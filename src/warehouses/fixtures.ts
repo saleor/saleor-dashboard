@@ -1,57 +1,57 @@
-import { address } from "@dashboard/fixtures";
+import { address } from '@dashboard/fixtures';
 import {
   WarehouseClickAndCollectOptionEnum,
   WarehouseDetailsFragment,
   WarehouseWithShippingFragment,
-} from "@dashboard/graphql";
+} from '@dashboard/graphql';
 
-import { shippingZones } from "../shipping/fixtures";
+import { shippingZones } from '../shipping/fixtures';
 
 export const warehouseList: WarehouseWithShippingFragment[] = [
   {
-    __typename: "Warehouse",
-    id: "V2FyZWhvdXNlOmEzMThmMGZlLTcwMmYtNDNjYy1hYmFjLWZmZmMzN2Y3ZTliYw==",
-    name: "C our wares",
+    __typename: 'Warehouse',
+    id: 'V2FyZWhvdXNlOmEzMThmMGZlLTcwMmYtNDNjYy1hYmFjLWZmZmMzN2Y3ZTliYw==',
+    name: 'C our wares',
     shippingZones: {
-      __typename: "ShippingZoneCountableConnection",
+      __typename: 'ShippingZoneCountableConnection',
       edges: shippingZones.map(node => ({
-        __typename: "ShippingZoneCountableEdge",
+        __typename: 'ShippingZoneCountableEdge',
         node,
       })),
     },
   },
   {
-    __typename: "Warehouse",
-    id: "V2FyZWhvdXNlOjJmN2UyOTlmLWEwMzMtNDhjZS1iYmM5LTFkZDM4NjU2ZjMwYw==",
-    name: "Be stocked",
+    __typename: 'Warehouse',
+    id: 'V2FyZWhvdXNlOjJmN2UyOTlmLWEwMzMtNDhjZS1iYmM5LTFkZDM4NjU2ZjMwYw==',
+    name: 'Be stocked',
     shippingZones: {
-      __typename: "ShippingZoneCountableConnection",
+      __typename: 'ShippingZoneCountableConnection',
       edges: shippingZones.map(node => ({
-        __typename: "ShippingZoneCountableEdge",
+        __typename: 'ShippingZoneCountableEdge',
         node,
       })),
     },
   },
   {
-    __typename: "Warehouse",
-    id: "V2FyZWhvdXNlOmM0ZmQ3Nzc0LWZlMjYtNDE1YS1hYjk1LWFlYTFjMjI0NTgwNg==",
-    name: "A Warehouse",
+    __typename: 'Warehouse',
+    id: 'V2FyZWhvdXNlOmM0ZmQ3Nzc0LWZlMjYtNDE1YS1hYjk1LWFlYTFjMjI0NTgwNg==',
+    name: 'A Warehouse',
     shippingZones: {
-      __typename: "ShippingZoneCountableConnection",
+      __typename: 'ShippingZoneCountableConnection',
       edges: shippingZones.map(node => ({
-        __typename: "ShippingZoneCountableEdge",
+        __typename: 'ShippingZoneCountableEdge',
         node,
       })),
     },
   },
   {
-    __typename: "Warehouse",
-    id: "V2FyZWhvdXNlOmNlMmNiZDhhLWRkYmQtNDhiNS1hM2UxLTNmZGVkZGI5MWZkMg==",
-    name: "Darkwares",
+    __typename: 'Warehouse',
+    id: 'V2FyZWhvdXNlOmNlMmNiZDhhLWRkYmQtNDhiNS1hM2UxLTNmZGVkZGI5MWZkMg==',
+    name: 'Darkwares',
     shippingZones: {
-      __typename: "ShippingZoneCountableConnection",
+      __typename: 'ShippingZoneCountableConnection',
       edges: shippingZones.map(node => ({
-        __typename: "ShippingZoneCountableEdge",
+        __typename: 'ShippingZoneCountableEdge',
         node,
       })),
     },

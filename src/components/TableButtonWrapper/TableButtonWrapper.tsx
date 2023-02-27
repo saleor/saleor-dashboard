@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export interface TableButtonWrapper {
   children: React.ReactElement<{
@@ -17,9 +17,7 @@ export interface TableButtonWrapper {
  * </TableButtonWrapper>
  * ```
  */
-export const TableButtonWrapper = <T extends HTMLElement>({
-  children,
-}: TableButtonWrapper) => {
+export const TableButtonWrapper = <T extends HTMLElement>({ children }: TableButtonWrapper) => {
   const onClick = (e: React.MouseEvent<T>) => {
     if (!children.props.href) {
       // <TableRowLink> is a <a> that wraps each <tr>
@@ -42,5 +40,5 @@ export const TableButtonWrapper = <T extends HTMLElement>({
 
   return children;
 };
-TableButtonWrapper.displayName = "TableButtonWrapper";
+TableButtonWrapper.displayName = 'TableButtonWrapper';
 export default TableButtonWrapper;

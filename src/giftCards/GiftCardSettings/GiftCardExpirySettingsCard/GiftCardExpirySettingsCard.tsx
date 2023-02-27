@@ -1,17 +1,16 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import CardTitle from '@dashboard/components/CardTitle';
 import GiftCardSettingsExpirySelect, {
   GiftCardSettingsExpirySelectProps,
-} from "@dashboard/giftCards/components/GiftCardSettingsExpirySelect";
-import { Card, CardContent } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/giftCards/components/GiftCardSettingsExpirySelect';
+import { Card, CardContent } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { GiftCardSettingsFormData } from "../types";
-import { giftCardExpirySettingsCard as messages } from "./messages";
+import { GiftCardSettingsFormData } from '../types';
+import { giftCardExpirySettingsCard as messages } from './messages';
 
-export interface GiftCardExpirySettingsCardProps
-  extends Pick<GiftCardSettingsExpirySelectProps, "errors"> {
+export interface GiftCardExpirySettingsCardProps extends Pick<GiftCardSettingsExpirySelectProps, 'errors'> {
   data: GiftCardSettingsFormData;
   disabled: boolean;
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -23,7 +22,7 @@ const useStyles = makeStyles(
       paddingTop: 0,
     },
   }),
-  { name: "GiftCardExpirySettingsCard" },
+  { name: 'GiftCardExpirySettingsCard' },
 );
 
 const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
@@ -37,10 +36,7 @@ const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
 
   return (
     <Card data-test-id="gift-card-settings">
-      <CardTitle
-        title={intl.formatMessage(messages.expiryDateTitle)}
-        className={classes.cardTitle}
-      />
+      <CardTitle title={intl.formatMessage(messages.expiryDateTitle)} className={classes.cardTitle} />
       <CardContent>
         <GiftCardSettingsExpirySelect
           expiryPeriodActive={data.expiryPeriodActive}
@@ -55,5 +51,5 @@ const GiftCardExpirySettingsCard: React.FC<GiftCardExpirySettingsCardProps> = ({
   );
 };
 
-GiftCardExpirySettingsCard.displayName = "GiftCardExpirySettingsCard";
+GiftCardExpirySettingsCard.displayName = 'GiftCardExpirySettingsCard';
 export default GiftCardExpirySettingsCard;

@@ -1,28 +1,19 @@
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import Money from "@dashboard/components/Money";
-import Skeleton from "@dashboard/components/Skeleton";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { OrderRefundDataQuery } from "@dashboard/graphql";
-import { FormsetChange } from "@dashboard/hooks/useFormset";
-import { renderCollection } from "@dashboard/misc";
-import {
-  Card,
-  CardContent,
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Button } from '@dashboard/components/Button';
+import CardTitle from '@dashboard/components/CardTitle';
+import Money from '@dashboard/components/Money';
+import Skeleton from '@dashboard/components/Skeleton';
+import TableCellAvatar from '@dashboard/components/TableCellAvatar';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { OrderRefundDataQuery } from '@dashboard/graphql';
+import { FormsetChange } from '@dashboard/hooks/useFormset';
+import { renderCollection } from '@dashboard/misc';
+import { Card, CardContent, Table, TableBody, TableCell, TableHead, TextField, Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { OrderRefundFormData } from "../OrderRefundPage/form";
-import { getTitle } from "./messages";
+import { OrderRefundFormData } from '../OrderRefundPage/form';
+import { getTitle } from './messages';
 
 const useStyles = makeStyles(
   theme => {
@@ -37,7 +28,7 @@ const useStyles = makeStyles(
         paddingTop: 0,
       },
       colQuantity: {
-        textAlign: "right",
+        textAlign: 'right',
         width: 210,
       },
       notice: {
@@ -45,7 +36,7 @@ const useStyles = makeStyles(
         marginTop: theme.spacing(2),
       },
       orderNumber: {
-        display: "inline",
+        display: 'inline',
         marginLeft: theme.spacing(1),
       },
       quantityInnerInput: {
@@ -57,18 +48,18 @@ const useStyles = makeStyles(
       remainingQuantity: {
         ...inputPadding,
         color: theme.palette.text.secondary,
-        whiteSpace: "nowrap",
+        whiteSpace: 'nowrap',
       },
       setMaximalQuantityButton: {
         marginTop: theme.spacing(1),
       },
     };
   },
-  { name: "OrderRefundFulfilledProducts" },
+  { name: 'OrderRefundFulfilledProducts' },
 );
 
 interface OrderRefundFulfilledProductsProps {
-  fulfillment: OrderRefundDataQuery["order"]["fulfillments"][0];
+  fulfillment: OrderRefundDataQuery['order']['fulfillments'][0];
   data: OrderRefundFormData;
   disabled: boolean;
   orderNumber: string;
@@ -77,14 +68,7 @@ interface OrderRefundFulfilledProductsProps {
 }
 
 const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> = props => {
-  const {
-    fulfillment,
-    data,
-    disabled,
-    orderNumber,
-    onRefundedProductQuantityChange,
-    onSetMaximalQuantities,
-  } = props;
+  const { fulfillment, data, disabled, orderNumber, onRefundedProductQuantityChange, onSetMaximalQuantities } = props;
   const classes = useStyles({});
   const intl = useIntl();
 
@@ -106,47 +90,25 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
         <Button
           className={classes.setMaximalQuantityButton}
           onClick={onSetMaximalQuantities}
-          data-test-id={
-            "set-maximal-quantity-fulfilled-button-" + fulfillment?.id
-          }
+          data-test-id={'set-maximal-quantity-fulfilled-button-' + fulfillment?.id}
         >
-          <FormattedMessage
-            id="2W4EBM"
-            defaultMessage="Set maximal quantities"
-            description="button"
-          />
+          <FormattedMessage id="2W4EBM" defaultMessage="Set maximal quantities" description="button" />
         </Button>
       </CardContent>
       <Table>
         <TableHead>
           <TableRowLink>
             <TableCell>
-              <FormattedMessage
-                id="FNT4b+"
-                defaultMessage="Product"
-                description="tabel column header"
-              />
+              <FormattedMessage id="FNT4b+" defaultMessage="Product" description="tabel column header" />
             </TableCell>
             <TableCell>
-              <FormattedMessage
-                id="5aiFbL"
-                defaultMessage="Price"
-                description="tabel column header"
-              />
+              <FormattedMessage id="5aiFbL" defaultMessage="Price" description="tabel column header" />
             </TableCell>
             <TableCell>
-              <FormattedMessage
-                id="Tl+7X4"
-                defaultMessage="Refunded Qty"
-                description="tabel column header"
-              />
+              <FormattedMessage id="Tl+7X4" defaultMessage="Refunded Qty" description="tabel column header" />
             </TableCell>
             <TableCell>
-              <FormattedMessage
-                id="+PclgM"
-                defaultMessage="Total"
-                description="tabel column header"
-              />
+              <FormattedMessage id="+PclgM" defaultMessage="Total" description="tabel column header" />
             </TableCell>
           </TableRowLink>
         </TableHead>
@@ -158,24 +120,15 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
                 refundedLine => refundedLine.id === line.id,
               );
               const isError =
-                Number(selectedLineQuantity?.value) > line?.quantity ||
-                Number(selectedLineQuantity?.value) < 0;
+                Number(selectedLineQuantity?.value) > line?.quantity || Number(selectedLineQuantity?.value) < 0;
 
               return (
                 <TableRowLink key={line?.id}>
                   <TableCellAvatar thumbnail={line?.orderLine?.thumbnail?.url}>
-                    {line?.orderLine?.productName ? (
-                      line?.orderLine?.productName
-                    ) : (
-                      <Skeleton />
-                    )}
+                    {line?.orderLine?.productName ? line?.orderLine?.productName : <Skeleton />}
                   </TableCellAvatar>
                   <TableCell>
-                    {line?.orderLine?.unitPrice ? (
-                      <Money money={line?.orderLine?.unitPrice.gross} />
-                    ) : (
-                      <Skeleton />
-                    )}
+                    {line?.orderLine?.unitPrice ? <Money money={line?.orderLine?.unitPrice.gross} /> : <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colQuantity}>
                     {line?.quantity ? (
@@ -184,33 +137,26 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
                         type="number"
                         inputProps={{
                           className: classes.quantityInnerInput,
-                          "data-test-id": "quantityInput" + line?.id,
+                          'data-test-id': 'quantityInput' + line?.id,
                           max: (line?.quantity).toString(),
                           min: 0,
-                          style: { textAlign: "right" },
+                          style: { textAlign: 'right' },
                         }}
                         fullWidth
                         value={selectedLineQuantity?.value}
-                        onChange={event =>
-                          onRefundedProductQuantityChange(
-                            line.id,
-                            event.target.value,
-                          )
-                        }
+                        onChange={event => onRefundedProductQuantityChange(line.id, event.target.value)}
                         InputProps={{
                           endAdornment: line?.quantity && (
-                            <div className={classes.remainingQuantity}>
-                              / {line?.quantity}
-                            </div>
+                            <div className={classes.remainingQuantity}>/ {line?.quantity}</div>
                           ),
                         }}
                         error={isError}
                         helperText={
                           isError &&
                           intl.formatMessage({
-                            id: "xoyCZ/",
-                            defaultMessage: "Improper value",
-                            description: "error message",
+                            id: 'xoyCZ/',
+                            defaultMessage: 'Improper value',
+                            description: 'error message',
                           })
                         }
                       />
@@ -223,9 +169,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
                       <Money
                         money={{
                           ...line?.orderLine.unitPrice.gross,
-                          amount:
-                            (line?.orderLine.unitPrice.gross.amount || 0) *
-                            Number(selectedLineQuantity?.value),
+                          amount: (line?.orderLine.unitPrice.gross.amount || 0) * Number(selectedLineQuantity?.value),
                         }}
                       />
                     )) || <Skeleton />}
@@ -236,10 +180,7 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
             () => (
               <TableRowLink>
                 <TableCell colSpan={4}>
-                  <FormattedMessage
-                    id="Q1Uzbb"
-                    defaultMessage="No products found"
-                  />
+                  <FormattedMessage id="Q1Uzbb" defaultMessage="No products found" />
                 </TableCell>
               </TableRowLink>
             ),
@@ -249,5 +190,5 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
     </Card>
   );
 };
-OrderRefundFulfilledProducts.displayName = "OrderRefundFulfilledProducts";
+OrderRefundFulfilledProducts.displayName = 'OrderRefundFulfilledProducts';
 export default OrderRefundFulfilledProducts;

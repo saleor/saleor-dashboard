@@ -1,20 +1,16 @@
-import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
-import { BulkAction, Dialog, SingleAction } from "@dashboard/types";
+import { UseNavigatorResult } from '@dashboard/hooks/useNavigator';
+import { BulkAction, Dialog, SingleAction } from '@dashboard/types';
 
 type Url<T extends Dialog<any>> = (params: T) => string;
-type CreateCloseModal<
-  TAction extends string,
-  TParams extends Dialog<TAction>
-> = [(action: TAction, newParams?: TParams) => void, () => void];
+type CreateCloseModal<TAction extends string, TParams extends Dialog<TAction>> = [
+  (action: TAction, newParams?: TParams) => void,
+  () => void,
+];
 
 function createDialogActionHandlers<
   TAction extends string,
-  TParams extends Dialog<TAction> & BulkAction & SingleAction
->(
-  navigate: UseNavigatorResult,
-  url: Url<TParams>,
-  params: TParams,
-): CreateCloseModal<TAction, TParams> {
+  TParams extends Dialog<TAction> & BulkAction & SingleAction,
+>(navigate: UseNavigatorResult, url: Url<TParams>, params: TParams): CreateCloseModal<TAction, TParams> {
   const close = () =>
     navigate(
       url({

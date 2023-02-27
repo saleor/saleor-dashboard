@@ -1,36 +1,25 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import Grid from "@dashboard/components/Grid";
-import Hr from "@dashboard/components/Hr";
-import Skeleton from "@dashboard/components/Skeleton";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { buttonMessages } from "@dashboard/intl";
-import {
-  TranslationField,
-  TranslationFieldType,
-} from "@dashboard/translations/types";
-import { ListProps } from "@dashboard/types";
-import { OutputData } from "@editorjs/editorjs";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import ArrowIcon from "@material-ui/icons/ArrowDropDown";
-import {
-  Button,
-  ConfirmButtonTransitionState,
-  IconButton,
-  makeStyles,
-} from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import CardTitle from '@dashboard/components/CardTitle';
+import Grid from '@dashboard/components/Grid';
+import Hr from '@dashboard/components/Hr';
+import Skeleton from '@dashboard/components/Skeleton';
+import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import { buttonMessages } from '@dashboard/intl';
+import { TranslationField, TranslationFieldType } from '@dashboard/translations/types';
+import { ListProps } from '@dashboard/types';
+import { OutputData } from '@editorjs/editorjs';
+import { Card, CardContent, Typography } from '@material-ui/core';
+import ArrowIcon from '@material-ui/icons/ArrowDropDown';
+import { Button, ConfirmButtonTransitionState, IconButton, makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import TranslationFieldsLong from "./TranslationFieldsLong";
-import TranslationFieldsRich from "./TranslationFieldsRich";
-import TranslationFieldsShort from "./TranslationFieldsShort";
+import TranslationFieldsLong from './TranslationFieldsLong';
+import TranslationFieldsRich from './TranslationFieldsRich';
+import TranslationFieldsShort from './TranslationFieldsShort';
 
-type Pagination = Pick<
-  ListProps,
-  Exclude<keyof ListProps, "getRowHref" | "disabled">
->;
+type Pagination = Pick<ListProps, Exclude<keyof ListProps, 'getRowHref' | 'disabled'>>;
 
 export interface TranslationFieldsProps {
   activeField: string;
@@ -43,10 +32,7 @@ export interface TranslationFieldsProps {
   richTextResetKey: string; // temporary workaround TODO: fix rich text editor
   onEdit: (field: string) => void;
   onDiscard: () => void;
-  onSubmit: (
-    field: TranslationField,
-    data: string | OutputData,
-  ) => SubmitPromise;
+  onSubmit: (field: TranslationField, data: string | OutputData) => SubmitPromise;
 }
 
 const useStyles = makeStyles(
@@ -55,7 +41,7 @@ const useStyles = makeStyles(
       fontSize: 14,
     },
     cardContent: {
-      "&:last-child": {
+      '&:last-child': {
         paddingBottom: theme.spacing(1),
       },
     },
@@ -63,24 +49,24 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(0.5),
     },
     content: {
-      "& a": {
+      '& a': {
         color: theme.palette.textHighlighted.active,
       },
-      "& blockquote": {
+      '& blockquote': {
         borderLeft: `2px solid ${theme.palette.divider}`,
         margin: 0,
         padding: theme.spacing(1, 2),
       },
-      "& h2": {
+      '& h2': {
         fontSize: 22,
         marginBottom: theme.spacing(1),
       },
-      "& h3": {
+      '& h3': {
         fontSize: 19,
         marginBottom: theme.spacing(1),
       },
-      "& p": {
-        "&:last-child": {
+      '& p': {
+        '&:last-child': {
           marginBottom: 0,
         },
         marginBottom: theme.spacing(),
@@ -89,9 +75,9 @@ const useStyles = makeStyles(
       paddingBottom: theme.spacing(2),
     },
     editButtonContainer: {
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "flex-end",
+      alignItems: 'center',
+      display: 'flex',
+      justifyContent: 'flex-end',
     },
     fieldName: {
       color: theme.typography.caption.color,
@@ -99,20 +85,20 @@ const useStyles = makeStyles(
       fontWeight: 500,
       marginBottom: theme.spacing(),
       marginTop: theme.spacing(2),
-      textTransform: "uppercase",
+      textTransform: 'uppercase',
     },
     grid: {
       gridRowGap: 0,
     },
     hr: {
-      gridColumnEnd: "span 2",
+      gridColumnEnd: 'span 2',
     },
 
     rotate: {
-      transform: "rotate(180deg)",
+      transform: 'rotate(180deg)',
     },
   }),
-  { name: "TranslationFields" },
+  { name: 'TranslationFields' },
 );
 
 const numberOfColumns = 2;
@@ -140,10 +126,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
       <CardTitle
         title={title}
         toolbar={
-          <IconButton
-            variant="secondary"
-            onClick={() => setExpandedState(!expanded)}
-          >
+          <IconButton variant="secondary" onClick={() => setExpandedState(!expanded)}>
             <ArrowIcon
               className={clsx({
                 [classes.rotate]: expanded,
@@ -159,11 +142,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
               <FormattedMessage id="Xtd0AT" defaultMessage="Original String" />
             </Typography>
             <Typography className={classes.columnHeader} variant="body1">
-              <FormattedMessage
-                id="bVY7j0"
-                defaultMessage="Translation"
-                description="Translated Name"
-              />
+              <FormattedMessage id="bVY7j0" defaultMessage="Translation" description="Translated Name" />
             </Typography>
             {fields.map(field => (
               <React.Fragment key={field.name}>
@@ -172,10 +151,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                   {field.displayName}
                 </Typography>
                 <div className={classes.editButtonContainer}>
-                  <Button
-                    data-test-id={`edit-${field.name}`}
-                    onClick={() => onEdit(field.name)}
-                  >
+                  <Button data-test-id={`edit-${field.name}`} onClick={() => onEdit(field.name)}>
                     <FormattedMessage {...buttonMessages.edit} />
                   </Button>
                 </div>
@@ -276,10 +252,7 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
               defaultMessage="{numberOfFields} Translations, {numberOfTranslatedFields} Completed"
               values={{
                 numberOfFields: fields.length,
-                numberOfTranslatedFields: fields.reduce(
-                  (acc, field) => acc + +(field.translation !== null),
-                  0,
-                ),
+                numberOfTranslatedFields: fields.reduce((acc, field) => acc + +(field.translation !== null), 0),
               }}
             />
           </Typography>
@@ -288,5 +261,5 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
     </Card>
   );
 };
-TranslationFields.displayName = "TranslationFields";
+TranslationFields.displayName = 'TranslationFields';
 export default TranslationFields;

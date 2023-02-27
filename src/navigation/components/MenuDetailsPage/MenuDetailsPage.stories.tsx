@@ -1,10 +1,10 @@
-import { MenuErrorCode } from "@dashboard/graphql";
-import { menu } from "@dashboard/navigation/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { MenuErrorCode } from '@dashboard/graphql';
+import { menu } from '@dashboard/navigation/fixtures';
+import Decorator from '@dashboard/storybook/Decorator';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import MenuDetailsPage, { MenuDetailsPageProps } from "./MenuDetailsPage";
+import MenuDetailsPage, { MenuDetailsPageProps } from './MenuDetailsPage';
 
 const props: MenuDetailsPageProps = {
   disabled: false,
@@ -15,16 +15,14 @@ const props: MenuDetailsPageProps = {
   onItemClick: () => undefined,
   onItemEdit: () => undefined,
   onSubmit: () => undefined,
-  saveButtonState: "default",
+  saveButtonState: 'default',
 };
 
-storiesOf("Navigation / Menu details", module)
+storiesOf('Navigation / Menu details', module)
   .addDecorator(Decorator)
-  .add("default", () => <MenuDetailsPage {...props} />)
-  .add("loading", () => (
-    <MenuDetailsPage {...props} disabled={true} menu={undefined} />
-  ))
-  .add("no data", () => (
+  .add('default', () => <MenuDetailsPage {...props} />)
+  .add('loading', () => <MenuDetailsPage {...props} disabled={true} menu={undefined} />)
+  .add('no data', () => (
     <MenuDetailsPage
       {...props}
       menu={{
@@ -33,14 +31,14 @@ storiesOf("Navigation / Menu details", module)
       }}
     />
   ))
-  .add("form errors", () => (
+  .add('form errors', () => (
     <MenuDetailsPage
       {...props}
-      errors={["name"].map(field => ({
-        __typename: "MenuError",
+      errors={['name'].map(field => ({
+        __typename: 'MenuError',
         code: MenuErrorCode.INVALID,
         field,
-        message: "Invalid field",
+        message: 'Invalid field',
       }))}
     />
   ));

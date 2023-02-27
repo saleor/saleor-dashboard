@@ -1,9 +1,9 @@
-import { Avatar as MuiAvatar, Typography } from "@material-ui/core";
-import { ImageIcon } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
+import { Avatar as MuiAvatar, Typography } from '@material-ui/core';
+import { ImageIcon } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
 
-import { useAvatarImageStyles } from "./styles";
+import { useAvatarImageStyles } from './styles';
 
 interface AvatarImageProps {
   initials?: string;
@@ -11,11 +11,7 @@ interface AvatarImageProps {
   avatarProps?: string;
 }
 
-const AvatarImage: React.FC<AvatarImageProps> = ({
-  initials,
-  thumbnail,
-  avatarProps,
-}) => {
+const AvatarImage: React.FC<AvatarImageProps> = ({ initials, thumbnail, avatarProps }) => {
   const classes = useAvatarImageStyles();
 
   if (!thumbnail && initials) {
@@ -34,9 +30,7 @@ const AvatarImage: React.FC<AvatarImageProps> = ({
     );
   }
 
-  return (
-    <MuiAvatar className={clsx(classes.avatar, avatarProps)} src={thumbnail} />
-  );
+  return <MuiAvatar className={clsx(classes.avatar, avatarProps)} src={thumbnail} />;
 };
 
 export default AvatarImage;

@@ -1,29 +1,29 @@
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import ImageUpload from "@dashboard/components/ImageUpload";
-import MediaTile from "@dashboard/components/MediaTile";
-import { ProductMediaFragment, ProductMediaType } from "@dashboard/graphql";
-import { ProductMediaPopper } from "@dashboard/products/components/ProductMediaPopper/ProductMediaPopper";
-import { ReorderAction } from "@dashboard/types";
-import createMultiFileUploadHandler from "@dashboard/utils/handlers/multiFileUploadHandler";
-import { Card, CardContent } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
-import clsx from "clsx";
-import React from "react";
-import { defineMessages, useIntl } from "react-intl";
-import { SortableContainer, SortableElement } from "react-sortable-hoc";
+import { Button } from '@dashboard/components/Button';
+import CardTitle from '@dashboard/components/CardTitle';
+import ImageUpload from '@dashboard/components/ImageUpload';
+import MediaTile from '@dashboard/components/MediaTile';
+import { ProductMediaFragment, ProductMediaType } from '@dashboard/graphql';
+import { ProductMediaPopper } from '@dashboard/products/components/ProductMediaPopper/ProductMediaPopper';
+import { ReorderAction } from '@dashboard/types';
+import createMultiFileUploadHandler from '@dashboard/utils/handlers/multiFileUploadHandler';
+import { Card, CardContent } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import { vars } from '@saleor/macaw-ui/next';
+import clsx from 'clsx';
+import React from 'react';
+import { defineMessages, useIntl } from 'react-intl';
+import { SortableContainer, SortableElement } from 'react-sortable-hoc';
 
 const messages = defineMessages({
   media: {
-    id: "/Mcvt4",
-    defaultMessage: "Media",
-    description: "section header",
+    id: '/Mcvt4',
+    defaultMessage: 'Media',
+    description: 'section header',
   },
   upload: {
-    id: "mGiA6q",
-    defaultMessage: "Upload",
-    description: "modal button upload",
+    id: 'mGiA6q',
+    defaultMessage: 'Upload',
+    description: 'modal button upload',
   },
 });
 
@@ -31,90 +31,90 @@ const useStyles = makeStyles(
   theme => ({
     card: {
       marginTop: theme.spacing(2),
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down('sm')]: {
         marginTop: 0,
       },
     },
     fileField: {
-      display: "none",
+      display: 'none',
     },
     icon: {
-      color: "rgba(255, 255, 255, 0.54)",
+      color: 'rgba(255, 255, 255, 0.54)',
     },
     image: {
-      height: "100%",
-      objectFit: "contain",
-      userSelect: "none",
-      width: "100%",
+      height: '100%',
+      objectFit: 'contain',
+      userSelect: 'none',
+      width: '100%',
     },
     imageContainer: {
-      "&:hover, &.dragged": {
-        "& $imageOverlay": {
-          display: "block",
+      '&:hover, &.dragged': {
+        '& $imageOverlay': {
+          display: 'block',
         },
       },
-      background: "#ffffff",
+      background: '#ffffff',
       border: `1px solid ${vars.colors.border.neutralPlain}`,
       borderRadius: theme.spacing(),
       height: 140,
-      margin: "auto",
-      overflow: "hidden",
+      margin: 'auto',
+      overflow: 'hidden',
       padding: theme.spacing(2),
-      position: "relative",
+      position: 'relative',
       width: 140,
     },
     imageGridContainer: {
-      position: "relative",
+      position: 'relative',
     },
     imageOverlay: {
-      background: "rgba(0, 0, 0, 0.6)",
-      cursor: "move",
-      display: "none",
+      background: 'rgba(0, 0, 0, 0.6)',
+      cursor: 'move',
+      display: 'none',
       height: 140,
       left: 0,
       padding: theme.spacing(2),
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       width: 140,
     },
     imageOverlayToolbar: {
-      alignContent: "flex-end",
-      display: "flex",
-      position: "relative",
+      alignContent: 'flex-end',
+      display: 'flex',
+      position: 'relative',
       right: theme.spacing(-3),
       top: theme.spacing(-2),
     },
     imageUpload: {
-      height: "100%",
+      height: '100%',
       left: 0,
       outline: 0,
-      position: "absolute",
+      position: 'absolute',
       top: 0,
-      width: "100%",
+      width: '100%',
     },
     imageUploadActive: {
       zIndex: 1,
     },
     imageUploadIconActive: {
-      display: "block",
+      display: 'block',
     },
     root: {
-      display: "grid",
+      display: 'grid',
       gridColumnGap: theme.spacing(2),
       gridRowGap: theme.spacing(2),
-      gridTemplateColumns: "repeat(4, 1fr)",
-      [theme.breakpoints.down("sm")]: {
-        gridTemplateColumns: "repeat(3, 1fr)",
+      gridTemplateColumns: 'repeat(4, 1fr)',
+      [theme.breakpoints.down('sm')]: {
+        gridTemplateColumns: 'repeat(3, 1fr)',
       },
-      [theme.breakpoints.down("xs")]: {
-        gridTemplateColumns: "repeat(2, 1fr)",
+      [theme.breakpoints.down('xs')]: {
+        gridTemplateColumns: 'repeat(2, 1fr)',
       },
     },
     rootDragActive: {
       opacity: 0.2,
     },
   }),
-  { name: "ProductMedia" },
+  { name: 'ProductMedia' },
 );
 
 interface SortableMediaProps {
@@ -127,11 +127,9 @@ interface SortableMediaProps {
   onDelete: () => void;
 }
 
-const SortableMedia = SortableElement<SortableMediaProps>(
-  ({ media, editHref, onDelete }) => (
-    <MediaTile media={media} editHref={editHref} onDelete={onDelete} />
-  ),
-);
+const SortableMedia = SortableElement<SortableMediaProps>(({ media, editHref, onDelete }) => (
+  <MediaTile media={media} editHref={editHref} onDelete={onDelete} />
+));
 
 interface MediaListContainerProps {
   className: string;
@@ -174,28 +172,18 @@ interface ProductMediaProps {
 }
 
 const ProductMedia: React.FC<ProductMediaProps> = props => {
-  const {
-    media,
-    placeholderImage,
-    getImageEditUrl,
-    onImageDelete,
-    onImageReorder,
-    onImageUpload,
-    openMediaUrlModal,
-  } = props;
+  const { media, placeholderImage, getImageEditUrl, onImageDelete, onImageReorder, onImageUpload, openMediaUrlModal } =
+    props;
 
   const classes = useStyles(props);
   const intl = useIntl();
   const imagesUpload = React.useRef<HTMLInputElement>(null);
   const anchor = React.useRef<HTMLButtonElement>();
-  const [imagesToUpload, setImagesToUpload] = React.useState<
-    ProductMediaFragment[]
-  >([]);
+  const [imagesToUpload, setImagesToUpload] = React.useState<ProductMediaFragment[]>([]);
   const [popperOpenStatus, setPopperOpenStatus] = React.useState(false);
 
   const handleImageUpload = createMultiFileUploadHandler(onImageUpload, {
-    onAfterUpload: () =>
-      setImagesToUpload(prevImagesToUpload => prevImagesToUpload.slice(1)),
+    onAfterUpload: () => setImagesToUpload(prevImagesToUpload => prevImagesToUpload.slice(1)),
     onStart: files => {
       Array.from(files).forEach((file, fileIndex) => {
         const reader = new FileReader();
@@ -203,9 +191,9 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
           setImagesToUpload(prevImagesToUpload => [
             ...prevImagesToUpload,
             {
-              __typename: "ProductMedia",
-              alt: "",
-              id: "",
+              __typename: 'ProductMedia',
+              alt: '',
+              id: '',
               sortOrder: fileIndex,
               type: ProductMediaType.IMAGE,
               url: event.target.result as string,
@@ -299,5 +287,5 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
     </Card>
   );
 };
-ProductMedia.displayName = "ProductMedia";
+ProductMedia.displayName = 'ProductMedia';
 export default ProductMedia;

@@ -1,11 +1,11 @@
-import { appsMessages } from "@dashboard/new-apps/messages";
-import { Typography } from "@material-ui/core";
-import { CopyIcon, Tooltip } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React, { useState } from "react";
-import { useIntl } from "react-intl";
+import { appsMessages } from '@dashboard/new-apps/messages';
+import { Typography } from '@material-ui/core';
+import { CopyIcon, Tooltip } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React, { useState } from 'react';
+import { useIntl } from 'react-intl';
 
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
 interface AppManifestTableDisplayProps {
   manifestUrl: string;
@@ -13,19 +13,13 @@ interface AppManifestTableDisplayProps {
 
 const getAppDomainFromManifest = (manifest: string) => new URL(manifest).host;
 
-export const AppManifestTableDisplay = ({
-  manifestUrl,
-}: AppManifestTableDisplayProps) => {
+export const AppManifestTableDisplay = ({ manifestUrl }: AppManifestTableDisplayProps) => {
   const styles = useStyles();
   const intl = useIntl();
   const [copied, setCopied] = useState(false);
 
   return (
-    <Tooltip
-      placement="top"
-      title={manifestUrl}
-      header={intl.formatMessage(appsMessages.appManifestUrl)}
-    >
+    <Tooltip placement="top" title={manifestUrl} header={intl.formatMessage(appsMessages.appManifestUrl)}>
       <Typography
         onMouseOut={() => setCopied(false)}
         className={styles.manifestText}
@@ -53,5 +47,5 @@ export const AppManifestTableDisplay = ({
     </Tooltip>
   );
 };
-AppManifestTableDisplay.displayName = "AppManifestTableDisplay";
+AppManifestTableDisplay.displayName = 'AppManifestTableDisplay';
 export default AppManifestTableDisplay;

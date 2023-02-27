@@ -1,60 +1,42 @@
-import { useUser } from "@dashboard/auth";
-import ActionDialog from "@dashboard/components/ActionDialog";
+import { useUser } from '@dashboard/auth';
+import ActionDialog from '@dashboard/components/ActionDialog';
 import {
   useBulkDeleteShippingZoneMutation,
   useDeleteShippingZoneMutation,
   useShippingZonesQuery,
   useUpdateDefaultWeightUnitMutation,
-} from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
-import useListSettings from "@dashboard/hooks/useListSettings";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
-import usePaginator, {
-  createPaginationState,
-  PaginatorContext,
-} from "@dashboard/hooks/usePaginator";
-import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
-import {
-  extractMutationErrors,
-  getById,
-  getStringOrPlaceholder,
-  maybe,
-} from "@dashboard/misc";
-import { ListViews } from "@dashboard/types";
-import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useBulkActions from '@dashboard/hooks/useBulkActions';
+import useListSettings from '@dashboard/hooks/useListSettings';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { usePaginationReset } from '@dashboard/hooks/usePaginationReset';
+import usePaginator, { createPaginationState, PaginatorContext } from '@dashboard/hooks/usePaginator';
+import useShop from '@dashboard/hooks/useShop';
+import { commonMessages } from '@dashboard/intl';
+import { extractMutationErrors, getById, getStringOrPlaceholder, maybe } from '@dashboard/misc';
+import { ListViews } from '@dashboard/types';
+import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import { DialogContentText } from '@material-ui/core';
+import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import ShippingZonesListPage from "../components/ShippingZonesListPage";
-import {
-  shippingZonesListUrl,
-  ShippingZonesListUrlDialog,
-  ShippingZonesListUrlQueryParams,
-} from "../urls";
+import ShippingZonesListPage from '../components/ShippingZonesListPage';
+import { shippingZonesListUrl, ShippingZonesListUrlDialog, ShippingZonesListUrlQueryParams } from '../urls';
 
 interface ShippingZonesListProps {
   params: ShippingZonesListUrlQueryParams;
 }
 
-export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
-  params,
-}) => {
+export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
   const { user } = useUser();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.SHIPPING_METHODS_LIST,
-  );
+  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+  const { updateListSettings, settings } = useListSettings(ListViews.SHIPPING_METHODS_LIST);
 
   usePaginationReset(shippingZonesListUrl, params, settings.rowNumber);
 
@@ -79,14 +61,11 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     variables: queryVariables,
   });
 
-  const [
-    deleteShippingZone,
-    deleteShippingZoneOpts,
-  ] = useDeleteShippingZoneMutation({
+  const [deleteShippingZone, deleteShippingZoneOpts] = useDeleteShippingZoneMutation({
     onCompleted: data => {
       if (data.shippingZoneDelete.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         closeModal();
@@ -95,28 +74,22 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     },
   });
 
-  const [
-    updateDefaultWeightUnit,
-    updateDefaultWeightUnitOpts,
-  ] = useUpdateDefaultWeightUnitMutation({
+  const [updateDefaultWeightUnit, updateDefaultWeightUnitOpts] = useUpdateDefaultWeightUnitMutation({
     onCompleted: data => {
       if (data.shopSettingsUpdate.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
     },
   });
 
-  const [
-    bulkDeleteShippingZone,
-    bulkDeleteShippingZoneOpts,
-  ] = useBulkDeleteShippingZoneMutation({
+  const [bulkDeleteShippingZone, bulkDeleteShippingZoneOpts] = useBulkDeleteShippingZoneMutation({
     onCompleted: data => {
       if (data.shippingZoneBulkDelete.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         closeModal();
@@ -137,15 +110,11 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
       <ShippingZonesListPage
         defaultWeightUnit={shop?.defaultWeightUnit}
         settings={settings}
-        disabled={
-          loading ||
-          deleteShippingZoneOpts.loading ||
-          updateDefaultWeightUnitOpts.loading
-        }
+        disabled={loading || deleteShippingZoneOpts.loading || updateDefaultWeightUnitOpts.loading}
         shippingZones={mapEdgesToItems(data?.shippingZones)}
         onUpdateListSettings={updateListSettings}
         onRemove={id =>
-          openModal("remove", {
+          openModal('remove', {
             id,
           })
         }
@@ -166,7 +135,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             variant="secondary"
             color="primary"
             onClick={() =>
-              openModal("remove-many", {
+              openModal('remove-many', {
                 ids: listElements,
               })
             }
@@ -178,13 +147,13 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
       />
 
       <ActionDialog
-        open={params.action === "remove"}
+        open={params.action === 'remove'}
         confirmButtonState={deleteShippingZoneOpts.status}
         variant="delete"
         title={intl.formatMessage({
-          id: "k3EI/U",
-          defaultMessage: "Delete Shipping Zone",
-          description: "dialog header",
+          id: 'k3EI/U',
+          defaultMessage: 'Delete Shipping Zone',
+          description: 'dialog header',
         })}
         onClose={closeModal}
         onConfirm={() =>
@@ -200,11 +169,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             values={{
               shippingZoneName: (
                 <strong>
-                  {getStringOrPlaceholder(
-                    mapEdgesToItems(data?.shippingZones)?.find(
-                      getById(params.id),
-                    )?.name,
-                  )}
+                  {getStringOrPlaceholder(mapEdgesToItems(data?.shippingZones)?.find(getById(params.id))?.name)}
                 </strong>
               ),
             }}
@@ -212,13 +177,13 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
         </DialogContentText>
       </ActionDialog>
       <ActionDialog
-        open={params.action === "remove-many"}
+        open={params.action === 'remove-many'}
         confirmButtonState={bulkDeleteShippingZoneOpts.status}
         variant="delete"
         title={intl.formatMessage({
-          id: "cpZLRH",
-          defaultMessage: "Delete Shipping Zones",
-          description: "dialog header",
+          id: 'cpZLRH',
+          defaultMessage: 'Delete Shipping Zones',
+          description: 'dialog header',
         })}
         onClose={closeModal}
         onConfirm={() =>
@@ -234,11 +199,7 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
             description="dialog content"
             values={{
               counter: params.ids?.length,
-              displayQuantity: (
-                <strong>
-                  {getStringOrPlaceholder(params.ids?.length.toString())}
-                </strong>
-              ),
+              displayQuantity: <strong>{getStringOrPlaceholder(params.ids?.length.toString())}</strong>,
             }}
           />
         </DialogContentText>
@@ -246,5 +207,5 @@ export const ShippingZonesList: React.FC<ShippingZonesListProps> = ({
     </PaginatorContext.Provider>
   );
 };
-ShippingZonesList.displayName = "ShippingZonesList";
+ShippingZonesList.displayName = 'ShippingZonesList';
 export default ShippingZonesList;

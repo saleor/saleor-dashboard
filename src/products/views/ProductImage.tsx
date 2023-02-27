@@ -1,24 +1,19 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import NotFoundPage from '@dashboard/components/NotFoundPage';
 import {
   useProductMediaByIdQuery,
   useProductMediaDeleteMutation,
   useProductMediaUpdateMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
-import { DialogContentText } from "@material-ui/core";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { commonMessages } from '@dashboard/intl';
+import { DialogContentText } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import ProductMediaPage from "../components/ProductMediaPage";
-import {
-  productImageUrl,
-  ProductImageUrlQueryParams,
-  productListUrl,
-  productUrl,
-} from "../urls";
+import ProductMediaPage from '../components/ProductMediaPage';
+import { productImageUrl, ProductImageUrlQueryParams, productListUrl, productUrl } from '../urls';
 
 interface ProductMediaProps {
   mediaId: string;
@@ -26,11 +21,7 @@ interface ProductMediaProps {
   params: ProductImageUrlQueryParams;
 }
 
-export const ProductImage: React.FC<ProductMediaProps> = ({
-  mediaId,
-  productId,
-  params,
-}) => {
+export const ProductImage: React.FC<ProductMediaProps> = ({ mediaId, productId, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -49,7 +40,7 @@ export const ProductImage: React.FC<ProductMediaProps> = ({
     onCompleted: data => {
       if (data.productMediaUpdate.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
@@ -67,8 +58,7 @@ export const ProductImage: React.FC<ProductMediaProps> = ({
   }
 
   const handleDelete = () => deleteImage({ variables: { id: mediaId } });
-  const handleImageClick = (id: string) => () =>
-    navigate(productImageUrl(productId, id));
+  const handleImageClick = (id: string) => () => navigate(productImageUrl(productId, id));
   const handleUpdate = (formData: { description: string }) => {
     updateImage({
       variables: {
@@ -90,7 +80,7 @@ export const ProductImage: React.FC<ProductMediaProps> = ({
         onDelete={() =>
           navigate(
             productImageUrl(productId, mediaId, {
-              action: "remove",
+              action: 'remove',
             }),
           )
         }
@@ -99,24 +89,19 @@ export const ProductImage: React.FC<ProductMediaProps> = ({
         saveButtonBarState={updateResult.status}
       />
       <ActionDialog
-        onClose={() =>
-          navigate(productImageUrl(productId, mediaId), { replace: true })
-        }
+        onClose={() => navigate(productImageUrl(productId, mediaId), { replace: true })}
         onConfirm={handleDelete}
-        open={params.action === "remove"}
+        open={params.action === 'remove'}
         title={intl.formatMessage({
-          id: "uCn/rd",
-          defaultMessage: "Delete Image",
-          description: "dialog header",
+          id: 'uCn/rd',
+          defaultMessage: 'Delete Image',
+          description: 'dialog header',
         })}
         variant="delete"
         confirmButtonState={deleteResult.status}
       >
         <DialogContentText>
-          <FormattedMessage
-            id="VEext+"
-            defaultMessage="Are you sure you want to delete this image?"
-          />
+          <FormattedMessage id="VEext+" defaultMessage="Are you sure you want to delete this image?" />
         </DialogContentText>
       </ActionDialog>
     </>

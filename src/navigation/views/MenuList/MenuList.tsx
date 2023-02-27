@@ -1,34 +1,31 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { Button } from "@dashboard/components/Button";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import { Button } from '@dashboard/components/Button';
 import {
   useMenuBulkDeleteMutation,
   useMenuCreateMutation,
   useMenuDeleteMutation,
   useMenuListQuery,
-} from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
-import useListSettings from "@dashboard/hooks/useListSettings";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
-import usePaginator, {
-  createPaginationState,
-  PaginatorContext,
-} from "@dashboard/hooks/usePaginator";
-import { buttonMessages, commonMessages } from "@dashboard/intl";
-import { getById, getStringOrPlaceholder, maybe } from "@dashboard/misc";
-import { ListViews } from "@dashboard/types";
-import createSortHandler from "@dashboard/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { getSortParams } from "@dashboard/utils/sort";
-import { DialogContentText } from "@material-ui/core";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useBulkActions from '@dashboard/hooks/useBulkActions';
+import useListSettings from '@dashboard/hooks/useListSettings';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { usePaginationReset } from '@dashboard/hooks/usePaginationReset';
+import usePaginator, { createPaginationState, PaginatorContext } from '@dashboard/hooks/usePaginator';
+import { buttonMessages, commonMessages } from '@dashboard/intl';
+import { getById, getStringOrPlaceholder, maybe } from '@dashboard/misc';
+import { ListViews } from '@dashboard/types';
+import createSortHandler from '@dashboard/utils/handlers/sortHandler';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import { getSortParams } from '@dashboard/utils/sort';
+import { DialogContentText } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import MenuCreateDialog from "../../components/MenuCreateDialog";
-import MenuListPage from "../../components/MenuListPage";
-import { menuListUrl, MenuListUrlQueryParams, menuUrl } from "../../urls";
-import { getSortQueryVariables } from "./sort";
+import MenuCreateDialog from '../../components/MenuCreateDialog';
+import MenuListPage from '../../components/MenuListPage';
+import { menuListUrl, MenuListUrlQueryParams, menuUrl } from '../../urls';
+import { getSortQueryVariables } from './sort';
 
 interface MenuListProps {
   params: MenuListUrlQueryParams;
@@ -36,12 +33,8 @@ interface MenuListProps {
 const MenuList: React.FC<MenuListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.NAVIGATION_LIST,
-  );
+  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+  const { updateListSettings, settings } = useListSettings(ListViews.NAVIGATION_LIST);
 
   usePaginationReset(menuListUrl, params, settings.rowNumber);
 
@@ -81,10 +74,10 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
     onCompleted: data => {
       if (data.menuCreate.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage({
-            id: "ugnggZ",
-            defaultMessage: "Created menu",
+            id: 'ugnggZ',
+            defaultMessage: 'Created menu',
           }),
         });
         navigate(menuUrl(data.menuCreate.menu.id));
@@ -96,10 +89,10 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
     onCompleted: data => {
       if (data.menuDelete.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage({
-            id: "OwG/0z",
-            defaultMessage: "Deleted menu",
+            id: 'OwG/0z',
+            defaultMessage: 'Deleted menu',
           }),
         });
         closeModal();
@@ -112,7 +105,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
     onCompleted: data => {
       if (data.menuBulkDelete.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         closeModal();
@@ -133,7 +126,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         onDelete={id =>
           navigate(
             menuListUrl({
-              action: "remove",
+              action: 'remove',
               id,
             }),
           )
@@ -151,7 +144,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
               navigate(
                 menuListUrl({
                   ...params,
-                  action: "remove-many",
+                  action: 'remove-many',
                   ids: listElements,
                 }),
               )
@@ -162,7 +155,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         }
       />
       <MenuCreateDialog
-        open={params.action === "add"}
+        open={params.action === 'add'}
         confirmButtonState={menuCreateOpts.status}
         disabled={menuCreateOpts.loading}
         errors={menuCreateOpts?.data?.menuCreate.errors || []}
@@ -174,7 +167,7 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         }
       />
       <ActionDialog
-        open={params.action === "remove"}
+        open={params.action === 'remove'}
         onClose={closeModal}
         confirmButtonState={menuDeleteOpts.status}
         onConfirm={() =>
@@ -186,9 +179,9 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         }
         variant="delete"
         title={intl.formatMessage({
-          id: "QzseV7",
-          defaultMessage: "Delete Menu",
-          description: "dialog header",
+          id: 'QzseV7',
+          defaultMessage: 'Delete Menu',
+          description: 'dialog header',
         })}
       >
         <DialogContentText>
@@ -196,17 +189,13 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
             id="bj1U23"
             defaultMessage="Are you sure you want to delete {menuName}?"
             values={{
-              menuName: getStringOrPlaceholder(
-                mapEdgesToItems(data?.menus)?.find(getById(params.id))?.name,
-              ),
+              menuName: getStringOrPlaceholder(mapEdgesToItems(data?.menus)?.find(getById(params.id))?.name),
             }}
           />
         </DialogContentText>
       </ActionDialog>
       <ActionDialog
-        open={
-          params.action === "remove-many" && maybe(() => params.ids.length > 0)
-        }
+        open={params.action === 'remove-many' && maybe(() => params.ids.length > 0)}
         onClose={closeModal}
         confirmButtonState={menuBulkDeleteOpts.status}
         onConfirm={() =>
@@ -218,9 +207,9 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
         }
         variant="delete"
         title={intl.formatMessage({
-          id: "1LBYpE",
-          defaultMessage: "Delete Menus",
-          description: "dialog header",
+          id: '1LBYpE',
+          defaultMessage: 'Delete Menus',
+          description: 'dialog header',
         })}
       >
         <DialogContentText>
@@ -228,12 +217,8 @@ const MenuList: React.FC<MenuListProps> = ({ params }) => {
             id="svK+kv"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this menu?} other{Are you sure you want to delete {displayQuantity} menus?}}"
             values={{
-              counter: maybe(() => params.ids.length.toString(), "..."),
-              displayQuantity: (
-                <strong>
-                  {maybe(() => params.ids.length.toString(), "...")}
-                </strong>
-              ),
+              counter: maybe(() => params.ids.length.toString(), '...'),
+              displayQuantity: <strong>{maybe(() => params.ids.length.toString(), '...')}</strong>,
             }}
           />
         </DialogContentText>

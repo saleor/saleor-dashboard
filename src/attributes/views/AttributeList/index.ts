@@ -1,2 +1,2 @@
-export * from "./AttributeList";
-export { default } from "./AttributeList";
+export * from './AttributeList';
+export { default } from './AttributeList';

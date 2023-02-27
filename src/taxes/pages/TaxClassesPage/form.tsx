@@ -1,14 +1,14 @@
-import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { TaxClassFragment } from "@dashboard/graphql";
-import useForm, { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
-import useFormset from "@dashboard/hooks/useFormset";
-import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import { TaxClassesPageFormData } from "@dashboard/taxes/types";
-import { getTaxClassInitialFormData } from "@dashboard/taxes/utils/data";
-import { validateTaxClassFormData } from "@dashboard/taxes/utils/validation";
-import { TaxClassError } from "@dashboard/utils/errors/taxes";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import React, { useState } from "react";
+import { useExitFormDialog } from '@dashboard/components/Form/useExitFormDialog';
+import { TaxClassFragment } from '@dashboard/graphql';
+import useForm, { FormChange, SubmitPromise } from '@dashboard/hooks/useForm';
+import useFormset from '@dashboard/hooks/useFormset';
+import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
+import { TaxClassesPageFormData } from '@dashboard/taxes/types';
+import { getTaxClassInitialFormData } from '@dashboard/taxes/utils/data';
+import { validateTaxClassFormData } from '@dashboard/taxes/utils/validation';
+import { TaxClassError } from '@dashboard/utils/errors/taxes';
+import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
+import React, { useState } from 'react';
 
 interface TaxClassesFormHandlers {
   handleRateChange: (id: string, value: string) => void;
@@ -26,41 +26,29 @@ export interface UseTaxClassesFormResult {
 interface TaxClassesFormProps {
   children: (props: UseTaxClassesFormResult) => React.ReactNode;
   taxClass: TaxClassFragment | undefined;
-  onTaxClassCreate: (
-    data: TaxClassesPageFormData,
-  ) => SubmitPromise<TaxClassError[]>;
-  onTaxClassUpdate: (
-    data: TaxClassesPageFormData,
-  ) => SubmitPromise<TaxClassError[]>;
+  onTaxClassCreate: (data: TaxClassesPageFormData) => SubmitPromise<TaxClassError[]>;
+  onTaxClassUpdate: (data: TaxClassesPageFormData) => SubmitPromise<TaxClassError[]>;
   disabled: boolean;
 }
 
 function useTaxClassesForm(
   taxClass: TaxClassFragment,
-  onTaxClassCreate: (
-    data: TaxClassesPageFormData,
-  ) => SubmitPromise<TaxClassError[]>,
-  onTaxClassUpdate: (
-    data: TaxClassesPageFormData,
-  ) => SubmitPromise<TaxClassError[]>,
+  onTaxClassCreate: (data: TaxClassesPageFormData) => SubmitPromise<TaxClassError[]>,
+  onTaxClassUpdate: (data: TaxClassesPageFormData) => SubmitPromise<TaxClassError[]>,
   disabled: boolean,
 ): UseTaxClassesFormResult {
   // Initial
 
-  const isNewTaxClass = taxClass?.id === "new";
+  const isNewTaxClass = taxClass?.id === 'new';
 
   const initialFormData = getTaxClassInitialFormData(taxClass);
   const initialFormsetData = initialFormData.updateTaxClassRates;
 
   const formset = useFormset(initialFormsetData);
 
-  const { formId, triggerChange, data, handleChange } = useForm(
-    initialFormData,
-    undefined,
-    {
-      confirmLeave: true,
-    },
-  );
+  const { formId, triggerChange, data, handleChange } = useForm(initialFormData, undefined, {
+    confirmLeave: true,
+  });
 
   const [validationErrors, setValidationErrors] = useState<TaxClassError[]>([]);
 
@@ -75,9 +63,7 @@ function useTaxClassesForm(
     formset.change(id, value);
   };
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
@@ -116,10 +102,7 @@ function useTaxClassesForm(
     formId,
   });
 
-  React.useEffect(() => setExitDialogSubmitRef(submit), [
-    setExitDialogSubmitRef,
-    submit,
-  ]);
+  React.useEffect(() => setExitDialogSubmitRef(submit), [setExitDialogSubmitRef, submit]);
   setIsSubmitDisabled(disabled);
 
   return {
@@ -138,15 +121,10 @@ const TaxClassesForm: React.FC<TaxClassesFormProps> = ({
   onTaxClassUpdate,
   disabled,
 }) => {
-  const props = useTaxClassesForm(
-    taxClass,
-    onTaxClassCreate,
-    onTaxClassUpdate,
-    disabled,
-  );
+  const props = useTaxClassesForm(taxClass, onTaxClassCreate, onTaxClassUpdate, disabled);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };
 
-TaxClassesForm.displayName = "TaxClassesForm";
+TaxClassesForm.displayName = 'TaxClassesForm';
 export default TaxClassesForm;

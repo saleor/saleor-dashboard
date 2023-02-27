@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import HomePage from "./views";
+import HomePage from './views';
 
 const Component = () => <HomePage />;
 

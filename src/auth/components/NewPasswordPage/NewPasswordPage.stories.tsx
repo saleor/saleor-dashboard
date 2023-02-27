@@ -1,24 +1,20 @@
-import { AccountErrorCode } from "@dashboard/graphql";
-import CardDecorator from "@dashboard/storybook//CardDecorator";
-import Decorator from "@dashboard/storybook//Decorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { AccountErrorCode } from '@dashboard/graphql';
+import CardDecorator from '@dashboard/storybook//CardDecorator';
+import Decorator from '@dashboard/storybook//Decorator';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import NewPasswordPage from "./NewPasswordPage";
+import NewPasswordPage from './NewPasswordPage';
 
-storiesOf("Authentication / Set up a new password", module)
+storiesOf('Authentication / Set up a new password', module)
   .addDecorator(CardDecorator)
   .addDecorator(Decorator)
-  .add("default", () => (
-    <NewPasswordPage errors={[]} loading={false} onSubmit={() => undefined} />
-  ))
-  .add("loading", () => (
-    <NewPasswordPage errors={[]} loading={true} onSubmit={() => undefined} />
-  ))
-  .add("too short error", () => (
+  .add('default', () => <NewPasswordPage errors={[]} loading={false} onSubmit={() => undefined} />)
+  .add('loading', () => <NewPasswordPage errors={[]} loading={true} onSubmit={() => undefined} />)
+  .add('too short error', () => (
     <NewPasswordPage
-      errors={["password"].map(field => ({
-        __typename: "AccountError",
+      errors={['password'].map(field => ({
+        __typename: 'AccountError',
         code: AccountErrorCode.PASSWORD_TOO_SHORT,
         field,
         addressType: null,

@@ -1,11 +1,11 @@
-import { CheckIfOrderExistsQuery } from "@dashboard/graphql";
-import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
-import { maybe, transformOrderStatus } from "@dashboard/misc";
-import { orderUrl } from "@dashboard/orders/urls";
-import { IntlShape } from "react-intl";
+import { CheckIfOrderExistsQuery } from '@dashboard/graphql';
+import { UseNavigatorResult } from '@dashboard/hooks/useNavigator';
+import { maybe, transformOrderStatus } from '@dashboard/misc';
+import { orderUrl } from '@dashboard/orders/urls';
+import { IntlShape } from 'react-intl';
 
-import { QuickSearchAction } from "../types";
-import messages from "./messages";
+import { QuickSearchAction } from '../types';
+import messages from './messages';
 
 export function isQueryValidOrderNumber(query: string): boolean {
   return query === parseInt(query, 10).toString();
@@ -19,7 +19,7 @@ function getOrdersModeActions(
   query: string,
   intl: IntlShape,
   navigate: UseNavigatorResult,
-  order: CheckIfOrderExistsQuery["order"],
+  order: CheckIfOrderExistsQuery['order'],
 ): QuickSearchAction[] {
   const gqlId = getGqlOrderId(query);
 
@@ -34,7 +34,7 @@ function getOrdersModeActions(
           navigate(orderUrl(gqlId));
           return false;
         },
-        type: "action",
+        type: 'action',
       },
     ];
   }

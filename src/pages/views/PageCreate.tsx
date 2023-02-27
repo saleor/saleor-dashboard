@@ -1,14 +1,8 @@
-import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
-import {
-  handleUploadMultipleFiles,
-  prepareAttributesInput,
-} from "@dashboard/attributes/utils/handlers";
-import { AttributeInput } from "@dashboard/components/Attributes";
-import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  DEFAULT_INITIAL_SEARCH_DATA,
-  VALUES_PAGINATE_BY,
-} from "@dashboard/config";
+import { getAttributesAfterFileAttributesUpdate } from '@dashboard/attributes/utils/data';
+import { handleUploadMultipleFiles, prepareAttributesInput } from '@dashboard/attributes/utils/handlers';
+import { AttributeInput } from '@dashboard/components/Attributes';
+import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from '@dashboard/config';
 import {
   PageErrorWithAttributesFragment,
   useFileUploadMutation,
@@ -16,23 +10,23 @@ import {
   usePageTypeQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { getMutationErrors } from "@dashboard/misc";
-import usePageSearch from "@dashboard/searches/usePageSearch";
-import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
-import useProductSearch from "@dashboard/searches/useProductSearch";
-import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
-import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { getMutationErrors } from '@dashboard/misc';
+import usePageSearch from '@dashboard/searches/usePageSearch';
+import usePageTypeSearch from '@dashboard/searches/usePageTypeSearch';
+import useProductSearch from '@dashboard/searches/useProductSearch';
+import useAttributeValueSearchHandler from '@dashboard/utils/handlers/attributeValueSearchHandler';
+import createMetadataCreateHandler from '@dashboard/utils/handlers/metadataCreateHandler';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import { getParsedDataForJsonStringField } from '@dashboard/utils/richText/misc';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import PageDetailsPage from "../components/PageDetailsPage";
-import { PageSubmitData } from "../components/PageDetailsPage/form";
-import { pageCreateUrl, PageCreateUrlQueryParams, pageUrl } from "../urls";
+import PageDetailsPage from '../components/PageDetailsPage';
+import { PageSubmitData } from '../components/PageDetailsPage/form';
+import { pageCreateUrl, PageCreateUrlQueryParams, pageUrl } from '../urls';
 
 export interface PageCreateProps {
   id: string;
@@ -46,13 +40,13 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const selectedPageTypeId = params["page-type-id"];
+  const selectedPageTypeId = params['page-type-id'];
 
   const handleSelectPageTypeId = (pageTypeId: string) =>
     navigate(
       pageCreateUrl({
         ...params,
-        "page-type-id": pageTypeId,
+        'page-type-id': pageTypeId,
       }),
     );
 
@@ -92,8 +86,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     skip: !selectedPageTypeId,
   });
 
-  const attributeValues =
-    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
@@ -101,10 +94,10 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     onCompleted: data => {
       if (data.pageCreate.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage({
-            id: "JMbFNo",
-            defaultMessage: "Successfully created new page",
+            id: 'JMbFNo',
+            defaultMessage: 'Successfully created new page',
           }),
         });
         navigate(pageUrl(data.pageCreate.page.id));
@@ -113,9 +106,8 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
   });
 
   const handleCreate = async (formData: PageSubmitData) => {
-    const uploadFilesResult = await handleUploadMultipleFiles(
-      formData.attributesWithNewFileValue,
-      variables => uploadFile({ variables }),
+    const uploadFilesResult = await handleUploadMultipleFiles(formData.attributesWithNewFileValue, variables =>
+      uploadFile({ variables }),
     );
 
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
@@ -139,7 +131,7 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
             description: formData.seoDescription,
             title: formData.seoTitle,
           },
-          slug: formData.slug === "" ? null : formData.slug,
+          slug: formData.slug === '' ? null : formData.slug,
           title: formData.title,
         },
       },
@@ -151,16 +143,12 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     };
   };
 
-  const handleSubmit = createMetadataCreateHandler(
-    handleCreate,
-    updateMetadata,
-    updatePrivateMetadata,
-  );
+  const handleSubmit = createMetadataCreateHandler(handleCreate, updateMetadata, updatePrivateMetadata);
 
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       pageCreateUrl({
-        action: "assign-attribute-value",
+        action: 'assign-attribute-value',
         id: attribute.id,
       }),
     );
@@ -181,23 +169,20 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     onFetchMore: loadMoreProducts,
   };
   const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
-      ?.hasNextPage,
+    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
     onFetchMore: loadMoreAttributeValues,
   };
 
-  const errors = getMutationErrors(
-    pageCreateOpts,
-  ) as PageErrorWithAttributesFragment[];
+  const errors = getMutationErrors(pageCreateOpts) as PageErrorWithAttributesFragment[];
 
   return (
     <>
       <WindowTitle
         title={intl.formatMessage({
-          id: "mX7zJJ",
-          defaultMessage: "Create Page",
-          description: "header",
+          id: 'mX7zJJ',
+          defaultMessage: 'Create Page',
+          description: 'header',
         })}
       />
       <PageDetailsPage
@@ -211,14 +196,10 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
         onSubmit={handleSubmit}
         fetchPageTypes={searchPageTypes}
         fetchMorePageTypes={fetchMorePageTypes}
-        assignReferencesAttributeId={
-          params.action === "assign-attribute-value" && params.id
-        }
+        assignReferencesAttributeId={params.action === 'assign-attribute-value' && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
-        referenceProducts={
-          mapEdgesToItems(searchProductsOpts?.data?.search) || []
-        }
+        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
@@ -233,5 +214,5 @@ export const PageCreate: React.FC<PageCreateProps> = ({ params }) => {
     </>
   );
 };
-PageCreate.displayName = "PageCreate";
+PageCreate.displayName = 'PageCreate';
 export default PageCreate;

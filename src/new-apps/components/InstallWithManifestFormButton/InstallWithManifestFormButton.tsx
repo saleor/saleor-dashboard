@@ -1,20 +1,18 @@
-import { buttonMessages } from "@dashboard/intl";
-import { appsMessages } from "@dashboard/new-apps/messages";
-import { TextField } from "@material-ui/core";
-import { Box, Button } from "@saleor/macaw-ui/next";
-import React, { useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { buttonMessages } from '@dashboard/intl';
+import { appsMessages } from '@dashboard/new-apps/messages';
+import { TextField } from '@material-ui/core';
+import { Box, Button } from '@saleor/macaw-ui/next';
+import React, { useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { messages } from "./messages";
-import { useStyles } from "./styles";
+import { messages } from './messages';
+import { useStyles } from './styles';
 
 interface Props {
   onSubmitted(manifestUrl: string): void;
 }
 
-export const InstallWithManifestFormButton: React.FC<Props> = ({
-  onSubmitted,
-}) => {
+export const InstallWithManifestFormButton: React.FC<Props> = ({ onSubmitted }) => {
   const styles = useStyles();
   const intl = useIntl();
 
@@ -24,14 +22,14 @@ export const InstallWithManifestFormButton: React.FC<Props> = ({
     e.preventDefault();
 
     const form = new FormData(e.currentTarget);
-    const inputValue = form.get("manifest-url") as string;
+    const inputValue = form.get('manifest-url') as string;
 
     try {
       new URL(inputValue);
 
       onSubmitted(inputValue);
     } catch (e) {
-      console.error("Invalid URL from input. Should be validated by browser");
+      console.error('Invalid URL from input. Should be validated by browser');
     }
   };
 
@@ -64,15 +62,10 @@ export const InstallWithManifestFormButton: React.FC<Props> = ({
   }
 
   return (
-    <Button
-      variant="primary"
-      size="medium"
-      data-test-id="add-app-from-manifest"
-      onClick={() => setInputOpened(true)}
-    >
+    <Button variant="primary" size="medium" data-test-id="add-app-from-manifest" onClick={() => setInputOpened(true)}>
       <FormattedMessage {...messages.installExternalApp} />
     </Button>
   );
 };
-InstallWithManifestFormButton.displayName = "InstallWithManifestFormButton";
+InstallWithManifestFormButton.displayName = 'InstallWithManifestFormButton';
 export default InstallWithManifestFormButton;

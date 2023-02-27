@@ -1,31 +1,25 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import { FormSpacer } from "@dashboard/components/FormSpacer";
-import RadioGroupField from "@dashboard/components/RadioGroupField";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
-import TableHead from "@dashboard/components/TableHead";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import TextFieldWithChoice from "@dashboard/components/TextFieldWithChoice";
-import { ChannelInput } from "@dashboard/discounts/handlers";
-import { DiscountTypeEnum } from "@dashboard/discounts/types";
-import { DiscountErrorFragment } from "@dashboard/graphql";
-import { renderCollection } from "@dashboard/misc";
-import { getFormErrors } from "@dashboard/utils/errors";
-import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import {
-  Card,
-  CardContent,
-  TableBody,
-  TableCell,
-  Typography,
-} from "@material-ui/core";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import CardTitle from '@dashboard/components/CardTitle';
+import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
+import { FormSpacer } from '@dashboard/components/FormSpacer';
+import RadioGroupField from '@dashboard/components/RadioGroupField';
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Skeleton from '@dashboard/components/Skeleton';
+import TableHead from '@dashboard/components/TableHead';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import TextFieldWithChoice from '@dashboard/components/TextFieldWithChoice';
+import { ChannelInput } from '@dashboard/discounts/handlers';
+import { DiscountTypeEnum } from '@dashboard/discounts/types';
+import { DiscountErrorFragment } from '@dashboard/graphql';
+import { renderCollection } from '@dashboard/misc';
+import { getFormErrors } from '@dashboard/utils/errors';
+import getDiscountErrorMessage from '@dashboard/utils/errors/discounts';
+import { Card, CardContent, TableBody, TableCell, Typography } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { translateVoucherTypes } from "../../translations";
-import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
-import { useStyles } from "./styles";
+import { translateVoucherTypes } from '../../translations';
+import { VoucherDetailsPageFormData } from '../VoucherDetailsPage';
+import { useStyles } from './styles';
 
 interface VoucherValueProps {
   data: VoucherDetailsPageFormData;
@@ -37,8 +31,8 @@ interface VoucherValueProps {
 }
 
 export enum VoucherType {
-  ENTIRE_ORDER = "ENTIRE_ORDER",
-  SPECIFIC_PRODUCT = "SPECIFIC_PRODUCT",
+  ENTIRE_ORDER = 'ENTIRE_ORDER',
+  SPECIFIC_PRODUCT = 'SPECIFIC_PRODUCT',
 }
 
 const numberOfColumns = 2;
@@ -49,7 +43,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["discountValue", "type"], errors);
+  const formErrors = getFormErrors(['discountValue', 'type'], errors);
 
   const translatedVoucherTypes = translateVoucherTypes(intl);
   const voucherTypeChoices = Object.values(VoucherType).map(type => ({
@@ -61,9 +55,9 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: "/oaqFS",
-          defaultMessage: "Value",
-          description: "section header",
+          id: '/oaqFS',
+          defaultMessage: 'Value',
+          description: 'section header',
         })}
       />
       <CardContent>
@@ -78,20 +72,12 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
             <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
               <TableCell className={classes.colName}>
                 <span>
-                  <FormattedMessage
-                    id="Hj3T7P"
-                    defaultMessage="Channel name"
-                    description="column title"
-                  />
+                  <FormattedMessage id="Hj3T7P" defaultMessage="Channel name" description="column title" />
                 </span>
               </TableCell>
               <TableCell className={classes.colType}>
                 <span>
-                  <FormattedMessage
-                    id="1shOIS"
-                    defaultMessage="Price"
-                    description="column title"
-                  />
+                  <FormattedMessage id="1shOIS" defaultMessage="Price" description="column title" />
                 </span>
               </TableCell>
             </TableHead>
@@ -99,9 +85,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
               {renderCollection(
                 data.channelListings,
                 (listing, index) => {
-                  const error = formErrors.discountValue?.channels?.find(
-                    id => id === listing.id,
-                  );
+                  const error = formErrors.discountValue?.channels?.find(id => id === listing.id);
                   return (
                     <TableRowLink key={listing?.id || `skeleton-${index}`}>
                       <TableCell>
@@ -113,33 +97,22 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                             disabled={disabled}
                             error={!!error?.length}
                             ChoiceProps={{
-                              label:
-                                data.discountType ===
-                                DiscountTypeEnum.VALUE_FIXED
-                                  ? listing.currency
-                                  : "%",
-                              name: "discountType" as keyof FormData,
+                              label: data.discountType === DiscountTypeEnum.VALUE_FIXED ? listing.currency : '%',
+                              name: 'discountType' as keyof FormData,
                               values: null,
                             }}
-                            helperText={
-                              error
-                                ? getDiscountErrorMessage(
-                                    formErrors.discountValue,
-                                    intl,
-                                  )
-                                : ""
-                            }
-                            name={"value"}
+                            helperText={error ? getDiscountErrorMessage(formErrors.discountValue, intl) : ''}
+                            name={'value'}
                             onChange={e =>
                               onChannelChange(listing.id, {
                                 discountValue: e.target.value,
                               })
                             }
                             label={intl.formatMessage({
-                              id: "mmcHeH",
-                              defaultMessage: "Discount Value",
+                              id: 'mmcHeH',
+                              defaultMessage: 'Discount Value',
                             })}
-                            value={listing.discountValue || ""}
+                            value={listing.discountValue || ''}
                             type="number"
                             fullWidth
                             inputProps={{
@@ -156,10 +129,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                 () => (
                   <TableRowLink>
                     <TableCell colSpan={numberOfColumns}>
-                      <FormattedMessage
-                        id="/glQgs"
-                        defaultMessage="No channels found"
-                      />
+                      <FormattedMessage id="/glQgs" defaultMessage="No channels found" />
                     </TableCell>
                   </TableRowLink>
                 ),
@@ -169,7 +139,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
         </div>
 
         <FormSpacer />
-        {variant === "update" && (
+        {variant === 'update' && (
           <>
             <RadioGroupField
               choices={voucherTypeChoices}
@@ -177,10 +147,10 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
               error={!!formErrors.type}
               hint={getDiscountErrorMessage(formErrors.type, intl)}
               label={intl.formatMessage({
-                id: "9UHfux",
-                defaultMessage: "Voucher Specific Information",
+                id: '9UHfux',
+                defaultMessage: 'Voucher Specific Information',
               })}
-              name={"type" as keyof VoucherDetailsPageFormData}
+              name={'type' as keyof VoucherDetailsPageFormData}
               value={data.type}
               onChange={onChange}
             />
@@ -188,7 +158,7 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
         )}
         <FormSpacer />
         <ControlledCheckbox
-          name={"applyOncePerOrder" as keyof VoucherDetailsPageFormData}
+          name={'applyOncePerOrder' as keyof VoucherDetailsPageFormData}
           label={
             <>
               <FormattedMessage

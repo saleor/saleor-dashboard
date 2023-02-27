@@ -1,9 +1,6 @@
-import { useContext } from "react";
+import { useContext } from 'react';
 
-import {
-  GiftCardUpdateDialogsConsumerProps,
-  GiftCardUpdateDialogsContext,
-} from "../GiftCardUpdateDialogsProvider";
+import { GiftCardUpdateDialogsConsumerProps, GiftCardUpdateDialogsContext } from '../GiftCardUpdateDialogsProvider';
 
 const useGiftCardUpdateDialogs = (): GiftCardUpdateDialogsConsumerProps => {
   const giftCardUpdateDialogsProps = useContext(GiftCardUpdateDialogsContext);

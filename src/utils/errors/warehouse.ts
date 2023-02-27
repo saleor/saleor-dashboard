@@ -1,25 +1,25 @@
-import { WarehouseErrorCode, WarehouseErrorFragment } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { WarehouseErrorCode, WarehouseErrorFragment } from '@dashboard/graphql';
+import { defineMessages, IntlShape } from 'react-intl';
 
-import { getCommonFormFieldErrorMessage } from "./common";
+import { getCommonFormFieldErrorMessage } from './common';
 
 const messages = defineMessages({
   slugUnique: {
-    id: "nKjLjT",
-    defaultMessage: "Slug must be unique for each warehouse",
-    description: "error message",
+    id: 'nKjLjT',
+    defaultMessage: 'Slug must be unique for each warehouse',
+    description: 'error message',
   },
 });
 
 function getWarehouseErrorMessage(
-  err: Omit<WarehouseErrorFragment, "__typename"> | undefined,
+  err: Omit<WarehouseErrorFragment, '__typename'> | undefined,
   intl: IntlShape,
 ): string | undefined {
   return getCommonFormFieldErrorMessage(err, intl);
 }
 
 export function getWarehouseSlugErrorMessage(
-  err: Omit<WarehouseErrorFragment, "__typename"> | undefined,
+  err: Omit<WarehouseErrorFragment, '__typename'> | undefined,
   intl: IntlShape,
 ): string | undefined {
   if (err) {

@@ -1,2 +1,2 @@
-export { useEnvFlags } from "./useEnvFlags";
-export { useAllEnvFlags } from "./useAllEnvFlags";
+export { useEnvFlags } from './useEnvFlags';
+export { useAllEnvFlags } from './useAllEnvFlags';

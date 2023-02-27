@@ -1,2 +1,2 @@
-export { default } from "./CategoryDeleteDialog";
-export * from "./CategoryDeleteDialog";
+export { default } from './CategoryDeleteDialog';
+export * from './CategoryDeleteDialog';

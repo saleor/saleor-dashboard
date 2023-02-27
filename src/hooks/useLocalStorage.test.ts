@@ -1,21 +1,21 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from '@testing-library/react-hooks';
 
-import useLocalStorage from "./useLocalStorage";
+import useLocalStorage from './useLocalStorage';
 
-const key = "exampleKey";
-const initialValue = "exampleValue";
-const savedValue = "savedValue";
+const key = 'exampleKey';
+const initialValue = 'exampleValue';
+const savedValue = 'savedValue';
 const numberValue = 12;
 const objectValue = { foo: numberValue };
 const booleanValue = true;
-const postfix = "-test";
+const postfix = '-test';
 
 beforeEach(() => {
   localStorage.clear();
 });
 
-describe("useLocalStorage", () => {
-  it("properly inits from value", () => {
+describe('useLocalStorage', () => {
+  it('properly inits from value', () => {
     expect(localStorage.getItem(key)).toBe(null);
 
     const { result } = renderHook(() => useLocalStorage(key, initialValue));
@@ -23,7 +23,7 @@ describe("useLocalStorage", () => {
     expect(result.current[0]).toBe(initialValue);
   });
 
-  it("omits initializing if value is found", () => {
+  it('omits initializing if value is found', () => {
     localStorage.setItem(key, savedValue);
     expect(localStorage.getItem(key)).toBe(savedValue);
 
@@ -32,7 +32,7 @@ describe("useLocalStorage", () => {
     expect(result.current[0]).toBe(savedValue);
   });
 
-  it("properly casts value to number", () => {
+  it('properly casts value to number', () => {
     localStorage.setItem(key, JSON.stringify(numberValue));
 
     const { result } = renderHook(() => useLocalStorage(key, initialValue));
@@ -40,7 +40,7 @@ describe("useLocalStorage", () => {
     expect(result.current[0]).toBe(numberValue);
   });
 
-  it("properly casts value to boolean", () => {
+  it('properly casts value to boolean', () => {
     localStorage.setItem(key, JSON.stringify(booleanValue));
 
     const { result } = renderHook(() => useLocalStorage(key, initialValue));
@@ -48,7 +48,7 @@ describe("useLocalStorage", () => {
     expect(result.current[0]).toBe(booleanValue);
   });
 
-  it("properly casts value to object", () => {
+  it('properly casts value to object', () => {
     localStorage.setItem(key, JSON.stringify(objectValue));
 
     const { result } = renderHook(() => useLocalStorage(key, initialValue));
@@ -56,38 +56,34 @@ describe("useLocalStorage", () => {
     expect(result.current[0]).toStrictEqual(objectValue);
   });
 
-  it("properly inits from callback if value is not found", () => {
+  it('properly inits from callback if value is not found', () => {
     const { result } = renderHook(() =>
-      useLocalStorage(key, storedValue =>
-        storedValue ? storedValue + postfix : initialValue,
-      ),
+      useLocalStorage(key, storedValue => (storedValue ? storedValue + postfix : initialValue)),
     );
 
     expect(result.current[0]).toBe(initialValue);
   });
 
-  it("properly inits from callback if value is found", () => {
+  it('properly inits from callback if value is found', () => {
     localStorage.setItem(key, savedValue);
 
     const { result } = renderHook(() =>
-      useLocalStorage(key, storedValue =>
-        storedValue ? storedValue + postfix : initialValue,
-      ),
+      useLocalStorage(key, storedValue => (storedValue ? storedValue + postfix : initialValue)),
     );
 
     expect(result.current[0]).toBe(savedValue + postfix);
     expect(localStorage.getItem(key)).toBe(savedValue + postfix);
   });
 
-  it("properly inits from callback if value is object", () => {
+  it('properly inits from callback if value is object', () => {
     localStorage.setItem(key, JSON.stringify(objectValue));
 
     const { result } = renderHook(() =>
       useLocalStorage(key, storedValue => {
-        if (typeof storedValue === "object") {
+        if (typeof storedValue === 'object') {
           return {
             ...storedValue,
-            bar: "baz",
+            bar: 'baz',
           };
         }
 
@@ -97,7 +93,7 @@ describe("useLocalStorage", () => {
 
     const newValue = {
       foo: numberValue,
-      bar: "baz",
+      bar: 'baz',
     };
     expect(result.current[0]).toStrictEqual(newValue);
     expect(localStorage.getItem(key)).toBe(JSON.stringify(newValue));

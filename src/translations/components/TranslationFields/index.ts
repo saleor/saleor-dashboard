@@ -1,3 +1,3 @@
-export { default } from "./TranslationFields";
-export * from "./TranslationFields";
-export * from "./TranslationFieldsSave";
+export { default } from './TranslationFields';
+export * from './TranslationFields';
+export * from './TranslationFieldsSave';

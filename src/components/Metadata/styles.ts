@@ -1,9 +1,9 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 const useStyles = makeStyles(
   theme => {
     const colAction: React.CSSProperties = {
-      textAlign: "right",
+      textAlign: 'right',
       width: 130,
     };
     const colName: React.CSSProperties = {
@@ -12,7 +12,7 @@ const useStyles = makeStyles(
 
     return {
       colAction: {
-        "&:last-child": {
+        '&:last-child': {
           ...colAction,
           paddingRight: theme.spacing(4),
         },
@@ -28,7 +28,7 @@ const useStyles = makeStyles(
       },
       colValue: {},
       actions: {
-        "&&": {
+        '&&': {
           paddingBottom: theme.spacing(2),
           paddingTop: theme.spacing(2),
           paddingLeft: theme.spacing(4),
@@ -43,16 +43,16 @@ const useStyles = makeStyles(
         paddingTop: 0,
       },
       expandBtn: {
-        position: "relative",
+        position: 'relative',
         left: theme.spacing(1),
         top: -2,
-        transition: theme.transitions.create("transform", {
+        transition: theme.transitions.create('transform', {
           duration: theme.transitions.duration.shorter,
         }),
         border: 0,
       },
       header: {
-        "&&": {
+        '&&': {
           paddingBottom: theme.spacing(1),
         },
       },
@@ -64,15 +64,15 @@ const useStyles = makeStyles(
       },
       table: {
         marginTop: theme.spacing(2),
-        tableLayout: "fixed",
+        tableLayout: 'fixed',
       },
       rotate: {
-        transform: "rotate(-180deg)",
+        transform: 'rotate(-180deg)',
       },
     };
   },
   {
-    name: "Metadata",
+    name: 'Metadata',
   },
 );
 

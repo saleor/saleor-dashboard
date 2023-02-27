@@ -1,42 +1,42 @@
-import { defineMessages } from "react-intl";
+import { defineMessages } from 'react-intl';
 
 export const appsMessages = defineMessages({
   repository: {
-    id: "f91E8b",
-    defaultMessage: "Repository",
-    description: "app repository",
+    id: 'f91E8b',
+    defaultMessage: 'Repository',
+    description: 'app repository',
   },
   support: {
-    id: "/eTYOp",
-    defaultMessage: "Support",
-    description: "app support",
+    id: '/eTYOp',
+    defaultMessage: 'Support',
+    description: 'app support',
   },
   dataPrivacy: {
-    id: "GKQGKG",
-    defaultMessage: "Data privacy",
-    description: "app data privacy",
+    id: 'GKQGKG',
+    defaultMessage: 'Data privacy',
+    description: 'app data privacy',
   },
   appManifestUrl: {
-    id: "4IgzXs",
-    defaultMessage: "App Manifest URL",
-    description: "label",
+    id: '4IgzXs',
+    defaultMessage: 'App Manifest URL',
+    description: 'label',
   },
   externalApp: {
-    id: "nA2g2e",
-    defaultMessage: "External app",
-    description: "label",
+    id: 'nA2g2e',
+    defaultMessage: 'External app',
+    description: 'label',
   },
 });
 
 export const appInstallationStatusMessages = defineMessages({
   pending: {
-    id: "F1VtFa",
-    defaultMessage: "Installation is pending...",
-    description: "information",
+    id: 'F1VtFa',
+    defaultMessage: 'Installation is pending...',
+    description: 'information',
   },
   failed: {
-    id: "RY4PJY",
-    defaultMessage: "Installation failed",
-    description: "information",
+    id: 'RY4PJY',
+    defaultMessage: 'Installation failed',
+    description: 'information',
   },
 });

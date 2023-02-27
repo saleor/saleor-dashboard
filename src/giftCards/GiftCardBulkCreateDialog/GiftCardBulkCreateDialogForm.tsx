@@ -1,42 +1,29 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
-import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
-import {
-  GiftCardSettingsExpiryTypeEnum,
-  TimePeriodTypeEnum,
-  useGiftCardSettingsQuery,
-} from "@dashboard/graphql";
-import useForm from "@dashboard/hooks/useForm";
-import {
-  DialogContent,
-  Divider,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
+import DialogButtons from '@dashboard/components/ActionDialog/DialogButtons';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import GiftCardTagInput from '@dashboard/giftCards/components/GiftCardTagInput';
+import { GiftCardSettingsExpiryTypeEnum, TimePeriodTypeEnum, useGiftCardSettingsQuery } from '@dashboard/graphql';
+import useForm from '@dashboard/hooks/useForm';
+import { DialogContent, Divider, TextField, Typography } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import GiftCardCreateExpirySelect from "../GiftCardCreateDialog/GiftCardCreateExpirySelect";
-import GiftCardCreateMoneyInput from "../GiftCardCreateDialog/GiftCardCreateMoneyInput";
-import GiftCardCreateRequiresActivationSection from "../GiftCardCreateDialog/GiftCardCreateRequiresActivationSection";
-import { giftCardCreateMessages as messages } from "../GiftCardCreateDialog/messages";
-import { useGiftCardCreateFormStyles as useStyles } from "../GiftCardCreateDialog/styles";
-import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
-import {
-  GiftCardBulkCreateFormCommonProps,
-  GiftCardBulkCreateFormData,
-  GiftCardBulkCreateFormErrors,
-} from "./types";
+import GiftCardCreateExpirySelect from '../GiftCardCreateDialog/GiftCardCreateExpirySelect';
+import GiftCardCreateMoneyInput from '../GiftCardCreateDialog/GiftCardCreateMoneyInput';
+import GiftCardCreateRequiresActivationSection from '../GiftCardCreateDialog/GiftCardCreateRequiresActivationSection';
+import { giftCardCreateMessages as messages } from '../GiftCardCreateDialog/messages';
+import { useGiftCardCreateFormStyles as useStyles } from '../GiftCardCreateDialog/styles';
+import { getGiftCardErrorMessage } from '../GiftCardUpdate/messages';
+import { GiftCardBulkCreateFormCommonProps, GiftCardBulkCreateFormData, GiftCardBulkCreateFormErrors } from './types';
 
 export const initialData: GiftCardBulkCreateFormData = {
   tags: [],
   balanceAmount: 1,
   balanceCurrency: null,
   expirySelected: false,
-  expiryType: "EXPIRY_PERIOD",
-  expiryDate: "",
+  expiryType: 'EXPIRY_PERIOD',
+  expiryDate: '',
   expiryPeriodType: TimePeriodTypeEnum.MONTH,
   expiryPeriodAmount: 12,
   requiresActivation: true,
@@ -59,10 +46,7 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
   const intl = useIntl();
   const classes = useStyles({});
 
-  const {
-    data: settingsData,
-    loading: loadingSettings,
-  } = useGiftCardSettingsQuery();
+  const { data: settingsData, loading: loadingSettings } = useGiftCardSettingsQuery();
 
   const getInitialExpirySettingsData = (): Partial<GiftCardBulkCreateFormData> => {
     if (loadingSettings) {
@@ -86,7 +70,7 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
     {
       ...initialData,
       ...getInitialExpirySettingsData(),
-      balanceCurrency: "",
+      balanceCurrency: '',
     },
     onSubmit,
   );
@@ -129,14 +113,9 @@ const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> 
         <VerticalSpacer />
         <Divider />
         <VerticalSpacer spacing={2} />
-        <GiftCardCreateRequiresActivationSection
-          onChange={change}
-          checked={requiresActivation}
-        />
+        <GiftCardCreateRequiresActivationSection onChange={change} checked={requiresActivation} />
         <VerticalSpacer spacing={2} />
-        <Typography>
-          {intl.formatMessage(messages.bulkCreateExplanation)}
-        </Typography>
+        <Typography>{intl.formatMessage(messages.bulkCreateExplanation)}</Typography>
       </DialogContent>
       <DialogButtons
         onConfirm={submit}

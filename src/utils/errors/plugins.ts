@@ -1,23 +1,20 @@
-import { PluginErrorCode, PluginErrorFragment } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { PluginErrorCode, PluginErrorFragment } from '@dashboard/graphql';
+import { defineMessages, IntlShape } from 'react-intl';
 
-import { getCommonFormFieldErrorMessage } from "./common";
+import { getCommonFormFieldErrorMessage } from './common';
 
 const messages = defineMessages({
   misconfigured: {
-    id: "0AQH0Q",
-    defaultMessage: "Plugin is misconfigured and cannot be activated",
+    id: '0AQH0Q',
+    defaultMessage: 'Plugin is misconfigured and cannot be activated',
   },
   unique: {
-    id: "lqIzC8",
-    defaultMessage: "This field needs to be unique",
+    id: 'lqIzC8',
+    defaultMessage: 'This field needs to be unique',
   },
 });
 
-function getPluginErrorMessage(
-  err: PluginErrorFragment,
-  intl: IntlShape,
-): string | undefined {
+function getPluginErrorMessage(err: PluginErrorFragment, intl: IntlShape): string | undefined {
   if (err) {
     switch (err.code) {
       case PluginErrorCode.PLUGIN_MISCONFIGURED:

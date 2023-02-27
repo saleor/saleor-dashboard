@@ -1,15 +1,15 @@
-import { AppInstallationFragment } from "@dashboard/graphql";
-import { useAppListContext } from "@dashboard/new-apps/context";
-import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
-import { getAppDetails } from "@dashboard/new-apps/utils";
-import { Box } from "@saleor/macaw-ui/next";
-import React from "react";
-import { useIntl } from "react-intl";
+import { AppInstallationFragment } from '@dashboard/graphql';
+import { useAppListContext } from '@dashboard/new-apps/context';
+import { GetV2SaleorAppsResponse } from '@dashboard/new-apps/marketplace.types';
+import { getAppDetails } from '@dashboard/new-apps/utils';
+import { Box } from '@saleor/macaw-ui/next';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import AppListCardActions from "./AppListCardActions";
-import AppListCardDescription from "./AppListCardDescription";
-import AppListCardIntegrations from "./AppListCardIntegrations";
-import AppListCardLinks from "./AppListCardLinks";
+import AppListCardActions from './AppListCardActions';
+import AppListCardDescription from './AppListCardDescription';
+import AppListCardIntegrations from './AppListCardIntegrations';
+import AppListCardLinks from './AppListCardLinks';
 
 interface AppListCardProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
@@ -66,5 +66,5 @@ const AppListCard: React.FC<AppListCardProps> = ({
     </Box>
   );
 };
-AppListCard.displayName = "AppListCard";
+AppListCard.displayName = 'AppListCard';
 export default AppListCard;

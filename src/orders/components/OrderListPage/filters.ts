@@ -1,37 +1,32 @@
-import { IFilter } from "@dashboard/components/Filter";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import { OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
-import {
-  commonMessages,
-  commonStatusMessages,
-  orderStatusMessages,
-  paymentStatusMessages,
-} from "@dashboard/intl";
-import { FilterOpts, KeyValue, MinMax } from "@dashboard/types";
+import { IFilter } from '@dashboard/components/Filter';
+import { MultiAutocompleteChoiceType } from '@dashboard/components/MultiAutocompleteSelectField';
+import { OrderStatusFilter, PaymentChargeStatusEnum } from '@dashboard/graphql';
+import { commonMessages, commonStatusMessages, orderStatusMessages, paymentStatusMessages } from '@dashboard/intl';
+import { FilterOpts, KeyValue, MinMax } from '@dashboard/types';
 import {
   createBooleanField,
   createDateField,
   createKeyValueField,
   createOptionsField,
   createTextField,
-} from "@dashboard/utils/filters/fields";
-import { defineMessages, IntlShape } from "react-intl";
+} from '@dashboard/utils/filters/fields';
+import { defineMessages, IntlShape } from 'react-intl';
 
 export enum OrderFilterKeys {
-  created = "created",
-  customer = "customer",
-  status = "status",
-  paymentStatus = "paymentStatus",
-  clickAndCollect = "clickAndCollect",
-  preorder = "preorder",
-  channel = "channel",
-  giftCard = "giftCard",
-  metadata = "metadata",
+  created = 'created',
+  customer = 'customer',
+  status = 'status',
+  paymentStatus = 'paymentStatus',
+  clickAndCollect = 'clickAndCollect',
+  preorder = 'preorder',
+  channel = 'channel',
+  giftCard = 'giftCard',
+  metadata = 'metadata',
 }
 
 export enum OrderFilterGiftCard {
-  bought = "bought",
-  paid = "paid",
+  bought = 'bought',
+  paid = 'paid',
 }
 
 export interface OrderListFilterOpts {
@@ -48,55 +43,52 @@ export interface OrderListFilterOpts {
 
 const messages = defineMessages({
   preorder: {
-    id: "JYvf8/",
-    defaultMessage: "Preorder",
-    description: "is preorder",
+    id: 'JYvf8/',
+    defaultMessage: 'Preorder',
+    description: 'is preorder',
   },
   clickAndCollect: {
-    id: "biAxKR",
-    defaultMessage: "Click&Collect",
-    description: "click and collect",
+    id: 'biAxKR',
+    defaultMessage: 'Click&Collect',
+    description: 'click and collect',
   },
   channel: {
-    id: "lJP1iw",
-    defaultMessage: "Channel",
-    description: "order",
+    id: 'lJP1iw',
+    defaultMessage: 'Channel',
+    description: 'order',
   },
   customer: {
-    id: "PzXIXh",
-    defaultMessage: "Customer",
-    description: "order",
+    id: 'PzXIXh',
+    defaultMessage: 'Customer',
+    description: 'order',
   },
   placed: {
-    id: "a4qX2+",
-    defaultMessage: "Created",
-    description: "order",
+    id: 'a4qX2+',
+    defaultMessage: 'Created',
+    description: 'order',
   },
   giftCard: {
-    id: "JUQwne",
-    defaultMessage: "Gift Card",
-    description: "order",
+    id: 'JUQwne',
+    defaultMessage: 'Gift Card',
+    description: 'order',
   },
   giftCardPaid: {
-    id: "Kgxlsf",
-    defaultMessage: "Paid with Gift Card",
-    description: "order",
+    id: 'Kgxlsf',
+    defaultMessage: 'Paid with Gift Card',
+    description: 'order',
   },
   giftCardOrdered: {
-    id: "s5v6m0",
-    defaultMessage: "Gift Card ordered",
-    description: "order",
+    id: 's5v6m0',
+    defaultMessage: 'Gift Card ordered',
+    description: 'order',
   },
   metadata: {
-    defaultMessage: "Metadata",
-    id: "8Q504V",
+    defaultMessage: 'Metadata',
+    id: '8Q504V',
   },
 });
 
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: OrderListFilterOpts,
-): IFilter<OrderFilterKeys> {
+export function createFilterStructure(intl: IntlShape, opts: OrderListFilterOpts): IFilter<OrderFilterKeys> {
   return [
     {
       ...createBooleanField(
@@ -111,31 +103,18 @@ export function createFilterStructure(
       active: opts.clickAndCollect.active,
     },
     {
-      ...createBooleanField(
-        OrderFilterKeys.preorder,
-        intl.formatMessage(messages.preorder),
-        opts.preorder.value,
-        {
-          negative: intl.formatMessage(commonMessages.no),
-          positive: intl.formatMessage(commonMessages.yes),
-        },
-      ),
+      ...createBooleanField(OrderFilterKeys.preorder, intl.formatMessage(messages.preorder), opts.preorder.value, {
+        negative: intl.formatMessage(commonMessages.no),
+        positive: intl.formatMessage(commonMessages.yes),
+      }),
       active: opts.preorder.active,
     },
     {
-      ...createTextField(
-        OrderFilterKeys.customer,
-        intl.formatMessage(messages.customer),
-        opts.customer.value,
-      ),
+      ...createTextField(OrderFilterKeys.customer, intl.formatMessage(messages.customer), opts.customer.value),
       active: opts.customer.active,
     },
     {
-      ...createDateField(
-        OrderFilterKeys.created,
-        intl.formatMessage(messages.placed),
-        opts.created.value,
-      ),
+      ...createDateField(OrderFilterKeys.created, intl.formatMessage(messages.placed), opts.created.value),
       active: opts.created.active,
     },
     {
@@ -240,11 +219,7 @@ export function createFilterStructure(
       active: opts.paymentStatus.active,
     },
     {
-      ...createKeyValueField(
-        OrderFilterKeys.metadata,
-        intl.formatMessage(messages.metadata),
-        opts.metadata.value,
-      ),
+      ...createKeyValueField(OrderFilterKeys.metadata, intl.formatMessage(messages.metadata), opts.metadata.value),
       active: opts.metadata.active,
     },
     ...(opts?.channel?.value.length

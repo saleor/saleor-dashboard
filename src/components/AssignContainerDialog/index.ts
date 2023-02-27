@@ -1,2 +1,2 @@
-export * from "./AssignContainerDialog";
-export { default } from "./AssignContainerDialog";
+export * from './AssignContainerDialog';
+export { default } from './AssignContainerDialog';

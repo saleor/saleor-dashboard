@@ -1,40 +1,35 @@
-import { ChannelData } from "@dashboard/channels/utils";
-import Datagrid, {
-  GetCellContentOpts,
-} from "@dashboard/components/Datagrid/Datagrid";
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/useDatagridChange";
-import { Choice } from "@dashboard/components/SingleSelectField";
+import { ChannelData } from '@dashboard/channels/utils';
+import Datagrid, { GetCellContentOpts } from '@dashboard/components/Datagrid/Datagrid';
+import { DatagridChangeOpts } from '@dashboard/components/Datagrid/useDatagridChange';
+import { Choice } from '@dashboard/components/SingleSelectField';
 import {
   AttributeInputTypeEnum,
   ProductDetailsVariantFragment,
   ProductFragment,
   RefreshLimitsQuery,
   WarehouseFragment,
-} from "@dashboard/graphql";
-import EditIcon from "@dashboard/icons/Edit";
-import { buttonMessages } from "@dashboard/intl";
-import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
-import { Item } from "@glideapps/glide-data-grid";
-import { Button } from "@saleor/macaw-ui";
+} from '@dashboard/graphql';
+import EditIcon from '@dashboard/icons/Edit';
+import { buttonMessages } from '@dashboard/intl';
+import { ProductVariantListError } from '@dashboard/products/views/ProductUpdate/handlers/errors';
+import { Item } from '@glideapps/glide-data-grid';
+import { Button } from '@saleor/macaw-ui';
 // import { isLimitReached } from "@dashboard/utils/limits";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import messages from "./messages";
-import { getColumnData, getData, getError } from "./utils";
+import messages from './messages';
+import { getColumnData, getData, getError } from './utils';
 
 interface ProductVariantsProps {
   channels: ChannelData[];
   errors: ProductVariantListError[];
-  limits: RefreshLimitsQuery["shop"]["limits"];
-  variantAttributes: ProductFragment["productType"]["variantAttributes"];
+  limits: RefreshLimitsQuery['shop']['limits'];
+  variantAttributes: ProductFragment['productType']['variantAttributes'];
   variants: ProductDetailsVariantFragment[];
   warehouses: WarehouseFragment[];
   productName: string;
-  onAttributeValuesSearch: (
-    id: string,
-    query: string,
-  ) => Promise<Array<Choice<string, string>>>;
+  onAttributeValuesSearch: (id: string, query: string) => Promise<Array<Choice<string, string>>>;
   onChange: (data: DatagridChangeOpts) => void;
   onRowClick: (id: string) => void;
 }
@@ -57,24 +52,16 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     () =>
       variantAttributes && warehouses && channels
         ? [
-            "name",
-            "sku",
-            ...channels?.flatMap(channel => [
-              `availableInChannel:${channel.id}`,
-              `channel:${channel.id}`,
-            ]),
+            'name',
+            'sku',
+            ...channels?.flatMap(channel => [`availableInChannel:${channel.id}`, `channel:${channel.id}`]),
             ...warehouses?.map(warehouse => `stock:${warehouse.id}`),
             ...variantAttributes
               .filter(attribute =>
-                [
-                  AttributeInputTypeEnum.DROPDOWN,
-                  AttributeInputTypeEnum.PLAIN_TEXT,
-                ].includes(attribute.inputType),
+                [AttributeInputTypeEnum.DROPDOWN, AttributeInputTypeEnum.PLAIN_TEXT].includes(attribute.inputType),
               )
               .map(attribute => `attribute:${attribute.id}`),
-          ].map(c =>
-            getColumnData(c, channels, warehouses, variantAttributes, intl),
-          )
+          ].map(c => getColumnData(c, channels, warehouses, variantAttributes, intl))
         : [],
     [variantAttributes, warehouses, channels],
   );
@@ -110,9 +97,9 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   return (
     <Datagrid
       addButtonLabel={intl.formatMessage({
-        defaultMessage: "Add variant",
-        id: "3C3Nj5",
-        description: "button",
+        defaultMessage: 'Add variant',
+        id: '3C3Nj5',
+        description: 'button',
       })}
       availableColumns={columns}
       emptyText={intl.formatMessage(messages.empty)}
@@ -120,7 +107,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
       getCellError={getCellError}
       menuItems={index => [
         {
-          label: "Edit Variant",
+          label: 'Edit Variant',
           onSelect: () => onRowClick(variants[index].id),
           Icon: <EditIcon />,
         },
@@ -139,5 +126,5 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
     />
   );
 };
-ProductVariants.displayName = "ProductVariants";
+ProductVariants.displayName = 'ProductVariants';
 export default ProductVariants;

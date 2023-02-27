@@ -1,15 +1,15 @@
-import FullScreenIcon from "@dashboard/icons/FullScreenIcon";
-import { Button, makeStyles, PlusSmallIcon } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React, { FC, PropsWithChildren } from "react";
+import FullScreenIcon from '@dashboard/icons/FullScreenIcon';
+import { Button, makeStyles, PlusSmallIcon } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React, { FC, PropsWithChildren } from 'react';
 
-import CardTitle from "../CardTitle";
+import CardTitle from '../CardTitle';
 
 const useStyles = makeStyles(
   theme => ({
     btnContainer: {
-      display: "flex",
-      flexDirection: "row-reverse",
+      display: 'flex',
+      flexDirection: 'row-reverse',
       gap: theme.spacing(1),
     },
     headerBtn: {
@@ -20,10 +20,10 @@ const useStyles = makeStyles(
       fontSize: 14,
     },
     fullScreenIconClose: {
-      transform: "rotate(180deg)",
+      transform: 'rotate(180deg)',
     },
   }),
-  { name: "Datagrid" },
+  { name: 'Datagrid' },
 );
 
 interface ButtonFullScreenProps {
@@ -31,20 +31,11 @@ interface ButtonFullScreenProps {
   onToggle: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({
-  isOpen,
-  onToggle,
-  children,
-}) => {
+const ButtonFullScreen: FC<PropsWithChildren<ButtonFullScreenProps>> = ({ isOpen, onToggle, children }) => {
   const classes = useStyles();
 
   return (
-    <Button
-      data-test-id="button-exit-fullscreen"
-      className={classes.headerBtn}
-      variant="tertiary"
-      onClick={onToggle}
-    >
+    <Button data-test-id="button-exit-fullscreen" className={classes.headerBtn} variant="tertiary" onClick={onToggle}>
       <FullScreenIcon
         className={clsx(classes.fullScreenIcon, {
           [classes.fullScreenIconClose]: isOpen,
@@ -59,19 +50,11 @@ interface ButtonAddRowProps {
   onAddRow: React.MouseEventHandler<HTMLButtonElement>;
 }
 
-const ButtonAddRow: FC<PropsWithChildren<ButtonAddRowProps>> = ({
-  onAddRow,
-  children,
-}) => {
+const ButtonAddRow: FC<PropsWithChildren<ButtonAddRowProps>> = ({ onAddRow, children }) => {
   const classes = useStyles();
 
   return (
-    <Button
-      data-test-id="button-add-variant"
-      className={classes.headerBtn}
-      variant="tertiary"
-      onClick={onAddRow}
-    >
+    <Button data-test-id="button-add-variant" className={classes.headerBtn} variant="tertiary" onClick={onAddRow}>
       <PlusSmallIcon />
       {children}
     </Button>
@@ -90,12 +73,7 @@ interface GridHeader extends FC<PropsWithChildren<HeaderProps>> {
 const Header: GridHeader = ({ title, children }) => {
   const classes = useStyles();
 
-  return (
-    <CardTitle
-      title={title}
-      toolbar={<div className={classes.btnContainer}>{children}</div>}
-    />
-  );
+  return <CardTitle title={title} toolbar={<div className={classes.btnContainer}>{children}</div>} />;
 };
 
 Header.ButtonFullScreen = ButtonFullScreen;

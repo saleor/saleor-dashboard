@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const checkExportFileStatus = gql`
   query CheckExportFileStatus($id: ID!) {

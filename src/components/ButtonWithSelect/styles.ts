@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 const ITEM_HEIGHT = 48;
 
@@ -10,13 +10,13 @@ export const useStyles = makeStyles(
     },
     paper: {
       maxHeight: ITEM_HEIGHT * 4.5,
-      overflowY: "scroll",
+      overflowY: 'scroll',
     },
     buttonIcon: {
       margin: 0,
     },
   }),
   {
-    name: "ButtonWithSelect",
+    name: 'ButtonWithSelect',
   },
 );

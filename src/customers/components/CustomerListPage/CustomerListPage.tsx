@@ -3,38 +3,24 @@ import {
   mapToMenuItems,
   mapToMenuItemsForCustomerOverviewActions,
   useExtensions,
-} from "@dashboard/apps/useExtensions";
-import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import ButtonWithSelect from "@dashboard/components/ButtonWithSelect";
-import CardMenu from "@dashboard/components/CardMenu/CardMenu";
-import FilterBar from "@dashboard/components/FilterBar";
-import {
-  customerAddUrl,
-  CustomerListUrlSortField,
-} from "@dashboard/customers/urls";
-import { ListCustomersQuery } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
-import {
-  FilterPageProps,
-  ListActions,
-  PageListProps,
-  RelayToFlat,
-  SortPage,
-  TabPageProps,
-} from "@dashboard/types";
-import { Card } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/apps/useExtensions';
+import { useUserPermissions } from '@dashboard/auth/hooks/useUserPermissions';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import ButtonWithSelect from '@dashboard/components/ButtonWithSelect';
+import CardMenu from '@dashboard/components/CardMenu/CardMenu';
+import FilterBar from '@dashboard/components/FilterBar';
+import { customerAddUrl, CustomerListUrlSortField } from '@dashboard/customers/urls';
+import { ListCustomersQuery } from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { sectionNames } from '@dashboard/intl';
+import { FilterPageProps, ListActions, PageListProps, RelayToFlat, SortPage, TabPageProps } from '@dashboard/types';
+import { Card } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import CustomerList from "../CustomerList/CustomerList";
-import {
-  createFilterStructure,
-  CustomerFilterKeys,
-  CustomerListFilterOpts,
-} from "./filters";
+import CustomerList from '../CustomerList/CustomerList';
+import { createFilterStructure, CustomerFilterKeys, CustomerListFilterOpts } from './filters';
 
 const useStyles = makeStyles(
   theme => ({
@@ -42,7 +28,7 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(2),
     },
   }),
-  { name: "CustomerListPage" },
+  { name: 'CustomerListPage' },
 );
 
 export interface CustomerListPageProps
@@ -51,7 +37,7 @@ export interface CustomerListPageProps
     FilterPageProps<CustomerFilterKeys, CustomerListFilterOpts>,
     SortPage<CustomerListUrlSortField>,
     TabPageProps {
-  customers: RelayToFlat<ListCustomersQuery["customers"]>;
+  customers: RelayToFlat<ListCustomersQuery['customers']>;
   selectedCustomerIds: string[];
 }
 
@@ -76,10 +62,9 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   const userPermissions = useUserPermissions();
   const structure = createFilterStructure(intl, filterOpts, userPermissions);
 
-  const {
-    CUSTOMER_OVERVIEW_CREATE,
-    CUSTOMER_OVERVIEW_MORE_ACTIONS,
-  } = useExtensions(extensionMountPoints.CUSTOMER_LIST);
+  const { CUSTOMER_OVERVIEW_CREATE, CUSTOMER_OVERVIEW_MORE_ACTIONS } = useExtensions(
+    extensionMountPoints.CUSTOMER_LIST,
+  );
   const extensionMenuItems = mapToMenuItemsForCustomerOverviewActions(
     CUSTOMER_OVERVIEW_MORE_ACTIONS,
     selectedCustomerIds,
@@ -89,37 +74,28 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   return (
     <>
       <TopNav title={intl.formatMessage(sectionNames.customers)}>
-        {extensionMenuItems.length > 0 && (
-          <CardMenu
-            className={classes.settings}
-            menuItems={extensionMenuItems}
-          />
-        )}
+        {extensionMenuItems.length > 0 && <CardMenu className={classes.settings} menuItems={extensionMenuItems} />}
         <ButtonWithSelect
           onClick={() => navigate(customerAddUrl)}
           options={extensionCreateButtonItems}
           data-test-id="create-customer"
         >
-          <FormattedMessage
-            id="QLVddq"
-            defaultMessage="Create customer"
-            description="button"
-          />
+          <FormattedMessage id="QLVddq" defaultMessage="Create customer" description="button" />
         </ButtonWithSelect>
       </TopNav>
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
-            id: "xQK2EC",
-            defaultMessage: "All Customers",
-            description: "tab name",
+            id: 'xQK2EC',
+            defaultMessage: 'All Customers',
+            description: 'tab name',
           })}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
-            id: "2mRLis",
-            defaultMessage: "Search Customer",
+            id: '2mRLis',
+            defaultMessage: 'Search Customer',
           })}
           tabs={tabs}
           onAll={onAll}
@@ -134,5 +110,5 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
     </>
   );
 };
-CustomerListPage.displayName = "CustomerListPage";
+CustomerListPage.displayName = 'CustomerListPage';
 export default CustomerListPage;

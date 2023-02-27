@@ -1,5 +1,5 @@
-import isEqual from "lodash/isEqual";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import isEqual from 'lodash/isEqual';
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 export interface UseStateFromPropsOpts<T> {
   mergeFunc?: (prevData: T, state: T, newData: T) => T;
@@ -10,10 +10,7 @@ export interface UseStateFromPropsOpts<T> {
  * value changes, but uses deep comparisons to detect changes.
  * You're most likely looking for `useStateUpdate` instead.
  */
-function useStateFromProps<T>(
-  data: T,
-  opts: UseStateFromPropsOpts<T> = {},
-): [T, Dispatch<SetStateAction<T>>] {
+function useStateFromProps<T>(data: T, opts: UseStateFromPropsOpts<T> = {}): [T, Dispatch<SetStateAction<T>>] {
   const [state, setState] = useState(data);
   const [prevData, setPrevData] = useState(data);
 
@@ -22,14 +19,11 @@ function useStateFromProps<T>(
   useEffect(() => {
     const shouldUpdate = !isEqual(prevData, data);
     if (shouldUpdate) {
-      const newData =
-        typeof mergeFunc === "function"
-          ? mergeFunc(prevData, state, data)
-          : data;
+      const newData = typeof mergeFunc === 'function' ? mergeFunc(prevData, state, data) : data;
 
       setState(newData);
       setPrevData(data);
-      if (typeof onRefresh === "function") {
+      if (typeof onRefresh === 'function') {
         onRefresh(data, newData);
       }
     }

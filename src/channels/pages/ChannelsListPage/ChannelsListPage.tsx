@@ -1,68 +1,52 @@
-import { channelAddUrl, channelUrl } from "@dashboard/channels/urls";
-import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Button } from "@dashboard/components/Button";
-import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
-import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import TableCellHeader from "@dashboard/components/TableCellHeader";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { configurationMenuUrl } from "@dashboard/configuration";
-import { ChannelDetailsFragment, RefreshLimitsQuery } from "@dashboard/graphql";
-import { sectionNames } from "@dashboard/intl";
-import { renderCollection, stopPropagation } from "@dashboard/misc";
-import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
-import { Card, TableBody, TableCell, TableHead } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { channelAddUrl, channelUrl } from '@dashboard/channels/urls';
+import { LimitsInfo } from '@dashboard/components/AppLayout/LimitsInfo';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import { Button } from '@dashboard/components/Button';
+import LimitReachedAlert from '@dashboard/components/LimitReachedAlert';
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Skeleton from '@dashboard/components/Skeleton';
+import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
+import TableCellHeader from '@dashboard/components/TableCellHeader';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { configurationMenuUrl } from '@dashboard/configuration';
+import { ChannelDetailsFragment, RefreshLimitsQuery } from '@dashboard/graphql';
+import { sectionNames } from '@dashboard/intl';
+import { renderCollection, stopPropagation } from '@dashboard/misc';
+import { hasLimits, isLimitReached } from '@dashboard/utils/limits';
+import { Card, TableBody, TableCell, TableHead } from '@material-ui/core';
+import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
 export interface ChannelsListPageProps {
   channelsList: ChannelDetailsFragment[] | undefined;
-  limits: RefreshLimitsQuery["shop"]["limits"];
+  limits: RefreshLimitsQuery['shop']['limits'];
   onRemove: (id: string) => void;
 }
 
 const numberOfColumns = 2;
 
-export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
-  channelsList,
-  limits,
-  onRemove,
-}) => {
+export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({ channelsList, limits, onRemove }) => {
   const intl = useIntl();
   const classes = useStyles({});
 
-  const limitReached = isLimitReached(limits, "channels");
+  const limitReached = isLimitReached(limits, 'channels');
 
   return (
     <>
-      <TopNav
-        href={configurationMenuUrl}
-        title={intl.formatMessage(sectionNames.channels)}
-      >
-        <Button
-          disabled={limitReached}
-          href={channelAddUrl}
-          variant="primary"
-          data-test-id="add-channel"
-        >
-          <FormattedMessage
-            id="OGm8wO"
-            defaultMessage="Create Channel"
-            description="button"
-          />
+      <TopNav href={configurationMenuUrl} title={intl.formatMessage(sectionNames.channels)}>
+        <Button disabled={limitReached} href={channelAddUrl} variant="primary" data-test-id="add-channel">
+          <FormattedMessage id="OGm8wO" defaultMessage="Create Channel" description="button" />
         </Button>
-        {hasLimits(limits, "channels") && (
+        {hasLimits(limits, 'channels') && (
           <LimitsInfo
             text={intl.formatMessage(
               {
-                id: "rZMT44",
-                defaultMessage: "{count}/{max} channels used",
-                description: "created channels counter",
+                id: 'rZMT44',
+                defaultMessage: '{count}/{max} channels used',
+                description: 'created channels counter',
               },
               {
                 count: limits.currentUsage.channels,
@@ -75,9 +59,9 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
       {limitReached && (
         <LimitReachedAlert
           title={intl.formatMessage({
-            id: "PTW56s",
-            defaultMessage: "Channel limit reached",
-            description: "alert",
+            id: 'PTW56s',
+            defaultMessage: 'Channel limit reached',
+            description: 'alert',
           })}
         >
           <FormattedMessage
@@ -91,18 +75,10 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
           <TableHead>
             <TableRowLink>
               <TableCellHeader>
-                <FormattedMessage
-                  id="j/vV0n"
-                  defaultMessage="Channel Name"
-                  description="channel name"
-                />
+                <FormattedMessage id="j/vV0n" defaultMessage="Channel Name" description="channel name" />
               </TableCellHeader>
               <TableCell className={classes.colRight}>
-                <FormattedMessage
-                  id="VHuzgq"
-                  defaultMessage="Actions"
-                  description="table actions"
-                />
+                <FormattedMessage id="VHuzgq" defaultMessage="Actions" description="table actions" />
               </TableCell>
             </TableRowLink>
           </TableHead>
@@ -112,14 +88,12 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
               channel => (
                 <TableRowLink
                   hover={!!channel}
-                  key={channel ? channel.id : "skeleton"}
+                  key={channel ? channel.id : 'skeleton'}
                   className={classes.tableRow}
                   href={channel && channelUrl(channel.id)}
                 >
                   <TableCell className={classes.colName}>
-                    <span data-test-id="name">
-                      {channel?.name || <Skeleton />}
-                    </span>
+                    <span data-test-id="name">{channel?.name || <Skeleton />}</span>
                   </TableCell>
                   <TableCell className={classes.colAction}>
                     {channelsList?.length > 1 && (
@@ -127,11 +101,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
                         <IconButton
                           variant="secondary"
                           color="primary"
-                          onClick={
-                            channel
-                              ? stopPropagation(() => onRemove(channel.id))
-                              : undefined
-                          }
+                          onClick={channel ? stopPropagation(() => onRemove(channel.id)) : undefined}
                         >
                           <DeleteIcon />
                         </IconButton>
@@ -143,10 +113,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
               () => (
                 <TableRowLink>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage
-                      id="/glQgs"
-                      defaultMessage="No channels found"
-                    />
+                    <FormattedMessage id="/glQgs" defaultMessage="No channels found" />
                   </TableCell>
                 </TableRowLink>
               ),
@@ -158,5 +125,5 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   );
 };
 
-ChannelsListPage.displayName = "ChannelsListPage";
+ChannelsListPage.displayName = 'ChannelsListPage';
 export default ChannelsListPage;

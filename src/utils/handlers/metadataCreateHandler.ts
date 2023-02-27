@@ -1,10 +1,7 @@
-import { MetadataFormData } from "@dashboard/components/Metadata/types";
-import {
-  UpdateMetadataMutationFn,
-  UpdatePrivateMetadataMutationFn,
-} from "@dashboard/graphql";
+import { MetadataFormData } from '@dashboard/components/Metadata/types';
+import { UpdateMetadataMutationFn, UpdatePrivateMetadataMutationFn } from '@dashboard/graphql';
 
-import { filterMetadataArray } from "./filterMetadataArray";
+import { filterMetadataArray } from './filterMetadataArray';
 
 export interface CreateMetadataHandlerFunctionResult<TError> {
   id?: string;

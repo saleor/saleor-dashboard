@@ -1,28 +1,25 @@
-import { attributeUrl } from "@dashboard/attributes/urls";
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import Checkbox from "@dashboard/components/Checkbox";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
-import {
-  SortableTableBody,
-  SortableTableRow,
-} from "@dashboard/components/SortableTable";
-import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import TableHead from "@dashboard/components/TableHead";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { AttributeFragment, ProductAttributeType } from "@dashboard/graphql";
-import { maybe, renderCollection } from "@dashboard/misc";
-import { ListActions, ReorderAction } from "@dashboard/types";
-import { Card, CardContent, TableCell } from "@material-ui/core";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { attributeUrl } from '@dashboard/attributes/urls';
+import { Button } from '@dashboard/components/Button';
+import CardTitle from '@dashboard/components/CardTitle';
+import Checkbox from '@dashboard/components/Checkbox';
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Skeleton from '@dashboard/components/Skeleton';
+import { SortableTableBody, SortableTableRow } from '@dashboard/components/SortableTable';
+import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
+import TableHead from '@dashboard/components/TableHead';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { AttributeFragment, ProductAttributeType } from '@dashboard/graphql';
+import { maybe, renderCollection } from '@dashboard/misc';
+import { ListActions, ReorderAction } from '@dashboard/types';
+import { Card, CardContent, TableCell } from '@material-ui/core';
+import { DeleteIcon, IconButton, makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const useStyles = makeStyles(
   {
     colAction: {
-      "&:last-child": {
+      '&:last-child': {
         paddingRight: 0,
       },
       width: 84,
@@ -35,13 +32,13 @@ const useStyles = makeStyles(
       width: 300,
     },
     link: {
-      cursor: "pointer",
+      cursor: 'pointer',
     },
     textLeft: {
-      textAlign: "left",
+      textAlign: 'left',
     },
   },
-  { name: "ProductTypeAttributes" },
+  { name: 'ProductTypeAttributes' },
 );
 
 interface ProductTypeAttributesProps extends ListActions {
@@ -80,9 +77,9 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
     <Card data-test-id="product-attributes">
       <CardTitle
         title={intl.formatMessage({
-          id: "9scTQ0",
-          defaultMessage: "Product Attributes",
-          description: "section header",
+          id: '9scTQ0',
+          defaultMessage: 'Product Attributes',
+          description: 'section header',
         })}
         toolbar={
           <Button
@@ -91,11 +88,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
             variant="tertiary"
             onClick={() => onAttributeAssign(ProductAttributeType[type])}
           >
-            <FormattedMessage
-              id="uxPpRx"
-              defaultMessage="Assign attribute"
-              description="button"
-            />
+            <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
           </Button>
         }
       />
@@ -122,11 +115,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                 <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
               </TableCell>
               <TableCell className={classes.colName}>
-                <FormattedMessage
-                  id="nf3XSt"
-                  defaultMessage="Slug"
-                  description="attribute internal name"
-                />
+                <FormattedMessage id="nf3XSt" defaultMessage="Slug" description="attribute internal name" />
               </TableCell>
               <TableCell />
             </TableHead>
@@ -145,7 +134,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                     href={attribute ? attributeUrl(attribute.id) : undefined}
                     key={maybe(() => attribute.id)}
                     index={attributeIndex || 0}
-                    data-test-id={"id" + maybe(() => attribute.id)}
+                    data-test-id={'id' + maybe(() => attribute.id)}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
@@ -156,18 +145,10 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
                       />
                     </TableCell>
                     <TableCell className={classes.colName} data-test-id="name">
-                      {maybe(() => attribute.name) ? (
-                        attribute.name
-                      ) : (
-                        <Skeleton />
-                      )}
+                      {maybe(() => attribute.name) ? attribute.name : <Skeleton />}
                     </TableCell>
                     <TableCell className={classes.colSlug} data-test-id="slug">
-                      {maybe(() => attribute.slug) ? (
-                        attribute.slug
-                      ) : (
-                        <Skeleton />
-                      )}
+                      {maybe(() => attribute.slug) ? attribute.slug : <Skeleton />}
                     </TableCell>
                     <TableCell className={classes.colAction}>
                       <TableButtonWrapper>
@@ -187,10 +168,7 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
               () => (
                 <TableRowLink>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage
-                      id="ztQgD8"
-                      defaultMessage="No attributes found"
-                    />
+                    <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
                   </TableCell>
                 </TableRowLink>
               ),
@@ -201,5 +179,5 @@ const ProductTypeAttributes: React.FC<ProductTypeAttributesProps> = props => {
     </Card>
   );
 };
-ProductTypeAttributes.displayName = "ProductTypeAttributes";
+ProductTypeAttributes.displayName = 'ProductTypeAttributes';
 export default ProductTypeAttributes;

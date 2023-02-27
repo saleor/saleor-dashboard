@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const staffList = gql`
   query StaffList(
@@ -9,14 +9,7 @@ export const staffList = gql`
     $filter: StaffUserInput
     $sort: UserSortingInput
   ) {
-    staffUsers(
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-      filter: $filter
-      sortBy: $sort
-    ) {
+    staffUsers(before: $before, after: $after, first: $first, last: $last, filter: $filter, sortBy: $sort) {
       edges {
         cursor
         node {

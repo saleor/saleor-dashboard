@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 const useStyles = makeStyles(
   theme => ({
@@ -12,23 +12,23 @@ const useStyles = makeStyles(
       padding: theme.spacing(2, 3),
     },
     inputRange: {
-      alignItems: "center",
-      display: "flex",
+      alignItems: 'center',
+      display: 'flex',
     },
 
     option: {
       left: theme.spacing(-0.5),
-      position: "relative",
+      position: 'relative',
     },
     optionRadio: {
       left: theme.spacing(-0.25),
     },
 
     fieldInput: {
-      padding: "12px 0 9px 12px",
+      padding: '12px 0 9px 12px',
     },
   }),
-  { name: "Filter" },
+  { name: 'Filter' },
 );
 
 export default useStyles;

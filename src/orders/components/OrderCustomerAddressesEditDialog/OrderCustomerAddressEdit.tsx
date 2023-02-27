@@ -1,24 +1,20 @@
-import AddressEdit from "@dashboard/components/AddressEdit";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import FormSpacer from "@dashboard/components/FormSpacer";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
-import Skeleton from "@dashboard/components/Skeleton";
-import CustomerAddressChoiceCard from "@dashboard/customers/components/CustomerAddressChoiceCard";
-import { AddressTypeInput } from "@dashboard/customers/types";
-import {
-  AccountErrorFragment,
-  AddressFragment,
-  OrderErrorFragment,
-} from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
-import { getById } from "@dashboard/misc";
-import { FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
-import React from "react";
-import { useIntl } from "react-intl";
+import AddressEdit from '@dashboard/components/AddressEdit';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import FormSpacer from '@dashboard/components/FormSpacer';
+import { SingleAutocompleteChoiceType } from '@dashboard/components/SingleAutocompleteSelectField';
+import Skeleton from '@dashboard/components/Skeleton';
+import CustomerAddressChoiceCard from '@dashboard/customers/components/CustomerAddressChoiceCard';
+import { AddressTypeInput } from '@dashboard/customers/types';
+import { AccountErrorFragment, AddressFragment, OrderErrorFragment } from '@dashboard/graphql';
+import { FormChange } from '@dashboard/hooks/useForm';
+import { getById } from '@dashboard/misc';
+import { FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { AddressInputOptionEnum } from "./form";
-import { addressEditMessages } from "./messages";
-import { useStyles } from "./styles";
+import { AddressInputOptionEnum } from './form';
+import { addressEditMessages } from './messages';
+import { useStyles } from './styles';
 
 export interface OrderCustomerAddressEditProps {
   loading: boolean;
@@ -84,41 +80,24 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
     >
       <FormControlLabel
         value={AddressInputOptionEnum.CUSTOMER_ADDRESS}
-        control={
-          <Radio
-            color="primary"
-            data-test-id={
-              addressInputOption + AddressInputOptionEnum.CUSTOMER_ADDRESS
-            }
-          />
-        }
+        control={<Radio color="primary" data-test-id={addressInputOption + AddressInputOptionEnum.CUSTOMER_ADDRESS} />}
         label={intl.formatMessage(addressEditMessages.customerAddress)}
         className={classes.optionLabel}
       />
-      {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS &&
-        showCard && (
-          <>
-            <CardSpacer />
-            <CustomerAddressChoiceCard
-              address={customerAddresses.find(
-                getById(selectedCustomerAddressId),
-              )}
-              editable
-              onEditClick={onEdit}
-            />
-            <FormSpacer />
-          </>
-        )}
+      {addressInputOption === AddressInputOptionEnum.CUSTOMER_ADDRESS && showCard && (
+        <>
+          <CardSpacer />
+          <CustomerAddressChoiceCard
+            address={customerAddresses.find(getById(selectedCustomerAddressId))}
+            editable
+            onEditClick={onEdit}
+          />
+          <FormSpacer />
+        </>
+      )}
       <FormControlLabel
         value={AddressInputOptionEnum.NEW_ADDRESS}
-        control={
-          <Radio
-            color="primary"
-            data-test-id={
-              addressInputOption + AddressInputOptionEnum.NEW_ADDRESS
-            }
-          />
-        }
+        control={<Radio color="primary" data-test-id={addressInputOption + AddressInputOptionEnum.NEW_ADDRESS} />}
         label={intl.formatMessage(addressEditMessages.newAddress)}
         className={classes.optionLabel}
       />
@@ -136,5 +115,5 @@ const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props 
   );
 };
 
-OrderCustomerAddressEdit.displayName = "OrderCustomerAddressEdit";
+OrderCustomerAddressEdit.displayName = 'OrderCustomerAddressEdit';
 export default OrderCustomerAddressEdit;

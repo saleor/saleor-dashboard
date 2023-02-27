@@ -1,2 +1,2 @@
-export { default } from "./TaxClassesPage";
-export * from "./TaxClassesPage";
+export { default } from './TaxClassesPage';
+export * from './TaxClassesPage';

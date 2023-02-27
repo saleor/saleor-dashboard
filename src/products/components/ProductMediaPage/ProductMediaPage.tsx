@@ -1,64 +1,64 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardTitle from "@dashboard/components/CardTitle";
-import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
-import Savebar from "@dashboard/components/Savebar";
-import Skeleton from "@dashboard/components/Skeleton";
-import { ProductMediaType } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { commonMessages } from "@dashboard/intl";
-import { productUrl } from "@dashboard/products/urls";
-import { Card, CardContent, TextField } from "@material-ui/core";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
-import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import CardTitle from '@dashboard/components/CardTitle';
+import Form from '@dashboard/components/Form';
+import Grid from '@dashboard/components/Grid';
+import Savebar from '@dashboard/components/Savebar';
+import Skeleton from '@dashboard/components/Skeleton';
+import { ProductMediaType } from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { commonMessages } from '@dashboard/intl';
+import { productUrl } from '@dashboard/products/urls';
+import { Card, CardContent, TextField } from '@material-ui/core';
+import { ConfirmButtonTransitionState, makeStyles } from '@saleor/macaw-ui';
+import { vars } from '@saleor/macaw-ui/next';
+import React from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import ProductMediaNavigation from "../ProductMediaNavigation";
+import ProductMediaNavigation from '../ProductMediaNavigation';
 
 const messages = defineMessages({
   editMedia: {
-    id: "Ihp4D3",
-    defaultMessage: "Edit Media",
-    description: "header",
+    id: 'Ihp4D3',
+    defaultMessage: 'Edit Media',
+    description: 'header',
   },
   mediaInformation: {
-    id: "9RvXNg",
-    defaultMessage: "Media Information",
-    description: "section header",
+    id: '9RvXNg',
+    defaultMessage: 'Media Information',
+    description: 'section header',
   },
   mediaView: {
-    id: "cW1RIo",
-    defaultMessage: "Media View",
-    description: "section header",
+    id: 'cW1RIo',
+    defaultMessage: 'Media View',
+    description: 'section header',
   },
   optional: {
-    id: "lzdvwp",
-    defaultMessage: "Optional",
-    description: "field is optional",
+    id: 'lzdvwp',
+    defaultMessage: 'Optional',
+    description: 'field is optional',
   },
 });
 
 const useStyles = makeStyles(
   theme => ({
     image: {
-      height: "100%",
-      objectFit: "contain",
-      width: "100%",
+      height: '100%',
+      objectFit: 'contain',
+      width: '100%',
     },
     imageContainer: {
-      "& iframe": {
-        width: "100%",
+      '& iframe': {
+        width: '100%',
         maxHeight: 420,
       },
       border: `1px solid ${vars.colors.border.neutralPlain}`,
       borderRadius: theme.spacing(),
       margin: `0 auto ${theme.spacing(2)}px`,
-      width: "100%",
+      width: '100%',
       padding: theme.spacing(2),
     },
   }),
-  { name: "ProductMediaPage" },
+  { name: 'ProductMediaPage' },
 );
 
 interface ProductMediaPageProps {
@@ -83,33 +83,17 @@ interface ProductMediaPageProps {
 }
 
 const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
-  const {
-    productId,
-    disabled,
-    mediaObj,
-    media,
-    saveButtonBarState,
-    onDelete,
-    onRowClick,
-    onSubmit,
-  } = props;
+  const { productId, disabled, mediaObj, media, saveButtonBarState, onDelete, onRowClick, onSubmit } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
   const navigate = useNavigator();
 
   return (
-    <Form
-      initial={{ description: mediaObj ? mediaObj.alt : "" }}
-      onSubmit={onSubmit}
-      confirmLeave
-    >
+    <Form initial={{ description: mediaObj ? mediaObj.alt : '' }} onSubmit={onSubmit} confirmLeave>
       {({ change, data, submit }) => (
         <>
-          <TopNav
-            href={productUrl(productId)}
-            title={intl.formatMessage(messages.editMedia)}
-          />
+          <TopNav href={productUrl(productId)} title={intl.formatMessage(messages.editMedia)} />
           <Grid variant="inverted">
             <div>
               <ProductMediaNavigation
@@ -119,9 +103,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                 onRowClick={onRowClick}
               />
               <Card>
-                <CardTitle
-                  title={intl.formatMessage(messages.mediaInformation)}
-                />
+                <CardTitle title={intl.formatMessage(messages.mediaInformation)} />
                 <CardContent>
                   <TextField
                     name="description"
@@ -143,11 +125,7 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
                   {!!mediaObj ? (
                     mediaObj?.type === ProductMediaType.IMAGE ? (
                       <div className={classes.imageContainer}>
-                        <img
-                          className={classes.image}
-                          src={mediaObj.url}
-                          alt={mediaObj.alt}
-                        />
+                        <img className={classes.image} src={mediaObj.url} alt={mediaObj.alt} />
                       </div>
                     ) : (
                       <div
@@ -176,5 +154,5 @@ const ProductMediaPage: React.FC<ProductMediaPageProps> = props => {
     </Form>
   );
 };
-ProductMediaPage.displayName = "ProductMediaPage";
+ProductMediaPage.displayName = 'ProductMediaPage';
 export default ProductMediaPage;

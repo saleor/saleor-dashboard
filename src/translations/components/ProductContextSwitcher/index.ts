@@ -1,2 +1,2 @@
-export * from "./ProductContextSwitcher";
-export { default } from "./ProductContextSwitcher";
+export * from './ProductContextSwitcher';
+export { default } from './ProductContextSwitcher';

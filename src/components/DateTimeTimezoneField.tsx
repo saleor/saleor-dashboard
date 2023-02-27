@@ -1,14 +1,14 @@
-import { commonMessages } from "@dashboard/intl";
-import { DateTime, joinDateTime, splitDateTime } from "@dashboard/misc";
-import { TextField } from "@material-ui/core";
-import { TextFieldProps } from "@material-ui/core/TextField";
-import { makeStyles } from "@saleor/macaw-ui";
-import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
+import { commonMessages } from '@dashboard/intl';
+import { DateTime, joinDateTime, splitDateTime } from '@dashboard/misc';
+import { TextField } from '@material-ui/core';
+import { TextFieldProps } from '@material-ui/core/TextField';
+import { makeStyles } from '@saleor/macaw-ui';
+import React, { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 
-import ErrorNoticeBar from "./ErrorNoticeBar";
+import ErrorNoticeBar from './ErrorNoticeBar';
 
-type DateTimeFieldProps = Omit<TextFieldProps, "label" | "error"> & {
+type DateTimeFieldProps = Omit<TextFieldProps, 'label' | 'error'> & {
   onChange: (value: string) => void;
   error: string | React.ReactNode;
   setError?: () => void;
@@ -25,7 +25,7 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(2),
     },
   }),
-  { name: "DateTimeTimezoneField" },
+  { name: 'DateTimeTimezoneField' },
 );
 
 export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
@@ -38,9 +38,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const [value, setValue] = useState<DateTime>(
-    initialValue ? splitDateTime(initialValue) : { date: "", time: "" },
-  );
+  const [value, setValue] = useState<DateTime>(initialValue ? splitDateTime(initialValue) : { date: '', time: '' });
 
   useEffect(() => {
     const newDate = joinDateTime(value.date, value.time);
@@ -79,9 +77,7 @@ export const DateTimeTimezoneField: React.FC<DateTimeFieldProps> = ({
         InputLabelProps={{ shrink: true }}
       />
 
-      {error && (
-        <ErrorNoticeBar className={classes.errorNoticeBar} message={error} />
-      )}
+      {error && <ErrorNoticeBar className={classes.errorNoticeBar} message={error} />}
     </>
   );
 };

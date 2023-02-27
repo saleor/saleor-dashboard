@@ -1,20 +1,14 @@
-import { useProductTranslationsQuery } from "@dashboard/graphql";
-import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
-import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
-import {
-  languageEntityUrl,
-  TranslatableEntities,
-} from "@dashboard/translations/urls";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import { useProductTranslationsQuery } from '@dashboard/graphql';
+import usePaginator, { PaginatorContext } from '@dashboard/hooks/usePaginator';
+import TranslationsEntitiesList from '@dashboard/translations/components/TranslationsEntitiesList';
+import { languageEntityUrl, TranslatableEntities } from '@dashboard/translations/urls';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import React from 'react';
 
-import { TranslationsEntityListProps } from "./types";
-import { sumCompleted } from "./utils";
+import { TranslationsEntityListProps } from './types';
+import { sumCompleted } from './utils';
 
-const TranslationsProductList: React.FC<TranslationsEntityListProps> = ({
-  params,
-  variables,
-}) => {
+const TranslationsProductList: React.FC<TranslationsEntityListProps> = ({ params, variables }) => {
   const { data, loading } = useProductTranslationsQuery({
     displayLoader: true,
     variables,
@@ -32,16 +26,14 @@ const TranslationsProductList: React.FC<TranslationsEntityListProps> = ({
         disabled={loading}
         entities={mapEdgesToItems(data?.translations)?.map(
           node =>
-            node.__typename === "ProductTranslatableContent" && {
+            node.__typename === 'ProductTranslatableContent' && {
               completion: {
                 current: sumCompleted([
                   node.translation?.description,
                   node.translation?.name,
                   node.translation?.seoDescription,
                   node.translation?.seoTitle,
-                  ...(node.attributeValues?.map(
-                    ({ translation }) => translation?.richText,
-                  ) || []),
+                  ...(node.attributeValues?.map(({ translation }) => translation?.richText) || []),
                 ]),
                 max: 4 + (node.attributeValues?.length || 0),
               },
@@ -49,13 +41,7 @@ const TranslationsProductList: React.FC<TranslationsEntityListProps> = ({
               name: node?.product?.name,
             },
         )}
-        getRowHref={id =>
-          languageEntityUrl(
-            variables.language,
-            TranslatableEntities.products,
-            id,
-          )
-        }
+        getRowHref={id => languageEntityUrl(variables.language, TranslatableEntities.products, id)}
       />
     </PaginatorContext.Provider>
   );

@@ -1,27 +1,21 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import PreviewPill from "@dashboard/components/PreviewPill";
-import RadioGroupField from "@dashboard/components/RadioGroupField";
-import { ProductTypeKindEnum } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { UserError } from "@dashboard/types";
-import { getFieldError } from "@dashboard/utils/errors";
-import {
-  Card,
-  CardContent,
-  Divider,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import CardTitle from '@dashboard/components/CardTitle';
+import PreviewPill from '@dashboard/components/PreviewPill';
+import RadioGroupField from '@dashboard/components/RadioGroupField';
+import { ProductTypeKindEnum } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { UserError } from '@dashboard/types';
+import { getFieldError } from '@dashboard/utils/errors';
+import { Card, CardContent, Divider, TextField, Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { messages } from "./messages";
+import { messages } from './messages';
 
 const useStyles = makeStyles(
   theme => ({
     root: {
-      overflow: "visible",
+      overflow: 'visible',
     },
     option: {
       marginTop: theme.spacing(-0.25),
@@ -31,7 +25,7 @@ const useStyles = makeStyles(
       marginLeft: theme.spacing(1),
     },
   }),
-  { name: "ProductTypeDetails" },
+  { name: 'ProductTypeDetails' },
 );
 
 interface ProductTypeDetailsProps {
@@ -65,15 +59,13 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
 
   return (
     <Card className={classes.root}>
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      />
+      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
       <CardContent>
         <TextField
           disabled={disabled}
-          error={!!getFieldError(errors, "name")}
+          error={!!getFieldError(errors, 'name')}
           fullWidth
-          helperText={getFieldError(errors, "name")?.message}
+          helperText={getFieldError(errors, 'name')?.message}
           label={intl.formatMessage(messages.productTypeName)}
           name="name"
           onChange={onChange}
@@ -86,15 +78,10 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
           disabled={disabled}
           choices={kindOptions.map(option => ({
             label: (
-              <div
-                className={classes.option}
-                data-test-id={`product-type-kind-option-${option.type}`}
-              >
+              <div className={classes.option} data-test-id={`product-type-kind-option-${option.type}`}>
                 <Typography variant="body1">
                   <FormattedMessage {...option.title} />
-                  {option.type === ProductTypeKindEnum.GIFT_CARD && (
-                    <PreviewPill className={classes.preview} />
-                  )}
+                  {option.type === ProductTypeKindEnum.GIFT_CARD && <PreviewPill className={classes.preview} />}
                 </Typography>
                 {option.subtitle && (
                   <Typography color="textSecondary" variant="caption">
@@ -113,5 +100,5 @@ const ProductTypeDetails: React.FC<ProductTypeDetailsProps> = props => {
     </Card>
   );
 };
-ProductTypeDetails.displayName = "ProductTypeDetails";
+ProductTypeDetails.displayName = 'ProductTypeDetails';
 export default ProductTypeDetails;

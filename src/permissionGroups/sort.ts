@@ -1,12 +1,9 @@
-import { StaffMemberFragment } from "@dashboard/graphql";
-import { getUserName } from "@dashboard/misc";
+import { StaffMemberFragment } from '@dashboard/graphql';
+import { getUserName } from '@dashboard/misc';
 
-import { MembersListUrlSortField } from "./urls";
+import { MembersListUrlSortField } from './urls';
 
-export const sortMembers = (sort: string, asc: boolean) => (
-  a: StaffMemberFragment,
-  b: StaffMemberFragment,
-) => {
+export const sortMembers = (sort: string, asc: boolean) => (a: StaffMemberFragment, b: StaffMemberFragment) => {
   let valueA;
   let valueB;
   switch (sort) {
@@ -20,7 +17,5 @@ export const sortMembers = (sort: string, asc: boolean) => (
       break;
   }
 
-  return asc
-    ? ("" + valueA).localeCompare(valueB)
-    : ("" + valueA).localeCompare(valueB) * -1;
+  return asc ? ('' + valueA).localeCompare(valueB) : ('' + valueA).localeCompare(valueB) * -1;
 };

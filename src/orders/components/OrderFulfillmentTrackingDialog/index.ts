@@ -1,2 +1,2 @@
-export { default } from "./OrderFulfillmentTrackingDialog";
-export * from "./OrderFulfillmentTrackingDialog";
+export { default } from './OrderFulfillmentTrackingDialog';
+export * from './OrderFulfillmentTrackingDialog';

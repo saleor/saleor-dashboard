@@ -1,5 +1,5 @@
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
 
 export interface VerticalSpacerProps {
   spacing?: number;
@@ -11,7 +11,7 @@ const useStyles = makeStyles(
       height: theme.spacing(spacing),
     }),
   }),
-  { name: "VerticalSpacer" },
+  { name: 'VerticalSpacer' },
 );
 
 const VerticalSpacer: React.FC<VerticalSpacerProps> = ({ spacing = 1 }) => {

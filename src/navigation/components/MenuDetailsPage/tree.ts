@@ -1,6 +1,6 @@
-import { RecursiveMenuItem } from "@dashboard/navigation/types";
+import { RecursiveMenuItem } from '@dashboard/navigation/types';
 
-import { TreeOperation } from "../MenuItems";
+import { TreeOperation } from '../MenuItems';
 
 export function findNode(tree: RecursiveMenuItem[], id: string): number[] {
   const foundNodeIndex = tree.findIndex(node => node.id === id);
@@ -10,27 +10,18 @@ export function findNode(tree: RecursiveMenuItem[], id: string): number[] {
   if (foundNodeIndex !== -1) {
     return [foundNodeIndex];
   }
-  const nodeMap = tree.map((node, nodeIndex) => [
-    nodeIndex,
-    ...findNode(node.children, id),
-  ]);
+  const nodeMap = tree.map((node, nodeIndex) => [nodeIndex, ...findNode(node.children, id)]);
   return nodeMap.find(path => path[path.length - 1] !== null) || [null];
 }
 
-export function getNode(
-  tree: RecursiveMenuItem[],
-  path: number[],
-): RecursiveMenuItem {
+export function getNode(tree: RecursiveMenuItem[], path: number[]): RecursiveMenuItem {
   if (path.length === 1) {
     return tree[path[0]];
   }
   return getNode([...tree[path[0]].children], path.slice(1));
 }
 
-function removeNode(
-  tree: RecursiveMenuItem[],
-  path: number[],
-): RecursiveMenuItem[] {
+function removeNode(tree: RecursiveMenuItem[], path: number[]): RecursiveMenuItem[] {
   const removeIndex = path[0];
 
   if (path.length === 1) {
@@ -53,12 +44,7 @@ interface InsertNodeInput {
   position: number;
 }
 
-function insertNode({
-  tree,
-  path,
-  node,
-  position,
-}: InsertNodeInput): RecursiveMenuItem[] {
+function insertNode({ tree, path, node, position }: InsertNodeInput): RecursiveMenuItem[] {
   if (path.length === 0) {
     return [...tree.slice(0, position), node, ...tree.slice(position)];
   }
@@ -74,10 +60,7 @@ function insertNode({
   return tree;
 }
 
-function removeNodeAndChildren(
-  tree: RecursiveMenuItem[],
-  operation: TreeOperation,
-): RecursiveMenuItem[] {
+function removeNodeAndChildren(tree: RecursiveMenuItem[], operation: TreeOperation): RecursiveMenuItem[] {
   const sourcePath = findNode(tree, operation.id);
   const node = getNode(tree, sourcePath);
 
@@ -86,7 +69,7 @@ function removeNodeAndChildren(
       (acc, child) =>
         removeNodeAndChildren(acc, {
           id: child.id,
-          type: "remove",
+          type: 'remove',
         }),
       tree,
     );
@@ -97,10 +80,7 @@ function removeNodeAndChildren(
   return removeNode(tree, sourcePath);
 }
 
-function permuteRelativeNode(
-  tree: RecursiveMenuItem[],
-  permutation: TreeOperation,
-): RecursiveMenuItem[] {
+function permuteRelativeNode(tree: RecursiveMenuItem[], permutation: TreeOperation): RecursiveMenuItem[] {
   const sourcePath = findNode(tree, permutation.id);
   const node = getNode(tree, sourcePath);
 
@@ -108,9 +88,7 @@ function permuteRelativeNode(
 
   const treeAfterRemoval = removeNode(tree, sourcePath);
 
-  const targetPath = hasParent
-    ? findNode(treeAfterRemoval, permutation.parentId)
-    : [];
+  const targetPath = hasParent ? findNode(treeAfterRemoval, permutation.parentId) : [];
 
   const position = sourcePath[sourcePath.length - 1];
 
@@ -124,19 +102,11 @@ function permuteRelativeNode(
   return treeAfterInsertion;
 }
 
-function executeRelativeOperation(
-  tree: RecursiveMenuItem[],
-  operation: TreeOperation,
-): RecursiveMenuItem[] {
-  return operation.type === "move"
-    ? permuteRelativeNode(tree, operation)
-    : removeNodeAndChildren(tree, operation);
+function executeRelativeOperation(tree: RecursiveMenuItem[], operation: TreeOperation): RecursiveMenuItem[] {
+  return operation.type === 'move' ? permuteRelativeNode(tree, operation) : removeNodeAndChildren(tree, operation);
 }
 
-export function computeRelativeTree(
-  tree: RecursiveMenuItem[],
-  operations: TreeOperation[],
-): RecursiveMenuItem[] {
+export function computeRelativeTree(tree: RecursiveMenuItem[], operations: TreeOperation[]): RecursiveMenuItem[] {
   const newTree = operations.reduce(
     (acc, operation) => executeRelativeOperation(acc, operation),
     JSON.parse(JSON.stringify(tree)),

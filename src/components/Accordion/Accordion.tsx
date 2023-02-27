@@ -1,11 +1,11 @@
-import { Typography } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import { IconButton, makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
+import { Typography } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add';
+import RemoveIcon from '@material-ui/icons/Remove';
+import { IconButton, makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
 
-import Hr from "../Hr";
+import Hr from '../Hr';
 
 const useStyles = makeStyles(
   theme => ({
@@ -13,7 +13,7 @@ const useStyles = makeStyles(
       padding: theme.spacing(3, 0),
     },
     expandButton: {
-      position: "relative",
+      position: 'relative',
       right: theme.spacing(-2),
       top: theme.spacing(0.5),
     },
@@ -23,15 +23,15 @@ const useStyles = makeStyles(
       padding: theme.spacing(0, 3),
     },
     title: {
-      display: "flex",
-      justifyContent: "space-between",
+      display: 'flex',
+      justifyContent: 'space-between',
     },
     titleText: {
       padding: theme.spacing(2, 0),
     },
   }),
   {
-    name: "Accordion",
+    name: 'Accordion',
   },
 );
 
@@ -42,14 +42,7 @@ export interface AccordionProps {
   title: string;
 }
 
-const Accordion: React.FC<AccordionProps> = ({
-  children,
-  className,
-  initialExpand,
-  quickPeek,
-  title,
-  ...props
-}) => {
+const Accordion: React.FC<AccordionProps> = ({ children, className, initialExpand, quickPeek, title, ...props }) => {
   const classes = useStyles({});
   const [expanded, setExpanded] = React.useState(!!initialExpand);
 
@@ -58,10 +51,7 @@ const Accordion: React.FC<AccordionProps> = ({
       <div className={classes.title}>
         <Typography className={classes.titleText}>{title}</Typography>
         <div className={classes.expandButton}>
-          <IconButton
-            variant="secondary"
-            onClick={() => setExpanded(!expanded)}
-          >
+          <IconButton variant="secondary" onClick={() => setExpanded(!expanded)}>
             {expanded ? <RemoveIcon /> : <AddIcon />}
           </IconButton>
         </div>
@@ -69,14 +59,12 @@ const Accordion: React.FC<AccordionProps> = ({
       {(expanded || !!quickPeek) && (
         <>
           <Hr />
-          <div className={classes.content}>
-            {quickPeek ? (expanded ? children : quickPeek) : children}
-          </div>
+          <div className={classes.content}>{quickPeek ? (expanded ? children : quickPeek) : children}</div>
         </>
       )}
     </div>
   );
 };
 
-Accordion.displayName = "Accordion";
+Accordion.displayName = 'Accordion';
 export default Accordion;

@@ -1,6 +1,6 @@
-import { act, renderHook } from "@testing-library/react-hooks";
+import { act, renderHook } from '@testing-library/react-hooks';
 
-import useStateFromProps from "./useStateFromProps";
+import useStateFromProps from './useStateFromProps';
 
 function setupHook() {
   return renderHook(useStateFromProps, {
@@ -10,8 +10,8 @@ function setupHook() {
   });
 }
 
-describe("useStateFromProps", () => {
-  it("updates itself if props changed", () => {
+describe('useStateFromProps', () => {
+  it('updates itself if props changed', () => {
     const hook = setupHook();
 
     hook.rerender({ a: 1 });
@@ -19,7 +19,7 @@ describe("useStateFromProps", () => {
     expect(hook.result.current[0].a).toBe(1);
   });
 
-  it("updates if called setState", () => {
+  it('updates if called setState', () => {
     const hook = setupHook();
 
     act(() => hook.result.current[1]({ a: 1 }));
@@ -27,7 +27,7 @@ describe("useStateFromProps", () => {
     expect(hook.result.current[0].a).toBe(1);
   });
 
-  it("does not update if props stay the same", () => {
+  it('does not update if props stay the same', () => {
     const hook = setupHook();
 
     act(() => hook.result.current[1]({ a: 1 }));
@@ -36,7 +36,7 @@ describe("useStateFromProps", () => {
     expect(hook.result.current[0].a).toBe(1);
   });
 
-  it("update if called setState and then props changed", () => {
+  it('update if called setState and then props changed', () => {
     const hook = setupHook();
 
     act(() => hook.result.current[1]({ a: 1 }));

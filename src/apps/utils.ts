@@ -1,11 +1,9 @@
-import { AppsInstallationsQuery } from "@dashboard/graphql";
+import { AppsInstallationsQuery } from '@dashboard/graphql';
 
-const tunnelKeywords = [".ngrok.io", ".saleor.live"];
+const tunnelKeywords = ['.ngrok.io', '.saleor.live'];
 
 export const isAppInTunnel = (manifestUrl: string) =>
   Boolean(tunnelKeywords.find(keyword => manifestUrl.includes(keyword)));
 
-export const getAppInProgressName = (
-  id: string,
-  collection?: AppsInstallationsQuery["appsInstallations"],
-) => collection?.find(app => app.id === id)?.appName || id;
+export const getAppInProgressName = (id: string, collection?: AppsInstallationsQuery['appsInstallations']) =>
+  collection?.find(app => app.id === id)?.appName || id;

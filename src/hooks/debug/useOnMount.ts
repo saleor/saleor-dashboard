@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 
 function useOnMount(name: string) {
   // eslint-disable-next-line no-console

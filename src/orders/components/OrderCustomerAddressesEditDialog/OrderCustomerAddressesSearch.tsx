@@ -1,29 +1,18 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
-import { ConfirmButton } from "@dashboard/components/ConfirmButton";
-import CustomerAddressChoiceCard from "@dashboard/customers/components/CustomerAddressChoiceCard";
-import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
-import { buttonMessages } from "@dashboard/intl";
-import { getById } from "@dashboard/misc";
-import {
-  Checkbox,
-  DialogActions,
-  DialogContent,
-  FormControlLabel,
-  InputAdornment,
-  TextField,
-} from "@material-ui/core";
-import {
-  Button,
-  ConfirmButtonTransitionState,
-  SearchIcon,
-} from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
+import { ConfirmButton } from '@dashboard/components/ConfirmButton';
+import CustomerAddressChoiceCard from '@dashboard/customers/components/CustomerAddressChoiceCard';
+import { AddressFragment, AddressTypeEnum } from '@dashboard/graphql';
+import { FormChange } from '@dashboard/hooks/useForm';
+import { buttonMessages } from '@dashboard/intl';
+import { getById } from '@dashboard/misc';
+import { Checkbox, DialogActions, DialogContent, FormControlLabel, InputAdornment, TextField } from '@material-ui/core';
+import { Button, ConfirmButtonTransitionState, SearchIcon } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { dialogMessages as messages } from "./messages";
-import { useStyles } from "./styles";
-import { parseQuery, stringifyAddress } from "./utils";
+import { dialogMessages as messages } from './messages';
+import { useStyles } from './styles';
+import { parseQuery, stringifyAddress } from './utils';
 
 export interface OrderCustomerAddressesSearchProps {
   type: AddressTypeEnum;
@@ -55,15 +44,10 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
   const intl = useIntl();
   const classes = useStyles(props);
 
-  const initialAddress = customerAddresses.find(
-    getById(selectedCustomerAddressId),
-  );
+  const initialAddress = customerAddresses.find(getById(selectedCustomerAddressId));
 
-  const [query, setQuery] = React.useState("");
-  const [
-    temporarySelectedAddress,
-    setTemporarySelectedAddress,
-  ] = React.useState(initialAddress);
+  const [query, setQuery] = React.useState('');
+  const [temporarySelectedAddress, setTemporarySelectedAddress] = React.useState(initialAddress);
 
   const handleSelect = () => {
     if (type === AddressTypeEnum.SHIPPING) {
@@ -83,7 +67,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
   const filteredCustomerAddresses = customerAddresses.filter(address => {
     const parsedAddress = stringifyAddress(address);
 
-    return parsedAddress.search(new RegExp(parseQuery(query), "i")) >= 0;
+    return parsedAddress.search(new RegExp(parseQuery(query), 'i')) >= 0;
   });
 
   return (
@@ -95,7 +79,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
           value={query}
           variant="outlined"
           onChange={handleChange}
-          placeholder={"Search addresses"}
+          placeholder={'Search addresses'}
           fullWidth
           InputProps={{
             startAdornment: (
@@ -130,7 +114,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
                 onChange={() =>
                   formChange({
                     target: {
-                      name: "cloneAddress",
+                      name: 'cloneAddress',
                       value: !cloneAddress,
                     },
                   })
@@ -138,9 +122,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
               />
             }
             label={intl.formatMessage(
-              type === AddressTypeEnum.SHIPPING
-                ? messages.billingSameAsShipping
-                : messages.shippingSameAsBilling,
+              type === AddressTypeEnum.SHIPPING ? messages.billingSameAsShipping : messages.shippingSameAsBilling,
             )}
           />
         )}
@@ -152,7 +134,7 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
         <ConfirmButton
           variant="primary"
           transitionState={transitionState}
-          type={openFromCustomerChange ? undefined : "submit"}
+          type={openFromCustomerChange ? undefined : 'submit'}
           onClick={handleSelect}
         >
           <FormattedMessage {...buttonMessages.select} />
@@ -162,5 +144,5 @@ const OrderCustomerAddressesSearch: React.FC<OrderCustomerAddressesSearchProps> 
   );
 };
 
-OrderCustomerAddressesSearch.displayName = "OrderCustomerAddressesSearch";
+OrderCustomerAddressesSearch.displayName = 'OrderCustomerAddressesSearch';
 export default OrderCustomerAddressesSearch;

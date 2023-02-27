@@ -1,9 +1,9 @@
-import { defineMessages } from "react-intl";
+import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
   item: {
-    id: "Xz/sDf",
-    defaultMessage: "Item:",
-    description: "Dry run items list item",
+    id: 'Xz/sDf',
+    defaultMessage: 'Item:',
+    description: 'Dry run items list item',
   },
 });

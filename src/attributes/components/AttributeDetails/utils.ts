@@ -1,12 +1,12 @@
-import { Choice } from "@dashboard/components/SingleSelectField";
-import { MeasurementUnitsEnum } from "@dashboard/graphql";
-import React from "react";
-import { IntlShape, MessageDescriptor } from "react-intl";
+import { Choice } from '@dashboard/components/SingleSelectField';
+import { MeasurementUnitsEnum } from '@dashboard/graphql';
+import React from 'react';
+import { IntlShape, MessageDescriptor } from 'react-intl';
 
-import * as M from "./messages";
+import * as M from './messages';
 
-export type UnitSystem = "imperial" | "metric";
-export type UnitType = "volume" | "weight" | "area" | "distance";
+export type UnitSystem = 'imperial' | 'metric';
+export type UnitType = 'volume' | 'weight' | 'area' | 'distance';
 
 const UNIT_MESSAGES_MAPPING = {
   [MeasurementUnitsEnum.CUBIC_FOOT]: M.units.cubicFoot,
@@ -42,41 +42,39 @@ const UNIT_MESSAGES_MAPPING = {
 
 export const getMeasurementUnitMessage = (
   unit: MeasurementUnitsEnum,
-  formatMessage: IntlShape["formatMessage"],
+  formatMessage: IntlShape['formatMessage'],
 ): MessageDescriptor | React.ReactNode => {
   const message = UNIT_MESSAGES_MAPPING[unit];
-  return typeof message === "string" || React.isValidElement(message)
-    ? message
-    : formatMessage(message);
+  return typeof message === 'string' || React.isValidElement(message) ? message : formatMessage(message);
 };
 
 export const unitSystemChoices: Array<Choice<UnitSystem, MessageDescriptor>> = [
   {
     label: M.unitSystemMessages.metric,
-    value: "metric",
+    value: 'metric',
   },
   {
     label: M.unitSystemMessages.imperial,
-    value: "imperial",
+    value: 'imperial',
   },
 ];
 
 export const unitTypeChoices: Array<Choice<UnitType, MessageDescriptor>> = [
   {
     label: M.unitTypeMessages.volume,
-    value: "volume",
+    value: 'volume',
   },
   {
     label: M.unitTypeMessages.distance,
-    value: "distance",
+    value: 'distance',
   },
   {
     label: M.unitTypeMessages.weight,
-    value: "weight",
+    value: 'weight',
   },
   {
     label: M.unitTypeMessages.area,
-    value: "area",
+    value: 'area',
   },
 ];
 
@@ -92,17 +90,9 @@ export const unitMapping = {
       MeasurementUnitsEnum.ACRE_IN,
       MeasurementUnitsEnum.ACRE_FT,
     ],
-    distance: [
-      MeasurementUnitsEnum.FT,
-      MeasurementUnitsEnum.YD,
-      MeasurementUnitsEnum.INCH,
-    ],
+    distance: [MeasurementUnitsEnum.FT, MeasurementUnitsEnum.YD, MeasurementUnitsEnum.INCH],
     weight: [MeasurementUnitsEnum.LB, MeasurementUnitsEnum.OZ],
-    area: [
-      MeasurementUnitsEnum.SQ_FT,
-      MeasurementUnitsEnum.SQ_YD,
-      MeasurementUnitsEnum.SQ_INCH,
-    ],
+    area: [MeasurementUnitsEnum.SQ_FT, MeasurementUnitsEnum.SQ_YD, MeasurementUnitsEnum.SQ_INCH],
   },
   metric: {
     volume: [
@@ -111,21 +101,9 @@ export const unitMapping = {
       MeasurementUnitsEnum.CUBIC_METER,
       MeasurementUnitsEnum.LITER,
     ],
-    distance: [
-      MeasurementUnitsEnum.CM,
-      MeasurementUnitsEnum.M,
-      MeasurementUnitsEnum.KM,
-    ],
-    weight: [
-      MeasurementUnitsEnum.G,
-      MeasurementUnitsEnum.KG,
-      MeasurementUnitsEnum.TONNE,
-    ],
-    area: [
-      MeasurementUnitsEnum.SQ_CM,
-      MeasurementUnitsEnum.SQ_M,
-      MeasurementUnitsEnum.SQ_KM,
-    ],
+    distance: [MeasurementUnitsEnum.CM, MeasurementUnitsEnum.M, MeasurementUnitsEnum.KM],
+    weight: [MeasurementUnitsEnum.G, MeasurementUnitsEnum.KG, MeasurementUnitsEnum.TONNE],
+    area: [MeasurementUnitsEnum.SQ_CM, MeasurementUnitsEnum.SQ_M, MeasurementUnitsEnum.SQ_KM],
   },
 };
 
@@ -133,7 +111,7 @@ const extractTypeChoices = (
   typeEnums: {
     [key in UnitType]: MeasurementUnitsEnum[];
   },
-  formatMessage: IntlShape["formatMessage"],
+  formatMessage: IntlShape['formatMessage'],
 ) =>
   Object.entries(typeEnums).reduce(
     (acc, [type, units]) => ({
@@ -147,7 +125,7 @@ const extractTypeChoices = (
   );
 
 export const getUnitChoices = (
-  formatMessage: IntlShape["formatMessage"],
+  formatMessage: IntlShape['formatMessage'],
 ): {
   [key in UnitSystem]: {
     [key in UnitType]: Array<Choice<MeasurementUnitsEnum>>;

@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const shippingZoneFragment = gql`
   fragment ShippingZone on ShippingZone {
@@ -67,12 +67,7 @@ export const shippingMethodTypeFragment = gql`
 export const shippingMethodWithExcludedProductsFragment = gql`
   fragment ShippingMethodWithExcludedProducts on ShippingMethodType {
     ...ShippingMethodType
-    excludedProducts(
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-    ) {
+    excludedProducts(before: $before, after: $after, first: $first, last: $last) {
       pageInfo {
         hasNextPage
         hasPreviousPage

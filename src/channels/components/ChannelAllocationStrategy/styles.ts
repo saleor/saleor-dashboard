@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
@@ -7,20 +7,20 @@ export const useStyles = makeStyles(
       marginBottom: theme.spacing(),
     },
     tooltipIcon: {
-      fill: theme.palette.type === "dark" ? "#FAFAFA" : "#28234A",
+      fill: theme.palette.type === 'dark' ? '#FAFAFA' : '#28234A',
       fillOpacity: 0.6,
-      "&:hover": {
+      '&:hover': {
         fillOpacity: 1,
       },
-      position: "absolute",
+      position: 'absolute',
       padding: theme.spacing(0.25),
     },
     preview: {
-      display: "flex",
+      display: 'flex',
       gap: theme.spacing(1),
-      flexWrap: "wrap",
-      alignItems: "center",
+      flexWrap: 'wrap',
+      alignItems: 'center',
     },
   }),
-  { name: "ChannelAllocationStrategy" },
+  { name: 'ChannelAllocationStrategy' },
 );

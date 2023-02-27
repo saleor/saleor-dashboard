@@ -1,7 +1,7 @@
-import { Box } from "@saleor/macaw-ui/next";
-import React from "react";
+import { Box } from '@saleor/macaw-ui/next';
+import React from 'react';
 
-import { useContentHeight } from "./useContentHeight";
+import { useContentHeight } from './useContentHeight';
 
 interface ContentProps {
   [key: `data-${string}`]: string;
@@ -10,12 +10,7 @@ interface ContentProps {
   noTopNav?: boolean;
 }
 
-export const Content: React.FC<ContentProps> = ({
-  children,
-  noSavebar = false,
-  noTopNav = false,
-  ...rest
-}) => {
+export const Content: React.FC<ContentProps> = ({ children, noSavebar = false, noTopNav = false, ...rest }) => {
   const { withoutSaveBar, withSaveBar } = useContentHeight();
 
   return (

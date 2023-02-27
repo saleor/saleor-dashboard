@@ -1,15 +1,15 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
+import ActionDialog from '@dashboard/components/ActionDialog';
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
-} from "@dashboard/components/SingleAutocompleteSelectField";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { FetchMoreProps } from "@dashboard/types";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/components/SingleAutocompleteSelectField';
+import useModalDialogOpen from '@dashboard/hooks/useModalDialogOpen';
+import useStateFromProps from '@dashboard/hooks/useStateFromProps';
+import { FetchMoreProps } from '@dashboard/types';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { messages } from "./messages";
+import { messages } from './messages';
 
 export interface PageTypePickerDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -31,15 +31,13 @@ const PageTypePickerDialog: React.FC<PageTypePickerDialogProps> = ({
   onConfirm,
 }) => {
   const intl = useIntl();
-  const [choice, setChoice] = useStateFromProps("");
-  const pageTypeDisplayValue = pageTypes.find(
-    pageType => pageType.value === choice,
-  )?.label;
+  const [choice, setChoice] = useStateFromProps('');
+  const pageTypeDisplayValue = pageTypes.find(pageType => pageType.value === choice)?.label;
 
   useModalDialogOpen(open, {
     onClose: () => {
-      setChoice("");
-      fetchPageTypes("");
+      setChoice('');
+      fetchPageTypes('');
     },
   });
 
@@ -66,5 +64,5 @@ const PageTypePickerDialog: React.FC<PageTypePickerDialogProps> = ({
     </ActionDialog>
   );
 };
-PageTypePickerDialog.displayName = "PageTypePickerDialog";
+PageTypePickerDialog.displayName = 'PageTypePickerDialog';
 export default PageTypePickerDialog;

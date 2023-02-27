@@ -1,26 +1,24 @@
-import CardMenu, { CardMenuItem } from "@dashboard/components/CardMenu";
-import { bulkEnableDisableSectionMessages } from "@dashboard/giftCards/GiftCardsList/GiftCardsListTable/GiftCardsListTableHeader/messages";
-import { giftCardsListTableMessages } from "@dashboard/giftCards/GiftCardsList/messages";
-import useGiftCardActivateToggle from "@dashboard/giftCards/GiftCardUpdate/GiftCardUpdatePageHeader/hooks/useGiftCardActivateToggle";
-import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
-import { CustomerGiftCardFragment } from "@dashboard/graphql";
-import * as React from "react";
-import { useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import CardMenu, { CardMenuItem } from '@dashboard/components/CardMenu';
+import { bulkEnableDisableSectionMessages } from '@dashboard/giftCards/GiftCardsList/GiftCardsListTable/GiftCardsListTableHeader/messages';
+import { giftCardsListTableMessages } from '@dashboard/giftCards/GiftCardsList/messages';
+import useGiftCardActivateToggle from '@dashboard/giftCards/GiftCardUpdate/GiftCardUpdatePageHeader/hooks/useGiftCardActivateToggle';
+import { ExtendedGiftCard } from '@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types';
+import { CustomerGiftCardFragment } from '@dashboard/graphql';
+import * as React from 'react';
+import { useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import GiftCardDeleteDialogContent from "../GiftCardDeleteDialog/GiftCardDeleteDialogContent";
-import useGiftCardSingleDelete from "../GiftCardDeleteDialog/useGiftCardSingleDelete";
-import GiftCardStatusChip from "../GiftCardStatusChip/GiftCardStatusChip";
-import { CUSTOMER_GIFT_CARD_LIST_QUERY } from "./queries";
-import { useListWrapperStyles } from "./styles";
+import GiftCardDeleteDialogContent from '../GiftCardDeleteDialog/GiftCardDeleteDialogContent';
+import useGiftCardSingleDelete from '../GiftCardDeleteDialog/useGiftCardSingleDelete';
+import GiftCardStatusChip from '../GiftCardStatusChip/GiftCardStatusChip';
+import { CUSTOMER_GIFT_CARD_LIST_QUERY } from './queries';
+import { useListWrapperStyles } from './styles';
 
 interface CustomerGiftCardsCardListItemProps {
   giftCard: ExtendedGiftCard<CustomerGiftCardFragment>;
 }
 
-const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps> = ({
-  giftCard,
-}) => {
+const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps> = ({ giftCard }) => {
   const intl = useIntl();
   const classes = useListWrapperStyles();
   const [openDeleteGiftCard, setOpenDeleteGiftCard] = useState(false);
@@ -28,14 +26,10 @@ const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps
 
   const onGiftCardDeleteDialogClose = () => setOpenDeleteGiftCard(false);
 
-  const {
-    giftCardActivate,
-    giftCardDeactivate,
-    giftCardActivateOpts,
-    giftCardDeactivateOpts,
-  } = useGiftCardActivateToggle({
-    isActive,
-  });
+  const { giftCardActivate, giftCardDeactivate, giftCardActivateOpts, giftCardDeactivateOpts } =
+    useGiftCardActivateToggle({
+      isActive,
+    });
 
   const handleGiftCardActivate = () => {
     giftCardActivate({
@@ -69,18 +63,14 @@ const CustomerGiftCardsCardListItem: React.FC<CustomerGiftCardsCardListItemProps
 
     const statusButton = isActive
       ? {
-          label: intl.formatMessage(
-            bulkEnableDisableSectionMessages.disableLabel,
-          ),
+          label: intl.formatMessage(bulkEnableDisableSectionMessages.disableLabel),
           onSelect: handleGiftCardDeactivate,
           loading: giftCardDeactivateOpts.loading,
           withLoading: true,
           hasError: !!giftCardDeactivateOpts.error,
         }
       : {
-          label: intl.formatMessage(
-            bulkEnableDisableSectionMessages.enableLabel,
-          ),
+          label: intl.formatMessage(bulkEnableDisableSectionMessages.enableLabel),
           onSelect: handleGiftCardActivate,
           loading: giftCardActivateOpts.loading,
           withLoading: true,

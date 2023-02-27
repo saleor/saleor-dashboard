@@ -1,18 +1,18 @@
-import { DiscountErrorCode, DiscountErrorFragment } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { DiscountErrorCode, DiscountErrorFragment } from '@dashboard/graphql';
+import { defineMessages, IntlShape } from 'react-intl';
 
-import { getCommonFormFieldErrorMessage } from "./common";
+import { getCommonFormFieldErrorMessage } from './common';
 
 const messages = defineMessages({
   alreadyExists: {
-    id: "stjHjY",
-    defaultMessage: "Promo code already exists",
-    description: "error message",
+    id: 'stjHjY',
+    defaultMessage: 'Promo code already exists',
+    description: 'error message',
   },
 });
 
 function getDiscountErrorMessage(
-  err: Omit<DiscountErrorFragment, "__typename"> | undefined,
+  err: Omit<DiscountErrorFragment, '__typename'> | undefined,
   intl: IntlShape,
 ): string | undefined {
   if (err) {

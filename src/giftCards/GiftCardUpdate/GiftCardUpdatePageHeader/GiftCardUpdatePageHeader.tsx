@@ -1,18 +1,18 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Button } from "@dashboard/components/Button";
-import GiftCardStatusChip from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
-import { giftCardsListPath } from "@dashboard/giftCards/urls";
-import { getStringOrPlaceholder } from "@dashboard/misc";
-import React from "react";
-import { useIntl } from "react-intl";
+import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import { Button } from '@dashboard/components/Button';
+import GiftCardStatusChip from '@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip';
+import { giftCardsListPath } from '@dashboard/giftCards/urls';
+import { getStringOrPlaceholder } from '@dashboard/misc';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList/messages";
-import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
-import useGiftCardUpdateDialogs from "../providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs";
-import GiftCardEnableDisableSection from "./GiftCardEnableDisableSection";
-import { giftCardUpdatePageHeaderMessages as messages } from "./messages";
-import useStyles from "./styles";
+import { giftCardsListTableMessages as tableMessages } from '../../GiftCardsList/messages';
+import useGiftCardDetails from '../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails';
+import useGiftCardUpdateDialogs from '../providers/GiftCardUpdateDialogsProvider/hooks/useGiftCardUpdateDialogs';
+import GiftCardEnableDisableSection from './GiftCardEnableDisableSection';
+import { giftCardUpdatePageHeaderMessages as messages } from './messages';
+import useStyles from './styles';
 
 const GiftCardUpdatePageHeader: React.FC = () => {
   const classes = useStyles();

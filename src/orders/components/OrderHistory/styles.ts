@@ -1,5 +1,5 @@
-import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { makeStyles } from '@saleor/macaw-ui';
+import { vars } from '@saleor/macaw-ui/next';
 
 export const useStyles = makeStyles(
   theme => ({
@@ -23,5 +23,5 @@ export const useStyles = makeStyles(
       marginBottom: theme.spacing(1),
     },
   }),
-  { name: "OrderHistory" },
+  { name: 'OrderHistory' },
 );

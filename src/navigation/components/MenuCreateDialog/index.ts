@@ -1,2 +1,2 @@
-export { default } from "./MenuCreateDialog";
-export * from "./MenuCreateDialog";
+export { default } from './MenuCreateDialog';
+export * from './MenuCreateDialog';

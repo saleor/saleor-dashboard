@@ -1,16 +1,13 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useState } from 'react';
 
 export type UseLocalStorage<T> = [T, Dispatch<SetStateAction<T>>];
-export default function useLocalStorage<T>(
-  key: string,
-  initialValue: SetStateAction<T>,
-): UseLocalStorage<T> {
+export default function useLocalStorage<T>(key: string, initialValue: SetStateAction<T>): UseLocalStorage<T> {
   const saveToLocalStorage = (valueToStore: T) => {
     try {
-      if (typeof valueToStore === "string") {
+      if (typeof valueToStore === 'string') {
         localStorage.setItem(key, valueToStore);
-      } else if (typeof valueToStore === "undefined") {
-        localStorage.setItem(key, "");
+      } else if (typeof valueToStore === 'undefined') {
+        localStorage.setItem(key, '');
       } else {
         localStorage.setItem(key, JSON.stringify(valueToStore));
       }
@@ -40,7 +37,7 @@ export default function useLocalStorage<T>(
     try {
       const parsed = JSON.parse(item);
       if (!parsed) {
-        throw new Error("Empty value");
+        throw new Error('Empty value');
       }
 
       result = parsed;
@@ -48,7 +45,7 @@ export default function useLocalStorage<T>(
       // Casting to T (which should resolve to string) because JSON.parse would
       // throw an error if "foo" was passed, but properly casting "true" or "1"
       // to their respective types
-      result = (item as unknown) as T;
+      result = item as unknown as T;
     }
 
     return getValue(result, initialValue);

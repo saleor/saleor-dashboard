@@ -1,55 +1,55 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import Money from "@dashboard/components/Money";
-import RequirePermissions from "@dashboard/components/RequirePermissions";
-import Skeleton from "@dashboard/components/Skeleton";
-import { HomeQuery, PermissionEnum } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
-import React from "react";
+import { Content } from '@dashboard/components/AppLayout/Content';
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import Money from '@dashboard/components/Money';
+import RequirePermissions from '@dashboard/components/RequirePermissions';
+import Skeleton from '@dashboard/components/Skeleton';
+import { HomeQuery, PermissionEnum } from '@dashboard/graphql';
+import { RelayToFlat } from '@dashboard/types';
+import { makeStyles } from '@saleor/macaw-ui';
+import { Box } from '@saleor/macaw-ui/next';
+import React from 'react';
 
-import Orders from "../../../icons/Orders";
-import Sales from "../../../icons/Sales";
-import HomeActivityCard from "../HomeActivityCard";
-import HomeAnalyticsCard from "../HomeAnalyticsCard";
-import HomeHeader from "../HomeHeader";
-import HomeNotificationTable from "../HomeNotificationTable/HomeNotificationTable";
-import HomeProductListCard from "../HomeProductListCard";
+import Orders from '../../../icons/Orders';
+import Sales from '../../../icons/Sales';
+import HomeActivityCard from '../HomeActivityCard';
+import HomeAnalyticsCard from '../HomeAnalyticsCard';
+import HomeHeader from '../HomeHeader';
+import HomeNotificationTable from '../HomeNotificationTable/HomeNotificationTable';
+import HomeProductListCard from '../HomeProductListCard';
 
 const useStyles = makeStyles(
   theme => ({
     cardContainer: {
-      display: "grid",
+      display: 'grid',
       gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: "1fr 1fr",
-      [theme.breakpoints.down("sm")]: {
+      gridTemplateColumns: '1fr 1fr',
+      [theme.breakpoints.down('sm')]: {
         gridColumnGap: theme.spacing(1),
       },
-      [theme.breakpoints.down("xs")]: {
-        gridTemplateColumns: "1fr",
+      [theme.breakpoints.down('xs')]: {
+        gridTemplateColumns: '1fr',
       },
     },
     icon: {
-      "& path": {
+      '& path': {
         fill: theme.palette.primary.main,
       },
     },
   }),
-  { name: "HomePage" },
+  { name: 'HomePage' },
 );
 
 export interface HomePageProps {
-  activities: RelayToFlat<HomeQuery["activities"]>;
+  activities: RelayToFlat<HomeQuery['activities']>;
   orders: number | null;
   ordersToCapture: number | null;
   ordersToFulfill: number | null;
   productsOutOfStock: number;
-  sales: HomeQuery["salesToday"]["gross"];
-  topProducts: RelayToFlat<HomeQuery["productTopToday"]> | null;
+  sales: HomeQuery['salesToday']['gross'];
+  topProducts: RelayToFlat<HomeQuery['productTopToday']> | null;
   userName: string;
   createNewChannelHref: string;
   ordersToFulfillHref: string;
@@ -83,47 +83,21 @@ const HomePage: React.FC<HomePageProps> = props => {
       <Content noSavebar>
         <Box paddingLeft={9} paddingRight={11}>
           <CardSpacer />
-          <RequirePermissions
-            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
-          >
+          <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
             <div className={classes.cardContainer}>
               <HomeAnalyticsCard
-                title={"Sales"}
+                title={'Sales'}
                 testId="sales-analytics"
-                icon={
-                  <Sales
-                    className={classes.icon}
-                    fontSize={"inherit"}
-                    viewBox="0 0 64 64"
-                  />
-                }
+                icon={<Sales className={classes.icon} fontSize={'inherit'} viewBox="0 0 64 64" />}
               >
-                {noChannel ? (
-                  0
-                ) : sales ? (
-                  <Money money={sales} />
-                ) : (
-                  <Skeleton style={{ width: "5em" }} />
-                )}
+                {noChannel ? 0 : sales ? <Money money={sales} /> : <Skeleton style={{ width: '5em' }} />}
               </HomeAnalyticsCard>
               <HomeAnalyticsCard
-                title={"Orders"}
+                title={'Orders'}
                 testId="orders-analytics"
-                icon={
-                  <Orders
-                    className={classes.icon}
-                    fontSize={"inherit"}
-                    viewBox="0 0 64 64"
-                  />
-                }
+                icon={<Orders className={classes.icon} fontSize={'inherit'} viewBox="0 0 64 64" />}
               >
-                {noChannel ? (
-                  0
-                ) : orders !== undefined ? (
-                  orders
-                ) : (
-                  <Skeleton style={{ width: "5em" }} />
-                )}
+                {noChannel ? 0 : orders !== undefined ? orders : <Skeleton style={{ width: '5em' }} />}
               </HomeAnalyticsCard>
             </div>
           </RequirePermissions>
@@ -139,16 +113,8 @@ const HomePage: React.FC<HomePageProps> = props => {
           />
           <CardSpacer />
           {topProducts && (
-            <RequirePermissions
-              requiredPermissions={[
-                PermissionEnum.MANAGE_ORDERS,
-                PermissionEnum.MANAGE_PRODUCTS,
-              ]}
-            >
-              <HomeProductListCard
-                testId="top-products"
-                topProducts={topProducts}
-              />
+            <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS, PermissionEnum.MANAGE_PRODUCTS]}>
+              <HomeProductListCard testId="top-products" topProducts={topProducts} />
               <CardSpacer />
             </RequirePermissions>
           )}
@@ -156,9 +122,7 @@ const HomePage: React.FC<HomePageProps> = props => {
       </Content>
       {activities && (
         <RightSidebar noSavebar>
-          <RequirePermissions
-            requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
-          >
+          <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}>
             <HomeActivityCard activities={activities} testId="activity-card" />
           </RequirePermissions>
         </RightSidebar>
@@ -166,5 +130,5 @@ const HomePage: React.FC<HomePageProps> = props => {
     </DetailedContent>
   );
 };
-HomePage.displayName = "HomePage";
+HomePage.displayName = 'HomePage';
 export default HomePage;

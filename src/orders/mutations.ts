@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const orderCancelMutation = gql`
   mutation OrderCancel($id: ID!) {
@@ -54,10 +54,7 @@ export const orderLineDiscountRemoveMutation = gql`
 `;
 
 export const orderLineDiscountUpdateMutation = gql`
-  mutation OrderLineDiscountUpdate(
-    $input: OrderDiscountCommonInput!
-    $orderLineId: ID!
-  ) {
+  mutation OrderLineDiscountUpdate($input: OrderDiscountCommonInput!, $orderLineId: ID!) {
     orderLineDiscountUpdate(input: $input, orderLineId: $orderLineId) {
       errors {
         ...OrderError
@@ -70,10 +67,7 @@ export const orderLineDiscountUpdateMutation = gql`
 `;
 
 export const orderDiscountUpdateMutation = gql`
-  mutation OrderDiscountUpdate(
-    $input: OrderDiscountCommonInput!
-    $discountId: ID!
-  ) {
+  mutation OrderDiscountUpdate($input: OrderDiscountCommonInput!, $discountId: ID!) {
     orderDiscountUpdate(input: $input, discountId: $discountId) {
       errors {
         ...OrderError
@@ -137,10 +131,7 @@ export const orderDraftFinalizeMutation = gql`
 `;
 
 export const orderReturnCreateMutation = gql`
-  mutation FulfillmentReturnProducts(
-    $id: ID!
-    $input: OrderReturnProductsInput!
-  ) {
+  mutation FulfillmentReturnProducts($id: ID!, $input: OrderReturnProductsInput!) {
     orderFulfillmentReturnProducts(input: $input, order: $id) {
       errors {
         ...OrderError
@@ -169,10 +160,7 @@ export const orderRefundMutation = gql`
 `;
 
 export const orderFulfillmentRefundProductsMutation = gql`
-  mutation OrderFulfillmentRefundProducts(
-    $input: OrderRefundProductsInput!
-    $order: ID!
-  ) {
+  mutation OrderFulfillmentRefundProducts($input: OrderRefundProductsInput!, $order: ID!) {
     orderFulfillmentRefundProducts(input: $input, order: $order) {
       errors {
         ...OrderError
@@ -227,10 +215,7 @@ export const orderCaptureMutation = gql`
 `;
 
 export const orderFulfillmentUpdateTrackingMutation = gql`
-  mutation OrderFulfillmentUpdateTracking(
-    $id: ID!
-    $input: FulfillmentUpdateTrackingInput!
-  ) {
+  mutation OrderFulfillmentUpdateTracking($id: ID!, $input: FulfillmentUpdateTrackingInput!) {
     orderFulfillmentUpdateTracking(id: $id, input: $input) {
       errors {
         ...OrderError
@@ -243,16 +228,8 @@ export const orderFulfillmentUpdateTrackingMutation = gql`
 `;
 
 export const orderFulfillmentApproveMutation = gql`
-  mutation OrderFulfillmentApprove(
-    $id: ID!
-    $notifyCustomer: Boolean!
-    $allowStockToBeExceeded: Boolean
-  ) {
-    orderFulfillmentApprove(
-      id: $id
-      notifyCustomer: $notifyCustomer
-      allowStockToBeExceeded: $allowStockToBeExceeded
-    ) {
+  mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!, $allowStockToBeExceeded: Boolean) {
+    orderFulfillmentApprove(id: $id, notifyCustomer: $notifyCustomer, allowStockToBeExceeded: $allowStockToBeExceeded) {
       errors {
         ...OrderError
       }
@@ -319,10 +296,7 @@ export const orderDraftUpdateMutation = gql`
 `;
 
 export const orderShippingMethodUpdateMutation = gql`
-  mutation OrderShippingMethodUpdate(
-    $id: ID!
-    $input: OrderUpdateShippingInput!
-  ) {
+  mutation OrderShippingMethodUpdate($id: ID!, $input: OrderUpdateShippingInput!) {
     orderUpdateShipping(order: $id, input: $input) {
       errors {
         ...OrderError
@@ -469,10 +443,7 @@ export const invoiceEmailSendMutation = gql`
 `;
 
 export const orderSettingsUpdateMutation = gql`
-  mutation OrderSettingsUpdate(
-    $orderSettingsInput: OrderSettingsUpdateInput!
-    $shopSettingsInput: ShopSettingsInput!
-  ) {
+  mutation OrderSettingsUpdate($orderSettingsInput: OrderSettingsUpdateInput!, $shopSettingsInput: ShopSettingsInput!) {
     orderSettingsUpdate(input: $orderSettingsInput) {
       errors {
         ...OrderSettingsError

@@ -1,2 +1,2 @@
-export { default } from "./OrderFulfillStockExceededDialog";
-export * from "./OrderFulfillStockExceededDialog";
+export { default } from './OrderFulfillStockExceededDialog';
+export * from './OrderFulfillStockExceededDialog';

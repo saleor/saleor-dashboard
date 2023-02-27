@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useAccordionStyles = makeStyles(
   () => ({
@@ -6,51 +6,51 @@ export const useAccordionStyles = makeStyles(
       paddingTop: 0,
     },
   }),
-  { name: "VariantDetailsChannelsAvailabilityCard" },
+  { name: 'VariantDetailsChannelsAvailabilityCard' },
 );
 
 export const useExpanderStyles = makeStyles(
   () => ({
     expanded: {},
     root: {
-      boxShadow: "none",
+      boxShadow: 'none',
       margin: 0,
       padding: 0,
 
-      "&:before": {
-        content: "none",
+      '&:before': {
+        content: 'none',
       },
 
-      "&$expanded": {
+      '&$expanded': {
         margin: 0,
-        border: "none",
+        border: 'none',
       },
     },
   }),
-  { name: "VariantDetailsChannelsAvailabilityCardExpander" },
+  { name: 'VariantDetailsChannelsAvailabilityCardExpander' },
 );
 
 export const useSummaryStyles = makeStyles(
   () => ({
     expanded: {},
     root: {
-      width: "100%",
-      border: "none",
+      width: '100%',
+      border: 'none',
       margin: 0,
       padding: 0,
       minHeight: 0,
 
-      "&$expanded": {
+      '&$expanded': {
         minHeight: 0,
       },
     },
     content: {
       margin: 0,
 
-      "&$expanded": {
+      '&$expanded': {
         margin: 0,
       },
     },
   }),
-  { name: "VariantDetailsChannelsAvailabilityCardExpanderSummary" },
+  { name: 'VariantDetailsChannelsAvailabilityCardExpanderSummary' },
 );

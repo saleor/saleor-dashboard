@@ -1,12 +1,12 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
     activateButton: {
-      "& img": {
+      '& img': {
         marginRight: theme.spacing(1),
       },
     },
   }),
-  { name: "CustomAppDetailsPage" },
+  { name: 'CustomAppDetailsPage' },
 );

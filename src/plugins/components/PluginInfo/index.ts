@@ -1,2 +1,2 @@
-export { default } from "./PluginInfo";
-export * from "./PluginInfo";
+export { default } from './PluginInfo';
+export * from './PluginInfo';

@@ -1,18 +1,13 @@
-import { FormChange } from "@dashboard/hooks/useForm";
+import { FormChange } from '@dashboard/hooks/useForm';
 
-export function createCountryChangeHandler(
-  selectedCountries: string[],
-  change: FormChange,
-) {
+export function createCountryChangeHandler(selectedCountries: string[], change: FormChange) {
   return (countryCode: string, checked: boolean) => {
     const updatedCountries = checked
       ? [...selectedCountries, countryCode]
-      : selectedCountries.filter(
-          selectedCountry => selectedCountry !== countryCode,
-        );
+      : selectedCountries.filter(selectedCountry => selectedCountry !== countryCode);
     change({
       target: {
-        name: "countries" as keyof FormData,
+        name: 'countries' as keyof FormData,
         value: updatedCountries,
       },
     } as any);
@@ -29,22 +24,16 @@ export function createRestOfTheWorldChangeHandler(
     if (restOfTheWorld) {
       change({
         target: {
-          name: "countries" as keyof FormData,
-          value: restWorldCountries
-            .filter(countryCode => !countrySelectionMap[countryCode])
-            .concat(selectedCountries),
+          name: 'countries' as keyof FormData,
+          value: restWorldCountries.filter(countryCode => !countrySelectionMap[countryCode]).concat(selectedCountries),
         },
       } as any);
     } else {
       change({
         target: {
-          name: "countries" as keyof FormData,
+          name: 'countries' as keyof FormData,
           value: selectedCountries.filter(
-            countryCode =>
-              !(
-                countrySelectionMap[countryCode] &&
-                restWorldCountries.includes(countryCode)
-              ),
+            countryCode => !(countrySelectionMap[countryCode] && restWorldCountries.includes(countryCode)),
           ),
         },
       } as any);

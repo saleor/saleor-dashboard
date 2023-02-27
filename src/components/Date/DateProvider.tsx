@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import { Provider } from "./DateContext";
+import { Provider } from './DateContext';
 
 interface DateProviderState {
   date: number;
@@ -16,10 +16,7 @@ export class DateProvider extends React.Component<{}, DateProviderState> {
   };
 
   componentDidMount() {
-    this.intervalId = window.setInterval(
-      () => this.setState({ date: Date.now() }),
-      10000,
-    );
+    this.intervalId = window.setInterval(() => this.setState({ date: Date.now() }), 10000);
   }
 
   componentWillUnmount() {

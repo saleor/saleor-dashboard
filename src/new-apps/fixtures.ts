@@ -5,80 +5,77 @@ import {
   AppTypeEnum,
   JobStatusEnum,
   PermissionEnum,
-} from "@dashboard/graphql";
+} from '@dashboard/graphql';
 
-import { GetV2SaleorAppsResponse } from "./marketplace.types";
+import { GetV2SaleorAppsResponse } from './marketplace.types';
 
 export const activeApp: AppListItemFragment = {
-  __typename: "App",
-  id: "QXBwOjE3Ng==",
+  __typename: 'App',
+  id: 'QXBwOjE3Ng==',
   isActive: true,
-  name: "First App",
+  name: 'First App',
   type: AppTypeEnum.THIRDPARTY,
-  version: "1.0.0",
-  appUrl: "http://localhost:3000",
-  manifestUrl: "http://localhost:3000/api/manifest",
+  version: '1.0.0',
+  appUrl: 'http://localhost:3000',
+  manifestUrl: 'http://localhost:3000/api/manifest',
   permissions: [
     {
-      __typename: "Permission",
+      __typename: 'Permission',
       code: PermissionEnum.MANAGE_USERS,
-      name: "Manage customers.",
+      name: 'Manage customers.',
     },
   ],
 };
 
 export const inactiveApp: AppListItemFragment = {
-  __typename: "App",
-  id: "QXBwOj4TMb==",
+  __typename: 'App',
+  id: 'QXBwOj4TMb==',
   isActive: false,
-  name: "Second App",
+  name: 'Second App',
   type: AppTypeEnum.THIRDPARTY,
-  version: "1.0.0",
+  version: '1.0.0',
   appUrl: null,
-  manifestUrl: "http://localhost:3000/api/manifest",
+  manifestUrl: 'http://localhost:3000/api/manifest',
   permissions: [
     {
-      __typename: "Permission",
+      __typename: 'Permission',
       code: PermissionEnum.MANAGE_ORDERS,
-      name: "Manage orders.",
+      name: 'Manage orders.',
     },
     {
-      __typename: "Permission",
+      __typename: 'Permission',
       code: PermissionEnum.MANAGE_USERS,
-      name: "Manage customers.",
+      name: 'Manage customers.',
     },
   ],
 };
 
-export const installedAppsList: AppListItemFragment[] = [
-  activeApp,
-  inactiveApp,
-];
+export const installedAppsList: AppListItemFragment[] = [activeApp, inactiveApp];
 
 export const failedAppInProgress: AppInstallationFragment = {
-  __typename: "AppInstallation",
-  appName: "app",
-  id: "QXBwSW5zdGFsbGF0aW9uOjk2",
-  manifestUrl: "http://localhost:3000/manifest",
-  message: "Failed to connect to app. Try later or contact with app support.",
+  __typename: 'AppInstallation',
+  appName: 'app',
+  id: 'QXBwSW5zdGFsbGF0aW9uOjk2',
+  manifestUrl: 'http://localhost:3000/manifest',
+  message: 'Failed to connect to app. Try later or contact with app support.',
   status: JobStatusEnum.FAILED,
 };
 
 export const pendingAppInProgress: AppInstallationFragment = {
-  __typename: "AppInstallation",
-  appName: "app pending",
-  id: "QXBwSW5zdGFsbGF0aW9uOjk2",
-  manifestUrl: "http://localhost:3000/manifest",
-  message: "Pending.",
+  __typename: 'AppInstallation',
+  appName: 'app pending',
+  id: 'QXBwSW5zdGFsbGF0aW9uOjk2',
+  manifestUrl: 'http://localhost:3000/manifest',
+  message: 'Pending.',
   status: JobStatusEnum.PENDING,
 };
 
 export const successAppInProgress: AppInstallationFragment = {
-  __typename: "AppInstallation",
-  appName: "app success",
-  id: "QXBwSW5zdGFsbGF0aW9uOjk2",
-  manifestUrl: "http://localhost:3000/manifest",
-  message: "Success.",
+  __typename: 'AppInstallation',
+  appName: 'app success',
+  id: 'QXBwSW5zdGFsbGF0aW9uOjk2',
+  manifestUrl: 'http://localhost:3000/manifest',
+  message: 'Success.',
   status: JobStatusEnum.SUCCESS,
 };
 
@@ -89,72 +86,68 @@ export const appsInProgress: AppInstallationFragment[] = [
 ];
 
 export const installApp: AppManifestFragment = {
-  __typename: "Manifest",
-  about: "Lorem ipsum",
+  __typename: 'Manifest',
+  about: 'Lorem ipsum',
   appUrl: null,
   configurationUrl: null,
   dataPrivacy: null,
   dataPrivacyUrl: null,
   homepageUrl: null,
-  identifier: "app",
-  name: "app",
+  identifier: 'app',
+  name: 'app',
   permissions: [
     {
-      __typename: "Permission",
+      __typename: 'Permission',
       code: PermissionEnum.MANAGE_USERS,
-      name: "Manage users",
+      name: 'Manage users',
     },
     {
-      __typename: "Permission",
+      __typename: 'Permission',
       code: PermissionEnum.MANAGE_ORDERS,
-      name: "Manage orders",
+      name: 'Manage orders',
     },
   ],
   supportUrl: null,
   tokenTargetUrl: null,
-  version: "1.0",
+  version: '1.0',
 };
 
 export const releasedApp: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
   name: {
-    en: "Test released app",
+    en: 'Test released app',
   },
   description: {
-    en: "Test released app description",
+    en: 'Test released app description',
   },
   logo: {
-    source: "https://www.released-example.com/images/logo.png",
-    color: "#000000",
+    source: 'https://www.released-example.com/images/logo.png',
+    color: '#000000',
   },
-  manifestUrl: "https://www.released-example.com/manifest",
-  privacyUrl: "https://www.released-example.com/privacy",
-  supportUrl: "https://www.released-example.com/support",
-  repositoryUrl: "https://www.released-example.com/repository",
-  githubForkUrl: "https://www.released-example.com/repository/fork",
+  manifestUrl: 'https://www.released-example.com/manifest',
+  privacyUrl: 'https://www.released-example.com/privacy',
+  supportUrl: 'https://www.released-example.com/support',
+  repositoryUrl: 'https://www.released-example.com/repository',
+  githubForkUrl: 'https://www.released-example.com/repository/fork',
   integrations: [
     {
-      name: "First released integration",
+      name: 'First released integration',
       logo: {
         light: {
-          source:
-            "https://www.released-example.com/images/first-integration-logo-light.png",
+          source: 'https://www.released-example.com/images/first-integration-logo-light.png',
         },
         dark: {
-          source:
-            "https://www.released-example.com/images/first-integration-logo-dark.png",
+          source: 'https://www.released-example.com/images/first-integration-logo-dark.png',
         },
       },
     },
     {
-      name: "Second released integration",
+      name: 'Second released integration',
       logo: {
         light: {
-          source:
-            "https://www.released-example.com/images/second-integration-logo-light.png",
+          source: 'https://www.released-example.com/images/second-integration-logo-light.png',
         },
         dark: {
-          source:
-            "https://www.released-example.com/images/second-integration-logo-dark.png",
+          source: 'https://www.released-example.com/images/second-integration-logo-dark.png',
         },
       },
     },
@@ -163,40 +156,36 @@ export const releasedApp: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
 
 export const comingSoonApp: GetV2SaleorAppsResponse.ComingSoonSaleorApp = {
   name: {
-    en: "Test coming soon app",
+    en: 'Test coming soon app',
   },
   description: {
-    en: "Test coming soon app description",
+    en: 'Test coming soon app description',
   },
   logo: {
-    source: "https://www.coming-soon-example.com/images/logo.png",
-    color: "#000000",
+    source: 'https://www.coming-soon-example.com/images/logo.png',
+    color: '#000000',
   },
-  releaseDate: "2019-12-16",
+  releaseDate: '2019-12-16',
   integrations: [
     {
-      name: "First coming soon integration",
+      name: 'First coming soon integration',
       logo: {
         light: {
-          source:
-            "https://www.coming-soon-example.com/images/first-integration-logo-light.png",
+          source: 'https://www.coming-soon-example.com/images/first-integration-logo-light.png',
         },
         dark: {
-          source:
-            "https://www.coming-soon-example.com/images/first-integration-logo-dark.png",
+          source: 'https://www.coming-soon-example.com/images/first-integration-logo-dark.png',
         },
       },
     },
     {
-      name: "Second coming soon integration",
+      name: 'Second coming soon integration',
       logo: {
         light: {
-          source:
-            "https://www.coming-soon-example.com/images/second-integration-logo-light.png",
+          source: 'https://www.coming-soon-example.com/images/second-integration-logo-light.png',
         },
         dark: {
-          source:
-            "https://www.coming-soon-example.com/images/second-integration-logo-dark.png",
+          source: 'https://www.coming-soon-example.com/images/second-integration-logo-dark.png',
         },
       },
     },

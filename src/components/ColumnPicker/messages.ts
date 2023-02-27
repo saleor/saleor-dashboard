@@ -1,20 +1,20 @@
-import { defineMessages } from "react-intl";
+import { defineMessages } from 'react-intl';
 
 const messages = defineMessages({
   title: {
-    defaultMessage: "Customize list",
-    id: "p+HM56",
-    description: "header",
+    defaultMessage: 'Customize list',
+    id: 'p+HM56',
+    description: 'header',
   },
   columnSubheader: {
-    defaultMessage: "Column settings",
-    id: "dS+SOT",
-    description: "header",
+    defaultMessage: 'Column settings',
+    id: 'dS+SOT',
+    description: 'header',
   },
   columnLabel: {
-    defaultMessage: "Selected columns",
-    id: "IHtOda",
-    description: "input label",
+    defaultMessage: 'Selected columns',
+    id: 'IHtOda',
+    description: 'input label',
   },
 });
 

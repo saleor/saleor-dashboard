@@ -1,34 +1,34 @@
-import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
-import { ShippingErrorFragment } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { getFormErrors } from "@dashboard/utils/errors";
-import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
-import { Card, CardContent, TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import CardSpacer from '@dashboard/components/CardSpacer';
+import CardTitle from '@dashboard/components/CardTitle';
+import { ShippingErrorFragment } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { getFormErrors } from '@dashboard/utils/errors';
+import getShippingErrorMessage from '@dashboard/utils/errors/shipping';
+import { Card, CardContent, TextField } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
 const messages = defineMessages({
   descriptionCharacterLimit: {
-    id: "ChAjJu",
-    defaultMessage: "{numberOfCharacters} of {maxCharacters} characters",
-    description: "character limit",
+    id: 'ChAjJu',
+    defaultMessage: '{numberOfCharacters} of {maxCharacters} characters',
+    description: 'character limit',
   },
   descriptionPlaceholder: {
-    id: "FkRNk+",
-    defaultMessage: "Description of a shipping zone.",
-    description: "field placeholder",
+    id: 'FkRNk+',
+    defaultMessage: 'Description of a shipping zone.',
+    description: 'field placeholder',
   },
   name: {
-    id: "YpukUN",
-    defaultMessage: "Shipping zone name",
-    description: "label",
+    id: 'YpukUN',
+    defaultMessage: 'Shipping zone name',
+    description: 'label',
   },
 });
 
 export interface ShippingZoneInfoProps {
-  data: Record<"name" | "description", string>;
+  data: Record<'name' | 'description', string>;
   disabled: boolean;
   errors: ShippingErrorFragment[];
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -40,33 +40,26 @@ const useStyles = makeStyles(
       flex: 1,
     },
     labelContainer: {
-      "& span": {
+      '& span': {
         paddingRight: 30,
       },
-      display: "flex",
+      display: 'flex',
     },
   },
-  { name: "ShippingZoneCreatePage" },
+  { name: 'ShippingZoneCreatePage' },
 );
 
 const MAX_DESCRIPTION_LENGTH = 300;
 
-const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}) => {
+const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({ data, disabled, errors, onChange }) => {
   const intl = useIntl();
   const classes = useStyles({});
 
-  const formErrors = getFormErrors(["name"], errors);
+  const formErrors = getFormErrors(['name'], errors);
 
   return (
     <Card>
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      />
+      <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
       <CardContent>
         <TextField
           disabled={disabled}
@@ -75,7 +68,7 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
           helperText={getShippingErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage(messages.name)}
           inputProps={{
-            "data-test-id": "name",
+            'data-test-id': 'name',
           }}
           name="name"
           value={data.name}
@@ -84,7 +77,7 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
         <CardSpacer />
         <TextField
           error={data.description.length > MAX_DESCRIPTION_LENGTH}
-          name={"description"}
+          name={'description'}
           label={
             <div className={classes.labelContainer}>
               <div className={classes.label}>
@@ -120,5 +113,5 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
     </Card>
   );
 };
-ShippingZoneInfo.displayName = "ShippingZoneInfo";
+ShippingZoneInfo.displayName = 'ShippingZoneInfo';
 export default ShippingZoneInfo;

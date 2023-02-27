@@ -6,16 +6,16 @@ import {
   searchPageProps,
   sortPageProps,
   tabPageProps,
-} from "@dashboard/fixtures";
-import { StaffMemberStatus } from "@dashboard/graphql";
-import { staffMembers } from "@dashboard/staff/fixtures";
-import { StaffListUrlSortField } from "@dashboard/staff/urls";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+} from '@dashboard/fixtures';
+import { StaffMemberStatus } from '@dashboard/graphql';
+import { staffMembers } from '@dashboard/staff/fixtures';
+import { StaffListUrlSortField } from '@dashboard/staff/urls';
+import Decorator from '@dashboard/storybook/Decorator';
+import { PaginatorContextDecorator } from '@dashboard/storybook/PaginatorContextDecorator';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import StaffListPage, { StaffListPageProps } from "./StaffListPage";
+import StaffListPage, { StaffListPageProps } from './StaffListPage';
 
 const props: StaffListPageProps = {
   ...pageListProps.default,
@@ -38,14 +38,10 @@ const props: StaffListPageProps = {
   staffMembers,
 };
 
-storiesOf("Staff / Staff members", module)
+storiesOf('Staff / Staff members', module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <StaffListPage {...props} />)
-  .add("when loading", () => (
-    <StaffListPage {...props} disabled={true} staffMembers={undefined} />
-  ))
-  .add("no limits", () => <StaffListPage {...props} limits={undefined} />)
-  .add("limits reached", () => (
-    <StaffListPage {...props} limits={limitsReached} />
-  ));
+  .add('default', () => <StaffListPage {...props} />)
+  .add('when loading', () => <StaffListPage {...props} disabled={true} staffMembers={undefined} />)
+  .add('no limits', () => <StaffListPage {...props} limits={undefined} />)
+  .add('limits reached', () => <StaffListPage {...props} limits={limitsReached} />);

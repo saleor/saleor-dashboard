@@ -1,16 +1,15 @@
-import { MetadataInput } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
-import React from "react";
+import { MetadataInput } from '@dashboard/graphql';
+import { ChangeEvent } from '@dashboard/hooks/useForm';
+import { removeAtIndex, updateAtIndex } from '@dashboard/utils/lists';
+import React from 'react';
 
-import CardSpacer from "../CardSpacer";
-import MetadataCard, { MetadataCardProps } from "./MetadataCard";
-import { EventDataAction, EventDataField } from "./types";
-import { getDataKey, parseEventData } from "./utils";
+import CardSpacer from '../CardSpacer';
+import MetadataCard, { MetadataCardProps } from './MetadataCard';
+import { EventDataAction, EventDataField } from './types';
+import { getDataKey, parseEventData } from './utils';
 
-export interface MetadataProps
-  extends Omit<MetadataCardProps, "data" | "isPrivate"> {
-  data: Record<"metadata" | "privateMetadata", MetadataInput[]>;
+export interface MetadataProps extends Omit<MetadataCardProps, 'data' | 'isPrivate'> {
+  data: Record<'metadata' | 'privateMetadata', MetadataInput[]>;
 }
 
 const Metadata: React.FC<MetadataProps> = ({ data, onChange }) => {
@@ -27,14 +26,8 @@ const Metadata: React.FC<MetadataProps> = ({ data, onChange }) => {
             ? updateAtIndex(
                 {
                   ...dataToUpdate[fieldIndex],
-                  key:
-                    field === EventDataField.name
-                      ? value
-                      : dataToUpdate[fieldIndex].key,
-                  value:
-                    field === EventDataField.value
-                      ? value
-                      : dataToUpdate[fieldIndex].value,
+                  key: field === EventDataField.name ? value : dataToUpdate[fieldIndex].key,
+                  value: field === EventDataField.value ? value : dataToUpdate[fieldIndex].value,
                 },
                 dataToUpdate,
                 fieldIndex,
@@ -43,8 +36,8 @@ const Metadata: React.FC<MetadataProps> = ({ data, onChange }) => {
             ? [
                 ...dataToUpdate,
                 {
-                  key: "",
-                  value: "",
+                  key: '',
+                  value: '',
                 },
               ]
             : removeAtIndex(dataToUpdate, fieldIndex),
@@ -54,20 +47,12 @@ const Metadata: React.FC<MetadataProps> = ({ data, onChange }) => {
 
   return (
     <>
-      <MetadataCard
-        data={data?.metadata}
-        isPrivate={false}
-        onChange={event => change(event, false)}
-      />
+      <MetadataCard data={data?.metadata} isPrivate={false} onChange={event => change(event, false)} />
       <CardSpacer />
-      <MetadataCard
-        data={data?.privateMetadata}
-        isPrivate={true}
-        onChange={event => change(event, true)}
-      />
+      <MetadataCard data={data?.privateMetadata} isPrivate={true} onChange={event => change(event, true)} />
     </>
   );
 };
 
-Metadata.displayName = "Metadata";
+Metadata.displayName = 'Metadata';
 export default Metadata;

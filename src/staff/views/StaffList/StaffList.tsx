@@ -1,46 +1,31 @@
-import { newPasswordUrl } from "@dashboard/auth/urls";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import {
-  useStaffListQuery,
-  useStaffMemberAddMutation,
-} from "@dashboard/graphql";
-import useListSettings from "@dashboard/hooks/useListSettings";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
-import usePaginator, {
-  createPaginationState,
-  PaginatorContext,
-} from "@dashboard/hooks/usePaginator";
-import { commonMessages } from "@dashboard/intl";
-import { getStringOrPlaceholder } from "@dashboard/misc";
-import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
-import { ListViews } from "@dashboard/types";
-import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
-import createSortHandler from "@dashboard/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { getSortParams } from "@dashboard/utils/sort";
-import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
-import React from "react";
-import { useIntl } from "react-intl";
-import urlJoin from "url-join";
+import { newPasswordUrl } from '@dashboard/auth/urls';
+import DeleteFilterTabDialog from '@dashboard/components/DeleteFilterTabDialog';
+import SaveFilterTabDialog, { SaveFilterTabDialogFormData } from '@dashboard/components/SaveFilterTabDialog';
+import { useShopLimitsQuery } from '@dashboard/components/Shop/queries';
+import { DEFAULT_INITIAL_SEARCH_DATA } from '@dashboard/config';
+import { useStaffListQuery, useStaffMemberAddMutation } from '@dashboard/graphql';
+import useListSettings from '@dashboard/hooks/useListSettings';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { usePaginationReset } from '@dashboard/hooks/usePaginationReset';
+import usePaginator, { createPaginationState, PaginatorContext } from '@dashboard/hooks/usePaginator';
+import { commonMessages } from '@dashboard/intl';
+import { getStringOrPlaceholder } from '@dashboard/misc';
+import usePermissionGroupSearch from '@dashboard/searches/usePermissionGroupSearch';
+import { ListViews } from '@dashboard/types';
+import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
+import createFilterHandlers from '@dashboard/utils/handlers/filterHandlers';
+import createSortHandler from '@dashboard/utils/handlers/sortHandler';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import { getSortParams } from '@dashboard/utils/sort';
+import { getAppMountUriForRedirect } from '@dashboard/utils/urls';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import urlJoin from 'url-join';
 
-import StaffAddMemberDialog, {
-  AddMemberFormData,
-} from "../../components/StaffAddMemberDialog";
-import StaffListPage from "../../components/StaffListPage";
-import {
-  staffListUrl,
-  StaffListUrlDialog,
-  StaffListUrlQueryParams,
-  staffMemberDetailsUrl,
-} from "../../urls";
+import StaffAddMemberDialog, { AddMemberFormData } from '../../components/StaffAddMemberDialog';
+import StaffListPage from '../../components/StaffListPage';
+import { staffListUrl, StaffListUrlDialog, StaffListUrlQueryParams, staffMemberDetailsUrl } from '../../urls';
 import {
   deleteFilterTab,
   getActiveFilters,
@@ -50,8 +35,8 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
-} from "./filters";
-import { getSortQueryVariables } from "./sort";
+} from './filters';
+import { getSortQueryVariables } from './sort';
 
 interface StaffListProps {
   params: StaffListUrlQueryParams;
@@ -60,9 +45,7 @@ interface StaffListProps {
 export const StaffList: React.FC<StaffListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.STAFF_MEMBERS_LIST,
-  );
+  const { updateListSettings, settings } = useListSettings(ListViews.STAFF_MEMBERS_LIST);
   const intl = useIntl();
 
   usePaginationReset(staffListUrl, params, settings.rowNumber);
@@ -90,7 +73,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
     onCompleted: data => {
       if (data.staffCreate.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate(staffMemberDetailsUrl(data.staffCreate.user.id));
@@ -110,21 +93,18 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
 
   const currentTab = getFiltersCurrentTab(params, tabs);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: staffListUrl,
     getFilterQueryParam,
     navigate,
     params,
   });
 
-  const [openModal, closeModal] = createDialogActionHandlers<
-    StaffListUrlDialog,
-    StaffListUrlQueryParams
-  >(navigate, staffListUrl, params);
+  const [openModal, closeModal] = createDialogActionHandlers<StaffListUrlDialog, StaffListUrlQueryParams>(
+    navigate,
+    staffListUrl,
+    params,
+  );
 
   const handleTabChange = (tab: number) => {
     navigate(
@@ -161,11 +141,7 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
           email: variables.email,
           firstName: variables.firstName,
           lastName: variables.lastName,
-          redirectUrl: urlJoin(
-            window.location.origin,
-            getAppMountUriForRedirect(),
-            newPasswordUrl().replace(/\?/, ""),
-          ),
+          redirectUrl: urlJoin(window.location.origin, getAppMountUriForRedirect(), newPasswordUrl().replace(/\?/, '')),
         },
       },
     });
@@ -175,32 +151,30 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
       <StaffListPage
         currentTab={currentTab}
         filterOpts={getFilterOpts(params)}
-        initialSearch={params.query || ""}
+        initialSearch={params.query || ''}
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}
         onAll={resetFilters}
         onTabChange={handleTabChange}
-        onTabDelete={() => openModal("delete-search")}
-        onTabSave={() => openModal("save-search")}
+        onTabDelete={() => openModal('delete-search')}
+        onTabSave={() => openModal('save-search')}
         tabs={tabs.map(tab => tab.name)}
         disabled={loading || addStaffMemberData.loading || limitOpts.loading}
         limits={limitOpts.data?.shop.limits}
         settings={settings}
         sort={getSortParams(params)}
         staffMembers={mapEdgesToItems(staffQueryData?.staffUsers)}
-        onAdd={() => openModal("add")}
+        onAdd={() => openModal('add')}
         onUpdateListSettings={updateListSettings}
         onSort={handleSort}
       />
       <StaffAddMemberDialog
-        availablePermissionGroups={mapEdgesToItems(
-          searchPermissionGroupsOpts?.data?.search,
-        )}
+        availablePermissionGroups={mapEdgesToItems(searchPermissionGroupsOpts?.data?.search)}
         confirmButtonState={addStaffMemberData.status}
         initialSearch=""
         disabled={loading}
         errors={addStaffMemberData.data?.staffCreate.errors || []}
-        open={params.action === "add"}
+        open={params.action === 'add'}
         onClose={closeModal}
         onConfirm={handleStaffMemberAdd}
         fetchMorePermissionGroups={{
@@ -211,13 +185,13 @@ export const StaffList: React.FC<StaffListProps> = ({ params }) => {
         onSearchChange={searchPermissionGroups}
       />
       <SaveFilterTabDialog
-        open={params.action === "save-search"}
+        open={params.action === 'save-search'}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabSave}
       />
       <DeleteFilterTabDialog
-        open={params.action === "delete-search"}
+        open={params.action === 'delete-search'}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabDelete}

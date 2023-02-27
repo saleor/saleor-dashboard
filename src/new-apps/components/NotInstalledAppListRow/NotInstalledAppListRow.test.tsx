@@ -1,16 +1,13 @@
-import * as context from "@dashboard/new-apps/context";
-import {
-  failedAppInProgress,
-  pendingAppInProgress,
-} from "@dashboard/new-apps/fixtures";
-import Wrapper from "@test/wrapper";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import React from "react";
+import * as context from '@dashboard/new-apps/context';
+import { failedAppInProgress, pendingAppInProgress } from '@dashboard/new-apps/fixtures';
+import Wrapper from '@test/wrapper';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
 
-import NotInstalledAppListRow from "./NotInstalledAppListRow";
+import NotInstalledAppListRow from './NotInstalledAppListRow';
 
-jest.mock("@dashboard/new-apps/context", () => ({
+jest.mock('@dashboard/new-apps/context', () => ({
   useAppListContext: jest.fn(() => ({
     openAppSettings: jest.fn(),
     removeAppInstallation: jest.fn(),
@@ -18,15 +15,12 @@ jest.mock("@dashboard/new-apps/context", () => ({
   })),
 }));
 
-describe("Apps NotInstalledAppListRow", () => {
-  it("displays app installation details when failed installation data passed", () => {
+describe('Apps NotInstalledAppListRow', () => {
+  it('displays app installation details when failed installation data passed', () => {
     // Arrange
     render(
       <Wrapper>
-        <NotInstalledAppListRow
-          appInstallation={failedAppInProgress}
-          isExternal={false}
-        />
+        <NotInstalledAppListRow appInstallation={failedAppInProgress} isExternal={false} />
       </Wrapper>,
     );
     const name = screen.queryByText(failedAppInProgress.appName);
@@ -34,8 +28,8 @@ describe("Apps NotInstalledAppListRow", () => {
     // const manifestDomain = screen.queryByText(
     //   new URL(failedAppInProgress.manifestUrl as string).host,
     // );
-    const pendingLabel = screen.queryByTestId("app-pending-label");
-    const failedLabel = screen.queryByTestId("app-failed-label");
+    const pendingLabel = screen.queryByTestId('app-pending-label');
+    const failedLabel = screen.queryByTestId('app-failed-label');
 
     // Assert
     expect(name).toBeTruthy();
@@ -45,14 +39,11 @@ describe("Apps NotInstalledAppListRow", () => {
     expect(failedLabel).toBeTruthy();
   });
 
-  it("displays app installation details when pending installation data passed", () => {
+  it('displays app installation details when pending installation data passed', () => {
     // Arrange
     render(
       <Wrapper>
-        <NotInstalledAppListRow
-          appInstallation={pendingAppInProgress}
-          isExternal={false}
-        />
+        <NotInstalledAppListRow appInstallation={pendingAppInProgress} isExternal={false} />
       </Wrapper>,
     );
     const name = screen.queryByText(pendingAppInProgress.appName);
@@ -60,8 +51,8 @@ describe("Apps NotInstalledAppListRow", () => {
     // const manifestDomain = screen.queryByText(
     //   new URL(pendingAppInProgress.manifestUrl as string).host,
     // );
-    const pendingLabel = screen.queryByTestId("app-pending-label");
-    const failedLabel = screen.queryByTestId("app-failed-label");
+    const pendingLabel = screen.queryByTestId('app-pending-label');
+    const failedLabel = screen.queryByTestId('app-failed-label');
 
     // Assert
     expect(name).toBeTruthy();
@@ -71,27 +62,24 @@ describe("Apps NotInstalledAppListRow", () => {
     expect(failedLabel).toBeFalsy();
   });
 
-  it("calls handlers when app installation data passed and buttons clicked", async () => {
+  it('calls handlers when app installation data passed and buttons clicked', async () => {
     // Arrange
     const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
-    jest.spyOn(context, "useAppListContext").mockImplementation(() => ({
+    jest.spyOn(context, 'useAppListContext').mockImplementation(() => ({
       openAppSettings,
       removeAppInstallation,
       retryAppInstallation,
     }));
     render(
       <Wrapper>
-        <NotInstalledAppListRow
-          appInstallation={failedAppInProgress}
-          isExternal={false}
-        />
+        <NotInstalledAppListRow appInstallation={failedAppInProgress} isExternal={false} />
       </Wrapper>,
     );
     const user = userEvent.setup();
-    const retryButton = screen.getByTestId("app-installation-retry-button");
-    const removeButton = screen.getByTestId("app-installation-remove-button");
+    const retryButton = screen.getByTestId('app-installation-retry-button');
+    const removeButton = screen.getByTestId('app-installation-remove-button');
 
     // Act
     await user.click(retryButton);

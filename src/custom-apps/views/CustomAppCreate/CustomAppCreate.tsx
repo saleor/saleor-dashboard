@@ -1,26 +1,22 @@
-import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { CustomAppUrls } from "@dashboard/custom-apps/urls";
-import { AppCreateMutation, useAppCreateMutation } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors } from "@dashboard/misc";
-import React from "react";
-import { useIntl } from "react-intl";
+import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { CustomAppUrls } from '@dashboard/custom-apps/urls';
+import { AppCreateMutation, useAppCreateMutation } from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import useShop from '@dashboard/hooks/useShop';
+import { commonMessages } from '@dashboard/intl';
+import { extractMutationErrors } from '@dashboard/misc';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import CustomAppCreatePage, {
-  CustomAppCreatePageFormData,
-} from "../../components/CustomAppCreatePage";
-import { messages } from "./messages";
+import CustomAppCreatePage, { CustomAppCreatePageFormData } from '../../components/CustomAppCreatePage';
+import { messages } from './messages';
 
 interface CustomAppCreateProps {
   setToken: (token: string) => void;
 }
 
-export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
-  setToken,
-}) => {
+export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({ setToken }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -29,7 +25,7 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
   const onSubmit = (data: AppCreateMutation) => {
     if (data.appCreate.errors.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage(commonMessages.savedChanges),
       });
       navigate(CustomAppUrls.resolveAppUrl(data.appCreate.app.id));
@@ -47,9 +43,7 @@ export const CustomAppCreate: React.FC<CustomAppCreateProps> = ({
         variables: {
           input: {
             name: data.name,
-            permissions: data.hasFullAccess
-              ? shop.permissions.map(permission => permission.code)
-              : data.permissions,
+            permissions: data.hasFullAccess ? shop.permissions.map(permission => permission.code) : data.permissions,
           },
         },
       }),

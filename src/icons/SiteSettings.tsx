@@ -1,5 +1,5 @@
-import { createSvgIcon, SvgIconProps } from "@material-ui/core";
-import React from "react";
+import { createSvgIcon, SvgIconProps } from '@material-ui/core';
+import React from 'react';
 
 const SiteSettings = createSvgIcon(
   <>
@@ -16,9 +16,7 @@ const SiteSettings = createSvgIcon(
       fill="currentColor"
     />
   </>,
-  "SiteSettings",
+  'SiteSettings',
 );
 
-export default (props: SvgIconProps) => (
-  <SiteSettings {...props} viewBox="0 0 32 32" />
-);
+export default (props: SvgIconProps) => <SiteSettings {...props} viewBox="0 0 32 32" />;

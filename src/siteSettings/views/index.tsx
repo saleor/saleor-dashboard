@@ -1,20 +1,16 @@
-import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  CountryCode,
-  useShopSettingsUpdateMutation,
-  useSiteSettingsQuery,
-} from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages, sectionNames } from "@dashboard/intl";
-import React from "react";
-import { useIntl } from "react-intl";
+import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { CountryCode, useShopSettingsUpdateMutation, useSiteSettingsQuery } from '@dashboard/graphql';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { commonMessages, sectionNames } from '@dashboard/intl';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { extractMutationErrors, findInEnum } from "../../misc";
+import { extractMutationErrors, findInEnum } from '../../misc';
 import SiteSettingsPage, {
   areAddressInputFieldsModified,
   SiteSettingsPageFormData,
-} from "../components/SiteSettingsPage";
-import { SiteSettingsUrlQueryParams } from "../urls";
+} from '../components/SiteSettingsPage';
+import { SiteSettingsUrlQueryParams } from '../urls';
 
 export interface SiteSettingsProps {
   params: SiteSettingsUrlQueryParams;
@@ -28,19 +24,11 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
     displayLoader: true,
   });
 
-  const [
-    updateShopSettings,
-    updateShopSettingsOpts,
-  ] = useShopSettingsUpdateMutation({
+  const [updateShopSettings, updateShopSettingsOpts] = useShopSettingsUpdateMutation({
     onCompleted: data => {
-      if (
-        [
-          ...(data?.shopAddressUpdate?.errors || []),
-          ...(data?.shopSettingsUpdate?.errors || []),
-        ].length === 0
-      ) {
+      if ([...(data?.shopAddressUpdate?.errors || []), ...(data?.shopSettingsUpdate?.errors || [])].length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
@@ -75,10 +63,8 @@ export const SiteSettings: React.FC<SiteSettingsProps> = () => {
           addressInput,
           shopSettingsInput: {
             description: data.description,
-            reserveStockDurationAnonymousUser:
-              data.reserveStockDurationAnonymousUser || null,
-            reserveStockDurationAuthenticatedUser:
-              data.reserveStockDurationAuthenticatedUser || null,
+            reserveStockDurationAnonymousUser: data.reserveStockDurationAnonymousUser || null,
+            reserveStockDurationAuthenticatedUser: data.reserveStockDurationAuthenticatedUser || null,
           },
         },
       }),

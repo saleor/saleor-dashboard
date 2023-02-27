@@ -1,2 +1,2 @@
-export { default } from "./ProductMediaPage";
-export * from "./ProductMediaPage";
+export { default } from './ProductMediaPage';
+export * from './ProductMediaPage';

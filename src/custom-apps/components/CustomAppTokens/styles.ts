@@ -1,14 +1,14 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.down("md")]: {
+    [theme.breakpoints.down('md')]: {
       colNote: {
         width: 200,
       },
     },
     colActions: {
-      textAlign: "right",
+      textAlign: 'right',
       width: 100,
     },
     colKey: {
@@ -16,8 +16,8 @@ export const useStyles = makeStyles(
     },
     colNote: {},
     table: {
-      tableLayout: "fixed",
+      tableLayout: 'fixed',
     },
   }),
-  { name: "CustomAppTokens" },
+  { name: 'CustomAppTokens' },
 );

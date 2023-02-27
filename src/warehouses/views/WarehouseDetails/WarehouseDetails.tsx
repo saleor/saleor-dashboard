@@ -1,33 +1,24 @@
-import NotFoundPage from "@dashboard/components/NotFoundPage";
-import { WindowTitle } from "@dashboard/components/WindowTitle";
+import NotFoundPage from '@dashboard/components/NotFoundPage';
+import { WindowTitle } from '@dashboard/components/WindowTitle';
 import {
   CountryCode,
   useWarehouseDeleteMutation,
   useWarehouseDetailsQuery,
   useWarehouseUpdateMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
-import {
-  extractMutationErrors,
-  findValueInEnum,
-  getMutationStatus,
-  getStringOrPlaceholder,
-} from "@dashboard/misc";
-import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import WarehouseDeleteDialog from "@dashboard/warehouses/components/WarehouseDeleteDialog";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import useShop from '@dashboard/hooks/useShop';
+import { commonMessages } from '@dashboard/intl';
+import { extractMutationErrors, findValueInEnum, getMutationStatus, getStringOrPlaceholder } from '@dashboard/misc';
+import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
+import WarehouseDeleteDialog from '@dashboard/warehouses/components/WarehouseDeleteDialog';
 import WarehouseDetailsPage, {
   WarehouseDetailsPageFormData,
-} from "@dashboard/warehouses/components/WarehouseDetailsPage";
-import {
-  warehouseListUrl,
-  warehouseUrl,
-  WarehouseUrlQueryParams,
-} from "@dashboard/warehouses/urls";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/warehouses/components/WarehouseDetailsPage';
+import { warehouseListUrl, warehouseUrl, WarehouseUrlQueryParams } from '@dashboard/warehouses/urls';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
 export interface WarehouseDetailsProps {
   id: string;
@@ -47,7 +38,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
     onCompleted: data => {
       if (data?.updateWarehouse?.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
@@ -59,7 +50,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
     onCompleted: data => {
       if (data?.deleteWarehouse?.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate(warehouseListUrl());
@@ -68,11 +59,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
   });
   const deleteWarehouseTransitionState = getMutationStatus(deleteWarehouseOpts);
 
-  const [openModal, closeModal] = createDialogActionHandlers(
-    navigate,
-    params => warehouseUrl(id, params),
-    params,
-  );
+  const [openModal, closeModal] = createDialogActionHandlers(navigate, params => warehouseUrl(id, params), params);
 
   if (data?.warehouse === null) {
     return <NotFoundPage onBack={() => navigate(warehouseListUrl())} />;
@@ -112,7 +99,7 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
         errors={updateWarehouseOpts.data?.updateWarehouse?.errors || []}
         saveButtonBarState={updateWarehouseTransitionState}
         warehouse={data?.warehouse}
-        onDelete={() => openModal("delete")}
+        onDelete={() => openModal('delete')}
         onSubmit={handleSubmit}
       />
       <WarehouseDeleteDialog
@@ -124,11 +111,11 @@ const WarehouseDetails: React.FC<WarehouseDetailsProps> = ({ id, params }) => {
             variables: { id },
           })
         }
-        open={params.action === "delete"}
+        open={params.action === 'delete'}
       />
     </>
   );
 };
 
-WarehouseDetails.displayName = "WarehouseDetails";
+WarehouseDetails.displayName = 'WarehouseDetails';
 export default WarehouseDetails;

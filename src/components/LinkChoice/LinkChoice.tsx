@@ -1,13 +1,13 @@
-import { FormChange } from "@dashboard/hooks/useForm";
-import ArrowDropdown from "@dashboard/icons/ArrowDropdown";
-import { ClickAwayListener, MenuItem, Paper, Popper } from "@material-ui/core";
-import clsx from "clsx";
-import { codes } from "keycode";
-import React from "react";
+import { FormChange } from '@dashboard/hooks/useForm';
+import ArrowDropdown from '@dashboard/icons/ArrowDropdown';
+import { ClickAwayListener, MenuItem, Paper, Popper } from '@material-ui/core';
+import clsx from 'clsx';
+import { codes } from 'keycode';
+import React from 'react';
 
-import Link from "../Link";
-import { SingleAutocompleteChoiceType } from "../SingleAutocompleteSelectField";
-import { useStyles } from "./styles";
+import Link from '../Link';
+import { SingleAutocompleteChoiceType } from '../SingleAutocompleteSelectField';
+import { useStyles } from './styles';
 
 export interface LinkChoiceProps {
   className?: string;
@@ -17,13 +17,7 @@ export interface LinkChoiceProps {
   onChange: FormChange;
 }
 
-const LinkChoice: React.FC<LinkChoiceProps> = ({
-  className,
-  choices,
-  name,
-  value,
-  onChange,
-}) => {
+const LinkChoice: React.FC<LinkChoiceProps> = ({ className, choices, name, value, onChange }) => {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const anchor = React.useRef<HTMLInputElement>(null);
@@ -43,15 +37,11 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
   const handleKeyPress = (event: React.KeyboardEvent<HTMLSpanElement>) => {
     switch (event.keyCode) {
       case codes.down:
-        setHighlightedIndex(
-          highlightedIndex => (highlightedIndex + 1) % choices.length,
-        );
+        setHighlightedIndex(highlightedIndex => (highlightedIndex + 1) % choices.length);
         break;
       case codes.up:
         setHighlightedIndex(highlightedIndex =>
-          highlightedIndex === 0
-            ? choices.length - 1
-            : (highlightedIndex - 1) % choices.length,
+          highlightedIndex === 0 ? choices.length - 1 : (highlightedIndex - 1) % choices.length,
         );
         break;
       case codes.enter:
@@ -65,12 +55,7 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
   };
 
   return (
-    <span
-      className={clsx(classes.root, className)}
-      ref={anchor}
-      onKeyDown={handleKeyPress}
-      tabIndex={0}
-    >
+    <span className={clsx(classes.root, className)} ref={anchor} onKeyDown={handleKeyPress} tabIndex={0}>
       <Link onClick={() => setOpen(open => !open)}>
         {current.label}
         <ArrowDropdown
@@ -89,10 +74,7 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
         disablePortal
         placement="bottom-start"
       >
-        <ClickAwayListener
-          onClickAway={() => setOpen(false)}
-          mouseEvent="onClick"
-        >
+        <ClickAwayListener onClickAway={() => setOpen(false)} mouseEvent="onClick">
           <Paper className={classes.paper}>
             {choices.map((choice, choiceIndex) => (
               <MenuItem
@@ -114,5 +96,5 @@ const LinkChoice: React.FC<LinkChoiceProps> = ({
   );
 };
 
-LinkChoice.displayName = "LinkChoice";
+LinkChoice.displayName = 'LinkChoice';
 export default LinkChoice;

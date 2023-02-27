@@ -1,28 +1,17 @@
-import TableButtonWrapper from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import { JobStatusEnum } from "@dashboard/graphql";
-import { buttonMessages } from "@dashboard/intl";
-import { useAppListContext } from "@dashboard/new-apps/context";
-import {
-  appInstallationStatusMessages,
-  appsMessages,
-} from "@dashboard/new-apps/messages";
-import { AppInstallation } from "@dashboard/new-apps/types";
-import { CircularProgress } from "@material-ui/core";
-import { Tooltip } from "@saleor/macaw-ui";
-import {
-  Box,
-  Button,
-  Chip,
-  List,
-  Text,
-  TrashBinIcon,
-  WarningIcon,
-} from "@saleor/macaw-ui/next";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import TableButtonWrapper from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
+import { JobStatusEnum } from '@dashboard/graphql';
+import { buttonMessages } from '@dashboard/intl';
+import { useAppListContext } from '@dashboard/new-apps/context';
+import { appInstallationStatusMessages, appsMessages } from '@dashboard/new-apps/messages';
+import { AppInstallation } from '@dashboard/new-apps/types';
+import { CircularProgress } from '@material-ui/core';
+import { Tooltip } from '@saleor/macaw-ui';
+import { Box, Button, Chip, List, Text, TrashBinIcon, WarningIcon } from '@saleor/macaw-ui/next';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { AppAvatar } from "../AppAvatar/AppAvatar";
-import { useStyles } from "./styles";
+import { AppAvatar } from '../AppAvatar/AppAvatar';
+import { useStyles } from './styles';
 
 export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
   const { appInstallation, isExternal, logo } = props;
@@ -38,13 +27,13 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
       borderColor="neutralPlain"
       justifyContent="space-between"
       flexDirection="row"
-      flexWrap={{ mobile: "wrap", desktop: "nowrap" }}
+      flexWrap={{ mobile: 'wrap', desktop: 'nowrap' }}
     >
       <Box
         display="flex"
         gap={5}
         alignItems="center"
-        justifyContent={{ mobile: "space-between", desktop: "flex-start" }}
+        justifyContent={{ mobile: 'space-between', desktop: 'flex-start' }}
       >
         <AppAvatar size="medium" logo={logo} />
         <Text variant="bodyStrong">{appInstallation.appName}</Text>
@@ -59,11 +48,7 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
       <div className={classes.actions}>
         {appInstallation?.status === JobStatusEnum.PENDING && (
           <>
-            <Text
-              variant="caption"
-              className={classes.pending}
-              data-test-id="app-pending-label"
-            >
+            <Text variant="caption" className={classes.pending} data-test-id="app-pending-label">
               {intl.formatMessage(appInstallationStatusMessages.pending)}
             </Text>
             <div className={classes.colSpinner}>
@@ -76,12 +61,7 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
             <Tooltip title={appInstallation.message} variant="error">
               <Box display="flex" placeItems="center" gap={3} marginX={3}>
                 <WarningIcon size="small" color="iconCriticalSubdued" />
-                <Text
-                  variant="caption"
-                  size="small"
-                  color="textCriticalSubdued"
-                  data-test-id="app-failed-label"
-                >
+                <Text variant="caption" size="small" color="textCriticalSubdued" data-test-id="app-failed-label">
                   <FormattedMessage {...appInstallationStatusMessages.failed} />
                 </Text>
               </Box>

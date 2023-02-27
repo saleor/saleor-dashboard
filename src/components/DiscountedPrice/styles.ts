@@ -1,12 +1,12 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
     strike: {
-      textDecoration: "line-through",
+      textDecoration: 'line-through',
       color: theme.palette.grey[400],
-      fontSize: "smaller",
+      fontSize: 'smaller',
     },
   }),
-  { name: "DiscountedPrice" },
+  { name: 'DiscountedPrice' },
 );

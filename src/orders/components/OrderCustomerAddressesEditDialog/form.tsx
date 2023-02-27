@@ -1,23 +1,15 @@
-import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
-import { AddressTypeInput } from "@dashboard/customers/types";
-import {
-  AddressFragment,
-  CountryWithCodeFragment,
-  Node,
-} from "@dashboard/graphql";
-import useForm, {
-  CommonUseFormResultWithHandlers,
-  FormChange,
-  SubmitPromise,
-} from "@dashboard/hooks/useForm";
-import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import React, { useEffect, useState } from "react";
+import { useExitFormDialog } from '@dashboard/components/Form/useExitFormDialog';
+import { SingleAutocompleteChoiceType } from '@dashboard/components/SingleAutocompleteSelectField';
+import { AddressTypeInput } from '@dashboard/customers/types';
+import { AddressFragment, CountryWithCodeFragment, Node } from '@dashboard/graphql';
+import useForm, { CommonUseFormResultWithHandlers, FormChange, SubmitPromise } from '@dashboard/hooks/useForm';
+import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
+import createSingleAutocompleteSelectHandler from '@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler';
+import React, { useEffect, useState } from 'react';
 
 export enum AddressInputOptionEnum {
-  CUSTOMER_ADDRESS = "customerAddress",
-  NEW_ADDRESS = "newAddress",
+  CUSTOMER_ADDRESS = 'customerAddress',
+  NEW_ADDRESS = 'newAddress',
 }
 
 export interface OrderCustomerAddressesEditFormData {
@@ -30,30 +22,23 @@ export interface OrderCustomerAddressesEditFormData {
   billingAddress: AddressTypeInput;
 }
 
-export interface OrderCustomerAddressesEditData
-  extends OrderCustomerAddressesEditFormData {
+export interface OrderCustomerAddressesEditData extends OrderCustomerAddressesEditFormData {
   shippingCountryDisplayName: string;
   billingCountryDisplayName: string;
 }
 
 export interface OrderCustomerAddressesEditHandlers {
-  changeFormAddress: (
-    event: React.ChangeEvent<any>,
-    addressType: "shippingAddress" | "billingAddress",
-  ) => void;
+  changeFormAddress: (event: React.ChangeEvent<any>, addressType: 'shippingAddress' | 'billingAddress') => void;
   changeCustomerAddress: (
     customerAddress: AddressFragment,
-    addressType: "customerShippingAddress" | "customerBillingAddress",
+    addressType: 'customerShippingAddress' | 'customerBillingAddress',
   ) => void;
   selectShippingCountry: FormChange;
   selectBillingCountry: FormChange;
 }
 
 interface UseOrderCustomerAddressesEditFormResult
-  extends CommonUseFormResultWithHandlers<
-    OrderCustomerAddressesEditData,
-    OrderCustomerAddressesEditHandlers
-  > {
+  extends CommonUseFormResultWithHandlers<OrderCustomerAddressesEditData, OrderCustomerAddressesEditHandlers> {
   submit: (event: React.FormEvent<any>) => SubmitPromise<any[]>;
 }
 
@@ -65,8 +50,7 @@ interface UseOrderCustomerAddressesEditFormOpts {
   defaultCloneAddress: boolean;
 }
 
-export interface OrderCustomerAddressesEditFormProps
-  extends UseOrderCustomerAddressesEditFormOpts {
+export interface OrderCustomerAddressesEditFormProps extends UseOrderCustomerAddressesEditFormOpts {
   children: (props: UseOrderCustomerAddressesEditFormResult) => React.ReactNode;
   initial?: Partial<OrderCustomerAddressesEditFormData>;
   onSubmit: (data: OrderCustomerAddressesEditData) => void;
@@ -78,11 +62,11 @@ function useOrderCustomerAddressesEditForm(
   opts: UseOrderCustomerAddressesEditFormOpts,
 ): UseOrderCustomerAddressesEditFormResult {
   const emptyAddress: AddressTypeInput = {
-    city: "",
-    country: "",
-    phone: "",
-    postalCode: "",
-    streetAddress1: "",
+    city: '',
+    country: '',
+    phone: '',
+    postalCode: '',
+    streetAddress1: '',
   };
   const defaultInitialFormData: OrderCustomerAddressesEditFormData = {
     cloneAddress: opts.defaultCloneAddress,
@@ -104,20 +88,13 @@ function useOrderCustomerAddressesEditForm(
   const { setExitDialogSubmitRef } = useExitFormDialog();
 
   const [shippingCountryDisplayName, setShippingCountryDisplayName] = useState(
-    opts.countries.find(
-      country => initialData.shippingAddress.country === country.code,
-    )?.country,
+    opts.countries.find(country => initialData.shippingAddress.country === country.code)?.country,
   );
   const [billingCountryDisplayName, setBillingCountryDisplayName] = useState(
-    opts.countries.find(
-      country => initialData.billingAddress.country === country.code,
-    )?.country,
+    opts.countries.find(country => initialData.billingAddress.country === country.code)?.country,
   );
 
-  const handleFormAddressChange = (
-    event: React.ChangeEvent<any>,
-    addressType: "shippingAddress" | "billingAddress",
-  ) =>
+  const handleFormAddressChange = (event: React.ChangeEvent<any>, addressType: 'shippingAddress' | 'billingAddress') =>
     change({
       target: {
         name: addressType,
@@ -129,7 +106,7 @@ function useOrderCustomerAddressesEditForm(
     });
   const handleCustomerAddressChange = (
     customerAddress: AddressFragment,
-    addressType: "customerShippingAddress" | "customerBillingAddress",
+    addressType: 'customerShippingAddress' | 'customerBillingAddress',
   ) =>
     change({
       target: {
@@ -141,11 +118,11 @@ function useOrderCustomerAddressesEditForm(
     event =>
       change({
         target: {
-          name: "shippingAddress",
+          name: 'shippingAddress',
           value: {
             ...formData.shippingAddress,
             [event.target.name]: event.target.value,
-            countryArea: "",
+            countryArea: '',
           },
         },
       }),
@@ -156,11 +133,11 @@ function useOrderCustomerAddressesEditForm(
     event =>
       change({
         target: {
-          name: "billingAddress",
+          name: 'billingAddress',
           value: {
             ...formData.billingAddress,
             [event.target.name]: event.target.value,
-            countryArea: "",
+            countryArea: '',
           },
         },
       }),
@@ -207,11 +184,7 @@ const OrderCustomerAddressesEditForm: React.FC<OrderCustomerAddressesEditFormPro
   onSubmit,
   ...rest
 }) => {
-  const props = useOrderCustomerAddressesEditForm(
-    initial || {},
-    onSubmit,
-    rest,
-  );
+  const props = useOrderCustomerAddressesEditForm(initial || {}, onSubmit, rest);
 
   return (
     <form onSubmit={props.submit} autoComplete="off">
@@ -220,5 +193,5 @@ const OrderCustomerAddressesEditForm: React.FC<OrderCustomerAddressesEditFormPro
   );
 };
 
-OrderCustomerAddressesEditForm.displayName = "OrderCustomerAddressesEditForm";
+OrderCustomerAddressesEditForm.displayName = 'OrderCustomerAddressesEditForm';
 export default OrderCustomerAddressesEditForm;

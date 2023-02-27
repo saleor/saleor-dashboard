@@ -1,9 +1,9 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
-import { CountryFragment } from "@dashboard/graphql";
-import { useLocalSearch } from "@dashboard/hooks/useLocalSearch";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import { buttonMessages } from "@dashboard/intl";
-import { taxesMessages } from "@dashboard/taxes/messages";
+import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
+import { CountryFragment } from '@dashboard/graphql';
+import { useLocalSearch } from '@dashboard/hooks/useLocalSearch';
+import useModalDialogOpen from '@dashboard/hooks/useModalDialogOpen';
+import { buttonMessages } from '@dashboard/intl';
+import { taxesMessages } from '@dashboard/taxes/messages';
 import {
   Dialog,
   DialogActions,
@@ -13,12 +13,12 @@ import {
   InputAdornment,
   Radio,
   TextField,
-} from "@material-ui/core";
-import { Button, DialogHeader, SearchIcon } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@material-ui/core';
+import { Button, DialogHeader, SearchIcon } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
 interface TaxCountryDialogProps {
   open: boolean;
@@ -27,29 +27,24 @@ interface TaxCountryDialogProps {
   onClose: () => void;
 }
 
-export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
-  open,
-  countries,
-  onConfirm,
-  onClose,
-}) => {
+export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({ open, countries, onConfirm, onClose }) => {
   const classes = useStyles();
   const intl = useIntl();
 
-  const [selectedCountry, setSelectedCountry] = React.useState<
-    CountryFragment
-  >();
+  const [selectedCountry, setSelectedCountry] = React.useState<CountryFragment>();
 
   useModalDialogOpen(open, {
     onClose: () => {
       setSelectedCountry(undefined);
-      setQuery("");
+      setQuery('');
     },
   });
 
-  const { query, setQuery, searchResult: filteredCountries } = useLocalSearch<
-    CountryFragment
-  >(countries, country => country.country);
+  const {
+    query,
+    setQuery,
+    searchResult: filteredCountries,
+  } = useLocalSearch<CountryFragment>(countries, country => country.country);
 
   return (
     <Dialog open={open} fullWidth onClose={onClose} className={classes.dialog}>

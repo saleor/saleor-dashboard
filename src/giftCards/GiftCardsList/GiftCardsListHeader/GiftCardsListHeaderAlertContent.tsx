@@ -1,12 +1,12 @@
-import Link from "@dashboard/components/Link";
-import { ProductTypeKindEnum } from "@dashboard/graphql";
-import { productAddUrl } from "@dashboard/products/urls";
-import { productTypeAddUrl } from "@dashboard/productTypes/urls";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import Link from '@dashboard/components/Link';
+import { ProductTypeKindEnum } from '@dashboard/graphql';
+import { productAddUrl } from '@dashboard/products/urls';
+import { productTypeAddUrl } from '@dashboard/productTypes/urls';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import { giftCardsListHeaderMenuItemsMessages as messages } from "../messages";
-import { useHeaderStyles as useStyles } from "../styles";
+import { giftCardsListHeaderMenuItemsMessages as messages } from '../messages';
+import { useHeaderStyles as useStyles } from '../styles';
 
 interface GiftCardsListHeaderAlertContentProps {
   giftCardProductTypesExist: boolean;
@@ -46,10 +46,7 @@ const GiftCardsListHeaderAlertContent: React.FC<GiftCardsListHeaderAlertContentP
         {...messages.noGiftCardsProducts}
         values={{
           createGiftCardProduct: (
-            <Link
-              href={giftCardCreateGiftCardProductUrl}
-              className={classes.alertLink}
-            >
+            <Link href={giftCardCreateGiftCardProductUrl} className={classes.alertLink}>
               <FormattedMessage {...messages.createGiftCardProduct} />
             </Link>
           ),

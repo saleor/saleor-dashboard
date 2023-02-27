@@ -1,9 +1,9 @@
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import Decorator from '@dashboard/storybook/Decorator';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import { installApp } from "../../fixtures";
-import AppInstallPage, { AppInstallPageProps } from "./AppInstallPage";
+import { installApp } from '../../fixtures';
+import AppInstallPage, { AppInstallPageProps } from './AppInstallPage';
 
 const props: AppInstallPageProps = {
   data: installApp,
@@ -12,7 +12,7 @@ const props: AppInstallPageProps = {
   onSubmit: () => Promise.resolve([]),
 };
 
-storiesOf("Apps / Install App", module)
+storiesOf('Apps / Install App', module)
   .addDecorator(Decorator)
-  .add("default", () => <AppInstallPage {...props} />)
-  .add("loading", () => <AppInstallPage {...props} loading={true} />);
+  .add('default', () => <AppInstallPage {...props} />)
+  .add('loading', () => <AppInstallPage {...props} loading={true} />);

@@ -1,9 +1,9 @@
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import Decorator from '@dashboard/storybook/Decorator';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import { customer } from "../../fixtures";
-import CustomerAddressListPage, { CustomerAddressListPageProps } from ".";
+import { customer } from '../../fixtures';
+import CustomerAddressListPage, { CustomerAddressListPageProps } from '.';
 
 const props: CustomerAddressListPageProps = {
   customer,
@@ -14,15 +14,8 @@ const props: CustomerAddressListPageProps = {
   onSetAsDefault: () => undefined,
 };
 
-storiesOf("Customers / Address Book", module)
+storiesOf('Customers / Address Book', module)
   .addDecorator(Decorator)
-  .add("default", () => <CustomerAddressListPage {...props} />)
-  .add("loading", () => (
-    <CustomerAddressListPage {...props} customer={undefined} disabled={true} />
-  ))
-  .add("no data", () => (
-    <CustomerAddressListPage
-      {...props}
-      customer={{ ...customer, addresses: [] }}
-    />
-  ));
+  .add('default', () => <CustomerAddressListPage {...props} />)
+  .add('loading', () => <CustomerAddressListPage {...props} customer={undefined} disabled={true} />)
+  .add('no data', () => <CustomerAddressListPage {...props} customer={{ ...customer, addresses: [] }} />);

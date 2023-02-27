@@ -1,2 +1,2 @@
-export { default } from "./ShippingZoneCreatePage";
-export * from "./ShippingZoneCreatePage";
+export { default } from './ShippingZoneCreatePage';
+export * from './ShippingZoneCreatePage';

@@ -1,6 +1,6 @@
-import sideBarDefaultLogo from "@assets/images/sidebar-default-logo.png";
-import { Avatar, Box, Text } from "@saleor/macaw-ui/next";
-import React from "react";
+import sideBarDefaultLogo from '@assets/images/sidebar-default-logo.png';
+import { Avatar, Box, Text } from '@saleor/macaw-ui/next';
+import React from 'react';
 
 export const MountingPoint = () => (
   <Box display="flex" gap={6} paddingX={7} paddingY={8}>

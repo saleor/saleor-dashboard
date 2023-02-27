@@ -1,2 +1,2 @@
-export { default } from "./useModalDialogOpen";
-export * from "./useModalDialogOpen";
+export { default } from './useModalDialogOpen';
+export * from './useModalDialogOpen';

@@ -1,15 +1,9 @@
-import { createSvgIcon } from "@material-ui/core/utils";
-import React from "react";
+import { createSvgIcon } from '@material-ui/core/utils';
+import React from 'react';
 
 const ErrorExclamationCircle = createSvgIcon(
   <>
-    <svg
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="12" cy="12" r="12" fill="#FE6D76" />
       <path
         fill-rule="evenodd"
@@ -19,7 +13,7 @@ const ErrorExclamationCircle = createSvgIcon(
       />
     </svg>
   </>,
-  "ErrorExclamationCircle",
+  'ErrorExclamationCircle',
 );
 
 export default ErrorExclamationCircle;

@@ -1,1 +1,1 @@
-export * from "./AppFrame";
+export * from './AppFrame';

@@ -1,23 +1,12 @@
-import { CollectionListUrlSortField } from "@dashboard/collections/urls";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { CollectionListUrlSortField } from '@dashboard/collections/urls';
+import Decorator from '@dashboard/storybook/Decorator';
+import { PaginatorContextDecorator } from '@dashboard/storybook/PaginatorContextDecorator';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import CollectionListPage, {
-  CollectionListPageProps,
-} from "../../../collections/components/CollectionListPage";
-import {
-  collectionListFilterOpts,
-  collections,
-} from "../../../collections/fixtures";
-import {
-  filterPageProps,
-  listActionsProps,
-  pageListProps,
-  sortPageProps,
-  tabPageProps,
-} from "../../../fixtures";
+import CollectionListPage, { CollectionListPageProps } from '../../../collections/components/CollectionListPage';
+import { collectionListFilterOpts, collections } from '../../../collections/fixtures';
+import { filterPageProps, listActionsProps, pageListProps, sortPageProps, tabPageProps } from '../../../fixtures';
 
 const props: CollectionListPageProps = {
   ...listActionsProps,
@@ -30,15 +19,13 @@ const props: CollectionListPageProps = {
   },
   ...tabPageProps,
   collections,
-  selectedChannelId: "123",
+  selectedChannelId: '123',
   filterOpts: collectionListFilterOpts,
 };
 
-storiesOf("Collections / Collection list", module)
+storiesOf('Collections / Collection list', module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <CollectionListPage {...props} />)
-  .add("loading", () => (
-    <CollectionListPage {...props} collections={undefined} disabled={true} />
-  ))
-  .add("no data", () => <CollectionListPage {...props} collections={[]} />);
+  .add('default', () => <CollectionListPage {...props} />)
+  .add('loading', () => <CollectionListPage {...props} collections={undefined} disabled={true} />)
+  .add('no data', () => <CollectionListPage {...props} collections={[]} />);

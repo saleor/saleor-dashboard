@@ -1,37 +1,32 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
-import { WindowTitle } from "@dashboard/components/WindowTitle";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import NotFoundPage from '@dashboard/components/NotFoundPage';
+import { WindowTitle } from '@dashboard/components/WindowTitle';
 import {
   useRemoveCustomerMutation,
   useUpdateCustomerMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { DialogContentText } from "@material-ui/core";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { commonMessages } from '@dashboard/intl';
+import { extractMutationErrors, getStringOrPlaceholder } from '@dashboard/misc';
+import createMetadataUpdateHandler from '@dashboard/utils/handlers/metadataUpdateHandler';
+import { DialogContentText } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import CustomerDetailsPage, {
-  CustomerDetailsPageFormData,
-} from "../components/CustomerDetailsPage";
-import { useCustomerDetails } from "../hooks/useCustomerDetails";
-import { CustomerDetailsProvider } from "../providers/CustomerDetailsProvider";
-import { customerListUrl, customerUrl, CustomerUrlQueryParams } from "../urls";
+import CustomerDetailsPage, { CustomerDetailsPageFormData } from '../components/CustomerDetailsPage';
+import { useCustomerDetails } from '../hooks/useCustomerDetails';
+import { CustomerDetailsProvider } from '../providers/CustomerDetailsProvider';
+import { customerListUrl, customerUrl, CustomerUrlQueryParams } from '../urls';
 
 interface CustomerDetailsViewProps {
   id: string;
   params: CustomerUrlQueryParams;
 }
 
-const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
-  id,
-  params,
-}) => {
+const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -44,10 +39,10 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
     onCompleted: data => {
       if (data.customerDelete.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage({
-            id: "PXatmC",
-            defaultMessage: "Customer Removed",
+            id: 'PXatmC',
+            defaultMessage: 'Customer Removed',
           }),
         });
         navigate(customerListUrl());
@@ -59,7 +54,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
     onCompleted: data => {
       if (data.customerUpdate.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
@@ -102,18 +97,14 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
       <CustomerDetailsPage
         customerId={id}
         customer={user}
-        disabled={
-          customerDetailsLoading ||
-          updateCustomerOpts.loading ||
-          removeCustomerOpts.loading
-        }
+        disabled={customerDetailsLoading || updateCustomerOpts.loading || removeCustomerOpts.loading}
         errors={updateCustomerOpts.data?.customerUpdate.errors || []}
         saveButtonBar={updateCustomerOpts.status}
         onSubmit={handleSubmit}
         onDelete={() =>
           navigate(
             customerUrl(id, {
-              action: "remove",
+              action: 'remove',
             }),
           )
         }
@@ -129,12 +120,12 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
           })
         }
         title={intl.formatMessage({
-          id: "ey0lZj",
-          defaultMessage: "Delete Customer",
-          description: "dialog header",
+          id: 'ey0lZj',
+          defaultMessage: 'Delete Customer',
+          description: 'dialog header',
         })}
         variant="delete"
-        open={params.action === "remove"}
+        open={params.action === 'remove'}
       >
         <DialogContentText>
           <FormattedMessage
@@ -151,10 +142,7 @@ const CustomerDetailsViewInner: React.FC<CustomerDetailsViewProps> = ({
   );
 };
 
-export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({
-  id,
-  params,
-}) => (
+export const CustomerDetailsView: React.FC<CustomerDetailsViewProps> = ({ id, params }) => (
   <CustomerDetailsProvider id={id}>
     <CustomerDetailsViewInner id={id} params={params} />
   </CustomerDetailsProvider>

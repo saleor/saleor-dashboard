@@ -1,28 +1,25 @@
-import { attributeUrl } from "@dashboard/attributes/urls";
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import Checkbox from "@dashboard/components/Checkbox";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
-import {
-  SortableTableBody,
-  SortableTableRow,
-} from "@dashboard/components/SortableTable";
-import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import TableHead from "@dashboard/components/TableHead";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { AttributeFragment, AttributeTypeEnum } from "@dashboard/graphql";
-import { renderCollection } from "@dashboard/misc";
-import { ListActions, ReorderAction } from "@dashboard/types";
-import { Card, CardContent, TableCell } from "@material-ui/core";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { attributeUrl } from '@dashboard/attributes/urls';
+import { Button } from '@dashboard/components/Button';
+import CardTitle from '@dashboard/components/CardTitle';
+import Checkbox from '@dashboard/components/Checkbox';
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Skeleton from '@dashboard/components/Skeleton';
+import { SortableTableBody, SortableTableRow } from '@dashboard/components/SortableTable';
+import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
+import TableHead from '@dashboard/components/TableHead';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { AttributeFragment, AttributeTypeEnum } from '@dashboard/graphql';
+import { renderCollection } from '@dashboard/misc';
+import { ListActions, ReorderAction } from '@dashboard/types';
+import { Card, CardContent, TableCell } from '@material-ui/core';
+import { DeleteIcon, IconButton, makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const useStyles = makeStyles(
   {
     colAction: {
-      "&:last-child": {
+      '&:last-child': {
         paddingRight: 0,
       },
       width: 80,
@@ -35,13 +32,13 @@ const useStyles = makeStyles(
       width: 300,
     },
     link: {
-      cursor: "pointer",
+      cursor: 'pointer',
     },
     textLeft: {
-      textAlign: "left",
+      textAlign: 'left',
     },
   },
-  { name: "PageTypeAttributes" },
+  { name: 'PageTypeAttributes' },
 );
 
 interface PageTypeAttributesProps extends ListActions {
@@ -77,9 +74,9 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
     <Card data-test-id="page-attributes">
       <CardTitle
         title={intl.formatMessage({
-          id: "iQxjow",
-          defaultMessage: "Content Attributes",
-          description: "section header",
+          id: 'iQxjow',
+          defaultMessage: 'Content Attributes',
+          description: 'section header',
         })}
         toolbar={
           <Button
@@ -87,11 +84,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
             onClick={() => onAttributeAssign(AttributeTypeEnum[type])}
             data-test-id="assign-attributes"
           >
-            <FormattedMessage
-              id="uxPpRx"
-              defaultMessage="Assign attribute"
-              description="button"
-            />
+            <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
           </Button>
         }
       />
@@ -118,11 +111,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
                 <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
               </TableCell>
               <TableCell className={classes.colName}>
-                <FormattedMessage
-                  id="nf3XSt"
-                  defaultMessage="Slug"
-                  description="attribute internal name"
-                />
+                <FormattedMessage id="nf3XSt" defaultMessage="Slug" description="attribute internal name" />
               </TableCell>
               <TableCell />
             </TableHead>
@@ -141,7 +130,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
                     href={attribute ? attributeUrl(attribute.id) : undefined}
                     key={attribute?.id}
                     index={attributeIndex || 0}
-                    data-test-id={"id-" + attribute?.id}
+                    data-test-id={'id-' + attribute?.id}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
@@ -159,10 +148,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
                     </TableCell>
                     <TableCell className={classes.colAction}>
                       <TableButtonWrapper>
-                        <IconButton
-                          variant="secondary"
-                          onClick={() => onAttributeUnassign(attribute.id)}
-                        >
+                        <IconButton variant="secondary" onClick={() => onAttributeUnassign(attribute.id)}>
                           <DeleteIcon color="primary" />
                         </IconButton>
                       </TableButtonWrapper>
@@ -173,10 +159,7 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
               () => (
                 <TableRowLink>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage
-                      id="ztQgD8"
-                      defaultMessage="No attributes found"
-                    />
+                    <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
                   </TableCell>
                 </TableRowLink>
               ),
@@ -187,5 +170,5 @@ const PageTypeAttributes: React.FC<PageTypeAttributesProps> = props => {
     </Card>
   );
 };
-PageTypeAttributes.displayName = "PageTypeAttributes";
+PageTypeAttributes.displayName = 'PageTypeAttributes';
 export default PageTypeAttributes;

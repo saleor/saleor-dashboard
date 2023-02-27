@@ -1,6 +1,6 @@
-import useLocale from "@dashboard/hooks/useLocale";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import useLocale from '@dashboard/hooks/useLocale';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
 
 const useStyles = makeStyles(
   {
@@ -8,11 +8,11 @@ const useStyles = makeStyles(
       fontWeight: 500,
     },
     currency: {
-      fontSize: "0.87em",
-      marginRight: "0.2rem",
+      fontSize: '0.87em',
+      marginRight: '0.2rem',
     },
   },
-  { name: "Money" },
+  { name: 'Money' },
 );
 
 export interface IMoney {
@@ -34,7 +34,7 @@ export const Money: React.FC<MoneyProps> = props => {
   }
 
   const currencyFractionDigits = new Intl.NumberFormat(locale, {
-    style: "currency",
+    style: 'currency',
     currency: money.currency,
   }).resolvedOptions().maximumFractionDigits;
 
@@ -51,5 +51,5 @@ export const Money: React.FC<MoneyProps> = props => {
   );
 };
 
-Money.displayName = "Money";
+Money.displayName = 'Money';
 export default Money;

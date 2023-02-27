@@ -1,18 +1,16 @@
-import { Typography } from "@material-ui/core";
-import { Alert } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Typography } from '@material-ui/core';
+import { Alert } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import msgs from "./messages";
-import { useStyles } from "./styles";
+import msgs from './messages';
+import { useStyles } from './styles';
 
 interface MarketplaceAlertProps {
   error?: Error;
 }
 
-export const MarketplaceAlert: React.FC<MarketplaceAlertProps> = ({
-  error,
-}) => {
+export const MarketplaceAlert: React.FC<MarketplaceAlertProps> = ({ error }) => {
   const classes = useStyles();
   const intl = useIntl();
 
@@ -21,12 +19,7 @@ export const MarketplaceAlert: React.FC<MarketplaceAlertProps> = ({
   }
 
   return (
-    <Alert
-      variant="warning"
-      className={classes.alert}
-      close={true}
-      title={intl.formatMessage(msgs.marketplaceError)}
-    >
+    <Alert variant="warning" className={classes.alert} close={true} title={intl.formatMessage(msgs.marketplaceError)}>
       <Typography>
         <FormattedMessage
           {...msgs.marketplaceErrorMessage}
@@ -38,5 +31,5 @@ export const MarketplaceAlert: React.FC<MarketplaceAlertProps> = ({
     </Alert>
   );
 };
-MarketplaceAlert.displayName = "MarketplaceAlert";
+MarketplaceAlert.displayName = 'MarketplaceAlert';
 export default MarketplaceAlert;

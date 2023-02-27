@@ -1,16 +1,14 @@
-import { FormChange } from "@dashboard/hooks/useForm";
-import { TextFieldProps } from "@material-ui/core";
-import { useMemo } from "react";
+import { FormChange } from '@dashboard/hooks/useForm';
+import { TextFieldProps } from '@material-ui/core';
+import { useMemo } from 'react';
 
-import { SEPARATOR_CHARACTERS } from "./consts";
-import { findPriceSeparator, getCurrencyDecimalPoints } from "./utils";
+import { SEPARATOR_CHARACTERS } from './consts';
+import { findPriceSeparator, getCurrencyDecimalPoints } from './utils';
 
 export function usePriceField(currency: string, onChange: FormChange) {
   const minValue = 0;
 
-  const maxDecimalLength = useMemo(() => getCurrencyDecimalPoints(currency), [
-    currency,
-  ]);
+  const maxDecimalLength = useMemo(() => getCurrencyDecimalPoints(currency), [currency]);
 
   const handleChange: FormChange = e => {
     let value = e.target.value;
@@ -35,16 +33,13 @@ export function usePriceField(currency: string, onChange: FormChange) {
     });
   };
 
-  const handleKeyDown: TextFieldProps["onKeyDown"] = e => {
+  const handleKeyDown: TextFieldProps['onKeyDown'] = e => {
     // Disallow entering e (exponent)
-    if (e.key === "e" || e.key === "E" || e.key === "-") {
+    if (e.key === 'e' || e.key === 'E' || e.key === '-') {
       e.preventDefault();
     }
     // ignore separator input when currency doesn't support decimal values
-    if (
-      maxDecimalLength === 0 &&
-      SEPARATOR_CHARACTERS.some(separator => e.key === separator)
-    ) {
+    if (maxDecimalLength === 0 && SEPARATOR_CHARACTERS.some(separator => e.key === separator)) {
       e.preventDefault();
     }
   };

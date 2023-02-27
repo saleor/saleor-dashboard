@@ -1,33 +1,22 @@
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
-import { GridColumn } from "@glideapps/glide-data-grid";
-import { useCallback, useMemo, useState } from "react";
+import useStateFromProps from '@dashboard/hooks/useStateFromProps';
+import { addAtIndex, removeAtIndex } from '@dashboard/utils/lists';
+import { GridColumn } from '@glideapps/glide-data-grid';
+import { useCallback, useMemo, useState } from 'react';
 
-import { AvailableColumn } from "./types";
+import { AvailableColumn } from './types';
 
 function useColumns(availableColumns: readonly AvailableColumn[]) {
-  const [query, setQuery] = useState("");
-  const [displayedColumns, setDisplayedColumns] = useStateFromProps(
-    availableColumns.map(({ id }) => id),
-  );
+  const [query, setQuery] = useState('');
+  const [displayedColumns, setDisplayedColumns] = useStateFromProps(availableColumns.map(({ id }) => id));
   const [columnState, setColumnState] = useStateFromProps(availableColumns);
 
-  const onColumnMoved = useCallback(
-    (startIndex: number, endIndex: number): void => {
-      setDisplayedColumns(old =>
-        addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
-      );
-    },
-    [],
-  );
+  const onColumnMoved = useCallback((startIndex: number, endIndex: number): void => {
+    setDisplayedColumns(old => addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex));
+  }, []);
   const onColumnResize = useCallback(
     (column: GridColumn, newSize: number) =>
       setColumnState(prevColumns =>
-        prevColumns.map(prevColumn =>
-          prevColumn.id === column.id
-            ? { ...prevColumn, width: newSize }
-            : prevColumn,
-        ),
+        prevColumns.map(prevColumn => (prevColumn.id === column.id ? { ...prevColumn, width: newSize } : prevColumn)),
       ),
     [],
   );
@@ -62,9 +51,7 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
       })),
     [availableColumns],
   );
-  const defaultColumns = useMemo(() => availableColumns.map(({ id }) => id), [
-    availableColumns,
-  ]);
+  const defaultColumns = useMemo(() => availableColumns.map(({ id }) => id), [availableColumns]);
 
   return {
     availableColumnsChoices,

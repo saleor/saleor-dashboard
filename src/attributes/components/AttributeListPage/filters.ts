@@ -1,14 +1,14 @@
-import { IFilter } from "@dashboard/components/Filter";
-import { commonMessages } from "@dashboard/intl";
-import { FilterOpts } from "@dashboard/types";
-import { createBooleanField } from "@dashboard/utils/filters/fields";
-import { defineMessages, IntlShape } from "react-intl";
+import { IFilter } from '@dashboard/components/Filter';
+import { commonMessages } from '@dashboard/intl';
+import { FilterOpts } from '@dashboard/types';
+import { createBooleanField } from '@dashboard/utils/filters/fields';
+import { defineMessages, IntlShape } from 'react-intl';
 
 export enum AttributeFilterKeys {
-  filterableInStorefront = "filterableInStorefront",
-  isVariantOnly = "isVariantOnly",
-  valueRequired = "valueRequired",
-  visibleInStorefront = "visibleInStorefront",
+  filterableInStorefront = 'filterableInStorefront',
+  isVariantOnly = 'isVariantOnly',
+  valueRequired = 'valueRequired',
+  visibleInStorefront = 'visibleInStorefront',
 }
 
 export interface AttributeListFilterOpts {
@@ -20,31 +20,28 @@ export interface AttributeListFilterOpts {
 
 const messages = defineMessages({
   filterableInStorefront: {
-    id: "PsRG+v",
-    defaultMessage: "Filterable in Storefront",
-    description: "use attribute in filtering",
+    id: 'PsRG+v',
+    defaultMessage: 'Filterable in Storefront',
+    description: 'use attribute in filtering',
   },
   isVariantOnly: {
-    id: "rvk9ls",
-    defaultMessage: "Variant Only",
-    description: "attribute can be used only in variants",
+    id: 'rvk9ls',
+    defaultMessage: 'Variant Only',
+    description: 'attribute can be used only in variants',
   },
   valueRequired: {
-    id: "HQR2y0",
-    defaultMessage: "Value Required",
-    description: "attribute value is required",
+    id: 'HQR2y0',
+    defaultMessage: 'Value Required',
+    description: 'attribute value is required',
   },
   visibleInStorefront: {
-    id: "cvbqJu",
-    defaultMessage: "Visible on Product Page in Storefront",
-    description: "attribute",
+    id: 'cvbqJu',
+    defaultMessage: 'Visible on Product Page in Storefront',
+    description: 'attribute',
   },
 });
 
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: AttributeListFilterOpts,
-): IFilter<AttributeFilterKeys> {
+export function createFilterStructure(intl: IntlShape, opts: AttributeListFilterOpts): IFilter<AttributeFilterKeys> {
   return [
     {
       ...createBooleanField(

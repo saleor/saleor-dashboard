@@ -1,12 +1,8 @@
-import ConfirmButton from "@dashboard/components/ConfirmButton";
-import { buttonMessages } from "@dashboard/intl";
-import {
-  Button,
-  ConfirmButtonTransitionState,
-  makeStyles,
-} from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import ConfirmButton from '@dashboard/components/ConfirmButton';
+import { buttonMessages } from '@dashboard/intl';
+import { Button, ConfirmButtonTransitionState, makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 interface TranslationFieldsSaveProps {
   saveButtonState: ConfirmButtonTransitionState;
@@ -20,13 +16,13 @@ const useStyles = makeStyles(
       marginLeft: theme.spacing(1),
     },
     root: {
-      display: "flex",
-      flexDirection: "row-reverse",
+      display: 'flex',
+      flexDirection: 'row-reverse',
       marginTop: theme.spacing(1),
     },
   }),
   {
-    name: "TranslationFieldsSave",
+    name: 'TranslationFieldsSave',
   },
 );
 
@@ -46,14 +42,10 @@ const TranslationFieldsSave: React.FC<TranslationFieldsSaveProps> = props => {
         <FormattedMessage {...buttonMessages.save} />
       </ConfirmButton>
       <Button onClick={onDiscard} type="submit">
-        <FormattedMessage
-          id="vTN5DZ"
-          defaultMessage="Discard"
-          description="button"
-        />
+        <FormattedMessage id="vTN5DZ" defaultMessage="Discard" description="button" />
       </Button>
     </div>
   );
 };
-TranslationFieldsSave.displayName = "TranslationFieldsSave";
+TranslationFieldsSave.displayName = 'TranslationFieldsSave';
 export default TranslationFieldsSave;

@@ -1,12 +1,12 @@
-import InlineAlert from "@dashboard/components/Alert/InlineAlert";
-import errorTracker from "@dashboard/services/errorTracking";
-import { Typography } from "@material-ui/core";
-import { alpha, makeStyles } from "@material-ui/core/styles";
-import React from "react";
-import { useIntl } from "react-intl";
+import InlineAlert from '@dashboard/components/Alert/InlineAlert';
+import errorTracker from '@dashboard/services/errorTracking';
+import { Typography } from '@material-ui/core';
+import { alpha, makeStyles } from '@material-ui/core/styles';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { validationMessages } from "../messages";
-import { FilterElement, FilterErrorMessages, FilterErrors } from "../types";
+import { validationMessages } from '../messages';
+import { FilterElement, FilterErrorMessages, FilterErrors } from '../types';
 
 const useStyles = makeStyles(
   theme => ({
@@ -20,18 +20,18 @@ const useStyles = makeStyles(
     dot: {
       backgroundColor: theme.palette.primary.contrastText,
       marginRight: theme.spacing(1),
-      borderRadius: "100%",
+      borderRadius: '100%',
       height: 8,
       minHeight: 8,
       width: 8,
       minWidth: 8,
     },
     itemContainer: {
-      display: "flex",
-      alignItems: "center",
+      display: 'flex',
+      alignItems: 'center',
     },
   }),
-  { name: "FilterErrorsList" },
+  { name: 'FilterErrorsList' },
 );
 
 interface FilterErrorsListProps<T extends string = string> {
@@ -50,13 +50,12 @@ const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
 
   const getErrorMessage = (code: string) => {
     try {
-      return intl.formatMessage(
-        errorMessages?.[code] || validationMessages[code],
-        { dependencies: dependencies?.join() },
-      );
+      return intl.formatMessage(errorMessages?.[code] || validationMessages[code], {
+        dependencies: dependencies?.join(),
+      });
     } catch (e) {
       errorTracker.captureException(e as Error);
-      console.warn("Translation missing for filter error code: ", code);
+      console.warn('Translation missing for filter error code: ', code);
       return intl.formatMessage(validationMessages.UNKNOWN_ERROR);
     }
   };
@@ -72,9 +71,7 @@ const FilterErrorsList: React.FC<FilterErrorsListProps> = ({
           {errors.map(code => (
             <div className={classes.itemContainer} key={code}>
               <div className={classes.dot} />
-              <Typography className={classes.listItemTitle}>
-                {getErrorMessage(code)}
-              </Typography>
+              <Typography className={classes.listItemTitle}>{getErrorMessage(code)}</Typography>
             </div>
           ))}
         </InlineAlert>

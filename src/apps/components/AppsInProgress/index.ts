@@ -1,2 +1,2 @@
-export * from "./AppsInProgress";
-export { default } from "./AppsInProgress";
+export * from './AppsInProgress';
+export { default } from './AppsInProgress';

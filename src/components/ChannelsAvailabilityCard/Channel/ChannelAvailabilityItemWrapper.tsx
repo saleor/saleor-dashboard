@@ -1,61 +1,61 @@
-import { ChannelData } from "@dashboard/channels/utils";
-import Label from "@dashboard/orders/components/OrderHistory/Label";
-import { Typography } from "@material-ui/core";
-import { Accordion, AccordionSummary, makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { ChannelData } from '@dashboard/channels/utils';
+import Label from '@dashboard/orders/components/OrderHistory/Label';
+import { Typography } from '@material-ui/core';
+import { Accordion, AccordionSummary, makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
 
-import { Messages } from "../types";
+import { Messages } from '../types';
 
 const useExpanderStyles = makeStyles(
   theme => ({
     expanded: {},
     root: {
-      boxShadow: "none",
+      boxShadow: 'none',
       margin: 0,
       padding: 0,
       paddingBottom: theme.spacing(2),
 
-      "&:before": {
-        content: "none",
+      '&:before': {
+        content: 'none',
       },
 
-      "&$expanded": {
+      '&$expanded': {
         margin: 0,
-        border: "none",
+        border: 'none',
       },
     },
   }),
-  { name: "ChannelContentWrapperExpander" },
+  { name: 'ChannelContentWrapperExpander' },
 );
 
 const useSummaryStyles = makeStyles(
   theme => ({
     expanded: {},
     root: {
-      width: "100%",
-      border: "none",
+      width: '100%',
+      border: 'none',
       margin: 0,
       padding: 0,
       minHeight: 0,
       paddingTop: theme.spacing(2),
 
-      "&$expanded": {
+      '&$expanded': {
         minHeight: 0,
         padding: theme.spacing(2, 0),
       },
     },
   }),
-  { name: "ChannelContentWrapperExpanderSummary" },
+  { name: 'ChannelContentWrapperExpanderSummary' },
 );
 
 const useStyles = makeStyles(
   () => ({
     container: {
-      display: "flex",
-      flexDirection: "column",
+      display: 'flex',
+      flexDirection: 'column',
     },
   }),
-  { name: "ChannelWithVariantAvailabilityItemWrapper" },
+  { name: 'ChannelWithVariantAvailabilityItemWrapper' },
 );
 
 export interface ChannelContentWrapperProps {
@@ -64,11 +64,7 @@ export interface ChannelContentWrapperProps {
   messages: Messages;
 }
 
-const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({
-  data,
-  messages,
-  children,
-}) => {
+const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({ data, messages, children }) => {
   const expanderClasses = useExpanderStyles();
   const summaryClasses = useSummaryStyles();
   const classes = useStyles();
@@ -76,10 +72,7 @@ const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({
   const { name } = data;
 
   return (
-    <Accordion
-      classes={expanderClasses}
-      data-test-id="channel-availability-item"
-    >
+    <Accordion classes={expanderClasses} data-test-id="channel-availability-item">
       <AccordionSummary className={summaryClasses.root}>
         <div className={classes.container}>
           <Typography>{name}</Typography>

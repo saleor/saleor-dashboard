@@ -1,44 +1,34 @@
-import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
-import ActionDialog from "@dashboard/components/ActionDialog";
-import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
-import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
+import ChannelPickerDialog from '@dashboard/channels/components/ChannelPickerDialog';
+import ActionDialog from '@dashboard/components/ActionDialog';
+import useAppChannel from '@dashboard/components/AppLayout/AppChannelContext';
+import DeleteFilterTabDialog from '@dashboard/components/DeleteFilterTabDialog';
+import SaveFilterTabDialog, { SaveFilterTabDialogFormData } from '@dashboard/components/SaveFilterTabDialog';
+import { useShopLimitsQuery } from '@dashboard/components/Shop/queries';
 import {
   useOrderDraftBulkCancelMutation,
   useOrderDraftCreateMutation,
   useOrderDraftListQuery,
-} from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
-import useListSettings from "@dashboard/hooks/useListSettings";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
-import usePaginator, {
-  createPaginationState,
-  PaginatorContext,
-} from "@dashboard/hooks/usePaginator";
-import { maybe } from "@dashboard/misc";
-import { ListViews } from "@dashboard/types";
-import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
-import createSortHandler from "@dashboard/utils/handlers/sortHandler";
-import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
-import { getSortParams } from "@dashboard/utils/sort";
-import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useBulkActions from '@dashboard/hooks/useBulkActions';
+import useListSettings from '@dashboard/hooks/useListSettings';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { usePaginationReset } from '@dashboard/hooks/usePaginationReset';
+import usePaginator, { createPaginationState, PaginatorContext } from '@dashboard/hooks/usePaginator';
+import { maybe } from '@dashboard/misc';
+import { ListViews } from '@dashboard/types';
+import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
+import createFilterHandlers from '@dashboard/utils/handlers/filterHandlers';
+import createSortHandler from '@dashboard/utils/handlers/sortHandler';
+import { mapEdgesToItems, mapNodeToChoice } from '@dashboard/utils/maps';
+import { getSortParams } from '@dashboard/utils/sort';
+import { DialogContentText } from '@material-ui/core';
+import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import OrderDraftListPage from "../../components/OrderDraftListPage";
-import {
-  orderDraftListUrl,
-  OrderDraftListUrlDialog,
-  OrderDraftListUrlQueryParams,
-  orderUrl,
-} from "../../urls";
+import OrderDraftListPage from '../../components/OrderDraftListPage';
+import { orderDraftListUrl, OrderDraftListUrlDialog, OrderDraftListUrlQueryParams, orderUrl } from '../../urls';
 import {
   deleteFilterTab,
   getActiveFilters,
@@ -48,8 +38,8 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
-} from "./filters";
-import { getSortQueryVariables } from "./sort";
+} from './filters';
+import { getSortQueryVariables } from './sort';
 
 interface OrderDraftListProps {
   params: OrderDraftListUrlQueryParams;
@@ -58,28 +48,21 @@ interface OrderDraftListProps {
 export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.DRAFT_LIST,
-  );
+  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+  const { updateListSettings, settings } = useListSettings(ListViews.DRAFT_LIST);
 
   usePaginationReset(orderDraftListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
 
-  const [
-    orderDraftBulkDelete,
-    orderDraftBulkDeleteOpts,
-  ] = useOrderDraftBulkCancelMutation({
+  const [orderDraftBulkDelete, orderDraftBulkDeleteOpts] = useOrderDraftBulkCancelMutation({
     onCompleted: data => {
       if (data.draftOrderBulkDelete.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage({
-            id: "ra2O4j",
-            defaultMessage: "Deleted draft orders",
+            id: 'ra2O4j',
+            defaultMessage: 'Deleted draft orders',
           }),
         });
         refetch();
@@ -92,10 +75,10 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const [createOrder] = useOrderDraftCreateMutation({
     onCompleted: data => {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "6udlH+",
-          defaultMessage: "Order draft successfully created",
+          id: '6udlH+',
+          defaultMessage: 'Order draft successfully created',
         }),
       });
       navigate(orderUrl(data.draftOrderCreate.order.id));
@@ -113,11 +96,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
 
   const currentTab = getFiltersCurrentTab(params, tabs);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
     cleanupFn: reset,
     createUrl: orderDraftListUrl,
     getFilterQueryParam,
@@ -125,10 +104,11 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     params,
   });
 
-  const [openModal, closeModal] = createDialogActionHandlers<
-    OrderDraftListUrlDialog,
-    OrderDraftListUrlQueryParams
-  >(navigate, orderDraftListUrl, params);
+  const [openModal, closeModal] = createDialogActionHandlers<OrderDraftListUrlDialog, OrderDraftListUrlQueryParams>(
+    navigate,
+    orderDraftListUrl,
+    params,
+  );
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -186,18 +166,18 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         currentTab={currentTab}
         filterOpts={getFilterOpts(params)}
         limits={limitOpts.data?.shop.limits}
-        initialSearch={params.query || ""}
+        initialSearch={params.query || ''}
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}
         onAll={resetFilters}
         onTabChange={handleTabChange}
-        onTabDelete={() => openModal("delete-search")}
-        onTabSave={() => openModal("save-search")}
+        onTabDelete={() => openModal('delete-search')}
+        onTabSave={() => openModal('save-search')}
         tabs={tabs.map(tab => tab.name)}
         disabled={loading}
         settings={settings}
         orders={mapEdgesToItems(data?.draftOrders)}
-        onAdd={() => openModal("create-order")}
+        onAdd={() => openModal('create-order')}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         isChecked={isSelected}
@@ -210,7 +190,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
             variant="secondary"
             color="primary"
             onClick={() =>
-              openModal("remove", {
+              openModal('remove', {
                 ids: listElements,
               })
             }
@@ -223,11 +203,11 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         confirmButtonState={orderDraftBulkDeleteOpts.status}
         onClose={closeModal}
         onConfirm={onOrderDraftBulkDelete}
-        open={params.action === "remove"}
+        open={params.action === 'remove'}
         title={intl.formatMessage({
-          id: "qbmeUI",
-          defaultMessage: "Delete Order Drafts",
-          description: "dialog header",
+          id: 'qbmeUI',
+          defaultMessage: 'Delete Order Drafts',
+          description: 'dialog header',
         })}
         variant="delete"
       >
@@ -238,31 +218,29 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
             description="dialog content"
             values={{
               counter: maybe(() => params.ids.length),
-              displayQuantity: (
-                <strong>{maybe(() => params.ids.length)}</strong>
-              ),
+              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>,
             }}
           />
         </DialogContentText>
       </ActionDialog>
       <SaveFilterTabDialog
-        open={params.action === "save-search"}
+        open={params.action === 'save-search'}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabSave}
       />
       <DeleteFilterTabDialog
-        open={params.action === "delete-search"}
+        open={params.action === 'delete-search'}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+        tabName={maybe(() => tabs[currentTab - 1].name, '...')}
       />
       <ChannelPickerDialog
         channelsChoices={mapNodeToChoice(availableChannels)}
         confirmButtonState="success"
         defaultChoice={channel?.id}
-        open={params.action === "create-order"}
+        open={params.action === 'create-order'}
         onClose={closeModal}
         onConfirm={channelId =>
           createOrder({

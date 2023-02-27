@@ -1,71 +1,71 @@
-import { IconButton } from "@dashboard/components/IconButton";
-import { CircularProgress } from "@material-ui/core";
-import { DeleteIcon, EditIcon, makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
+import { IconButton } from '@dashboard/components/IconButton';
+import { CircularProgress } from '@material-ui/core';
+import { DeleteIcon, EditIcon, makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
 
 const useStyles = makeStyles(
   theme => ({
     media: {
-      height: "100%",
-      objectFit: "contain",
-      userSelect: "none",
-      width: "100%",
+      height: '100%',
+      objectFit: 'contain',
+      userSelect: 'none',
+      width: '100%',
     },
     mediaContainer: {
-      "&:hover, &.dragged": {
-        "& $mediaOverlay": {
-          display: "block",
+      '&:hover, &.dragged': {
+        '& $mediaOverlay': {
+          display: 'block',
         },
       },
       background: theme.palette.background.paper,
       border: `1px solid ${theme.palette.divider}`,
       borderRadius: theme.spacing(),
       height: 148,
-      overflow: "hidden",
+      overflow: 'hidden',
       padding: theme.spacing(2),
-      position: "relative",
+      position: 'relative',
       width: 148,
     },
     mediaOverlay: {
       background: theme.palette.background.default,
       opacity: 0.8,
-      cursor: "move",
-      display: "none",
+      cursor: 'move',
+      display: 'none',
       height: 148,
       left: 0,
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       width: 148,
     },
     mediaOverlayShadow: {
-      "&mediaOverlay": {
-        alignItems: "center",
-        display: "flex",
-        justifyContent: "center",
+      '&mediaOverlay': {
+        alignItems: 'center',
+        display: 'flex',
+        justifyContent: 'center',
       },
     },
     mediaOverlayToolbar: {
-      display: "flex",
-      justifyContent: "flex-end",
+      display: 'flex',
+      justifyContent: 'flex-end',
     },
     controlButton: {
       color: theme.palette.saleor.main[1],
-      backgroundColor: "transparent",
-      border: "none",
-      cursor: "pointer",
+      backgroundColor: 'transparent',
+      border: 'none',
+      cursor: 'pointer',
       margin: theme.spacing(2),
       padding: 0,
 
-      "&:hover": {
+      '&:hover': {
         color: theme.palette.saleor.active[1],
       },
-      "&:first-child": {
+      '&:first-child': {
         marginRight: 0,
       },
     },
   }),
-  { name: "MediaTile" },
+  { name: 'MediaTile' },
 );
 
 interface MediaTileBaseProps {
@@ -95,9 +95,7 @@ export type MediaTileProps = MediaTileBaseProps &
 const MediaTile: React.FC<MediaTileProps> = props => {
   const { loading, onDelete, onEdit, editHref, media } = props;
   const classes = useStyles(props);
-  const parsedMediaOembedData = media?.oembedData
-    ? JSON.parse(media.oembedData)
-    : null;
+  const parsedMediaOembedData = media?.oembedData ? JSON.parse(media.oembedData) : null;
   const mediaUrl = parsedMediaOembedData?.thumbnail_url || media.url;
 
   return (
@@ -123,12 +121,7 @@ const MediaTile: React.FC<MediaTileProps> = props => {
               </IconButton>
             )}
             {onDelete && (
-              <IconButton
-                variant="secondary"
-                hoverOutline={false}
-                className={classes.controlButton}
-                onClick={onDelete}
-              >
+              <IconButton variant="secondary" hoverOutline={false} className={classes.controlButton} onClick={onDelete}>
                 <DeleteIcon />
               </IconButton>
             )}
@@ -139,5 +132,5 @@ const MediaTile: React.FC<MediaTileProps> = props => {
     </div>
   );
 };
-MediaTile.displayName = "MediaTile";
+MediaTile.displayName = 'MediaTile';
 export default MediaTile;

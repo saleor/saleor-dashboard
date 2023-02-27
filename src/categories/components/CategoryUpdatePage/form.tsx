@@ -1,21 +1,15 @@
-import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@dashboard/components/Metadata";
-import { CategoryDetailsFragment } from "@dashboard/graphql";
-import useForm, {
-  CommonUseFormResult,
-  FormChange,
-} from "@dashboard/hooks/useForm";
-import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import getMetadata from "@dashboard/utils/metadata/getMetadata";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import {
-  RichTextContext,
-  RichTextContextValues,
-} from "@dashboard/utils/richText/context";
-import useRichText from "@dashboard/utils/richText/useRichText";
-import { OutputData } from "@editorjs/editorjs";
-import React, { useEffect } from "react";
+import { useExitFormDialog } from '@dashboard/components/Form/useExitFormDialog';
+import { MetadataFormData } from '@dashboard/components/Metadata';
+import { CategoryDetailsFragment } from '@dashboard/graphql';
+import useForm, { CommonUseFormResult, FormChange } from '@dashboard/hooks/useForm';
+import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
+import { mapMetadataItemToInput } from '@dashboard/utils/maps';
+import getMetadata from '@dashboard/utils/metadata/getMetadata';
+import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
+import { RichTextContext, RichTextContextValues } from '@dashboard/utils/richText/context';
+import useRichText from '@dashboard/utils/richText/useRichText';
+import { OutputData } from '@editorjs/editorjs';
+import React, { useEffect } from 'react';
 
 export interface CategoryUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;
@@ -32,8 +26,7 @@ interface CategoryUpdateHandlers {
   changeMetadata: FormChange;
 }
 
-export interface UseCategoryUpdateFormResult
-  extends CommonUseFormResult<CategoryUpdateData> {
+export interface UseCategoryUpdateFormResult extends CommonUseFormResult<CategoryUpdateData> {
   handlers: CategoryUpdateHandlers;
 }
 
@@ -45,13 +38,13 @@ export interface CategoryUpdateFormProps {
 }
 
 const getInitialData = (category?: CategoryDetailsFragment) => ({
-  backgroundImageAlt: category?.backgroundImage?.alt || "",
+  backgroundImageAlt: category?.backgroundImage?.alt || '',
   metadata: category?.metadata?.map(mapMetadataItemToInput),
-  name: category?.name || "",
+  name: category?.name || '',
   privateMetadata: category?.privateMetadata?.map(mapMetadataItemToInput),
-  seoDescription: category?.seoDescription || "",
-  seoTitle: category?.seoTitle || "",
-  slug: category?.slug || "",
+  seoDescription: category?.seoDescription || '',
+  seoTitle: category?.seoTitle || '',
+  slug: category?.slug || '',
 });
 
 function useCategoryUpdateForm(
@@ -124,26 +117,15 @@ function useCategoryUpdateForm(
   };
 }
 
-const CategoryUpdateForm: React.FC<CategoryUpdateFormProps> = ({
-  children,
-  category,
-  onSubmit,
-  disabled,
-}) => {
-  const { richText, ...props } = useCategoryUpdateForm(
-    category,
-    onSubmit,
-    disabled,
-  );
+const CategoryUpdateForm: React.FC<CategoryUpdateFormProps> = ({ children, category, onSubmit, disabled }) => {
+  const { richText, ...props } = useCategoryUpdateForm(category, onSubmit, disabled);
 
   return (
     <form onSubmit={props.submit}>
-      <RichTextContext.Provider value={richText}>
-        {children(props)}
-      </RichTextContext.Provider>
+      <RichTextContext.Provider value={richText}>{children(props)}</RichTextContext.Provider>
     </form>
   );
 };
 
-CategoryUpdateForm.displayName = "CategoryUpdateForm";
+CategoryUpdateForm.displayName = 'CategoryUpdateForm';
 export default CategoryUpdateForm;

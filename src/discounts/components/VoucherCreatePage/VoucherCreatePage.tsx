@@ -1,40 +1,33 @@
-import { ChannelVoucherData } from "@dashboard/channels/utils";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import Form from "@dashboard/components/Form";
-import Metadata from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
-import {
-  createChannelsChangeHandler,
-  createDiscountTypeChangeHandler,
-} from "@dashboard/discounts/handlers";
-import { voucherListUrl } from "@dashboard/discounts/urls";
-import { VOUCHER_CREATE_FORM_ID } from "@dashboard/discounts/views/VoucherCreate/types";
-import {
-  DiscountErrorFragment,
-  PermissionEnum,
-  VoucherTypeEnum,
-} from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { validatePrice } from "@dashboard/products/utils/validation";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import { ChannelVoucherData } from '@dashboard/channels/utils';
+import { Content } from '@dashboard/components/AppLayout/Content';
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import ChannelsAvailabilityCard from '@dashboard/components/ChannelsAvailabilityCard';
+import Form from '@dashboard/components/Form';
+import Metadata from '@dashboard/components/Metadata';
+import Savebar from '@dashboard/components/Savebar';
+import { createChannelsChangeHandler, createDiscountTypeChangeHandler } from '@dashboard/discounts/handlers';
+import { voucherListUrl } from '@dashboard/discounts/urls';
+import { VOUCHER_CREATE_FORM_ID } from '@dashboard/discounts/views/VoucherCreate/types';
+import { DiscountErrorFragment, PermissionEnum, VoucherTypeEnum } from '@dashboard/graphql';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { validatePrice } from '@dashboard/products/utils/validation';
+import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { DiscountTypeEnum, RequirementsPicker } from "../../types";
-import VoucherDates from "../VoucherDates";
-import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
-import VoucherInfo from "../VoucherInfo";
-import VoucherLimits from "../VoucherLimits";
-import VoucherRequirements from "../VoucherRequirements";
-import VoucherTypes from "../VoucherTypes";
-import VoucherValue from "../VoucherValue";
+import { DiscountTypeEnum, RequirementsPicker } from '../../types';
+import VoucherDates from '../VoucherDates';
+import { VoucherDetailsPageFormData } from '../VoucherDetailsPage';
+import VoucherInfo from '../VoucherInfo';
+import VoucherLimits from '../VoucherLimits';
+import VoucherRequirements from '../VoucherRequirements';
+import VoucherTypes from '../VoucherTypes';
+import VoucherValue from '../VoucherValue';
 
 export interface FormData extends VoucherDetailsPageFormData {
   value: number;
@@ -64,24 +57,23 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const { makeChangeHandler: makeMetadataChangeHandler } =
-    useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
   const initialForm: FormData = {
     applyOncePerCustomer: false,
     applyOncePerOrder: false,
     onlyForStaff: false,
     channelListings,
-    code: "",
+    code: '',
     discountType: DiscountTypeEnum.VALUE_FIXED,
-    endDate: "",
-    endTime: "",
+    endDate: '',
+    endTime: '',
     hasEndDate: false,
     hasUsageLimit: false,
-    minCheckoutItemsQuantity: "0",
+    minCheckoutItemsQuantity: '0',
     requirementsPicker: RequirementsPicker.NONE,
-    startDate: "",
-    startTime: "",
+    startDate: '',
+    startTime: '',
     type: VoucherTypeEnum.ENTIRE_ORDER,
     usageLimit: 1,
     used: 0,
@@ -91,12 +83,11 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
   };
 
   const checkIfSaveIsDisabled = (data: FormData) =>
-    (data.discountType.toString() !== "SHIPPING" &&
+    (data.discountType.toString() !== 'SHIPPING' &&
       data.channelListings?.some(
         channel =>
           validatePrice(channel.discountValue) ||
-          (data.requirementsPicker === RequirementsPicker.ORDER &&
-            validatePrice(channel.minSpent)),
+          (data.requirementsPicker === RequirementsPicker.ORDER && validatePrice(channel.minSpent)),
       )) ||
     disabled;
 
@@ -109,13 +100,8 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
       checkIfSaveIsDisabled={checkIfSaveIsDisabled}
     >
       {({ change, data, submit, triggerChange, set }) => {
-        const handleDiscountTypeChange =
-          createDiscountTypeChangeHandler(change);
-        const handleChannelChange = createChannelsChangeHandler(
-          data.channelListings,
-          onChannelsChange,
-          triggerChange,
-        );
+        const handleDiscountTypeChange = createDiscountTypeChangeHandler(change);
+        const handleChannelChange = createChannelsChangeHandler(data.channelListings, onChannelsChange, triggerChange);
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
@@ -123,9 +109,9 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
             <TopNav
               href={voucherListUrl()}
               title={intl.formatMessage({
-                id: "PsclSa",
-                defaultMessage: "Create Voucher",
-                description: "page header",
+                id: 'PsclSa',
+                defaultMessage: 'Create Voucher',
+                description: 'page header',
               })}
             />
             <Content>
@@ -137,13 +123,8 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 variant="create"
               />
               <CardSpacer />
-              <VoucherTypes
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
-              {data.discountType.toString() !== "SHIPPING" ? (
+              <VoucherTypes data={data} disabled={disabled} errors={errors} onChange={change} />
+              {data.discountType.toString() !== 'SHIPPING' ? (
                 <>
                   <CardSpacer />
                   <VoucherValue
@@ -175,12 +156,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 isNewVoucher
               />
               <CardSpacer />
-              <VoucherDates
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
+              <VoucherDates data={data} disabled={disabled} errors={errors} onChange={change} />
             </Content>
             <RightSidebar>
               <ChannelsAvailabilityCard
@@ -207,5 +183,5 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
     </Form>
   );
 };
-VoucherCreatePage.displayName = "VoucherCreatePage";
+VoucherCreatePage.displayName = 'VoucherCreatePage';
 export default VoucherCreatePage;

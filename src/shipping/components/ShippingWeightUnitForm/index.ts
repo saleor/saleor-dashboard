@@ -1,2 +1,2 @@
-export { default } from "./ShippingWeightUnitForm";
-export * from "./ShippingWeightUnitForm";
+export { default } from './ShippingWeightUnitForm';
+export * from './ShippingWeightUnitForm';

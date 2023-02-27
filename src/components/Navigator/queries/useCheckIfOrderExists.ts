@@ -1,18 +1,12 @@
-import {
-  CheckIfOrderExistsQueryHookResult,
-  useCheckIfOrderExistsQuery,
-} from "@dashboard/graphql";
-import useDebounce from "@dashboard/hooks/useDebounce";
-import { useState } from "react";
+import { CheckIfOrderExistsQueryHookResult, useCheckIfOrderExistsQuery } from '@dashboard/graphql';
+import useDebounce from '@dashboard/hooks/useDebounce';
+import { useState } from 'react';
 
-function useCheckIfOrderExists(): [
-  CheckIfOrderExistsQueryHookResult,
-  (query: string) => void,
-] {
-  const [id, setId] = useState("");
+function useCheckIfOrderExists(): [CheckIfOrderExistsQueryHookResult, (query: string) => void] {
+  const [id, setId] = useState('');
   const setIdDebounced = useDebounce(setId);
   const result = useCheckIfOrderExistsQuery({
-    skip: id === "",
+    skip: id === '',
     variables: {
       id,
     },

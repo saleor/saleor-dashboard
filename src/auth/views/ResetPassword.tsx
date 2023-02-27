@@ -1,38 +1,30 @@
-import { useRequestPasswordResetMutation } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors } from "@dashboard/misc";
-import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
-import React from "react";
-import { useIntl } from "react-intl";
-import urlJoin from "url-join";
+import { useRequestPasswordResetMutation } from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { commonMessages } from '@dashboard/intl';
+import { extractMutationErrors } from '@dashboard/misc';
+import { getAppMountUriForRedirect } from '@dashboard/utils/urls';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import urlJoin from 'url-join';
 
-import ResetPasswordPage, {
-  ResetPasswordPageFormData,
-} from "../components/ResetPasswordPage";
-import { newPasswordUrl, passwordResetSuccessUrl } from "../urls";
+import ResetPasswordPage, { ResetPasswordPageFormData } from '../components/ResetPasswordPage';
+import { newPasswordUrl, passwordResetSuccessUrl } from '../urls';
 
 const ResetPasswordView: React.FC = () => {
   const [error, setError] = React.useState<string>();
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const [
-    requestPasswordReset,
-    requestPasswordResetOpts,
-  ] = useRequestPasswordResetMutation({
+  const [requestPasswordReset, requestPasswordResetOpts] = useRequestPasswordResetMutation({
     onCompleted: data => {
       if (data.requestPasswordReset.errors.length === 0) {
         navigate(passwordResetSuccessUrl);
       } else {
-        if (
-          data.requestPasswordReset.errors.find(err => err.field === "email")
-        ) {
+        if (data.requestPasswordReset.errors.find(err => err.field === 'email')) {
           setError(
             intl.formatMessage({
-              id: "C0JLNW",
-              defaultMessage:
-                "Provided email address does not exist in our database.",
+              id: 'C0JLNW',
+              defaultMessage: 'Provided email address does not exist in our database.',
             }),
           );
         } else {
@@ -47,22 +39,12 @@ const ResetPasswordView: React.FC = () => {
       requestPasswordReset({
         variables: {
           email: data.email,
-          redirectUrl: urlJoin(
-            window.location.origin,
-            getAppMountUriForRedirect(),
-            newPasswordUrl().replace(/\?/, ""),
-          ),
+          redirectUrl: urlJoin(window.location.origin, getAppMountUriForRedirect(), newPasswordUrl().replace(/\?/, '')),
         },
       }),
     );
 
-  return (
-    <ResetPasswordPage
-      disabled={requestPasswordResetOpts.loading}
-      error={error}
-      onSubmit={handleSubmit}
-    />
-  );
+  return <ResetPasswordPage disabled={requestPasswordResetOpts.loading} error={error} onSubmit={handleSubmit} />;
 };
-ResetPasswordView.displayName = "ResetPasswordView";
+ResetPasswordView.displayName = 'ResetPasswordView';
 export default ResetPasswordView;

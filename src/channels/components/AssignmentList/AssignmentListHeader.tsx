@@ -1,10 +1,10 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
-import Skeleton from "@dashboard/components/Skeleton";
-import { Typography } from "@material-ui/core";
-import { AccordionSummary } from "@saleor/macaw-ui";
-import React from "react";
+import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
+import Skeleton from '@dashboard/components/Skeleton';
+import { Typography } from '@material-ui/core';
+import { AccordionSummary } from '@saleor/macaw-ui';
+import React from 'react';
 
-import { useHeaderStyles } from "./styles";
+import { useHeaderStyles } from './styles';
 
 interface AssignmentListHeaderProps {
   assignCount: number;
@@ -12,11 +12,7 @@ interface AssignmentListHeaderProps {
   loading: boolean;
 }
 
-const AssignmentListHeader: React.FC<AssignmentListHeaderProps> = ({
-  assignCount,
-  itemsName,
-  loading,
-}) => {
+const AssignmentListHeader: React.FC<AssignmentListHeaderProps> = ({ assignCount, itemsName, loading }) => {
   const { container, skeleton, ...accordion } = useHeaderStyles();
 
   return (

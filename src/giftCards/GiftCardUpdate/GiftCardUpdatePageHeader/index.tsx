@@ -1,2 +1,2 @@
-export * from "./GiftCardUpdatePageHeader";
-export { default } from "./GiftCardUpdatePageHeader";
+export * from './GiftCardUpdatePageHeader';
+export { default } from './GiftCardUpdatePageHeader';

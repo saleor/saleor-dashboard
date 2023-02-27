@@ -1,13 +1,13 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
-import Grid from "@dashboard/components/Grid";
-import { DiscountErrorFragment } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { getFormErrors } from "@dashboard/utils/errors";
-import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { Card, CardContent, TextField } from "@material-ui/core";
-import React from "react";
-import { useIntl } from "react-intl";
+import CardTitle from '@dashboard/components/CardTitle';
+import { ControlledCheckbox } from '@dashboard/components/ControlledCheckbox';
+import Grid from '@dashboard/components/Grid';
+import { DiscountErrorFragment } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { getFormErrors } from '@dashboard/utils/errors';
+import getDiscountErrorMessage from '@dashboard/utils/errors/discounts';
+import { Card, CardContent, TextField } from '@material-ui/core';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
 interface DiscountDatesProps {
   data: {
@@ -22,23 +22,18 @@ interface DiscountDatesProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const DiscountDates = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}: DiscountDatesProps) => {
+const DiscountDates = ({ data, disabled, errors, onChange }: DiscountDatesProps) => {
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["startDate", "endDate"], errors);
+  const formErrors = getFormErrors(['startDate', 'endDate'], errors);
 
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: "zKOGkU",
-          defaultMessage: "Active Dates",
-          description: "time during discount is active, header",
+          id: 'zKOGkU',
+          defaultMessage: 'Active Dates',
+          description: 'time during discount is active, header',
         })}
       />
       <CardContent>
@@ -47,7 +42,7 @@ const DiscountDates = ({
             disabled={disabled}
             error={!!formErrors.startDate}
             helperText={getDiscountErrorMessage(formErrors.startDate, intl)}
-            name={"startDate" as keyof FormData}
+            name={'startDate' as keyof FormData}
             onChange={onChange}
             label={intl.formatMessage(commonMessages.startDate)}
             value={data.startDate}
@@ -61,7 +56,7 @@ const DiscountDates = ({
             disabled={disabled}
             error={!!formErrors.startDate}
             helperText={getDiscountErrorMessage(formErrors.startDate, intl)}
-            name={"startTime" as keyof FormData}
+            name={'startTime' as keyof FormData}
             onChange={onChange}
             label={intl.formatMessage(commonMessages.startHour)}
             value={data.startTime}
@@ -75,11 +70,11 @@ const DiscountDates = ({
         <ControlledCheckbox
           checked={data.hasEndDate}
           label={intl.formatMessage({
-            id: "AVF5T5",
-            defaultMessage: "Set end date",
-            description: "voucher end date, switch button",
+            id: 'AVF5T5',
+            defaultMessage: 'Set end date',
+            description: 'voucher end date, switch button',
           })}
-          name={"hasEndDate" as keyof FormData}
+          name={'hasEndDate' as keyof FormData}
           onChange={onChange}
         />
         {data.hasEndDate && (
@@ -88,7 +83,7 @@ const DiscountDates = ({
               disabled={disabled}
               error={!!formErrors.endDate}
               helperText={getDiscountErrorMessage(formErrors.endDate, intl)}
-              name={"endDate" as keyof FormData}
+              name={'endDate' as keyof FormData}
               onChange={onChange}
               label={intl.formatMessage(commonMessages.endDate)}
               value={data.endDate}
@@ -102,7 +97,7 @@ const DiscountDates = ({
               disabled={disabled}
               error={!!formErrors.endDate}
               helperText={getDiscountErrorMessage(formErrors.endDate, intl)}
-              name={"endTime" as keyof FormData}
+              name={'endTime' as keyof FormData}
               onChange={onChange}
               label={intl.formatMessage(commonMessages.endHour)}
               value={data.endTime}

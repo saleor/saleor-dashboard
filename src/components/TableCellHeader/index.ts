@@ -1,2 +1,2 @@
-export { default } from "./TableCellHeader";
-export * from "./TableCellHeader";
+export { default } from './TableCellHeader';
+export * from './TableCellHeader';

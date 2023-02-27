@@ -1,2 +1,2 @@
-export * from "./DeactivatedText";
-export { default } from "./DeactivatedText";
+export * from './DeactivatedText';
+export { default } from './DeactivatedText';

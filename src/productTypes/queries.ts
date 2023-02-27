@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const productTypeListQuery = gql`
   query ProductTypeList(
@@ -9,14 +9,7 @@ export const productTypeListQuery = gql`
     $filter: ProductTypeFilterInput
     $sort: ProductTypeSortingInput
   ) {
-    productTypes(
-      after: $after
-      before: $before
-      first: $first
-      last: $last
-      filter: $filter
-      sortBy: $sort
-    ) {
+    productTypes(after: $after, before: $before, first: $first, last: $last, filter: $filter, sortBy: $sort) {
       edges {
         node {
           ...ProductType

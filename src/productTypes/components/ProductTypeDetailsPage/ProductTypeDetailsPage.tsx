@@ -1,44 +1,39 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import ControlledSwitch from "@dashboard/components/ControlledSwitch";
-import Form from "@dashboard/components/Form";
-import Metadata from "@dashboard/components/Metadata/Metadata";
-import { MetadataFormData } from "@dashboard/components/Metadata/types";
-import Savebar from "@dashboard/components/Savebar";
+import { Content } from '@dashboard/components/AppLayout/Content';
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import ControlledSwitch from '@dashboard/components/ControlledSwitch';
+import Form from '@dashboard/components/Form';
+import Metadata from '@dashboard/components/Metadata/Metadata';
+import { MetadataFormData } from '@dashboard/components/Metadata/types';
+import Savebar from '@dashboard/components/Savebar';
 import {
   ProductAttributeType,
   ProductTypeDetailsQuery,
   ProductTypeKindEnum,
   TaxClassBaseFragment,
   WeightUnitsEnum,
-} from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { maybe } from "@dashboard/misc";
-import { handleTaxClassChange } from "@dashboard/productTypes/handlers";
-import { productTypeListUrl } from "@dashboard/productTypes/urls";
-import {
-  FetchMoreProps,
-  ListActions,
-  ReorderEvent,
-  UserError,
-} from "@dashboard/types";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { sprinkles } from "@saleor/macaw-ui/next";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useStateFromProps from '@dashboard/hooks/useStateFromProps';
+import { maybe } from '@dashboard/misc';
+import { handleTaxClassChange } from '@dashboard/productTypes/handlers';
+import { productTypeListUrl } from '@dashboard/productTypes/urls';
+import { FetchMoreProps, ListActions, ReorderEvent, UserError } from '@dashboard/types';
+import { mapMetadataItemToInput } from '@dashboard/utils/maps';
+import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import { sprinkles } from '@saleor/macaw-ui/next';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import ProductTypeAttributes from "../ProductTypeAttributes/ProductTypeAttributes";
-import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
-import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
-import ProductTypeTaxes from "../ProductTypeTaxes/ProductTypeTaxes";
-import ProductTypeVariantAttributes from "../ProductTypeVariantAttributes/ProductTypeVariantAttributes";
+import ProductTypeAttributes from '../ProductTypeAttributes/ProductTypeAttributes';
+import ProductTypeDetails from '../ProductTypeDetails/ProductTypeDetails';
+import ProductTypeShipping from '../ProductTypeShipping/ProductTypeShipping';
+import ProductTypeTaxes from '../ProductTypeTaxes/ProductTypeTaxes';
+import ProductTypeVariantAttributes from '../ProductTypeVariantAttributes/ProductTypeVariantAttributes';
 
 interface ChoiceType {
   label: string;
@@ -58,7 +53,7 @@ export interface ProductTypeForm extends MetadataFormData {
 
 export interface ProductTypeDetailsPageProps {
   errors: UserError[];
-  productType: ProductTypeDetailsQuery["productType"];
+  productType: ProductTypeDetailsQuery['productType'];
   defaultWeightUnit: WeightUnitsEnum;
   disabled: boolean;
   pageTitle: string;
@@ -106,20 +101,13 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
     makeChangeHandler: makeMetadataChangeHandler,
   } = useMetadataChangeTrigger();
 
-  const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps(
-    productType?.taxClass?.name ?? "",
-  );
+  const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps(productType?.taxClass?.name ?? '');
   const formInitialData: ProductTypeForm = {
-    hasVariants:
-      maybe(() => productType.hasVariants) !== undefined
-        ? productType.hasVariants
-        : false,
+    hasVariants: maybe(() => productType.hasVariants) !== undefined ? productType.hasVariants : false,
     isShippingRequired:
-      maybe(() => productType.isShippingRequired) !== undefined
-        ? productType.isShippingRequired
-        : false,
+      maybe(() => productType.isShippingRequired) !== undefined ? productType.isShippingRequired : false,
     metadata: productType?.metadata?.map(mapMetadataItemToInput),
-    name: maybe(() => productType.name) !== undefined ? productType.name : "",
+    name: maybe(() => productType.name) !== undefined ? productType.name : '',
     kind: productType?.kind || ProductTypeKindEnum.NORMAL,
     privateMetadata: productType?.privateMetadata?.map(mapMetadataItemToInput),
     productAttributes:
@@ -129,7 +117,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
             value: attribute.id,
           }))
         : [],
-    taxClassId: productType?.taxClass?.id ?? "",
+    taxClassId: productType?.taxClass?.id ?? '',
     variantAttributes:
       maybe(() => productType.variantAttributes) !== undefined
         ? productType.variantAttributes.map(attribute => ({
@@ -142,9 +130,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
 
   const handleSubmit = (data: ProductTypeForm) => {
     const metadata = isMetadataModified ? data.metadata : undefined;
-    const privateMetadata = isPrivateMetadataModified
-      ? data.privateMetadata
-      : undefined;
+    const privateMetadata = isPrivateMetadataModified ? data.privateMetadata : undefined;
 
     return onSubmit({
       ...data,
@@ -154,12 +140,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
   };
 
   return (
-    <Form
-      initial={formInitialData}
-      onSubmit={handleSubmit}
-      confirmLeave
-      disabled={disabled}
-    >
+    <Form initial={formInitialData} onSubmit={handleSubmit} confirmLeave disabled={disabled}>
       {({ change, data, isSaveDisabled, submit }) => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
@@ -180,14 +161,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 data={data}
                 taxClasses={taxClasses}
                 taxClassDisplayName={taxClassDisplayName}
-                onChange={event =>
-                  handleTaxClassChange(
-                    event,
-                    taxClasses,
-                    change,
-                    setTaxClassDisplayName,
-                  )
-                }
+                onChange={event => handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)}
                 onFetchMore={onFetchMoreTaxClasses}
               />
               <CardSpacer />
@@ -197,9 +171,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 disabled={disabled}
                 type={ProductAttributeType.PRODUCT}
                 onAttributeAssign={onAttributeAdd}
-                onAttributeReorder={(event: ReorderEvent) =>
-                  onAttributeReorder(event, ProductAttributeType.PRODUCT)
-                }
+                onAttributeReorder={(event: ReorderEvent) => onAttributeReorder(event, ProductAttributeType.PRODUCT)}
                 onAttributeUnassign={onAttributeUnassign}
                 {...productAttributeList}
               />
@@ -208,9 +180,9 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 checked={data.hasVariants}
                 disabled={disabled}
                 label={intl.formatMessage({
-                  id: "5pHBSU",
-                  defaultMessage: "Product type uses Variant Attributes",
-                  description: "switch button",
+                  id: '5pHBSU',
+                  defaultMessage: 'Product type uses Variant Attributes',
+                  description: 'switch button',
                 })}
                 name="hasVariants"
                 onChange={event => onHasVariantsToggle(event.target.value)}
@@ -221,9 +193,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                   <CardSpacer />
                   <ProductTypeVariantAttributes
                     testId="assign-variants-attributes"
-                    assignedVariantAttributes={
-                      productType?.assignedVariantAttributes
-                    }
+                    assignedVariantAttributes={productType?.assignedVariantAttributes}
                     disabled={disabled}
                     type={ProductAttributeType.VARIANT}
                     onAttributeAssign={onAttributeAdd}
@@ -261,5 +231,5 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
     </Form>
   );
 };
-ProductTypeDetailsPage.displayName = "ProductTypeDetailsPage";
+ProductTypeDetailsPage.displayName = 'ProductTypeDetailsPage';
 export default ProductTypeDetailsPage;

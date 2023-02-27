@@ -1,24 +1,18 @@
-import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
-import useForm, {
-  CommonUseFormResultWithHandlers,
-  SubmitPromise,
-} from "@dashboard/hooks/useForm";
-import useFormset, {
-  FormsetChange,
-  FormsetData,
-} from "@dashboard/hooks/useFormset";
-import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import { getById } from "@dashboard/misc";
-import React, { useEffect } from "react";
+import { useExitFormDialog } from '@dashboard/components/Form/useExitFormDialog';
+import { FulfillmentStatus, OrderDetailsFragment } from '@dashboard/graphql';
+import useForm, { CommonUseFormResultWithHandlers, SubmitPromise } from '@dashboard/hooks/useForm';
+import useFormset, { FormsetChange, FormsetData } from '@dashboard/hooks/useFormset';
+import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
+import { getById } from '@dashboard/misc';
+import React, { useEffect } from 'react';
 
-import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
+import { OrderRefundAmountCalculationMode } from '../OrderRefundPage/form';
 import {
   getLineItem,
   getOrderUnfulfilledLines,
   getParsedLineData,
   getParsedLineDataForFulfillmentStatus,
-} from "./utils";
+} from './utils';
 
 export interface LineItemOptions<T> {
   initialValue: T;
@@ -58,10 +52,7 @@ export interface OrderReturnFormData extends OrderReturnData {
 
 export type OrderRefundSubmitData = OrderReturnFormData;
 
-export type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
-  OrderReturnFormData,
-  OrderReturnHandlers
->;
+export type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<OrderReturnFormData, OrderReturnHandlers>;
 
 interface OrderReturnProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
@@ -103,11 +94,10 @@ function useOrderReturnForm(
       isFulfillment: true,
     };
 
-    const refundedFulfilmentsItems = getParsedLineDataForFulfillmentStatus(
-      order,
-      FulfillmentStatus.REFUNDED,
-      { ...commonOptions, isRefunded: true },
-    );
+    const refundedFulfilmentsItems = getParsedLineDataForFulfillmentStatus(order, FulfillmentStatus.REFUNDED, {
+      ...commonOptions,
+      isRefunded: true,
+    });
 
     const fulfilledFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
       order,
@@ -124,41 +114,29 @@ function useOrderReturnForm(
       isFulfillment: true,
     };
 
-    return getParsedLineDataForFulfillmentStatus(
-      order,
-      FulfillmentStatus.WAITING_FOR_APPROVAL,
-      commonOptions,
-    );
+    return getParsedLineDataForFulfillmentStatus(order, FulfillmentStatus.WAITING_FOR_APPROVAL, commonOptions);
   };
 
-  const fulfiledItemsQuatities = useFormset<LineItemData, number>(
-    getItemsFulfilled(),
-  );
+  const fulfiledItemsQuatities = useFormset<LineItemData, number>(getItemsFulfilled());
 
-  const waitingItemsQuantities = useFormset<LineItemData, number>(
-    getItemsWaiting(),
-  );
+  const waitingItemsQuantities = useFormset<LineItemData, number>(getItemsWaiting());
 
   const getItemsToBeReplaced = () => {
     if (!order) {
       return [];
     }
 
-    const orderLinesItems = getOrderUnfulfilledLines(order).map(
-      getParsedLineData({ initialValue: false }),
-    );
+    const orderLinesItems = getOrderUnfulfilledLines(order).map(getParsedLineData({ initialValue: false }));
 
-    const refundedFulfilmentsItems = getParsedLineDataForFulfillmentStatus(
-      order,
-      FulfillmentStatus.REFUNDED,
-      { initialValue: false, isFulfillment: true },
-    );
+    const refundedFulfilmentsItems = getParsedLineDataForFulfillmentStatus(order, FulfillmentStatus.REFUNDED, {
+      initialValue: false,
+      isFulfillment: true,
+    });
 
-    const fulfilledFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
-      order,
-      FulfillmentStatus.FULFILLED,
-      { initialValue: false, isFulfillment: true },
-    );
+    const fulfilledFulfillmentsItems = getParsedLineDataForFulfillmentStatus(order, FulfillmentStatus.FULFILLED, {
+      initialValue: false,
+      isFulfillment: true,
+    });
 
     const waitingFulfillmentsItems = getParsedLineDataForFulfillmentStatus(
       order,
@@ -174,19 +152,15 @@ function useOrderReturnForm(
     ];
   };
 
-  const itemsToBeReplaced = useFormset<LineItemData, boolean>(
-    getItemsToBeReplaced(),
-  );
+  const itemsToBeReplaced = useFormset<LineItemData, boolean>(getItemsToBeReplaced());
 
   const handleSetMaximalUnfulfiledItemsQuantities = () => {
-    const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(
-      ({ id }) => {
-        const line = order.lines.find(getById(id));
-        const initialValue = line.quantityToFulfill;
+    const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(({ id }) => {
+      const line = order.lines.find(getById(id));
+      const initialValue = line.quantityToFulfill;
 
-        return getLineItem(line, { initialValue });
-      },
-    );
+      return getLineItem(line, { initialValue });
+    });
 
     triggerChange();
     unfulfiledItemsQuantites.set(newQuantities);
@@ -196,9 +170,7 @@ function useOrderReturnForm(
     const fulfillment = order.fulfillments.find(getById(fulfillmentId));
 
     const quantities =
-      fulfillment.status === FulfillmentStatus.WAITING_FOR_APPROVAL
-        ? waitingItemsQuantities
-        : fulfiledItemsQuatities;
+      fulfillment.status === FulfillmentStatus.WAITING_FOR_APPROVAL ? waitingItemsQuantities : fulfiledItemsQuatities;
 
     const newQuantities: FormsetQuantityData = quantities.data.map(item => {
       const line = fulfillment.lines.find(getById(item.id));
@@ -253,16 +225,10 @@ function useOrderReturnForm(
     change: handleChange,
     data,
     handlers: {
-      changeFulfiledItemsQuantity: handleHandlerChange(
-        fulfiledItemsQuatities.change,
-      ),
-      changeWaitingItemsQuantity: handleHandlerChange(
-        waitingItemsQuantities.change,
-      ),
+      changeFulfiledItemsQuantity: handleHandlerChange(fulfiledItemsQuatities.change),
+      changeWaitingItemsQuantity: handleHandlerChange(waitingItemsQuantities.change),
       changeItemsToBeReplaced: handleHandlerChange(itemsToBeReplaced.change),
-      changeUnfulfiledItemsQuantity: handleHandlerChange(
-        unfulfiledItemsQuantites.change,
-      ),
+      changeUnfulfiledItemsQuantity: handleHandlerChange(unfulfiledItemsQuantites.change),
       handleSetMaximalItemsQuantities,
       handleSetMaximalUnfulfiledItemsQuantities,
     },
@@ -271,11 +237,7 @@ function useOrderReturnForm(
   };
 }
 
-const OrderReturnForm: React.FC<OrderReturnProps> = ({
-  children,
-  order,
-  onSubmit,
-}) => {
+const OrderReturnForm: React.FC<OrderReturnProps> = ({ children, order, onSubmit }) => {
   const props = useOrderReturnForm(order, onSubmit);
 
   return <form>{children(props)}</form>;

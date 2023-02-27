@@ -1,10 +1,10 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 import {
   SearchOrderVariantDocument,
   SearchOrderVariantQuery,
   SearchOrderVariantQueryVariables,
-} from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+} from '@dashboard/graphql';
+import makeTopLevelSearch from '@dashboard/hooks/makeTopLevelSearch';
 
 export const searchOrderVariant = gql`
   query SearchOrderVariant(
@@ -19,11 +19,7 @@ export const searchOrderVariant = gql`
     search: products(
       first: $first
       after: $after
-      filter: {
-        search: $query
-        isPublished: $isPublished
-        stockAvailability: $stockAvailability
-      }
+      filter: { search: $query, isPublished: $isPublished, stockAvailability: $stockAvailability }
       channel: $channel
     ) {
       edges {
@@ -63,7 +59,6 @@ export const searchOrderVariant = gql`
   }
 `;
 
-export const useOrderVariantSearch = makeTopLevelSearch<
-  SearchOrderVariantQuery,
-  SearchOrderVariantQueryVariables
->(SearchOrderVariantDocument);
+export const useOrderVariantSearch = makeTopLevelSearch<SearchOrderVariantQuery, SearchOrderVariantQueryVariables>(
+  SearchOrderVariantDocument,
+);

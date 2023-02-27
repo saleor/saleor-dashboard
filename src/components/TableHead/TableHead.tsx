@@ -1,17 +1,13 @@
-import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  TableCell,
-  TableHead as MuiTableHead,
-  Typography,
-} from "@material-ui/core";
-import { TableHeadProps as MuiTableHeadProps } from "@material-ui/core/TableHead";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { TableCell, TableHead as MuiTableHead, Typography } from '@material-ui/core';
+import { TableHeadProps as MuiTableHeadProps } from '@material-ui/core/TableHead';
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import { Node } from "../../types";
-import Checkbox from "../Checkbox";
+import { Node } from '../../types';
+import Checkbox from '../Checkbox';
 
 export interface TableHeadProps extends MuiTableHeadProps {
   colSpan: number;
@@ -29,8 +25,8 @@ const useStyles = makeStyles(
       height: 56,
     },
     container: {
-      alignItems: "center",
-      display: "flex",
+      alignItems: 'center',
+      display: 'flex',
       height: 47,
       marginRight: theme.spacing(-2),
     },
@@ -39,7 +35,7 @@ const useStyles = makeStyles(
       width: 52,
     },
     padding: {
-      "&:last-child": {
+      '&:last-child': {
         padding: 0,
       },
     },
@@ -51,13 +47,13 @@ const useStyles = makeStyles(
       flex: 1,
     },
     toolbar: {
-      "& > *": {
+      '& > *': {
         marginLeft: theme.spacing(1),
       },
       marginRight: theme.spacing(1.5),
     },
   }),
-  { name: "TableHead" },
+  { name: 'TableHead' },
 );
 
 function getColSpan(colSpan: number, dragRows: boolean): number {
@@ -69,17 +65,7 @@ function getColSpan(colSpan: number, dragRows: boolean): number {
 }
 
 const TableHead: React.FC<TableHeadProps> = props => {
-  const {
-    children,
-    colSpan,
-    disabled,
-    dragRows,
-    items,
-    selected,
-    toggleAll,
-    toolbar,
-    ...muiTableHeadProps
-  } = props;
+  const { children, colSpan, disabled, dragRows, items, selected, toggleAll, toolbar, ...muiTableHeadProps } = props;
   const classes = useStyles(props);
 
   return (
@@ -103,10 +89,7 @@ const TableHead: React.FC<TableHeadProps> = props => {
         )}
         {selected ? (
           <>
-            <TableCell
-              className={clsx(classes.cell, classes.root)}
-              colSpan={getColSpan(colSpan, dragRows)}
-            >
+            <TableCell className={clsx(classes.cell, classes.root)} colSpan={getColSpan(colSpan, dragRows)}>
               <div className={classes.container}>
                 {selected && (
                   <Typography data-test-id="SelectedText">
@@ -131,5 +114,5 @@ const TableHead: React.FC<TableHeadProps> = props => {
     </MuiTableHead>
   );
 };
-TableHead.displayName = "TableHead";
+TableHead.displayName = 'TableHead';
 export default TableHead;

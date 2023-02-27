@@ -1,28 +1,24 @@
-import { ChannelCollectionData } from "@dashboard/channels/utils";
-import { collectionListUrl } from "@dashboard/collections/urls";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { CardSpacer } from "@dashboard/components/CardSpacer";
-import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import Metadata from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
-import SeoForm from "@dashboard/components/SeoForm";
-import {
-  CollectionChannelListingErrorFragment,
-  CollectionErrorFragment,
-  PermissionEnum,
-} from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import { ChannelCollectionData } from '@dashboard/channels/utils';
+import { collectionListUrl } from '@dashboard/collections/urls';
+import { Content } from '@dashboard/components/AppLayout/Content';
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import { CardSpacer } from '@dashboard/components/CardSpacer';
+import ChannelsAvailabilityCard from '@dashboard/components/ChannelsAvailabilityCard';
+import Metadata from '@dashboard/components/Metadata';
+import Savebar from '@dashboard/components/Savebar';
+import SeoForm from '@dashboard/components/SeoForm';
+import { CollectionChannelListingErrorFragment, CollectionErrorFragment, PermissionEnum } from '@dashboard/graphql';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import CollectionDetails from "../CollectionDetails/CollectionDetails";
-import { CollectionImage } from "../CollectionImage/CollectionImage";
-import CollectionCreateForm, { CollectionCreateData } from "./form";
+import CollectionDetails from '../CollectionDetails/CollectionDetails';
+import { CollectionImage } from '../CollectionImage/CollectionImage';
+import CollectionCreateForm, { CollectionCreateData } from './form';
 
 export interface CollectionCreatePageProps {
   channelsCount: number;
@@ -62,24 +58,19 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
           <TopNav
             href={collectionListUrl()}
             title={intl.formatMessage({
-              id: "Fxa6xp",
-              defaultMessage: "Add Collection",
-              description: "page header",
+              id: 'Fxa6xp',
+              defaultMessage: 'Add Collection',
+              description: 'page header',
             })}
           />
           <Content>
-            <CollectionDetails
-              data={data}
-              disabled={disabled}
-              errors={errors}
-              onChange={change}
-            />
+            <CollectionDetails data={data} disabled={disabled} errors={errors} onChange={change} />
             <CardSpacer />
             <CollectionImage
               image={
                 data.backgroundImage.url
                   ? {
-                      __typename: "Image",
+                      __typename: 'Image',
                       alt: data.backgroundImageAlt,
                       url: data.backgroundImage.url,
                     }
@@ -88,7 +79,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
               onImageDelete={() =>
                 change({
                   target: {
-                    name: "backgroundImage",
+                    name: 'backgroundImage',
                     value: {
                       url: null,
                       value: null,
@@ -99,7 +90,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
               onImageUpload={file =>
                 change({
                   target: {
-                    name: "backgroundImage",
+                    name: 'backgroundImage',
                     value: {
                       url: URL.createObjectURL(file),
                       value: file,
@@ -117,9 +108,8 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
               disabled={disabled}
               descriptionPlaceholder=""
               helperText={intl.formatMessage({
-                id: "Rj8LxK",
-                defaultMessage:
-                  "Add search engine title and description to make this collection easier to find",
+                id: 'Rj8LxK',
+                defaultMessage: 'Add search engine title and description to make this collection easier to find',
               })}
               slug={data.slug}
               slugPlaceholder={data.name}
@@ -134,15 +124,15 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
             <ChannelsAvailabilityCard
               messages={{
                 hiddenLabel: intl.formatMessage({
-                  id: "V8FhTt",
-                  defaultMessage: "Hidden",
-                  description: "collection label",
+                  id: 'V8FhTt',
+                  defaultMessage: 'Hidden',
+                  description: 'collection label',
                 }),
 
                 visibleLabel: intl.formatMessage({
-                  id: "9vQR6c",
-                  defaultMessage: "Visible",
-                  description: "collection label",
+                  id: '9vQR6c',
+                  defaultMessage: 'Visible',
+                  description: 'collection label',
                 }),
               }}
               managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
@@ -165,5 +155,5 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
     </CollectionCreateForm>
   );
 };
-CollectionCreatePage.displayName = "CollectionCreatePage";
+CollectionCreatePage.displayName = 'CollectionCreatePage';
 export default CollectionCreatePage;

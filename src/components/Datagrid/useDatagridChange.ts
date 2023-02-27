@@ -1,5 +1,5 @@
-import { updateAtIndex } from "@dashboard/utils/lists";
-import { EditableGridCell, Item } from "@glideapps/glide-data-grid";
+import { updateAtIndex } from '@dashboard/utils/lists';
+import { EditableGridCell, Item } from '@glideapps/glide-data-grid';
 import {
   createContext,
   Dispatch,
@@ -9,9 +9,9 @@ import {
   useContext,
   useRef,
   useState,
-} from "react";
+} from 'react';
 
-import { AvailableColumn } from "./types";
+import { AvailableColumn } from './types';
 
 export interface DatagridChange {
   data: any;
@@ -47,29 +47,14 @@ export function useDatagridChangeState(): UseDatagridChangeState {
   };
 }
 
-export const DatagridChangeStateContext = createContext<UseDatagridChangeState>(
-  undefined,
-);
-export const useDatagridChangeStateContext = () =>
-  useContext(DatagridChangeStateContext);
+export const DatagridChangeStateContext = createContext<UseDatagridChangeState>(undefined);
+export const useDatagridChangeStateContext = () => useContext(DatagridChangeStateContext);
 
-function useDatagridChange(
-  availableColumns: readonly AvailableColumn[],
-  rows: number,
-  onChange?: OnDatagridChange,
-) {
-  const {
-    added,
-    setAdded,
-    removed,
-    setRemoved,
-    changes,
-  } = useDatagridChangeStateContext();
+function useDatagridChange(availableColumns: readonly AvailableColumn[], rows: number, onChange?: OnDatagridChange) {
+  const { added, setAdded, removed, setRemoved, changes } = useDatagridChangeStateContext();
   const getChangeIndex = useCallback(
     (column: string, row: number): number =>
-      changes.current.findIndex(
-        change => change.column === column && change.row === row,
-      ),
+      changes.current.findIndex(change => change.column === column && change.row === row),
     [],
   );
 
@@ -92,9 +77,7 @@ function useDatagridChange(
       const existingIndex = getChangeIndex(columnId, row);
       const update = { data: newValue.data, column: columnId, row };
       changes.current =
-        existingIndex === -1
-          ? [...changes.current, update]
-          : updateAtIndex(update, changes.current, existingIndex);
+        existingIndex === -1 ? [...changes.current, update] : updateAtIndex(update, changes.current, existingIndex);
       notify(changes.current, added, removed);
     },
     [availableColumns, notify, added, removed],
@@ -103,14 +86,10 @@ function useDatagridChange(
   const onRowsRemoved = useCallback(
     (rows: number[]) => {
       const getRowOffset = (row: number) => rows.filter(r => r < row).length;
-      const newAdded = added
-        .filter(row => !rows.includes(row))
-        .map(row => row - getRowOffset(row));
+      const newAdded = added.filter(row => !rows.includes(row)).map(row => row - getRowOffset(row));
       const newRemoved = [
         ...removed,
-        ...rows
-          .filter(row => !added.includes(row))
-          .map(row => row + removed.filter(r => r <= row).length),
+        ...rows.filter(row => !added.includes(row)).map(row => row + removed.filter(r => r <= row).length),
       ];
 
       setRemoved(newRemoved);

@@ -1,2 +1,2 @@
-export { default } from "./BulkAttributeUnassignDialog";
-export * from "./BulkAttributeUnassignDialog";
+export { default } from './BulkAttributeUnassignDialog';
+export * from './BulkAttributeUnassignDialog';

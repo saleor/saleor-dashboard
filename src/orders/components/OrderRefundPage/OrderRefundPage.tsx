@@ -1,31 +1,21 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import {
-  FulfillmentStatus,
-  OrderErrorFragment,
-  OrderRefundDataQuery,
-} from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { renderCollection } from "@dashboard/misc";
-import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
-import { useIntl } from "react-intl";
+import { Content } from '@dashboard/components/AppLayout/Content';
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import { FulfillmentStatus, OrderErrorFragment, OrderRefundDataQuery } from '@dashboard/graphql';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import { renderCollection } from '@dashboard/misc';
+import { orderUrl } from '@dashboard/orders/urls';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import OrderRefund from "../OrderRefund";
-import OrderRefundFulfilledProducts from "../OrderRefundFulfilledProducts";
-import OrderRefundAmount from "../OrderRefundReturnAmount";
-import {
-  getMiscellaneousAmountValues,
-  getRefundProductsAmountValues,
-} from "../OrderRefundReturnAmount/utils";
-import OrderRefundUnfulfilledProducts from "../OrderRefundUnfulfilledProducts";
-import OrderRefundForm, {
-  OrderRefundSubmitData,
-  OrderRefundType,
-} from "./form";
+import OrderRefund from '../OrderRefund';
+import OrderRefundFulfilledProducts from '../OrderRefundFulfilledProducts';
+import OrderRefundAmount from '../OrderRefundReturnAmount';
+import { getMiscellaneousAmountValues, getRefundProductsAmountValues } from '../OrderRefundReturnAmount/utils';
+import OrderRefundUnfulfilledProducts from '../OrderRefundUnfulfilledProducts';
+import OrderRefundForm, { OrderRefundSubmitData, OrderRefundType } from './form';
 
 export const refundFulfilledStatuses = [
   FulfillmentStatus.FULFILLED,
@@ -34,7 +24,7 @@ export const refundFulfilledStatuses = [
 ];
 
 export interface OrderRefundPageProps {
-  order: OrderRefundDataQuery["order"];
+  order: OrderRefundDataQuery['order'];
   defaultType?: OrderRefundType;
   disabled: boolean;
   errors: OrderErrorFragment[];
@@ -42,32 +32,17 @@ export interface OrderRefundPageProps {
 }
 
 const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
-  const {
-    order,
-    defaultType = OrderRefundType.PRODUCTS,
-    disabled,
-    errors = [],
-    onSubmit,
-  } = props;
+  const { order, defaultType = OrderRefundType.PRODUCTS, disabled, errors = [], onSubmit } = props;
 
   const intl = useIntl();
 
-  const unfulfilledLines = order?.lines.filter(
-    line => line.quantityToFulfill > 0,
-  );
+  const unfulfilledLines = order?.lines.filter(line => line.quantityToFulfill > 0);
 
   const fulfilledFulfillemnts =
-    order?.fulfillments.filter(({ status }) =>
-      refundFulfilledStatuses.includes(status),
-    ) || [];
+    order?.fulfillments.filter(({ status }) => refundFulfilledStatuses.includes(status)) || [];
 
   return (
-    <OrderRefundForm
-      order={order}
-      defaultType={defaultType}
-      onSubmit={onSubmit}
-      disabled={disabled}
-    >
+    <OrderRefundForm order={order} defaultType={defaultType} onSubmit={onSubmit} disabled={disabled}>
       {({ data, handlers, change, submit, isSaveDisabled }) => {
         const isProductRefund = data.type === OrderRefundType.PRODUCTS;
 
@@ -77,9 +52,9 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
               href={orderUrl(order?.id)}
               title={intl.formatMessage(
                 {
-                  id: "0krqBj",
-                  defaultMessage: "Order no. {orderNumber} - Refund",
-                  description: "page header",
+                  id: '0krqBj',
+                  defaultMessage: 'Order no. {orderNumber} - Refund',
+                  description: 'page header',
                 },
                 {
                   orderNumber: order?.number,
@@ -97,12 +72,8 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                         unfulfilledLines={unfulfilledLines}
                         data={data}
                         disabled={disabled}
-                        onRefundedProductQuantityChange={
-                          handlers.changeRefundedProductQuantity
-                        }
-                        onSetMaximalQuantities={
-                          handlers.setMaximalRefundedProductQuantities
-                        }
+                        onRefundedProductQuantityChange={handlers.changeRefundedProductQuantity}
+                        onSetMaximalQuantities={handlers.setMaximalRefundedProductQuantities}
                       />
                     </>
                   )}
@@ -114,13 +85,9 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                         data={data}
                         disabled={disabled}
                         orderNumber={order?.number}
-                        onRefundedProductQuantityChange={
-                          handlers.changeRefundedFulfilledProductQuantity
-                        }
+                        onRefundedProductQuantityChange={handlers.changeRefundedFulfilledProductQuantity}
                         onSetMaximalQuantities={() =>
-                          handlers.setMaximalRefundedFulfilledProductQuantities(
-                            fulfillment?.id,
-                          )
+                          handlers.setMaximalRefundedFulfilledProductQuantities(fulfillment?.id)
                         }
                       />
                     </React.Fragment>
@@ -131,9 +98,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
             <RightSidebar>
               <OrderRefundAmount
                 amountData={
-                  isProductRefund
-                    ? getRefundProductsAmountValues(order, data)
-                    : getMiscellaneousAmountValues(order)
+                  isProductRefund ? getRefundProductsAmountValues(order, data) : getMiscellaneousAmountValues(order)
                 }
                 data={data}
                 order={order}
@@ -149,5 +114,5 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
     </OrderRefundForm>
   );
 };
-OrderRefundPage.displayName = "OrderRefundPage";
+OrderRefundPage.displayName = 'OrderRefundPage';
 export default OrderRefundPage;

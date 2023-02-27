@@ -1,19 +1,13 @@
-import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
-import FormSpacer from "@dashboard/components/FormSpacer";
-import { OrderErrorFragment } from "@dashboard/graphql";
-import { buttonMessages } from "@dashboard/intl";
-import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import BackButton from '@dashboard/components/BackButton';
+import ConfirmButton from '@dashboard/components/ConfirmButton';
+import FormSpacer from '@dashboard/components/FormSpacer';
+import { OrderErrorFragment } from '@dashboard/graphql';
+import { buttonMessages } from '@dashboard/intl';
+import getOrderErrorMessage from '@dashboard/utils/errors/order';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export interface OrderPaymentVoidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -35,18 +29,11 @@ const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle disableTypography>
-        <FormattedMessage
-          id="KszPFx"
-          defaultMessage="Void Payment"
-          description="dialog header"
-        />
+        <FormattedMessage id="KszPFx" defaultMessage="Void Payment" description="dialog header" />
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
-          <FormattedMessage
-            id="euRfu+"
-            defaultMessage="Are you sure you want to void this payment?"
-          />
+          <FormattedMessage id="euRfu+" defaultMessage="Are you sure you want to void this payment?" />
         </DialogContentText>
         {errors.length > 0 && (
           <>
@@ -68,5 +55,5 @@ const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({
     </Dialog>
   );
 };
-OrderPaymentVoidDialog.displayName = "OrderPaymentVoidDialog";
+OrderPaymentVoidDialog.displayName = 'OrderPaymentVoidDialog';
 export default OrderPaymentVoidDialog;

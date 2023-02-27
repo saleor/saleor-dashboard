@@ -3,13 +3,13 @@ import {
   useUserAccountUpdateMutation,
   useUserAvatarDeleteMutation,
   useUserAvatarUpdateMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages, errorMessages } from "@dashboard/intl";
-import { useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { commonMessages, errorMessages } from '@dashboard/intl';
+import { useIntl } from 'react-intl';
 
-import { staffMemberDetailsUrl } from "../urls";
+import { staffMemberDetailsUrl } from '../urls';
 
 interface UseUserMutationProps {
   refetch: () => void;
@@ -17,40 +17,35 @@ interface UseUserMutationProps {
   closeModal: () => void;
 }
 
-export const useProfileOperations = ({
-  refetch,
-  id,
-  closeModal,
-}: UseUserMutationProps) => {
+export const useProfileOperations = ({ refetch, id, closeModal }: UseUserMutationProps) => {
   const notify = useNotifier();
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const [updateUserAccount, updateUserAccountOpts] =
-    useUserAccountUpdateMutation({
-      onCompleted: data => {
-        if (!data.accountUpdate?.errors.length) {
-          refetch();
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
+  const [updateUserAccount, updateUserAccountOpts] = useUserAccountUpdateMutation({
+    onCompleted: data => {
+      if (!data.accountUpdate?.errors.length) {
+        refetch();
+        notify({
+          status: 'success',
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
+    },
+  });
 
   const [updateUserAvatar] = useUserAvatarUpdateMutation({
     onCompleted: data => {
       if (!data.userAvatarUpdate?.errors.length) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         refetch();
         navigate(staffMemberDetailsUrl(id));
       } else {
         notify({
-          status: "error",
+          status: 'error',
           title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
           text: intl.formatMessage(errorMessages.imageUploadErrorText),
         });
@@ -62,7 +57,7 @@ export const useProfileOperations = ({
     onCompleted: data => {
       if (!data.userAvatarDelete?.errors.length) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         refetch();
@@ -75,7 +70,7 @@ export const useProfileOperations = ({
     onCompleted: data => {
       if (!data.passwordChange?.errors.length) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         closeModal();

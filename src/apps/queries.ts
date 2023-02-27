@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const appsList = gql`
   query AppsList(
@@ -9,14 +9,7 @@ export const appsList = gql`
     $sort: AppSortingInput
     $filter: AppFilterInput
   ) {
-    apps(
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-      sortBy: $sort
-      filter: $filter
-    ) {
+    apps(before: $before, after: $after, first: $first, last: $last, sortBy: $sort, filter: $filter) {
       pageInfo {
         hasNextPage
         hasPreviousPage
@@ -80,4 +73,4 @@ export const extensionList = gql`
   }
 `;
 
-export const EXTENSION_LIST_QUERY = "ExtensionList";
+export const EXTENSION_LIST_QUERY = 'ExtensionList';

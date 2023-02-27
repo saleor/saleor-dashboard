@@ -1,4 +1,4 @@
-import { MetadataFormData } from "@dashboard/components/Metadata";
+import { MetadataFormData } from '@dashboard/components/Metadata';
 
 export interface ShippingZoneUpdateFormData extends MetadataFormData {
   name: string;

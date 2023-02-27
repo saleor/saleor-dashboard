@@ -1,9 +1,9 @@
-import { OrderErrorFragment, OrderLineFragment } from "@dashboard/graphql";
-import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { useMemo } from "react";
-import { useIntl } from "react-intl";
+import { OrderErrorFragment, OrderLineFragment } from '@dashboard/graphql';
+import getOrderErrorMessage from '@dashboard/utils/errors/order';
+import { useMemo } from 'react';
+import { useIntl } from 'react-intl';
 
-import { lineAlertMessages } from "./messages";
+import { lineAlertMessages } from './messages';
 
 interface UseLineAlertsOpts {
   line: OrderLineFragment;

@@ -1,22 +1,15 @@
-import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import FormSpacer from "@dashboard/components/FormSpacer";
-import { OrderErrorFragment } from "@dashboard/graphql";
-import { buttonMessages } from "@dashboard/intl";
-import { getFormErrors } from "@dashboard/utils/errors";
-import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-} from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import BackButton from '@dashboard/components/BackButton';
+import ConfirmButton from '@dashboard/components/ConfirmButton';
+import Form from '@dashboard/components/Form';
+import FormSpacer from '@dashboard/components/FormSpacer';
+import { OrderErrorFragment } from '@dashboard/graphql';
+import { buttonMessages } from '@dashboard/intl';
+import { getFormErrors } from '@dashboard/utils/errors';
+import getOrderErrorMessage from '@dashboard/utils/errors/order';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export interface FormData {
   amount: number;
@@ -41,7 +34,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
 }) => {
   const intl = useIntl();
 
-  const formFields = ["payment"];
+  const formFields = ['payment'];
   const formErrors = getFormErrors(formFields, errors);
 
   return (
@@ -56,9 +49,9 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
           <>
             <DialogTitle disableTypography>
               {intl.formatMessage({
-                id: "+PbHKD",
-                defaultMessage: "Capture Payment",
-                description: "dialog header",
+                id: '+PbHKD',
+                defaultMessage: 'Capture Payment',
+                description: 'dialog header',
               })}
             </DialogTitle>
             <DialogContent>
@@ -67,14 +60,14 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
                 fullWidth
                 helperText={getOrderErrorMessage(formErrors.payment, intl)}
                 label={intl.formatMessage({
-                  id: "OhdPS1",
-                  defaultMessage: "Amount",
-                  description: "amount of refunded money",
+                  id: 'OhdPS1',
+                  defaultMessage: 'Amount',
+                  description: 'amount of refunded money',
                 })}
                 name="amount"
                 onChange={change}
                 inputProps={{
-                  step: "0.01",
+                  step: '0.01',
                 }}
                 type="number"
                 value={data.amount}
@@ -94,10 +87,7 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
             </DialogContent>
             <DialogActions>
               <BackButton onClick={onClose} />
-              <ConfirmButton
-                transitionState={confirmButtonState}
-                onClick={submit}
-              >
+              <ConfirmButton transitionState={confirmButtonState} onClick={submit}>
                 <FormattedMessage {...buttonMessages.confirm} />
               </ConfirmButton>
             </DialogActions>
@@ -107,5 +97,5 @@ const OrderPaymentDialog: React.FC<OrderPaymentDialogProps> = ({
     </Dialog>
   );
 };
-OrderPaymentDialog.displayName = "OrderPaymentDialog";
+OrderPaymentDialog.displayName = 'OrderPaymentDialog';
 export default OrderPaymentDialog;

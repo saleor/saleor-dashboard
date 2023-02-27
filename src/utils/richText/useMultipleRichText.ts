@@ -1,8 +1,8 @@
-import { EditorCore } from "@dashboard/components/RichTextEditor";
-import { OutputData } from "@editorjs/editorjs";
-import { useCallback, useRef } from "react";
+import { EditorCore } from '@dashboard/components/RichTextEditor';
+import { OutputData } from '@editorjs/editorjs';
+import { useCallback, useRef } from 'react';
 
-import useMap from "../objects/useMap";
+import useMap from '../objects/useMap';
 
 export type RefsMap<TKey extends string> = Record<TKey, EditorCore | null>;
 
@@ -20,10 +20,7 @@ export interface RichTextMultipleOptions<TKey extends string> {
   triggerChange: () => void;
 }
 
-export const useMultipleRichText = <TKey extends string>({
-  initial,
-  triggerChange,
-}: RichTextMultipleOptions<TKey>) => {
+export const useMultipleRichText = <TKey extends string>({ initial, triggerChange }: RichTextMultipleOptions<TKey>) => {
   const editorRefs = useRef<RefsMap<TKey>>({} as RefsMap<TKey>);
   const [shouldMountMap, { set: setShouldMountById }] = useMap();
 
@@ -43,7 +40,7 @@ export const useMultipleRichText = <TKey extends string>({
     (id: TKey) => {
       if (initial[id] === undefined) {
         setShouldMountById(id, true);
-        return "";
+        return '';
       }
 
       try {
@@ -57,15 +54,12 @@ export const useMultipleRichText = <TKey extends string>({
     [initial],
   );
 
-  const getShouldMount = useCallback(
-    (id: TKey) => shouldMountMap.get(id) ?? false,
-    [shouldMountMap],
-  );
+  const getShouldMount = useCallback((id: TKey) => shouldMountMap.get(id) ?? false, [shouldMountMap]);
 
   const getValues = async () => {
-    const availableRefs = Object.entries(editorRefs.current).filter(
-      ([, value]) => value !== null,
-    ) as Array<[string, EditorCore]>;
+    const availableRefs = Object.entries(editorRefs.current).filter(([, value]) => value !== null) as Array<
+      [string, EditorCore]
+    >;
 
     const results = await Promise.all(
       availableRefs.map(async ([key, ref]) => {

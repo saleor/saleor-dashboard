@@ -2,50 +2,46 @@ import {
   useOrderFulfillmentRefundProductsMutation,
   useOrderRefundDataQuery,
   useOrderRefundMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { extractMutationErrors } from "@dashboard/misc";
-import OrderRefundPage from "@dashboard/orders/components/OrderRefundPage";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { extractMutationErrors } from '@dashboard/misc';
+import OrderRefundPage from '@dashboard/orders/components/OrderRefundPage';
 import {
   OrderRefundAmountCalculationMode,
   OrderRefundSubmitData,
   OrderRefundType,
-} from "@dashboard/orders/components/OrderRefundPage/form";
-import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/orders/components/OrderRefundPage/form';
+import { orderUrl } from '@dashboard/orders/urls';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-const getAutomaticallyCalculatedProductsRefundInput = (
-  formData: OrderRefundSubmitData,
-) => ({
+const getAutomaticallyCalculatedProductsRefundInput = (formData: OrderRefundSubmitData) => ({
   fulfillmentLines: formData.refundedFulfilledProductQuantities
-    .filter(line => line.value !== "0")
+    .filter(line => line.value !== '0')
     .map(line => ({
       fulfillmentLineId: line.id,
       quantity: Number(line.value),
     })),
   includeShippingCosts: formData.refundShipmentCosts,
   orderLines: formData.refundedProductQuantities
-    .filter(line => line.value !== "0")
+    .filter(line => line.value !== '0')
     .map(line => ({
       orderLineId: line.id,
       quantity: Number(line.value),
     })),
 });
-const getManuallySetProductsRefundInput = (
-  formData: OrderRefundSubmitData,
-) => ({
+const getManuallySetProductsRefundInput = (formData: OrderRefundSubmitData) => ({
   amountToRefund: formData.amount,
   fulfillmentLines: formData.refundedFulfilledProductQuantities
-    .filter(line => line.value !== "0")
+    .filter(line => line.value !== '0')
     .map(line => ({
       fulfillmentLineId: line.id,
       quantity: Number(line.value),
     })),
   includeShippingCosts: formData.refundShipmentCosts,
   orderLines: formData.refundedProductQuantities
-    .filter(line => line.value !== "0")
+    .filter(line => line.value !== '0')
     .map(line => ({
       orderLineId: line.id,
       quantity: Number(line.value),
@@ -72,38 +68,34 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
       if (data.orderRefund.errors.length === 0) {
         navigate(orderUrl(orderId), { replace: true });
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage({
-            id: "XRf1Bi",
-            defaultMessage: "Refunded Items",
-            description: "order refunded success message",
+            id: 'XRf1Bi',
+            defaultMessage: 'Refunded Items',
+            description: 'order refunded success message',
           }),
         });
       }
     },
   });
-  const [
-    refundOrderFulfillmentProducts,
-    refundOrderFulfillmentProductsOpts,
-  ] = useOrderFulfillmentRefundProductsMutation({
-    onCompleted: data => {
-      if (data.orderFulfillmentRefundProducts.errors.length === 0) {
-        navigate(orderUrl(orderId), { replace: true });
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "XRf1Bi",
-            defaultMessage: "Refunded Items",
-            description: "order refunded success message",
-          }),
-        });
-      }
-    },
-  });
+  const [refundOrderFulfillmentProducts, refundOrderFulfillmentProductsOpts] =
+    useOrderFulfillmentRefundProductsMutation({
+      onCompleted: data => {
+        if (data.orderFulfillmentRefundProducts.errors.length === 0) {
+          navigate(orderUrl(orderId), { replace: true });
+          notify({
+            status: 'success',
+            text: intl.formatMessage({
+              id: 'XRf1Bi',
+              defaultMessage: 'Refunded Items',
+              description: 'order refunded success message',
+            }),
+          });
+        }
+      },
+    });
 
-  const handleSubmitMiscellaneousRefund = async (
-    formData: OrderRefundSubmitData,
-  ) => {
+  const handleSubmitMiscellaneousRefund = async (formData: OrderRefundSubmitData) => {
     extractMutationErrors(
       refundOrder({
         variables: {
@@ -114,12 +106,9 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
     );
   };
 
-  const handleSubmitProductsRefund = async (
-    formData: OrderRefundSubmitData,
-  ) => {
+  const handleSubmitProductsRefund = async (formData: OrderRefundSubmitData) => {
     const input =
-      formData.amountCalculationMode ===
-      OrderRefundAmountCalculationMode.AUTOMATIC
+      formData.amountCalculationMode === OrderRefundAmountCalculationMode.AUTOMATIC
         ? getAutomaticallyCalculatedProductsRefundInput(formData)
         : getManuallySetProductsRefundInput(formData);
 
@@ -141,19 +130,14 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
   return (
     <OrderRefundPage
       order={data?.order}
-      disabled={
-        loading ||
-        refundOrderOpts.loading ||
-        refundOrderFulfillmentProductsOpts.loading
-      }
+      disabled={loading || refundOrderOpts.loading || refundOrderFulfillmentProductsOpts.loading}
       errors={[
         ...(refundOrderOpts.data?.orderRefund.errors || []),
-        ...(refundOrderFulfillmentProductsOpts.data
-          ?.orderFulfillmentRefundProducts.errors || []),
+        ...(refundOrderFulfillmentProductsOpts.data?.orderFulfillmentRefundProducts.errors || []),
       ]}
       onSubmit={handleSubmit}
     />
   );
 };
-OrderRefund.displayName = "OrderRefund";
+OrderRefund.displayName = 'OrderRefund';
 export default OrderRefund;

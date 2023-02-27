@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const saleFragment = gql`
   fragment Sale on Sale {
@@ -36,8 +36,7 @@ export const saleDetailsFragment = gql`
     categoriesCount: categories {
       totalCount
     }
-    variants(after: $after, before: $before, first: $first, last: $last)
-      @include(if: $includeVariants) {
+    variants(after: $after, before: $before, first: $first, last: $last) @include(if: $includeVariants) {
       edges {
         node {
           id
@@ -62,8 +61,7 @@ export const saleDetailsFragment = gql`
         ...PageInfo
       }
     }
-    products(after: $after, before: $before, first: $first, last: $last)
-      @include(if: $includeProducts) {
+    products(after: $after, before: $before, first: $first, last: $last) @include(if: $includeProducts) {
       edges {
         node {
           id
@@ -84,8 +82,7 @@ export const saleDetailsFragment = gql`
         ...PageInfo
       }
     }
-    categories(after: $after, before: $before, first: $first, last: $last)
-      @include(if: $includeCategories) {
+    categories(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCategories) {
       edges {
         node {
           id
@@ -99,8 +96,7 @@ export const saleDetailsFragment = gql`
         ...PageInfo
       }
     }
-    collections(after: $after, before: $before, first: $first, last: $last)
-      @include(if: $includeCollections) {
+    collections(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCollections) {
       edges {
         node {
           id
@@ -167,8 +163,7 @@ export const voucherDetailsFragment = gql`
     categoriesCount: categories {
       totalCount
     }
-    products(after: $after, before: $before, first: $first, last: $last)
-      @include(if: $includeProducts) {
+    products(after: $after, before: $before, first: $first, last: $last) @include(if: $includeProducts) {
       edges {
         node {
           id
@@ -189,8 +184,7 @@ export const voucherDetailsFragment = gql`
         ...PageInfo
       }
     }
-    collections(after: $after, before: $before, first: $first, last: $last)
-      @include(if: $includeCollections) {
+    collections(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCollections) {
       edges {
         node {
           id
@@ -204,8 +198,7 @@ export const voucherDetailsFragment = gql`
         ...PageInfo
       }
     }
-    categories(after: $after, before: $before, first: $first, last: $last)
-      @include(if: $includeCategories) {
+    categories(after: $after, before: $before, first: $first, last: $last) @include(if: $includeCategories) {
       edges {
         node {
           id

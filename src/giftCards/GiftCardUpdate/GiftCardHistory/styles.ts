@@ -1,5 +1,5 @@
-import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { makeStyles } from '@saleor/macaw-ui';
+import { vars } from '@saleor/macaw-ui/next';
 
 const useStyles = makeStyles(
   {
@@ -13,7 +13,7 @@ const useStyles = makeStyles(
       paddingRight: vars.space[9],
     },
   },
-  { name: "GiftCardHistory" },
+  { name: 'GiftCardHistory' },
 );
 
 export default useStyles;

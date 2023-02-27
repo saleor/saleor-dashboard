@@ -1,27 +1,24 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import { FormSpacer } from "@dashboard/components/FormSpacer";
-import Link from "@dashboard/components/Link";
-import PreviewPill from "@dashboard/components/PreviewPill";
-import { RadioGroupField } from "@dashboard/components/RadioGroupField";
-import Skeleton from "@dashboard/components/Skeleton";
-import {
-  WarehouseClickAndCollectOptionEnum,
-  WarehouseWithShippingFragment,
-} from "@dashboard/graphql";
-import { sectionNames } from "@dashboard/intl";
-import { renderCollection } from "@dashboard/misc";
-import { shippingZoneUrl } from "@dashboard/shipping/urls";
-import { RelayToFlat } from "@dashboard/types";
-import { Card, CardContent, Divider, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import CardTitle from '@dashboard/components/CardTitle';
+import { FormSpacer } from '@dashboard/components/FormSpacer';
+import Link from '@dashboard/components/Link';
+import PreviewPill from '@dashboard/components/PreviewPill';
+import { RadioGroupField } from '@dashboard/components/RadioGroupField';
+import Skeleton from '@dashboard/components/Skeleton';
+import { WarehouseClickAndCollectOptionEnum, WarehouseWithShippingFragment } from '@dashboard/graphql';
+import { sectionNames } from '@dashboard/intl';
+import { renderCollection } from '@dashboard/misc';
+import { shippingZoneUrl } from '@dashboard/shipping/urls';
+import { RelayToFlat } from '@dashboard/types';
+import { Card, CardContent, Divider, Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import { WarehouseDetailsPageFormData } from "./../WarehouseDetailsPage";
-import messages from "./messages";
+import { WarehouseDetailsPageFormData } from './../WarehouseDetailsPage';
+import messages from './messages';
 
 export interface WarehouseSettingsProps {
-  zones: RelayToFlat<WarehouseWithShippingFragment["shippingZones"]>;
+  zones: RelayToFlat<WarehouseWithShippingFragment['shippingZones']>;
   disabled: boolean;
   data: WarehouseDetailsPageFormData;
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -31,7 +28,7 @@ export interface WarehouseSettingsProps {
 const useStyles = makeStyles(
   theme => ({
     link: {
-      "&:not(:last-of-type)": {
+      '&:not(:last-of-type)': {
         marginBottom: theme.spacing(),
       },
     },
@@ -40,22 +37,13 @@ const useStyles = makeStyles(
     },
   }),
   {
-    name: "WarehouseInfoProps",
+    name: 'WarehouseInfoProps',
   },
 );
 
-const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
-  zones,
-  disabled,
-  data,
-  onChange,
-  setData,
-}) => {
+const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({ zones, disabled, data, onChange, setData }) => {
   React.useEffect(() => {
-    if (
-      data.isPrivate &&
-      data.clickAndCollectOption === WarehouseClickAndCollectOptionEnum.LOCAL
-    ) {
+    if (data.isPrivate && data.clickAndCollectOption === WarehouseClickAndCollectOptionEnum.LOCAL) {
       setData({
         clickAndCollectOption: WarehouseClickAndCollectOptionEnum.DISABLED,
       });
@@ -65,7 +53,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
   const classes = useStyles({});
 
   const booleanRadioHandler = ({ target: { name, value } }) => {
-    setData({ [name]: value === "true" });
+    setData({ [name]: value === 'true' });
   };
 
   const isPrivateChoices = [
@@ -74,27 +62,23 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
         <>
           <FormattedMessage {...messages.warehouseSettingsPrivateStock} />
           <Typography variant="caption" color="textSecondary">
-            <FormattedMessage
-              {...messages.warehouseSettingsPrivateStockDescription}
-            />
+            <FormattedMessage {...messages.warehouseSettingsPrivateStockDescription} />
           </Typography>
           <FormSpacer />
         </>
       ),
-      value: "true",
+      value: 'true',
     },
     {
       label: (
         <>
           <FormattedMessage {...messages.warehouseSettingsPublicStock} />
           <Typography variant="caption" color="textSecondary">
-            <FormattedMessage
-              {...messages.warehouseSettingsPublicStockDescription}
-            />
+            <FormattedMessage {...messages.warehouseSettingsPublicStockDescription} />
           </Typography>
         </>
       ),
-      value: "false",
+      value: 'false',
     },
   ];
 
@@ -104,9 +88,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
         <>
           <FormattedMessage {...messages.warehouseSettingsDisabled} />
           <Typography variant="caption" color="textSecondary">
-            <FormattedMessage
-              {...messages.warehouseSettingsDisabledDescription}
-            />
+            <FormattedMessage {...messages.warehouseSettingsDisabledDescription} />
           </Typography>
           <FormSpacer />
         </>
@@ -130,9 +112,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
         <>
           <FormattedMessage {...messages.warehouseSettingsAllWarehouses} />
           <Typography variant="caption" color="textSecondary">
-            <FormattedMessage
-              {...messages.warehouseSettingsAllWarehousesDescription}
-            />
+            <FormattedMessage {...messages.warehouseSettingsAllWarehousesDescription} />
           </Typography>
         </>
       ),
@@ -162,17 +142,13 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
             ),
           () => (
             <Typography color="textSecondary">
-              <FormattedMessage
-                {...messages.warehouseSettingsNoShippingZonesAssigned}
-              />
+              <FormattedMessage {...messages.warehouseSettingsNoShippingZonesAssigned} />
             </Typography>
           ),
         )}
       </CardContent>
       <Divider />
-      <CardTitle
-        title={<FormattedMessage {...messages.warehouseSettingsStockTitle} />}
-      />
+      <CardTitle title={<FormattedMessage {...messages.warehouseSettingsStockTitle} />} />
       <CardContent>
         <RadioGroupField
           disabled={disabled}
@@ -195,11 +171,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
       <CardContent>
         <RadioGroupField
           disabled={disabled}
-          choices={
-            data.isPrivate
-              ? clickAndCollectChoices
-              : clickAndCollectChoicesPublic
-          }
+          choices={data.isPrivate ? clickAndCollectChoices : clickAndCollectChoicesPublic}
           onChange={onChange}
           value={data.clickAndCollectOption}
           name="clickAndCollectOption"
@@ -210,5 +182,5 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
   );
 };
 
-WarehouseSettings.displayName = "WarehouseInfo";
+WarehouseSettings.displayName = 'WarehouseInfo';
 export default WarehouseSettings;

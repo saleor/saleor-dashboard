@@ -1,39 +1,31 @@
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import LanguageSwitch from "@dashboard/components/LanguageSwitch";
-import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
-import {
-  AttributeTranslationDetailsFragment,
-  LanguageCodeEnum,
-} from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { getStringOrPlaceholder } from "@dashboard/misc";
-import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
-import {
-  languageEntitiesUrl,
-  languageEntityUrl,
-  TranslatableEntities,
-} from "@dashboard/translations/urls";
-import { ListSettings } from "@dashboard/types";
-import React from "react";
-import { useIntl } from "react-intl";
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import LanguageSwitch from '@dashboard/components/LanguageSwitch';
+import { ListSettingsUpdate } from '@dashboard/components/TablePagination';
+import { AttributeTranslationDetailsFragment, LanguageCodeEnum } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { getStringOrPlaceholder } from '@dashboard/misc';
+import { TranslationsEntitiesPageProps } from '@dashboard/translations/types';
+import { languageEntitiesUrl, languageEntityUrl, TranslatableEntities } from '@dashboard/translations/urls';
+import { ListSettings } from '@dashboard/types';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { getTranslationFields } from "../../utils";
-import TranslationFields from "../TranslationFields";
-import { transtionsAttributesPageFieldsMessages as messages } from "./messages";
+import { getTranslationFields } from '../../utils';
+import TranslationFields from '../TranslationFields';
+import { transtionsAttributesPageFieldsMessages as messages } from './messages';
 
-export interface TranslationsAttributesPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsAttributesPageProps extends TranslationsEntitiesPageProps {
   data: AttributeTranslationDetailsFragment;
   settings?: ListSettings;
   onUpdateListSettings?: ListSettingsUpdate;
 }
 
 export const fieldNames = {
-  attribute: "attribute",
-  value: "attributeValue",
-  richTextValue: "attributeRichTextValue",
+  attribute: 'attribute',
+  value: 'attributeValue',
+  richTextValue: 'attributeRichTextValue',
 };
 
 const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
@@ -62,10 +54,9 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
         })}
         title={intl.formatMessage(
           {
-            id: "SPBLzT",
-            defaultMessage:
-              'Translation Attribute "{attribute}" - {languageCode}',
-            description: "header",
+            id: 'SPBLzT',
+            defaultMessage: 'Translation Attribute "{attribute}" - {languageCode}',
+            description: 'header',
           },
           {
             attribute: getStringOrPlaceholder(data?.attribute?.name),
@@ -76,13 +67,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          getLanguageUrl={lang =>
-            languageEntityUrl(
-              lang,
-              TranslatableEntities.attributes,
-              translationId,
-            )
-          }
+          getLanguageUrl={lang => languageEntityUrl(lang, TranslatableEntities.attributes, translationId)}
         />
       </TopNav>
       <TranslationFields
@@ -93,12 +78,12 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
-              id: "DRMMDs",
-              defaultMessage: "Attribute Name",
+              id: 'DRMMDs',
+              defaultMessage: 'Attribute Name',
             }),
-            name: fieldNames.attribute + ":" + data?.attribute.id,
+            name: fieldNames.attribute + ':' + data?.attribute.id,
             translation: data?.translation?.name || null,
-            type: "short" as "short",
+            type: 'short' as 'short',
             value: data?.attribute?.name,
           },
         ]}
@@ -130,5 +115,5 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
     </DetailedContent>
   );
 };
-TranslationsAttributesPage.displayName = "TranslationsAttributesPage";
+TranslationsAttributesPage.displayName = 'TranslationsAttributesPage';
 export default TranslationsAttributesPage;

@@ -1,12 +1,12 @@
-import AddressFormatter from "@dashboard/components/AddressFormatter";
-import CardMenu from "@dashboard/components/CardMenu";
-import CardTitle from "@dashboard/components/CardTitle";
-import Skeleton from "@dashboard/components/Skeleton";
-import { AddressFragment, AddressTypeEnum } from "@dashboard/graphql";
-import { Card, CardContent } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import AddressFormatter from '@dashboard/components/AddressFormatter';
+import CardMenu from '@dashboard/components/CardMenu';
+import CardTitle from '@dashboard/components/CardTitle';
+import Skeleton from '@dashboard/components/Skeleton';
+import { AddressFragment, AddressTypeEnum } from '@dashboard/graphql';
+import { Card, CardContent } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
 export interface CustomerAddressProps {
   address: AddressFragment;
@@ -21,67 +21,60 @@ export interface CustomerAddressProps {
 
 const messages = defineMessages({
   defaultAddress: {
-    id: "hMRP6J",
-    defaultMessage: "Default Address",
+    id: 'hMRP6J',
+    defaultMessage: 'Default Address',
   },
   defaultBillingAddress: {
-    id: "VyzsWZ",
-    defaultMessage: "Default Billing Address",
+    id: 'VyzsWZ',
+    defaultMessage: 'Default Billing Address',
   },
   defaultShippingAddress: {
-    id: "nLML8Y",
-    defaultMessage: "Default Shipping Address",
+    id: 'nLML8Y',
+    defaultMessage: 'Default Shipping Address',
   },
   deleteAddress: {
-    id: "puikeb",
-    defaultMessage: "Delete Address",
-    description: "button",
+    id: 'puikeb',
+    defaultMessage: 'Delete Address',
+    description: 'button',
   },
   editAddress: {
-    id: "w+8BfK",
-    defaultMessage: "Edit Address",
-    description: "button",
+    id: 'w+8BfK',
+    defaultMessage: 'Edit Address',
+    description: 'button',
   },
   setDefaultBilling: {
-    id: "hLOEeb",
-    defaultMessage: "Set as default billing address",
-    description: "button",
+    id: 'hLOEeb',
+    defaultMessage: 'Set as default billing address',
+    description: 'button',
   },
   setDefaultShipping: {
-    id: "+7OsyM",
-    defaultMessage: "Set as default shipping address",
-    description: "button",
+    id: '+7OsyM',
+    defaultMessage: 'Set as default shipping address',
+    description: 'button',
   },
 });
 
 const useStyles = makeStyles(
   {
     actions: {
-      flexDirection: "row",
+      flexDirection: 'row',
     },
     actionsContainer: {
-      display: "flex",
-      flexDirection: "column",
-      height: "100%",
-      justifyContent: "flex-end",
+      display: 'flex',
+      flexDirection: 'column',
+      height: '100%',
+      justifyContent: 'flex-end',
     },
     card: {
-      display: "flex",
-      flexDirection: "column",
+      display: 'flex',
+      flexDirection: 'column',
     },
   },
-  { name: "CustomerAddress" },
+  { name: 'CustomerAddress' },
 );
 const CustomerAddress: React.FC<CustomerAddressProps> = props => {
-  const {
-    address,
-    disabled,
-    isDefaultBillingAddress,
-    isDefaultShippingAddress,
-    onEdit,
-    onRemove,
-    onSetAsDefault,
-  } = props;
+  const { address, disabled, isDefaultBillingAddress, isDefaultShippingAddress, onEdit, onRemove, onSetAsDefault } =
+    props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -111,22 +104,22 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
               {
                 label: intl.formatMessage(messages.setDefaultShipping),
                 onSelect: () => onSetAsDefault(AddressTypeEnum.SHIPPING),
-                testId: "set-default-shipping-address",
+                testId: 'set-default-shipping-address',
               },
               {
                 label: intl.formatMessage(messages.setDefaultBilling),
                 onSelect: () => onSetAsDefault(AddressTypeEnum.BILLING),
-                testId: "set-default-billing-address",
+                testId: 'set-default-billing-address',
               },
               {
                 label: intl.formatMessage(messages.editAddress),
                 onSelect: () => onEdit(),
-                testId: "edit-address",
+                testId: 'edit-address',
               },
               {
                 label: intl.formatMessage(messages.deleteAddress),
                 onSelect: () => onRemove(),
-                testId: "delete-address",
+                testId: 'delete-address',
               },
             ]}
           />
@@ -138,5 +131,5 @@ const CustomerAddress: React.FC<CustomerAddressProps> = props => {
     </Card>
   );
 };
-CustomerAddress.displayName = "CustomerAddress";
+CustomerAddress.displayName = 'CustomerAddress';
 export default CustomerAddress;

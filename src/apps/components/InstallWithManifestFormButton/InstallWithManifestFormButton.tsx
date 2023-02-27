@@ -1,8 +1,8 @@
-import { Button } from "@dashboard/components/Button";
-import { TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React, { useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Button } from '@dashboard/components/Button';
+import { TextField } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React, { useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 enum AvailableStates {
   Initial,
@@ -17,7 +17,7 @@ const useStyles = makeStyles(
     },
   }),
   {
-    name: "InstallWithManifestFormButton",
+    name: 'InstallWithManifestFormButton',
   },
 );
 
@@ -35,14 +35,14 @@ export const InstallWithManifestFormButton = ({ onSubmitted }: Props) => {
     e.preventDefault();
 
     const form = new FormData(e.currentTarget);
-    const inputValue = form.get("manifest-url") as string;
+    const inputValue = form.get('manifest-url') as string;
 
     try {
       new URL(inputValue);
 
       onSubmitted(inputValue);
     } catch (e) {
-      console.error("Invalid URL from input. Should be validated by browser");
+      console.error('Invalid URL from input. Should be validated by browser');
     }
   };
 
@@ -70,24 +70,19 @@ export const InstallWithManifestFormButton = ({ onSubmitted }: Props) => {
             type="url"
             name="manifest-url"
             label={intl.formatMessage({
-              id: "QVraQY",
-              defaultMessage: "App manifest URL",
+              id: 'QVraQY',
+              defaultMessage: 'App manifest URL',
             })}
             defaultValue=""
             helperText={intl.formatMessage({
-              id: "o/q4fc",
-              defaultMessage: "Usually ends with /api/manifest",
+              id: 'o/q4fc',
+              defaultMessage: 'Usually ends with /api/manifest',
             })}
           />
-          <Button
-            size="medium"
-            type="submit"
-            className={styles.installButton}
-            variant="primary"
-          >
+          <Button size="medium" type="submit" className={styles.installButton} variant="primary">
             {intl.formatMessage({
-              id: "ubmFc8",
-              defaultMessage: "Install",
+              id: 'ubmFc8',
+              defaultMessage: 'Install',
             })}
           </Button>
         </form>

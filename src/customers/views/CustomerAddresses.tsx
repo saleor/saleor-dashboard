@@ -1,38 +1,31 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { WindowTitle } from "@dashboard/components/WindowTitle";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import { WindowTitle } from '@dashboard/components/WindowTitle';
 import {
   useCreateCustomerAddressMutation,
   useCustomerAddressesQuery,
   useRemoveCustomerAddressMutation,
   useSetCustomerDefaultAddressMutation,
   useUpdateCustomerAddressMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
-import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { DialogContentText } from "@material-ui/core";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import useShop from '@dashboard/hooks/useShop';
+import { commonMessages } from '@dashboard/intl';
+import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
+import { DialogContentText } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import CustomerAddressDialog from "../components/CustomerAddressDialog";
-import CustomerAddressListPage from "../components/CustomerAddressListPage";
-import {
-  customerAddressesUrl,
-  CustomerAddressesUrlDialog,
-  CustomerAddressesUrlQueryParams,
-} from "../urls";
+import CustomerAddressDialog from '../components/CustomerAddressDialog';
+import CustomerAddressListPage from '../components/CustomerAddressListPage';
+import { customerAddressesUrl, CustomerAddressesUrlDialog, CustomerAddressesUrlQueryParams } from '../urls';
 
 interface CustomerAddressesProps {
   id: string;
   params: CustomerAddressesUrlQueryParams;
 }
 
-const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
-  id,
-  params,
-}) => {
+const CustomerAddresses: React.FC<CustomerAddressesProps> = ({ id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -48,17 +41,14 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
       if (data.addressSetDefault.errors.length === 0) {
         closeModal();
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
     },
   });
 
-  const [
-    createCustomerAddress,
-    createCustomerAddressOpts,
-  ] = useCreateCustomerAddressMutation({
+  const [createCustomerAddress, createCustomerAddressOpts] = useCreateCustomerAddressMutation({
     onCompleted: data => {
       if (data.addressCreate.errors.length === 0) {
         closeModal();
@@ -66,30 +56,24 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
     },
   });
 
-  const [
-    updateCustomerAddress,
-    updateCustomerAddressOpts,
-  ] = useUpdateCustomerAddressMutation({
+  const [updateCustomerAddress, updateCustomerAddressOpts] = useUpdateCustomerAddressMutation({
     onCompleted: data => {
       if (data.addressUpdate.errors.length === 0) {
         closeModal();
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
     },
   });
 
-  const [
-    removeCustomerAddress,
-    removeCustomerAddressOpts,
-  ] = useRemoveCustomerAddressMutation({
+  const [removeCustomerAddress, removeCustomerAddressOpts] = useRemoveCustomerAddressMutation({
     onCompleted: data => {
       if (data.addressDelete.errors.length === 0) {
         closeModal();
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
@@ -111,14 +95,14 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
       <CustomerAddressListPage
         customer={customerData?.data?.user}
         disabled={customerData?.loading}
-        onAdd={() => openModal("add")}
+        onAdd={() => openModal('add')}
         onEdit={id =>
-          openModal("edit", {
+          openModal('edit', {
             id,
           })
         }
         onRemove={id =>
-          openModal("remove", {
+          openModal('remove', {
             id,
           })
         }
@@ -133,7 +117,7 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
         confirmButtonState={createCustomerAddressOpts.status}
         countries={countryChoices}
         errors={createCustomerAddressOpts?.data?.addressCreate.errors || []}
-        open={params.action === "add"}
+        open={params.action === 'add'}
         variant="create"
         onClose={closeModal}
         onConfirm={input =>
@@ -146,13 +130,11 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
         }
       />
       <CustomerAddressDialog
-        address={customerData?.data?.user.addresses.find(
-          addr => addr.id === params.id,
-        )}
+        address={customerData?.data?.user.addresses.find(addr => addr.id === params.id)}
         confirmButtonState={updateCustomerAddressOpts.status}
         countries={countryChoices}
         errors={updateCustomerAddressOpts?.data?.addressUpdate.errors || []}
-        open={params.action === "edit"}
+        open={params.action === 'edit'}
         variant="edit"
         onClose={closeModal}
         onConfirm={input =>
@@ -165,12 +147,12 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = ({
         }
       />
       <ActionDialog
-        open={params.action === "remove"}
+        open={params.action === 'remove'}
         variant="delete"
         title={intl.formatMessage({
-          id: "qLOBff",
-          defaultMessage: "Delete Address",
-          description: "dialog header",
+          id: 'qLOBff',
+          defaultMessage: 'Delete Address',
+          description: 'dialog header',
         })}
         confirmButtonState={removeCustomerAddressOpts.status}
         onClose={closeModal}

@@ -1,18 +1,14 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 import {
   SearchProductTypesDocument,
   SearchProductTypesQuery,
   SearchProductTypesQueryVariables,
-} from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+} from '@dashboard/graphql';
+import makeTopLevelSearch from '@dashboard/hooks/makeTopLevelSearch';
 
 export const searchProductTypes = gql`
   query SearchProductTypes($after: String, $first: Int!, $query: String!) {
-    search: productTypes(
-      after: $after
-      first: $first
-      filter: { search: $query }
-    ) {
+    search: productTypes(after: $after, first: $first, filter: { search: $query }) {
       edges {
         node {
           id
@@ -26,7 +22,6 @@ export const searchProductTypes = gql`
   }
 `;
 
-export default makeTopLevelSearch<
-  SearchProductTypesQuery,
-  SearchProductTypesQueryVariables
->(SearchProductTypesDocument);
+export default makeTopLevelSearch<SearchProductTypesQuery, SearchProductTypesQueryVariables>(
+  SearchProductTypesDocument,
+);

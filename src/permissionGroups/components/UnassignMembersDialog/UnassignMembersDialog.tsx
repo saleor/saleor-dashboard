@@ -1,8 +1,8 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { DialogContentText } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import { DialogContentText } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export interface UnassignMembersDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -28,9 +28,9 @@ const UnassignMembersDialog: React.FC<UnassignMembersDialogProps> = ({
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
-        id: "lT5MYM",
-        defaultMessage: "Unassign users",
-        description: "dialog title",
+        id: 'lT5MYM',
+        defaultMessage: 'Unassign users',
+        description: 'dialog title',
       })}
       variant="delete"
     >
@@ -48,5 +48,5 @@ const UnassignMembersDialog: React.FC<UnassignMembersDialogProps> = ({
     </ActionDialog>
   );
 };
-UnassignMembersDialog.displayName = "UnassignMembersDialog";
+UnassignMembersDialog.displayName = 'UnassignMembersDialog';
 export default UnassignMembersDialog;

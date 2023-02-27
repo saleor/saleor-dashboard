@@ -1,18 +1,10 @@
-import { gql } from "@apollo/client";
-import {
-  SearchCollectionsDocument,
-  SearchCollectionsQuery,
-  SearchCollectionsQueryVariables,
-} from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+import { gql } from '@apollo/client';
+import { SearchCollectionsDocument, SearchCollectionsQuery, SearchCollectionsQueryVariables } from '@dashboard/graphql';
+import makeTopLevelSearch from '@dashboard/hooks/makeTopLevelSearch';
 
 export const searchCollections = gql`
   query SearchCollections($after: String, $first: Int!, $query: String!) {
-    search: collections(
-      after: $after
-      first: $first
-      filter: { search: $query }
-    ) {
+    search: collections(after: $after, first: $first, filter: { search: $query }) {
       edges {
         node {
           id
@@ -26,7 +18,4 @@ export const searchCollections = gql`
   }
 `;
 
-export default makeTopLevelSearch<
-  SearchCollectionsQuery,
-  SearchCollectionsQueryVariables
->(SearchCollectionsDocument);
+export default makeTopLevelSearch<SearchCollectionsQuery, SearchCollectionsQueryVariables>(SearchCollectionsDocument);

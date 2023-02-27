@@ -1,8 +1,8 @@
-import { Card, CardContent, CardHeader } from "@material-ui/core";
-import RefreshIcon from "@material-ui/icons/Refresh";
-import { IconButton } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import { Card, CardContent, CardHeader } from '@material-ui/core';
+import RefreshIcon from '@material-ui/icons/Refresh';
+import { IconButton } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
 export interface FilterCardProps {
   handleClear();
@@ -21,8 +21,8 @@ const FilterCard: React.FC<FilterCardProps> = ({ children, handleClear }) => {
             </IconButton>
           }
           title={intl.formatMessage({
-            id: "zSOvI0",
-            defaultMessage: "Filters",
+            id: 'zSOvI0',
+            defaultMessage: 'Filters',
           })}
         />
         <CardContent>{children}</CardContent>
@@ -30,5 +30,5 @@ const FilterCard: React.FC<FilterCardProps> = ({ children, handleClear }) => {
     </Card>
   );
 };
-FilterCard.displayName = "FilterCard";
+FilterCard.displayName = 'FilterCard';
 export default FilterCard;

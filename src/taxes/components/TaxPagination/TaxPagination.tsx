@@ -1,7 +1,7 @@
-import { commonMessages } from "@dashboard/intl";
-import { makeStyles, Pagination } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import { commonMessages } from '@dashboard/intl';
+import { makeStyles, Pagination } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
 interface TaxPaginationProps {
   rowNumber: number;
@@ -18,7 +18,7 @@ const useStyles = makeStyles(
       padding: theme.spacing(0, 4),
     },
   }),
-  { name: "TaxPagination" },
+  { name: 'TaxPagination' },
 );
 
 export const TaxPagination = ({

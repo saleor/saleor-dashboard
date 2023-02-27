@@ -1,27 +1,25 @@
-import DeleteIconButton from "@dashboard/components/DeleteIconButton";
+import DeleteIconButton from '@dashboard/components/DeleteIconButton';
 import TableCellHeader, {
   TableCellHeaderArrowDirection,
   TableCellHeaderProps,
-} from "@dashboard/components/TableCellHeader";
-import TableHead from "@dashboard/components/TableHead";
-import TooltipTableCellHeader from "@dashboard/components/TooltipTableCellHeader";
-import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
-import Label, {
-  LabelSizes,
-} from "@dashboard/orders/components/OrderHistory/Label";
-import { getArrowDirection } from "@dashboard/utils/sort";
-import { TableCell } from "@material-ui/core";
-import React from "react";
-import { MessageDescriptor, useIntl } from "react-intl";
+} from '@dashboard/components/TableCellHeader';
+import TableHead from '@dashboard/components/TableHead';
+import TooltipTableCellHeader from '@dashboard/components/TooltipTableCellHeader';
+import { commonTooltipMessages } from '@dashboard/components/TooltipTableCellHeader/messages';
+import Label, { LabelSizes } from '@dashboard/orders/components/OrderHistory/Label';
+import { getArrowDirection } from '@dashboard/utils/sort';
+import { TableCell } from '@material-ui/core';
+import React from 'react';
+import { MessageDescriptor, useIntl } from 'react-intl';
 
-import { messages as filterLabels } from "../../GiftCardListSearchAndFilters/filters";
-import { giftCardsListTableMessages as messages } from "../../messages";
-import { useGiftCardListDialogs } from "../../providers/GiftCardListDialogsProvider";
-import { useGiftCardList } from "../../providers/GiftCardListProvider";
-import { canBeSorted } from "../../sort";
-import { useTableStyles as useStyles } from "../../styles";
-import { GiftCardUrlSortField } from "../../types";
-import BulkEnableDisableSection from "./BulkEnableDisableSection";
+import { messages as filterLabels } from '../../GiftCardListSearchAndFilters/filters';
+import { giftCardsListTableMessages as messages } from '../../messages';
+import { useGiftCardListDialogs } from '../../providers/GiftCardListDialogsProvider';
+import { useGiftCardList } from '../../providers/GiftCardListProvider';
+import { canBeSorted } from '../../sort';
+import { useTableStyles as useStyles } from '../../styles';
+import { GiftCardUrlSortField } from '../../types';
+import BulkEnableDisableSection from './BulkEnableDisableSection';
 
 interface HeaderItem {
   title?: MessageDescriptor;
@@ -34,19 +32,11 @@ interface GiftCardsListTableHeaderProps {
   isCurrencySelected: boolean;
 }
 
-const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
-  isCurrencySelected,
-}) => {
+const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({ isCurrencySelected }) => {
   const intl = useIntl();
   const classes = useStyles({});
 
-  const {
-    giftCards,
-    numberOfColumns,
-    loading,
-    toggleAll,
-    listElements,
-  } = useGiftCardList();
+  const { giftCards, numberOfColumns, loading, toggleAll, listElements } = useGiftCardList();
   const { openDeleteDialog } = useGiftCardListDialogs();
   const { onSort, sort } = useGiftCardList();
 
@@ -58,7 +48,7 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
       title: messages.giftCardsTableColumnGiftCardTitle,
       options: {
         className: classes.colCardCode,
-        textAlign: "left",
+        textAlign: 'left',
       },
     },
     {
@@ -83,7 +73,7 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
     title: messages.giftCardsTableColumnBalanceTitle,
     options: {
       className: classes.colBalance,
-      textAlign: "right",
+      textAlign: 'right',
     },
     onClick: () => onSort(GiftCardUrlSortField.balance),
     direction: getDirection(GiftCardUrlSortField.balance),
@@ -121,20 +111,12 @@ const GiftCardsListTableHeader: React.FC<GiftCardsListTableHeaderProps> = ({
         }
       >
         {headerItems.map(({ title, options, onClick, direction }) => (
-          <TableCellHeader
-            {...options}
-            onClick={onClick}
-            direction={direction}
-            key={title.defaultMessage}
-          >
+          <TableCellHeader {...options} onClick={onClick} direction={direction} key={title.defaultMessage}>
             <Label text={intl.formatMessage(title)} size={LabelSizes.md} />
           </TableCellHeader>
         ))}
         <TooltipTableCellHeader {...headerTooltipItemProps}>
-          <Label
-            text={intl.formatMessage(headerTooltipItem.title)}
-            size={LabelSizes.md}
-          />
+          <Label text={intl.formatMessage(headerTooltipItem.title)} size={LabelSizes.md} />
         </TooltipTableCellHeader>
         <TableCell className={classes.colDelete} />
       </TableHead>

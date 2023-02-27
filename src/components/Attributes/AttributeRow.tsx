@@ -1,9 +1,9 @@
-import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
-import { getMeasurementUnitMessage } from "@dashboard/attributes/components/AttributeDetails/utils";
-import BasicAttributeRow from "@dashboard/components/Attributes/BasicAttributeRow";
-import ExtendedAttributeRow from "@dashboard/components/Attributes/ExtendedAttributeRow";
-import { attributeRowMessages } from "@dashboard/components/Attributes/messages";
-import { SwatchRow } from "@dashboard/components/Attributes/SwatchRow";
+import { inputTypeMessages } from '@dashboard/attributes/components/AttributeDetails/messages';
+import { getMeasurementUnitMessage } from '@dashboard/attributes/components/AttributeDetails/utils';
+import BasicAttributeRow from '@dashboard/components/Attributes/BasicAttributeRow';
+import ExtendedAttributeRow from '@dashboard/components/Attributes/ExtendedAttributeRow';
+import { attributeRowMessages } from '@dashboard/components/Attributes/messages';
+import { SwatchRow } from '@dashboard/components/Attributes/SwatchRow';
 import {
   getErrorMessage,
   getFileChoice,
@@ -12,22 +12,22 @@ import {
   getReferenceDisplayValue,
   getSingleChoices,
   getSingleDisplayValue,
-} from "@dashboard/components/Attributes/utils";
-import Checkbox from "@dashboard/components/Checkbox";
-import { DateTimeField } from "@dashboard/components/DateTimeField";
-import FileUploadField from "@dashboard/components/FileUploadField";
-import MultiAutocompleteSelectField from "@dashboard/components/MultiAutocompleteSelectField";
-import RichTextEditor from "@dashboard/components/RichTextEditor";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
-import SortableChipsField from "@dashboard/components/SortableChipsField";
-import { AttributeInputTypeEnum } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { InputAdornment, TextField } from "@material-ui/core";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/components/Attributes/utils';
+import Checkbox from '@dashboard/components/Checkbox';
+import { DateTimeField } from '@dashboard/components/DateTimeField';
+import FileUploadField from '@dashboard/components/FileUploadField';
+import MultiAutocompleteSelectField from '@dashboard/components/MultiAutocompleteSelectField';
+import RichTextEditor from '@dashboard/components/RichTextEditor';
+import SingleAutocompleteSelectField from '@dashboard/components/SingleAutocompleteSelectField';
+import SortableChipsField from '@dashboard/components/SortableChipsField';
+import { AttributeInputTypeEnum } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { InputAdornment, TextField } from '@material-ui/core';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { useStyles } from "./styles";
-import { AttributeRowProps } from "./types";
+import { useStyles } from './styles';
+import { AttributeRowProps } from './types';
 
 const AttributeRow: React.FC<AttributeRowProps> = ({
   attribute,
@@ -127,10 +127,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.PLAIN_TEXT:
       return (
-        <BasicAttributeRow
-          label={attribute.label}
-          description={intl.formatMessage(inputTypeMessages.plainText)}
-        >
+        <BasicAttributeRow label={attribute.label} description={intl.formatMessage(inputTypeMessages.plainText)}>
           <TextField
             fullWidth
             multiline
@@ -146,18 +143,10 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.RICH_TEXT:
-      const {
-        getShouldMount,
-        getDefaultValue,
-        getMountEditor,
-        getHandleChange,
-      } = richTextGetters;
+      const { getShouldMount, getDefaultValue, getMountEditor, getHandleChange } = richTextGetters;
       const defaultValue = getDefaultValue(attribute.id);
       return (
-        <BasicAttributeRow
-          label={attribute.label}
-          description={intl.formatMessage(inputTypeMessages.richText)}
-        >
+        <BasicAttributeRow label={attribute.label} description={intl.formatMessage(inputTypeMessages.richText)}>
           {getShouldMount(attribute.id) && (
             <RichTextEditor
               defaultValue={defaultValue}
@@ -189,10 +178,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
               attribute.data.unit && {
                 endAdornment: (
                   <InputAdornment position="end">
-                    {getMeasurementUnitMessage(
-                      attribute.data.unit,
-                      intl.formatMessage,
-                    )}
+                    {getMeasurementUnitMessage(attribute.data.unit, intl.formatMessage)}
                   </InputAdornment>
                 ),
               }
@@ -207,10 +193,8 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             <Checkbox
               disabled={disabled}
               name={`attribute:${attribute.label}`}
-              onChange={event =>
-                onChange(attribute.id, JSON.stringify(event.target.checked))
-              }
-              checked={JSON.parse(attribute.value[0] ?? "false")}
+              onChange={event => onChange(attribute.id, JSON.stringify(event.target.checked))}
+              checked={JSON.parse(attribute.value[0] ?? 'false')}
               className={classes.pullRight}
               helperText={getErrorMessage(error, intl)}
               error={!!error}
@@ -272,5 +256,5 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
   }
 };
-AttributeRow.displayName = "AttributeRow";
+AttributeRow.displayName = 'AttributeRow';
 export default AttributeRow;

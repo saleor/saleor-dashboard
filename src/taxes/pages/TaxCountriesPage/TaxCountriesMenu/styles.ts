@@ -1,36 +1,36 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
     menu: {
-      height: "fit-content",
+      height: 'fit-content',
     },
     clickable: {
-      cursor: "pointer",
+      cursor: 'pointer',
     },
     selected: {
-      "&&&&::before": {
-        position: "absolute",
+      '&&&&::before': {
+        position: 'absolute',
         left: 0,
-        width: "4px",
-        height: "100%",
+        width: '4px',
+        height: '100%',
         backgroundColor: theme.palette.saleor.active[1],
       },
     },
     spaceBetween: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
     },
     tableRow: {
-      minHeight: "48px",
-      "&::after": {
-        display: "none",
+      minHeight: '48px',
+      '&::after': {
+        display: 'none',
       },
     },
     greyText: {
       color: theme.palette.text.hint,
     },
   }),
-  { name: "TaxCountriesMenu" },
+  { name: 'TaxCountriesMenu' },
 );

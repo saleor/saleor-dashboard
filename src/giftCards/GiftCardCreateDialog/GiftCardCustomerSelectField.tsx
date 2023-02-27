@@ -1,14 +1,14 @@
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { commonMessages } from "@dashboard/intl";
-import { getFullName } from "@dashboard/misc";
-import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
-import { useIntl } from "react-intl";
+import SingleAutocompleteSelectField from '@dashboard/components/SingleAutocompleteSelectField';
+import { DEFAULT_INITIAL_SEARCH_DATA } from '@dashboard/config';
+import { commonMessages } from '@dashboard/intl';
+import { getFullName } from '@dashboard/misc';
+import useCustomerSearch from '@dashboard/searches/useCustomerSearch';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { giftCardCreateMessages as messages } from "./messages";
-import { GiftCardCreateFormCustomer } from "./types";
+import { giftCardCreateMessages as messages } from './messages';
+import { GiftCardCreateFormCustomer } from './types';
 
 export interface GiftCardCustomerSelectFieldProps {
   selectedCustomer: GiftCardCreateFormCustomer;
@@ -41,9 +41,7 @@ const GiftCardCustomerSelectField: React.FC<GiftCardCustomerSelectFieldProps> = 
     setSelectedCustomer({ email: value, name: label });
   };
 
-  const label = `${intl.formatMessage(
-    messages.customerLabel,
-  )} *${intl.formatMessage(commonMessages.optionalField)}`;
+  const label = `${intl.formatMessage(messages.customerLabel)} *${intl.formatMessage(commonMessages.optionalField)}`;
 
   return (
     <SingleAutocompleteSelectField

@@ -1,18 +1,15 @@
-import { Typography } from "@material-ui/core";
-import React from "react";
+import { Typography } from '@material-ui/core';
+import React from 'react';
 
-import Money, { IMoney } from "../Money";
-import { useStyles } from "./styles";
+import Money, { IMoney } from '../Money';
+import { useStyles } from './styles';
 
 interface DiscountedPriceProps {
   regularPrice: IMoney;
   discountedPrice: IMoney;
 }
 
-const DiscountedPrice: React.FC<DiscountedPriceProps> = ({
-  regularPrice,
-  discountedPrice,
-}) => {
+const DiscountedPrice: React.FC<DiscountedPriceProps> = ({ regularPrice, discountedPrice }) => {
   const classes = useStyles();
 
   return (

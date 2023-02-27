@@ -1,2 +1,2 @@
-export { default } from "./TableCellAvatar";
-export * from "./TableCellAvatar";
+export { default } from './TableCellAvatar';
+export * from './TableCellAvatar';

@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 const useStyles = makeStyles(
   theme => ({
@@ -6,7 +6,7 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(3),
     },
   }),
-  { name: "GiftCardExportDialogContent" },
+  { name: 'GiftCardExportDialogContent' },
 );
 
 export default useStyles;

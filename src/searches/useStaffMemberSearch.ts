@@ -1,18 +1,14 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 import {
   SearchStaffMembersDocument,
   SearchStaffMembersQuery,
   SearchStaffMembersQueryVariables,
-} from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+} from '@dashboard/graphql';
+import makeTopLevelSearch from '@dashboard/hooks/makeTopLevelSearch';
 
 export const searchStaffMembers = gql`
   query SearchStaffMembers($after: String, $first: Int!, $query: String!) {
-    search: staffUsers(
-      after: $after
-      first: $first
-      filter: { search: $query }
-    ) {
+    search: staffUsers(after: $after, first: $first, filter: { search: $query }) {
       edges {
         node {
           id
@@ -33,7 +29,6 @@ export const searchStaffMembers = gql`
   }
 `;
 
-export default makeTopLevelSearch<
-  SearchStaffMembersQuery,
-  SearchStaffMembersQueryVariables
->(SearchStaffMembersDocument);
+export default makeTopLevelSearch<SearchStaffMembersQuery, SearchStaffMembersQueryVariables>(
+  SearchStaffMembersDocument,
+);

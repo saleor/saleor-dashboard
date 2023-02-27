@@ -1,5 +1,5 @@
-import { Alert, AlertProps, makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { Alert, AlertProps, makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
 
 const useStyles = makeStyles(
   theme => ({
@@ -7,10 +7,10 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(3),
     },
   }),
-  { name: "LimitReachedAlert" },
+  { name: 'LimitReachedAlert' },
 );
 
-export type LimitReachedAlertProps = Omit<AlertProps, "variant" | "close">;
+export type LimitReachedAlertProps = Omit<AlertProps, 'variant' | 'close'>;
 
 const LimitReachedAlert: React.FC<LimitReachedAlertProps> = props => {
   const classes = useStyles();
@@ -18,5 +18,5 @@ const LimitReachedAlert: React.FC<LimitReachedAlertProps> = props => {
   return <Alert variant="warning" close className={classes.root} {...props} />;
 };
 
-LimitReachedAlert.displayName = "LimitReachedAlert";
+LimitReachedAlert.displayName = 'LimitReachedAlert';
 export default LimitReachedAlert;

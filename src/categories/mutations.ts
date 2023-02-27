@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const categoryDeleteMutation = gql`
   mutation CategoryDelete($id: ID!) {

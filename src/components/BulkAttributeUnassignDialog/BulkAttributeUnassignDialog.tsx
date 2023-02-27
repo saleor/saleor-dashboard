@@ -1,10 +1,10 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { DialogContentText } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import { DialogContentText } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import messages from "./messages";
+import messages from './messages';
 
 export interface BulkAttributeUnassignDialogProps {
   title: string;
@@ -49,5 +49,5 @@ const BulkAttributeUnassignDialog: React.FC<BulkAttributeUnassignDialogProps> = 
     </ActionDialog>
   );
 };
-BulkAttributeUnassignDialog.displayName = "BulkAttributeUnassignDialog";
+BulkAttributeUnassignDialog.displayName = 'BulkAttributeUnassignDialog';
 export default BulkAttributeUnassignDialog;

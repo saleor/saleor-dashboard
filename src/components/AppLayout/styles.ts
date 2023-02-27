@@ -1,61 +1,61 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
-import { appLoaderHeight } from "./consts";
+import { appLoaderHeight } from './consts';
 
 export const useStyles = makeStyles(
   theme => ({
     appAction: {
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down('sm')]: {
         left: 0,
-        width: "100%",
+        width: '100%',
       },
       bottom: 0,
       gridColumn: 2,
-      position: "sticky",
+      position: 'sticky',
       zIndex: 10,
     },
     appLoader: {
       height: appLoaderHeight,
       zIndex: 1201,
-      position: "fixed",
-      width: "100%",
+      position: 'fixed',
+      width: '100%',
     },
     content: {
       flex: 1,
-      [theme.breakpoints.up("md")]: {
+      [theme.breakpoints.up('md')]: {
         width: 0, // workaround for flex children width expansion affected by their contents
       },
     },
     darkThemeSwitch: {
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down('sm')]: {
         marginRight: theme.spacing(1),
       },
       marginRight: theme.spacing(2),
     },
     header: {
-      display: "grid",
+      display: 'grid',
       gridTemplateAreas: `"headerAnchor headerToolbar"`,
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down('sm')]: {
         gridTemplateAreas: `"headerToolbar" 
         "headerAnchor"`,
       },
       marginBottom: theme.spacing(6),
     },
     headerAnchor: {
-      gridArea: "headerAnchor",
+      gridArea: 'headerAnchor',
     },
     headerToolbar: {
-      display: "flex",
-      gridArea: "headerToolbar",
+      display: 'flex',
+      gridArea: 'headerToolbar',
       height: 40,
-      [theme.breakpoints.down("sm")]: {
-        height: "auto",
+      [theme.breakpoints.down('sm')]: {
+        height: 'auto',
       },
     },
     root: {
-      isolation: "isolate",
-      [theme.breakpoints.up("md")]: {
-        display: "flex",
+      isolation: 'isolate',
+      [theme.breakpoints.up('md')]: {
+        display: 'flex',
       },
       width: `100%`,
     },
@@ -63,8 +63,8 @@ export const useStyles = makeStyles(
       flex: 1,
     },
     userBar: {
-      alignItems: "center",
-      display: "flex",
+      alignItems: 'center',
+      display: 'flex',
     },
 
     view: {
@@ -72,35 +72,33 @@ export const useStyles = makeStyles(
     },
     viewMargins: {
       paddingBottom: theme.spacing(),
-      [theme.breakpoints.up("sm")]: {
+      [theme.breakpoints.up('sm')]: {
         paddingBottom: theme.spacing(3),
       },
     },
     viewContainer: {
-      minHeight: `calc(100vh - ${appLoaderHeight + 72}px - ${theme.spacing(
-        4,
-      )})`,
+      minHeight: `calc(100vh - ${appLoaderHeight + 72}px - ${theme.spacing(4)})`,
     },
   }),
-  { name: "AppLayout" },
+  { name: 'AppLayout' },
 );
 
 export const useFullSizeStyles = makeStyles(
   () => ({
     content: {
-      height: "100vh",
-      display: "flex",
-      flexDirection: "column",
+      height: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
     },
     viewContainer: {
       flex: 1,
-      display: "flex",
-      flexDirection: "column",
+      display: 'flex',
+      flexDirection: 'column',
     },
     view: {
       flex: 1,
     },
     viewContainerWrapper: {},
   }),
-  { name: "AppLayoutFullSize" },
+  { name: 'AppLayoutFullSize' },
 );

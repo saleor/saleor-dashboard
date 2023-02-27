@@ -1,14 +1,7 @@
-import React from "react";
+import React from 'react';
 
 const Arrow: React.FC<React.SVGProps<SVGSVGElement>> = props => (
-  <svg
-    width="18"
-    height="21"
-    viewBox="0 0 18 21"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    {...props}
-  >
+  <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
@@ -18,5 +11,5 @@ const Arrow: React.FC<React.SVGProps<SVGSVGElement>> = props => (
   </svg>
 );
 
-Arrow.displayName = "Arrow";
+Arrow.displayName = 'Arrow';
 export default Arrow;

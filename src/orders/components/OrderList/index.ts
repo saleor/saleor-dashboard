@@ -1,2 +1,2 @@
-export { default } from "./OrderList";
-export * from "./OrderList";
+export { default } from './OrderList';
+export * from './OrderList';

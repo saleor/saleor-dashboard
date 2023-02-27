@@ -1,7 +1,7 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
+import { Card, CardContent, Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
 interface ErrorNoticeBarProps {
   className?: string;
   message: string | React.ReactNode;
@@ -14,7 +14,7 @@ const useStyles = makeStyles(
     },
   }),
   {
-    name: "ErrorNoticeBar",
+    name: 'ErrorNoticeBar',
   },
 );
 
@@ -30,5 +30,5 @@ const ErrorNoticeBar: React.FC<ErrorNoticeBarProps> = props => {
     </Card>
   );
 };
-ErrorNoticeBar.displayName = "ErrorNoticeBar";
+ErrorNoticeBar.displayName = 'ErrorNoticeBar';
 export default ErrorNoticeBar;

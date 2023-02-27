@@ -1,7 +1,4 @@
-import {
-  CollectionChannelListingErrorFragment,
-  ProductChannelListingErrorFragment,
-} from "@dashboard/graphql";
+import { CollectionChannelListingErrorFragment, ProductChannelListingErrorFragment } from '@dashboard/graphql';
 
 export interface ChannelOpts {
   availableForPurchase?: string;
@@ -23,6 +20,4 @@ export interface Messages {
   setAvailabilityDateLabel?: string;
 }
 
-export type ChannelsAvailabilityError =
-  | ProductChannelListingErrorFragment
-  | CollectionChannelListingErrorFragment;
+export type ChannelsAvailabilityError = ProductChannelListingErrorFragment | CollectionChannelListingErrorFragment;

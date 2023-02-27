@@ -1,16 +1,16 @@
-import { MutationFunction } from "@apollo/client";
-import { OrderDraftCreateMutation } from "@dashboard/graphql";
-import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
-import { IntlShape } from "react-intl";
+import { MutationFunction } from '@apollo/client';
+import { OrderDraftCreateMutation } from '@dashboard/graphql';
+import { UseNavigatorResult } from '@dashboard/hooks/useNavigator';
+import { IntlShape } from 'react-intl';
 
-import { QuickSearchAction, QuickSearchMode } from "../types";
-import getCatalogModeActions from "./catalog";
-import getCommandModeActions from "./commands";
-import getCustomersModeActions from "./customers";
-import getDefaultModeActions from "./default";
-import getHelpModeActions from "./help";
-import getOrdersModeActions from "./orders";
-import { ActionQueries } from "./types";
+import { QuickSearchAction, QuickSearchMode } from '../types';
+import getCatalogModeActions from './catalog';
+import getCommandModeActions from './commands';
+import getCustomersModeActions from './customers';
+import getDefaultModeActions from './default';
+import getHelpModeActions from './help';
+import getOrdersModeActions from './orders';
+import { ActionQueries } from './types';
 
 function getModeActions(
   mode: QuickSearchMode,
@@ -24,30 +24,18 @@ function getModeActions(
   },
 ): QuickSearchAction[] {
   switch (mode) {
-    case "catalog":
+    case 'catalog':
       return getCatalogModeActions(query, intl, cbs.navigate, queries.catalog);
-    case "commands":
-      return getCommandModeActions(
-        query,
-        intl,
-        cbs.navigate,
-        cbs.createOrder,
-        cbs.setMode,
-      );
-    case "customers":
+    case 'commands':
+      return getCommandModeActions(query, intl, cbs.navigate, cbs.createOrder, cbs.setMode);
+    case 'customers':
       return getCustomersModeActions(intl, cbs.navigate, queries.customers);
-    case "help":
+    case 'help':
       return getHelpModeActions(query, intl, cbs.setMode);
-    case "orders":
+    case 'orders':
       return getOrdersModeActions(query, intl, cbs.navigate, queries.order);
     default:
-      return getDefaultModeActions(
-        query,
-        intl,
-        cbs.navigate,
-        cbs.createOrder,
-        cbs.setMode,
-      );
+      return getDefaultModeActions(query, intl, cbs.navigate, cbs.createOrder, cbs.setMode);
   }
 }
 

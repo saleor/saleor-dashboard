@@ -1,2 +1,2 @@
-export { default } from "./PageSectionHeader";
-export * from "./PageSectionHeader";
+export { default } from './PageSectionHeader';
+export * from './PageSectionHeader';

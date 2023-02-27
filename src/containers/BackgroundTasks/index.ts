@@ -1,2 +1,2 @@
-export * from "./BackgroundTasksProvider";
-export { default } from "./BackgroundTasksProvider";
+export * from './BackgroundTasksProvider';
+export { default } from './BackgroundTasksProvider';

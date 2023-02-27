@@ -1,47 +1,47 @@
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import Skeleton from "@dashboard/components/Skeleton";
-import { ProductMediaFragment } from "@dashboard/graphql";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
-import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { Button } from '@dashboard/components/Button';
+import CardTitle from '@dashboard/components/CardTitle';
+import Skeleton from '@dashboard/components/Skeleton';
+import { ProductMediaFragment } from '@dashboard/graphql';
+import { Card, CardContent, Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import { vars } from '@saleor/macaw-ui/next';
+import React from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
 const messages = defineMessages({
   chooseMedia: {
-    id: "2J6EFz",
-    defaultMessage: "Choose media",
-    description: "button",
+    id: '2J6EFz',
+    defaultMessage: 'Choose media',
+    description: 'button',
   },
   media: {
-    id: "/Mcvt4",
-    defaultMessage: "Media",
-    description: "section header",
+    id: '/Mcvt4',
+    defaultMessage: 'Media',
+    description: 'section header',
   },
   selectSpecificVariant: {
-    id: "JfKvrV",
-    defaultMessage: "Select a specific variant media from product media",
-    description: "select variant media",
+    id: 'JfKvrV',
+    defaultMessage: 'Select a specific variant media from product media',
+    description: 'select variant media',
   },
 });
 
 const useStyles = makeStyles(
   theme => ({
     gridElement: {
-      "& img": {
-        width: "100%",
+      '& img': {
+        width: '100%',
       },
     },
     helpText: {
-      gridColumnEnd: "span 4",
+      gridColumnEnd: 'span 4',
     },
     image: {
-      objectFit: "contain",
-      width: "100%",
+      objectFit: 'contain',
+      width: '100%',
     },
     imageContainer: {
-      background: "#ffffff",
+      background: '#ffffff',
       border: `1px solid ${vars.colors.border.neutralPlain}`,
       borderRadius: theme.spacing(),
       height: theme.spacing(17.5),
@@ -49,12 +49,12 @@ const useStyles = makeStyles(
       padding: theme.spacing(2),
     },
     root: {
-      display: "grid",
+      display: 'grid',
       gridColumnGap: theme.spacing(2),
-      gridTemplateColumns: "repeat(4, 1fr)",
+      gridTemplateColumns: 'repeat(4, 1fr)',
     },
   }),
-  { name: "ProductVariantMedia" },
+  { name: 'ProductVariantMedia' },
 );
 
 interface ProductVariantMediaProps {
@@ -64,9 +64,7 @@ interface ProductVariantMediaProps {
   onImageAdd();
 }
 
-export const ProductVariantMedia: React.FC<
-  ProductVariantMediaProps
-> = props => {
+export const ProductVariantMedia: React.FC<ProductVariantMediaProps> = props => {
   const intl = useIntl();
   const classes = useStyles(props);
   const { disabled, media, onImageAdd } = props;
@@ -90,26 +88,16 @@ export const ProductVariantMedia: React.FC<
               .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1))
               .map(mediaObj => {
                 const parsedMediaOembedData = JSON.parse(mediaObj?.oembedData);
-                const mediaUrl =
-                  parsedMediaOembedData?.thumbnail_url || mediaObj.url;
-                return (
-                  <img
-                    key={mediaObj.id}
-                    className={classes.image}
-                    src={mediaUrl}
-                    alt={mediaObj.alt}
-                  />
-                );
+                const mediaUrl = parsedMediaOembedData?.thumbnail_url || mediaObj.url;
+                return <img key={mediaObj.id} className={classes.image} src={mediaUrl} alt={mediaObj.alt} />;
               })
           ) : (
-            <Typography className={classes.helpText}>
-              {intl.formatMessage(messages.selectSpecificVariant)}
-            </Typography>
+            <Typography className={classes.helpText}>{intl.formatMessage(messages.selectSpecificVariant)}</Typography>
           )}
         </div>
       </CardContent>
     </Card>
   );
 };
-ProductVariantMedia.displayName = "ProductVariantMedia";
+ProductVariantMedia.displayName = 'ProductVariantMedia';
 export default ProductVariantMedia;

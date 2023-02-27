@@ -1,24 +1,22 @@
-import { channel, channelCreateErrors } from "@dashboard/channels/fixtures";
-import { countries } from "@dashboard/fixtures";
-import { ChannelErrorFragment } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { channel, channelCreateErrors } from '@dashboard/channels/fixtures';
+import { countries } from '@dashboard/fixtures';
+import { ChannelErrorFragment } from '@dashboard/graphql';
+import Decorator from '@dashboard/storybook/Decorator';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import ChannelDetailsPage, {
-  ChannelDetailsPageProps,
-} from "./ChannelDetailsPage";
+import ChannelDetailsPage, { ChannelDetailsPageProps } from './ChannelDetailsPage';
 
 const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   currencyCodes: [
-    { label: "USD", value: "USD" },
-    { label: "PLN", value: "PLN" },
+    { label: 'USD', value: 'USD' },
+    { label: 'PLN', value: 'PLN' },
   ],
   disabled: false,
   disabledStatus: false,
   errors: [],
   onSubmit: () => undefined,
-  saveButtonBarState: "default",
+  saveButtonBarState: 'default',
   updateChannelStatus: () => undefined,
   searchShippingZones: () => undefined,
   searchShippingZonesData: undefined,
@@ -27,19 +25,19 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   countries: countries.map(({ name, code }) => ({
     code,
     country: name,
-    __typename: "CountryDisplay",
+    __typename: 'CountryDisplay',
   })),
   allShippingZonesCount: 10,
   channelShippingZones: [
     {
-      __typename: "ShippingZone",
-      id: "zone-1",
-      name: "Europe",
+      __typename: 'ShippingZone',
+      id: 'zone-1',
+      name: 'Europe',
     },
     {
-      __typename: "ShippingZone",
-      id: "zone-2",
-      name: "USA",
+      __typename: 'ShippingZone',
+      id: 'zone-2',
+      name: 'USA',
     },
   ],
   fetchMoreShippingZones: {
@@ -51,14 +49,14 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   allWarehousesCount: 10,
   channelWarehouses: [
     {
-      __typename: "Warehouse",
-      id: "warehouse-1",
-      name: "Warehouse 1",
+      __typename: 'Warehouse',
+      id: 'warehouse-1',
+      name: 'Warehouse 1',
     },
     {
-      __typename: "Warehouse",
-      id: "warehouse-2",
-      name: "Warehouse 2",
+      __typename: 'Warehouse',
+      id: 'warehouse-2',
+      name: 'Warehouse 2',
     },
   ],
   fetchMoreWarehouses: {
@@ -69,21 +67,13 @@ const props: ChannelDetailsPageProps<ChannelErrorFragment[]> = {
   },
 };
 
-storiesOf("Channels / Channel details", module)
+storiesOf('Channels / Channel details', module)
   .addDecorator(Decorator)
-  .add("default", () => <ChannelDetailsPage {...props} />)
-  .add("disabled", () => <ChannelDetailsPage {...props} disabled={true} />)
-  .add("loading", () => (
-    <ChannelDetailsPage {...props} saveButtonBarState={"loading"} />
+  .add('default', () => <ChannelDetailsPage {...props} />)
+  .add('disabled', () => <ChannelDetailsPage {...props} disabled={true} />)
+  .add('loading', () => <ChannelDetailsPage {...props} saveButtonBarState={'loading'} />)
+  .add('with data', () => <ChannelDetailsPage {...props} channel={channel} />)
+  .add('without editable currency code', () => (
+    <ChannelDetailsPage {...props} currencyCodes={undefined} channel={channel} />
   ))
-  .add("with data", () => <ChannelDetailsPage {...props} channel={channel} />)
-  .add("without editable currency code", () => (
-    <ChannelDetailsPage
-      {...props}
-      currencyCodes={undefined}
-      channel={channel}
-    />
-  ))
-  .add("with errors", () => (
-    <ChannelDetailsPage {...props} errors={channelCreateErrors} />
-  ));
+  .add('with errors', () => <ChannelDetailsPage {...props} errors={channelCreateErrors} />);

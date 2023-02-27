@@ -1,19 +1,17 @@
-import { AppPermissionFragment } from "@dashboard/graphql";
-import { Tooltip } from "@saleor/macaw-ui";
-import { Box, InfoIcon } from "@saleor/macaw-ui/next";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import { AppPermissionFragment } from '@dashboard/graphql';
+import { Tooltip } from '@saleor/macaw-ui';
+import { Box, InfoIcon } from '@saleor/macaw-ui/next';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import { messages } from "./messages";
-import { useStyles } from "./styles";
+import { messages } from './messages';
+import { useStyles } from './styles';
 
 interface AppPermissionsProps {
   permissions?: AppPermissionFragment[] | null;
 }
 
-export const AppPermissions: React.FC<AppPermissionsProps> = ({
-  permissions,
-}) => {
+export const AppPermissions: React.FC<AppPermissionsProps> = ({ permissions }) => {
   const classes = useStyles();
 
   return (
@@ -22,9 +20,7 @@ export const AppPermissions: React.FC<AppPermissionsProps> = ({
       title={
         <ul className={classes.list}>
           {permissions?.length ? (
-            permissions?.map(permission => (
-              <li key={permission.code}>{permission.name}</li>
-            ))
+            permissions?.map(permission => <li key={permission.code}>{permission.name}</li>)
           ) : (
             <li>
               <FormattedMessage {...messages.noPermissions} />
@@ -39,5 +35,5 @@ export const AppPermissions: React.FC<AppPermissionsProps> = ({
     </Tooltip>
   );
 };
-AppPermissions.displayName = "AppPermissions";
+AppPermissions.displayName = 'AppPermissions';
 export default AppPermissions;

@@ -1,40 +1,30 @@
-import { DateTime } from "@dashboard/components/Date";
-import Money from "@dashboard/components/Money";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
-import TableCellHeader from "@dashboard/components/TableCellHeader";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { OrderListQuery } from "@dashboard/graphql";
-import {
-  maybe,
-  renderCollection,
-  transformOrderStatus,
-  transformPaymentStatus,
-} from "@dashboard/misc";
-import { OrderListUrlSortField, orderUrl } from "@dashboard/orders/urls";
-import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
-import { getArrowDirection } from "@dashboard/utils/sort";
-import {
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-} from "@material-ui/core";
-import { CSSProperties } from "@material-ui/styles";
-import { makeStyles, Pill } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { DateTime } from '@dashboard/components/Date';
+import Money from '@dashboard/components/Money';
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Skeleton from '@dashboard/components/Skeleton';
+import TableCellHeader from '@dashboard/components/TableCellHeader';
+import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { OrderListQuery } from '@dashboard/graphql';
+import { maybe, renderCollection, transformOrderStatus, transformPaymentStatus } from '@dashboard/misc';
+import { OrderListUrlSortField, orderUrl } from '@dashboard/orders/urls';
+import { ListProps, RelayToFlat, SortPage } from '@dashboard/types';
+import { getArrowDirection } from '@dashboard/utils/sort';
+import { TableBody, TableCell, TableFooter, TableHead } from '@material-ui/core';
+import { CSSProperties } from '@material-ui/styles';
+import { makeStyles, Pill } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const useStyles = makeStyles(
   theme => {
     const overflowing: CSSProperties = {
-      overflow: "hidden",
-      textOverflow: "ellipsis",
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
     };
 
     return {
-      [theme.breakpoints.up("lg")]: {
+      [theme.breakpoints.up('lg')]: {
         colCustomer: {
           width: 220,
         },
@@ -51,7 +41,7 @@ const useStyles = makeStyles(
         colTotal: {},
       },
       pill: {
-        maxWidth: "100%",
+        maxWidth: '100%',
         ...overflowing,
       },
       colCustomer: overflowing,
@@ -62,25 +52,24 @@ const useStyles = makeStyles(
       colNumber: {},
       colPayment: {},
       colTotal: {
-        textAlign: "right",
+        textAlign: 'right',
       },
       link: {
-        cursor: "pointer",
+        cursor: 'pointer',
       },
     };
   },
-  { name: "OrderList" },
+  { name: 'OrderList' },
 );
 
 interface OrderListProps extends ListProps, SortPage<OrderListUrlSortField> {
-  orders: RelayToFlat<OrderListQuery["orders"]>;
+  orders: RelayToFlat<OrderListQuery['orders']>;
 }
 
 const numberOfColumns = 6;
 
 export const OrderList: React.FC<OrderListProps> = props => {
-  const { disabled, settings, orders, onUpdateListSettings, onSort, sort } =
-    props;
+  const { disabled, settings, orders, onUpdateListSettings, onSort, sort } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -97,11 +86,7 @@ export const OrderList: React.FC<OrderListProps> = props => {
       <TableHead>
         <TableRowLink>
           <TableCellHeader
-            direction={
-              sort.sort === OrderListUrlSortField.number
-                ? getArrowDirection(sort.asc)
-                : undefined
-            }
+            direction={sort.sort === OrderListUrlSortField.number ? getArrowDirection(sort.asc) : undefined}
             arrowPosition="right"
             onClick={() => onSort(OrderListUrlSortField.number)}
             className={classes.colNumber}
@@ -109,67 +94,35 @@ export const OrderList: React.FC<OrderListProps> = props => {
             <FormattedMessage id="kFkPWB" defaultMessage="Number" />
           </TableCellHeader>
           <TableCellHeader
-            direction={
-              sort.sort === OrderListUrlSortField.date
-                ? getArrowDirection(sort.asc)
-                : undefined
-            }
+            direction={sort.sort === OrderListUrlSortField.date ? getArrowDirection(sort.asc) : undefined}
             onClick={() => onSort(OrderListUrlSortField.date)}
             className={classes.colDate}
           >
-            <FormattedMessage
-              id="PHUcrU"
-              defaultMessage="Date"
-              description="date when order was placed"
-            />
+            <FormattedMessage id="PHUcrU" defaultMessage="Date" description="date when order was placed" />
           </TableCellHeader>
           <TableCellHeader
-            direction={
-              sort.sort === OrderListUrlSortField.customer
-                ? getArrowDirection(sort.asc)
-                : undefined
-            }
+            direction={sort.sort === OrderListUrlSortField.customer ? getArrowDirection(sort.asc) : undefined}
             onClick={() => onSort(OrderListUrlSortField.customer)}
             className={classes.colCustomer}
           >
-            <FormattedMessage
-              id="5blVMu"
-              defaultMessage="Customer"
-              description="e-mail or full name"
-            />
+            <FormattedMessage id="5blVMu" defaultMessage="Customer" description="e-mail or full name" />
           </TableCellHeader>
           <TableCellHeader
-            direction={
-              sort.sort === OrderListUrlSortField.payment
-                ? getArrowDirection(sort.asc)
-                : undefined
-            }
+            direction={sort.sort === OrderListUrlSortField.payment ? getArrowDirection(sort.asc) : undefined}
             onClick={() => onSort(OrderListUrlSortField.payment)}
             className={classes.colPayment}
           >
-            <FormattedMessage
-              id="p+UDec"
-              defaultMessage="Payment"
-              description="payment status"
-            />
+            <FormattedMessage id="p+UDec" defaultMessage="Payment" description="payment status" />
           </TableCellHeader>
           <TableCellHeader
-            direction={
-              sort.sort === OrderListUrlSortField.fulfillment
-                ? getArrowDirection(sort.asc)
-                : undefined
-            }
+            direction={sort.sort === OrderListUrlSortField.fulfillment ? getArrowDirection(sort.asc) : undefined}
             onClick={() => onSort(OrderListUrlSortField.fulfillment)}
             className={classes.colFulfillment}
           >
             <FormattedMessage id="NWxomz" defaultMessage="Fulfillment status" />
           </TableCellHeader>
           <TableCellHeader textAlign="right" className={classes.colTotal}>
-            <FormattedMessage
-              id="k9hf7F"
-              defaultMessage="Total"
-              description="total order price"
-            />
+            <FormattedMessage id="k9hf7F" defaultMessage="Total" description="total order price" />
           </TableCellHeader>
         </TableRowLink>
       </TableHead>
@@ -192,17 +145,13 @@ export const OrderList: React.FC<OrderListProps> = props => {
               hover={!!order}
               className={!!order ? classes.link : undefined}
               href={order && orderUrl(order.id)}
-              key={order ? order.id : "skeleton"}
+              key={order ? order.id : 'skeleton'}
             >
               <TableCell className={classes.colNumber}>
-                {maybe(() => order.number) ? "#" + order.number : <Skeleton />}
+                {maybe(() => order.number) ? '#' + order.number : <Skeleton />}
               </TableCell>
               <TableCell className={classes.colDate}>
-                {maybe(() => order.created) ? (
-                  <DateTime date={order.created} plain />
-                ) : (
-                  <Skeleton />
-                )}
+                {maybe(() => order.created) ? <DateTime date={order.created} plain /> : <Skeleton />}
               </TableCell>
               <TableCell className={classes.colCustomer}>
                 {maybe(() => order.billingAddress) ? (
@@ -232,31 +181,20 @@ export const OrderList: React.FC<OrderListProps> = props => {
               </TableCell>
               <TableCell className={classes.colFulfillment}>
                 {maybe(() => order.status) ? (
-                  <Pill
-                    className={classes.pill}
-                    color={order.status.status}
-                    label={order.status.localized}
-                  />
+                  <Pill className={classes.pill} color={order.status.status} label={order.status.localized} />
                 ) : (
                   <Skeleton />
                 )}
               </TableCell>
               <TableCell className={classes.colTotal} align="right">
-                {maybe(() => order.total.gross) ? (
-                  <Money money={order.total.gross} />
-                ) : (
-                  <Skeleton />
-                )}
+                {maybe(() => order.total.gross) ? <Money money={order.total.gross} /> : <Skeleton />}
               </TableCell>
             </TableRowLink>
           ),
           () => (
             <TableRowLink>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage
-                  id="RlfqSV"
-                  defaultMessage="No orders found"
-                />
+                <FormattedMessage id="RlfqSV" defaultMessage="No orders found" />
               </TableCell>
             </TableRowLink>
           ),
@@ -265,5 +203,5 @@ export const OrderList: React.FC<OrderListProps> = props => {
     </ResponsiveTable>
   );
 };
-OrderList.displayName = "OrderList";
+OrderList.displayName = 'OrderList';
 export default OrderList;

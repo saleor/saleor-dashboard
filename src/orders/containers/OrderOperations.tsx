@@ -53,23 +53,17 @@ import {
   useOrderShippingMethodUpdateMutation,
   useOrderUpdateMutation,
   useOrderVoidMutation,
-} from "@dashboard/graphql";
-import React from "react";
+} from '@dashboard/graphql';
+import React from 'react';
 
-import { getMutationProviderData } from "../../misc";
-import { PartialMutationProviderOutput } from "../../types";
+import { getMutationProviderData } from '../../misc';
+import { PartialMutationProviderOutput } from '../../types';
 
 interface OrderOperationsProps {
   order: string;
   children: (props: {
-    orderAddNote: PartialMutationProviderOutput<
-      OrderAddNoteMutation,
-      OrderAddNoteMutationVariables
-    >;
-    orderCancel: PartialMutationProviderOutput<
-      OrderCancelMutation,
-      OrderCancelMutationVariables
-    >;
+    orderAddNote: PartialMutationProviderOutput<OrderAddNoteMutation, OrderAddNoteMutationVariables>;
+    orderCancel: PartialMutationProviderOutput<OrderCancelMutation, OrderCancelMutationVariables>;
     orderFulfillmentApprove: PartialMutationProviderOutput<
       OrderFulfillmentApproveMutation,
       OrderFulfillmentApproveMutationVariables
@@ -82,64 +76,26 @@ interface OrderOperationsProps {
       OrderFulfillmentUpdateTrackingMutation,
       OrderFulfillmentUpdateTrackingMutationVariables
     >;
-    orderPaymentCapture: PartialMutationProviderOutput<
-      OrderCaptureMutation,
-      OrderCaptureMutationVariables
-    >;
-    orderPaymentMarkAsPaid: PartialMutationProviderOutput<
-      OrderMarkAsPaidMutation,
-      OrderMarkAsPaidMutationVariables
-    >;
-    orderVoid: PartialMutationProviderOutput<
-      OrderVoidMutation,
-      OrderVoidMutationVariables
-    >;
-    orderUpdate: PartialMutationProviderOutput<
-      OrderUpdateMutation,
-      OrderUpdateMutationVariables
-    >;
-    orderDraftCancel: PartialMutationProviderOutput<
-      OrderDraftCancelMutation,
-      OrderDraftCancelMutationVariables
-    >;
-    orderDraftFinalize: PartialMutationProviderOutput<
-      OrderDraftFinalizeMutation,
-      OrderDraftFinalizeMutationVariables
-    >;
-    orderDraftUpdate: PartialMutationProviderOutput<
-      OrderDraftUpdateMutation,
-      OrderDraftUpdateMutationVariables
-    >;
+    orderPaymentCapture: PartialMutationProviderOutput<OrderCaptureMutation, OrderCaptureMutationVariables>;
+    orderPaymentMarkAsPaid: PartialMutationProviderOutput<OrderMarkAsPaidMutation, OrderMarkAsPaidMutationVariables>;
+    orderVoid: PartialMutationProviderOutput<OrderVoidMutation, OrderVoidMutationVariables>;
+    orderUpdate: PartialMutationProviderOutput<OrderUpdateMutation, OrderUpdateMutationVariables>;
+    orderDraftCancel: PartialMutationProviderOutput<OrderDraftCancelMutation, OrderDraftCancelMutationVariables>;
+    orderDraftFinalize: PartialMutationProviderOutput<OrderDraftFinalizeMutation, OrderDraftFinalizeMutationVariables>;
+    orderDraftUpdate: PartialMutationProviderOutput<OrderDraftUpdateMutation, OrderDraftUpdateMutationVariables>;
     orderShippingMethodUpdate: PartialMutationProviderOutput<
       OrderShippingMethodUpdateMutation,
       OrderShippingMethodUpdateMutationVariables
     >;
-    orderLineDelete: PartialMutationProviderOutput<
-      OrderLineDeleteMutation,
-      OrderLineDeleteMutationVariables
-    >;
-    orderLinesAdd: PartialMutationProviderOutput<
-      OrderLinesAddMutation,
-      OrderLinesAddMutationVariables
-    >;
-    orderLineUpdate: PartialMutationProviderOutput<
-      OrderLineUpdateMutation,
-      OrderLineUpdateMutationVariables
-    >;
-    orderInvoiceRequest: PartialMutationProviderOutput<
-      InvoiceRequestMutation,
-      InvoiceRequestMutationVariables
-    >;
-    orderInvoiceSend: PartialMutationProviderOutput<
-      InvoiceEmailSendMutation,
-      InvoiceEmailSendMutationVariables
-    >;
+    orderLineDelete: PartialMutationProviderOutput<OrderLineDeleteMutation, OrderLineDeleteMutationVariables>;
+    orderLinesAdd: PartialMutationProviderOutput<OrderLinesAddMutation, OrderLinesAddMutationVariables>;
+    orderLineUpdate: PartialMutationProviderOutput<OrderLineUpdateMutation, OrderLineUpdateMutationVariables>;
+    orderInvoiceRequest: PartialMutationProviderOutput<InvoiceRequestMutation, InvoiceRequestMutationVariables>;
+    orderInvoiceSend: PartialMutationProviderOutput<InvoiceEmailSendMutation, InvoiceEmailSendMutationVariables>;
   }) => React.ReactNode;
   onOrderFulfillmentApprove: (data: OrderFulfillmentApproveMutation) => void;
   onOrderFulfillmentCancel: (data: OrderFulfillmentCancelMutation) => void;
-  onOrderFulfillmentUpdate: (
-    data: OrderFulfillmentUpdateTrackingMutation,
-  ) => void;
+  onOrderFulfillmentUpdate: (data: OrderFulfillmentUpdateTrackingMutation) => void;
   onOrderCancel: (data: OrderCancelMutation) => void;
   onOrderVoid: (data: OrderVoidMutation) => void;
   onOrderMarkAsPaid: (data: OrderMarkAsPaidMutation) => void;
@@ -244,9 +200,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
         orderDraftUpdate: getMutationProviderData(...updateDraft),
         orderFulfillmentApprove: getMutationProviderData(...approveFulfillment),
         orderFulfillmentCancel: getMutationProviderData(...cancelFulfillment),
-        orderFulfillmentUpdateTracking: getMutationProviderData(
-          ...updateTrackingNumber,
-        ),
+        orderFulfillmentUpdateTracking: getMutationProviderData(...updateTrackingNumber),
         orderInvoiceRequest: getMutationProviderData(...invoiceRequest),
         orderInvoiceSend: getMutationProviderData(...invoiceEmailSend),
         orderLineDelete: getMutationProviderData(...deleteOrderLine),
@@ -254,9 +208,7 @@ const OrderOperations: React.FC<OrderOperationsProps> = ({
         orderLinesAdd: getMutationProviderData(...addOrderLine),
         orderPaymentCapture: getMutationProviderData(...paymentCapture),
         orderPaymentMarkAsPaid: getMutationProviderData(...markAsPaid),
-        orderShippingMethodUpdate: getMutationProviderData(
-          ...updateShippingMethod,
-        ),
+        orderShippingMethodUpdate: getMutationProviderData(...updateShippingMethod),
         orderUpdate: getMutationProviderData(...update),
         orderVoid: getMutationProviderData(...orderVoid),
       })}

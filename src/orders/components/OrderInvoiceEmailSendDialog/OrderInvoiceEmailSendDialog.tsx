@@ -1,20 +1,14 @@
-import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
-import FormSpacer from "@dashboard/components/FormSpacer";
-import { InvoiceErrorFragment, InvoiceFragment } from "@dashboard/graphql";
-import { buttonMessages } from "@dashboard/intl";
-import { DialogProps } from "@dashboard/types";
-import getInvoiceErrorMessage from "@dashboard/utils/errors/invoice";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import BackButton from '@dashboard/components/BackButton';
+import ConfirmButton from '@dashboard/components/ConfirmButton';
+import FormSpacer from '@dashboard/components/FormSpacer';
+import { InvoiceErrorFragment, InvoiceFragment } from '@dashboard/graphql';
+import { buttonMessages } from '@dashboard/intl';
+import { DialogProps } from '@dashboard/types';
+import getInvoiceErrorMessage from '@dashboard/utils/errors/invoice';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export interface OrderInvoiceEmailSendDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -23,18 +17,23 @@ export interface OrderInvoiceEmailSendDialogProps extends DialogProps {
   onSend: () => void;
 }
 
-const OrderInvoiceEmailSendDialog: React.FC<
-  OrderInvoiceEmailSendDialogProps
-> = ({ confirmButtonState, errors, open, invoice, onClose, onSend }) => {
+const OrderInvoiceEmailSendDialog: React.FC<OrderInvoiceEmailSendDialogProps> = ({
+  confirmButtonState,
+  errors,
+  open,
+  invoice,
+  onClose,
+  onSend,
+}) => {
   const intl = useIntl();
 
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="xs">
       <DialogTitle disableTypography>
         {intl.formatMessage({
-          id: "5JT4v2",
-          defaultMessage: "Send Invoice",
-          description: "dialog header",
+          id: '5JT4v2',
+          defaultMessage: 'Send Invoice',
+          description: 'dialog header',
         })}
       </DialogTitle>
       <DialogContent>
@@ -67,5 +66,5 @@ const OrderInvoiceEmailSendDialog: React.FC<
     </Dialog>
   );
 };
-OrderInvoiceEmailSendDialog.displayName = "OrderInvoiceEmailSendDialog";
+OrderInvoiceEmailSendDialog.displayName = 'OrderInvoiceEmailSendDialog';
 export default OrderInvoiceEmailSendDialog;

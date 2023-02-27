@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const home = gql`
   query Home(
@@ -7,40 +7,28 @@ export const home = gql`
     $PERMISSION_MANAGE_PRODUCTS: Boolean!
     $PERMISSION_MANAGE_ORDERS: Boolean!
   ) {
-    salesToday: ordersTotal(period: TODAY, channel: $channel)
-      @include(if: $PERMISSION_MANAGE_ORDERS) {
+    salesToday: ordersTotal(period: TODAY, channel: $channel) @include(if: $PERMISSION_MANAGE_ORDERS) {
       gross {
         amount
         currency
       }
     }
-    ordersToday: orders(filter: { created: $datePeriod }, channel: $channel)
+    ordersToday: orders(filter: { created: $datePeriod }, channel: $channel) @include(if: $PERMISSION_MANAGE_ORDERS) {
+      totalCount
+    }
+    ordersToFulfill: orders(filter: { status: READY_TO_FULFILL }, channel: $channel)
       @include(if: $PERMISSION_MANAGE_ORDERS) {
       totalCount
     }
-    ordersToFulfill: orders(
-      filter: { status: READY_TO_FULFILL }
-      channel: $channel
-    ) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    ordersToCapture: orders(filter: { status: READY_TO_CAPTURE }, channel: $channel)
+      @include(if: $PERMISSION_MANAGE_ORDERS) {
       totalCount
     }
-    ordersToCapture: orders(
-      filter: { status: READY_TO_CAPTURE }
-      channel: $channel
-    ) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    productsOutOfStock: products(filter: { stockAvailability: OUT_OF_STOCK }, channel: $channel) {
       totalCount
     }
-    productsOutOfStock: products(
-      filter: { stockAvailability: OUT_OF_STOCK }
-      channel: $channel
-    ) {
-      totalCount
-    }
-    productTopToday: reportProductSales(
-      period: TODAY
-      first: 5
-      channel: $channel
-    ) @include(if: $PERMISSION_MANAGE_PRODUCTS) {
+    productTopToday: reportProductSales(period: TODAY, first: 5, channel: $channel)
+      @include(if: $PERMISSION_MANAGE_PRODUCTS) {
       edges {
         node {
           id
@@ -67,8 +55,7 @@ export const home = gql`
         }
       }
     }
-    activities: homepageEvents(last: 10)
-      @include(if: $PERMISSION_MANAGE_ORDERS) {
+    activities: homepageEvents(last: 10) @include(if: $PERMISSION_MANAGE_ORDERS) {
       edges {
         node {
           amount

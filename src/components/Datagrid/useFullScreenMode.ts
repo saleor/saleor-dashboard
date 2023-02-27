@@ -1,8 +1,8 @@
-import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
-import { useEffect, useState } from "react";
+import { usePreventHistoryBack } from '@dashboard/hooks/usePreventHistoryBack';
+import { useEffect, useState } from 'react';
 
-import { useDelayedState } from "./useDelayedState";
-import { usePressEscKey } from "./usePressEscKey";
+import { useDelayedState } from './useDelayedState';
+import { usePressEscKey } from './usePressEscKey';
 
 export const useFullScreenMode = () => {
   const { enable, disable } = usePreventHistoryBack(document.body, {
@@ -22,7 +22,7 @@ export const useFullScreenMode = () => {
   };
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
+    document.body.style.overflow = open ? 'hidden' : '';
   }, [open]);
 
   return {

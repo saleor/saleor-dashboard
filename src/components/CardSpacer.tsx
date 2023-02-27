@@ -1,16 +1,16 @@
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
 
 const useStyles = makeStyles(
   theme => ({
     spacer: {
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down('sm')]: {
         marginTop: theme.spacing(2),
       },
       marginTop: theme.spacing(4),
     },
   }),
-  { name: "CardSpacer" },
+  { name: 'CardSpacer' },
 );
 
 interface CardSpacerProps {
@@ -24,5 +24,5 @@ export const CardSpacer: React.FC<CardSpacerProps> = props => {
 
   return <div className={classes.spacer}>{children}</div>;
 };
-CardSpacer.displayName = "CardSpacer";
+CardSpacer.displayName = 'CardSpacer';
 export default CardSpacer;

@@ -1,19 +1,19 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import { InternalLink } from "@dashboard/components/InternalLink";
-import { CategoryDetailsQuery } from "@dashboard/graphql";
-import { productAddUrl, productListUrl } from "@dashboard/products/urls";
-import { Card } from "@material-ui/core";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
+import { Button } from '@dashboard/components/Button';
+import CardTitle from '@dashboard/components/CardTitle';
+import { InternalLink } from '@dashboard/components/InternalLink';
+import { CategoryDetailsQuery } from '@dashboard/graphql';
+import { productAddUrl, productListUrl } from '@dashboard/products/urls';
+import { Card } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { ListActions, PageListProps, RelayToFlat } from "../../../types";
-import CategoryProductList from "../CategoryProductList";
-import { useStyles } from "./styles";
+import { ListActions, PageListProps, RelayToFlat } from '../../../types';
+import CategoryProductList from '../CategoryProductList';
+import { useStyles } from './styles';
 
 interface CategoryProductsProps extends PageListProps, ListActions {
-  products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
+  products: RelayToFlat<CategoryDetailsQuery['category']['products']>;
   categoryName: string;
   categoryId: string;
 }
@@ -37,9 +37,9 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
       <CardTitle
         title={intl.formatMessage(
           {
-            id: "+43JV5",
-            defaultMessage: "Products in {categoryName}",
-            description: "header",
+            id: '+43JV5',
+            defaultMessage: 'Products in {categoryName}',
+            description: 'header',
           },
           { categoryName },
         )}
@@ -51,24 +51,12 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
               })}
             >
               <Button variant="tertiary" data-test-id="view-products">
-                <FormattedMessage
-                  id="z8jo8h"
-                  defaultMessage="View products"
-                  description="button"
-                />
+                <FormattedMessage id="z8jo8h" defaultMessage="View products" description="button" />
               </Button>
             </InternalLink>
             <HorizontalSpacer />
-            <Button
-              variant="tertiary"
-              href={productAddUrl()}
-              data-test-id="add-products"
-            >
-              <FormattedMessage
-                id="x/pIZ9"
-                defaultMessage="Add product"
-                description="button"
-              />
+            <Button variant="tertiary" href={productAddUrl()} data-test-id="add-products">
+              <FormattedMessage id="x/pIZ9" defaultMessage="Add product" description="button" />
             </Button>
           </div>
         }
@@ -86,5 +74,5 @@ export const CategoryProducts: React.FC<CategoryProductsProps> = ({
   );
 };
 
-CategoryProducts.displayName = "CategoryProducts";
+CategoryProducts.displayName = 'CategoryProducts';
 export default CategoryProducts;

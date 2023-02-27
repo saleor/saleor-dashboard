@@ -1,2 +1,2 @@
-export { default } from "./ProductVariantPrice";
-export * from "./ProductVariantPrice";
+export { default } from './ProductVariantPrice';
+export * from './ProductVariantPrice';

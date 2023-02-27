@@ -1,2 +1,2 @@
-export { default } from "./PermissionGroupList";
-export * from "./PermissionGroupList";
+export { default } from './PermissionGroupList';
+export * from './PermissionGroupList';

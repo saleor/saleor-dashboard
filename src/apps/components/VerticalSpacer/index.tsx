@@ -1,2 +1,2 @@
-export * from "./VerticalSpacer";
-export { default } from "./VerticalSpacer";
+export * from './VerticalSpacer';
+export { default } from './VerticalSpacer';

@@ -1,20 +1,14 @@
-import { usePageTranslationsQuery } from "@dashboard/graphql";
-import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
-import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
-import {
-  languageEntityUrl,
-  TranslatableEntities,
-} from "@dashboard/translations/urls";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
+import { usePageTranslationsQuery } from '@dashboard/graphql';
+import usePaginator, { PaginatorContext } from '@dashboard/hooks/usePaginator';
+import TranslationsEntitiesList from '@dashboard/translations/components/TranslationsEntitiesList';
+import { languageEntityUrl, TranslatableEntities } from '@dashboard/translations/urls';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import React from 'react';
 
-import { TranslationsEntityListProps } from "./types";
-import { sumCompleted } from "./utils";
+import { TranslationsEntityListProps } from './types';
+import { sumCompleted } from './utils';
 
-const TranslationsPageList: React.FC<TranslationsEntityListProps> = ({
-  params,
-  variables,
-}) => {
+const TranslationsPageList: React.FC<TranslationsEntityListProps> = ({ params, variables }) => {
   const { data, loading } = usePageTranslationsQuery({
     displayLoader: true,
     variables,
@@ -32,7 +26,7 @@ const TranslationsPageList: React.FC<TranslationsEntityListProps> = ({
         disabled={loading}
         entities={mapEdgesToItems(data?.translations)?.map(
           node =>
-            node.__typename === "PageTranslatableContent" && {
+            node.__typename === 'PageTranslatableContent' && {
               completion: {
                 current: sumCompleted([
                   node.translation?.content,
@@ -46,9 +40,7 @@ const TranslationsPageList: React.FC<TranslationsEntityListProps> = ({
               name: node?.page.title,
             },
         )}
-        getRowHref={id =>
-          languageEntityUrl(variables.language, TranslatableEntities.pages, id)
-        }
+        getRowHref={id => languageEntityUrl(variables.language, TranslatableEntities.pages, id)}
       />
     </PaginatorContext.Provider>
   );

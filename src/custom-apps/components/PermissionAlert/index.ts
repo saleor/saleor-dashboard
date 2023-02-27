@@ -1,2 +1,2 @@
-export * from "./PermissionAlert";
-export { default } from "./PermissionAlert";
+export * from './PermissionAlert';
+export { default } from './PermissionAlert';

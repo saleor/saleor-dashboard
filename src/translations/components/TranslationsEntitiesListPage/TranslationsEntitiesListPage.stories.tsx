@@ -1,21 +1,19 @@
-import { pageListProps, searchPageProps } from "@dashboard/fixtures";
-import { LanguageCodeEnum } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { pageListProps, searchPageProps } from '@dashboard/fixtures';
+import { LanguageCodeEnum } from '@dashboard/graphql';
+import Decorator from '@dashboard/storybook/Decorator';
+import { PaginatorContextDecorator } from '@dashboard/storybook/PaginatorContextDecorator';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import TranslationsEntitiesList from "../TranslationsEntitiesList";
-import TranslationsEntitiesListPage, {
-  TranslationsEntitiesListPageProps,
-} from "./TranslationsEntitiesListPage";
+import TranslationsEntitiesList from '../TranslationsEntitiesList';
+import TranslationsEntitiesListPage, { TranslationsEntitiesListPageProps } from './TranslationsEntitiesListPage';
 
 const props: TranslationsEntitiesListPageProps = {
   ...pageListProps.default,
   ...searchPageProps,
   children: null,
   filters: {
-    current: "products",
+    current: 'products',
     onCategoriesTabClick: () => undefined,
     onCollectionsTabClick: () => undefined,
     onPagesTabClick: () => undefined,
@@ -27,32 +25,32 @@ const props: TranslationsEntitiesListPageProps = {
     onMenuItemsTabClick: () => undefined,
   },
   language: {
-    __typename: "LanguageDisplay",
+    __typename: 'LanguageDisplay',
     code: LanguageCodeEnum.EN,
-    language: "English",
+    language: 'English',
   },
 };
 
-storiesOf("Translations / Entity list", module)
+storiesOf('Translations / Entity list', module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
-  .add("default", () => (
+  .add('default', () => (
     <TranslationsEntitiesListPage {...props}>
       <TranslationsEntitiesList
         disabled={false}
         entities={[
           {
             completion: { current: 1, max: 3 },
-            id: "1",
-            name: "White Hoodie",
+            id: '1',
+            name: 'White Hoodie',
           },
           {
             completion: { current: 2, max: 3 },
-            id: "1",
-            name: "Brown Supreme Hoodie",
+            id: '1',
+            name: 'Brown Supreme Hoodie',
           },
         ]}
-        getRowHref={() => ""}
+        getRowHref={() => ''}
       />
     </TranslationsEntitiesListPage>
   ));

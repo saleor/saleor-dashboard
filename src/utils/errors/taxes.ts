@@ -2,14 +2,10 @@ import {
   TaxClassCreateErrorFragment,
   TaxClassDeleteErrorFragment,
   TaxClassUpdateErrorFragment,
-} from "@dashboard/graphql";
-import { IntlShape } from "react-intl";
+} from '@dashboard/graphql';
+import { IntlShape } from 'react-intl';
 
-import {
-  CommonError,
-  CommonErrorCode,
-  getCommonFormFieldErrorMessage,
-} from "./common";
+import { CommonError, CommonErrorCode, getCommonFormFieldErrorMessage } from './common';
 
 export type TaxClassError =
   | TaxClassUpdateErrorFragment
@@ -17,10 +13,7 @@ export type TaxClassError =
   | TaxClassDeleteErrorFragment
   | CommonError<CommonErrorCode>;
 
-function getTaxesErrorMessage(
-  err: Omit<TaxClassError, "__typename"> | undefined,
-  intl: IntlShape,
-): string | undefined {
+function getTaxesErrorMessage(err: Omit<TaxClassError, '__typename'> | undefined, intl: IntlShape): string | undefined {
   return getCommonFormFieldErrorMessage(err, intl);
 }
 

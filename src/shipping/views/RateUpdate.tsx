@@ -1,11 +1,8 @@
-import {
-  createShippingChannelsFromRate,
-  createSortedShippingChannels,
-} from "@dashboard/channels/utils";
-import { Button } from "@dashboard/components/Button";
-import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
-import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from "@dashboard/config";
+import { createShippingChannelsFromRate, createSortedShippingChannels } from '@dashboard/channels/utils';
+import { Button } from '@dashboard/components/Button';
+import ChannelsAvailabilityDialog from '@dashboard/components/ChannelsAvailabilityDialog';
+import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { DEFAULT_INITIAL_SEARCH_DATA, PAGINATE_BY } from '@dashboard/config';
 import {
   PostalCodeRuleInclusionTypeEnum,
   ShippingMethodTypeEnum,
@@ -17,48 +14,42 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useUpdateShippingRateMutation,
-} from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
-import useChannels from "@dashboard/hooks/useChannels";
-import useLocalPaginator, {
-  useLocalPaginationState,
-} from "@dashboard/hooks/useLocalPaginator";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { PaginatorContext } from "@dashboard/hooks/usePaginator";
-import { commonMessages, sectionNames } from "@dashboard/intl";
-import { getById, getByUnmatchingId } from "@dashboard/misc";
-import useProductSearch from "@dashboard/searches/useProductSearch";
-import DeleteShippingRateDialog from "@dashboard/shipping/components/DeleteShippingRateDialog";
-import ShippingMethodProductsAddDialog from "@dashboard/shipping/components/ShippingMethodProductsAddDialog";
-import ShippingZonePostalCodeRangeDialog from "@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog";
-import ShippingZoneRatesPage from "@dashboard/shipping/components/ShippingZoneRatesPage";
-import { ShippingZoneRateUpdateFormData } from "@dashboard/shipping/components/ShippingZoneRatesPage/types";
-import UnassignDialog from "@dashboard/shipping/components/UnassignDialog";
+} from '@dashboard/graphql';
+import useBulkActions from '@dashboard/hooks/useBulkActions';
+import useChannels from '@dashboard/hooks/useChannels';
+import useLocalPaginator, { useLocalPaginationState } from '@dashboard/hooks/useLocalPaginator';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { PaginatorContext } from '@dashboard/hooks/usePaginator';
+import { commonMessages, sectionNames } from '@dashboard/intl';
+import { getById, getByUnmatchingId } from '@dashboard/misc';
+import useProductSearch from '@dashboard/searches/useProductSearch';
+import DeleteShippingRateDialog from '@dashboard/shipping/components/DeleteShippingRateDialog';
+import ShippingMethodProductsAddDialog from '@dashboard/shipping/components/ShippingMethodProductsAddDialog';
+import ShippingZonePostalCodeRangeDialog from '@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog';
+import ShippingZoneRatesPage from '@dashboard/shipping/components/ShippingZoneRatesPage';
+import { ShippingZoneRateUpdateFormData } from '@dashboard/shipping/components/ShippingZoneRatesPage/types';
+import UnassignDialog from '@dashboard/shipping/components/UnassignDialog';
 import {
   getShippingMethodChannelVariables,
   getUpdateShippingPriceRateVariables,
   getUpdateShippingWeightRateVariables,
-} from "@dashboard/shipping/handlers";
+} from '@dashboard/shipping/handlers';
 import {
   shippingRateEditUrl,
   ShippingRateUrlDialog,
   ShippingRateUrlQueryParams,
   shippingZoneUrl,
-} from "@dashboard/shipping/urls";
-import postalCodesReducer from "@dashboard/shipping/views/reducer";
-import {
-  filterPostalCodes,
-  getPostalCodeRuleByMinMax,
-  getRuleObject,
-} from "@dashboard/shipping/views/utils";
-import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
-import { MinMax } from "@dashboard/types";
-import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/shipping/urls';
+import postalCodesReducer from '@dashboard/shipping/views/reducer';
+import { filterPostalCodes, getPostalCodeRuleByMinMax, getRuleObject } from '@dashboard/shipping/views/utils';
+import { useTaxClassFetchMore } from '@dashboard/taxes/utils/useTaxClassFetchMore';
+import { MinMax } from '@dashboard/types';
+import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
+import createMetadataUpdateHandler from '@dashboard/utils/handlers/metadataUpdateHandler';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const FORM_ID = Symbol();
 
@@ -68,18 +59,12 @@ export interface RateUpdateProps {
   params: ShippingRateUrlQueryParams;
 }
 
-export const RateUpdate: React.FC<RateUpdateProps> = ({
-  id,
-  rateId,
-  params,
-}) => {
+export const RateUpdate: React.FC<RateUpdateProps> = ({ id, rateId, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
 
-  const [paginationState, setPaginationState] = useLocalPaginationState(
-    PAGINATE_BY,
-  );
+  const [paginationState, setPaginationState] = useLocalPaginationState(PAGINATE_BY);
   const paginate = useLocalPaginator(setPaginationState);
 
   const { data, loading, refetch } = useShippingZoneQuery({
@@ -97,29 +82,20 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     result: productsSearchOpts,
   } = useProductSearch({ variables: DEFAULT_INITIAL_SEARCH_DATA });
 
-  const [openModal, closeModal] = createDialogActionHandlers<
-    ShippingRateUrlDialog,
-    ShippingRateUrlQueryParams
-  >(navigate, params => shippingRateEditUrl(id, rateId, params), params);
-
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    [],
+  const [openModal, closeModal] = createDialogActionHandlers<ShippingRateUrlDialog, ShippingRateUrlQueryParams>(
+    navigate,
+    params => shippingRateEditUrl(id, rateId, params),
+    params,
   );
 
-  const { pageInfo, ...paginationValues } = paginate(
-    rate?.excludedProducts.pageInfo,
-    paginationState,
-  );
+  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions([]);
 
-  const [
-    updateShippingMethodChannelListing,
-    updateShippingMethodChannelListingOpts,
-  ] = useShippingMethodChannelListingUpdateMutation({});
+  const { pageInfo, ...paginationValues } = paginate(rate?.excludedProducts.pageInfo, paginationState);
 
-  const [
-    unassignProduct,
-    unassignProductOpts,
-  ] = useShippingPriceRemoveProductFromExcludeMutation({
+  const [updateShippingMethodChannelListing, updateShippingMethodChannelListingOpts] =
+    useShippingMethodChannelListingUpdateMutation({});
+
+  const [unassignProduct, unassignProductOpts] = useShippingPriceRemoveProductFromExcludeMutation({
     onCompleted: data => {
       if (data.shippingPriceRemoveProductFromExclude.errors.length === 0) {
         handleSuccess();
@@ -129,10 +105,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     },
   });
 
-  const [
-    assignProduct,
-    assignProductOpts,
-  ] = useShippingPriceExcludeProductMutation({
+  const [assignProduct, assignProductOpts] = useShippingPriceExcludeProductMutation({
     onCompleted: data => {
       if (data.shippingPriceExcludeProducts.errors.length === 0) {
         handleSuccess();
@@ -141,9 +114,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
       }
     },
   });
-  const shippingChannels = createShippingChannelsFromRate(
-    rate?.channelListings,
-  );
+  const shippingChannels = createShippingChannelsFromRate(rate?.channelListings);
   const allChannels = createSortedShippingChannels(channelsData);
 
   const {
@@ -157,30 +128,19 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels,
-  } = useChannels(
-    shippingChannels,
-    params?.action,
-    { closeModal, openModal },
-    { formId: FORM_ID },
-  );
+  } = useChannels(shippingChannels, params?.action, { closeModal, openModal }, { formId: FORM_ID });
 
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
 
-  const [
-    updateShippingRate,
-    updateShippingRateOpts,
-  ] = useUpdateShippingRateMutation({});
+  const [updateShippingRate, updateShippingRateOpts] = useUpdateShippingRateMutation({});
 
   const handleSuccess = () => {
     notify({
-      status: "success",
+      status: 'success',
       text: intl.formatMessage(commonMessages.savedChanges),
     });
   };
-  const [
-    deleteShippingRate,
-    deleteShippingRateOpts,
-  ] = useDeleteShippingRateMutation({
+  const [deleteShippingRate, deleteShippingRateOpts] = useDeleteShippingRateMutation({
     onCompleted: data => {
       if (data.shippingPriceDelete.errors.length === 0) {
         handleSuccess();
@@ -201,18 +161,13 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
   });
 
   const postalCodeRulesLoaded =
-    !loading &&
-    !state.postalCodeRules?.length &&
-    !state.codesToDelete?.length &&
-    rate?.postalCodeRules?.length;
+    !loading && !state.postalCodeRules?.length && !state.codesToDelete?.length && rate?.postalCodeRules?.length;
 
   if (postalCodeRulesLoaded) {
     dispatch({ postalCodeRules: rate.postalCodeRules });
   }
 
-  const onPostalCodeInclusionChange = (
-    inclusion: PostalCodeRuleInclusionTypeEnum,
-  ) => {
+  const onPostalCodeInclusionChange = (inclusion: PostalCodeRuleInclusionTypeEnum) => {
     dispatch({
       codesToDelete: rate.postalCodeRules.map(code => code.id),
       havePostalCodesChanged: true,
@@ -221,21 +176,13 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
     });
   };
 
-  const updateData = async (
-    formData: ShippingZoneRateUpdateFormData,
-  ): Promise<unknown[]> => {
+  const updateData = async (formData: ShippingZoneRateUpdateFormData): Promise<unknown[]> => {
     const getUpdateVariables =
       rate!.type === ShippingMethodTypeEnum.PRICE
         ? getUpdateShippingPriceRateVariables
         : getUpdateShippingWeightRateVariables;
     const response = await updateShippingRate({
-      variables: getUpdateVariables(
-        formData,
-        id,
-        rateId,
-        state.postalCodeRules,
-        state.codesToDelete,
-      ),
+      variables: getUpdateVariables(formData, id, rateId, state.postalCodeRules, state.codesToDelete),
     });
 
     dispatch({ codesToDelete: [] });
@@ -282,9 +229,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
       dispatch({ originalCodes: rate.postalCodeRules });
     }
 
-    if (
-      state.postalCodeRules.filter(getPostalCodeRuleByMinMax(rule)).length > 0
-    ) {
+    if (state.postalCodeRules.filter(getPostalCodeRuleByMinMax(rule)).length > 0) {
       closeModal();
       return;
     }
@@ -302,9 +247,7 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
       dispatch({
         codesToDelete: [...state.codesToDelete, code.id],
         havePostalCodesChanged: true,
-        postalCodeRules: state.postalCodeRules.filter(
-          getByUnmatchingId(code.id),
-        ),
+        postalCodeRules: state.postalCodeRules.filter(getByUnmatchingId(code.id)),
       });
     } else {
       dispatch({
@@ -325,8 +268,8 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
-            id: "EM730i",
-            defaultMessage: "Manage Channel Availability",
+            id: 'EM730i',
+            defaultMessage: 'Manage Channel Availability',
           })}
           selected={channelListElements.length}
           confirmButtonState="default"
@@ -344,11 +287,11 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
             },
           })
         }
-        open={params.action === "remove"}
+        open={params.action === 'remove'}
         name={rate?.name}
       />
       <UnassignDialog
-        open={params.action === "unassign-product" && !!listElements.length}
+        open={params.action === 'unassign-product' && !!listElements.length}
         idsLength={listElements.length}
         confirmButtonState={unassignProductOpts.status}
         closeModal={closeModal}
@@ -357,11 +300,9 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
       <ShippingMethodProductsAddDialog
         confirmButtonState={assignProductOpts.status}
         loading={productsSearchOpts.loading}
-        open={params.action === "assign-product"}
+        open={params.action === 'assign-product'}
         hasMore={productsSearchOpts.data?.search?.pageInfo.hasNextPage}
-        products={mapEdgesToItems(productsSearchOpts?.data?.search)?.filter(
-          suggestedProduct => suggestedProduct.id,
-        )}
+        products={mapEdgesToItems(productsSearchOpts?.data?.search)?.filter(suggestedProduct => suggestedProduct.id)}
         onClose={closeModal}
         onFetch={productsSearch}
         onFetchMore={loadMore}
@@ -373,32 +314,29 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
         shippingChannels={currentChannels}
         disabled={
           loading ||
-          updateShippingRateOpts?.status === "loading" ||
-          updateShippingMethodChannelListingOpts?.status === "loading" ||
-          unassignProductOpts?.status === "loading" ||
-          assignProductOpts?.status === "loading"
+          updateShippingRateOpts?.status === 'loading' ||
+          updateShippingMethodChannelListingOpts?.status === 'loading' ||
+          unassignProductOpts?.status === 'loading' ||
+          assignProductOpts?.status === 'loading'
         }
         saveButtonBarState={updateShippingRateOpts.status}
-        onDelete={() => openModal("remove")}
+        onDelete={() => openModal('remove')}
         backHref={shippingZoneUrl(id)}
         onSubmit={handleSubmit}
         rate={rate}
         errors={updateShippingRateOpts.data?.shippingPriceUpdate.errors || []}
-        channelErrors={
-          updateShippingMethodChannelListingOpts?.data
-            ?.shippingMethodChannelListingUpdate?.errors || []
-        }
+        channelErrors={updateShippingMethodChannelListingOpts?.data?.shippingMethodChannelListingUpdate?.errors || []}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
         onProductUnassign={handleProductUnassign}
-        onProductAssign={() => openModal("assign-product")}
+        onProductAssign={() => openModal('assign-product')}
         variant={rate?.type}
         isChecked={isSelected}
         selected={listElements.length}
         toggle={toggle}
         toggleAll={toggleAll}
         toolbar={
-          <Button onClick={() => openModal("unassign-product")}>
+          <Button onClick={() => openModal('unassign-product')}>
             <FormattedMessage
               id="YdeHZX"
               defaultMessage="Unassign"
@@ -407,17 +345,17 @@ export const RateUpdate: React.FC<RateUpdateProps> = ({
           </Button>
         }
         onPostalCodeInclusionChange={onPostalCodeInclusionChange}
-        onPostalCodeAssign={() => openModal("add-range")}
+        onPostalCodeAssign={() => openModal('add-range')}
         onPostalCodeUnassign={onPostalCodeUnassign}
         postalCodeRules={state.postalCodeRules}
         taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}
       />
       <ShippingZonePostalCodeRangeDialog
-        confirmButtonState={"default"}
+        confirmButtonState={'default'}
         onClose={closeModal}
         onSubmit={code => onPostalCodeAssign(code)}
-        open={params.action === "add-range"}
+        open={params.action === 'add-range'}
       />
     </PaginatorContext.Provider>
   );

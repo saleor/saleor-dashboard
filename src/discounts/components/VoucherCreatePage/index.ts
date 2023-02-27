@@ -1,2 +1,2 @@
-export { default } from "./VoucherCreatePage";
-export * from "./VoucherCreatePage";
+export { default } from './VoucherCreatePage';
+export * from './VoucherCreatePage';

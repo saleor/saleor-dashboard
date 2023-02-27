@@ -1,2 +1,2 @@
-export { default } from "./OrderCustomerAddressesEditDialog";
-export * from "./OrderCustomerAddressesEditDialog";
+export { default } from './OrderCustomerAddressesEditDialog';
+export * from './OrderCustomerAddressesEditDialog';

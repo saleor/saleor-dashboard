@@ -1,2 +1,2 @@
-export { default } from "./WarehouseDetailsPage";
-export * from "./WarehouseDetailsPage";
+export { default } from './WarehouseDetailsPage';
+export * from './WarehouseDetailsPage';

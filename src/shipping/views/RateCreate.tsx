@@ -1,33 +1,26 @@
-import { createSortedShippingChannels } from "@dashboard/channels/utils";
-import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
-import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  PostalCodeRuleInclusionTypeEnum,
-  useShippingZoneChannelsQuery,
-} from "@dashboard/graphql";
-import useChannels from "@dashboard/hooks/useChannels";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
-import ShippingZonePostalCodeRangeDialog from "@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog";
-import ShippingZoneRatesCreatePage from "@dashboard/shipping/components/ShippingZoneRatesCreatePage";
-import { useShippingRateCreator } from "@dashboard/shipping/handlers";
+import { createSortedShippingChannels } from '@dashboard/channels/utils';
+import ChannelsAvailabilityDialog from '@dashboard/components/ChannelsAvailabilityDialog';
+import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { PostalCodeRuleInclusionTypeEnum, useShippingZoneChannelsQuery } from '@dashboard/graphql';
+import useChannels from '@dashboard/hooks/useChannels';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { sectionNames } from '@dashboard/intl';
+import ShippingZonePostalCodeRangeDialog from '@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog';
+import ShippingZoneRatesCreatePage from '@dashboard/shipping/components/ShippingZoneRatesCreatePage';
+import { useShippingRateCreator } from '@dashboard/shipping/handlers';
 import {
   shippingRateCreateUrl,
   ShippingRateCreateUrlDialog,
   ShippingRateCreateUrlQueryParams,
   shippingZoneUrl,
-} from "@dashboard/shipping/urls";
-import postalCodesReducer from "@dashboard/shipping/views/reducer";
-import {
-  filterPostalCodes,
-  getPostalCodeRuleByMinMax,
-  getRuleObject,
-} from "@dashboard/shipping/views/utils";
-import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
-import { MinMax } from "@dashboard/types";
-import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/shipping/urls';
+import postalCodesReducer from '@dashboard/shipping/views/reducer';
+import { filterPostalCodes, getPostalCodeRuleByMinMax, getRuleObject } from '@dashboard/shipping/views/utils';
+import { useTaxClassFetchMore } from '@dashboard/taxes/utils/useTaxClassFetchMore';
+import { MinMax } from '@dashboard/types';
+import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
 const FORM_ID = Symbol();
 
@@ -45,19 +38,14 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
     ShippingRateCreateUrlQueryParams
   >(navigate, params => shippingRateCreateUrl(id, params), params);
 
-  const {
-    data: shippingZoneData,
-    loading: channelsLoading,
-  } = useShippingZoneChannelsQuery({
+  const { data: shippingZoneData, loading: channelsLoading } = useShippingZoneChannelsQuery({
     displayLoader: true,
     variables: { id },
   });
 
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
 
-  const allChannels = createSortedShippingChannels(
-    shippingZoneData?.shippingZone?.channels,
-  );
+  const allChannels = createSortedShippingChannels(shippingZoneData?.shippingZone?.channels);
 
   const {
     channelListElements,
@@ -70,12 +58,7 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels,
-  } = useChannels(
-    allChannels,
-    params?.action,
-    { closeModal, openModal },
-    { formId: FORM_ID },
-  );
+  } = useChannels(allChannels, params?.action, { closeModal, openModal }, { formId: FORM_ID });
 
   const [state, dispatch] = React.useReducer(postalCodesReducer, {
     codesToDelete: [],
@@ -85,12 +68,7 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
     postalCodeRules: [],
   });
 
-  const {
-    channelErrors,
-    createShippingRate,
-    errors,
-    status,
-  } = useShippingRateCreator(
+  const { channelErrors, createShippingRate, errors, status } = useShippingRateCreator(
     id,
     params.type,
     state.postalCodeRules,
@@ -98,9 +76,7 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
   );
 
   const onPostalCodeAssign = (rule: MinMax) => {
-    if (
-      state.postalCodeRules.filter(getPostalCodeRuleByMinMax(rule)).length > 0
-    ) {
+    if (state.postalCodeRules.filter(getPostalCodeRuleByMinMax(rule)).length > 0) {
       closeModal();
       return;
     }
@@ -113,9 +89,7 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
     closeModal();
   };
 
-  const onPostalCodeInclusionChange = (
-    inclusion: PostalCodeRuleInclusionTypeEnum,
-  ) => {
+  const onPostalCodeInclusionChange = (inclusion: PostalCodeRuleInclusionTypeEnum) => {
     dispatch({
       inclusionType: inclusion,
       postalCodeRules: [],
@@ -140,8 +114,8 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
-            id: "EM730i",
-            defaultMessage: "Manage Channel Availability",
+            id: 'EM730i',
+            defaultMessage: 'Manage Channel Availability',
           })}
           confirmButtonState="default"
           selected={channelListElements.length}
@@ -154,7 +128,7 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
         formId={FORM_ID}
         allChannelsCount={allChannels?.length}
         shippingChannels={currentChannels}
-        disabled={channelsLoading || status === "loading"}
+        disabled={channelsLoading || status === 'loading'}
         saveButtonBarState={status}
         onSubmit={createShippingRate}
         backUrl={shippingZoneUrl(id)}
@@ -163,7 +137,7 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
         postalCodes={state.postalCodeRules}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
-        onPostalCodeAssign={() => openModal("add-range")}
+        onPostalCodeAssign={() => openModal('add-range')}
         onPostalCodeUnassign={onPostalCodeUnassign}
         onPostalCodeInclusionChange={onPostalCodeInclusionChange}
         variant={params.type}
@@ -174,7 +148,7 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPostalCodeAssign}
-        open={params.action === "add-range"}
+        open={params.action === 'add-range'}
       />
     </>
   );

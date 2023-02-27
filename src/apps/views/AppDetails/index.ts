@@ -1,2 +1,2 @@
-export * from "./AppDetails";
-export { default } from "./AppDetails";
+export * from './AppDetails';
+export { default } from './AppDetails';

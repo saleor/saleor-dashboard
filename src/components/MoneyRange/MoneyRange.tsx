@@ -1,8 +1,8 @@
-import React from "react";
-import { useIntl } from "react-intl";
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { LocaleConsumer } from "../Locale";
-import { formatMoney, formatMoneyRange, IMoney } from "../Money";
+import { LocaleConsumer } from '../Locale';
+import { formatMoney, formatMoneyRange, IMoney } from '../Money';
 
 export interface MoneyRangeProps {
   from?: IMoney;
@@ -16,16 +16,14 @@ export const MoneyRange: React.FC<MoneyRangeProps> = ({ from, to }) => {
     <LocaleConsumer>
       {({ locale }) => {
         if (from && to) {
-          return from.amount === to.amount
-            ? formatMoney(from, locale)
-            : formatMoneyRange(from, to, locale);
+          return from.amount === to.amount ? formatMoney(from, locale) : formatMoneyRange(from, to, locale);
         }
         if (from && !to) {
           return intl.formatMessage(
             {
-              id: "lW5uJO",
-              defaultMessage: "from {money}",
-              description: "money",
+              id: 'lW5uJO',
+              defaultMessage: 'from {money}',
+              description: 'money',
             },
             {
               money: formatMoney(from, locale),
@@ -35,20 +33,20 @@ export const MoneyRange: React.FC<MoneyRangeProps> = ({ from, to }) => {
         if (!from && to) {
           return intl.formatMessage(
             {
-              id: "hptDxW",
-              defaultMessage: "to {money}",
-              description: "money",
+              id: 'hptDxW',
+              defaultMessage: 'to {money}',
+              description: 'money',
             },
             {
               money: formatMoney(to, locale),
             },
           );
         }
-        return "-";
+        return '-';
       }}
     </LocaleConsumer>
   );
 };
 
-MoneyRange.displayName = "MoneyRange";
+MoneyRange.displayName = 'MoneyRange';
 export default MoneyRange;

@@ -1,2 +1,2 @@
-export * from "./OrderCustomerNote";
-export { default } from "./OrderCustomerNote";
+export * from './OrderCustomerNote';
+export { default } from './OrderCustomerNote';

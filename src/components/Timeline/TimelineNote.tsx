@@ -1,13 +1,13 @@
-import { useUser } from "@dashboard/auth";
-import { UserFragment } from "@dashboard/graphql";
-import { Avatar, Card, CardContent, Typography } from "@material-ui/core";
-import * as colors from "@material-ui/core/colors";
-import PersonIcon from "@material-ui/icons/Person";
-import { makeStyles } from "@saleor/macaw-ui";
-import CRC from "crc-32";
-import React from "react";
+import { useUser } from '@dashboard/auth';
+import { UserFragment } from '@dashboard/graphql';
+import { Avatar, Card, CardContent, Typography } from '@material-ui/core';
+import * as colors from '@material-ui/core/colors';
+import PersonIcon from '@material-ui/icons/Person';
+import { makeStyles } from '@saleor/macaw-ui';
+import CRC from 'crc-32';
+import React from 'react';
 
-import { DateTime } from "../Date";
+import { DateTime } from '../Date';
 
 const palette = [
   colors.amber,
@@ -32,35 +32,35 @@ const useStyles = makeStyles(
   theme => ({
     avatar: {
       left: -40,
-      position: "absolute",
+      position: 'absolute',
       top: 0,
     },
     card: {
       marginBottom: theme.spacing(3),
       marginLeft: theme.spacing(3),
-      position: "relative",
-      boxShadow: "none",
+      position: 'relative',
+      boxShadow: 'none',
     },
     cardContent: {
-      "&:last-child": {
+      '&:last-child': {
         padding: 16,
       },
     },
     root: {
-      position: "relative",
+      position: 'relative',
     },
     title: {
-      "& p": {
-        fontSize: "14px",
+      '& p': {
+        fontSize: '14px',
       },
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "space-between",
+      alignItems: 'center',
+      display: 'flex',
+      justifyContent: 'space-between',
       marginBottom: theme.spacing(),
       paddingLeft: theme.spacing(3),
     },
   }),
-  { name: "TimelineNote" },
+  { name: 'TimelineNote' },
 );
 
 interface TimelineNoteProps {
@@ -79,8 +79,8 @@ interface NoteMessageProps {
 
 const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
   <>
-    {message.split("\n").map(string => {
-      if (string === "") {
+    {message.split('\n').map(string => {
+      if (string === '') {
         return <br />;
       }
 
@@ -103,10 +103,7 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
     return user?.email;
   };
 
-  const getBackgroundColor = (
-    user: TimelineNoteProps["user"],
-    currentUser: UserFragment,
-  ) => {
+  const getBackgroundColor = (user: TimelineNoteProps['user'], currentUser: UserFragment) => {
     if (user.email === currentUser.email) {
       return colors.deepPurple[500];
     }
@@ -117,10 +114,7 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
   return (
     <div className={classes.root}>
       {user && (
-        <Avatar
-          className={classes.avatar}
-          style={{ background: getBackgroundColor(user, currentUser) }}
-        >
+        <Avatar className={classes.avatar} style={{ background: getBackgroundColor(user, currentUser) }}>
           <PersonIcon />
         </Avatar>
       )}
@@ -138,5 +132,5 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
     </div>
   );
 };
-TimelineNote.displayName = "TimelineNote";
+TimelineNote.displayName = 'TimelineNote';
 export default TimelineNote;

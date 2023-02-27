@@ -1,22 +1,19 @@
-import {
-  ChannelData,
-  ChannelPriceAndPreorderArgs,
-} from "@dashboard/channels/utils";
-import CardTitle from "@dashboard/components/CardTitle";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import { DateTimeTimezoneField } from "@dashboard/components/DateTimeTimezoneField";
-import FormSpacer from "@dashboard/components/FormSpacer";
-import Hr from "@dashboard/components/Hr";
-import Link from "@dashboard/components/Link";
-import PreviewPill from "@dashboard/components/PreviewPill";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { ProductErrorFragment, WarehouseFragment } from "@dashboard/graphql";
-import { FormChange, FormErrors } from "@dashboard/hooks/useForm";
-import { FormsetAtomicData, FormsetChange } from "@dashboard/hooks/useFormset";
-import { sectionNames } from "@dashboard/intl";
-import { renderCollection } from "@dashboard/misc";
-import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
+import { ChannelData, ChannelPriceAndPreorderArgs } from '@dashboard/channels/utils';
+import CardTitle from '@dashboard/components/CardTitle';
+import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
+import { DateTimeTimezoneField } from '@dashboard/components/DateTimeTimezoneField';
+import FormSpacer from '@dashboard/components/FormSpacer';
+import Hr from '@dashboard/components/Hr';
+import Link from '@dashboard/components/Link';
+import PreviewPill from '@dashboard/components/PreviewPill';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { ProductErrorFragment, WarehouseFragment } from '@dashboard/graphql';
+import { FormChange, FormErrors } from '@dashboard/hooks/useForm';
+import { FormsetAtomicData, FormsetChange } from '@dashboard/hooks/useFormset';
+import { sectionNames } from '@dashboard/intl';
+import { renderCollection } from '@dashboard/misc';
+import { getFormErrors, getProductErrorMessage } from '@dashboard/utils/errors';
+import createNonNegativeValueChangeHandler from '@dashboard/utils/handlers/nonNegativeValueChangeHandler';
 import {
   Card,
   CardContent,
@@ -31,24 +28,21 @@ import {
   TableHead,
   TextField,
   Typography,
-} from "@material-ui/core";
-import { Button, DeleteIcon, IconButton, PlusIcon } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@material-ui/core';
+import { Button, DeleteIcon, IconButton, PlusIcon } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { ProductCreateData } from "../ProductCreatePage";
-import { ProductVariantCreateData } from "../ProductVariantCreatePage/form";
-import { ProductVariantUpdateData } from "../ProductVariantPage/form";
-import { messages } from "./messages";
-import { useStyles } from "./styles";
+import { ProductCreateData } from '../ProductCreatePage';
+import { ProductVariantCreateData } from '../ProductVariantCreatePage/form';
+import { ProductVariantUpdateData } from '../ProductVariantPage/form';
+import { messages } from './messages';
+import { useStyles } from './styles';
 
 export interface ProductStockFormsetData {
   quantityAllocated: number;
 }
-export type ProductStockInput = FormsetAtomicData<
-  ProductStockFormsetData,
-  string
->;
+export type ProductStockInput = FormsetAtomicData<ProductStockFormsetData, string>;
 export interface ProductStockFormData {
   sku: string;
   trackInventory: boolean;
@@ -71,10 +65,7 @@ export interface ProductStocksProps {
   hasVariants: boolean;
   stocks: ProductStockInput[];
   warehouses: WarehouseFragment[];
-  onVariantChannelListingChange?: (
-    id: string,
-    data: Partial<ChannelPriceAndPreorderArgs>,
-  ) => void;
+  onVariantChannelListingChange?: (id: string, data: Partial<ChannelPriceAndPreorderArgs>) => void;
   onChange: FormsetChange;
   onChangePreorderEndDate: FormChange;
   onEndPreorderTrigger?: () => void;
@@ -109,14 +100,10 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   const [isExpanded, setExpansionState] = React.useState(false);
   const unitsLeft = parseInt(data.globalThreshold, 10) - data.globalSoldUnits;
 
-  const warehousesToAssign =
-    warehouses?.filter(
-      warehouse => !stocks.some(stock => stock.id === warehouse.id),
-    ) || [];
-  const formErrors = getFormErrors(["sku"], errors);
+  const warehousesToAssign = warehouses?.filter(warehouse => !stocks.some(stock => stock.id === warehouse.id)) || [];
+  const formErrors = getFormErrors(['sku'], errors);
 
-  const onThresholdChange =
-    createNonNegativeValueChangeHandler(onFormDataChange);
+  const onThresholdChange = createNonNegativeValueChangeHandler(onFormDataChange);
 
   const handleWarehouseStockAdd = (warehouseId: string) => {
     onWarehouseStockAdd(warehouseId);
@@ -134,7 +121,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
     onFormDataChange(e);
     onFormDataChange({
       target: {
-        name: "variantName",
+        name: 'variantName',
         value: e.target.value,
       },
     });
@@ -160,11 +147,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
         <ControlledCheckbox
           checked={data.isPreorder}
           name="isPreorder"
-          onChange={
-            onEndPreorderTrigger && data.isPreorder
-              ? onEndPreorderTrigger
-              : onFormDataChange
-          }
+          onChange={onEndPreorderTrigger && data.isPreorder ? onEndPreorderTrigger : onFormDataChange}
           disabled={disabled}
           label={
             <>
@@ -214,18 +197,13 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           )}
 
           {!warehouses?.length && (
-            <Typography
-              color="textSecondary"
-              className={classes.noWarehouseInfo}
-            >
+            <Typography color="textSecondary" className={classes.noWarehouseInfo}>
               {hasVariants ? (
                 <>
                   <FormattedMessage
                     {...messages.configureWarehouseForVariant}
                     values={{
-                      a: chunks => (
-                        <Link onClick={onWarehouseConfigure}>{chunks}</Link>
-                      ),
+                      a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
                     }}
                   />
                 </>
@@ -234,9 +212,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                   <FormattedMessage
                     {...messages.configureWarehouseForProduct}
                     values={{
-                      a: chunks => (
-                        <Link onClick={onWarehouseConfigure}>{chunks}</Link>
-                      ),
+                      a: chunks => <Link onClick={onWarehouseConfigure}>{chunks}</Link>,
                     }}
                   />
                 </>
@@ -245,132 +221,113 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           )}
         </CardContent>
       )}
-      {productVariantChannelListings?.length > 0 &&
-        warehouses?.length > 0 &&
-        !data.isPreorder && (
-          <Table>
-            <colgroup>
-              <col className={classes.colName} />
-              <col className={classes.colQuantity} />
-              <col className={classes.colQuantity} />
-            </colgroup>
-            <TableHead>
-              <TableRowLink>
-                <TableCell className={classes.colName}>
-                  <FormattedMessage {...messages.warehouseName} />
-                </TableCell>
-                <TableCell className={classes.colQuantity}>
-                  <FormattedMessage {...messages.allocated} />
-                </TableCell>
-                <TableCell className={classes.colQuantity}>
-                  <FormattedMessage {...messages.quantity} />
-                </TableCell>
-                <TableCell className={classes.colAction} />
-              </TableRowLink>
-            </TableHead>
-            <TableBody>
-              {renderCollection(stocks, (stock, index) => {
-                const handleQuantityChange =
-                  createNonNegativeValueChangeHandler(event =>
-                    onChange(stock.id, event.target.value),
-                  );
+      {productVariantChannelListings?.length > 0 && warehouses?.length > 0 && !data.isPreorder && (
+        <Table>
+          <colgroup>
+            <col className={classes.colName} />
+            <col className={classes.colQuantity} />
+            <col className={classes.colQuantity} />
+          </colgroup>
+          <TableHead>
+            <TableRowLink>
+              <TableCell className={classes.colName}>
+                <FormattedMessage {...messages.warehouseName} />
+              </TableCell>
+              <TableCell className={classes.colQuantity}>
+                <FormattedMessage {...messages.allocated} />
+              </TableCell>
+              <TableCell className={classes.colQuantity}>
+                <FormattedMessage {...messages.quantity} />
+              </TableCell>
+              <TableCell className={classes.colAction} />
+            </TableRowLink>
+          </TableHead>
+          <TableBody>
+            {renderCollection(stocks, (stock, index) => {
+              const handleQuantityChange = createNonNegativeValueChangeHandler(event =>
+                onChange(stock.id, event.target.value),
+              );
 
-                return (
-                  <TableRowLink key={stock.id}>
-                    <TableCell className={classes.colName}>
-                      {stock.label}
-                    </TableCell>
-                    <TableCell className={classes.colQuantity}>
-                      {stock.data?.quantityAllocated || 0}
-                    </TableCell>
-                    <TableCell className={classes.colQuantity}>
-                      <TextField
-                        data-test-id="stock-input"
-                        disabled={disabled}
-                        fullWidth
-                        inputProps={{
-                          className: classes.input,
-                          min: 0,
-                          type: "number",
-                        }}
-                        onChange={handleQuantityChange}
-                        value={stock.value}
-                        inputRef={input =>
-                          stocks.length === index + 1 &&
-                          handleStockInputFocus(input)
-                        }
-                      />
-                    </TableCell>
-                    <TableCell className={classes.colAction}>
+              return (
+                <TableRowLink key={stock.id}>
+                  <TableCell className={classes.colName}>{stock.label}</TableCell>
+                  <TableCell className={classes.colQuantity}>{stock.data?.quantityAllocated || 0}</TableCell>
+                  <TableCell className={classes.colQuantity}>
+                    <TextField
+                      data-test-id="stock-input"
+                      disabled={disabled}
+                      fullWidth
+                      inputProps={{
+                        className: classes.input,
+                        min: 0,
+                        type: 'number',
+                      }}
+                      onChange={handleQuantityChange}
+                      value={stock.value}
+                      inputRef={input => stocks.length === index + 1 && handleStockInputFocus(input)}
+                    />
+                  </TableCell>
+                  <TableCell className={classes.colAction}>
+                    <IconButton variant="secondary" color="primary" onClick={() => onWarehouseStockDelete(stock.id)}>
+                      <DeleteIcon />
+                    </IconButton>
+                  </TableCell>
+                </TableRowLink>
+              );
+            })}
+            {warehousesToAssign.length > 0 && (
+              <ClickAwayListener onClickAway={() => setExpansionState(false)}>
+                <TableRowLink className={classes.addRow} onClick={() => setExpansionState(!isExpanded)}>
+                  <TableCell colSpan={3} className={classes.actionableText}>
+                    <Typography variant="body2">
+                      <FormattedMessage {...messages.assignWarehouse} />
+                    </Typography>
+                  </TableCell>
+                  <TableCell className={classes.colAction}>
+                    <div ref={anchor}>
                       <IconButton
-                        variant="secondary"
+                        data-test-id="add-warehouse"
                         color="primary"
-                        onClick={() => onWarehouseStockDelete(stock.id)}
+                        variant="secondary"
+                        className={classes.actionableText}
                       >
-                        <DeleteIcon />
+                        <PlusIcon />
                       </IconButton>
-                    </TableCell>
-                  </TableRowLink>
-                );
-              })}
-              {warehousesToAssign.length > 0 && (
-                <ClickAwayListener onClickAway={() => setExpansionState(false)}>
-                  <TableRowLink
-                    className={classes.addRow}
-                    onClick={() => setExpansionState(!isExpanded)}
-                  >
-                    <TableCell colSpan={3} className={classes.actionableText}>
-                      <Typography variant="body2">
-                        <FormattedMessage {...messages.assignWarehouse} />
-                      </Typography>
-                    </TableCell>
-                    <TableCell className={classes.colAction}>
-                      <div ref={anchor}>
-                        <IconButton
-                          data-test-id="add-warehouse"
-                          color="primary"
-                          variant="secondary"
-                          className={classes.actionableText}
-                        >
-                          <PlusIcon />
-                        </IconButton>
-                        <Popper
-                          className={classes.popper}
-                          open={isExpanded}
-                          anchorEl={anchor.current}
-                          transition
-                          placement="top-end"
-                        >
-                          {({ TransitionProps }) => (
-                            <Grow
-                              {...TransitionProps}
-                              style={{
-                                transformOrigin: "right top",
-                              }}
-                            >
-                              <Paper className={classes.paper} elevation={8}>
-                                {warehousesToAssign.map(warehouse => (
-                                  <MenuItem
-                                    className={classes.menuItem}
-                                    onClick={() =>
-                                      handleWarehouseStockAdd(warehouse.id)
-                                    }
-                                  >
-                                    {warehouse.name}
-                                  </MenuItem>
-                                ))}
-                              </Paper>
-                            </Grow>
-                          )}
-                        </Popper>
-                      </div>
-                    </TableCell>
-                  </TableRowLink>
-                </ClickAwayListener>
-              )}
-            </TableBody>
-          </Table>
-        )}
+                      <Popper
+                        className={classes.popper}
+                        open={isExpanded}
+                        anchorEl={anchor.current}
+                        transition
+                        placement="top-end"
+                      >
+                        {({ TransitionProps }) => (
+                          <Grow
+                            {...TransitionProps}
+                            style={{
+                              transformOrigin: 'right top',
+                            }}
+                          >
+                            <Paper className={classes.paper} elevation={8}>
+                              {warehousesToAssign.map(warehouse => (
+                                <MenuItem
+                                  className={classes.menuItem}
+                                  onClick={() => handleWarehouseStockAdd(warehouse.id)}
+                                >
+                                  {warehouse.name}
+                                </MenuItem>
+                              ))}
+                            </Paper>
+                          </Grow>
+                        )}
+                      </Popper>
+                    </div>
+                  </TableCell>
+                </TableRowLink>
+              </ClickAwayListener>
+            )}
+          </TableBody>
+        </Table>
+      )}
       {data.isPreorder && (
         <CardContent>
           <Typography variant="caption" className={classes.caption}>
@@ -380,7 +337,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           {data.hasPreorderEndDate && (
             <div className={classes.dateTimeInputs}>
               <DateTimeTimezoneField
-                name={"preorderEndDateTime"}
+                name={'preorderEndDateTime'}
                 disabled={disabled}
                 futureDatesOnly
                 fullWidth={false}
@@ -389,7 +346,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 onChange={event =>
                   onChangePreorderEndDate({
                     target: {
-                      name: "preorderEndDateTime",
+                      name: 'preorderEndDateTime',
                       value: event,
                     },
                   })
@@ -404,7 +361,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             onClick={() =>
               onFormDataChange({
                 target: {
-                  name: "hasPreorderEndDate",
+                  name: 'hasPreorderEndDate',
                   value: !data.hasPreorderEndDate,
                 },
               })
@@ -424,20 +381,15 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               }}
               disabled={disabled}
               fullWidth
-              helperText={intl.formatMessage(
-                messages.preorderTresholdDescription,
-              )}
+              helperText={intl.formatMessage(messages.preorderTresholdDescription)}
               label={intl.formatMessage(messages.preorderTresholdLabel)}
               name="globalThreshold"
               onChange={onThresholdChange}
-              value={data.globalThreshold ?? ""}
+              value={data.globalThreshold ?? ''}
               className={classes.thresholdInput}
             />
             {productVariantChannelListings?.length > 0 && (
-              <Typography
-                variant="caption"
-                className={classes.preorderItemsLeftCount}
-              >
+              <Typography variant="caption" className={classes.preorderItemsLeftCount}>
                 {data.globalThreshold
                   ? intl.formatMessage(messages.preorderTresholdUnitsLeft, {
                       unitsLeft,
@@ -477,12 +429,8 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
 
               return (
                 <TableRowLink key={listing.id}>
-                  <TableCell className={classes.colName}>
-                    {listing.name}
-                  </TableCell>
-                  <TableCell className={classes.colQuantity}>
-                    {listing?.unitsSold || 0}
-                  </TableCell>
+                  <TableCell className={classes.colName}>{listing.name}</TableCell>
+                  <TableCell className={classes.colQuantity}>{listing?.unitsSold || 0}</TableCell>
                   <TableCell className={classes.colQuantity}>
                     <TextField
                       name="channel-threshold"
@@ -491,22 +439,17 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                       inputProps={{
                         className: classes.input,
                         min: 0,
-                        type: "number",
+                        type: 'number',
                       }}
-                      placeholder={intl.formatMessage(
-                        messages.preorderTresholdUnlimited,
-                      )}
+                      placeholder={intl.formatMessage(messages.preorderTresholdUnlimited)}
                       onChange={e => {
                         onVariantChannelListingChange(listing.id, {
                           costPrice: listing.costPrice,
                           price: listing.price,
-                          preorderThreshold:
-                            e.target.value === ""
-                              ? undefined
-                              : Number(e.target.value),
+                          preorderThreshold: e.target.value === '' ? undefined : Number(e.target.value),
                         });
                       }}
-                      value={listing?.preorderThreshold ?? ""}
+                      value={listing?.preorderThreshold ?? ''}
                     />
                   </TableCell>
                 </TableRowLink>
@@ -519,5 +462,5 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   );
 };
 
-ProductStocks.displayName = "ProductStocks";
+ProductStocks.displayName = 'ProductStocks';
 export default ProductStocks;

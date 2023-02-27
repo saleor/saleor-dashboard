@@ -59,8 +59,8 @@ import {
   WarehouseListDocument,
   WarehouseListQuery,
   WarehouseListQueryVariables,
-} from "@dashboard/graphql";
-import { DocumentNode } from "graphql";
+} from '@dashboard/graphql';
+import { DocumentNode } from 'graphql';
 
 const DefaultVariables = {
   first: 100,
@@ -127,61 +127,61 @@ export const DocumentMap: Record<string, Document> = {
   APP: {
     document: AppsListDocument,
     variables: DefaultVariables,
-    displayedAttribute: "name",
+    displayedAttribute: 'name',
   },
   ATTRIBUTE: {
     document: AttributeListDocument,
     variables: DefaultVariables,
-    displayedAttribute: "name",
+    displayedAttribute: 'name',
   },
   CATEGORY: {
     document: RootCategoriesDocument,
     variables: DefaultVariables,
-    collection: "categories",
-    displayedAttribute: "name",
+    collection: 'categories',
+    displayedAttribute: 'name',
   },
   GIFT_CARD: {
     document: GiftCardListDocument,
     variables: DefaultVariables,
-    displayedAttribute: "last4CodeChars",
+    displayedAttribute: 'last4CodeChars',
   },
   CHECKOUT: {
     document: CheckoutListDocument,
     variables: DefaultVariables,
-    displayedAttribute: "id",
+    displayedAttribute: 'id',
   },
   COLLECTION: {
     document: CollectionListDocument,
     variables: DefaultVariables,
-    displayedAttribute: "name",
+    displayedAttribute: 'name',
   },
   CUSTOMER: {
     document: ListCustomersDocument,
     variables: DefaultVariables,
-    displayedAttribute: "email",
+    displayedAttribute: 'email',
     // TODO inverted name
   },
 
   INVOICE: {
     document: OrderListDocument,
     variables: DefaultVariables,
-    collection: "orders",
-    displayedAttribute: "number",
+    collection: 'orders',
+    displayedAttribute: 'number',
   },
   MENU: {
     document: MenuListDocument,
     variables: DefaultVariables,
-    displayedAttribute: "name",
+    displayedAttribute: 'name',
   },
   ORDER: {
     document: OrderListDocument,
     variables: DefaultVariables,
-    displayedAttribute: "number",
+    displayedAttribute: 'number',
   },
   PAGE: {
     document: PageListDocument,
     variables: DefaultVariables,
-    displayedAttribute: "title",
+    displayedAttribute: 'title',
   },
   PRODUCT: {
     document: ProductListDocument,
@@ -190,39 +190,39 @@ export const DocumentMap: Record<string, Document> = {
       hasChannel: true,
       hasSelectedAttributes: true,
     },
-    displayedAttribute: "name",
+    displayedAttribute: 'name',
   },
   SALE: {
     document: SaleListDocument,
     variables: DefaultVariables,
-    displayedAttribute: "name",
+    displayedAttribute: 'name',
   },
   SHIPPING_PRICE: {
     document: ShippingZonesDocument,
     variables: DefaultVariables,
-    collection: "shippingZones",
-    displayedAttribute: "name",
+    collection: 'shippingZones',
+    displayedAttribute: 'name',
   },
   SHIPPING_ZONE: {
     document: ShippingZonesDocument,
     variables: DefaultVariables,
-    displayedAttribute: "name",
+    displayedAttribute: 'name',
   },
   STAFF: {
     document: StaffListDocument,
     variables: DefaultVariables,
-    collection: "staffUsers",
-    displayedAttribute: "email",
+    collection: 'staffUsers',
+    displayedAttribute: 'email',
   },
   VOUCHER: {
     document: VoucherListDocument,
     variables: DefaultVariables,
-    displayedAttribute: "code",
+    displayedAttribute: 'code',
   },
   WAREHOUSE: {
     document: WarehouseListDocument,
     variables: DefaultVariables,
-    displayedAttribute: "name",
+    displayedAttribute: 'name',
   },
 };
 

@@ -1,39 +1,33 @@
-import {
-  AttributeListUrlSortField,
-  attributeUrl,
-} from "@dashboard/attributes/urls";
-import Checkbox from "@dashboard/components/Checkbox";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
-import TableCellHeader from "@dashboard/components/TableCellHeader";
-import TableHead from "@dashboard/components/TableHead";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { AttributeFragment } from "@dashboard/graphql";
-import { translateBoolean } from "@dashboard/intl";
-import { renderCollection } from "@dashboard/misc";
-import { ListActions, ListProps, SortPage } from "@dashboard/types";
-import { getArrowDirection } from "@dashboard/utils/sort";
-import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { AttributeListUrlSortField, attributeUrl } from '@dashboard/attributes/urls';
+import Checkbox from '@dashboard/components/Checkbox';
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Skeleton from '@dashboard/components/Skeleton';
+import TableCellHeader from '@dashboard/components/TableCellHeader';
+import TableHead from '@dashboard/components/TableHead';
+import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { AttributeFragment } from '@dashboard/graphql';
+import { translateBoolean } from '@dashboard/intl';
+import { renderCollection } from '@dashboard/misc';
+import { ListActions, ListProps, SortPage } from '@dashboard/types';
+import { getArrowDirection } from '@dashboard/utils/sort';
+import { TableBody, TableCell, TableFooter } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-export interface AttributeListProps
-  extends ListProps,
-    ListActions,
-    SortPage<AttributeListUrlSortField> {
+export interface AttributeListProps extends ListProps, ListActions, SortPage<AttributeListUrlSortField> {
   attributes: AttributeFragment[];
 }
 
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up('lg')]: {
       colFaceted: {
         width: 180,
       },
       colName: {
-        width: "auto",
+        width: 'auto',
       },
       colSearchable: {
         width: 180,
@@ -46,23 +40,23 @@ const useStyles = makeStyles(
       },
     },
     colFaceted: {
-      textAlign: "center",
+      textAlign: 'center',
     },
     colName: {},
     colSearchable: {
-      textAlign: "center",
+      textAlign: 'center',
     },
     colSlug: {
       paddingLeft: 0,
     },
     colVisible: {
-      textAlign: "center",
+      textAlign: 'center',
     },
     link: {
-      cursor: "pointer",
+      cursor: 'pointer',
     },
   }),
-  { name: "AttributeList" },
+  { name: 'AttributeList' },
 );
 
 const numberOfColumns = 6;
@@ -93,11 +87,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
       >
         <TableCellHeader
           className={classes.colSlug}
-          direction={
-            sort.sort === AttributeListUrlSortField.slug
-              ? getArrowDirection(!!sort.asc)
-              : undefined
-          }
+          direction={sort.sort === AttributeListUrlSortField.slug ? getArrowDirection(!!sort.asc) : undefined}
           arrowPosition="right"
           onClick={() => onSort(AttributeListUrlSortField.slug)}
         >
@@ -105,42 +95,22 @@ const AttributeList: React.FC<AttributeListProps> = ({
         </TableCellHeader>
         <TableCellHeader
           className={classes.colName}
-          direction={
-            sort.sort === AttributeListUrlSortField.name
-              ? getArrowDirection(!!sort.asc)
-              : undefined
-          }
+          direction={sort.sort === AttributeListUrlSortField.name ? getArrowDirection(!!sort.asc) : undefined}
           onClick={() => onSort(AttributeListUrlSortField.name)}
         >
-          <FormattedMessage
-            id="HjUoHK"
-            defaultMessage="Default Label"
-            description="attribute's label'"
-          />
+          <FormattedMessage id="HjUoHK" defaultMessage="Default Label" description="attribute's label'" />
         </TableCellHeader>
         <TableCellHeader
           className={classes.colVisible}
-          direction={
-            sort.sort === AttributeListUrlSortField.visible
-              ? getArrowDirection(!!sort.asc)
-              : undefined
-          }
+          direction={sort.sort === AttributeListUrlSortField.visible ? getArrowDirection(!!sort.asc) : undefined}
           textAlign="center"
           onClick={() => onSort(AttributeListUrlSortField.visible)}
         >
-          <FormattedMessage
-            id="k6WDZl"
-            defaultMessage="Visible"
-            description="attribute is visible"
-          />
+          <FormattedMessage id="k6WDZl" defaultMessage="Visible" description="attribute is visible" />
         </TableCellHeader>
         <TableCellHeader
           className={classes.colSearchable}
-          direction={
-            sort.sort === AttributeListUrlSortField.searchable
-              ? getArrowDirection(!!sort.asc)
-              : undefined
-          }
+          direction={sort.sort === AttributeListUrlSortField.searchable ? getArrowDirection(!!sort.asc) : undefined}
           textAlign="center"
           onClick={() => onSort(AttributeListUrlSortField.searchable)}
         >
@@ -153,9 +123,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
         <TableCellHeader
           className={classes.colFaceted}
           direction={
-            sort.sort === AttributeListUrlSortField.useInFacetedSearch
-              ? getArrowDirection(!!sort.asc)
-              : undefined
+            sort.sort === AttributeListUrlSortField.useInFacetedSearch ? getArrowDirection(!!sort.asc) : undefined
           }
           textAlign="center"
           onClick={() => onSort(AttributeListUrlSortField.useInFacetedSearch)}
@@ -182,7 +150,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
               <TableRowLink
                 selected={isSelected}
                 hover={!!attribute}
-                key={attribute ? attribute.id : "skeleton"}
+                key={attribute ? attribute.id : 'skeleton'}
                 href={attribute && attributeUrl(attribute.id)}
                 className={classes.link}
                 data-test-id={`id-${attribute?.id}`}
@@ -192,7 +160,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
                     checked={isSelected}
                     disabled={disabled}
                     disableClickPropagation
-                    onChange={() => toggle(attribute?.id ?? "")}
+                    onChange={() => toggle(attribute?.id ?? '')}
                   />
                 </TableCell>
                 <TableCell className={classes.colSlug} data-test-id="slug">
@@ -206,35 +174,21 @@ const AttributeList: React.FC<AttributeListProps> = ({
                   data-test-id="visible"
                   data-test-visible={attribute?.visibleInStorefront}
                 >
-                  {attribute ? (
-                    translateBoolean(attribute.visibleInStorefront, intl)
-                  ) : (
-                    <Skeleton />
-                  )}
+                  {attribute ? translateBoolean(attribute.visibleInStorefront, intl) : <Skeleton />}
                 </TableCell>
                 <TableCell
                   className={classes.colSearchable}
                   data-test-id="searchable"
                   data-test-searchable={attribute?.filterableInDashboard}
                 >
-                  {attribute ? (
-                    translateBoolean(attribute.filterableInDashboard, intl)
-                  ) : (
-                    <Skeleton />
-                  )}
+                  {attribute ? translateBoolean(attribute.filterableInDashboard, intl) : <Skeleton />}
                 </TableCell>
                 <TableCell
                   className={classes.colFaceted}
                   data-test-id="use-in-faceted-search"
-                  data-test-use-in-faceted-search={
-                    attribute?.filterableInStorefront
-                  }
+                  data-test-use-in-faceted-search={attribute?.filterableInStorefront}
                 >
-                  {attribute ? (
-                    translateBoolean(attribute.filterableInStorefront, intl)
-                  ) : (
-                    <Skeleton />
-                  )}
+                  {attribute ? translateBoolean(attribute.filterableInStorefront, intl) : <Skeleton />}
                 </TableCell>
               </TableRowLink>
             );
@@ -242,10 +196,7 @@ const AttributeList: React.FC<AttributeListProps> = ({
           () => (
             <TableRowLink>
               <TableCell colSpan={numberOfColumns}>
-                <FormattedMessage
-                  id="ztQgD8"
-                  defaultMessage="No attributes found"
-                />
+                <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
               </TableCell>
             </TableRowLink>
           ),
@@ -254,5 +205,5 @@ const AttributeList: React.FC<AttributeListProps> = ({
     </ResponsiveTable>
   );
 };
-AttributeList.displayName = "AttributeList";
+AttributeList.displayName = 'AttributeList';
 export default AttributeList;

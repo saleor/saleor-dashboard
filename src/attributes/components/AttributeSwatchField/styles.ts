@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
@@ -6,9 +6,9 @@ export const useStyles = makeStyles(
       marginTop: theme.spacing(3),
       width: 216,
       height: 216,
-      backgroundSize: "cover",
-      backgroundPosition: "center",
+      backgroundSize: 'cover',
+      backgroundPosition: 'center',
     },
   }),
-  { name: "AttributeSwatchField" },
+  { name: 'AttributeSwatchField' },
 );

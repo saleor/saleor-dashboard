@@ -1,12 +1,12 @@
-import { EditIcon, ThemeProvider } from "@saleor/macaw-ui";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import React from "react";
+import { EditIcon, ThemeProvider } from '@saleor/macaw-ui';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
 
-import { RowActions } from "./RowActions";
+import { RowActions } from './RowActions';
 
-describe("RowActions", () => {
-  it("should render empty when menu items count equal to 0", () => {
+describe('RowActions', () => {
+  it('should render empty when menu items count equal to 0', () => {
     // Arrange & Act
     const { container } = render(
       <ThemeProvider>
@@ -18,14 +18,14 @@ describe("RowActions", () => {
     expect(container.firstChild).toBeNull();
   });
 
-  it("should render icon button when only one menu item and has icon props", () => {
+  it('should render icon button when only one menu item and has icon props', () => {
     // Arrange & Act
     render(
       <ThemeProvider>
         <RowActions
           menuItems={[
             {
-              label: "Edit",
+              label: 'Edit',
               onSelect: jest.fn(),
               Icon: <EditIcon data-test-id="edit-icon" />,
             },
@@ -36,18 +36,18 @@ describe("RowActions", () => {
     );
 
     // Assert
-    expect(screen.getByTestId("row-action-button")).toBeInTheDocument();
-    expect(screen.getByTestId("edit-icon")).toBeInTheDocument();
+    expect(screen.getByTestId('row-action-button')).toBeInTheDocument();
+    expect(screen.getByTestId('edit-icon')).toBeInTheDocument();
   });
 
-  it("should render card meu when only one menu item and has no icon props", () => {
+  it('should render card meu when only one menu item and has no icon props', () => {
     // Arrange & Act
     render(
       <ThemeProvider>
         <RowActions
           menuItems={[
             {
-              label: "Edit",
+              label: 'Edit',
               onSelect: jest.fn(),
             },
           ]}
@@ -57,29 +57,29 @@ describe("RowActions", () => {
     );
 
     // Assert
-    expect(screen.getByTestId("show-more-button")).toBeInTheDocument();
+    expect(screen.getByTestId('show-more-button')).toBeInTheDocument();
   });
 
-  it("should render card meu with multiple items", async () => {
+  it('should render card meu with multiple items', async () => {
     // Arrange
     render(
       <ThemeProvider>
         <RowActions
           menuItems={[
             {
-              label: "Edit",
+              label: 'Edit',
               onSelect: jest.fn(),
-              testId: "edit-button",
+              testId: 'edit-button',
             },
             {
-              label: "Delete",
+              label: 'Delete',
               onSelect: jest.fn(),
-              testId: "delete-button",
+              testId: 'delete-button',
             },
             {
-              label: "Upgrade",
+              label: 'Upgrade',
               onSelect: jest.fn(),
-              testId: "upgrade-button",
+              testId: 'upgrade-button',
             },
           ]}
           disabled={false}
@@ -89,16 +89,16 @@ describe("RowActions", () => {
 
     // Act
 
-    await userEvent.click(screen.getByTestId("show-more-button"));
+    await userEvent.click(screen.getByTestId('show-more-button'));
 
     // Assert
-    expect(screen.getByTestId("show-more-button")).toBeInTheDocument();
-    expect(screen.getByTestId("edit-button")).toBeInTheDocument();
-    expect(screen.getByTestId("delete-button")).toBeInTheDocument();
-    expect(screen.getByTestId("upgrade-button")).toBeInTheDocument();
+    expect(screen.getByTestId('show-more-button')).toBeInTheDocument();
+    expect(screen.getByTestId('edit-button')).toBeInTheDocument();
+    expect(screen.getByTestId('delete-button')).toBeInTheDocument();
+    expect(screen.getByTestId('upgrade-button')).toBeInTheDocument();
   });
 
-  it("should fire callback when click on icon button when single menu item with icon props", async () => {
+  it('should fire callback when click on icon button when single menu item with icon props', async () => {
     // Arrange
     const onSelectCallback = jest.fn();
 
@@ -107,7 +107,7 @@ describe("RowActions", () => {
         <RowActions
           menuItems={[
             {
-              label: "Edit",
+              label: 'Edit',
               onSelect: onSelectCallback,
               Icon: <EditIcon />,
             },
@@ -118,13 +118,13 @@ describe("RowActions", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("row-action-button"));
+    await userEvent.click(screen.getByTestId('row-action-button'));
 
     // Assert
     expect(onSelectCallback).toHaveBeenCalled();
   });
 
-  it("should fire callback when click on icon button when multiple menu item", async () => {
+  it('should fire callback when click on icon button when multiple menu item', async () => {
     // Arrange
     const onIconClickCallback = jest.fn();
 
@@ -133,16 +133,16 @@ describe("RowActions", () => {
         <RowActions
           menuItems={[
             {
-              label: "Edit",
+              label: 'Edit',
               onSelect: onIconClickCallback,
-              testId: "edit-button",
+              testId: 'edit-button',
             },
             {
-              label: "Delete",
+              label: 'Delete',
               onSelect: jest.fn(),
             },
             {
-              label: "Upgrade",
+              label: 'Upgrade',
               onSelect: jest.fn(),
             },
           ]}
@@ -152,25 +152,25 @@ describe("RowActions", () => {
     );
 
     // Act
-    await userEvent.click(screen.getByTestId("show-more-button"));
-    await userEvent.click(screen.getByTestId("edit-button"));
+    await userEvent.click(screen.getByTestId('show-more-button'));
+    await userEvent.click(screen.getByTestId('edit-button'));
 
     // Assert
     expect(onIconClickCallback).toHaveBeenCalled();
   });
 
-  it("should disabled show more button when RowAction disabled", async () => {
+  it('should disabled show more button when RowAction disabled', async () => {
     // Arrange & Act
     render(
       <ThemeProvider>
         <RowActions
           menuItems={[
             {
-              label: "Edit",
+              label: 'Edit',
               onSelect: jest.fn(),
             },
             {
-              label: "Delete",
+              label: 'Delete',
               onSelect: jest.fn(),
             },
           ]}
@@ -180,17 +180,17 @@ describe("RowActions", () => {
     );
 
     // Assert
-    expect(screen.getByTestId("show-more-button")).toBeDisabled();
+    expect(screen.getByTestId('show-more-button')).toBeDisabled();
   });
 
-  it("should disabled row action button when RowAction disabled", async () => {
+  it('should disabled row action button when RowAction disabled', async () => {
     // Arrange & Act
     render(
       <ThemeProvider>
         <RowActions
           menuItems={[
             {
-              label: "Edit",
+              label: 'Edit',
               onSelect: jest.fn(),
               Icon: <EditIcon />,
             },
@@ -201,6 +201,6 @@ describe("RowActions", () => {
     );
 
     // Assert
-    expect(screen.getByTestId("row-action-button")).toBeDisabled();
+    expect(screen.getByTestId('row-action-button')).toBeDisabled();
   });
 });

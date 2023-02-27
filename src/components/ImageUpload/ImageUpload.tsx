@@ -1,12 +1,12 @@
-import { Typography } from "@material-ui/core";
-import { alpha } from "@material-ui/core/styles";
-import { ImageIcon, makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
-import clsx from "clsx";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import { Typography } from '@material-ui/core';
+import { alpha } from '@material-ui/core/styles';
+import { ImageIcon, makeStyles } from '@saleor/macaw-ui';
+import { vars } from '@saleor/macaw-ui/next';
+import clsx from 'clsx';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import Dropzone from "../Dropzone";
+import Dropzone from '../Dropzone';
 
 interface ImageUploadProps {
   children?: (props: { isDragActive: boolean }) => React.ReactNode;
@@ -26,37 +26,37 @@ const useStyles = makeStyles(
       color: theme.palette.primary.main,
     },
     fileField: {
-      display: "none",
+      display: 'none',
     },
     imageContainer: {
-      background: "#ffffff",
+      background: '#ffffff',
       border: `1px solid ${vars.colors.border.neutralPlain}`,
       borderRadius: theme.spacing(),
       height: 148,
-      justifySelf: "start",
-      overflow: "hidden",
+      justifySelf: 'start',
+      overflow: 'hidden',
       padding: theme.spacing(2),
-      position: "relative",
-      transition: theme.transitions.duration.standard + "s",
+      position: 'relative',
+      transition: theme.transitions.duration.standard + 's',
       width: 148,
     },
     photosIcon: {
       height: 32,
-      margin: "0 auto",
+      margin: '0 auto',
       width: 32,
     },
     photosIconContainer: {
       padding: theme.spacing(5, 0),
-      textAlign: "center",
+      textAlign: 'center',
     },
     uploadText: {
       color: theme.typography.body1.color,
       fontSize: 12,
       fontWeight: 600,
-      textTransform: "uppercase",
+      textTransform: 'uppercase',
     },
   }),
-  { name: "ImageUpload" },
+  { name: 'ImageUpload' },
 );
 
 export const ImageUpload: React.FC<ImageUploadProps> = props => {
@@ -90,18 +90,10 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
                   [iconContainerActiveClassName]: isDragActive,
                 })}
               >
-                <input
-                  {...getInputProps()}
-                  className={classes.fileField}
-                  accept="image/*"
-                />
+                <input {...getInputProps()} className={classes.fileField} accept="image/*" />
                 <ImageIcon className={classes.photosIcon} />
                 <Typography className={classes.uploadText}>
-                  <FormattedMessage
-                    id="NxeDbG"
-                    defaultMessage="Drop here to upload"
-                    description="image upload"
-                  />
+                  <FormattedMessage id="NxeDbG" defaultMessage="Drop here to upload" description="image upload" />
                 </Typography>
               </div>
             )}
@@ -112,5 +104,5 @@ export const ImageUpload: React.FC<ImageUploadProps> = props => {
     </Dropzone>
   );
 };
-ImageUpload.displayName = "ImageUpload";
+ImageUpload.displayName = 'ImageUpload';
 export default ImageUpload;

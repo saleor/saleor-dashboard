@@ -1,9 +1,9 @@
-import { useUser } from "@dashboard/auth";
-import { ChannelFragment, useBaseChannelsQuery } from "@dashboard/graphql";
-import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import { getById } from "@dashboard/misc";
-import { useSaleorConfig } from "@saleor/sdk";
-import React from "react";
+import { useUser } from '@dashboard/auth';
+import { ChannelFragment, useBaseChannelsQuery } from '@dashboard/graphql';
+import useLocalStorage from '@dashboard/hooks/useLocalStorage';
+import { getById } from '@dashboard/misc';
+import { useSaleorConfig } from '@saleor/sdk';
+import React from 'react';
 
 interface UseAppChannel {
   availableChannels: ChannelFragment[];
@@ -36,17 +36,14 @@ const isValidChannel = (channelId: string, channelList?: ChannelFragment[]) => {
 export const AppChannelProvider: React.FC = ({ children }) => {
   const { setChannel } = useSaleorConfig();
   const { authenticated, user } = useUser();
-  const [selectedChannel, setSelectedChannel] = useLocalStorage("channel", "");
+  const [selectedChannel, setSelectedChannel] = useLocalStorage('channel', '');
   const { data: channelData, refetch } = useBaseChannelsQuery({
     skip: !authenticated || !user,
   });
 
   const [isPickerActive, setPickerActive] = React.useState(false);
   React.useEffect(() => {
-    if (
-      !isValidChannel(selectedChannel, channelData?.channels) &&
-      channelData?.channels?.length > 0
-    ) {
+    if (!isValidChannel(selectedChannel, channelData?.channels) && channelData?.channels?.length > 0) {
       setSelectedChannel(channelData.channels[0].id);
     }
   }, [channelData]);
@@ -57,8 +54,7 @@ export const AppChannelProvider: React.FC = ({ children }) => {
 
   const availableChannels = channelData?.channels || [];
 
-  const channel =
-    channelData && (availableChannels.find(getById(selectedChannel)) || null);
+  const channel = channelData && (availableChannels.find(getById(selectedChannel)) || null);
 
   return (
     <AppChannelContext.Provider
@@ -76,7 +72,7 @@ export const AppChannelProvider: React.FC = ({ children }) => {
   );
 };
 
-AppChannelProvider.displayName = "AppChannelProvider";
+AppChannelProvider.displayName = 'AppChannelProvider';
 
 function useAppChannel(enablePicker = true): UseAppChannel {
   const { setPickerActive, ...data } = React.useContext(AppChannelContext);

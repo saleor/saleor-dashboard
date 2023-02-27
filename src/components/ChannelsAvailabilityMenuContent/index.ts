@@ -1,2 +1,2 @@
-export * from "./ChannelsAvailabilityMenuContent";
-export { default } from "./ChannelsAvailabilityMenuContent";
+export * from './ChannelsAvailabilityMenuContent';
+export { default } from './ChannelsAvailabilityMenuContent';

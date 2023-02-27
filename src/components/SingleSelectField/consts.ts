@@ -1,1 +1,1 @@
-export const singleSelectFieldItemHeight = "36";
+export const singleSelectFieldItemHeight = '36';

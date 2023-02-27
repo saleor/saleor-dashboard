@@ -1,16 +1,10 @@
-import { Button } from "@dashboard/components/Button";
-import { buttonMessages } from "@dashboard/intl";
-import { DialogProps } from "@dashboard/types";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import { Button } from '@dashboard/components/Button';
+import { buttonMessages } from '@dashboard/intl';
+import { DialogProps } from '@dashboard/types';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles(
   theme => ({
@@ -19,24 +13,17 @@ const useStyles = makeStyles(
     },
   }),
   {
-    name: "OrderCannotCancelOrderDialog",
+    name: 'OrderCannotCancelOrderDialog',
   },
 );
 
-const OrderCannotCancelOrderDialog: React.FC<DialogProps> = ({
-  open,
-  onClose,
-}) => {
+const OrderCannotCancelOrderDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   const classes = useStyles({});
 
   return (
     <Dialog onClose={onClose} open={open} maxWidth="sm">
       <DialogTitle disableTypography>
-        <FormattedMessage
-          id="NhQboB"
-          defaultMessage="Saleor couldn’t cancel order"
-          description="dialog header"
-        />
+        <FormattedMessage id="NhQboB" defaultMessage="Saleor couldn’t cancel order" description="dialog header" />
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -54,5 +41,5 @@ const OrderCannotCancelOrderDialog: React.FC<DialogProps> = ({
     </Dialog>
   );
 };
-OrderCannotCancelOrderDialog.displayName = "OrderCannotCancelOrderDialog";
+OrderCannotCancelOrderDialog.displayName = 'OrderCannotCancelOrderDialog';
 export default OrderCannotCancelOrderDialog;

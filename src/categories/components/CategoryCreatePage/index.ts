@@ -1,2 +1,2 @@
-export { default } from "./CategoryCreatePage";
-export * from "./CategoryCreatePage";
+export { default } from './CategoryCreatePage';
+export * from './CategoryCreatePage';

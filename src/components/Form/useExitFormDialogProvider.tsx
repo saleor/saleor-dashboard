@@ -1,9 +1,9 @@
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { useEffect, useRef, useState } from "react";
-import { useHistory } from "react-router";
-import useRouter from "use-react-router";
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import { useEffect, useRef, useState } from 'react';
+import { useHistory } from 'react-router';
+import useRouter from 'use-react-router';
 
-import { ExitFormDialogData, FormData, FormsData } from "./types";
+import { ExitFormDialogData, FormData, FormsData } from './types';
 
 const defaultValues = {
   isDirty: false,
@@ -66,10 +66,7 @@ export function useExitFormDialogProvider() {
 
   // Set either on generic form load or on every custom form data change
   // but doesn't cause re-renders
-  const setSubmitRef = <T extends () => SubmitPromise<any[]>>(
-    id: symbol,
-    submitFn: T,
-  ) => {
+  const setSubmitRef = <T extends () => SubmitPromise<any[]>>(id: symbol, submitFn: T) => {
     setFormData(id, { submitFn });
   };
 
@@ -88,8 +85,7 @@ export function useExitFormDialogProvider() {
 
   const setBlockNav = (value: boolean) => (blockNav.current = value);
 
-  const setDefaultNavAction = () =>
-    (navAction.current = defaultValues.navAction);
+  const setDefaultNavAction = () => (navAction.current = defaultValues.navAction);
 
   const setStateDefaultValues = () => {
     setIsSubmitting(defaultValues.isSubmitting);
@@ -101,12 +97,9 @@ export function useExitFormDialogProvider() {
   };
 
   const getFormsDataValuesArray = () =>
-    Object.getOwnPropertySymbols(formsData.current).map(
-      key => formsData.current[key],
-    );
+    Object.getOwnPropertySymbols(formsData.current).map(key => formsData.current[key]);
 
-  const hasAnyFormsDirty = () =>
-    getFormsDataValuesArray().some(({ isDirty }) => isDirty);
+  const hasAnyFormsDirty = () => getFormsDataValuesArray().some(({ isDirty }) => isDirty);
 
   const shouldBlockNav = () => {
     if (!enableExitDialog.current || !hasAnyFormsDirty()) {

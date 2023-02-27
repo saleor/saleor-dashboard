@@ -1,15 +1,9 @@
-import useForm from "@dashboard/hooks/useForm";
-import {
-  Card,
-  CardContent,
-  TableCell,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { TextFieldProps } from "@material-ui/core/TextField";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
+import useForm from '@dashboard/hooks/useForm';
+import { Card, CardContent, TableCell, TextField, Typography } from '@material-ui/core';
+import { TextFieldProps } from '@material-ui/core/TextField';
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
 
 const useStyles = makeStyles(
   theme => ({
@@ -17,31 +11,31 @@ const useStyles = makeStyles(
       border: `1px solid ${theme.palette.divider}`,
     },
     container: {
-      position: "relative",
+      position: 'relative',
     },
     overlay: {
-      cursor: "pointer",
-      height: "100vh",
+      cursor: 'pointer',
+      height: '100vh',
       left: 0,
-      position: "fixed",
+      position: 'fixed',
       top: 0,
-      width: "100vw",
+      width: '100vw',
       zIndex: 1,
     },
     root: {
       left: 0,
       minWidth: theme.spacing(20),
-      position: "absolute",
+      position: 'absolute',
       top: 0,
       width: `calc(100% + ${theme.spacing(4)}px)`,
       zIndex: 2,
     },
     text: {
-      cursor: "pointer",
-      fontSize: "0.8125rem",
+      cursor: 'pointer',
+      fontSize: '0.8125rem',
     },
   }),
-  { name: "EditableTableCell" },
+  { name: 'EditableTableCell' },
 );
 
 interface EditableTableCellProps {
@@ -70,9 +64,7 @@ export const EditableTableCell: React.FC<EditableTableCellProps> = props => {
   // };
 
   const [opened, setOpenStatus] = React.useState(focused);
-  const { change, data } = useForm(
-    { value } /* commenting out temporarily handleConfirm */,
-  );
+  const { change, data } = useForm({ value } /* commenting out temporarily handleConfirm */);
   const enable = () => setOpenStatus(true);
   const disable = () => setOpenStatus(false);
 
@@ -102,5 +94,5 @@ export const EditableTableCell: React.FC<EditableTableCellProps> = props => {
     </TableCell>
   );
 };
-EditableTableCell.displayName = "EditableTableCell";
+EditableTableCell.displayName = 'EditableTableCell';
 export default EditableTableCell;

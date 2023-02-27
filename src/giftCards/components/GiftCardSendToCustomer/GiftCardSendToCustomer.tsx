@@ -1,16 +1,16 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
-import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import SingleSelectField from "@dashboard/components/SingleSelectField";
-import GiftCardCustomerSelectField from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCustomerSelectField";
-import { GiftCardCreateFormCustomer } from "@dashboard/giftCards/GiftCardCreateDialog/types";
-import { FormChange } from "@dashboard/hooks/useForm";
-import Label from "@dashboard/orders/components/OrderHistory/Label";
-import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
-import React, { useEffect } from "react";
-import { useIntl } from "react-intl";
+import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
+import useAppChannel from '@dashboard/components/AppLayout/AppChannelContext';
+import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
+import SingleSelectField from '@dashboard/components/SingleSelectField';
+import GiftCardCustomerSelectField from '@dashboard/giftCards/GiftCardCreateDialog/GiftCardCustomerSelectField';
+import { GiftCardCreateFormCustomer } from '@dashboard/giftCards/GiftCardCreateDialog/types';
+import { FormChange } from '@dashboard/hooks/useForm';
+import Label from '@dashboard/orders/components/OrderHistory/Label';
+import { mapSlugNodeToChoice } from '@dashboard/utils/maps';
+import React, { useEffect } from 'react';
+import { useIntl } from 'react-intl';
 
-import { giftCardSendToCustomerMessages as messages } from "./messages";
+import { giftCardSendToCustomerMessages as messages } from './messages';
 
 interface GiftCardSendToCustomerProps {
   selectedChannelSlug: string;
@@ -33,10 +33,7 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
 
   const channelsChoices = mapSlugNodeToChoice(availableChannels);
 
-  useEffect(
-    () => change({ target: { name: "channelSlug", value: channel?.slug } }),
-    [],
-  );
+  useEffect(() => change({ target: { name: 'channelSlug', value: channel?.slug } }), []);
 
   const intl = useIntl();
 
@@ -44,7 +41,7 @@ const GiftCardSendToCustomer: React.FC<GiftCardSendToCustomerProps> = ({
     <>
       <VerticalSpacer />
       <ControlledCheckbox
-        name={"sendToCustomerSelected"}
+        name={'sendToCustomerSelected'}
         label={intl.formatMessage(messages.sendToCustomerSelectedLabel)}
         checked={sendToCustomerSelected}
         onChange={change}

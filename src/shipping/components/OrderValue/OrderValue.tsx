@@ -1,23 +1,20 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
-import { ChannelShippingData } from "@dashboard/channels/utils";
-import CardTitle from "@dashboard/components/CardTitle";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import PriceField from "@dashboard/components/PriceField";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import TableHead from "@dashboard/components/TableHead";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { ShippingChannelsErrorFragment } from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
-import {
-  getFormChannelError,
-  getFormChannelErrors,
-} from "@dashboard/utils/errors";
-import getShippingErrorMessage from "@dashboard/utils/errors/shipping";
-import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
+import { ChannelShippingData } from '@dashboard/channels/utils';
+import CardTitle from '@dashboard/components/CardTitle';
+import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
+import PriceField from '@dashboard/components/PriceField';
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import TableHead from '@dashboard/components/TableHead';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { ShippingChannelsErrorFragment } from '@dashboard/graphql';
+import { ChangeEvent } from '@dashboard/hooks/useForm';
+import { getFormChannelError, getFormChannelErrors } from '@dashboard/utils/errors';
+import getShippingErrorMessage from '@dashboard/utils/errors/shipping';
+import { Card, TableBody, TableCell, Typography } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
 interface Value {
   maxValue: string;
@@ -44,18 +41,15 @@ export const OrderValue: React.FC<OrderValueProps> = ({
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
-  const formErrors = getFormChannelErrors(
-    ["maximumOrderPrice", "minimumOrderPrice"],
-    errors,
-  );
+  const formErrors = getFormChannelErrors(['maximumOrderPrice', 'minimumOrderPrice'], errors);
 
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: "yatGsm",
-          defaultMessage: "Order Value",
-          description: "card title",
+          id: 'yatGsm',
+          defaultMessage: 'Order Value',
+          description: 'card title',
         })}
       />
       <div className={classes.content}>
@@ -64,16 +58,12 @@ export const OrderValue: React.FC<OrderValueProps> = ({
             name="orderValueRestricted"
             label={
               <>
-                <FormattedMessage
-                  id="Dgp38J"
-                  defaultMessage="Restrict order value"
-                  description="checkbox label"
-                />
+                <FormattedMessage id="Dgp38J" defaultMessage="Restrict order value" description="checkbox label" />
                 <Typography variant="caption">
                   {intl.formatMessage({
-                    id: "aZDHYr",
-                    defaultMessage: "This rate will apply to all orders",
-                    description: "price rates info",
+                    id: 'aZDHYr',
+                    defaultMessage: 'This rate will apply to all orders',
+                    description: 'price rates info',
                   })}
                 </Typography>
               </>
@@ -95,42 +85,24 @@ export const OrderValue: React.FC<OrderValueProps> = ({
             <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
               <TableCell className={classes.colName}>
                 <span>
-                  <FormattedMessage
-                    id="UymotP"
-                    defaultMessage="Channel name"
-                    description="channel name"
-                  />
+                  <FormattedMessage id="UymotP" defaultMessage="Channel name" description="channel name" />
                 </span>
               </TableCell>
               <TableCell className={classes.colType}>
                 <span>
-                  <FormattedMessage
-                    id="0FexL7"
-                    defaultMessage="Min. value"
-                    description="min price in channel"
-                  />
+                  <FormattedMessage id="0FexL7" defaultMessage="Min. value" description="min price in channel" />
                 </span>
               </TableCell>
               <TableCell className={classes.colType}>
                 <span>
-                  <FormattedMessage
-                    id="ER/yBq"
-                    defaultMessage="Max. value"
-                    description="max price in channel"
-                  />
+                  <FormattedMessage id="ER/yBq" defaultMessage="Max. value" description="max price in channel" />
                 </span>
               </TableCell>
             </TableHead>
             <TableBody>
               {channels?.map(channel => {
-                const minError = getFormChannelError(
-                  formErrors.minimumOrderPrice,
-                  channel.id,
-                );
-                const maxError = getFormChannelError(
-                  formErrors.maximumOrderPrice,
-                  channel.id,
-                );
+                const minError = getFormChannelError(formErrors.minimumOrderPrice, channel.id);
+                const maxError = getFormChannelError(formErrors.maximumOrderPrice, channel.id);
 
                 return (
                   <TableRowLink key={channel.id}>
@@ -142,8 +114,8 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                         disabled={disabled}
                         error={!!minError}
                         label={intl.formatMessage({
-                          id: "kN6SLs",
-                          defaultMessage: "Min Value",
+                          id: 'kN6SLs',
+                          defaultMessage: 'Min Value',
                         })}
                         name={`minValue:${channel.name}`}
                         value={channel.minValue}
@@ -154,9 +126,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                           })
                         }
                         currencySymbol={channel.currency}
-                        hint={
-                          minError && getShippingErrorMessage(minError, intl)
-                        }
+                        hint={minError && getShippingErrorMessage(minError, intl)}
                       />
                     </TableCell>
                     <TableCell className={classes.price}>
@@ -164,8 +134,8 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                         disabled={disabled}
                         error={!!maxError}
                         label={intl.formatMessage({
-                          id: "vjsfyn",
-                          defaultMessage: "Max Value",
+                          id: 'vjsfyn',
+                          defaultMessage: 'Max Value',
                         })}
                         name={`maxValue:${channel.name}`}
                         value={channel.maxValue}
@@ -177,9 +147,7 @@ export const OrderValue: React.FC<OrderValueProps> = ({
                           })
                         }
                         currencySymbol={channel.currency}
-                        hint={
-                          maxError && getShippingErrorMessage(maxError, intl)
-                        }
+                        hint={maxError && getShippingErrorMessage(maxError, intl)}
                       />
                     </TableCell>
                   </TableRowLink>

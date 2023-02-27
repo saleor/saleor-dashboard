@@ -1,2 +1,2 @@
-export * from "./ChannelAllocationStrategy";
-export { default } from "./ChannelAllocationStrategy";
+export * from './ChannelAllocationStrategy';
+export { default } from './ChannelAllocationStrategy';

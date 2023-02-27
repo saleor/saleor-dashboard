@@ -1,33 +1,33 @@
-import { PageErrorCode, PageErrorFragment } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { PageErrorCode, PageErrorFragment } from '@dashboard/graphql';
+import { defineMessages, IntlShape } from 'react-intl';
 
-import { getCommonFormFieldErrorMessage } from "./common";
+import { getCommonFormFieldErrorMessage } from './common';
 
 const messages = defineMessages({
   attributeAlreadyAssigned: {
-    id: "+hib+V",
-    defaultMessage: "This attribute is already assigned.",
-    description: "error message",
+    id: '+hib+V',
+    defaultMessage: 'This attribute is already assigned.',
+    description: 'error message',
   },
   duplicatedInputItem: {
-    id: "1H+V6k",
-    defaultMessage: "Page with these attributes already exists.",
-    description: "error message",
+    id: '1H+V6k',
+    defaultMessage: 'Page with these attributes already exists.',
+    description: 'error message',
   },
   nameAlreadyTaken: {
-    id: "N7XGzW",
-    defaultMessage: "This name is already taken. Please provide another.",
-    description: "error message",
+    id: 'N7XGzW',
+    defaultMessage: 'This name is already taken. Please provide another.',
+    description: 'error message',
   },
   notFound: {
-    id: "PCoO4D",
-    defaultMessage: "Page not found.",
-    description: "error message",
+    id: 'PCoO4D',
+    defaultMessage: 'Page not found.',
+    description: 'error message',
   },
 });
 
 function getPageErrorMessage(
-  err: Omit<PageErrorFragment, "__typename"> | undefined,
+  err: Omit<PageErrorFragment, '__typename'> | undefined,
   intl: IntlShape,
 ): string | undefined {
   if (err) {

@@ -1,2 +1,2 @@
-export { default } from "./VoucherTypes";
-export * from "./VoucherTypes";
+export { default } from './VoucherTypes';
+export * from './VoucherTypes';

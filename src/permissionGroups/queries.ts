@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const permissionGroupListQuery = gql`
   query PermissionGroupList(
@@ -9,14 +9,7 @@ export const permissionGroupListQuery = gql`
     $filter: PermissionGroupFilterInput
     $sort: PermissionGroupSortingInput
   ) {
-    permissionGroups(
-      after: $after
-      before: $before
-      first: $first
-      last: $last
-      filter: $filter
-      sortBy: $sort
-    ) {
+    permissionGroups(after: $after, before: $before, first: $first, last: $last, filter: $filter, sortBy: $sort) {
       edges {
         node {
           ...PermissionGroup

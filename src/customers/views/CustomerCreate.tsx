@@ -1,18 +1,13 @@
-import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  useCreateCustomerMutation,
-  useCustomerCreateDataQuery,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import React from "react";
-import { useIntl } from "react-intl";
+import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { useCreateCustomerMutation, useCustomerCreateDataQuery } from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { extractMutationErrors, maybe } from "../../misc";
-import CustomerCreatePage, {
-  CustomerCreatePageSubmitData,
-} from "../components/CustomerCreatePage";
-import { customerUrl } from "../urls";
+import { extractMutationErrors, maybe } from '../../misc';
+import CustomerCreatePage, { CustomerCreatePageSubmitData } from '../components/CustomerCreatePage';
+import { customerUrl } from '../urls';
 
 export const CustomerCreate: React.FC = () => {
   const navigate = useNavigator();
@@ -27,10 +22,10 @@ export const CustomerCreate: React.FC = () => {
     onCompleted: data => {
       if (data.customerCreate.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage({
-            id: "ftcHpD",
-            defaultMessage: "Customer created",
+            id: 'ftcHpD',
+            defaultMessage: 'Customer created',
           }),
         });
         navigate(customerUrl(data.customerCreate.user.id));
@@ -58,9 +53,9 @@ export const CustomerCreate: React.FC = () => {
     <>
       <WindowTitle
         title={intl.formatMessage({
-          id: "nX2pCU",
-          defaultMessage: "Create customer",
-          description: "window title",
+          id: 'nX2pCU',
+          defaultMessage: 'Create customer',
+          description: 'window title',
         })}
       />
       <CustomerCreatePage

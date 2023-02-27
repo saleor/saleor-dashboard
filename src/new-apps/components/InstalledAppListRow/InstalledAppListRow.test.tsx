@@ -1,25 +1,16 @@
-import { getAppsConfig } from "@dashboard/config";
-import {
-  AppListContext,
-  AppListContextValues,
-} from "@dashboard/new-apps/context";
-import { activeApp } from "@dashboard/new-apps/fixtures";
-import { InstalledApp } from "@dashboard/new-apps/types";
-import Wrapper from "@test/wrapper";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import React from "react";
-import { MemoryRouter as Router } from "react-router-dom";
+import { getAppsConfig } from '@dashboard/config';
+import { AppListContext, AppListContextValues } from '@dashboard/new-apps/context';
+import { activeApp } from '@dashboard/new-apps/fixtures';
+import { InstalledApp } from '@dashboard/new-apps/types';
+import Wrapper from '@test/wrapper';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
+import { MemoryRouter as Router } from 'react-router-dom';
 
-import InstalledAppListRow from "./InstalledAppListRow";
+import InstalledAppListRow from './InstalledAppListRow';
 
-const Component = ({
-  data,
-  context,
-}: {
-  data: InstalledApp;
-  context: AppListContextValues;
-}) => (
+const Component = ({ data, context }: { data: InstalledApp; context: AppListContextValues }) => (
   <Wrapper>
     <Router>
       <AppListContext.Provider value={context}>
@@ -29,8 +20,8 @@ const Component = ({
   </Wrapper>
 );
 
-describe("Apps InstalledAppListRow", () => {
-  it("displays app details when basic app data passed", () => {
+describe('Apps InstalledAppListRow', () => {
+  it('displays app details when basic app data passed', () => {
     // Arrange
     const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
@@ -56,8 +47,8 @@ describe("Apps InstalledAppListRow", () => {
     // const manifestDomain = screen.queryByText(
     //   new URL(activeApp.manifestUrl as string).host,
     // );
-    const externalLabel = screen.queryByTestId("app-external-label");
-    const tunnelLabel = screen.queryByTestId("app-tunnel-label");
+    const externalLabel = screen.queryByTestId('app-external-label');
+    const tunnelLabel = screen.queryByTestId('app-tunnel-label');
 
     // Assert
     expect(name).toBeTruthy();
@@ -68,7 +59,7 @@ describe("Apps InstalledAppListRow", () => {
     expect(tunnelLabel).toBeFalsy();
   });
 
-  it("displays external label when app is external", () => {
+  it('displays external label when app is external', () => {
     // Arrange
     const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
@@ -86,13 +77,13 @@ describe("Apps InstalledAppListRow", () => {
         }}
       />,
     );
-    const externalLabel = screen.queryByTestId("app-external-label");
+    const externalLabel = screen.queryByTestId('app-external-label');
 
     // Assert
     expect(externalLabel).toBeTruthy();
   });
 
-  it("displays tunnnel label when app is served via tunnnel", () => {
+  it('displays tunnnel label when app is served via tunnnel', () => {
     // Arrange
     const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
@@ -115,13 +106,13 @@ describe("Apps InstalledAppListRow", () => {
         }}
       />,
     );
-    const tunnelLabel = screen.queryByTestId("app-tunnel-label");
+    const tunnelLabel = screen.queryByTestId('app-tunnel-label');
 
     // Assert
     expect(tunnelLabel).toBeTruthy();
   });
 
-  it("calls handlers when app data passed and buttons clicked", async () => {
+  it('calls handlers when app data passed and buttons clicked', async () => {
     // Arrange
     const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
@@ -140,7 +131,7 @@ describe("Apps InstalledAppListRow", () => {
       />,
     );
     const user = userEvent.setup();
-    const settingsButton = screen.getByTestId("app-settings-button");
+    const settingsButton = screen.getByTestId('app-settings-button');
 
     // Act
     await user.click(settingsButton);

@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   {
@@ -6,15 +6,15 @@ export const useStyles = makeStyles(
       width: 84,
     },
     colName: {
-      width: "auto",
+      width: 'auto',
     },
     colProducts: {
-      textAlign: "right",
+      textAlign: 'right',
       width: 140,
     },
     tableRow: {
-      cursor: "pointer",
+      cursor: 'pointer',
     },
   },
-  { name: "DiscountCollections" },
+  { name: 'DiscountCollections' },
 );

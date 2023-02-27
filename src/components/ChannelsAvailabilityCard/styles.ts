@@ -1,4 +1,4 @@
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(
   theme => ({
@@ -10,51 +10,51 @@ export const useStyles = makeStyles(
       paddingLeft: theme.spacing(1),
     },
     arrow: {
-      transition: theme.transitions.duration.short + "ms",
+      transition: theme.transitions.duration.short + 'ms',
     },
     card: {
-      "&:last-child": {
+      '&:last-child': {
         paddingBottom: 0,
       },
       paddingTop: 0,
     },
     channelBtn: {
-      "&:focus": {
-        outline: "none",
+      '&:focus': {
+        outline: 'none',
       },
-      background: "transparent",
-      border: "none",
-      cursor: "pointer",
-      textAlign: "left",
+      background: 'transparent',
+      border: 'none',
+      cursor: 'pointer',
+      textAlign: 'left',
     },
     channelInfo: {
       fontSize: 14,
       padding: theme.spacing(2, 0),
     },
     channelItem: {
-      "&:last-child hr": {
-        display: "none",
+      '&:last-child hr': {
+        display: 'none',
       },
       padding: theme.spacing(2, 0),
     },
     channelName: {
-      alignItems: "center",
-      display: "flex",
-      justifyContent: "space-between",
+      alignItems: 'center',
+      display: 'flex',
+      justifyContent: 'space-between',
       marginBottom: theme.spacing(0.5),
     },
     checkbox: {
-      alignItems: "flex-start",
+      alignItems: 'flex-start',
       marginTop: 10,
     },
     date: {
-      "& svg": {
+      '& svg': {
         fill: theme.palette.primary.main,
       },
       marginTop: theme.spacing(1),
     },
     hr: {
-      position: "relative",
+      position: 'relative',
     },
     label: {
       lineHeight: 1.2,
@@ -63,12 +63,12 @@ export const useStyles = makeStyles(
       marginTop: 9,
     },
     radioLabel: {
-      "& > span": {
+      '& > span': {
         padding: theme.spacing(0, 0.5),
       },
     },
     rotate: {
-      transform: "rotate(180deg)",
+      transform: 'rotate(180deg)',
     },
     secondLabel: {
       color: theme.palette.text.hint,
@@ -76,11 +76,11 @@ export const useStyles = makeStyles(
     },
     setPublicationDate: {
       color: theme.palette.primary.main,
-      cursor: "pointer",
+      cursor: 'pointer',
       fontSize: 14,
       paddingBottom: 10,
       paddingTop: 0,
     },
   }),
-  { name: "ChannelsAvailabilityCard" },
+  { name: 'ChannelsAvailabilityCard' },
 );

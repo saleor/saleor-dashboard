@@ -6,28 +6,22 @@ import {
   QueryHookOptions as BaseQueryHookOptions,
   QueryResult,
   useQuery as useBaseQuery,
-} from "@apollo/client";
-import { handleQueryAuthError, useUser } from "@dashboard/auth";
-import { PrefixedPermissions } from "@dashboard/graphql/extendedTypes";
-import {
-  PermissionEnum,
-  UserPermissionFragment,
-} from "@dashboard/graphql/types.generated";
-import { RequireAtLeastOne } from "@dashboard/misc";
-import { DocumentNode } from "graphql";
-import { useEffect } from "react";
-import { useIntl } from "react-intl";
+} from '@apollo/client';
+import { handleQueryAuthError, useUser } from '@dashboard/auth';
+import { PrefixedPermissions } from '@dashboard/graphql/extendedTypes';
+import { PermissionEnum, UserPermissionFragment } from '@dashboard/graphql/types.generated';
+import { RequireAtLeastOne } from '@dashboard/misc';
+import { DocumentNode } from 'graphql';
+import { useEffect } from 'react';
+import { useIntl } from 'react-intl';
 
-import useAppState from "./useAppState";
-import useNotifier from "./useNotifier";
-export { useLazyQuery } from "@apollo/client";
+import useAppState from './useAppState';
+import useNotifier from './useNotifier';
+export { useLazyQuery } from '@apollo/client';
 
-const getPermissionKey = (permission: string) =>
-  `PERMISSION_${permission}` as PrefixedPermissions;
+const getPermissionKey = (permission: string) => `PERMISSION_${permission}` as PrefixedPermissions;
 
-export const allPermissions: Record<PrefixedPermissions, boolean> = Object.keys(
-  PermissionEnum,
-).reduce(
+export const allPermissions: Record<PrefixedPermissions, boolean> = Object.keys(PermissionEnum).reduce(
   (prev, code) => ({
     ...prev,
     [getPermissionKey(code)]: false,
@@ -35,9 +29,7 @@ export const allPermissions: Record<PrefixedPermissions, boolean> = Object.keys(
   {} as Record<PrefixedPermissions, boolean>,
 );
 
-const getUserPermissions = (
-  userPermissions: UserPermissionFragment[],
-): Record<PrefixedPermissions, boolean> =>
+const getUserPermissions = (userPermissions: UserPermissionFragment[]): Record<PrefixedPermissions, boolean> =>
   userPermissions.reduce(
     (prev, permission) => ({
       ...prev,
@@ -53,15 +45,14 @@ export interface LoadMore<TData, TVariables> {
   ) => Promise<ApolloQueryResult<TData>>;
 }
 
-export type LazyQueryHookOptions<
-  TData = any,
-  TVariables = OperationVariables
-> = BaseLazyQueryHookOptions<TData, TVariables>;
+export type LazyQueryHookOptions<TData = any, TVariables = OperationVariables> = BaseLazyQueryHookOptions<
+  TData,
+  TVariables
+>;
 
-export type UseQueryResult<TData, TVariables> = QueryResult<TData, TVariables> &
-  LoadMore<TData, TVariables>;
+export type UseQueryResult<TData, TVariables> = QueryResult<TData, TVariables> & LoadMore<TData, TVariables>;
 export type QueryHookOptions<TData, TVariables> = Partial<
-  Omit<BaseQueryHookOptions<TData, TVariables>, "variables"> & {
+  Omit<BaseQueryHookOptions<TData, TVariables>, 'variables'> & {
     displayLoader: boolean;
     handleError?: (error: ApolloError) => void | undefined;
     variables?: Omit<TVariables, PrefixedPermissions>;
@@ -74,14 +65,7 @@ type UseQueryHook<TData, TVariables> = (
 
 export function useQuery<TData, TVariables>(
   query: DocumentNode,
-  {
-    displayLoader,
-    skip,
-    variables,
-    fetchPolicy,
-    handleError,
-    ...opts
-  }: QueryHookOptions<TData, TVariables> = {},
+  { displayLoader, skip, variables, fetchPolicy, handleError, ...opts }: QueryHookOptions<TData, TVariables> = {},
 ): UseQueryResult<TData, TVariables> {
   const notify = useNotifier();
   const intl = useIntl();
@@ -100,8 +84,8 @@ export function useQuery<TData, TVariables>(
     context: {
       useBatching: true,
     },
-    errorPolicy: "all",
-    fetchPolicy: fetchPolicy ?? "cache-and-network",
+    errorPolicy: 'all',
+    fetchPolicy: fetchPolicy ?? 'cache-and-network',
     onError: error => {
       if (!!handleError) {
         handleError(error);
@@ -119,7 +103,7 @@ export function useQuery<TData, TVariables>(
         payload: {
           value: queryData.loading,
         },
-        type: "displayLoader",
+        type: 'displayLoader',
       });
     }
   }, [queryData.loading]);
@@ -145,11 +129,8 @@ export function useQuery<TData, TVariables>(
   };
 }
 
-function makeQuery<TData, TVariables>(
-  query: DocumentNode,
-): UseQueryHook<TData, TVariables> {
-  return (opts: QueryHookOptions<TData, TVariables>) =>
-    useQuery<TData, TVariables>(query, opts);
+function makeQuery<TData, TVariables>(query: DocumentNode): UseQueryHook<TData, TVariables> {
+  return (opts: QueryHookOptions<TData, TVariables>) => useQuery<TData, TVariables>(query, opts);
 }
 
 export default makeQuery;

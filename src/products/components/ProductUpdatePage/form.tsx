@@ -3,7 +3,7 @@ import {
   getRichTextAttributesFromMap,
   getRichTextDataFromAttributes,
   mergeAttributes,
-} from "@dashboard/attributes/utils/data";
+} from '@dashboard/attributes/utils/data';
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
@@ -12,33 +12,30 @@ import {
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
-} from "@dashboard/attributes/utils/handlers";
+} from '@dashboard/attributes/utils/handlers';
 import {
   DatagridChangeOpts,
   DatagridChangeStateContext,
   useDatagridChangeState,
-} from "@dashboard/components/Datagrid/useDatagridChange";
-import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { ProductFragment } from "@dashboard/graphql";
-import useForm from "@dashboard/hooks/useForm";
-import useFormset from "@dashboard/hooks/useFormset";
-import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import useLocale from "@dashboard/hooks/useLocale";
-import {
-  getAttributeInputFromProduct,
-  getProductUpdatePageFormData,
-} from "@dashboard/products/utils/data";
-import { PRODUCT_UPDATE_FORM_ID } from "@dashboard/products/views/ProductUpdate/consts";
-import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
-import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import getMetadata from "@dashboard/utils/metadata/getMetadata";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { RichTextContext } from "@dashboard/utils/richText/context";
-import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
-import useRichText from "@dashboard/utils/richText/useRichText";
-import React, { useCallback, useEffect, useMemo, useRef } from "react";
+} from '@dashboard/components/Datagrid/useDatagridChange';
+import { useExitFormDialog } from '@dashboard/components/Form/useExitFormDialog';
+import { ProductFragment } from '@dashboard/graphql';
+import useForm from '@dashboard/hooks/useForm';
+import useFormset from '@dashboard/hooks/useFormset';
+import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
+import useLocale from '@dashboard/hooks/useLocale';
+import { getAttributeInputFromProduct, getProductUpdatePageFormData } from '@dashboard/products/utils/data';
+import { PRODUCT_UPDATE_FORM_ID } from '@dashboard/products/views/ProductUpdate/consts';
+import createMultiAutocompleteSelectHandler from '@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler';
+import createSingleAutocompleteSelectHandler from '@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler';
+import getMetadata from '@dashboard/utils/metadata/getMetadata';
+import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
+import { RichTextContext } from '@dashboard/utils/richText/context';
+import { useMultipleRichText } from '@dashboard/utils/richText/useMultipleRichText';
+import useRichText from '@dashboard/utils/richText/useRichText';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 
-import { useProductChannelListingsForm } from "./formChannels";
+import { useProductChannelListingsForm } from './formChannels';
 import {
   ProductUpdateData,
   ProductUpdateFormProps,
@@ -46,8 +43,8 @@ import {
   SubmitResult,
   UseProductUpdateFormOpts,
   UseProductUpdateFormOutput,
-} from "./types";
-import { prepareVariantChangeData } from "./utils";
+} from './types';
+import { prepareVariantChangeData } from './utils';
 
 function useProductUpdateForm(
   product: ProductFragment,
@@ -56,23 +53,14 @@ function useProductUpdateForm(
   refetch: () => Promise<any>,
   opts: UseProductUpdateFormOpts,
 ): UseProductUpdateFormOutput {
-  const initial = useMemo(
-    () => getProductUpdatePageFormData(product, product?.variants),
-    [product],
-  );
+  const initial = useMemo(() => getProductUpdatePageFormData(product, product?.variants), [product]);
 
   const form = useForm(initial, undefined, {
     confirmLeave: true,
     formId: PRODUCT_UPDATE_FORM_ID,
   });
 
-  const {
-    handleChange,
-    triggerChange,
-    toggleValue,
-    data: formData,
-    setIsSubmitDisabled,
-  } = form;
+  const { handleChange, triggerChange, toggleValue, data: formData, setIsSubmitDisabled } = form;
   const { locale } = useLocale();
 
   const datagrid = useDatagridChangeState();
@@ -91,10 +79,7 @@ function useProductUpdateForm(
   );
 
   const attributes = useFormset(getAttributeInputFromProduct(product));
-  const {
-    getters: attributeRichTextGetters,
-    getValues: getAttributeRichTextValues,
-  } = useMultipleRichText({
+  const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } = useMultipleRichText({
     initial: getRichTextDataFromAttributes(attributes.data),
     triggerChange,
   });
@@ -133,19 +118,13 @@ function useProductUpdateForm(
     opts.setSelectedCategory,
     opts.categories,
   );
-  const handleAttributeChange = createAttributeChangeHandler(
-    attributes.change,
-    triggerChange,
-  );
+  const handleAttributeChange = createAttributeChangeHandler(attributes.change, triggerChange);
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
     attributes.change,
     attributes.data,
     triggerChange,
   );
-  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
-    attributes.change,
-    triggerChange,
-  );
+  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(attributes.change, triggerChange);
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
@@ -194,17 +173,12 @@ function useProductUpdateForm(
     ...getMetadata(data, isMetadataModified, isPrivateMetadataModified),
     attributes: mergeAttributes(
       attributes.data,
-      getRichTextAttributesFromMap(
-        attributes.data,
-        await getAttributeRichTextValues(),
-      ),
+      getRichTextAttributesFromMap(attributes.data, await getAttributeRichTextValues()),
     ),
     attributesWithNewFileValue: attributesWithNewFileValue.data,
     channels: {
       ...channels,
-      updateChannels: channels.updateChannels.filter(listing =>
-        touchedChannels.current.includes(listing.channelId),
-      ),
+      updateChannels: channels.updateChannels.filter(listing => touchedChannels.current.includes(listing.channelId)),
     },
     description: await richText.getValue(),
     variants: variants.current,
@@ -231,26 +205,21 @@ function useProductUpdateForm(
 
     datagrid.setAdded(prevAdded =>
       prevAdded.filter((_, index) =>
-        result.some(
-          error =>
-            error.__typename === "DatagridError" &&
-            error.type === "create" &&
-            error.index === index,
-        ),
+        result.some(error => error.__typename === 'DatagridError' && error.type === 'create' && error.index === index),
       ),
     );
     datagrid.changes.current = datagrid.changes.current.filter(change =>
       datagrid.added.includes(change.row)
         ? result.some(
             error =>
-              error.__typename === "DatagridError" &&
-              error.type === "create" &&
+              error.__typename === 'DatagridError' &&
+              error.type === 'create' &&
               error.index === datagrid.added.findIndex(r => r === change.row),
           )
         : result.some(
             error =>
-              error.__typename === "DatagridError" &&
-              error.type !== "create" &&
+              error.__typename === 'DatagridError' &&
+              error.type !== 'create' &&
               error.variantId === product.variants[change.row].id,
           ),
     );
@@ -266,11 +235,7 @@ function useProductUpdateForm(
       return false;
     }
 
-    if (
-      data.isPreorder &&
-      data.hasPreorderEndDate &&
-      !!form.errors.preorderEndDateTime
-    ) {
+    if (data.isPreorder && data.hasPreorderEndDate && !!form.errors.preorderEndDateTime) {
       return false;
     }
 
@@ -320,24 +285,16 @@ const ProductUpdateForm: React.FC<ProductUpdateFormProps> = ({
   disabled,
   ...rest
 }) => {
-  const { datagrid, richText, ...props } = useProductUpdateForm(
-    product,
-    onSubmit,
-    disabled,
-    refetch,
-    rest,
-  );
+  const { datagrid, richText, ...props } = useProductUpdateForm(product, onSubmit, disabled, refetch, rest);
 
   return (
     <form onSubmit={props.submit} data-test-id="product-update-form">
       <DatagridChangeStateContext.Provider value={datagrid}>
-        <RichTextContext.Provider value={richText}>
-          {children(props)}
-        </RichTextContext.Provider>
+        <RichTextContext.Provider value={richText}>{children(props)}</RichTextContext.Provider>
       </DatagridChangeStateContext.Provider>
     </form>
   );
 };
 
-ProductUpdateForm.displayName = "ProductUpdateForm";
+ProductUpdateForm.displayName = 'ProductUpdateForm';
 export default ProductUpdateForm;

@@ -1,18 +1,18 @@
-import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
-import Hr from "@dashboard/components/Hr";
-import Label from "@dashboard/orders/components/OrderHistory/Label";
-import { TextField, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { ControlledCheckbox } from '@dashboard/components/ControlledCheckbox';
+import Hr from '@dashboard/components/Hr';
+import Label from '@dashboard/orders/components/OrderHistory/Label';
+import { TextField, Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
 export const useStyles = makeStyles(
   theme => ({
     content: {
-      "& hr": {
+      '& hr': {
         left: -24,
-        position: "relative",
-        width: "calc(100% + 48px)",
+        position: 'relative',
+        width: 'calc(100% + 48px)',
       },
     },
     contentTitle: {
@@ -23,20 +23,20 @@ export const useStyles = makeStyles(
       marginTop: theme.spacing(2),
     },
     input: {
-      "& label": {
-        overflowX: "inherit",
+      '& label': {
+        overflowX: 'inherit',
       },
     },
     notFound: {
       paddingBottom: theme.spacing(2),
     },
     scrollArea: {
-      maxHeight: "calc(100vh - 400px)",
-      "@media (min-height: 800px)": {
+      maxHeight: 'calc(100vh - 400px)',
+      '@media (min-height: 800px)': {
         maxHeight: 400,
       },
-      overflowY: "scroll",
-      overflowX: "hidden",
+      overflowY: 'scroll',
+      overflowX: 'hidden',
       // overflowX can't be "visible" when overflowY is "scroll"
       // workaround for visible button ripples:
       marginLeft: -15,
@@ -48,30 +48,29 @@ export const useStyles = makeStyles(
       marginBottom: 5,
     },
   }),
-  { name: "ChannelsAvailabilityContent" },
+  { name: 'ChannelsAvailabilityContent' },
 );
 
 const messages = defineMessages({
   selectTitle: {
-    id: "7scATx",
-    defaultMessage:
-      "Select channels you want for {contentType} to be available on",
-    description: "select title",
+    id: '7scATx',
+    defaultMessage: 'Select channels you want for {contentType} to be available on',
+    description: 'select title',
   },
   selectAllChannelsLabel: {
-    id: "zR9Ozi",
-    defaultMessage: "Select All Channels",
-    description: "select all channels label",
+    id: 'zR9Ozi',
+    defaultMessage: 'Select All Channels',
+    description: 'select all channels label',
   },
   channelsAlphabeticallyTitle: {
-    id: "/lBLBI",
-    defaultMessage: "Channels from A to Z",
-    description: "channels alphabetically title",
+    id: '/lBLBI',
+    defaultMessage: 'Channels from A to Z',
+    description: 'channels alphabetically title',
   },
   notFoundTitle: {
-    id: "PctLol",
-    defaultMessage: "No Channels Found",
-    description: "no channels found title",
+    id: 'PctLol',
+    defaultMessage: 'No Channels Found',
+    description: 'no channels found title',
   },
 });
 
@@ -87,7 +86,7 @@ export interface ChannelsAvailabilityContentProps {
 }
 
 export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityContentProps> = ({
-  contentType = "",
+  contentType = '',
   toggleAll,
   toggleAllLabel,
   children,
@@ -99,8 +98,8 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
   const classes = useStyles({});
   const intl = useIntl();
   const searchText = intl.formatMessage({
-    id: "ybaLoZ",
-    defaultMessage: "Search through channels",
+    id: 'ybaLoZ',
+    defaultMessage: 'Search through channels',
   });
 
   return (
@@ -125,13 +124,7 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
             <ControlledCheckbox
               checked={hasAllSelected}
               name="allChannels"
-              label={
-                toggleAllLabel || (
-                  <Label
-                    text={intl.formatMessage(messages.selectAllChannelsLabel)}
-                  />
-                )
-              }
+              label={toggleAllLabel || <Label text={intl.formatMessage(messages.selectAllChannelsLabel)} />}
               onChange={toggleAll}
             />
             <Hr />
@@ -140,10 +133,7 @@ export const ChannelsAvailabilityContentWrapper: React.FC<ChannelsAvailabilityCo
         <Typography className={classes.contentTitle}>
           <FormattedMessage {...messages.channelsAlphabeticallyTitle} />
         </Typography>
-        <div
-          className={classes.scrollArea}
-          data-test-id="manage-products-channels-availiability-list"
-        >
+        <div className={classes.scrollArea} data-test-id="manage-products-channels-availiability-list">
           {hasAnyChannelsToDisplay ? (
             children
           ) : (

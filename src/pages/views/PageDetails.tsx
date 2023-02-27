@@ -2,19 +2,16 @@ import {
   getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors,
-} from "@dashboard/attributes/utils/data";
+} from '@dashboard/attributes/utils/data';
 import {
   handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
   prepareAttributesInput,
-} from "@dashboard/attributes/utils/handlers";
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { AttributeInput } from "@dashboard/components/Attributes";
-import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  DEFAULT_INITIAL_SEARCH_DATA,
-  VALUES_PAGINATE_BY,
-} from "@dashboard/config";
+} from '@dashboard/attributes/utils/handlers';
+import ActionDialog from '@dashboard/components/ActionDialog';
+import { AttributeInput } from '@dashboard/components/Attributes';
+import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from '@dashboard/config';
 import {
   AttributeErrorFragment,
   AttributeValueInput,
@@ -29,25 +26,25 @@ import {
   usePageUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
-import usePageSearch from "@dashboard/searches/usePageSearch";
-import useProductSearch from "@dashboard/searches/useProductSearch";
-import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
-import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
-import { DialogContentText } from "@material-ui/core";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { commonMessages } from '@dashboard/intl';
+import usePageSearch from '@dashboard/searches/usePageSearch';
+import useProductSearch from '@dashboard/searches/useProductSearch';
+import useAttributeValueSearchHandler from '@dashboard/utils/handlers/attributeValueSearchHandler';
+import createMetadataUpdateHandler from '@dashboard/utils/handlers/metadataUpdateHandler';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import { getParsedDataForJsonStringField } from '@dashboard/utils/richText/misc';
+import { DialogContentText } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { getStringOrPlaceholder, maybe } from "../../misc";
-import PageDetailsPage from "../components/PageDetailsPage";
-import { PageData, PageSubmitData } from "../components/PageDetailsPage/form";
-import { pageListUrl, pageUrl, PageUrlQueryParams } from "../urls";
-import { getAttributeInputFromPage } from "../utils/data";
+import { getStringOrPlaceholder, maybe } from '../../misc';
+import PageDetailsPage from '../components/PageDetailsPage';
+import { PageData, PageSubmitData } from '../components/PageDetailsPage/form';
+import { pageListUrl, pageUrl, PageUrlQueryParams } from '../urls';
+import { getAttributeInputFromPage } from '../utils/data';
 
 export interface PageDetailsProps {
   id: string;
@@ -71,7 +68,7 @@ const createPageInput = (
     description: data.seoDescription,
     title: data.seoTitle,
   },
-  slug: data.slug === "" ? null : data.slug,
+  slug: data.slug === '' ? null : data.slug,
   title: data.title,
 });
 
@@ -93,16 +90,13 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
 
   const [pageUpdate, pageUpdateOpts] = usePageUpdateMutation({});
 
-  const [
-    deleteAttributeValue,
-    deleteAttributeValueOpts,
-  ] = useAttributeValueDeleteMutation({});
+  const [deleteAttributeValue, deleteAttributeValueOpts] = useAttributeValueDeleteMutation({});
 
   const [pageRemove, pageRemoveOpts] = usePageRemoveMutation({
     onCompleted: data => {
       if (data.pageDelete.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate(pageListUrl());
@@ -113,19 +107,16 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       pageUrl(id, {
-        action: "assign-attribute-value",
+        action: 'assign-attribute-value',
         id: attribute.id,
       }),
     );
 
   const handleUpdate = async (data: PageSubmitData) => {
-    let errors: Array<
-      AttributeErrorFragment | UploadErrorFragment | PageErrorFragment
-    > = [];
+    let errors: Array<AttributeErrorFragment | UploadErrorFragment | PageErrorFragment> = [];
 
-    const uploadFilesResult = await handleUploadMultipleFiles(
-      data.attributesWithNewFileValue,
-      variables => uploadFile({ variables }),
+    const uploadFilesResult = await handleUploadMultipleFiles(data.attributesWithNewFileValue, variables =>
+      uploadFile({ variables }),
     );
 
     const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
@@ -142,11 +133,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     const updateResult = await pageUpdate({
       variables: {
         id,
-        input: createPageInput(
-          data,
-          pageDetails?.data?.page,
-          updatedFileAttributes,
-        ),
+        input: createPageInput(data, pageDetails?.data?.page, updatedFileAttributes),
         firstValues: VALUES_PAGINATE_BY,
       },
     });
@@ -189,8 +176,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     reset: searchAttributeReset,
   } = useAttributeValueSearchHandler(DEFAULT_INITIAL_SEARCH_DATA);
 
-  const attributeValues =
-    mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
+  const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   const fetchMoreReferencePages = {
     hasMore: searchPagesOpts.data?.search?.pageInfo?.hasNextPage,
@@ -203,8 +189,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     onFetchMore: loadMoreProducts,
   };
   const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
-      ?.hasNextPage,
+    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
     onFetchMore: loadMoreAttributeValues,
   };
@@ -214,10 +199,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
       <WindowTitle title={maybe(() => pageDetails.data.page.title)} />
       <PageDetailsPage
         loading={
-          pageDetails.loading ||
-          pageUpdateOpts.loading ||
-          uploadFileOpts.loading ||
-          deleteAttributeValueOpts.loading
+          pageDetails.loading || pageUpdateOpts.loading || uploadFileOpts.loading || deleteAttributeValueOpts.loading
         }
         errors={pageUpdateOpts.data?.pageUpdate.errors || []}
         saveButtonBarState={pageUpdateOpts.status}
@@ -226,19 +208,15 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         onRemove={() =>
           navigate(
             pageUrl(id, {
-              action: "remove",
+              action: 'remove',
             }),
           )
         }
         onSubmit={handleSubmit}
-        assignReferencesAttributeId={
-          params.action === "assign-attribute-value" && params.id
-        }
+        assignReferencesAttributeId={params.action === 'assign-attribute-value' && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
-        referenceProducts={
-          mapEdgesToItems(searchProductsOpts?.data?.search) || []
-        }
+        referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
         fetchReferencePages={searchPages}
         fetchMoreReferencePages={fetchMoreReferencePages}
         fetchReferenceProducts={searchProducts}
@@ -249,12 +227,12 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
         onAttributeSelectBlur={searchAttributeReset}
       />
       <ActionDialog
-        open={params.action === "remove"}
+        open={params.action === 'remove'}
         confirmButtonState={pageRemoveOpts.status}
         title={intl.formatMessage({
-          id: "C1luwg",
-          defaultMessage: "Delete Page",
-          description: "dialog header",
+          id: 'C1luwg',
+          defaultMessage: 'Delete Page',
+          description: 'dialog header',
         })}
         onClose={() => navigate(pageUrl(id))}
         onConfirm={() => pageRemove({ variables: { id } })}
@@ -266,11 +244,7 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
             defaultMessage="Are you sure you want to delete {title}?"
             description="delete page"
             values={{
-              title: (
-                <strong>
-                  {getStringOrPlaceholder(pageDetails.data?.page?.title)}
-                </strong>
-              ),
+              title: <strong>{getStringOrPlaceholder(pageDetails.data?.page?.title)}</strong>,
             }}
           />
         </DialogContentText>
@@ -278,5 +252,5 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     </>
   );
 };
-PageDetails.displayName = "PageDetails";
+PageDetails.displayName = 'PageDetails';
 export default PageDetails;

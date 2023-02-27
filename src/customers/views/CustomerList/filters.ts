@@ -1,61 +1,41 @@
-import { FilterElement } from "@dashboard/components/Filter";
-import {
-  CustomerFilterKeys,
-  CustomerListFilterOpts,
-} from "@dashboard/customers/components/CustomerListPage";
-import { CustomerFilterInput } from "@dashboard/graphql";
-import { maybe } from "@dashboard/misc";
+import { FilterElement } from '@dashboard/components/Filter';
+import { CustomerFilterKeys, CustomerListFilterOpts } from '@dashboard/customers/components/CustomerListPage';
+import { CustomerFilterInput } from '@dashboard/graphql';
+import { maybe } from '@dashboard/misc';
 
 import {
   createFilterTabUtils,
   createFilterUtils,
   getGteLteVariables,
   getMinMaxQueryParam,
-} from "../../../utils/filters";
-import {
-  CustomerListUrlFilters,
-  CustomerListUrlFiltersEnum,
-  CustomerListUrlQueryParams,
-} from "../../urls";
+} from '../../../utils/filters';
+import { CustomerListUrlFilters, CustomerListUrlFiltersEnum, CustomerListUrlQueryParams } from '../../urls';
 
-export const CUSTOMER_FILTERS_KEY = "customerFilters";
+export const CUSTOMER_FILTERS_KEY = 'customerFilters';
 
-export function getFilterOpts(
-  params: CustomerListUrlFilters,
-): CustomerListFilterOpts {
+export function getFilterOpts(params: CustomerListUrlFilters): CustomerListFilterOpts {
   return {
     joined: {
-      active: maybe(
-        () =>
-          [params.joinedFrom, params.joinedTo].some(
-            field => field !== undefined,
-          ),
-        false,
-      ),
+      active: maybe(() => [params.joinedFrom, params.joinedTo].some(field => field !== undefined), false),
       value: {
-        max: maybe(() => params.joinedTo, ""),
-        min: maybe(() => params.joinedFrom, ""),
+        max: maybe(() => params.joinedTo, ''),
+        min: maybe(() => params.joinedFrom, ''),
       },
     },
     numberOfOrders: {
       active: maybe(
-        () =>
-          [params.numberOfOrdersFrom, params.numberOfOrdersTo].some(
-            field => field !== undefined,
-          ),
+        () => [params.numberOfOrdersFrom, params.numberOfOrdersTo].some(field => field !== undefined),
         false,
       ),
       value: {
-        max: maybe(() => params.numberOfOrdersTo, ""),
-        min: maybe(() => params.numberOfOrdersFrom, ""),
+        max: maybe(() => params.numberOfOrdersTo, ''),
+        min: maybe(() => params.numberOfOrdersFrom, ''),
       },
     },
   };
 }
 
-export function getFilterVariables(
-  params: CustomerListUrlFilters,
-): CustomerFilterInput {
+export function getFilterVariables(params: CustomerListUrlFilters): CustomerFilterInput {
   return {
     dateJoined: getGteLteVariables({
       gte: params.joinedFrom,
@@ -69,18 +49,12 @@ export function getFilterVariables(
   };
 }
 
-export function getFilterQueryParam(
-  filter: FilterElement<CustomerFilterKeys>,
-): CustomerListUrlFilters {
+export function getFilterQueryParam(filter: FilterElement<CustomerFilterKeys>): CustomerListUrlFilters {
   const { name } = filter;
 
   switch (name) {
     case CustomerFilterKeys.joined:
-      return getMinMaxQueryParam(
-        filter,
-        CustomerListUrlFiltersEnum.joinedFrom,
-        CustomerListUrlFiltersEnum.joinedTo,
-      );
+      return getMinMaxQueryParam(filter, CustomerListUrlFiltersEnum.joinedFrom, CustomerListUrlFiltersEnum.joinedTo);
 
     case CustomerFilterKeys.numberOfOrders:
       return getMinMaxQueryParam(
@@ -91,16 +65,10 @@ export function getFilterQueryParam(
   }
 }
 
-export const {
-  deleteFilterTab,
-  getFilterTabs,
-  saveFilterTab,
-} = createFilterTabUtils<CustomerListUrlFilters>(CUSTOMER_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<CustomerListUrlFilters>(CUSTOMER_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<CustomerListUrlQueryParams, CustomerListUrlFilters>(
-  CustomerListUrlFiltersEnum,
-);
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
+  CustomerListUrlQueryParams,
+  CustomerListUrlFilters
+>(CustomerListUrlFiltersEnum);

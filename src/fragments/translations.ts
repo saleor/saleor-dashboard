@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const attributeValueTranslatableFragment = gql`
   fragment AttributeValueTranslatable on AttributeValueTranslatableContent {
@@ -265,12 +265,7 @@ export const attributeTranslationDetailsFragment = gql`
       name
       inputType
       withChoices
-      choices(
-        first: $firstValues
-        after: $afterValues
-        last: $lastValues
-        before: $beforeValues
-      ) {
+      choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
         ...AttributeChoicesTranslation
       }
     }

@@ -1,18 +1,16 @@
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import FilterBar from "@dashboard/components/FilterBar";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { pageListUrl, PageListUrlQueryParams } from "@dashboard/pages/urls";
-import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
-import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
-import { useIntl } from "react-intl";
+import DeleteFilterTabDialog from '@dashboard/components/DeleteFilterTabDialog';
+import FilterBar from '@dashboard/components/FilterBar';
+import SaveFilterTabDialog, { SaveFilterTabDialogFormData } from '@dashboard/components/SaveFilterTabDialog';
+import { DEFAULT_INITIAL_SEARCH_DATA } from '@dashboard/config';
+import { getSearchFetchMoreProps } from '@dashboard/hooks/makeTopLevelSearch/utils';
+import useBulkActions from '@dashboard/hooks/useBulkActions';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { pageListUrl, PageListUrlQueryParams } from '@dashboard/pages/urls';
+import usePageTypeSearch from '@dashboard/searches/usePageTypeSearch';
+import createFilterHandlers from '@dashboard/utils/handlers/filterHandlers';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
 import {
   createFilterStructure,
@@ -23,19 +21,16 @@ import {
   getFiltersCurrentTab,
   getFilterTabs,
   saveFilterTab,
-} from "./filters";
-import { pagesListSearchAndFiltersMessages as messages } from "./messages";
-import { PageListActionDialogOpts } from "./PageListPage";
+} from './filters';
+import { pagesListSearchAndFiltersMessages as messages } from './messages';
+import { PageListActionDialogOpts } from './PageListPage';
 
 interface PageListSearchAndFiltersProps {
   params: PageListUrlQueryParams;
   actionDialogOpts: PageListActionDialogOpts;
 }
 
-const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
-  params,
-  actionDialogOpts,
-}) => {
+const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({ params, actionDialogOpts }) => {
   const navigate = useNavigator();
   const intl = useIntl();
 
@@ -63,11 +58,7 @@ const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
     },
   });
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: pageListUrl,
     getFilterQueryParam,
     navigate,
@@ -106,30 +97,30 @@ const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
     <>
       <FilterBar
         filterStructure={filterStructure}
-        initialSearch={""}
+        initialSearch={''}
         onAll={resetFilters}
         onFilterChange={changeFilters}
         onSearchChange={handleSearchChange}
         searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
-        allTabLabel={"All Pages"}
+        allTabLabel={'All Pages'}
         tabs={tabs.map(({ name }) => name)}
         currentTab={currentTab}
         onTabDelete={handleTabDelete}
         onTabChange={handleTabChange}
-        onTabSave={() => openModal("save-search")}
+        onTabSave={() => openModal('save-search')}
       />
       <SaveFilterTabDialog
-        open={params.action === "save-search"}
+        open={params.action === 'save-search'}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabSave}
       />
       <DeleteFilterTabDialog
-        open={params.action === "delete-search"}
+        open={params.action === 'delete-search'}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabDelete}
-        tabName={tabs[currentTab - 1]?.name ?? "..."}
+        tabName={tabs[currentTab - 1]?.name ?? '...'}
       />
     </>
   );

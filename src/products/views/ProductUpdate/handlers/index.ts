@@ -4,10 +4,10 @@ import {
   ProductMediaCreateMutationVariables,
   ProductMediaReorderMutationVariables,
   ProductVariantReorderMutationFn,
-} from "@dashboard/graphql";
-import { ReorderEvent } from "@dashboard/types";
-import { move } from "@dashboard/utils/lists";
-import { arrayMove } from "react-sortable-hoc";
+} from '@dashboard/graphql';
+import { ReorderEvent } from '@dashboard/types';
+import { move } from '@dashboard/utils/lists';
+import { arrayMove } from 'react-sortable-hoc';
 
 export function createImageUploadHandler(
   id: string,
@@ -15,7 +15,7 @@ export function createImageUploadHandler(
 ) {
   return (file: File) =>
     createProductImage({
-      alt: "",
+      alt: '',
       image: file,
       product: id,
     });
@@ -23,9 +23,7 @@ export function createImageUploadHandler(
 
 export function createImageReorderHandler(
   product: ProductFragment,
-  reorderProductImages: (
-    variables: ProductMediaReorderMutationVariables,
-  ) => void,
+  reorderProductImages: (variables: ProductMediaReorderMutationVariables) => void,
 ) {
   return ({ newIndex, oldIndex }: ReorderEvent) => {
     let ids = product.media.map(image => image.id);
@@ -41,9 +39,10 @@ function areVariantsEqual(a: Node, b: Node) {
   return a.id === b.id;
 }
 
-export function createVariantReorderHandler<
-  T extends { id: string; variants: any[] }
->(product: T, reorderProductVariants: ProductVariantReorderMutationFn) {
+export function createVariantReorderHandler<T extends { id: string; variants: any[] }>(
+  product: T,
+  reorderProductVariants: ProductVariantReorderMutationFn,
+) {
   return ({ newIndex, oldIndex }: ReorderEvent) => {
     const oldVariantOrder = [...product.variants];
 
@@ -56,20 +55,15 @@ export function createVariantReorderHandler<
         productId: product.id,
       },
       optimisticResponse: () => ({
-        __typename: "Mutation",
+        __typename: 'Mutation',
         productVariantReorder: {
-          __typename: "ProductVariantReorder",
+          __typename: 'ProductVariantReorder',
           errors: [],
           product: {
-            __typename: "Product",
+            __typename: 'Product',
             id: product.id,
             variants: [
-              ...move<T["variants"][0]>(
-                product.variants[oldIndex],
-                product!.variants,
-                areVariantsEqual,
-                newIndex,
-              ),
+              ...move<T['variants'][0]>(product.variants[oldIndex], product!.variants, areVariantsEqual, newIndex),
             ],
           },
         },

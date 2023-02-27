@@ -1,2 +1,2 @@
-export { default } from "./TooltipTableCellHeader";
-export * from "./TooltipTableCellHeader";
+export { default } from './TooltipTableCellHeader';
+export * from './TooltipTableCellHeader';

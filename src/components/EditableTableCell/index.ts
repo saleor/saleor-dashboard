@@ -1,2 +1,2 @@
-export { default } from "./EditableTableCell";
-export * from "./EditableTableCell";
+export { default } from './EditableTableCell';
+export * from './EditableTableCell';

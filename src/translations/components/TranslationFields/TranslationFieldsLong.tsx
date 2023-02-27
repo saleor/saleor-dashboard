@@ -1,11 +1,11 @@
-import Form from "@dashboard/components/Form";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { TextField, Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import Form from '@dashboard/components/Form';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import { TextField, Typography } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import TranslationFieldsSave from "./TranslationFieldsSave";
+import TranslationFieldsSave from './TranslationFieldsSave';
 
 interface TranslationFieldsLongProps {
   disabled: boolean;
@@ -27,11 +27,7 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
   const intl = useIntl();
 
   return edit ? (
-    <Form
-      confirmLeave
-      initial={{ translation: initial }}
-      onSubmit={data => onSubmit(data.translation)}
-    >
+    <Form confirmLeave initial={{ translation: initial }} onSubmit={data => onSubmit(data.translation)}>
       {({ change, data, submit }) => (
         <div>
           <TextField
@@ -39,19 +35,15 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
             fullWidth
             multiline
             label={intl.formatMessage({
-              id: "/vCXIP",
-              defaultMessage: "Translation",
+              id: '/vCXIP',
+              defaultMessage: 'Translation',
             })}
             name="translation"
-            value={data.translation || ""}
+            value={data.translation || ''}
             data-test-id="translation-field"
             onChange={change}
           />
-          <TranslationFieldsSave
-            saveButtonState={saveButtonState}
-            onDiscard={onDiscard}
-            onSave={submit}
-          />
+          <TranslationFieldsSave saveButtonState={saveButtonState} onDiscard={onDiscard} onSave={submit} />
         </div>
       )}
     </Form>
@@ -63,5 +55,5 @@ const TranslationFieldsLong: React.FC<TranslationFieldsLongProps> = ({
     <Typography>{initial}</Typography>
   );
 };
-TranslationFieldsLong.displayName = "TranslationFieldsLong";
+TranslationFieldsLong.displayName = 'TranslationFieldsLong';
 export default TranslationFieldsLong;

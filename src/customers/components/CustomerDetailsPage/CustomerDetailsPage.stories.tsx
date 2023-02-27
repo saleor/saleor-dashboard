@@ -1,22 +1,20 @@
-import { AccountErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { MockedUserProvider } from "@dashboard/storybook/MockedUserProvider";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { AccountErrorCode } from '@dashboard/graphql';
+import Decorator from '@dashboard/storybook/Decorator';
+import { MockedUserProvider } from '@dashboard/storybook/MockedUserProvider';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import { customer } from "../../fixtures";
-import CustomerDetailsPageComponent, {
-  CustomerDetailsPageProps,
-} from "./CustomerDetailsPage";
+import { customer } from '../../fixtures';
+import CustomerDetailsPageComponent, { CustomerDetailsPageProps } from './CustomerDetailsPage';
 
-const props: Omit<CustomerDetailsPageProps, "classes"> = {
-  customerId: "123",
+const props: Omit<CustomerDetailsPageProps, 'classes'> = {
+  customerId: '123',
   customer,
   disabled: false,
   errors: [],
   onDelete: () => undefined,
   onSubmit: () => undefined,
-  saveButtonBar: "default",
+  saveButtonBar: 'default',
 };
 
 interface CustomerDetailsPageErrors {
@@ -32,39 +30,35 @@ const CustomerDetailsPage = props => (
   </MockedUserProvider>
 );
 
-storiesOf("Customers / Customer details", module)
+storiesOf('Customers / Customer details', module)
   .addDecorator(Decorator)
-  .add("default", () => <CustomerDetailsPage {...props} />)
-  .add("loading", () => (
-    <CustomerDetailsPage {...props} customer={undefined} disabled={true} />
-  ))
-  .add("form errors", () => (
+  .add('default', () => <CustomerDetailsPage {...props} />)
+  .add('loading', () => <CustomerDetailsPage {...props} customer={undefined} disabled={true} />)
+  .add('form errors', () => (
     <CustomerDetailsPage
       {...props}
-      errors={(["email", "firstName", "lastName"] as Array<
-        keyof CustomerDetailsPageErrors
-      >).map(field => ({
-        __typename: "AccountError",
+      errors={(['email', 'firstName', 'lastName'] as Array<keyof CustomerDetailsPageErrors>).map(field => ({
+        __typename: 'AccountError',
         code: AccountErrorCode.INVALID,
         field,
         addressType: null,
-        message: "Account invalid",
+        message: 'Account invalid',
       }))}
     />
   ))
-  .add("different addresses", () => (
+  .add('different addresses', () => (
     <CustomerDetailsPage
       {...props}
       customer={{
         ...customer,
         defaultBillingAddress: {
           ...customer.defaultBillingAddress,
-          id: "AvSduf72=",
+          id: 'AvSduf72=',
         },
       }}
     />
   ))
-  .add("never logged", () => (
+  .add('never logged', () => (
     <CustomerDetailsPage
       {...props}
       customer={{
@@ -73,7 +67,7 @@ storiesOf("Customers / Customer details", module)
       }}
     />
   ))
-  .add("never placed order", () => (
+  .add('never placed order', () => (
     <CustomerDetailsPage
       {...props}
       customer={{
@@ -85,7 +79,7 @@ storiesOf("Customers / Customer details", module)
       }}
     />
   ))
-  .add("no default billing address", () => (
+  .add('no default billing address', () => (
     <CustomerDetailsPage
       {...props}
       customer={{
@@ -94,7 +88,7 @@ storiesOf("Customers / Customer details", module)
       }}
     />
   ))
-  .add("no default shipping address", () => (
+  .add('no default shipping address', () => (
     <CustomerDetailsPage
       {...props}
       customer={{
@@ -103,7 +97,7 @@ storiesOf("Customers / Customer details", module)
       }}
     />
   ))
-  .add("no address at all", () => (
+  .add('no address at all', () => (
     <CustomerDetailsPage
       {...props}
       customer={{

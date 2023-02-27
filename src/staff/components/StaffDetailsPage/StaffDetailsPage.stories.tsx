@@ -1,12 +1,12 @@
-import { userPermissionGroups } from "@dashboard/permissionGroups/fixtures";
-import { staffMember } from "@dashboard/staff/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { userPermissionGroups } from '@dashboard/permissionGroups/fixtures';
+import { staffMember } from '@dashboard/staff/fixtures';
+import Decorator from '@dashboard/storybook/Decorator';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import StaffDetailsPage, { StaffDetailsPageProps } from "./StaffDetailsPage";
+import StaffDetailsPage, { StaffDetailsPageProps } from './StaffDetailsPage';
 
-const props: Omit<StaffDetailsPageProps, "classes"> = {
+const props: Omit<StaffDetailsPageProps, 'classes'> = {
   availablePermissionGroups: [],
   canEditAvatar: false,
   canEditPreferences: false,
@@ -15,25 +15,23 @@ const props: Omit<StaffDetailsPageProps, "classes"> = {
   disabled: false,
   errors: [],
   fetchMorePermissionGroups: undefined,
-  initialSearch: "",
+  initialSearch: '',
   onChangePassword: () => undefined,
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
   onSearchChange: () => undefined,
   onSubmit: () => undefined,
-  saveButtonBarState: "default",
+  saveButtonBarState: 'default',
   staffMember: { ...staffMember, permissionGroups: userPermissionGroups },
 };
 
-storiesOf("Staff / Staff member details", module)
+storiesOf('Staff / Staff member details', module)
   .addDecorator(Decorator)
-  .add("default", () => <StaffDetailsPage {...props} />)
-  .add("loading", () => (
-    <StaffDetailsPage {...props} disabled={true} staffMember={undefined} />
-  ))
-  .add("not admin", () => <StaffDetailsPage {...props} canEditStatus={false} />)
-  .add("himself", () => (
+  .add('default', () => <StaffDetailsPage {...props} />)
+  .add('loading', () => <StaffDetailsPage {...props} disabled={true} staffMember={undefined} />)
+  .add('not admin', () => <StaffDetailsPage {...props} canEditStatus={false} />)
+  .add('himself', () => (
     <StaffDetailsPage
       {...props}
       canEditStatus={false}

@@ -1,20 +1,20 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import { ChannelFragment } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
-import { Card, CardContent, Divider } from "@material-ui/core";
-import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import CardTitle from '@dashboard/components/CardTitle';
+import { MultiAutocompleteChoiceType } from '@dashboard/components/MultiAutocompleteSelectField';
+import { ChannelFragment } from '@dashboard/graphql';
+import { FormChange } from '@dashboard/hooks/useForm';
+import { Card, CardContent, Divider } from '@material-ui/core';
+import React from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import { ShippingZoneUpdateFormData } from "../../components/ShippingZoneDetailsPage/types";
-import ChannelsSection from "./ChannelsSection";
-import WarehousesSection from "./WarehousesSection";
+import { ShippingZoneUpdateFormData } from '../../components/ShippingZoneDetailsPage/types';
+import ChannelsSection from './ChannelsSection';
+import WarehousesSection from './WarehousesSection';
 
 const messages = defineMessages({
   title: {
-    id: "t/R8nK",
-    defaultMessage: "Settings",
-    description: "ShippingZoneSettingsCard title",
+    id: 't/R8nK',
+    defaultMessage: 'Settings',
+    description: 'ShippingZoneSettingsCard title',
   },
 });
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 export interface DebounceProps<T> {
   children: (props: (...args: T[]) => void) => React.ReactNode;

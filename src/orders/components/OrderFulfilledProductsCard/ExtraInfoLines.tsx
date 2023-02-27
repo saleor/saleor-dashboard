@@ -1,18 +1,18 @@
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
-import { getStringOrPlaceholder } from "@dashboard/misc";
-import { TableCell, Typography } from "@material-ui/core";
-import clsx from "clsx";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { FulfillmentStatus, OrderDetailsFragment } from '@dashboard/graphql';
+import { getStringOrPlaceholder } from '@dashboard/misc';
+import { TableCell, Typography } from '@material-ui/core';
+import clsx from 'clsx';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { extraInfoMessages } from "./messages";
-import useStyles from "./styles";
+import { extraInfoMessages } from './messages';
+import useStyles from './styles';
 
 const NUMBER_OF_COLUMNS = 5;
 
 interface ExtraInfoLinesProps {
-  fulfillment?: OrderDetailsFragment["fulfillments"][0];
+  fulfillment?: OrderDetailsFragment['fulfillments'][0];
 }
 
 const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
@@ -32,9 +32,7 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
           {warehouse && (
             <>
               {intl.formatMessage(
-                status === FulfillmentStatus.RETURNED
-                  ? extraInfoMessages.restocked
-                  : extraInfoMessages.fulfilled,
+                status === FulfillmentStatus.RETURNED ? extraInfoMessages.restocked : extraInfoMessages.fulfilled,
               )}
               <Typography
                 className={clsx(classes.infoLabel, {
@@ -54,11 +52,7 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
               {...extraInfoMessages.tracking}
               values={{
                 trackingNumber: (
-                  <Typography
-                    className={classes.infoLabel}
-                    color="textPrimary"
-                    variant="body2"
-                  >
+                  <Typography className={classes.infoLabel} color="textPrimary" variant="body2">
                     {trackingNumber}
                   </Typography>
                 ),

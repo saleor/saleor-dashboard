@@ -1,48 +1,43 @@
-import {
-  PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodTypeEnum,
-} from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook//Decorator";
-import { taxClasses } from "@dashboard/taxes/fixtures";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeEnum } from '@dashboard/graphql';
+import Decorator from '@dashboard/storybook//Decorator';
+import { taxClasses } from '@dashboard/taxes/fixtures';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import ShippingZoneRatesCreatePage, {
-  ShippingZoneRatesCreatePageProps,
-} from "./ShippingZoneRatesCreatePage";
+import ShippingZoneRatesCreatePage, { ShippingZoneRatesCreatePageProps } from './ShippingZoneRatesCreatePage';
 
 const channels = [
   {
-    currency: "USD",
-    id: "1",
-    maxValue: "10",
-    minValue: "0",
-    name: "channel",
-    price: "5",
+    currency: 'USD',
+    id: '1',
+    maxValue: '10',
+    minValue: '0',
+    name: 'channel',
+    price: '5',
   },
   {
-    currency: "USD",
-    id: "2",
-    maxValue: "20",
-    minValue: "1",
-    name: "test",
-    price: "6",
+    currency: 'USD',
+    id: '2',
+    maxValue: '20',
+    minValue: '1',
+    name: 'test',
+    price: '6',
   },
 ];
 
 const defaultChannels = [
   {
-    currency: "USD",
-    id: "1",
-    maxValue: "",
-    minValue: "",
-    name: "channel",
-    price: "",
+    currency: 'USD',
+    id: '1',
+    maxValue: '',
+    minValue: '',
+    name: 'channel',
+    price: '',
   },
 ];
 
 const props: ShippingZoneRatesCreatePageProps = {
-  backUrl: "",
+  backUrl: '',
   formId: Symbol(),
   allChannelsCount: 3,
   channelErrors: [],
@@ -57,41 +52,31 @@ const props: ShippingZoneRatesCreatePageProps = {
   openChannelsModal: () => undefined,
   postalCodes: [
     {
-      __typename: "ShippingMethodPostalCodeRule",
-      end: "51-200",
-      id: "1",
+      __typename: 'ShippingMethodPostalCodeRule',
+      end: '51-200',
+      id: '1',
       inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-      start: "51-220",
+      start: '51-220',
     },
     {
-      __typename: "ShippingMethodPostalCodeRule",
-      end: "31-101",
-      id: "1",
+      __typename: 'ShippingMethodPostalCodeRule',
+      end: '31-101',
+      id: '1',
       inclusionType: PostalCodeRuleInclusionTypeEnum.EXCLUDE,
-      start: "44-205",
+      start: '44-205',
     },
   ],
-  saveButtonBarState: "default",
+  saveButtonBarState: 'default',
   shippingChannels: defaultChannels,
   variant: ShippingMethodTypeEnum.PRICE,
   taxClasses,
   fetchMoreTaxClasses: undefined,
 };
 
-storiesOf("Shipping / ShippingZoneRatesCreatePage", module)
+storiesOf('Shipping / ShippingZoneRatesCreatePage', module)
   .addDecorator(Decorator)
-  .add("create price", () => <ShippingZoneRatesCreatePage {...props} />)
-  .add("loading", () => (
-    <ShippingZoneRatesCreatePage
-      {...props}
-      disabled={true}
-      saveButtonBarState={"loading"}
-    />
-  ))
-  .add("create weight", () => (
-    <ShippingZoneRatesCreatePage
-      {...props}
-      shippingChannels={channels}
-      variant={ShippingMethodTypeEnum.WEIGHT}
-    />
+  .add('create price', () => <ShippingZoneRatesCreatePage {...props} />)
+  .add('loading', () => <ShippingZoneRatesCreatePage {...props} disabled={true} saveButtonBarState={'loading'} />)
+  .add('create weight', () => (
+    <ShippingZoneRatesCreatePage {...props} shippingChannels={channels} variant={ShippingMethodTypeEnum.WEIGHT} />
   ));

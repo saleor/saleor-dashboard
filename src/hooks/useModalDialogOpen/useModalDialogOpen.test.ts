@@ -1,6 +1,6 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from '@testing-library/react-hooks';
 
-import useModalDialogOpen from "./useModalDialogOpen";
+import useModalDialogOpen from './useModalDialogOpen';
 
 const onClose = jest.fn();
 const onOpen = jest.fn();
@@ -10,16 +10,13 @@ const cbs = {
   onOpen,
 };
 
-test("Does not render errors after close", () => {
-  const { rerender } = renderHook(
-    ({ open, cbs }) => useModalDialogOpen(open, cbs),
-    {
-      initialProps: {
-        cbs,
-        open: false,
-      },
+test('Does not render errors after close', () => {
+  const { rerender } = renderHook(({ open, cbs }) => useModalDialogOpen(open, cbs), {
+    initialProps: {
+      cbs,
+      open: false,
     },
-  );
+  });
 
   // Open modal
   rerender({

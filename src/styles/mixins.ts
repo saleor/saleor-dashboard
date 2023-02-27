@@ -1,4 +1,4 @@
-import { CSSProperties } from "react";
+import { CSSProperties } from 'react';
 
 export const triangle = (color: string, width: number): CSSProperties => ({
   borderBottom: `${width}px solid ${color}`,

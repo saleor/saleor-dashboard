@@ -1,7 +1,7 @@
-import throttle from "lodash/throttle";
-import { MutableRefObject, useEffect, useState } from "react";
+import throttle from 'lodash/throttle';
+import { MutableRefObject, useEffect, useState } from 'react';
 
-export type Position = Record<"x" | "y", number>;
+export type Position = Record<'x' | 'y', number>;
 
 function getPosition(anchor?: HTMLElement): Position {
   if (!!anchor) {
@@ -13,14 +13,9 @@ function getPosition(anchor?: HTMLElement): Position {
   return undefined;
 }
 
-export function isScrolledToBottom(
-  anchor: MutableRefObject<HTMLElement>,
-  position: Position,
-  offset: number = 0,
-) {
+export function isScrolledToBottom(anchor: MutableRefObject<HTMLElement>, position: Position, offset: number = 0) {
   return !!anchor.current && position
-    ? position.y + anchor.current.clientHeight + offset >=
-        anchor.current.scrollHeight
+    ? position.y + anchor.current.clientHeight + offset >= anchor.current.scrollHeight
     : undefined;
 }
 
@@ -31,15 +26,12 @@ function useElementScroll(anchor: MutableRefObject<HTMLElement>): Position {
     const anchorInstance = anchor.current;
 
     if (!!anchorInstance) {
-      const handleScroll = throttle(
-        () => setScroll(getPosition(anchorInstance)),
-        100,
-      );
-      anchorInstance.addEventListener("scroll", handleScroll);
+      const handleScroll = throttle(() => setScroll(getPosition(anchorInstance)), 100);
+      anchorInstance.addEventListener('scroll', handleScroll);
 
       return () => {
         if (!!anchorInstance) {
-          anchorInstance.removeEventListener("scroll", handleScroll);
+          anchorInstance.removeEventListener('scroll', handleScroll);
         }
       };
     }

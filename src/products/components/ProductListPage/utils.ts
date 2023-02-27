@@ -1,4 +1,4 @@
-const prefix = "attribute";
+const prefix = 'attribute';
 
 export function getAttributeColumnValue(id: string) {
   return `${prefix}:${id}`;

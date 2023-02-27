@@ -1,9 +1,5 @@
-import { FlagWithName } from "../types";
-import {
-  envNameToFlagName,
-  isFlagEnabled,
-  readAllFlagsFromEnv,
-} from "./helpers";
+import { FlagWithName } from '../types';
+import { envNameToFlagName, isFlagEnabled, readAllFlagsFromEnv } from './helpers';
 
 export const useAllEnvFlags = (): FlagWithName[] => {
   const flags = readAllFlagsFromEnv();

@@ -1,29 +1,28 @@
-import { commonMessages } from "@dashboard/intl";
-import { defineMessages, IntlShape } from "react-intl";
+import { commonMessages } from '@dashboard/intl';
+import { defineMessages, IntlShape } from 'react-intl';
 
 const commonErrorMessages = defineMessages({
   graphqlError: {
-    id: "c5pMZ8",
-    defaultMessage: "API error",
+    id: 'c5pMZ8',
+    defaultMessage: 'API error',
   },
   invalid: {
-    id: "577R2r",
-    defaultMessage: "Invalid value",
+    id: '577R2r',
+    defaultMessage: 'Invalid value',
   },
   unknownError: {
-    id: "qDwvZ4",
-    defaultMessage: "Unknown error",
+    id: 'qDwvZ4',
+    defaultMessage: 'Unknown error',
   },
 });
 
 export const CommonErrorCode = {
-  GRAPHQL_ERROR: "GRAPHQL_ERROR",
-  INVALID: "INVALID",
-  REQUIRED: "REQUIRED",
+  GRAPHQL_ERROR: 'GRAPHQL_ERROR',
+  INVALID: 'INVALID',
+  REQUIRED: 'REQUIRED',
 } as const;
 
-export type CommonErrorCode =
-  (typeof CommonErrorCode)[keyof typeof CommonErrorCode];
+export type CommonErrorCode = (typeof CommonErrorCode)[keyof typeof CommonErrorCode];
 
 export interface CommonError<ErrorCode> {
   code: ErrorCode | CommonErrorCode;
@@ -37,11 +36,11 @@ export function getCommonFormFieldErrorMessage<ErrorCode>(
 ): string | undefined {
   if (error) {
     switch (error.code) {
-      case "GRAPHQL_ERROR":
+      case 'GRAPHQL_ERROR':
         return intl.formatMessage(commonErrorMessages.graphqlError);
-      case "REQUIRED":
+      case 'REQUIRED':
         return intl.formatMessage(commonMessages.requiredField);
-      case "INVALID":
+      case 'INVALID':
         return intl.formatMessage(commonErrorMessages.invalid);
 
       default:

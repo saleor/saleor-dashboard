@@ -1,23 +1,16 @@
-import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import FormSpacer from "@dashboard/components/FormSpacer";
-import { OrderErrorFragment } from "@dashboard/graphql";
-import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
-import { buttonMessages } from "@dashboard/intl";
-import { getFormErrors } from "@dashboard/utils/errors";
-import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
-} from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import BackButton from '@dashboard/components/BackButton';
+import ConfirmButton from '@dashboard/components/ConfirmButton';
+import Form from '@dashboard/components/Form';
+import FormSpacer from '@dashboard/components/FormSpacer';
+import { OrderErrorFragment } from '@dashboard/graphql';
+import useModalDialogErrors from '@dashboard/hooks/useModalDialogErrors';
+import { buttonMessages } from '@dashboard/intl';
+import { getFormErrors } from '@dashboard/utils/errors';
+import getOrderErrorMessage from '@dashboard/utils/errors/order';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, TextField } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export interface FormData {
   trackingNumber: string;
@@ -32,9 +25,7 @@ export interface OrderFulfillmentTrackingDialogProps {
   onConfirm(data: FormData);
 }
 
-const OrderFulfillmentTrackingDialog: React.FC<
-  OrderFulfillmentTrackingDialogProps
-> = ({
+const OrderFulfillmentTrackingDialog: React.FC<OrderFulfillmentTrackingDialogProps> = ({
   confirmButtonState,
   errors: apiErrors,
   open,
@@ -45,11 +36,11 @@ const OrderFulfillmentTrackingDialog: React.FC<
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
 
-  const formFields = ["trackingNumber"];
+  const formFields = ['trackingNumber'];
   const formErrors = getFormErrors(formFields, errors);
 
   const initialData: FormData = {
-    trackingNumber: trackingNumber || "",
+    trackingNumber: trackingNumber || '',
   };
 
   return (
@@ -58,22 +49,15 @@ const OrderFulfillmentTrackingDialog: React.FC<
         {({ change, data, submit }) => (
           <>
             <DialogTitle disableTypography>
-              <FormattedMessage
-                id="/BJQIq"
-                defaultMessage="Add Tracking Code"
-                description="dialog header"
-              />
+              <FormattedMessage id="/BJQIq" defaultMessage="Add Tracking Code" description="dialog header" />
             </DialogTitle>
             <DialogContent>
               <TextField
                 error={!!formErrors.trackingNumber}
-                helperText={getOrderErrorMessage(
-                  formErrors.trackingNumber,
-                  intl,
-                )}
+                helperText={getOrderErrorMessage(formErrors.trackingNumber, intl)}
                 label={intl.formatMessage({
-                  id: "yT/GAp",
-                  defaultMessage: "Tracking number",
+                  id: 'yT/GAp',
+                  defaultMessage: 'Tracking number',
                 })}
                 name="trackingNumber"
                 onChange={change}
@@ -95,10 +79,7 @@ const OrderFulfillmentTrackingDialog: React.FC<
             </DialogContent>
             <DialogActions>
               <BackButton onClick={onClose} />
-              <ConfirmButton
-                transitionState={confirmButtonState}
-                onClick={submit}
-              >
+              <ConfirmButton transitionState={confirmButtonState} onClick={submit}>
                 <FormattedMessage {...buttonMessages.confirm} />
               </ConfirmButton>
             </DialogActions>
@@ -108,5 +89,5 @@ const OrderFulfillmentTrackingDialog: React.FC<
     </Dialog>
   );
 };
-OrderFulfillmentTrackingDialog.displayName = "OrderFulfillmentTrackingDialog";
+OrderFulfillmentTrackingDialog.displayName = 'OrderFulfillmentTrackingDialog';
 export default OrderFulfillmentTrackingDialog;

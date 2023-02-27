@@ -1,32 +1,32 @@
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
 
 const useStyles = makeStyles(
   theme => ({
-    "@keyframes skeleton-animation": {
-      "0%": {
+    '@keyframes skeleton-animation': {
+      '0%': {
         opacity: 0.6,
       },
-      "100%": {
+      '100%': {
         opacity: 1,
       },
     },
     primary: {
-      "&$skeleton": {
+      '&$skeleton': {
         background: theme.palette.primary.main,
       },
     },
     skeleton: {
-      animation: "skeleton-animation .75s linear infinite forwards alternate",
+      animation: 'skeleton-animation .75s linear infinite forwards alternate',
       background: theme.palette.background.default,
       borderRadius: 4,
-      display: "block",
-      height: "0.8em",
-      margin: "0.2em 0",
+      display: 'block',
+      height: '0.8em',
+      margin: '0.2em 0',
     },
   }),
-  { name: "Skeleton" },
+  { name: 'Skeleton' },
 );
 
 interface SkeletonProps {
@@ -53,5 +53,5 @@ const Skeleton: React.FC<SkeletonProps> = props => {
   );
 };
 
-Skeleton.displayName = "Skeleton";
+Skeleton.displayName = 'Skeleton';
 export default Skeleton;

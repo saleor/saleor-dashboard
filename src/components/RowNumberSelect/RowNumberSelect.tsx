@@ -1,7 +1,7 @@
-import { MenuItem, Select } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import { MenuItem, Select } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles(
   theme => ({
@@ -9,23 +9,23 @@ const useStyles = makeStyles(
       fontSize: 14,
     },
     select: {
-      "& div": {
-        "&:focus": {
-          background: "none",
+      '& div': {
+        '&:focus': {
+          background: 'none',
         },
         color: theme.palette.primary.main,
         marginLeft: theme.spacing(1),
       },
-      "& svg": {
+      '& svg': {
         color: theme.palette.primary.main,
       },
-      "&:after, &:before, &:hover": {
-        border: "none !important",
+      '&:after, &:before, &:hover': {
+        border: 'none !important',
       },
     },
   }),
   {
-    name: "RowNumberSelect",
+    name: 'RowNumberSelect',
   },
 );
 
@@ -36,12 +36,7 @@ interface RowNumberSelectProps {
   onChange(value: number);
 }
 
-const RowNumberSelect: React.FC<RowNumberSelectProps> = ({
-  className,
-  choices,
-  rowNumber,
-  onChange,
-}) => {
+const RowNumberSelect: React.FC<RowNumberSelectProps> = ({ className, choices, rowNumber, onChange }) => {
   const classes = useStyles({});
 
   return (
@@ -57,11 +52,7 @@ const RowNumberSelect: React.FC<RowNumberSelectProps> = ({
       >
         {choices.length > 0 &&
           choices.map(choice => (
-            <MenuItem
-              value={choice}
-              key={choice}
-              data-test-id="row-number-option"
-            >
+            <MenuItem value={choice} key={choice} data-test-id="row-number-option">
               {choice}
             </MenuItem>
           ))}

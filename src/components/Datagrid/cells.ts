@@ -1,15 +1,8 @@
-import {
-  NumberCell,
-  numberCellEmptyValue,
-} from "@dashboard/components/Datagrid/NumberCell";
-import { GridCell, GridCellKind } from "@glideapps/glide-data-grid";
+import { NumberCell, numberCellEmptyValue } from '@dashboard/components/Datagrid/NumberCell';
+import { GridCell, GridCellKind } from '@glideapps/glide-data-grid';
 
-import {
-  DropdownCell,
-  DropdownCellContentProps,
-  DropdownChoice,
-} from "./DropdownCell";
-import { MoneyCell } from "./MoneyCell";
+import { DropdownCell, DropdownCellContentProps, DropdownChoice } from './DropdownCell';
+import { MoneyCell } from './MoneyCell';
 
 const common = {
   allowOverlay: true,
@@ -34,17 +27,15 @@ export function booleanCell(value: boolean): GridCell {
   };
 }
 
-export function numberCell(
-  value: number | typeof numberCellEmptyValue,
-): NumberCell {
+export function numberCell(value: number | typeof numberCellEmptyValue): NumberCell {
   return {
     ...common,
     data: {
-      kind: "number-cell",
+      kind: 'number-cell',
       value,
     },
     kind: GridCellKind.Custom,
-    copyData: value !== numberCellEmptyValue ? value.toString() : "",
+    copyData: value !== numberCellEmptyValue ? value.toString() : '',
   };
 }
 
@@ -53,27 +44,24 @@ export function moneyCell(value: number | null, currency: string): MoneyCell {
     ...common,
     kind: GridCellKind.Custom,
     data: {
-      kind: "money-cell",
+      kind: 'money-cell',
       value,
       currency,
     },
-    copyData: value?.toString() ?? "",
+    copyData: value?.toString() ?? '',
   };
 }
 
 export function dropdownCell(
   value: DropdownChoice,
   opts: DropdownCellContentProps &
-    (
-      | { choices: DropdownChoice[] }
-      | { update: (text: string) => Promise<DropdownChoice[]> }
-    ),
+    ({ choices: DropdownChoice[] } | { update: (text: string) => Promise<DropdownChoice[]> }),
 ): DropdownCell {
   return {
     ...common,
     data: {
       ...opts,
-      kind: "dropdown-cell",
+      kind: 'dropdown-cell',
       value,
     },
     kind: GridCellKind.Custom,

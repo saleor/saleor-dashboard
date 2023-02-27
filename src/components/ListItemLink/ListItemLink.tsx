@@ -1,11 +1,10 @@
-import { BaseListItemProps, ListItem, makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
+import { BaseListItemProps, ListItem, makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
 
-import Link from "../Link";
+import Link from '../Link';
 
-export interface ListItemLinkProps
-  extends Omit<BaseListItemProps, "onClick" | "classes"> {
+export interface ListItemLinkProps extends Omit<BaseListItemProps, 'onClick' | 'classes'> {
   href?: string;
   className?: string;
   linkClassName?: string;
@@ -14,19 +13,14 @@ export interface ListItemLinkProps
 const useStyles = makeStyles(
   {
     link: {
-      all: "inherit",
-      display: "contents",
+      all: 'inherit',
+      display: 'contents',
     },
   },
-  { name: "ListItemLink" },
+  { name: 'ListItemLink' },
 );
 
-export const ListItemLink: React.FC<ListItemLinkProps> = ({
-  href,
-  children,
-  linkClassName,
-  ...props
-}) => {
+export const ListItemLink: React.FC<ListItemLinkProps> = ({ href, children, linkClassName, ...props }) => {
   const classes = useStyles();
 
   if (!href) {

@@ -2,19 +2,19 @@ import {
   LanguageCodeEnum,
   useSaleTranslationDetailsQuery,
   useUpdateSaleTranslationsMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors } from "@dashboard/misc";
-import { stringifyQs } from "@dashboard/utils/urls";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import useShop from '@dashboard/hooks/useShop';
+import { commonMessages } from '@dashboard/intl';
+import { extractMutationErrors } from '@dashboard/misc';
+import { stringifyQs } from '@dashboard/utils/urls';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import TranslationsSalesPage from "../components/TranslationsSalesPage";
-import { TranslationField, TranslationInputFieldName } from "../types";
-import { getParsedTranslationInputData } from "../utils";
+import TranslationsSalesPage from '../components/TranslationsSalesPage';
+import { TranslationField, TranslationInputFieldName } from '../types';
+import { getParsedTranslationInputData } from '../utils';
 
 export interface TranslationsSalesQueryParams {
   activeField: string;
@@ -25,11 +25,7 @@ export interface TranslationsSalesProps {
   params: TranslationsSalesQueryParams;
 }
 
-const TranslationsSales: React.FC<TranslationsSalesProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsSales: React.FC<TranslationsSalesProps> = ({ id, languageCode, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -39,25 +35,22 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
     variables: { id, language: languageCode },
   });
 
-  const [
-    updateTranslations,
-    updateTranslationsOpts,
-  ] = useUpdateSaleTranslationsMutation({
+  const [updateTranslations, updateTranslationsOpts] = useUpdateSaleTranslationsMutation({
     onCompleted: data => {
       if (data.saleTranslate.errors.length === 0) {
         saleTranslations.refetch();
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate("?", { replace: true });
+        navigate('?', { replace: true });
       }
     },
   });
 
   const onEdit = (field: string) =>
     navigate(
-      "?" +
+      '?' +
         stringifyQs({
           activeField: field,
         }),
@@ -65,13 +58,10 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
     );
 
   const onDiscard = () => {
-    navigate("?", { replace: true });
+    navigate('?', { replace: true });
   };
 
-  const handleSubmit = (
-    { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string,
-  ) =>
+  const handleSubmit = ({ name: fieldName }: TranslationField<TranslationInputFieldName>, data: string) =>
     extractMutationErrors(
       updateTranslations({
         variables: {
@@ -98,13 +88,9 @@ const TranslationsSales: React.FC<TranslationsSalesProps> = ({
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      data={
-        translation?.__typename === "SaleTranslatableContent"
-          ? translation
-          : null
-      }
+      data={translation?.__typename === 'SaleTranslatableContent' ? translation : null}
     />
   );
 };
-TranslationsSales.displayName = "TranslationsSales";
+TranslationsSales.displayName = 'TranslationsSales';
 export default TranslationsSales;

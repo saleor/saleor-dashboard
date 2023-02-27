@@ -1,10 +1,10 @@
-import { Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
 
-import ExtendedPageHeader from "../ExtendedPageHeader";
-import PreviewPill from "../PreviewPill";
-import Skeleton from "../Skeleton";
+import ExtendedPageHeader from '../ExtendedPageHeader';
+import PreviewPill from '../PreviewPill';
+import Skeleton from '../Skeleton';
 
 const useStyles = makeStyles(
   theme => ({
@@ -12,36 +12,36 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(4),
     },
     preview: {
-      position: "absolute",
+      position: 'absolute',
       top: theme.spacing(-4),
     },
     root: {
-      alignItems: "center",
-      display: "flex",
-      [theme.breakpoints.down("xs")]: {
-        flexDirection: "column",
-        alignItems: "flex-start",
-        "& > *": {
-          width: "100%",
+      alignItems: 'center',
+      display: 'flex',
+      [theme.breakpoints.down('xs')]: {
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        '& > *': {
+          width: '100%',
         },
-        "& > *:not(first-child)": {
+        '& > *:not(first-child)': {
           marginTop: theme.spacing(2),
         },
       },
     },
     title: {
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down('sm')]: {
         fontSize: 20,
         padding: 0,
       },
       fontWeight: 700,
       flex: 1,
-      whiteSpace: "nowrap",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
+      whiteSpace: 'nowrap',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
     },
   }),
-  { name: "PageHeader" },
+  { name: 'PageHeader' },
 );
 
 interface PageHeaderProps {
@@ -56,16 +56,7 @@ interface PageHeaderProps {
 }
 
 const PageHeader: React.FC<PageHeaderProps> = props => {
-  const {
-    children,
-    className,
-    inline,
-    underline,
-    limitText,
-    title,
-    cardMenu,
-    preview,
-  } = props;
+  const { children, className, inline, underline, limitText, title, cardMenu, preview } = props;
 
   const classes = useStyles(props);
 
@@ -80,11 +71,7 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
         title={
           <>
             <Typography className={classes.title} variant="h3">
-              {title !== undefined ? (
-                title
-              ) : (
-                <Skeleton style={{ width: "10em" }} />
-              )}
+              {title !== undefined ? title : <Skeleton style={{ width: '10em' }} />}
             </Typography>
             {cardMenu}
           </>
@@ -103,5 +90,5 @@ const PageHeader: React.FC<PageHeaderProps> = props => {
   );
 };
 
-PageHeader.displayName = "PageHeader";
+PageHeader.displayName = 'PageHeader';
 export default PageHeader;

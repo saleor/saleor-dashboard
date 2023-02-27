@@ -1,14 +1,14 @@
-import { ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
-import CardTitle from "@dashboard/components/CardTitle";
-import { SearchWarehousesQuery } from "@dashboard/graphql";
-import { sectionNames } from "@dashboard/intl";
-import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import React from "react";
-import { useIntl } from "react-intl";
+import { ChannelWarehouses } from '@dashboard/channels/pages/ChannelDetailsPage/types';
+import CardTitle from '@dashboard/components/CardTitle';
+import { SearchWarehousesQuery } from '@dashboard/graphql';
+import { sectionNames } from '@dashboard/intl';
+import { FetchMoreProps, RelayToFlat, ReorderAction } from '@dashboard/types';
+import { Card, CardContent, Typography } from '@material-ui/core';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import AssignmentList from "../AssignmentList";
-import { messages } from "./messages";
+import AssignmentList from '../AssignmentList';
+import { messages } from './messages';
 
 export interface WarehousesProps {
   addWarehouse: (id: string) => void;
@@ -19,7 +19,7 @@ export interface WarehousesProps {
   totalCount: number;
   fetchMoreWarehouses: FetchMoreProps;
   warehouses: ChannelWarehouses;
-  warehousesChoices: RelayToFlat<SearchWarehousesQuery["search"]>;
+  warehousesChoices: RelayToFlat<SearchWarehousesQuery['search']>;
 }
 
 const Warehouses: React.FC<WarehousesProps> = props => {

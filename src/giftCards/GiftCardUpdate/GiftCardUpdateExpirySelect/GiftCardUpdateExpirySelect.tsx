@@ -1,14 +1,14 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
-import useGiftCardUpdateForm from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { TextField, Typography } from "@material-ui/core";
-import React, { useEffect } from "react";
-import { useIntl } from "react-intl";
+import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
+import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
+import { getGiftCardErrorMessage } from '@dashboard/giftCards/GiftCardUpdate/messages';
+import useGiftCardUpdateForm from '@dashboard/giftCards/GiftCardUpdate/providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm';
+import useStateFromProps from '@dashboard/hooks/useStateFromProps';
+import { TextField, Typography } from '@material-ui/core';
+import React, { useEffect } from 'react';
+import { useIntl } from 'react-intl';
 
-import { giftCardExpirySelectMessages as messages } from "./messages";
-import { useGiftCardExpirySelectStyles as useStyles } from "./styles";
+import { giftCardExpirySelectMessages as messages } from './messages';
+import { useGiftCardExpirySelectStyles as useStyles } from './styles';
 
 const GiftCardUpdateExpirySelect: React.FC = () => {
   const intl = useIntl();
@@ -20,15 +20,13 @@ const GiftCardUpdateExpirySelect: React.FC = () => {
     formErrors,
   } = useGiftCardUpdateForm();
 
-  const [cardExpiresSelected, setCardExpiresSelected] = useStateFromProps(
-    !!expiryDate,
-  );
+  const [cardExpiresSelected, setCardExpiresSelected] = useStateFromProps(!!expiryDate);
 
   useEffect(() => {
     if (!cardExpiresSelected) {
       change({
         target: {
-          name: "expiryDate",
+          name: 'expiryDate',
           value: null,
         },
       });
@@ -51,7 +49,7 @@ const GiftCardUpdateExpirySelect: React.FC = () => {
           error={!!formErrors?.expiryDate}
           helperText={getGiftCardErrorMessage(formErrors?.expiryDate, intl)}
           onChange={change}
-          name={"expiryDate"}
+          name={'expiryDate'}
           fullWidth
           className={classes.dateField}
           label={intl.formatMessage(messages.expiryDateLabel)}

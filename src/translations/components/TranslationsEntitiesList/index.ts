@@ -1,2 +1,2 @@
-export { default } from "./TranslationsEntitiesList";
-export * from "./TranslationsEntitiesList";
+export { default } from './TranslationsEntitiesList';
+export * from './TranslationsEntitiesList';

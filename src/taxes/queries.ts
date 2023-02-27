@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const taxConfigurationsList = gql`
   query TaxConfigurationsList(
@@ -8,13 +8,7 @@ export const taxConfigurationsList = gql`
     $last: Int
     $filter: TaxConfigurationFilterInput
   ) {
-    taxConfigurations(
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-      filter: $filter
-    ) {
+    taxConfigurations(before: $before, after: $after, first: $first, last: $last, filter: $filter) {
       edges {
         node {
           ...TaxConfiguration
@@ -41,14 +35,7 @@ export const taxClassesList = gql`
     $filter: TaxClassFilterInput
     $sortBy: TaxClassSortingInput
   ) {
-    taxClasses(
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-      filter: $filter
-      sortBy: $sortBy
-    ) {
+    taxClasses(before: $before, after: $after, first: $first, last: $last, filter: $filter, sortBy: $sortBy) {
       edges {
         node {
           ...TaxClass

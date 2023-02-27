@@ -1,2 +1,2 @@
-export { default } from "./CardMenu";
-export * from "./CardMenu";
+export { default } from './CardMenu';
+export * from './CardMenu';

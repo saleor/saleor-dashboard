@@ -1,14 +1,11 @@
-import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import { DefaultTheme, useTheme as useMacawTheme } from "@saleor/macaw-ui/next";
+import useLocalStorage from '@dashboard/hooks/useLocalStorage';
+import { DefaultTheme, useTheme as useMacawTheme } from '@saleor/macaw-ui/next';
 
-import { defaultTheme, localStorageKey } from "./consts";
+import { defaultTheme, localStorageKey } from './consts';
 
 export const useTheme = () => {
   const { theme, setTheme } = useMacawTheme();
-  const [, setActiveTheme] = useLocalStorage<DefaultTheme>(
-    localStorageKey,
-    defaultTheme,
-  );
+  const [, setActiveTheme] = useLocalStorage<DefaultTheme>(localStorageKey, defaultTheme);
 
   return {
     theme,

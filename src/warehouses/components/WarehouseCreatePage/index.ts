@@ -1,2 +1,2 @@
-export { default } from "./WarehouseCreatePage";
-export * from "./WarehouseCreatePage";
+export { default } from './WarehouseCreatePage';
+export * from './WarehouseCreatePage';

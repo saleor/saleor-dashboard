@@ -1,5 +1,5 @@
-import { useTheme } from "@saleor/macaw-ui";
-import { useEffect, useState } from "react";
+import { useTheme } from '@saleor/macaw-ui';
+import { useEffect, useState } from 'react';
 
 export const useDelayedState = (state: boolean) => {
   const {

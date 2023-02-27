@@ -1,17 +1,17 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up('lg')]: {
       colAction: {
-        "& svg": {
+        '& svg': {
           color: theme.palette.primary.main,
         },
-        textAlign: "right" as "right",
+        textAlign: 'right' as 'right',
       },
       colName: {
-        "&&": {
-          width: "auto",
+        '&&': {
+          width: 'auto',
         },
       },
     },
@@ -23,14 +23,14 @@ export const useStyles = makeStyles(
       color: theme.palette.text.secondary,
     },
     colRight: {
-      textAlign: "right",
+      textAlign: 'right',
     },
     table: {
-      tableLayout: "fixed",
+      tableLayout: 'fixed',
     },
     tableRow: {
-      cursor: "pointer",
+      cursor: 'pointer',
     },
   }),
-  { name: "WebhooksList" },
+  { name: 'WebhooksList' },
 );

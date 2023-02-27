@@ -1,36 +1,28 @@
-import ConfirmButton from "@dashboard/components/ConfirmButton";
-import { Task } from "@dashboard/containers/BackgroundTasks/types";
-import {
-  useExportGiftCardsMutation,
-  useGiftCardTotalCountQuery,
-} from "@dashboard/graphql";
-import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
-import useForm from "@dashboard/hooks/useForm";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import ExportDialogSettings from "@dashboard/products/components/ProductExportDialog/ExportDialogSettings";
+import ConfirmButton from '@dashboard/components/ConfirmButton';
+import { Task } from '@dashboard/containers/BackgroundTasks/types';
+import { useExportGiftCardsMutation, useGiftCardTotalCountQuery } from '@dashboard/graphql';
+import useBackgroundTask from '@dashboard/hooks/useBackgroundTask';
+import useForm from '@dashboard/hooks/useForm';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import ExportDialogSettings from '@dashboard/products/components/ProductExportDialog/ExportDialogSettings';
 import {
   ExportSettingsFormData,
   exportSettingsInitialFormData,
   exportSettingsInitialFormDataWithIds,
-} from "@dashboard/products/components/ProductExportDialog/types";
-import { DialogProps } from "@dashboard/types";
-import {
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  Typography,
-} from "@material-ui/core";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/products/components/ProductExportDialog/types';
+import { DialogProps } from '@dashboard/types';
+import { DialogActions, DialogContent, DialogTitle, Typography } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import ContentWithProgress from "../GiftCardCreateDialog/ContentWithProgress";
-import { useGiftCardList } from "../GiftCardsList/providers/GiftCardListProvider";
-import { giftCardExportDialogMessages as messages } from "./messages";
-import useStyles from "./styles";
-import { getExportGiftCardsInput } from "./utils";
+import ContentWithProgress from '../GiftCardCreateDialog/ContentWithProgress';
+import { useGiftCardList } from '../GiftCardsList/providers/GiftCardListProvider';
+import { giftCardExportDialogMessages as messages } from './messages';
+import useStyles from './styles';
+import { getExportGiftCardsInput } from './utils';
 
 const GiftCardExportDialog: React.FC<
-  Pick<DialogProps, "onClose"> & {
+  Pick<DialogProps, 'onClose'> & {
     idsToExport?: string[] | null;
   }
 > = ({ onClose, idsToExport }) => {
@@ -41,16 +33,11 @@ const GiftCardExportDialog: React.FC<
 
   const hasIdsToExport = !!idsToExport?.length;
 
-  const {
-    loading: loadingGiftCardList,
-    totalCount: filteredGiftCardsCount,
-    listElements,
-  } = useGiftCardList();
+  const { loading: loadingGiftCardList, totalCount: filteredGiftCardsCount, listElements } = useGiftCardList();
 
   const selectedIds = idsToExport ?? listElements;
 
-  const { data: allGiftCardsCountData, loading: loadingGiftCardCount } =
-    useGiftCardTotalCountQuery();
+  const { data: allGiftCardsCountData, loading: loadingGiftCardCount } = useGiftCardTotalCountQuery();
 
   const loading = loadingGiftCardList || loadingGiftCardCount;
 
@@ -85,9 +72,7 @@ const GiftCardExportDialog: React.FC<
   };
 
   const { data, change, submit } = useForm(
-    hasIdsToExport
-      ? exportSettingsInitialFormDataWithIds
-      : exportSettingsInitialFormData,
+    hasIdsToExport ? exportSettingsInitialFormDataWithIds : exportSettingsInitialFormData,
     handleSubmit,
   );
   const allGiftCardsCount = allGiftCardsCountData?.giftCards?.totalCount;
@@ -95,19 +80,19 @@ const GiftCardExportDialog: React.FC<
   const exportScopeLabels = {
     allItems: intl.formatMessage(
       {
-        id: "uQk8gB",
-        defaultMessage: "All gift cards ({number})",
-        description: "export all items to csv file",
+        id: 'uQk8gB',
+        defaultMessage: 'All gift cards ({number})',
+        description: 'export all items to csv file',
       },
       {
-        number: allGiftCardsCount || "...",
+        number: allGiftCardsCount || '...',
       },
     ),
     selectedItems: intl.formatMessage(
       {
-        id: "n97Ii0",
-        defaultMessage: "Selected giftCards ({number})",
-        description: "export selected items to csv file",
+        id: 'n97Ii0',
+        defaultMessage: 'Selected giftCards ({number})',
+        description: 'export selected items to csv file',
       },
       {
         number: listElements.length,

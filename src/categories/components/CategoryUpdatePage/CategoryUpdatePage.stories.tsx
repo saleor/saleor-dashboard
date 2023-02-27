@@ -1,51 +1,43 @@
-import placeholderImage from "@assets/images/placeholder255x255.png";
-import { category as categoryFixture } from "@dashboard/categories/fixtures";
-import { listActionsProps } from "@dashboard/fixtures";
-import { ProductErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import placeholderImage from '@assets/images/placeholder255x255.png';
+import { category as categoryFixture } from '@dashboard/categories/fixtures';
+import { listActionsProps } from '@dashboard/fixtures';
+import { ProductErrorCode } from '@dashboard/graphql';
+import Decorator from '@dashboard/storybook/Decorator';
+import { PaginatorContextDecorator } from '@dashboard/storybook/PaginatorContextDecorator';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import CategoryUpdatePage, {
-  CategoryPageTab,
-  CategoryUpdatePageProps,
-} from "./CategoryUpdatePage";
+import CategoryUpdatePage, { CategoryPageTab, CategoryUpdatePageProps } from './CategoryUpdatePage';
 
 const category = categoryFixture(placeholderImage);
 
-const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
+const updateProps: Omit<CategoryUpdatePageProps, 'classes'> = {
   category,
-  categoryId: "123",
+  categoryId: '123',
   changeTab: undefined,
   currentTab: CategoryPageTab.categories,
   disabled: false,
   errors: [],
-  addProductHref: "",
+  addProductHref: '',
   onDelete: () => undefined,
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
   onSubmit: () => undefined,
   productListToolbar: null,
   products: mapEdgesToItems(category.products),
-  saveButtonBarState: "default",
+  saveButtonBarState: 'default',
   subcategories: mapEdgesToItems(category.children),
   subcategoryListToolbar: null,
   ...listActionsProps,
 };
 
-storiesOf("Categories / Update category", module)
+storiesOf('Categories / Update category', module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <CategoryUpdatePage {...updateProps} />)
-  .add("products", () => (
-    <CategoryUpdatePage
-      {...updateProps}
-      currentTab={CategoryPageTab.products}
-    />
-  ))
-  .add("no background", () => (
+  .add('default', () => <CategoryUpdatePage {...updateProps} />)
+  .add('products', () => <CategoryUpdatePage {...updateProps} currentTab={CategoryPageTab.products} />)
+  .add('no background', () => (
     <CategoryUpdatePage
       {...updateProps}
       category={{
@@ -54,17 +46,9 @@ storiesOf("Categories / Update category", module)
       }}
     />
   ))
-  .add("no subcategories", () => (
-    <CategoryUpdatePage {...updateProps} subcategories={[]} />
-  ))
-  .add("no products", () => (
-    <CategoryUpdatePage
-      {...updateProps}
-      products={[]}
-      currentTab={CategoryPageTab.products}
-    />
-  ))
-  .add("loading", () => (
+  .add('no subcategories', () => <CategoryUpdatePage {...updateProps} subcategories={[]} />)
+  .add('no products', () => <CategoryUpdatePage {...updateProps} products={[]} currentTab={CategoryPageTab.products} />)
+  .add('loading', () => (
     <CategoryUpdatePage
       {...updateProps}
       subcategories={undefined}
@@ -73,22 +57,22 @@ storiesOf("Categories / Update category", module)
       category={undefined}
     />
   ))
-  .add("form errors", () => (
+  .add('form errors', () => (
     <CategoryUpdatePage
       {...updateProps}
       errors={[
         {
           code: ProductErrorCode.REQUIRED,
-          field: "name",
-          message: "Product field name required",
+          field: 'name',
+          message: 'Product field name required',
         },
         {
           code: ProductErrorCode.REQUIRED,
-          field: "description",
-          message: "Product field description required",
+          field: 'description',
+          message: 'Product field description required',
         },
       ].map(err => ({
-        __typename: "ProductError",
+        __typename: 'ProductError',
         ...err,
       }))}
     />

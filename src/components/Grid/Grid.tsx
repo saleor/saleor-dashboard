@@ -1,8 +1,8 @@
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
 
-export type GridVariant = "default" | "inverted" | "uniform";
+export type GridVariant = 'default' | 'inverted' | 'uniform';
 export interface GridProps {
   children: React.ReactNodeArray | React.ReactNode;
   className?: string;
@@ -13,30 +13,30 @@ export interface GridProps {
 const useStyles = makeStyles(
   theme => ({
     default: {
-      gridTemplateColumns: "9fr 4fr",
+      gridTemplateColumns: '9fr 4fr',
     },
     inverted: {
-      gridTemplateColumns: "4fr 9fr",
+      gridTemplateColumns: '4fr 9fr',
     },
     root: {
-      "& > div": {
+      '& > div': {
         minWidth: 0,
       },
-      display: "grid",
+      display: 'grid',
       gridColumnGap: theme.spacing(3),
       gridRowGap: theme.spacing(3),
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down('sm')]: {
         gridRowGap: theme.spacing(1),
-        gridTemplateColumns: "1fr",
+        gridTemplateColumns: '1fr',
       },
     },
     uniform: {
-      gridTemplateColumns: "1fr 1fr",
+      gridTemplateColumns: '1fr 1fr',
     },
     // TODO: Remove me
     richText: {},
   }),
-  { name: "Grid" },
+  { name: 'Grid' },
 );
 
 export const Grid: React.FC<GridProps> = props => {
@@ -47,9 +47,9 @@ export const Grid: React.FC<GridProps> = props => {
   return (
     <div
       className={clsx(className, classes.root, {
-        [classes.default]: variant === "default",
-        [classes.inverted]: variant === "inverted",
-        [classes.uniform]: variant === "uniform",
+        [classes.default]: variant === 'default',
+        [classes.inverted]: variant === 'inverted',
+        [classes.uniform]: variant === 'uniform',
         [classes.richText]: richText,
       })}
     >
@@ -57,8 +57,8 @@ export const Grid: React.FC<GridProps> = props => {
     </div>
   );
 };
-Grid.displayName = "Grid";
+Grid.displayName = 'Grid';
 Grid.defaultProps = {
-  variant: "default",
+  variant: 'default',
 };
 export default Grid;

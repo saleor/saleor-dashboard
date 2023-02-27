@@ -1,20 +1,14 @@
-import {
-  PostalCodeRuleInclusionTypeEnum,
-  ShippingMethodWithPostalCodesFragment,
-} from "@dashboard/graphql";
+import { PostalCodeRuleInclusionTypeEnum, ShippingMethodWithPostalCodesFragment } from '@dashboard/graphql';
 
 export interface PostalCodesState {
   codesToDelete?: string[];
   havePostalCodesChanged?: boolean;
   inclusionType?: PostalCodeRuleInclusionTypeEnum;
-  originalCodes?: ShippingMethodWithPostalCodesFragment["postalCodeRules"];
-  postalCodeRules?: ShippingMethodWithPostalCodesFragment["postalCodeRules"];
+  originalCodes?: ShippingMethodWithPostalCodesFragment['postalCodeRules'];
+  postalCodeRules?: ShippingMethodWithPostalCodesFragment['postalCodeRules'];
 }
 
-function postalCodesReducer(
-  prevState: PostalCodesState,
-  newState: PostalCodesState,
-) {
+function postalCodesReducer(prevState: PostalCodesState, newState: PostalCodesState) {
   return { ...prevState, ...newState };
 }
 

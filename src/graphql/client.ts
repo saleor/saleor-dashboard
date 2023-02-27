@@ -1,12 +1,12 @@
 // DON'T TOUCH THIS
 // These are separate clients and do not share configs between themselves
-import { ApolloClient, ApolloLink, InMemoryCache } from "@apollo/client";
-import { createFetch, createSaleorClient } from "@saleor/sdk";
-import { createUploadLink } from "apollo-upload-client";
+import { ApolloClient, ApolloLink, InMemoryCache } from '@apollo/client';
+import { createFetch, createSaleorClient } from '@saleor/sdk';
+import { createUploadLink } from 'apollo-upload-client';
 
-import { getApiUrl } from "../config";
-import introspectionQueryResultData from "./fragmentTypes.generated";
-import { TypedTypePolicies } from "./typePolicies.generated";
+import { getApiUrl } from '../config';
+import introspectionQueryResultData from './fragmentTypes.generated';
+import { TypedTypePolicies } from './typePolicies.generated';
 
 const attachVariablesLink = new ApolloLink((operation, forward) =>
   forward(operation).map(data => ({
@@ -20,7 +20,7 @@ const attachVariablesLink = new ApolloLink((operation, forward) =>
 
 export const link = attachVariablesLink.concat(
   createUploadLink({
-    credentials: "include",
+    credentials: 'include',
     uri: getApiUrl(),
     fetch: createFetch(),
   }),
@@ -31,7 +31,7 @@ export const apolloClient = new ApolloClient({
     possibleTypes: introspectionQueryResultData.possibleTypes,
     typePolicies: {
       CountryDisplay: {
-        keyFields: ["code"],
+        keyFields: ['code'],
       },
       Money: {
         merge: false,
@@ -57,7 +57,7 @@ export const apolloClient = new ApolloClient({
            */
           slug: (givenSlug, { readField }) => {
             if (!givenSlug) {
-              return readField("name");
+              return readField('name');
             }
 
             return givenSlug;
@@ -71,5 +71,5 @@ export const apolloClient = new ApolloClient({
 
 export const saleorClient = createSaleorClient({
   apiUrl: getApiUrl(),
-  channel: "",
+  channel: '',
 });

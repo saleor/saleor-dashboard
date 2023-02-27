@@ -1,33 +1,28 @@
-import { channelsList } from "@dashboard/channels/fixtures";
-import { createChannelsDataWithDiscountPrice } from "@dashboard/channels/utils";
-import { listActionsProps, pageListProps } from "@dashboard/fixtures";
-import { DiscountErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { channelsList } from '@dashboard/channels/fixtures';
+import { createChannelsDataWithDiscountPrice } from '@dashboard/channels/utils';
+import { listActionsProps, pageListProps } from '@dashboard/fixtures';
+import { DiscountErrorCode } from '@dashboard/graphql';
+import Decorator from '@dashboard/storybook/Decorator';
+import { PaginatorContextDecorator } from '@dashboard/storybook/PaginatorContextDecorator';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import { voucherDetails } from "../../fixtures";
+import { voucherDetails } from '../../fixtures';
 import VoucherDetailsPage, {
   VoucherDetailsPageFormData,
   VoucherDetailsPageProps,
   VoucherDetailsPageTab,
-} from "./VoucherDetailsPage";
+} from './VoucherDetailsPage';
 
-const channels = createChannelsDataWithDiscountPrice(
-  voucherDetails,
-  channelsList,
-);
+const channels = createChannelsDataWithDiscountPrice(voucherDetails, channelsList);
 
 const props: VoucherDetailsPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
   activeTab: VoucherDetailsPageTab.products,
   tabItemsCount: {
-    [VoucherDetailsPageTab.categories]:
-      voucherDetails.categoriesCount.totalCount,
-    [VoucherDetailsPageTab.collections]:
-      voucherDetails.collectionsCount.totalCount,
+    [VoucherDetailsPageTab.categories]: voucherDetails.categoriesCount.totalCount,
+    [VoucherDetailsPageTab.collections]: voucherDetails.collectionsCount.totalCount,
     [VoucherDetailsPageTab.products]: voucherDetails.productsCount.totalCount,
   },
   allChannelsCount: channels.length,
@@ -49,38 +44,38 @@ const props: VoucherDetailsPageProps = {
   onTabClick: () => undefined,
   openChannelsModal: () => undefined,
   productListToolbar: null,
-  saveButtonBarState: "default",
-  selectedChannelId: "123",
+  saveButtonBarState: 'default',
+  selectedChannelId: '123',
   voucher: voucherDetails,
 };
 
-storiesOf("Discounts / Voucher details", module)
+storiesOf('Discounts / Voucher details', module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <VoucherDetailsPage {...props} />)
-  .add("loading", () => (
-    <VoucherDetailsPage {...props} disabled={true} voucher={undefined} />
-  ))
-  .add("form errors", () => (
+  .add('default', () => <VoucherDetailsPage {...props} />)
+  .add('loading', () => <VoucherDetailsPage {...props} disabled={true} voucher={undefined} />)
+  .add('form errors', () => (
     <VoucherDetailsPage
       {...props}
-      errors={([
-        "applyOncePerOrder",
-        "code",
-        "discountType",
-        "endDate",
-        "minSpent",
-        "name",
-        "startDate",
-        "type",
-        "usageLimit",
-        "discountValue",
-      ] as Array<keyof VoucherDetailsPageFormData>).map(field => ({
-        __typename: "DiscountError",
+      errors={(
+        [
+          'applyOncePerOrder',
+          'code',
+          'discountType',
+          'endDate',
+          'minSpent',
+          'name',
+          'startDate',
+          'type',
+          'usageLimit',
+          'discountValue',
+        ] as Array<keyof VoucherDetailsPageFormData>
+      ).map(field => ({
+        __typename: 'DiscountError',
         channels: [],
         code: DiscountErrorCode.INVALID,
         field,
-        message: "Discount invalid",
+        message: 'Discount invalid',
       }))}
     />
   ));

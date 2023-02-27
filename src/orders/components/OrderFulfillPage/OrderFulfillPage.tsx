@@ -1,12 +1,12 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import Form from "@dashboard/components/Form";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Savebar from "@dashboard/components/Savebar";
-import Skeleton from "@dashboard/components/Skeleton";
-import TableRowLink from "@dashboard/components/TableRowLink";
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import CardTitle from '@dashboard/components/CardTitle';
+import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
+import Form from '@dashboard/components/Form';
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Savebar from '@dashboard/components/Savebar';
+import Skeleton from '@dashboard/components/Skeleton';
+import TableRowLink from '@dashboard/components/TableRowLink';
 import {
   FulfillOrderMutation,
   OrderErrorCode,
@@ -14,40 +14,30 @@ import {
   OrderFulfillLineFragment,
   OrderFulfillStockInput,
   ShopOrderSettingsFragment,
-} from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useFormset, { FormsetData } from "@dashboard/hooks/useFormset";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { commonMessages } from "@dashboard/intl";
-import { renderCollection } from "@dashboard/misc";
-import OrderChangeWarehouseDialog from "@dashboard/orders/components/OrderChangeWarehouseDialog";
-import {
-  OrderFulfillUrlDialog,
-  OrderFulfillUrlQueryParams,
-  orderUrl,
-} from "@dashboard/orders/urls";
+} from '@dashboard/graphql';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import useFormset, { FormsetData } from '@dashboard/hooks/useFormset';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { commonMessages } from '@dashboard/intl';
+import { renderCollection } from '@dashboard/misc';
+import OrderChangeWarehouseDialog from '@dashboard/orders/components/OrderChangeWarehouseDialog';
+import { OrderFulfillUrlDialog, OrderFulfillUrlQueryParams, orderUrl } from '@dashboard/orders/urls';
 import {
   getAttributesCaption,
   getLineAllocationWithHighestQuantity,
   getToFulfillOrderLines,
   OrderFulfillLineFormData,
-} from "@dashboard/orders/utils/data";
-import {
-  Card,
-  CardContent,
-  TableBody,
-  TableCell,
-  TableHead,
-} from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/orders/utils/data';
+import { Card, CardContent, TableBody, TableCell, TableHead } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";
-import OrderFulfillStockExceededDialog from "../OrderFulfillStockExceededDialog";
-import { messages } from "./messages";
-import { useStyles } from "./styles";
+import OrderFulfillLine from '../OrderFulfillLine/OrderFulfillLine';
+import OrderFulfillStockExceededDialog from '../OrderFulfillStockExceededDialog';
+import { messages } from './messages';
+import { useStyles } from './styles';
 
 interface OrderFulfillFormData {
   sendInfo: boolean;
@@ -59,15 +49,12 @@ export interface OrderFulfillSubmitData extends OrderFulfillFormData {
 export interface OrderFulfillPageProps {
   params: OrderFulfillUrlQueryParams;
   loading: boolean;
-  errors: FulfillOrderMutation["orderFulfill"]["errors"];
-  order: OrderFulfillDataQuery["order"];
+  errors: FulfillOrderMutation['orderFulfill']['errors'];
+  order: OrderFulfillDataQuery['order'];
   saveButtonBar: ConfirmButtonTransitionState;
   shopSettings?: ShopOrderSettingsFragment;
   onSubmit: (data: OrderFulfillSubmitData) => SubmitPromise;
-  openModal: (
-    action: OrderFulfillUrlDialog,
-    params?: OrderFulfillUrlQueryParams,
-  ) => void;
+  openModal: (action: OrderFulfillUrlDialog, params?: OrderFulfillUrlQueryParams) => void;
   closeModal: () => void;
 }
 
@@ -77,53 +64,33 @@ const initialFormData: OrderFulfillFormData = {
 };
 
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
-  const {
-    params,
-    loading,
-    errors,
-    order,
-    saveButtonBar,
-    shopSettings,
-    onSubmit,
-    openModal,
-    closeModal,
-  } = props;
+  const { params, loading, errors, order, saveButtonBar, shopSettings, onSubmit, openModal, closeModal } = props;
 
   const intl = useIntl();
   const classes = useStyles(props);
   const navigate = useNavigator();
 
-  const { change: formsetChange, data: formsetData } = useFormset<
-    null,
-    OrderFulfillLineFormData[]
-  >(
-    (getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[]).map(
-      line => {
-        const highestQuantityAllocation = getLineAllocationWithHighestQuantity(
-          line,
-        );
+  const { change: formsetChange, data: formsetData } = useFormset<null, OrderFulfillLineFormData[]>(
+    (getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[]).map(line => {
+      const highestQuantityAllocation = getLineAllocationWithHighestQuantity(line);
 
-        return {
-          data: null,
-          id: line.id,
-          label: getAttributesCaption(line?.variant?.attributes),
-          value: line?.variant?.preorder
-            ? null
-            : [
-                {
-                  quantity: line.quantityToFulfill,
-                  warehouse: highestQuantityAllocation?.warehouse,
-                },
-              ],
-        };
-      },
-    ),
+      return {
+        data: null,
+        id: line.id,
+        label: getAttributesCaption(line?.variant?.attributes),
+        value: line?.variant?.preorder
+          ? null
+          : [
+              {
+                quantity: line.quantityToFulfill,
+                warehouse: highestQuantityAllocation?.warehouse,
+              },
+            ],
+      };
+    }),
   );
 
-  const [
-    displayStockExceededDialog,
-    setDisplayStockExceededDialog,
-  ] = React.useState(false);
+  const [displayStockExceededDialog, setDisplayStockExceededDialog] = React.useState(false);
 
   const handleSubmit = ({
     formData,
@@ -148,18 +115,13 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     });
   };
   React.useEffect(() => {
-    if (
-      errors &&
-      errors.every(err => err.code === OrderErrorCode.INSUFFICIENT_STOCK)
-    ) {
+    if (errors && errors.every(err => err.code === OrderErrorCode.INSUFFICIENT_STOCK)) {
       setDisplayStockExceededDialog(true);
     }
   }, [errors]);
 
   const notAllowedToFulfillUnpaid =
-    shopSettings?.fulfillmentAutoApprove &&
-    !shopSettings?.fulfillmentAllowUnpaid &&
-    !order?.isPaid;
+    shopSettings?.fulfillmentAutoApprove && !shopSettings?.fulfillmentAllowUnpaid && !order?.isPaid;
 
   const areWarehousesSet = formsetData
     .filter(item => !!item?.value) // preorder case
@@ -174,17 +136,13 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
       return false;
     }
 
-    const isAtLeastOneFulfilled = formsetData?.some(
-      el => el.value?.[0]?.quantity > 0,
-    );
+    const isAtLeastOneFulfilled = formsetData?.some(el => el.value?.[0]?.quantity > 0);
 
     const overfulfill = formsetData
       .filter(item => !!item?.value) // this can be removed after preorder is dropped
       .some(item => {
         const formQuantityFulfilled = item?.value?.[0]?.quantity;
-        const quantityToFulfill = order?.lines?.find(
-          line => line.id === item.id,
-        ).quantityToFulfill;
+        const quantityToFulfill = order?.lines?.find(line => line.id === item.id).quantityToFulfill;
         return formQuantityFulfilled > quantityToFulfill;
       });
 
@@ -212,9 +170,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         {({ change, data, submit }) => (
           <>
             <Card>
-              <CardTitle
-                title={intl.formatMessage(messages.itemsReadyToShip)}
-              />
+              <CardTitle title={intl.formatMessage(messages.itemsReadyToShip)} />
               {order ? (
                 <ResponsiveTable className={classes.table}>
                   <TableHead>
@@ -225,12 +181,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                       <TableCell className={classes.colSku}>
                         <FormattedMessage {...messages.sku} />
                       </TableCell>
-                      <TableCell
-                        className={clsx(
-                          classes.colQuantity,
-                          classes.colQuantityHeader,
-                        )}
-                      >
+                      <TableCell className={clsx(classes.colQuantity, classes.colQuantityHeader)}>
                         <FormattedMessage {...messages.quantity} />
                       </TableCell>
                       <TableCell className={classes.colStock}>
@@ -252,11 +203,9 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                           formsetData={formsetData}
                           formsetChange={formsetChange}
                           onWarehouseChange={() =>
-                            openModal("change-warehouse", {
+                            openModal('change-warehouse', {
                               lineId: line.id,
-                              warehouseId:
-                                formsetData[lineIndex]?.value?.[0]?.warehouse
-                                  ?.id,
+                              warehouseId: formsetData[lineIndex]?.value?.[0]?.warehouse?.id,
                             })
                           }
                         />
@@ -275,9 +224,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
 
             {shopSettings?.fulfillmentAutoApprove && (
               <Card>
-                <CardTitle
-                  title={intl.formatMessage(messages.shipmentInformation)}
-                />
+                <CardTitle title={intl.formatMessage(messages.shipmentInformation)} />
                 <CardContent>
                   <ControlledCheckbox
                     checked={data.sendInfo}
@@ -298,9 +245,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
               }}
               state={saveButtonBar}
               tooltips={{
-                confirm:
-                  notAllowedToFulfillUnpaid &&
-                  intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder),
+                confirm: notAllowedToFulfillUnpaid && intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder),
               }}
               onSubmit={submit}
               onCancel={() => navigate(orderUrl(order?.id))}
@@ -317,13 +262,11 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         )}
       </Form>
       <OrderChangeWarehouseDialog
-        open={params.action === "change-warehouse"}
+        open={params.action === 'change-warehouse'}
         line={order?.lines.find(line => line.id === params.lineId)}
         currentWarehouseId={params.warehouseId}
         onConfirm={warehouse => {
-          const lineFormQuantity = formsetData.find(
-            item => item.id === params.lineId,
-          )?.value?.[0]?.quantity;
+          const lineFormQuantity = formsetData.find(item => item.id === params.lineId)?.value?.[0]?.quantity;
 
           formsetChange(params.lineId, [
             {
@@ -338,5 +281,5 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   );
 };
 
-OrderFulfillPage.displayName = "OrderFulfillPage";
+OrderFulfillPage.displayName = 'OrderFulfillPage';
 export default OrderFulfillPage;

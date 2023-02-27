@@ -1,39 +1,20 @@
-import {
-  ChannelVoucherData,
-  validateSalePrice,
-  validateVoucherPrice,
-} from "@dashboard/channels/utils";
-import {
-  ChannelSaleFormData,
-  SaleDetailsPageFormData,
-} from "@dashboard/discounts/components/SaleDetailsPage";
-import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
-import { DiscountTypeEnum } from "@dashboard/discounts/types";
-import {
-  DiscountErrorCode,
-  DiscountErrorFragment,
-  SaleType,
-  VoucherTypeEnum,
-} from "@dashboard/graphql";
-import {
-  ChangeEvent,
-  FormChange,
-  SubmitPromise,
-} from "@dashboard/hooks/useForm";
-import { RequireOnlyOne } from "@dashboard/misc";
-import { arrayDiff } from "@dashboard/utils/arrays";
+import { ChannelVoucherData, validateSalePrice, validateVoucherPrice } from '@dashboard/channels/utils';
+import { ChannelSaleFormData, SaleDetailsPageFormData } from '@dashboard/discounts/components/SaleDetailsPage';
+import { VoucherDetailsPageFormData } from '@dashboard/discounts/components/VoucherDetailsPage';
+import { DiscountTypeEnum } from '@dashboard/discounts/types';
+import { DiscountErrorCode, DiscountErrorFragment, SaleType, VoucherTypeEnum } from '@dashboard/graphql';
+import { ChangeEvent, FormChange, SubmitPromise } from '@dashboard/hooks/useForm';
+import { RequireOnlyOne } from '@dashboard/misc';
+import { arrayDiff } from '@dashboard/utils/arrays';
 
-import { getAddedChannelsInputFromFormData } from "./data";
+import { getAddedChannelsInputFromFormData } from './data';
 
 export interface ChannelArgs {
   discountValue: string;
   minSpent: string;
 }
 
-export type ChannelInput = RequireOnlyOne<
-  ChannelArgs,
-  "discountValue" | "minSpent"
->;
+export type ChannelInput = RequireOnlyOne<ChannelArgs, 'discountValue' | 'minSpent'>;
 
 export function createDiscountTypeChangeHandler(change: FormChange) {
   return (formData: VoucherDetailsPageFormData, event: ChangeEvent) => {
@@ -41,7 +22,7 @@ export function createDiscountTypeChangeHandler(change: FormChange) {
       // if previously type was shipping
       change({
         target: {
-          name: "type",
+          name: 'type',
           value: VoucherTypeEnum.ENTIRE_ORDER,
         },
       });
@@ -49,7 +30,7 @@ export function createDiscountTypeChangeHandler(change: FormChange) {
       // if currently type should be shipping
       change({
         target: {
-          name: "type",
+          name: 'type',
           value: VoucherTypeEnum.ENTIRE_ORDER,
         },
       });
@@ -64,9 +45,7 @@ export function createChannelsChangeHandler(
   triggerChange: () => void,
 ) {
   return (id: string, input: ChannelInput) => {
-    const channelIndex = channelListings.findIndex(
-      channel => channel.id === id,
-    );
+    const channelIndex = channelListings.findIndex(channel => channel.id === id);
     const channel = channelListings[channelIndex];
     const { discountValue, minSpent } = input;
     const updatedChannels = [
@@ -93,14 +72,11 @@ export function createSaleChannelsChangeHandler(
   saleType: SaleType,
 ) {
   return (id: string, passedValue: string) => {
-    const channelIndex = channelListings.findIndex(
-      channel => channel.id === id,
-    );
+    const channelIndex = channelListings.findIndex(channel => channel.id === id);
     const channel = channelListings[channelIndex];
     const { percentageValue, fixedValue } = channel;
 
-    const newPercentage =
-      saleType === SaleType.PERCENTAGE ? passedValue : percentageValue;
+    const newPercentage = saleType === SaleType.PERCENTAGE ? passedValue : percentageValue;
     const newFixed = saleType === SaleType.FIXED ? passedValue : fixedValue;
 
     const updatedChannels = [
@@ -137,11 +113,7 @@ export const getChannelsVariables = (
   };
 };
 
-export const getSaleChannelsVariables = (
-  id: string,
-  formData: SaleDetailsPageFormData,
-  prevChannelsIds?: string[],
-) => {
+export const getSaleChannelsVariables = (id: string, formData: SaleDetailsPageFormData, prevChannelsIds?: string[]) => {
   const modifiedIds = formData.channelListings.map(channel => channel.id);
 
   const idsDiff = arrayDiff(prevChannelsIds, modifiedIds);
@@ -153,10 +125,7 @@ export const getSaleChannelsVariables = (
         formData.channelListings
           ?.map(channel => ({
             channelId: channel.id,
-            discountValue:
-              formData.type === SaleType.FIXED
-                ? channel.fixedValue
-                : channel.percentageValue,
+            discountValue: formData.type === SaleType.FIXED ? channel.fixedValue : channel.percentageValue,
           }))
           .filter(channel => !!channel.discountValue) || [],
       removeChannels: idsDiff.removed,
@@ -177,11 +146,11 @@ export function createSaleUpdateHandler(
     const localErrors: DiscountErrorFragment[] = !!invalidChannelListings?.length
       ? [
           {
-            __typename: "DiscountError",
+            __typename: 'DiscountError',
             code: DiscountErrorCode.INVALID,
-            field: "value",
+            field: 'value',
             channels: invalidChannelListings,
-            message: "Invalid discount value",
+            message: 'Invalid discount value',
           },
         ]
       : [];
@@ -209,11 +178,11 @@ export function createVoucherUpdateHandler(
     const localErrors: DiscountErrorFragment[] = !!invalidChannelListings?.length
       ? [
           {
-            __typename: "DiscountError",
+            __typename: 'DiscountError',
             code: DiscountErrorCode.INVALID,
-            field: "discountValue",
+            field: 'discountValue',
             channels: invalidChannelListings,
-            message: "Invalid discount value",
+            message: 'Invalid discount value',
           },
         ]
       : [];

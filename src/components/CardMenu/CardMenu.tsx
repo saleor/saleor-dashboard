@@ -7,14 +7,14 @@ import {
   Paper,
   Popper,
   Typography,
-} from "@material-ui/core";
-import { IconButtonProps, makeStyles, SettingsIcon } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React, { useEffect, useRef, useState } from "react";
-import { FormattedMessage } from "react-intl";
+} from '@material-ui/core';
+import { IconButtonProps, makeStyles, SettingsIcon } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React, { useEffect, useRef, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import { IconButton } from "../IconButton";
-import { cardMenuMessages as messages } from "./messages";
+import { IconButton } from '../IconButton';
+import { cardMenuMessages as messages } from './messages';
 
 const ITEM_HEIGHT = 48;
 export interface CardMenuItem {
@@ -44,7 +44,7 @@ const useStyles = makeStyles(
     },
     iconButton: {
       background: theme.palette.background.paper,
-      borderRadius: "100%",
+      borderRadius: '100%',
       height: 32,
       padding: 0,
       width: 32,
@@ -52,30 +52,22 @@ const useStyles = makeStyles(
     paper: {
       marginTop: theme.spacing(2),
       maxHeight: ITEM_HEIGHT * 4.5,
-      overflowY: "scroll",
+      overflowY: 'scroll',
     },
     loadingContent: {
-      width: "100%",
-      display: "grid",
-      gridTemplateColumns: "1fr 24px",
+      width: '100%',
+      display: 'grid',
+      gridTemplateColumns: '1fr 24px',
       gap: theme.spacing(2),
-      alignItems: "center",
-      justifyContent: "flex-end",
+      alignItems: 'center',
+      justifyContent: 'flex-end',
     },
   }),
-  { name: "CardMenu" },
+  { name: 'CardMenu' },
 );
 
 const CardMenu: React.FC<CardMenuProps> = props => {
-  const {
-    className,
-    disabled,
-    menuItems,
-    outlined,
-    Icon: icon,
-    IconButtonProps = {},
-    ...rest
-  } = props;
+  const { className, disabled, menuItems, outlined, Icon: icon, IconButtonProps = {}, ...rest } = props;
   const classes = useStyles(props);
 
   const anchorRef = useRef<HTMLButtonElement | null>(null);
@@ -84,10 +76,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
   const handleToggle = () => setOpen(prevOpen => !prevOpen);
 
   const handleClose = (event: React.MouseEvent<EventTarget>) => {
-    if (
-      anchorRef.current &&
-      anchorRef.current.contains(event.target as HTMLElement)
-    ) {
+    if (anchorRef.current && anchorRef.current.contains(event.target as HTMLElement)) {
       return;
     }
 
@@ -95,7 +84,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
   };
 
   const handleListKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === "Tab") {
+    if (event.key === 'Tab') {
       event.preventDefault();
       setOpen(false);
     }
@@ -138,40 +127,29 @@ const CardMenu: React.FC<CardMenuProps> = props => {
       <IconButton
         data-test-id="show-more-button"
         aria-label="More"
-        aria-owns={open ? "long-menu" : null}
+        aria-owns={open ? 'long-menu' : null}
         aria-haspopup="true"
         disabled={disabled}
         ref={anchorRef}
         onClick={handleToggle}
-        variant={outlined ? "primary" : "secondary"}
-        state={open ? "active" : "default"}
+        variant={outlined ? 'primary' : 'secondary'}
+        state={open ? 'active' : 'default'}
         {...IconButtonProps}
       >
         <Icon />
       </IconButton>
-      <Popper
-        placement="bottom-end"
-        className={classes.container}
-        open={open}
-        anchorEl={anchorRef.current}
-        transition
-      >
+      <Popper placement="bottom-end" className={classes.container} open={open} anchorEl={anchorRef.current} transition>
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin:
-                placement === "bottom" ? "right top" : "right bottom",
-              overflowY: "auto",
+              transformOrigin: placement === 'bottom' ? 'right top' : 'right bottom',
+              overflowY: 'auto',
             }}
           >
             <Paper className={classes.paper} elevation={8}>
               <ClickAwayListener onClickAway={handleClose}>
-                <MenuList
-                  autoFocusItem={open}
-                  id="menu-list-grow"
-                  onKeyDown={handleListKeyDown}
-                >
+                <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
                   {menuItems.map((menuItem, menuItemIndex) => (
                     <MenuItem
                       data-test-id={menuItem.testId}
@@ -188,9 +166,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                         {menuItem.loading ? (
                           <>
                             <Typography variant="subtitle1">
-                              <FormattedMessage
-                                {...messages.cardMenuItemLoading}
-                              />
+                              <FormattedMessage {...messages.cardMenuItemLoading} />
                             </Typography>
                             <CircularProgress size={24} />
                           </>
@@ -209,5 +185,5 @@ const CardMenu: React.FC<CardMenuProps> = props => {
     </div>
   );
 };
-CardMenu.displayName = "CardMenu";
+CardMenu.displayName = 'CardMenu';
 export default CardMenu;

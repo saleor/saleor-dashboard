@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
 
 export interface PageInfo {
   endCursor: number;
@@ -26,9 +26,7 @@ function useLocalPageInfo<T>(values: T[], paginateBy: number) {
   const hasNextPage = page < maxPage;
 
   const startCursor = page * paginateBy;
-  const endCursor = hasNextPage
-    ? startCursor + paginateBy - 1
-    : Math.max(0, values.length - 1);
+  const endCursor = hasNextPage ? startCursor + paginateBy - 1 : Math.max(0, values.length - 1);
 
   const pageValues = values.slice(startCursor, endCursor + 1);
 

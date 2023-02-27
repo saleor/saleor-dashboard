@@ -1,2 +1,2 @@
-export { default } from "./makeTopLevelSearch";
-export * from "./makeTopLevelSearch";
+export { default } from './makeTopLevelSearch';
+export * from './makeTopLevelSearch';

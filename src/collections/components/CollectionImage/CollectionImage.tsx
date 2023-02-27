@@ -1,51 +1,51 @@
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import Hr from "@dashboard/components/Hr";
-import ImageUpload from "@dashboard/components/ImageUpload";
-import MediaTile from "@dashboard/components/MediaTile";
-import Skeleton from "@dashboard/components/Skeleton";
-import { CollectionDetailsFragment } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { Card, CardContent, TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Button } from '@dashboard/components/Button';
+import CardTitle from '@dashboard/components/CardTitle';
+import Hr from '@dashboard/components/Hr';
+import ImageUpload from '@dashboard/components/ImageUpload';
+import MediaTile from '@dashboard/components/MediaTile';
+import Skeleton from '@dashboard/components/Skeleton';
+import { CollectionDetailsFragment } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { Card, CardContent, TextField } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import { vars } from '@saleor/macaw-ui/next';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const useStyles = makeStyles(
   theme => ({
     PhotosIcon: {
-      height: "64px",
-      margin: "0 auto",
-      width: "64px",
+      height: '64px',
+      margin: '0 auto',
+      width: '64px',
     },
     PhotosIconContainer: {
       margin: theme.spacing(5, 0),
-      textAlign: "center",
+      textAlign: 'center',
     },
     fileField: {
-      display: "none",
+      display: 'none',
     },
     image: {
-      height: "100%",
-      objectFit: "contain",
-      userSelect: "none",
-      width: "100%",
+      height: '100%',
+      objectFit: 'contain',
+      userSelect: 'none',
+      width: '100%',
     },
     imageContainer: {
-      background: "#ffffff",
+      background: '#ffffff',
       border: `1px solid ${vars.colors.border.neutralPlain}`,
       borderRadius: theme.spacing(),
       height: 148,
-      justifySelf: "start",
-      overflow: "hidden",
+      justifySelf: 'start',
+      overflow: 'hidden',
       padding: theme.spacing(2),
-      position: "relative",
+      position: 'relative',
       width: 148,
     },
   }),
   {
-    name: "CollectionImage",
+    name: 'CollectionImage',
   },
 );
 
@@ -53,7 +53,7 @@ export interface CollectionImageProps {
   data: {
     backgroundImageAlt: string;
   };
-  image: CollectionDetailsFragment["backgroundImage"];
+  image: CollectionDetailsFragment['backgroundImage'];
   onChange: (event: React.ChangeEvent<any>) => void;
   onImageDelete: () => void;
   onImageUpload: (file: File) => void;
@@ -72,9 +72,9 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: "DP6b8U",
-          defaultMessage: "Background Image (optional)",
-          description: "section header",
+          id: 'DP6b8U',
+          defaultMessage: 'Background Image (optional)',
+          description: 'section header',
         })}
         toolbar={
           <>
@@ -115,9 +115,9 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
               name="backgroundImageAlt"
               label={intl.formatMessage(commonMessages.description)}
               helperText={intl.formatMessage({
-                id: "0iMYc+",
-                defaultMessage: "(Optional)",
-                description: "field is optional",
+                id: '0iMYc+',
+                defaultMessage: '(Optional)',
+                description: 'field is optional',
               })}
               value={data.backgroundImageAlt}
               onChange={onChange}
@@ -131,5 +131,5 @@ export const CollectionImage: React.FC<CollectionImageProps> = props => {
   );
 };
 
-CollectionImage.displayName = "CollectionImage";
+CollectionImage.displayName = 'CollectionImage';
 export default CollectionImage;

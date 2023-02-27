@@ -1,23 +1,18 @@
-import { ApolloClient, useApolloClient } from "@apollo/client";
-import { IMessageContext } from "@dashboard/components/messages";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import React from "react";
-import { IntlShape, useIntl } from "react-intl";
+import { ApolloClient, useApolloClient } from '@apollo/client';
+import { IMessageContext } from '@dashboard/components/messages';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import React from 'react';
+import { IntlShape, useIntl } from 'react-intl';
 
-import BackgroundTasksContext from "./context";
-import { checkExportFileStatus, checkOrderInvoicesStatus } from "./queries";
-import {
-  handleTask,
-  queueCustom,
-  queueExport,
-  queueInvoiceGenerate,
-} from "./tasks";
-import { QueuedTask, Task, TaskData, TaskStatus } from "./types";
+import BackgroundTasksContext from './context';
+import { checkExportFileStatus, checkOrderInvoicesStatus } from './queries';
+import { handleTask, queueCustom, queueExport, queueInvoiceGenerate } from './tasks';
+import { QueuedTask, Task, TaskData, TaskStatus } from './types';
 
 export const backgroundTasksRefreshTime = 15 * 1000;
 
 export function useBackgroundTasks(
-  apolloClient: Pick<ApolloClient<any>, "query">,
+  apolloClient: Pick<ApolloClient<any>, 'query'>,
   notify: IMessageContext,
   intl: IntlShape,
 ) {
@@ -39,9 +34,7 @@ export function useBackgroundTasks(
                   throw error;
                 }
                 if (status !== TaskStatus.PENDING) {
-                  const taskIndex = tasks.current.findIndex(
-                    t => t.id === task.id,
-                  );
+                  const taskIndex = tasks.current.findIndex(t => t.id === task.id);
                   tasks.current[taskIndex].status = status;
                 }
               }
@@ -75,7 +68,7 @@ export function useBackgroundTasks(
           tasks,
           () =>
             apolloClient.query({
-              fetchPolicy: "network-only",
+              fetchPolicy: 'network-only',
               query: checkOrderInvoicesStatus,
               variables: {
                 id: data.generateInvoice.orderId,
@@ -91,7 +84,7 @@ export function useBackgroundTasks(
           tasks,
           () =>
             apolloClient.query({
-              fetchPolicy: "network-only",
+              fetchPolicy: 'network-only',
               query: checkExportFileStatus,
               variables: {
                 id: data.id,
@@ -130,5 +123,5 @@ const BackgroundTasksProvider: React.FC = ({ children }) => {
   );
 };
 
-BackgroundTasksProvider.displayName = "BackgroundTasksProvider";
+BackgroundTasksProvider.displayName = 'BackgroundTasksProvider';
 export default BackgroundTasksProvider;

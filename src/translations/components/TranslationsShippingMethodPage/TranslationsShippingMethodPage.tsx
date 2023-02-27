@@ -1,34 +1,21 @@
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import LanguageSwitch from "@dashboard/components/LanguageSwitch";
-import {
-  LanguageCodeEnum,
-  ShippingMethodTranslationFragment,
-} from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { getStringOrPlaceholder } from "@dashboard/misc";
-import {
-  TranslationInputFieldName,
-  TranslationsEntitiesPageProps,
-} from "@dashboard/translations/types";
-import {
-  languageEntitiesUrl,
-  languageEntityUrl,
-  TranslatableEntities,
-} from "@dashboard/translations/urls";
-import React from "react";
-import { useIntl } from "react-intl";
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import LanguageSwitch from '@dashboard/components/LanguageSwitch';
+import { LanguageCodeEnum, ShippingMethodTranslationFragment } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { getStringOrPlaceholder } from '@dashboard/misc';
+import { TranslationInputFieldName, TranslationsEntitiesPageProps } from '@dashboard/translations/types';
+import { languageEntitiesUrl, languageEntityUrl, TranslatableEntities } from '@dashboard/translations/urls';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import TranslationFields from "../TranslationFields";
+import TranslationFields from '../TranslationFields';
 
-export interface TranslationsShippingMethodPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsShippingMethodPageProps extends TranslationsEntitiesPageProps {
   data: ShippingMethodTranslationFragment;
 }
 
-const TranslationsShippingMethodPage: React.FC<
-  TranslationsShippingMethodPageProps
-> = ({
+const TranslationsShippingMethodPage: React.FC<TranslationsShippingMethodPageProps> = ({
   translationId,
   activeField,
   disabled,
@@ -50,10 +37,9 @@ const TranslationsShippingMethodPage: React.FC<
         })}
         title={intl.formatMessage(
           {
-            id: "1UKx20",
-            defaultMessage:
-              'Translation ShippingMethod "{shippingMethodName}" - {languageCode}',
-            description: "header",
+            id: '1UKx20',
+            defaultMessage: 'Translation ShippingMethod "{shippingMethodName}" - {languageCode}',
+            description: 'header',
           },
           {
             languageCode,
@@ -64,13 +50,7 @@ const TranslationsShippingMethodPage: React.FC<
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          getLanguageUrl={lang =>
-            languageEntityUrl(
-              lang,
-              TranslatableEntities.shippingMethods,
-              translationId,
-            )
-          }
+          getLanguageUrl={lang => languageEntityUrl(lang, TranslatableEntities.shippingMethods, translationId)}
         />
       </TopNav>
       <TranslationFields
@@ -81,24 +61,24 @@ const TranslationsShippingMethodPage: React.FC<
         fields={[
           {
             displayName: intl.formatMessage({
-              id: "aPCrsp",
-              defaultMessage: "Name",
-              description: "shipping method name",
+              id: 'aPCrsp',
+              defaultMessage: 'Name',
+              description: 'shipping method name',
             }),
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
-            type: "short" as "short",
+            type: 'short' as 'short',
             value: data?.name,
           },
           {
             displayName: intl.formatMessage({
-              id: "GpqEl5",
-              defaultMessage: "Description",
-              description: "shipping method description",
+              id: 'GpqEl5',
+              defaultMessage: 'Description',
+              description: 'shipping method description',
             }),
             name: TranslationInputFieldName.description,
             translation: data?.translation?.description || null,
-            type: "rich",
+            type: 'rich',
             value: data?.description,
           },
         ]}
@@ -111,5 +91,5 @@ const TranslationsShippingMethodPage: React.FC<
     </DetailedContent>
   );
 };
-TranslationsShippingMethodPage.displayName = "TranslationsShippingMethodPage";
+TranslationsShippingMethodPage.displayName = 'TranslationsShippingMethodPage';
 export default TranslationsShippingMethodPage;

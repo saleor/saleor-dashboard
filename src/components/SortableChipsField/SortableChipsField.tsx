@@ -1,12 +1,12 @@
-import { ReorderAction, ReorderEvent } from "@dashboard/types";
-import { Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { SortableContainerProps } from "react-sortable-hoc";
+import { ReorderAction, ReorderEvent } from '@dashboard/types';
+import { Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { SortableContainerProps } from 'react-sortable-hoc';
 
-import Skeleton from "../Skeleton";
-import DraggableChip from "../SortableChip";
-import SortableContainer from "./SortableContainer";
+import Skeleton from '../Skeleton';
+import DraggableChip from '../SortableChip';
+import SortableContainer from './SortableContainer';
 
 const useStyles = makeStyles(
   theme => ({
@@ -16,20 +16,20 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(1),
     },
     chipHelper: {
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center",
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
       padding: 0,
     },
     grabbing: {
-      cursor: "grabbing",
+      cursor: 'grabbing',
     },
     errorText: {
       color: theme.palette.error.light,
     },
   }),
   {
-    name: "SortableChipsField",
+    name: 'SortableChipsField',
   },
 );
 
@@ -48,14 +48,7 @@ export interface SortableChipsFieldProps extends SortableContainerProps {
 }
 
 const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
-  const {
-    loading,
-    values,
-    error,
-    helperText,
-    onValueDelete,
-    onValueReorder,
-  } = props;
+  const { loading, values, error, helperText, onValueDelete, onValueReorder } = props;
   const classes = useStyles(props);
 
   const handleSortStart = () => {
@@ -100,5 +93,5 @@ const SortableChipsField: React.FC<SortableChipsFieldProps> = props => {
   );
 };
 
-SortableChipsField.displayName = "SortableChipsField";
+SortableChipsField.displayName = 'SortableChipsField';
 export default SortableChipsField;

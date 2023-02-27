@@ -1,52 +1,43 @@
-import {
-  extensionMountPoints,
-  mapToMenuItemsForOrderDetails,
-  useExtensions,
-} from "@dashboard/apps/useExtensions";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardMenu from "@dashboard/components/CardMenu";
-import { CardSpacer } from "@dashboard/components/CardSpacer";
-import Form from "@dashboard/components/Form";
-import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
-import {
-  OrderDetailsFragment,
-  OrderDetailsQuery,
-  OrderErrorFragment,
-  OrderStatus,
-} from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
-import { orderListUrl } from "@dashboard/orders/urls";
-import { playgroundOpenHandler } from "@dashboard/utils/graphql";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import { extensionMountPoints, mapToMenuItemsForOrderDetails, useExtensions } from '@dashboard/apps/useExtensions';
+import { Content } from '@dashboard/components/AppLayout/Content';
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import CardMenu from '@dashboard/components/CardMenu';
+import { CardSpacer } from '@dashboard/components/CardSpacer';
+import Form from '@dashboard/components/Form';
+import Metadata, { MetadataFormData } from '@dashboard/components/Metadata';
+import Savebar from '@dashboard/components/Savebar';
+import { OrderDetailsFragment, OrderDetailsQuery, OrderErrorFragment, OrderStatus } from '@dashboard/graphql';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { defaultGraphiQLQuery } from '@dashboard/orders/queries';
+import { orderListUrl } from '@dashboard/orders/urls';
+import { playgroundOpenHandler } from '@dashboard/utils/graphql';
+import { mapMetadataItemToInput } from '@dashboard/utils/maps';
+import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { getMutationErrors, maybe } from "../../../misc";
-import OrderChannelSectionCard from "../OrderChannelSectionCard";
-import OrderCustomer from "../OrderCustomer";
-import OrderCustomerNote from "../OrderCustomerNote";
-import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
-import { FormData as OrderDraftDetailsProductsFormData } from "../OrderDraftDetailsProducts";
-import OrderFulfilledProductsCard from "../OrderFulfilledProductsCard";
-import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
-import OrderInvoiceList from "../OrderInvoiceList";
-import OrderPayment from "../OrderPayment/OrderPayment";
-import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
-import { messages } from "./messages";
-import Title from "./Title";
-import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
+import { getMutationErrors, maybe } from '../../../misc';
+import OrderChannelSectionCard from '../OrderChannelSectionCard';
+import OrderCustomer from '../OrderCustomer';
+import OrderCustomerNote from '../OrderCustomerNote';
+import OrderDraftDetails from '../OrderDraftDetails/OrderDraftDetails';
+import { FormData as OrderDraftDetailsProductsFormData } from '../OrderDraftDetailsProducts';
+import OrderFulfilledProductsCard from '../OrderFulfilledProductsCard';
+import OrderHistory, { FormData as HistoryFormData } from '../OrderHistory';
+import OrderInvoiceList from '../OrderInvoiceList';
+import OrderPayment from '../OrderPayment/OrderPayment';
+import OrderUnfulfilledProductsCard from '../OrderUnfulfilledProductsCard';
+import { messages } from './messages';
+import Title from './Title';
+import { filteredConditionalItems, hasAnyItemsReplaceable } from './utils';
 
 export interface OrderDetailsPageProps {
   order: OrderDetailsFragment;
-  shop: OrderDetailsQuery["shop"];
+  shop: OrderDetailsQuery['shop'];
   shippingMethods?: Array<{
     id: string;
     name: string;
@@ -55,10 +46,7 @@ export interface OrderDetailsPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   onOrderLineAdd?: () => void;
-  onOrderLineChange?: (
-    id: string,
-    data: OrderDraftDetailsProductsFormData,
-  ) => void;
+  onOrderLineChange?: (id: string, data: OrderDraftDetailsProductsFormData) => void;
   onOrderLineRemove?: (id: string) => void;
   onShippingMethodEdit?: () => void;
   onBillingAddressEdit();
@@ -126,19 +114,12 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const canCancel = order?.status !== OrderStatus.CANCELED;
   const canEditAddresses = order?.status !== OrderStatus.CANCELED;
   const canFulfill = order?.status !== OrderStatus.CANCELED;
-  const notAllowedToFulfillUnpaid =
-    shop?.fulfillmentAutoApprove &&
-    !shop?.fulfillmentAllowUnpaid &&
-    !order?.isPaid;
-  const unfulfilled = (order?.lines || []).filter(
-    line => line.quantityToFulfill > 0,
-  );
+  const notAllowedToFulfillUnpaid = shop?.fulfillmentAutoApprove && !shop?.fulfillmentAllowUnpaid && !order?.isPaid;
+  const unfulfilled = (order?.lines || []).filter(line => line.quantityToFulfill > 0);
 
   const handleSubmit = async (data: MetadataFormData) => {
     const metadata = isMetadataModified ? data.metadata : undefined;
-    const privateMetadata = isPrivateMetadataModified
-      ? data.privateMetadata
-      : undefined;
+    const privateMetadata = isPrivateMetadataModified ? data.privateMetadata : undefined;
 
     const result = await onSubmit({
       metadata,
@@ -153,9 +134,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     privateMetadata: order?.privateMetadata.map(mapMetadataItemToInput),
   };
 
-  const saveLabel = isOrderUnconfirmed
-    ? { confirm: intl.formatMessage(messages.confirmOrder) }
-    : undefined;
+  const saveLabel = isOrderUnconfirmed ? { confirm: intl.formatMessage(messages.confirmOrder) } : undefined;
 
   const allowSave = () => {
     if (!isOrderUnconfirmed) {
@@ -183,19 +162,14 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     },
   ]);
 
-  const { ORDER_DETAILS_MORE_ACTIONS } = useExtensions(
-    extensionMountPoints.ORDER_DETAILS,
-  );
+  const { ORDER_DETAILS_MORE_ACTIONS } = useExtensions(extensionMountPoints.ORDER_DETAILS);
 
-  const extensionMenuItems = mapToMenuItemsForOrderDetails(
-    ORDER_DETAILS_MORE_ACTIONS,
-    order?.id,
-  );
+  const extensionMenuItems = mapToMenuItemsForOrderDetails(ORDER_DETAILS_MORE_ACTIONS, order?.id);
 
   const openPlaygroundURL = playgroundOpenHandler({
     query: defaultGraphiQLQuery,
-    headers: "",
-    operationName: "",
+    headers: '',
+    operationName: '',
     variables: `{ "id": "${order?.id}" }`,
   });
 
@@ -214,7 +188,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   {
                     label: intl.formatMessage(messages.openGraphiQL),
                     onSelect: openPlaygroundURL,
-                    testId: "graphiql-redirect",
+                    testId: 'graphiql-redirect',
                   },
                 ]}
               />
@@ -247,16 +221,10 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                     fulfillment={fulfillment}
                     fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
                     order={order}
-                    onOrderFulfillmentCancel={() =>
-                      onFulfillmentCancel(fulfillment.id)
-                    }
-                    onTrackingCodeAdd={() =>
-                      onFulfillmentTrackingNumberUpdate(fulfillment.id)
-                    }
+                    onOrderFulfillmentCancel={() => onFulfillmentCancel(fulfillment.id)}
+                    onTrackingCodeAdd={() => onFulfillmentTrackingNumberUpdate(fulfillment.id)}
                     onRefund={onPaymentRefund}
-                    onOrderFulfillmentApprove={() =>
-                      onFulfillmentApprove(fulfillment.id)
-                    }
+                    onOrderFulfillmentApprove={() => onFulfillmentApprove(fulfillment.id)}
                   />
                 </React.Fragment>
               ))}
@@ -315,5 +283,5 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   );
 };
 
-OrderDetailsPage.displayName = "OrderDetailsPage";
+OrderDetailsPage.displayName = 'OrderDetailsPage';
 export default OrderDetailsPage;

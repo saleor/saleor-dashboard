@@ -1,22 +1,22 @@
-import AddressEdit from "@dashboard/components/AddressEdit";
-import CardTitle from "@dashboard/components/CardTitle";
-import { FormSpacer } from "@dashboard/components/FormSpacer";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
-import { AccountErrorFragment } from "@dashboard/graphql";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import AddressEdit from '@dashboard/components/AddressEdit';
+import CardTitle from '@dashboard/components/CardTitle';
+import { FormSpacer } from '@dashboard/components/FormSpacer';
+import { SingleAutocompleteChoiceType } from '@dashboard/components/SingleAutocompleteSelectField';
+import { AccountErrorFragment } from '@dashboard/graphql';
+import { Card, CardContent, Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { AddressTypeInput } from "../../types";
+import { AddressTypeInput } from '../../types';
 
 const useStyles = makeStyles(
   {
     overflow: {
-      overflow: "visible",
+      overflow: 'visible',
     },
   },
-  { name: "CustomerCreateAddress" },
+  { name: 'CustomerCreateAddress' },
 );
 
 export interface CustomerCreateAddressProps {
@@ -30,15 +30,7 @@ export interface CustomerCreateAddressProps {
 }
 
 const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
-  const {
-    countries,
-    countryDisplayName,
-    data,
-    disabled,
-    errors,
-    onChange,
-    onCountryChange,
-  } = props;
+  const { countries, countryDisplayName, data, disabled, errors, onChange, onCountryChange } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -47,17 +39,14 @@ const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
     <Card className={classes.overflow}>
       <CardTitle
         title={intl.formatMessage({
-          id: "jGGnSZ",
-          defaultMessage: "Primary Address",
-          description: "page header",
+          id: 'jGGnSZ',
+          defaultMessage: 'Primary Address',
+          description: 'page header',
         })}
       />
       <CardContent className={classes.overflow}>
         <Typography>
-          <FormattedMessage
-            id="wNQzS/"
-            defaultMessage="The primary address of this customer."
-          />
+          <FormattedMessage id="wNQzS/" defaultMessage="The primary address of this customer." />
         </Typography>
         <FormSpacer />
         <AddressEdit
@@ -73,5 +62,5 @@ const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {
     </Card>
   );
 };
-CustomerCreateAddress.displayName = "CustomerCreateAddress";
+CustomerCreateAddress.displayName = 'CustomerCreateAddress';
 export default CustomerCreateAddress;

@@ -1,26 +1,26 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
     root: {
-      "&:before": {
+      '&:before': {
         backgroundColor: theme.palette.error.main,
-        borderRadius: "50%",
+        borderRadius: '50%',
         content: "''",
-        display: "block",
+        display: 'block',
         height: 8,
         left: 0,
-        position: "absolute",
-        top: "50%",
-        transform: "translateY(-50%)",
+        position: 'absolute',
+        top: '50%',
+        transform: 'translateY(-50%)',
         width: 8,
       },
       color: theme.palette.error.main,
-      display: "inline-block",
+      display: 'inline-block',
       marginLeft: theme.spacing(1.5),
       paddingLeft: theme.spacing(2),
-      position: "relative",
+      position: 'relative',
     },
   }),
-  { name: "DeactivatedText" },
+  { name: 'DeactivatedText' },
 );

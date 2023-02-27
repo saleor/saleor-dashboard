@@ -1,49 +1,41 @@
-import { CollectionFragment } from "@dashboard/graphql";
-import { PillColor } from "@saleor/macaw-ui";
-import { MessageDescriptor } from "react-intl";
+import { CollectionFragment } from '@dashboard/graphql';
+import { PillColor } from '@saleor/macaw-ui';
+import { MessageDescriptor } from 'react-intl';
 
-import { Pill } from "../ChannelsAvailabilityMenuContent";
-import { channelStatusMessages } from "./messages";
+import { Pill } from '../ChannelsAvailabilityMenuContent';
+import { channelStatusMessages } from './messages';
 
 export type CollectionChannels = Pick<
-  CollectionFragment["channelListings"][0],
-  "isPublished" | "publicationDate" | "channel"
+  CollectionFragment['channelListings'][0],
+  'isPublished' | 'publicationDate' | 'channel'
 >;
-export type Channels = Pick<
-  CollectionFragment["channelListings"][0],
-  "channel"
->;
+export type Channels = Pick<CollectionFragment['channelListings'][0], 'channel'>;
 
-export const isActive = (channelData: CollectionChannels) =>
-  channelData?.isPublished;
+export const isActive = (channelData: CollectionChannels) => channelData?.isPublished;
 export const isScheduled = (channelData: CollectionChannels) =>
   channelData?.publicationDate && !channelData?.isPublished;
 
 export const getDropdownColor = (channels: CollectionChannels[]) => {
   if (channels.some(isActive)) {
-    return "success";
+    return 'success';
   }
   if (channels.some(isScheduled)) {
-    return "warning";
+    return 'warning';
   }
-  return "error";
+  return 'error';
 };
 
-export const getChannelAvailabilityColor = (
-  channelData: CollectionChannels,
-): PillColor => {
+export const getChannelAvailabilityColor = (channelData: CollectionChannels): PillColor => {
   if (isActive(channelData)) {
-    return "success";
+    return 'success';
   }
   if (isScheduled(channelData)) {
-    return "warning";
+    return 'warning';
   }
-  return "error";
+  return 'error';
 };
 
-export const getChannelAvailabilityLabel = (
-  channelData: CollectionChannels,
-): MessageDescriptor => {
+export const getChannelAvailabilityLabel = (channelData: CollectionChannels): MessageDescriptor => {
   if (isActive(channelData)) {
     return channelStatusMessages.published;
   }

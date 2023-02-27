@@ -1,5 +1,5 @@
-import { SentryAdapter } from "./adapters";
-import { ErrorTrackerFactory } from "./trackerFactory";
+import { SentryAdapter } from './adapters';
+import { ErrorTrackerFactory } from './trackerFactory';
 
 const errorTracker = ErrorTrackerFactory(
   SentryAdapter({

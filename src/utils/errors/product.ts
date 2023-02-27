@@ -4,83 +4,77 @@ import {
   ProductChannelListingErrorFragment,
   ProductErrorCode,
   ProductErrorFragment,
-} from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+} from '@dashboard/graphql';
+import { defineMessages, IntlShape } from 'react-intl';
 
-import commonErrorMessages, { getCommonFormFieldErrorMessage } from "./common";
+import commonErrorMessages, { getCommonFormFieldErrorMessage } from './common';
 
 const messages = defineMessages({
   alreadyExists: {
-    id: "2NgTCJ",
-    defaultMessage: "A product with this SKU already exists",
+    id: '2NgTCJ',
+    defaultMessage: 'A product with this SKU already exists',
   },
   attributeAlreadyAssigned: {
-    id: "aggaJg",
-    defaultMessage:
-      "This attribute has already been assigned to this product type",
+    id: 'aggaJg',
+    defaultMessage: 'This attribute has already been assigned to this product type',
   },
   attributeCannotBeAssigned: {
-    id: "u24Ppd",
-    defaultMessage: "This attribute cannot be assigned to this product type",
+    id: 'u24Ppd',
+    defaultMessage: 'This attribute cannot be assigned to this product type',
   },
   attributeRequired: {
-    id: "cd13nN",
-    defaultMessage: "All attributes should have value",
-    description: "product attribute error",
+    id: 'cd13nN',
+    defaultMessage: 'All attributes should have value',
+    description: 'product attribute error',
   },
   attributeVariantsDisabled: {
-    id: "lLwtgs",
-    defaultMessage: "Variants are disabled in this product type",
+    id: 'lLwtgs',
+    defaultMessage: 'Variants are disabled in this product type',
   },
   duplicated: {
-    id: "AY7Tuz",
-    defaultMessage: "The same object cannot be in both lists",
+    id: 'AY7Tuz',
+    defaultMessage: 'The same object cannot be in both lists',
   },
   duplicatedInputItem: {
-    id: "pFVX6g",
-    defaultMessage: "Variant with these attributes already exists",
+    id: 'pFVX6g',
+    defaultMessage: 'Variant with these attributes already exists',
   },
   nameAlreadyTaken: {
-    id: "FuAV5G",
-    defaultMessage: "This name is already taken. Please provide another.",
+    id: 'FuAV5G',
+    defaultMessage: 'This name is already taken. Please provide another.',
   },
   priceInvalid: {
-    id: "mYs3tb",
-    defaultMessage: "Product price cannot be lower than 0.",
+    id: 'mYs3tb',
+    defaultMessage: 'Product price cannot be lower than 0.',
   },
   skuUnique: {
-    id: "rZf1qL",
-    defaultMessage: "SKUs must be unique",
-    description: "bulk variant create error",
+    id: 'rZf1qL',
+    defaultMessage: 'SKUs must be unique',
+    description: 'bulk variant create error',
   },
   unsupportedMediaProvider: {
-    id: "DILs4b",
-    defaultMessage: "Unsupported media provider or incorrect URL",
+    id: 'DILs4b',
+    defaultMessage: 'Unsupported media provider or incorrect URL',
   },
   variantNoDigitalContent: {
-    id: "Z6QAbw",
-    defaultMessage: "This variant does not have any digital content",
+    id: 'Z6QAbw',
+    defaultMessage: 'This variant does not have any digital content',
   },
   variantUnique: {
-    id: "i3Mvj8",
-    defaultMessage: "This variant already exists",
-    description: "product attribute error",
+    id: 'i3Mvj8',
+    defaultMessage: 'This variant already exists',
+    description: 'product attribute error',
   },
   noCategorySet: {
-    id: "3AqOxp",
-    defaultMessage: "Product category not set",
-    description: "no category set error",
+    id: '3AqOxp',
+    defaultMessage: 'Product category not set',
+    description: 'no category set error',
   },
 });
 
 function getProductErrorMessage(
   err:
-    | Omit<
-        | ProductErrorFragment
-        | CollectionErrorFragment
-        | ProductChannelListingErrorFragment,
-        "__typename"
-      >
+    | Omit<ProductErrorFragment | CollectionErrorFragment | ProductChannelListingErrorFragment, '__typename'>
     | undefined,
   intl: IntlShape,
 ): string | undefined {
@@ -103,12 +97,12 @@ function getProductErrorMessage(
       case ProductErrorCode.PRODUCT_WITHOUT_CATEGORY:
         return intl.formatMessage(messages.noCategorySet);
       case ProductErrorCode.INVALID:
-        if (err.field === "price") {
+        if (err.field === 'price') {
           return intl.formatMessage(messages.priceInvalid);
         }
         return intl.formatMessage(commonErrorMessages.invalid);
       case ProductErrorCode.UNIQUE:
-        if (err.field === "sku") {
+        if (err.field === 'sku') {
           return intl.formatMessage(messages.skuUnique);
         }
     }
@@ -117,7 +111,7 @@ function getProductErrorMessage(
 }
 
 export function getProductVariantAttributeErrorMessage(
-  err: Omit<ProductErrorFragment, "__typename"> | undefined,
+  err: Omit<ProductErrorFragment, '__typename'> | undefined,
   intl: IntlShape,
 ): string | undefined {
   if (err) {
@@ -136,7 +130,7 @@ export function getBulkProductErrorMessage(
   err: BulkProductErrorFragment | undefined,
   intl: IntlShape,
 ): string | undefined {
-  if (err?.code === ProductErrorCode.UNIQUE && err.field === "sku") {
+  if (err?.code === ProductErrorCode.UNIQUE && err.field === 'sku') {
     return intl.formatMessage(messages.skuUnique);
   }
   return getProductErrorMessage(err, intl);

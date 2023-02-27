@@ -1,28 +1,19 @@
-import { stringifyQs } from "@dashboard/utils/urls";
-import urlJoin from "url-join";
+import { stringifyQs } from '@dashboard/utils/urls';
+import urlJoin from 'url-join';
 
-import {
-  ActiveTab,
-  BulkAction,
-  Dialog,
-  Filters,
-  Pagination,
-  SingleAction,
-  Sort,
-  TabActionDialog,
-} from "../types";
+import { ActiveTab, BulkAction, Dialog, Filters, Pagination, SingleAction, Sort, TabActionDialog } from '../types';
 
-const pageTypeSection = "/page-types/";
+const pageTypeSection = '/page-types/';
 
 export const pageTypeListPath = pageTypeSection;
 export enum PageTypeListUrlFiltersEnum {
-  type = "type",
-  query = "query",
+  type = 'type',
+  query = 'query',
 }
 export type PageTypeListUrlFilters = Filters<PageTypeListUrlFiltersEnum>;
-export type PageTypeListUrlDialog = "remove" | TabActionDialog;
+export type PageTypeListUrlDialog = 'remove' | TabActionDialog;
 export enum PageTypeListUrlSortField {
-  name = "name",
+  name = 'name',
 }
 export type PageTypeListUrlSort = Sort<PageTypeListUrlSortField>;
 export type PageTypeListUrlQueryParams = ActiveTab &
@@ -31,22 +22,17 @@ export type PageTypeListUrlQueryParams = ActiveTab &
   Pagination &
   PageTypeListUrlFilters &
   PageTypeListUrlSort;
-export const pageTypeListUrl = (params?: PageTypeListUrlQueryParams) =>
-  pageTypeListPath + "?" + stringifyQs(params);
+export const pageTypeListUrl = (params?: PageTypeListUrlQueryParams) => pageTypeListPath + '?' + stringifyQs(params);
 
-export const pageTypeAddPath = urlJoin(pageTypeSection, "add");
+export const pageTypeAddPath = urlJoin(pageTypeSection, 'add');
 export const pageTypeAddUrl = pageTypeAddPath;
 
 export const pageTypePath = (id: string) => urlJoin(pageTypeSection, id);
-export type PageTypeUrlDialog =
-  | "assign-attribute"
-  | "unassign-attribute"
-  | "unassign-attributes"
-  | "remove";
+export type PageTypeUrlDialog = 'assign-attribute' | 'unassign-attribute' | 'unassign-attributes' | 'remove';
 export type PageTypeUrlQueryParams = BulkAction &
   Dialog<PageTypeUrlDialog> &
   SingleAction & {
     type?: string;
   };
 export const pageTypeUrl = (id: string, params?: PageTypeUrlQueryParams) =>
-  pageTypePath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+  pageTypePath(encodeURIComponent(id)) + '?' + stringifyQs(params);

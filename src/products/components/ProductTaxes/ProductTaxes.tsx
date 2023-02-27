@@ -1,15 +1,15 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
-import { TaxClassBaseFragment } from "@dashboard/graphql";
-import { sectionNames } from "@dashboard/intl";
-import { taxesMessages } from "@dashboard/taxes/messages";
-import { FetchMoreProps } from "@dashboard/types";
-import { Card, CardContent } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import CardTitle from '@dashboard/components/CardTitle';
+import SingleAutocompleteSelectField from '@dashboard/components/SingleAutocompleteSelectField';
+import { TaxClassBaseFragment } from '@dashboard/graphql';
+import { sectionNames } from '@dashboard/intl';
+import { taxesMessages } from '@dashboard/taxes/messages';
+import { FetchMoreProps } from '@dashboard/types';
+import { Card, CardContent } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { ProductCreateFormData } from "../ProductCreatePage";
+import { ProductCreateFormData } from '../ProductCreatePage';
 
 interface ProductTaxesProps {
   value: string;
@@ -23,21 +23,14 @@ interface ProductTaxesProps {
 const useStyles = makeStyles(
   {
     root: {
-      overflow: "visible",
+      overflow: 'visible',
     },
   },
-  { name: "ProductTaxes" },
+  { name: 'ProductTaxes' },
 );
 
 const ProductTaxes: React.FC<ProductTaxesProps> = props => {
-  const {
-    value,
-    disabled,
-    taxClasses,
-    taxClassDisplayName,
-    onChange,
-    onFetchMore,
-  } = props;
+  const { value, disabled, taxClasses, taxClassDisplayName, onChange, onFetchMore } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -50,7 +43,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
           disabled={disabled}
           displayValue={taxClassDisplayName}
           label={intl.formatMessage(taxesMessages.taxClass)}
-          name={"taxClassId" as keyof ProductCreateFormData}
+          name={'taxClassId' as keyof ProductCreateFormData}
           onChange={onChange}
           value={value}
           choices={taxClasses.map(choice => ({
@@ -58,7 +51,7 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
             value: choice.id,
           }))}
           InputProps={{
-            autoComplete: "off",
+            autoComplete: 'off',
           }}
           {...onFetchMore}
         />
@@ -66,5 +59,5 @@ const ProductTaxes: React.FC<ProductTaxesProps> = props => {
     </Card>
   );
 };
-ProductTaxes.displayName = "ProductTaxes";
+ProductTaxes.displayName = 'ProductTaxes';
 export default ProductTaxes;

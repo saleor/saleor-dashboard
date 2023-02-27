@@ -1,21 +1,18 @@
-import BackButton from "@dashboard/components/BackButton";
-import Checkbox from "@dashboard/components/Checkbox";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
-import FormSpacer from "@dashboard/components/FormSpacer";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  OrderErrorFragment,
-  SearchOrderVariantQuery,
-} from "@dashboard/graphql";
-import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import useSearchQuery from "@dashboard/hooks/useSearchQuery";
-import { buttonMessages } from "@dashboard/intl";
-import { maybe, renderCollection } from "@dashboard/misc";
-import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import BackButton from '@dashboard/components/BackButton';
+import Checkbox from '@dashboard/components/Checkbox';
+import ConfirmButton from '@dashboard/components/ConfirmButton';
+import FormSpacer from '@dashboard/components/FormSpacer';
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import TableCellAvatar from '@dashboard/components/TableCellAvatar';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { OrderErrorFragment, SearchOrderVariantQuery } from '@dashboard/graphql';
+import useModalDialogErrors from '@dashboard/hooks/useModalDialogErrors';
+import useModalDialogOpen from '@dashboard/hooks/useModalDialogOpen';
+import useSearchQuery from '@dashboard/hooks/useSearchQuery';
+import { buttonMessages } from '@dashboard/intl';
+import { maybe, renderCollection } from '@dashboard/misc';
+import { FetchMoreProps, RelayToFlat } from '@dashboard/types';
+import getOrderErrorMessage from '@dashboard/utils/errors/order';
 import {
   CircularProgress,
   Dialog,
@@ -27,35 +24,28 @@ import {
   TableCell,
   TextField,
   Typography,
-} from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import OrderPriceLabel from "../OrderPriceLabel/OrderPriceLabel";
-import { messages } from "./messages";
-import { useStyles } from "./styles";
-import {
-  hasAllVariantsSelected,
-  isVariantSelected,
-  onProductAdd,
-  onVariantAdd,
-} from "./utils";
+import OrderPriceLabel from '../OrderPriceLabel/OrderPriceLabel';
+import { messages } from './messages';
+import { useStyles } from './styles';
+import { hasAllVariantsSelected, isVariantSelected, onProductAdd, onVariantAdd } from './utils';
 
 export interface OrderProductAddDialogProps extends FetchMoreProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
-  products: RelayToFlat<SearchOrderVariantQuery["search"]>;
+  products: RelayToFlat<SearchOrderVariantQuery['search']>;
   onClose: () => void;
   onFetch: (query: string) => void;
-  onSubmit: (
-    data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
-  ) => void;
+  onSubmit: (data: SearchOrderVariantQuery['search']['edges'][0]['node']['variants']) => void;
 }
 
-const scrollableTargetId = "orderProductAddScrollableDialog";
+const scrollableTargetId = 'orderProductAddScrollableDialog';
 
 const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   const {
@@ -74,57 +64,37 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
   const [query, onQueryChange] = useSearchQuery(onFetch);
-  const [variants, setVariants] = React.useState<
-    SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"]
-  >([]);
+  const [variants, setVariants] = React.useState<SearchOrderVariantQuery['search']['edges'][0]['node']['variants']>([]);
   const errors = useModalDialogErrors(apiErrors, open);
 
   useModalDialogOpen(open, {
     onClose: () => setVariants([]),
   });
 
-  const isValidVariant = ({
-    pricing,
-  }: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0]) =>
+  const isValidVariant = ({ pricing }: SearchOrderVariantQuery['search']['edges'][0]['node']['variants'][0]) =>
     !!pricing;
 
-  const getValidProductVariants = ({
-    variants,
-  }: SearchOrderVariantQuery["search"]["edges"][0]["node"]) =>
+  const getValidProductVariants = ({ variants }: SearchOrderVariantQuery['search']['edges'][0]['node']) =>
     variants.filter(isValidVariant);
 
-  const productChoices =
-    products?.filter(product => getValidProductVariants(product).length > 0) ||
-    [];
+  const productChoices = products?.filter(product => getValidProductVariants(product).length > 0) || [];
 
   const selectedVariantsToProductsMap = productChoices
     ? productChoices.map(product =>
-        getValidProductVariants(product).map(variant =>
-          isVariantSelected(variant, variants),
-        ),
+        getValidProductVariants(product).map(variant => isVariantSelected(variant, variants)),
       )
     : [];
 
   const productsWithAllVariantsSelected = productChoices
-    ? productChoices.map(product =>
-        hasAllVariantsSelected(getValidProductVariants(product), variants),
-      )
+    ? productChoices.map(product => hasAllVariantsSelected(getValidProductVariants(product), variants))
     : [];
 
   const handleSubmit = () => onSubmit(variants);
 
-  const productChoicesWithValidVariants = productChoices.filter(
-    ({ variants }) => variants.some(isValidVariant),
-  );
+  const productChoicesWithValidVariants = productChoices.filter(({ variants }) => variants.some(isValidVariant));
 
   return (
-    <Dialog
-      onClose={onClose}
-      open={open}
-      classes={{ paper: classes.overflow }}
-      fullWidth
-      maxWidth="sm"
-    >
+    <Dialog onClose={onClose} open={open} classes={{ paper: classes.overflow }} fullWidth maxWidth="sm">
       <DialogTitle disableTypography>
         <FormattedMessage {...messages.title} />
       </DialogTitle>
@@ -137,7 +107,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           placeholder={intl.formatMessage(messages.searchPlaceholder)}
           fullWidth
           InputProps={{
-            autoComplete: "off",
+            autoComplete: 'off',
             endAdornment: loading && <CircularProgress size={16} />,
           }}
         />
@@ -160,32 +130,18 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
               {renderCollection(
                 productChoicesWithValidVariants,
                 (product, productIndex) => (
-                  <React.Fragment key={product ? product.id : "skeleton"}>
+                  <React.Fragment key={product ? product.id : 'skeleton'}>
                     <TableRowLink>
-                      <TableCell
-                        padding="checkbox"
-                        className={classes.productCheckboxCell}
-                      >
+                      <TableCell padding="checkbox" className={classes.productCheckboxCell}>
                         <Checkbox
-                          checked={
-                            productsWithAllVariantsSelected[productIndex]
-                          }
+                          checked={productsWithAllVariantsSelected[productIndex]}
                           disabled={loading}
                           onChange={() =>
-                            onProductAdd(
-                              product,
-                              productIndex,
-                              productsWithAllVariantsSelected,
-                              variants,
-                              setVariants,
-                            )
+                            onProductAdd(product, productIndex, productsWithAllVariantsSelected, variants, setVariants)
                           }
                         />
                       </TableCell>
-                      <TableCellAvatar
-                        className={classes.avatar}
-                        thumbnail={maybe(() => product.thumbnail.url)}
-                      />
+                      <TableCellAvatar className={classes.avatar} thumbnail={maybe(() => product.thumbnail.url)} />
                       <TableCell className={classes.colName} colSpan={2}>
                         {maybe(() => product.name)}
                       </TableCell>
@@ -198,11 +154,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                           <TableCell className={classes.colVariantCheckbox}>
                             <Checkbox
                               className={classes.variantCheckbox}
-                              checked={
-                                selectedVariantsToProductsMap[productIndex][
-                                  variantIndex
-                                ]
-                              }
+                              checked={selectedVariantsToProductsMap[productIndex][variantIndex]}
                               disabled={loading}
                               onChange={() =>
                                 onVariantAdd(
@@ -260,16 +212,12 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
       </DialogContent>
       <DialogActions>
         <BackButton onClick={onClose} />
-        <ConfirmButton
-          transitionState={confirmButtonState}
-          type="submit"
-          onClick={handleSubmit}
-        >
+        <ConfirmButton transitionState={confirmButtonState} type="submit" onClick={handleSubmit}>
           <FormattedMessage {...buttonMessages.confirm} />
         </ConfirmButton>
       </DialogActions>
     </Dialog>
   );
 };
-OrderProductAddDialog.displayName = "OrderProductAddDialog";
+OrderProductAddDialog.displayName = 'OrderProductAddDialog';
 export default OrderProductAddDialog;

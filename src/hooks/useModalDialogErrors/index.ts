@@ -1,2 +1,2 @@
-export { default } from "./useModalDialogErrors";
-export * from "./useModalDialogErrors";
+export { default } from './useModalDialogErrors';
+export * from './useModalDialogErrors';

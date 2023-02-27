@@ -1,14 +1,14 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import Grid from "@dashboard/components/Grid";
-import Hr from "@dashboard/components/Hr";
-import { AccountErrorFragment } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { getFormErrors } from "@dashboard/utils/errors";
-import getAccountErrorMessage from "@dashboard/utils/errors/account";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import CardTitle from '@dashboard/components/CardTitle';
+import Grid from '@dashboard/components/Grid';
+import Hr from '@dashboard/components/Hr';
+import { AccountErrorFragment } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { getFormErrors } from '@dashboard/utils/errors';
+import getAccountErrorMessage from '@dashboard/utils/errors/account';
+import { Card, CardContent, TextField, Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const useStyles = makeStyles(
   theme => ({
@@ -22,7 +22,7 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(),
     },
   }),
-  { name: "CustomerInfo" },
+  { name: 'CustomerInfo' },
 );
 
 export interface CustomerInfoProps {
@@ -42,7 +42,7 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["firstName", "lastName", "email"], errors);
+  const formErrors = getFormErrors(['firstName', 'lastName', 'email'], errors);
 
   return (
     <Card>
@@ -115,5 +115,5 @@ const CustomerInfo: React.FC<CustomerInfoProps> = props => {
     </Card>
   );
 };
-CustomerInfo.displayName = "CustomerInfo";
+CustomerInfo.displayName = 'CustomerInfo';
 export default CustomerInfo;

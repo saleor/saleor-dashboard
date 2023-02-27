@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const collectionList = gql`
   query CollectionList(
@@ -38,13 +38,7 @@ export const collectionList = gql`
 `;
 
 export const collectionDetails = gql`
-  query CollectionDetails(
-    $id: ID!
-    $first: Int
-    $after: String
-    $last: Int
-    $before: String
-  ) {
+  query CollectionDetails($id: ID!, $first: Int, $after: String, $last: Int, $before: String) {
     collection(id: $id) {
       ...CollectionDetails
       products(first: $first, after: $after, before: $before, last: $last) {

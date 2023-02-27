@@ -1,26 +1,14 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 import {
   SearchGiftCardTagsDocument,
   SearchGiftCardTagsQuery,
   SearchGiftCardTagsQueryVariables,
-} from "@dashboard/graphql";
-import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
+} from '@dashboard/graphql';
+import makeTopLevelSearch from '@dashboard/hooks/makeTopLevelSearch';
 
 export const searchGiftCardTags = gql`
-  query SearchGiftCardTags(
-    $query: String!
-    $first: Int!
-    $after: String
-    $last: Int
-    $before: String
-  ) {
-    search: giftCardTags(
-      filter: { search: $query }
-      first: $first
-      after: $after
-      last: $last
-      before: $before
-    ) {
+  query SearchGiftCardTags($query: String!, $first: Int!, $after: String, $last: Int, $before: String) {
+    search: giftCardTags(filter: { search: $query }, first: $first, after: $after, last: $last, before: $before) {
       totalCount
       edges {
         node {
@@ -35,7 +23,6 @@ export const searchGiftCardTags = gql`
   }
 `;
 
-export default makeTopLevelSearch<
-  SearchGiftCardTagsQuery,
-  SearchGiftCardTagsQueryVariables
->(SearchGiftCardTagsDocument);
+export default makeTopLevelSearch<SearchGiftCardTagsQuery, SearchGiftCardTagsQueryVariables>(
+  SearchGiftCardTagsDocument,
+);

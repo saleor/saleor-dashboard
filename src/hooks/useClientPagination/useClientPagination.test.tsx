@@ -1,10 +1,10 @@
-import { act } from "@testing-library/react";
-import { renderHook } from "@testing-library/react-hooks";
+import { act } from '@testing-library/react';
+import { renderHook } from '@testing-library/react-hooks';
 
-import { useClientPagination } from "./useClientPagination";
+import { useClientPagination } from './useClientPagination';
 
-describe("useClientPagination", () => {
-  test("should reset current page when row number change", () => {
+describe('useClientPagination', () => {
+  test('should reset current page when row number change', () => {
     // Arrange
     const { result } = renderHook(() => useClientPagination());
 
@@ -17,7 +17,7 @@ describe("useClientPagination", () => {
     expect(result.current.rowNumber).toEqual(20);
   });
 
-  test("should reset current page and row number when call restartPagination", () => {
+  test('should reset current page and row number when call restartPagination', () => {
     // Arrange
     const { result } = renderHook(() => useClientPagination());
 
@@ -31,7 +31,7 @@ describe("useClientPagination", () => {
     expect(result.current.rowNumber).toEqual(10);
   });
 
-  test("should change current page when call changeCurrentPage", () => {
+  test('should change current page when call changeCurrentPage', () => {
     // Arrange
     const { result } = renderHook(() => useClientPagination());
 
@@ -42,7 +42,7 @@ describe("useClientPagination", () => {
     expect(result.current.currentPage).toEqual(2);
   });
 
-  test("should change row number when call changeRowNumber", () => {
+  test('should change row number when call changeRowNumber', () => {
     // Arrange
     const { result } = renderHook(() => useClientPagination());
 
@@ -53,7 +53,7 @@ describe("useClientPagination", () => {
     expect(result.current.rowNumber).toEqual(20);
   });
 
-  test("should return paginated data slice to first 10", () => {
+  test('should return paginated data slice to first 10', () => {
     // Arrange & Act
     const { result } = renderHook(() => useClientPagination());
     const paginatedData = result.current.paginate(Array.from(Array(20).keys()));
@@ -64,7 +64,7 @@ describe("useClientPagination", () => {
     expect(paginatedData.data.length).toEqual(10);
   });
 
-  test("should return paginated data with false hasNextPage", () => {
+  test('should return paginated data with false hasNextPage', () => {
     // Arrange
     const { result } = renderHook(() => useClientPagination());
 
@@ -78,7 +78,7 @@ describe("useClientPagination", () => {
     expect(paginatedData.data.length).toEqual(10);
   });
 
-  test("should return paginated data with false hasNextPage and hasPreviousPage", () => {
+  test('should return paginated data with false hasNextPage and hasPreviousPage', () => {
     // Arrange
     const { result } = renderHook(() => useClientPagination());
 

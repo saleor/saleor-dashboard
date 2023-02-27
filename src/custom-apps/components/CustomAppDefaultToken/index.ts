@@ -1,2 +1,2 @@
-export * from "./CustomAppDefaultToken";
-export { default } from "./CustomAppDefaultToken";
+export * from './CustomAppDefaultToken';
+export { default } from './CustomAppDefaultToken';

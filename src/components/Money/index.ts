@@ -1,7 +1,7 @@
-import { IMoney } from "./Money";
+import { IMoney } from './Money';
 
-export { default } from "./Money";
-export * from "./Money";
+export { default } from './Money';
+export * from './Money';
 
 export function addMoney(init: IMoney, ...args: IMoney[]): IMoney {
   return {
@@ -19,7 +19,7 @@ export function subtractMoney(init: IMoney, ...args: IMoney[]): IMoney {
 export const formatMoney = (money: IMoney, locale: string) => {
   try {
     const formattedMoney = Intl.NumberFormat(locale, {
-      style: "currency",
+      style: 'currency',
       currency: money.currency,
     }).format(money.amount);
     return formattedMoney;
@@ -28,16 +28,14 @@ export const formatMoney = (money: IMoney, locale: string) => {
   }
 };
 
-export const formatMoneyRange = (
-  moneyFrom: IMoney,
-  moneyTo: IMoney,
-  locale: string,
-) => {
+export const formatMoneyRange = (moneyFrom: IMoney, moneyTo: IMoney, locale: string) => {
   try {
-    const formattedMoneyRange = (Intl.NumberFormat(locale, {
-      style: "currency",
-      currency: moneyFrom.currency,
-    }) as any).formatRange(moneyFrom.amount, moneyTo.amount);
+    const formattedMoneyRange = (
+      Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency: moneyFrom.currency,
+      }) as any
+    ).formatRange(moneyFrom.amount, moneyTo.amount);
     // TODO: remove casting from formatRange when typescript
     // is updated to 4.7 or higher
     return formattedMoneyRange;

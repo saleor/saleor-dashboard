@@ -1,35 +1,35 @@
-import { TimelineEvent } from "@dashboard/components/Timeline";
-import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
-import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
-import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { TimelineEvent } from '@dashboard/components/Timeline';
+import { TitleElement } from '@dashboard/components/Timeline/TimelineEventHeader';
+import { OrderEventFragment, OrderEventsEnum } from '@dashboard/graphql';
+import { orderUrl } from '@dashboard/orders/urls';
+import React from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import { getEmployeeNameLink } from "./utils";
+import { getEmployeeNameLink } from './utils';
 
 export const replacementCreatedMessages = defineMessages({
   description: {
-    id: "kvSYZh",
-    defaultMessage: "was created for replaced products",
-    description: "replacement created order history message description",
+    id: 'kvSYZh',
+    defaultMessage: 'was created for replaced products',
+    description: 'replacement created order history message description',
   },
   draftNumber: {
-    id: "kkIw+l",
-    defaultMessage: "Draft #{orderNumber} ",
-    description: "replacement created order history message draft number",
+    id: 'kkIw+l',
+    defaultMessage: 'Draft #{orderNumber} ',
+    description: 'replacement created order history message draft number',
   },
 });
 
 export const discountRemovedMessages = defineMessages({
   orderDiscountRemoved: {
-    id: "KXkdMH",
-    defaultMessage: "Order discount was removed by ",
-    description: "order discount removed title",
+    id: 'KXkdMH',
+    defaultMessage: 'Order discount was removed by ',
+    description: 'order discount removed title',
   },
   productDiscountRemoved: {
-    id: "A0Wlg7",
-    defaultMessage: "{productName} discount was removed by",
-    description: "product discount removed title",
+    id: 'A0Wlg7',
+    defaultMessage: '{productName} discount was removed by',
+    description: 'product discount removed title',
   },
 });
 
@@ -38,10 +38,7 @@ interface LinkedTimelineEventProps {
   hasPlainDate?: boolean;
 }
 
-const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({
-  event,
-  hasPlainDate,
-}) => {
+const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({ event, hasPlainDate }) => {
   const intl = useIntl();
 
   const getTitleElements = (): TitleElement[] => {
@@ -62,9 +59,7 @@ const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({
       case OrderEventsEnum.ORDER_DISCOUNT_DELETED: {
         return [
           {
-            text: intl.formatMessage(
-              discountRemovedMessages.orderDiscountRemoved,
-            ),
+            text: intl.formatMessage(discountRemovedMessages.orderDiscountRemoved),
           },
           getEmployeeNameLink(event),
         ];
@@ -72,10 +67,9 @@ const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({
       case OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED: {
         return [
           {
-            text: intl.formatMessage(
-              discountRemovedMessages.productDiscountRemoved,
-              { productName: lines[0].itemName },
-            ),
+            text: intl.formatMessage(discountRemovedMessages.productDiscountRemoved, {
+              productName: lines[0].itemName,
+            }),
           },
           getEmployeeNameLink(event),
         ];
@@ -83,13 +77,7 @@ const LinkedTimelineEvent: React.FC<LinkedTimelineEventProps> = ({
     }
   };
 
-  return (
-    <TimelineEvent
-      titleElements={getTitleElements()}
-      date={event.date}
-      hasPlainDate={hasPlainDate}
-    />
-  );
+  return <TimelineEvent titleElements={getTitleElements()} date={event.date} hasPlainDate={hasPlainDate} />;
 };
 
 export default LinkedTimelineEvent;

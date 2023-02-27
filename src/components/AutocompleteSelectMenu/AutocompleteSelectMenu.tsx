@@ -1,22 +1,13 @@
-import { buttonMessages } from "@dashboard/intl";
-import {
-  CircularProgress,
-  MenuItem,
-  Paper,
-  TextField,
-} from "@material-ui/core";
-import ArrowBack from "@material-ui/icons/ArrowBack";
-import { makeStyles } from "@saleor/macaw-ui";
-import Downshift from "downshift";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import { buttonMessages } from '@dashboard/intl';
+import { CircularProgress, MenuItem, Paper, TextField } from '@material-ui/core';
+import ArrowBack from '@material-ui/icons/ArrowBack';
+import { makeStyles } from '@saleor/macaw-ui';
+import Downshift from 'downshift';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import {
-  getMenuItemByPath,
-  IMenu,
-  validateMenuOptions,
-} from "../../utils/menu";
-import Debounce, { DebounceProps } from "../Debounce";
+import { getMenuItemByPath, IMenu, validateMenuOptions } from '../../utils/menu';
+import Debounce, { DebounceProps } from '../Debounce';
 
 export interface AutocompleteSelectMenuProps {
   disabled: boolean;
@@ -33,19 +24,15 @@ export interface AutocompleteSelectMenuProps {
   onInputChange?: (value: string) => void;
 }
 
-const validationError: Error = new Error(
-  "Values supplied to AutocompleteSelectMenu should be unique",
-);
+const validationError: Error = new Error('Values supplied to AutocompleteSelectMenu should be unique');
 
-const DebounceAutocomplete: React.ComponentType<DebounceProps<
-  string
->> = Debounce;
+const DebounceAutocomplete: React.ComponentType<DebounceProps<string>> = Debounce;
 
 const useStyles = makeStyles(
   theme => ({
     container: {
       flexGrow: 1,
-      position: "relative",
+      position: 'relative',
     },
     menuBack: {
       marginLeft: theme.spacing(-0.5),
@@ -55,13 +42,13 @@ const useStyles = makeStyles(
       left: 0,
       marginTop: theme.spacing(),
       padding: theme.spacing(),
-      position: "absolute",
+      position: 'absolute',
       right: 0,
       zIndex: 2,
     },
     root: {},
   }),
-  { name: "AutocompleteSelectMenu" },
+  { name: 'AutocompleteSelectMenu' },
 );
 const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
   const {
@@ -82,7 +69,7 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
 
   const [isFocused, setIsFocused] = React.useState(false);
 
-  const [inputValue, setInputValue] = React.useState(displayValue || "");
+  const [inputValue, setInputValue] = React.useState(displayValue || '');
 
   const [menuPath, setMenuPath] = React.useState<number[]>([]);
 
@@ -112,22 +99,17 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
       {debounceFn => (
         <Downshift onSelect={handleChange}>
           {({ getItemProps, isOpen, openMenu, closeMenu, selectItem }) => (
-            <div
-              className={classes.container}
-              data-test-id="container-autocomplete-select"
-            >
+            <div className={classes.container} data-test-id="container-autocomplete-select">
               <TextField
                 InputProps={{
-                  endAdornment: isFocused && loading && (
-                    <CircularProgress size={16} />
-                  ),
+                  endAdornment: isFocused && loading && <CircularProgress size={16} />,
                   id: undefined,
                   onBlur() {
                     setIsFocused(false);
                     closeMenu();
                     setMenuPath([]);
-                    setInputValue(displayValue || "");
-                    debounceFn("");
+                    setInputValue(displayValue || '');
+                    debounceFn('');
                   },
                   onChange: event => {
                     debounceFn(event.target.value);
@@ -154,41 +136,33 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
                         <MenuItem
                           component="div"
                           {...getItemProps({
-                            item: "Back",
+                            item: 'Back',
                           })}
-                          onClick={() =>
-                            setMenuPath(menuPath.slice(0, menuPath.length - 2))
-                          }
+                          onClick={() => setMenuPath(menuPath.slice(0, menuPath.length - 2))}
                         >
                           <ArrowBack className={classes.menuBack} />
                           <FormattedMessage {...buttonMessages.back} />
                         </MenuItem>
                       )}
-                      {(menuPath.length
-                        ? getMenuItemByPath(options, menuPath).children
-                        : options
-                      ).map((suggestion, index) => (
-                        <MenuItem
-                          data-test-id={!!testIds ? testIds[index] : ""}
-                          key={`${suggestion.value}:${index}`}
-                          component="div"
-                          {...getItemProps({ item: suggestion.value ?? "" })}
-                          onClick={() =>
-                            suggestion.value
-                              ? selectItem(suggestion.value)
-                              : setMenuPath([...menuPath, index])
-                          }
-                        >
-                          {suggestion.label}
-                        </MenuItem>
-                      ))}
+                      {(menuPath.length ? getMenuItemByPath(options, menuPath).children : options).map(
+                        (suggestion, index) => (
+                          <MenuItem
+                            data-test-id={!!testIds ? testIds[index] : ''}
+                            key={`${suggestion.value}:${index}`}
+                            component="div"
+                            {...getItemProps({ item: suggestion.value ?? '' })}
+                            onClick={() =>
+                              suggestion.value ? selectItem(suggestion.value) : setMenuPath([...menuPath, index])
+                            }
+                          >
+                            {suggestion.label}
+                          </MenuItem>
+                        ),
+                      )}
                     </>
                   ) : (
                     <MenuItem disabled component="div">
-                      <FormattedMessage
-                        id="jHJmjf"
-                        defaultMessage="No results"
-                      />
+                      <FormattedMessage id="jHJmjf" defaultMessage="No results" />
                     </MenuItem>
                   )}
                 </Paper>
@@ -200,5 +174,5 @@ const AutocompleteSelectMenu: React.FC<AutocompleteSelectMenuProps> = props => {
     </DebounceAutocomplete>
   );
 };
-AutocompleteSelectMenu.displayName = "AutocompleteSelectMenu";
+AutocompleteSelectMenu.displayName = 'AutocompleteSelectMenu';
 export default AutocompleteSelectMenu;

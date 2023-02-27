@@ -1,14 +1,12 @@
-import CardMenu from "@dashboard/components/CardMenu";
-import React from "react";
-import { useIntl } from "react-intl";
+import CardMenu from '@dashboard/components/CardMenu';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
 interface ProductVariantSetDefaultProps {
   onSetDefaultVariant: () => void;
 }
 
-const ProductVariantSetDefault: React.FC<ProductVariantSetDefaultProps> = ({
-  onSetDefaultVariant,
-}) => {
+const ProductVariantSetDefault: React.FC<ProductVariantSetDefaultProps> = ({ onSetDefaultVariant }) => {
   const intl = useIntl();
 
   return (
@@ -16,12 +14,12 @@ const ProductVariantSetDefault: React.FC<ProductVariantSetDefaultProps> = ({
       menuItems={[
         {
           label: intl.formatMessage({
-            id: "SZH0fw",
-            defaultMessage: "Set as default",
-            description: "set variant as default, button",
+            id: 'SZH0fw',
+            defaultMessage: 'Set as default',
+            description: 'set variant as default, button',
           }),
           onSelect: onSetDefaultVariant,
-          testId: "setDefault",
+          testId: 'setDefault',
         },
       ]}
       data-test-id="menu"
@@ -29,5 +27,5 @@ const ProductVariantSetDefault: React.FC<ProductVariantSetDefaultProps> = ({
   );
 };
 
-ProductVariantSetDefault.displayName = "ProductVariantSetDefault";
+ProductVariantSetDefault.displayName = 'ProductVariantSetDefault';
 export default ProductVariantSetDefault;

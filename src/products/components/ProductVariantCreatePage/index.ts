@@ -1,2 +1,2 @@
-export { default } from "./ProductVariantCreatePage";
-export * from "./ProductVariantCreatePage";
+export { default } from './ProductVariantCreatePage';
+export * from './ProductVariantCreatePage';

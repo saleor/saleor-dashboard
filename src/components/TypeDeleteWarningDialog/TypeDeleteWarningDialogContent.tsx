@@ -1,14 +1,14 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { CardContent } from "@material-ui/core";
-import React, { useState } from "react";
-import { MessageDescriptor, useIntl } from "react-intl";
+import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import ConfirmButton from '@dashboard/components/ConfirmButton';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { CardContent } from '@material-ui/core';
+import React, { useState } from 'react';
+import { MessageDescriptor, useIntl } from 'react-intl';
 
-import DeleteButton from "../DeleteButton";
-import DeleteWarningDialogConsentContent from "./DeleteWarningDialogConsentContent";
-import { useTypeDeleteWarningDialogStyles as useStyles } from "./styles";
+import DeleteButton from '../DeleteButton';
+import DeleteWarningDialogConsentContent from './DeleteWarningDialogConsentContent';
+import { useTypeDeleteWarningDialogStyles as useStyles } from './styles';
 
 interface TypeDeleteWarningDialogContentProps {
   singleItemSelectedName?: string;
@@ -44,8 +44,7 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
 
   const isDisbled = hasAssignedItems ? !isConsentChecked : false;
 
-  const shouldShowViewAssignedItemsButton =
-    showViewAssignedItemsButton && hasAssignedItems;
+  const shouldShowViewAssignedItemsButton = showViewAssignedItemsButton && hasAssignedItems;
 
   return (
     <CardContent>
@@ -63,20 +62,13 @@ const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentPro
       <div className={classes.buttonsSection}>
         {shouldShowViewAssignedItemsButton && (
           <>
-            <ConfirmButton
-              onClick={handleViewAssignedItems}
-              transitionState="default"
-            >
+            <ConfirmButton onClick={handleViewAssignedItems} transitionState="default">
               {intl.formatMessage(viewAssignedItemsButtonLabel)}
             </ConfirmButton>
             <HorizontalSpacer spacing={3} />
           </>
         )}
-        <DeleteButton
-          onClick={onDelete}
-          disabled={isDisbled}
-          testId="confirm-delete"
-        />
+        <DeleteButton onClick={onDelete} disabled={isDisbled} testId="confirm-delete" />
       </div>
     </CardContent>
   );

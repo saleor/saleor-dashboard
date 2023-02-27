@@ -1,2 +1,2 @@
-export { default } from "./OrderSettings";
-export * from "./OrderSettings";
+export { default } from './OrderSettings';
+export * from './OrderSettings';

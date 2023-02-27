@@ -1,10 +1,6 @@
-import { FilterElement, IFilter } from "@dashboard/components/Filter";
-import {
-  GiftCardFilterInput,
-  SearchCustomersQuery,
-  SearchProductsQuery,
-} from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { FilterElement, IFilter } from '@dashboard/components/Filter';
+import { GiftCardFilterInput, SearchCustomersQuery, SearchProductsQuery } from '@dashboard/graphql';
+import { RelayToFlat } from '@dashboard/types';
 import {
   createFilterTabUtils,
   createFilterUtils,
@@ -12,20 +8,12 @@ import {
   getMinMaxQueryParam,
   getMultipleValueQueryParam,
   getSingleValueQueryParam,
-} from "@dashboard/utils/filters";
-import {
-  createAutocompleteField,
-  createNumberField,
-  createOptionsField,
-} from "@dashboard/utils/filters/fields";
-import {
-  mapNodeToChoice,
-  mapPersonNodeToChoice,
-  mapSingleValueNodeToChoice,
-} from "@dashboard/utils/maps";
-import { defineMessages, IntlShape } from "react-intl";
+} from '@dashboard/utils/filters';
+import { createAutocompleteField, createNumberField, createOptionsField } from '@dashboard/utils/filters/fields';
+import { mapNodeToChoice, mapPersonNodeToChoice, mapSingleValueNodeToChoice } from '@dashboard/utils/maps';
+import { defineMessages, IntlShape } from 'react-intl';
 
-import { GiftCardListUrlQueryParams } from "../types";
+import { GiftCardListUrlQueryParams } from '../types';
 import {
   GiftCardListFilterKeys,
   GiftCardListFilterOpts,
@@ -33,17 +21,17 @@ import {
   GiftCardListUrlFiltersEnum,
   GiftCardStatusFilterEnum,
   SearchWithFetchMoreProps,
-} from "./types";
+} from './types';
 
-export const GIFT_CARD_FILTERS_KEY = "giftCardFilters";
+export const GIFT_CARD_FILTERS_KEY = 'giftCardFilters';
 
 interface GiftCardFilterOptsProps {
   params: GiftCardListUrlFilters;
   currencies: string[];
   loadingCurrencies: boolean;
-  products: RelayToFlat<SearchProductsQuery["search"]>;
+  products: RelayToFlat<SearchProductsQuery['search']>;
   productSearchProps: SearchWithFetchMoreProps;
-  customers: RelayToFlat<SearchCustomersQuery["search"]>;
+  customers: RelayToFlat<SearchCustomersQuery['search']>;
   customerSearchProps: SearchWithFetchMoreProps;
   tags: string[];
   tagSearchProps: SearchWithFetchMoreProps;
@@ -72,7 +60,7 @@ export const getFilterOpts = ({
     value: params?.product,
     choices: mapNodeToChoice(products),
     displayValues: mapSingleValueNodeToChoice(products),
-    initialSearch: "",
+    initialSearch: '',
     hasMore: productSearchProps.hasMore,
     loading: productSearchProps.loading,
     onFetchMore: productSearchProps.onFetchMore,
@@ -83,7 +71,7 @@ export const getFilterOpts = ({
     value: params?.usedBy,
     choices: mapPersonNodeToChoice(customers),
     displayValues: mapPersonNodeToChoice(customers),
-    initialSearch: "",
+    initialSearch: '',
     hasMore: customerSearchProps.hasMore,
     loading: customerSearchProps.loading,
     onFetchMore: customerSearchProps.onFetchMore,
@@ -94,7 +82,7 @@ export const getFilterOpts = ({
     value: dedupeFilter(params?.tag || []),
     choices: mapSingleValueNodeToChoice(tags),
     displayValues: mapSingleValueNodeToChoice(tags),
-    initialSearch: "",
+    initialSearch: '',
     hasMore: tagSearchProps.hasMore,
     loading: tagSearchProps.loading,
     onFetchMore: tagSearchProps.onFetchMore,
@@ -102,22 +90,18 @@ export const getFilterOpts = ({
   },
   initialBalanceAmount: {
     active:
-      [params.initialBalanceAmountFrom, params.initialBalanceAmountTo].some(
-        field => field !== undefined,
-      ) || false,
+      [params.initialBalanceAmountFrom, params.initialBalanceAmountTo].some(field => field !== undefined) || false,
     value: {
-      max: params.initialBalanceAmountTo || "",
-      min: params.initialBalanceAmountFrom || "",
+      max: params.initialBalanceAmountTo || '',
+      min: params.initialBalanceAmountFrom || '',
     },
   },
   currentBalanceAmount: {
     active:
-      [params.currentBalanceAmountFrom, params.currentBalanceAmountTo].some(
-        field => field !== undefined,
-      ) || false,
+      [params.currentBalanceAmountFrom, params.currentBalanceAmountTo].some(field => field !== undefined) || false,
     value: {
-      max: params.currentBalanceAmountTo || "",
-      min: params.currentBalanceAmountFrom || "",
+      max: params.currentBalanceAmountTo || '',
+      min: params.currentBalanceAmountFrom || '',
     },
   },
   status: {
@@ -126,20 +110,10 @@ export const getFilterOpts = ({
   },
 });
 
-export function getFilterQueryParam(
-  filter: FilterElement<GiftCardListFilterKeys>,
-): GiftCardListUrlFilters {
+export function getFilterQueryParam(filter: FilterElement<GiftCardListFilterKeys>): GiftCardListUrlFilters {
   const { name } = filter;
 
-  const {
-    initialBalanceAmount,
-    currentBalanceAmount,
-    tag,
-    currency,
-    usedBy,
-    product,
-    status,
-  } = GiftCardListFilterKeys;
+  const { initialBalanceAmount, currentBalanceAmount, tag, currency, usedBy, product, status } = GiftCardListFilterKeys;
 
   switch (name) {
     case currency:
@@ -169,61 +143,58 @@ export function getFilterQueryParam(
 
 export const messages = defineMessages({
   balanceAmountLabel: {
-    id: "bVbEZ/",
-    defaultMessage: "Amount",
-    description: "amount filter label",
+    id: 'bVbEZ/',
+    defaultMessage: 'Amount',
+    description: 'amount filter label',
   },
   tagLabel: {
-    id: "mE+fru",
-    defaultMessage: "Tags",
-    description: "tag filter label",
+    id: 'mE+fru',
+    defaultMessage: 'Tags',
+    description: 'tag filter label',
   },
   currencyLabel: {
-    id: "osPBn1",
-    defaultMessage: "Currency",
-    description: "currency filter label",
+    id: 'osPBn1',
+    defaultMessage: 'Currency',
+    description: 'currency filter label',
   },
   productLabel: {
-    id: "Sjd7wm",
-    defaultMessage: "Product",
-    description: "product filter label",
+    id: 'Sjd7wm',
+    defaultMessage: 'Product',
+    description: 'product filter label',
   },
   usedByLabel: {
-    id: "WMGoqz",
-    defaultMessage: "Used by",
-    description: "used by filter label",
+    id: 'WMGoqz',
+    defaultMessage: 'Used by',
+    description: 'used by filter label',
   },
   statusLabel: {
-    id: "D4CsYK",
-    defaultMessage: "Status",
-    description: "status filter label",
+    id: 'D4CsYK',
+    defaultMessage: 'Status',
+    description: 'status filter label',
   },
   enabledOptionLabel: {
-    id: "vC8vyb",
-    defaultMessage: "Enabled",
-    description: "enabled status option label",
+    id: 'vC8vyb',
+    defaultMessage: 'Enabled',
+    description: 'enabled status option label',
   },
   disabledOptionLabel: {
-    id: "+WTmpr",
-    defaultMessage: "Disabled",
-    description: "disabled status option label",
+    id: '+WTmpr',
+    defaultMessage: 'Disabled',
+    description: 'disabled status option label',
   },
   initialBalanceLabel: {
-    id: "VceXrc",
-    defaultMessage: "Initial balance",
-    description: "initial balance filter label",
+    id: 'VceXrc',
+    defaultMessage: 'Initial balance',
+    description: 'initial balance filter label',
   },
   currentBalanceLabel: {
-    id: "e/61NZ",
-    defaultMessage: "Current balance",
-    description: "current balance filter label",
+    id: 'e/61NZ',
+    defaultMessage: 'Current balance',
+    description: 'current balance filter label',
   },
 });
 
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: GiftCardListFilterOpts,
-): IFilter<GiftCardListFilterKeys> {
+export function createFilterStructure(intl: IntlShape, opts: GiftCardListFilterOpts): IFilter<GiftCardListFilterKeys> {
   return [
     {
       ...createNumberField(
@@ -231,9 +202,7 @@ export function createFilterStructure(
         intl.formatMessage(messages.initialBalanceLabel),
         opts.initialBalanceAmount.value,
       ),
-      multiple:
-        opts?.initialBalanceAmount?.value?.min !==
-        opts?.initialBalanceAmount?.value?.max,
+      multiple: opts?.initialBalanceAmount?.value?.min !== opts?.initialBalanceAmount?.value?.max,
       active: opts.initialBalanceAmount.active,
       dependencies: [GiftCardListFilterKeys.currency],
     },
@@ -244,9 +213,7 @@ export function createFilterStructure(
         intl.formatMessage(messages.currentBalanceLabel),
         opts.currentBalanceAmount.value,
       ),
-      multiple:
-        opts?.currentBalanceAmount?.value?.min !==
-        opts?.currentBalanceAmount?.value?.max,
+      multiple: opts?.currentBalanceAmount?.value?.min !== opts?.currentBalanceAmount?.value?.max,
       active: opts.currentBalanceAmount.active,
       dependencies: [GiftCardListFilterKeys.currency],
     },
@@ -270,7 +237,7 @@ export function createFilterStructure(
         opts.tag.choices,
         {
           hasMore: opts.tag.hasMore,
-          initialSearch: "",
+          initialSearch: '',
           loading: opts.tag.loading,
           onFetchMore: opts.tag.onFetchMore,
           onSearchChange: opts.tag.onSearchChange,
@@ -288,7 +255,7 @@ export function createFilterStructure(
         opts.product.choices,
         {
           hasMore: opts.product.hasMore,
-          initialSearch: "",
+          initialSearch: '',
           loading: opts.product.loading,
           onFetchMore: opts.product.onFetchMore,
           onSearchChange: opts.product.onSearchChange,
@@ -306,7 +273,7 @@ export function createFilterStructure(
         opts.usedBy.choices,
         {
           hasMore: opts.usedBy.hasMore,
-          initialSearch: "",
+          initialSearch: '',
           loading: opts.usedBy.loading,
           onFetchMore: opts.usedBy.onFetchMore,
           onSearchChange: opts.usedBy.onSearchChange,
@@ -336,19 +303,13 @@ export function createFilterStructure(
   ];
 }
 
-export const {
-  deleteFilterTab,
-  getFilterTabs,
-  saveFilterTab,
-} = createFilterTabUtils<GiftCardListUrlFilters>(GIFT_CARD_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<GiftCardListUrlFilters>(GIFT_CARD_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<GiftCardListUrlQueryParams, GiftCardListUrlFilters>(
-  GiftCardListUrlFiltersEnum,
-);
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
+  GiftCardListUrlQueryParams,
+  GiftCardListUrlFilters
+>(GiftCardListUrlFiltersEnum);
 
 export function getFilterVariables({
   status,
@@ -383,7 +344,7 @@ export function getFilterVariables({
 
   return {
     code: query,
-    isActive: !!status ? status === "enabled" : undefined,
+    isActive: !!status ? status === 'enabled' : undefined,
     tags: tag,
     usedBy,
     products: product,

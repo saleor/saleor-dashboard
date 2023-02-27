@@ -1,9 +1,5 @@
-import {
-  AddressValidationRulesQuery,
-  CountryCode,
-  useAddressValidationRulesQuery,
-} from "@dashboard/graphql";
-import { ChoiceValue } from "@saleor/sdk/dist/apollo/types";
+import { AddressValidationRulesQuery, CountryCode, useAddressValidationRulesQuery } from '@dashboard/graphql';
+import { ChoiceValue } from '@saleor/sdk/dist/apollo/types';
 
 interface AreaChoices {
   label: string;
@@ -19,9 +15,7 @@ const prepareChoices = (values: ChoiceValue[]): AreaChoices[] =>
   }));
 
 const selectRules = (data: AddressValidationRulesQuery) =>
-  data
-    ? data.addressValidationRules
-    : { countryAreaChoices: [], allowedFields: [] };
+  data ? data.addressValidationRules : { countryAreaChoices: [], allowedFields: [] };
 
 const useValidationRules = (country?: string) => {
   const countryCode = CountryCode[country];
@@ -53,8 +47,7 @@ const useAllowedFields = (data: AddressValidationRulesQuery) => {
 };
 
 const useDisplayValues = (areas: AreaChoices[]) => {
-  const isProvinceCode = (code: string) =>
-    code.length === 2 && code.toLocaleUpperCase() === code;
+  const isProvinceCode = (code: string) => code.length === 2 && code.toLocaleUpperCase() === code;
 
   const getDisplayValue = (value: string) => {
     if (isProvinceCode(value)) {

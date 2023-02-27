@@ -1,18 +1,18 @@
-import { MutationFunction } from "@apollo/client";
-import { categoryAddUrl } from "@dashboard/categories/urls";
-import { collectionAddUrl } from "@dashboard/collections/urls";
-import { customerAddUrl } from "@dashboard/customers/urls";
-import { voucherAddUrl } from "@dashboard/discounts/urls";
-import { OrderDraftCreateMutation } from "@dashboard/graphql";
-import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
-import { permissionGroupAddUrl } from "@dashboard/permissionGroups/urls";
-import { productAddUrl } from "@dashboard/products/urls";
-import { score } from "fuzzaldrin";
-import { IntlShape } from "react-intl";
+import { MutationFunction } from '@apollo/client';
+import { categoryAddUrl } from '@dashboard/categories/urls';
+import { collectionAddUrl } from '@dashboard/collections/urls';
+import { customerAddUrl } from '@dashboard/customers/urls';
+import { voucherAddUrl } from '@dashboard/discounts/urls';
+import { OrderDraftCreateMutation } from '@dashboard/graphql';
+import { UseNavigatorResult } from '@dashboard/hooks/useNavigator';
+import { permissionGroupAddUrl } from '@dashboard/permissionGroups/urls';
+import { productAddUrl } from '@dashboard/products/urls';
+import { score } from 'fuzzaldrin';
+import { IntlShape } from 'react-intl';
 
-import { QuickSearchActionInput, QuickSearchMode } from "../../types";
-import messages from "../messages";
-import { sortScores } from "../utils";
+import { QuickSearchActionInput, QuickSearchMode } from '../../types';
+import messages from '../messages';
+import { sortScores } from '../utils';
 
 const threshold = 0.05;
 const maxActions = 5;
@@ -81,7 +81,7 @@ export function searchInCommands(
     {
       label: intl.formatMessage(messages.helpMode),
       onClick: () => {
-        setMode("help");
+        setMode('help');
         return true;
       },
     },
@@ -92,7 +92,7 @@ export function searchInCommands(
     onClick: action.onClick,
     score: score(action.label, search),
     text: action.label,
-    type: "action",
+    type: 'action',
   }));
 }
 

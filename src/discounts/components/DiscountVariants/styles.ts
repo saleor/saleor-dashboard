@@ -1,36 +1,36 @@
-import { AVATAR_MARGIN } from "@dashboard/components/TableCellAvatar/Avatar";
-import { makeStyles } from "@saleor/macaw-ui";
+import { AVATAR_MARGIN } from '@dashboard/components/TableCellAvatar/Avatar';
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
     colActions: {
-      "&:last-child": {
+      '&:last-child': {
         paddingRight: 0,
       },
       width: `calc(76px + ${theme.spacing(0.5)})`,
     },
     colProductName: {
       paddingLeft: 0,
-      width: "auto",
+      width: 'auto',
       minWidth: 200,
     },
     colNameLabel: {
       marginLeft: `calc(${AVATAR_MARGIN}px + ${theme.spacing(3)})`,
     },
     colVariantName: {
-      width: "auto",
+      width: 'auto',
       minWidth: 150,
     },
     colType: {
-      width: "auto",
+      width: 'auto',
       minWidth: 150,
     },
     table: {
-      tableLayout: "fixed",
+      tableLayout: 'fixed',
     },
     tableRow: {
-      cursor: "pointer",
+      cursor: 'pointer',
     },
   }),
-  { name: "DiscountVariants" },
+  { name: 'DiscountVariants' },
 );

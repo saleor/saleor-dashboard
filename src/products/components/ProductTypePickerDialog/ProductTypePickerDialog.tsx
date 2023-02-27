@@ -1,15 +1,15 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
+import ActionDialog from '@dashboard/components/ActionDialog';
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
-} from "@dashboard/components/SingleAutocompleteSelectField";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { FetchMoreProps } from "@dashboard/types";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/components/SingleAutocompleteSelectField';
+import useModalDialogOpen from '@dashboard/hooks/useModalDialogOpen';
+import useStateFromProps from '@dashboard/hooks/useStateFromProps';
+import { FetchMoreProps } from '@dashboard/types';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { messages } from "./messages";
+import { messages } from './messages';
 
 export interface ProductTypePickerDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -31,15 +31,13 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
   onConfirm,
 }) => {
   const intl = useIntl();
-  const [choice, setChoice] = useStateFromProps("");
-  const productTypeDisplayValue = productTypes.find(
-    productType => productType.value === choice,
-  )?.label;
+  const [choice, setChoice] = useStateFromProps('');
+  const productTypeDisplayValue = productTypes.find(productType => productType.value === choice)?.label;
 
   useModalDialogOpen(open, {
     onClose: () => {
-      setChoice("");
-      fetchProductTypes("");
+      setChoice('');
+      fetchProductTypes('');
     },
   });
 
@@ -66,5 +64,5 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
     </ActionDialog>
   );
 };
-ProductTypePickerDialog.displayName = "ProductTypePickerDialog";
+ProductTypePickerDialog.displayName = 'ProductTypePickerDialog';
 export default ProductTypePickerDialog;

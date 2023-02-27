@@ -1,28 +1,20 @@
-import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  useAppQuery,
-  useWebhookCreateMutation,
-  WebhookEventTypeAsyncEnum,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors } from "@dashboard/misc";
-import React from "react";
-import { useIntl } from "react-intl";
+import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { useAppQuery, useWebhookCreateMutation, WebhookEventTypeAsyncEnum } from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { commonMessages } from '@dashboard/intl';
+import { extractMutationErrors } from '@dashboard/misc';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import WebhookDetailsPage, {
-  WebhookFormData,
-} from "../components/WebhookDetailsPage";
-import { CustomAppUrls } from "../urls";
+import WebhookDetailsPage, { WebhookFormData } from '../components/WebhookDetailsPage';
+import { CustomAppUrls } from '../urls';
 
 export interface CustomAppWebhookCreateProps {
   appId: string;
 }
 
-export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
-  appId,
-}) => {
+export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({ appId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -34,7 +26,7 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
       const webhook = data.webhookCreate?.webhook;
       if (webhook && data?.webhookCreate?.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate(CustomAppUrls.resolveWebhookUrl(appId, webhook.id));
@@ -49,9 +41,7 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
           input: {
             app: appId,
             syncEvents: data.syncEvents,
-            asyncEvents: data.asyncEvents.includes(
-              WebhookEventTypeAsyncEnum.ANY_EVENTS,
-            )
+            asyncEvents: data.asyncEvents.includes(WebhookEventTypeAsyncEnum.ANY_EVENTS)
               ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
               : data.asyncEvents,
             isActive: data.isActive,
@@ -68,14 +58,14 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
     <>
       <WindowTitle
         title={intl.formatMessage({
-          id: "JVaz1C",
-          defaultMessage: "Create Webhook",
-          description: "window title",
+          id: 'JVaz1C',
+          defaultMessage: 'Create Webhook',
+          description: 'window title',
         })}
       />
       <WebhookDetailsPage
         appId={appId}
-        appName={data?.app?.name ?? ""}
+        appName={data?.app?.name ?? ''}
         disabled={false}
         errors={webhookCreateOpts.data?.webhookCreate?.errors ?? []}
         onSubmit={handleSubmit}
@@ -85,5 +75,5 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
   );
 };
 
-CustomAppWebhookCreate.displayName = "CustomAppWebhookCreate";
+CustomAppWebhookCreate.displayName = 'CustomAppWebhookCreate';
 export default CustomAppWebhookCreate;

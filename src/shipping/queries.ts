@@ -1,12 +1,7 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const shippingZones = gql`
-  query ShippingZones(
-    $first: Int
-    $after: String
-    $last: Int
-    $before: String
-  ) {
+  query ShippingZones($first: Int, $after: String, $last: Int, $before: String) {
     shippingZones(first: $first, after: $after, last: $last, before: $before) {
       edges {
         node {
@@ -21,13 +16,7 @@ export const shippingZones = gql`
 `;
 
 export const shippingZone = gql`
-  query ShippingZone(
-    $id: ID!
-    $before: String
-    $after: String
-    $first: Int
-    $last: Int
-  ) {
+  query ShippingZone($id: ID!, $before: String, $after: String, $first: Int, $last: Int) {
     shippingZone(id: $id) {
       ...ShippingZone
       default

@@ -1,30 +1,19 @@
-import { PageCountQueryVariables, usePageCountQuery } from "@dashboard/graphql";
-import { pageListUrl } from "@dashboard/pages/urls";
-import {
-  PageTypeListUrlQueryParams,
-  PageTypeUrlQueryParams,
-} from "@dashboard/pageTypes/urls";
-import React from "react";
+import { PageCountQueryVariables, usePageCountQuery } from '@dashboard/graphql';
+import { pageListUrl } from '@dashboard/pages/urls';
+import { PageTypeListUrlQueryParams, PageTypeUrlQueryParams } from '@dashboard/pageTypes/urls';
+import React from 'react';
 
-import * as messages from "./messages";
-import { UseTypeDeleteData, UseTypeDeleteProps } from "./types";
+import * as messages from './messages';
+import { UseTypeDeleteData, UseTypeDeleteProps } from './types';
 
-type UsePageTypeDeleteProps<
-  T = PageTypeListUrlQueryParams | PageTypeUrlQueryParams
-> = UseTypeDeleteProps<T>;
+type UsePageTypeDeleteProps<T = PageTypeListUrlQueryParams | PageTypeUrlQueryParams> = UseTypeDeleteProps<T>;
 
-function usePageTypeDelete({
-  singleId,
-  params,
-  selectedTypes,
-}: UsePageTypeDeleteProps): UseTypeDeleteData {
+function usePageTypeDelete({ singleId, params, selectedTypes }: UsePageTypeDeleteProps): UseTypeDeleteData {
   const pageTypes = selectedTypes || [singleId];
 
-  const isDeleteDialogOpen = params.action === "remove";
+  const isDeleteDialogOpen = params.action === 'remove';
 
-  const pagesAssignedToSelectedTypesQueryVars = React.useMemo<
-    PageCountQueryVariables
-  >(
+  const pagesAssignedToSelectedTypesQueryVars = React.useMemo<PageCountQueryVariables>(
     () => ({
       filter: {
         pageTypes,
@@ -35,10 +24,7 @@ function usePageTypeDelete({
 
   const shouldSkipPageListQuery = !pageTypes.length || !isDeleteDialogOpen;
 
-  const {
-    data: pagesAssignedToSelectedTypesData,
-    loading: loadingPagesAssignedToSelectedTypes,
-  } = usePageCountQuery({
+  const { data: pagesAssignedToSelectedTypesData, loading: loadingPagesAssignedToSelectedTypes } = usePageCountQuery({
     variables: pagesAssignedToSelectedTypesQueryVars,
     skip: shouldSkipPageListQuery,
   });
@@ -47,8 +33,7 @@ function usePageTypeDelete({
     pageTypes,
   });
 
-  const assignedItemsCount =
-    pagesAssignedToSelectedTypesData?.pages?.totalCount;
+  const assignedItemsCount = pagesAssignedToSelectedTypesData?.pages?.totalCount;
 
   return {
     ...messages,

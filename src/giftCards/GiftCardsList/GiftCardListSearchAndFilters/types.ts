@@ -7,34 +7,34 @@ import {
   MinMax,
   Search,
   SearchProps,
-} from "@dashboard/types";
+} from '@dashboard/types';
 
 export enum GiftCardListUrlFiltersEnum {
-  currency = "currency",
-  initialBalanceAmountFrom = "initialBalanceAmountFrom",
-  initialBalanceAmountTo = "initialBalanceAmountTo",
-  currentBalanceAmountFrom = "currentBalanceAmountFrom",
-  currentBalanceAmountTo = "currentBalanceAmountTo",
-  status = "status",
+  currency = 'currency',
+  initialBalanceAmountFrom = 'initialBalanceAmountFrom',
+  initialBalanceAmountTo = 'initialBalanceAmountTo',
+  currentBalanceAmountFrom = 'currentBalanceAmountFrom',
+  currentBalanceAmountTo = 'currentBalanceAmountTo',
+  status = 'status',
 }
 
 export enum GiftCardListUrlFiltersWithMultipleValuesEnum {
-  tag = "tag",
-  product = "product",
-  usedBy = "usedBy",
+  tag = 'tag',
+  product = 'product',
+  usedBy = 'usedBy',
 }
 
 export enum GiftCardListFilterKeys {
-  currency = "currency",
-  balance = "balance",
-  initialBalance = "initialBalance",
-  currentBalance = "currentBalance",
-  initialBalanceAmount = "initialBalanceAmount",
-  currentBalanceAmount = "currentBalanceAmount",
-  tag = "tag",
-  product = "product",
-  usedBy = "usedBy",
-  status = "status",
+  currency = 'currency',
+  balance = 'balance',
+  initialBalance = 'initialBalance',
+  currentBalance = 'currentBalance',
+  initialBalanceAmount = 'initialBalanceAmount',
+  currentBalanceAmount = 'currentBalanceAmount',
+  tag = 'tag',
+  product = 'product',
+  usedBy = 'usedBy',
+  status = 'status',
 }
 
 export type GiftCardListUrlFilters = Filters<GiftCardListUrlFiltersEnum> &
@@ -53,6 +53,6 @@ export interface GiftCardListFilterOpts {
 export type SearchWithFetchMoreProps = FetchMoreProps & Search & SearchProps;
 
 export enum GiftCardStatusFilterEnum {
-  enabled = "enabled",
-  disabled = "disabled",
+  enabled = 'enabled',
+  disabled = 'disabled',
 }

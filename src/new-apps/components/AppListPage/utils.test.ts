@@ -1,25 +1,12 @@
-import {
-  AppListItemFragment,
-  AppTypeEnum,
-  PermissionEnum,
-} from "@dashboard/graphql";
-import {
-  appsInProgress,
-  comingSoonApp,
-  installedAppsList,
-  releasedApp,
-} from "@dashboard/new-apps/fixtures";
-import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
+import { AppListItemFragment, AppTypeEnum, PermissionEnum } from '@dashboard/graphql';
+import { appsInProgress, comingSoonApp, installedAppsList, releasedApp } from '@dashboard/new-apps/fixtures';
+import { GetV2SaleorAppsResponse } from '@dashboard/new-apps/marketplace.types';
 
-import { AppListPageSections } from "./types";
-import {
-  getVerifiedInstallableMarketplaceApps,
-  getVerifiedInstalledApps,
-  resolveSectionsAvailability,
-} from "./utils";
+import { AppListPageSections } from './types';
+import { getVerifiedInstallableMarketplaceApps, getVerifiedInstalledApps, resolveSectionsAvailability } from './utils';
 
-describe("App List available sections util", () => {
-  it("should return available app list sections when all data are passed", () => {
+describe('App List available sections util', () => {
+  it('should return available app list sections when all data are passed', () => {
     // Arrange
     const appSectionsData: AppListPageSections = {
       appsInstallations: appsInProgress,
@@ -40,7 +27,7 @@ describe("App List available sections util", () => {
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
   });
 
-  it("should return no available app list sections when no data are passed", () => {
+  it('should return no available app list sections when no data are passed', () => {
     // Arrange
     const appSectionsData: AppListPageSections = {
       appsInstallations: [],
@@ -61,7 +48,7 @@ describe("App List available sections util", () => {
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
   });
 
-  it("should return only installed apps section as available when only installed apps are passed", () => {
+  it('should return only installed apps section as available when only installed apps are passed', () => {
     // Arrange
     const appSectionsData: AppListPageSections = {
       appsInstallations: [],
@@ -82,7 +69,7 @@ describe("App List available sections util", () => {
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
   });
 
-  it("should return only installed apps section as available when only installations are passed", () => {
+  it('should return only installed apps section as available when only installations are passed', () => {
     // Arrange
     const appSectionsData: AppListPageSections = {
       appsInstallations: appsInProgress,
@@ -103,7 +90,7 @@ describe("App List available sections util", () => {
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
   });
 
-  it("should return available app list sections when all data are undefined", () => {
+  it('should return available app list sections when all data are undefined', () => {
     // Arrange
     const appSectionsData: AppListPageSections = {
       appsInstallations: undefined,
@@ -124,7 +111,7 @@ describe("App List available sections util", () => {
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
   });
 
-  it("should return installed apps section as available when installed apps passed and installations is undefined", () => {
+  it('should return installed apps section as available when installed apps passed and installations is undefined', () => {
     // Arrange
     const appSectionsData: AppListPageSections = {
       appsInstallations: undefined,
@@ -145,7 +132,7 @@ describe("App List available sections util", () => {
     expect(sectionsAvailability).toEqual(expectedSectionsAvailability);
   });
 
-  it("should return installed apps section as available when installed apps is undefined and installations are passed", () => {
+  it('should return installed apps section as available when installed apps is undefined and installations are passed', () => {
     // Arrange
     const appSectionsData: AppListPageSections = {
       appsInstallations: appsInProgress,
@@ -167,77 +154,73 @@ describe("App List available sections util", () => {
   });
 });
 
-describe("App List verified installed apps util", () => {
-  it("should return installed apps list labeled as external properly when some of them are external", () => {
+describe('App List verified installed apps util', () => {
+  it('should return installed apps list labeled as external properly when some of them are external', () => {
     // Arrange
     const installedApps: AppListItemFragment[] = [
       {
-        __typename: "App",
-        id: "QXBjPgE3Ng==",
+        __typename: 'App',
+        id: 'QXBjPgE3Ng==',
         isActive: true,
-        name: "app external",
+        name: 'app external',
         type: AppTypeEnum.THIRDPARTY,
-        version: "1.0.0",
+        version: '1.0.0',
         appUrl: null,
-        manifestUrl: "https://www.example.com/manifest",
+        manifestUrl: 'https://www.example.com/manifest',
         permissions: [
           {
-            __typename: "Permission",
+            __typename: 'Permission',
             code: PermissionEnum.MANAGE_USERS,
-            name: "Manage customers.",
+            name: 'Manage customers.',
           },
         ],
       },
       {
-        __typename: "App",
-        id: "QXBwOjE3Ng==",
+        __typename: 'App',
+        id: 'QXBwOjE3Ng==',
         isActive: false,
-        name: "app local",
+        name: 'app local',
         type: AppTypeEnum.THIRDPARTY,
-        version: "1.0.0",
-        appUrl: "http://localhost:3000",
-        manifestUrl: "http://localhost:3000/api/manifest",
+        version: '1.0.0',
+        appUrl: 'http://localhost:3000',
+        manifestUrl: 'http://localhost:3000/api/manifest',
         permissions: [
           {
-            __typename: "Permission",
+            __typename: 'Permission',
             code: PermissionEnum.MANAGE_ORDERS,
-            name: "Manage orders.",
+            name: 'Manage orders.',
           },
           {
-            __typename: "Permission",
+            __typename: 'Permission',
             code: PermissionEnum.MANAGE_USERS,
-            name: "Manage customers.",
+            name: 'Manage customers.',
           },
         ],
       },
     ];
-    const installableMarketplaceApps: GetV2SaleorAppsResponse.ReleasedSaleorApp[] =
-      [
-        {
-          name: {
-            en: "Test app",
-          },
-          description: {
-            en: "Test app description",
-          },
-          logo: {
-            source: "https://www.example.com/logo",
-            color: "#000000",
-          },
-          integrations: [],
-          manifestUrl: "https://www.example.com/manifest",
-          privacyUrl: "https://www.example.com/privacy",
-          supportUrl: "https://www.example.com/support",
-          repositoryUrl: "https://www.example.com/repository",
-          githubForkUrl: "https://www.example.com/repository/fork",
+    const installableMarketplaceApps: GetV2SaleorAppsResponse.ReleasedSaleorApp[] = [
+      {
+        name: {
+          en: 'Test app',
         },
-      ];
+        description: {
+          en: 'Test app description',
+        },
+        logo: {
+          source: 'https://www.example.com/logo',
+          color: '#000000',
+        },
+        integrations: [],
+        manifestUrl: 'https://www.example.com/manifest',
+        privacyUrl: 'https://www.example.com/privacy',
+        supportUrl: 'https://www.example.com/support',
+        repositoryUrl: 'https://www.example.com/repository',
+        githubForkUrl: 'https://www.example.com/repository/fork',
+      },
+    ];
 
     // Act
-    const verifiedInstalledApps = getVerifiedInstalledApps(
-      installedApps,
-      installableMarketplaceApps,
-    );
+    const verifiedInstalledApps = getVerifiedInstalledApps(installedApps, installableMarketplaceApps);
 
     // Assert
     const expectedVerifiedInstalledApps = [
@@ -245,8 +228,8 @@ describe("App List verified installed apps util", () => {
         app: installedApps[0],
         isExternal: false,
         logo: {
-          source: "https://www.example.com/logo",
-          color: "#000000",
+          source: 'https://www.example.com/logo',
+          color: '#000000',
         },
       },
       {
@@ -259,103 +242,97 @@ describe("App List verified installed apps util", () => {
   });
 });
 
-describe("App List verified installable marketplace apps util", () => {
-  it("should return filtered installable marketplace apps list when some of them are already installed", () => {
+describe('App List verified installable marketplace apps util', () => {
+  it('should return filtered installable marketplace apps list when some of them are already installed', () => {
     // Arrange
     const installedApps: AppListItemFragment[] = [
       {
-        __typename: "App",
-        id: "QXBjPgE3Ng==",
+        __typename: 'App',
+        id: 'QXBjPgE3Ng==',
         isActive: true,
-        name: "app external",
+        name: 'app external',
         type: AppTypeEnum.THIRDPARTY,
-        version: "1.0.0",
+        version: '1.0.0',
         appUrl: null,
-        manifestUrl: "https://www.example.com/manifest",
+        manifestUrl: 'https://www.example.com/manifest',
         permissions: [
           {
-            __typename: "Permission",
+            __typename: 'Permission',
             code: PermissionEnum.MANAGE_USERS,
-            name: "Manage customers.",
+            name: 'Manage customers.',
           },
         ],
       },
       {
-        __typename: "App",
-        id: "QXBwOjE3Ng==",
+        __typename: 'App',
+        id: 'QXBwOjE3Ng==',
         isActive: false,
-        name: "app local",
+        name: 'app local',
         type: AppTypeEnum.THIRDPARTY,
-        version: "1.0.0",
-        appUrl: "http://localhost:3000",
-        manifestUrl: "http://localhost:3000/api/manifest",
+        version: '1.0.0',
+        appUrl: 'http://localhost:3000',
+        manifestUrl: 'http://localhost:3000/api/manifest',
         permissions: [
           {
-            __typename: "Permission",
+            __typename: 'Permission',
             code: PermissionEnum.MANAGE_ORDERS,
-            name: "Manage orders.",
+            name: 'Manage orders.',
           },
           {
-            __typename: "Permission",
+            __typename: 'Permission',
             code: PermissionEnum.MANAGE_USERS,
-            name: "Manage customers.",
+            name: 'Manage customers.',
           },
         ],
       },
     ];
-    const installableMarketplaceApps: GetV2SaleorAppsResponse.ReleasedSaleorApp[] =
-      [
-        {
-          name: {
-            en: "Test app",
-          },
-          description: {
-            en: "Test app description",
-          },
-          logo: {
-            source: "https://www.example.com/logo",
-            color: "#000000",
-          },
-          integrations: [],
-          manifestUrl: "https://www.example.com/manifest",
-          privacyUrl: "https://www.example.com/privacy",
-          supportUrl: "https://www.example.com/support",
-          repositoryUrl: "https://www.example.com/repository",
-          githubForkUrl: "https://www.example.com/repository/fork",
+    const installableMarketplaceApps: GetV2SaleorAppsResponse.ReleasedSaleorApp[] = [
+      {
+        name: {
+          en: 'Test app',
         },
-        {
-          name: {
-            en: "Test app",
-          },
-          description: {
-            en: "Test app description",
-          },
-          logo: {
-            source: "https://www.example-2.com/logo",
-            color: "#000000",
-          },
-          integrations: [],
-          manifestUrl: "https://www.example-2.com/manifest",
-          privacyUrl: "https://www.example-2.com/privacy",
-          supportUrl: "https://www.example-2.com/support",
-          repositoryUrl: "https://www.example-2.com/repository",
-          githubForkUrl: "https://www.example-2.com/repository/fork",
+        description: {
+          en: 'Test app description',
         },
-      ];
+        logo: {
+          source: 'https://www.example.com/logo',
+          color: '#000000',
+        },
+        integrations: [],
+        manifestUrl: 'https://www.example.com/manifest',
+        privacyUrl: 'https://www.example.com/privacy',
+        supportUrl: 'https://www.example.com/support',
+        repositoryUrl: 'https://www.example.com/repository',
+        githubForkUrl: 'https://www.example.com/repository/fork',
+      },
+      {
+        name: {
+          en: 'Test app',
+        },
+        description: {
+          en: 'Test app description',
+        },
+        logo: {
+          source: 'https://www.example-2.com/logo',
+          color: '#000000',
+        },
+        integrations: [],
+        manifestUrl: 'https://www.example-2.com/manifest',
+        privacyUrl: 'https://www.example-2.com/privacy',
+        supportUrl: 'https://www.example-2.com/support',
+        repositoryUrl: 'https://www.example-2.com/repository',
+        githubForkUrl: 'https://www.example-2.com/repository/fork',
+      },
+    ];
 
     // Act
-    const verifiedInstallableMarketplaceApps =
-      getVerifiedInstallableMarketplaceApps(
-        installedApps,
-        installableMarketplaceApps,
-      );
+    const verifiedInstallableMarketplaceApps = getVerifiedInstallableMarketplaceApps(
+      installedApps,
+      installableMarketplaceApps,
+    );
 
     // Assert
-    const expectedVerifiedInstallableMarketplaceApps = [
-      installableMarketplaceApps[1],
-    ];
-    expect(verifiedInstallableMarketplaceApps).toEqual(
-      expectedVerifiedInstallableMarketplaceApps,
-    );
+    const expectedVerifiedInstallableMarketplaceApps = [installableMarketplaceApps[1]];
+    expect(verifiedInstallableMarketplaceApps).toEqual(expectedVerifiedInstallableMarketplaceApps);
   });
 });

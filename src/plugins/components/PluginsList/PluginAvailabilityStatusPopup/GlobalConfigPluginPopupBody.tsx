@@ -1,22 +1,17 @@
-import CardSpacer from "@dashboard/components/CardSpacer";
-import { PluginBaseFragment } from "@dashboard/graphql";
-import { CardContent, Typography } from "@material-ui/core";
-import { Pill } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import CardSpacer from '@dashboard/components/CardSpacer';
+import { PluginBaseFragment } from '@dashboard/graphql';
+import { CardContent, Typography } from '@material-ui/core';
+import { Pill } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import {
-  globalConfigPluginMessages as messages,
-  pluginStatusMessages,
-} from "../messages";
+import { globalConfigPluginMessages as messages, pluginStatusMessages } from '../messages';
 
 interface GlobalConfigPluginPopupBodyProps {
   plugin: PluginBaseFragment;
 }
 
-const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = ({
-  plugin,
-}) => {
+const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = ({ plugin }) => {
   const intl = useIntl();
 
   const { active } = plugin.globalConfiguration;
@@ -26,17 +21,11 @@ const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = 
       <CardContent>
         <Typography>{intl.formatMessage(messages.title)}</Typography>
         <CardSpacer />
-        <Typography variant="caption">
-          {intl.formatMessage(messages.description)}
-        </Typography>
+        <Typography variant="caption">{intl.formatMessage(messages.description)}</Typography>
         <CardSpacer />
         <Pill
-          color={active ? "success" : "error"}
-          label={intl.formatMessage(
-            active
-              ? pluginStatusMessages.active
-              : pluginStatusMessages.deactivated,
-          )}
+          color={active ? 'success' : 'error'}
+          label={intl.formatMessage(active ? pluginStatusMessages.active : pluginStatusMessages.deactivated)}
         />
       </CardContent>
     </>

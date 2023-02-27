@@ -1,5 +1,5 @@
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React from "react";
+import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
+import React from 'react';
 
 interface DeletableItemProps {
   onDelete: (id: string) => void;

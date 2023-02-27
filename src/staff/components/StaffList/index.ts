@@ -1,2 +1,2 @@
-export { default } from "./StaffList";
-export * from "./StaffList";
+export { default } from './StaffList';
+export * from './StaffList';

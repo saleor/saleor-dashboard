@@ -1,10 +1,8 @@
-import { PluginSortField } from "@dashboard/graphql";
-import { PluginListUrlSortField } from "@dashboard/plugins/urls";
-import { createGetSortQueryVariables } from "@dashboard/utils/sort";
+import { PluginSortField } from '@dashboard/graphql';
+import { PluginListUrlSortField } from '@dashboard/plugins/urls';
+import { createGetSortQueryVariables } from '@dashboard/utils/sort';
 
-export function getSortQueryField(
-  sort: PluginListUrlSortField,
-): PluginSortField {
+export function getSortQueryField(sort: PluginListUrlSortField): PluginSortField {
   switch (sort) {
     case PluginListUrlSortField.name:
       return PluginSortField.NAME;
@@ -15,6 +13,4 @@ export function getSortQueryField(
   }
 }
 
-export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField,
-);
+export const getSortQueryVariables = createGetSortQueryVariables(getSortQueryField);

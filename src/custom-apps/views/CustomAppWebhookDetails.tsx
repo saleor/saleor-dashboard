@@ -1,28 +1,20 @@
-import NotFoundPage from "@dashboard/components/NotFoundPage";
-import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  useWebhookDetailsQuery,
-  useWebhookUpdateMutation,
-  WebhookEventTypeAsyncEnum,
-} from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
-import React from "react";
-import { useIntl } from "react-intl";
+import NotFoundPage from '@dashboard/components/NotFoundPage';
+import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { useWebhookDetailsQuery, useWebhookUpdateMutation, WebhookEventTypeAsyncEnum } from '@dashboard/graphql';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { commonMessages } from '@dashboard/intl';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { extractMutationErrors, getStringOrPlaceholder } from "../../misc";
-import WebhookDetailsPage, {
-  WebhookFormData,
-} from "../components/WebhookDetailsPage";
-import { CustomAppUrls } from "../urls";
+import { extractMutationErrors, getStringOrPlaceholder } from '../../misc';
+import WebhookDetailsPage, { WebhookFormData } from '../components/WebhookDetailsPage';
+import { CustomAppUrls } from '../urls';
 
 export interface CustomAppWebhookDetailsProps {
   id: string;
 }
 
-export const CustomAppWebhookDetails: React.FC<
-  CustomAppWebhookDetailsProps
-> = ({ id }) => {
+export const CustomAppWebhookDetails: React.FC<CustomAppWebhookDetailsProps> = ({ id }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
@@ -36,7 +28,7 @@ export const CustomAppWebhookDetails: React.FC<
 
       if (errors?.length === 0 && webhook) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
@@ -53,9 +45,7 @@ export const CustomAppWebhookDetails: React.FC<
           id,
           input: {
             syncEvents: data.syncEvents,
-            asyncEvents: data.asyncEvents.includes(
-              WebhookEventTypeAsyncEnum.ANY_EVENTS,
-            )
+            asyncEvents: data.asyncEvents.includes(WebhookEventTypeAsyncEnum.ANY_EVENTS)
               ? [WebhookEventTypeAsyncEnum.ANY_EVENTS]
               : data.asyncEvents,
             isActive: data.isActive,
@@ -75,12 +65,10 @@ export const CustomAppWebhookDetails: React.FC<
 
   return (
     <>
-      <WindowTitle
-        title={getStringOrPlaceholder(webhookDetails?.webhook?.name)}
-      />
+      <WindowTitle title={getStringOrPlaceholder(webhookDetails?.webhook?.name)} />
       <WebhookDetailsPage
-        appId={webhook?.app.id ?? ""}
-        appName={webhook?.app.name ?? ""}
+        appId={webhook?.app.id ?? ''}
+        appName={webhook?.app.name ?? ''}
         disabled={loading}
         errors={formErrors}
         saveButtonBarState={webhookUpdateOpts.status}
@@ -91,5 +79,5 @@ export const CustomAppWebhookDetails: React.FC<
   );
 };
 
-CustomAppWebhookDetails.displayName = "CustomAppWebhookDetails";
+CustomAppWebhookDetails.displayName = 'CustomAppWebhookDetails';
 export default CustomAppWebhookDetails;

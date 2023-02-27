@@ -2,19 +2,19 @@ import {
   LanguageCodeEnum,
   useMenuItemTranslationDetailsQuery,
   useUpdateMenuItemTranslationsMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors } from "@dashboard/misc";
-import { stringifyQs } from "@dashboard/utils/urls";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import useShop from '@dashboard/hooks/useShop';
+import { commonMessages } from '@dashboard/intl';
+import { extractMutationErrors } from '@dashboard/misc';
+import { stringifyQs } from '@dashboard/utils/urls';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import TranslationsMenuItemPage from "../components/TranslationsMenuItemPage";
-import { TranslationField, TranslationInputFieldName } from "../types";
-import { getParsedTranslationInputData } from "../utils";
+import TranslationsMenuItemPage from '../components/TranslationsMenuItemPage';
+import { TranslationField, TranslationInputFieldName } from '../types';
+import { getParsedTranslationInputData } from '../utils';
 
 export interface TranslationsMenuItemQueryParams {
   activeField: string;
@@ -25,11 +25,7 @@ export interface TranslationsMenuItemProps {
   params: TranslationsMenuItemQueryParams;
 }
 
-const TranslationsMenuItem: React.FC<TranslationsMenuItemProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsMenuItem: React.FC<TranslationsMenuItemProps> = ({ id, languageCode, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -39,25 +35,22 @@ const TranslationsMenuItem: React.FC<TranslationsMenuItemProps> = ({
     variables: { id, language: languageCode },
   });
 
-  const [
-    updateTranslations,
-    updateTranslationsOpts,
-  ] = useUpdateMenuItemTranslationsMutation({
+  const [updateTranslations, updateTranslationsOpts] = useUpdateMenuItemTranslationsMutation({
     onCompleted: data => {
       if (data.menuItemTranslate.errors.length === 0) {
         menuItemTranslations.refetch();
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate("?", { replace: true });
+        navigate('?', { replace: true });
       }
     },
   });
 
   const onEdit = (field: string) =>
     navigate(
-      "?" +
+      '?' +
         stringifyQs({
           activeField: field,
         }),
@@ -65,13 +58,10 @@ const TranslationsMenuItem: React.FC<TranslationsMenuItemProps> = ({
     );
 
   const onDiscard = () => {
-    navigate("?", { replace: true });
+    navigate('?', { replace: true });
   };
 
-  const handleSubmit = (
-    { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string,
-  ) =>
+  const handleSubmit = ({ name: fieldName }: TranslationField<TranslationInputFieldName>, data: string) =>
     extractMutationErrors(
       updateTranslations({
         variables: {
@@ -95,13 +85,9 @@ const TranslationsMenuItem: React.FC<TranslationsMenuItemProps> = ({
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      data={
-        translation?.__typename === "MenuItemTranslatableContent"
-          ? translation
-          : null
-      }
+      data={translation?.__typename === 'MenuItemTranslatableContent' ? translation : null}
     />
   );
 };
-TranslationsMenuItem.displayName = "TranslationsMenuItem";
+TranslationsMenuItem.displayName = 'TranslationsMenuItem';
 export default TranslationsMenuItem;

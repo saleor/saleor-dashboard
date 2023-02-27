@@ -1,11 +1,11 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { getStringOrPlaceholder } from "@dashboard/misc";
-import { DialogContentText } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import { getStringOrPlaceholder } from '@dashboard/misc';
+import { DialogContentText } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import msgs from "./messages";
+import msgs from './messages';
 
 export interface AppDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -13,7 +13,7 @@ export interface AppDeleteDialogProps {
   name?: string | null;
   onClose: () => void;
   onConfirm: () => void;
-  type: "CUSTOM" | "EXTERNAL";
+  type: 'CUSTOM' | 'EXTERNAL';
 }
 
 const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
@@ -26,8 +26,8 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
 }) => {
   const intl = useIntl();
 
-  const isNameMissing = name === null || name === "";
-  const isExternal = type === "EXTERNAL";
+  const isNameMissing = name === null || name === '';
+  const isExternal = type === 'EXTERNAL';
 
   const getMainText = () => {
     if (isNameMissing && isExternal) {
@@ -61,5 +61,5 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
     </ActionDialog>
   );
 };
-AppDeleteDialog.displayName = "AppDeleteDialog";
+AppDeleteDialog.displayName = 'AppDeleteDialog';
 export default AppDeleteDialog;

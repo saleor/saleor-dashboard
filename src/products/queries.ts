@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const initialProductFilterAttributesQuery = gql`
   query InitialProductFilterAttributes {
@@ -118,13 +118,7 @@ export const productDetailsQuery = gql`
 `;
 
 export const productTypeQuery = gql`
-  query ProductType(
-    $id: ID!
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
-  ) {
+  query ProductType($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
     productType(id: $id) {
       id
       name
@@ -137,12 +131,7 @@ export const productTypeQuery = gql`
         name
         valueRequired
         unit
-        choices(
-          first: $firstValues
-          after: $afterValues
-          last: $lastValues
-          before: $beforeValues
-        ) {
+        choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
           ...AttributeValueList
         }
       }
@@ -194,14 +183,10 @@ export const productVariantCreateQuery = gql`
       name
       productType {
         id
-        selectionVariantAttributes: variantAttributes(
-          variantSelection: VARIANT_SELECTION
-        ) {
+        selectionVariantAttributes: variantAttributes(variantSelection: VARIANT_SELECTION) {
           ...VariantAttribute
         }
-        nonSelectionVariantAttributes: variantAttributes(
-          variantSelection: NOT_VARIANT_SELECTION
-        ) {
+        nonSelectionVariantAttributes: variantAttributes(variantSelection: NOT_VARIANT_SELECTION) {
           ...VariantAttribute
         }
       }

@@ -1,2 +1,2 @@
-export { default } from "./SiteCheckoutSettingsCard";
-export * from "./SiteCheckoutSettingsCard";
+export { default } from './SiteCheckoutSettingsCard';
+export * from './SiteCheckoutSettingsCard';

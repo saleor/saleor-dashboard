@@ -1,17 +1,14 @@
-import { FormId, useExitFormDialog } from "@dashboard/components/Form";
-import { MessageContext } from "@dashboard/components/messages";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { useContext } from "react";
+import { FormId, useExitFormDialog } from '@dashboard/components/Form';
+import { MessageContext } from '@dashboard/components/messages';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import { useContext } from 'react';
 
 interface UseHandleFormSubmitProps<TData, TError> {
   formId?: FormId;
   onSubmit: (data: TData) => SubmitPromise<TError[]> | void;
 }
 
-function useHandleFormSubmit<TData, TErrors>({
-  formId,
-  onSubmit,
-}: UseHandleFormSubmitProps<TData, TErrors>) {
+function useHandleFormSubmit<TData, TErrors>({ formId, onSubmit }: UseHandleFormSubmitProps<TData, TErrors>) {
   const { setIsSubmitting, setIsDirty } = useExitFormDialog({
     formId,
   });

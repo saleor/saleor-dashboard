@@ -1,21 +1,15 @@
-import {
-  ChannelPriceAndPreorderData,
-  IChannelPriceAndPreorderArgs,
-} from "@dashboard/channels/utils";
-import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
-import { FormsetData } from "@dashboard/hooks/useFormset";
-import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
-import { toggle } from "@dashboard/utils/lists";
-import React, { useState } from "react";
+import { ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs } from '@dashboard/channels/utils';
+import ChannelsAvailabilityDialog from '@dashboard/components/ChannelsAvailabilityDialog';
+import { FormsetData } from '@dashboard/hooks/useFormset';
+import useModalDialogOpen from '@dashboard/hooks/useModalDialogOpen';
+import { toggle } from '@dashboard/utils/lists';
+import React, { useState } from 'react';
 
-import { ProductChannelListing } from "../types";
+import { ProductChannelListing } from '../types';
 
 interface VariantChannelsDialogProps {
   channelListings: ProductChannelListing;
-  selectedChannelListings?: FormsetData<
-    ChannelPriceAndPreorderData,
-    IChannelPriceAndPreorderArgs
-  >;
+  selectedChannelListings?: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
   open: boolean;
   onClose: () => void;
   onConfirm: (selectedIds: string[]) => void;

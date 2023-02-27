@@ -1,10 +1,10 @@
-import { isExternalURL } from "@dashboard/utils/urls";
-import { Typography } from "@material-ui/core";
-import { TypographyProps } from "@material-ui/core/Typography";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { isExternalURL } from '@dashboard/utils/urls';
+import { Typography } from '@material-ui/core';
+import { TypographyProps } from '@material-ui/core/Typography';
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 
 const useStyles = makeStyles(
   theme => ({
@@ -12,29 +12,29 @@ const useStyles = makeStyles(
       color: theme.palette.textHighlighted.active,
     },
     root: {
-      cursor: "pointer",
-      display: "inline",
+      cursor: 'pointer',
+      display: 'inline',
     },
     secondary: {
       color: theme.palette.primary.main,
     },
     underline: {
-      textDecoration: "underline",
+      textDecoration: 'underline',
     },
     noUnderline: {
-      textDecoration: "none",
+      textDecoration: 'none',
     },
     disabled: {
-      cursor: "default",
+      cursor: 'default',
       color: theme.palette.textHighlighted.inactive,
     },
   }),
-  { name: "Link" },
+  { name: 'Link' },
 );
 
 interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   href?: string;
-  color?: "primary" | "secondary";
+  color?: 'primary' | 'secondary';
   inline?: boolean;
   underline?: boolean;
   typographyProps?: TypographyProps;
@@ -47,7 +47,7 @@ const Link: React.FC<LinkProps> = props => {
     className,
     children,
     inline = true,
-    color = "primary",
+    color = 'primary',
     underline = false,
     onClick,
     disabled,
@@ -59,7 +59,7 @@ const Link: React.FC<LinkProps> = props => {
 
   const classes = useStyles(props);
 
-  const opensNewTab = target === "_blank";
+  const opensNewTab = target === '_blank';
 
   const commonLinkProps = {
     className: clsx(
@@ -81,8 +81,7 @@ const Link: React.FC<LinkProps> = props => {
       onClick(event);
     },
     target,
-    rel:
-      rel ?? (opensNewTab && isExternalURL(href)) ? "noopener noreferer" : "",
+    rel: rel ?? (opensNewTab && isExternalURL(href)) ? 'noopener noreferer' : '',
     ...linkProps,
   };
 
@@ -93,16 +92,12 @@ const Link: React.FC<LinkProps> = props => {
           {children}
         </RouterLink>
       ) : (
-        <Typography
-          component="a"
-          href={disabled ? undefined : href}
-          {...commonLinkProps}
-        >
+        <Typography component="a" href={disabled ? undefined : href} {...commonLinkProps}>
           {children}
         </Typography>
       )}
     </>
   );
 };
-Link.displayName = "Link";
+Link.displayName = 'Link';
 export default Link;

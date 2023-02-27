@@ -1,8 +1,8 @@
-import { IFilter } from "@dashboard/components/Filter";
-import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
-import { ActiveTab, Pagination, Search, Sort } from "@dashboard/types";
+import { IFilter } from '@dashboard/components/Filter';
+import { UseNavigatorResult } from '@dashboard/hooks/useNavigator';
+import { ActiveTab, Pagination, Search, Sort } from '@dashboard/types';
 
-import { GetFilterQueryParam, getFilterQueryParams } from "../filters";
+import { GetFilterQueryParam, getFilterQueryParams } from '../filters';
 
 type RequiredParams = ActiveTab & Search & Sort<any> & Pagination;
 type CreateUrl = (params: RequiredParams) => string;
@@ -12,10 +12,7 @@ type CreateFilterHandlers<TFilterKeys extends string> = [
   (query: string) => void,
 ];
 
-function createFilterHandlers<
-  TFilterKeys extends string,
-  TFilters extends {},
->(opts: {
+function createFilterHandlers<TFilterKeys extends string, TFilters extends {}>(opts: {
   getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TFilters>;
   navigate: UseNavigatorResult;
   createUrl: CreateUrl;

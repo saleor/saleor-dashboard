@@ -1,65 +1,60 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
-import Link from "@dashboard/components/Link";
-import Money from "@dashboard/components/Money";
-import {
-  DiscountValueTypeEnum,
-  OrderDetailsFragment,
-  OrderErrorFragment,
-} from "@dashboard/graphql";
-import { OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
-import { getFormErrors } from "@dashboard/utils/errors";
-import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React, { useRef } from "react";
-import { useIntl } from "react-intl";
+import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
+import Link from '@dashboard/components/Link';
+import Money from '@dashboard/components/Money';
+import { DiscountValueTypeEnum, OrderDetailsFragment, OrderErrorFragment } from '@dashboard/graphql';
+import { OrderDiscountContextConsumerProps } from '@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider';
+import { OrderDiscountData } from '@dashboard/products/components/OrderDiscountProviders/types';
+import { getFormErrors } from '@dashboard/utils/errors';
+import getOrderErrorMessage from '@dashboard/utils/errors/order';
+import { Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React, { useRef } from 'react';
+import { useIntl } from 'react-intl';
 
-import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
-import { ORDER_DISCOUNT } from "../OrderDiscountCommonModal/types";
-import { messages } from "./messages";
+import OrderDiscountCommonModal from '../OrderDiscountCommonModal';
+import { ORDER_DISCOUNT } from '../OrderDiscountCommonModal/types';
+import { messages } from './messages';
 
 const useStyles = makeStyles(
   theme => ({
     root: {
       ...theme.typography.body1,
       lineHeight: 1.9,
-      width: "100%",
+      width: '100%',
     },
     textRight: {
-      textAlign: "right",
+      textAlign: 'right',
     },
     textError: {
       color: theme.palette.error.main,
       marginLeft: theme.spacing(1.5),
-      display: "inline",
+      display: 'inline',
     },
     subtitle: {
       color: theme.palette.grey[500],
       paddingRight: theme.spacing(1),
     },
     relativeRow: {
-      position: "relative",
+      position: 'relative',
     },
     percentDiscountLabelContainer: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "baseline",
-      justifyContent: "flex-end",
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'baseline',
+      justifyContent: 'flex-end',
     },
     shippingMethodContainer: {
-      display: "flex",
-      flexDirection: "row",
-      alignItems: "baseline",
+      display: 'flex',
+      flexDirection: 'row',
+      alignItems: 'baseline',
     },
   }),
-  { name: "OrderDraftDetailsSummary" },
+  { name: 'OrderDraftDetailsSummary' },
 );
 
-const PRICE_PLACEHOLDER = "---";
+const PRICE_PLACEHOLDER = '---';
 
-interface OrderDraftDetailsSummaryProps
-  extends OrderDiscountContextConsumerProps {
+interface OrderDraftDetailsSummaryProps extends OrderDiscountContextConsumerProps {
   disabled?: boolean;
   order: OrderDetailsFragment;
   errors: OrderErrorFragment[];
@@ -102,35 +97,26 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     isShippingRequired,
   } = order;
 
-  const formErrors = getFormErrors(["shipping"], errors);
+  const formErrors = getFormErrors(['shipping'], errors);
 
-  const hasChosenShippingMethod =
-    shippingMethod !== null && shippingMethodName !== null;
+  const hasChosenShippingMethod = shippingMethod !== null && shippingMethodName !== null;
 
   const hasShippingMethods = !!shippingMethods?.length || isShippingRequired;
 
-  const discountTitle = orderDiscount
-    ? messages.discount
-    : messages.addDiscount;
+  const discountTitle = orderDiscount ? messages.discount : messages.addDiscount;
 
   const getOrderDiscountLabel = (orderDiscountData: OrderDiscountData) => {
     if (!orderDiscountData) {
       return PRICE_PLACEHOLDER;
     }
 
-    const {
-      value: discountValue,
-      calculationMode,
-      amount: discountAmount,
-    } = orderDiscountData;
+    const { value: discountValue, calculationMode, amount: discountAmount } = orderDiscountData;
     const currency = total.gross.currency;
 
     if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
       return (
         <div className={classes.percentDiscountLabelContainer}>
-          <Typography
-            className={classes.subtitle}
-          >{`(${discountValue}%)`}</Typography>
+          <Typography className={classes.subtitle}>{`(${discountValue}%)`}</Typography>
           <Money money={discountAmount} />
         </div>
       );
@@ -141,27 +127,20 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
 
   const getShippingMethodComponent = () => {
     if (hasChosenShippingMethod) {
-      return (
-        <Link onClick={onShippingMethodEdit}>{`${shippingMethodName}`}</Link>
-      );
+      return <Link onClick={onShippingMethodEdit}>{`${shippingMethodName}`}</Link>;
     }
 
     const shippingCarrierBase = intl.formatMessage(messages.addShippingCarrier);
 
     if (!!shippingAddress) {
       return (
-        <Link
-          onClick={onShippingMethodEdit}
-          data-test-id="add-shipping-carrier"
-        >
+        <Link onClick={onShippingMethodEdit} data-test-id="add-shipping-carrier">
           {shippingCarrierBase}
         </Link>
       );
     }
 
-    const addShippingAddressInfo = intl.formatMessage(
-      messages.addShippingAddressInfo,
-    );
+    const addShippingAddressInfo = intl.formatMessage(messages.addShippingAddressInfo);
 
     return (
       <div className={classes.shippingMethodContainer}>
@@ -179,9 +158,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
       <tbody>
         <tr className={classes.relativeRow} ref={popperAnchorRef}>
           <td>
-            <Link onClick={openDialog}>
-              {intl.formatMessage(discountTitle)}
-            </Link>
+            <Link onClick={openDialog}>{intl.formatMessage(discountTitle)}</Link>
             <OrderDiscountCommonModal
               dialogPlacement="bottom-start"
               modalType={ORDER_DISCOUNT}
@@ -196,9 +173,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
               removeStatus={orderDiscountRemoveStatus}
             />
           </td>
-          <td className={classes.textRight}>
-            {getOrderDiscountLabel(orderDiscount)}
-          </td>
+          <td className={classes.textRight}>{getOrderDiscountLabel(orderDiscount)}</td>
         </tr>
         <tr>
           <td>{intl.formatMessage(messages.subtotal)}</td>
@@ -210,8 +185,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
           <td>
             {hasShippingMethods && getShippingMethodComponent()}
 
-            {!hasShippingMethods &&
-              intl.formatMessage(messages.noShippingCarriers)}
+            {!hasShippingMethods && intl.formatMessage(messages.noShippingCarriers)}
 
             {formErrors.shipping && (
               <Typography variant="body2" className={classes.textError}>
@@ -221,11 +195,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
           </td>
 
           <td className={classes.textRight}>
-            {hasChosenShippingMethod ? (
-              <Money money={shippingPrice.gross} />
-            ) : (
-              PRICE_PLACEHOLDER
-            )}
+            {hasChosenShippingMethod ? <Money money={shippingPrice.gross} /> : PRICE_PLACEHOLDER}
           </td>
         </tr>
         <tr>

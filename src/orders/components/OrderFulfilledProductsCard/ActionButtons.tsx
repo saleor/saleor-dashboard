@@ -1,12 +1,12 @@
-import { Button } from "@dashboard/components/Button";
-import { FulfillmentStatus } from "@dashboard/graphql";
-import { buttonMessages, commonMessages } from "@dashboard/intl";
-import { CardActions, Typography } from "@material-ui/core";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import { Button } from '@dashboard/components/Button';
+import { FulfillmentStatus } from '@dashboard/graphql';
+import { buttonMessages, commonMessages } from '@dashboard/intl';
+import { CardActions, Typography } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-import { actionButtonsMessages } from "./messages";
-import useStyles from "./styles";
+import { actionButtonsMessages } from './messages';
+import useStyles from './styles';
 
 interface AcionButtonsProps {
   status: FulfillmentStatus;

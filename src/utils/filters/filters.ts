@@ -1,16 +1,8 @@
-import {
-  FilterElement,
-  FilterElementKeyValue,
-  FilterElementRegular,
-  IFilter,
-} from "@dashboard/components/Filter";
-import { findValueInEnum } from "@dashboard/misc";
-import { ActiveTab } from "@dashboard/types";
+import { FilterElement, FilterElementKeyValue, FilterElementRegular, IFilter } from '@dashboard/components/Filter';
+import { findValueInEnum } from '@dashboard/misc';
+import { ActiveTab } from '@dashboard/types';
 
-function createFilterUtils<
-  TQueryParams extends {},
-  TFilters extends {},
->(filters: {}) {
+function createFilterUtils<TQueryParams extends {}, TFilters extends {}>(filters: {}) {
   function getActiveFilters(params: TQueryParams): TFilters {
     return Object.keys(params)
       .filter(key => Object.keys(filters).includes(key))
@@ -24,10 +16,7 @@ function createFilterUtils<
     return Object.keys(getActiveFilters(params)).some(key => !!params[key]);
   }
 
-  function getFiltersCurrentTab<TQueryTabParams extends ActiveTab>(
-    params: TQueryTabParams,
-    tabs: unknown[],
-  ) {
+  function getFiltersCurrentTab<TQueryTabParams extends ActiveTab>(params: TQueryTabParams, tabs: unknown[]) {
     return params.activeTab === undefined
       ? areFiltersApplied(params as unknown as TQueryParams)
         ? tabs.length + 1
@@ -50,14 +39,11 @@ export function dedupeFilter<T>(array: T[]): T[] {
   return Array.from(new Set(array));
 }
 
-export type GetFilterQueryParam<
-  TFilterKeys extends string,
-  TFilters extends {},
-> = (filter: FilterElement<TFilterKeys>, params?: {}) => TFilters;
-export function getFilterQueryParams<
-  TFilterKeys extends string,
-  TUrlFilters extends {},
->(
+export type GetFilterQueryParam<TFilterKeys extends string, TFilters extends {}> = (
+  filter: FilterElement<TFilterKeys>,
+  params?: {},
+) => TFilters;
+export function getFilterQueryParams<TFilterKeys extends string, TUrlFilters extends {}>(
   filters: IFilter<TFilterKeys>,
   getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TUrlFilters>,
 ): TUrlFilters {
@@ -70,13 +56,10 @@ export function getFilterQueryParams<
   );
 }
 
-export type GteLte<T> = Partial<Record<"gte" | "lte", T>>;
+export type GteLte<T> = Partial<Record<'gte' | 'lte', T>>;
 export function getGteLteVariables<T>(variables: GteLte<T>): GteLte<T> | null {
   if (
-    !![variables.gte, variables.lte].some(
-      v =>
-        v !== undefined && v !== null && !(typeof v === "number" && isNaN(v)),
-    )
+    !![variables.gte, variables.lte].some(v => v !== undefined && v !== null && !(typeof v === 'number' && isNaN(v)))
   ) {
     return variables;
   }
@@ -84,10 +67,10 @@ export function getGteLteVariables<T>(variables: GteLte<T>): GteLte<T> | null {
   return null;
 }
 
-export function getSingleValueQueryParam<
-  TKey extends string,
-  TUrlKey extends string,
->(param: FilterElement<TKey>, key: TUrlKey) {
+export function getSingleValueQueryParam<TKey extends string, TUrlKey extends string>(
+  param: FilterElement<TKey>,
+  key: TUrlKey,
+) {
   const { active, value } = param;
 
   if (!active || !value) {
@@ -101,11 +84,11 @@ export function getSingleValueQueryParam<
   };
 }
 
-export function getSingleEnumValueQueryParam<
-  TKey extends string,
-  TUrlKey extends string,
-  TEnum extends {},
->(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: TEnum) {
+export function getSingleEnumValueQueryParam<TKey extends string, TUrlKey extends string, TEnum extends {}>(
+  param: FilterElementRegular<TKey>,
+  key: TUrlKey,
+  haystack: TEnum,
+) {
   const { active, value } = param;
 
   if (!active) {
@@ -119,11 +102,11 @@ export function getSingleEnumValueQueryParam<
   };
 }
 
-export function getMultipleEnumValueQueryParam<
-  TKey extends string,
-  TUrlKey extends string,
-  TEnum extends {},
->(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: TEnum) {
+export function getMultipleEnumValueQueryParam<TKey extends string, TUrlKey extends string, TEnum extends {}>(
+  param: FilterElementRegular<TKey>,
+  key: TUrlKey,
+  haystack: TEnum,
+) {
   const { active, value } = param;
 
   if (!active) {
@@ -137,10 +120,10 @@ export function getMultipleEnumValueQueryParam<
   };
 }
 
-export function getMultipleValueQueryParam<
-  TKey extends string,
-  TUrlKey extends string,
->(param: FilterElement<TKey>, key: TUrlKey) {
+export function getMultipleValueQueryParam<TKey extends string, TUrlKey extends string>(
+  param: FilterElement<TKey>,
+  key: TUrlKey,
+) {
   const { active, value } = param;
 
   if (!active) {
@@ -154,10 +137,11 @@ export function getMultipleValueQueryParam<
   };
 }
 
-export function getMinMaxQueryParam<
-  TKey extends string,
-  TUrlKey extends string,
->(param: FilterElement<TKey>, keyFrom: TUrlKey, keyTo: TUrlKey) {
+export function getMinMaxQueryParam<TKey extends string, TUrlKey extends string>(
+  param: FilterElement<TKey>,
+  keyFrom: TUrlKey,
+  keyTo: TUrlKey,
+) {
   const { active, multiple, value } = param;
 
   if (!active || !value) {
@@ -180,10 +164,10 @@ export function getMinMaxQueryParam<
   };
 }
 
-export function getKeyValueQueryParam<
-  TKey extends string,
-  TUrlKey extends string,
->(param: FilterElementKeyValue<TKey>, key: TUrlKey) {
+export function getKeyValueQueryParam<TKey extends string, TUrlKey extends string>(
+  param: FilterElementKeyValue<TKey>,
+  key: TUrlKey,
+) {
   const { active, value } = param;
 
   if (!active) {
@@ -192,7 +176,7 @@ export function getKeyValueQueryParam<
     };
   }
 
-  const filledOutPairs = value.filter(keyValuePair => keyValuePair.key !== "");
+  const filledOutPairs = value.filter(keyValuePair => keyValuePair.key !== '');
 
   return {
     [key]: filledOutPairs,

@@ -1,5 +1,5 @@
-import { gql } from "@apollo/client";
-import { getOperationAST } from "graphql";
+import { gql } from '@apollo/client';
+import { getOperationAST } from 'graphql';
 
 export const giftCardList = gql`
   query GiftCardList(
@@ -10,14 +10,7 @@ export const giftCardList = gql`
     $filter: GiftCardFilterInput
     $sort: GiftCardSortingInput
   ) {
-    giftCards(
-      first: $first
-      after: $after
-      before: $before
-      last: $last
-      filter: $filter
-      sortBy: $sort
-    ) {
+    giftCards(first: $first, after: $after, before: $before, last: $last, filter: $filter, sortBy: $sort) {
       edges {
         node {
           id

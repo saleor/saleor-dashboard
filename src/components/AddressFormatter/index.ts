@@ -1,2 +1,2 @@
-export { default } from "./AddressFormatter";
-export * from "./AddressFormatter";
+export { default } from './AddressFormatter';
+export * from './AddressFormatter';

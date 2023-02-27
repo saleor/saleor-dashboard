@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const pluginUpdate = gql`
   mutation PluginUpdate($channelId: ID, $id: ID!, $input: PluginUpdateInput!) {

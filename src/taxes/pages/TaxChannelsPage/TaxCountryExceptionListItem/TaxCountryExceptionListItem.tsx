@@ -1,22 +1,12 @@
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import SingleSelectField, {
-  Choice,
-} from "@dashboard/components/SingleSelectField";
-import {
-  TaxConfigurationPerCountryFragment,
-  TaxConfigurationUpdateInput,
-} from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
-import { Divider } from "@material-ui/core";
-import {
-  DeleteIcon,
-  IconButton,
-  ListItem,
-  ListItemCell,
-} from "@saleor/macaw-ui";
-import React from "react";
+import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
+import SingleSelectField, { Choice } from '@dashboard/components/SingleSelectField';
+import { TaxConfigurationPerCountryFragment, TaxConfigurationUpdateInput } from '@dashboard/graphql';
+import { FormChange } from '@dashboard/hooks/useForm';
+import { Divider } from '@material-ui/core';
+import { DeleteIcon, IconButton, ListItem, ListItemCell } from '@saleor/macaw-ui';
+import React from 'react';
 
-import { useStyles } from "../styles";
+import { useStyles } from '../styles';
 
 interface TaxCountryExceptionListItemProps {
   country: TaxConfigurationPerCountryFragment | undefined;
@@ -42,7 +32,7 @@ export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemPr
           <ControlledCheckbox
             className={classes.center}
             checked={country.chargeTaxes}
-            name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
+            name={'chargeTaxes' as keyof TaxConfigurationUpdateInput}
             onChange={onChange}
           />
           <SingleSelectField
@@ -50,7 +40,7 @@ export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemPr
             choices={strategyChoices}
             disabled={!country.chargeTaxes}
             value={country.taxCalculationStrategy}
-            name={"taxCalculationStrategy" as keyof TaxConfigurationUpdateInput}
+            name={'taxCalculationStrategy' as keyof TaxConfigurationUpdateInput}
             onChange={onChange}
           />
         </ListItemCell>
@@ -58,7 +48,7 @@ export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemPr
           <ControlledCheckbox
             className={classes.center}
             checked={country.displayGrossPrices}
-            name={"displayGrossPrices" as keyof TaxConfigurationUpdateInput}
+            name={'displayGrossPrices' as keyof TaxConfigurationUpdateInput}
             onChange={onChange}
           />
         </ListItemCell>

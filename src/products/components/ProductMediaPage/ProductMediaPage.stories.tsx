@@ -1,24 +1,24 @@
-import placeholder from "@assets/images/placeholder1080x1080.png";
-import { ProductMediaType } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import placeholder from '@assets/images/placeholder1080x1080.png';
+import { ProductMediaType } from '@dashboard/graphql';
+import Decorator from '@dashboard/storybook/Decorator';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import ProductMediaPage from "./ProductMediaPage";
+import ProductMediaPage from './ProductMediaPage';
 
 const mediaObj = {
-  alt: "Lorem ipsum",
-  id: "",
+  alt: 'Lorem ipsum',
+  id: '',
   type: ProductMediaType.IMAGE,
   url: placeholder,
 };
 const media = (Array(8) as any)
-  .fill({ id: "img", url: placeholder, oembedData: "{}" })
+  .fill({ id: 'img', url: placeholder, oembedData: '{}' })
   .map((image, imageIndex) => ({ ...image, id: image.id + imageIndex }));
 
-storiesOf("Products / Product image details", module)
+storiesOf('Products / Product image details', module)
   .addDecorator(Decorator)
-  .add("when loaded data", () => (
+  .add('when loaded data', () => (
     <ProductMediaPage
       productId=""
       product="Example product"
@@ -31,7 +31,7 @@ storiesOf("Products / Product image details", module)
       saveButtonBarState="default"
     />
   ))
-  .add("when loading data", () => (
+  .add('when loading data', () => (
     <ProductMediaPage
       productId=""
       product="Example product"

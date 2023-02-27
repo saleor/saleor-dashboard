@@ -1,33 +1,30 @@
-import Checkbox from "@dashboard/components/Checkbox";
-import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
-import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import TableCellHeader from "@dashboard/components/TableCellHeader";
-import TableHead from "@dashboard/components/TableHead";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { MenuFragment } from "@dashboard/graphql";
-import { maybe, renderCollection } from "@dashboard/misc";
-import { MenuListUrlSortField, menuUrl } from "@dashboard/navigation/urls";
-import { ListActions, ListProps, SortPage } from "@dashboard/types";
-import { getArrowDirection } from "@dashboard/utils/sort";
-import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { DeleteIcon, makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import Checkbox from '@dashboard/components/Checkbox';
+import IconButtonTableCell from '@dashboard/components/IconButtonTableCell';
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Skeleton from '@dashboard/components/Skeleton';
+import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
+import TableCellHeader from '@dashboard/components/TableCellHeader';
+import TableHead from '@dashboard/components/TableHead';
+import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { MenuFragment } from '@dashboard/graphql';
+import { maybe, renderCollection } from '@dashboard/misc';
+import { MenuListUrlSortField, menuUrl } from '@dashboard/navigation/urls';
+import { ListActions, ListProps, SortPage } from '@dashboard/types';
+import { getArrowDirection } from '@dashboard/utils/sort';
+import { Card, TableBody, TableCell, TableFooter } from '@material-ui/core';
+import { DeleteIcon, makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
-export interface MenuListProps
-  extends ListProps,
-    ListActions,
-    SortPage<MenuListUrlSortField> {
+export interface MenuListProps extends ListProps, ListActions, SortPage<MenuListUrlSortField> {
   menus: MenuFragment[];
   onDelete: (id: string) => void;
 }
 
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up("lg")]: {
+    [theme.breakpoints.up('lg')]: {
       colItems: {
         width: 200,
       },
@@ -37,16 +34,16 @@ const useStyles = makeStyles(
       width: 84,
     },
     colItems: {
-      textAlign: "right",
+      textAlign: 'right',
     },
     colTitle: {
       paddingLeft: 0,
     },
     row: {
-      cursor: "pointer",
+      cursor: 'pointer',
     },
   }),
-  { name: "MenuList" },
+  { name: 'MenuList' },
 );
 
 const numberOfColumns = 4;
@@ -81,11 +78,7 @@ const MenuList: React.FC<MenuListProps> = props => {
           toolbar={toolbar}
         >
           <TableCellHeader
-            direction={
-              sort.sort === MenuListUrlSortField.name
-                ? getArrowDirection(sort.asc)
-                : undefined
-            }
+            direction={sort.sort === MenuListUrlSortField.name ? getArrowDirection(sort.asc) : undefined}
             arrowPosition="right"
             onClick={() => onSort(MenuListUrlSortField.name)}
             className={classes.colTitle}
@@ -93,20 +86,12 @@ const MenuList: React.FC<MenuListProps> = props => {
             <FormattedMessage id="jhh/D6" defaultMessage="Menu Title" />
           </TableCellHeader>
           <TableCellHeader
-            direction={
-              sort.sort === MenuListUrlSortField.items
-                ? getArrowDirection(sort.asc)
-                : undefined
-            }
+            direction={sort.sort === MenuListUrlSortField.items ? getArrowDirection(sort.asc) : undefined}
             textAlign="right"
             onClick={() => onSort(MenuListUrlSortField.items)}
             className={classes.colItems}
           >
-            <FormattedMessage
-              id="0nL1D6"
-              defaultMessage="Items"
-              description="number of menu items"
-            />
+            <FormattedMessage id="0nL1D6" defaultMessage="Items" description="number of menu items" />
           </TableCellHeader>
           <TableCell className={classes.colAction} />
         </TableHead>
@@ -128,7 +113,7 @@ const MenuList: React.FC<MenuListProps> = props => {
               return (
                 <TableRowLink
                   hover={!!menu}
-                  key={menu ? menu.id : "skeleton"}
+                  key={menu ? menu.id : 'skeleton'}
                   href={menu && menuUrl(menu.id)}
                   className={classes.row}
                   selected={isSelected}
@@ -145,10 +130,7 @@ const MenuList: React.FC<MenuListProps> = props => {
                     {maybe<React.ReactNode>(() => menu.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colItems}>
-                    {maybe<React.ReactNode>(
-                      () => menu.items.length,
-                      <Skeleton />,
-                    )}
+                    {maybe<React.ReactNode>(() => menu.items.length, <Skeleton />)}
                   </TableCell>
                   <TableButtonWrapper>
                     <IconButtonTableCell
@@ -165,10 +147,7 @@ const MenuList: React.FC<MenuListProps> = props => {
             () => (
               <TableRowLink>
                 <TableCell colSpan={numberOfColumns}>
-                  <FormattedMessage
-                    id="DWs4ba"
-                    defaultMessage="No menus found"
-                  />
+                  <FormattedMessage id="DWs4ba" defaultMessage="No menus found" />
                 </TableCell>
               </TableRowLink>
             ),
@@ -178,5 +157,5 @@ const MenuList: React.FC<MenuListProps> = props => {
     </Card>
   );
 };
-MenuList.displayName = "MenuList";
+MenuList.displayName = 'MenuList';
 export default MenuList;

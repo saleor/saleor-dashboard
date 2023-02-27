@@ -1,15 +1,13 @@
-import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
-import { useTheme } from "@saleor/macaw-ui";
-import { Box, Text } from "@saleor/macaw-ui/next";
-import React from "react";
+import { GetV2SaleorAppsResponse } from '@dashboard/new-apps/marketplace.types';
+import { useTheme } from '@saleor/macaw-ui';
+import { Box, Text } from '@saleor/macaw-ui/next';
+import React from 'react';
 
 interface AppListCardIntegrationsProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
 }
 
-const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
-  app,
-}) => {
+const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({ app }) => {
   const { themeType } = useTheme();
 
   if (!app.integrations.length) {
@@ -19,13 +17,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
   return (
     <Box as="ul" display="flex" flexDirection="row" gap={8}>
       {app.integrations.map(integration => (
-        <Box
-          as="li"
-          display="flex"
-          alignItems="center"
-          gap={4}
-          key={integration.name}
-        >
+        <Box as="li" display="flex" alignItems="center" gap={4} key={integration.name}>
           <Box
             height={10}
             width={10}
@@ -38,11 +30,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
           >
             <img
               title={integration.name}
-              src={
-                themeType === "dark"
-                  ? integration.logo.dark.source
-                  : integration.logo.light.source
-              }
+              src={themeType === 'dark' ? integration.logo.dark.source : integration.logo.light.source}
               alt={integration.name}
             />
           </Box>
@@ -54,5 +42,5 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
     </Box>
   );
 };
-AppListCardIntegrations.displayName = "AppListCardIntegrations";
+AppListCardIntegrations.displayName = 'AppListCardIntegrations';
 export default AppListCardIntegrations;

@@ -1,13 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import { Channel, Product, Variant } from "./../types";
-import { AvailabilityCard } from "./AvailabilityCard";
-import {
-  getAvailabilityCountForProduct,
-  getAvailabilityCountForVariant,
-} from "./availabilityCount";
-import { CardSkeleton } from "./CardSkeleton";
-import { CreateVariantTitle } from "./CreateVariantTitle";
+import { Channel, Product, Variant } from './../types';
+import { AvailabilityCard } from './AvailabilityCard';
+import { getAvailabilityCountForProduct, getAvailabilityCountForVariant } from './availabilityCount';
+import { CardSkeleton } from './CardSkeleton';
+import { CreateVariantTitle } from './CreateVariantTitle';
 
 interface VariantDetailsChannelsAvailabilityCardProps {
   variant: Variant;

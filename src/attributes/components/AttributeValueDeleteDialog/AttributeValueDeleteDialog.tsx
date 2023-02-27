@@ -1,8 +1,8 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { DialogContentText } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import { DialogContentText } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export interface AttributeValueDeleteDialogProps {
   attributeName: string;
@@ -33,9 +33,9 @@ const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
       onConfirm={onConfirm}
       variant="delete"
       title={intl.formatMessage({
-        id: "WWV8aZ",
-        defaultMessage: "Delete attribute value",
-        description: "dialog title",
+        id: 'WWV8aZ',
+        defaultMessage: 'Delete attribute value',
+        description: 'dialog title',
       })}
     >
       <DialogContentText>
@@ -63,5 +63,5 @@ const AttributeValueDeleteDialog: React.FC<AttributeValueDeleteDialogProps> = ({
   );
 };
 
-AttributeValueDeleteDialog.displayName = "AttributeValueDeleteDialog";
+AttributeValueDeleteDialog.displayName = 'AttributeValueDeleteDialog';
 export default AttributeValueDeleteDialog;

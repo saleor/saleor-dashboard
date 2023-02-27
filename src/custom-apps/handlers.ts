@@ -1,22 +1,13 @@
-import {
-  WebhookEventTypeAsyncEnum,
-  WebhookEventTypeSyncEnum,
-} from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { capitalize } from "@dashboard/misc";
-import { toggle } from "@dashboard/utils/lists";
-import {
-  InlineFragmentNode,
-  ObjectFieldNode,
-  parse,
-  print,
-  visit,
-} from "graphql";
-import isEmpty from "lodash/isEmpty";
-import React, { Dispatch, SetStateAction } from "react";
+import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from '@dashboard/graphql';
+import { ChangeEvent } from '@dashboard/hooks/useForm';
+import { capitalize } from '@dashboard/misc';
+import { toggle } from '@dashboard/utils/lists';
+import { InlineFragmentNode, ObjectFieldNode, parse, print, visit } from 'graphql';
+import isEmpty from 'lodash/isEmpty';
+import React, { Dispatch, SetStateAction } from 'react';
 
-import { WebhookFormData } from "./components/WebhookDetailsPage";
-import { filterSelectedAsyncEvents } from "./utils";
+import { WebhookFormData } from './components/WebhookDetailsPage';
+import { filterSelectedAsyncEvents } from './utils';
 
 interface CreateSyncEventsSelectHandler {
   change: (event: ChangeEvent, cb?: () => void) => void;
@@ -33,11 +24,11 @@ export const createSyncEventsSelectHandler =
 
     // Clear asyncEvents
     if (!isEmpty(asyncEvents)) {
-      setQuery("");
+      setQuery('');
 
       change({
         target: {
-          name: "asyncEvents",
+          name: 'asyncEvents',
           value: [],
         },
       });
@@ -45,7 +36,7 @@ export const createSyncEventsSelectHandler =
 
     change({
       target: {
-        name: "syncEvents",
+        name: 'syncEvents',
         value: events,
       },
     });
@@ -69,11 +60,11 @@ export const createAsyncEventsSelectHandler =
 
     // Clear syncEvents
     if (!isEmpty(syncEvents)) {
-      setQuery("");
+      setQuery('');
 
       change({
         target: {
-          name: "syncEvents",
+          name: 'syncEvents',
           value: [],
         },
       });
@@ -81,7 +72,7 @@ export const createAsyncEventsSelectHandler =
 
     change({
       target: {
-        name: "asyncEvents",
+        name: 'asyncEvents',
         value: filteredEvents,
       },
     });
@@ -97,13 +88,11 @@ const handleQuery = (
   if (events.length > 0 && query.length === 0) {
     const event = events[0]
       .toLowerCase()
-      .split("_")
+      .split('_')
       .map(chunk => capitalize(chunk))
-      .join("");
+      .join('');
 
-    setQuery(
-      print(parse(`subscription { event { ... on ${event} { __typename } } }`)),
-    );
+    setQuery(print(parse(`subscription { event { ... on ${event} { __typename } } }`)));
   }
 
   if (query.length > 0) {
@@ -111,30 +100,29 @@ const handleQuery = (
 
     visit(ast, {
       SelectionSet(node, _key, parent) {
-        if ((parent as ObjectFieldNode).name?.value === "event") {
+        if ((parent as ObjectFieldNode).name?.value === 'event') {
           const queryEvents = node.selections.map(
-            selection =>
-              (selection as InlineFragmentNode).typeCondition.name.value,
+            selection => (selection as InlineFragmentNode).typeCondition.name.value,
           );
           const newEvents = events
             .map(event =>
               event
                 .toLowerCase()
-                .split("_")
+                .split('_')
                 .map(chunk => capitalize(chunk))
-                .join(""),
+                .join(''),
             )
             .filter(event => !queryEvents.includes(event));
 
           if (newEvents.length > 0) {
             // TODO modify AST
 
-            const inserted = query.replace(/\n/g, " ").replace(
-              "   } } ",
+            const inserted = query.replace(/\n/g, ' ').replace(
+              '   } } ',
               newEvents
                 .map(event => ` ... on ${event} { __typename }`)
-                .join("")
-                .concat("   } } "),
+                .join('')
+                .concat('   } } '),
             );
             setQuery(print(parse(inserted)));
           }

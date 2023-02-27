@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const orderListQuery = gql`
   query OrderList(
@@ -9,14 +9,7 @@ export const orderListQuery = gql`
     $filter: OrderFilterInput
     $sort: OrderSortingInput
   ) {
-    orders(
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-      filter: $filter
-      sortBy: $sort
-    ) {
+    orders(before: $before, after: $after, first: $first, last: $last, filter: $filter, sortBy: $sort) {
       edges {
         node {
           __typename
@@ -57,14 +50,7 @@ export const orderDraftListQuery = gql`
     $filter: OrderDraftFilterInput
     $sort: OrderSortingInput
   ) {
-    draftOrders(
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-      filter: $filter
-      sortBy: $sort
-    ) {
+    draftOrders(before: $before, after: $after, first: $first, last: $last, filter: $filter, sortBy: $sort) {
       edges {
         node {
           __typename

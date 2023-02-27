@@ -1,5 +1,5 @@
-import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
-import { useEffect, useReducer, useRef } from "react";
+import { GetV2SaleorAppsResponse } from '@dashboard/new-apps/marketplace.types';
+import { useEffect, useReducer, useRef } from 'react';
 
 interface State {
   data?: GetV2SaleorAppsResponse.SaleorApp[];
@@ -12,9 +12,9 @@ interface Cache {
 
 // discriminated union type
 type Action =
-  | { type: "loading" }
-  | { type: "fetched"; payload: GetV2SaleorAppsResponse.SaleorApp[] }
-  | { type: "error"; payload: Error };
+  | { type: 'loading' }
+  | { type: 'fetched'; payload: GetV2SaleorAppsResponse.SaleorApp[] }
+  | { type: 'error'; payload: Error };
 
 /**
  * Hook used to fetch apps list available under given marketplace url.
@@ -35,15 +35,15 @@ function useMarketplaceApps(marketplaceUrl?: string): State {
   // Keep state logic separated
   const fetchReducer = (state: State, action: Action): State => {
     switch (action.type) {
-      case "loading":
+      case 'loading':
         return { ...initialState };
-      case "fetched":
+      case 'fetched':
         return {
           ...initialState,
           data: action.payload,
           error: undefined,
         };
-      case "error":
+      case 'error':
         return { ...initialState, error: action.payload };
       default:
         return state;
@@ -61,11 +61,11 @@ function useMarketplaceApps(marketplaceUrl?: string): State {
     cancelRequest.current = false;
 
     const fetchData = async () => {
-      dispatch({ type: "loading" });
+      dispatch({ type: 'loading' });
 
       // If a cache exists for this url, return it
       if (cache.current[marketplaceUrl]) {
-        dispatch({ type: "fetched", payload: cache.current[marketplaceUrl] });
+        dispatch({ type: 'fetched', payload: cache.current[marketplaceUrl] });
         return;
       }
 
@@ -81,13 +81,13 @@ function useMarketplaceApps(marketplaceUrl?: string): State {
           return;
         }
 
-        dispatch({ type: "fetched", payload: data });
+        dispatch({ type: 'fetched', payload: data });
       } catch (error) {
         if (cancelRequest.current) {
           return;
         }
 
-        dispatch({ type: "error", payload: error as Error });
+        dispatch({ type: 'error', payload: error as Error });
       }
     };
 

@@ -3,23 +3,20 @@ import {
   useProductVariantTranslationDetailsQuery,
   useUpdateAttributeValueTranslationsMutation,
   useUpdateProductVariantTranslationsMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
-import { OutputData } from "@editorjs/editorjs";
-import { stringify as stringifyQs } from "qs";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import useShop from '@dashboard/hooks/useShop';
+import { commonMessages } from '@dashboard/intl';
+import { OutputData } from '@editorjs/editorjs';
+import { stringify as stringifyQs } from 'qs';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { extractMutationErrors, maybe } from "../../misc";
-import TranslationsProductVariantsPage from "../components/TranslationsProductVariantsPage";
-import { TranslationField, TranslationInputFieldName } from "../types";
-import {
-  getAttributeValueTranslationsInputData,
-  getParsedTranslationInputData,
-} from "../utils";
+import { extractMutationErrors, maybe } from '../../misc';
+import TranslationsProductVariantsPage from '../components/TranslationsProductVariantsPage';
+import { TranslationField, TranslationInputFieldName } from '../types';
+import { getAttributeValueTranslationsInputData, getParsedTranslationInputData } from '../utils';
 
 export interface TranslationsProductVariantsQueryParams {
   activeField: string;
@@ -50,29 +47,24 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
     if (errors.length === 0) {
       productVariantTranslations.refetch();
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage(commonMessages.savedChanges),
       });
-      navigate("?", { replace: true });
+      navigate('?', { replace: true });
     }
   };
 
-  const [
-    updateTranslations,
-    updateTranslationsOpts,
-  ] = useUpdateProductVariantTranslationsMutation({
+  const [updateTranslations, updateTranslationsOpts] = useUpdateProductVariantTranslationsMutation({
     onCompleted: data => onUpdate(data.productVariantTranslate.errors),
   });
 
-  const [
-    updateAttributeValueTranslations,
-  ] = useUpdateAttributeValueTranslationsMutation({
+  const [updateAttributeValueTranslations] = useUpdateAttributeValueTranslationsMutation({
     onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
   });
 
   const onEdit = (field: string) =>
     navigate(
-      "?" +
+      '?' +
         stringifyQs({
           activeField: field,
         }),
@@ -80,13 +72,10 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
     );
 
   const onDiscard = () => {
-    navigate("?", { replace: true });
+    navigate('?', { replace: true });
   };
 
-  const handleSubmit = (
-    { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string,
-  ) =>
+  const handleSubmit = ({ name: fieldName }: TranslationField<TranslationInputFieldName>, data: string) =>
     extractMutationErrors(
       updateTranslations({
         variables: {
@@ -122,9 +111,7 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
       productId={productId}
       variantId={id}
       activeField={params.activeField}
-      disabled={
-        productVariantTranslations.loading || updateTranslationsOpts.loading
-      }
+      disabled={productVariantTranslations.loading || updateTranslationsOpts.loading}
       languageCode={languageCode}
       languages={maybe(() => shop.languages, [])}
       saveButtonState={updateTranslationsOpts.status}
@@ -132,13 +119,9 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
       onAttributeValueSubmit={handleAttributeValueSubmit}
-      data={
-        translation?.__typename === "ProductVariantTranslatableContent"
-          ? translation
-          : null
-      }
+      data={translation?.__typename === 'ProductVariantTranslatableContent' ? translation : null}
     />
   );
 };
-TranslationsProductVariants.displayName = "TranslationsProductVariants";
+TranslationsProductVariants.displayName = 'TranslationsProductVariants';
 export default TranslationsProductVariants;

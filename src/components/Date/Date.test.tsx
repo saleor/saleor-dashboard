@@ -1,15 +1,15 @@
-import { ThemeProvider } from "@saleor/macaw-ui";
-import { render, screen } from "@testing-library/react";
-import React from "react";
+import { ThemeProvider } from '@saleor/macaw-ui';
+import { render, screen } from '@testing-library/react';
+import React from 'react';
 
-import { TimezoneProvider } from "../Timezone";
-import Date from "./Date";
+import { TimezoneProvider } from '../Timezone';
+import Date from './Date';
 
-const testDate = "2018-04-07";
-const expectedDate = "Apr 7, 2018";
+const testDate = '2018-04-07';
+const expectedDate = 'Apr 7, 2018';
 
-describe("Date", () => {
-  it("Render plain date with timezone GMT-11", () => {
+describe('Date', () => {
+  it('Render plain date with timezone GMT-11', () => {
     // Arrange & Act
     render(
       <ThemeProvider>
@@ -22,7 +22,7 @@ describe("Date", () => {
     expect(screen.queryByText(expectedDate)).toBeInTheDocument();
   });
 
-  it("Render plain date with timezone GMT+13", () => {
+  it('Render plain date with timezone GMT+13', () => {
     // Arrange & Act
     render(
       <ThemeProvider>
@@ -35,7 +35,7 @@ describe("Date", () => {
     expect(screen.queryByText(expectedDate)).toBeInTheDocument();
   });
 
-  it("Render humanized date with timezone GMT-11", () => {
+  it('Render humanized date with timezone GMT-11', () => {
     // Arrange & Act
     render(
       <ThemeProvider>
@@ -45,12 +45,10 @@ describe("Date", () => {
       </ThemeProvider>,
     );
     // Assert
-    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(
-      testDate,
-    );
+    expect(screen.queryByTestId<HTMLTimeElement>('dateTime').dateTime).toEqual(testDate);
   });
 
-  it("Render humanized date with timezone GMT+13", () => {
+  it('Render humanized date with timezone GMT+13', () => {
     // Arrange & Act
     render(
       <ThemeProvider>
@@ -60,8 +58,6 @@ describe("Date", () => {
       </ThemeProvider>,
     );
     // Assert
-    expect(screen.queryByTestId<HTMLTimeElement>("dateTime").dateTime).toEqual(
-      testDate,
-    );
+    expect(screen.queryByTestId<HTMLTimeElement>('dateTime').dateTime).toEqual(testDate);
   });
 });

@@ -1,23 +1,23 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import CardTitle from '@dashboard/components/CardTitle';
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
-} from "@dashboard/components/SingleAutocompleteSelectField";
-import { PageDetailsFragment, PageErrorFragment } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
-import { FetchMoreProps } from "@dashboard/types";
-import { getFormErrors } from "@dashboard/utils/errors";
-import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/components/SingleAutocompleteSelectField';
+import { PageDetailsFragment, PageErrorFragment } from '@dashboard/graphql';
+import { FormChange } from '@dashboard/hooks/useForm';
+import { FetchMoreProps } from '@dashboard/types';
+import { getFormErrors } from '@dashboard/utils/errors';
+import getPageErrorMessage from '@dashboard/utils/errors/page';
+import { Card, CardContent, Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { PageFormData } from "../PageDetailsPage/form";
+import { PageFormData } from '../PageDetailsPage/form';
 
 export interface PageOrganizeContentProps {
   canChangeType: boolean;
   data: PageFormData;
-  pageType?: PageDetailsFragment["pageType"];
+  pageType?: PageDetailsFragment['pageType'];
   pageTypeInputDisplayValue?: string;
   errors: PageErrorFragment[];
   disabled: boolean;
@@ -33,7 +33,7 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(0.5),
     },
   }),
-  { name: "PageOrganizeContent" },
+  { name: 'PageOrganizeContent' },
 );
 
 const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
@@ -53,15 +53,15 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["pageType"], errors);
+  const formErrors = getFormErrors(['pageType'], errors);
 
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: "jU9GPX",
-          defaultMessage: "Organize Content",
-          description: "section header",
+          id: 'jU9GPX',
+          defaultMessage: 'Organize Content',
+          description: 'section header',
         })}
       />
       <CardContent>
@@ -71,17 +71,17 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
             disabled={disabled}
             displayValue={pageTypeInputDisplayValue}
             label={intl.formatMessage({
-              id: "W5SK5c",
-              defaultMessage: "Select content type",
+              id: 'W5SK5c',
+              defaultMessage: 'Select content type',
             })}
             error={!!formErrors.pageType}
             helperText={getPageErrorMessage(formErrors.pageType, intl)}
-            name={"pageType" as keyof PageFormData}
+            name={'pageType' as keyof PageFormData}
             onChange={onPageTypeChange}
             value={data.pageType?.id}
             choices={pageTypes}
             InputProps={{
-              autoComplete: "off",
+              autoComplete: 'off',
             }}
             fetchChoices={fetchPageTypes}
             {...fetchMorePageTypes}
@@ -98,5 +98,5 @@ const PageOrganizeContent: React.FC<PageOrganizeContentProps> = props => {
     </Card>
   );
 };
-PageOrganizeContent.displayName = "PageOrganizeContent";
+PageOrganizeContent.displayName = 'PageOrganizeContent';
 export default PageOrganizeContent;

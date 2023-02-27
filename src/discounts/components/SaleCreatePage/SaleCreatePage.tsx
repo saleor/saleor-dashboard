@@ -1,31 +1,27 @@
-import { validateSalePrice } from "@dashboard/channels/utils";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import Form from "@dashboard/components/Form";
-import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
-import { createSaleChannelsChangeHandler } from "@dashboard/discounts/handlers";
-import { SALE_CREATE_FORM_ID } from "@dashboard/discounts/views/SaleCreate/consts";
-import {
-  DiscountErrorFragment,
-  PermissionEnum,
-  SaleType as SaleTypeEnum,
-} from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import { validateSalePrice } from '@dashboard/channels/utils';
+import { Content } from '@dashboard/components/AppLayout/Content';
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import ChannelsAvailabilityCard from '@dashboard/components/ChannelsAvailabilityCard';
+import Form from '@dashboard/components/Form';
+import Metadata, { MetadataFormData } from '@dashboard/components/Metadata';
+import Savebar from '@dashboard/components/Savebar';
+import { createSaleChannelsChangeHandler } from '@dashboard/discounts/handlers';
+import { SALE_CREATE_FORM_ID } from '@dashboard/discounts/views/SaleCreate/consts';
+import { DiscountErrorFragment, PermissionEnum, SaleType as SaleTypeEnum } from '@dashboard/graphql';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import DiscountDates from "../DiscountDates";
-import { ChannelSaleFormData } from "../SaleDetailsPage";
-import SaleInfo from "../SaleInfo";
-import SaleType from "../SaleType";
-import SaleValue from "../SaleValue";
+import DiscountDates from '../DiscountDates';
+import { ChannelSaleFormData } from '../SaleDetailsPage';
+import SaleInfo from '../SaleInfo';
+import SaleType from '../SaleType';
+import SaleValue from '../SaleValue';
 
 export interface FormData extends MetadataFormData {
   channelListings: ChannelSaleFormData[];
@@ -63,26 +59,24 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
   onBack,
 }) => {
   const intl = useIntl();
-  const { makeChangeHandler: makeMetadataChangeHandler } =
-    useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
   const initialForm: FormData = {
     channelListings,
-    endDate: "",
-    endTime: "",
+    endDate: '',
+    endTime: '',
     hasEndDate: false,
-    name: "",
-    startDate: "",
-    startTime: "",
+    name: '',
+    startDate: '',
+    startTime: '',
     type: SaleTypeEnum.FIXED,
-    value: "",
+    value: '',
     metadata: [],
     privateMetadata: [],
   };
 
   const checkIfSaveIsDisabled = (data: FormData) =>
-    data.channelListings?.some(channel => validateSalePrice(data, channel)) ||
-    disabled;
+    data.channelListings?.some(channel => validateSalePrice(data, channel)) || disabled;
 
   return (
     <Form
@@ -105,34 +99,19 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
           <DetailedContent>
             <TopNav
               title={intl.formatMessage({
-                id: "2E1xZ0",
-                defaultMessage: "Create Sale",
-                description: "page header",
+                id: '2E1xZ0',
+                defaultMessage: 'Create Sale',
+                description: 'page header',
               })}
             />
             <Content>
-              <SaleInfo
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
+              <SaleInfo data={data} disabled={disabled} errors={errors} onChange={change} />
               <CardSpacer />
               <SaleType data={data} disabled={disabled} onChange={change} />
               <CardSpacer />
-              <SaleValue
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={handleChannelChange}
-              />
+              <SaleValue data={data} disabled={disabled} errors={errors} onChange={handleChannelChange} />
               <CardSpacer />
-              <DiscountDates
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
+              <DiscountDates data={data} disabled={disabled} errors={errors} onChange={change} />
             </Content>
             <RightSidebar>
               <ChannelsAvailabilityCard
@@ -147,17 +126,12 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
               />
             </RightSidebar>
             <Metadata data={data} onChange={changeMetadata} />
-            <Savebar
-              disabled={disabled}
-              onCancel={onBack}
-              onSubmit={submit}
-              state={saveButtonBarState}
-            />
+            <Savebar disabled={disabled} onCancel={onBack} onSubmit={submit} state={saveButtonBarState} />
           </DetailedContent>
         );
       }}
     </Form>
   );
 };
-SaleCreatePage.displayName = "SaleCreatePage";
+SaleCreatePage.displayName = 'SaleCreatePage';
 export default SaleCreatePage;

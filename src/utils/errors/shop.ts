@@ -1,18 +1,18 @@
-import { ShopErrorCode, ShopErrorFragment } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { ShopErrorCode, ShopErrorFragment } from '@dashboard/graphql';
+import { defineMessages, IntlShape } from 'react-intl';
 
-import { getCommonFormFieldErrorMessage } from "./common";
+import { getCommonFormFieldErrorMessage } from './common';
 
 const messages = defineMessages({
   alreadyExists: {
-    id: "m8cjcK",
-    defaultMessage: "Authorization key with this type already exists",
-    description: "add authorization key error",
+    id: 'm8cjcK',
+    defaultMessage: 'Authorization key with this type already exists',
+    description: 'add authorization key error',
   },
 });
 
 function getShopErrorMessage(
-  err: Omit<ShopErrorFragment, "__typename"> | undefined,
+  err: Omit<ShopErrorFragment, '__typename'> | undefined,
   intl: IntlShape,
 ): string | undefined {
   if (err) {

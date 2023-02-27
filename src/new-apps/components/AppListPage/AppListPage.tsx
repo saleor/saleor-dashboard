@@ -1,25 +1,25 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
-import { AppUrls } from "@dashboard/new-apps/urls";
-import { ListProps } from "@dashboard/types";
-import { Box, Text } from "@saleor/macaw-ui/next";
-import React, { useCallback } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { sectionNames } from '@dashboard/intl';
+import { AppUrls } from '@dashboard/new-apps/urls';
+import { ListProps } from '@dashboard/types';
+import { Box, Text } from '@saleor/macaw-ui/next';
+import React, { useCallback } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import AllAppList from "../AllAppList";
-import InstalledAppList from "../InstalledAppList";
-import { InstallWithManifestFormButton } from "../InstallWithManifestFormButton";
-import MarketplaceAlert from "../MarketplaceAlert";
-import { messages } from "./messages";
-import { useStyles } from "./styles";
-import { AppListPageSections } from "./types";
+import AllAppList from '../AllAppList';
+import InstalledAppList from '../InstalledAppList';
+import { InstallWithManifestFormButton } from '../InstallWithManifestFormButton';
+import MarketplaceAlert from '../MarketplaceAlert';
+import { messages } from './messages';
+import { useStyles } from './styles';
+import { AppListPageSections } from './types';
 import {
   getVerifiedAppsInstallations,
   getVerifiedInstallableMarketplaceApps,
   getVerifiedInstalledApps,
   resolveSectionsAvailability,
-} from "./utils";
+} from './utils';
 
 export interface AppListPageProps extends AppListPageSections, ListProps {
   marketplaceError?: Error;
@@ -38,19 +38,12 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   } = props;
   const intl = useIntl();
   const classes = useStyles();
-  const verifiedInstalledApps = getVerifiedInstalledApps(
+  const verifiedInstalledApps = getVerifiedInstalledApps(installedApps, installableMarketplaceApps);
+  const verifiedAppsIntallations = getVerifiedAppsInstallations(appsInstallations, installableMarketplaceApps);
+  const verifiedInstallableMarketplaceApps = getVerifiedInstallableMarketplaceApps(
     installedApps,
     installableMarketplaceApps,
   );
-  const verifiedAppsIntallations = getVerifiedAppsInstallations(
-    appsInstallations,
-    installableMarketplaceApps,
-  );
-  const verifiedInstallableMarketplaceApps =
-    getVerifiedInstallableMarketplaceApps(
-      installedApps,
-      installableMarketplaceApps,
-    );
   const sectionsAvailability = resolveSectionsAvailability({
     ...props,
     installableMarketplaceApps: verifiedInstallableMarketplaceApps,
@@ -65,7 +58,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   );
 
   const navigateToGithubForkPage = useCallback((githubForkUrl: string) => {
-    window.open(githubForkUrl, "_blank");
+    window.open(githubForkUrl, '_blank');
   }, []);
 
   return (
@@ -73,12 +66,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
       <TopNav title={intl.formatMessage(sectionNames.apps)}>
         <InstallWithManifestFormButton onSubmitted={navigateToAppInstallPage} />
       </TopNav>
-      <Box
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        marginY={8}
-      >
+      <Box display="flex" flexDirection="column" alignItems="center" marginY={8}>
         <Box className={classes.appContent} marginY={8}>
           {sectionsAvailability.installed && (
             <>
@@ -115,10 +103,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
               <Text as="h3" variant="heading" color="textNeutralSubdued">
                 {intl.formatMessage(messages.comingSoonApps)}
               </Text>
-              <AllAppList
-                appList={comingSoonMarketplaceApps}
-                appInstallationList={appsInstallations}
-              />
+              <AllAppList appList={comingSoonMarketplaceApps} appInstallationList={appsInstallations} />
             </Box>
           )}
         </Box>
@@ -126,5 +111,5 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
     </>
   );
 };
-AppListPage.displayName = "AppListPage";
+AppListPage.displayName = 'AppListPage';
 export default AppListPage;

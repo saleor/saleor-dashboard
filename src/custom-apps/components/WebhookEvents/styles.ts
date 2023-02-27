@@ -1,5 +1,5 @@
-import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { makeStyles } from '@saleor/macaw-ui';
+import { vars } from '@saleor/macaw-ui/next';
 
 export const useStyles = makeStyles(
   theme => ({
@@ -8,18 +8,18 @@ export const useStyles = makeStyles(
       paddingLeft: 0,
     },
     objectsWrapper: {
-      borderRight: "1px solid",
+      borderRight: '1px solid',
       borderRightColor: vars.colors.border.neutralPlain,
       padding: theme.spacing(3),
     },
     listHeader: {
-      textTransform: "uppercase",
+      textTransform: 'uppercase',
       padding: theme.spacing(1),
       minHeight: 0,
     },
     listBody: {
       height: 300,
-      overflowY: "auto",
+      overflowY: 'auto',
     },
     listItem: {
       minHeight: 0,
@@ -27,8 +27,8 @@ export const useStyles = makeStyles(
       padding: theme.spacing(1),
     },
     listItemCell: {
-      paddingLeft: "0 !important",
-      wordBreak: "break-all",
+      paddingLeft: '0 !important',
+      wordBreak: 'break-all',
     },
     checkbox: {
       padding: 0,
@@ -37,5 +37,5 @@ export const useStyles = makeStyles(
       paddingLeft: 0,
     },
   }),
-  { name: "WebhookEvents" },
+  { name: 'WebhookEvents' },
 );

@@ -1,20 +1,20 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { UserFragment } from "@dashboard/graphql";
-import { sectionNames } from "@dashboard/intl";
-import { Typography } from "@material-ui/core";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import { makeStyles, NavigationCard } from "@saleor/macaw-ui";
-import { Box, vars } from "@saleor/macaw-ui/next";
-import React from "react";
-import { useIntl } from "react-intl";
-import { Link } from "react-router-dom";
+import { Content } from '@dashboard/components/AppLayout/Content';
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import { UserFragment } from '@dashboard/graphql';
+import { sectionNames } from '@dashboard/intl';
+import { Typography } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { makeStyles, NavigationCard } from '@saleor/macaw-ui';
+import { Box, vars } from '@saleor/macaw-ui/next';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { Link } from 'react-router-dom';
 
-import VersionInfo from "../components/VersionInfo";
-import { MenuSection } from "./types";
-import { hasUserMenuItemPermissions } from "./utils";
+import VersionInfo from '../components/VersionInfo';
+import { MenuSection } from './types';
+import { hasUserMenuItemPermissions } from './utils';
 
 interface VersionInfo {
   dashboardVersion: string;
@@ -24,30 +24,30 @@ interface VersionInfo {
 const useStyles = makeStyles(
   theme => ({
     configurationCategory: {
-      [theme.breakpoints.down("md")]: {
-        gridTemplateColumns: "1fr",
+      [theme.breakpoints.down('md')]: {
+        gridTemplateColumns: '1fr',
       },
-      display: "grid",
+      display: 'grid',
       gap: theme.spacing(4),
-      gridTemplateColumns: "1fr 3fr",
+      gridTemplateColumns: '1fr 3fr',
       padding: theme.spacing(4, 0),
     },
 
     configurationItem: {
-      display: "grid",
+      display: 'grid',
       gap: theme.spacing(4),
-      gridTemplateColumns: "1fr 1fr",
+      gridTemplateColumns: '1fr 1fr',
     },
     configurationLabel: {
       paddingBottom: 20,
     },
 
     link: {
-      display: "contents",
+      display: 'contents',
       marginBottom: theme.spacing(4),
     },
     icon: {
-      "& path": {
+      '& path': {
         fill: theme.palette.primary.main,
       },
       fontSize: 48,
@@ -60,13 +60,13 @@ const useStyles = makeStyles(
     navigationCard: {
       border: `1px solid ${vars.colors.border.neutralDefault}`,
       height: 130,
-      boxShadow: "none !important",
-      "& .MuiCardContent-root": {
+      boxShadow: 'none !important',
+      '& .MuiCardContent-root': {
         borderRadius: vars.borderRadius[3],
       },
     },
   }),
-  { name: "ConfigurationPage" },
+  { name: 'ConfigurationPage' },
 );
 
 export interface ConfigurationPageProps {
@@ -83,30 +83,19 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   } = props;
   const classes = useStyles(props);
   const theme = useTheme();
-  const isSmUp = useMediaQuery(theme.breakpoints.up("sm"));
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
-  const renderVersionInfo = (
-    <VersionInfo
-      dashboardVersion={dashboardVersion}
-      coreVersion={coreVersion}
-    />
-  );
+  const renderVersionInfo = <VersionInfo dashboardVersion={dashboardVersion} coreVersion={coreVersion} />;
 
   const intl = useIntl();
 
   return (
     <DetailedContent useSingleColumn>
-      <TopNav title={intl.formatMessage(sectionNames.configuration)}>
-        {isSmUp && renderVersionInfo}
-      </TopNav>
+      <TopNav title={intl.formatMessage(sectionNames.configuration)}>{isSmUp && renderVersionInfo}</TopNav>
       <Content noSavebar>
-        <Box paddingX={9} __maxWidth={"1024px"} margin="auto">
+        <Box paddingX={9} __maxWidth={'1024px'} margin="auto">
           {menus
-            .filter(menu =>
-              menu.menuItems.some(menuItem =>
-                hasUserMenuItemPermissions(menuItem, user),
-              ),
-            )
+            .filter(menu => menu.menuItems.some(menuItem => hasUserMenuItemPermissions(menuItem, user)))
             .map((menu, menuIndex) => (
               <div className={classes.configurationCategory} key={menuIndex}>
                 <div className={classes.configurationLabel}>
@@ -114,9 +103,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                 </div>
                 <div className={classes.configurationItem}>
                   {menu.menuItems
-                    .filter(menuItem =>
-                      hasUserMenuItemPermissions(menuItem, user),
-                    )
+                    .filter(menuItem => hasUserMenuItemPermissions(menuItem, user))
                     .map((item, itemIndex) => (
                       <Link className={classes.link} to={item.url}>
                         <NavigationCard
@@ -125,11 +112,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
                           icon={item.icon}
                           title={item.title}
                           description={item.description}
-                          data-test-id={
-                            item.testId +
-                            "-settings-subsection-" +
-                            item.title.toLowerCase()
-                          }
+                          data-test-id={item.testId + '-settings-subsection-' + item.title.toLowerCase()}
                         />
                       </Link>
                     ))}
@@ -141,5 +124,5 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
     </DetailedContent>
   );
 };
-ConfigurationPage.displayName = "ConfigurationPage";
+ConfigurationPage.displayName = 'ConfigurationPage';
 export default ConfigurationPage;

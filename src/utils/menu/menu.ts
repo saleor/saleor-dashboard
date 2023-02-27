@@ -3,30 +3,18 @@ interface IBaseMenuItem<TMenuData = {}, TValue = string> {
   value?: TValue;
   data: TMenuData | null;
 }
-export type IFlatMenuItem<TMenuData = {}, TValue = string> = IBaseMenuItem<
-  TMenuData,
-  TValue
-> & {
+export type IFlatMenuItem<TMenuData = {}, TValue = string> = IBaseMenuItem<TMenuData, TValue> & {
   id: string;
   parent: string | null;
   sort: number;
 };
-export type IMenuItem<TMenuData = {}, TValue = string> = IBaseMenuItem<
-  TMenuData,
-  TValue
-> & {
+export type IMenuItem<TMenuData = {}, TValue = string> = IBaseMenuItem<TMenuData, TValue> & {
   children: Array<IMenuItem<TMenuData, TValue>>;
 };
-export type IMenu<TMenuData = {}, TValue = string> = Array<
-  IMenuItem<TMenuData, TValue>
->;
-export type IFlatMenu<TMenuData = {}, TValue = string> = Array<
-  IFlatMenuItem<TMenuData, TValue>
->;
+export type IMenu<TMenuData = {}, TValue = string> = Array<IMenuItem<TMenuData, TValue>>;
+export type IFlatMenu<TMenuData = {}, TValue = string> = Array<IFlatMenuItem<TMenuData, TValue>>;
 
-export function validateMenuOptions<TMenuData = {}, TValue = string>(
-  menu: IMenu<TMenuData, TValue>,
-): boolean {
+export function validateMenuOptions<TMenuData = {}, TValue = string>(menu: IMenu<TMenuData, TValue>): boolean {
   const isValue = (val: TValue | undefined): val is TValue => val !== undefined;
 
   const values: TValue[] = toFlat(menu)
@@ -58,8 +46,9 @@ export function getMenuItemByValue<TMenuData = {}, TValue = string>(
   value: TValue,
 ): IMenuItem<TMenuData, TValue> {
   const flatMenu = toFlat(menu);
-  const flatMenuItem: IFlatMenuItem<TMenuData, TValue> | undefined =
-    flatMenu.find(menuItem => menuItem.value === value);
+  const flatMenuItem: IFlatMenuItem<TMenuData, TValue> | undefined = flatMenu.find(
+    menuItem => menuItem.value === value,
+  );
 
   if (flatMenuItem === undefined) {
     throw new Error(`Value ${value} does not exist in menu`);
@@ -116,11 +105,9 @@ export function walkToRoot<TMenuData = {}, TValue = string>(
     throw new Error(`Value ${value} does not exist in menu`);
   }
 
-  return (
-    menuItem.parent === null
-      ? [menuItem]
-      : [menuItem, ..._walkToRoot(flatMenu, menuItem.parent)]
-  ).map(flatMenuItem => _fromFlat(flatMenu, flatMenuItem));
+  return (menuItem.parent === null ? [menuItem] : [menuItem, ..._walkToRoot(flatMenu, menuItem.parent)]).map(
+    flatMenuItem => _fromFlat(flatMenu, flatMenuItem),
+  );
 }
 
 function _toFlat<TMenuData = {}, TValue = string>(
@@ -128,7 +115,7 @@ function _toFlat<TMenuData = {}, TValue = string>(
   sort: number,
   parent: string | null,
 ): IFlatMenu<TMenuData, TValue> {
-  const id = parent ? [parent, sort].join(":") : sort.toString();
+  const id = parent ? [parent, sort].join(':') : sort.toString();
   const flatMenuItem: IFlatMenuItem<TMenuData, TValue> = {
     data: menuItem.data,
     id,
@@ -141,21 +128,13 @@ function _toFlat<TMenuData = {}, TValue = string>(
     flatMenuItem,
     ...menuItem.children
       .map((child, childIndex) => _toFlat(child, childIndex, id))
-      .reduce(
-        (acc, curr) => [...acc, ...curr],
-        [] as IFlatMenu<TMenuData, TValue>,
-      ),
+      .reduce((acc, curr) => [...acc, ...curr], [] as IFlatMenu<TMenuData, TValue>),
   ];
 }
-export function toFlat<TMenuData = {}, TValue = string>(
-  menu: IMenu<TMenuData, TValue>,
-): IFlatMenu<TMenuData, TValue> {
+export function toFlat<TMenuData = {}, TValue = string>(menu: IMenu<TMenuData, TValue>): IFlatMenu<TMenuData, TValue> {
   return menu
     .map((menuItem, menuItemIndex) => _toFlat(menuItem, menuItemIndex, null))
-    .reduce(
-      (acc, curr) => [...acc, ...curr],
-      [] as IFlatMenu<TMenuData, TValue>,
-    );
+    .reduce((acc, curr) => [...acc, ...curr], [] as IFlatMenu<TMenuData, TValue>);
 }
 
 function _fromFlat<TMenuData = {}, TValue = string>(
@@ -176,13 +155,9 @@ function _fromFlat<TMenuData = {}, TValue = string>(
 export function fromFlat<TMenuData = {}, TValue = string>(
   menu: IFlatMenu<TMenuData, TValue>,
 ): IMenu<TMenuData, TValue> {
-  return menu
-    .filter(menuItem => menuItem.parent === null)
-    .map(menuItem => _fromFlat(menu, menuItem));
+  return menu.filter(menuItem => menuItem.parent === null).map(menuItem => _fromFlat(menu, menuItem));
 }
 
-export function isLeaf<TMenuData = {}, TValue = string>(
-  menuItem: IMenuItem<TMenuData, TValue>,
-): boolean {
+export function isLeaf<TMenuData = {}, TValue = string>(menuItem: IMenuItem<TMenuData, TValue>): boolean {
   return menuItem.children.length === 0;
 }

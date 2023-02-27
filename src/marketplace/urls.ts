@@ -1,3 +1,3 @@
-const marketplaceSection = "/marketplace/";
+const marketplaceSection = '/marketplace/';
 
 export const marketplaceUrl = marketplaceSection;

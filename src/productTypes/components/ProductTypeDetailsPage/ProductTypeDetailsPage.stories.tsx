@@ -1,19 +1,16 @@
-import { listActionsProps } from "@dashboard/fixtures";
-import { WeightUnitsEnum } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { formError } from "@dashboard/storybook/formError";
-import { taxClasses } from "@dashboard/taxes/fixtures";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { listActionsProps } from '@dashboard/fixtures';
+import { WeightUnitsEnum } from '@dashboard/graphql';
+import Decorator from '@dashboard/storybook/Decorator';
+import { formError } from '@dashboard/storybook/formError';
+import { taxClasses } from '@dashboard/taxes/fixtures';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import { productType } from "../../fixtures";
-import ProductTypeDetailsPage, {
-  ProductTypeDetailsPageProps,
-  ProductTypeForm,
-} from "./ProductTypeDetailsPage";
+import { productType } from '../../fixtures';
+import ProductTypeDetailsPage, { ProductTypeDetailsPageProps, ProductTypeForm } from './ProductTypeDetailsPage';
 
-const props: Omit<ProductTypeDetailsPageProps, "classes"> = {
-  defaultWeightUnit: "kg" as WeightUnitsEnum,
+const props: Omit<ProductTypeDetailsPageProps, 'classes'> = {
+  defaultWeightUnit: 'kg' as WeightUnitsEnum,
   disabled: false,
   errors: [],
   onAttributeAdd: () => undefined,
@@ -25,7 +22,7 @@ const props: Omit<ProductTypeDetailsPageProps, "classes"> = {
   pageTitle: productType.name,
   productAttributeList: listActionsProps,
   productType,
-  saveButtonBarState: "default",
+  saveButtonBarState: 'default',
   taxClasses,
   onFetchMoreTaxClasses: undefined,
   variantAttributeList: listActionsProps,
@@ -33,18 +30,13 @@ const props: Omit<ProductTypeDetailsPageProps, "classes"> = {
   selectedVariantAttributes: [],
 };
 
-storiesOf("Product types / Product type details", module)
+storiesOf('Product types / Product type details', module)
   .addDecorator(Decorator)
-  .add("default", () => <ProductTypeDetailsPage {...props} />)
-  .add("loading", () => (
-    <ProductTypeDetailsPage
-      {...props}
-      disabled={true}
-      pageTitle={undefined}
-      productType={undefined}
-    />
+  .add('default', () => <ProductTypeDetailsPage {...props} />)
+  .add('loading', () => (
+    <ProductTypeDetailsPage {...props} disabled={true} pageTitle={undefined} productType={undefined} />
   ))
-  .add("no attributes", () => (
+  .add('no attributes', () => (
     <ProductTypeDetailsPage
       {...props}
       productType={{
@@ -53,9 +45,6 @@ storiesOf("Product types / Product type details", module)
       }}
     />
   ))
-  .add("form errors", () => (
-    <ProductTypeDetailsPage
-      {...props}
-      errors={(["name"] as Array<keyof ProductTypeForm>).map(formError)}
-    />
+  .add('form errors', () => (
+    <ProductTypeDetailsPage {...props} errors={(['name'] as Array<keyof ProductTypeForm>).map(formError)} />
   ));

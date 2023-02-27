@@ -1,35 +1,29 @@
-import { date } from "@dashboard/fixtures";
-import { OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
-import {
-  createFilterStructure,
-  OrderFilterGiftCard,
-} from "@dashboard/orders/components/OrderListPage";
-import { OrderListUrlFilters } from "@dashboard/orders/urls";
-import { getFilterQueryParams } from "@dashboard/utils/filters";
-import { stringifyQs } from "@dashboard/utils/urls";
-import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
-import { config } from "@test/intl";
-import { createIntl } from "react-intl";
+import { date } from '@dashboard/fixtures';
+import { OrderStatusFilter, PaymentChargeStatusEnum } from '@dashboard/graphql';
+import { createFilterStructure, OrderFilterGiftCard } from '@dashboard/orders/components/OrderListPage';
+import { OrderListUrlFilters } from '@dashboard/orders/urls';
+import { getFilterQueryParams } from '@dashboard/utils/filters';
+import { stringifyQs } from '@dashboard/utils/urls';
+import { getExistingKeys, setFilterOptsStatus } from '@test/filters';
+import { config } from '@test/intl';
+import { createIntl } from 'react-intl';
 
-import { getFilterQueryParam, getFilterVariables } from "./filters";
+import { getFilterQueryParam, getFilterVariables } from './filters';
 
-describe("Filtering query params", () => {
-  it("should be empty object if no params given", () => {
+describe('Filtering query params', () => {
+  it('should be empty object if no params given', () => {
     const params: OrderListUrlFilters = {};
     const filterVariables = getFilterVariables(params);
 
     expect(getExistingKeys(filterVariables)).toHaveLength(0);
   });
 
-  it("should not be empty object if params given", () => {
+  it('should not be empty object if params given', () => {
     const params: OrderListUrlFilters = {
       createdFrom: date.from,
       createdTo: date.to,
-      customer: "email@example.com",
-      status: [
-        OrderStatusFilter.FULFILLED,
-        OrderStatusFilter.PARTIALLY_FULFILLED,
-      ],
+      customer: 'email@example.com',
+      status: [OrderStatusFilter.FULFILLED, OrderStatusFilter.PARTIALLY_FULFILLED],
     };
     const filterVariables = getFilterVariables(params);
 
@@ -37,7 +31,7 @@ describe("Filtering query params", () => {
   });
 });
 
-describe("Filtering URL params", () => {
+describe('Filtering URL params', () => {
   const intl = createIntl(config);
 
   const filters = createFilterStructure(intl, {
@@ -53,8 +47,8 @@ describe("Filtering URL params", () => {
       active: false,
       value: [
         {
-          label: "Channel PLN",
-          value: "channelId",
+          label: 'Channel PLN',
+          value: 'channelId',
         },
       ],
     },
@@ -67,21 +61,15 @@ describe("Filtering URL params", () => {
     },
     customer: {
       active: false,
-      value: "email@example.com",
+      value: 'email@example.com',
     },
     status: {
       active: false,
-      value: [
-        OrderStatusFilter.FULFILLED,
-        OrderStatusFilter.PARTIALLY_FULFILLED,
-      ],
+      value: [OrderStatusFilter.FULFILLED, OrderStatusFilter.PARTIALLY_FULFILLED],
     },
     paymentStatus: {
       active: false,
-      value: [
-        PaymentChargeStatusEnum.FULLY_CHARGED,
-        PaymentChargeStatusEnum.PARTIALLY_CHARGED,
-      ],
+      value: [PaymentChargeStatusEnum.FULLY_CHARGED, PaymentChargeStatusEnum.PARTIALLY_CHARGED],
     },
     giftCard: {
       active: false,
@@ -91,27 +79,21 @@ describe("Filtering URL params", () => {
       active: false,
       value: [
         {
-          key: "",
-          value: "",
+          key: '',
+          value: '',
         },
       ],
     },
   });
 
-  it("should be empty if no active filters", () => {
-    const filterQueryParams = getFilterQueryParams(
-      filters,
-      getFilterQueryParam,
-    );
+  it('should be empty if no active filters', () => {
+    const filterQueryParams = getFilterQueryParams(filters, getFilterQueryParam);
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
   });
 
-  it("should not be empty if active filters are present", () => {
-    const filterQueryParams = getFilterQueryParams(
-      setFilterOptsStatus(filters, true),
-      getFilterQueryParam,
-    );
+  it('should not be empty if active filters are present', () => {
+    const filterQueryParams = getFilterQueryParams(setFilterOptsStatus(filters, true), getFilterQueryParam);
 
     expect(filterQueryParams).toMatchSnapshot();
     expect(stringifyQs(filterQueryParams)).toMatchSnapshot();

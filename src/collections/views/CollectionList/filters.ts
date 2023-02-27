@@ -1,28 +1,18 @@
-import {
-  CollectionFilterKeys,
-  CollectionListFilterOpts,
-} from "@dashboard/collections/components/CollectionListPage";
-import {
-  FilterElement,
-  FilterElementRegular,
-} from "@dashboard/components/Filter";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
-import { CollectionFilterInput, CollectionPublished } from "@dashboard/graphql";
-import { findValueInEnum, maybe } from "@dashboard/misc";
+import { CollectionFilterKeys, CollectionListFilterOpts } from '@dashboard/collections/components/CollectionListPage';
+import { FilterElement, FilterElementRegular } from '@dashboard/components/Filter';
+import { SingleAutocompleteChoiceType } from '@dashboard/components/SingleAutocompleteSelectField';
+import { CollectionFilterInput, CollectionPublished } from '@dashboard/graphql';
+import { findValueInEnum, maybe } from '@dashboard/misc';
 
 import {
   createFilterTabUtils,
   createFilterUtils,
   getSingleEnumValueQueryParam,
   getSingleValueQueryParam,
-} from "../../../utils/filters";
-import {
-  CollectionListUrlFilters,
-  CollectionListUrlFiltersEnum,
-  CollectionListUrlQueryParams,
-} from "../../urls";
+} from '../../../utils/filters';
+import { CollectionListUrlFilters, CollectionListUrlFiltersEnum, CollectionListUrlQueryParams } from '../../urls';
 
-export const COLLECTION_FILTERS_KEY = "collectionFilters";
+export const COLLECTION_FILTERS_KEY = 'collectionFilters';
 
 export function getFilterOpts(
   params: CollectionListUrlFilters,
@@ -41,20 +31,14 @@ export function getFilterOpts(
   };
 }
 
-export function getFilterVariables(
-  params: CollectionListUrlFilters,
-): CollectionFilterInput {
+export function getFilterVariables(params: CollectionListUrlFilters): CollectionFilterInput {
   return {
-    published: params.status
-      ? findValueInEnum(params.status, CollectionPublished)
-      : undefined,
+    published: params.status ? findValueInEnum(params.status, CollectionPublished) : undefined,
     search: params.query,
   };
 }
 
-export function getFilterQueryParam(
-  filter: FilterElement<CollectionFilterKeys>,
-): CollectionListUrlFilters {
+export function getFilterQueryParam(filter: FilterElement<CollectionFilterKeys>): CollectionListUrlFilters {
   const { name } = filter;
 
   switch (name) {
@@ -65,23 +49,14 @@ export function getFilterQueryParam(
         CollectionPublished,
       );
     case CollectionFilterKeys.channel:
-      return getSingleValueQueryParam(
-        filter,
-        CollectionListUrlFiltersEnum.channel,
-      );
+      return getSingleValueQueryParam(filter, CollectionListUrlFiltersEnum.channel);
   }
 }
 
-export const {
-  deleteFilterTab,
-  getFilterTabs,
-  saveFilterTab,
-} = createFilterTabUtils<CollectionListUrlFilters>(COLLECTION_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<CollectionListUrlFilters>(COLLECTION_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<CollectionListUrlQueryParams, CollectionListUrlFilters>(
-  CollectionListUrlFiltersEnum,
-);
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } = createFilterUtils<
+  CollectionListUrlQueryParams,
+  CollectionListUrlFilters
+>(CollectionListUrlFiltersEnum);

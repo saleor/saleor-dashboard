@@ -1,2 +1,2 @@
-export { default } from "./WarehouseSettings";
-export * from "./WarehouseSettings";
+export { default } from './WarehouseSettings';
+export * from './WarehouseSettings';

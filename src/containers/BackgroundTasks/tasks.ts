@@ -1,20 +1,11 @@
-import { ApolloQueryResult } from "@apollo/client";
-import { IMessageContext } from "@dashboard/components/messages";
-import {
-  CheckExportFileStatusQuery,
-  CheckOrderInvoicesStatusQuery,
-  JobStatusEnum,
-} from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { IntlShape } from "react-intl";
+import { ApolloQueryResult } from '@apollo/client';
+import { IMessageContext } from '@dashboard/components/messages';
+import { CheckExportFileStatusQuery, CheckOrderInvoicesStatusQuery, JobStatusEnum } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { IntlShape } from 'react-intl';
 
-import messages from "./messages";
-import {
-  InvoiceGenerateParams,
-  QueuedTask,
-  TaskData,
-  TaskStatus,
-} from "./types";
+import messages from './messages';
+import { InvoiceGenerateParams, QueuedTask, TaskData, TaskStatus } from './types';
 
 function getTaskStatus(jobStatus: JobStatusEnum): TaskStatus {
   switch (jobStatus) {
@@ -40,7 +31,7 @@ export async function handleTask(task: QueuedTask): Promise<TaskStatus> {
     if (error instanceof Error) {
       task.onError(error);
     } else {
-      console.error("Unknown error", error);
+      console.error('Unknown error', error);
     }
   }
 
@@ -51,12 +42,8 @@ export function handleError(error: Error) {
   throw error;
 }
 
-export function queueCustom(
-  id: number,
-  tasks: React.MutableRefObject<QueuedTask[]>,
-  data: TaskData,
-) {
-  (["handle", "onCompleted"] as Array<keyof TaskData>)
+export function queueCustom(id: number, tasks: React.MutableRefObject<QueuedTask[]>, data: TaskData) {
+  (['handle', 'onCompleted'] as Array<keyof TaskData>)
     .filter(field => !data[field])
     .forEach(field => {
       throw new Error(`${field} is required when creating custom task`);
@@ -82,16 +69,14 @@ export function queueInvoiceGenerate(
   intl: IntlShape,
 ) {
   if (!generateInvoice) {
-    throw new Error("generateInvoice is required when creating custom task");
+    throw new Error('generateInvoice is required when creating custom task');
   }
   tasks.current = [
     ...tasks.current,
     {
       handle: async () => {
         const result = await fetch();
-        const status = result.data.order.invoices.find(
-          invoice => invoice.id === generateInvoice.invoiceId,
-        ).status;
+        const status = result.data.order.invoices.find(invoice => invoice.id === generateInvoice.invoiceId).status;
 
         return getTaskStatus(status);
       },
@@ -99,12 +84,12 @@ export function queueInvoiceGenerate(
       onCompleted: data =>
         data.status === TaskStatus.SUCCESS
           ? notify({
-              status: "success",
+              status: 'success',
               text: intl.formatMessage(messages.invoiceGenerateFinishedText),
               title: intl.formatMessage(messages.invoiceGenerateFinishedTitle),
             })
           : notify({
-              status: "error",
+              status: 'error',
               text: intl.formatMessage(commonMessages.somethingWentWrong),
               title: intl.formatMessage(messages.invoiceGenerationFailedTitle),
             }),
@@ -134,12 +119,12 @@ export function queueExport(
       onCompleted: data =>
         data.status === TaskStatus.SUCCESS
           ? notify({
-              status: "success",
+              status: 'success',
               text: intl.formatMessage(messages.exportFinishedText),
               title: intl.formatMessage(messages.exportFinishedTitle),
             })
           : notify({
-              status: "error",
+              status: 'error',
               text: intl.formatMessage(commonMessages.somethingWentWrong),
               title: intl.formatMessage(messages.exportFailedTitle),
             }),

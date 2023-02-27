@@ -1,25 +1,19 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import Money from "@dashboard/components/Money";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
-import TableCellAvatar from "@dashboard/components/TableCellAvatar";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { HomeQuery } from "@dashboard/graphql";
-import { productVariantEditUrl } from "@dashboard/products/urls";
-import { RelayToFlat } from "@dashboard/types";
-import {
-  Card,
-  CardContent,
-  TableBody,
-  TableCell,
-  Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import CardTitle from '@dashboard/components/CardTitle';
+import Money from '@dashboard/components/Money';
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Skeleton from '@dashboard/components/Skeleton';
+import TableCellAvatar from '@dashboard/components/TableCellAvatar';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { HomeQuery } from '@dashboard/graphql';
+import { productVariantEditUrl } from '@dashboard/products/urls';
+import { RelayToFlat } from '@dashboard/types';
+import { Card, CardContent, TableBody, TableCell, Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { maybe, renderCollection } from "../../../misc";
+import { maybe, renderCollection } from '../../../misc';
 
 const useStyles = makeStyles(
   theme => ({
@@ -34,7 +28,7 @@ const useStyles = makeStyles(
       width: 112,
     },
     colName: {
-      width: "auto",
+      width: 'auto',
     },
     label: {
       paddingLeft: 0,
@@ -42,10 +36,10 @@ const useStyles = makeStyles(
     noProducts: {
       paddingBottom: 20,
       paddingTop: 20,
-      paddingLeft: "0 !important",
+      paddingLeft: '0 !important',
     },
     tableRow: {
-      cursor: "pointer",
+      cursor: 'pointer',
     },
     cardContent: {
       padding: 0,
@@ -54,12 +48,12 @@ const useStyles = makeStyles(
       padding: 0,
     },
   }),
-  { name: "HomeProductListCard" },
+  { name: 'HomeProductListCard' },
 );
 
 interface HomeProductListProps {
   testId?: string;
-  topProducts: RelayToFlat<HomeQuery["productTopToday"]>;
+  topProducts: RelayToFlat<HomeQuery['productTopToday']>;
 }
 
 export const HomeProductList: React.FC<HomeProductListProps> = props => {
@@ -73,9 +67,9 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
       <CardTitle
         className={classes.cardTitle}
         title={intl.formatMessage({
-          id: "rr8fyf",
-          defaultMessage: "Top Products",
-          description: "header",
+          id: 'rr8fyf',
+          defaultMessage: 'Top Products',
+          description: 'header',
         })}
       />
       <CardContent className={classes.cardContent}>
@@ -90,7 +84,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
               topProducts,
               variant => (
                 <TableRowLink
-                  key={variant ? variant.id : "skeleton"}
+                  key={variant ? variant.id : 'skeleton'}
                   hover={!!variant}
                   className={clsx({
                     [classes.tableRow]: !!variant,
@@ -106,17 +100,11 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                   <TableCell className={classes.label}>
                     {variant ? (
                       <>
-                        <Typography color={"primary"}>
-                          {variant.product.name}
+                        <Typography color={'primary'}>{variant.product.name}</Typography>
+                        <Typography color={'textSecondary'}>
+                          {maybe(() => variant.attributes.map(attribute => attribute.values[0].name).join(' / '))}
                         </Typography>
-                        <Typography color={"textSecondary"}>
-                          {maybe(() =>
-                            variant.attributes
-                              .map(attribute => attribute.values[0].name)
-                              .join(" / "),
-                          )}
-                        </Typography>
-                        <Typography color={"textSecondary"}>
+                        <Typography color={'textSecondary'}>
                           <FormattedMessage
                             id="0opVvi"
                             defaultMessage="{amount, plural,one {One ordered}other {{amount} Ordered}}"
@@ -133,7 +121,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                   </TableCell>
 
                   <TableCell>
-                    <Typography align={"right"}>
+                    <Typography align={'right'}>
                       {maybe(
                         () => (
                           <Money money={variant.revenue.gross} />
@@ -148,10 +136,7 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
                 <TableRowLink>
                   <TableCell colSpan={3} className={classes.noProducts}>
                     <Typography>
-                      <FormattedMessage
-                        id="Q1Uzbb"
-                        defaultMessage="No products found"
-                      />
+                      <FormattedMessage id="Q1Uzbb" defaultMessage="No products found" />
                     </Typography>
                   </TableCell>
                 </TableRowLink>
@@ -164,5 +149,5 @@ export const HomeProductList: React.FC<HomeProductListProps> = props => {
   );
 };
 
-HomeProductList.displayName = "HomeProductList";
+HomeProductList.displayName = 'HomeProductList';
 export default HomeProductList;

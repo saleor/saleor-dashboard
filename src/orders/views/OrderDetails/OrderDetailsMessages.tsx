@@ -1,5 +1,5 @@
-import { handleNestedMutationErrors } from "@dashboard/auth";
-import messages from "@dashboard/containers/BackgroundTasks/messages";
+import { handleNestedMutationErrors } from '@dashboard/auth';
+import messages from '@dashboard/containers/BackgroundTasks/messages';
 import {
   InvoiceEmailSendMutation,
   InvoiceRequestMutation,
@@ -20,15 +20,15 @@ import {
   OrderShippingMethodUpdateMutation,
   OrderUpdateMutation,
   OrderVoidMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import getOrderErrorMessage from '@dashboard/utils/errors/order';
+import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { orderUrl, OrderUrlQueryParams } from "../../urls";
+import { orderUrl, OrderUrlQueryParams } from '../../urls';
 
 interface OrderDetailsMessages {
   children: (props: {
@@ -37,24 +37,16 @@ interface OrderDetailsMessages {
     handleDraftUpdate: (data: OrderDraftUpdateMutation) => void;
     handleNoteAdd: (data: OrderAddNoteMutation) => void;
     handleOrderCancel: (data: OrderCancelMutation) => void;
-    handleOrderFulfillmentApprove: (
-      data: OrderFulfillmentApproveMutation,
-    ) => void;
-    handleOrderFulfillmentCancel: (
-      data: OrderFulfillmentCancelMutation,
-    ) => void;
-    handleOrderFulfillmentUpdate: (
-      data: OrderFulfillmentUpdateTrackingMutation,
-    ) => void;
+    handleOrderFulfillmentApprove: (data: OrderFulfillmentApproveMutation) => void;
+    handleOrderFulfillmentCancel: (data: OrderFulfillmentCancelMutation) => void;
+    handleOrderFulfillmentUpdate: (data: OrderFulfillmentUpdateTrackingMutation) => void;
     handleOrderLinesAdd: (data: OrderLinesAddMutation) => void;
     handleOrderLineDelete: (data: OrderLineDeleteMutation) => void;
     handleOrderLineUpdate: (data: OrderLineUpdateMutation) => void;
     handleOrderMarkAsPaid: (data: OrderMarkAsPaidMutation) => void;
     handleOrderVoid: (data: OrderVoidMutation) => void;
     handlePaymentCapture: (data: OrderCaptureMutation) => void;
-    handleShippingMethodUpdate: (
-      data: OrderShippingMethodUpdateMutation,
-    ) => void;
+    handleShippingMethodUpdate: (data: OrderShippingMethodUpdateMutation) => void;
     handleUpdate: (data: OrderUpdateMutation) => void;
     handleInvoiceGeneratePending: (data: InvoiceRequestMutation) => void;
     handleInvoiceGenerateFinished: (data: InvoiceRequestMutation) => void;
@@ -64,29 +56,21 @@ interface OrderDetailsMessages {
   params: OrderUrlQueryParams;
 }
 
-export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
-  children,
-  id,
-  params,
-}) => {
+export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({ children, id, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
 
-  const [, closeModal] = createDialogActionHandlers(
-    navigate,
-    params => orderUrl(id, params),
-    params,
-  );
+  const [, closeModal] = createDialogActionHandlers(navigate, params => orderUrl(id, params), params);
 
   const handlePaymentCapture = (data: OrderCaptureMutation) => {
     const errs = data.orderCapture?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "9RCuN3",
-          defaultMessage: "Payment successfully captured",
+          id: '9RCuN3',
+          defaultMessage: 'Payment successfully captured',
         }),
       });
       closeModal();
@@ -96,10 +80,10 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderMarkAsPaid?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "lL1HTg",
-          defaultMessage: "Order marked as paid",
+          id: 'lL1HTg',
+          defaultMessage: 'Order marked as paid',
         }),
       });
       closeModal();
@@ -109,10 +93,10 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderCancel?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "W/Es0H",
-          defaultMessage: "Order successfully cancelled",
+          id: 'W/Es0H',
+          defaultMessage: 'Order successfully cancelled',
         }),
       });
       closeModal();
@@ -122,10 +106,10 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.draftOrderDelete?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "W/Es0H",
-          defaultMessage: "Order successfully cancelled",
+          id: 'W/Es0H',
+          defaultMessage: 'Order successfully cancelled',
         }),
       });
       closeModal();
@@ -135,10 +119,10 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderVoid?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "L87bp7",
-          defaultMessage: "Order payment successfully voided",
+          id: 'L87bp7',
+          defaultMessage: 'Order payment successfully voided',
         }),
       });
       closeModal();
@@ -148,10 +132,10 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderAddNote?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "KmPicj",
-          defaultMessage: "Note successfully added",
+          id: 'KmPicj',
+          defaultMessage: 'Note successfully added',
         }),
       });
     }
@@ -160,10 +144,10 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderUpdate?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "j2fPVo",
-          defaultMessage: "Order successfully updated",
+          id: 'j2fPVo',
+          defaultMessage: 'Order successfully updated',
         }),
       });
       closeModal();
@@ -173,25 +157,23 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.draftOrderUpdate?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "j2fPVo",
-          defaultMessage: "Order successfully updated",
+          id: 'j2fPVo',
+          defaultMessage: 'Order successfully updated',
         }),
       });
       closeModal();
     }
   };
-  const handleShippingMethodUpdate = (
-    data: OrderShippingMethodUpdateMutation,
-  ) => {
+  const handleShippingMethodUpdate = (data: OrderShippingMethodUpdateMutation) => {
     const errs = data.orderUpdateShipping?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "7U8GRy",
-          defaultMessage: "Shipping method successfully updated",
+          id: '7U8GRy',
+          defaultMessage: 'Shipping method successfully updated',
         }),
       });
       closeModal();
@@ -201,10 +183,10 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderLineDelete?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "9OtpHt",
-          defaultMessage: "Order line deleted",
+          id: '9OtpHt',
+          defaultMessage: 'Order line deleted',
         }),
       });
     }
@@ -213,10 +195,10 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderLinesCreate?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "HlCkMT",
-          defaultMessage: "Order line added",
+          id: 'HlCkMT',
+          defaultMessage: 'Order line added',
         }),
       });
       closeModal();
@@ -226,31 +208,29 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.orderLineUpdate?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "Fn3bE0",
-          defaultMessage: "Order line updated",
+          id: 'Fn3bE0',
+          defaultMessage: 'Order line updated',
         }),
       });
     } else {
       errs.forEach(error =>
         notify({
-          status: "error",
+          status: 'error',
           text: getOrderErrorMessage(error, intl),
         }),
       );
     }
   };
-  const handleOrderFulfillmentApprove = (
-    data: OrderFulfillmentApproveMutation,
-  ) => {
+  const handleOrderFulfillmentApprove = (data: OrderFulfillmentApproveMutation) => {
     const errs = data.orderFulfillmentApprove?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "+sX7yS",
-          defaultMessage: "Fulfillment successfully approved",
+          id: '+sX7yS',
+          defaultMessage: 'Fulfillment successfully approved',
         }),
       });
       closeModal();
@@ -260,31 +240,27 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       }
     }
   };
-  const handleOrderFulfillmentCancel = (
-    data: OrderFulfillmentCancelMutation,
-  ) => {
+  const handleOrderFulfillmentCancel = (data: OrderFulfillmentCancelMutation) => {
     const errs = data.orderFulfillmentCancel?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "uMpv1v",
-          defaultMessage: "Fulfillment successfully cancelled",
+          id: 'uMpv1v',
+          defaultMessage: 'Fulfillment successfully cancelled',
         }),
       });
       closeModal();
     }
   };
-  const handleOrderFulfillmentUpdate = (
-    data: OrderFulfillmentUpdateTrackingMutation,
-  ) => {
+  const handleOrderFulfillmentUpdate = (data: OrderFulfillmentUpdateTrackingMutation) => {
     const errs = data.orderFulfillmentUpdateTracking?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "CZmloB",
-          defaultMessage: "Fulfillment successfully updated",
+          id: 'CZmloB',
+          defaultMessage: 'Fulfillment successfully updated',
         }),
       });
       closeModal();
@@ -294,10 +270,10 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.draftOrderComplete?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage({
-          id: "c4gbXr",
-          defaultMessage: "Draft order successfully finalized",
+          id: 'c4gbXr',
+          defaultMessage: 'Draft order successfully finalized',
         }),
       });
     }
@@ -307,13 +283,12 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     if (errs.length === 0) {
       notify({
         text: intl.formatMessage({
-          id: "ND5x+V",
-          defaultMessage:
-            "We’re generating the invoice you requested. Please wait a couple of moments",
+          id: 'ND5x+V',
+          defaultMessage: 'We’re generating the invoice you requested. Please wait a couple of moments',
         }),
         title: intl.formatMessage({
-          id: "PKJqcq",
-          defaultMessage: "Invoice is Generating",
+          id: 'PKJqcq',
+          defaultMessage: 'Invoice is Generating',
         }),
       });
       closeModal();
@@ -323,7 +298,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     const errs = data.invoiceRequest?.errors;
     if (errs.length === 0) {
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage(messages.invoiceGenerateFinishedText),
         title: intl.formatMessage(messages.invoiceGenerateFinishedTitle),
       });
@@ -335,8 +310,8 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     if (errs.length === 0) {
       notify({
         text: intl.formatMessage({
-          id: "3u+4NZ",
-          defaultMessage: "Invoice email sent",
+          id: '3u+4NZ',
+          defaultMessage: 'Invoice email sent',
         }),
       });
       closeModal();

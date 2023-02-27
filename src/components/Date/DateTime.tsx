@@ -1,11 +1,11 @@
-import { Tooltip } from "@saleor/macaw-ui";
-import moment from "moment-timezone";
-import React from "react";
-import ReactMoment from "react-moment";
+import { Tooltip } from '@saleor/macaw-ui';
+import moment from 'moment-timezone';
+import React from 'react';
+import ReactMoment from 'react-moment';
 
-import { LocaleConsumer } from "../Locale";
-import { TimezoneConsumer } from "../Timezone";
-import { Consumer } from "./DateContext";
+import { LocaleConsumer } from '../Locale';
+import { TimezoneConsumer } from '../Timezone';
+import { Consumer } from './DateContext';
 
 interface DateTimeProps {
   date: string;
@@ -18,7 +18,7 @@ export const DateTime: React.FC<DateTimeProps> = ({ date, plain }) => {
     if (tz !== undefined) {
       date = date.tz(tz);
     }
-    return date.format("lll");
+    return date.format('lll');
   };
 
   return (
@@ -47,5 +47,5 @@ export const DateTime: React.FC<DateTimeProps> = ({ date, plain }) => {
     </TimezoneConsumer>
   );
 };
-DateTime.displayName = "DateTime";
+DateTime.displayName = 'DateTime';
 export default DateTime;

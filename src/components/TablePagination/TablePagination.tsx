@@ -1,25 +1,16 @@
-import { commonMessages } from "@dashboard/intl";
-import { TableCell } from "@material-ui/core";
-import {
-  Pagination,
-  PaginationProps as MacawPaginationProps,
-} from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
-import { Link, LinkProps } from "react-router-dom";
+import { commonMessages } from '@dashboard/intl';
+import { TableCell } from '@material-ui/core';
+import { Pagination, PaginationProps as MacawPaginationProps } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { Link, LinkProps } from 'react-router-dom';
 
-import { ListSettings } from "../../types";
+import { ListSettings } from '../../types';
 
-export type ListSettingsUpdate = <T extends keyof ListSettings>(
-  key: T,
-  value: ListSettings[T],
-) => void;
+export type ListSettingsUpdate = <T extends keyof ListSettings>(key: T, value: ListSettings[T]) => void;
 
 export interface PaginationProps
-  extends Omit<
-    MacawPaginationProps,
-    "labels" | "rowNumber" | "nextIconButtonProps" | "prevIconButtonProps"
-  > {
+  extends Omit<MacawPaginationProps, 'labels' | 'rowNumber' | 'nextIconButtonProps' | 'prevIconButtonProps'> {
   component?: React.ElementType;
   colSpan?: number;
   settings?: ListSettings;
@@ -53,21 +44,13 @@ export const TablePagination: React.FC<PaginationProps> = ({
           noOfRows: intl.formatMessage(commonMessages.noOfRows),
         }}
         rowNumber={settings?.rowNumber}
-        onRowNumberUpdate={
-          onUpdateListSettings
-            ? value => onUpdateListSettings("rowNumber", value)
-            : undefined
-        }
-        nextIconButtonProps={
-          nextHref ? { component: Link, to: nextHref } : undefined
-        }
-        prevIconButtonProps={
-          prevHref ? { component: Link, to: prevHref } : undefined
-        }
+        onRowNumberUpdate={onUpdateListSettings ? value => onUpdateListSettings('rowNumber', value) : undefined}
+        nextIconButtonProps={nextHref ? { component: Link, to: nextHref } : undefined}
+        prevIconButtonProps={prevHref ? { component: Link, to: prevHref } : undefined}
       />
     </Wrapper>
   );
 };
 
-TablePagination.displayName = "TablePagination";
+TablePagination.displayName = 'TablePagination';
 export default TablePagination;

@@ -1,46 +1,46 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
-import { emphasisedTextBlue, greyDark, textColor } from "./constants";
+import { emphasisedTextBlue, greyDark, textColor } from './constants';
 
 const useStyles = makeStyles(
   theme => ({
     wrapper: {
-      width: "100%",
-      backgroundColor: "inherit",
+      width: '100%',
+      backgroundColor: 'inherit',
       padding: `0 13px`,
       fontSize: theme.spacing(1.5),
     },
     borderedWrapper: {
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
       maxHeight: theme.spacing(7.5),
-      flex: "0 0 auto",
+      flex: '0 0 auto',
       padding: theme.spacing(3, 0),
       backgroundImage: `linear-gradient(to right,  ${greyDark} 13%, rgba(255, 255, 255, 0) 0%)`,
-      backgroundPosition: "bottom",
+      backgroundPosition: 'bottom',
       backgroundSize: theme.spacing(1.5, 0.125),
-      backgroundRepeat: "repeat-x",
+      backgroundRepeat: 'repeat-x',
     },
     logoWrapper: {
       lineHeight: 0,
     },
     linkList: {
-      display: "flex",
-      alignItems: "center",
+      display: 'flex',
+      alignItems: 'center',
     },
     link: {
-      display: "flex",
+      display: 'flex',
       padding: theme.spacing(2),
       color: textColor,
     },
     textEmphasis: {
       color: emphasisedTextBlue,
-      textTransform: "uppercase",
+      textTransform: 'uppercase',
       fontWeight: 600,
-      fontStyle: "normal",
-      paddingLeft: "5px",
+      fontStyle: 'normal',
+      paddingLeft: '5px',
     },
     divider: {
       borderRight: `1px solid  ${greyDark}`,
@@ -48,11 +48,11 @@ const useStyles = makeStyles(
     },
     githubStarButton: {
       lineHeight: 0,
-      marginLeft: "15px",
+      marginLeft: '15px',
     },
   }),
   {
-    name: "DemoBanner",
+    name: 'DemoBanner',
   },
 );
 

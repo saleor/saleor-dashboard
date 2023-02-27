@@ -1,2 +1,2 @@
-export { default } from "./NewPasswordPage";
-export * from "./NewPasswordPage";
+export { default } from './NewPasswordPage';
+export * from './NewPasswordPage';

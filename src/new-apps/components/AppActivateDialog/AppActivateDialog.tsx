@@ -1,12 +1,12 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { buttonMessages } from "@dashboard/intl";
-import { getStringOrPlaceholder } from "@dashboard/misc";
-import { DialogContentText } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import { buttonMessages } from '@dashboard/intl';
+import { getStringOrPlaceholder } from '@dashboard/misc';
+import { DialogContentText } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import msgs from "./messages";
+import msgs from './messages';
 
 export interface AppActivateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -25,7 +25,7 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
 }) => {
   const intl = useIntl();
 
-  const isNameMissing = name === null || name === "";
+  const isNameMissing = name === null || name === '';
 
   const getMainText = () => {
     if (isNameMissing) {
@@ -46,11 +46,9 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
       title={intl.formatMessage(msgs.activateAppTitle)}
       variant="default"
     >
-      <DialogContentText data-test-id="dialog-content">
-        {getMainText()}
-      </DialogContentText>
+      <DialogContentText data-test-id="dialog-content">{getMainText()}</DialogContentText>
     </ActionDialog>
   );
 };
-AppActivateDialog.displayName = "AppActivateDialog";
+AppActivateDialog.displayName = 'AppActivateDialog';
 export default AppActivateDialog;

@@ -1,13 +1,10 @@
-import { useBaseChannelsQuery } from "@dashboard/graphql";
-import chunk from "lodash/chunk";
-import compact from "lodash/compact";
-import concat from "lodash/concat";
-import { useEffect, useState } from "react";
+import { useBaseChannelsQuery } from '@dashboard/graphql';
+import chunk from 'lodash/chunk';
+import compact from 'lodash/compact';
+import concat from 'lodash/concat';
+import { useEffect, useState } from 'react';
 
-import {
-  ChannelsWithLoadMoreProps,
-  useChannelsSearch,
-} from "./useChannelsSearch";
+import { ChannelsWithLoadMoreProps, useChannelsSearch } from './useChannelsSearch';
 
 const DEFAULT_ITEMS_PER_PAGE = 6;
 const INITIAL_INDEX = 0;
@@ -17,11 +14,7 @@ export const useChannelsSearchWithLoadMore = (
 ): ChannelsWithLoadMoreProps => {
   const { data, loading } = useBaseChannelsQuery({});
 
-  const {
-    query,
-    onQueryChange: onSearchChange,
-    filteredChannels,
-  } = useChannelsSearch(data?.channels);
+  const { query, onQueryChange: onSearchChange, filteredChannels } = useChannelsSearch(data?.channels);
 
   const allChannelsChunks = chunk(filteredChannels, itemsPerPage);
 

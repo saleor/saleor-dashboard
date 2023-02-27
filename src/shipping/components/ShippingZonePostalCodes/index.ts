@@ -1,2 +1,2 @@
-export * from "./ShippingZonePostalCodes";
-export { default } from "./ShippingZonePostalCodes";
+export * from './ShippingZonePostalCodes';
+export { default } from './ShippingZonePostalCodes';

@@ -1,19 +1,16 @@
-import { renderHook } from "@testing-library/react-hooks";
+import { renderHook } from '@testing-library/react-hooks';
 
-import useModalDialogErrors from "./useModalDialogErrors";
+import useModalDialogErrors from './useModalDialogErrors';
 
-const errors = ["err1", "err2"];
+const errors = ['err1', 'err2'];
 
-test("Does not render errors after close", () => {
-  const { result, rerender } = renderHook(
-    ({ errors, open }) => useModalDialogErrors(errors, open),
-    {
-      initialProps: {
-        errors: [] as string[],
-        open: false,
-      },
+test('Does not render errors after close', () => {
+  const { result, rerender } = renderHook(({ errors, open }) => useModalDialogErrors(errors, open), {
+    initialProps: {
+      errors: [] as string[],
+      open: false,
     },
-  );
+  });
 
   // Open modal
   rerender({

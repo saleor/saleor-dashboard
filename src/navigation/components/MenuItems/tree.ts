@@ -1,10 +1,10 @@
-import { RecursiveMenuItem } from "@dashboard/navigation/types";
-import { getPatch } from "fast-array-diff";
-import { TreeItem } from "react-sortable-tree";
+import { RecursiveMenuItem } from '@dashboard/navigation/types';
+import { getPatch } from 'fast-array-diff';
+import { TreeItem } from 'react-sortable-tree';
 
-import { MenuItemType } from "../MenuItemDialog";
+import { MenuItemType } from '../MenuItemDialog';
 
-export type TreeOperationType = "move" | "remove";
+export type TreeOperationType = 'move' | 'remove';
 export interface TreeOperation {
   id: string;
   type: TreeOperationType;
@@ -21,12 +21,9 @@ export interface TreeItemProps {
 
 export type MenuTreeItem = TreeItem<TreeItemProps>;
 
-export const unknownTypeError = Error("Unknown type");
+export const unknownTypeError = Error('Unknown type');
 
-function treeToMap(
-  tree: MenuTreeItem[],
-  parent: string,
-): Record<string, string[]> {
+function treeToMap(tree: MenuTreeItem[], parent: string): Record<string, string[]> {
   const childrenList = tree.map(node => node.id);
   const childrenMaps = tree.map(node => ({
     id: node.id,
@@ -47,13 +44,13 @@ function treeToMap(
 
 export function getItemType(item: RecursiveMenuItem): MenuItemType {
   if (item.category) {
-    return "category";
+    return 'category';
   } else if (item.collection) {
-    return "collection";
+    return 'collection';
   } else if (item.page) {
-    return "page";
+    return 'page';
   } else if (item.url) {
-    return "link";
+    return 'link';
   } else {
     throw unknownTypeError;
   }
@@ -73,12 +70,9 @@ export function getItemId(item: RecursiveMenuItem): string {
   }
 }
 
-export function getDiff(
-  originalTree: MenuTreeItem[],
-  newTree: MenuTreeItem[],
-): TreeOperation[] {
-  const originalMap = treeToMap(originalTree, "root");
-  const newMap = treeToMap(newTree, "root");
+export function getDiff(originalTree: MenuTreeItem[], newTree: MenuTreeItem[]): TreeOperation[] {
+  const originalMap = treeToMap(originalTree, 'root');
+  const newMap = treeToMap(newTree, 'root');
 
   const diff: TreeOperation[] = Object.keys(newMap).flatMap(key => {
     const originalNode = originalMap[key];
@@ -87,14 +81,12 @@ export function getDiff(
     const patch = getPatch(originalNode, newNode);
 
     if (patch.length > 0) {
-      const addedNode = patch.find(operation => operation.type === "add");
-      const removedNode = patch.find(operation => operation.type === "remove");
+      const addedNode = patch.find(operation => operation.type === 'add');
+      const removedNode = patch.find(operation => operation.type === 'remove');
 
       if (!!addedNode) {
         const changedParent = originalNode.length !== newNode.length;
-        const sortOrder = removedNode
-          ? addedNode.newPos - removedNode.oldPos
-          : addedNode.newPos;
+        const sortOrder = removedNode ? addedNode.newPos - removedNode.oldPos : addedNode.newPos;
 
         // This exists because backend doesn't recongize the position of the new node
         // when it's moved from child to parent and/or up
@@ -105,28 +97,26 @@ export function getDiff(
           return [
             {
               id: addedNode.items[0],
-              parentId: key === "root" ? undefined : key,
+              parentId: key === 'root' ? undefined : key,
               sortOrder: newNode.length - 1,
-              type: "move" as TreeOperationType,
+              type: 'move' as TreeOperationType,
               simulatedMove: true,
             },
             {
               id: addedNode.items[0],
-              parentId: key === "root" ? undefined : key,
+              parentId: key === 'root' ? undefined : key,
               sortOrder:
-                sortOrder - newNode.length < 0
-                  ? sortOrder - newNode.length + 1
-                  : sortOrder - newNode.length - 1,
-              type: "move" as TreeOperationType,
+                sortOrder - newNode.length < 0 ? sortOrder - newNode.length + 1 : sortOrder - newNode.length - 1,
+              type: 'move' as TreeOperationType,
             },
           ];
         }
 
         return {
           id: addedNode.items[0],
-          parentId: key === "root" ? undefined : key,
+          parentId: key === 'root' ? undefined : key,
           sortOrder,
-          type: "move" as TreeOperationType,
+          type: 'move' as TreeOperationType,
         };
       }
     }
@@ -142,9 +132,7 @@ export function getNodeData(
   onEdit: (id: string) => void,
 ): MenuTreeItem {
   return {
-    children: item.children.map(child =>
-      getNodeData(child, onChange, onClick, onEdit),
-    ),
+    children: item.children.map(child => getNodeData(child, onChange, onClick, onEdit)),
     expanded: true,
     id: item.id,
     onChange,
@@ -155,8 +143,5 @@ export function getNodeData(
 }
 
 export function getNodeQuantity(items: RecursiveMenuItem[]): number {
-  return items.reduce(
-    (acc, curr) => acc + getNodeQuantity(curr.children),
-    items.length,
-  );
+  return items.reduce((acc, curr) => acc + getNodeQuantity(curr.children), items.length);
 }

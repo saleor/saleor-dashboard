@@ -1,6 +1,6 @@
-import { FetchResult } from "@apollo/client";
-import { FormData } from "@dashboard/discounts/components/SaleCreatePage";
-import { getSaleChannelsVariables } from "@dashboard/discounts/handlers";
+import { FetchResult } from '@apollo/client';
+import { FormData } from '@dashboard/discounts/components/SaleCreatePage';
+import { getSaleChannelsVariables } from '@dashboard/discounts/handlers';
 import {
   DiscountValueTypeEnum,
   SaleChannelListingUpdateMutation,
@@ -8,13 +8,8 @@ import {
   SaleCreateMutation,
   SaleCreateMutationVariables,
   SaleType,
-} from "@dashboard/graphql";
-import {
-  decimal,
-  extractMutationErrors,
-  getMutationErrors,
-  joinDateTime,
-} from "@dashboard/misc";
+} from '@dashboard/graphql';
+import { decimal, extractMutationErrors, getMutationErrors, joinDateTime } from '@dashboard/misc';
 
 function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
   return type.toString() === DiscountValueTypeEnum.FIXED
@@ -23,9 +18,7 @@ function discountValueTypeEnum(type: SaleType): DiscountValueTypeEnum {
 }
 
 export function createHandler(
-  createSale: (
-    variables: SaleCreateMutationVariables,
-  ) => Promise<FetchResult<SaleCreateMutation>>,
+  createSale: (variables: SaleCreateMutationVariables) => Promise<FetchResult<SaleCreateMutation>>,
   updateChannels: (options: {
     variables: SaleChannelListingUpdateMutationVariables;
   }) => Promise<FetchResult<SaleChannelListingUpdateMutation>>,
@@ -33,9 +26,7 @@ export function createHandler(
   return async (formData: FormData) => {
     const response = await createSale({
       input: {
-        endDate: formData.hasEndDate
-          ? joinDateTime(formData.endDate, formData.endTime)
-          : null,
+        endDate: formData.hasEndDate ? joinDateTime(formData.endDate, formData.endTime) : null,
         name: formData.name,
         startDate: joinDateTime(formData.startDate, formData.startTime),
         type: discountValueTypeEnum(formData.type),
@@ -51,10 +42,7 @@ export function createHandler(
 
     const updateChannelsErrors = await extractMutationErrors(
       updateChannels({
-        variables: getSaleChannelsVariables(
-          response.data.saleCreate.sale.id,
-          formData,
-        ),
+        variables: getSaleChannelsVariables(response.data.saleCreate.sale.id, formData),
       }),
     );
 

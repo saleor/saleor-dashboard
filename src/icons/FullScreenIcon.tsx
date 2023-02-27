@@ -1,5 +1,5 @@
-import { createSvgIcon } from "@material-ui/core/utils";
-import React from "react";
+import { createSvgIcon } from '@material-ui/core/utils';
+import React from 'react';
 
 const FullScreenIcon = createSvgIcon(
   <>
@@ -8,7 +8,7 @@ const FullScreenIcon = createSvgIcon(
       <path d="M372.939 0H252.636c-6.641 0-12.03 5.39-12.03 12.03s5.39 12.03 12.03 12.03h91.382L99.635 268.432c-4.668 4.668-4.668 12.235 0 16.903 4.668 4.668 12.235 4.668 16.891 0L360.909 40.951v91.382c0 6.641 5.39 12.03 12.03 12.03s12.03-5.39 12.03-12.03V12.03C384.97 5.558 379.412 0 372.939 0z" />
     </svg>
   </>,
-  "FullScreenIcon",
+  'FullScreenIcon',
 );
 
 export default FullScreenIcon;

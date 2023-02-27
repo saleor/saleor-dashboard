@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const updateCustomer = gql`
   mutation UpdateCustomer($id: ID!, $input: CustomerInput!) {
@@ -37,11 +37,7 @@ export const removeCustomer = gql`
 `;
 
 export const setCustomerDefaultAddress = gql`
-  mutation SetCustomerDefaultAddress(
-    $addressId: ID!
-    $userId: ID!
-    $type: AddressTypeEnum!
-  ) {
+  mutation SetCustomerDefaultAddress($addressId: ID!, $userId: ID!, $type: AddressTypeEnum!) {
     addressSetDefault(addressId: $addressId, userId: $userId, type: $type) {
       errors {
         ...AccountError

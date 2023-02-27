@@ -1,14 +1,9 @@
-import { IFilter } from "@dashboard/components/Filter";
-import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
-import { AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
-import { commonMessages, sectionNames } from "@dashboard/intl";
-import { ProductListUrlFiltersAsDictWithMultipleValues } from "@dashboard/products/urls";
-import {
-  AutocompleteFilterOpts,
-  FilterOpts,
-  KeyValue,
-  MinMax,
-} from "@dashboard/types";
+import { IFilter } from '@dashboard/components/Filter';
+import { SingleAutocompleteChoiceType } from '@dashboard/components/SingleAutocompleteSelectField';
+import { AttributeInputTypeEnum, StockAvailability } from '@dashboard/graphql';
+import { commonMessages, sectionNames } from '@dashboard/intl';
+import { ProductListUrlFiltersAsDictWithMultipleValues } from '@dashboard/products/urls';
+import { AutocompleteFilterOpts, FilterOpts, KeyValue, MinMax } from '@dashboard/types';
 import {
   createAutocompleteField,
   createBooleanField,
@@ -18,21 +13,21 @@ import {
   createNumberField,
   createOptionsField,
   createPriceField,
-} from "@dashboard/utils/filters/fields";
-import { defineMessages, IntlShape } from "react-intl";
+} from '@dashboard/utils/filters/fields';
+import { defineMessages, IntlShape } from 'react-intl';
 
 export const ProductFilterKeys = {
   ...ProductListUrlFiltersAsDictWithMultipleValues,
-  categories: "categories",
-  collections: "collections",
-  metadata: "metadata",
-  price: "price",
-  productType: "productType",
-  stock: "stock",
-  channel: "channel",
-  productKind: "productKind",
+  categories: 'categories',
+  collections: 'collections',
+  metadata: 'metadata',
+  price: 'price',
+  productType: 'productType',
+  stock: 'stock',
+  channel: 'channel',
+  productKind: 'productKind',
 } as const;
-export type ProductFilterKeys = typeof ProductFilterKeys[keyof typeof ProductFilterKeys];
+export type ProductFilterKeys = (typeof ProductFilterKeys)[keyof typeof ProductFilterKeys];
 
 export type AttributeFilterOpts = FilterOpts<string[]> & {
   id: string;
@@ -56,77 +51,64 @@ export interface ProductListFilterOpts {
 
 const messages = defineMessages({
   available: {
-    id: "diOQm7",
-    defaultMessage: "Available",
-    description: "product status",
+    id: 'diOQm7',
+    defaultMessage: 'Available',
+    description: 'product status',
   },
   channel: {
-    id: "pbGIUg",
-    defaultMessage: "Channel",
-    description: "sales channel",
+    id: 'pbGIUg',
+    defaultMessage: 'Channel',
+    description: 'sales channel',
   },
   kind: {
-    id: "pBTTtU",
-    defaultMessage: "Product Kind",
-    description: "product kind",
+    id: 'pBTTtU',
+    defaultMessage: 'Product Kind',
+    description: 'product kind',
   },
   hidden: {
-    id: "Bx367s",
-    defaultMessage: "Hidden",
-    description: "product is hidden",
+    id: 'Bx367s',
+    defaultMessage: 'Hidden',
+    description: 'product is hidden',
   },
   metadata: {
-    defaultMessage: "Metadata",
-    id: "8Q504V",
+    defaultMessage: 'Metadata',
+    id: '8Q504V',
   },
   outOfStock: {
-    id: "Sna+WK",
-    defaultMessage: "Out Of Stock",
-    description: "product status",
+    id: 'Sna+WK',
+    defaultMessage: 'Out Of Stock',
+    description: 'product status',
   },
   price: {
-    id: "b1zuN9",
-    defaultMessage: "Price",
+    id: 'b1zuN9',
+    defaultMessage: 'Price',
   },
   quantity: {
-    id: "3Z8972",
-    defaultMessage: "Stock quantity",
-    description: "product",
+    id: '3Z8972',
+    defaultMessage: 'Stock quantity',
+    description: 'product',
   },
   visibility: {
-    id: "g+GAf4",
-    defaultMessage: "Visibility",
-    description: "product visibility",
+    id: 'g+GAf4',
+    defaultMessage: 'Visibility',
+    description: 'product visibility',
   },
   visible: {
-    id: "6Y1nQd",
-    defaultMessage: "Visible",
-    description: "product is visible",
+    id: '6Y1nQd',
+    defaultMessage: 'Visible',
+    description: 'product is visible',
   },
 });
 
-const filterByType = (type: AttributeInputTypeEnum) => (
-  attribute: AttributeFilterOpts,
-) => attribute.inputType === type;
+const filterByType = (type: AttributeInputTypeEnum) => (attribute: AttributeFilterOpts) => attribute.inputType === type;
 
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: ProductListFilterOpts,
-): IFilter<string> {
+export function createFilterStructure(intl: IntlShape, opts: ProductListFilterOpts): IFilter<string> {
   const attributes = opts.attributes;
 
-  const booleanAttributes = attributes.filter(
-    filterByType(AttributeInputTypeEnum.BOOLEAN),
-  );
-  const dateAttributes = attributes.filter(
-    filterByType(AttributeInputTypeEnum.DATE),
-  );
-  const dateTimeAttributes = attributes.filter(
-    filterByType(AttributeInputTypeEnum.DATE_TIME),
-  );
-  const numericAttributes = attributes.filter(
-    filterByType(AttributeInputTypeEnum.NUMERIC),
-  );
+  const booleanAttributes = attributes.filter(filterByType(AttributeInputTypeEnum.BOOLEAN));
+  const dateAttributes = attributes.filter(filterByType(AttributeInputTypeEnum.DATE));
+  const dateTimeAttributes = attributes.filter(filterByType(AttributeInputTypeEnum.DATE_TIME));
+  const numericAttributes = attributes.filter(filterByType(AttributeInputTypeEnum.NUMERIC));
 
   const defaultAttributes = opts.attributes.filter(
     ({ inputType }) =>
@@ -150,11 +132,7 @@ export function createFilterStructure(
       active: opts.channel.active,
     },
     {
-      ...createKeyValueField(
-        ProductFilterKeys.metadata,
-        intl.formatMessage(messages.metadata),
-        opts.metadata.value,
-      ),
+      ...createKeyValueField(ProductFilterKeys.metadata, intl.formatMessage(messages.metadata), opts.metadata.value),
       active: opts.metadata.active,
     },
     {
@@ -188,11 +166,7 @@ export function createFilterStructure(
       dependencies: [ProductFilterKeys.channel],
     },
     {
-      ...createPriceField(
-        ProductFilterKeys.price,
-        intl.formatMessage(messages.price),
-        opts.price.value,
-      ),
+      ...createPriceField(ProductFilterKeys.price, intl.formatMessage(messages.price), opts.price.value),
       active: opts.price.active,
     },
     {
@@ -205,7 +179,7 @@ export function createFilterStructure(
         opts.categories.choices,
         {
           hasMore: opts.categories.hasMore,
-          initialSearch: "",
+          initialSearch: '',
           loading: opts.categories.loading,
           onFetchMore: opts.categories.onFetchMore,
           onSearchChange: opts.categories.onSearchChange,
@@ -223,7 +197,7 @@ export function createFilterStructure(
         opts.collections.choices,
         {
           hasMore: opts.collections.hasMore,
-          initialSearch: "",
+          initialSearch: '',
           loading: opts.collections.loading,
           onFetchMore: opts.collections.onFetchMore,
           onSearchChange: opts.collections.onSearchChange,
@@ -241,7 +215,7 @@ export function createFilterStructure(
         opts.productType.choices,
         {
           hasMore: opts.productType.hasMore,
-          initialSearch: "",
+          initialSearch: '',
           loading: opts.productType.loading,
           onFetchMore: opts.productType.onFetchMore,
           onSearchChange: opts.productType.onSearchChange,
@@ -253,9 +227,7 @@ export function createFilterStructure(
       ...createBooleanField(
         attr.slug,
         attr.name,
-        Array.isArray(attr.value)
-          ? undefined
-          : (attr.value as unknown) === "true",
+        Array.isArray(attr.value) ? undefined : (attr.value as unknown) === 'true',
         {
           positive: intl.formatMessage(commonMessages.yes),
           negative: intl.formatMessage(commonMessages.no),
@@ -298,7 +270,7 @@ export function createFilterStructure(
         opts.attributeChoices.choices,
         {
           hasMore: opts.attributeChoices.hasMore,
-          initialSearch: "",
+          initialSearch: '',
           loading: opts.attributeChoices.loading,
           onFetchMore: opts.attributeChoices.onFetchMore,
           onSearchChange: opts.attributeChoices.onSearchChange,

@@ -1,30 +1,26 @@
-import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { CardSpacer } from "@dashboard/components/CardSpacer";
-import Form from "@dashboard/components/Form";
-import Savebar from "@dashboard/components/Savebar";
-import { customerListUrl } from "@dashboard/customers/urls";
-import {
-  AccountErrorFragment,
-  AddressInput,
-  CustomerCreateDataQuery,
-} from "@dashboard/graphql";
-import useAddressValidation from "@dashboard/hooks/useAddressValidation";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { extractMutationErrors } from "@dashboard/misc";
-import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import { createCountryHandler } from '@dashboard/components/AddressEdit/createCountryHandler';
+import { Content } from '@dashboard/components/AppLayout/Content';
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import { CardSpacer } from '@dashboard/components/CardSpacer';
+import Form from '@dashboard/components/Form';
+import Savebar from '@dashboard/components/Savebar';
+import { customerListUrl } from '@dashboard/customers/urls';
+import { AccountErrorFragment, AddressInput, CustomerCreateDataQuery } from '@dashboard/graphql';
+import useAddressValidation from '@dashboard/hooks/useAddressValidation';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { extractMutationErrors } from '@dashboard/misc';
+import createSingleAutocompleteSelectHandler from '@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler';
+import { mapCountriesToChoices } from '@dashboard/utils/maps';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { AddressTypeInput } from "../../types";
-import CustomerCreateAddress from "../CustomerCreateAddress/CustomerCreateAddress";
-import CustomerCreateDetails from "../CustomerCreateDetails";
-import CustomerCreateNote from "../CustomerCreateNote/CustomerCreateNote";
+import { AddressTypeInput } from '../../types';
+import CustomerCreateAddress from '../CustomerCreateAddress/CustomerCreateAddress';
+import CustomerCreateDetails from '../CustomerCreateDetails';
+import CustomerCreateNote from '../CustomerCreateNote/CustomerCreateNote';
 
 export interface CustomerCreatePageFormData {
   customerFirstName: string;
@@ -32,31 +28,30 @@ export interface CustomerCreatePageFormData {
   email: string;
   note: string;
 }
-export interface CustomerCreatePageSubmitData
-  extends CustomerCreatePageFormData {
+export interface CustomerCreatePageSubmitData extends CustomerCreatePageFormData {
   address: AddressInput;
 }
 
 const initialForm: CustomerCreatePageFormData & AddressTypeInput = {
-  city: "",
-  cityArea: "",
-  companyName: "",
-  country: "",
-  countryArea: "",
-  customerFirstName: "",
-  customerLastName: "",
-  email: "",
-  firstName: "",
-  lastName: "",
-  note: "",
-  phone: "",
-  postalCode: "",
-  streetAddress1: "",
-  streetAddress2: "",
+  city: '',
+  cityArea: '',
+  companyName: '',
+  country: '',
+  countryArea: '',
+  customerFirstName: '',
+  customerLastName: '',
+  email: '',
+  firstName: '',
+  lastName: '',
+  note: '',
+  phone: '',
+  postalCode: '',
+  streetAddress1: '',
+  streetAddress2: '',
 };
 
 export interface CustomerCreatePageProps {
-  countries: CustomerCreateDataQuery["shop"]["countries"];
+  countries: CustomerCreateDataQuery['shop']['countries'];
   disabled: boolean;
   errors: AccountErrorFragment[];
   saveButtonBar: ConfirmButtonTransitionState;
@@ -73,52 +68,52 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const [countryDisplayName, setCountryDisplayName] = React.useState("");
+  const [countryDisplayName, setCountryDisplayName] = React.useState('');
   const countryChoices = mapCountriesToChoices(countries);
-  const { errors: validationErrors, submit: handleSubmitWithAddress } =
-    useAddressValidation<CustomerCreatePageFormData, void>(formData =>
-      onSubmit({
-        address: {
-          city: formData.city,
-          cityArea: formData.cityArea,
-          companyName: formData.companyName,
-          country: formData.country,
-          countryArea: formData.countryArea,
-          firstName: formData.firstName,
-          lastName: formData.lastName,
-          phone: formData.phone,
-          postalCode: formData.postalCode,
-          streetAddress1: formData.streetAddress1,
-          streetAddress2: formData.streetAddress2,
-        },
-        customerFirstName: formData.customerFirstName,
-        customerLastName: formData.customerLastName,
-        email: formData.email,
-        note: formData.note,
-      }),
-    );
+  const { errors: validationErrors, submit: handleSubmitWithAddress } = useAddressValidation<
+    CustomerCreatePageFormData,
+    void
+  >(formData =>
+    onSubmit({
+      address: {
+        city: formData.city,
+        cityArea: formData.cityArea,
+        companyName: formData.companyName,
+        country: formData.country,
+        countryArea: formData.countryArea,
+        firstName: formData.firstName,
+        lastName: formData.lastName,
+        phone: formData.phone,
+        postalCode: formData.postalCode,
+        streetAddress1: formData.streetAddress1,
+        streetAddress2: formData.streetAddress2,
+      },
+      customerFirstName: formData.customerFirstName,
+      customerLastName: formData.customerLastName,
+      email: formData.email,
+      note: formData.note,
+    }),
+  );
 
   const errors = [...apiErrors, ...validationErrors];
 
-  const handleSubmit = (
-    formData: CustomerCreatePageFormData & AddressTypeInput,
-  ) => {
+  const handleSubmit = (formData: CustomerCreatePageFormData & AddressTypeInput) => {
     const areAddressInputFieldsModified = (
       [
-        "city",
-        "companyName",
-        "country",
-        "countryArea",
-        "firstName",
-        "lastName",
-        "phone",
-        "postalCode",
-        "streetAddress1",
-        "streetAddress2",
+        'city',
+        'companyName',
+        'country',
+        'countryArea',
+        'firstName',
+        'lastName',
+        'phone',
+        'postalCode',
+        'streetAddress1',
+        'streetAddress2',
       ] as Array<keyof AddressTypeInput>
     )
       .map(key => formData[key])
-      .some(field => field !== "");
+      .some(field => field !== '');
 
     if (areAddressInputFieldsModified) {
       return handleSubmitWithAddress(formData);
@@ -136,18 +131,9 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
   };
 
   return (
-    <Form
-      confirmLeave
-      initial={initialForm}
-      onSubmit={handleSubmit}
-      disabled={disabled}
-    >
+    <Form confirmLeave initial={initialForm} onSubmit={handleSubmit} disabled={disabled}>
       {({ change, set, data, isSaveDisabled, submit }) => {
-        const countrySelect = createSingleAutocompleteSelectHandler(
-          change,
-          setCountryDisplayName,
-          countryChoices,
-        );
+        const countrySelect = createSingleAutocompleteSelectHandler(change, setCountryDisplayName, countryChoices);
 
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
@@ -156,19 +142,14 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
             <TopNav
               href={customerListUrl()}
               title={intl.formatMessage({
-                id: "N76zUg",
-                defaultMessage: "Create Customer",
-                description: "page header",
+                id: 'N76zUg',
+                defaultMessage: 'Create Customer',
+                description: 'page header',
               })}
             />
             <Content>
               <div>
-                <CustomerCreateDetails
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
+                <CustomerCreateDetails data={data} disabled={disabled} errors={errors} onChange={change} />
                 <CardSpacer />
                 <CustomerCreateAddress
                   countries={countryChoices}
@@ -180,12 +161,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
                   onCountryChange={handleCountrySelect}
                 />
                 <CardSpacer />
-                <CustomerCreateNote
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
+                <CustomerCreateNote data={data} disabled={disabled} errors={errors} onChange={change} />
               </div>
               <Savebar
                 disabled={isSaveDisabled}
@@ -200,5 +176,5 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
     </Form>
   );
 };
-CustomerCreatePage.displayName = "CustomerCreatePage";
+CustomerCreatePage.displayName = 'CustomerCreatePage';
 export default CustomerCreatePage;

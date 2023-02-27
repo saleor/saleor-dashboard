@@ -1,42 +1,30 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
-import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  useSaleBulkDeleteMutation,
-  useSaleListQuery,
-} from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
-import useListSettings from "@dashboard/hooks/useListSettings";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
-import usePaginator, {
-  createPaginationState,
-  PaginatorContext,
-} from "@dashboard/hooks/usePaginator";
-import { commonMessages, sectionNames } from "@dashboard/intl";
-import { maybe } from "@dashboard/misc";
-import { ListViews } from "@dashboard/types";
-import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
-import createSortHandler from "@dashboard/utils/handlers/sortHandler";
-import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
-import { getSortParams } from "@dashboard/utils/sort";
-import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React, { useEffect } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import useAppChannel from '@dashboard/components/AppLayout/AppChannelContext';
+import DeleteFilterTabDialog from '@dashboard/components/DeleteFilterTabDialog';
+import SaveFilterTabDialog, { SaveFilterTabDialogFormData } from '@dashboard/components/SaveFilterTabDialog';
+import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { useSaleBulkDeleteMutation, useSaleListQuery } from '@dashboard/graphql';
+import useBulkActions from '@dashboard/hooks/useBulkActions';
+import useListSettings from '@dashboard/hooks/useListSettings';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { usePaginationReset } from '@dashboard/hooks/usePaginationReset';
+import usePaginator, { createPaginationState, PaginatorContext } from '@dashboard/hooks/usePaginator';
+import { commonMessages, sectionNames } from '@dashboard/intl';
+import { maybe } from '@dashboard/misc';
+import { ListViews } from '@dashboard/types';
+import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
+import createFilterHandlers from '@dashboard/utils/handlers/filterHandlers';
+import createSortHandler from '@dashboard/utils/handlers/sortHandler';
+import { mapEdgesToItems, mapNodeToChoice } from '@dashboard/utils/maps';
+import { getSortParams } from '@dashboard/utils/sort';
+import { DialogContentText } from '@material-ui/core';
+import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
+import React, { useEffect } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import SaleListPage from "../../components/SaleListPage";
-import {
-  saleListUrl,
-  SaleListUrlDialog,
-  SaleListUrlQueryParams,
-} from "../../urls";
+import SaleListPage from '../../components/SaleListPage';
+import { saleListUrl, SaleListUrlDialog, SaleListUrlQueryParams } from '../../urls';
 import {
   deleteFilterTab,
   getActiveFilters,
@@ -46,8 +34,8 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
-} from "./filters";
-import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
+} from './filters';
+import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from './sort';
 
 interface SaleListProps {
   params: SaleListUrlQueryParams;
@@ -56,28 +44,21 @@ interface SaleListProps {
 export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.SALES_LIST,
-  );
+  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
+  const { updateListSettings, settings } = useListSettings(ListViews.SALES_LIST);
 
   usePaginationReset(saleListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
   const { availableChannels } = useAppChannel(false);
-  const selectedChannel = availableChannels.find(
-    channel => channel.slug === params.channel,
-  );
-  const channelOpts = availableChannels
-    ? mapNodeToChoice(availableChannels, channel => channel.slug)
-    : null;
+  const selectedChannel = availableChannels.find(channel => channel.slug === params.channel);
+  const channelOpts = availableChannels ? mapNodeToChoice(availableChannels, channel => channel.slug) : null;
 
-  const [openModal, closeModal] = createDialogActionHandlers<
-    SaleListUrlDialog,
-    SaleListUrlQueryParams
-  >(navigate, saleListUrl, params);
+  const [openModal, closeModal] = createDialogActionHandlers<SaleListUrlDialog, SaleListUrlQueryParams>(
+    navigate,
+    saleListUrl,
+    params,
+  );
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
@@ -98,11 +79,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
 
   const currentTab = getFiltersCurrentTab(params, tabs);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
     cleanupFn: reset,
     createUrl: saleListUrl,
     getFilterQueryParam,
@@ -154,7 +131,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     onCompleted: data => {
       if (data.saleBulkDelete.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         reset();
@@ -179,13 +156,13 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
       <SaleListPage
         currentTab={currentTab}
         filterOpts={getFilterOpts(params, channelOpts)}
-        initialSearch={params.query || ""}
+        initialSearch={params.query || ''}
         onSearchChange={handleSearchChange}
         onFilterChange={filter => changeFilters(filter)}
         onAll={resetFilters}
         onTabChange={handleTabChange}
-        onTabDelete={() => openModal("delete-search")}
-        onTabSave={() => openModal("save-search")}
+        onTabDelete={() => openModal('delete-search')}
+        onTabSave={() => openModal('save-search')}
         tabs={tabs.map(tab => tab.name)}
         sales={mapEdgesToItems(data?.sales)}
         settings={settings}
@@ -202,7 +179,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
             variant="secondary"
             color="primary"
             onClick={() =>
-              openModal("remove", {
+              openModal('remove', {
                 ids: listElements,
               })
             }
@@ -216,11 +193,11 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         confirmButtonState={saleBulkDeleteOpts.status}
         onClose={closeModal}
         onConfirm={onSaleBulkDelete}
-        open={params.action === "remove" && canOpenBulkActionDialog}
+        open={params.action === 'remove' && canOpenBulkActionDialog}
         title={intl.formatMessage({
-          id: "ZWIjvr",
-          defaultMessage: "Delete Sales",
-          description: "dialog header",
+          id: 'ZWIjvr',
+          defaultMessage: 'Delete Sales',
+          description: 'dialog header',
         })}
         variant="delete"
       >
@@ -239,17 +216,17 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         )}
       </ActionDialog>
       <SaveFilterTabDialog
-        open={params.action === "save-search"}
+        open={params.action === 'save-search'}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabSave}
       />
       <DeleteFilterTabDialog
-        open={params.action === "delete-search"}
+        open={params.action === 'delete-search'}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+        tabName={maybe(() => tabs[currentTab - 1].name, '...')}
       />
     </PaginatorContext.Provider>
   );

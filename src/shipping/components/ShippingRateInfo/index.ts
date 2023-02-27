@@ -1,2 +1,2 @@
-export { default } from "./ShippingRateInfo";
-export * from "./ShippingRateInfo";
+export { default } from './ShippingRateInfo';
+export * from './ShippingRateInfo';

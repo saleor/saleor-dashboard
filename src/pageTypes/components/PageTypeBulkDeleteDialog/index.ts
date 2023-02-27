@@ -1,2 +1,2 @@
-export { default } from "./PageTypeBulkDeleteDialog";
-export * from "./PageTypeBulkDeleteDialog";
+export { default } from './PageTypeBulkDeleteDialog';
+export * from './PageTypeBulkDeleteDialog';

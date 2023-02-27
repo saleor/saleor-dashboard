@@ -1,35 +1,22 @@
-import {
-  ChannelShippingZones,
-  ChannelWarehouses,
-} from "@dashboard/channels/pages/ChannelDetailsPage/types";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
-import FormSpacer from "@dashboard/components/FormSpacer";
+import { ChannelShippingZones, ChannelWarehouses } from '@dashboard/channels/pages/ChannelDetailsPage/types';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import CardTitle from '@dashboard/components/CardTitle';
+import FormSpacer from '@dashboard/components/FormSpacer';
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
-} from "@dashboard/components/SingleAutocompleteSelectField";
-import {
-  ChannelErrorFragment,
-  CountryCode,
-  StockSettingsInput,
-} from "@dashboard/graphql";
-import useClipboard from "@dashboard/hooks/useClipboard";
-import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
-import { commonMessages } from "@dashboard/intl";
-import { getFormErrors } from "@dashboard/utils/errors";
-import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import {
-  Card,
-  CardContent,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/components/SingleAutocompleteSelectField';
+import { ChannelErrorFragment, CountryCode, StockSettingsInput } from '@dashboard/graphql';
+import useClipboard from '@dashboard/hooks/useClipboard';
+import { ChangeEvent, FormChange } from '@dashboard/hooks/useForm';
+import { commonMessages } from '@dashboard/intl';
+import { getFormErrors } from '@dashboard/utils/errors';
+import getChannelsErrorMessage from '@dashboard/utils/errors/channels';
+import { Card, CardContent, InputAdornment, TextField, Typography } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useStyles } from "../styles";
-import { ExtendedFormHelperTextProps } from "./types";
+import { useStyles } from '../styles';
+import { ExtendedFormHelperTextProps } from './types';
 
 export interface FormData extends StockSettingsInput {
   name: string;
@@ -72,7 +59,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   const intl = useIntl();
   const [copied, copy] = useClipboard();
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
-    ["name", "slug", "currencyCode", "defaultCountry"],
+    ['name', 'slug', 'currencyCode', 'defaultCountry'],
     errors,
   );
   const classes = useStyles();
@@ -80,9 +67,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   return (
     <>
       <Card>
-        <CardTitle
-          title={intl.formatMessage(commonMessages.generalInformations)}
-        />
+        <CardTitle title={intl.formatMessage(commonMessages.generalInformations)} />
         <CardContent>
           <TextField
             error={!!formErrors.name}
@@ -90,9 +75,9 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             disabled={disabled}
             fullWidth
             label={intl.formatMessage({
-              id: "UymotP",
-              defaultMessage: "Channel name",
-              description: "channel name",
+              id: 'UymotP',
+              defaultMessage: 'Channel name',
+              description: 'channel name',
             })}
             name="name"
             value={data.name}
@@ -106,13 +91,13 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             fullWidth
             FormHelperTextProps={
               {
-                "data-test-id": "slug-text-input-helper-text",
+                'data-test-id': 'slug-text-input-helper-text',
               } as ExtendedFormHelperTextProps
             }
             label={intl.formatMessage({
-              id: "74Zo/H",
-              defaultMessage: "Slug",
-              description: "channel slug",
+              id: '74Zo/H',
+              defaultMessage: 'Slug',
+              description: 'channel slug',
             })}
             name="slug"
             value={data.slug}
@@ -126,17 +111,9 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
                   onClick={() => copy(data.slug)}
                 >
                   {copied ? (
-                    <FormattedMessage
-                      id="r86alc"
-                      defaultMessage="Copied"
-                      description="button"
-                    />
+                    <FormattedMessage id="r86alc" defaultMessage="Copied" description="button" />
                   ) : (
-                    <FormattedMessage
-                      id="ZhaXLU"
-                      defaultMessage="Copy"
-                      description="button"
-                    />
+                    <FormattedMessage id="ZhaXLU" defaultMessage="Copy" description="button" />
                   )}
                 </InputAdornment>
               ),
@@ -149,9 +126,9 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
       <Card>
         <CardTitle
           title={intl.formatMessage({
-            id: "3y4r+z",
-            defaultMessage: "Channel Settings",
-            description: "channel settings",
+            id: '3y4r+z',
+            defaultMessage: 'Channel Settings',
+            description: 'channel settings',
           })}
         />
         <CardContent>
@@ -162,18 +139,15 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               error={!!formErrors.currencyCode}
               FormHelperTextProps={
                 {
-                  "data-test-id": "currency-text-input-helper-text",
+                  'data-test-id': 'currency-text-input-helper-text',
                 } as ExtendedFormHelperTextProps
               }
-              helperText={getChannelsErrorMessage(
-                formErrors?.currencyCode,
-                intl,
-              )}
+              helperText={getChannelsErrorMessage(formErrors?.currencyCode, intl)}
               disabled={disabled}
               label={intl.formatMessage({
-                id: "9Sz0By",
-                defaultMessage: "Currency",
-                description: "channel currency",
+                id: '9Sz0By',
+                defaultMessage: 'Currency',
+                description: 'channel currency',
               })}
               choices={currencyCodes}
               name="currencyCode"
@@ -184,11 +158,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           ) : (
             <>
               <Typography variant="caption" className={classes.label}>
-                <FormattedMessage
-                  id="39yi8w"
-                  defaultMessage="Selected currency"
-                  description="selected currency"
-                />
+                <FormattedMessage id="39yi8w" defaultMessage="Selected currency" description="selected currency" />
               </Typography>
               <Typography>{data.currencyCode}</Typography>
             </>
@@ -199,17 +169,14 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             error={!!formErrors.defaultCountry}
             FormHelperTextProps={
               {
-                "data-test-id": "country-text-input-helper-text",
+                'data-test-id': 'country-text-input-helper-text',
               } as ExtendedFormHelperTextProps
             }
-            helperText={getChannelsErrorMessage(
-              formErrors?.defaultCountry,
-              intl,
-            )}
+            helperText={getChannelsErrorMessage(formErrors?.defaultCountry, intl)}
             disabled={disabled}
             label={intl.formatMessage({
-              id: "tV+Dcm",
-              defaultMessage: "Default country",
+              id: 'tV+Dcm',
+              defaultMessage: 'Default country',
             })}
             choices={countries}
             name="defaultCountry"
@@ -223,5 +190,5 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   );
 };
 
-ChannelForm.displayName = "ChannelForm";
+ChannelForm.displayName = 'ChannelForm';
 export default ChannelForm;

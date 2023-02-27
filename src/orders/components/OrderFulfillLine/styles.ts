@@ -1,26 +1,26 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
     colStock: {
-      textAlign: "right",
+      textAlign: 'right',
       width: 180,
     },
     colName: {
       width: 220,
     },
     colQuantity: {
-      textAlign: "right",
+      textAlign: 'right',
       width: 210,
     },
     colSku: {
-      textAlign: "right",
-      textOverflow: "ellipsis",
+      textAlign: 'right',
+      textOverflow: 'ellipsis',
       width: 100,
     },
     colWarehouse: {
       width: 200,
-      textAlign: "right",
+      textAlign: 'right',
     },
     warningIcon: {
       color: theme.palette.saleor.warning.mid,
@@ -30,7 +30,7 @@ export const useStyles = makeStyles(
       color: theme.palette.error.main,
     },
     warning: {
-      borderColor: theme.palette.saleor.warning.dark + " !important",
+      borderColor: theme.palette.saleor.warning.dark + ' !important',
       boxShadow: `0 0 0 3px ${theme.palette.saleor.warning.light}`,
     },
     quantityInnerInput: {
@@ -44,30 +44,30 @@ export const useStyles = makeStyles(
       paddingBottom: theme.spacing(2),
       paddingTop: theme.spacing(2),
       color: theme.palette.text.secondary,
-      whiteSpace: "nowrap",
+      whiteSpace: 'nowrap',
     },
     warehouseButton: {
       padding: theme.spacing(1.5),
-      width: "100%",
-      justifyContent: "right",
-      cursor: "pointer",
+      width: '100%',
+      justifyContent: 'right',
+      cursor: 'pointer',
       border: `1px solid ${theme.palette.primary.dark}`,
-      "&:hover": {
-        borderColor: "transparent",
+      '&:hover': {
+        borderColor: 'transparent',
       },
     },
     warehouseButtonContent: {
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      width: "100%",
-      cursor: "pointer",
+      display: 'flex',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      width: '100%',
+      cursor: 'pointer',
     },
     warehouseButtonContentText: {
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      whiteSpace: 'nowrap',
     },
   }),
-  { name: "OrderFulfillLine" },
+  { name: 'OrderFulfillLine' },
 );

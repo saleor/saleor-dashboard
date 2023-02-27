@@ -1,23 +1,23 @@
-import { ShippingErrorCode, ShippingErrorFragment } from "@dashboard/graphql";
-import { defineMessages, IntlShape } from "react-intl";
+import { ShippingErrorCode, ShippingErrorFragment } from '@dashboard/graphql';
+import { defineMessages, IntlShape } from 'react-intl';
 
-import { getCommonFormFieldErrorMessage } from "./common";
+import { getCommonFormFieldErrorMessage } from './common';
 
 const messages = defineMessages({
   alreadyExists: {
-    id: "VIABHy",
-    defaultMessage: "Default shipping zone already exists",
-    description: "error message",
+    id: 'VIABHy',
+    defaultMessage: 'Default shipping zone already exists',
+    description: 'error message',
   },
   lessThanMin: {
-    id: "AdmPca",
-    defaultMessage: "Max value cannot be less than min value",
-    description: "error message",
+    id: 'AdmPca',
+    defaultMessage: 'Max value cannot be less than min value',
+    description: 'error message',
   },
 });
 
 function getShippingErrorMessage(
-  err: Omit<ShippingErrorFragment, "__typename"> | undefined,
+  err: Omit<ShippingErrorFragment, '__typename'> | undefined,
   intl: IntlShape,
 ): string | undefined {
   if (err) {

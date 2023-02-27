@@ -1,7 +1,7 @@
-import { stringifyQs } from "@dashboard/utils/urls";
-import { createContext, useContext, useMemo } from "react";
+import { stringifyQs } from '@dashboard/utils/urls';
+import { createContext, useContext, useMemo } from 'react';
 
-import { Pagination } from "../types";
+import { Pagination } from '../types';
 
 export interface PageInfo {
   endCursor: string | null;
@@ -17,10 +17,7 @@ export interface PaginationState {
   last?: number;
 }
 
-export function createPaginationState(
-  paginateBy: number,
-  queryString: Pagination,
-): PaginationState {
+export function createPaginationState(paginateBy: number, queryString: Pagination): PaginationState {
   return queryString && (queryString.before || queryString.after)
     ? queryString.after
       ? {
@@ -42,19 +39,14 @@ interface UsePaginatorArgs {
   queryString: Pagination;
 }
 
-function usePaginator({
-  queryString,
-  paginationState,
-  pageInfo,
-}: UsePaginatorArgs) {
+function usePaginator({ queryString, paginationState, pageInfo }: UsePaginatorArgs) {
   const newPageInfo = useMemo<PageInfo | undefined>(
     () =>
       pageInfo
         ? {
             ...pageInfo,
             hasNextPage: !!paginationState.before || pageInfo.hasNextPage,
-            hasPreviousPage:
-              !!paginationState.after || pageInfo.hasPreviousPage,
+            hasPreviousPage: !!paginationState.after || pageInfo.hasPreviousPage,
           }
         : undefined,
     [paginationState, pageInfo],
@@ -66,7 +58,7 @@ function usePaginator({
     }
 
     return (
-      "?" +
+      '?' +
       stringifyQs({
         ...queryString,
         after: pageInfo.endCursor,
@@ -80,7 +72,7 @@ function usePaginator({
       return undefined;
     }
     return (
-      "?" +
+      '?' +
       stringifyQs({
         ...queryString,
         after: undefined,
@@ -92,7 +84,7 @@ function usePaginator({
   return {
     nextHref,
     prevHref,
-    paginatorType: "link" as const,
+    paginatorType: 'link' as const,
     ...newPageInfo,
   };
 }
@@ -104,14 +96,14 @@ export type PaginatorContextValuesCommon = Partial<PageInfo>;
 export type PaginatorContextValues = PaginatorContextValuesCommon &
   (
     | {
-        paginatorType: "link";
+        paginatorType: 'link';
         nextHref?: string;
         prevHref?: string;
         loadNextPage?: never;
         loadPreviousPage?: never;
       }
     | {
-        paginatorType: "click";
+        paginatorType: 'click';
         nextHref?: never;
         prevHref?: never;
         loadNextPage: () => void;
@@ -119,17 +111,13 @@ export type PaginatorContextValues = PaginatorContextValuesCommon &
       }
   );
 
-export const PaginatorContext = createContext<PaginatorContextValues | null>(
-  null,
-);
+export const PaginatorContext = createContext<PaginatorContextValues | null>(null);
 
 export const usePaginatorContext = () => {
   const context = useContext(PaginatorContext);
 
   if (context === null) {
-    throw new Error(
-      "usePaginatorContext must be used within a PaginatorContext.Provider",
-    );
+    throw new Error('usePaginatorContext must be used within a PaginatorContext.Provider');
   }
 
   return context;

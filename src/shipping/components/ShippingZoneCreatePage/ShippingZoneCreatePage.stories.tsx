@@ -1,38 +1,36 @@
-import { ShippingErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { mapCountriesToCountriesCodes } from "@dashboard/utils/maps";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { ShippingErrorCode } from '@dashboard/graphql';
+import Decorator from '@dashboard/storybook/Decorator';
+import { mapCountriesToCountriesCodes } from '@dashboard/utils/maps';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import ShippingZoneCreatePage, {
-  ShippingZoneCreatePageProps,
-} from "./ShippingZoneCreatePage";
+import ShippingZoneCreatePage, { ShippingZoneCreatePageProps } from './ShippingZoneCreatePage';
 
 const countries = [
   {
-    __typename: "CountryDisplay" as "CountryDisplay",
-    code: "DE",
-    country: "Germany",
+    __typename: 'CountryDisplay' as 'CountryDisplay',
+    code: 'DE',
+    country: 'Germany',
   },
   {
-    __typename: "CountryDisplay" as "CountryDisplay",
-    code: "GB",
-    country: "Great Britain",
+    __typename: 'CountryDisplay' as 'CountryDisplay',
+    code: 'GB',
+    country: 'Great Britain',
   },
   {
-    __typename: "CountryDisplay" as "CountryDisplay",
-    code: "PL",
-    country: "Poland",
+    __typename: 'CountryDisplay' as 'CountryDisplay',
+    code: 'PL',
+    country: 'Poland',
   },
   {
-    __typename: "CountryDisplay" as "CountryDisplay",
-    code: "CZ",
-    country: "Czech Republic",
+    __typename: 'CountryDisplay' as 'CountryDisplay',
+    code: 'CZ',
+    country: 'Czech Republic',
   },
   {
-    __typename: "CountryDisplay" as "CountryDisplay",
-    code: "FR",
-    country: "France",
+    __typename: 'CountryDisplay' as 'CountryDisplay',
+    code: 'FR',
+    country: 'France',
   },
 ];
 
@@ -42,22 +40,22 @@ const props: ShippingZoneCreatePageProps = {
   disabled: false,
   errors: [],
   onSubmit: () => undefined,
-  saveButtonBarState: "default",
+  saveButtonBarState: 'default',
 };
 
-storiesOf("Shipping / Create shipping zone", module)
+storiesOf('Shipping / Create shipping zone', module)
   .addDecorator(Decorator)
-  .add("default", () => <ShippingZoneCreatePage {...props} />)
-  .add("loading", () => <ShippingZoneCreatePage {...props} disabled={true} />)
-  .add("form errors", () => (
+  .add('default', () => <ShippingZoneCreatePage {...props} />)
+  .add('loading', () => <ShippingZoneCreatePage {...props} disabled={true} />)
+  .add('form errors', () => (
     <ShippingZoneCreatePage
       {...props}
-      errors={["name"].map(field => ({
-        __typename: "ShippingError",
+      errors={['name'].map(field => ({
+        __typename: 'ShippingError',
         channels: [],
         code: ShippingErrorCode.INVALID,
         field,
-        message: "Name field invalid",
+        message: 'Name field invalid',
       }))}
     />
   ));

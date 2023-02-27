@@ -1,21 +1,18 @@
-import {
-  getReferenceAttributeEntityTypeFromAttribute,
-  mergeAttributeValues,
-} from "@dashboard/attributes/utils/data";
-import CannotDefineChannelsAvailabilityCard from "@dashboard/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
-import { ChannelData } from "@dashboard/channels/utils";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
-import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import Metadata from "@dashboard/components/Metadata";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import Savebar from "@dashboard/components/Savebar";
-import SeoForm from "@dashboard/components/SeoForm";
+import { getReferenceAttributeEntityTypeFromAttribute, mergeAttributeValues } from '@dashboard/attributes/utils/data';
+import CannotDefineChannelsAvailabilityCard from '@dashboard/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard';
+import { ChannelData } from '@dashboard/channels/utils';
+import { Content } from '@dashboard/components/AppLayout/Content';
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import AssignAttributeValueDialog from '@dashboard/components/AssignAttributeValueDialog';
+import Attributes, { AttributeInput } from '@dashboard/components/Attributes';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import ChannelsAvailabilityCard from '@dashboard/components/ChannelsAvailabilityCard';
+import Metadata from '@dashboard/components/Metadata';
+import { MultiAutocompleteChoiceType } from '@dashboard/components/MultiAutocompleteSelectField';
+import Savebar from '@dashboard/components/Savebar';
+import SeoForm from '@dashboard/components/SeoForm';
 import {
   PermissionEnum,
   ProductChannelListingErrorFragment,
@@ -29,57 +26,48 @@ import {
   SearchProductTypesQuery,
   SearchWarehousesQuery,
   TaxClassBaseFragment,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import ProductVariantPrice from "@dashboard/products/components/ProductVariantPrice";
-import {
-  ProductCreateUrlQueryParams,
-  productListUrl,
-} from "@dashboard/products/urls";
-import { getChoices } from "@dashboard/products/utils/data";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useStateFromProps from '@dashboard/hooks/useStateFromProps';
+import ProductVariantPrice from '@dashboard/products/components/ProductVariantPrice';
+import { ProductCreateUrlQueryParams, productListUrl } from '@dashboard/products/urls';
+import { getChoices } from '@dashboard/products/utils/data';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { FetchMoreProps, RelayToFlat } from "../../../types";
-import ProductDetailsForm from "../ProductDetailsForm";
-import ProductOrganization from "../ProductOrganization";
-import ProductShipping from "../ProductShipping/ProductShipping";
-import ProductStocks from "../ProductStocks";
-import ProductTaxes from "../ProductTaxes";
-import ProductCreateForm, {
-  ProductCreateData,
-  ProductCreateFormData,
-  ProductCreateHandlers,
-} from "./form";
+import { FetchMoreProps, RelayToFlat } from '../../../types';
+import ProductDetailsForm from '../ProductDetailsForm';
+import ProductOrganization from '../ProductOrganization';
+import ProductShipping from '../ProductShipping/ProductShipping';
+import ProductStocks from '../ProductStocks';
+import ProductTaxes from '../ProductTaxes';
+import ProductCreateForm, { ProductCreateData, ProductCreateFormData, ProductCreateHandlers } from './form';
 
 interface ProductCreatePageProps {
   errors: ProductErrorWithAttributesFragment[];
   channelsErrors: ProductChannelListingErrorFragment[];
   allChannelsCount: number;
   currentChannels: ChannelData[];
-  collections: RelayToFlat<SearchCollectionsQuery["search"]>;
-  categories: RelayToFlat<SearchCategoriesQuery["search"]>;
-  attributeValues: RelayToFlat<
-    SearchAttributeValuesQuery["attribute"]["choices"]
-  >;
+  collections: RelayToFlat<SearchCollectionsQuery['search']>;
+  categories: RelayToFlat<SearchCategoriesQuery['search']>;
+  attributeValues: RelayToFlat<SearchAttributeValuesQuery['attribute']['choices']>;
   loading: boolean;
   fetchMoreCategories: FetchMoreProps;
   fetchMoreCollections: FetchMoreProps;
   fetchMoreProductTypes: FetchMoreProps;
   fetchMoreAttributeValues?: FetchMoreProps;
   initial?: Partial<ProductCreateFormData>;
-  productTypes?: RelayToFlat<SearchProductTypesQuery["search"]>;
-  referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
-  referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
+  productTypes?: RelayToFlat<SearchProductTypesQuery['search']>;
+  referencePages?: RelayToFlat<SearchPagesQuery['search']>;
+  referenceProducts?: RelayToFlat<SearchProductsQuery['search']>;
   header: string;
   saveButtonBarState: ConfirmButtonTransitionState;
   weightUnit: string;
-  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
+  warehouses: RelayToFlat<SearchWarehousesQuery['search']>;
   taxClasses: TaxClassBaseFragment[];
   fetchMoreTaxClasses: FetchMoreProps;
-  selectedProductType?: ProductTypeQuery["productType"];
+  selectedProductType?: ProductTypeQuery['productType'];
   fetchCategories: (data: string) => void;
   fetchCollections: (data: string) => void;
   fetchProductTypes: (data: string) => void;
@@ -145,21 +133,15 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   const navigate = useNavigator();
 
   const closeDialog = () => {
-    onCloseDialog({ "product-type-id": selectedProductType.id });
+    onCloseDialog({ 'product-type-id': selectedProductType.id });
   };
 
   // Display values
-  const [selectedCategory, setSelectedCategory] = useStateFromProps(
-    initial?.category || "",
-  );
+  const [selectedCategory, setSelectedCategory] = useStateFromProps(initial?.category || '');
 
-  const [selectedCollections, setSelectedCollections] = useStateFromProps<
-    MultiAutocompleteChoiceType[]
-  >([]);
+  const [selectedCollections, setSelectedCollections] = useStateFromProps<MultiAutocompleteChoiceType[]>([]);
 
-  const [selectedTaxClass, setSelectedTaxClass] = useStateFromProps(
-    initial?.taxClassId ?? "",
-  );
+  const [selectedTaxClass, setSelectedTaxClass] = useStateFromProps(initial?.taxClassId ?? '');
 
   const categories = getChoices(categoryChoiceList);
   const collections = getChoices(collectionChoiceList);
@@ -179,11 +161,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
   ) => {
     handlers.selectAttributeReference(
       assignReferencesAttributeId,
-      mergeAttributeValues(
-        assignReferencesAttributeId,
-        attributeValues,
-        data.attributes,
-      ),
+      mergeAttributeValues(assignReferencesAttributeId, attributeValues, data.attributes),
     );
 
     closeDialog();
@@ -215,36 +193,19 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
       assignReferencesAttributeId={assignReferencesAttributeId}
       loading={loading}
     >
-      {({
-        change,
-        data,
-        formErrors,
-        validationErrors,
-        handlers,
-        submit,
-        isSaveDisabled,
-        attributeRichTextGetters,
-      }) => {
+      {({ change, data, formErrors, validationErrors, handlers, submit, isSaveDisabled, attributeRichTextGetters }) => {
         // Comparing explicitly to false because `hasVariants` can be undefined
         const isSimpleProduct = data.productType?.hasVariants === false;
 
         const errors = [...apiErrors, ...validationErrors];
 
-        const entityType = getReferenceAttributeEntityTypeFromAttribute(
-          assignReferencesAttributeId,
-          data.attributes,
-        );
+        const entityType = getReferenceAttributeEntityTypeFromAttribute(assignReferencesAttributeId, data.attributes);
 
         return (
           <DetailedContent>
             <TopNav href={productListUrl()} title={header} />
             <Content>
-              <ProductDetailsForm
-                data={data}
-                disabled={loading}
-                errors={errors}
-                onChange={change}
-              />
+              <ProductDetailsForm data={data} disabled={loading} errors={errors} onChange={change} />
               <CardSpacer />
               {data.attributes.length > 0 && (
                 <Attributes
@@ -304,9 +265,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               <SeoForm
                 allowEmptySlug={true}
                 helperText={intl.formatMessage({
-                  id: "LKoIB1",
-                  defaultMessage:
-                    "Add search engine title and description to make this product easier to find",
+                  id: 'LKoIB1',
+                  defaultMessage: 'Add search engine title and description to make this product easier to find',
                 })}
                 title={data.seoTitle}
                 slug={data.slug}
@@ -336,7 +296,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 fetchMoreProductTypes={fetchMoreProductTypes}
                 fetchProductTypes={fetchProductTypes}
                 productType={data.productType}
-                productTypeInputDisplayValue={data.productType?.name || ""}
+                productTypeInputDisplayValue={data.productType?.name || ''}
                 productTypes={productTypes}
                 onCategoryChange={handlers.selectCategory}
                 onCollectionChange={handlers.selectCollection}
@@ -349,15 +309,15 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
                   messages={{
                     hiddenLabel: intl.formatMessage({
-                      id: "saKXY3",
-                      defaultMessage: "Not published",
-                      description: "product label",
+                      id: 'saKXY3',
+                      defaultMessage: 'Not published',
+                      description: 'product label',
                     }),
 
                     visibleLabel: intl.formatMessage({
-                      id: "qJedl0",
-                      defaultMessage: "Published",
-                      description: "product label",
+                      id: 'qJedl0',
+                      defaultMessage: 'Published',
+                      description: 'product label',
                     }),
                   }}
                   errors={channelsErrors}
@@ -389,7 +349,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
             {canOpenAssignReferencesAttributeDialog && entityType && (
               <AssignAttributeValueDialog
                 entityType={entityType}
-                confirmButtonState={"default"}
+                confirmButtonState={'default'}
                 products={referenceProducts}
                 pages={referencePages}
                 hasMore={handlers.fetchMoreReferences?.hasMore}
@@ -398,13 +358,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
                 loading={handlers.fetchMoreReferences?.loading}
                 onClose={closeDialog}
-                onSubmit={attributeValues =>
-                  handleAssignReferenceAttribute(
-                    attributeValues,
-                    data,
-                    handlers,
-                  )
-                }
+                onSubmit={attributeValues => handleAssignReferenceAttribute(attributeValues, data, handlers)}
               />
             )}
           </DetailedContent>
@@ -413,5 +367,5 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
     </ProductCreateForm>
   );
 };
-ProductCreatePage.displayName = "ProductCreatePage";
+ProductCreatePage.displayName = 'ProductCreatePage';
 export default ProductCreatePage;

@@ -1,15 +1,12 @@
-import {
-  useOrderSettingsQuery,
-  useOrderSettingsUpdateMutation,
-} from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors, getMutationState } from "@dashboard/misc";
-import OrderSettingsPage from "@dashboard/orders/components/OrderSettingsPage";
-import React from "react";
-import { useIntl } from "react-intl";
+import { useOrderSettingsQuery, useOrderSettingsUpdateMutation } from '@dashboard/graphql';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { commonMessages } from '@dashboard/intl';
+import { extractMutationErrors, getMutationState } from '@dashboard/misc';
+import OrderSettingsPage from '@dashboard/orders/components/OrderSettingsPage';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { OrderSettingsFormData } from "../components/OrderSettingsPage/types";
+import { OrderSettingsFormData } from '../components/OrderSettingsPage/types';
 
 export const OrderSettings: React.FC = () => {
   const intl = useIntl();
@@ -17,21 +14,18 @@ export const OrderSettings: React.FC = () => {
 
   const { data, loading } = useOrderSettingsQuery({});
 
-  const [
-    orderSettingsUpdate,
-    orderSettingsUpdateOpts,
-  ] = useOrderSettingsUpdateMutation({
+  const [orderSettingsUpdate, orderSettingsUpdateOpts] = useOrderSettingsUpdateMutation({
     onCompleted: ({ orderSettingsUpdate: { errors } }) => {
       if (!errors.length) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         return;
       }
 
       notify({
-        status: "error",
+        status: 'error',
         text: intl.formatMessage(commonMessages.somethingWentWrong),
       });
     },
@@ -64,11 +58,9 @@ export const OrderSettings: React.FC = () => {
       shop={data?.shop}
       disabled={loading || orderSettingsUpdateOpts.loading}
       onSubmit={handleSubmit}
-      saveButtonBarState={getMutationState(
-        orderSettingsUpdateOpts.called,
-        orderSettingsUpdateOpts.loading,
-        [...(orderSettingsUpdateOpts.data?.orderSettingsUpdate.errors || [])],
-      )}
+      saveButtonBarState={getMutationState(orderSettingsUpdateOpts.called, orderSettingsUpdateOpts.loading, [
+        ...(orderSettingsUpdateOpts.data?.orderSettingsUpdate.errors || []),
+      ])}
     />
   );
 };

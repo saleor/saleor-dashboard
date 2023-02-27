@@ -1,21 +1,14 @@
-import Hr from "@dashboard/components/Hr";
-import RadioGroupField, {
-  RadioGroupFieldChoice,
-} from "@dashboard/components/RadioGroupField";
-import {
-  ExportErrorFragment,
-  ExportProductsInput,
-  ExportScope,
-  FileTypesEnum,
-} from "@dashboard/graphql";
-import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { getFormErrors } from "@dashboard/utils/errors";
-import getExportErrorMessage from "@dashboard/utils/errors/export";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import Hr from '@dashboard/components/Hr';
+import RadioGroupField, { RadioGroupFieldChoice } from '@dashboard/components/RadioGroupField';
+import { ExportErrorFragment, ExportProductsInput, ExportScope, FileTypesEnum } from '@dashboard/graphql';
+import { ChangeEvent } from '@dashboard/hooks/useForm';
+import { getFormErrors } from '@dashboard/utils/errors';
+import getExportErrorMessage from '@dashboard/utils/errors/export';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { ExportSettingsInput } from "./types";
+import { ExportSettingsInput } from './types';
 
 const useStyles = makeStyles(
   theme => ({
@@ -25,11 +18,11 @@ const useStyles = makeStyles(
     },
   }),
   {
-    name: "ExportDialogSettings",
+    name: 'ExportDialogSettings',
   },
 );
 
-export type ExportItemsQuantity = Record<"all" | "filter", number>;
+export type ExportItemsQuantity = Record<'all' | 'filter', number>;
 
 export interface ExportScopeLabels {
   allItems: string;
@@ -46,7 +39,7 @@ export interface ExportDialogSettingsProps {
   allowScopeSelection?: boolean;
 }
 
-const formFields: Array<keyof ExportSettingsInput> = ["fileType", "scope"];
+const formFields: Array<keyof ExportSettingsInput> = ['fileType', 'scope'];
 
 const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
   data,
@@ -62,22 +55,20 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
 
   const formErrors = getFormErrors(formFields, errors);
 
-  const productExportTypeChoices: Array<RadioGroupFieldChoice<
-    FileTypesEnum
-  >> = [
+  const productExportTypeChoices: Array<RadioGroupFieldChoice<FileTypesEnum>> = [
     {
       label: intl.formatMessage({
-        id: "9Tl/bT",
-        defaultMessage: "Spreadsheet for Excel, Numbers etc.",
-        description: "export items as spreadsheet",
+        id: '9Tl/bT',
+        defaultMessage: 'Spreadsheet for Excel, Numbers etc.',
+        description: 'export items as spreadsheet',
       }),
       value: FileTypesEnum.XLSX,
     },
     {
       label: intl.formatMessage({
-        id: "li1BBk",
-        defaultMessage: "Plain CSV file",
-        description: "export items as csv file",
+        id: 'li1BBk',
+        defaultMessage: 'Plain CSV file',
+        description: 'export items as csv file',
       }),
       value: FileTypesEnum.CSV,
     },
@@ -96,12 +87,12 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
     {
       label: intl.formatMessage(
         {
-          id: "SZt9kC",
-          defaultMessage: "Current search ({number})",
-          description: "export filtered items to csv file",
+          id: 'SZt9kC',
+          defaultMessage: 'Current search ({number})',
+          description: 'export filtered items to csv file',
         },
         {
-          number: itemsQuantity.filter || "...",
+          number: itemsQuantity.filter || '...',
         },
       ),
       value: ExportScope.FILTER,
@@ -117,11 +108,11 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
             error={!!formErrors.scope}
             hint={getExportErrorMessage(formErrors.scope, intl)}
             label={intl.formatMessage({
-              id: "g6yuk2",
-              defaultMessage: "Export information for:",
-              description: "export items to csv file, choice field label",
+              id: 'g6yuk2',
+              defaultMessage: 'Export information for:',
+              description: 'export items to csv file, choice field label',
             })}
-            name={"scope" as keyof ExportProductsInput}
+            name={'scope' as keyof ExportProductsInput}
             onChange={onChange}
             value={data.scope}
           />
@@ -133,11 +124,11 @@ const ExportDialogSettings: React.FC<ExportDialogSettingsProps> = ({
         error={!!formErrors.fileType}
         hint={getExportErrorMessage(formErrors.fileType, intl)}
         label={intl.formatMessage({
-          id: "z1puMb",
-          defaultMessage: "Export as:",
-          description: "export items as csv or spreadsheet file",
+          id: 'z1puMb',
+          defaultMessage: 'Export as:',
+          description: 'export items as csv or spreadsheet file',
         })}
-        name={"fileType" as keyof ExportProductsInput}
+        name={'fileType' as keyof ExportProductsInput}
         onChange={onChange}
         value={data.fileType}
       />

@@ -1,2 +1,2 @@
-export { default } from "./ExternalLink";
-export * from "./ExternalLink";
+export { default } from './ExternalLink';
+export * from './ExternalLink';

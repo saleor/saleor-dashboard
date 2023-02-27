@@ -1,11 +1,11 @@
-import { Typography } from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
-import { SortableElement, SortableElementProps } from "react-sortable-hoc";
+import { Typography } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
+import { SortableElement, SortableElementProps } from 'react-sortable-hoc';
 
-import SortableHandle from "./SortableHandle";
+import SortableHandle from './SortableHandle';
 
 export interface SortableChipProps extends SortableElementProps {
   className?: string;
@@ -17,30 +17,30 @@ const useStyles = makeStyles(
   theme => ({
     closeButton: {
       marginLeft: theme.spacing(),
-      background: "none",
-      border: "none",
+      background: 'none',
+      border: 'none',
     },
     closeIcon: {
-      cursor: "pointer",
+      cursor: 'pointer',
       fontSize: 16,
-      verticalAlign: "middle",
+      verticalAlign: 'middle',
     },
     content: {
-      alignItems: "center",
-      display: "flex",
+      alignItems: 'center',
+      display: 'flex',
     },
     root: {
       border: `1px solid ${theme.palette.divider}`,
       borderRadius: 18,
-      display: "inline-block",
+      display: 'inline-block',
       marginRight: theme.spacing(2),
-      padding: "6px 12px",
+      padding: '6px 12px',
     },
     sortableHandle: {
       marginRight: theme.spacing(1),
     },
   }),
-  { name: "SortableChip" },
+  { name: 'SortableChip' },
 );
 
 const SortableChip = SortableElement((props: SortableChipProps) => {
@@ -58,17 +58,10 @@ const SortableChip = SortableElement((props: SortableChipProps) => {
   return (
     <div className={clsx(classes.root, className)}>
       <div className={classes.content}>
-        <SortableHandle
-          className={classes.sortableHandle}
-          data-test-id="button-drag-handle"
-        />
+        <SortableHandle className={classes.sortableHandle} data-test-id="button-drag-handle" />
         <Typography data-test-id="chip-label">{label}</Typography>
         {onClose && (
-          <button
-            className={classes.closeButton}
-            onClick={handleClose}
-            data-test-id="button-close"
-          >
+          <button className={classes.closeButton} onClick={handleClose} data-test-id="button-close">
             <CloseIcon className={classes.closeIcon} />
           </button>
         )}
@@ -77,5 +70,5 @@ const SortableChip = SortableElement((props: SortableChipProps) => {
   );
 });
 
-SortableChip.displayName = "SortableChip";
+SortableChip.displayName = 'SortableChip';
 export default SortableChip;

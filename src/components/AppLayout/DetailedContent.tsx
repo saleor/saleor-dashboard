@@ -1,8 +1,8 @@
-import { Box, tabletMediaQuery } from "@saleor/macaw-ui/next";
-import React from "react";
-import { useMediaQuery } from "usehooks-ts";
+import { Box, tabletMediaQuery } from '@saleor/macaw-ui/next';
+import React from 'react';
+import { useMediaQuery } from 'usehooks-ts';
 
-import { contentMaxWidth } from "./consts";
+import { contentMaxWidth } from './consts';
 
 interface DetailedContentProps {
   children: React.ReactNode;
@@ -29,10 +29,10 @@ export const DetailedContent: React.FC<DetailedContentProps> = ({
     <Box
       as="div"
       display="grid"
-      height={constHeight ? "100vh" : "100%"}
+      height={constHeight ? '100vh' : '100%'}
       margin="auto"
       __maxWidth={contentMaxWidth}
-      __gridTemplateColumns={useSingleColumn ? "1fr" : "9fr 4fr"}
+      __gridTemplateColumns={useSingleColumn ? '1fr' : '9fr 4fr'}
       __gridTemplateRows="auto 1fr"
       __gridTemplateAreas={getLayoutAreas(useSingleColumn, isTablet)}
     >

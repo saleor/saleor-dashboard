@@ -1,21 +1,16 @@
-import { AppPermissionFragment } from "@dashboard/graphql";
-import {
-  IconButton,
-  makeStyles,
-  PermissionsIcon,
-  Tooltip,
-} from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import { AppPermissionFragment } from '@dashboard/graphql';
+import { IconButton, makeStyles, PermissionsIcon, Tooltip } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles(
   () => ({
     list: {
       margin: 0,
-      paddingLeft: "16px",
+      paddingLeft: '16px',
     },
   }),
-  { name: "AppPermissions" },
+  { name: 'AppPermissions' },
 );
 
 interface AppPermissionsProps {
@@ -27,11 +22,7 @@ export const AppPermissions = ({ permissions }: AppPermissionsProps) => {
   return (
     <Tooltip
       header={
-        <FormattedMessage
-          defaultMessage="App permissions"
-          id="xNfh4L"
-          description="app permissions tooltip header"
-        />
+        <FormattedMessage defaultMessage="App permissions" id="xNfh4L" description="app permissions tooltip header" />
       }
       title={
         <ul className={classes.list}>

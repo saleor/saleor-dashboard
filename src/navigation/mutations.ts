@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const menuCreate = gql`
   mutation MenuCreate($input: MenuCreateInput!) {
@@ -52,12 +52,7 @@ export const menuItemCreate = gql`
 `;
 
 export const menuUpdate = gql`
-  mutation MenuUpdate(
-    $id: ID!
-    $name: String!
-    $moves: [MenuItemMoveInput!]!
-    $removeIds: [ID!]!
-  ) {
+  mutation MenuUpdate($id: ID!, $name: String!, $moves: [MenuItemMoveInput!]!, $removeIds: [ID!]!) {
     menuUpdate(id: $id, input: { name: $name }) {
       errors {
         ...MenuError

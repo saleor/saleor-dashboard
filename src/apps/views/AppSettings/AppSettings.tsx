@@ -1,12 +1,12 @@
-import { appMessages } from "@dashboard/apps/messages";
-import NotFoundPage from "@dashboard/components/NotFoundPage";
-import { useAppQuery } from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import React from "react";
-import { useIntl } from "react-intl";
+import { appMessages } from '@dashboard/apps/messages';
+import NotFoundPage from '@dashboard/components/NotFoundPage';
+import { useAppQuery } from '@dashboard/graphql';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { AppPage } from "../../components/AppPage";
-import { appsListPath } from "../../urls";
+import { AppPage } from '../../components/AppPage';
+import { appsListPath } from '../../urls';
 
 interface AppSettingsProps {
   id: string;
@@ -30,11 +30,11 @@ export const AppSettings: React.FC<AppSettingsProps> = ({ id }) => {
   return (
     <AppPage
       data={data?.app ?? null}
-      url={data?.app?.configurationUrl ?? ""}
+      url={data?.app?.configurationUrl ?? ''}
       refetch={refetch}
       onError={() =>
         notify({
-          status: "error",
+          status: 'error',
           text: intl.formatMessage(appMessages.failedToFetchAppSettings),
         })
       }

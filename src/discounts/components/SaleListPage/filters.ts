@@ -1,18 +1,15 @@
-import { IFilter } from "@dashboard/components/Filter";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import { DiscountStatusEnum, DiscountValueTypeEnum } from "@dashboard/graphql";
-import { FilterOpts, MinMax } from "@dashboard/types";
-import {
-  createDateField,
-  createOptionsField,
-} from "@dashboard/utils/filters/fields";
-import { defineMessages, IntlShape } from "react-intl";
+import { IFilter } from '@dashboard/components/Filter';
+import { MultiAutocompleteChoiceType } from '@dashboard/components/MultiAutocompleteSelectField';
+import { DiscountStatusEnum, DiscountValueTypeEnum } from '@dashboard/graphql';
+import { FilterOpts, MinMax } from '@dashboard/types';
+import { createDateField, createOptionsField } from '@dashboard/utils/filters/fields';
+import { defineMessages, IntlShape } from 'react-intl';
 
 export enum SaleFilterKeys {
-  saleType = "saleType",
-  started = "started",
-  status = "status",
-  channel = "channel",
+  saleType = 'saleType',
+  started = 'started',
+  status = 'status',
+  channel = 'channel',
 }
 
 export interface SaleListFilterOpts {
@@ -24,55 +21,52 @@ export interface SaleListFilterOpts {
 
 const messages = defineMessages({
   active: {
-    id: "AnqH4p",
-    defaultMessage: "Active",
-    description: "sale status",
+    id: 'AnqH4p',
+    defaultMessage: 'Active',
+    description: 'sale status',
   },
   channel: {
-    id: "1BNKCZ",
-    defaultMessage: "Channel",
-    description: "sale channel",
+    id: '1BNKCZ',
+    defaultMessage: 'Channel',
+    description: 'sale channel',
   },
   expired: {
-    id: "RBxYJf",
-    defaultMessage: "Expired",
-    description: "sale status",
+    id: 'RBxYJf',
+    defaultMessage: 'Expired',
+    description: 'sale status',
   },
   fixed: {
-    id: "XDBeA+",
-    defaultMessage: "Fixed amount",
-    description: "discount type",
+    id: 'XDBeA+',
+    defaultMessage: 'Fixed amount',
+    description: 'discount type',
   },
   percentage: {
-    id: "s17U7u",
-    defaultMessage: "Percentage",
-    description: "discount type",
+    id: 's17U7u',
+    defaultMessage: 'Percentage',
+    description: 'discount type',
   },
   scheduled: {
-    id: "BanAhF",
-    defaultMessage: "Scheduled",
-    description: "sale status",
+    id: 'BanAhF',
+    defaultMessage: 'Scheduled',
+    description: 'sale status',
   },
   started: {
-    id: "zjHH6b",
-    defaultMessage: "Started",
-    description: "sale start date",
+    id: 'zjHH6b',
+    defaultMessage: 'Started',
+    description: 'sale start date',
   },
   status: {
-    id: "SpngiS",
-    defaultMessage: "Status",
-    description: "sale status",
+    id: 'SpngiS',
+    defaultMessage: 'Status',
+    description: 'sale status',
   },
   type: {
-    id: "KHZlmi",
-    defaultMessage: "Discount Type",
+    id: 'KHZlmi',
+    defaultMessage: 'Discount Type',
   },
 });
 
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: SaleListFilterOpts,
-): IFilter<SaleFilterKeys> {
+export function createFilterStructure(intl: IntlShape, opts: SaleListFilterOpts): IFilter<SaleFilterKeys> {
   return [
     {
       ...createOptionsField(
@@ -85,53 +79,37 @@ export function createFilterStructure(
       active: opts.channel.active,
     },
     {
-      ...createDateField(
-        SaleFilterKeys.started,
-        intl.formatMessage(messages.started),
-        opts.started.value,
-      ),
+      ...createDateField(SaleFilterKeys.started, intl.formatMessage(messages.started), opts.started.value),
       active: opts.started.active,
     },
     {
-      ...createOptionsField(
-        SaleFilterKeys.status,
-        intl.formatMessage(messages.status),
-        opts.status.value,
-        true,
-        [
-          {
-            label: intl.formatMessage(messages.active),
-            value: DiscountStatusEnum.ACTIVE,
-          },
-          {
-            label: intl.formatMessage(messages.expired),
-            value: DiscountStatusEnum.EXPIRED,
-          },
-          {
-            label: intl.formatMessage(messages.scheduled),
-            value: DiscountStatusEnum.SCHEDULED,
-          },
-        ],
-      ),
+      ...createOptionsField(SaleFilterKeys.status, intl.formatMessage(messages.status), opts.status.value, true, [
+        {
+          label: intl.formatMessage(messages.active),
+          value: DiscountStatusEnum.ACTIVE,
+        },
+        {
+          label: intl.formatMessage(messages.expired),
+          value: DiscountStatusEnum.EXPIRED,
+        },
+        {
+          label: intl.formatMessage(messages.scheduled),
+          value: DiscountStatusEnum.SCHEDULED,
+        },
+      ]),
       active: opts.status.active,
     },
     {
-      ...createOptionsField(
-        SaleFilterKeys.saleType,
-        intl.formatMessage(messages.type),
-        [opts.saleType.value],
-        false,
-        [
-          {
-            label: intl.formatMessage(messages.fixed),
-            value: DiscountValueTypeEnum.FIXED,
-          },
-          {
-            label: intl.formatMessage(messages.percentage),
-            value: DiscountValueTypeEnum.PERCENTAGE,
-          },
-        ],
-      ),
+      ...createOptionsField(SaleFilterKeys.saleType, intl.formatMessage(messages.type), [opts.saleType.value], false, [
+        {
+          label: intl.formatMessage(messages.fixed),
+          value: DiscountValueTypeEnum.FIXED,
+        },
+        {
+          label: intl.formatMessage(messages.percentage),
+          value: DiscountValueTypeEnum.PERCENTAGE,
+        },
+      ]),
       active: opts.saleType.active,
     },
   ];

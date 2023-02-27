@@ -1,30 +1,20 @@
-import { useApolloClient } from "@apollo/client";
-import AppDeleteDialog from "@dashboard/apps/components/AppDeleteDialog";
-import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
-import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  AppSortField,
-  AppTypeEnum,
-  OrderDirection,
-  useAppDeleteMutation,
-  useAppsListQuery,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { sectionNames } from "@dashboard/intl";
-import { findById } from "@dashboard/misc";
-import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import React from "react";
-import { useIntl } from "react-intl";
+import { useApolloClient } from '@apollo/client';
+import AppDeleteDialog from '@dashboard/apps/components/AppDeleteDialog';
+import { EXTENSION_LIST_QUERY } from '@dashboard/apps/queries';
+import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { AppSortField, AppTypeEnum, OrderDirection, useAppDeleteMutation, useAppsListQuery } from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { sectionNames } from '@dashboard/intl';
+import { findById } from '@dashboard/misc';
+import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import CustomAppListPage from "../components/CustomAppListPage";
-import { messages } from "../messages";
-import {
-  CustomAppListUrlDialog,
-  CustomAppListUrlQueryParams,
-  CustomAppUrls,
-} from "../urls";
+import CustomAppListPage from '../components/CustomAppListPage';
+import { messages } from '../messages';
+import { CustomAppListUrlDialog, CustomAppListUrlQueryParams, CustomAppUrls } from '../urls';
 
 interface CustomAppListProps {
   params: CustomAppListUrlQueryParams;
@@ -36,14 +26,15 @@ export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
   const intl = useIntl();
   const client = useApolloClient();
 
-  const [openModal, closeModal] = createDialogActionHandlers<
-    CustomAppListUrlDialog,
-    CustomAppListUrlQueryParams
-  >(navigate, CustomAppUrls.resolveAppListUrl, params);
+  const [openModal, closeModal] = createDialogActionHandlers<CustomAppListUrlDialog, CustomAppListUrlQueryParams>(
+    navigate,
+    CustomAppUrls.resolveAppListUrl,
+    params,
+  );
 
   const removeAppNotify = () => {
     notify({
-      status: "success",
+      status: 'success',
       text: intl.formatMessage(messages.appRemoved),
     });
   };
@@ -61,18 +52,16 @@ export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
     },
   };
 
-  const { data: customAppsData, refetch: customAppsRefetch } = useAppsListQuery(
-    {
-      displayLoader: true,
-      variables: {
-        first: 100,
-        ...queryVariables,
-        filter: {
-          type: AppTypeEnum.LOCAL,
-        },
+  const { data: customAppsData, refetch: customAppsRefetch } = useAppsListQuery({
+    displayLoader: true,
+    variables: {
+      first: 100,
+      ...queryVariables,
+      filter: {
+        type: AppTypeEnum.LOCAL,
       },
     },
-  );
+  });
 
   const [deleteApp, deleteAppOpts] = useAppDeleteMutation({
     onCompleted: data => {
@@ -104,13 +93,13 @@ export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
         onClose={closeModal}
         onConfirm={handleRemoveConfirm}
         type="CUSTOM"
-        open={params.action === "remove-custom-app"}
+        open={params.action === 'remove-custom-app'}
       />
       <CustomAppListPage
         appsList={customApps}
         getCustomAppHref={id => CustomAppUrls.resolveAppUrl(id)}
         onRemove={id =>
-          openModal("remove-custom-app", {
+          openModal('remove-custom-app', {
             id,
           })
         }
@@ -119,5 +108,5 @@ export const CustomAppList: React.FC<CustomAppListProps> = ({ params }) => {
   );
 };
 
-CustomAppList.displayName = "CustomAppList";
+CustomAppList.displayName = 'CustomAppList';
 export default CustomAppList;

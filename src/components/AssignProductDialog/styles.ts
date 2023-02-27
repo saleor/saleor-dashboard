@@ -1,9 +1,9 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   {
     avatar: {
-      "&&:first-child": {
+      '&&:first-child': {
         paddingLeft: 0,
       },
       width: 72,
@@ -16,5 +16,5 @@ export const useStyles = makeStyles(
       paddingLeft: 0,
     },
   },
-  { name: "AssignProductDialog" },
+  { name: 'AssignProductDialog' },
 );

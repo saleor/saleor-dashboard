@@ -1,11 +1,11 @@
-import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import CardSpacer from '@dashboard/components/CardSpacer';
+import CardTitle from '@dashboard/components/CardTitle';
+import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
+import { Card, CardContent, Typography } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { OrderSettingsFormData } from "../OrderSettingsPage/types";
+import { OrderSettingsFormData } from '../OrderSettingsPage/types';
 
 export interface OrderSettingsProps {
   data: OrderSettingsFormData;
@@ -13,20 +13,16 @@ export interface OrderSettingsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const OrderSettings: React.FC<OrderSettingsProps> = ({
-  data,
-  disabled,
-  onChange,
-}) => {
+const OrderSettings: React.FC<OrderSettingsProps> = ({ data, disabled, onChange }) => {
   const intl = useIntl();
 
   return (
     <Card data-test-id="order-settings">
       <CardTitle
         title={intl.formatMessage({
-          id: "CLYlsu",
-          defaultMessage: "Settings",
-          description: "section header",
+          id: 'CLYlsu',
+          defaultMessage: 'Settings',
+          description: 'section header',
         })}
       />
       <CardContent>
@@ -81,5 +77,5 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
     </Card>
   );
 };
-OrderSettings.displayName = "OrderSettings";
+OrderSettings.displayName = 'OrderSettings';
 export default OrderSettings;

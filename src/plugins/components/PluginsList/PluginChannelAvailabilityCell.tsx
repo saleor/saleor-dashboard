@@ -1,18 +1,16 @@
-import Skeleton from "@dashboard/components/Skeleton";
-import { PluginBaseFragment } from "@dashboard/graphql";
-import { TableCell } from "@material-ui/core";
-import React, { useRef, useState } from "react";
+import Skeleton from '@dashboard/components/Skeleton';
+import { PluginBaseFragment } from '@dashboard/graphql';
+import { TableCell } from '@material-ui/core';
+import React, { useRef, useState } from 'react';
 
-import PluginAvailabilityStatus from "./PluginAvailabilityStatus";
-import PluginAvailabilityStatusPopup from "./PluginAvailabilityStatusPopup";
+import PluginAvailabilityStatus from './PluginAvailabilityStatus';
+import PluginAvailabilityStatusPopup from './PluginAvailabilityStatusPopup';
 
 interface PluginChannelAvailabilityCellProps {
   plugin: PluginBaseFragment;
 }
 
-const PluginChannelAvailabilityCell: React.FC<PluginChannelAvailabilityCellProps> = ({
-  plugin,
-}) => {
+const PluginChannelAvailabilityCell: React.FC<PluginChannelAvailabilityCellProps> = ({ plugin }) => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const popupAnchor = useRef<HTMLTableCellElement>(null);
 
@@ -21,20 +19,11 @@ const PluginChannelAvailabilityCell: React.FC<PluginChannelAvailabilityCellProps
   const handleMouseLeave = () => setIsPopupOpen(false);
 
   return (
-    <TableCell
-      colSpan={2}
-      ref={popupAnchor}
-      onMouseOver={handleMouseOver}
-      onMouseLeave={handleMouseLeave}
-    >
+    <TableCell colSpan={2} ref={popupAnchor} onMouseOver={handleMouseOver} onMouseLeave={handleMouseLeave}>
       {plugin ? (
         <>
           <PluginAvailabilityStatus plugin={plugin} />
-          <PluginAvailabilityStatusPopup
-            plugin={plugin}
-            isOpen={isPopupOpen}
-            anchor={popupAnchor}
-          />
+          <PluginAvailabilityStatusPopup plugin={plugin} isOpen={isPopupOpen} anchor={popupAnchor} />
         </>
       ) : (
         <Skeleton />

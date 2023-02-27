@@ -1,30 +1,31 @@
-import { toggle } from "@dashboard/utils/lists";
-import { FormControlLabel, Radio } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
+import { toggle } from '@dashboard/utils/lists';
+import { FormControlLabel, Radio } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
 
-import Checkbox from "../Checkbox";
-import { FieldType, FilterFieldBaseProps } from "./types";
+import Checkbox from '../Checkbox';
+import { FieldType, FilterFieldBaseProps } from './types';
 
 const useStyles = makeStyles(
   theme => ({
     option: {
       left: theme.spacing(-0.5),
-      position: "relative",
+      position: 'relative',
     },
     optionRadio: {
       left: theme.spacing(-0.25),
     },
     root: {},
   }),
-  { name: "FilterOptionField" },
+  { name: 'FilterOptionField' },
 );
 
-const FilterOptionField: React.FC<FilterFieldBaseProps<
-  string,
-  FieldType.options
->> = ({ filter, onFilterPropertyChange, ...rest }) => {
+const FilterOptionField: React.FC<FilterFieldBaseProps<string, FieldType.options>> = ({
+  filter,
+  onFilterPropertyChange,
+  ...rest
+}) => {
   const classes = useStyles({});
   const handleSelect = (value: string) =>
     onFilterPropertyChange({
@@ -32,12 +33,10 @@ const FilterOptionField: React.FC<FilterFieldBaseProps<
         name: filter.name,
         update: {
           active: true,
-          value: filter.multiple
-            ? toggle(value, filter.value, (a, b) => a === b)
-            : [value],
+          value: filter.multiple ? toggle(value, filter.value, (a, b) => a === b) : [value],
         },
       },
-      type: "set-property",
+      type: 'set-property',
     });
 
   return (
@@ -53,12 +52,12 @@ const FilterOptionField: React.FC<FilterFieldBaseProps<
             control={
               filter.multiple ? (
                 <Checkbox
-                  data-test-id={"filter-option-" + option.value}
+                  data-test-id={'filter-option-' + option.value}
                   checked={filter.value.includes(option.value)}
                 />
               ) : (
                 <Radio
-                  data-test-id={"filter-option-" + option.value}
+                  data-test-id={'filter-option-' + option.value}
                   checked={filter.value[0] === option.value}
                   color="primary"
                 />
@@ -74,5 +73,5 @@ const FilterOptionField: React.FC<FilterFieldBaseProps<
   );
 };
 
-FilterOptionField.displayName = "FilterOptionField";
+FilterOptionField.displayName = 'FilterOptionField';
 export default FilterOptionField;

@@ -3,23 +3,20 @@ import {
   usePageTranslationDetailsQuery,
   useUpdateAttributeValueTranslationsMutation,
   useUpdatePageTranslationsMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors } from "@dashboard/misc";
-import { stringifyQs } from "@dashboard/utils/urls";
-import { OutputData } from "@editorjs/editorjs";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import useShop from '@dashboard/hooks/useShop';
+import { commonMessages } from '@dashboard/intl';
+import { extractMutationErrors } from '@dashboard/misc';
+import { stringifyQs } from '@dashboard/utils/urls';
+import { OutputData } from '@editorjs/editorjs';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import TranslationsPagesPage from "../components/TranslationsPagesPage";
-import { PageTranslationInputFieldName, TranslationField } from "../types";
-import {
-  getAttributeValueTranslationsInputData,
-  getParsedTranslationInputData,
-} from "../utils";
+import TranslationsPagesPage from '../components/TranslationsPagesPage';
+import { PageTranslationInputFieldName, TranslationField } from '../types';
+import { getAttributeValueTranslationsInputData, getParsedTranslationInputData } from '../utils';
 
 export interface TranslationsPagesQueryParams {
   activeField: string;
@@ -30,11 +27,7 @@ export interface TranslationsPagesProps {
   params: TranslationsPagesQueryParams;
 }
 
-const TranslationsPages: React.FC<TranslationsPagesProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsPages: React.FC<TranslationsPagesProps> = ({ id, languageCode, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -48,29 +41,24 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
     if (errors.length === 0) {
       pageTranslations.refetch();
       notify({
-        status: "success",
+        status: 'success',
         text: intl.formatMessage(commonMessages.savedChanges),
       });
-      navigate("?", { replace: true });
+      navigate('?', { replace: true });
     }
   };
 
-  const [
-    updateTranslations,
-    updateTranslationsOpts,
-  ] = useUpdatePageTranslationsMutation({
+  const [updateTranslations, updateTranslationsOpts] = useUpdatePageTranslationsMutation({
     onCompleted: data => onUpdate(data.pageTranslate.errors),
   });
 
-  const [
-    updateAttributeValueTranslations,
-  ] = useUpdateAttributeValueTranslationsMutation({
+  const [updateAttributeValueTranslations] = useUpdateAttributeValueTranslationsMutation({
     onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
   });
 
   const onEdit = (field: string) =>
     navigate(
-      "?" +
+      '?' +
         stringifyQs({
           activeField: field,
         }),
@@ -78,13 +66,10 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
     );
 
   const onDiscard = () => {
-    navigate("?", { replace: true });
+    navigate('?', { replace: true });
   };
 
-  const handleSubmit = (
-    { name: fieldName }: TranslationField<PageTranslationInputFieldName>,
-    data: string | any,
-  ) =>
+  const handleSubmit = ({ name: fieldName }: TranslationField<PageTranslationInputFieldName>, data: string | any) =>
     extractMutationErrors(
       updateTranslations({
         variables: {
@@ -126,13 +111,9 @@ const TranslationsPages: React.FC<TranslationsPagesProps> = ({
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
       onAttributeValueSubmit={handleAttributeValueSubmit}
-      data={
-        translation?.__typename === "PageTranslatableContent"
-          ? translation
-          : null
-      }
+      data={translation?.__typename === 'PageTranslatableContent' ? translation : null}
     />
   );
 };
-TranslationsPages.displayName = "TranslationsPages";
+TranslationsPages.displayName = 'TranslationsPages';
 export default TranslationsPages;

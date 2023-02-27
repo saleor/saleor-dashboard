@@ -1,42 +1,39 @@
-import AccountPermissionGroups from "@dashboard/components/AccountPermissionGroups";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
-import Form from "@dashboard/components/Form";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import Savebar from "@dashboard/components/Savebar";
+import AccountPermissionGroups from '@dashboard/components/AccountPermissionGroups';
+import { Content } from '@dashboard/components/AppLayout/Content';
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import CardTitle from '@dashboard/components/CardTitle';
+import Form from '@dashboard/components/Form';
+import { MultiAutocompleteChoiceType } from '@dashboard/components/MultiAutocompleteSelectField';
+import Savebar from '@dashboard/components/Savebar';
 import {
   SearchPermissionGroupsQuery,
   StaffErrorFragment,
   StaffMemberDetailsFragment,
   UserFragment,
-} from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useLocale from "@dashboard/hooks/useLocale";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { getUserName } from "@dashboard/misc";
-import UserStatus from "@dashboard/staff/components/UserStatus";
-import { staffListUrl } from "@dashboard/staff/urls";
-import {
-  getMemberPermissionGroups,
-  isMemberActive,
-} from "@dashboard/staff/utils";
-import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
-import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import useLocale from '@dashboard/hooks/useLocale';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useStateFromProps from '@dashboard/hooks/useStateFromProps';
+import { getUserName } from '@dashboard/misc';
+import UserStatus from '@dashboard/staff/components/UserStatus';
+import { staffListUrl } from '@dashboard/staff/urls';
+import { getMemberPermissionGroups, isMemberActive } from '@dashboard/staff/utils';
+import { FetchMoreProps, RelayToFlat, SearchPageProps } from '@dashboard/types';
+import createMultiAutocompleteSelectHandler from '@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler';
+import { Card, CardContent, Typography } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import StaffPassword from "../StaffPassword/StaffPassword";
-import StaffPreferences from "../StaffPreferences";
-import StaffProperties from "../StaffProperties/StaffProperties";
-import { staffDetailsPageMessages as messages } from "./messages";
-import useStyles from "./styles";
+import StaffPassword from '../StaffPassword/StaffPassword';
+import StaffPreferences from '../StaffPreferences';
+import StaffProperties from '../StaffProperties/StaffProperties';
+import { staffDetailsPageMessages as messages } from './messages';
+import useStyles from './styles';
 
 export interface StaffDetailsFormData {
   email: string;
@@ -47,7 +44,7 @@ export interface StaffDetailsFormData {
 }
 
 export interface StaffDetailsPageProps extends SearchPageProps {
-  availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search"]>;
+  availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery['search']>;
   canEditAvatar: boolean;
   canEditPreferences: boolean;
   canEditStatus: boolean;
@@ -92,30 +89,26 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   const isActive = isMemberActive(staffMember);
   const permissionGroups = getMemberPermissionGroups(staffMember);
 
-  const [permissionGroupsDisplayValues, setPermissionGroupsDisplayValues] =
-    useStateFromProps<MultiAutocompleteChoiceType[]>(
-      permissionGroups.map(group => ({
-        disabled: !group.userCanManage,
-        label: group.name,
-        value: group.id,
-      })) || [],
-    );
+  const [permissionGroupsDisplayValues, setPermissionGroupsDisplayValues] = useStateFromProps<
+    MultiAutocompleteChoiceType[]
+  >(
+    permissionGroups.map(group => ({
+      disabled: !group.userCanManage,
+      label: group.name,
+      value: group.id,
+    })) || [],
+  );
 
   const initialForm: StaffDetailsFormData = {
-    email: staffMember?.email || "",
-    firstName: staffMember?.firstName || "",
+    email: staffMember?.email || '',
+    firstName: staffMember?.firstName || '',
     isActive,
-    lastName: staffMember?.lastName || "",
+    lastName: staffMember?.lastName || '',
     permissionGroups: permissionGroups.map(pg => pg.id),
   };
 
   return (
-    <Form
-      confirmLeave
-      initial={initialForm}
-      onSubmit={onSubmit}
-      disabled={disabled}
-    >
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ data: formData, change, isSaveDisabled, submit, toggleValue }) => {
         const permissionGroupsChange = createMultiAutocompleteSelectHandler(
           toggleValue,
@@ -150,9 +143,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
             </Content>
 
             <RightSidebar className={classes.noOverflow}>
-              {canEditPreferences && (
-                <StaffPreferences locale={locale} onLocaleChange={setLocale} />
-              )}
+              {canEditPreferences && <StaffPreferences locale={locale} onLocaleChange={setLocale} />}
               {canEditStatus && (
                 <>
                   <UserStatus
@@ -165,17 +156,17 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                   <Card>
                     <CardTitle
                       title={intl.formatMessage({
-                        id: "Fbr4Vp",
-                        defaultMessage: "Permissions",
-                        description: "dialog header",
+                        id: 'Fbr4Vp',
+                        defaultMessage: 'Permissions',
+                        description: 'dialog header',
                       })}
                     />
                     <CardContent>
                       <Typography>
                         {intl.formatMessage({
-                          id: "P+kVxW",
-                          defaultMessage: "User is assigned to:",
-                          description: "card description",
+                          id: 'P+kVxW',
+                          defaultMessage: 'User is assigned to:',
+                          description: 'card description',
                         })}
                       </Typography>
 
@@ -208,5 +199,5 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
     </Form>
   );
 };
-StaffDetailsPage.displayName = "StaffDetailsPage";
+StaffDetailsPage.displayName = 'StaffDetailsPage';
 export default StaffDetailsPage;

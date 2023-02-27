@@ -1,20 +1,14 @@
-import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import { MenuErrorFragment } from "@dashboard/graphql";
-import { buttonMessages } from "@dashboard/intl";
-import { getFormErrors } from "@dashboard/utils/errors";
-import getMenuErrorMessage from "@dashboard/utils/errors/menu";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogTitle,
-  TextField,
-} from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import BackButton from '@dashboard/components/BackButton';
+import ConfirmButton from '@dashboard/components/ConfirmButton';
+import Form from '@dashboard/components/Form';
+import { MenuErrorFragment } from '@dashboard/graphql';
+import { buttonMessages } from '@dashboard/intl';
+import { getFormErrors } from '@dashboard/utils/errors';
+import getMenuErrorMessage from '@dashboard/utils/errors/menu';
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export interface MenuCreateDialogFormData {
   name: string;
@@ -30,7 +24,7 @@ export interface MenuCreateDialogProps {
 }
 
 const initialForm: MenuCreateDialogFormData = {
-  name: "",
+  name: '',
 };
 
 const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
@@ -43,16 +37,12 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
 }) => {
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["name"], errors);
+  const formErrors = getFormErrors(['name'], errors);
 
   return (
     <Dialog onClose={onClose} maxWidth="sm" fullWidth open={open}>
       <DialogTitle disableTypography>
-        <FormattedMessage
-          id="0OtaXa"
-          defaultMessage="Create Menu"
-          description="dialog header"
-        />
+        <FormattedMessage id="0OtaXa" defaultMessage="Create Menu" description="dialog header" />
       </DialogTitle>
       <Form initial={initialForm} onSubmit={onConfirm}>
         {({ change, data, submit }) => (
@@ -64,21 +54,17 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
                 fullWidth
                 helperText={getMenuErrorMessage(formErrors.name, intl)}
                 label={intl.formatMessage({
-                  id: "jhh/D6",
-                  defaultMessage: "Menu Title",
+                  id: 'jhh/D6',
+                  defaultMessage: 'Menu Title',
                 })}
-                name={"name" as keyof MenuCreateDialogFormData}
+                name={'name' as keyof MenuCreateDialogFormData}
                 value={data.name}
                 onChange={change}
               />
             </DialogContent>
             <DialogActions>
               <BackButton onClick={onClose} />
-              <ConfirmButton
-                transitionState={confirmButtonState}
-                onClick={submit}
-                data-test-id="submit"
-              >
+              <ConfirmButton transitionState={confirmButtonState} onClick={submit} data-test-id="submit">
                 <FormattedMessage {...buttonMessages.save} />
               </ConfirmButton>
             </DialogActions>
@@ -89,5 +75,5 @@ const MenuCreateDialog: React.FC<MenuCreateDialogProps> = ({
   );
 };
 
-MenuCreateDialog.displayName = "MenuCreateDialog";
+MenuCreateDialog.displayName = 'MenuCreateDialog';
 export default MenuCreateDialog;

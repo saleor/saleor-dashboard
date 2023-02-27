@@ -8,13 +8,7 @@ export type CreateMultiFileUploadHandlerCallbacks = Partial<{
 
 function createMultiFileUploadHandler<T>(
   upload: (file: File, fileIndex: number) => Promise<T>,
-  {
-    onAfterUpload,
-    onBeforeUpload,
-    onCompleted,
-    onError,
-    onStart,
-  }: CreateMultiFileUploadHandlerCallbacks,
+  { onAfterUpload, onBeforeUpload, onCompleted, onError, onStart }: CreateMultiFileUploadHandlerCallbacks,
 ) {
   async function uploadImage(files: File[], fileIndex: number): Promise<void> {
     if (files.length > fileIndex) {
@@ -29,9 +23,7 @@ function createMultiFileUploadHandler<T>(
           onAfterUpload(fileIndex, files);
         }
       } catch (exception) {
-        console.error(
-          `Could not upload file #${fileIndex + 1}. Reason: ${exception}`,
-        );
+        console.error(`Could not upload file #${fileIndex + 1}. Reason: ${exception}`);
         if (onError) {
           onError(fileIndex, files);
         }

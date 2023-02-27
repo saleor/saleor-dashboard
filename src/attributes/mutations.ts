@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const attributeBulkDelete = gql`
   mutation AttributeBulkDelete($ids: [ID!]!) {
@@ -44,12 +44,7 @@ export const attributeValueDelete = gql`
     attributeValueDelete(id: $id) {
       attribute {
         id
-        choices(
-          first: $firstValues
-          after: $afterValues
-          last: $lastValues
-          before: $beforeValues
-        ) {
+        choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
           ...AttributeValueList
         }
       }
@@ -72,12 +67,7 @@ export const attributeValueUpdateMutation = gql`
     attributeValueUpdate(id: $id, input: $input) {
       attribute {
         id
-        choices(
-          first: $firstValues
-          after: $afterValues
-          last: $lastValues
-          before: $beforeValues
-        ) {
+        choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
           ...AttributeValueList
         }
       }
@@ -100,12 +90,7 @@ export const attributeValueCreateMutation = gql`
     attributeValueCreate(attribute: $id, input: $input) {
       attribute {
         id
-        choices(
-          first: $firstValues
-          after: $afterValues
-          last: $lastValues
-          before: $beforeValues
-        ) {
+        choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
           ...AttributeValueList
         }
       }
@@ -141,12 +126,7 @@ export const attributeValueReorderMutation = gql`
     attributeReorderValues(attributeId: $id, moves: [$move]) {
       attribute {
         id
-        choices(
-          first: $firstValues
-          after: $afterValues
-          last: $lastValues
-          before: $beforeValues
-        ) {
+        choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
           pageInfo {
             ...PageInfo
           }

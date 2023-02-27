@@ -1,5 +1,5 @@
-import { createSvgIcon, SvgIconProps } from "@material-ui/core";
-import React from "react";
+import { createSvgIcon, SvgIconProps } from '@material-ui/core';
+import React from 'react';
 
 const ProductTypes = createSvgIcon(
   <>
@@ -10,9 +10,7 @@ const ProductTypes = createSvgIcon(
       fill="currentColor"
     />
   </>,
-  "ProductTypes",
+  'ProductTypes',
 );
 
-export default (props: SvgIconProps) => (
-  <ProductTypes {...props} viewBox="0 0 44 44" />
-);
+export default (props: SvgIconProps) => <ProductTypes {...props} viewBox="0 0 44 44" />;

@@ -1,4 +1,4 @@
-import { FormChange } from "@dashboard/hooks/useForm";
+import { FormChange } from '@dashboard/hooks/useForm';
 
 export function createPageTypeSelectHandler(
   setPageType: (pageTypeId: string) => void,

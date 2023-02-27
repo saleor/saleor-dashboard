@@ -1,1 +1,1 @@
-export * from "./Backlink";
+export * from './Backlink';

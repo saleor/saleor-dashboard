@@ -1,6 +1,4 @@
-export function makeGetColumnData(
-  regexp: RegExp,
-): (column: string) => string | null {
+export function makeGetColumnData(regexp: RegExp): (column: string) => string | null {
   return column => {
     if (!regexp.test(column)) {
       return null;
@@ -12,21 +10,13 @@ export function makeGetColumnData(
 
 export const getColumnAttribute = makeGetColumnData(/^attribute:(.*)/);
 export const getColumnChannel = makeGetColumnData(/^channel:(.*)/);
-export const getColumnChannelAvailability = makeGetColumnData(
-  /^availableInChannel:(.*)/,
-);
+export const getColumnChannelAvailability = makeGetColumnData(/^availableInChannel:(.*)/);
 export const getColumnStock = makeGetColumnData(/^stock:(.*)/);
 
 export const getColumnName = (column: string) => {
-  const splited = column.split(":");
+  const splited = column.split(':');
   return splited[0];
 };
 
-export const isCurrentRow = (
-  datagridChangeIndex: number,
-  variantIndex: number,
-  datagridRemovedRowsIds: number[],
-) =>
-  datagridChangeIndex ===
-  variantIndex +
-    datagridRemovedRowsIds.filter(index => index <= variantIndex).length;
+export const isCurrentRow = (datagridChangeIndex: number, variantIndex: number, datagridRemovedRowsIds: number[]) =>
+  datagridChangeIndex === variantIndex + datagridRemovedRowsIds.filter(index => index <= variantIndex).length;

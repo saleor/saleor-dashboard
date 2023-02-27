@@ -1,17 +1,17 @@
-import { countries } from "@dashboard/fixtures";
-import { CountryFragment } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { taxConfigurations } from "@dashboard/taxes/fixtures";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { countries } from '@dashboard/fixtures';
+import { CountryFragment } from '@dashboard/graphql';
+import Decorator from '@dashboard/storybook/Decorator';
+import { taxConfigurations } from '@dashboard/taxes/fixtures';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import TaxChannelsPage from "./TaxChannelsPage";
+import TaxChannelsPage from './TaxChannelsPage';
 
 export const castedCountries = countries.map(
   ({ code, name }): CountryFragment => ({
     code,
     country: name,
-    __typename: "CountryDisplay",
+    __typename: 'CountryDisplay',
   }),
 );
 
@@ -24,14 +24,12 @@ const props = {
   openDialog: () => undefined,
   closeDialog: () => undefined,
   onSubmit: () => undefined,
-  savebarState: "default" as const,
+  savebarState: 'default' as const,
   disabled: false,
 };
 
-storiesOf("Taxes / Channels view", module)
+storiesOf('Taxes / Channels view', module)
   .addDecorator(Decorator)
-  .add("loading", () => (
-    <TaxChannelsPage {...props} taxConfigurations={undefined} />
-  ))
-  .add("default", () => <TaxChannelsPage {...props} />)
-  .add("add country", () => <TaxChannelsPage {...props} isDialogOpen={true} />);
+  .add('loading', () => <TaxChannelsPage {...props} taxConfigurations={undefined} />)
+  .add('default', () => <TaxChannelsPage {...props} />)
+  .add('add country', () => <TaxChannelsPage {...props} isDialogOpen={true} />);

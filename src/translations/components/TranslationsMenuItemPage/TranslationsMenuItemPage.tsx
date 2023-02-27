@@ -1,28 +1,17 @@
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import LanguageSwitch from "@dashboard/components/LanguageSwitch";
-import {
-  LanguageCodeEnum,
-  MenuItemTranslationFragment,
-} from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { getStringOrPlaceholder } from "@dashboard/misc";
-import {
-  TranslationInputFieldName,
-  TranslationsEntitiesPageProps,
-} from "@dashboard/translations/types";
-import {
-  languageEntitiesUrl,
-  languageEntityUrl,
-  TranslatableEntities,
-} from "@dashboard/translations/urls";
-import React from "react";
-import { useIntl } from "react-intl";
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import LanguageSwitch from '@dashboard/components/LanguageSwitch';
+import { LanguageCodeEnum, MenuItemTranslationFragment } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { getStringOrPlaceholder } from '@dashboard/misc';
+import { TranslationInputFieldName, TranslationsEntitiesPageProps } from '@dashboard/translations/types';
+import { languageEntitiesUrl, languageEntityUrl, TranslatableEntities } from '@dashboard/translations/urls';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import TranslationFields from "../TranslationFields";
+import TranslationFields from '../TranslationFields';
 
-export interface TranslationsMenuItemPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsMenuItemPageProps extends TranslationsEntitiesPageProps {
   data: MenuItemTranslationFragment;
 }
 
@@ -48,10 +37,9 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
         })}
         title={intl.formatMessage(
           {
-            id: "IOshTA",
-            defaultMessage:
-              'Translation MenuItem "{menuItemName}" - {languageCode}',
-            description: "header",
+            id: 'IOshTA',
+            defaultMessage: 'Translation MenuItem "{menuItemName}" - {languageCode}',
+            description: 'header',
           },
           {
             languageCode,
@@ -62,13 +50,7 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          getLanguageUrl={lang =>
-            languageEntityUrl(
-              lang,
-              TranslatableEntities.menuItems,
-              translationId,
-            )
-          }
+          getLanguageUrl={lang => languageEntityUrl(lang, TranslatableEntities.menuItems, translationId)}
         />
       </TopNav>
       <TranslationFields
@@ -79,13 +61,13 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
-              id: "0Vyr8h",
-              defaultMessage: "Name",
-              description: "menu item name",
+              id: '0Vyr8h',
+              defaultMessage: 'Name',
+              description: 'menu item name',
             }),
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
-            type: "short" as "short",
+            type: 'short' as 'short',
             value: data?.menuItem.name,
           },
         ]}
@@ -98,5 +80,5 @@ const TranslationsMenuItemPage: React.FC<TranslationsMenuItemPageProps> = ({
     </DetailedContent>
   );
 };
-TranslationsMenuItemPage.displayName = "TranslationsMenuItemPage";
+TranslationsMenuItemPage.displayName = 'TranslationsMenuItemPage';
 export default TranslationsMenuItemPage;

@@ -1,10 +1,5 @@
-import { MessageDescriptor } from "react-intl";
+import { MessageDescriptor } from 'react-intl';
 
-export type CommonTypeDeleteWarningMessages = Record<
-  "title" | "viewAssignedItemsButtonLabel",
-  MessageDescriptor
->;
+export type CommonTypeDeleteWarningMessages = Record<'title' | 'viewAssignedItemsButtonLabel', MessageDescriptor>;
 
-export type TypeDeleteWarningMessages = Partial<
-  Record<"description" | "consentLabel", MessageDescriptor>
->;
+export type TypeDeleteWarningMessages = Partial<Record<'description' | 'consentLabel', MessageDescriptor>>;

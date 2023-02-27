@@ -1,12 +1,12 @@
-import { Button } from "@dashboard/components/Button";
-import { FileFragment } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { Typography } from "@material-ui/core";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import { Button } from '@dashboard/components/Button';
+import { FileFragment } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { Typography } from '@material-ui/core';
+import { DeleteIcon, IconButton, makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import Skeleton from "../Skeleton";
+import Skeleton from '../Skeleton';
 
 export interface FileChoiceType {
   label: string;
@@ -15,10 +15,7 @@ export interface FileChoiceType {
 }
 
 export interface FileUploadFieldProps {
-  inputProps?: React.DetailedHTMLProps<
-    React.InputHTMLAttributes<HTMLInputElement>,
-    HTMLInputElement
-  >;
+  inputProps?: React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
   className?: string;
   disabled: boolean;
   loading: boolean;
@@ -35,37 +32,27 @@ const useStyles = makeStyles(
       color: theme.palette.error.light,
     },
     fileField: {
-      display: "none",
+      display: 'none',
     },
     fileUrl: {
       color: theme.palette.primary.main,
-      textDecoration: "none",
+      textDecoration: 'none',
     },
     uploadFileContent: {
-      alignItems: "center",
+      alignItems: 'center',
       color: theme.palette.primary.main,
-      display: "flex",
+      display: 'flex',
       fontSize: theme.typography.body1.fontSize,
     },
     uploadFileName: {
-      minWidth: "6rem",
+      minWidth: '6rem',
     },
   }),
-  { name: "FileUploadField" },
+  { name: 'FileUploadField' },
 );
 
 const FileUploadField: React.FC<FileUploadFieldProps> = props => {
-  const {
-    loading,
-    disabled,
-    file,
-    className,
-    error,
-    helperText,
-    onFileUpload,
-    onFileDelete,
-    inputProps,
-  } = props;
+  const { loading, disabled, file, className, error, helperText, onFileUpload, onFileDelete, inputProps } = props;
   const classes = useStyles({});
   const intl = useIntl();
 
@@ -73,13 +60,13 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
   const clickFileInput = () => fileInputAnchor.current.click();
 
   const handleFileDelete = () => {
-    fileInputAnchor.current.value = "";
+    fileInputAnchor.current.value = '';
     onFileDelete();
   };
 
   React.useEffect(() => {
     if (!file.value) {
-      fileInputAnchor.current.value = "";
+      fileInputAnchor.current.value = '';
     }
   }, [file]);
 
@@ -92,11 +79,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
               {loading ? (
                 <Skeleton />
               ) : (
-                <a
-                  href={file.file?.url}
-                  target="blank"
-                  className={classes.fileUrl}
-                >
+                <a href={file.file?.url} target="blank" className={classes.fileUrl}>
                   {file.label}
                 </a>
               )}
@@ -141,5 +124,5 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
     </>
   );
 };
-FileUploadField.displayName = "FileUploadField";
+FileUploadField.displayName = 'FileUploadField';
 export default FileUploadField;

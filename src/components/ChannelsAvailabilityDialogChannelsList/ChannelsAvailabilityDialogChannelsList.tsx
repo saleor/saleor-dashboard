@@ -1,9 +1,9 @@
-import { Channel } from "@dashboard/channels/utils";
-import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
-import Hr from "@dashboard/components/Hr";
-import { Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { Channel } from '@dashboard/channels/utils';
+import { ControlledCheckbox } from '@dashboard/components/ControlledCheckbox';
+import Hr from '@dashboard/components/Hr';
+import { Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
 
 export const useStyles = makeStyles(
   theme => ({
@@ -11,15 +11,15 @@ export const useStyles = makeStyles(
       fontSize: 14,
     },
     option: {
-      "&:last-child": {
-        "& hr": {
-          display: "none",
+      '&:last-child': {
+        '& hr': {
+          display: 'none',
         },
       },
       margin: theme.spacing(1, 0),
     },
   }),
-  { name: "ChannelsAvailabilityContent" },
+  { name: 'ChannelsAvailabilityContent' },
 );
 
 export interface ChannelsAvailabilityContentProps {
@@ -38,17 +38,11 @@ const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = 
   return (
     <>
       {channels.map(option => (
-        <div
-          key={option.id}
-          className={classes.option}
-          data-test-id="channel-row"
-        >
+        <div key={option.id} className={classes.option} data-test-id="channel-row">
           <ControlledCheckbox
             checked={isChannelSelected(option)}
             name={option.name}
-            label={
-              <Typography className={classes.label}>{option.name}</Typography>
-            }
+            label={<Typography className={classes.label}>{option.name}</Typography>}
             onChange={() => onChange(option)}
           />
           <Hr />

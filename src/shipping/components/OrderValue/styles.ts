@@ -1,15 +1,15 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
     colName: {
       fontSize: 14,
       paddingLeft: 0,
-      width: "auto",
+      width: 'auto',
     },
     colType: {
       fontSize: 14,
-      textAlign: "right",
+      textAlign: 'right',
       width: 250,
     },
     content: {
@@ -19,16 +19,16 @@ export const useStyles = makeStyles(
       fontSize: 14,
     },
     price: {
-      verticalAlign: "top",
+      verticalAlign: 'top',
     },
     subheader: {
       padding: theme.spacing(0, 3, 0, 3),
     },
     table: {
-      tableLayout: "fixed",
+      tableLayout: 'fixed',
     },
   }),
   {
-    name: "OrderValue",
+    name: 'OrderValue',
   },
 );

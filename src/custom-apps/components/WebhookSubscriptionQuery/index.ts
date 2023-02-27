@@ -1,2 +1,2 @@
-export { default } from "./WebhookSubscriptionQuery";
-export * from "./WebhookSubscriptionQuery";
+export { default } from './WebhookSubscriptionQuery';
+export * from './WebhookSubscriptionQuery';

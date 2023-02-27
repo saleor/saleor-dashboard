@@ -1,39 +1,25 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
-import {
-  CategoryBulkDeleteMutation,
-  useCategoryBulkDeleteMutation,
-  useRootCategoriesQuery,
-} from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
-import useListSettings from "@dashboard/hooks/useListSettings";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
-import usePaginator, {
-  createPaginationState,
-  PaginatorContext,
-} from "@dashboard/hooks/usePaginator";
-import { maybe } from "@dashboard/misc";
-import { ListViews } from "@dashboard/types";
-import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createSortHandler from "@dashboard/utils/handlers/sortHandler";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { getSortParams } from "@dashboard/utils/sort";
-import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import DeleteFilterTabDialog from '@dashboard/components/DeleteFilterTabDialog';
+import SaveFilterTabDialog, { SaveFilterTabDialogFormData } from '@dashboard/components/SaveFilterTabDialog';
+import { CategoryBulkDeleteMutation, useCategoryBulkDeleteMutation, useRootCategoriesQuery } from '@dashboard/graphql';
+import useBulkActions from '@dashboard/hooks/useBulkActions';
+import useListSettings from '@dashboard/hooks/useListSettings';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { usePaginationReset } from '@dashboard/hooks/usePaginationReset';
+import usePaginator, { createPaginationState, PaginatorContext } from '@dashboard/hooks/usePaginator';
+import { maybe } from '@dashboard/misc';
+import { ListViews } from '@dashboard/types';
+import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
+import createSortHandler from '@dashboard/utils/handlers/sortHandler';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import { getSortParams } from '@dashboard/utils/sort';
+import { DialogContentText } from '@material-ui/core';
+import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
-import {
-  categoryListUrl,
-  CategoryListUrlDialog,
-  CategoryListUrlFilters,
-  CategoryListUrlQueryParams,
-} from "../../urls";
+import { CategoryListPage } from '../../components/CategoryListPage/CategoryListPage';
+import { categoryListUrl, CategoryListUrlDialog, CategoryListUrlFilters, CategoryListUrlQueryParams } from '../../urls';
 import {
   deleteFilterTab,
   getActiveFilters,
@@ -41,8 +27,8 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
-} from "./filter";
-import { getSortQueryVariables } from "./sort";
+} from './filter';
+import { getSortQueryVariables } from './sort';
 
 interface CategoryListProps {
   params: CategoryListUrlQueryParams;
@@ -51,12 +37,8 @@ interface CategoryListProps {
 export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const navigate = useNavigator();
 
-  const { isSelected, listElements, toggle, toggleAll, reset } = useBulkActions(
-    params.ids,
-  );
-  const { updateListSettings, settings } = useListSettings(
-    ListViews.CATEGORY_LIST,
-  );
+  const { isSelected, listElements, toggle, toggleAll, reset } = useBulkActions(params.ids);
+  const { updateListSettings, settings } = useListSettings(ListViews.CATEGORY_LIST);
 
   usePaginationReset(categoryListUrl, params, settings.rowNumber);
 
@@ -91,10 +73,11 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     );
   };
 
-  const [openModal, closeModal] = createDialogActionHandlers<
-    CategoryListUrlDialog,
-    CategoryListUrlQueryParams
-  >(navigate, categoryListUrl, params);
+  const [openModal, closeModal] = createDialogActionHandlers<CategoryListUrlDialog, CategoryListUrlQueryParams>(
+    navigate,
+    categoryListUrl,
+    params,
+  );
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -131,10 +114,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     }
   };
 
-  const [
-    categoryBulkDelete,
-    categoryBulkDeleteOpts,
-  ] = useCategoryBulkDeleteMutation({
+  const [categoryBulkDelete, categoryBulkDeleteOpts] = useCategoryBulkDeleteMutation({
     onCompleted: handleCategoryBulkDelete,
   });
 
@@ -145,12 +125,12 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
       <CategoryListPage
         categories={mapEdgesToItems(data?.categories)}
         currentTab={currentTab}
-        initialSearch={params.query || ""}
+        initialSearch={params.query || ''}
         onSearchChange={query => changeFilterField({ query })}
         onAll={() => navigate(categoryListUrl())}
         onTabChange={handleTabChange}
-        onTabDelete={() => openModal("delete-search")}
-        onTabSave={() => openModal("save-search")}
+        onTabDelete={() => openModal('delete-search')}
+        onTabSave={() => openModal('save-search')}
         tabs={tabs.map(tab => tab.name)}
         settings={settings}
         sort={getSortParams(params)}
@@ -167,7 +147,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
             color="primary"
             data-test-id="delete-icon"
             onClick={() =>
-              openModal("delete", {
+              openModal('delete', {
                 ids: listElements,
               })
             }
@@ -194,11 +174,11 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
             },
           })
         }
-        open={params.action === "delete"}
+        open={params.action === 'delete'}
         title={intl.formatMessage({
-          id: "sG0w22",
-          defaultMessage: "Delete categories",
-          description: "dialog title",
+          id: 'sG0w22',
+          defaultMessage: 'Delete categories',
+          description: 'dialog title',
         })}
         variant="delete"
       >
@@ -208,9 +188,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
             defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
             values={{
               counter: maybe(() => params.ids.length),
-              displayQuantity: (
-                <strong>{maybe(() => params.ids.length)}</strong>
-              ),
+              displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>,
             }}
           />
         </DialogContentText>
@@ -222,17 +200,17 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         </DialogContentText>
       </ActionDialog>
       <SaveFilterTabDialog
-        open={params.action === "save-search"}
+        open={params.action === 'save-search'}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabSave}
       />
       <DeleteFilterTabDialog
-        open={params.action === "delete-search"}
+        open={params.action === 'delete-search'}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+        tabName={maybe(() => tabs[currentTab - 1].name, '...')}
       />
     </PaginatorContext.Provider>
   );

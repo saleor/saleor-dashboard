@@ -1,25 +1,17 @@
-import {
-  CustomCell,
-  CustomCellRenderer,
-  getMiddleCenterBias,
-  ProvideEditorCallback,
-} from "@glideapps/glide-data-grid";
-import React from "react";
+import { CustomCell, CustomCellRenderer, getMiddleCenterBias, ProvideEditorCallback } from '@glideapps/glide-data-grid';
+import React from 'react';
 
-import { Locale } from "../Locale";
+import { Locale } from '../Locale';
 
 export const numberCellEmptyValue = Symbol();
 interface NumberCellProps {
-  readonly kind: "number-cell";
+  readonly kind: 'number-cell';
   readonly value: number | typeof numberCellEmptyValue;
 }
 
 export type NumberCell = CustomCell<NumberCellProps>;
 
-const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
-  value: cell,
-  onChange,
-}) => (
+const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({ value: cell, onChange }) => (
   <input
     type="number"
     onChange={event =>
@@ -31,27 +23,20 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
         },
       })
     }
-    value={cell.data.value === numberCellEmptyValue ? "" : cell.data.value}
+    value={cell.data.value === numberCellEmptyValue ? '' : cell.data.value}
     autoFocus
   />
 );
 
-export const numberCellRenderer = (
-  locale: Locale,
-): CustomCellRenderer<NumberCell> => ({
-  isMatch: (c): c is NumberCell => (c.data as any).kind === "number-cell",
+export const numberCellRenderer = (locale: Locale): CustomCellRenderer<NumberCell> => ({
+  isMatch: (c): c is NumberCell => (c.data as any).kind === 'number-cell',
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
     const { value } = cell.data;
-    const formatted =
-      value === numberCellEmptyValue ? "-" : value.toLocaleString(locale);
+    const formatted = value === numberCellEmptyValue ? '-' : value.toLocaleString(locale);
     ctx.fillStyle = theme.textDark;
-    ctx.textAlign = "right";
-    ctx.fillText(
-      formatted,
-      rect.x + rect.width - 8,
-      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-    );
+    ctx.textAlign = 'right';
+    ctx.fillText(formatted, rect.x + rect.width - 8, rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme));
 
     return true;
   },
@@ -60,7 +45,7 @@ export const numberCellRenderer = (
     disablePadding: true,
     deletedValue: cell => ({
       ...cell,
-      copyData: "",
+      copyData: '',
       data: {
         ...cell.data,
         value: numberCellEmptyValue,

@@ -1,2 +1,2 @@
-export * from "./ChannelsAvailabilityDialogChannelsList";
-export { default } from "./ChannelsAvailabilityDialogChannelsList";
+export * from './ChannelsAvailabilityDialogChannelsList';
+export { default } from './ChannelsAvailabilityDialogChannelsList';

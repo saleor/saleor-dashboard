@@ -1,10 +1,6 @@
-import { OrderDetailsFragment } from "@dashboard/graphql";
+import { OrderDetailsFragment } from '@dashboard/graphql';
 
-import {
-  getFulfilledFulfillemnts,
-  getUnfulfilledLines,
-  getWaitingFulfillments,
-} from "../OrderReturnPage/utils";
+import { getFulfilledFulfillemnts, getUnfulfilledLines, getWaitingFulfillments } from '../OrderReturnPage/utils';
 
 export const hasAnyItemsReplaceable = (order?: OrderDetailsFragment) => {
   if (!order) {
@@ -17,9 +13,7 @@ export const hasAnyItemsReplaceable = (order?: OrderDetailsFragment) => {
 
   const hasAnyFulfilmentsToReturn = getFulfilledFulfillemnts(order).length > 0;
 
-  return (
-    hasAnyUnfulfilledItems || hasAnyFulfilmentsToReturn || hasAnyWaitingLines
-  );
+  return hasAnyUnfulfilledItems || hasAnyFulfilmentsToReturn || hasAnyWaitingLines;
 };
 
 export interface ConditionalItem {

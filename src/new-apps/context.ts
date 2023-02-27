@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import React from "react";
+import React from 'react';
 
 export interface AppListContextValues {
   removeAppInstallation: (installationId: string) => void;
@@ -7,15 +7,13 @@ export interface AppListContextValues {
   openAppSettings: (appId: string) => void;
 }
 
-export const AppListContext = React.createContext<
-  AppListContextValues | undefined
->(undefined);
+export const AppListContext = React.createContext<AppListContextValues | undefined>(undefined);
 
 export const useAppListContext = () => {
   const context = React.useContext(AppListContext);
 
   if (!context) {
-    throw new Error("useAppListContext must be used within a AppListContext");
+    throw new Error('useAppListContext must be used within a AppListContext');
   }
 
   return context;

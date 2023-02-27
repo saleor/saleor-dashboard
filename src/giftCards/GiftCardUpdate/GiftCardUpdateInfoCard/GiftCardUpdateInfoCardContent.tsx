@@ -1,22 +1,22 @@
-import { appUrl } from "@dashboard/apps/urls";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import Link from "@dashboard/components/Link";
-import { customerUrl } from "@dashboard/customers/urls";
-import { GiftCardEventsEnum } from "@dashboard/graphql";
-import useDateLocalize from "@dashboard/hooks/useDateLocalize";
-import { getFullName, getStringOrPlaceholder } from "@dashboard/misc";
-import Label from "@dashboard/orders/components/OrderHistory/Label";
-import { getOrderNumberLinkObject } from "@dashboard/orders/components/OrderHistory/utils";
-import { getByType } from "@dashboard/orders/components/OrderReturnPage/utils";
-import { productUrl } from "@dashboard/products/urls";
-import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
-import { Typography } from "@material-ui/core";
-import React from "react";
-import { MessageDescriptor, useIntl } from "react-intl";
+import { appUrl } from '@dashboard/apps/urls';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import Link from '@dashboard/components/Link';
+import { customerUrl } from '@dashboard/customers/urls';
+import { GiftCardEventsEnum } from '@dashboard/graphql';
+import useDateLocalize from '@dashboard/hooks/useDateLocalize';
+import { getFullName, getStringOrPlaceholder } from '@dashboard/misc';
+import Label from '@dashboard/orders/components/OrderHistory/Label';
+import { getOrderNumberLinkObject } from '@dashboard/orders/components/OrderHistory/utils';
+import { getByType } from '@dashboard/orders/components/OrderReturnPage/utils';
+import { productUrl } from '@dashboard/products/urls';
+import { staffMemberDetailsUrl } from '@dashboard/staff/urls';
+import { Typography } from '@material-ui/core';
+import React from 'react';
+import { MessageDescriptor, useIntl } from 'react-intl';
 
-import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
-import { PLACEHOLDER } from "../types";
-import { giftCardUpdateInfoCardMessages as messages } from "./messages";
+import useGiftCardDetails from '../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails';
+import { PLACEHOLDER } from '../types';
+import { giftCardUpdateInfoCardMessages as messages } from './messages';
 
 const GiftCardUpdateInfoCardContent: React.FC = () => {
   const intl = useIntl();
@@ -24,15 +24,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
 
   const { giftCard } = useGiftCardDetails();
 
-  const {
-    created,
-    createdByEmail,
-    createdBy,
-    usedByEmail,
-    usedBy,
-    product,
-    events,
-  } = giftCard;
+  const { created, createdByEmail, createdBy, usedByEmail, usedBy, product, events } = giftCard;
 
   const cardIssuedEvent = events.find(getByType(GiftCardEventsEnum.ISSUED));
   const cardBoughtEvent = events.find(getByType(GiftCardEventsEnum.BOUGHT));
@@ -104,11 +96,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
     return null;
   };
 
-  const {
-    label: buyerLabelMessage,
-    name: buyerName,
-    url: buyerUrl,
-  } = getBuyerFieldData();
+  const { label: buyerLabelMessage, name: buyerName, url: buyerUrl } = getBuyerFieldData();
 
   const orderData = getOrderData();
 
@@ -119,36 +107,22 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
       <CardSpacer />
 
       <Label text={intl.formatMessage(messages.orderNumberLabel)} />
-      {orderData ? (
-        <Link href={orderData.link}>{orderData.text}</Link>
-      ) : (
-        <Typography>{PLACEHOLDER}</Typography>
-      )}
+      {orderData ? <Link href={orderData.link}>{orderData.text}</Link> : <Typography>{PLACEHOLDER}</Typography>}
       <CardSpacer />
 
       <Label text={intl.formatMessage(messages.productLabel)} />
-      {product ? (
-        <Link href={productUrl(product?.id)}>{product?.name}</Link>
-      ) : (
-        <Typography>{PLACEHOLDER}</Typography>
-      )}
+      {product ? <Link href={productUrl(product?.id)}>{product?.name}</Link> : <Typography>{PLACEHOLDER}</Typography>}
       <CardSpacer />
 
       <Label text={intl.formatMessage(buyerLabelMessage)} />
-      {buyerUrl ? (
-        <Link href={buyerUrl}>{buyerName}</Link>
-      ) : (
-        <Typography>{buyerName}</Typography>
-      )}
+      {buyerUrl ? <Link href={buyerUrl}>{buyerName}</Link> : <Typography>{buyerName}</Typography>}
       <CardSpacer />
 
       <Label text={intl.formatMessage(messages.usedByLabel)} />
       {usedBy ? (
         <Link href={customerUrl(usedBy.id)}>{getFullName(usedBy)}</Link>
       ) : (
-        <Typography>
-          {getStringOrPlaceholder(usedByEmail, PLACEHOLDER)}
-        </Typography>
+        <Typography>{getStringOrPlaceholder(usedByEmail, PLACEHOLDER)}</Typography>
       )}
     </>
   );

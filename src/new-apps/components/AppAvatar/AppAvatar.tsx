@@ -1,14 +1,14 @@
-import { AppLogo } from "@dashboard/new-apps/types";
-import { Box, GenericAppIcon } from "@saleor/macaw-ui/next";
-import React from "react";
+import { AppLogo } from '@dashboard/new-apps/types';
+import { Box, GenericAppIcon } from '@saleor/macaw-ui/next';
+import React from 'react';
 
 interface AppAvatarProps {
   logo: AppLogo | undefined;
-  size: "medium" | "large";
+  size: 'medium' | 'large';
 }
 
 export const AppAvatar: React.FC<AppAvatarProps> = ({ logo, size }) => {
-  const avatarSize = size === "medium" ? 11 : 13;
+  const avatarSize = size === 'medium' ? 11 : 13;
 
   if (logo?.source) {
     return (
@@ -27,7 +27,7 @@ export const AppAvatar: React.FC<AppAvatarProps> = ({ logo, size }) => {
   } else {
     return (
       <Box
-        __backgroundColor={logo?.color ?? "#EAE8E9"}
+        __backgroundColor={logo?.color ?? '#EAE8E9'}
         __color="#7C7F7F"
         padding={3}
         width={avatarSize}

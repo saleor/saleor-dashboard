@@ -1,4 +1,4 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
@@ -7,30 +7,30 @@ export const useStyles = makeStyles(
     },
 
     row: {
-      display: "flex",
-      justifyContent: "space-between",
+      display: 'flex',
+      justifyContent: 'space-between',
 
-      "&:not(:last-child)": {
+      '&:not(:last-child)': {
         marginBottom: theme.spacing(2),
       },
     },
     caption: {
-      textTransform: "uppercase",
+      textTransform: 'uppercase',
       color: theme.palette.saleor.main[3],
       fontWeight: 500,
-      letterSpacing: "0.1em",
+      letterSpacing: '0.1em',
     },
     hr: {
       left: theme.spacing(-1),
-      position: "relative",
+      position: 'relative',
       width: `calc(100% + ${theme.spacing(2)}px)`,
     },
     menuItem: {
-      display: "block",
+      display: 'block',
     },
     title: {
       padding: theme.spacing(1, 2, 1, 2),
     },
   }),
-  { name: "ChannelsAvailabilityMenuContent" },
+  { name: 'ChannelsAvailabilityMenuContent' },
 );

@@ -1,3 +1,3 @@
-export { default } from "./AttributeListPage";
-export * from "./AttributeListPage";
-export * from "./filters";
+export { default } from './AttributeListPage';
+export * from './AttributeListPage';
+export * from './filters';

@@ -1,11 +1,11 @@
-import { attributes } from "@dashboard/attributes/fixtures";
-import { categories } from "@dashboard/categories/fixtures";
-import { collections } from "@dashboard/collections/fixtures";
-import { fetchMoreProps, searchPageProps } from "@dashboard/fixtures";
-import { StockAvailability } from "@dashboard/graphql";
-import { ProductListFilterOpts } from "@dashboard/products/components/ProductListPage";
-import { productTypes } from "@dashboard/productTypes/fixtures";
-import { mapEdgesToItems, mapSlugNodeToChoice } from "@dashboard/utils/maps";
+import { attributes } from '@dashboard/attributes/fixtures';
+import { categories } from '@dashboard/categories/fixtures';
+import { collections } from '@dashboard/collections/fixtures';
+import { fetchMoreProps, searchPageProps } from '@dashboard/fixtures';
+import { StockAvailability } from '@dashboard/graphql';
+import { ProductListFilterOpts } from '@dashboard/products/components/ProductListPage';
+import { productTypes } from '@dashboard/productTypes/fixtures';
+import { mapEdgesToItems, mapSlugNodeToChoice } from '@dashboard/utils/maps';
 
 export const productListFilterOpts: ProductListFilterOpts = {
   attributes: attributes.map(attr => ({
@@ -14,10 +14,7 @@ export const productListFilterOpts: ProductListFilterOpts = {
     inputType: attr.inputType,
     name: attr.name,
     slug: attr.slug,
-    value: [
-      attr.choices.edges[0].node.slug,
-      attr.choices.edges.length > 2 && attr.choices.edges[2].node.slug,
-    ],
+    value: [attr.choices.edges[0].node.slug, attr.choices.edges.length > 2 && attr.choices.edges[2].node.slug],
   })),
   attributeChoices: {
     ...fetchMoreProps,
@@ -45,25 +42,25 @@ export const productListFilterOpts: ProductListFilterOpts = {
   },
   channel: {
     active: false,
-    value: "default-channel",
+    value: 'default-channel',
     choices: [
       {
-        value: "default-channel",
-        label: "Default channel",
+        value: 'default-channel',
+        label: 'Default channel',
       },
     ],
   },
   metadata: {
     active: false,
-    value: [{ key: "metadataKey", value: "metadataValue" }],
+    value: [{ key: 'metadataKey', value: 'metadataValue' }],
   },
   productKind: {
     active: false,
-    value: "NORMAL",
+    value: 'NORMAL',
     choices: [
       {
-        value: "NORMAL",
-        label: "Normal",
+        value: 'NORMAL',
+        label: 'Normal',
       },
     ],
   },
@@ -86,8 +83,8 @@ export const productListFilterOpts: ProductListFilterOpts = {
   price: {
     active: false,
     value: {
-      max: "20",
-      min: "10",
+      max: '20',
+      min: '10',
     },
   },
   productType: {

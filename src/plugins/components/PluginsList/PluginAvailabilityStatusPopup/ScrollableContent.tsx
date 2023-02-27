@@ -1,15 +1,15 @@
-import { List } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { List } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
 
 const useStyles = makeStyles(
   () => ({
     container: {
       maxHeight: 450,
-      overflow: "auto",
+      overflow: 'auto',
     },
   }),
-  { name: "ScrollableContent" },
+  { name: 'ScrollableContent' },
 );
 
 interface ScrollableContentProps {

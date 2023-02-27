@@ -1,13 +1,11 @@
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { SetPasswordData, useAuth } from "@saleor/sdk";
-import { parse as parseQs } from "qs";
-import React, { useState } from "react";
-import { RouteComponentProps } from "react-router";
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { SetPasswordData, useAuth } from '@saleor/sdk';
+import { parse as parseQs } from 'qs';
+import React, { useState } from 'react';
+import { RouteComponentProps } from 'react-router';
 
-import NewPasswordPage, {
-  NewPasswordPageFormData,
-} from "../components/NewPasswordPage";
-import { NewPasswordUrlQueryParams } from "../urls";
+import NewPasswordPage, { NewPasswordPageFormData } from '../components/NewPasswordPage';
+import { NewPasswordUrlQueryParams } from '../urls';
 
 const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
   const navigate = useNavigator();
@@ -15,7 +13,7 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
   const { setPassword } = useAuth();
 
   const [loading, setLoading] = useState(false);
-  const [errors, setErrors] = useState<SetPasswordData["errors"]>([]);
+  const [errors, setErrors] = useState<SetPasswordData['errors']>([]);
 
   const params: NewPasswordUrlQueryParams = parseQs(location.search.substr(1));
 
@@ -34,18 +32,12 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
     setLoading(false);
 
     if (!errors.length) {
-      navigate("/", { replace: true });
+      navigate('/', { replace: true });
     }
   };
 
-  return (
-    <NewPasswordPage
-      errors={errors}
-      loading={loading}
-      onSubmit={handleSubmit}
-    />
-  );
+  return <NewPasswordPage errors={errors} loading={loading} onSubmit={handleSubmit} />;
 };
 
-NewPassword.displayName = "NewPassword";
+NewPassword.displayName = 'NewPassword';
 export default NewPassword;

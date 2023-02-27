@@ -1,2 +1,2 @@
-export * from "./ProductExternalMediaDialog";
-export { default } from "./ProductExternalMediaDialog";
+export * from './ProductExternalMediaDialog';
+export { default } from './ProductExternalMediaDialog';

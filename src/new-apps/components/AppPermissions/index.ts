@@ -1,2 +1,2 @@
-export { AppPermissions } from "./AppPermissions";
-export { default } from "./AppPermissions";
+export { AppPermissions } from './AppPermissions';
+export { default } from './AppPermissions';

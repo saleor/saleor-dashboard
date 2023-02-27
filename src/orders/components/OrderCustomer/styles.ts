@@ -1,10 +1,10 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
     sectionHeader: {
-      alignItems: "center",
-      display: "flex",
+      alignItems: 'center',
+      display: 'flex',
       marginBottom: theme.spacing(3),
     },
     sectionHeaderTitle: {
@@ -17,7 +17,7 @@ export const useStyles = makeStyles(
       marginBottom: theme.spacing(1),
     },
   }),
-  { name: "OrderCustomer" },
+  { name: 'OrderCustomer' },
 );
 
 export const useAddressTextErrorStyles = makeStyles(
@@ -26,5 +26,5 @@ export const useAddressTextErrorStyles = makeStyles(
       color: theme.palette.error.main,
     },
   }),
-  { name: "AddrssTextError" },
+  { name: 'AddrssTextError' },
 );

@@ -1,9 +1,9 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { getStringOrPlaceholder } from "@dashboard/misc";
-import { DialogContentText } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import { getStringOrPlaceholder } from '@dashboard/misc';
+import { DialogContentText } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export interface AppActivateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -25,23 +25,23 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
   return (
     <ActionDialog
       confirmButtonLabel={intl.formatMessage({
-        id: "D3E2b5",
-        defaultMessage: "Activate",
-        description: "button label",
+        id: 'D3E2b5',
+        defaultMessage: 'Activate',
+        description: 'button label',
       })}
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
-        id: "YHNozE",
-        defaultMessage: "Activate App",
-        description: "dialog header",
+        id: 'YHNozE',
+        defaultMessage: 'Activate App',
+        description: 'dialog header',
       })}
       variant="default"
     >
       <DialogContentText>
-        {["", null].includes(name) ? (
+        {['', null].includes(name) ? (
           <FormattedMessage
             id="Q47ovw"
             defaultMessage="Are you sure you want to activate this app? Activating will start gathering events."
@@ -61,5 +61,5 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
     </ActionDialog>
   );
 };
-AppActivateDialog.displayName = "AppActivateDialog";
+AppActivateDialog.displayName = 'AppActivateDialog';
 export default AppActivateDialog;

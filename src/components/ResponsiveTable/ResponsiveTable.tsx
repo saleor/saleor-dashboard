@@ -1,23 +1,23 @@
-import { Table } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
+import { Table } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
 
 const useStyles = makeStyles(
   theme => ({
     root: {
-      overflowX: "auto",
-      width: "100%",
+      overflowX: 'auto',
+      width: '100%',
     },
     table: {
-      [theme.breakpoints.up("md")]: {
-        tableLayout: "fixed",
+      [theme.breakpoints.up('md')]: {
+        tableLayout: 'fixed',
       },
-      tableLayout: "auto",
+      tableLayout: 'auto',
     },
   }),
   {
-    name: "ResponsiveTable",
+    name: 'ResponsiveTable',
   },
 );
 
@@ -39,5 +39,5 @@ const ResponsiveTable: React.FC<ResponsiveTableProps> = props => {
   );
 };
 
-ResponsiveTable.displayName = "ResponsiveTable";
+ResponsiveTable.displayName = 'ResponsiveTable';
 export default ResponsiveTable;

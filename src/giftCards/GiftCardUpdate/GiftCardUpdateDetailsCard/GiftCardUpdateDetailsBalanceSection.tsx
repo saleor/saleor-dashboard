@@ -1,14 +1,14 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import Money from "@dashboard/components/Money";
-import { Typography } from "@material-ui/core";
-import clsx from "clsx";
-import React from "react";
-import { useIntl } from "react-intl";
+import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import Money from '@dashboard/components/Money';
+import { Typography } from '@material-ui/core';
+import clsx from 'clsx';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
-import { giftCardUpdateDetailsCardMessages as messages } from "./messages";
-import { useGiftCardDetailsBalanceStyles as useStyles } from "./styles";
+import useGiftCardDetails from '../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails';
+import { giftCardUpdateDetailsCardMessages as messages } from './messages';
+import { useGiftCardDetailsBalanceStyles as useStyles } from './styles';
 
 const GiftCardUpdateDetailsBalanceSection: React.FC = () => {
   const classes = useStyles({});
@@ -38,10 +38,7 @@ const GiftCardUpdateDetailsBalanceSection: React.FC = () => {
       </div>
       <CardSpacer />
       <div className={classes.balanceBar}>
-        <div
-          style={{ width: `${progressBarWidth}%` }}
-          className={classes.balanceBarProgress}
-        />
+        <div style={{ width: `${progressBarWidth}%` }} className={classes.balanceBarProgress} />
       </div>
     </>
   );

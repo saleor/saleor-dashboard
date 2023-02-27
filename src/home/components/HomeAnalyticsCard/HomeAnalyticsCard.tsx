@@ -1,28 +1,28 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { IconProps } from "@material-ui/core/Icon";
-import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import { Card, CardContent, Typography } from '@material-ui/core';
+import { IconProps } from '@material-ui/core/Icon';
+import { makeStyles } from '@saleor/macaw-ui';
+import { vars } from '@saleor/macaw-ui/next';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles(
   theme => ({
     cardContent: {
-      display: "grid",
+      display: 'grid',
       gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: "1fr 64px",
+      gridTemplateColumns: '1fr 64px',
       border: `1px solid ${vars.colors.border.neutralPlain}`,
       borderRadius: vars.borderRadius[3],
     },
     cardSpacing: {
-      [theme.breakpoints.down("sm")]: {
+      [theme.breakpoints.down('sm')]: {
         marginBottom: theme.spacing(1),
       },
       marginBottom: theme.spacing(3),
     },
     cardSubtitle: {
       fontSize: 12,
-      height: "20px",
+      height: '20px',
       lineHeight: 0.9,
     },
     cardTitle: {
@@ -32,22 +32,22 @@ const useStyles = makeStyles(
     icon: {
       color: theme.palette.primary.contrastText,
       fontSize: 54,
-      margin: ".5rem .3rem",
+      margin: '.5rem .3rem',
     },
     iconBackground: {
       backgroundColor: theme.palette.background.default,
-      borderRadius: "8px",
-      color: "white",
-      fontSize: "54px",
-      height: "100%",
-      padding: "10px 5px 0px 5px",
-      width: "100%",
+      borderRadius: '8px',
+      color: 'white',
+      fontSize: '54px',
+      height: '100%',
+      padding: '10px 5px 0px 5px',
+      width: '100%',
     },
     value: {
-      textAlign: "right",
+      textAlign: 'right',
     },
   }),
-  { name: "HomeAnalyticsCard" },
+  { name: 'HomeAnalyticsCard' },
 );
 
 interface HomeAnalyticsCardProps {
@@ -69,18 +69,10 @@ const HomeAnalyticsCard: React.FC<HomeAnalyticsCardProps> = props => {
           <Typography className={classes.cardTitle} variant="subtitle1">
             {title}
           </Typography>
-          <Typography
-            className={classes.cardSubtitle}
-            variant="caption"
-            color="textSecondary"
-          >
+          <Typography className={classes.cardSubtitle} variant="caption" color="textSecondary">
             <FormattedMessage id="zWgbGg" defaultMessage="Today" />
           </Typography>
-          <Typography
-            className={classes.value}
-            color="textPrimary"
-            variant="h4"
-          >
+          <Typography className={classes.value} color="textPrimary" variant="h4">
             {children}
           </Typography>
         </div>
@@ -89,5 +81,5 @@ const HomeAnalyticsCard: React.FC<HomeAnalyticsCardProps> = props => {
     </Card>
   );
 };
-HomeAnalyticsCard.displayName = "HomeAnalyticsCard";
+HomeAnalyticsCard.displayName = 'HomeAnalyticsCard';
 export default HomeAnalyticsCard;

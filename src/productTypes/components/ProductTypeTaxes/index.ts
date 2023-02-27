@@ -1,2 +1,2 @@
-export { default } from "./ProductTypeTaxes";
-export * from "./ProductTypeTaxes";
+export { default } from './ProductTypeTaxes';
+export * from './ProductTypeTaxes';

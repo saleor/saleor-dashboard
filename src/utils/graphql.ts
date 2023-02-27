@@ -1,26 +1,19 @@
-import { getApiUrl } from "@dashboard/config";
-import LzString from "lz-string";
+import { getApiUrl } from '@dashboard/config';
+import LzString from 'lz-string';
 
 export type EditorContent = Record<keyof typeof longKeysToShortKeys, string>;
 
-type ShorterEditorContent = Record<
-  (typeof longKeysToShortKeys)[keyof typeof longKeysToShortKeys],
-  string
->;
+type ShorterEditorContent = Record<(typeof longKeysToShortKeys)[keyof typeof longKeysToShortKeys], string>;
 
-export function removeEmptyValues<T extends object>(
-  editorContent: T,
-): Partial<T> {
-  return Object.fromEntries(
-    Object.entries(editorContent).filter(([, val]) => !!val),
-  ) as Partial<T>;
+export function removeEmptyValues<T extends object>(editorContent: T): Partial<T> {
+  return Object.fromEntries(Object.entries(editorContent).filter(([, val]) => !!val)) as Partial<T>;
 }
 
 const longKeysToShortKeys = {
-  query: "q",
-  headers: "h",
-  operationName: "o",
-  variables: "v",
+  query: 'q',
+  headers: 'h',
+  operationName: 'o',
+  variables: 'v',
 } as const;
 
 export const encodeGraphQLStatement = (editorContent: EditorContent) => {
@@ -33,9 +26,7 @@ export const encodeGraphQLStatement = (editorContent: EditorContent) => {
   const stringifiedContent = JSON.stringify(removeEmptyValues(shorterContent));
 
   const editorContentToSaveInUrl =
-    stringifiedContent === "{}"
-      ? ""
-      : LzString.compressToEncodedURIComponent(stringifiedContent);
+    stringifiedContent === '{}' ? '' : LzString.compressToEncodedURIComponent(stringifiedContent);
 
   return `saleor/${editorContentToSaveInUrl}`;
 };
@@ -59,5 +50,5 @@ export const playgroundOpenHandler =
       operationName,
       variables,
     });
-    window.open(playgroundURL, "_blank").focus();
+    window.open(playgroundURL, '_blank').focus();
   };

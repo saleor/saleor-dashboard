@@ -1,26 +1,24 @@
-import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import FilterBar from "@dashboard/components/FilterBar";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { giftCardListUrl } from "@dashboard/giftCards/urls";
-import { useGiftCardCurrenciesQuery } from "@dashboard/graphql";
-import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { maybe } from "@dashboard/misc";
-import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
-import useGiftCardTagsSearch from "@dashboard/searches/useGiftCardTagsSearch";
-import useProductSearch from "@dashboard/searches/useProductSearch";
-import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
-import compact from "lodash/compact";
-import React from "react";
-import { useIntl } from "react-intl";
+import DeleteFilterTabDialog from '@dashboard/components/DeleteFilterTabDialog';
+import FilterBar from '@dashboard/components/FilterBar';
+import SaveFilterTabDialog, { SaveFilterTabDialogFormData } from '@dashboard/components/SaveFilterTabDialog';
+import { DEFAULT_INITIAL_SEARCH_DATA } from '@dashboard/config';
+import { giftCardListUrl } from '@dashboard/giftCards/urls';
+import { useGiftCardCurrenciesQuery } from '@dashboard/graphql';
+import { getSearchFetchMoreProps } from '@dashboard/hooks/makeTopLevelSearch/utils';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { maybe } from '@dashboard/misc';
+import useCustomerSearch from '@dashboard/searches/useCustomerSearch';
+import useGiftCardTagsSearch from '@dashboard/searches/useGiftCardTagsSearch';
+import useProductSearch from '@dashboard/searches/useProductSearch';
+import createFilterHandlers from '@dashboard/utils/handlers/filterHandlers';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
+import compact from 'lodash/compact';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
-import { useGiftCardList } from "../providers/GiftCardListProvider";
-import { GiftCardListActionParamsEnum } from "../types";
+import { useGiftCardListDialogs } from '../providers/GiftCardListDialogsProvider';
+import { useGiftCardList } from '../providers/GiftCardListProvider';
+import { GiftCardListActionParamsEnum } from '../types';
 import {
   createFilterStructure,
   deleteFilterTab,
@@ -30,11 +28,11 @@ import {
   getFiltersCurrentTab,
   getFilterTabs,
   saveFilterTab,
-} from "./filters";
+} from './filters';
 import {
   giftCardListFilterErrorMessages as errorMessages,
   giftCardListSearchAndFiltersMessages as messages,
-} from "./messages";
+} from './messages';
 
 const GiftCardListSearchAndFilters: React.FC = () => {
   const navigate = useNavigator();
@@ -42,11 +40,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
 
   const { reset, params } = useGiftCardList();
 
-  const {
-    onClose,
-    openSearchDeleteDialog,
-    openSearchSaveDialog,
-  } = useGiftCardListDialogs();
+  const { onClose, openSearchDeleteDialog, openSearchSaveDialog } = useGiftCardListDialogs();
 
   const defaultSearchVariables = {
     variables: { ...DEFAULT_INITIAL_SEARCH_DATA, first: 5 },
@@ -70,10 +64,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
     result: searchGiftCardTagsResult,
   } = useGiftCardTagsSearch(defaultSearchVariables);
 
-  const {
-    data: giftCardCurrenciesData,
-    loading: loadingGiftCardCurrencies,
-  } = useGiftCardCurrenciesQuery();
+  const { data: giftCardCurrenciesData, loading: loadingGiftCardCurrencies } = useGiftCardCurrenciesQuery();
 
   const filterOpts = getFilterOpts({
     params,
@@ -90,17 +81,10 @@ const GiftCardListSearchAndFilters: React.FC = () => {
     },
     customers: mapEdgesToItems(searchCustomersResult?.data?.search),
     tagSearchProps: {
-      ...getSearchFetchMoreProps(
-        searchGiftCardTagsResult,
-        fetchMoreGiftCardTags,
-      ),
+      ...getSearchFetchMoreProps(searchGiftCardTagsResult, fetchMoreGiftCardTags),
       onSearchChange: searchGiftCardTags,
     },
-    tags: compact(
-      mapEdgesToItems(searchGiftCardTagsResult?.data?.search)?.map(
-        ({ name }) => name,
-      ),
-    ),
+    tags: compact(mapEdgesToItems(searchGiftCardTagsResult?.data?.search)?.map(({ name }) => name)),
   });
 
   const filterStructure = createFilterStructure(intl, filterOpts);
@@ -108,11 +92,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
   const tabs = getFilterTabs();
   const currentTab = getFiltersCurrentTab(params, tabs);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
+  const [changeFilters, resetFilters, handleSearchChange] = createFilterHandlers({
     createUrl: giftCardListUrl,
     getFilterQueryParam,
     navigate,
@@ -153,7 +133,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
         tabs={tabs.map(tab => tab.name)}
         currentTab={currentTab}
         filterStructure={filterStructure}
-        initialSearch={params?.query || ""}
+        initialSearch={params?.query || ''}
         onAll={resetFilters}
         onFilterChange={changeFilters}
         onSearchChange={handleSearchChange}
@@ -161,7 +141,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
         onTabDelete={openSearchDeleteDialog}
         onTabSave={openSearchSaveDialog}
         searchPlaceholder={intl.formatMessage(messages.searchPlaceholder, {
-          exampleGiftCardCode: "21F1-39DY-V4U2",
+          exampleGiftCardCode: '21F1-39DY-V4U2',
         })}
         allTabLabel={intl.formatMessage(messages.defaultTabLabel)}
       />
@@ -176,7 +156,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
         confirmButtonState="default"
         onClose={onClose}
         onSubmit={handleTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+        tabName={maybe(() => tabs[currentTab - 1].name, '...')}
       />
     </>
   );

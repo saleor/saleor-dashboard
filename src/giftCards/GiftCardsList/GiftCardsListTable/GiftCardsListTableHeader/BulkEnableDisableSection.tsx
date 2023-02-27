@@ -1,17 +1,14 @@
-import ConfirmButton from "@dashboard/components/ConfirmButton";
-import { IMessage } from "@dashboard/components/messages";
-import {
-  useGiftCardBulkActivateMutation,
-  useGiftCardBulkDeactivateMutation,
-} from "@dashboard/graphql";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { getByIds } from "@dashboard/orders/components/OrderReturnPage/utils";
-import React from "react";
-import { useIntl } from "react-intl";
+import ConfirmButton from '@dashboard/components/ConfirmButton';
+import { IMessage } from '@dashboard/components/messages';
+import { useGiftCardBulkActivateMutation, useGiftCardBulkDeactivateMutation } from '@dashboard/graphql';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { getByIds } from '@dashboard/orders/components/OrderReturnPage/utils';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { useGiftCardList } from "../../providers/GiftCardListProvider";
-import { GIFT_CARD_LIST_QUERY } from "../../queries";
-import { bulkEnableDisableSectionMessages as messages } from "./messages";
+import { useGiftCardList } from '../../providers/GiftCardListProvider';
+import { GIFT_CARD_LIST_QUERY } from '../../queries';
+import { bulkEnableDisableSectionMessages as messages } from './messages';
 
 const BulkEnableDisableSection: React.FC = () => {
   const intl = useIntl();
@@ -19,38 +16,27 @@ const BulkEnableDisableSection: React.FC = () => {
 
   const { listElements: ids, reset, giftCards } = useGiftCardList();
 
-  const hasAnyEnabledCardsSelected = giftCards
-    .filter(getByIds(ids))
-    .some(({ isActive }) => isActive);
+  const hasAnyEnabledCardsSelected = giftCards.filter(getByIds(ids)).some(({ isActive }) => isActive);
 
-  const areAllSelectedCardsActive = giftCards
-    .filter(getByIds(ids))
-    .every(({ isActive }) => isActive);
+  const areAllSelectedCardsActive = giftCards.filter(getByIds(ids)).every(({ isActive }) => isActive);
 
-  const hasAnyDisabledCardsSelected = giftCards
-    .filter(getByIds(ids))
-    .some(({ isActive }) => !isActive);
+  const hasAnyDisabledCardsSelected = giftCards.filter(getByIds(ids)).some(({ isActive }) => !isActive);
 
-  const areAllSelectedCardsDisabled = giftCards
-    .filter(getByIds(ids))
-    .every(({ isActive }) => !isActive);
+  const areAllSelectedCardsDisabled = giftCards.filter(getByIds(ids)).every(({ isActive }) => !isActive);
 
-  const [
-    activateGiftCards,
-    activateGiftCardsOpts,
-  ] = useGiftCardBulkActivateMutation({
+  const [activateGiftCards, activateGiftCardsOpts] = useGiftCardBulkActivateMutation({
     onCompleted: data => {
       const { errors, count } = data?.giftCardBulkActivate;
 
       const notifierData: IMessage = !!errors?.length
         ? {
-            status: "error",
+            status: 'error',
             text: intl.formatMessage(messages.errorActivateAlertText, {
               count,
             }),
           }
         : {
-            status: "success",
+            status: 'success',
             text: intl.formatMessage(messages.successActivateAlertText, {
               count,
             }),
@@ -65,22 +51,19 @@ const BulkEnableDisableSection: React.FC = () => {
     refetchQueries: [GIFT_CARD_LIST_QUERY],
   });
 
-  const [
-    deactivateGiftCards,
-    deactivateGiftCardsOpts,
-  ] = useGiftCardBulkDeactivateMutation({
+  const [deactivateGiftCards, deactivateGiftCardsOpts] = useGiftCardBulkDeactivateMutation({
     onCompleted: data => {
       const { errors, count } = data?.giftCardBulkDeactivate;
 
       const notifierData: IMessage = !!errors?.length
         ? {
-            status: "error",
+            status: 'error',
             text: intl.formatMessage(messages.errorDeactivateAlertText, {
               count,
             }),
           }
         : {
-            status: "success",
+            status: 'success',
             text: intl.formatMessage(messages.successDeactivateAlertText, {
               count,
             }),
@@ -95,14 +78,11 @@ const BulkEnableDisableSection: React.FC = () => {
     refetchQueries: [GIFT_CARD_LIST_QUERY],
   });
 
-  const handleActivateGiftCards = () =>
-    activateGiftCards({ variables: { ids } });
+  const handleActivateGiftCards = () => activateGiftCards({ variables: { ids } });
 
-  const handleDeactivateGiftCards = () =>
-    deactivateGiftCards({ variables: { ids } });
+  const handleDeactivateGiftCards = () => deactivateGiftCards({ variables: { ids } });
 
-  const isSelectionMixed =
-    hasAnyEnabledCardsSelected && hasAnyDisabledCardsSelected;
+  const isSelectionMixed = hasAnyEnabledCardsSelected && hasAnyDisabledCardsSelected;
 
   return (
     <>

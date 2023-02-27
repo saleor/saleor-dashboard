@@ -1,20 +1,15 @@
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  TableBody,
-  TableCell,
-  TableFooter,
-  TableHead,
-} from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Skeleton from '@dashboard/components/Skeleton';
+import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { TableBody, TableCell, TableFooter, TableHead } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { maybe, renderCollection } from "../../../misc";
-import { ListProps } from "../../../types";
+import { maybe, renderCollection } from '../../../misc';
+import { ListProps } from '../../../types';
 
 export interface TranslatableEntity {
   id: string;
@@ -33,20 +28,18 @@ export interface TranslationsEntitiesListProps extends ListProps {
 const useStyles = makeStyles(
   {
     tableRow: {
-      cursor: "pointer",
+      cursor: 'pointer',
     },
     textRight: {
-      textAlign: "right",
+      textAlign: 'right',
     },
     wideColumn: {
-      width: "80%",
+      width: '80%',
     },
   },
-  { name: "TranslationsEntitiesList" },
+  { name: 'TranslationsEntitiesList' },
 );
-const TranslationsEntitiesList: React.FC<
-  TranslationsEntitiesListProps
-> = props => {
+const TranslationsEntitiesList: React.FC<TranslationsEntitiesListProps> = props => {
   const { disabled, entities, getRowHref } = props;
 
   const classes = useStyles(props);
@@ -64,10 +57,7 @@ const TranslationsEntitiesList: React.FC<
             />
           </TableCell>
           <TableCell className={classes.textRight}>
-            <FormattedMessage
-              id="LWmYSU"
-              defaultMessage="Completed Translations"
-            />
+            <FormattedMessage id="LWmYSU" defaultMessage="Completed Translations" />
           </TableCell>
         </TableRowLink>
       </TableHead>
@@ -86,7 +76,7 @@ const TranslationsEntitiesList: React.FC<
               })}
               hover={!!entity}
               href={entity && getRowHref(entity.id)}
-              key={entity ? entity.id : "skeleton"}
+              key={entity ? entity.id : 'skeleton'}
             >
               <TableCell>{entity?.name || <Skeleton />}</TableCell>
               <TableCell className={classes.textRight}>
@@ -95,9 +85,9 @@ const TranslationsEntitiesList: React.FC<
                     () =>
                       intl.formatMessage(
                         {
-                          id: "ikRuLs",
-                          defaultMessage: "{current} of {max}",
-                          description: "translation progress",
+                          id: 'ikRuLs',
+                          defaultMessage: '{current} of {max}',
+                          description: 'translation progress',
                         },
                         entity.completion,
                       ),
@@ -109,10 +99,7 @@ const TranslationsEntitiesList: React.FC<
           () => (
             <TableRowLink>
               <TableCell colSpan={2}>
-                <FormattedMessage
-                  id="vcwrgW"
-                  defaultMessage="No translatable entities found"
-                />
+                <FormattedMessage id="vcwrgW" defaultMessage="No translatable entities found" />
               </TableCell>
             </TableRowLink>
           ),
@@ -121,5 +108,5 @@ const TranslationsEntitiesList: React.FC<
     </ResponsiveTable>
   );
 };
-TranslationsEntitiesList.displayName = "TranslationsEntitiesList";
+TranslationsEntitiesList.displayName = 'TranslationsEntitiesList';
 export default TranslationsEntitiesList;

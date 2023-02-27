@@ -1,1 +1,1 @@
-export const ENV_FLAG_PREFIX = "FF_";
+export const ENV_FLAG_PREFIX = 'FF_';

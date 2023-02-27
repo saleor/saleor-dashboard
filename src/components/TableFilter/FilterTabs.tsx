@@ -1,6 +1,6 @@
-import { Tabs } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { Tabs } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
 
 const useStyles = makeStyles(
   theme => ({
@@ -9,7 +9,7 @@ const useStyles = makeStyles(
       paddingLeft: theme.spacing(4),
     },
   }),
-  { name: "FilterTabs" },
+  { name: 'FilterTabs' },
 );
 
 interface FilterTabsProps {
@@ -23,11 +23,7 @@ export const FilterTabs: React.FC<FilterTabsProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <Tabs
-      className={classes.tabsRoot}
-      value={currentTab}
-      indicatorColor={"primary"}
-    >
+    <Tabs className={classes.tabsRoot} value={currentTab} indicatorColor={'primary'}>
       {children}
     </Tabs>
   );

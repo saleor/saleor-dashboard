@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import GiftCardUpdatePage from "./GiftCardUpdatePage";
-import GiftCardDetailsProvider from "./providers/GiftCardDetailsProvider";
-import GiftCardUpdateDialogsProvider from "./providers/GiftCardUpdateDialogsProvider";
-import GiftCardUpdateFormProvider from "./providers/GiftCardUpdateFormProvider/GiftCardUpdateFormProvider";
-import { GiftCardUpdatePageUrlQueryParams } from "./types";
+import GiftCardUpdatePage from './GiftCardUpdatePage';
+import GiftCardDetailsProvider from './providers/GiftCardDetailsProvider';
+import GiftCardUpdateDialogsProvider from './providers/GiftCardUpdateDialogsProvider';
+import GiftCardUpdateFormProvider from './providers/GiftCardUpdateFormProvider/GiftCardUpdateFormProvider';
+import { GiftCardUpdatePageUrlQueryParams } from './types';
 
 interface GiftCardUpdateProps {
   params: GiftCardUpdatePageUrlQueryParams;

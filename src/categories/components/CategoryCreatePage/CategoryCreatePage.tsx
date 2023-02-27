@@ -1,19 +1,19 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { CardSpacer } from "@dashboard/components/CardSpacer";
-import Metadata from "@dashboard/components/Metadata";
-import Savebar from "@dashboard/components/Savebar";
-import SeoForm from "@dashboard/components/SeoForm";
-import { ProductErrorFragment } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
-import React from "react";
-import { useIntl } from "react-intl";
+import { Content } from '@dashboard/components/AppLayout/Content';
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import { CardSpacer } from '@dashboard/components/CardSpacer';
+import Metadata from '@dashboard/components/Metadata';
+import Savebar from '@dashboard/components/Savebar';
+import SeoForm from '@dashboard/components/SeoForm';
+import { ProductErrorFragment } from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import { Box } from '@saleor/macaw-ui/next';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import CategoryDetailsForm from "../../components/CategoryDetailsForm";
-import CategoryCreateForm, { CategoryCreateData } from "./form";
+import CategoryDetailsForm from '../../components/CategoryDetailsForm';
+import CategoryCreateForm, { CategoryCreateData } from './form';
 
 export interface CategoryCreatePageProps {
   errors: ProductErrorFragment[];
@@ -40,26 +40,20 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
           <TopNav
             href={backUrl}
             title={intl.formatMessage({
-              id: "cgsY/X",
-              defaultMessage: "Create New Category",
-              description: "page header",
+              id: 'cgsY/X',
+              defaultMessage: 'Create New Category',
+              description: 'page header',
             })}
           />
           <Content>
             <Box height="100vh" __marginBottom="auto">
-              <CategoryDetailsForm
-                data={data}
-                disabled={disabled}
-                errors={errors}
-                onChange={change}
-              />
+              <CategoryDetailsForm data={data} disabled={disabled} errors={errors} onChange={change} />
               <CardSpacer />
               <SeoForm
                 allowEmptySlug={true}
                 helperText={intl.formatMessage({
-                  id: "wQdR8M",
-                  defaultMessage:
-                    "Add search engine title and description to make this category easier to find",
+                  id: 'wQdR8M',
+                  defaultMessage: 'Add search engine title and description to make this category easier to find',
                 })}
                 slug={data.slug}
                 slugPlaceholder={data.name}
@@ -86,5 +80,5 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
     </CategoryCreateForm>
   );
 };
-CategoryCreatePage.displayName = "CategoryCreatePage";
+CategoryCreatePage.displayName = 'CategoryCreatePage';
 export default CategoryCreatePage;

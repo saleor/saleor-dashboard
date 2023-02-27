@@ -1,9 +1,9 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   () => ({
     card: {
-      "&:last-child": {
+      '&:last-child': {
         paddingBottom: 0,
       },
     },
@@ -13,28 +13,28 @@ export const useStyles = makeStyles(
     colName: {
       fontSize: 14,
       paddingLeft: 0,
-      width: "auto",
+      width: 'auto',
     },
     colType: {
       fontSize: 14,
-      textAlign: "right",
+      textAlign: 'right',
       width: 235,
     },
     info: {
       fontSize: 14,
     },
     row: {
-      "&:last-child": {
-        "& td": {
-          borderBottom: "none",
+      '&:last-child': {
+        '& td': {
+          borderBottom: 'none',
         },
       },
     },
     table: {
-      tableLayout: "fixed",
+      tableLayout: 'fixed',
     },
   }),
   {
-    name: "SaleValue",
+    name: 'SaleValue',
   },
 );

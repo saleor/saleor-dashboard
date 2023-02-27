@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef } from 'react';
 
 /**
  * Hook that prevents hostory-back when use touchpad on Mac.
@@ -8,10 +8,7 @@ import React, { useRef } from "react";
  * https://caniuse.com/css-overscroll-behavior
  */
 
-export const usePreventHistoryBack = (
-  scroller: HTMLElement,
-  options?: { defaultEnabled?: boolean },
-) => {
+export const usePreventHistoryBack = (scroller: HTMLElement, options?: { defaultEnabled?: boolean }) => {
   const enabled = useRef(options?.defaultEnabled ?? true);
   const offsetY = useRef(0);
 
@@ -34,10 +31,10 @@ export const usePreventHistoryBack = (
       return;
     }
 
-    scroller.addEventListener("wheel", wheelHandler, { passive: false });
+    scroller.addEventListener('wheel', wheelHandler, { passive: false });
 
     return () => {
-      scroller.removeEventListener("wheel", wheelHandler);
+      scroller.removeEventListener('wheel', wheelHandler);
     };
   }, [scroller]);
 

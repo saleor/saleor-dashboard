@@ -1,11 +1,6 @@
-import { FieldType, FilterElementGeneric } from "@dashboard/components/Filter";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import {
-  FetchMoreProps,
-  KeyValue,
-  MinMax,
-  SearchPageProps,
-} from "@dashboard/types";
+import { FieldType, FilterElementGeneric } from '@dashboard/components/Filter';
+import { MultiAutocompleteChoiceType } from '@dashboard/components/MultiAutocompleteSelectField';
+import { FetchMoreProps, KeyValue, MinMax, SearchPageProps } from '@dashboard/types';
 
 export function createPriceField<K extends string = string>(
   name: K,
@@ -143,7 +138,7 @@ export function createBooleanField<K extends string>(
   name: K,
   label: string,
   defaultValue: boolean | undefined,
-  labels: Record<"positive" | "negative", string>,
+  labels: Record<'positive' | 'negative', string>,
 ): FilterElementGeneric<K, FieldType.boolean> {
   return {
     active: false,
@@ -161,6 +156,6 @@ export function createBooleanField<K extends string>(
       },
     ],
     type: FieldType.boolean,
-    value: [defaultValue?.toString() ?? ""],
+    value: [defaultValue?.toString() ?? ''],
   };
 }

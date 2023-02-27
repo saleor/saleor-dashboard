@@ -1,10 +1,10 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   () => ({
     root: {
-      textDecoration: "none",
+      textDecoration: 'none',
     },
   }),
-  { name: "InternalLink" },
+  { name: 'InternalLink' },
 );

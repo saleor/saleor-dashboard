@@ -1,21 +1,18 @@
-import { AppInstallation, InstalledApp } from "@dashboard/new-apps/types";
-import { ListProps } from "@dashboard/types";
-import { Skeleton } from "@material-ui/lab";
-import { List } from "@saleor/macaw-ui/next";
-import React from "react";
+import { AppInstallation, InstalledApp } from '@dashboard/new-apps/types';
+import { ListProps } from '@dashboard/types';
+import { Skeleton } from '@material-ui/lab';
+import { List } from '@saleor/macaw-ui/next';
+import React from 'react';
 
-import InstalledAppListRow from "../InstalledAppListRow";
-import NotInstalledAppListRow from "../NotInstalledAppListRow";
+import InstalledAppListRow from '../InstalledAppListRow';
+import NotInstalledAppListRow from '../NotInstalledAppListRow';
 
 interface InstalledAppListProps extends ListProps {
   appList?: InstalledApp[];
   appInstallationList?: AppInstallation[];
 }
 
-const InstalledAppList: React.FC<InstalledAppListProps> = ({
-  appList,
-  appInstallationList,
-}) => {
+const InstalledAppList: React.FC<InstalledAppListProps> = ({ appList, appInstallationList }) => {
   if (!appList || !appInstallationList) {
     return <Skeleton />;
   }
@@ -31,12 +28,7 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
         />
       ))}
       {appList.map(({ app, isExternal, logo }) => (
-        <InstalledAppListRow
-          key={app.id}
-          app={app}
-          isExternal={isExternal}
-          logo={logo}
-        />
+        <InstalledAppListRow key={app.id} app={app} isExternal={isExternal} logo={logo} />
       ))}
     </List>
   );

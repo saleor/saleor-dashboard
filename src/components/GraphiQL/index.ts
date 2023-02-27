@@ -1,2 +1,2 @@
-export { default } from "./GraphiQL";
-export * from "./GraphiQL";
+export { default } from './GraphiQL';
+export * from './GraphiQL';

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export interface UseWizardActions<T> {
   next: () => void;
@@ -9,15 +9,11 @@ export interface UseWizardOpts<T> {
   onTransition: (prevStep: T, nextStep: T) => void;
 }
 export type UseWizard<T> = [T, UseWizardActions<T>];
-function useWizard<T>(
-  initial: T,
-  steps: T[],
-  opts?: UseWizardOpts<T>,
-): UseWizard<T> {
+function useWizard<T>(initial: T, steps: T[], opts?: UseWizardOpts<T>): UseWizard<T> {
   const [stepIndex, setStepIndex] = useState(steps.indexOf(initial));
 
   function goToStep(nextStepIndex) {
-    if (typeof opts?.onTransition === "function") {
+    if (typeof opts?.onTransition === 'function') {
       opts.onTransition(steps[stepIndex], steps[nextStepIndex]);
     }
     setStepIndex(nextStepIndex);
@@ -25,7 +21,7 @@ function useWizard<T>(
 
   function next() {
     if (stepIndex === steps.length - 1) {
-      console.error("This is the last step");
+      console.error('This is the last step');
     } else {
       goToStep(stepIndex + 1);
     }
@@ -33,7 +29,7 @@ function useWizard<T>(
 
   function prev() {
     if (stepIndex === 0) {
-      console.error("This is the first step");
+      console.error('This is the first step');
     } else {
       goToStep(stepIndex - 1);
     }
@@ -42,7 +38,7 @@ function useWizard<T>(
   function set(step: T) {
     const newStepIndex = steps.findIndex(s => s === step);
     if (newStepIndex === -1) {
-      console.error("Step does not exist");
+      console.error('Step does not exist');
     } else {
       goToStep(newStepIndex);
     }

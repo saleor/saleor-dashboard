@@ -1,16 +1,16 @@
-import ExternalLink from "@dashboard/components/ExternalLink";
-import { useTheme } from "@material-ui/core/styles";
-import useMediaQuery from "@material-ui/core/useMediaQuery";
-import React from "react";
-import GitHubButton from "react-github-btn";
-import { FormattedMessage } from "react-intl";
+import ExternalLink from '@dashboard/components/ExternalLink';
+import { useTheme } from '@material-ui/core/styles';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import React from 'react';
+import GitHubButton from 'react-github-btn';
+import { FormattedMessage } from 'react-intl';
 
-import { SALEOR_GRAPHQL_URL, SALEOR_STOREFRONT_URL } from "./constants";
-import styles from "./styles";
+import { SALEOR_GRAPHQL_URL, SALEOR_STOREFRONT_URL } from './constants';
+import styles from './styles';
 
 export const DemoBanner: React.FC = () => {
   const theme = useTheme();
-  const isMdUp = useMediaQuery(theme.breakpoints.up("md"));
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
   const classes = styles();
 
   return (
@@ -24,9 +24,7 @@ export const DemoBanner: React.FC = () => {
                 id="4gZl/n"
                 defaultMessage="See <emphasis>DEMO STOREFRONT</emphasis>"
                 values={{
-                  emphasis: (children: any) => (
-                    <em className={classes.textEmphasis}>{children}</em>
-                  ),
+                  emphasis: (children: any) => <em className={classes.textEmphasis}>{children}</em>,
                 }}
               />
             ) : (
@@ -42,9 +40,7 @@ export const DemoBanner: React.FC = () => {
                 id="/X8Mjx"
                 defaultMessage="Play with <emphasis>GraphQL API</emphasis>"
                 values={{
-                  emphasis: (children: any) => (
-                    <em className={classes.textEmphasis}>{children}</em>
-                  ),
+                  emphasis: (children: any) => <em className={classes.textEmphasis}>{children}</em>,
                 }}
               />
             ) : (
@@ -71,5 +67,5 @@ export const DemoBanner: React.FC = () => {
   );
 };
 
-DemoBanner.displayName = "DemoBanner";
+DemoBanner.displayName = 'DemoBanner';
 export default DemoBanner;

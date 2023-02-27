@@ -2,20 +2,20 @@ import {
   LanguageCodeEnum,
   useCategoryTranslationDetailsQuery,
   useUpdateCategoryTranslationsMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors } from "@dashboard/misc";
-import { stringifyQs } from "@dashboard/utils/urls";
-import { OutputData } from "@editorjs/editorjs";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import useShop from '@dashboard/hooks/useShop';
+import { commonMessages } from '@dashboard/intl';
+import { extractMutationErrors } from '@dashboard/misc';
+import { stringifyQs } from '@dashboard/utils/urls';
+import { OutputData } from '@editorjs/editorjs';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import TranslationsCategoriesPage from "../components/TranslationsCategoriesPage";
-import { TranslationField, TranslationInputFieldName } from "../types";
-import { getParsedTranslationInputData } from "../utils";
+import TranslationsCategoriesPage from '../components/TranslationsCategoriesPage';
+import { TranslationField, TranslationInputFieldName } from '../types';
+import { getParsedTranslationInputData } from '../utils';
 
 export interface TranslationsCategoriesQueryParams {
   activeField: string;
@@ -26,11 +26,7 @@ export interface TranslationsCategoriesProps {
   params: TranslationsCategoriesQueryParams;
 }
 
-const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({ id, languageCode, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -40,25 +36,22 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
     variables: { id, language: languageCode },
   });
 
-  const [
-    updateTranslations,
-    updateTranslationsOpts,
-  ] = useUpdateCategoryTranslationsMutation({
+  const [updateTranslations, updateTranslationsOpts] = useUpdateCategoryTranslationsMutation({
     onCompleted: data => {
       if (data.categoryTranslate.errors.length === 0) {
         categoryTranslations.refetch();
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate("?", { replace: true });
+        navigate('?', { replace: true });
       }
     },
   });
 
   const onEdit = (field: string) =>
     navigate(
-      "?" +
+      '?' +
         stringifyQs({
           activeField: field,
         }),
@@ -66,13 +59,10 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
     );
 
   const onDiscard = () => {
-    navigate("?", { replace: true });
+    navigate('?', { replace: true });
   };
 
-  const handleSubmit = (
-    { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string | OutputData,
-  ) =>
+  const handleSubmit = ({ name: fieldName }: TranslationField<TranslationInputFieldName>, data: string | OutputData) =>
     extractMutationErrors(
       updateTranslations({
         variables: {
@@ -99,13 +89,9 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      data={
-        translation?.__typename === "CategoryTranslatableContent"
-          ? translation
-          : null
-      }
+      data={translation?.__typename === 'CategoryTranslatableContent' ? translation : null}
     />
   );
 };
-TranslationsCategories.displayName = "TranslationsCategories";
+TranslationsCategories.displayName = 'TranslationsCategories';
 export default TranslationsCategories;

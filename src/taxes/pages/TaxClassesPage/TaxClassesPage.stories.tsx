@@ -1,15 +1,15 @@
-import Decorator from "@dashboard/storybook/Decorator";
-import { taxClasses } from "@dashboard/taxes/fixtures";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import Decorator from '@dashboard/storybook/Decorator';
+import { taxClasses } from '@dashboard/taxes/fixtures';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import TaxClassesPage from "./TaxClassesPage";
+import TaxClassesPage from './TaxClassesPage';
 
 const props = {
   taxClasses,
   selectedTaxClassId: taxClasses[0].id,
   handleTabChange: () => undefined,
-  savebarState: "default" as const,
+  savebarState: 'default' as const,
   disabled: false,
   onCreateNewButtonClick: () => undefined,
   onTaxClassUpdate: () => undefined,
@@ -17,7 +17,7 @@ const props = {
   onTaxClassDelete: () => undefined,
 };
 
-storiesOf("Taxes / Tax classes view", module)
+storiesOf('Taxes / Tax classes view', module)
   .addDecorator(Decorator)
-  .add("loading", () => <TaxClassesPage {...props} taxClasses={undefined} />)
-  .add("default", () => <TaxClassesPage {...props} />);
+  .add('loading', () => <TaxClassesPage {...props} taxClasses={undefined} />)
+  .add('default', () => <TaxClassesPage {...props} />);

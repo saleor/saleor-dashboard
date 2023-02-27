@@ -1,13 +1,13 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 const useStyles = makeStyles(
   {
     title: {
-      alignItems: "center",
-      display: "inline-flex",
+      alignItems: 'center',
+      display: 'inline-flex',
     },
   },
-  { name: "GiftCardUpdatePageHeader" },
+  { name: 'GiftCardUpdatePageHeader' },
 );
 
 export default useStyles;

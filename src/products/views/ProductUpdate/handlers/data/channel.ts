@@ -1,21 +1,15 @@
-import {
-  DatagridChange,
-  DatagridChangeOpts,
-} from "@dashboard/components/Datagrid/useDatagridChange";
+import { DatagridChange, DatagridChangeOpts } from '@dashboard/components/Datagrid/useDatagridChange';
 import {
   ProductFragment,
   ProductVariantChannelListingAddInput,
   ProductVariantChannelListingUpdateInput,
-} from "@dashboard/graphql";
-import {
-  getColumnChannel,
-  getColumnChannelAvailability,
-} from "@dashboard/products/utils/datagrid";
+} from '@dashboard/graphql';
+import { getColumnChannel, getColumnChannelAvailability } from '@dashboard/products/utils/datagrid';
 
 export function getUpdateVariantChannelInputs(
   data: DatagridChangeOpts,
   index: number,
-  variant: ProductFragment["variants"][number],
+  variant: ProductFragment['variants'][number],
 ): ProductVariantChannelListingUpdateInput {
   return data.updates
     .filter(byCurrentRowByIndex(index, data))
@@ -23,14 +17,11 @@ export function getUpdateVariantChannelInputs(
     .filter(byChannelColumn)
     .reduce(byColumn, [])
     .map(dataGridChangeToFlatChannel)
-    .reduce<ProductVariantChannelListingUpdateInput>(
-      toUpdateChannelData(variant),
-      {
-        create: [],
-        remove: [],
-        update: [],
-      },
-    );
+    .reduce<ProductVariantChannelListingUpdateInput>(toUpdateChannelData(variant), {
+      create: [],
+      remove: [],
+      update: [],
+    });
 }
 
 export function getVariantChannelsInputs(
@@ -89,20 +80,13 @@ function dataGridChangeToFlatChannel(change: DatagridChange) {
   };
 }
 
-function byNotNullPrice(
-  change: ReturnType<typeof dataGridChangeToFlatChannel>,
-) {
+function byNotNullPrice(change: ReturnType<typeof dataGridChangeToFlatChannel>) {
   return change.price !== null;
 }
 
-function toUpdateChannelData(variant: ProductFragment["variants"][number]) {
-  return (
-    acc: ProductVariantChannelListingUpdateInput,
-    channel: ReturnType<typeof dataGridChangeToFlatChannel>,
-  ) => {
-    const variantChannel = variant.channelListings.find(
-      c => c.channel.id === channel.channelId,
-    );
+function toUpdateChannelData(variant: ProductFragment['variants'][number]) {
+  return (acc: ProductVariantChannelListingUpdateInput, channel: ReturnType<typeof dataGridChangeToFlatChannel>) => {
+    const variantChannel = variant.channelListings.find(c => c.channel.id === channel.channelId);
 
     if (channel.price === null) {
       if (variantChannel) {

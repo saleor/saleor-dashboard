@@ -1,50 +1,29 @@
-import ActionDialog, {
-  ActionDialogProps,
-} from "@dashboard/components/ActionDialog";
-import DeleteWarningDialogConsentContent from "@dashboard/components/TypeDeleteWarningDialog/DeleteWarningDialogConsentContent";
-import { GiftCardsListConsumerProps } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
-import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
-import { GiftCardDataFragment } from "@dashboard/graphql";
-import { getById } from "@dashboard/misc";
-import {
-  CircularProgress,
-  DialogContentText,
-  Typography,
-} from "@material-ui/core";
-import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
+import ActionDialog, { ActionDialogProps } from '@dashboard/components/ActionDialog';
+import DeleteWarningDialogConsentContent from '@dashboard/components/TypeDeleteWarningDialog/DeleteWarningDialogConsentContent';
+import { GiftCardsListConsumerProps } from '@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider';
+import { ExtendedGiftCard } from '@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types';
+import { GiftCardDataFragment } from '@dashboard/graphql';
+import { getById } from '@dashboard/misc';
+import { CircularProgress, DialogContentText, Typography } from '@material-ui/core';
+import React, { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 
-import { giftCardDeleteDialogMessages as messages } from "./messages";
-import { useGiftCardDeleteDialogContentStyles as useStyles } from "./styles";
+import { giftCardDeleteDialogMessages as messages } from './messages';
+import { useGiftCardDeleteDialogContentStyles as useStyles } from './styles';
 
 export const SINGLE = 1;
 
-type DeleteDialogContentGiftCard = Pick<
-  ExtendedGiftCard<GiftCardDataFragment>,
-  "currentBalance" | "id"
->;
+type DeleteDialogContentGiftCard = Pick<ExtendedGiftCard<GiftCardDataFragment>, 'currentBalance' | 'id'>;
 
-export interface GiftCardDeleteDialogContentProps<
-  TGiftCard extends DeleteDialogContentGiftCard
->
-  extends Pick<
-      ActionDialogProps,
-      "open" | "onClose" | "onConfirm" | "confirmButtonState"
-    >,
-    Partial<
-      Pick<
-        GiftCardsListConsumerProps,
-        "listElements" | "selectedItemsCount" | "giftCards" | "loading"
-      >
-    > {
+export interface GiftCardDeleteDialogContentProps<TGiftCard extends DeleteDialogContentGiftCard>
+  extends Pick<ActionDialogProps, 'open' | 'onClose' | 'onConfirm' | 'confirmButtonState'>,
+    Partial<Pick<GiftCardsListConsumerProps, 'listElements' | 'selectedItemsCount' | 'giftCards' | 'loading'>> {
   id?: string;
   giftCard?: TGiftCard;
   singleDeletion: boolean;
 }
 
-function GiftCardDeleteDialogContent<
-  TGiftCard extends DeleteDialogContentGiftCard
->({
+function GiftCardDeleteDialogContent<TGiftCard extends DeleteDialogContentGiftCard>({
   id,
   open,
   onClose,

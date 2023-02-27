@@ -1,13 +1,13 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent } from 'react';
 
-import { createCountryHandler } from "./createCountryHandler";
+import { createCountryHandler } from './createCountryHandler';
 
-describe("createCountryHandler", () => {
-  it("calls original country handler and restets the country area field", () => {
+describe('createCountryHandler', () => {
+  it('calls original country handler and restets the country area field', () => {
     // Arrange
     const originalCountryHandler = jest.fn();
     const setFn = jest.fn();
-    const exampleEvent = { target: "some event" } as ChangeEvent<any>;
+    const exampleEvent = { target: 'some event' } as ChangeEvent<any>;
     const newHandler = createCountryHandler(originalCountryHandler, setFn);
 
     // Act
@@ -15,6 +15,6 @@ describe("createCountryHandler", () => {
 
     // Assert
     expect(originalCountryHandler).toBeCalledWith(exampleEvent);
-    expect(setFn).toBeCalledWith({ countryArea: "" });
+    expect(setFn).toBeCalledWith({ countryArea: '' });
   });
 });

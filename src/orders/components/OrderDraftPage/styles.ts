@@ -1,15 +1,15 @@
-import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { makeStyles } from '@saleor/macaw-ui';
+import { vars } from '@saleor/macaw-ui/next';
 
 export const useAlertStyles = makeStyles(
   theme => ({
     root: {
       marginBottom: theme.spacing(3),
-      "& .MuiCardContent-root": {
-        backgroundColor: "unset",
+      '& .MuiCardContent-root': {
+        backgroundColor: 'unset',
         paddingRight: vars.space[11],
       },
     },
   }),
-  { name: "OrderDraftAlert" },
+  { name: 'OrderDraftAlert' },
 );

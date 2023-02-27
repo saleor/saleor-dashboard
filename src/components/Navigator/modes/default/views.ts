@@ -1,38 +1,34 @@
-import { appsListUrl } from "@dashboard/apps/urls";
-import { attributeListUrl } from "@dashboard/attributes/urls";
-import { categoryListUrl } from "@dashboard/categories/urls";
-import { collectionListUrl } from "@dashboard/collections/urls";
-import { customerListUrl } from "@dashboard/customers/urls";
-import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
-import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
-import { menuListUrl } from "@dashboard/navigation/urls";
-import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
-import { pageListUrl } from "@dashboard/pages/urls";
-import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
-import { pluginListUrl } from "@dashboard/plugins/urls";
-import { productListUrl } from "@dashboard/products/urls";
-import { productTypeListUrl } from "@dashboard/productTypes/urls";
-import { shippingZonesListUrl } from "@dashboard/shipping/urls";
-import { siteSettingsUrl } from "@dashboard/siteSettings/urls";
-import { staffListUrl } from "@dashboard/staff/urls";
-import { taxConfigurationListUrl } from "@dashboard/taxes/urls";
-import { languageListUrl } from "@dashboard/translations/urls";
-import { warehouseListUrl } from "@dashboard/warehouses/urls";
-import { score } from "fuzzaldrin";
-import { IntlShape } from "react-intl";
+import { appsListUrl } from '@dashboard/apps/urls';
+import { attributeListUrl } from '@dashboard/attributes/urls';
+import { categoryListUrl } from '@dashboard/categories/urls';
+import { collectionListUrl } from '@dashboard/collections/urls';
+import { customerListUrl } from '@dashboard/customers/urls';
+import { saleListUrl, voucherListUrl } from '@dashboard/discounts/urls';
+import { UseNavigatorResult } from '@dashboard/hooks/useNavigator';
+import { sectionNames } from '@dashboard/intl';
+import { menuListUrl } from '@dashboard/navigation/urls';
+import { orderDraftListUrl, orderListUrl } from '@dashboard/orders/urls';
+import { pageListUrl } from '@dashboard/pages/urls';
+import { permissionGroupListUrl } from '@dashboard/permissionGroups/urls';
+import { pluginListUrl } from '@dashboard/plugins/urls';
+import { productListUrl } from '@dashboard/products/urls';
+import { productTypeListUrl } from '@dashboard/productTypes/urls';
+import { shippingZonesListUrl } from '@dashboard/shipping/urls';
+import { siteSettingsUrl } from '@dashboard/siteSettings/urls';
+import { staffListUrl } from '@dashboard/staff/urls';
+import { taxConfigurationListUrl } from '@dashboard/taxes/urls';
+import { languageListUrl } from '@dashboard/translations/urls';
+import { warehouseListUrl } from '@dashboard/warehouses/urls';
+import { score } from 'fuzzaldrin';
+import { IntlShape } from 'react-intl';
 
-import { QuickSearchActionInput } from "../../types";
+import { QuickSearchActionInput } from '../../types';
 
 interface View {
   label: string;
   url: string;
 }
-function searchInViews(
-  search: string,
-  intl: IntlShape,
-  navigate: UseNavigatorResult,
-): QuickSearchActionInput[] {
+function searchInViews(search: string, intl: IntlShape, navigate: UseNavigatorResult): QuickSearchActionInput[] {
   const views: View[] = [
     {
       label: intl.formatMessage(sectionNames.apps),
@@ -60,7 +56,7 @@ function searchInViews(
     },
     {
       label: intl.formatMessage(sectionNames.home),
-      url: "/",
+      url: '/',
     },
     {
       label: intl.formatMessage(sectionNames.navigation),
@@ -132,7 +128,7 @@ function searchInViews(
     },
     score: score(view.label, search),
     text: view.label,
-    type: "view",
+    type: 'view',
   }));
 }
 

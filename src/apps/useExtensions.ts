@@ -1,20 +1,15 @@
-import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
-import {
-  AppExtensionMountEnum,
-  ExtensionListQuery,
-  PermissionEnum,
-  useExtensionListQuery,
-} from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
-import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { useUserPermissions } from '@dashboard/auth/hooks/useUserPermissions';
+import { AppExtensionMountEnum, ExtensionListQuery, PermissionEnum, useExtensionListQuery } from '@dashboard/graphql';
+import { RelayToFlat } from '@dashboard/types';
+import { mapEdgesToItems } from '@dashboard/utils/maps';
 
-import { useExternalApp } from "./components/ExternalAppContext/";
-import { AppData } from "./components/ExternalAppContext/context";
-import { AppDetailsUrlMountQueryParams } from "./urls";
+import { useExternalApp } from './components/ExternalAppContext/';
+import { AppData } from './components/ExternalAppContext/context';
+import { AppDetailsUrlMountQueryParams } from './urls';
 
 export interface Extension {
   id: string;
-  app: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>[0]["app"];
+  app: RelayToFlat<NonNullable<ExtensionListQuery['appExtensions']>>[0]['app'];
   accessToken: string;
   permissions: PermissionEnum[];
   label: string;
@@ -23,23 +18,14 @@ export interface Extension {
   open(): void;
 }
 
-export interface ExtensionWithParams extends Omit<Extension, "open"> {
+export interface ExtensionWithParams extends Omit<Extension, 'open'> {
   open(params: AppDetailsUrlMountQueryParams): void;
 }
 
 export const extensionMountPoints = {
-  CUSTOMER_LIST: [
-    AppExtensionMountEnum.CUSTOMER_OVERVIEW_CREATE,
-    AppExtensionMountEnum.CUSTOMER_OVERVIEW_MORE_ACTIONS,
-  ],
-  PRODUCT_LIST: [
-    AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE,
-    AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS,
-  ],
-  ORDER_LIST: [
-    AppExtensionMountEnum.ORDER_OVERVIEW_CREATE,
-    AppExtensionMountEnum.ORDER_OVERVIEW_MORE_ACTIONS,
-  ],
+  CUSTOMER_LIST: [AppExtensionMountEnum.CUSTOMER_OVERVIEW_CREATE, AppExtensionMountEnum.CUSTOMER_OVERVIEW_MORE_ACTIONS],
+  PRODUCT_LIST: [AppExtensionMountEnum.PRODUCT_OVERVIEW_CREATE, AppExtensionMountEnum.PRODUCT_OVERVIEW_MORE_ACTIONS],
+  ORDER_LIST: [AppExtensionMountEnum.ORDER_OVERVIEW_CREATE, AppExtensionMountEnum.ORDER_OVERVIEW_MORE_ACTIONS],
   CUSTOMER_DETAILS: [AppExtensionMountEnum.CUSTOMER_DETAILS_MORE_ACTIONS],
   ORDER_DETAILS: [AppExtensionMountEnum.ORDER_DETAILS_MORE_ACTIONS],
   PRODUCT_DETAILS: [AppExtensionMountEnum.PRODUCT_DETAILS_MORE_ACTIONS],
@@ -54,29 +40,27 @@ export const extensionMountPoints = {
 };
 
 const filterAndMapToTarget = (
-  extensions: RelayToFlat<NonNullable<ExtensionListQuery["appExtensions"]>>,
+  extensions: RelayToFlat<NonNullable<ExtensionListQuery['appExtensions']>>,
   openApp: (appData: AppData) => void,
 ): ExtensionWithParams[] =>
-  extensions.map(
-    ({ id, accessToken, permissions, url, label, mount, target, app }) => ({
-      id,
-      app,
-      accessToken: accessToken || "",
-      permissions: permissions.map(({ code }) => code),
-      url,
-      label,
-      mount,
-      open: (params: AppDetailsUrlMountQueryParams) =>
-        openApp({
-          id: app.id,
-          appToken: accessToken || "",
-          src: url,
-          label,
-          target,
-          params,
-        }),
-    }),
-  );
+  extensions.map(({ id, accessToken, permissions, url, label, mount, target, app }) => ({
+    id,
+    app,
+    accessToken: accessToken || '',
+    permissions: permissions.map(({ code }) => code),
+    url,
+    label,
+    mount,
+    open: (params: AppDetailsUrlMountQueryParams) =>
+      openApp({
+        id: app.id,
+        appToken: accessToken || '',
+        src: url,
+        label,
+        target,
+        params,
+      }),
+  }));
 
 const mapToMenuItem = ({ label, id, open }: Extension) => ({
   label,
@@ -84,37 +68,18 @@ const mapToMenuItem = ({ label, id, open }: Extension) => ({
   onSelect: open,
 });
 
-export const mapToMenuItems = (extensions: ExtensionWithParams[]) =>
-  extensions.map(mapToMenuItem);
+export const mapToMenuItems = (extensions: ExtensionWithParams[]) => extensions.map(mapToMenuItem);
 
-export const mapToMenuItemsForProductOverviewActions = (
-  extensions: ExtensionWithParams[],
-  productIds: string[],
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ productIds }) }),
-  );
+export const mapToMenuItemsForProductOverviewActions = (extensions: ExtensionWithParams[], productIds: string[]) =>
+  extensions.map(extension => mapToMenuItem({ ...extension, open: () => extension.open({ productIds }) }));
 
-export const mapToMenuItemsForProductDetails = (
-  extensions: ExtensionWithParams[],
-  productId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ productId }) }),
-  );
+export const mapToMenuItemsForProductDetails = (extensions: ExtensionWithParams[], productId: string) =>
+  extensions.map(extension => mapToMenuItem({ ...extension, open: () => extension.open({ productId }) }));
 
-export const mapToMenuItemsForCustomerDetails = (
-  extensions: ExtensionWithParams[],
-  customerId: string,
-) =>
-  extensions.map(extension =>
-    mapToMenuItem({ ...extension, open: () => extension.open({ customerId }) }),
-  );
+export const mapToMenuItemsForCustomerDetails = (extensions: ExtensionWithParams[], customerId: string) =>
+  extensions.map(extension => mapToMenuItem({ ...extension, open: () => extension.open({ customerId }) }));
 
-export const mapToMenuItemsForCustomerOverviewActions = (
-  extensions: ExtensionWithParams[],
-  customerIds: string[],
-) =>
+export const mapToMenuItemsForCustomerOverviewActions = (extensions: ExtensionWithParams[], customerIds: string[]) =>
   extensions.map(extension =>
     mapToMenuItem({
       ...extension,
@@ -122,10 +87,7 @@ export const mapToMenuItemsForCustomerOverviewActions = (
     }),
   );
 
-export const mapToMenuItemsForOrderDetails = (
-  extensions: ExtensionWithParams[],
-  orderId?: string,
-) =>
+export const mapToMenuItemsForOrderDetails = (extensions: ExtensionWithParams[], orderId?: string) =>
   extensions.map(extension =>
     mapToMenuItem({
       ...extension,
@@ -133,17 +95,13 @@ export const mapToMenuItemsForOrderDetails = (
     }),
   );
 
-export const useExtensions = <T extends AppExtensionMountEnum>(
-  mountList: T[],
-): Record<T, Extension[]> => {
+export const useExtensions = <T extends AppExtensionMountEnum>(mountList: T[]): Record<T, Extension[]> => {
   const { openApp } = useExternalApp();
   const permissions = useUserPermissions();
-  const extensionsPermissions = permissions?.find(
-    perm => perm.code === PermissionEnum.MANAGE_APPS,
-  );
+  const extensionsPermissions = permissions?.find(perm => perm.code === PermissionEnum.MANAGE_APPS);
 
   const { data } = useExtensionListQuery({
-    fetchPolicy: "cache-first",
+    fetchPolicy: 'cache-first',
     variables: {
       filter: {
         mount: mountList,
@@ -152,10 +110,7 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
     skip: !extensionsPermissions,
   });
 
-  const extensions = filterAndMapToTarget(
-    mapEdgesToItems(data?.appExtensions ?? undefined) || [],
-    openApp,
-  );
+  const extensions = filterAndMapToTarget(mapEdgesToItems(data?.appExtensions ?? undefined) || [], openApp);
 
   const extensionsMap = mountList.reduce(
     (extensionsMap, mount) => ({ ...extensionsMap, [mount]: [] }),
@@ -165,10 +120,7 @@ export const useExtensions = <T extends AppExtensionMountEnum>(
   return extensions.reduce(
     (prevExtensionsMap, extension) => ({
       ...prevExtensionsMap,
-      [extension.mount]: [
-        ...(prevExtensionsMap[extension.mount] || []),
-        extension,
-      ],
+      [extension.mount]: [...(prevExtensionsMap[extension.mount] || []), extension],
     }),
     extensionsMap,
   );

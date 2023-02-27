@@ -1,19 +1,19 @@
-import { defineMessages } from "react-intl";
+import { defineMessages } from 'react-intl';
 
 export const messages = defineMessages({
   integrations: {
-    id: "MaTR88",
-    defaultMessage: "Integrations",
-    description: "header",
+    id: 'MaTR88',
+    defaultMessage: 'Integrations',
+    description: 'header',
   },
   forkOnGithub: {
-    id: "zmnGkp",
-    defaultMessage: "Fork on GitHub",
-    description: "button",
+    id: 'zmnGkp',
+    defaultMessage: 'Fork on GitHub',
+    description: 'button',
   },
   releaseComingSoon: {
-    id: "oGIPb7",
-    defaultMessage: "Coming soon ({releaseDate})",
-    description: "information",
+    id: 'oGIPb7',
+    defaultMessage: 'Coming soon ({releaseDate})',
+    description: 'information',
   },
 });

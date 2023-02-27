@@ -1,8 +1,8 @@
-import { Box, List } from "@saleor/macaw-ui/next";
-import React from "react";
+import { Box, List } from '@saleor/macaw-ui/next';
+import React from 'react';
 
-import { MenuItem } from "./Item";
-import { useMenuStructure } from "./useMenuStructure";
+import { MenuItem } from './Item';
+import { useMenuStructure } from './useMenuStructure';
 
 export const Menu = () => {
   const menuStructure = useMenuStructure();

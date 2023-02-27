@@ -1,34 +1,27 @@
-import {
-  MenuItemCreateInput,
-  MenuItemFragment,
-  MenuItemInput,
-  MenuItemMoveInput,
-} from "@dashboard/graphql";
+import { MenuItemCreateInput, MenuItemFragment, MenuItemInput, MenuItemMoveInput } from '@dashboard/graphql';
 
-import { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
-import { MenuItemDialogFormData } from "../../components/MenuItemDialog";
-import { unknownTypeError } from "../../components/MenuItems";
+import { MenuDetailsSubmitData } from '../../components/MenuDetailsPage';
+import { MenuItemDialogFormData } from '../../components/MenuItemDialog';
+import { unknownTypeError } from '../../components/MenuItems';
 
-export function getMenuItemInputData(
-  data: MenuItemDialogFormData,
-): MenuItemInput {
+export function getMenuItemInputData(data: MenuItemDialogFormData): MenuItemInput {
   const variables: MenuItemInput = {
     name: data.name,
   };
   switch (data.type) {
-    case "category":
+    case 'category':
       variables.category = data.id;
       break;
 
-    case "collection":
+    case 'collection':
       variables.collection = data.id;
       break;
 
-    case "page":
+    case 'page':
       variables.page = data.id;
       break;
 
-    case "link":
+    case 'link':
       variables.url = data.id;
       break;
 
@@ -39,28 +32,25 @@ export function getMenuItemInputData(
   return variables;
 }
 
-export function getMenuItemCreateInputData(
-  menu: string,
-  data: MenuItemDialogFormData,
-): MenuItemCreateInput {
+export function getMenuItemCreateInputData(menu: string, data: MenuItemDialogFormData): MenuItemCreateInput {
   const variables: MenuItemCreateInput = {
     menu,
     name: data.name,
   };
   switch (data.type) {
-    case "category":
+    case 'category':
       variables.category = data.id;
       break;
 
-    case "collection":
+    case 'collection':
       variables.collection = data.id;
       break;
 
-    case "page":
+    case 'page':
       variables.page = data.id;
       break;
 
-    case "link":
+    case 'link':
       variables.url = data.id;
       break;
 
@@ -73,7 +63,7 @@ export function getMenuItemCreateInputData(
 
 export function getInitialDisplayValue(item: MenuItemFragment): string {
   if (!item) {
-    return "...";
+    return '...';
   }
   if (item.category) {
     return item.category.name;
@@ -84,13 +74,13 @@ export function getInitialDisplayValue(item: MenuItemFragment): string {
   } else if (item.url) {
     return item.url;
   } else {
-    return "";
+    return '';
   }
 }
 
 export function getMoves(data: MenuDetailsSubmitData): MenuItemMoveInput[] {
   return data.operations
-    .filter(operation => operation.type === "move")
+    .filter(operation => operation.type === 'move')
     .map(move => ({
       itemId: move.id,
       parentId: move.parentId,
@@ -99,7 +89,5 @@ export function getMoves(data: MenuDetailsSubmitData): MenuItemMoveInput[] {
 }
 
 export function getRemoveIds(data: MenuDetailsSubmitData): string[] {
-  return data.operations
-    .filter(operation => operation.type === "remove")
-    .map(operation => operation.id);
+  return data.operations.filter(operation => operation.type === 'remove').map(operation => operation.id);
 }

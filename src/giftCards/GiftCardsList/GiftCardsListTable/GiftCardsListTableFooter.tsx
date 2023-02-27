@@ -1,10 +1,10 @@
-import TablePagination from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import usePaginator from "@dashboard/hooks/usePaginator";
-import { TableFooter } from "@material-ui/core";
-import React from "react";
+import TablePagination from '@dashboard/components/TablePagination';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import usePaginator from '@dashboard/hooks/usePaginator';
+import { TableFooter } from '@material-ui/core';
+import React from 'react';
 
-import { useGiftCardList } from "../providers/GiftCardListProvider";
+import { useGiftCardList } from '../providers/GiftCardListProvider';
 
 const GiftCardsListTableFooter: React.FC = () => {
   const {

@@ -1,2 +1,2 @@
-export const localStorageKey = "activeMacawUITheme";
-export const defaultTheme = "defaultLight";
+export const localStorageKey = 'activeMacawUITheme';
+export const defaultTheme = 'defaultLight';

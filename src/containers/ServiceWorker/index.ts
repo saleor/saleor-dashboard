@@ -1,2 +1,2 @@
-export * from "./ServiceWorker";
-export { default } from "./ServiceWorker";
+export * from './ServiceWorker';
+export { default } from './ServiceWorker';

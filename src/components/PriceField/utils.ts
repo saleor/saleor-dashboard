@@ -1,17 +1,17 @@
-import { SEPARATOR_CHARACTERS } from "./consts";
+import { SEPARATOR_CHARACTERS } from './consts';
 
-const getNumberFormatting = (currency: string = "USD") => {
+const getNumberFormatting = (currency: string = 'USD') => {
   try {
-    return new Intl.NumberFormat("en-GB", {
-      style: "currency",
+    return new Intl.NumberFormat('en-GB', {
+      style: 'currency',
       currency,
     });
   } catch (e) {
     try {
       // fallback to "USD" if currency wasn't recognised
-      return new Intl.NumberFormat("en-GB", {
-        style: "currency",
-        currency: "USD",
+      return new Intl.NumberFormat('en-GB', {
+        style: 'currency',
+        currency: 'USD',
       });
     } catch {
       // everything is broken - try to return something that makes sense
@@ -29,5 +29,4 @@ export const getCurrencyDecimalPoints = (currency?: string) => {
   return options.maximumFractionDigits;
 };
 
-export const findPriceSeparator = (input: string) =>
-  SEPARATOR_CHARACTERS.find(separator => input.includes(separator));
+export const findPriceSeparator = (input: string) => SEPARATOR_CHARACTERS.find(separator => input.includes(separator));

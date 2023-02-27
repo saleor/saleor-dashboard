@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef } from 'react';
 
 export function useUpdateEffect(fn: () => void, depArr: any[]) {
   const mounted = useRef(false);

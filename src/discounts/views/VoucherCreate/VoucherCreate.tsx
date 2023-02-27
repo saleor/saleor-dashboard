@@ -1,34 +1,27 @@
-import { ChannelsAction } from "@dashboard/channels/urls";
-import {
-  ChannelVoucherData,
-  createSortedVoucherData,
-} from "@dashboard/channels/utils";
-import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
-import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { ChannelsAction } from '@dashboard/channels/urls';
+import { ChannelVoucherData, createSortedVoucherData } from '@dashboard/channels/utils';
+import useAppChannel from '@dashboard/components/AppLayout/AppChannelContext';
+import ChannelsAvailabilityDialog from '@dashboard/components/ChannelsAvailabilityDialog';
+import { WindowTitle } from '@dashboard/components/WindowTitle';
 import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
   useVoucherChannelListingUpdateMutation,
   useVoucherCreateMutation,
-} from "@dashboard/graphql";
-import useChannels from "@dashboard/hooks/useChannels";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { sectionNames } from "@dashboard/intl";
-import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useChannels from '@dashboard/hooks/useChannels';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { sectionNames } from '@dashboard/intl';
+import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
+import createMetadataCreateHandler from '@dashboard/utils/handlers/metadataCreateHandler';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import VoucherCreatePage from "../../components/VoucherCreatePage";
-import {
-  voucherAddUrl,
-  VoucherCreateUrlQueryParams,
-  voucherUrl,
-} from "../../urls";
-import { createHandler } from "./handlers";
-import { VOUCHER_CREATE_FORM_ID } from "./types";
+import VoucherCreatePage from '../../components/VoucherCreatePage';
+import { voucherAddUrl, VoucherCreateUrlQueryParams, voucherUrl } from '../../urls';
+import { createHandler } from './handlers';
+import { VOUCHER_CREATE_FORM_ID } from './types';
 
 interface VoucherCreateProps {
   params: VoucherCreateUrlQueryParams;
@@ -41,15 +34,14 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
 
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
-  const [openModal, closeModal] = createDialogActionHandlers<
-    ChannelsAction,
-    VoucherCreateUrlQueryParams
-  >(navigate, params => voucherAddUrl(params), params);
+  const [openModal, closeModal] = createDialogActionHandlers<ChannelsAction, VoucherCreateUrlQueryParams>(
+    navigate,
+    params => voucherAddUrl(params),
+    params,
+  );
 
   const { availableChannels } = useAppChannel(false);
-  const allChannels: ChannelVoucherData[] = createSortedVoucherData(
-    availableChannels,
-  );
+  const allChannels: ChannelVoucherData[] = createSortedVoucherData(availableChannels);
 
   const {
     channelListElements,
@@ -62,26 +54,18 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels,
-  } = useChannels(
-    allChannels,
-    params?.action,
-    { closeModal, openModal },
-    { formId: VOUCHER_CREATE_FORM_ID },
-  );
+  } = useChannels(allChannels, params?.action, { closeModal, openModal }, { formId: VOUCHER_CREATE_FORM_ID });
 
-  const [
-    updateChannels,
-    updateChannelsOpts,
-  ] = useVoucherChannelListingUpdateMutation({});
+  const [updateChannels, updateChannelsOpts] = useVoucherChannelListingUpdateMutation({});
 
   const [voucherCreate, voucherCreateOpts] = useVoucherCreateMutation({
     onCompleted: data => {
       if (data.voucherCreate.errors.length === 0) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage({
-            id: "Q8mpW3",
-            defaultMessage: "Successfully created voucher",
+            id: 'Q8mpW3',
+            defaultMessage: 'Successfully created voucher',
           }),
         });
         navigate(voucherUrl(data.voucherCreate.voucher.id), { replace: true });
@@ -89,15 +73,8 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
     },
   });
 
-  const handleCreate = createHandler(
-    variables => voucherCreate({ variables }),
-    updateChannels,
-  );
-  const handleSubmit = createMetadataCreateHandler(
-    handleCreate,
-    updateMetadata,
-    updatePrivateMetadata,
-  );
+  const handleCreate = createHandler(variables => voucherCreate({ variables }), updateChannels);
+  const handleSubmit = createMetadataCreateHandler(handleCreate, updateMetadata, updatePrivateMetadata);
 
   return (
     <>
@@ -110,8 +87,8 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
-            id: "Eau5AV",
-            defaultMessage: "Manage Products Channel Availability",
+            id: 'Eau5AV',
+            defaultMessage: 'Manage Products Channel Availability',
           })}
           confirmButtonState="default"
           selected={channelListElements.length}
@@ -126,8 +103,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
         disabled={voucherCreateOpts.loading || updateChannelsOpts.loading}
         errors={[
           ...(voucherCreateOpts.data?.voucherCreate.errors || []),
-          ...(updateChannelsOpts.data?.voucherChannelListingUpdate.errors ||
-            []),
+          ...(updateChannelsOpts.data?.voucherChannelListingUpdate.errors || []),
         ]}
         onSubmit={handleSubmit}
         saveButtonBarState={voucherCreateOpts.status}

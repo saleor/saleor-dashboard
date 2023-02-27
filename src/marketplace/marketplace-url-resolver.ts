@@ -3,11 +3,11 @@ import {
   MARKETPLACE_SALEOR_APPS_JSON_PATH,
   MARKETPLACE_SALEOR_APPS_PAGE_PATH,
   MARKETPLACE_URL,
-} from "@dashboard/config";
-import urlJoin from "url-join";
+} from '@dashboard/config';
+import urlJoin from 'url-join';
 
 export class MarketplaceUrlResolver {
-  private rootSection = "/marketplace";
+  private rootSection = '/marketplace';
 
   private marketplaceAppBaseUrl = MARKETPLACE_URL;
   private saleorAppsPath = MARKETPLACE_SALEOR_APPS_PAGE_PATH;
@@ -16,15 +16,12 @@ export class MarketplaceUrlResolver {
 
   checkMarketplaceConfigExists() {
     return Boolean(
-      this.marketplaceAppBaseUrl &&
-        this.saleorAppsPath &&
-        this.saleorAppsJsonPath &&
-        this.templateGalleryJsonPath,
+      this.marketplaceAppBaseUrl && this.saleorAppsPath && this.saleorAppsJsonPath && this.templateGalleryJsonPath,
     );
   }
 
   getMarketplaceDeepUrlFromPath(path: string) {
-    return path.replace(this.rootSection, "");
+    return path.replace(this.rootSection, '');
   }
 
   getTemplateGalleryDashboardPath() {

@@ -1,2 +1,2 @@
-export * from "./ShippingMethodProductsAddDialog";
-export { default } from "./ShippingMethodProductsAddDialog";
+export * from './ShippingMethodProductsAddDialog';
+export { default } from './ShippingMethodProductsAddDialog';

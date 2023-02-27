@@ -1,20 +1,20 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useGiftCardDetailsBalanceStyles = makeStyles(
   theme => ({
     labelsContainer: {
-      display: "flex",
-      alignItems: "baseline",
+      display: 'flex',
+      alignItems: 'baseline',
     },
     wideContainer: {
-      justifyContent: "space-between",
+      justifyContent: 'space-between',
     },
     balanceBar: {
-      width: "100%",
-      display: "flex",
-      alignItems: "center",
+      width: '100%',
+      display: 'flex',
+      alignItems: 'center',
       height: 36,
-      padding: "0 4px",
+      padding: '0 4px',
       backgroundColor: theme.palette.background.default,
       borderRadius: 18,
     },
@@ -24,5 +24,5 @@ export const useGiftCardDetailsBalanceStyles = makeStyles(
       backgroundColor: theme.palette.primary.light,
     },
   }),
-  { name: "GiftCardUpdateDetailsBalanceSection" },
+  { name: 'GiftCardUpdateDetailsBalanceSection' },
 );

@@ -1,17 +1,13 @@
-import {
-  filterPageProps,
-  pageListProps,
-  sortPageProps,
-} from "@dashboard/fixtures";
-import { PluginConfigurationType } from "@dashboard/graphql";
-import { pluginList } from "@dashboard/plugins/fixtures";
-import { PluginListUrlSortField } from "@dashboard/plugins/urls";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { filterPageProps, pageListProps, sortPageProps } from '@dashboard/fixtures';
+import { PluginConfigurationType } from '@dashboard/graphql';
+import { pluginList } from '@dashboard/plugins/fixtures';
+import { PluginListUrlSortField } from '@dashboard/plugins/urls';
+import Decorator from '@dashboard/storybook/Decorator';
+import { PaginatorContextDecorator } from '@dashboard/storybook/PaginatorContextDecorator';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import PluginsListPage, { PluginsListPageProps } from "./PluginsListPage";
+import PluginsListPage, { PluginsListPageProps } from './PluginsListPage';
 
 const props: PluginsListPageProps = {
   ...pageListProps.default,
@@ -26,7 +22,7 @@ const props: PluginsListPageProps = {
       active: false,
       choices: [],
       displayValues: [],
-      initialSearch: "",
+      initialSearch: '',
       hasMore: false,
       loading: false,
       onFetchMore: () => undefined,
@@ -49,11 +45,9 @@ const props: PluginsListPageProps = {
   },
 };
 
-storiesOf("Plugins / Plugin list", module)
+storiesOf('Plugins / Plugin list', module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <PluginsListPage {...props} />)
-  .add("loading", () => (
-    <PluginsListPage {...props} disabled={true} plugins={undefined} />
-  ))
-  .add("no data", () => <PluginsListPage {...props} plugins={[]} />);
+  .add('default', () => <PluginsListPage {...props} />)
+  .add('loading', () => <PluginsListPage {...props} disabled={true} plugins={undefined} />)
+  .add('no data', () => <PluginsListPage {...props} plugins={[]} />);

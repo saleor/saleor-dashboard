@@ -1,10 +1,10 @@
-import { IFilter } from "@dashboard/components/Filter";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
-import { CollectionPublished } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { FilterOpts } from "@dashboard/types";
-import { createOptionsField } from "@dashboard/utils/filters/fields";
-import { defineMessages, IntlShape } from "react-intl";
+import { IFilter } from '@dashboard/components/Filter';
+import { MultiAutocompleteChoiceType } from '@dashboard/components/MultiAutocompleteSelectField';
+import { CollectionPublished } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { FilterOpts } from '@dashboard/types';
+import { createOptionsField } from '@dashboard/utils/filters/fields';
+import { defineMessages, IntlShape } from 'react-intl';
 
 export interface CollectionListFilterOpts {
   status: FilterOpts<CollectionPublished>;
@@ -12,27 +12,24 @@ export interface CollectionListFilterOpts {
 }
 
 export enum CollectionFilterKeys {
-  status = "status",
-  channel = "channel",
+  status = 'status',
+  channel = 'channel',
 }
 
 const messages = defineMessages({
   hidden: {
-    id: "9eC0MZ",
-    defaultMessage: "Hidden",
-    description: "collection",
+    id: '9eC0MZ',
+    defaultMessage: 'Hidden',
+    description: 'collection',
   },
   published: {
-    id: "lL3YJO",
-    defaultMessage: "Published",
-    description: "collection",
+    id: 'lL3YJO',
+    defaultMessage: 'Published',
+    description: 'collection',
   },
 });
 
-export function createFilterStructure(
-  intl: IntlShape,
-  opts: CollectionListFilterOpts,
-): IFilter<CollectionFilterKeys> {
+export function createFilterStructure(intl: IntlShape, opts: CollectionListFilterOpts): IFilter<CollectionFilterKeys> {
   return [
     {
       ...createOptionsField(

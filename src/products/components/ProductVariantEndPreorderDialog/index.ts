@@ -1,2 +1,2 @@
-export * from "./ProductVariantEndPreorderDialog";
-export { default } from "./ProductVariantEndPreorderDialog";
+export * from './ProductVariantEndPreorderDialog';
+export { default } from './ProductVariantEndPreorderDialog';

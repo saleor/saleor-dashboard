@@ -1,2 +1,2 @@
-export * from "./GiftCardSettingsExpirySelect";
-export { default } from "./GiftCardSettingsExpirySelect";
+export * from './GiftCardSettingsExpirySelect';
+export { default } from './GiftCardSettingsExpirySelect';

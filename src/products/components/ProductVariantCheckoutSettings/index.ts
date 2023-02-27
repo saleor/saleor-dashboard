@@ -1,2 +1,2 @@
-export { default } from "./ProductVariantCheckoutSettings";
-export * from "./ProductVariantCheckoutSettings";
+export { default } from './ProductVariantCheckoutSettings';
+export * from './ProductVariantCheckoutSettings';

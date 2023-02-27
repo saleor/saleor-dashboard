@@ -1,47 +1,38 @@
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
-import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { PluginBaseFragment } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { renderCollection } from "@dashboard/misc";
-import { PluginListUrlSortField, pluginUrl } from "@dashboard/plugins/urls";
-import { ListProps, SortPage } from "@dashboard/types";
-import { TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { EditIcon, makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Skeleton from '@dashboard/components/Skeleton';
+import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { PluginBaseFragment } from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { renderCollection } from '@dashboard/misc';
+import { PluginListUrlSortField, pluginUrl } from '@dashboard/plugins/urls';
+import { ListProps, SortPage } from '@dashboard/types';
+import { TableBody, TableCell, TableFooter } from '@material-ui/core';
+import { EditIcon, makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import PluginChannelAvailabilityCell from "./PluginChannelAvailabilityCell";
-import PluginChannelConfigurationCell from "./PluginChannelConfigurationCell";
-import PluginListTableHead from "./PluginListTableHead";
+import PluginChannelAvailabilityCell from './PluginChannelAvailabilityCell';
+import PluginChannelConfigurationCell from './PluginChannelConfigurationCell';
+import PluginListTableHead from './PluginListTableHead';
 
 export const useStyles = makeStyles(
   () => ({
     link: {
-      cursor: "pointer",
+      cursor: 'pointer',
     },
   }),
-  { name: "PluginsList" },
+  { name: 'PluginsList' },
 );
 
-export interface PluginListProps
-  extends ListProps,
-    SortPage<PluginListUrlSortField> {
+export interface PluginListProps extends ListProps, SortPage<PluginListUrlSortField> {
   plugins: PluginBaseFragment[];
 }
 
 const totalColSpan = 10;
 
 const PluginList: React.FC<PluginListProps> = props => {
-  const {
-    settings,
-    plugins,
-    disabled,
-    sort,
-    onSort,
-    onUpdateListSettings,
-  } = props;
+  const { settings, plugins, disabled, sort, onSort, onUpdateListSettings } = props;
   const classes = useStyles(props);
   const navigate = useNavigator();
   const intl = useIntl();
@@ -71,7 +62,7 @@ const PluginList: React.FC<PluginListProps> = props => {
                 // FIXME: middle click doesn't work - issues with deployments
                 // shows 404 not found
                 onClick={() => plugin && navigate(pluginUrl(plugin.id))}
-                key={plugin ? plugin.id : "skeleton"}
+                key={plugin ? plugin.id : 'skeleton'}
               >
                 <TableCell colSpan={5}>{plugin.name}</TableCell>
                 <PluginChannelConfigurationCell plugin={plugin} />
@@ -91,8 +82,8 @@ const PluginList: React.FC<PluginListProps> = props => {
             <TableRowLink>
               <TableCell colSpan={totalColSpan}>
                 {intl.formatMessage({
-                  id: "Co2U4u",
-                  defaultMessage: "No plugins found",
+                  id: 'Co2U4u',
+                  defaultMessage: 'No plugins found',
                 })}
               </TableCell>
             </TableRowLink>
@@ -102,5 +93,5 @@ const PluginList: React.FC<PluginListProps> = props => {
     </ResponsiveTable>
   );
 };
-PluginList.displayName = "PluginList";
+PluginList.displayName = 'PluginList';
 export default PluginList;

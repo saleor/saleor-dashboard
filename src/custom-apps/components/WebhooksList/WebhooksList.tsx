@@ -1,33 +1,23 @@
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
-import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import TableCellHeader from "@dashboard/components/TableCellHeader";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { CustomAppUrls } from "@dashboard/custom-apps/urls";
-import { isUnnamed } from "@dashboard/custom-apps/utils";
-import { WebhookFragment } from "@dashboard/graphql";
-import {
-  commonMessages,
-  commonStatusMessages,
-  sectionNames,
-} from "@dashboard/intl";
-import { renderCollection, stopPropagation } from "@dashboard/misc";
-import {
-  Card,
-  CardContent,
-  TableBody,
-  TableCell,
-  TableHead,
-} from "@material-ui/core";
-import { DeleteIcon, IconButton, Pill } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Button } from '@dashboard/components/Button';
+import CardTitle from '@dashboard/components/CardTitle';
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Skeleton from '@dashboard/components/Skeleton';
+import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
+import TableCellHeader from '@dashboard/components/TableCellHeader';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { CustomAppUrls } from '@dashboard/custom-apps/urls';
+import { isUnnamed } from '@dashboard/custom-apps/utils';
+import { WebhookFragment } from '@dashboard/graphql';
+import { commonMessages, commonStatusMessages, sectionNames } from '@dashboard/intl';
+import { renderCollection, stopPropagation } from '@dashboard/misc';
+import { Card, CardContent, TableBody, TableCell, TableHead } from '@material-ui/core';
+import { DeleteIcon, IconButton, Pill } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { messages } from "./messages";
-import { useStyles } from "./styles";
+import { messages } from './messages';
+import { useStyles } from './styles';
 
 export interface WebhooksListProps {
   webhooks: WebhookFragment[];
@@ -35,11 +25,7 @@ export interface WebhooksListProps {
   createHref?: string;
 }
 
-const WebhooksList: React.FC<WebhooksListProps> = ({
-  webhooks,
-  createHref,
-  onRemove,
-}) => {
+const WebhooksList: React.FC<WebhooksListProps> = ({ webhooks, createHref, onRemove }) => {
   const intl = useIntl();
   const classes = useStyles();
   const numberOfColumns = webhooks?.length === 0 ? 2 : 3;
@@ -51,11 +37,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
         className={classes.cardTitle}
         toolbar={
           !!createHref && (
-            <Button
-              variant="secondary"
-              href={createHref}
-              data-test-id="create-webhook"
-            >
+            <Button variant="secondary" href={createHref} data-test-id="create-webhook">
               <FormattedMessage {...messages.createWebhook} />
             </Button>
           )
@@ -65,12 +47,8 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
         <ResponsiveTable className={classes.table}>
           <TableHead>
             <TableRowLink>
-              <TableCellHeader>
-                {intl.formatMessage(commonMessages.name)}
-              </TableCellHeader>
-              <TableCellHeader>
-                {intl.formatMessage(commonMessages.status)}
-              </TableCellHeader>
+              <TableCellHeader>{intl.formatMessage(commonMessages.name)}</TableCellHeader>
+              <TableCellHeader>{intl.formatMessage(commonMessages.status)}</TableCellHeader>
               <TableCell className={clsx(classes.colAction, classes.colRight)}>
                 <FormattedMessage {...messages.action} />
               </TableCell>
@@ -83,11 +61,8 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                 <TableRowLink
                   hover={!!webhook}
                   className={!!webhook ? classes.tableRow : undefined}
-                  href={
-                    webhook &&
-                    CustomAppUrls.resolveWebhookUrl(webhook.app.id, webhook.id)
-                  }
-                  key={webhook ? webhook.id : "skeleton"}
+                  href={webhook && CustomAppUrls.resolveWebhookUrl(webhook.app.id, webhook.id)}
+                  key={webhook ? webhook.id : 'skeleton'}
                 >
                   <TableCell
                     className={clsx(classes.colName, {
@@ -108,24 +83,18 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
                             ? intl.formatMessage(commonStatusMessages.active)
                             : intl.formatMessage(commonStatusMessages.notActive)
                         }
-                        color={webhook.isActive ? "success" : "error"}
+                        color={webhook.isActive ? 'success' : 'error'}
                       />
                     ) : (
                       <Skeleton />
                     )}
                   </TableCell>
-                  <TableCell
-                    className={clsx(classes.colAction, classes.colRight)}
-                  >
+                  <TableCell className={clsx(classes.colAction, classes.colRight)}>
                     <TableButtonWrapper>
                       <IconButton
                         variant="secondary"
                         color="primary"
-                        onClick={
-                          webhook
-                            ? stopPropagation(() => onRemove(webhook.id))
-                            : undefined
-                        }
+                        onClick={webhook ? stopPropagation(() => onRemove(webhook.id)) : undefined}
                       >
                         <DeleteIcon />
                       </IconButton>
@@ -135,9 +104,7 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
               ),
               () => (
                 <TableRowLink>
-                  <TableCell colSpan={numberOfColumns}>
-                    {intl.formatMessage(messages.noWebhooks)}
-                  </TableCell>
+                  <TableCell colSpan={numberOfColumns}>{intl.formatMessage(messages.noWebhooks)}</TableCell>
                 </TableRowLink>
               ),
             )}
@@ -147,5 +114,5 @@ const WebhooksList: React.FC<WebhooksListProps> = ({
     </Card>
   );
 };
-WebhooksList.displayName = "WebhooksList";
+WebhooksList.displayName = 'WebhooksList';
 export default WebhooksList;

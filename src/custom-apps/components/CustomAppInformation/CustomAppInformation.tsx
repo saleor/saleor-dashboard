@@ -1,12 +1,12 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import { AppErrorFragment } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
-import { getFormErrors } from "@dashboard/utils/errors";
-import getAppErrorMessage from "@dashboard/utils/errors/app";
-import { Card, CardContent, TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import CardTitle from '@dashboard/components/CardTitle';
+import { AppErrorFragment } from '@dashboard/graphql';
+import { FormChange } from '@dashboard/hooks/useForm';
+import { getFormErrors } from '@dashboard/utils/errors';
+import getAppErrorMessage from '@dashboard/utils/errors/app';
+import { Card, CardContent, TextField } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
 const useStyles = makeStyles(
   {
@@ -14,7 +14,7 @@ const useStyles = makeStyles(
       paddingRight: 16,
     },
   },
-  { name: "AccountPermissions" },
+  { name: 'AccountPermissions' },
 );
 
 export interface CustomAppInfoProps {
@@ -26,25 +26,20 @@ export interface CustomAppInfoProps {
   onChange: FormChange;
 }
 
-const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}) => {
+const CustomAppInformation: React.FC<CustomAppInfoProps> = ({ data, disabled, errors, onChange }) => {
   const intl = useIntl();
   const classes = useStyles();
 
-  const formErrors = getFormErrors(["name"], errors);
+  const formErrors = getFormErrors(['name'], errors);
 
   return (
     <Card>
       <CardTitle
         className={classes.cardTitle}
         title={intl.formatMessage({
-          id: "imYxM9",
-          defaultMessage: "App Information",
-          description: "header",
+          id: 'imYxM9',
+          defaultMessage: 'App Information',
+          description: 'header',
         })}
       />
       <CardContent>
@@ -52,9 +47,9 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
           disabled={disabled}
           error={!!formErrors.name}
           label={intl.formatMessage({
-            id: "foNlhn",
-            defaultMessage: "App Name",
-            description: "custom app name",
+            id: 'foNlhn',
+            defaultMessage: 'App Name',
+            description: 'custom app name',
           })}
           helperText={getAppErrorMessage(formErrors.name, intl)}
           fullWidth
@@ -67,5 +62,5 @@ const CustomAppInformation: React.FC<CustomAppInfoProps> = ({
   );
 };
 
-CustomAppInformation.displayName = "CustomAppInformation";
+CustomAppInformation.displayName = 'CustomAppInformation';
 export default CustomAppInformation;

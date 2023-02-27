@@ -1,17 +1,17 @@
-import { Tab } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
+import { Tab } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
 
 const useStyles = makeStyles(
   theme => ({
     selectedTabLabel: {
-      "&$tabLabel": {
+      '&$tabLabel': {
         color: theme.typography.body1.color,
       },
     },
     tabLabel: {
-      "&:hover": {
+      '&:hover': {
         color: theme.typography.body1.color,
       },
       color: theme.typography.caption.color,
@@ -19,13 +19,13 @@ const useStyles = makeStyles(
       fontWeight: 500,
     },
     tabRoot: {
-      minWidth: "80px",
+      minWidth: '80px',
       opacity: 1,
       paddingTop: theme.spacing(1),
-      textTransform: "initial" as "initial",
+      textTransform: 'initial' as 'initial',
     },
   }),
-  { name: "FilterTab" },
+  { name: 'FilterTab' },
 );
 
 interface FilterTabProps {
@@ -55,5 +55,5 @@ export const FilterTab: React.FC<FilterTabProps> = props => {
     />
   );
 };
-FilterTab.displayName = "FilterTab";
+FilterTab.displayName = 'FilterTab';
 export default FilterTab;

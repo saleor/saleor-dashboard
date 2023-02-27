@@ -1,4 +1,4 @@
-import EditorJS from "@editorjs/editorjs";
+import EditorJS from '@editorjs/editorjs';
 
 export async function clean(editor: EditorJS) {
   if (editor) {

@@ -1,5 +1,5 @@
-import { createSvgIcon } from "@material-ui/core/utils";
-import React from "react";
+import { createSvgIcon } from '@material-ui/core/utils';
+import React from 'react';
 
 const Image = createSvgIcon(
   <>
@@ -8,20 +8,13 @@ const Image = createSvgIcon(
       fill="url(#paint0_linear)"
     />
     <defs>
-      <linearGradient
-        id="paint0_linear"
-        x1="3"
-        y1="3"
-        x2="22.8"
-        y2="23.5714"
-        gradientUnits="userSpaceOnUse"
-      >
+      <linearGradient id="paint0_linear" x1="3" y1="3" x2="22.8" y2="23.5714" gradientUnits="userSpaceOnUse">
         <stop stopColor="#06847B" />
         <stop offset="1" stopColor="#3EE7CD" />
       </linearGradient>
     </defs>
   </>,
-  "Image",
+  'Image',
 );
 
 export default Image;

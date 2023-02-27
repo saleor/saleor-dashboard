@@ -1,2 +1,2 @@
-export * from "./InstallWithManifestFormButton";
-export { default } from "./InstallWithManifestFormButton";
+export * from './InstallWithManifestFormButton';
+export { default } from './InstallWithManifestFormButton';

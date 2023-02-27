@@ -1,24 +1,18 @@
-import { getApiUrl } from "@dashboard/config";
-import { FlagWithName } from "@dashboard/hooks/useFlags/types";
-import { stringifyQs } from "@dashboard/utils/urls";
-import { ThemeType } from "@saleor/app-sdk/app-bridge";
-import urlJoin from "url-join";
+import { getApiUrl } from '@dashboard/config';
+import { FlagWithName } from '@dashboard/hooks/useFlags/types';
+import { stringifyQs } from '@dashboard/utils/urls';
+import { ThemeType } from '@saleor/app-sdk/app-bridge';
+import urlJoin from 'url-join';
 
-import { ActiveTab, Dialog, Pagination, SingleAction } from "../types";
+import { ActiveTab, Dialog, Pagination, SingleAction } from '../types';
 
-export const MANIFEST_ATTR = "manifestUrl";
+export const MANIFEST_ATTR = 'manifestUrl';
 
-export type AppListUrlDialog = "app-installation-remove";
+export type AppListUrlDialog = 'app-installation-remove';
 
-export type AppDetailsUrlDialog =
-  | "app-activate"
-  | "app-deactivate"
-  | "app-delete";
+export type AppDetailsUrlDialog = 'app-activate' | 'app-deactivate' | 'app-delete';
 
-export type AppListUrlQueryParams = ActiveTab &
-  Dialog<AppListUrlDialog> &
-  SingleAction &
-  Pagination;
+export type AppListUrlQueryParams = ActiveTab & Dialog<AppListUrlDialog> & SingleAction & Pagination;
 
 export interface AppDetailsUrlMountQueryParams {
   productId?: string;
@@ -44,72 +38,49 @@ export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
 export type AppInstallUrlQueryParams = Partial<{ [MANIFEST_ATTR]: string }>;
 
 export enum AppListUrlSortField {
-  name = "name",
-  active = "active",
+  name = 'name',
+  active = 'active',
 }
 
-export const appsSection = "/apps/";
+export const appsSection = '/apps/';
 export const appsListPath = appsSection;
 
 export const appDetailsPath = (id: string) => urlJoin(appsSection, id);
-export const appPath = (id: string) => urlJoin(appsSection, id, "app");
-export const appDeepPath = (id: string, subPath: string) =>
-  urlJoin(appPath(id), subPath);
-export const appInstallPath = urlJoin(appsSection, "install");
-export const createAppInstallUrl = (manifestUrl: string) =>
-  `${appInstallPath}?manifestUrl=${manifestUrl}`;
+export const appPath = (id: string) => urlJoin(appsSection, id, 'app');
+export const appDeepPath = (id: string, subPath: string) => urlJoin(appPath(id), subPath);
+export const appInstallPath = urlJoin(appsSection, 'install');
+export const createAppInstallUrl = (manifestUrl: string) => `${appInstallPath}?manifestUrl=${manifestUrl}`;
 
 export const appDetailsUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
-  appDetailsPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
+  appDetailsPath(encodeURIComponent(id)) + '?' + stringifyQs(params);
 
 export const appUrl = (id: string, params?: AppDetailsUrlQueryParams) =>
-  appPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
-export const appDeepUrl = (
-  id: string,
-  subPath: string,
-  params?: AppDetailsUrlQueryParams,
-) => appDeepPath(encodeURIComponent(id), subPath) + "?" + stringifyQs(params);
+  appPath(encodeURIComponent(id)) + '?' + stringifyQs(params);
+export const appDeepUrl = (id: string, subPath: string, params?: AppDetailsUrlQueryParams) =>
+  appDeepPath(encodeURIComponent(id), subPath) + '?' + stringifyQs(params);
 
-export const getAppDeepPathFromDashboardUrl = (
-  dashboardUrl: string,
-  appId: string,
-) => {
-  const deepSubPath = dashboardUrl.replace(
-    appPath(encodeURIComponent(appId)),
-    "",
-  );
-  return deepSubPath || "/";
+export const getAppDeepPathFromDashboardUrl = (dashboardUrl: string, appId: string) => {
+  const deepSubPath = dashboardUrl.replace(appPath(encodeURIComponent(appId)), '');
+  return deepSubPath || '/';
 };
-export const getAppCompleteUrlFromDashboardUrl = (
-  dashboardUrl: string,
-  appUrl?: string,
-  appId?: string,
-) => {
+export const getAppCompleteUrlFromDashboardUrl = (dashboardUrl: string, appUrl?: string, appId?: string) => {
   if (!appUrl || !appId) {
     return appUrl;
   }
-  const deepSubPath = dashboardUrl.replace(
-    appPath(encodeURIComponent(appId)),
-    "",
-  );
+  const deepSubPath = dashboardUrl.replace(appPath(encodeURIComponent(appId)), '');
   const appCompleteUrl = urlJoin(appUrl, deepSubPath);
   return appCompleteUrl;
 };
-export const getDashboardUrFromAppCompleteUrl = (
-  appCompleteUrl: string,
-  appUrl?: string,
-  appId?: string,
-) => {
+export const getDashboardUrFromAppCompleteUrl = (appCompleteUrl: string, appUrl?: string, appId?: string) => {
   if (!appUrl || !appId) {
     return appUrl;
   }
-  const deepSubPath = appCompleteUrl.replace(appUrl, "");
+  const deepSubPath = appCompleteUrl.replace(appUrl, '');
   const dashboardUrl = urlJoin(appPath(encodeURIComponent(appId)), deepSubPath);
   return dashboardUrl;
 };
 
-export const appsListUrl = (params?: AppListUrlQueryParams) =>
-  appsListPath + "?" + stringifyQs(params);
+export const appsListUrl = (params?: AppListUrlQueryParams) => appsListPath + '?' + stringifyQs(params);
 
 export const resolveAppIframeUrl = (
   appId: string,
@@ -136,15 +107,13 @@ export const resolveAppIframeUrl = (
       id: appId,
       ...params,
     },
-    "comma",
+    'comma',
   )}`;
 
   return urlJoin(appUrl, window.location.search, iframeContextQueryString);
 };
 
-export const prepareFeatureFlagsList = (
-  flags: FlagWithName[],
-): Record<string, string> =>
+export const prepareFeatureFlagsList = (flags: FlagWithName[]): Record<string, string> =>
   flags.reduce<Record<string, string>>((acc, flag) => {
     if (flag.enabled) {
       acc[flag.name] = `${flag.value || true}`;

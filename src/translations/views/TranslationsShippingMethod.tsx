@@ -2,19 +2,19 @@ import {
   LanguageCodeEnum,
   useShippingMethodTranslationDetailsQuery,
   useUpdateShippingMethodTranslationsMutation,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import useShop from "@dashboard/hooks/useShop";
-import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors } from "@dashboard/misc";
-import { stringifyQs } from "@dashboard/utils/urls";
-import React from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import useShop from '@dashboard/hooks/useShop';
+import { commonMessages } from '@dashboard/intl';
+import { extractMutationErrors } from '@dashboard/misc';
+import { stringifyQs } from '@dashboard/utils/urls';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import TranslationsShippingMethodPage from "../components/TranslationsShippingMethodPage";
-import { TranslationField, TranslationInputFieldName } from "../types";
-import { getParsedTranslationInputData } from "../utils";
+import TranslationsShippingMethodPage from '../components/TranslationsShippingMethodPage';
+import { TranslationField, TranslationInputFieldName } from '../types';
+import { getParsedTranslationInputData } from '../utils';
 
 export interface TranslationsShippingMethodQueryParams {
   activeField: string;
@@ -25,11 +25,7 @@ export interface TranslationsShippingMethodProps {
   params: TranslationsShippingMethodQueryParams;
 }
 
-const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
-  id,
-  languageCode,
-  params,
-}) => {
+const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({ id, languageCode, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -39,25 +35,22 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
     variables: { id, language: languageCode },
   });
 
-  const [
-    updateTranslations,
-    updateTranslationsOpts,
-  ] = useUpdateShippingMethodTranslationsMutation({
+  const [updateTranslations, updateTranslationsOpts] = useUpdateShippingMethodTranslationsMutation({
     onCompleted: data => {
       if (data.shippingPriceTranslate.errors.length === 0) {
         shippingMethodTranslations.refetch();
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate("?", { replace: true });
+        navigate('?', { replace: true });
       }
     },
   });
 
   const onEdit = (field: string) =>
     navigate(
-      "?" +
+      '?' +
         stringifyQs({
           activeField: field,
         }),
@@ -65,13 +58,10 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
     );
 
   const onDiscard = () => {
-    navigate("?", { replace: true });
+    navigate('?', { replace: true });
   };
 
-  const handleSubmit = (
-    { name: fieldName }: TranslationField<TranslationInputFieldName>,
-    data: string,
-  ) =>
+  const handleSubmit = ({ name: fieldName }: TranslationField<TranslationInputFieldName>, data: string) =>
     extractMutationErrors(
       updateTranslations({
         variables: {
@@ -88,22 +78,16 @@ const TranslationsShippingMethod: React.FC<TranslationsShippingMethodProps> = ({
     <TranslationsShippingMethodPage
       translationId={id}
       activeField={params.activeField}
-      disabled={
-        shippingMethodTranslations.loading || updateTranslationsOpts.loading
-      }
+      disabled={shippingMethodTranslations.loading || updateTranslationsOpts.loading}
       languages={shop?.languages || []}
       languageCode={languageCode}
       saveButtonState={updateTranslationsOpts.status}
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      data={
-        translation?.__typename === "ShippingMethodTranslatableContent"
-          ? translation
-          : null
-      }
+      data={translation?.__typename === 'ShippingMethodTranslatableContent' ? translation : null}
     />
   );
 };
-TranslationsShippingMethod.displayName = "TranslationsShippingMethod";
+TranslationsShippingMethod.displayName = 'TranslationsShippingMethod';
 export default TranslationsShippingMethod;

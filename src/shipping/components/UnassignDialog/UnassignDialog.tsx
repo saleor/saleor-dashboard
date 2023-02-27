@@ -1,8 +1,8 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { DialogContentText } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import { DialogContentText } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export interface UnassignDialogProps {
   open: boolean;
@@ -24,17 +24,17 @@ export const UnassignDialog: React.FC<UnassignDialogProps> = ({
     <ActionDialog
       open={open}
       title={intl.formatMessage({
-        id: "Gfbp36",
-        defaultMessage: "Unassign Products From Shipping",
-        description: "dialog header",
+        id: 'Gfbp36',
+        defaultMessage: 'Unassign Products From Shipping',
+        description: 'dialog header',
       })}
       confirmButtonState={confirmButtonState}
       onClose={closeModal}
       onConfirm={onConfirm}
       confirmButtonLabel={intl.formatMessage({
-        id: "p/Fd7s",
-        defaultMessage: "Unassign and save",
-        description: "unassign products from shipping rate and save, button",
+        id: 'p/Fd7s',
+        defaultMessage: 'Unassign and save',
+        description: 'unassign products from shipping rate and save, button',
       })}
     >
       <DialogContentText>

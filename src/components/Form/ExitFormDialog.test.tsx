@@ -1,24 +1,24 @@
-import { render } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
-import React from "react";
+import { render } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import React from 'react';
 
-import ExitFormDialog from "./ExitFormDialog";
+import ExitFormDialog from './ExitFormDialog';
 
-jest.mock("react-intl", () => ({
+jest.mock('react-intl', () => ({
   useIntl: jest.fn(() => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
 }));
 
-jest.mock("@saleor/macaw-ui", () => ({
+jest.mock('@saleor/macaw-ui', () => ({
   useStyles: jest.fn(() => () => ({})),
   makeStyles: jest.fn(() => () => ({})),
   DialogHeader: jest.fn(() => () => <></>),
 }));
 
-describe("ExitFormDialog", () => {
-  it("closes when ignore changes is clicked", async () => {
+describe('ExitFormDialog', () => {
+  it('closes when ignore changes is clicked', async () => {
     // Arrange
     const props = {
       onClose: jest.fn(),
@@ -29,12 +29,12 @@ describe("ExitFormDialog", () => {
 
     // Act
     const { getByTestId } = render(<ExitFormDialog {...props} />);
-    await user.click(getByTestId("ignore-changes"));
+    await user.click(getByTestId('ignore-changes'));
 
     // Assert
     expect(props.onLeave).toHaveBeenCalled();
   });
-  it("closes when keep editing is clicked", async () => {
+  it('closes when keep editing is clicked', async () => {
     // Arrange
     const props = {
       onClose: jest.fn(),
@@ -45,7 +45,7 @@ describe("ExitFormDialog", () => {
 
     // Act
     const { getByTestId } = render(<ExitFormDialog {...props} />);
-    await user.click(getByTestId("keep-editing"));
+    await user.click(getByTestId('keep-editing'));
 
     // Assert
     expect(props.onClose).toHaveBeenCalled();

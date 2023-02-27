@@ -1,2 +1,2 @@
-export { default } from "./ShippingZoneCountriesAssignDialog";
-export * from "./ShippingZoneCountriesAssignDialog";
+export { default } from './ShippingZoneCountriesAssignDialog';
+export * from './ShippingZoneCountriesAssignDialog';

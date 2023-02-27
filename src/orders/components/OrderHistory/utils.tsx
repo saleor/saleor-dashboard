@@ -1,19 +1,17 @@
-import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
-import { getFullName } from "@dashboard/misc";
-import { orderUrl } from "@dashboard/orders/urls";
-import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
-import { MessageDescriptor } from "react-intl";
+import { OrderEventFragment, OrderEventsEnum } from '@dashboard/graphql';
+import { getFullName } from '@dashboard/misc';
+import { orderUrl } from '@dashboard/orders/urls';
+import { staffMemberDetailsUrl } from '@dashboard/staff/urls';
+import { MessageDescriptor } from 'react-intl';
 
-export const getEventSecondaryTitle = (
-  event: OrderEventFragment,
-): [MessageDescriptor, any?] => {
+export const getEventSecondaryTitle = (event: OrderEventFragment): [MessageDescriptor, any?] => {
   switch (event.type) {
     case OrderEventsEnum.ORDER_MARKED_AS_PAID: {
       return [
         {
-          defaultMessage: "Transaction Reference {transactionReference}",
-          description: "transaction reference",
-          id: "transaction-reference-order-history",
+          defaultMessage: 'Transaction Reference {transactionReference}',
+          description: 'transaction reference',
+          id: 'transaction-reference-order-history',
         },
         { transactionReference: event.transactionReference },
       ];
@@ -45,33 +43,19 @@ const timelineEventTypes = {
     OrderEventsEnum.ORDER_LINE_DISCOUNT_REMOVED,
   ],
   note: [OrderEventsEnum.NOTE_ADDED],
-  rawMessage: [
-    OrderEventsEnum.OTHER,
-    OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION,
-    OrderEventsEnum.TRANSACTION_EVENT,
-  ],
+  rawMessage: [OrderEventsEnum.OTHER, OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION, OrderEventsEnum.TRANSACTION_EVENT],
   secondaryTitle: [OrderEventsEnum.ORDER_MARKED_AS_PAID],
 };
 
 export const isTimelineEventOfType = (
-  type:
-    | "extendable"
-    | "secondaryTitle"
-    | "rawMessage"
-    | "note"
-    | "linked"
-    | "discount",
+  type: 'extendable' | 'secondaryTitle' | 'rawMessage' | 'note' | 'linked' | 'discount',
   eventType: OrderEventsEnum,
 ) => !!timelineEventTypes[type]?.includes(eventType);
 
 export const isTimelineEventOfDiscountType = (eventType: OrderEventsEnum) =>
-  isTimelineEventOfType("discount", eventType);
+  isTimelineEventOfType('discount', eventType);
 
-const selectEmployeeName = ({
-  firstName,
-  lastName,
-  email,
-}: OrderEventFragment["user"]) => {
+const selectEmployeeName = ({ firstName, lastName, email }: OrderEventFragment['user']) => {
   if (!!firstName) {
     return getFullName({ firstName, lastName }).trim();
   }
@@ -80,7 +64,7 @@ const selectEmployeeName = ({
 };
 
 export const getEmployeeNameLink = (event: OrderEventFragment) => {
-  if (!hasEnsuredOrderEventFields(event, ["user"])) {
+  if (!hasEnsuredOrderEventFields(event, ['user'])) {
     return null;
   }
 
@@ -92,16 +76,11 @@ export const getEmployeeNameLink = (event: OrderEventFragment) => {
   };
 };
 
-export const hasOrderLineDiscountWithNoPreviousValue = ({
-  type,
-  lines,
-}: OrderEventFragment) =>
-  type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED &&
-  lines?.[0]?.discount &&
-  !lines?.[0].discount?.oldValue;
+export const hasOrderLineDiscountWithNoPreviousValue = ({ type, lines }: OrderEventFragment) =>
+  type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED && lines?.[0]?.discount && !lines?.[0].discount?.oldValue;
 
 export const getOrderNumberLink = (event: OrderEventFragment) => {
-  if (!hasEnsuredOrderEventFields(event, ["relatedOrder"])) {
+  if (!hasEnsuredOrderEventFields(event, ['relatedOrder'])) {
     return null;
   }
 
@@ -110,18 +89,10 @@ export const getOrderNumberLink = (event: OrderEventFragment) => {
   return getOrderNumberLinkObject({ id, number });
 };
 
-const hasEnsuredOrderEventFields = (
-  event: OrderEventFragment,
-  fields: Array<keyof OrderEventFragment>,
-) => !fields.some((field: keyof OrderEventFragment) => !event[field]);
+const hasEnsuredOrderEventFields = (event: OrderEventFragment, fields: Array<keyof OrderEventFragment>) =>
+  !fields.some((field: keyof OrderEventFragment) => !event[field]);
 
-export const getOrderNumberLinkObject = ({
-  id,
-  number,
-}: {
-  id: string;
-  number: string;
-}) => ({
+export const getOrderNumberLinkObject = ({ id, number }: { id: string; number: string }) => ({
   link: orderUrl(id),
   text: `#${number}`,
 });

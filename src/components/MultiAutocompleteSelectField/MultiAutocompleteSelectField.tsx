@@ -1,26 +1,20 @@
-import Debounce, { DebounceProps } from "@dashboard/components/Debounce";
-import { FetchMoreProps } from "@dashboard/types";
-import {
-  Popper,
-  PopperPlacementType,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import CloseIcon from "@material-ui/icons/Close";
-import { ChevronIcon, IconButton } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import Downshift, { ControllerStateAndHelpers } from "downshift";
-import { filter } from "fuzzaldrin";
-import React from "react";
+import Debounce, { DebounceProps } from '@dashboard/components/Debounce';
+import { FetchMoreProps } from '@dashboard/types';
+import { Popper, PopperPlacementType, TextField, Typography } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
+import { ChevronIcon, IconButton } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import Downshift, { ControllerStateAndHelpers } from 'downshift';
+import { filter } from 'fuzzaldrin';
+import React from 'react';
 
 import MultiAutocompleteSelectFieldContent, {
   MultiAutocompleteActionType,
   MultiAutocompleteChoiceType,
-} from "./MultiAutocompleteSelectFieldContent";
-import { useStyles } from "./styles";
+} from './MultiAutocompleteSelectFieldContent';
+import { useStyles } from './styles';
 
-export interface MultiAutocompleteSelectFieldProps
-  extends Partial<FetchMoreProps> {
+export interface MultiAutocompleteSelectFieldProps extends Partial<FetchMoreProps> {
   add?: MultiAutocompleteActionType;
   allowCustomValues?: boolean;
   displayValues: MultiAutocompleteChoiceType[];
@@ -42,9 +36,7 @@ export interface MultiAutocompleteSelectFieldProps
   popperPlacement?: PopperPlacementType;
 }
 
-const DebounceAutocomplete: React.ComponentType<DebounceProps<
-  string
->> = Debounce;
+const DebounceAutocomplete: React.ComponentType<DebounceProps<string>> = Debounce;
 
 const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFieldProps> = props => {
   const {
@@ -68,19 +60,16 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
     onFetchMore,
     fetchOnFocus,
     endAdornment,
-    popperPlacement = "bottom-end",
+    popperPlacement = 'bottom-end',
     ...rest
   } = props;
   const classes = useStyles(props);
   const anchor = React.useRef<HTMLDivElement | null>(null);
   const input = React.useRef<HTMLInputElement | null>(null);
 
-  const [inputValue, setInputValue] = React.useState("");
+  const [inputValue, setInputValue] = React.useState('');
 
-  const handleSelect = (
-    item: string,
-    downshiftOpts?: ControllerStateAndHelpers<string>,
-  ) => {
+  const handleSelect = (item: string, downshiftOpts?: ControllerStateAndHelpers<string>) => {
     if (downshiftOpts) {
       downshiftOpts.reset({
         inputValue: downshiftOpts.inputValue,
@@ -108,7 +97,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
             // this is to prevent unwanted state updates when the dropdown is closed with an empty value,
             // which downshift interprets as the value being updated with an empty string, causing side-effects
             stateReducer={(state, changes) => {
-              if (changes.isOpen === false && state.inputValue === "") {
+              if (changes.isOpen === false && state.inputValue === '') {
                 delete changes.inputValue;
               }
               return changes;
@@ -128,10 +117,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                 inputValue &&
                 inputValue.length > 0 &&
                 allowCustomValues &&
-                !choices.find(
-                  choice =>
-                    choice.label.toLowerCase() === inputValue.toLowerCase(),
-                );
+                !choices.find(choice => choice.label.toLowerCase() === inputValue.toLowerCase());
 
               const handleFocus = () => {
                 if (fetchOnFocus) {
@@ -206,9 +192,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
                             },
                           }
                         }
-                        choices={choices?.filter(
-                          choice => !value.includes(choice.value),
-                        )}
+                        choices={choices?.filter(choice => !value.includes(choice.value))}
                         displayCustomValue={displayCustomValue}
                         displayValues={displayValues}
                         getItemProps={getItemProps}
@@ -228,24 +212,14 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
       </DebounceAutocomplete>
       <div className={classes.chipContainer}>
         {displayValues.map(value => (
-          <div
-            className={classes.chip}
-            key={value.value}
-            id={`selected-option-${value.label}`}
-          >
-            <div
-              className={
-                !value.disabled ? classes.chipInner : classes.disabledChipInner
-              }
-            >
-              <Typography className={classes.chipLabel}>
-                {value.label}
-              </Typography>
+          <div className={classes.chip} key={value.value} id={`selected-option-${value.label}`}>
+            <div className={!value.disabled ? classes.chipInner : classes.disabledChipInner}>
+              <Typography className={classes.chipLabel}>{value.label}</Typography>
 
               <IconButton
                 hoverOutline={false}
                 variant="secondary"
-                data-test-id={testId ? `${testId}-remove` : "remove"}
+                data-test-id={testId ? `${testId}-remove` : 'remove'}
                 className={classes.chipClose}
                 disabled={value.disabled}
                 onClick={() => handleSelect(value.value)}
@@ -266,29 +240,24 @@ const MultiAutocompleteSelectField: React.FC<MultiAutocompleteSelectFieldProps> 
   testId,
   ...props
 }) => {
-  const [query, setQuery] = React.useState("");
+  const [query, setQuery] = React.useState('');
 
   if (fetchChoices) {
     return (
-      <MultiAutocompleteSelectFieldComponent
-        testId={testId}
-        choices={choices}
-        {...props}
-        fetchChoices={fetchChoices}
-      />
+      <MultiAutocompleteSelectFieldComponent testId={testId} choices={choices} {...props} fetchChoices={fetchChoices} />
     );
   }
 
   return (
     <MultiAutocompleteSelectFieldComponent
-      fetchChoices={q => setQuery(q || "")}
+      fetchChoices={q => setQuery(q || '')}
       choices={filter(choices, query, {
-        key: "label",
+        key: 'label',
       })}
       {...props}
     />
   );
 };
 
-MultiAutocompleteSelectField.displayName = "MultiAutocompleteSelectField";
+MultiAutocompleteSelectField.displayName = 'MultiAutocompleteSelectField';
 export default MultiAutocompleteSelectField;

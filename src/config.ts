@@ -1,13 +1,12 @@
-import packageInfo from "../package.json";
-import { SearchVariables } from "./hooks/makeSearch";
-import { ListSettings, ListViews, Pagination } from "./types";
+import packageInfo from '../package.json';
+import { SearchVariables } from './hooks/makeSearch';
+import { ListSettings, ListViews, Pagination } from './types';
 
-export const getAppDefaultUri = () => "/";
-export const getAppMountUri = () =>
-  window.__SALEOR_CONFIG__.APP_MOUNT_URI || getAppDefaultUri();
+export const getAppDefaultUri = () => '/';
+export const getAppMountUri = () => window.__SALEOR_CONFIG__.APP_MOUNT_URI || getAppDefaultUri();
 export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 10) || 300;
-export const IS_CLOUD_INSTANCE = process.env.IS_CLOUD_INSTANCE === "true";
+export const IS_CLOUD_INSTANCE = process.env.IS_CLOUD_INSTANCE === 'true';
 /**
  * @deprecated
  */
@@ -15,30 +14,29 @@ export const MARKETPLACE_URL = window.__SALEOR_CONFIG__.MARKETPLACE_URL;
 /**
  * @deprecated
  */
-export const MARKETPLACE_SALEOR_APPS_PAGE_PATH =
-  window.__SALEOR_CONFIG__.SALEOR_APPS_PAGE_PATH;
+export const MARKETPLACE_SALEOR_APPS_PAGE_PATH = window.__SALEOR_CONFIG__.SALEOR_APPS_PAGE_PATH;
 /**
  * @deprecated
  */
-export const MARKETPLACE_SALEOR_APPS_JSON_PATH =
-  window.__SALEOR_CONFIG__.SALEOR_APPS_JSON_PATH;
+export const MARKETPLACE_SALEOR_APPS_JSON_PATH = window.__SALEOR_CONFIG__.SALEOR_APPS_JSON_PATH;
 /**
  * @deprecated
  */
-export const MARKETPLACE_APP_TEMPLATE_GALLERY_PATH =
-  window.__SALEOR_CONFIG__.APP_TEMPLATE_GALLERY_PATH;
+export const MARKETPLACE_APP_TEMPLATE_GALLERY_PATH = window.__SALEOR_CONFIG__.APP_TEMPLATE_GALLERY_PATH;
 
 export const getAppsConfig = () => ({
   marketplaceApiUri: window.__SALEOR_CONFIG__.APPS_MARKETPLACE_API_URI,
-  tunnelUrlKeywords: window.__SALEOR_CONFIG__.APPS_TUNNEL_URL_KEYWORDS?.split(
-    ";",
-  ) || [".ngrok.io", ".saleor.live", ".trycloudflare.com"],
+  tunnelUrlKeywords: window.__SALEOR_CONFIG__.APPS_TUNNEL_URL_KEYWORDS?.split(';') || [
+    '.ngrok.io',
+    '.saleor.live',
+    '.trycloudflare.com',
+  ],
 });
 
 export const DEFAULT_INITIAL_SEARCH_DATA: SearchVariables = {
   after: null,
   first: 20,
-  query: "",
+  query: '',
 };
 
 export const DEFAULT_INITIAL_PAGINATION_DATA: Pagination = {
@@ -49,11 +47,7 @@ export const DEFAULT_INITIAL_PAGINATION_DATA: Pagination = {
 export const PAGINATE_BY = 20;
 export const VALUES_PAGINATE_BY = 10;
 
-export type ProductListColumns =
-  | "productType"
-  | "availability"
-  | "price"
-  | "date";
+export type ProductListColumns = 'productType' | 'availability' | 'price' | 'date';
 
 export interface AppListViewSettings {
   [ListViews.APPS_LIST]: ListSettings;
@@ -110,7 +104,7 @@ export const defaultListSettings: AppListViewSettings = {
     rowNumber: PAGINATE_BY,
   },
   [ListViews.PRODUCT_LIST]: {
-    columns: ["availability", "price", "productType", "date"],
+    columns: ['availability', 'price', 'productType', 'date'],
     rowNumber: PAGINATE_BY,
   },
   [ListViews.SALES_LIST]: {
@@ -144,7 +138,7 @@ export const defaultListSettings: AppListViewSettings = {
 
 export const APP_VERSION = packageInfo.version;
 
-export const DEMO_MODE = process.env.DEMO_MODE === "true";
+export const DEMO_MODE = process.env.DEMO_MODE === 'true';
 export const GTM_ID = process.env.GTM_ID;
 
 export const DEFAULT_NOTIFICATION_SHOW_TIME = 3000;

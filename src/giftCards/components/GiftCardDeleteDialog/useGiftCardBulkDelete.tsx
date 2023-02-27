@@ -1,14 +1,11 @@
-import { useGiftCardList } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
-import {
-  BulkDeleteGiftCardMutation,
-  useBulkDeleteGiftCardMutation,
-} from "@dashboard/graphql";
-import { MutationResultWithOpts } from "@dashboard/hooks/makeMutation";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import commonErrorMessages from "@dashboard/utils/errors/common";
-import { useIntl } from "react-intl";
+import { useGiftCardList } from '@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider';
+import { BulkDeleteGiftCardMutation, useBulkDeleteGiftCardMutation } from '@dashboard/graphql';
+import { MutationResultWithOpts } from '@dashboard/hooks/makeMutation';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import commonErrorMessages from '@dashboard/utils/errors/common';
+import { useIntl } from 'react-intl';
 
-import { giftCardDeleteDialogMessages as messages } from "./messages";
+import { giftCardDeleteDialogMessages as messages } from './messages';
 
 interface UseGiftCardBulkDeleteProps {
   onBulkDeleteGiftCards: () => void;
@@ -25,22 +22,15 @@ const useGiftCardBulkDelete = ({
   const notify = useNotifier();
   const intl = useIntl();
 
-  const {
-    listElements,
-    selectedItemsCount,
-    reset: resetSelectedItems,
-  } = useGiftCardList();
+  const { listElements, selectedItemsCount, reset: resetSelectedItems } = useGiftCardList();
 
-  const [
-    bulkDeleteGiftCard,
-    bulkDeleteGiftCardOpts,
-  ] = useBulkDeleteGiftCardMutation({
+  const [bulkDeleteGiftCard, bulkDeleteGiftCardOpts] = useBulkDeleteGiftCardMutation({
     onCompleted: data => {
       const errors = data?.giftCardBulkDelete?.errors;
 
       if (!errors.length) {
         notify({
-          status: "success",
+          status: 'success',
           text: intl.formatMessage(messages.deleteSuccessAlertText, {
             selectedItemsCount,
           }),
@@ -52,15 +42,14 @@ const useGiftCardBulkDelete = ({
       }
 
       notify({
-        status: "error",
+        status: 'error',
         text: intl.formatMessage(commonErrorMessages.unknownError),
       });
     },
     refetchQueries,
   });
 
-  const onBulkDeleteGiftCards = () =>
-    bulkDeleteGiftCard({ variables: { ids: listElements } });
+  const onBulkDeleteGiftCards = () => bulkDeleteGiftCard({ variables: { ids: listElements } });
 
   return {
     onBulkDeleteGiftCards,

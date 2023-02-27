@@ -1,19 +1,19 @@
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Skeleton from '@dashboard/components/Skeleton';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { OrderDetailsFragment, OrderErrorFragment } from '@dashboard/graphql';
 import {
   OrderLineDiscountConsumer,
   OrderLineDiscountContextConsumerProps,
-} from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider';
+import getOrderErrorMessage from '@dashboard/utils/errors/order';
+import { TableBody, TableCell, TableHead, Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { renderCollection } from "../../../misc";
-import TableLine from "./TableLine";
+import { renderCollection } from '../../../misc';
+import TableLine from './TableLine';
 
 export interface FormData {
   quantity: number;
@@ -25,7 +25,7 @@ const useStyles = makeStyles(
       width: theme.spacing(10),
     },
     colName: {
-      width: "auto",
+      width: 'auto',
     },
     colNameLabel: {},
     colPrice: {},
@@ -37,22 +37,22 @@ const useStyles = makeStyles(
     errorInfo: {
       color: theme.palette.error.main,
       marginLeft: theme.spacing(1.5),
-      display: "inline",
+      display: 'inline',
     },
     quantityField: {
-      "& input": {
-        padding: "12px 12px 10px",
+      '& input': {
+        padding: '12px 12px 10px',
       },
       width: 60,
     },
     table: {
-      [theme.breakpoints.up("md")]: {
-        tableLayout: "auto",
+      [theme.breakpoints.up('md')]: {
+        tableLayout: 'auto',
       },
-      tableLayout: "auto",
+      tableLayout: 'auto',
     },
   }),
-  { name: "OrderDraftDetailsProducts" },
+  { name: 'OrderDraftDetailsProducts' },
 );
 
 interface OrderDraftDetailsProductsProps {
@@ -69,7 +69,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
   const intl = useIntl();
   const classes = useStyles(props);
 
-  const formErrors = errors.filter(error => error.field === "lines");
+  const formErrors = errors.filter(error => error.field === 'lines');
 
   if (order === undefined) {
     return <Skeleton className={classes.skeleton} />;
@@ -86,25 +86,13 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
               </span>
             </TableCell>
             <TableCell className={classes.colQuantity}>
-              <FormattedMessage
-                id="nEWp+k"
-                defaultMessage="Quantity"
-                description="quantity of ordered products"
-              />
+              <FormattedMessage id="nEWp+k" defaultMessage="Quantity" description="quantity of ordered products" />
             </TableCell>
             <TableCell className={classes.colPrice}>
-              <FormattedMessage
-                id="32dfzI"
-                defaultMessage="Price"
-                description="price or ordered products"
-              />
+              <FormattedMessage id="32dfzI" defaultMessage="Price" description="price or ordered products" />
             </TableCell>
             <TableCell className={classes.colTotal}>
-              <FormattedMessage
-                id="lVwmf5"
-                defaultMessage="Total"
-                description="total price of ordered products"
-              />
+              <FormattedMessage id="lVwmf5" defaultMessage="Total" description="total price of ordered products" />
             </TableCell>
             <TableCell className={classes.colAction} />
           </TableRowLink>
@@ -114,15 +102,11 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
         {!!lines.length ? (
           renderCollection(lines, line => (
             <OrderLineDiscountConsumer key={line.id} orderLineId={line.id}>
-              {(
-                orderLineDiscountProps: OrderLineDiscountContextConsumerProps,
-              ) => (
+              {(orderLineDiscountProps: OrderLineDiscountContextConsumerProps) => (
                 <TableLine
                   {...orderLineDiscountProps}
                   line={line}
-                  error={formErrors.find(error =>
-                    error.orderLines?.some(id => id === line.id),
-                  )}
+                  error={formErrors.find(error => error.orderLines?.some(id => id === line.id))}
                   onOrderLineChange={onOrderLineChange}
                   onOrderLineRemove={onOrderLineRemove}
                 />
@@ -133,10 +117,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
           <>
             <TableRowLink>
               <TableCell colSpan={5}>
-                <FormattedMessage
-                  id="UD7/q8"
-                  defaultMessage="No Products added to Order"
-                />
+                <FormattedMessage id="UD7/q8" defaultMessage="No Products added to Order" />
                 {!!formErrors.length && (
                   <Typography variant="body2" className={classes.errorInfo}>
                     {getOrderErrorMessage(formErrors[0], intl)}
@@ -150,5 +131,5 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = prop
     </ResponsiveTable>
   );
 };
-OrderDraftDetailsProducts.displayName = "OrderDraftDetailsProducts";
+OrderDraftDetailsProducts.displayName = 'OrderDraftDetailsProducts';
 export default OrderDraftDetailsProducts;

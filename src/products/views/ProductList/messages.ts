@@ -1,14 +1,14 @@
-import { defineMessages } from "react-intl";
+import { defineMessages } from 'react-intl';
 
 export const productKindMessages = defineMessages({
   giftCardLabel: {
-    id: "YKyNm9",
-    defaultMessage: "Gift Card",
-    description: "label",
+    id: 'YKyNm9',
+    defaultMessage: 'Gift Card',
+    description: 'label',
   },
   normalLabel: {
-    id: "X/K4LI",
-    defaultMessage: "Normal",
-    description: "label",
+    id: 'X/K4LI',
+    defaultMessage: 'Normal',
+    description: 'label',
   },
 });

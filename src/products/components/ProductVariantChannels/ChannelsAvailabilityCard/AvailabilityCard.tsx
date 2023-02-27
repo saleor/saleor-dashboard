@@ -1,12 +1,12 @@
-import React from "react";
-import { useIntl } from "react-intl";
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { variantDetailsChannelsAvailabilityCardMessages as messages } from "./../messages";
-import { Channel, ProductChannelListing } from "./../types";
-import { ChannelsList } from "./ChannelsList";
-import { ChannelsListItem } from "./ChannelsListItem";
-import { NotAvailable } from "./NotAvailable";
-import CardContainer from "./VariantDetailsChannelsAvailabilityCardContainer";
+import { variantDetailsChannelsAvailabilityCardMessages as messages } from './../messages';
+import { Channel, ProductChannelListing } from './../types';
+import { ChannelsList } from './ChannelsList';
+import { ChannelsListItem } from './ChannelsListItem';
+import { NotAvailable } from './NotAvailable';
+import CardContainer from './VariantDetailsChannelsAvailabilityCardContainer';
 
 interface AvailabilityCardProps {
   items: Channel[];
@@ -21,10 +21,7 @@ export const AvailabilityCard: React.FC<AvailabilityCardProps> = ({
   children,
 }) => {
   const intl = useIntl();
-  const channelListSummary = intl.formatMessage(
-    messages.subtitle,
-    availabilityCount,
-  );
+  const channelListSummary = intl.formatMessage(messages.subtitle, availabilityCount);
 
   if (items.length === 0) {
     return (

@@ -1,9 +1,9 @@
-import Skeleton from "@dashboard/components/Skeleton";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { TableCell } from "@material-ui/core";
-import React from "react";
+import Skeleton from '@dashboard/components/Skeleton';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { TableCell } from '@material-ui/core';
+import React from 'react';
 
-import { useStyles } from "../../styles";
+import { useStyles } from '../../styles';
 
 export const AppsSkeleton = () => {
   const classes = useStyles({});
@@ -17,5 +17,5 @@ export const AppsSkeleton = () => {
   );
 };
 
-AppsSkeleton.displayName = "AppsSkeleton";
+AppsSkeleton.displayName = 'AppsSkeleton';
 export default AppsSkeleton;

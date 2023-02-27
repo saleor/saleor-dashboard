@@ -1,26 +1,19 @@
-import { act, renderHook } from "@testing-library/react-hooks";
-import React from "react";
+import { act, renderHook } from '@testing-library/react-hooks';
+import React from 'react';
 
-import { AvailableColumn } from "./types";
-import useDatagridChange, {
-  DatagridChangeStateContext,
-  useDatagridChangeState,
-} from "./useDatagridChange";
+import { AvailableColumn } from './types';
+import useDatagridChange, { DatagridChangeStateContext, useDatagridChangeState } from './useDatagridChange';
 
 const columns: AvailableColumn[] = [
-  { id: "name", title: "Name", width: 100 },
-  { id: "sku", title: "SKU", width: 100 },
-  { id: "size", title: "Size", width: 100 },
+  { id: 'name', title: 'Name', width: 100 },
+  { id: 'sku', title: 'SKU', width: 100 },
+  { id: 'size', title: 'Size', width: 100 },
 ];
 
 const GridContext = ({ children }) => {
   const stateProps = useDatagridChangeState();
 
-  return (
-    <DatagridChangeStateContext.Provider value={stateProps}>
-      {children}
-    </DatagridChangeStateContext.Provider>
-  );
+  return <DatagridChangeStateContext.Provider value={stateProps}>{children}</DatagridChangeStateContext.Provider>;
 };
 
 function setupHook() {
@@ -29,8 +22,8 @@ function setupHook() {
   });
 }
 
-describe("useDatagridChange", () => {
-  it("properly adds row", () => {
+describe('useDatagridChange', () => {
+  it('properly adds row', () => {
     const { result } = setupHook();
 
     act(result.current.onRowAdded);
@@ -39,7 +32,7 @@ describe("useDatagridChange", () => {
     expect(result.current.added[0]).toBe(10);
   });
 
-  it("properly removes rows", () => {
+  it('properly removes rows', () => {
     const { result } = setupHook();
 
     act(() => {
@@ -54,7 +47,7 @@ describe("useDatagridChange", () => {
     expect(result.current.removed[1]).toBe(8);
   });
 
-  it("properly removes added rows", () => {
+  it('properly removes added rows', () => {
     const { result } = setupHook();
 
     act(result.current.onRowAdded);
@@ -70,7 +63,7 @@ describe("useDatagridChange", () => {
     expect(result.current.removed[0]).toBe(7);
   });
 
-  it("properly removes added rows 2", () => {
+  it('properly removes added rows 2', () => {
     const { result } = setupHook();
 
     act(result.current.onRowAdded);
@@ -84,7 +77,7 @@ describe("useDatagridChange", () => {
     expect(result.current.removed).toHaveLength(0);
   });
 
-  it("properly removes added rows 3", () => {
+  it('properly removes added rows 3', () => {
     const { result } = setupHook();
 
     act(result.current.onRowAdded);
@@ -100,7 +93,7 @@ describe("useDatagridChange", () => {
     expect(result.current.removed).toHaveLength(0);
   });
 
-  it("properly updates changes after row removal", () => {
+  it('properly updates changes after row removal', () => {
     const { result } = setupHook();
 
     act(() => {
@@ -114,7 +107,7 @@ describe("useDatagridChange", () => {
     expect(result.current.changes.current[0].row).toBe(0);
   });
 
-  it("properly updates changes after row removal 2", () => {
+  it('properly updates changes after row removal 2', () => {
     const { result } = setupHook();
 
     act(result.current.onRowAdded);

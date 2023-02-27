@@ -1,36 +1,34 @@
-import { defineMessages } from "react-intl";
+import { defineMessages } from 'react-intl';
 
 export const variantDetailsChannelsAvailabilityCardMessages = defineMessages({
   title: {
-    id: "sedoZ3",
-    defaultMessage: "Availability",
-    description: "VariantDetailsChannelsAvailabilityCard title",
+    id: 'sedoZ3',
+    defaultMessage: 'Availability',
+    description: 'VariantDetailsChannelsAvailabilityCard title',
   },
   subtitle: {
-    id: "3+KwtP",
-    defaultMessage:
-      "Available in {publishedInChannelsCount} out of {availableChannelsCount}",
-    description: "VariantDetailsChannelsAvailabilityCard subtitle",
+    id: '3+KwtP',
+    defaultMessage: 'Available in {publishedInChannelsCount} out of {availableChannelsCount}',
+    description: 'VariantDetailsChannelsAvailabilityCard subtitle',
   },
   itemSubtitlePublished: {
-    id: "rJ3lkW",
-    defaultMessage: "Published since {publicationDate}",
-    description:
-      "VariantDetailsChannelsAvailabilityCard item subtitle published",
+    id: 'rJ3lkW',
+    defaultMessage: 'Published since {publicationDate}',
+    description: 'VariantDetailsChannelsAvailabilityCard item subtitle published',
   },
   itemSubtitleHidden: {
-    id: "EsZH44",
-    defaultMessage: "Hidden",
-    description: "VariantDetailsChannelsAvailabilityCard item subtitle hidden",
+    id: 'EsZH44',
+    defaultMessage: 'Hidden',
+    description: 'VariantDetailsChannelsAvailabilityCard item subtitle hidden',
   },
   noItemsAvailable: {
-    id: "jqJqdE",
-    defaultMessage: "This variant is not available at any of the channels",
-    description: "VariantDetailsChannelsAvailabilityCard no items available",
+    id: 'jqJqdE',
+    defaultMessage: 'This variant is not available at any of the channels',
+    description: 'VariantDetailsChannelsAvailabilityCard no items available',
   },
   manageButtonText: {
-    id: "2CBcub",
-    defaultMessage: "Manage",
-    description: "CreateVariantTitle manage",
+    id: '2CBcub',
+    defaultMessage: 'Manage',
+    description: 'CreateVariantTitle manage',
   },
 });

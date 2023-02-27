@@ -1,20 +1,20 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import CountryList from "@dashboard/components/CountryList";
-import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
-import Savebar from "@dashboard/components/Savebar";
-import { CountryFragment, ShippingErrorFragment } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { shippingZonesListUrl } from "@dashboard/shipping/urls";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { Content } from '@dashboard/components/AppLayout/Content';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import CountryList from '@dashboard/components/CountryList';
+import Form from '@dashboard/components/Form';
+import Grid from '@dashboard/components/Grid';
+import Savebar from '@dashboard/components/Savebar';
+import { CountryFragment, ShippingErrorFragment } from '@dashboard/graphql';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import { shippingZonesListUrl } from '@dashboard/shipping/urls';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import ShippingZoneCountriesAssignDialog from "../ShippingZoneCountriesAssignDialog";
-import ShippingZoneInfo from "../ShippingZoneInfo";
+import ShippingZoneCountriesAssignDialog from '../ShippingZoneCountriesAssignDialog';
+import ShippingZoneInfo from '../ShippingZoneInfo';
 
 export interface ShippingZoneCreateFormData {
   countries: string[];
@@ -24,19 +24,18 @@ export interface ShippingZoneCreateFormData {
 
 const messages = defineMessages({
   countries: {
-    id: "55LMJv",
-    defaultMessage: "Countries",
-    description: "country list header",
+    id: '55LMJv',
+    defaultMessage: 'Countries',
+    description: 'country list header',
   },
   createZone: {
-    id: "6fxdUO",
-    defaultMessage: "Create New Shipping Zone",
-    description: "section header",
+    id: '6fxdUO',
+    defaultMessage: 'Create New Shipping Zone',
+    description: 'section header',
   },
   noCountriesAssigned: {
-    id: "y7mfbl",
-    defaultMessage:
-      "Currently, there are no countries assigned to this shipping zone",
+    id: 'y7mfbl',
+    defaultMessage: 'Currently, there are no countries assigned to this shipping zone',
   },
 });
 
@@ -65,32 +64,19 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
 
   const initialForm: ShippingZoneCreateFormData = {
     countries: [],
-    description: "",
-    name: "",
+    description: '',
+    name: '',
   };
 
   return (
-    <Form
-      confirmLeave
-      initial={initialForm}
-      onSubmit={onSubmit}
-      disabled={disabled}
-    >
+    <Form confirmLeave initial={initialForm} onSubmit={onSubmit} disabled={disabled}>
       {({ change, data, isSaveDisabled, submit }) => (
         <>
-          <TopNav
-            href={shippingZonesListUrl()}
-            title={intl.formatMessage(messages.createZone)}
-          />
+          <TopNav href={shippingZonesListUrl()} title={intl.formatMessage(messages.createZone)} />
           <Content>
             <Grid>
               <div>
-                <ShippingZoneInfo
-                  data={data}
-                  disabled={disabled}
-                  errors={errors}
-                  onChange={change}
-                />
+                <ShippingZoneInfo data={data} disabled={disabled} errors={errors} onChange={change} />
                 <CardSpacer />
                 <CountryList
                   countries={data.countries.map(selectedCountry =>
@@ -102,10 +88,8 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
                   onCountryUnassign={countryCode =>
                     change({
                       target: {
-                        name: "countries",
-                        value: data.countries.filter(
-                          country => country !== countryCode,
-                        ),
+                        name: 'countries',
+                        value: data.countries.filter(country => country !== countryCode),
                       },
                     } as any)
                   }
@@ -125,7 +109,7 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
             onConfirm={formData => {
               change({
                 target: {
-                  name: "countries",
+                  name: 'countries',
                   value: formData.countries,
                 },
               } as any);
@@ -142,5 +126,5 @@ const ShippingZoneCreatePage: React.FC<ShippingZoneCreatePageProps> = ({
     </Form>
   );
 };
-ShippingZoneCreatePage.displayName = "ShippingZoneCreatePage";
+ShippingZoneCreatePage.displayName = 'ShippingZoneCreatePage';
 export default ShippingZoneCreatePage;

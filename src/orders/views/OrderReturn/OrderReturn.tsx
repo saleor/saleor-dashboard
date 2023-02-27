@@ -1,36 +1,32 @@
-import {
-  OrderErrorCode,
-  useFulfillmentReturnProductsMutation,
-  useOrderDetailsQuery,
-} from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import useNotifier from "@dashboard/hooks/useNotifier";
-import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors } from "@dashboard/misc";
-import OrderReturnPage from "@dashboard/orders/components/OrderReturnPage";
-import { OrderReturnFormData } from "@dashboard/orders/components/OrderReturnPage/form";
-import { orderUrl } from "@dashboard/orders/urls";
-import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { OrderErrorCode, useFulfillmentReturnProductsMutation, useOrderDetailsQuery } from '@dashboard/graphql';
+import useNavigator from '@dashboard/hooks/useNavigator';
+import useNotifier from '@dashboard/hooks/useNotifier';
+import { commonMessages } from '@dashboard/intl';
+import { extractMutationErrors } from '@dashboard/misc';
+import OrderReturnPage from '@dashboard/orders/components/OrderReturnPage';
+import { OrderReturnFormData } from '@dashboard/orders/components/OrderReturnPage/form';
+import { orderUrl } from '@dashboard/orders/urls';
+import React from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import ReturnFormDataParser from "./utils";
+import ReturnFormDataParser from './utils';
 
 export const messages = defineMessages({
   cannotRefundDescription: {
-    id: "XQBVEJ",
+    id: 'XQBVEJ',
     defaultMessage:
-      "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again.",
-    description: "order return error description when cannot refund",
+      'We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again.',
+    description: 'order return error description when cannot refund',
   },
   cannotRefundTitle: {
-    id: "l9Lwjh",
+    id: 'l9Lwjh',
     defaultMessage: "Couldn't refund products",
-    description: "order return error title when cannot refund",
+    description: 'order return error title when cannot refund',
   },
   successAlert: {
-    id: "/z9uo1",
-    defaultMessage: "Successfully returned products!",
-    description: "order returned success message",
+    id: '/z9uo1',
+    defaultMessage: 'Successfully returned products!',
+    description: 'order returned success message',
   },
 });
 
@@ -50,41 +46,37 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
     },
   });
 
-  const [returnCreate, returnCreateOpts] = useFulfillmentReturnProductsMutation(
-    {
-      onCompleted: ({
-        orderFulfillmentReturnProducts: { errors, replaceOrder },
-      }) => {
-        if (!errors.length) {
-          notify({
-            status: "success",
-            text: intl.formatMessage(messages.successAlert),
-          });
+  const [returnCreate, returnCreateOpts] = useFulfillmentReturnProductsMutation({
+    onCompleted: ({ orderFulfillmentReturnProducts: { errors, replaceOrder } }) => {
+      if (!errors.length) {
+        notify({
+          status: 'success',
+          text: intl.formatMessage(messages.successAlert),
+        });
 
-          navigate(orderUrl(replaceOrder?.id || orderId));
+        navigate(orderUrl(replaceOrder?.id || orderId));
 
-          return;
-        }
+        return;
+      }
 
-        if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {
-          notify({
-            autohide: 5000,
-            status: "error",
-            text: intl.formatMessage(messages.cannotRefundDescription),
-            title: intl.formatMessage(messages.cannotRefundTitle),
-          });
-
-          return;
-        }
-
+      if (errors.some(err => err.code === OrderErrorCode.CANNOT_REFUND)) {
         notify({
           autohide: 5000,
-          status: "error",
-          text: intl.formatMessage(commonMessages.somethingWentWrong),
+          status: 'error',
+          text: intl.formatMessage(messages.cannotRefundDescription),
+          title: intl.formatMessage(messages.cannotRefundTitle),
         });
-      },
+
+        return;
+      }
+
+      notify({
+        autohide: 5000,
+        status: 'error',
+        text: intl.formatMessage(commonMessages.somethingWentWrong),
+      });
     },
-  );
+  });
 
   const handleSubmit = async (formData: OrderReturnFormData) => {
     if (!data?.order) {
@@ -111,5 +103,5 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   );
 };
 
-OrderReturn.displayName = "OrderReturn";
+OrderReturn.displayName = 'OrderReturn';
 export default OrderReturn;

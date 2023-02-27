@@ -1,11 +1,11 @@
-import { commonMessages } from "@dashboard/intl";
-import { ConfirmButton } from "@saleor/macaw-ui";
-import React from "react";
-import { useIntl } from "react-intl";
+import { commonMessages } from '@dashboard/intl';
+import { ConfirmButton } from '@saleor/macaw-ui';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { bulkEnableDisableSectionMessages as buttonMessages } from "../../GiftCardsList/GiftCardsListTable/GiftCardsListTableHeader/messages";
-import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
-import useGiftCardActivateToggle from "./hooks/useGiftCardActivateToggle";
+import { bulkEnableDisableSectionMessages as buttonMessages } from '../../GiftCardsList/GiftCardsListTable/GiftCardsListTableHeader/messages';
+import useGiftCardDetails from '../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails';
+import useGiftCardActivateToggle from './hooks/useGiftCardActivateToggle';
 
 const GiftCardEnableDisableSection: React.FC = () => {
   const intl = useIntl();
@@ -14,22 +14,14 @@ const GiftCardEnableDisableSection: React.FC = () => {
     giftCard: { id, isActive, isExpired },
   } = useGiftCardDetails();
 
-  const {
-    giftCardActivate,
-    giftCardDeactivate,
-    currentOpts,
-  } = useGiftCardActivateToggle({
+  const { giftCardActivate, giftCardDeactivate, currentOpts } = useGiftCardActivateToggle({
     isActive,
   });
 
   const handleClick = () =>
-    isActive
-      ? giftCardDeactivate({ variables: { id } })
-      : giftCardActivate({ variables: { id } });
+    isActive ? giftCardDeactivate({ variables: { id } }) : giftCardActivate({ variables: { id } });
 
-  const buttonLabel = isActive
-    ? buttonMessages.disableLabel
-    : buttonMessages.enableLabel;
+  const buttonLabel = isActive ? buttonMessages.disableLabel : buttonMessages.enableLabel;
 
   if (isExpired) {
     return null;

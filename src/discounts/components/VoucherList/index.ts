@@ -1,2 +1,2 @@
-export { default } from "./VoucherList";
-export * from "./VoucherList";
+export { default } from './VoucherList';
+export * from './VoucherList';

@@ -1,4 +1,4 @@
-import { gql } from "@apollo/client";
+import { gql } from '@apollo/client';
 
 export const pageList = gql`
   query PageList(
@@ -9,14 +9,7 @@ export const pageList = gql`
     $sort: PageSortingInput
     $filter: PageFilterInput
   ) {
-    pages(
-      before: $before
-      after: $after
-      first: $first
-      last: $last
-      sortBy: $sort
-      filter: $filter
-    ) {
+    pages(before: $before, after: $after, first: $first, last: $last, sortBy: $sort, filter: $filter) {
       edges {
         node {
           ...Page
@@ -33,13 +26,7 @@ export const pageList = gql`
 `;
 
 export const pageDetails = gql`
-  query PageDetails(
-    $id: ID!
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
-  ) {
+  query PageDetails($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
     page(id: $id) {
       ...PageDetails
     }
@@ -47,13 +34,7 @@ export const pageDetails = gql`
 `;
 
 export const pageTypeQuery = gql`
-  query PageType(
-    $id: ID!
-    $firstValues: Int
-    $afterValues: String
-    $lastValues: Int
-    $beforeValues: String
-  ) {
+  query PageType($id: ID!, $firstValues: Int, $afterValues: String, $lastValues: Int, $beforeValues: String) {
     pageType(id: $id) {
       id
       name
@@ -64,12 +45,7 @@ export const pageTypeQuery = gql`
         slug
         name
         valueRequired
-        choices(
-          first: $firstValues
-          after: $afterValues
-          last: $lastValues
-          before: $beforeValues
-        ) {
+        choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
           ...AttributeValueList
         }
       }

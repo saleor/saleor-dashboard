@@ -1,20 +1,14 @@
-import { FilterFieldBaseProps, FilterType } from "@dashboard/components/Filter";
-import {
-  getIsFilterMultipleChoices,
-  useCommonStyles,
-} from "@dashboard/components/Filter/FilterContent/utils";
-import FormSpacer from "@dashboard/components/FormSpacer";
-import React from "react";
-import { useIntl } from "react-intl";
+import { FilterFieldBaseProps, FilterType } from '@dashboard/components/Filter';
+import { getIsFilterMultipleChoices, useCommonStyles } from '@dashboard/components/Filter/FilterContent/utils';
+import FormSpacer from '@dashboard/components/FormSpacer';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import SingleSelectField from "../../SingleSelectField/SingleSelectField";
+import SingleSelectField from '../../SingleSelectField/SingleSelectField';
 
 type FilterSingleSelectFieldProps = FilterFieldBaseProps<string>;
 
-export const FilterSingleSelectField: React.FC<FilterSingleSelectFieldProps> = ({
-  filter,
-  onFilterPropertyChange,
-}) => {
+export const FilterSingleSelectField: React.FC<FilterSingleSelectFieldProps> = ({ filter, onFilterPropertyChange }) => {
   const classes = useCommonStyles({});
   const intl = useIntl();
 
@@ -40,7 +34,7 @@ export const FilterSingleSelectField: React.FC<FilterSingleSelectFieldProps> = (
                 }),
               },
             },
-            type: "set-property",
+            type: 'set-property',
           })
         }
       />

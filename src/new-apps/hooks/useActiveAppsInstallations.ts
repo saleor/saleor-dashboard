@@ -1,14 +1,14 @@
-import { useApolloClient } from "@apollo/client";
-import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
+import { useApolloClient } from '@apollo/client';
+import { EXTENSION_LIST_QUERY } from '@dashboard/apps/queries';
 import {
   AppInstallationFragment,
   AppsInstallationsQuery,
   JobStatusEnum,
   useAppDeleteFailedInstallationMutation,
   useAppRetryInstallMutation,
-} from "@dashboard/graphql";
-import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import { useEffect, useRef } from "react";
+} from '@dashboard/graphql';
+import useLocalStorage from '@dashboard/hooks/useLocalStorage';
+import { useEffect, useRef } from 'react';
 
 interface UseActiveAppsInstallations {
   appsInProgressData: AppsInstallationsQuery | undefined;
@@ -32,9 +32,10 @@ function useActiveAppsInstallations({
   onRemoveInProgressAppSuccess,
 }: UseActiveAppsInstallations) {
   const client = useApolloClient();
-  const [activeInstallations, setActiveInstallations] = useLocalStorage<
-    Array<Record<"id" | "name", string>>
-  >("activeInstallations", []);
+  const [activeInstallations, setActiveInstallations] = useLocalStorage<Array<Record<'id' | 'name', string>>>(
+    'activeInstallations',
+    [],
+  );
   const intervalId = useRef<null | number>(null);
 
   const refetchExtensionList = () => {
@@ -44,9 +45,7 @@ function useActiveAppsInstallations({
   };
 
   const removeInstallation = (id: string) =>
-    setActiveInstallations(installations =>
-      installations.filter(item => item.id !== id),
-    );
+    setActiveInstallations(installations => installations.filter(item => item.id !== id));
 
   const [retryInstallApp, retryInstallAppOpts] = useAppRetryInstallMutation({
     onCompleted: data => {
@@ -65,19 +64,17 @@ function useActiveAppsInstallations({
     },
   });
 
-  const handleAppInstallRetry = (id: string) =>
-    retryInstallApp({ variables: { id } });
+  const handleAppInstallRetry = (id: string) => retryInstallApp({ variables: { id } });
 
-  const [deleteInProgressApp, deleteInProgressAppOpts] =
-    useAppDeleteFailedInstallationMutation({
-      onCompleted: data => {
-        if (!data?.appDeleteFailedInstallation?.errors?.length) {
-          removeInProgressAppNotify();
-          appsInProgressRefetch();
-          onRemoveInProgressAppSuccess();
-        }
-      },
-    });
+  const [deleteInProgressApp, deleteInProgressAppOpts] = useAppDeleteFailedInstallationMutation({
+    onCompleted: data => {
+      if (!data?.appDeleteFailedInstallation?.errors?.length) {
+        removeInProgressAppNotify();
+        appsInProgressRefetch();
+        onRemoveInProgressAppSuccess();
+      }
+    },
+  });
 
   const handleRemoveInProgress = (id: string) =>
     deleteInProgressApp({
@@ -93,9 +90,7 @@ function useActiveAppsInstallations({
     () =>
       appsInProgressData?.appsInstallations?.forEach(app => {
         if (app.status === JobStatusEnum.PENDING) {
-          const item = activeInstallations.find(
-            installation => installation.id === app.id,
-          );
+          const item = activeInstallations.find(installation => installation.id === app.id);
           if (!item) {
             setActiveInstallations(installations => [
               ...installations,

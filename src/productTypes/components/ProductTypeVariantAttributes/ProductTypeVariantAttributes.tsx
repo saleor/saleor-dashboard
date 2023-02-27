@@ -1,33 +1,27 @@
-import { attributeUrl } from "@dashboard/attributes/urls";
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import Checkbox from "@dashboard/components/Checkbox";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
-import Skeleton from "@dashboard/components/Skeleton";
-import {
-  SortableTableBody,
-  SortableTableRow,
-} from "@dashboard/components/SortableTable";
-import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import TableHead from "@dashboard/components/TableHead";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  ProductAttributeType,
-  ProductTypeDetailsQuery,
-} from "@dashboard/graphql";
-import { maybe, renderCollection } from "@dashboard/misc";
-import { ListActions, ReorderAction } from "@dashboard/types";
-import { Card, CardContent, TableCell } from "@material-ui/core";
-import HelpOutline from "@material-ui/icons/HelpOutline";
-import { DeleteIcon, IconButton, makeStyles, Tooltip } from "@saleor/macaw-ui";
-import capitalize from "lodash/capitalize";
-import React, { useEffect } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { attributeUrl } from '@dashboard/attributes/urls';
+import { Button } from '@dashboard/components/Button';
+import CardTitle from '@dashboard/components/CardTitle';
+import Checkbox from '@dashboard/components/Checkbox';
+import ResponsiveTable from '@dashboard/components/ResponsiveTable';
+import Skeleton from '@dashboard/components/Skeleton';
+import { SortableTableBody, SortableTableRow } from '@dashboard/components/SortableTable';
+import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
+import TableHead from '@dashboard/components/TableHead';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { ProductAttributeType, ProductTypeDetailsQuery } from '@dashboard/graphql';
+import { maybe, renderCollection } from '@dashboard/misc';
+import { ListActions, ReorderAction } from '@dashboard/types';
+import { Card, CardContent, TableCell } from '@material-ui/core';
+import HelpOutline from '@material-ui/icons/HelpOutline';
+import { DeleteIcon, IconButton, makeStyles, Tooltip } from '@saleor/macaw-ui';
+import capitalize from 'lodash/capitalize';
+import React, { useEffect } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 const useStyles = makeStyles(
   theme => ({
     colAction: {
-      "&:last-child": {
+      '&:last-child': {
         paddingRight: 0,
       },
       width: 80,
@@ -45,28 +39,28 @@ const useStyles = makeStyles(
       width: 150,
     },
     colVariantContent: {
-      display: "flex",
-      alignItems: "center",
+      display: 'flex',
+      alignItems: 'center',
     },
     colVariantDisabled: {
       fill: theme.palette.alert.icon.info,
       fillOpacity: 0.6,
-      "&:hover": {
+      '&:hover': {
         fillOpacity: 1,
       },
     },
     link: {
-      cursor: "pointer",
+      cursor: 'pointer',
     },
     textLeft: {
-      textAlign: "left",
+      textAlign: 'left',
     },
   }),
-  { name: "ProductTypeAttributes" },
+  { name: 'ProductTypeAttributes' },
 );
 
 interface ProductTypeVariantAttributesProps extends ListActions {
-  assignedVariantAttributes: ProductTypeDetailsQuery["productType"]["assignedVariantAttributes"];
+  assignedVariantAttributes: ProductTypeDetailsQuery['productType']['assignedVariantAttributes'];
   disabled: boolean;
   type: string;
   testId?: string;
@@ -84,11 +78,7 @@ function handleContainerAssign(
   setSelectedAttributes: (data: string[]) => void,
 ) {
   if (isSelected) {
-    setSelectedAttributes(
-      selectedAttributes.filter(
-        selectedContainer => selectedContainer !== variantID,
-      ),
-    );
+    setSelectedAttributes(selectedAttributes.filter(selectedContainer => selectedContainer !== variantID));
   } else {
     setSelectedAttributes([...selectedAttributes, variantID]);
   }
@@ -96,9 +86,7 @@ function handleContainerAssign(
 
 const numberOfColumns = 6;
 
-const ProductTypeVariantAttributes: React.FC<
-  ProductTypeVariantAttributesProps
-> = props => {
+const ProductTypeVariantAttributes: React.FC<ProductTypeVariantAttributesProps> = props => {
   const {
     assignedVariantAttributes,
     disabled,
@@ -122,9 +110,8 @@ const ProductTypeVariantAttributes: React.FC<
   useEffect(() => {
     // Populate initial selection - populated inside this component to preserve it's state between data reloads
     setSelectedVariantAttributes(
-      assignedVariantAttributes
-        .map(elem => (elem.variantSelection ? elem.attribute.id : undefined))
-        .filter(Boolean) || [],
+      assignedVariantAttributes.map(elem => (elem.variantSelection ? elem.attribute.id : undefined)).filter(Boolean) ||
+        [],
     );
   }, []);
 
@@ -132,9 +119,9 @@ const ProductTypeVariantAttributes: React.FC<
     <Card data-test-id="variant-attributes">
       <CardTitle
         title={intl.formatMessage({
-          id: "skEK/i",
-          defaultMessage: "Variant Attributes",
-          description: "section header",
+          id: 'skEK/i',
+          defaultMessage: 'Variant Attributes',
+          description: 'section header',
         })}
         toolbar={
           <Button
@@ -142,11 +129,7 @@ const ProductTypeVariantAttributes: React.FC<
             variant="tertiary"
             onClick={() => onAttributeAssign(ProductAttributeType[type])}
           >
-            <FormattedMessage
-              id="uxPpRx"
-              defaultMessage="Assign attribute"
-              description="button"
-            />
+            <FormattedMessage id="uxPpRx" defaultMessage="Assign attribute" description="button" />
           </Button>
         }
       />
@@ -166,9 +149,7 @@ const ProductTypeVariantAttributes: React.FC<
               disabled={disabled}
               dragRows
               selected={selected}
-              items={assignedVariantAttributes?.map(
-                selectedAttribute => selectedAttribute.attribute,
-              )}
+              items={assignedVariantAttributes?.map(selectedAttribute => selectedAttribute.attribute)}
               toggleAll={toggleAll}
               toolbar={toolbar}
             >
@@ -176,11 +157,7 @@ const ProductTypeVariantAttributes: React.FC<
                 <FormattedMessage id="kTr2o8" defaultMessage="Attribute name" />
               </TableCell>
               <TableCell className={classes.colName}>
-                <FormattedMessage
-                  id="nf3XSt"
-                  defaultMessage="Slug"
-                  description="attribute internal name"
-                />
+                <FormattedMessage id="nf3XSt" defaultMessage="Slug" description="attribute internal name" />
               </TableCell>
               <TableCell className={classes.colName}>
                 <FormattedMessage
@@ -197,21 +174,14 @@ const ProductTypeVariantAttributes: React.FC<
               assignedVariantAttributes,
               (assignedVariantAttribute, attributeIndex) => {
                 const { attribute } = assignedVariantAttribute;
-                const isVariantSelected = assignedVariantAttribute
-                  ? isChecked(attribute.id)
-                  : false;
+                const isVariantSelected = assignedVariantAttribute ? isChecked(attribute.id) : false;
                 const isSelected = !!selectedVariantAttributes.find(
                   selectedAttribute => selectedAttribute === attribute.id,
                 );
-                const variantSelectionDisabled = ![
-                  "DROPDOWN",
-                  "BOOLEAN",
-                  "SWATCH",
-                  "NUMERIC",
-                ].includes(attribute.inputType);
-                const readableAttributeInputType = capitalize(
-                  attribute.inputType.split("_").join(" "),
+                const variantSelectionDisabled = !['DROPDOWN', 'BOOLEAN', 'SWATCH', 'NUMERIC'].includes(
+                  attribute.inputType,
                 );
+                const readableAttributeInputType = capitalize(attribute.inputType.split('_').join(' '));
 
                 return (
                   <SortableTableRow
@@ -221,7 +191,7 @@ const ProductTypeVariantAttributes: React.FC<
                     href={attribute ? attributeUrl(attribute.id) : undefined}
                     key={maybe(() => attribute.id)}
                     index={attributeIndex || 0}
-                    data-test-id={"id-" + +maybe(() => attribute.id)}
+                    data-test-id={'id-' + +maybe(() => attribute.id)}
                   >
                     <TableCell padding="checkbox">
                       <Checkbox
@@ -235,16 +205,9 @@ const ProductTypeVariantAttributes: React.FC<
                       {attribute.name ?? <Skeleton />}
                     </TableCell>
                     <TableCell className={classes.colSlug} data-test-id="slug">
-                      {maybe(() => attribute.slug) ? (
-                        attribute.slug
-                      ) : (
-                        <Skeleton />
-                      )}
+                      {maybe(() => attribute.slug) ? attribute.slug : <Skeleton />}
                     </TableCell>
-                    <TableCell
-                      className={classes.colVariant}
-                      data-test-id="variant-selection"
-                    >
+                    <TableCell className={classes.colVariant} data-test-id="variant-selection">
                       <div className={classes.colVariantContent}>
                         <Checkbox
                           data-test-id="variant-selection-checkbox"
@@ -272,9 +235,7 @@ const ProductTypeVariantAttributes: React.FC<
                               />
                             }
                           >
-                            <HelpOutline
-                              className={classes.colVariantDisabled}
-                            />
+                            <HelpOutline className={classes.colVariantDisabled} />
                           </Tooltip>
                         )}
                       </div>
@@ -296,10 +257,7 @@ const ProductTypeVariantAttributes: React.FC<
               () => (
                 <TableRowLink>
                   <TableCell colSpan={numberOfColumns}>
-                    <FormattedMessage
-                      id="ztQgD8"
-                      defaultMessage="No attributes found"
-                    />
+                    <FormattedMessage id="ztQgD8" defaultMessage="No attributes found" />
                   </TableCell>
                 </TableRowLink>
               ),
@@ -310,5 +268,5 @@ const ProductTypeVariantAttributes: React.FC<
     </Card>
   );
 };
-ProductTypeVariantAttributes.displayName = "ProductTypeVariantAttributes";
+ProductTypeVariantAttributes.displayName = 'ProductTypeVariantAttributes';
 export default ProductTypeVariantAttributes;

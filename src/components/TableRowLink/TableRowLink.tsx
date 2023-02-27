@@ -1,11 +1,11 @@
-import { isExternalURL } from "@dashboard/utils/urls";
-import { TableRow, TableRowTypeMap } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React, { forwardRef } from "react";
-import { Link } from "react-router-dom";
+import { isExternalURL } from '@dashboard/utils/urls';
+import { TableRow, TableRowTypeMap } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React, { forwardRef } from 'react';
+import { Link } from 'react-router-dom';
 
-type MaterialTableRowPropsType = TableRowTypeMap["props"];
+type MaterialTableRowPropsType = TableRowTypeMap['props'];
 
 export interface TableRowLinkProps extends MaterialTableRowPropsType {
   children: React.ReactNode;
@@ -18,35 +18,33 @@ export interface TableRowLinkProps extends MaterialTableRowPropsType {
 const useStyles = makeStyles(
   {
     link: {
-      all: "inherit",
-      display: "contents",
+      all: 'inherit',
+      display: 'contents',
     },
   },
-  { name: "TableRowLink" },
+  { name: 'TableRowLink' },
 );
 
-const TableRowLink = forwardRef<HTMLTableRowElement, TableRowLinkProps>(
-  (props, ref) => {
-    const { href, children, linkClassName, onClick, ...restProps } = props;
-    const classes = useStyles();
+const TableRowLink = forwardRef<HTMLTableRowElement, TableRowLinkProps>((props, ref) => {
+  const { href, children, linkClassName, onClick, ...restProps } = props;
+  const classes = useStyles();
 
-    if (!href || isExternalURL(href)) {
-      return (
-        <TableRow ref={ref} hover={!!onClick} onClick={onClick} {...restProps}>
-          {children}
-        </TableRow>
-      );
-    }
-
+  if (!href || isExternalURL(href)) {
     return (
-      <TableRow ref={ref} hover={true} onClick={onClick} {...restProps}>
-        <Link className={clsx(classes.link, linkClassName)} to={href}>
-          {children}
-        </Link>
+      <TableRow ref={ref} hover={!!onClick} onClick={onClick} {...restProps}>
+        {children}
       </TableRow>
     );
-  },
-);
+  }
 
-TableRowLink.displayName = "TableRowLink";
+  return (
+    <TableRow ref={ref} hover={true} onClick={onClick} {...restProps}>
+      <Link className={clsx(classes.link, linkClassName)} to={href}>
+        {children}
+      </Link>
+    </TableRow>
+  );
+});
+
+TableRowLink.displayName = 'TableRowLink';
 export default TableRowLink;

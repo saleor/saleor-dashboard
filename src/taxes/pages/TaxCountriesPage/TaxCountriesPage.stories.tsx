@@ -1,9 +1,9 @@
-import Decorator from "@dashboard/storybook/Decorator";
-import { taxCountryConfigurations } from "@dashboard/taxes/fixtures";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import Decorator from '@dashboard/storybook/Decorator';
+import { taxCountryConfigurations } from '@dashboard/taxes/fixtures';
+import { storiesOf } from '@storybook/react';
+import React from 'react';
 
-import TaxCountriesPage, { TaxCountriesPageProps } from "./TaxCountriesPage";
+import TaxCountriesPage, { TaxCountriesPageProps } from './TaxCountriesPage';
 
 const props: TaxCountriesPageProps = {
   countryTaxesData: taxCountryConfigurations,
@@ -12,13 +12,11 @@ const props: TaxCountriesPageProps = {
   openDialog: () => null,
   onSubmit: () => null,
   onDeleteConfiguration: () => null,
-  savebarState: "default" as const,
+  savebarState: 'default' as const,
   disabled: false,
 };
 
-storiesOf("Taxes / Countries view", module)
+storiesOf('Taxes / Countries view', module)
   .addDecorator(Decorator)
-  .add("loading", () => (
-    <TaxCountriesPage {...props} countryTaxesData={undefined} />
-  ))
-  .add("default", () => <TaxCountriesPage {...props} />);
+  .add('loading', () => <TaxCountriesPage {...props} countryTaxesData={undefined} />)
+  .add('default', () => <TaxCountriesPage {...props} />);

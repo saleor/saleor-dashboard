@@ -1,31 +1,18 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import Skeleton from "@dashboard/components/Skeleton";
-import { buttonMessages } from "@dashboard/intl";
-import { RecursiveMenuItem } from "@dashboard/navigation/types";
-import { Card, CardActions, Paper, Typography } from "@material-ui/core";
-import EditIcon from "@material-ui/icons/Edit";
-import {
-  Button,
-  DeleteIcon,
-  IconButton,
-  makeStyles,
-  useTheme,
-} from "@saleor/macaw-ui";
-import { GripIcon, vars } from "@saleor/macaw-ui/next";
-import clsx from "clsx";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
-import SortableTree, { NodeRendererProps } from "react-sortable-tree";
+import CardTitle from '@dashboard/components/CardTitle';
+import Skeleton from '@dashboard/components/Skeleton';
+import { buttonMessages } from '@dashboard/intl';
+import { RecursiveMenuItem } from '@dashboard/navigation/types';
+import { Card, CardActions, Paper, Typography } from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
+import { Button, DeleteIcon, IconButton, makeStyles, useTheme } from '@saleor/macaw-ui';
+import { GripIcon, vars } from '@saleor/macaw-ui/next';
+import clsx from 'clsx';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
+import SortableTree, { NodeRendererProps } from 'react-sortable-tree';
 
-import { MenuItemType } from "../MenuItemDialog";
-import {
-  getDiff,
-  getNodeData,
-  getNodeQuantity,
-  MenuTreeItem,
-  TreeItemProps,
-  TreeOperation,
-} from "./tree";
+import { MenuItemType } from '../MenuItemDialog';
+import { getDiff, getNodeData, getNodeQuantity, MenuTreeItem, TreeItemProps, TreeOperation } from './tree';
 
 const NODE_HEIGHT = 56;
 const NODE_MARGIN = 40;
@@ -43,10 +30,10 @@ export interface MenuItemsProps {
 const useStyles = makeStyles(
   theme => ({
     actions: {
-      "&&": {
+      '&&': {
         padding: theme.spacing(2, 4),
       },
-      flexDirection: "row",
+      flexDirection: 'row',
     },
     container: {
       background: theme.palette.grey[200],
@@ -58,62 +45,62 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(1),
     },
     dragIcon: {
-      cursor: "grab",
+      cursor: 'grab',
     },
     nodeTitle: {
-      cursor: "pointer",
+      cursor: 'pointer',
       marginLeft: theme.spacing(7),
     },
     nodeActions: {
-      display: "flex",
+      display: 'flex',
       gap: theme.spacing(1),
     },
     root: {
-      "& .rst__collapseButton": {
-        display: "none",
+      '& .rst__collapseButton': {
+        display: 'none',
       },
-      "& .rst__node": {
-        "&:first-of-type": {
-          "& $row": {
+      '& .rst__node': {
+        '&:first-of-type': {
+          '& $row': {
             borderTop: `1px ${vars.colors.border.neutralPlain} solid`,
           },
         },
       },
     },
     row: {
-      alignItems: "center",
+      alignItems: 'center',
       background: vars.colors.background.surfaceNeutralPlain,
       borderBottom: `1px ${vars.colors.border.neutralPlain} solid`,
       borderRadius: 0,
-      display: "flex",
-      flexDirection: "row",
+      display: 'flex',
+      flexDirection: 'row',
       height: NODE_HEIGHT,
-      justifyContent: "flex-start",
+      justifyContent: 'flex-start',
       paddingLeft: theme.spacing(3),
     },
     rowContainer: {
-      "& > *": {
+      '& > *': {
         opacity: 1,
         transition: `opacity ${theme.transitions.duration.standard}ms`,
       },
       transition: `margin ${theme.transitions.duration.standard}ms`,
     },
     rowContainerDragged: {
-      "&$rowContainer": {
-        "&:before": {
+      '&$rowContainer': {
+        '&:before': {
           background: vars.colors.background.surfaceNeutralPlain,
           border: `1px solid ${vars.colors.border.neutralPlain}`,
-          borderRadius: "100%",
+          borderRadius: '100%',
           content: "''",
           height: 7,
           left: 0,
-          position: "absolute",
+          position: 'absolute',
           top: -3,
           width: 7,
         },
         borderTop: `1px solid ${vars.colors.border.neutralPlain}`,
         height: 0,
-        position: "relative",
+        position: 'relative',
         top: -1,
       },
     },
@@ -124,7 +111,7 @@ const useStyles = makeStyles(
       flex: 1,
     },
   }),
-  { name: "MenuItems" },
+  { name: 'MenuItems' },
 );
 
 const Placeholder: React.FC = props => {
@@ -133,29 +120,19 @@ const Placeholder: React.FC = props => {
   return (
     <Paper className={classes.row} elevation={0}>
       <Typography>
-        <FormattedMessage
-          id="WwZfNK"
-          defaultMessage="Add new menu item to begin creating menu"
-        />
+        <FormattedMessage id="WwZfNK" defaultMessage="Add new menu item to begin creating menu" />
       </Typography>
     </Paper>
   );
 };
 
 const Node: React.FC<NodeRendererProps<TreeItemProps>> = props => {
-  const { node, path, connectDragPreview, connectDragSource, isDragging } =
-    props;
+  const { node, path, connectDragPreview, connectDragSource, isDragging } = props;
   const classes = useStyles(props);
 
-  const draggedClassName = clsx(
-    classes.rowContainer,
-    classes.rowContainerDragged,
-  );
+  const draggedClassName = clsx(classes.rowContainer, classes.rowContainerDragged);
   const defaultClassName = isDragging ? draggedClassName : classes.rowContainer;
-  const placeholderClassName = clsx(
-    classes.rowContainer,
-    classes.rowContainerPlaceholder,
-  );
+  const placeholderClassName = clsx(classes.rowContainer, classes.rowContainerPlaceholder);
 
   const [className, setClassName] = React.useState(defaultClassName);
   React.useEffect(() => setClassName(defaultClassName), [isDragging]);
@@ -196,7 +173,7 @@ const Node: React.FC<NodeRendererProps<TreeItemProps>> = props => {
               node.onChange([
                 {
                   id: node.id,
-                  type: "remove",
+                  type: 'remove',
                 },
               ])
             }
@@ -210,15 +187,7 @@ const Node: React.FC<NodeRendererProps<TreeItemProps>> = props => {
 };
 
 const MenuItems: React.FC<MenuItemsProps> = props => {
-  const {
-    canUndo,
-    items,
-    onChange,
-    onItemAdd,
-    onItemClick,
-    onItemEdit,
-    onUndo,
-  } = props;
+  const { canUndo, items, onChange, onItemAdd, onItemClick, onItemEdit, onUndo } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -228,9 +197,9 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: "dEUZg2",
-          defaultMessage: "Menu Items",
-          description: "header",
+          id: 'dEUZg2',
+          defaultMessage: 'Menu Items',
+          description: 'header',
         })}
         toolbar={
           <Button disabled={!canUndo} onClick={onUndo}>
@@ -240,11 +209,11 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
       />
       <div
         className={clsx(classes.container, {
-          [classes.darkContainer]: themeType === "dark",
+          [classes.darkContainer]: themeType === 'dark',
         })}
         style={{
           minHeight: (items ? getNodeQuantity(items) - 1 : 1) * NODE_HEIGHT,
-          padding: !items && "0 24px",
+          padding: !items && '0 24px',
           paddingTop: !items && 20,
         }}
       >
@@ -262,18 +231,14 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
             maxDepth={5}
             isVirtualized={false}
             rowHeight={NODE_HEIGHT}
-            treeData={items.map(item =>
-              getNodeData(item, onChange, onItemClick, onItemEdit),
-            )}
+            treeData={items.map(item => getNodeData(item, onChange, onItemClick, onItemEdit))}
             theme={{
               nodeContentRenderer: Node,
             }}
             onChange={newTree =>
               onChange(
                 getDiff(
-                  items.map(item =>
-                    getNodeData(item, onChange, onItemClick, onItemEdit),
-                  ),
+                  items.map(item => getNodeData(item, onChange, onItemClick, onItemEdit)),
                   newTree as MenuTreeItem[],
                 ),
               )
@@ -284,15 +249,11 @@ const MenuItems: React.FC<MenuItemsProps> = props => {
       </div>
       <CardActions className={classes.actions}>
         <Button onClick={onItemAdd} data-test-id="create-new-menu-item">
-          <FormattedMessage
-            id="Uf3oHA"
-            defaultMessage="Create new item"
-            description="add new menu item"
-          />
+          <FormattedMessage id="Uf3oHA" defaultMessage="Create new item" description="add new menu item" />
         </Button>
       </CardActions>
     </Card>
   );
 };
-MenuItems.displayName = "MenuItems";
+MenuItems.displayName = 'MenuItems';
 export default MenuItems;

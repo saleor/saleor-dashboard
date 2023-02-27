@@ -1,40 +1,38 @@
-import { AttributeEntityTypeEnum, SearchPagesQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
-import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { AttributeEntityTypeEnum, SearchPagesQuery } from '@dashboard/graphql';
+import { RelayToFlat } from '@dashboard/types';
+import React from 'react';
+import { defineMessages, useIntl } from 'react-intl';
 
-import AssignContainerDialog from "../AssignContainerDialog";
-import AssignProductDialog, {
-  AssignProductDialogProps,
-} from "../AssignProductDialog";
-import AssignVariantDialog from "../AssignVariantDialog";
+import AssignContainerDialog from '../AssignContainerDialog';
+import AssignProductDialog, { AssignProductDialogProps } from '../AssignProductDialog';
+import AssignVariantDialog from '../AssignVariantDialog';
 
 const pagesMessages = defineMessages({
   confirmBtn: {
-    id: "idr+JK",
-    defaultMessage: "Assign and save",
-    description: "assign reference to a page, button",
+    id: 'idr+JK',
+    defaultMessage: 'Assign and save',
+    description: 'assign reference to a page, button',
   },
   header: {
-    id: "5I7Lc2",
-    defaultMessage: "Assign page",
-    description: "dialog header",
+    id: '5I7Lc2',
+    defaultMessage: 'Assign page',
+    description: 'dialog header',
   },
   searchLabel: {
-    id: "izJvcM",
-    defaultMessage: "Search pages",
-    description: "label",
+    id: 'izJvcM',
+    defaultMessage: 'Search pages',
+    description: 'label',
   },
   searchPlaceholder: {
-    id: "OFW7nq",
-    defaultMessage: "Search by page name, etc...",
-    description: "placeholder",
+    id: 'OFW7nq',
+    defaultMessage: 'Search by page name, etc...',
+    description: 'placeholder',
   },
 });
 
 type AssignAttributeValueDialogProps = AssignProductDialogProps & {
   entityType: AttributeEntityTypeEnum;
-  pages: RelayToFlat<SearchPagesQuery["search"]>;
+  pages: RelayToFlat<SearchPagesQuery['search']>;
 };
 
 const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
@@ -65,5 +63,5 @@ const AssignAttributeValueDialog: React.FC<AssignAttributeValueDialogProps> = ({
       return <AssignVariantDialog products={products} {...rest} />;
   }
 };
-AssignAttributeValueDialog.displayName = "AssignAttributeValueDialog";
+AssignAttributeValueDialog.displayName = 'AssignAttributeValueDialog';
 export default AssignAttributeValueDialog;

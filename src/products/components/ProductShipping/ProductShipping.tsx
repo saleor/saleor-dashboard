@@ -1,16 +1,11 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import Grid from "@dashboard/components/Grid";
-import { ProductErrorFragment } from "@dashboard/graphql";
-import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
-import {
-  Card,
-  CardContent,
-  InputAdornment,
-  TextField,
-} from "@material-ui/core";
-import React from "react";
-import { useIntl } from "react-intl";
+import CardTitle from '@dashboard/components/CardTitle';
+import Grid from '@dashboard/components/Grid';
+import { ProductErrorFragment } from '@dashboard/graphql';
+import { getFormErrors, getProductErrorMessage } from '@dashboard/utils/errors';
+import createNonNegativeValueChangeHandler from '@dashboard/utils/handlers/nonNegativeValueChangeHandler';
+import { Card, CardContent, InputAdornment, TextField } from '@material-ui/core';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
 interface ProductShippingProps {
   data: {
@@ -27,16 +22,16 @@ const ProductShipping: React.FC<ProductShippingProps> = props => {
 
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["weight"], errors);
+  const formErrors = getFormErrors(['weight'], errors);
   const handleChange = createNonNegativeValueChangeHandler(onChange);
 
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: "3rIMq/",
-          defaultMessage: "Shipping",
-          description: "product shipping",
+          id: '3rIMq/',
+          defaultMessage: 'Shipping',
+          description: 'product shipping',
         })}
       />
       <CardContent>
@@ -44,9 +39,9 @@ const ProductShipping: React.FC<ProductShippingProps> = props => {
           <TextField
             disabled={disabled}
             label={intl.formatMessage({
-              id: "SUbxSK",
-              defaultMessage: "Weight",
-              description: "product weight",
+              id: 'SUbxSK',
+              defaultMessage: 'Weight',
+              description: 'product weight',
             })}
             error={!!formErrors.weight}
             helperText={getProductErrorMessage(formErrors.weight, intl)}
@@ -54,11 +49,7 @@ const ProductShipping: React.FC<ProductShippingProps> = props => {
             value={data.weight}
             onChange={handleChange}
             InputProps={{
-              endAdornment: (
-                <InputAdornment position="end">
-                  {weightUnit || ""}
-                </InputAdornment>
-              ),
+              endAdornment: <InputAdornment position="end">{weightUnit || ''}</InputAdornment>,
               inputProps: {
                 min: 0,
               },
@@ -69,5 +60,5 @@ const ProductShipping: React.FC<ProductShippingProps> = props => {
     </Card>
   );
 };
-ProductShipping.displayName = "ProductShipping";
+ProductShipping.displayName = 'ProductShipping';
 export default ProductShipping;

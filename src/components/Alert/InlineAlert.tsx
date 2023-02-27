@@ -1,6 +1,6 @@
-import { Card } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { Card } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
 
 const useStyles = makeStyles(
   theme => ({
@@ -9,7 +9,7 @@ const useStyles = makeStyles(
       padding: theme.spacing(1.5, 2),
     },
   }),
-  { name: "InlineAlert" },
+  { name: 'InlineAlert' },
 );
 
 interface AlertCardProps {

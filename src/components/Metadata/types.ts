@@ -1,13 +1,13 @@
-import { MetadataInput } from "@dashboard/graphql";
+import { MetadataInput } from '@dashboard/graphql';
 
 export enum EventDataAction {
-  add = "add",
-  delete = "delete",
-  update = "update",
+  add = 'add',
+  delete = 'delete',
+  update = 'update',
 }
 export enum EventDataField {
-  name = "name",
-  value = "value",
+  name = 'name',
+  value = 'value',
 }
 export interface EventData {
   action: EventDataAction;

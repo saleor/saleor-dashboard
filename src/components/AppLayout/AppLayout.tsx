@@ -1,13 +1,13 @@
-import useAppState from "@dashboard/hooks/useAppState";
-import { LinearProgress } from "@material-ui/core";
-import { useActionBar } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
-import React from "react";
+import useAppState from '@dashboard/hooks/useAppState';
+import { LinearProgress } from '@material-ui/core';
+import { useActionBar } from '@saleor/macaw-ui';
+import { Box } from '@saleor/macaw-ui/next';
+import React from 'react';
 
-import Navigator from "../Navigator";
-import { Sidebar } from "../Sidebar";
-import { contentMaxWidth } from "./consts";
-import { useStyles } from "./styles";
+import Navigator from '../Navigator';
+import { Sidebar } from '../Sidebar';
+import { contentMaxWidth } from './consts';
+import { useStyles } from './styles';
 
 interface AppLayoutProps {
   children: React.ReactNode;
@@ -22,14 +22,9 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
 
   return (
     <>
-      <Navigator
-        visible={isNavigatorVisible}
-        setVisibility={setNavigatorVisibility}
-      />
+      <Navigator visible={isNavigatorVisible} setVisibility={setNavigatorVisibility} />
       <Box display="grid" __gridTemplateColumns="auto 1fr">
-        {appState.loading && (
-          <LinearProgress className={classes.appLoader} color="primary" />
-        )}
+        {appState.loading && <LinearProgress className={classes.appLoader} color="primary" />}
         <Box
           height="100vh"
           borderColor="neutralPlain"

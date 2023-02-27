@@ -1,13 +1,10 @@
-import { SaleListUrlSortField } from "@dashboard/discounts/urls";
-import { SaleSortField } from "@dashboard/graphql";
-import { createGetSortQueryVariables } from "@dashboard/utils/sort";
+import { SaleListUrlSortField } from '@dashboard/discounts/urls';
+import { SaleSortField } from '@dashboard/graphql';
+import { createGetSortQueryVariables } from '@dashboard/utils/sort';
 
 export const DEFAULT_SORT_KEY = SaleListUrlSortField.name;
 
-export function canBeSorted(
-  sort: SaleListUrlSortField,
-  isChannelSelected: boolean,
-) {
+export function canBeSorted(sort: SaleListUrlSortField, isChannelSelected: boolean) {
   switch (sort) {
     case SaleListUrlSortField.name:
     case SaleListUrlSortField.startDate:
@@ -38,6 +35,4 @@ export function getSortQueryField(sort: SaleListUrlSortField): SaleSortField {
   }
 }
 
-export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField,
-);
+export const getSortQueryVariables = createGetSortQueryVariables(getSortQueryField);

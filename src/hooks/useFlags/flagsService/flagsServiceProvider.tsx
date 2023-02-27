@@ -1,8 +1,7 @@
-import React from "react";
+import React from 'react';
 
 interface FlagsServiceProviderProps {
   children: React.ReactElement;
 }
 
-export const FlagsServiceProvider = ({ children }: FlagsServiceProviderProps) =>
-  children;
+export const FlagsServiceProvider = ({ children }: FlagsServiceProviderProps) => children;

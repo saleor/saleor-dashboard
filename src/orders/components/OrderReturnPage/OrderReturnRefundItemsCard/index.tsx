@@ -1,2 +1,2 @@
-export * from "./ReturnItemsCard";
-export { default } from "./ReturnItemsCard";
+export * from './ReturnItemsCard';
+export { default } from './ReturnItemsCard';

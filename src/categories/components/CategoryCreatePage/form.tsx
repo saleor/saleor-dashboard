@@ -1,18 +1,12 @@
-import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@dashboard/components/Metadata";
-import useForm, {
-  CommonUseFormResult,
-  FormChange,
-} from "@dashboard/hooks/useForm";
-import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import {
-  RichTextContext,
-  RichTextContextValues,
-} from "@dashboard/utils/richText/context";
-import useRichText from "@dashboard/utils/richText/useRichText";
-import { OutputData } from "@editorjs/editorjs";
-import React, { useEffect } from "react";
+import { useExitFormDialog } from '@dashboard/components/Form/useExitFormDialog';
+import { MetadataFormData } from '@dashboard/components/Metadata';
+import useForm, { CommonUseFormResult, FormChange } from '@dashboard/hooks/useForm';
+import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
+import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
+import { RichTextContext, RichTextContextValues } from '@dashboard/utils/richText/context';
+import useRichText from '@dashboard/utils/richText/useRichText';
+import { OutputData } from '@editorjs/editorjs';
+import React, { useEffect } from 'react';
 
 export interface CategoryCreateFormData extends MetadataFormData {
   name: string;
@@ -28,8 +22,7 @@ interface CategoryCreateHandlers {
   changeMetadata: FormChange;
 }
 
-export interface UseCategoryCreateFormResult
-  extends CommonUseFormResult<CategoryCreateData> {
+export interface UseCategoryCreateFormResult extends CommonUseFormResult<CategoryCreateData> {
   handlers: CategoryCreateHandlers;
 }
 
@@ -41,11 +34,11 @@ export interface CategoryCreateFormProps {
 
 const initialData: CategoryCreateFormData = {
   metadata: [],
-  name: "",
+  name: '',
   privateMetadata: [],
-  seoDescription: "",
-  seoTitle: "",
-  slug: "",
+  seoDescription: '',
+  seoTitle: '',
+  slug: '',
 };
 
 function useCategoryCreateForm(
@@ -74,9 +67,7 @@ function useCategoryCreateForm(
     triggerChange,
   });
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
@@ -109,21 +100,15 @@ function useCategoryCreateForm(
   };
 }
 
-const CategoryCreateForm: React.FC<CategoryCreateFormProps> = ({
-  children,
-  onSubmit,
-  disabled,
-}) => {
+const CategoryCreateForm: React.FC<CategoryCreateFormProps> = ({ children, onSubmit, disabled }) => {
   const { richText, ...props } = useCategoryCreateForm(onSubmit, disabled);
 
   return (
     <form onSubmit={props.submit}>
-      <RichTextContext.Provider value={richText}>
-        {children(props)}
-      </RichTextContext.Provider>
+      <RichTextContext.Provider value={richText}>{children(props)}</RichTextContext.Provider>
     </form>
   );
 };
 
-CategoryCreateForm.displayName = "CategoryCreateForm";
+CategoryCreateForm.displayName = 'CategoryCreateForm';
 export default CategoryCreateForm;

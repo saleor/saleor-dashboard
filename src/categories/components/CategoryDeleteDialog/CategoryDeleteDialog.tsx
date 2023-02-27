@@ -1,21 +1,15 @@
-import BackButton from "@dashboard/components/BackButton";
-import { Button } from "@dashboard/components/Button";
-import { buttonMessages } from "@dashboard/intl";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage } from "react-intl";
+import BackButton from '@dashboard/components/BackButton';
+import { Button } from '@dashboard/components/Button';
+import { buttonMessages } from '@dashboard/intl';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 
 const useStyles = makeStyles(
   theme => ({
     deleteButton: {
-      "&:hover": {
+      '&:hover': {
         backgroundColor: theme.palette.error.main,
       },
       backgroundColor: theme.palette.error.main,
@@ -23,7 +17,7 @@ const useStyles = makeStyles(
     },
   }),
   {
-    name: "CategoryDeleteDialog",
+    name: 'CategoryDeleteDialog',
   },
 );
 
@@ -42,11 +36,7 @@ const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = props => {
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle disableTypography>
-        <FormattedMessage
-          id="xo5UIb"
-          defaultMessage="Delete category"
-          description="dialog title"
-        />
+        <FormattedMessage id="xo5UIb" defaultMessage="Delete category" description="dialog title" />
       </DialogTitle>
       <DialogContent>
         <DialogContentText>
@@ -62,11 +52,7 @@ const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = props => {
       </DialogContent>
       <DialogActions>
         <BackButton onClick={onClose} />
-        <Button
-          className={classes.deleteButton}
-          variant="primary"
-          onClick={onConfirm}
-        >
+        <Button className={classes.deleteButton} variant="primary" onClick={onConfirm}>
           <FormattedMessage {...buttonMessages.save} />
         </Button>
       </DialogActions>
@@ -74,5 +60,5 @@ const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = props => {
   );
 };
 
-CategoryDeleteDialog.displayName = "CategoryDeleteDialog";
+CategoryDeleteDialog.displayName = 'CategoryDeleteDialog';
 export default CategoryDeleteDialog;

@@ -1,13 +1,10 @@
-import { createMockClient } from "@apollo/client/testing";
-import { JobStatusEnum } from "@dashboard/graphql";
-import { renderHook } from "@testing-library/react-hooks";
+import { createMockClient } from '@apollo/client/testing';
+import { JobStatusEnum } from '@dashboard/graphql';
+import { renderHook } from '@testing-library/react-hooks';
 
-import {
-  backgroundTasksRefreshTime,
-  useBackgroundTasks,
-} from "./BackgroundTasksProvider";
-import { checkExportFileStatus } from "./queries";
-import { Task, TaskData, TaskStatus } from "./types";
+import { backgroundTasksRefreshTime, useBackgroundTasks } from './BackgroundTasksProvider';
+import { checkExportFileStatus } from './queries';
+import { Task, TaskData, TaskStatus } from './types';
 
 jest.useFakeTimers();
 
@@ -21,8 +18,8 @@ function renderBackgroundTasks() {
         result: {
           data: {
             exportFile: {
-              __typename: "ExportFile",
-              id: "123",
+              __typename: 'ExportFile',
+              id: '123',
               status: JobStatusEnum.SUCCESS,
             },
           },
@@ -36,17 +33,13 @@ function renderBackgroundTasks() {
     formatMessage: ({ defaultMessage }) => defaultMessage,
   };
 
-  return renderHook(() =>
-    useBackgroundTasks(mockClient, jest.fn(), intl as any),
-  );
+  return renderHook(() => useBackgroundTasks(mockClient, jest.fn(), intl as any));
 }
 
 // FIXME: #3021 Fix background task provider tests
-describe.skip("Background task provider", () => {
-  it("can queue a task", done => {
-    const handle = jest.fn<Promise<TaskStatus>, []>(
-      () => new Promise(resolve => resolve(TaskStatus.SUCCESS)),
-    );
+describe.skip('Background task provider', () => {
+  it('can queue a task', done => {
+    const handle = jest.fn<Promise<TaskStatus>, []>(() => new Promise(resolve => resolve(TaskStatus.SUCCESS)));
     const onCompleted = jest.fn();
     const onError = jest.fn();
 
@@ -73,11 +66,11 @@ describe.skip("Background task provider", () => {
     });
   });
 
-  it("can handle task error", done => {
+  it('can handle task error', done => {
     const handle = jest.fn<Promise<TaskStatus>, []>(
       () =>
         new Promise(() => {
-          throw new Error("dummy error");
+          throw new Error('dummy error');
         }),
     );
     const onCompleted = jest.fn();
@@ -102,7 +95,7 @@ describe.skip("Background task provider", () => {
     });
   });
 
-  it("can cancel task", done => {
+  it('can cancel task', done => {
     const onCompleted = jest.fn();
 
     const { result } = renderBackgroundTasks();
@@ -125,22 +118,18 @@ describe.skip("Background task provider", () => {
     });
   });
 
-  it("can queue multiple tasks", done => {
+  it('can queue multiple tasks', done => {
     let cycle = 0;
 
     // Completed in two cycles
     const shortTask = {
-      handle: jest.fn(() =>
-        Promise.resolve(cycle > 1 ? TaskStatus.SUCCESS : TaskStatus.PENDING),
-      ),
+      handle: jest.fn(() => Promise.resolve(cycle > 1 ? TaskStatus.SUCCESS : TaskStatus.PENDING)),
       onCompleted: jest.fn(),
     };
 
     // Completed in three cycles
     const longTask = {
-      handle: jest.fn(() =>
-        Promise.resolve(cycle > 2 ? TaskStatus.SUCCESS : TaskStatus.PENDING),
-      ),
+      handle: jest.fn(() => Promise.resolve(cycle > 2 ? TaskStatus.SUCCESS : TaskStatus.PENDING)),
       onCompleted: jest.fn(),
     };
     const tasks: TaskData[] = [shortTask, longTask];

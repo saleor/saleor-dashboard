@@ -1,8 +1,8 @@
-import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
-import { hasOneOfPermissions } from "@dashboard/components/RequirePermissions";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
-import { PermissionEnum, useWarehousesCountQuery } from "@dashboard/graphql";
-import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
+import { useUserPermissions } from '@dashboard/auth/hooks/useUserPermissions';
+import { hasOneOfPermissions } from '@dashboard/components/RequirePermissions';
+import { DEFAULT_INITIAL_SEARCH_DATA } from '@dashboard/config';
+import { PermissionEnum, useWarehousesCountQuery } from '@dashboard/graphql';
+import useWarehouseSearch from '@dashboard/searches/useWarehouseSearch';
 
 export const useWarehouses = () => {
   const userPermissions = useUserPermissions();
@@ -12,10 +12,9 @@ export const useWarehouses = () => {
     PermissionEnum.MANAGE_PRODUCTS,
   ]);
 
-  const {
-    data: warehousesCountData,
-    loading: warehousesCountLoading,
-  } = useWarehousesCountQuery({ skip: !canLoadWarehouses });
+  const { data: warehousesCountData, loading: warehousesCountLoading } = useWarehousesCountQuery({
+    skip: !canLoadWarehouses,
+  });
 
   const {
     loadMore: fetchMoreWarehouses,

@@ -1,23 +1,18 @@
-import { ArrowLeftIcon, Box, sprinkles, Text } from "@saleor/macaw-ui/next";
-import React, { PropsWithChildren } from "react";
-import { Link } from "react-router-dom";
+import { ArrowLeftIcon, Box, sprinkles, Text } from '@saleor/macaw-ui/next';
+import React, { PropsWithChildren } from 'react';
+import { Link } from 'react-router-dom';
 
-import useAppChannel from "./AppChannelContext";
-import AppChannelSelect from "./AppChannelSelect";
-import { topBarHeight } from "./consts";
+import useAppChannel from './AppChannelContext';
+import AppChannelSelect from './AppChannelSelect';
+import { topBarHeight } from './consts';
 
 interface TopNavProps {
   title: string | React.ReactNode;
   href?: string;
 }
 
-export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
-  title,
-  href,
-  children,
-}) => {
-  const { availableChannels, channel, isPickerActive, setChannel } =
-    useAppChannel(false);
+export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({ title, href, children }) => {
+  const { availableChannels, channel, isPickerActive, setChannel } = useAppChannel(false);
 
   return (
     <Box
@@ -39,14 +34,14 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
           to={href}
           data-test-id="app-header-back-button"
           className={sprinkles({
-            borderColor: "neutralPlain",
-            borderStyle: "solid",
+            borderColor: 'neutralPlain',
+            borderStyle: 'solid',
             borderWidth: 1,
             padding: 5,
             borderRadius: 2,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
             marginRight: 7,
           })}
         >
@@ -58,11 +53,7 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
       </Box>
       <Box display="flex" flexWrap="nowrap">
         {isPickerActive && (
-          <AppChannelSelect
-            channels={availableChannels}
-            selectedChannelId={channel?.id}
-            onChannelSelect={setChannel}
-          />
+          <AppChannelSelect channels={availableChannels} selectedChannelId={channel?.id} onChannelSelect={setChannel} />
         )}
 
         {children}

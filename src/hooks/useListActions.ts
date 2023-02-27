@@ -1,4 +1,4 @@
-import useStateFromProps from "./useStateFromProps";
+import useStateFromProps from './useStateFromProps';
 
 function useListActions<TData>(
   initial: TData[] = [],
@@ -15,9 +15,7 @@ function useListActions<TData>(
   }
 
   function remove(data: TData) {
-    setListElements(
-      listElements.filter(listElement => !compareFunc(listElement, data)),
-    );
+    setListElements(listElements.filter(listElement => !compareFunc(listElement, data)));
   }
 
   function reset() {

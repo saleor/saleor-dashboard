@@ -1,11 +1,11 @@
-import Form from "@dashboard/components/Form";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
-import { TextField, Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import Form from '@dashboard/components/Form';
+import { SubmitPromise } from '@dashboard/hooks/useForm';
+import { TextField, Typography } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import TranslationFieldsSave from "./TranslationFieldsSave";
+import TranslationFieldsSave from './TranslationFieldsSave';
 
 interface TranslationFieldsShortProps {
   disabled: boolean;
@@ -27,30 +27,22 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
   const intl = useIntl();
 
   return edit ? (
-    <Form
-      confirmLeave
-      initial={{ translation: initial }}
-      onSubmit={data => onSubmit(data.translation)}
-    >
+    <Form confirmLeave initial={{ translation: initial }} onSubmit={data => onSubmit(data.translation)}>
       {({ change, data, submit }) => (
         <div>
           <TextField
             disabled={disabled}
             fullWidth
             label={intl.formatMessage({
-              id: "/vCXIP",
-              defaultMessage: "Translation",
+              id: '/vCXIP',
+              defaultMessage: 'Translation',
             })}
             name="translation"
             data-test-id="translation-field"
-            value={data.translation || ""}
+            value={data.translation || ''}
             onChange={change}
           />
-          <TranslationFieldsSave
-            saveButtonState={saveButtonState}
-            onDiscard={onDiscard}
-            onSave={submit}
-          />
+          <TranslationFieldsSave saveButtonState={saveButtonState} onDiscard={onDiscard} onSave={submit} />
         </div>
       )}
     </Form>
@@ -62,5 +54,5 @@ const TranslationFieldsShort: React.FC<TranslationFieldsShortProps> = ({
     <Typography>{initial}</Typography>
   );
 };
-TranslationFieldsShort.displayName = "TranslationFieldsShort";
+TranslationFieldsShort.displayName = 'TranslationFieldsShort';
 export default TranslationFieldsShort;

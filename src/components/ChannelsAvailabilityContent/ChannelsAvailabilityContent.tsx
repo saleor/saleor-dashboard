@@ -1,12 +1,12 @@
-import { Channel } from "@dashboard/channels/utils";
-import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
-import Hr from "@dashboard/components/Hr";
-import { TextField, Typography } from "@material-ui/core";
-import { filter } from "fuzzaldrin";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Channel } from '@dashboard/channels/utils';
+import { ControlledCheckbox } from '@dashboard/components/ControlledCheckbox';
+import Hr from '@dashboard/components/Hr';
+import { TextField, Typography } from '@material-ui/core';
+import { filter } from 'fuzzaldrin';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
 export interface ChannelsAvailabilityContentProps {
   isSelected: (option: Channel) => boolean;
@@ -22,7 +22,7 @@ export interface ChannelsAvailabilityContentProps {
 export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentProps> = ({
   isSelected,
   channels,
-  contentType = "",
+  contentType = '',
   onChange,
   selected = 0,
   toggleAll,
@@ -31,11 +31,11 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
   const classes = useStyles({});
   const intl = useIntl();
   const searchText = intl.formatMessage({
-    id: "ybaLoZ",
-    defaultMessage: "Search through channels",
+    id: 'ybaLoZ',
+    defaultMessage: 'Search through channels',
   });
-  const [query, onQueryChange] = React.useState("");
-  const filteredChannels = filter(channels, query, { key: "name" });
+  const [query, onQueryChange] = React.useState('');
+  const filteredChannels = filter(channels, query, { key: 'name' });
 
   return (
     <div className={classes.content}>
@@ -66,10 +66,7 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
               label={
                 toggleAllText || (
                   <Typography className={classes.label}>
-                    <FormattedMessage
-                      id="2/L4zZ"
-                      defaultMessage="Select all channels"
-                    />
+                    <FormattedMessage id="2/L4zZ" defaultMessage="Select all channels" />
                   </Typography>
                 )
               }
@@ -81,25 +78,14 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
         <Typography className={classes.contentTitle}>
           <FormattedMessage id="EWCUdP" defaultMessage="Channels A to Z" />
         </Typography>
-        <div
-          className={classes.scrollArea}
-          data-test-id="manage-products-channels-availiability-list"
-        >
+        <div className={classes.scrollArea} data-test-id="manage-products-channels-availiability-list">
           {filteredChannels?.length ? (
             filteredChannels.map(option => (
-              <div
-                key={option.id}
-                className={classes.option}
-                data-test-id="channel-row"
-              >
+              <div key={option.id} className={classes.option} data-test-id="channel-row">
                 <ControlledCheckbox
                   checked={isSelected(option)}
                   name={option.name}
-                  label={
-                    <Typography className={classes.label}>
-                      {option.name}
-                    </Typography>
-                  }
+                  label={<Typography className={classes.label}>{option.name}</Typography>}
                   onChange={() => onChange(option)}
                 />
                 <Hr />
@@ -107,10 +93,7 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
             ))
           ) : (
             <div className={classes.notFound}>
-              <FormattedMessage
-                id="B9yrkK"
-                defaultMessage="No Channels found"
-              />
+              <FormattedMessage id="B9yrkK" defaultMessage="No Channels found" />
             </div>
           )}
         </div>
@@ -118,5 +101,5 @@ export const ChannelsAvailabilityContent: React.FC<ChannelsAvailabilityContentPr
     </div>
   );
 };
-ChannelsAvailabilityContent.displayName = "ChannelsAvailabilityContent";
+ChannelsAvailabilityContent.displayName = 'ChannelsAvailabilityContent';
 export default ChannelsAvailabilityContent;

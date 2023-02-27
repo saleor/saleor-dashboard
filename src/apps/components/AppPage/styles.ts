@@ -1,21 +1,21 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   () => ({
     container: {
-      height: "100%",
+      height: '100%',
     },
     iframeContainer: {
-      position: "relative",
+      position: 'relative',
       lineHeight: 0, // It removes extra space between iframe and container
-      height: "100%",
-      "& > iframe": {
-        border: "none",
-        minHeight: "100vh",
-        height: "100%",
-        width: "100%",
+      height: '100%',
+      '& > iframe': {
+        border: 'none',
+        minHeight: '100vh',
+        height: '100%',
+        width: '100%',
       },
     },
   }),
-  { name: "AppPage" },
+  { name: 'AppPage' },
 );

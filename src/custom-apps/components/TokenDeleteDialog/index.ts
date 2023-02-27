@@ -1,2 +1,2 @@
-export * from "./TokenDeleteDialog";
-export { default } from "./TokenDeleteDialog";
+export * from './TokenDeleteDialog';
+export { default } from './TokenDeleteDialog';

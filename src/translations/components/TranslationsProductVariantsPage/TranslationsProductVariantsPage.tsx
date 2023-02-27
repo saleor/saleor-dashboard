@@ -1,34 +1,23 @@
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import LanguageSwitch from "@dashboard/components/LanguageSwitch";
-import {
-  LanguageCodeEnum,
-  ProductVariantTranslationFragment,
-} from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { getStringOrPlaceholder } from "@dashboard/misc";
-import {
-  TranslationInputFieldName,
-  TranslationsEntitiesPageProps,
-} from "@dashboard/translations/types";
-import {
-  languageEntitiesUrl,
-  productVariantUrl,
-  TranslatableEntities,
-} from "@dashboard/translations/urls";
-import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
-import React from "react";
-import { useIntl } from "react-intl";
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import LanguageSwitch from '@dashboard/components/LanguageSwitch';
+import { LanguageCodeEnum, ProductVariantTranslationFragment } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { getStringOrPlaceholder } from '@dashboard/misc';
+import { TranslationInputFieldName, TranslationsEntitiesPageProps } from '@dashboard/translations/types';
+import { languageEntitiesUrl, productVariantUrl, TranslatableEntities } from '@dashboard/translations/urls';
+import { mapAttributeValuesToTranslationFields } from '@dashboard/translations/utils';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import ProductContextSwitcher from "../ProductContextSwitcher";
-import TranslationFields from "../TranslationFields";
+import ProductContextSwitcher from '../ProductContextSwitcher';
+import TranslationFields from '../TranslationFields';
 
-export interface TranslationsProductsPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsProductsPageProps extends TranslationsEntitiesPageProps {
   data: ProductVariantTranslationFragment;
   productId: string;
   variantId: string;
-  onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
+  onAttributeValueSubmit: TranslationsEntitiesPageProps['onSubmit'];
 }
 
 const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
@@ -56,10 +45,9 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         })}
         title={intl.formatMessage(
           {
-            id: "98WMlR",
-            defaultMessage:
-              'Translation Product Variant "{productName}" - {languageCode}',
-            description: "header",
+            id: '98WMlR',
+            defaultMessage: 'Translation Product Variant "{productName}" - {languageCode}',
+            description: 'header',
           },
           {
             languageCode,
@@ -67,17 +55,11 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
           },
         )}
       >
-        <ProductContextSwitcher
-          languageCode={languageCode}
-          productId={productId}
-          selectedId={variantId}
-        />
+        <ProductContextSwitcher languageCode={languageCode} productId={productId} selectedId={variantId} />
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          getLanguageUrl={lang =>
-            productVariantUrl(lang, productId, translationId)
-          }
+          getLanguageUrl={lang => productVariantUrl(lang, productId, translationId)}
         />
       </TopNav>
       <TranslationFields
@@ -88,12 +70,12 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
-              id: "T1f2Yl",
-              defaultMessage: "Variant Name",
+              id: 'T1f2Yl',
+              defaultMessage: 'Variant Name',
             }),
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
-            type: "short",
+            type: 'short',
             value: data?.name,
           },
         ]}
@@ -111,10 +93,7 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
             disabled={disabled}
             initialState={true}
             title={intl.formatMessage(commonMessages.translationAttributes)}
-            fields={mapAttributeValuesToTranslationFields(
-              data.attributeValues,
-              intl,
-            )}
+            fields={mapAttributeValuesToTranslationFields(data.attributeValues, intl)}
             saveButtonState={saveButtonState}
             richTextResetKey={languageCode}
             onEdit={onEdit}
@@ -127,5 +106,5 @@ const TranslationsProductsPage: React.FC<TranslationsProductsPageProps> = ({
     </>
   );
 };
-TranslationsProductsPage.displayName = "TranslationsProductsPage";
+TranslationsProductsPage.displayName = 'TranslationsProductsPage';
 export default TranslationsProductsPage;

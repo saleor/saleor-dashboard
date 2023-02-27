@@ -4,7 +4,7 @@ import {
   getRichTextDataFromAttributes,
   mergeAttributes,
   RichTextProps,
-} from "@dashboard/attributes/utils/data";
+} from '@dashboard/attributes/utils/data';
 import {
   createAttributeFileChangeHandler,
   createAttributeMultiChangeHandler,
@@ -12,51 +12,42 @@ import {
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
-} from "@dashboard/attributes/utils/handlers";
-import {
-  ChannelPriceAndPreorderData,
-  IChannelPriceAndPreorderArgs,
-} from "@dashboard/channels/utils";
-import { AttributeInput } from "@dashboard/components/Attributes";
-import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { MetadataFormData } from "@dashboard/components/Metadata";
+} from '@dashboard/attributes/utils/handlers';
+import { ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs } from '@dashboard/channels/utils';
+import { AttributeInput } from '@dashboard/components/Attributes';
+import { useExitFormDialog } from '@dashboard/components/Form/useExitFormDialog';
+import { MetadataFormData } from '@dashboard/components/Metadata';
 import {
   ProductErrorWithAttributesFragment,
   ProductVariantCreateDataQuery,
   SearchPagesQuery,
   SearchProductsQuery,
   SearchWarehousesQuery,
-} from "@dashboard/graphql";
+} from '@dashboard/graphql';
 import useForm, {
   CommonUseFormResultWithHandlers,
   FormChange,
   FormErrors,
   SubmitPromise,
-} from "@dashboard/hooks/useForm";
-import useFormset, {
-  FormsetChange,
-  FormsetData,
-} from "@dashboard/hooks/useFormset";
-import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
-import { errorMessages } from "@dashboard/intl";
-import { getVariantAttributeInputFromProduct } from "@dashboard/products/utils/data";
-import {
-  createPreorderEndDateChangeHandler,
-  getChannelsInput,
-} from "@dashboard/products/utils/handlers";
-import { validateVariantData } from "@dashboard/products/utils/validation";
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
-import React, { useEffect, useState } from "react";
-import { useIntl } from "react-intl";
+} from '@dashboard/hooks/useForm';
+import useFormset, { FormsetChange, FormsetData } from '@dashboard/hooks/useFormset';
+import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
+import { errorMessages } from '@dashboard/intl';
+import { getVariantAttributeInputFromProduct } from '@dashboard/products/utils/data';
+import { createPreorderEndDateChangeHandler, getChannelsInput } from '@dashboard/products/utils/handlers';
+import { validateVariantData } from '@dashboard/products/utils/validation';
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from '@dashboard/types';
+import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
+import { useMultipleRichText } from '@dashboard/utils/richText/useMultipleRichText';
+import React, { useEffect, useState } from 'react';
+import { useIntl } from 'react-intl';
 
-import { ProductStockFormsetData, ProductStockInput } from "../ProductStocks";
+import { ProductStockFormsetData, ProductStockInput } from '../ProductStocks';
 import {
   concatChannelsBySelection,
   createChannelsWithPreorderInfo,
   validateChannels,
-} from "../ProductVariantChannels/formOpretations";
+} from '../ProductVariantChannels/formOpretations';
 
 export interface ProductVariantCreateFormData extends MetadataFormData {
   sku: string;
@@ -74,16 +65,13 @@ export interface ProductVariantCreateData extends ProductVariantCreateFormData {
   attributes: AttributeInput[];
   attributesWithNewFileValue: FormsetData<null, File>;
   stocks: ProductStockInput[];
-  channelListings: FormsetData<
-    ChannelPriceAndPreorderData,
-    IChannelPriceAndPreorderArgs
-  >;
+  channelListings: FormsetData<ChannelPriceAndPreorderData, IChannelPriceAndPreorderArgs>;
 }
 
 export interface UseProductVariantCreateFormOpts {
-  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
-  referencePages: RelayToFlat<SearchPagesQuery["search"]>;
-  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
+  warehouses: RelayToFlat<SearchWarehousesQuery['search']>;
+  referencePages: RelayToFlat<SearchPagesQuery['search']>;
+  referenceProducts: RelayToFlat<SearchProductsQuery['search']>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
@@ -92,17 +80,11 @@ export interface UseProductVariantCreateFormOpts {
 }
 
 export interface ProductVariantCreateHandlers
-  extends Record<
-      | "changeStock"
-      | "selectAttribute"
-      | "selectAttributeMultiple"
-      | "changeChannels",
-      FormsetChange
-    >,
-    Record<"selectAttributeReference", FormsetChange<string[]>>,
-    Record<"selectAttributeFile", FormsetChange<File>>,
-    Record<"reorderAttributeValue", FormsetChange<ReorderEvent>>,
-    Record<"addStock" | "deleteStock", (id: string) => void> {
+  extends Record<'changeStock' | 'selectAttribute' | 'selectAttributeMultiple' | 'changeChannels', FormsetChange>,
+    Record<'selectAttributeReference', FormsetChange<string[]>>,
+    Record<'selectAttributeFile', FormsetChange<File>>,
+    Record<'reorderAttributeValue', FormsetChange<ReorderEvent>>,
+    Record<'addStock' | 'deleteStock', (id: string) => void> {
   changeMetadata: FormChange;
   updateChannels: (selectedChannelsIds: string[]) => void;
   changePreorderEndDate: FormChange;
@@ -111,20 +93,16 @@ export interface ProductVariantCreateHandlers
 }
 
 export interface UseProductVariantCreateFormOutput
-  extends CommonUseFormResultWithHandlers<
-      ProductVariantCreateData,
-      ProductVariantCreateHandlers
-    >,
-    Omit<RichTextProps, "richText"> {
+  extends CommonUseFormResultWithHandlers<ProductVariantCreateData, ProductVariantCreateHandlers>,
+    Omit<RichTextProps, 'richText'> {
   formErrors: FormErrors<ProductVariantCreateData>;
   validationErrors: ProductErrorWithAttributesFragment[];
   disabled: boolean;
 }
 
-export interface ProductVariantCreateFormProps
-  extends UseProductVariantCreateFormOpts {
+export interface ProductVariantCreateFormProps extends UseProductVariantCreateFormOpts {
   children: (props: UseProductVariantCreateFormOutput) => React.ReactNode;
-  product: ProductVariantCreateDataQuery["product"];
+  product: ProductVariantCreateDataQuery['product'];
   onSubmit: (data: ProductVariantCreateData) => SubmitPromise;
   disabled: boolean;
 }
@@ -132,52 +110,39 @@ export interface ProductVariantCreateFormProps
 const initial: ProductVariantCreateFormData = {
   metadata: [],
   privateMetadata: [],
-  sku: "",
+  sku: '',
   trackInventory: true,
-  weight: "",
+  weight: '',
   isPreorder: false,
   globalThreshold: null,
   globalSoldUnits: 0,
   hasPreorderEndDate: false,
-  preorderEndDateTime: "",
+  preorderEndDateTime: '',
   quantityLimitPerCustomer: null,
-  variantName: "",
+  variantName: '',
 };
 
 function useProductVariantCreateForm(
-  product: ProductVariantCreateDataQuery["product"],
+  product: ProductVariantCreateDataQuery['product'],
   onSubmit: (data: ProductVariantCreateData) => SubmitPromise,
   disabled: boolean,
   opts: UseProductVariantCreateFormOpts,
 ): UseProductVariantCreateFormOutput {
   const intl = useIntl();
   const attributeInput = getVariantAttributeInputFromProduct(product);
-  const [validationErrors, setValidationErrors] = useState<
-    ProductErrorWithAttributesFragment[]
-  >([]);
+  const [validationErrors, setValidationErrors] = useState<ProductErrorWithAttributesFragment[]>([]);
 
   const form = useForm(initial, undefined, { confirmLeave: true });
 
-  const {
-    triggerChange,
-    handleChange,
-    data: formData,
-    formId,
-    setIsSubmitDisabled,
-  } = form;
+  const { triggerChange, handleChange, data: formData, formId, setIsSubmitDisabled } = form;
 
-  const currentChannelsWithPreorderInfo = createChannelsWithPreorderInfo(
-    product,
-  );
+  const currentChannelsWithPreorderInfo = createChannelsWithPreorderInfo(product);
   const channelsInput = getChannelsInput(currentChannelsWithPreorderInfo);
 
   const attributes = useFormset(attributeInput);
   const channels = useFormset(channelsInput);
 
-  const {
-    getters: attributeRichTextGetters,
-    getValues: getAttributeRichTextValues,
-  } = useMultipleRichText({
+  const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } = useMultipleRichText({
     initial: getRichTextDataFromAttributes(attributes.data),
     triggerChange,
   });
@@ -188,16 +153,14 @@ function useProductVariantCreateForm(
     formId,
   });
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
   const changeMetadata = makeMetadataChangeHandler(handleChange);
 
   const handleAttributeChangeWithName = (id: string, value: string) => {
     triggerChange();
-    attributes.change(id, value === "" ? [] : [value]);
-    handleChange({ target: { value, name: "name" } });
+    attributes.change(id, value === '' ? [] : [value]);
+    handleChange({ target: { value, name: 'name' } });
   };
 
   const handleAttributeMultiChange = createAttributeMultiChangeHandler(
@@ -205,10 +168,7 @@ function useProductVariantCreateForm(
     attributes.data,
     triggerChange,
   );
-  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
-    attributes.change,
-    triggerChange,
-  );
+  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(attributes.change, triggerChange);
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
@@ -241,7 +201,7 @@ function useProductVariantCreateForm(
       },
       id,
       label: opts.warehouses.find(warehouse => warehouse.id === id).name,
-      value: "0",
+      value: '0',
     });
   };
   const handleStockChange = (id: string, value: string) => {
@@ -265,13 +225,7 @@ function useProductVariantCreateForm(
   };
 
   const handleUpdateChannels = (selectedIds: string[]) => {
-    channels.set(
-      concatChannelsBySelection(
-        selectedIds,
-        channels,
-        currentChannelsWithPreorderInfo,
-      ),
-    );
+    channels.set(concatChannelsBySelection(selectedIds, channels, currentChannelsWithPreorderInfo));
 
     triggerChange();
   };
@@ -293,10 +247,7 @@ function useProductVariantCreateForm(
     ...data,
     attributes: mergeAttributes(
       attributes.data,
-      getRichTextAttributesFromMap(
-        attributes.data,
-        await getAttributeRichTextValues(),
-      ),
+      getRichTextAttributesFromMap(attributes.data, await getAttributeRichTextValues()),
     ),
   });
 
@@ -322,10 +273,7 @@ function useProductVariantCreateForm(
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
   const invalidChannels = validateChannels(channels?.data);
-  const invalidPreorder =
-    data.isPreorder &&
-    data.hasPreorderEndDate &&
-    !!form.errors.preorderEndDateTime;
+  const invalidPreorder = data.isPreorder && data.hasPreorderEndDate && !!form.errors.preorderEndDateTime;
 
   const formDisabled = invalidPreorder || invalidChannels;
   const isSaveDisabled = disabled || formDisabled || !onSubmit;
@@ -372,5 +320,5 @@ const ProductVariantCreateForm: React.FC<ProductVariantCreateFormProps> = ({
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };
 
-ProductVariantCreateForm.displayName = "ProductVariantCreateForm";
+ProductVariantCreateForm.displayName = 'ProductVariantCreateForm';
 export default ProductVariantCreateForm;

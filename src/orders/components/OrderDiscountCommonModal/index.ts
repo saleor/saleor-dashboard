@@ -1,2 +1,2 @@
-export { default } from "./OrderDiscountCommonModal";
-export * from "./OrderDiscountCommonModal";
+export { default } from './OrderDiscountCommonModal';
+export * from './OrderDiscountCommonModal';

@@ -1,8 +1,8 @@
-import { Typography } from "@material-ui/core";
-import { alpha } from "@material-ui/core/styles";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
+import { Typography } from '@material-ui/core';
+import { alpha } from '@material-ui/core/styles';
+import { makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
 
 const useStyles = makeStyles(
   theme => ({
@@ -10,28 +10,28 @@ const useStyles = makeStyles(
       color: theme.palette.text.secondary,
     },
     root: {
-      "&$active": {
+      '&$active': {
         borderBottomColor: theme.palette.primary.main,
         color: theme.typography.body1.color,
       },
-      "&:focus": {
+      '&:focus': {
         color: theme.palette.primary.main,
       },
-      "&:hover": {
+      '&:hover': {
         color: theme.palette.primary.main,
       },
-      borderBottom: "1px solid transparent",
+      borderBottom: '1px solid transparent',
       color: alpha(theme.palette.text.secondary, 0.6),
-      cursor: "pointer",
-      display: "inline-block",
+      cursor: 'pointer',
+      display: 'inline-block',
       fontWeight: theme.typography.fontWeightRegular,
       marginRight: theme.spacing(2),
       minWidth: 40,
       padding: theme.spacing(1),
-      transition: theme.transitions.duration.short + "ms",
+      transition: theme.transitions.duration.short + 'ms',
     },
   }),
-  { name: "Tab" },
+  { name: 'Tab' },
 );
 
 interface TabProps<T> {

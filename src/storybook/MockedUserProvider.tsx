@@ -1,10 +1,10 @@
-import { UserContext } from "@dashboard/auth";
-import { adminUserPermissions } from "@dashboard/fixtures";
-import { UserFragment } from "@dashboard/graphql";
-import * as React from "react";
+import { UserContext } from '@dashboard/auth';
+import { adminUserPermissions } from '@dashboard/fixtures';
+import { UserFragment } from '@dashboard/graphql';
+import * as React from 'react';
 
 export const MockedUserProvider: React.FC<{
-  customPermissions?: UserFragment["userPermissions"];
+  customPermissions?: UserFragment['userPermissions'];
 }> = ({ customPermissions, children }) => (
   <UserContext.Provider
     value={{
@@ -15,14 +15,14 @@ export const MockedUserProvider: React.FC<{
       authenticating: false,
       authenticated: false,
       user: {
-        id: "0",
-        email: "email@email.me",
-        firstName: "user",
-        lastName: "user",
+        id: '0',
+        email: 'email@email.me',
+        firstName: 'user',
+        lastName: 'user',
         isStaff: true,
         userPermissions: customPermissions ?? adminUserPermissions,
         avatar: null,
-        __typename: "User",
+        __typename: 'User',
       },
       errors: [],
     }}

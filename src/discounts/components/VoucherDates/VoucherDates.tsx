@@ -1,15 +1,15 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
-import Grid from "@dashboard/components/Grid";
-import { DiscountErrorFragment } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { getFormErrors } from "@dashboard/utils/errors";
-import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
-import { Card, CardContent, TextField } from "@material-ui/core";
-import React from "react";
-import { useIntl } from "react-intl";
+import CardTitle from '@dashboard/components/CardTitle';
+import { ControlledCheckbox } from '@dashboard/components/ControlledCheckbox';
+import Grid from '@dashboard/components/Grid';
+import { DiscountErrorFragment } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { getFormErrors } from '@dashboard/utils/errors';
+import getDiscountErrorMessage from '@dashboard/utils/errors/discounts';
+import { Card, CardContent, TextField } from '@material-ui/core';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import { VoucherDetailsPageFormData } from '../VoucherDetailsPage';
 
 interface VoucherDatesProps {
   data: VoucherDetailsPageFormData;
@@ -18,23 +18,18 @@ interface VoucherDatesProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const VoucherDates = ({
-  data,
-  disabled,
-  errors,
-  onChange,
-}: VoucherDatesProps) => {
+const VoucherDates = ({ data, disabled, errors, onChange }: VoucherDatesProps) => {
   const intl = useIntl();
 
-  const formErrors = getFormErrors(["startDate", "endDate"], errors);
+  const formErrors = getFormErrors(['startDate', 'endDate'], errors);
 
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: "YjcN9w",
-          defaultMessage: "Active Dates",
-          description: "time during voucher is active, header",
+          id: 'YjcN9w',
+          defaultMessage: 'Active Dates',
+          description: 'time during voucher is active, header',
         })}
       />
       <CardContent>
@@ -43,7 +38,7 @@ const VoucherDates = ({
             disabled={disabled}
             error={!!formErrors.startDate}
             helperText={getDiscountErrorMessage(formErrors.startDate, intl)}
-            name={"startDate" as keyof VoucherDetailsPageFormData}
+            name={'startDate' as keyof VoucherDetailsPageFormData}
             onChange={onChange}
             label={intl.formatMessage(commonMessages.startDate)}
             value={data.startDate}
@@ -57,7 +52,7 @@ const VoucherDates = ({
             disabled={disabled}
             error={!!formErrors.startDate}
             helperText={getDiscountErrorMessage(formErrors.startDate, intl)}
-            name={"startTime" as keyof VoucherDetailsPageFormData}
+            name={'startTime' as keyof VoucherDetailsPageFormData}
             onChange={onChange}
             label={intl.formatMessage(commonMessages.startHour)}
             value={data.startTime}
@@ -71,11 +66,11 @@ const VoucherDates = ({
         <ControlledCheckbox
           checked={data.hasEndDate}
           label={intl.formatMessage({
-            id: "AVF5T5",
-            defaultMessage: "Set end date",
-            description: "voucher end date, switch button",
+            id: 'AVF5T5',
+            defaultMessage: 'Set end date',
+            description: 'voucher end date, switch button',
           })}
-          name={"hasEndDate" as keyof VoucherDetailsPageFormData}
+          name={'hasEndDate' as keyof VoucherDetailsPageFormData}
           onChange={onChange}
         />
         {data.hasEndDate && (
@@ -84,7 +79,7 @@ const VoucherDates = ({
               disabled={disabled}
               error={!!formErrors.endDate}
               helperText={getDiscountErrorMessage(formErrors.endDate, intl)}
-              name={"endDate" as keyof VoucherDetailsPageFormData}
+              name={'endDate' as keyof VoucherDetailsPageFormData}
               onChange={onChange}
               label={intl.formatMessage(commonMessages.endDate)}
               value={data.endDate}
@@ -98,7 +93,7 @@ const VoucherDates = ({
               disabled={disabled}
               error={!!formErrors.endDate}
               helperText={getDiscountErrorMessage(formErrors.endDate, intl)}
-              name={"endTime" as keyof VoucherDetailsPageFormData}
+              name={'endTime' as keyof VoucherDetailsPageFormData}
               onChange={onChange}
               label={intl.formatMessage(commonMessages.endHour)}
               value={data.endTime}

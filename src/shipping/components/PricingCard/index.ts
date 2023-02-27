@@ -1,2 +1,2 @@
-export * from "./PricingCard";
-export { default } from "./PricingCard";
+export * from './PricingCard';
+export { default } from './PricingCard';

@@ -1,26 +1,16 @@
-import CardTitle from "@dashboard/components/CardTitle";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import Grid from "@dashboard/components/Grid";
-import SingleSelectField, {
-  Choice,
-} from "@dashboard/components/SingleSelectField";
-import { TaxConfigurationUpdateInput } from "@dashboard/graphql";
-import { FormChange } from "@dashboard/hooks/useForm";
-import { taxesMessages } from "@dashboard/taxes/messages";
-import {
-  Card,
-  CardContent,
-  Divider,
-  FormControlLabel,
-  Radio,
-  RadioGroup,
-  Typography,
-} from "@material-ui/core";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import CardTitle from '@dashboard/components/CardTitle';
+import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
+import Grid from '@dashboard/components/Grid';
+import SingleSelectField, { Choice } from '@dashboard/components/SingleSelectField';
+import { TaxConfigurationUpdateInput } from '@dashboard/graphql';
+import { FormChange } from '@dashboard/hooks/useForm';
+import { taxesMessages } from '@dashboard/taxes/messages';
+import { Card, CardContent, Divider, FormControlLabel, Radio, RadioGroup, Typography } from '@material-ui/core';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { TaxConfigurationFormData } from "../TaxChannelsPage";
-import { useStyles } from "./styles";
+import { TaxConfigurationFormData } from '../TaxChannelsPage';
+import { useStyles } from './styles';
 
 export interface TaxSettingsCardProps {
   values: TaxConfigurationFormData;
@@ -28,11 +18,7 @@ export interface TaxSettingsCardProps {
   onChange: FormChange;
 }
 
-export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
-  values,
-  strategyChoices,
-  onChange,
-}) => {
+export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({ values, strategyChoices, onChange }) => {
   const intl = useIntl();
   const classes = useStyles();
 
@@ -46,22 +32,20 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
         <div className={classes.taxStrategySection}>
           <ControlledCheckbox
             checked={values.chargeTaxes}
-            name={"chargeTaxes" as keyof TaxConfigurationUpdateInput}
+            name={'chargeTaxes' as keyof TaxConfigurationUpdateInput}
             onChange={onChange}
             label={intl.formatMessage(taxesMessages.chargeTaxes)}
           />
           <div className={classes.singleSelectWrapper}>
             <span className={classes.hint}>
-              <FormattedMessage {...taxesMessages.taxStrategyHint} />{" "}
+              <FormattedMessage {...taxesMessages.taxStrategyHint} />{' '}
             </span>
             <SingleSelectField
               className={classes.singleSelectField}
               choices={strategyChoices}
               disabled={!values.chargeTaxes}
               value={values.taxCalculationStrategy}
-              name={
-                "taxCalculationStrategy" as keyof TaxConfigurationUpdateInput
-              }
+              name={'taxCalculationStrategy' as keyof TaxConfigurationUpdateInput}
               onChange={onChange}
             />
           </div>
@@ -72,12 +56,12 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
         <Grid variant="uniform">
           <RadioGroup
             value={values.pricesEnteredWithTax}
-            name={"pricesEnteredWithTax" as keyof TaxConfigurationUpdateInput}
+            name={'pricesEnteredWithTax' as keyof TaxConfigurationUpdateInput}
             onChange={e => {
               onChange({
                 target: {
                   name: e.target.name,
-                  value: e.target.value === "true",
+                  value: e.target.value === 'true',
                 },
               });
             }}
@@ -103,7 +87,7 @@ export const TaxSettingsCard: React.FC<TaxSettingsCardProps> = ({
             </Typography>
             <ControlledCheckbox
               label={intl.formatMessage(taxesMessages.showGrossHeader)}
-              name={"displayGrossPrices" as keyof TaxConfigurationUpdateInput}
+              name={'displayGrossPrices' as keyof TaxConfigurationUpdateInput}
               checked={values.displayGrossPrices}
               onChange={onChange}
             />

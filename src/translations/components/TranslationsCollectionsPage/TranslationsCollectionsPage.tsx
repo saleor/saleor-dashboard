@@ -1,35 +1,22 @@
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import LanguageSwitch from "@dashboard/components/LanguageSwitch";
-import {
-  CollectionTranslationFragment,
-  LanguageCodeEnum,
-} from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { getStringOrPlaceholder } from "@dashboard/misc";
-import {
-  TranslationInputFieldName,
-  TranslationsEntitiesPageProps,
-} from "@dashboard/translations/types";
-import {
-  languageEntitiesUrl,
-  languageEntityUrl,
-  TranslatableEntities,
-} from "@dashboard/translations/urls";
-import React from "react";
-import { useIntl } from "react-intl";
+import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
+import { TopNav } from '@dashboard/components/AppLayout/TopNav';
+import CardSpacer from '@dashboard/components/CardSpacer';
+import LanguageSwitch from '@dashboard/components/LanguageSwitch';
+import { CollectionTranslationFragment, LanguageCodeEnum } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { getStringOrPlaceholder } from '@dashboard/misc';
+import { TranslationInputFieldName, TranslationsEntitiesPageProps } from '@dashboard/translations/types';
+import { languageEntitiesUrl, languageEntityUrl, TranslatableEntities } from '@dashboard/translations/urls';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import TranslationFields from "../TranslationFields";
+import TranslationFields from '../TranslationFields';
 
-export interface TranslationsCollectionsPageProps
-  extends TranslationsEntitiesPageProps {
+export interface TranslationsCollectionsPageProps extends TranslationsEntitiesPageProps {
   data: CollectionTranslationFragment;
 }
 
-const TranslationsCollectionsPage: React.FC<
-  TranslationsCollectionsPageProps
-> = ({
+const TranslationsCollectionsPage: React.FC<TranslationsCollectionsPageProps> = ({
   translationId,
   activeField,
   disabled,
@@ -51,10 +38,9 @@ const TranslationsCollectionsPage: React.FC<
         })}
         title={intl.formatMessage(
           {
-            id: "Bphmwe",
-            defaultMessage:
-              'Translation Collection "{collectionName}" - {languageCode}',
-            description: "header",
+            id: 'Bphmwe',
+            defaultMessage: 'Translation Collection "{collectionName}" - {languageCode}',
+            description: 'header',
           },
           {
             collectionName: getStringOrPlaceholder(data?.collection?.name),
@@ -65,13 +51,7 @@ const TranslationsCollectionsPage: React.FC<
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          getLanguageUrl={lang =>
-            languageEntityUrl(
-              lang,
-              TranslatableEntities.collections,
-              translationId,
-            )
-          }
+          getLanguageUrl={lang => languageEntityUrl(lang, TranslatableEntities.collections, translationId)}
         />
       </TopNav>
       <TranslationFields
@@ -82,19 +62,19 @@ const TranslationsCollectionsPage: React.FC<
         fields={[
           {
             displayName: intl.formatMessage({
-              id: "VZsE96",
-              defaultMessage: "Collection Name",
+              id: 'VZsE96',
+              defaultMessage: 'Collection Name',
             }),
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
-            type: "short" as "short",
+            type: 'short' as 'short',
             value: data?.collection?.name,
           },
           {
             displayName: intl.formatMessage(commonMessages.description),
             name: TranslationInputFieldName.description,
             translation: data?.translation?.description || null,
-            type: "rich" as "rich",
+            type: 'rich' as 'rich',
             value: data?.collection?.description,
           },
         ]}
@@ -110,28 +90,28 @@ const TranslationsCollectionsPage: React.FC<
         disabled={disabled}
         initialState={true}
         title={intl.formatMessage({
-          id: "TGX4T1",
-          defaultMessage: "Search Engine Preview",
+          id: 'TGX4T1',
+          defaultMessage: 'Search Engine Preview',
         })}
         fields={[
           {
             displayName: intl.formatMessage({
-              id: "HlEpii",
-              defaultMessage: "Search Engine Title",
+              id: 'HlEpii',
+              defaultMessage: 'Search Engine Title',
             }),
             name: TranslationInputFieldName.seoTitle,
             translation: data?.translation?.seoTitle || null,
-            type: "short" as "short",
+            type: 'short' as 'short',
             value: data?.collection?.seoTitle,
           },
           {
             displayName: intl.formatMessage({
-              id: "US3IPU",
-              defaultMessage: "Search Engine Description",
+              id: 'US3IPU',
+              defaultMessage: 'Search Engine Description',
             }),
             name: TranslationInputFieldName.seoDescription,
             translation: data?.translation?.seoDescription || null,
-            type: "long" as "long",
+            type: 'long' as 'long',
             value: data?.collection?.seoDescription,
           },
         ]}
@@ -144,5 +124,5 @@ const TranslationsCollectionsPage: React.FC<
     </DetailedContent>
   );
 };
-TranslationsCollectionsPage.displayName = "TranslationsCollectionsPage";
+TranslationsCollectionsPage.displayName = 'TranslationsCollectionsPage';
 export default TranslationsCollectionsPage;

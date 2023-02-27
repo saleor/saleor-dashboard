@@ -1,13 +1,13 @@
-import AddressFormatter from "@dashboard/components/AddressFormatter";
-import { AddressFragment } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { EditIcon } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
-import { useIntl } from "react-intl";
+import AddressFormatter from '@dashboard/components/AddressFormatter';
+import { AddressFragment } from '@dashboard/graphql';
+import { commonMessages } from '@dashboard/intl';
+import { Card, CardContent, Typography } from '@material-ui/core';
+import { EditIcon } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
+import { useIntl } from 'react-intl';
 
-import { useStyles } from "./styles";
+import { useStyles } from './styles';
 
 export interface CustomerAddressChoiceCardProps {
   address: AddressFragment;
@@ -47,5 +47,5 @@ const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = prop
     </Card>
   );
 };
-CustomerAddressChoiceCard.displayName = "CustomerAddressChoiceCard";
+CustomerAddressChoiceCard.displayName = 'CustomerAddressChoiceCard';
 export default CustomerAddressChoiceCard;

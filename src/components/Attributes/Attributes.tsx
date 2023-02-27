@@ -1,6 +1,6 @@
-import { AttributeReference } from "@dashboard/attributes/utils/data";
-import CardTitle from "@dashboard/components/CardTitle";
-import Hr from "@dashboard/components/Hr";
+import { AttributeReference } from '@dashboard/attributes/utils/data';
+import CardTitle from '@dashboard/components/CardTitle';
+import Hr from '@dashboard/components/Hr';
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
@@ -9,18 +9,18 @@ import {
   MeasurementUnitsEnum,
   PageErrorWithAttributesFragment,
   ProductErrorWithAttributesFragment,
-} from "@dashboard/graphql";
-import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
-import { FetchMoreProps } from "@dashboard/types";
-import { RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { ChevronIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+} from '@dashboard/graphql';
+import { FormsetAtomicData } from '@dashboard/hooks/useFormset';
+import { FetchMoreProps } from '@dashboard/types';
+import { RichTextGetters } from '@dashboard/utils/richText/useMultipleRichText';
+import { Card, CardContent, Typography } from '@material-ui/core';
+import { ChevronIcon, IconButton, makeStyles } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React from 'react';
+import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
 
-import AttributeRow from "./AttributeRow";
-import { AttributeRowHandlers, VariantAttributeScope } from "./types";
+import AttributeRow from './AttributeRow';
+import { AttributeRowHandlers, VariantAttributeScope } from './types';
 
 export interface AttributeInputData {
   inputType: AttributeInputTypeEnum;
@@ -42,9 +42,7 @@ export interface AttributesProps extends AttributeRowHandlers {
   onAttributeSelectBlur: () => void;
   disabled: boolean;
   loading: boolean;
-  errors: Array<
-    ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment
-  >;
+  errors: Array<ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment>;
   title?: React.ReactNode;
   richTextGetters: RichTextGetters<string>;
 }
@@ -52,68 +50,68 @@ export interface AttributesProps extends AttributeRowHandlers {
 const useStyles = makeStyles(
   theme => ({
     attributeSection: {
-      "&:last-of-type": {
+      '&:last-of-type': {
         paddingBottom: 0,
       },
       padding: theme.spacing(2, 0),
     },
     attributeSectionLabel: {
-      alignItems: "center",
-      display: "flex",
+      alignItems: 'center',
+      display: 'flex',
     },
     card: {
-      overflow: "visible",
+      overflow: 'visible',
     },
     cardContent: {
-      "&:last-child": {
+      '&:last-child': {
         paddingBottom: theme.spacing(2),
       },
       paddingTop: theme.spacing(1),
     },
     expansionBar: {
-      display: "flex",
+      display: 'flex',
     },
     expansionBarButton: {
       padding: 4,
       marginBottom: theme.spacing(1),
     },
     expansionBarButtonIcon: {
-      transition: theme.transitions.duration.short + "ms",
+      transition: theme.transitions.duration.short + 'ms',
     },
     expansionBarLabel: {
       color: theme.palette.text.disabled,
       fontSize: 14,
     },
     expansionBarLabelContainer: {
-      alignItems: "center",
-      display: "flex",
+      alignItems: 'center',
+      display: 'flex',
       flex: 1,
     },
     rotate: {
-      transform: "rotate(180deg)",
+      transform: 'rotate(180deg)',
     },
     uploadFileButton: {
-      float: "right",
+      float: 'right',
     },
     uploadFileContent: {
       color: theme.palette.primary.main,
-      float: "right",
+      float: 'right',
       fontSize: theme.typography.body1.fontSize,
     },
   }),
-  { name: "Attributes" },
+  { name: 'Attributes' },
 );
 
 const messages = defineMessages({
   attributesNumber: {
-    id: "z0gGP+",
-    defaultMessage: "{number} Attributes",
-    description: "number of attributes",
+    id: 'z0gGP+',
+    defaultMessage: '{number} Attributes',
+    description: 'number of attributes',
   },
   header: {
-    id: "3ukd9/",
-    defaultMessage: "Attributes",
-    description: "attributes, section header",
+    id: '3ukd9/',
+    defaultMessage: 'Attributes',
+    description: 'attributes, section header',
   },
 });
 
@@ -164,9 +162,7 @@ const Attributes: React.FC<AttributesProps> = ({
           <>
             <Hr />
             {attributes.map((attribute, attributeIndex) => {
-              const error = errors.find(err =>
-                err.attributes?.includes(attribute.id),
-              );
+              const error = errors.find(err => err.attributes?.includes(attribute.id));
 
               return (
                 <React.Fragment key={attribute.id}>
@@ -188,5 +184,5 @@ const Attributes: React.FC<AttributesProps> = ({
     </Card>
   );
 };
-Attributes.displayName = "Attributes";
+Attributes.displayName = 'Attributes';
 export default Attributes;

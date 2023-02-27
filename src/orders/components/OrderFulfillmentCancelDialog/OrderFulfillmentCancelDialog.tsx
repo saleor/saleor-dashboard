@@ -1,22 +1,16 @@
-import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
-import Form from "@dashboard/components/Form";
-import FormSpacer from "@dashboard/components/FormSpacer";
-import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
-import { OrderErrorFragment, WarehouseFragment } from "@dashboard/graphql";
-import { buttonMessages } from "@dashboard/intl";
-import getOrderErrorMessage from "@dashboard/utils/errors/order";
-import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
-import {
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-} from "@material-ui/core";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import BackButton from '@dashboard/components/BackButton';
+import ConfirmButton from '@dashboard/components/ConfirmButton';
+import Form from '@dashboard/components/Form';
+import FormSpacer from '@dashboard/components/FormSpacer';
+import SingleAutocompleteSelectField from '@dashboard/components/SingleAutocompleteSelectField';
+import { OrderErrorFragment, WarehouseFragment } from '@dashboard/graphql';
+import { buttonMessages } from '@dashboard/intl';
+import getOrderErrorMessage from '@dashboard/utils/errors/order';
+import createSingleAutocompleteSelectHandler from '@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler';
+import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
+import { ConfirmButtonTransitionState, makeStyles } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
 export interface OrderFulfillmentCancelDialogFormData {
   warehouseId: string;
@@ -25,16 +19,16 @@ export interface OrderFulfillmentCancelDialogFormData {
 const useStyles = makeStyles(
   theme => ({
     enableOverflow: {
-      overflow: "visible",
+      overflow: 'visible',
     },
     paragraph: {
       marginBottom: theme.spacing(2),
     },
     selectCcontainer: {
-      width: "60%",
+      width: '60%',
     },
   }),
-  { name: "OrderFulfillmentCancelDialog" },
+  { name: 'OrderFulfillmentCancelDialog' },
 );
 
 export interface OrderFulfillmentCancelDialogProps {
@@ -46,15 +40,12 @@ export interface OrderFulfillmentCancelDialogProps {
   onConfirm(data: OrderFulfillmentCancelDialogFormData);
 }
 
-const OrderFulfillmentCancelDialog: React.FC<
-  OrderFulfillmentCancelDialogProps
-> = props => {
-  const { confirmButtonState, errors, open, warehouses, onConfirm, onClose } =
-    props;
+const OrderFulfillmentCancelDialog: React.FC<OrderFulfillmentCancelDialogProps> = props => {
+  const { confirmButtonState, errors, open, warehouses, onConfirm, onClose } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
-  const [displayValue, setDisplayValue] = React.useState("");
+  const [displayValue, setDisplayValue] = React.useState('');
 
   const choices = warehouses?.map(warehouse => ({
     label: warehouse.name,
@@ -73,19 +64,11 @@ const OrderFulfillmentCancelDialog: React.FC<
     >
       <Form initial={{ warehouseId: null }} onSubmit={onConfirm}>
         {({ change, data: formData, submit }) => {
-          const handleChange = createSingleAutocompleteSelectHandler(
-            change,
-            setDisplayValue,
-            choices,
-          );
+          const handleChange = createSingleAutocompleteSelectHandler(change, setDisplayValue, choices);
           return (
             <>
               <DialogTitle disableTypography>
-                <FormattedMessage
-                  id="bb4nSp"
-                  defaultMessage="Cancel Fulfillment"
-                  description="dialog header"
-                />
+                <FormattedMessage id="bb4nSp" defaultMessage="Cancel Fulfillment" description="dialog header" />
               </DialogTitle>
               <DialogContent className={classes.enableOverflow}>
                 <DialogContentText className={classes.paragraph}>
@@ -94,17 +77,14 @@ const OrderFulfillmentCancelDialog: React.FC<
                     defaultMessage="Are you sure you want to cancel fulfillment? Canceling a fulfillment will restock products at a selected warehouse."
                   />
                 </DialogContentText>
-                <div
-                  className={classes.selectCcontainer}
-                  data-test-id="cancel-fulfillment-select-field"
-                >
+                <div className={classes.selectCcontainer} data-test-id="cancel-fulfillment-select-field">
                   <SingleAutocompleteSelectField
                     choices={choices}
                     displayValue={displayValue}
                     label={intl.formatMessage({
-                      id: "aHc89n",
-                      defaultMessage: "Select Warehouse",
-                      description: "select warehouse to restock items",
+                      id: 'aHc89n',
+                      defaultMessage: 'Select Warehouse',
+                      description: 'select warehouse to restock items',
                     })}
                     name="warehouseId"
                     value={formData.warehouseId}
@@ -140,5 +120,5 @@ const OrderFulfillmentCancelDialog: React.FC<
     </Dialog>
   );
 };
-OrderFulfillmentCancelDialog.displayName = "OrderFulfillmentCancelDialog";
+OrderFulfillmentCancelDialog.displayName = 'OrderFulfillmentCancelDialog';
 export default OrderFulfillmentCancelDialog;

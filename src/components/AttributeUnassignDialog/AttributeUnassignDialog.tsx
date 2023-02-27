@@ -1,10 +1,10 @@
-import ActionDialog from "@dashboard/components/ActionDialog";
-import { DialogContentText } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import ActionDialog from '@dashboard/components/ActionDialog';
+import { DialogContentText } from '@material-ui/core';
+import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import React from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import messages from "./messages";
+import messages from './messages';
 
 export interface AttributeUnassignDialogProps {
   title: string;
@@ -48,5 +48,5 @@ const AttributeUnassignDialog: React.FC<AttributeUnassignDialogProps> = ({
     </ActionDialog>
   );
 };
-AttributeUnassignDialog.displayName = "AttributeUnassignDialog";
+AttributeUnassignDialog.displayName = 'AttributeUnassignDialog';
 export default AttributeUnassignDialog;

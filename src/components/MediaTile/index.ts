@@ -1,2 +1,2 @@
-export { default } from "./MediaTile";
-export * from "./MediaTile";
+export { default } from './MediaTile';
+export * from './MediaTile';

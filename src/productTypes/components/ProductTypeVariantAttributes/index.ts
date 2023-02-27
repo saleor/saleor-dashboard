@@ -1,2 +1,2 @@
-export { default } from "./ProductTypeVariantAttributes";
-export * from "./ProductTypeVariantAttributes";
+export { default } from './ProductTypeVariantAttributes';
+export * from './ProductTypeVariantAttributes';

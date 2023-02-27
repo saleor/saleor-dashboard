@@ -1,37 +1,26 @@
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import Skeleton from "@dashboard/components/Skeleton";
-import TableRowLink from "@dashboard/components/TableRowLink";
-import { FormChange } from "@dashboard/hooks/useForm";
-import {
-  Card,
-  CardActions,
-  CardContent,
-  Table,
-  TableCell,
-  TableHead,
-  Typography,
-} from "@material-ui/core";
-import { ExpandIcon, IconButton } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React, { useEffect, useMemo, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { Button } from '@dashboard/components/Button';
+import CardTitle from '@dashboard/components/CardTitle';
+import Skeleton from '@dashboard/components/Skeleton';
+import TableRowLink from '@dashboard/components/TableRowLink';
+import { FormChange } from '@dashboard/hooks/useForm';
+import { Card, CardActions, CardContent, Table, TableCell, TableHead, Typography } from '@material-ui/core';
+import { ExpandIcon, IconButton } from '@saleor/macaw-ui';
+import clsx from 'clsx';
+import React, { useEffect, useMemo, useState } from 'react';
+import { FormattedMessage, useIntl } from 'react-intl';
 
-import { WebhookFormData } from "../WebhookDetailsPage";
-import { messages } from "./messages";
-import useStyles from "./styles";
-import { mapHeaders, stringifyHeaders } from "./utils";
-import WebhookHeadersTableBody from "./WebhookHeadersTableBody";
+import { WebhookFormData } from '../WebhookDetailsPage';
+import { messages } from './messages';
+import useStyles from './styles';
+import { mapHeaders, stringifyHeaders } from './utils';
+import WebhookHeadersTableBody from './WebhookHeadersTableBody';
 
 export interface WebhookHeadersProps {
   data: WebhookFormData;
   onChange: FormChange;
 }
 
-const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
-  data: { customHeaders },
-  onChange,
-}) => {
+const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }, onChange }) => {
   const intl = useIntl();
   const [expanded, setExpanded] = useState(false);
   const classes = useStyles();
@@ -45,11 +34,11 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
 
   const add = () => {
     const items = [...headers];
-    items.push({ name: "", value: "", error: false });
+    items.push({ name: '', value: '', error: false });
 
     onChange({
       target: {
-        name: "customHeaders",
+        name: 'customHeaders',
         value: stringifyHeaders(items),
       },
     });
@@ -113,17 +102,10 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
                   <Table className={classes.table}>
                     <TableHead>
                       <TableRowLink>
-                        <TableCell
-                          className={clsx(
-                            classes.colNameHeader,
-                            classes.tableCell,
-                          )}
-                        >
+                        <TableCell className={clsx(classes.colNameHeader, classes.tableCell)}>
                           <FormattedMessage {...messages.headerName} />
                         </TableCell>
-                        <TableCell
-                          className={clsx(classes.colValue, classes.tableCell)}
-                        >
+                        <TableCell className={clsx(classes.colValue, classes.tableCell)}>
                           <FormattedMessage {...messages.headerValue} />
                         </TableCell>
                         <TableCell className={classes.colActionHeader}>
@@ -131,19 +113,12 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
                         </TableCell>
                       </TableRowLink>
                     </TableHead>
-                    <WebhookHeadersTableBody
-                      onChange={onChange}
-                      headers={headers}
-                    />
+                    <WebhookHeadersTableBody onChange={onChange} headers={headers} />
                   </Table>
                 </>
               )}
               <CardActions className={classes.actions}>
-                <Button
-                  variant="secondary"
-                  data-test-id="add-header"
-                  onClick={add}
-                >
+                <Button variant="secondary" data-test-id="add-header" onClick={add}>
                   <FormattedMessage {...messages.add} />
                 </Button>
               </CardActions>
@@ -155,5 +130,5 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
   );
 };
 
-WebhookHeaders.displayName = "WebhookHeaders";
+WebhookHeaders.displayName = 'WebhookHeaders';
 export default WebhookHeaders;

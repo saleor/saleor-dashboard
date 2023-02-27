@@ -1,13 +1,7 @@
-import { FetchResult } from "@apollo/client";
-import {
-  getAttributesAfterFileAttributesUpdate,
-  mergeFileUploadErrors,
-} from "@dashboard/attributes/utils/data";
-import {
-  handleUploadMultipleFiles,
-  prepareAttributesInput,
-} from "@dashboard/attributes/utils/handlers";
-import { ChannelData } from "@dashboard/channels/utils";
+import { FetchResult } from '@apollo/client';
+import { getAttributesAfterFileAttributesUpdate, mergeFileUploadErrors } from '@dashboard/attributes/utils/data';
+import { handleUploadMultipleFiles, prepareAttributesInput } from '@dashboard/attributes/utils/handlers';
+import { ChannelData } from '@dashboard/channels/utils';
 import {
   AttributeErrorFragment,
   FileUploadMutation,
@@ -26,11 +20,11 @@ import {
   UploadErrorFragment,
   VariantCreateMutation,
   VariantCreateMutationVariables,
-} from "@dashboard/graphql";
-import { weight } from "@dashboard/misc";
-import { ProductCreateData } from "@dashboard/products/components/ProductCreatePage/form";
-import { getAvailabilityVariables } from "@dashboard/products/utils/handlers";
-import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+} from '@dashboard/graphql';
+import { weight } from '@dashboard/misc';
+import { ProductCreateData } from '@dashboard/products/components/ProductCreatePage/form';
+import { getAvailabilityVariables } from '@dashboard/products/utils/handlers';
+import { getParsedDataForJsonStringField } from '@dashboard/utils/richText/misc';
 
 const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
   variables: {
@@ -41,10 +35,7 @@ const getChannelsVariables = (productId: string, channels: ChannelData[]) => ({
   },
 });
 
-const getSimpleProductVariables = (
-  formData: ProductCreateData,
-  productId: string,
-) => ({
+const getSimpleProductVariables = (formData: ProductCreateData, productId: string) => ({
   input: {
     attributes: [],
     product: productId,
@@ -55,9 +46,7 @@ const getSimpleProductVariables = (
     })),
     preorder: formData.isPreorder
       ? {
-          globalThreshold: formData.globalThreshold
-            ? parseInt(formData.globalThreshold, 10)
-            : null,
+          globalThreshold: formData.globalThreshold ? parseInt(formData.globalThreshold, 10) : null,
           endDate: formData.preorderEndDateTime || null,
         }
       : null,
@@ -66,16 +55,10 @@ const getSimpleProductVariables = (
 });
 
 export function createHandler(
-  productType: ProductTypeQuery["productType"],
-  uploadFile: (
-    variables: FileUploadMutationVariables,
-  ) => Promise<FetchResult<FileUploadMutation>>,
-  productCreate: (
-    variables: ProductCreateMutationVariables,
-  ) => Promise<FetchResult<ProductCreateMutation>>,
-  productVariantCreate: (
-    variables: VariantCreateMutationVariables,
-  ) => Promise<FetchResult<VariantCreateMutation>>,
+  productType: ProductTypeQuery['productType'],
+  uploadFile: (variables: FileUploadMutationVariables) => Promise<FetchResult<FileUploadMutation>>,
+  productCreate: (variables: ProductCreateMutationVariables) => Promise<FetchResult<ProductCreateMutation>>,
+  productVariantCreate: (variables: VariantCreateMutationVariables) => Promise<FetchResult<VariantCreateMutation>>,
   updateChannels: (options: {
     variables: ProductChannelListingUpdateMutationVariables;
   }) => Promise<FetchResult<ProductChannelListingUpdateMutation>>,
@@ -88,16 +71,10 @@ export function createHandler(
 ) {
   return async (formData: ProductCreateData) => {
     let errors: Array<
-      | AttributeErrorFragment
-      | UploadErrorFragment
-      | ProductErrorFragment
-      | ProductChannelListingErrorFragment
+      AttributeErrorFragment | UploadErrorFragment | ProductErrorFragment | ProductChannelListingErrorFragment
     > = [];
 
-    const uploadFilesResult = await handleUploadMultipleFiles(
-      formData.attributesWithNewFileValue,
-      uploadFile,
-    );
+    const uploadFilesResult = await handleUploadMultipleFiles(formData.attributesWithNewFileValue, uploadFile);
 
     errors = [...errors, ...mergeFileUploadErrors(uploadFilesResult)];
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
@@ -142,13 +119,10 @@ export function createHandler(
 
     if (!hasVariants) {
       const result = await Promise.all([
-        updateChannels(
-          getChannelsVariables(productId, formData.channelListings),
-        ),
+        updateChannels(getChannelsVariables(productId, formData.channelListings)),
         productVariantCreate(getSimpleProductVariables(formData, productId)),
       ]);
-      const channelErrors =
-        result[0].data?.productChannelListingUpdate?.errors || [];
+      const channelErrors = result[0].data?.productChannelListingUpdate?.errors || [];
       const variantErrors = result[1].data?.productVariantCreate?.errors || [];
       errors = [...errors, ...channelErrors, ...variantErrors];
 
@@ -166,11 +140,8 @@ export function createHandler(
         });
       }
     } else {
-      const result = await updateChannels(
-        getChannelsVariables(productId, formData.channelListings),
-      );
-      const channelErrors =
-        result.data?.productChannelListingUpdate?.errors || [];
+      const result = await updateChannels(getChannelsVariables(productId, formData.channelListings));
+      const channelErrors = result.data?.productChannelListingUpdate?.errors || [];
 
       errors = [...errors, ...channelErrors];
     }

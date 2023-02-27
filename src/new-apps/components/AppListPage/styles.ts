@@ -1,11 +1,11 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from '@saleor/macaw-ui';
 
 export const useStyles = makeStyles(
   theme => ({
     appContent: {
-      width: "100%",
-      [theme.breakpoints.up("md")]: {
-        width: "50vw",
+      width: '100%',
+      [theme.breakpoints.up('md')]: {
+        width: '50vw',
       },
     },
     sectionHeader: {
@@ -13,11 +13,11 @@ export const useStyles = makeStyles(
       fontWeight: 700,
       color: theme.palette.saleor.main[3],
       margin: theme.spacing(8, 0, 3, 0),
-      textTransform: "uppercase",
+      textTransform: 'uppercase',
     },
     previewLabel: {
       marginLeft: theme.spacing(2),
     },
   }),
-  { name: "AppListPage" },
+  { name: 'AppListPage' },
 );

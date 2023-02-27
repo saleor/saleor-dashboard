@@ -1,9 +1,9 @@
-import { MenuItem, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { GetItemPropsOptions } from "downshift";
-import React from "react";
+import { MenuItem, Typography } from '@material-ui/core';
+import { makeStyles } from '@saleor/macaw-ui';
+import { GetItemPropsOptions } from 'downshift';
+import React from 'react';
 
-import { QuickSearchAction } from "./types";
+import { QuickSearchAction } from './types';
 
 interface NavigatorSectionProps {
   getItemProps: (options: GetItemPropsOptions<QuickSearchAction>) => any;
@@ -16,22 +16,22 @@ interface NavigatorSectionProps {
 const useStyles = makeStyles(
   theme => ({
     item: {
-      "&&&&": {
+      '&&&&': {
         color: theme.palette.text.secondary,
         fontWeight: 400,
       },
-      display: "flex",
+      display: 'flex',
       margin: theme.spacing(1, 0),
     },
     itemLabel: {
-      display: "inline-block",
+      display: 'inline-block',
     },
     label: {
       paddingLeft: theme.spacing(2),
-      textTransform: "uppercase",
+      textTransform: 'uppercase',
     },
     root: {
-      "&:last-child": {
+      '&:last-child': {
         marginBottom: 0,
       },
       margin: theme.spacing(2, 0),
@@ -40,13 +40,13 @@ const useStyles = makeStyles(
       flex: 1,
     },
     symbol: {
-      display: "inline-block",
+      display: 'inline-block',
       fontWeight: 600,
       width: theme.spacing(4),
     },
   }),
   {
-    name: "NavigatorSection",
+    name: 'NavigatorSection',
   },
 );
 
@@ -57,11 +57,7 @@ const NavigatorSection: React.FC<NavigatorSectionProps> = props => {
 
   return (
     <div className={classes.root}>
-      <Typography
-        className={classes.label}
-        variant="caption"
-        color="textSecondary"
-      >
+      <Typography className={classes.label} variant="caption" color="textSecondary">
         {label}
       </Typography>
       {items.map((item, itemIndex) => {
@@ -76,16 +72,12 @@ const NavigatorSection: React.FC<NavigatorSectionProps> = props => {
             {...itemProps}
             className={classes.item}
             selected={highlightedIndex === index}
-            key={[item.label, item.type].join(":")}
+            key={[item.label, item.type].join(':')}
           >
             <span className={classes.itemLabel}>
-              {item.symbol && (
-                <span className={classes.symbol}>{item.symbol}</span>
-              )}
+              {item.symbol && <span className={classes.symbol}>{item.symbol}</span>}
               <span>{item.label}</span>
-              {item.caption && (
-                <Typography variant="caption">{item.caption}</Typography>
-              )}
+              {item.caption && <Typography variant="caption">{item.caption}</Typography>}
             </span>
             <span className={classes.spacer} />
             {item.extraInfo}
@@ -96,5 +88,5 @@ const NavigatorSection: React.FC<NavigatorSectionProps> = props => {
   );
 };
 
-NavigatorSection.displayName = "NavigatorSection";
+NavigatorSection.displayName = 'NavigatorSection';
 export default NavigatorSection;

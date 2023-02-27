@@ -1,2 +1,2 @@
-export * from "./PreviewPill";
-export { default } from "./PreviewPill";
+export * from './PreviewPill';
+export { default } from './PreviewPill';
