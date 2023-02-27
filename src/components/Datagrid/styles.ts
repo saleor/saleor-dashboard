@@ -1,6 +1,6 @@
 import { Theme } from "@glideapps/glide-data-grid";
 import { makeStyles, useTheme } from "@saleor/macaw-ui";
-import { themes } from "@saleor/macaw-ui/next";
+import { themes, useTheme as useNewTheme } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
 
 export const cellHeight = 36;
@@ -182,24 +182,26 @@ export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(
 
 export function useDatagridTheme() {
   const theme = useTheme();
+  const { theme: selectedTheme } = useNewTheme();
+  const newTheme = themes[selectedTheme];
 
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: theme.palette.secondary.main,
-      accentLight: theme.palette.background.default,
+      accentColor: newTheme.colors.border.brandDefault,
+      accentLight: newTheme.colors.border.brandDefault,
       accentFg: "transparent",
-      bgCell: theme.palette.background.paper,
-      bgHeader: theme.palette.background.paper,
-      bgHeaderHasFocus: theme.palette.background.paper,
-      bgHeaderHovered: theme.palette.background.paper,
-      bgBubbleSelected: theme.palette.background.paper,
-      textHeader: theme.palette.text.secondary,
-      borderColor: theme.palette.divider,
-      fontFamily: themes.defaultLight.fontFamily.body,
-      baseFontStyle: themes.defaultLight.fontSize.bodySmall,
-      headerFontStyle: themes.defaultLight.fontSize.bodySmall,
-      editorFontSize: themes.defaultLight.fontSize.bodySmall,
-      textMedium: theme.palette.text.primary,
+      bgCell: newTheme.colors.background.plain,
+      bgHeader: newTheme.colors.background.plain,
+      bgHeaderHasFocus: newTheme.colors.background.plain,
+      bgHeaderHovered: newTheme.colors.background.plain,
+      bgBubbleSelected: newTheme.colors.background.plain,
+      textHeader: newTheme.colors.foreground.textNeutralDisabled,
+      borderColor: newTheme.colors.border.neutralHighlight,
+      fontFamily: newTheme.fontFamily.body,
+      baseFontStyle: newTheme.fontSize.bodySmall,
+      headerFontStyle: newTheme.fontSize.bodySmall,
+      editorFontSize: newTheme.fontSize.bodySmall,
+      textMedium: newTheme.colors.foreground.text1Decorative,
       textGroupHeader: theme.palette.text.secondary,
       textBubble: theme.palette.text.primary,
       textDark: theme.palette.text.primary,

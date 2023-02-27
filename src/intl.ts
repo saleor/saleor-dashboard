@@ -199,6 +199,10 @@ export const commonMessages = defineMessages({
     defaultMessage: "No. of rows",
     description: "pagination",
   },
+  product: {
+    defaultMessage: "Prodcut",
+    id: "hR29z+",
+  },
 });
 
 export const errorMessages = defineMessages({

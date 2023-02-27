@@ -48,8 +48,8 @@ export function getColumns({
   return [
     {
       id: "name",
-      title: intl.formatMessage(commonMessages.name),
-      width: 350,
+      title: intl.formatMessage(commonMessages.product),
+      width: 300,
       icon: getColumnSortIconName(sort, ProductListUrlSortField.name),
     },
     ...[

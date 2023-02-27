@@ -21,8 +21,9 @@ export const thumbnailCellRenderer: CustomCellRenderer<ThumbnailCell> = {
     const { ctx, rect, theme, imageLoader, col, row } = args;
     const { image, name } = cell.data;
 
-    const xPad = theme.cellHorizontalPadding;
+    const xPad = 7;
     const size = rect.height - xPad * 2;
+
     const drawX = rect.x + xPad;
     const drawY = rect.y + xPad;
 
@@ -37,8 +38,8 @@ export const thumbnailCellRenderer: CustomCellRenderer<ThumbnailCell> = {
       ctx.restore();
     } else {
       ctx.save();
-      const backupImg = size - 10;
-      const startY = drawY + 5;
+      const backupImg = size - 5;
+      const startY = drawY + 2;
       ctx.beginPath();
       ctx.rect(drawX, startY, backupImg, backupImg);
       ctx.strokeStyle = theme.textDark;
