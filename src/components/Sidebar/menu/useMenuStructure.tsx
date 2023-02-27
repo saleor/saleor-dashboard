@@ -213,7 +213,7 @@ export function useMenuStructure() {
         ),
       ],
       icon: <StorefrontIcon {...iconSettings} />,
-      label: intl.formatMessage(sectionNames.pages),
+      label: intl.formatMessage(sectionNames.content),
       permissions: [PermissionEnum.MANAGE_PAGES],
       id: "pages",
       url: pageListPath,

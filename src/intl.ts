@@ -451,9 +451,14 @@ export const sectionNames = defineMessages({
     description: "page types section name",
   },
   pages: {
-    id: "0Bw3x9",
-    defaultMessage: "Content",
+    id: "H6NsC1",
+    defaultMessage: "Pages",
     description: "pages section name",
+  },
+  content: {
+    id: "NelCIl",
+    defaultMessage: "Content",
+    description: "content section name",
   },
   permissionGroups: {
     id: "DNTxWr",

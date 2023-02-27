@@ -39,6 +39,10 @@
     "context": "tax class for a product type",
     "string": "Tax class"
   },
+  "+MJW+8": {
+    "context": "button",
+    "string": "Create Discount"
+  },
   "+NUzaQ": {
     "context": "check to mark this account as active",
     "string": "User account active"
@@ -296,10 +300,6 @@
   },
   "0AQH0Q": {
     "string": "Plugin is misconfigured and cannot be activated"
-  },
-  "0Bw3x9": {
-    "context": "pages section name",
-    "string": "Content"
   },
   "0DRBjg": {
     "string": "Token Note"
@@ -1542,10 +1542,6 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to unassign this product?} other{Are you sure you want to unassign {displayQuantity} products?}}"
   },
-  "AHRDWt": {
-    "context": "button",
-    "string": "Create page"
-  },
   "AJgl5u": {
     "context": "gift card product message",
     "string": "gift card product"
@@ -2000,6 +1996,10 @@
   },
   "DO8+uV": {
     "string": "Product created"
+  },
+  "DOVEZF": {
+    "context": "button",
+    "string": "Create content"
   },
   "DOkfyZ": {
     "string": "Insufficient permissions"
@@ -2531,6 +2531,10 @@
     "context": "attribute values list: name column header",
     "string": "Default Store View"
   },
+  "H6NsC1": {
+    "context": "pages section name",
+    "string": "Pages"
+  },
   "HAlOn1": {
     "string": "Name"
   },
@@ -2811,10 +2815,6 @@
   "JGm7E5": {
     "context": "option",
     "string": "Export stock for all warehouses"
-  },
-  "JHfbXR": {
-    "context": "button",
-    "string": "Create Sale"
   },
   "JI2Xwp": {
     "context": "dialog title",
@@ -3198,9 +3198,6 @@
     "context": "activate",
     "string": "Activate"
   },
-  "MSD3A/": {
-    "string": "Search Sale"
-  },
   "MSItJD": {
     "string": "You are about to leave the Dashboard. Do you want to continue?"
   },
@@ -3358,6 +3355,10 @@
   "NZtcLb": {
     "context": "gift card bulk create success dialog content",
     "string": "We have issued all of your requested gift cards. You can download the list of new gift cards using the button below."
+  },
+  "NelCIl": {
+    "context": "content section name",
+    "string": "Content"
   },
   "Nfh9QM": {
     "context": "checkbox gift cards label description",
@@ -4274,10 +4275,6 @@
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
   },
-  "UW1fLs": {
-    "context": "search pages placeholder",
-    "string": "Search Pages"
-  },
   "UaYJJ8": {
     "string": "Are you sure you want to delete {name} search tab?"
   },
@@ -4921,10 +4918,6 @@
     "context": "time during voucher is active, header",
     "string": "Active Dates"
   },
-  "Yjhgle": {
-    "context": "tab name",
-    "string": "All Sales"
-  },
   "YkOzse": {
     "context": "used warehouses counter",
     "string": "{count}/{max} warehouses used"
@@ -5371,6 +5364,10 @@
   },
   "c8nvms": {
     "string": "Sales"
+  },
+  "c8zJID": {
+    "context": "tab name",
+    "string": "All Discounts"
   },
   "cBHRxx": {
     "context": "button",
@@ -6457,6 +6454,9 @@
     "context": "save filter tab, header",
     "string": "Save Custom Search"
   },
+  "lit2zF": {
+    "string": "Search Discounts"
+  },
   "ll2dE6": {
     "context": "PageTypeDeleteWarningDialog multiple assigned items description",
     "string": "Are you sure you want to delete selected page types? If you remove them you won’t be able to assign them to created pages."
@@ -6676,6 +6676,10 @@
   "nOo0oL": {
     "context": "error message",
     "string": "Not enough items to fulfill"
+  },
+  "nP8iex": {
+    "context": "search content placeholder",
+    "string": "Search Content"
   },
   "nRiOg+": {
     "string": "Sorry, the page was not found"
