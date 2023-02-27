@@ -2237,10 +2237,6 @@
     "context": "transaction reference",
     "string": "Transaction reference"
   },
-  "Edg9FT": {
-    "context": "button, submit form",
-    "string": "Replace products"
-  },
   "Ediw6/": {
     "context": "button label",
     "string": "Assign references"
@@ -4539,6 +4535,10 @@
     "context": "attribute values",
     "string": "Value {number}"
   },
+  "UxOcKE": {
+    "context": "order history message",
+    "string": "Transaction charge requested"
+  },
   "UxdBmI": {
     "context": "collection availability",
     "string": "Availability"
@@ -5904,6 +5904,10 @@
   "ey0lZj": {
     "context": "dialog header",
     "string": "Delete Customer"
+  },
+  "f/Drvo": {
+    "context": "order history message",
+    "string": "Transaction cancel requested"
   },
   "f/R1Ln": {
     "context": "restocked group",
@@ -7901,6 +7905,10 @@
   },
   "uMpv1v": {
     "string": "Fulfillment successfully cancelled"
+  },
+  "uN88fb": {
+    "context": "button, submit form",
+    "string": "Return and Replace products"
   },
   "uQNm59": {
     "context": "add header,button",

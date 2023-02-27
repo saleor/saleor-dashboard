@@ -1,17 +1,20 @@
-import { OrderEventsEmailsEnum, OrderEventsEnum } from "@dashboard/graphql";
-import { OrderEventFragment } from "@dashboard/graphql/transactions";
+import { OrderEventsEmailsEnum } from "@dashboard/graphql";
+import { OrderEventFragment, OrderEventsEnum } from "@dashboard/orders/types";
 import { IntlShape } from "react-intl";
 
-export const getEventMessage = (event: OrderEventFragment, intl: IntlShape) => {
-  const getUserOrApp = () => {
-    if (event.user) {
-      return event.user.email;
-    }
-    if (event.app) {
-      return event.app.name;
-    }
-  };
+const getUserOrApp = (event: OrderEventFragment) => {
+  if (event.user) {
+    return event.user.email;
+  }
+  if (event.app) {
+    return event.app.name;
+  }
+};
 
+export const getEventMessage = (
+  event: OrderEventFragment,
+  intl: IntlShape,
+): string => {
   switch (event.type) {
     case OrderEventsEnum.CANCELED:
       return intl.formatMessage({
@@ -108,7 +111,7 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape) => {
           description: "order history message",
         },
         {
-          requestedBy: getUserOrApp(),
+          requestedBy: getUserOrApp(event),
         },
       );
     case OrderEventsEnum.INVOICE_GENERATED:
@@ -120,7 +123,7 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape) => {
           description: "order history message",
         },
         {
-          generatedBy: getUserOrApp(),
+          generatedBy: getUserOrApp(event),
           invoiceNumber: event.invoiceNumber,
         },
       );
@@ -143,7 +146,7 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape) => {
           description: "order history message",
         },
         {
-          sentBy: getUserOrApp(),
+          sentBy: getUserOrApp(event),
         },
       );
     case OrderEventsEnum.FULFILLMENT_AWAITS_APPROVAL:
@@ -171,7 +174,7 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape) => {
           description: "order history message",
         },
         {
-          refundedBy: getUserOrApp(),
+          refundedBy: getUserOrApp(event),
         },
       );
     case OrderEventsEnum.FULFILLMENT_RESTOCKED_ITEMS:
@@ -292,6 +295,18 @@ export const getEventMessage = (event: OrderEventFragment, intl: IntlShape) => {
       return intl.formatMessage({
         id: "DRwqnt",
         defaultMessage: "Transaction capture requested",
+        description: "order history message",
+      });
+    case OrderEventsEnum.TRANSACTION_CHARGE_REQUESTED:
+      return intl.formatMessage({
+        id: "UxOcKE",
+        defaultMessage: "Transaction charge requested",
+        description: "order history message",
+      });
+    case OrderEventsEnum.TRANSACTION_CANCEL_REQUESTED:
+      return intl.formatMessage({
+        id: "f/Drvo",
+        defaultMessage: "Transaction cancel requested",
         description: "order history message",
       });
     case OrderEventsEnum.EXTERNAL_SERVICE_NOTIFICATION:
