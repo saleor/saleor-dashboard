@@ -12,9 +12,12 @@ interface Props {
 
 export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
   const isActive = isMenuActive(location.pathname, menuItem);
+  const isExpanded =
+    isActive ||
+    menuItem?.children.some(item => isMenuActive(location.pathname, item));
 
   return (
-    <List.ItemGroup defaultExpanded={isActive}>
+    <List.ItemGroup defaultExpanded={isExpanded}>
       <List.ItemGroup.Trigger
         paddingX={5}
         paddingY={4}
