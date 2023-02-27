@@ -34,7 +34,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
         <Box display="flex" gap={7} alignItems="center">
           <TopNavLink to={goBackLink} variant="tertiary" />
           <Box display="flex" gap={5} alignItems="center">
-            <AppAvatar size="large" />
+            <AppAvatar size="medium" />
             <Text variant="heading">{name}</Text>
           </Box>
         </Box>

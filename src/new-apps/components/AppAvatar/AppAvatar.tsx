@@ -36,7 +36,7 @@ export const AppAvatar: React.FC<AppAvatarProps> = ({ logo, size }) => {
         placeItems="center"
         borderRadius={2}
       >
-        <GenericAppIcon />
+        <GenericAppIcon size="large" />
       </Box>
     );
   }
