@@ -297,7 +297,7 @@
     "cy:run:stable:parallel": "cypress run --record --env grepTags=@critical  --parallel --tag Stable",
     "test": "jest src/",
     "test:watch": "jest --watch src/",
-    "lint": "eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix",
+    "lint": "eslint \"*/**/*.@(tsx|ts|jsx|js)\" --fix",
     "postbuild": "node scripts/removeSourcemaps.js",
     "postinstall": "node scripts/patchReactVirtualized.js",
     "predev": "npm run build-types",
