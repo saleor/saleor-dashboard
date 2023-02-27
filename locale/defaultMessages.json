@@ -297,6 +297,10 @@
   "0AQH0Q": {
     "string": "Plugin is misconfigured and cannot be activated"
   },
+  "0Bw3x9": {
+    "context": "pages section name",
+    "string": "Content"
+  },
   "0DRBjg": {
     "string": "Token Note"
   },
@@ -2526,10 +2530,6 @@
   "H60H6L": {
     "context": "attribute values list: name column header",
     "string": "Default Store View"
-  },
-  "H6NsC1": {
-    "context": "pages section name",
-    "string": "Pages"
   },
   "HAlOn1": {
     "string": "Name"
