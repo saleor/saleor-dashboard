@@ -10,6 +10,7 @@
   "extends": ["prettier"],
   "plugins": [
     "@typescript-eslint",
+    "prettier",
     "import",
     "local-rules",
     "simple-import-sort",
@@ -83,10 +84,7 @@
     "@typescript-eslint/triple-slash-reference": "error",
     "@typescript-eslint/type-annotation-spacing": "off",
     "@typescript-eslint/unified-signatures": "error",
-    "@typescript-eslint/no-unused-vars": [
-      "error",
-      { "argsIgnorePattern": "^_" }
-    ],
+    "@typescript-eslint/no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "arrow-body-style": "error",
     "arrow-parens": ["off", "as-needed"],
     "camelcase": "off",
@@ -195,6 +193,7 @@
     "spaced-comment": ["error", "always", { "markers": ["/"] }],
     "use-isnan": "error",
     "valid-typeof": "off",
+    "prettier/prettier": ["error"],
     "no-restricted-imports": [
       "error",
       {

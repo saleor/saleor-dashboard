@@ -200,6 +200,7 @@
     "eslint-plugin-import": "^2.19.1",
     "eslint-plugin-local-rules": "^0.1.1",
     "eslint-plugin-prefer-arrow": "^1.1.6",
+    "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.3.1",
     "eslint-plugin-simple-import-sort": "^5.0.3",
@@ -264,12 +265,10 @@
   },
   "lint-staged": {
     "*.{ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
+      "eslint --fix"
     ],
     "*.{js,jsx}": [
-      "eslint --fix",
-      "prettier --write"
+      "eslint --fix"
     ]
   },
   "scripts": {
