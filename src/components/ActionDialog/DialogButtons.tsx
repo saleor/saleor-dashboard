@@ -1,12 +1,12 @@
-import { buttonMessages } from '@dashboard/intl';
-import { DialogActions } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { buttonMessages } from "@dashboard/intl";
+import { DialogActions } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import BackButton from '../BackButton';
-import ConfirmButton from '../ConfirmButton';
-import { ActionDialogVariant } from './types';
+import BackButton from "../BackButton";
+import ConfirmButton from "../ConfirmButton";
+import { ActionDialogVariant } from "./types";
 
 interface DialogButtonsProps {
   onClose: () => void;
@@ -37,16 +37,16 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
     <DialogActions>
       {children}
       {showBackButton && <BackButton onClick={onClose} />}
-      {variant !== 'info' && (
+      {variant !== "info" && (
         <ConfirmButton
           disabled={disabled}
           transitionState={confirmButtonState}
           onClick={onConfirm}
-          error={variant === 'delete'}
+          error={variant === "delete"}
           data-test-id="submit"
         >
           {confirmButtonLabel ||
-            (variant === 'delete'
+            (variant === "delete"
               ? intl.formatMessage(buttonMessages.delete)
               : intl.formatMessage(buttonMessages.confirm))}
         </ConfirmButton>
@@ -56,8 +56,8 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
 };
 
 DialogButtons.defaultProps = {
-  confirmButtonState: 'default',
-  variant: 'default',
+  confirmButtonState: "default",
+  variant: "default",
 };
 
 export default DialogButtons;

@@ -1,9 +1,9 @@
-import { Button } from '@dashboard/components/Button';
-import Grid from '@dashboard/components/Grid';
-import { Typography } from '@material-ui/core';
-import React from 'react';
+import { Button } from "@dashboard/components/Button";
+import Grid from "@dashboard/components/Grid";
+import { Typography } from "@material-ui/core";
+import React from "react";
 
-import { useExtendedAttributeStyles } from './styles';
+import { useExtendedAttributeStyles } from "./styles";
 
 interface ExtendedAttributeRowProps {
   label: string;
@@ -39,5 +39,5 @@ const ExtendedAttributeRow: React.FC<ExtendedAttributeRowProps> = props => {
   );
 };
 
-ExtendedAttributeRow.displayName = 'ExtendedAttributeRow';
+ExtendedAttributeRow.displayName = "ExtendedAttributeRow";
 export default ExtendedAttributeRow;

@@ -1,24 +1,26 @@
-import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
-import { CollectionFragment } from '@dashboard/graphql';
-import ScrollableContent from '@dashboard/plugins/components/PluginsList/PluginAvailabilityStatusPopup/ScrollableContent';
-import { Typography } from '@material-ui/core';
-import { Pill, PillColor } from '@saleor/macaw-ui';
-import React from 'react';
-import { MessageDescriptor, useIntl } from 'react-intl';
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import { CollectionFragment } from "@dashboard/graphql";
+import ScrollableContent from "@dashboard/plugins/components/PluginsList/PluginAvailabilityStatusPopup/ScrollableContent";
+import { Typography } from "@material-ui/core";
+import { Pill, PillColor } from "@saleor/macaw-ui";
+import React from "react";
+import { MessageDescriptor, useIntl } from "react-intl";
 
-import { messages } from '../ChannelsAvailabilityDropdown/messages';
-import { useStyles } from './styles';
+import { messages } from "../ChannelsAvailabilityDropdown/messages";
+import { useStyles } from "./styles";
 
 export interface ChannelsAvailabilityMenuContentProps {
   pills: Pill[];
 }
 export interface Pill {
-  channel: CollectionFragment['channelListings'][0]['channel'];
+  channel: CollectionFragment["channelListings"][0]["channel"];
   color: PillColor;
   label: MessageDescriptor;
 }
 
-export const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuContentProps> = ({ pills }) => {
+export const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuContentProps> = ({
+  pills,
+}) => {
   const intl = useIntl();
   const classes = useStyles({});
 
@@ -44,5 +46,5 @@ export const ChannelsAvailabilityMenuContent: React.FC<ChannelsAvailabilityMenuC
     </div>
   );
 };
-ChannelsAvailabilityMenuContent.displayName = 'ChannelsAvailabilityMenuContent';
+ChannelsAvailabilityMenuContent.displayName = "ChannelsAvailabilityMenuContent";
 export default ChannelsAvailabilityMenuContent;

@@ -1,7 +1,7 @@
-import { CircularProgress } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
+import { CircularProgress } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
 
 interface ContentWithProgressProps {
   containerClassName?: string;
@@ -10,18 +10,21 @@ interface ContentWithProgressProps {
 export const useStyles = makeStyles(
   theme => ({
     container: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '100%',
-      width: '100%',
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "100%",
+      width: "100%",
       padding: theme.spacing(3),
     },
   }),
-  { name: 'ContentWithProgress' },
+  { name: "ContentWithProgress" },
 );
 
-const ContentWithProgress: React.FC<ContentWithProgressProps> = ({ containerClassName, children }) => {
+const ContentWithProgress: React.FC<ContentWithProgressProps> = ({
+  containerClassName,
+  children,
+}) => {
   const classes = useStyles({});
 
   return children ? (

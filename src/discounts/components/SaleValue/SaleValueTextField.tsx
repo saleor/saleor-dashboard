@@ -1,10 +1,10 @@
-import { SaleType } from '@dashboard/graphql';
-import { TextField } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { SaleType } from "@dashboard/graphql";
+import { TextField } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { ChannelSaleFormData } from '../SaleDetailsPage';
-import { SaleValueInputOnChangeType } from './types';
+import { ChannelSaleFormData } from "../SaleDetailsPage";
+import { SaleValueInputOnChangeType } from "./types";
 
 interface SaleValueTextFieldProps {
   dataType: SaleType;
@@ -27,30 +27,31 @@ const SaleValueTextField: React.FC<SaleValueTextFieldProps> = ({
 
   const { id, percentageValue, fixedValue } = listing;
 
-  const getTextFieldValue = (dataType: SaleType) => (dataType === SaleType.PERCENTAGE ? percentageValue : fixedValue);
+  const getTextFieldValue = (dataType: SaleType) =>
+    dataType === SaleType.PERCENTAGE ? percentageValue : fixedValue;
 
   return (
     <TextField
       disabled={disabled}
-      helperText={helperText || ''}
+      helperText={helperText || ""}
       error={error}
       name="value"
       onChange={e => {
         onChange(id, e.target.value);
       }}
       label={intl.formatMessage({
-        id: 'x3g4Ry',
-        defaultMessage: 'Discount Value',
-        description: 'sale discount',
+        id: "x3g4Ry",
+        defaultMessage: "Discount Value",
+        description: "sale discount",
       })}
-      value={getTextFieldValue(dataType) || ''}
+      value={getTextFieldValue(dataType) || ""}
       type="number"
       fullWidth
       inputProps={{
         min: 0,
       }}
       InputProps={{
-        endAdornment: dataType === SaleType.FIXED ? listing.currency : '%',
+        endAdornment: dataType === SaleType.FIXED ? listing.currency : "%",
       }}
     />
   );

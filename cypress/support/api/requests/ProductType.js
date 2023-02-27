@@ -39,9 +39,7 @@ export function createTypeProduct({
       }
     }
   } `;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.productTypeCreate.productType");
+  return cy.sendRequestWithQuery(mutation).its("body.data.productTypeCreate.productType");
 }
 
 export function getProductTypes(first, search) {
@@ -57,9 +55,7 @@ export function getProductTypes(first, search) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(query)
-    .then(resp => resp.body.data.productTypes.edges);
+  return cy.sendRequestWithQuery(query).then(resp => resp.body.data.productTypes.edges);
 }
 
 export function deleteProductType(productTypeId) {
@@ -148,11 +144,7 @@ export function setProductTypeAsDigital(productTypeId, isDigital = true) {
   return cy.sendRequestWithQuery(mutation);
 }
 
-export function assignAttribute(
-  productTypeId,
-  attributeId,
-  attributeType = "VARIANT",
-) {
+export function assignAttribute(productTypeId, attributeId, attributeType = "VARIANT") {
   const mutation = `mutation{
     productAttributeAssign(productTypeId:"${productTypeId}", operations:{
       id:"${attributeId}"

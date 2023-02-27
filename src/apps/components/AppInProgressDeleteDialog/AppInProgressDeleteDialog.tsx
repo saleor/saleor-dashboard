@@ -1,9 +1,9 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import { getStringOrPlaceholder } from '@dashboard/misc';
-import { DialogContentText } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import { DialogContentText } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface AppInProgressDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -29,14 +29,14 @@ const AppInProgressDeleteDialog: React.FC<AppInProgressDeleteDialogProps> = ({
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
-        id: 'zQX6xO',
-        defaultMessage: 'Delete App',
-        description: 'dialog header',
+        id: "zQX6xO",
+        defaultMessage: "Delete App",
+        description: "dialog header",
       })}
       variant="delete"
     >
       <DialogContentText>
-        {['', null].includes(name) ? (
+        {["", null].includes(name) ? (
           <FormattedMessage
             id="6hLZNA"
             defaultMessage="Are you sure you want to delete this app?"
@@ -56,5 +56,5 @@ const AppInProgressDeleteDialog: React.FC<AppInProgressDeleteDialogProps> = ({
     </ActionDialog>
   );
 };
-AppInProgressDeleteDialog.displayName = 'AppInProgressDeleteDialog';
+AppInProgressDeleteDialog.displayName = "AppInProgressDeleteDialog";
 export default AppInProgressDeleteDialog;

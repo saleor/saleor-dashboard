@@ -1,101 +1,101 @@
-import { alpha } from '@material-ui/core/styles';
-import { makeStyles } from '@saleor/macaw-ui';
+import { alpha } from "@material-ui/core/styles";
+import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(
   theme => {
     const hover = {
-      '&:hover': {
+      "&:hover": {
         background: alpha(theme.palette.primary.main, 0.1),
       },
     };
 
-    const isDarkMode = theme.palette.type === 'dark';
+    const isDarkMode = theme.palette.type === "dark";
 
     return {
       editor: {
-        '& .codex-editor': {
+        "& .codex-editor": {
           zIndex: 2,
         },
-        '& .cdx-quote__text': {
+        "& .cdx-quote__text": {
           minHeight: 24,
         },
-        '& .ce-block--selected .ce-block__content': {
+        "& .ce-block--selected .ce-block__content": {
           background: `${alpha(theme.palette.primary.main, 0.2)} !important`,
         },
-        '& .ce-block__content': {
+        "& .ce-block__content": {
           margin: 0,
-          maxWidth: 'unset',
+          maxWidth: "unset",
         },
-        '& .ce-conversion-tool': {
+        "& .ce-conversion-tool": {
           ...hover,
         },
-        '& .ce-conversion-tool--focused': {
+        "& .ce-conversion-tool--focused": {
           background: `${alpha(theme.palette.primary.main, 0.1)} !important`,
         },
-        '& .ce-conversion-tool__icon': {
-          background: 'none',
+        "& .ce-conversion-tool__icon": {
+          background: "none",
         },
-        '& .ce-conversion-toolbar': {
+        "& .ce-conversion-toolbar": {
           background: theme.palette.background.paper,
         },
-        '& .ce-header': {
+        "& .ce-header": {
           marginBottom: 0,
           paddingBottom: theme.spacing(1),
         },
-        '& .ce-inline-tool': {
+        "& .ce-inline-tool": {
           ...hover,
           color: theme.palette.text.primary,
           height: 32,
-          transition: theme.transitions.duration.short + 'ms',
+          transition: theme.transitions.duration.short + "ms",
           width: 32,
         },
-        '& .ce-inline-toolbar': {
-          '& input': {
-            background: 'none',
+        "& .ce-inline-toolbar": {
+          "& input": {
+            background: "none",
           },
           background: theme.palette.background.paper,
           color: theme.palette.text.primary,
         },
-        '& .ce-inline-toolbar__dropdown': {
+        "& .ce-inline-toolbar__dropdown": {
           ...hover,
           height: 32,
           marginRight: 0,
         },
-        '& .ce-inline-toolbar__toggler-and-button-wrapper': {
+        "& .ce-inline-toolbar__toggler-and-button-wrapper": {
           paddingRight: 0,
         },
-        '& .ce-toolbar__actions': {
+        "& .ce-toolbar__actions": {
           right: 0,
           top: 0,
         },
-        '& .ce-toolbar__content': {
-          maxWidth: 'unset',
+        "& .ce-toolbar__content": {
+          maxWidth: "unset",
         },
-        '& .ce-toolbar__plus': {
+        "& .ce-toolbar__plus": {
           left: -9,
           color: theme.palette.text.primary,
           ...hover,
         },
-        '& .ce-popover': {
+        "& .ce-popover": {
           backgroundColor: theme.palette.background.paper,
         },
-        '& .ce-popover__item': {
+        "& .ce-popover__item": {
           ...hover,
         },
-        '& .ce-popover__item-icon': {
+        "& .ce-popover__item-icon": {
           color: theme.palette.saleor.generic.verydark,
         },
-        '& .ce-toolbox.ce-toolbox--opened': {
+        "& .ce-toolbox.ce-toolbox--opened": {
           left: 16,
         },
-        '& .codex-editor__redactor': {
+        "& .codex-editor__redactor": {
           marginRight: `${theme.spacing(4)}px !important`,
-          paddingBottom: '0 !important',
+          paddingBottom: "0 !important",
         },
-        '& a': {
+        "& a": {
           color: theme.palette.primary.light,
         },
-        '&:not($rootDisabled):hover': {
+        "&:not($rootDisabled):hover": {
           borderColor: isDarkMode ? theme.palette.saleor.main[2] : theme.palette.saleor.main[4],
         },
       },
@@ -107,14 +107,14 @@ const useStyles = makeStyles(
         padding: theme.spacing(3, 2),
         paddingBottom: theme.spacing(),
         paddingLeft: 10,
-        position: 'relative',
-        transition: theme.transitions.duration.short + 'ms',
+        position: "relative",
+        transition: theme.transitions.duration.short + "ms",
       },
       rootActive: {
         borderColor: theme.palette.saleor.main[1],
       },
       rootDisabled: {
-        ...theme.overrides.MuiOutlinedInput.root['&$disabled']['& fieldset'],
+        ...theme.overrides.MuiOutlinedInput.root["&$disabled"]["& fieldset"],
         background: theme.palette.background.default,
         color: theme.palette.saleor.main[4],
       },
@@ -126,7 +126,7 @@ const useStyles = makeStyles(
       },
     };
   },
-  { name: 'RichTextEditor' },
+  { name: "RichTextEditor" },
 );
 
 export default useStyles;

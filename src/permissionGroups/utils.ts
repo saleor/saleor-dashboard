@@ -1,14 +1,18 @@
-import { PermissionFragment, PermissionGroupDetailsFragment, UserFragment } from '@dashboard/graphql';
-import difference from 'lodash/difference';
+import {
+  PermissionFragment,
+  PermissionGroupDetailsFragment,
+  UserFragment,
+} from "@dashboard/graphql";
+import difference from "lodash/difference";
 
-import { PermissionGroupDetailsPageFormData } from './components/PermissionGroupDetailsPage';
+import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
 
 /**
  * Will return true if group has all permissions available in shop assigned.
  */
 export const isGroupFullAccess = (
   permissionGroup: PermissionGroupDetailsFragment,
-  shopPermissions: Array<Omit<PermissionFragment, '__typename'>>,
+  shopPermissions: Array<Omit<PermissionFragment, "__typename">>,
 ) => {
   const assignedCodes = extractPermissionCodes(permissionGroup);
 
@@ -65,7 +69,10 @@ export const usersDiff = (
 /**
  * Permissions are exceeded when group has permission which is not handled by user
  */
-export const arePermissionsExceeded = (permissionGroup: PermissionGroupDetailsFragment, user: UserFragment) => {
+export const arePermissionsExceeded = (
+  permissionGroup: PermissionGroupDetailsFragment,
+  user: UserFragment,
+) => {
   const groupPermissions = extractPermissionCodes(permissionGroup);
   const userPermissions = user.userPermissions.map(p => p.code);
   return difference(groupPermissions, userPermissions).length > 0;

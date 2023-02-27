@@ -1,16 +1,25 @@
-import { useTaxConfigurationsListQuery, useTaxConfigurationUpdateMutation } from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import useShop from '@dashboard/hooks/useShop';
-import { commonMessages } from '@dashboard/intl';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import {
+  useTaxConfigurationsListQuery,
+  useTaxConfigurationUpdateMutation,
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import TaxChannelsPage from '../pages/TaxChannelsPage';
-import { taxConfigurationListUrl, TaxesUrlDialog, TaxesUrlQueryParams, TaxTab, taxTabPath } from '../urls';
-import { useTaxUrlRedirect } from '../utils/useTaxUrlRedirect';
+import TaxChannelsPage from "../pages/TaxChannelsPage";
+import {
+  taxConfigurationListUrl,
+  TaxesUrlDialog,
+  TaxesUrlQueryParams,
+  TaxTab,
+  taxTabPath,
+} from "../urls";
+import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
 
 interface TaxChannelsListProps {
   id: string | undefined;
@@ -32,7 +41,7 @@ export const TaxChannelsList: React.FC<TaxChannelsListProps> = ({ id, params }) 
         const errors = data?.taxConfigurationUpdate?.errors;
         if (errors.length === 0) {
           notify({
-            status: 'success',
+            status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
           });
         }
@@ -58,7 +67,7 @@ export const TaxChannelsList: React.FC<TaxChannelsListProps> = ({ id, params }) 
     navigate,
   });
 
-  if (id === 'undefined' && taxConfigurations) {
+  if (id === "undefined" && taxConfigurations) {
     return null;
   }
 
@@ -68,7 +77,7 @@ export const TaxChannelsList: React.FC<TaxChannelsListProps> = ({ id, params }) 
       selectedConfigurationId={id!}
       handleTabChange={handleTabChange}
       allCountries={shop?.countries}
-      isDialogOpen={params?.action === 'add-country'}
+      isDialogOpen={params?.action === "add-country"}
       openDialog={openDialog}
       closeDialog={closeDialog}
       onSubmit={input =>

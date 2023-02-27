@@ -1,15 +1,15 @@
-import { channelsList } from '@dashboard/channels/fixtures';
-import { createCollectionChannels } from '@dashboard/channels/utils';
-import { CollectionErrorCode } from '@dashboard/graphql';
-import Decorator from '@dashboard/storybook/Decorator';
-import { storiesOf } from '@storybook/react';
-import React from 'react';
+import { channelsList } from "@dashboard/channels/fixtures";
+import { createCollectionChannels } from "@dashboard/channels/utils";
+import { CollectionErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
-import CollectionCreatePage, { CollectionCreatePageProps } from './CollectionCreatePage';
+import CollectionCreatePage, { CollectionCreatePageProps } from "./CollectionCreatePage";
 
 const channels = createCollectionChannels(channelsList);
 
-const props: Omit<CollectionCreatePageProps, 'classes'> = {
+const props: Omit<CollectionCreatePageProps, "classes"> = {
   channelsCount: 2,
   channelsErrors: [],
   currentChannels: channels,
@@ -18,29 +18,29 @@ const props: Omit<CollectionCreatePageProps, 'classes'> = {
   onChannelsChange: () => undefined,
   onSubmit: () => undefined,
   openChannelsModal: () => undefined,
-  saveButtonBarState: 'default',
+  saveButtonBarState: "default",
 };
 
-storiesOf('Collections / Create collection', module)
+storiesOf("Collections / Create collection", module)
   .addDecorator(Decorator)
-  .add('default', () => <CollectionCreatePage {...props} />)
-  .add('loading', () => <CollectionCreatePage {...props} disabled={true} />)
-  .add('form errors', () => (
+  .add("default", () => <CollectionCreatePage {...props} />)
+  .add("loading", () => <CollectionCreatePage {...props} disabled={true} />)
+  .add("form errors", () => (
     <CollectionCreatePage
       {...props}
       errors={[
         {
           code: CollectionErrorCode.REQUIRED,
-          field: 'name',
-          message: 'Collection field name required',
+          field: "name",
+          message: "Collection field name required",
         },
         {
           code: CollectionErrorCode.REQUIRED,
-          field: 'description',
-          message: 'Collection field description required',
+          field: "description",
+          message: "Collection field description required",
         },
       ].map(err => ({
-        __typename: 'CollectionError',
+        __typename: "CollectionError",
         ...err,
       }))}
     />

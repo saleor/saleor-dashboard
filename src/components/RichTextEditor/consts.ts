@@ -1,13 +1,13 @@
-import strikethroughIcon from '@dashboard/icons/StrikethroughIcon';
-import { ToolConstructable, ToolSettings } from '@editorjs/editorjs';
-import Embed from '@editorjs/embed';
-import Header from '@editorjs/header';
-import List from '@editorjs/list';
-import Paragraph from '@editorjs/paragraph';
-import Quote from '@editorjs/quote';
-import createGenericInlineTool from 'editorjs-inline-tool';
+import strikethroughIcon from "@dashboard/icons/StrikethroughIcon";
+import { ToolConstructable, ToolSettings } from "@editorjs/editorjs";
+import Embed from "@editorjs/embed";
+import Header from "@editorjs/header";
+import List from "@editorjs/list";
+import Paragraph from "@editorjs/paragraph";
+import Quote from "@editorjs/quote";
+import createGenericInlineTool from "editorjs-inline-tool";
 
-const inlineToolbar = ['link', 'bold', 'italic', 'strikethrough'];
+const inlineToolbar = ["link", "bold", "italic", "strikethrough"];
 
 export const tools: Record<string, ToolConstructable | ToolSettings> = {
   embed: Embed,
@@ -35,8 +35,8 @@ export const tools: Record<string, ToolConstructable | ToolSettings> = {
     sanitize: {
       s: {},
     },
-    shortcut: 'CMD+S',
-    tagName: 's',
+    shortcut: "CMD+S",
+    tagName: "s",
     toolboxIcon: strikethroughIcon,
   }),
 };

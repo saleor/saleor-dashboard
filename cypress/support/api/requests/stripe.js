@@ -4,12 +4,7 @@ import { getValueWithDefault } from "./utils/Utils";
 const stripeAuthBearer = `Bearer ${Cypress.env("STRIPE_SECRET_KEY")}`;
 const stripePublicKey = Cypress.env("STRIPE_PUBLIC_KEY");
 
-export function getPaymentMethodStripeId({
-  cardNumber,
-  cvc,
-  expMonth,
-  expYear,
-}) {
+export function getPaymentMethodStripeId({ cardNumber, cvc, expMonth, expYear }) {
   return cy.request({
     url: urlList.stripeApiPaymentMethods,
     method: "POST",
@@ -57,18 +52,10 @@ export function confirmThreeDSecure(nextActionUrl, withSuccess = true) {
     .then(resp => {
       const { body } = new DOMParser().parseFromString(resp.body, "text/html");
       const formUrl = body.querySelector('[id="form"]').getAttribute("action");
-      const source = body
-        .querySelector('[name="source_slug"]')
-        .getAttribute("value");
-      returnUrl = body
-        .querySelector('[name="return_url"]')
-        .getAttribute("value");
-      const amount = body
-        .querySelector('[name="amount"]')
-        .getAttribute("value");
-      const currency = body
-        .querySelector('[name="currency"]')
-        .getAttribute("value");
+      const source = body.querySelector('[name="source_slug"]').getAttribute("value");
+      returnUrl = body.querySelector('[name="return_url"]').getAttribute("value");
+      const amount = body.querySelector('[name="amount"]').getAttribute("value");
+      const currency = body.querySelector('[name="currency"]').getAttribute("value");
       const usage = body.querySelector('[name="usage"]').getAttribute("value");
 
       const url = `${formUrl}?source_slug=${source}&livemode=false&type=three_d_secure&pass_through=&return_url=${returnUrl}&amount=${amount}&currency=
@@ -89,9 +76,7 @@ export function confirmThreeDSecure(nextActionUrl, withSuccess = true) {
     .then(resp => {
       const { body } = new DOMParser().parseFromString(resp.body, "text/html");
       const formUrl = body.querySelector('[id="form"]').getAttribute("action");
-      const merchant = body
-        .querySelector('[name="merchant"]')
-        .getAttribute("value");
+      const merchant = body.querySelector('[name="merchant"]').getAttribute("value");
       cy.request({
         url: formUrl,
         method: "POST",

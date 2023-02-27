@@ -1,6 +1,6 @@
-import { useContext } from 'react';
+import { useContext } from "react";
 
-import { GiftCardDetailsContext } from '../../providers/GiftCardDetailsProvider';
+import { GiftCardDetailsContext } from "../../providers/GiftCardDetailsProvider";
 
 const useGiftCardHistoryEvents = () => {
   const { giftCard } = useContext(GiftCardDetailsContext);

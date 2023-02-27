@@ -24,11 +24,7 @@ describe("Products displayed in listings", () => {
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(
-        ({
-          attribute: attributeResp,
-          productType: productTypeResp,
-          category: categoryResp,
-        }) => {
+        ({ attribute: attributeResp, productType: productTypeResp, category: categoryResp }) => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
@@ -47,10 +43,7 @@ describe("Products displayed in listings", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(
@@ -76,10 +69,7 @@ describe("Products displayed in listings", () => {
           searchInShop(productName);
         })
         .then(resp => {
-          const isProductVisible = isProductVisibleInSearchResult(
-            resp,
-            productName,
-          );
+          const isProductVisible = isProductVisibleInSearchResult(resp, productName);
           expect(isProductVisible).to.be.eq(true);
         });
     },
@@ -106,10 +96,7 @@ describe("Products displayed in listings", () => {
           updateProductVisibleInListings(productUrl);
 
           searchInShop(productName).then(resp => {
-            const isProductVisible = isProductVisibleInSearchResult(
-              resp,
-              productName,
-            );
+            const isProductVisible = isProductVisibleInSearchResult(resp, productName);
             expect(isProductVisible).to.be.eq(false);
           });
           cy.loginInShop();
@@ -118,10 +105,7 @@ describe("Products displayed in listings", () => {
           searchInShop(productName);
         })
         .then(resp => {
-          const isProductVisible = isProductVisibleInSearchResult(
-            resp,
-            productName,
-          );
+          const isProductVisible = isProductVisibleInSearchResult(resp, productName);
           expect(isProductVisible).to.be.eq(true);
         });
     },

@@ -1,15 +1,23 @@
-import { FieldType, FilterFieldBaseProps } from '@dashboard/components/Filter';
-import Arrow from '@dashboard/components/Filter/Arrow';
-import { splitDateTime } from '@dashboard/misc';
-import { TextField } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FieldType, FilterFieldBaseProps } from "@dashboard/components/Filter";
+import Arrow from "@dashboard/components/Filter/Arrow";
+import { splitDateTime } from "@dashboard/misc";
+import { TextField } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { filterTestingContext, getDateFilterValue, getDateTimeFilterValue, useCommonStyles } from './utils';
+import {
+  filterTestingContext,
+  getDateFilterValue,
+  getDateTimeFilterValue,
+  useCommonStyles,
+} from "./utils";
 
 type FilterDateTimeFieldProps = FilterFieldBaseProps<string, FieldType.dateTime | FieldType.date>;
 
-export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({ filter, onFilterPropertyChange }) => {
+export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({
+  filter,
+  onFilterPropertyChange,
+}) => {
   const classes = useCommonStyles({});
   const isDateTime = filter.type === FieldType.dateTime;
   const isMultiple = filter.multiple;
@@ -22,7 +30,7 @@ export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({ filter
           value,
         },
       },
-      type: 'set-property',
+      type: "set-property",
     });
 
   return (
@@ -32,15 +40,15 @@ export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({ filter
           <Arrow className={classes.arrow} />
         </div>
         <TextField
-          {...(isMultiple && { 'data-test-range-type': 'min' })}
+          {...(isMultiple && { "data-test-range-type": "min" })}
           data-test-id={filterTestingContext + filter.name}
           fullWidth
-          name={filter.name + (isMultiple ? '_min' : '')}
+          name={filter.name + (isMultiple ? "_min" : "")}
           InputProps={{
             classes: {
               input: classes.input,
             },
-            type: 'date',
+            type: "date",
           }}
           value={splitDateTime(filter.value[0]).date}
           onChange={event => {
@@ -53,10 +61,10 @@ export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({ filter
             data-test-id={filterTestingContext + filter.name}
             data-test-range-type="time_min"
             className={classes.inputTime}
-            name={filter.name + (isMultiple ? '_time_min' : '')}
+            name={filter.name + (isMultiple ? "_time_min" : "")}
             InputProps={{
               classes: { input: classes.input },
-              type: 'time',
+              type: "time",
             }}
             value={splitDateTime(filter.value[0]).time}
             onChange={event => {
@@ -71,7 +79,11 @@ export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({ filter
           <div className={classes.inputRange}>
             <div className={classes.spacer} />
             <span className={classes.andLabel}>
-              <FormattedMessage id="34F7Jk" defaultMessage="and" description="filter range separator" />
+              <FormattedMessage
+                id="34F7Jk"
+                defaultMessage="and"
+                description="filter range separator"
+              />
             </span>
           </div>
           <div className={classes.inputRange}>
@@ -80,16 +92,19 @@ export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({ filter
               data-test-id={filterTestingContext + filter.name}
               data-test-range-type="max"
               fullWidth
-              name={filter.name + '_max'}
+              name={filter.name + "_max"}
               InputProps={{
                 classes: {
                   input: classes.input,
                 },
-                type: 'date',
+                type: "date",
               }}
               value={splitDateTime(filter.value[1]).date}
               onChange={event =>
-                handleChange([filter.value[0], getDateFilterValue(event.target.value, filter.value[1], isDateTime)])
+                handleChange([
+                  filter.value[0],
+                  getDateFilterValue(event.target.value, filter.value[1], isDateTime),
+                ])
               }
             />
             {isDateTime && (
@@ -97,14 +112,17 @@ export const FilterDateTimeField: React.FC<FilterDateTimeFieldProps> = ({ filter
                 data-test-id={filterTestingContext + filter.name}
                 className={classes.inputTime}
                 data-test-range-type="time_max"
-                name={filter.name + '_time_max'}
+                name={filter.name + "_time_max"}
                 InputProps={{
                   classes: { input: classes.input },
-                  type: 'time',
+                  type: "time",
                 }}
                 value={splitDateTime(filter.value[1]).time}
                 onChange={event =>
-                  handleChange([filter.value[0], getDateTimeFilterValue(filter.value[1], event.target.value)])
+                  handleChange([
+                    filter.value[0],
+                    getDateTimeFilterValue(filter.value[1], event.target.value),
+                  ])
                 }
               />
             )}

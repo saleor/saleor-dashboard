@@ -1,25 +1,29 @@
-import CardSpacer from '@dashboard/components/CardSpacer';
-import CardTitle from '@dashboard/components/CardTitle';
-import { FormSpacer } from '@dashboard/components/FormSpacer';
-import Hr from '@dashboard/components/Hr';
-import Link from '@dashboard/components/Link';
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
+import Hr from "@dashboard/components/Hr";
+import Link from "@dashboard/components/Link";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType,
-} from '@dashboard/components/MultiAutocompleteSelectField';
+} from "@dashboard/components/MultiAutocompleteSelectField";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
-} from '@dashboard/components/SingleAutocompleteSelectField';
-import { ProductChannelListingErrorFragment, ProductErrorCode, ProductErrorFragment } from '@dashboard/graphql';
-import { ChangeEvent } from '@dashboard/hooks/useForm';
-import { commonMessages } from '@dashboard/intl';
-import { maybe } from '@dashboard/misc';
-import { productTypeUrl } from '@dashboard/productTypes/urls';
-import { FetchMoreProps } from '@dashboard/types';
-import { getFormErrors, getProductErrorMessage } from '@dashboard/utils/errors';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@dashboard/components/SingleAutocompleteSelectField";
+import {
+  ProductChannelListingErrorFragment,
+  ProductErrorCode,
+  ProductErrorFragment,
+} from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
+import { maybe } from "@dashboard/misc";
+import { productTypeUrl } from "@dashboard/productTypes/urls";
+import { FetchMoreProps } from "@dashboard/types";
+import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface ProductType {
   hasVariants: boolean;
@@ -30,7 +34,7 @@ interface ProductType {
 const useStyles = makeStyles(
   theme => ({
     card: {
-      overflow: 'visible',
+      overflow: "visible",
     },
     cardSubtitle: {
       fontSize: theme.typography.body1.fontSize,
@@ -40,7 +44,7 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(0.5),
     },
   }),
-  { name: 'ProductOrganization' },
+  { name: "ProductOrganization" },
 );
 
 interface ProductOrganizationProps {
@@ -97,17 +101,22 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const formErrors = getFormErrors(['productType', 'category', 'collections', 'isPublished'], errors);
+  const formErrors = getFormErrors(
+    ["productType", "category", "collections", "isPublished"],
+    errors,
+  );
   const noCategoryError =
-    formErrors.isPublished?.code === ProductErrorCode.PRODUCT_WITHOUT_CATEGORY ? formErrors.isPublished : null;
+    formErrors.isPublished?.code === ProductErrorCode.PRODUCT_WITHOUT_CATEGORY
+      ? formErrors.isPublished
+      : null;
 
   return (
     <Card className={classes.card}>
       <CardTitle
         title={intl.formatMessage({
-          id: 'JjeZEG',
-          defaultMessage: 'Organize Product',
-          description: 'section header',
+          id: "JjeZEG",
+          defaultMessage: "Organize Product",
+          description: "section header",
         })}
       />
       <CardContent>
@@ -119,8 +128,8 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
             name="productType"
             disabled={disabled}
             label={intl.formatMessage({
-              id: 'anK7jD',
-              defaultMessage: 'Product Type',
+              id: "anK7jD",
+              defaultMessage: "Product Type",
             })}
             choices={productTypes}
             value={data.productType?.id}
@@ -135,8 +144,8 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
               <FormattedMessage id="anK7jD" defaultMessage="Product Type" />
             </Typography>
             <Typography>
-              <Link href={productTypeUrl(productType?.id) ?? ''} disabled={!productType?.id}>
-                {productType?.name ?? '...'}
+              <Link href={productTypeUrl(productType?.id) ?? ""} disabled={!productType?.id}>
+                {productType?.name ?? "..."}
               </Link>
             </Typography>
             <CardSpacer />
@@ -149,7 +158,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
                   productType.hasVariants
                     ? intl.formatMessage(commonMessages.yes)
                     : intl.formatMessage(commonMessages.no),
-                '...',
+                "...",
               )}
             </Typography>
           </>
@@ -163,8 +172,8 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           helperText={getProductErrorMessage(formErrors.category || noCategoryError, intl)}
           disabled={disabled}
           label={intl.formatMessage({
-            id: 'ccXLVi',
-            defaultMessage: 'Category',
+            id: "ccXLVi",
+            defaultMessage: "Category",
           })}
           choices={disabled ? [] : categories}
           name="category"
@@ -181,8 +190,8 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           displayValues={collectionsInputDisplayValue}
           error={!!formErrors.collections}
           label={intl.formatMessage({
-            id: 'ulh3kf',
-            defaultMessage: 'Collections',
+            id: "ulh3kf",
+            defaultMessage: "Collections",
           })}
           choices={disabled ? [] : collections}
           name="collections"
@@ -190,9 +199,9 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           helperText={
             getProductErrorMessage(formErrors.collections, intl) ||
             intl.formatMessage({
-              id: 'v+Pkm+',
-              defaultMessage: '*Optional. Adding product to collection helps users find it.',
-              description: 'field is optional',
+              id: "v+Pkm+",
+              defaultMessage: "*Optional. Adding product to collection helps users find it.",
+              description: "field is optional",
             })
           }
           onChange={onCollectionChange}
@@ -205,5 +214,5 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
     </Card>
   );
 };
-ProductOrganization.displayName = 'ProductOrganization';
+ProductOrganization.displayName = "ProductOrganization";
 export default ProductOrganization;

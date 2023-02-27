@@ -1,11 +1,11 @@
-import { IndicatorOutlined, Tooltip, TooltipMountWrapper } from '@saleor/macaw-ui';
-import React from 'react';
+import { IndicatorOutlined, Tooltip, TooltipMountWrapper } from "@saleor/macaw-ui";
+import React from "react";
 
-import OrderAlerts from '../OrderAlerts';
+import OrderAlerts from "../OrderAlerts";
 
 interface TableLineAlertProps {
   alerts?: string[];
-  variant: 'warning' | 'error';
+  variant: "warning" | "error";
 }
 
 const TableLineAlert: React.FC<TableLineAlertProps> = ({ alerts, variant }) => {

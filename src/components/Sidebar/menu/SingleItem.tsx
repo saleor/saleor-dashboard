@@ -1,10 +1,10 @@
-import { extensionMountPoints, useExtensions } from '@dashboard/apps/useExtensions';
-import { Box, List, sprinkles, Text } from '@saleor/macaw-ui/next';
-import React from 'react';
-import { Link } from 'react-router-dom';
+import { extensionMountPoints, useExtensions } from "@dashboard/apps/useExtensions";
+import { Box, List, sprinkles, Text } from "@saleor/macaw-ui/next";
+import React from "react";
+import { Link } from "react-router-dom";
 
-import { SidebarMenuItem } from './types';
-import { getMenuItemExtension, isMenuActive } from './utils';
+import { SidebarMenuItem } from "./types";
+import { getMenuItemExtension, isMenuActive } from "./utils";
 
 interface Props {
   menuItem: SidebarMenuItem;
@@ -33,8 +33,8 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
         className={sprinkles({
           paddingY: 4,
           paddingX: 5,
-          display: 'block',
-          width: '100%',
+          display: "block",
+          width: "100%",
         })}
       >
         <Box display="flex" alignItems="center" gap={6}>

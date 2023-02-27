@@ -1,2 +1,2 @@
-export * from './AppsSkeleton';
-export { default } from './AppsSkeleton';
+export * from "./AppsSkeleton";
+export { default } from "./AppsSkeleton";

@@ -1,6 +1,6 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import NotFoundPage from '@dashboard/components/NotFoundPage';
-import { WindowTitle } from '@dashboard/components/WindowTitle';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CategoryBulkDeleteMutation,
   CategoryDeleteMutation,
@@ -13,28 +13,33 @@ import {
   useProductBulkDeleteMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from '@dashboard/graphql';
-import useBulkActions from '@dashboard/hooks/useBulkActions';
-import useLocalPaginator, { useSectionLocalPaginationState } from '@dashboard/hooks/useLocalPaginator';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { PaginatorContext } from '@dashboard/hooks/usePaginator';
-import { commonMessages, errorMessages } from '@dashboard/intl';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import createMetadataUpdateHandler from '@dashboard/utils/handlers/metadataUpdateHandler';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import { getParsedDataForJsonStringField } from '@dashboard/utils/richText/misc';
-import { DialogContentText } from '@material-ui/core';
-import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
-import React, { useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useLocalPaginator, {
+  useSectionLocalPaginationState,
+} from "@dashboard/hooks/useLocalPaginator";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import { commonMessages, errorMessages } from "@dashboard/intl";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import { DialogContentText } from "@material-ui/core";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import React, { useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { PAGINATE_BY } from '../../config';
-import { extractMutationErrors, maybe } from '../../misc';
-import { productAddUrl } from '../../products/urls';
-import { CategoryPageTab, CategoryUpdatePage } from '../components/CategoryUpdatePage/CategoryUpdatePage';
-import { CategoryUpdateData } from '../components/CategoryUpdatePage/form';
-import { categoryListUrl, categoryUrl, CategoryUrlDialog, CategoryUrlQueryParams } from '../urls';
+import { PAGINATE_BY } from "../../config";
+import { extractMutationErrors, maybe } from "../../misc";
+import { productAddUrl } from "../../products/urls";
+import {
+  CategoryPageTab,
+  CategoryUpdatePage,
+} from "../components/CategoryUpdatePage/CategoryUpdatePage";
+import { CategoryUpdateData } from "../components/CategoryUpdatePage/form";
+import { categoryListUrl, categoryUrl, CategoryUrlDialog, CategoryUrlQueryParams } from "../urls";
 
 export interface CategoryDetailsProps {
   params: CategoryUrlQueryParams;
@@ -42,7 +47,9 @@ export interface CategoryDetailsProps {
 }
 
 export function getActiveTab(tabName: string): CategoryPageTab {
-  return tabName === CategoryPageTab.products ? CategoryPageTab.products : CategoryPageTab.categories;
+  return tabName === CategoryPageTab.products
+    ? CategoryPageTab.products
+    : CategoryPageTab.categories;
 }
 
 export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) => {
@@ -54,7 +61,10 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
   const [activeTab, setActiveTab] = useState<CategoryPageTab>(CategoryPageTab.categories);
-  const [paginationState, setPaginationState] = useSectionLocalPaginationState(PAGINATE_BY, activeTab);
+  const [paginationState, setPaginationState] = useSectionLocalPaginationState(
+    PAGINATE_BY,
+    activeTab,
+  );
   const paginate = useLocalPaginator(setPaginationState);
   const changeTab = (tab: CategoryPageTab) => {
     reset();
@@ -71,10 +81,10 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
   const handleCategoryDelete = (data: CategoryDeleteMutation) => {
     if (data.categoryDelete.errors.length === 0) {
       notify({
-        status: 'success',
+        status: "success",
         text: intl.formatMessage({
-          id: 'HvJPcU',
-          defaultMessage: 'Category deleted',
+          id: "HvJPcU",
+          defaultMessage: "Category deleted",
         }),
       });
       navigate(categoryListUrl());
@@ -88,18 +98,18 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
   const handleCategoryUpdate = (data: CategoryUpdateMutation) => {
     if (data.categoryUpdate.errors.length > 0) {
       const backgroundImageError = data.categoryUpdate.errors.find(
-        error => error.field === ('backgroundImage' as keyof CategoryInput),
+        error => error.field === ("backgroundImage" as keyof CategoryInput),
       );
       if (backgroundImageError) {
         notify({
-          status: 'error',
+          status: "error",
           title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
           text: intl.formatMessage(errorMessages.imageUploadErrorText),
         });
       }
     } else {
       notify({
-        status: 'success',
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
     }
@@ -113,7 +123,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
     if (data.categoryBulkDelete.errors.length === 0) {
       closeModal();
       notify({
-        status: 'success',
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
       reset();
@@ -129,7 +139,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
       if (data.productBulkDelete.errors.length === 0) {
         closeModal();
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         refetch();
@@ -138,11 +148,10 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
     },
   });
 
-  const [openModal, closeModal] = createDialogActionHandlers<CategoryUrlDialog, CategoryUrlQueryParams>(
-    navigate,
-    params => categoryUrl(id, params),
-    params,
-  );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    CategoryUrlDialog,
+    CategoryUrlQueryParams
+  >(navigate, params => categoryUrl(id, params), params);
 
   const { pageInfo, ...paginationFunctions } = paginate(
     activeTab === CategoryPageTab.categories
@@ -192,7 +201,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
         disabled={loading}
         errors={updateResult.data?.categoryUpdate.errors || []}
         addProductHref={productAddUrl()}
-        onDelete={() => openModal('delete')}
+        onDelete={() => openModal("delete")}
         onImageDelete={() =>
           updateCategory({
             variables: {
@@ -223,7 +232,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
             variant="secondary"
             color="primary"
             onClick={() =>
-              openModal('delete-categories', {
+              openModal("delete-categories", {
                 ids: listElements,
               })
             }
@@ -236,7 +245,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
             data-test-id="delete-icon"
             color="primary"
             onClick={() =>
-              openModal('delete-products', {
+              openModal("delete-products", {
                 ids: listElements,
               })
             }
@@ -253,11 +262,11 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
         confirmButtonState={deleteResult.status}
         onClose={closeModal}
         onConfirm={() => deleteCategory({ variables: { id } })}
-        open={params.action === 'delete'}
+        open={params.action === "delete"}
         title={intl.formatMessage({
-          id: 'xo5UIb',
-          defaultMessage: 'Delete category',
-          description: 'dialog title',
+          id: "xo5UIb",
+          defaultMessage: "Delete category",
+          description: "dialog title",
         })}
         variant="delete"
       >
@@ -266,7 +275,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
             id="xRkj2h"
             defaultMessage="Are you sure you want to delete {categoryName}?"
             values={{
-              categoryName: <strong>{maybe(() => data.category.name, '...')}</strong>,
+              categoryName: <strong>{maybe(() => data.category.name, "...")}</strong>,
             }}
           />
         </DialogContentText>
@@ -278,7 +287,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
         </DialogContentText>
       </ActionDialog>
       <ActionDialog
-        open={params.action === 'delete-categories' && maybe(() => params.ids.length > 0)}
+        open={params.action === "delete-categories" && maybe(() => params.ids.length > 0)}
         confirmButtonState={categoryBulkDeleteOpts.status}
         onClose={closeModal}
         onConfirm={() =>
@@ -287,9 +296,9 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
           }).then(() => refetch())
         }
         title={intl.formatMessage({
-          id: 'sG0w22',
-          defaultMessage: 'Delete categories',
-          description: 'dialog title',
+          id: "sG0w22",
+          defaultMessage: "Delete categories",
+          description: "dialog title",
         })}
         variant="delete"
       >
@@ -311,7 +320,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
         </DialogContentText>
       </ActionDialog>
       <ActionDialog
-        open={params.action === 'delete-products'}
+        open={params.action === "delete-products"}
         confirmButtonState={productBulkDeleteOpts.status}
         onClose={closeModal}
         onConfirm={() =>
@@ -320,9 +329,9 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({ id, params }) 
           }).then(() => refetch())
         }
         title={intl.formatMessage({
-          id: 'KCjd1o',
-          defaultMessage: 'Delete products',
-          description: 'dialog title',
+          id: "KCjd1o",
+          defaultMessage: "Delete products",
+          description: "dialog title",
         })}
         variant="delete"
       >

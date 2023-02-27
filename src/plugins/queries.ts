@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const pluginsList = gql`
   query Plugins(
@@ -9,7 +9,14 @@ export const pluginsList = gql`
     $filter: PluginFilterInput
     $sort: PluginSortingInput
   ) {
-    plugins(before: $before, after: $after, first: $first, last: $last, filter: $filter, sortBy: $sort) {
+    plugins(
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+      filter: $filter
+      sortBy: $sort
+    ) {
       edges {
         node {
           ...PluginBase

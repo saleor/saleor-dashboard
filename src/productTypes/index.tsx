@@ -1,11 +1,11 @@
-import { sectionNames } from '@dashboard/intl';
-import { asSortParams } from '@dashboard/utils/sort';
-import { parse as parseQs } from 'qs';
-import React from 'react';
-import { useIntl } from 'react-intl';
-import { Route, RouteComponentProps, Switch } from 'react-router-dom';
+import { sectionNames } from "@dashboard/intl";
+import { asSortParams } from "@dashboard/utils/sort";
+import { parse as parseQs } from "qs";
+import React from "react";
+import { useIntl } from "react-intl";
+import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { WindowTitle } from '../components/WindowTitle';
+import { WindowTitle } from "../components/WindowTitle";
 import {
   productTypeAddPath,
   ProductTypeAddUrlQueryParams,
@@ -14,10 +14,10 @@ import {
   ProductTypeListUrlSortField,
   productTypePath,
   ProductTypeUrlQueryParams,
-} from './urls';
-import ProductTypeCreateComponent from './views/ProductTypeCreate';
-import ProductTypeListComponent from './views/ProductTypeList';
-import ProductTypeUpdateComponent from './views/ProductTypeUpdate';
+} from "./urls";
+import ProductTypeCreateComponent from "./views/ProductTypeCreate";
+import ProductTypeListComponent from "./views/ProductTypeList";
+import ProductTypeUpdateComponent from "./views/ProductTypeUpdate";
 
 const ProductTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
@@ -28,7 +28,9 @@ const ProductTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 interface ProductTypeCreateRouteParams {
   id: string;
 }
-const ProductTypeCreate: React.FC<RouteComponentProps<ProductTypeCreateRouteParams>> = ({ location }) => {
+const ProductTypeCreate: React.FC<RouteComponentProps<ProductTypeCreateRouteParams>> = ({
+  location,
+}) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductTypeAddUrlQueryParams = qs;
 
@@ -38,7 +40,9 @@ const ProductTypeCreate: React.FC<RouteComponentProps<ProductTypeCreateRoutePara
 interface ProductTypeUpdateRouteParams {
   id: string;
 }
-const ProductTypeUpdate: React.FC<RouteComponentProps<ProductTypeUpdateRouteParams>> = ({ match }) => {
+const ProductTypeUpdate: React.FC<RouteComponentProps<ProductTypeUpdateRouteParams>> = ({
+  match,
+}) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductTypeUrlQueryParams = qs;
 
@@ -54,10 +58,10 @@ export const ProductTypeRouter: React.FC = () => {
       <Switch>
         <Route exact path={productTypeListPath} component={ProductTypeList} />
         <Route exact path={productTypeAddPath} component={ProductTypeCreate} />
-        <Route path={productTypePath(':id')} component={ProductTypeUpdate} />
+        <Route path={productTypePath(":id")} component={ProductTypeUpdate} />
       </Switch>
     </>
   );
 };
-ProductTypeRouter.displayName = 'ProductTypeRouter';
+ProductTypeRouter.displayName = "ProductTypeRouter";
 export default ProductTypeRouter;

@@ -25,11 +25,7 @@ describe("Published products", () => {
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(
-        ({
-          attribute: attributeResp,
-          productType: productTypeResp,
-          category: categoryResp,
-        }) => {
+        ({ attribute: attributeResp, productType: productTypeResp, category: categoryResp }) => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
@@ -48,40 +44,33 @@ describe("Published products", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
-  it(
-    "should update product to published",
-    { tags: ["@products", "@allEnv", "@stable"] },
-    () => {
-      const productName = `${startsWith}${faker.datatype.number()}`;
+  it("should update product to published", { tags: ["@products", "@allEnv", "@stable"] }, () => {
+    const productName = `${startsWith}${faker.datatype.number()}`;
 
-      productsUtils
-        .createProductInChannel({
-          name: productName,
-          channelId: defaultChannel.id,
-          productTypeId: productType.id,
-          attributeId: attribute.id,
-          categoryId: category.id,
-          isPublished: false,
-          isAvailableForPurchase: false,
-        })
-        .then(({ product: productResp }) => {
-          const product = productResp;
-          const productUrl = productDetailsUrl(product.id);
-          updateProductPublish(productUrl, true);
-          getProductDetails(product.id, defaultChannel.slug);
-        })
-        .then(resp => {
-          const isVisible = isProductVisible(resp, productName);
-          expect(isVisible).to.be.eq(true);
-        });
-    },
-  );
+    productsUtils
+      .createProductInChannel({
+        name: productName,
+        channelId: defaultChannel.id,
+        productTypeId: productType.id,
+        attributeId: attribute.id,
+        categoryId: category.id,
+        isPublished: false,
+        isAvailableForPurchase: false,
+      })
+      .then(({ product: productResp }) => {
+        const product = productResp;
+        const productUrl = productDetailsUrl(product.id);
+        updateProductPublish(productUrl, true);
+        getProductDetails(product.id, defaultChannel.slug);
+      })
+      .then(resp => {
+        const isVisible = isProductVisible(resp, productName);
+        expect(isVisible).to.be.eq(true);
+      });
+  });
 
   it(
     "should update product to not published",

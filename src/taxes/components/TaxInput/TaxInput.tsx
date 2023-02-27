@@ -1,9 +1,9 @@
-import { findPriceSeparator } from '@dashboard/components/PriceField/utils';
-import { FormChange } from '@dashboard/hooks/useForm';
-import { InputAdornment, TextField, TextFieldProps } from '@material-ui/core';
-import React from 'react';
+import { findPriceSeparator } from "@dashboard/components/PriceField/utils";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { InputAdornment, TextField, TextFieldProps } from "@material-ui/core";
+import React from "react";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 interface TaxInputProps {
   placeholder?: string;
@@ -31,10 +31,10 @@ export const TaxInput: React.FC<TaxInputProps> = ({ placeholder, value, change }
       },
     });
   };
-  const handleKeyDown: TextFieldProps['onKeyDown'] = event => {
+  const handleKeyDown: TextFieldProps["onKeyDown"] = event => {
     switch (event.key.toLowerCase()) {
-      case 'e':
-      case '-': {
+      case "e":
+      case "-": {
         event.preventDefault();
         break;
       }

@@ -45,11 +45,7 @@ describe("Products available in listings", () => {
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(
-        ({
-          attribute: attributeResp,
-          productType: productTypeResp,
-          category: categoryResp,
-        }) => {
+        ({ attribute: attributeResp, productType: productTypeResp, category: categoryResp }) => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
@@ -65,10 +61,7 @@ describe("Products available in listings", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(

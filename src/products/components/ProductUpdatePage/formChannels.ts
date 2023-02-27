@@ -1,13 +1,17 @@
-import { ChannelOpts } from '@dashboard/components/ChannelsAvailabilityCard/types';
-import { ProductChannelListingAddInput, ProductChannelListingUpdateInput, ProductFragment } from '@dashboard/graphql';
-import useStateFromProps from '@dashboard/hooks/useStateFromProps';
-import uniq from 'lodash/uniq';
-import uniqBy from 'lodash/uniqBy';
-import { useCallback, useRef } from 'react';
+import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
+import {
+  ProductChannelListingAddInput,
+  ProductChannelListingUpdateInput,
+  ProductFragment,
+} from "@dashboard/graphql";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import uniq from "lodash/uniq";
+import uniqBy from "lodash/uniqBy";
+import { useCallback, useRef } from "react";
 
-import { ProductChannelsListingDialogSubmit } from './ProductChannelsListingsDialog';
+import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 
-const emptyListing: Omit<ProductChannelListingAddInput, 'channelId'> = {
+const emptyListing: Omit<ProductChannelListingAddInput, "channelId"> = {
   availableForPurchaseDate: null,
   isAvailableForPurchase: false,
   isPublished: false,
@@ -15,7 +19,11 @@ const emptyListing: Omit<ProductChannelListingAddInput, 'channelId'> = {
   visibleInListings: false,
 };
 
-export const updateChannelsInput = (input: ProductChannelListingUpdateInput, data: ChannelOpts, id: string) => {
+export const updateChannelsInput = (
+  input: ProductChannelListingUpdateInput,
+  data: ChannelOpts,
+  id: string,
+) => {
   const mergeListings = (listing: ProductChannelListingAddInput) => {
     if (listing.channelId === id) {
       return {
@@ -33,7 +41,7 @@ export const updateChannelsInput = (input: ProductChannelListingUpdateInput, dat
 };
 
 export function useProductChannelListingsForm(
-  product: Pick<ProductFragment, 'channelListings'>,
+  product: Pick<ProductFragment, "channelListings">,
   triggerChange: () => void,
 ) {
   const [channels, setChannels] = useStateFromProps<ProductChannelListingUpdateInput>({
@@ -72,9 +80,11 @@ export function useProductChannelListingsForm(
               ...emptyListing,
             })),
           ],
-          'channelId',
+          "channelId",
         ).filter(({ channelId }) => !removed.includes(channelId)),
-        removeChannels: uniq([...prevData.removeChannels, ...removed]).filter(id => !added.includes(id)),
+        removeChannels: uniq([...prevData.removeChannels, ...removed]).filter(
+          id => !added.includes(id),
+        ),
       }));
       triggerChange();
       added.forEach(id => touch(id));

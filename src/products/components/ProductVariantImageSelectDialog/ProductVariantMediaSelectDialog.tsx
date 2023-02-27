@@ -1,14 +1,14 @@
-import BackButton from '@dashboard/components/BackButton';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import { ProductMediaFragment } from '@dashboard/graphql';
-import useModalDialogOpen from '@dashboard/hooks/useModalDialogOpen';
-import { buttonMessages } from '@dashboard/intl';
-import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
-import clsx from 'clsx';
-import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ProductMediaFragment } from "@dashboard/graphql";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import { buttonMessages } from "@dashboard/intl";
+import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
+import clsx from "clsx";
+import React, { useState } from "react";
+import { FormattedMessage } from "react-intl";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 interface ProductVariantImageSelectDialogProps {
   media?: ProductMediaFragment[];
@@ -47,7 +47,11 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle disableTypography>
-        <FormattedMessage id="iPk640" defaultMessage="Media Selection" description="dialog header" />
+        <FormattedMessage
+          id="iPk640"
+          defaultMessage="Media Selection"
+          description="dialog header"
+        />
       </DialogTitle>
       <DialogContent className={classes.content}>
         <div className={classes.root}>
@@ -83,5 +87,5 @@ const ProductVariantMediaSelectDialog: React.FC<ProductVariantImageSelectDialogP
   );
 };
 
-ProductVariantMediaSelectDialog.displayName = 'ProductVariantMediaSelectDialog';
+ProductVariantMediaSelectDialog.displayName = "ProductVariantMediaSelectDialog";
 export default ProductVariantMediaSelectDialog;

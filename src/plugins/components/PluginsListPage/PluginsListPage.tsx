@@ -1,17 +1,17 @@
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import FilterBar from '@dashboard/components/FilterBar';
-import { configurationMenuUrl } from '@dashboard/configuration';
-import { PluginBaseFragment } from '@dashboard/graphql';
-import { sectionNames } from '@dashboard/intl';
-import { PluginListUrlSortField } from '@dashboard/plugins/urls';
-import { FilterPageProps, PageListProps, SortPage, TabPageProps } from '@dashboard/types';
-import { Card } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import FilterBar from "@dashboard/components/FilterBar";
+import { configurationMenuUrl } from "@dashboard/configuration";
+import { PluginBaseFragment } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { PluginListUrlSortField } from "@dashboard/plugins/urls";
+import { FilterPageProps, PageListProps, SortPage, TabPageProps } from "@dashboard/types";
+import { Card } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import PluginsList from '../PluginsList/PluginsList';
-import { createFilterStructure, PluginFilterKeys, PluginListFilterOpts } from './filters';
-import { pluginsFilterErrorMessages } from './messages';
+import PluginsList from "../PluginsList/PluginsList";
+import { createFilterStructure, PluginFilterKeys, PluginListFilterOpts } from "./filters";
+import { pluginsFilterErrorMessages } from "./messages";
 
 export interface PluginsListPageProps
   extends PageListProps,
@@ -54,14 +54,14 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
           onTabSave={onTabSave}
           tabs={tabs}
           allTabLabel={intl.formatMessage({
-            id: 'aOelhW',
-            defaultMessage: 'All Plugins',
-            description: 'tab name',
+            id: "aOelhW",
+            defaultMessage: "All Plugins",
+            description: "tab name",
           })}
           filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
-            id: 'BtErCZ',
-            defaultMessage: 'Search Plugins...',
+            id: "BtErCZ",
+            defaultMessage: "Search Plugins...",
           })}
         />
         <PluginsList {...listProps} />
@@ -69,5 +69,5 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
     </>
   );
 };
-PluginsListPage.displayName = 'PluginsListPage';
+PluginsListPage.displayName = "PluginsListPage";
 export default PluginsListPage;

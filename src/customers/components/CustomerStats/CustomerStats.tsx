@@ -1,13 +1,13 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import { DateTime } from '@dashboard/components/Date';
-import { Hr } from '@dashboard/components/Hr';
-import RequirePermissions from '@dashboard/components/RequirePermissions';
-import Skeleton from '@dashboard/components/Skeleton';
-import { CustomerDetailsQuery, PermissionEnum } from '@dashboard/graphql';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import { DateTime } from "@dashboard/components/Date";
+import { Hr } from "@dashboard/components/Hr";
+import RequirePermissions from "@dashboard/components/RequirePermissions";
+import Skeleton from "@dashboard/components/Skeleton";
+import { CustomerDetailsQuery, PermissionEnum } from "@dashboard/graphql";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -18,11 +18,11 @@ const useStyles = makeStyles(
       fontSize: 24,
     },
   }),
-  { name: 'CustomerStats' },
+  { name: "CustomerStats" },
 );
 
 export interface CustomerStatsProps {
-  customer: CustomerDetailsQuery['user'];
+  customer: CustomerDetailsQuery["user"];
 }
 
 const CustomerStats: React.FC<CustomerStatsProps> = props => {
@@ -35,9 +35,9 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'e7Nyu7',
-          defaultMessage: 'Customer History',
-          description: 'section header',
+          id: "e7Nyu7",
+          defaultMessage: "Customer History",
+          description: "section header",
         })}
       />
       <CardContent>
@@ -46,7 +46,7 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
         </Typography>
         {customer ? (
           <Typography variant="h6" className={classes.value}>
-            {customer.lastLogin === null ? '-' : <DateTime date={customer.lastLogin} />}
+            {customer.lastLogin === null ? "-" : <DateTime date={customer.lastLogin} />}
           </Typography>
         ) : (
           <Skeleton />
@@ -61,7 +61,7 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
           {customer && customer.lastPlacedOrder ? (
             <Typography variant="h6" className={classes.value}>
               {customer.lastPlacedOrder.edges.length === 0 ? (
-                '-'
+                "-"
               ) : (
                 <DateTime date={customer.lastPlacedOrder.edges[0].node.created} />
               )}
@@ -74,5 +74,5 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
     </Card>
   );
 };
-CustomerStats.displayName = 'CustomerStats';
+CustomerStats.displayName = "CustomerStats";
 export default CustomerStats;

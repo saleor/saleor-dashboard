@@ -1,29 +1,29 @@
-import CollectionWithDividers from '@dashboard/components/CollectionWithDividers';
-import Skeleton from '@dashboard/components/Skeleton';
-import { PluginsDetailsFragment } from '@dashboard/graphql';
-import { isPluginGlobal } from '@dashboard/plugins/views/utils';
-import { CardContent, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
+import Skeleton from "@dashboard/components/Skeleton";
+import { PluginsDetailsFragment } from "@dashboard/graphql";
+import { isPluginGlobal } from "@dashboard/plugins/views/utils";
+import { CardContent, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { pluginDetailsChannelsCardMessages as messages } from './messages';
+import { pluginDetailsChannelsCardMessages as messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
     itemContainer: {
-      position: 'relative',
-      cursor: 'pointer',
+      position: "relative",
+      cursor: "pointer",
     },
     itemActiveIndicator: {
-      position: 'absolute',
+      position: "absolute",
       left: 0,
       backgroundColor: theme.palette.primary.main,
       width: 2,
-      height: '100%',
+      height: "100%",
     },
   }),
-  { name: 'PluginDetailsChannelsCardContent' },
+  { name: "PluginDetailsChannelsCardContent" },
 );
 
 export interface PluginDetailsChannelsCardProps {

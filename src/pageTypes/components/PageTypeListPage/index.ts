@@ -1,2 +1,2 @@
-export { default } from './PageTypeListPage';
-export * from './PageTypeListPage';
+export { default } from "./PageTypeListPage";
+export * from "./PageTypeListPage";

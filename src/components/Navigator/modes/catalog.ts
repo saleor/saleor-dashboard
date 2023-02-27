@@ -1,15 +1,15 @@
-import { categoryUrl } from '@dashboard/categories/urls';
-import { collectionUrl } from '@dashboard/collections/urls';
-import { SearchCatalogQuery } from '@dashboard/graphql';
-import { UseNavigatorResult } from '@dashboard/hooks/useNavigator';
-import { productUrl } from '@dashboard/products/urls';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import { score } from 'fuzzaldrin';
-import { IntlShape } from 'react-intl';
+import { categoryUrl } from "@dashboard/categories/urls";
+import { collectionUrl } from "@dashboard/collections/urls";
+import { SearchCatalogQuery } from "@dashboard/graphql";
+import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import { productUrl } from "@dashboard/products/urls";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { score } from "fuzzaldrin";
+import { IntlShape } from "react-intl";
 
-import { QuickSearchAction, QuickSearchActionInput } from '../types';
-import messages from './messages';
-import { sortScores } from './utils';
+import { QuickSearchAction, QuickSearchActionInput } from "../types";
+import messages from "./messages";
+import { sortScores } from "./utils";
 
 const maxActions = 5;
 
@@ -29,7 +29,7 @@ export function searchInCatalog(
       },
       score: score(category.name, search),
       text: category.name,
-      type: 'catalog',
+      type: "catalog",
     }))
     .sort(sortScores);
 
@@ -43,7 +43,7 @@ export function searchInCatalog(
       },
       score: score(collection.name, search),
       text: collection.name,
-      type: 'catalog',
+      type: "catalog",
     }))
     .sort(sortScores);
 
@@ -58,11 +58,15 @@ export function searchInCatalog(
       },
       score: score(product.name, search),
       text: product.name,
-      type: 'catalog',
+      type: "catalog",
     }))
     .sort(sortScores);
 
-  const baseActions = [...categories.slice(0, 1), ...collections.slice(0, 1), ...products.slice(0, 1)];
+  const baseActions = [
+    ...categories.slice(0, 1),
+    ...collections.slice(0, 1),
+    ...products.slice(0, 1),
+  ];
 
   return [
     ...baseActions,

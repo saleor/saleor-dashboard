@@ -1,7 +1,7 @@
-import { ChangeEvent } from '@dashboard/hooks/useForm';
+import { ChangeEvent } from "@dashboard/hooks/useForm";
 
-import { nameSeparator } from './MetadataCard';
-import { EventData, EventDataAction, EventDataField } from './types';
+import { nameSeparator } from "./MetadataCard";
+import { EventData, EventDataAction, EventDataField } from "./types";
 
 export function parseEventData(event: ChangeEvent): EventData {
   let action: EventDataAction;
@@ -38,5 +38,5 @@ export function parseEventData(event: ChangeEvent): EventData {
 }
 
 export function getDataKey(isPrivate: boolean) {
-  return isPrivate ? 'privateMetadata' : 'metadata';
+  return isPrivate ? "privateMetadata" : "metadata";
 }

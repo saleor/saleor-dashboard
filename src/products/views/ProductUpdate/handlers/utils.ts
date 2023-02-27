@@ -1,8 +1,8 @@
-import { FetchResult } from '@apollo/client';
-import { getAttributesAfterFileAttributesUpdate } from '@dashboard/attributes/utils/data';
-import { prepareAttributesInput } from '@dashboard/attributes/utils/handlers';
-import { DatagridChangeOpts } from '@dashboard/components/Datagrid/useDatagridChange';
-import { VALUES_PAGINATE_BY } from '@dashboard/config';
+import { FetchResult } from "@apollo/client";
+import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
+import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
+import { DatagridChangeOpts } from "@dashboard/components/Datagrid/useDatagridChange";
+import { VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   FileUploadMutation,
   ProductChannelListingAddInput,
@@ -10,18 +10,18 @@ import {
   ProductChannelListingUpdateMutationVariables,
   ProductFragment,
   ProductVariantBulkUpdateInput,
-} from '@dashboard/graphql';
-import { ProductUpdateSubmitData } from '@dashboard/products/components/ProductUpdatePage/types';
-import { getAttributeInputFromProduct } from '@dashboard/products/utils/data';
-import { getParsedDataForJsonStringField } from '@dashboard/utils/richText/misc';
-import pick from 'lodash/pick';
-import uniq from 'lodash/uniq';
+} from "@dashboard/graphql";
+import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
+import { getAttributeInputFromProduct } from "@dashboard/products/utils/data";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import pick from "lodash/pick";
+import uniq from "lodash/uniq";
 
-import { getAttributeData } from './data/attributes';
-import { getUpdateVariantChannelInputs, getVariantChannelsInputs } from './data/channel';
-import { getNameData } from './data/name';
-import { getSkuData } from './data/sku';
-import { getStockData, getVaraintUpdateStockData } from './data/stock';
+import { getAttributeData } from "./data/attributes";
+import { getUpdateVariantChannelInputs, getVariantChannelsInputs } from "./data/channel";
+import { getNameData } from "./data/name";
+import { getSkuData } from "./data/sku";
+import { getStockData, getVaraintUpdateStockData } from "./data/stock";
 
 export function getProductUpdateVariables(
   product: ProductFragment,
@@ -80,14 +80,14 @@ export function getProductChannelsUpdateVariables(
         listing,
         // Filtering it here so we send only fields defined in input schema
         [
-          'availableForPurchaseAt',
-          'availableForPurchaseDate',
-          'channelId',
-          'isAvailableForPurchase',
-          'isPublished',
-          'publicationDate',
-          'publishedAt',
-          'visibleInListings',
+          "availableForPurchaseAt",
+          "availableForPurchaseDate",
+          "channelId",
+          "isAvailableForPurchase",
+          "isPublished",
+          "publicationDate",
+          "publishedAt",
+          "visibleInListings",
         ] as Array<keyof ProductChannelListingAddInput>,
       ),
     )
@@ -113,7 +113,7 @@ export function hasProductChannelsUpdate(data: ProductChannelListingUpdateInput)
 }
 
 export function getBulkVariantUpdateInputs(
-  variants: ProductFragment['variants'],
+  variants: ProductFragment["variants"],
   data: DatagridChangeOpts,
 ): ProductVariantBulkUpdateInput[] {
   const toUpdateInput = createToUpdateInput(data);
@@ -142,7 +142,10 @@ const byAvailability = (variant: ProductVariantBulkUpdateInput): boolean =>
   variant.channelListings.remove.length > 0 ||
   variant.channelListings.create.length > 0;
 
-export function inferProductChannelsAfterUpdate(product: ProductFragment, data: ProductUpdateSubmitData) {
+export function inferProductChannelsAfterUpdate(
+  product: ProductFragment,
+  data: ProductUpdateSubmitData,
+) {
   const productChannelsIds = product.channelListings.map(listing => listing.channel.id);
   const updatedChannelsIds = data.channels.updateChannels?.map(listing => listing.channelId) || [];
   const removedChannelsIds = data.channels.removeChannels || [];

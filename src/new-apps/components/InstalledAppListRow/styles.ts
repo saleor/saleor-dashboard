@@ -1,16 +1,16 @@
-import { InstalledApp } from '@dashboard/new-apps/types';
-import { makeStyles } from '@saleor/macaw-ui';
+import { InstalledApp } from "@dashboard/new-apps/types";
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles<InstalledApp>(
   theme => ({
     mainContent: {
-      display: 'flex',
-      alignItems: 'center',
+      display: "flex",
+      alignItems: "center",
       gap: theme.spacing(2),
     },
     logo: props => ({
       backgroundColor: props.logo?.color || theme.palette.grey[300],
-      color: props.logo?.color ? '#fff' : theme.palette.grey[600],
+      color: props.logo?.color ? "#fff" : theme.palette.grey[600],
       padding: theme.spacing(1.2),
       borderRadius: theme.spacing(1),
       borderWidth: 0,
@@ -23,41 +23,41 @@ export const useStyles = makeStyles<InstalledApp>(
     },
     tunnel: {
       color: theme.palette.saleor.main[3],
-      whiteSpace: 'nowrap',
+      whiteSpace: "nowrap",
     },
     actions: {
-      alignItems: 'center',
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
-      textAlign: 'right',
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "flex-end",
+      textAlign: "right",
       gap: theme.spacing(1),
     },
     externalAppLabel: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
     row: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
     col: {
       paddingTop: theme.spacing(1),
       paddingBottom: theme.spacing(1),
     },
     colLogo: {
-      width: '100%',
-      '&.MuiTableCell-root:first-child:not(.MuiTableCell-paddingCheckbox)': {
+      width: "100%",
+      "&.MuiTableCell-root:first-child:not(.MuiTableCell-paddingCheckbox)": {
         paddingLeft: theme.spacing(3),
-        width: '100%',
+        width: "100%",
       },
-      height: 'auto',
+      height: "auto",
     },
     colActions: {
-      '&&': {
+      "&&": {
         paddingRight: theme.spacing(3),
-        textAlign: 'right',
+        textAlign: "right",
       },
-      height: 'auto',
+      height: "auto",
     },
   }),
-  { name: 'InstalledAppListRow' },
+  { name: "InstalledAppListRow" },
 );

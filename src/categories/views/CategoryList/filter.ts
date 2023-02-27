@@ -1,9 +1,13 @@
-import { CategoryFilterInput } from '@dashboard/graphql';
+import { CategoryFilterInput } from "@dashboard/graphql";
 
-import { createFilterTabUtils, createFilterUtils } from '../../../utils/filters';
-import { CategoryListUrlFilters, CategoryListUrlFiltersEnum, CategoryListUrlQueryParams } from '../../urls';
+import { createFilterTabUtils, createFilterUtils } from "../../../utils/filters";
+import {
+  CategoryListUrlFilters,
+  CategoryListUrlFiltersEnum,
+  CategoryListUrlQueryParams,
+} from "../../urls";
 
-export const CATEGORY_FILTERS_KEY = 'categoryFilters';
+export const CATEGORY_FILTERS_KEY = "categoryFilters";
 
 export function getFilterVariables(params: CategoryListUrlFilters): CategoryFilterInput {
   return {

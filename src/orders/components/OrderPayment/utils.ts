@@ -1,8 +1,14 @@
-import { IMoney, subtractMoney } from '@dashboard/components/Money';
-import { GiftCardEventsEnum, OrderDetailsFragment, PaymentChargeStatusEnum } from '@dashboard/graphql';
-import compact from 'lodash/compact';
+import { IMoney, subtractMoney } from "@dashboard/components/Money";
+import {
+  GiftCardEventsEnum,
+  OrderDetailsFragment,
+  PaymentChargeStatusEnum,
+} from "@dashboard/graphql";
+import compact from "lodash/compact";
 
-export const extractOrderGiftCardUsedAmount = (order?: OrderDetailsFragment): number | undefined => {
+export const extractOrderGiftCardUsedAmount = (
+  order?: OrderDetailsFragment,
+): number | undefined => {
   if (!order) {
     return undefined;
   }
@@ -11,7 +17,9 @@ export const extractOrderGiftCardUsedAmount = (order?: OrderDetailsFragment): nu
 
   const usedInOrderEvents = compact(
     giftCards.map(({ events }) =>
-      events.find(({ orderId, type }) => type === GiftCardEventsEnum.USED_IN_ORDER && orderId === id),
+      events.find(
+        ({ orderId, type }) => type === GiftCardEventsEnum.USED_IN_ORDER && orderId === id,
+      ),
     ),
   );
 
@@ -29,7 +37,9 @@ export const extractOrderGiftCardUsedAmount = (order?: OrderDetailsFragment): nu
 };
 
 export const extractOutstandingBalance = (order: OrderDetailsFragment): IMoney =>
-  order?.totalCaptured && order?.total?.gross && subtractMoney(order.total.gross, order.totalCaptured);
+  order?.totalCaptured &&
+  order?.total?.gross &&
+  subtractMoney(order.total.gross, order.totalCaptured);
 
 export const extractRefundedAmount = (order: OrderDetailsFragment): IMoney => {
   if (order?.paymentStatus === PaymentChargeStatusEnum.FULLY_REFUNDED) {

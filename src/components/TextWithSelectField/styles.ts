@@ -1,4 +1,4 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   () => ({
@@ -6,17 +6,17 @@ export const useStyles = makeStyles(
       width: 400,
     },
     innerContainer: {
-      width: '100%',
+      width: "100%",
     },
     textField: {
-      width: '100%',
+      width: "100%",
       paddingRight: 0,
-      '& input': {
-        maxWidth: '100%',
+      "& input": {
+        maxWidth: "100%",
       },
     },
     textFieldCentered: {
-      '& input': {
+      "& input": {
         paddingTop: 17,
         paddingBottom: 16,
       },
@@ -28,15 +28,15 @@ export const useStyles = makeStyles(
     // complex selectors with volatile class names, it's both easier and safer
     // to enforce these styles with !important.
     input: {
-      boxShadow: 'none !important',
-      border: 'none',
+      boxShadow: "none !important",
+      border: "none",
     },
     noBorder: {
-      borderColor: 'transparent !important',
+      borderColor: "transparent !important",
     },
     noBackground: {
-      backgroundColor: 'transparent !important',
+      backgroundColor: "transparent !important",
     },
   }),
-  { name: 'TextWithSelectField' },
+  { name: "TextWithSelectField" },
 );

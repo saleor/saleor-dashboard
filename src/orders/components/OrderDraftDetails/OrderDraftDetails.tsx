@@ -1,22 +1,22 @@
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
 import {
   ChannelUsabilityDataQuery,
   OrderDetailsFragment,
   OrderErrorFragment,
   OrderLineInput,
-} from '@dashboard/graphql';
+} from "@dashboard/graphql";
 import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps,
-} from '@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider';
-import { Card, CardContent } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { Card, CardContent } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe } from '../../../misc';
-import OrderDraftDetailsProducts from '../OrderDraftDetailsProducts';
-import OrderDraftDetailsSummary from '../OrderDraftDetailsSummary';
+import { maybe } from "../../../misc";
+import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts";
+import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary";
 
 interface OrderDraftDetailsProps {
   order: OrderDetailsFragment;
@@ -46,9 +46,9 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: '18wvf7',
-          defaultMessage: 'Order Details',
-          description: 'section header',
+          id: "18wvf7",
+          defaultMessage: "Order Details",
+          description: "section header",
         })}
         toolbar={
           isChannelActive &&
@@ -82,5 +82,5 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     </Card>
   );
 };
-OrderDraftDetails.displayName = 'OrderDraftDetails';
+OrderDraftDetails.displayName = "OrderDraftDetails";
 export default OrderDraftDetails;

@@ -10,9 +10,9 @@ export const GIFT_CARD_DIALOG = {
     expiryPeriodAmount: '[name="expiryPeriodAmount"]',
     expiryPeriodTypeButton: '[id*="select-expiryPeriodType"]',
     expiryPeriodMonthType: '[data-test-id="select-field-option-MONTH"]',
-    expiryDateInput: '[name="expiryDate"]'
+    expiryDateInput: '[name="expiryDate"]',
   },
   noteInput: '[name="note"]',
   cardCodeText: '[data-test-id="card-code"]',
-  tagInput: '[data-test-id="gift-card-tag-select-field"]'
+  tagInput: '[data-test-id="gift-card-tag-select-field"]',
 };

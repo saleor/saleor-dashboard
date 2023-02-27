@@ -1,19 +1,19 @@
-import DialogButtons from '@dashboard/components/ActionDialog/DialogButtons';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import PriceField from '@dashboard/components/PriceField';
-import RadioGroupField from '@dashboard/components/RadioGroupField';
-import { DiscountValueTypeEnum, MoneyFragment } from '@dashboard/graphql';
-import { useUpdateEffect } from '@dashboard/hooks/useUpdateEffect';
-import { buttonMessages } from '@dashboard/intl';
-import { Card, CardContent, Popper, TextField, Typography } from '@material-ui/core';
-import { PopperPlacementType } from '@material-ui/core/Popper';
-import { ConfirmButtonTransitionState, makeStyles } from '@saleor/macaw-ui';
-import React, { ChangeEvent, MutableRefObject, useEffect, useRef, useState } from 'react';
-import { defineMessages, useIntl } from 'react-intl';
+import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import PriceField from "@dashboard/components/PriceField";
+import RadioGroupField from "@dashboard/components/RadioGroupField";
+import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
+import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
+import { buttonMessages } from "@dashboard/intl";
+import { Card, CardContent, Popper, TextField, Typography } from "@material-ui/core";
+import { PopperPlacementType } from "@material-ui/core/Popper";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import React, { ChangeEvent, MutableRefObject, useEffect, useRef, useState } from "react";
+import { defineMessages, useIntl } from "react-intl";
 
-import ModalTitle from './ModalTitle';
-import { ORDER_LINE_DISCOUNT, OrderDiscountCommonInput, OrderDiscountType } from './types';
+import ModalTitle from "./ModalTitle";
+import { ORDER_LINE_DISCOUNT, OrderDiscountCommonInput, OrderDiscountType } from "./types";
 
 const fullNumbersRegex = /^[0-9]*$/;
 const numbersRegex = /([0-9]+\.?[0-9]*)$/;
@@ -26,71 +26,71 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(1),
     },
     removeButton: {
-      '&:hover': {
+      "&:hover": {
         backgroundColor: theme.palette.error.main,
       },
       backgroundColor: theme.palette.error.main,
       color: theme.palette.error.contrastText,
     },
     radioContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
     },
     reasonInput: {
       marginTop: theme.spacing(1),
-      width: '100%',
+      width: "100%",
     },
     buttonWrapper: {
-      display: 'flex',
-      flexDirection: 'row',
+      display: "flex",
+      flexDirection: "row",
       flex: 1,
     },
   }),
-  { name: 'OrderLineDiscountModal' },
+  { name: "OrderLineDiscountModal" },
 );
 
 const messages = defineMessages({
   buttonLabel: {
-    id: 'QSnh4Y',
-    defaultMessage: 'Add',
-    description: 'add button label',
+    id: "QSnh4Y",
+    defaultMessage: "Add",
+    description: "add button label",
   },
   itemDiscountTitle: {
-    id: 'WTj17Z',
-    defaultMessage: 'Discount Item',
-    description: 'dialog title item discount',
+    id: "WTj17Z",
+    defaultMessage: "Discount Item",
+    description: "dialog title item discount",
   },
   orderDiscountTitle: {
-    id: 'YFDAaX',
-    defaultMessage: 'Discount this Order by:',
-    description: 'dialog title order discount',
+    id: "YFDAaX",
+    defaultMessage: "Discount this Order by:",
+    description: "dialog title order discount",
   },
   percentageOption: {
-    id: 'WUf3Iu',
-    defaultMessage: 'Percentage',
-    description: 'percentage option',
+    id: "WUf3Iu",
+    defaultMessage: "Percentage",
+    description: "percentage option",
   },
   fixedAmountOption: {
-    id: 'fo7nfa',
-    defaultMessage: 'Fixed Amount',
-    description: 'fixed amount',
+    id: "fo7nfa",
+    defaultMessage: "Fixed Amount",
+    description: "fixed amount",
   },
   invalidValue: {
-    id: 'IN5iJz',
-    defaultMessage: 'Invalid value',
-    description: 'value input helper text',
+    id: "IN5iJz",
+    defaultMessage: "Invalid value",
+    description: "value input helper text",
   },
   discountValueLabel: {
-    id: 'GAmGog',
-    defaultMessage: 'Discount value',
-    description: 'value input label',
+    id: "GAmGog",
+    defaultMessage: "Discount value",
+    description: "value input label",
   },
   discountReasonLabel: {
-    id: 'nvSJNR',
-    defaultMessage: 'Reason',
-    description: 'discount reason input lavel',
+    id: "nvSJNR",
+    defaultMessage: "Reason",
+    description: "discount reason input lavel",
   },
 });
 
@@ -109,7 +109,7 @@ export interface OrderDiscountCommonModalProps {
 }
 
 const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
-  maxPrice = { amount: null, currency: '' },
+  maxPrice = { amount: null, currency: "" },
   onConfirm,
   modalType,
   anchorRef,
@@ -125,7 +125,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
 
   const getInitialDiscountValue = (calculationMode: DiscountValueTypeEnum) => {
     if (!existingDiscount?.value) {
-      return '';
+      return "";
     }
 
     const stringifiedValue = existingDiscount.value.toString();
@@ -142,7 +142,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
 
     return {
       calculationMode,
-      reason: existingDiscount?.reason || '',
+      reason: existingDiscount?.reason || "",
       value: getInitialDiscountValue(calculationMode),
     };
   };
@@ -152,7 +152,9 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   const [isValueError, setValueError] = useState<boolean>(false);
   const [reason, setReason] = useState<string>(initialData.reason);
   const [value, setValue] = useState<string>(initialData.value);
-  const [calculationMode, setCalculationMode] = useState<DiscountValueTypeEnum>(initialData.calculationMode);
+  const [calculationMode, setCalculationMode] = useState<DiscountValueTypeEnum>(
+    initialData.calculationMode,
+  );
   const previousCalculationMode = useRef(calculationMode);
 
   const classes = useStyles({});
@@ -218,7 +220,11 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
       previousCalculationMode.current === DiscountValueTypeEnum.PERCENTAGE &&
       calculationMode === DiscountValueTypeEnum.FIXED;
 
-    const recalculatedValueFromPercentageToFixed = (getParsedDiscountValue() * PERMIL * maxPrice.amount).toFixed(2);
+    const recalculatedValueFromPercentageToFixed = (
+      getParsedDiscountValue() *
+      PERMIL *
+      maxPrice.amount
+    ).toFixed(2);
 
     const recalculatedValueFromFixedToPercentage = Math.round(
       (getParsedDiscountValue() * (1 / PERMIL)) / maxPrice.amount,
@@ -234,14 +240,20 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
 
   useUpdateEffect(handleValueConversion, [calculationMode]);
 
-  const dialogTitle = modalType === ORDER_LINE_DISCOUNT ? messages.itemDiscountTitle : messages.orderDiscountTitle;
+  const dialogTitle =
+    modalType === ORDER_LINE_DISCOUNT ? messages.itemDiscountTitle : messages.orderDiscountTitle;
 
-  const valueFieldSymbol = calculationMode === DiscountValueTypeEnum.FIXED ? currency : '%';
+  const valueFieldSymbol = calculationMode === DiscountValueTypeEnum.FIXED ? currency : "%";
 
   const isSubmitDisabled = !getParsedDiscountValue() || isValueError || isAmountTooLarge();
 
   return (
-    <Popper open={isOpen} anchorEl={anchorRef.current} className={classes.container} placement={dialogPlacement}>
+    <Popper
+      open={isOpen}
+      anchorEl={anchorRef.current}
+      className={classes.container}
+      placement={dialogPlacement}
+    >
       <Card>
         <ModalTitle title={intl.formatMessage(dialogTitle)} onClose={onClose} />
         <CardContent>

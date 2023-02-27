@@ -9,10 +9,7 @@ import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-eleme
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { TEST_ADMIN_USER } from "../../../fixtures/users";
 import { createGiftCard } from "../../../support/api/requests/GiftCard";
-import {
-  activatePlugin,
-  updatePlugin,
-} from "../../../support/api/requests/Plugins";
+import { activatePlugin, updatePlugin } from "../../../support/api/requests/Plugins";
 import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
 import { getMailWithGiftCardExportWithAttachment } from "../../../support/api/utils/users";
 import { enterAndSelectGiftCards } from "../../../support/pages/catalog/giftCardPage";

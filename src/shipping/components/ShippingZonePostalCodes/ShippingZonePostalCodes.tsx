@@ -1,34 +1,34 @@
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import RadioGroupField from '@dashboard/components/RadioGroupField';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeFragment } from '@dashboard/graphql';
-import ArrowDropdown from '@dashboard/icons/ArrowDropdown';
-import { renderCollection } from '@dashboard/misc';
-import { Card, CardContent, TableBody, TableCell, TableHead, Typography } from '@material-ui/core';
-import { DeleteIcon, IconButton, makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import RadioGroupField from "@dashboard/components/RadioGroupField";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { PostalCodeRuleInclusionTypeEnum, ShippingMethodTypeFragment } from "@dashboard/graphql";
+import ArrowDropdown from "@dashboard/icons/ArrowDropdown";
+import { renderCollection } from "@dashboard/misc";
+import { Card, CardContent, TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ShippingZonePostalCodesProps {
   disabled: boolean;
   initialExpanded?: boolean;
-  postalCodes: ShippingMethodTypeFragment['postalCodeRules'] | undefined;
+  postalCodes: ShippingMethodTypeFragment["postalCodeRules"] | undefined;
   onPostalCodeInclusionChange: (inclusion: PostalCodeRuleInclusionTypeEnum) => void;
-  onPostalCodeDelete: (code: ShippingMethodTypeFragment['postalCodeRules'][0]) => void;
+  onPostalCodeDelete: (code: ShippingMethodTypeFragment["postalCodeRules"][0]) => void;
   onPostalCodeRangeAdd: () => void;
 }
 
 const useStyles = makeStyles(
   theme => ({
     arrow: {
-      transition: theme.transitions.create('transform'),
+      transition: theme.transitions.create("transform"),
     },
     arrowRotate: {
-      transform: 'scale(-1)',
+      transform: "scale(-1)",
     },
     colAction: {
       width: 80,
@@ -46,7 +46,7 @@ const useStyles = makeStyles(
     },
   }),
   {
-    name: 'ShippingZonePostalCodes',
+    name: "ShippingZonePostalCodes",
   },
 );
 
@@ -76,7 +76,9 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
     onPostalCodeInclusionChange(value);
   };
 
-  const getPostalCodeRangeLabel = (postalCodeRange: ShippingMethodTypeFragment['postalCodeRules'][0]) => {
+  const getPostalCodeRangeLabel = (
+    postalCodeRange: ShippingMethodTypeFragment["postalCodeRules"][0],
+  ) => {
     if (!postalCodeRange?.start) {
       return <Skeleton />;
     }
@@ -90,13 +92,17 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'FcTTvh',
-          defaultMessage: 'Postal codes',
-          description: 'postal codes, header',
+          id: "FcTTvh",
+          defaultMessage: "Postal codes",
+          description: "postal codes, header",
         })}
         toolbar={
           <Button onClick={onPostalCodeRangeAdd} data-test-id="add-postal-code-range">
-            <FormattedMessage id="1lk/oS" defaultMessage="Add postal code range" description="button" />
+            <FormattedMessage
+              id="1lk/oS"
+              defaultMessage="Add postal code range"
+              description="button"
+            />
           </Button>
         }
       />
@@ -108,7 +114,11 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
               label: (
                 <div className={classes.option}>
                   <Typography variant="body1">
-                    <FormattedMessage id="YpLVVc" defaultMessage="Exclude postal codes" description="action" />
+                    <FormattedMessage
+                      id="YpLVVc"
+                      defaultMessage="Exclude postal codes"
+                      description="action"
+                    />
                   </Typography>
                   <Typography color="textSecondary" variant="caption">
                     <FormattedMessage
@@ -124,7 +134,11 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
               label: (
                 <div className={classes.option}>
                   <Typography variant="body1">
-                    <FormattedMessage id="7qsOwa" defaultMessage="Include postal codes" description="action" />
+                    <FormattedMessage
+                      id="7qsOwa"
+                      defaultMessage="Include postal codes"
+                      description="action"
+                    />
                   </Typography>
                   <Typography color="textSecondary" variant="caption">
                     <FormattedMessage
@@ -189,7 +203,7 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                       color="primary"
                       variant="secondary"
                       onClick={() => onPostalCodeDelete(postalCodeRange)}
-                      data-test-id={'delete-postal-code-' + postalCodeRange?.id}
+                      data-test-id={"delete-postal-code-" + postalCodeRange?.id}
                     >
                       <DeleteIcon />
                     </IconButton>
@@ -200,7 +214,10 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
                 <TableRowLink>
                   <TableCell colSpan={2}>
                     <Typography color="textSecondary">
-                      <FormattedMessage id="Pyjarj" defaultMessage="This shipping rate has no postal codes assigned" />
+                      <FormattedMessage
+                        id="Pyjarj"
+                        defaultMessage="This shipping rate has no postal codes assigned"
+                      />
                     </Typography>
                   </TableCell>
                 </TableRowLink>
@@ -213,5 +230,5 @@ const ShippingZonePostalCodes: React.FC<ShippingZonePostalCodesProps> = ({
   );
 };
 
-ShippingZonePostalCodes.displayName = 'ShippingZonePostalCodes';
+ShippingZonePostalCodes.displayName = "ShippingZonePostalCodes";
 export default ShippingZonePostalCodes;

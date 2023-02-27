@@ -1,12 +1,12 @@
-import { useSaleTranslationsQuery } from '@dashboard/graphql';
-import usePaginator, { PaginatorContext } from '@dashboard/hooks/usePaginator';
-import TranslationsEntitiesList from '@dashboard/translations/components/TranslationsEntitiesList';
-import { languageEntityUrl, TranslatableEntities } from '@dashboard/translations/urls';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import React from 'react';
+import { useSaleTranslationsQuery } from "@dashboard/graphql";
+import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import React from "react";
 
-import { TranslationsEntityListProps } from './types';
-import { sumCompleted } from './utils';
+import { TranslationsEntityListProps } from "./types";
+import { sumCompleted } from "./utils";
 
 const TranslationsSaleList: React.FC<TranslationsEntityListProps> = ({ params, variables }) => {
   const { data, loading } = useSaleTranslationsQuery({
@@ -26,7 +26,7 @@ const TranslationsSaleList: React.FC<TranslationsEntityListProps> = ({ params, v
         disabled={loading}
         entities={mapEdgesToItems(data?.translations)?.map(
           node =>
-            node.__typename === 'SaleTranslatableContent' && {
+            node.__typename === "SaleTranslatableContent" && {
               completion: {
                 current: sumCompleted([node.translation?.name]),
                 max: 1,

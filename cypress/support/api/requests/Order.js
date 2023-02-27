@@ -80,9 +80,7 @@ export function createDraftOrder({ customerId, channelId, address }) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.draftOrderCreate.order");
+  return cy.sendRequestWithQuery(mutation).its("body.data.draftOrderCreate.order");
 }
 
 export function completeOrder(orderId) {

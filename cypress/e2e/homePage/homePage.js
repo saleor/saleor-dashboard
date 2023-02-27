@@ -11,9 +11,7 @@ describe("Displaying welcome message on home page", () => {
     { tags: ["@homePage", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       cy.loginUserViaRequest().visit(urlList.homePage);
-      expectWelcomeMessageIncludes(
-        `${TEST_ADMIN_USER.name} ${TEST_ADMIN_USER.lastName}`,
-      );
+      expectWelcomeMessageIncludes(`${TEST_ADMIN_USER.name} ${TEST_ADMIN_USER.lastName}`);
     },
   );
 
@@ -30,13 +28,8 @@ describe("Displaying welcome message on home page", () => {
     "should refresh page without errors",
     { tags: ["@homePage", "@allEnv", "@stable", "@oldRelease"] },
     () => {
-      cy.loginUserViaRequest()
-        .visit(urlList.homePage)
-        .waitForProgressBarToNotExist()
-        .reload(true);
-      expectWelcomeMessageIncludes(
-        `${TEST_ADMIN_USER.name} ${TEST_ADMIN_USER.lastName}`,
-      );
+      cy.loginUserViaRequest().visit(urlList.homePage).waitForProgressBarToNotExist().reload(true);
+      expectWelcomeMessageIncludes(`${TEST_ADMIN_USER.name} ${TEST_ADMIN_USER.lastName}`);
     },
   );
 });

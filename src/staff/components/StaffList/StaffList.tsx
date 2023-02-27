@@ -1,64 +1,64 @@
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableCellHeader from '@dashboard/components/TableCellHeader';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { StaffListQuery } from '@dashboard/graphql';
-import { getUserInitials, getUserName, maybe, renderCollection } from '@dashboard/misc';
-import { StaffListUrlSortField, staffMemberDetailsUrl } from '@dashboard/staff/urls';
-import { ListProps, RelayToFlat, SortPage } from '@dashboard/types';
-import { getArrowDirection } from '@dashboard/utils/sort';
-import { TableBody, TableCell, TableFooter, TableHead, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { StaffListQuery } from "@dashboard/graphql";
+import { getUserInitials, getUserName, maybe, renderCollection } from "@dashboard/misc";
+import { StaffListUrlSortField, staffMemberDetailsUrl } from "@dashboard/staff/urls";
+import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
+import { getArrowDirection } from "@dashboard/utils/sort";
+import { TableBody, TableCell, TableFooter, TableHead, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
     avatar: {
-      alignItems: 'center',
-      borderRadius: '100%',
-      display: 'grid',
-      float: 'left',
+      alignItems: "center",
+      borderRadius: "100%",
+      display: "grid",
+      float: "left",
       height: 47,
-      justifyContent: 'center',
+      justifyContent: "center",
       marginRight: theme.spacing(1),
-      overflow: 'hidden',
+      overflow: "hidden",
       width: 47,
     },
     avatarDefault: {
-      '& div': {
+      "& div": {
         color: theme.palette.primary.contrastText,
-        lineHeight: '47px',
+        lineHeight: "47px",
       },
       background: theme.palette.primary.main,
       height: 47,
-      textAlign: 'center',
+      textAlign: "center",
       width: 47,
     },
     avatarImage: {
-      pointerEvents: 'none',
-      width: '100%',
+      pointerEvents: "none",
+      width: "100%",
     },
     colEmail: {
       width: 400,
     },
     statusText: {
-      color: '#9E9D9D',
+      color: "#9E9D9D",
     },
     tableRow: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
     wideColumn: {
-      width: '80%',
+      width: "80%",
     },
   }),
-  { name: 'StaffList' },
+  { name: "StaffList" },
 );
 
 interface StaffListProps extends ListProps, SortPage<StaffListUrlSortField> {
-  staffMembers: RelayToFlat<StaffListQuery['staffUsers']>;
+  staffMembers: RelayToFlat<StaffListQuery["staffUsers"]>;
 }
 
 const numberOfColumns = 2;
@@ -78,15 +78,23 @@ const StaffList: React.FC<StaffListProps> = props => {
       <TableHead>
         <TableRowLink>
           <TableCellHeader
-            direction={sort.sort === StaffListUrlSortField.name ? getArrowDirection(sort.asc) : undefined}
+            direction={
+              sort.sort === StaffListUrlSortField.name ? getArrowDirection(sort.asc) : undefined
+            }
             arrowPosition="right"
             onClick={() => onSort(StaffListUrlSortField.name)}
             className={classes.wideColumn}
           >
-            <FormattedMessage id="W32xfN" defaultMessage="Name" description="staff member full name" />
+            <FormattedMessage
+              id="W32xfN"
+              defaultMessage="Name"
+              description="staff member full name"
+            />
           </TableCellHeader>
           <TableCellHeader
-            direction={sort.sort === StaffListUrlSortField.email ? getArrowDirection(sort.asc) : undefined}
+            direction={
+              sort.sort === StaffListUrlSortField.email ? getArrowDirection(sort.asc) : undefined
+            }
             onClick={() => onSort(StaffListUrlSortField.email)}
           >
             <FormattedMessage id="xxQxLE" defaultMessage="Email Address" />
@@ -113,12 +121,15 @@ const StaffList: React.FC<StaffListProps> = props => {
               })}
               hover={!!staffMember}
               href={staffMember && staffMemberDetailsUrl(staffMember.id)}
-              key={staffMember ? staffMember.id : 'skeleton'}
+              key={staffMember ? staffMember.id : "skeleton"}
             >
               <TableCell>
                 <div className={classes.avatar} data-test-id="staffAvatar">
                   {maybe(() => staffMember.avatar.url) ? (
-                    <img className={classes.avatarImage} src={maybe(() => staffMember.avatar.url)} />
+                    <img
+                      className={classes.avatarImage}
+                      src={maybe(() => staffMember.avatar.url)}
+                    />
                   ) : (
                     <div className={classes.avatarDefault}>
                       <Typography>{getUserInitials(staffMember)}</Typography>
@@ -126,19 +137,23 @@ const StaffList: React.FC<StaffListProps> = props => {
                   )}
                 </div>
                 <Typography>{getUserName(staffMember) || <Skeleton />}</Typography>
-                <Typography variant={'caption'} className={classes.statusText} data-test-id="staffStatusText">
+                <Typography
+                  variant={"caption"}
+                  className={classes.statusText}
+                  data-test-id="staffStatusText"
+                >
                   {maybe<React.ReactNode>(
                     () =>
                       staffMember.isActive
                         ? intl.formatMessage({
-                            id: '9Zlogd',
-                            defaultMessage: 'Active',
-                            description: 'staff member status',
+                            id: "9Zlogd",
+                            defaultMessage: "Active",
+                            description: "staff member status",
                           })
                         : intl.formatMessage({
-                            id: '7WzUxn',
-                            defaultMessage: 'Inactive',
-                            description: 'staff member status',
+                            id: "7WzUxn",
+                            defaultMessage: "Inactive",
+                            description: "staff member status",
                           }),
                     <Skeleton />,
                   )}
@@ -159,5 +174,5 @@ const StaffList: React.FC<StaffListProps> = props => {
     </ResponsiveTable>
   );
 };
-StaffList.displayName = 'StaffList';
+StaffList.displayName = "StaffList";
 export default StaffList;

@@ -1,6 +1,6 @@
-import { OrderSortField } from '@dashboard/graphql';
-import { OrderListUrlSortField } from '@dashboard/orders/urls';
-import { createGetSortQueryVariables } from '@dashboard/utils/sort';
+import { OrderSortField } from "@dashboard/graphql";
+import { OrderListUrlSortField } from "@dashboard/orders/urls";
+import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 export const DEFAULT_SORT_KEY = OrderListUrlSortField.number;
 

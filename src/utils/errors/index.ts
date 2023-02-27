@@ -1,10 +1,13 @@
-import { UserError } from '@dashboard/types';
+import { UserError } from "@dashboard/types";
 
 export function getFieldError<T extends UserError>(errors: T[], field: string): T | undefined {
   return errors.find(err => err.field === field);
 }
 
-export type FormErrors<TField extends string, TError extends UserError> = Record<TField, TError | undefined>;
+export type FormErrors<TField extends string, TError extends UserError> = Record<
+  TField,
+  TError | undefined
+>;
 
 export function getFormErrors<TField extends string, TError extends UserError>(
   fields: TField[],
@@ -35,8 +38,11 @@ export function getFormChannelErrors<TField extends string, TError extends Chann
   }, {} as Record<TField, TError[]>);
 }
 
-export function getFormChannelError<TError extends ChannelError>(formError: TError[], channelId: string) {
+export function getFormChannelError<TError extends ChannelError>(
+  formError: TError[],
+  channelId: string,
+) {
   return formError?.find(error => error.channels?.find(id => id === channelId));
 }
 
-export { default as getProductErrorMessage } from './product';
+export { default as getProductErrorMessage } from "./product";

@@ -23,7 +23,7 @@ export function getDefaultAddress(address, addressType, withName = true) {
 export function getVariantsLines(variantsList, quantity) {
   return variantsList.map(
     variant => `{quantity:${quantity}
-                    variantId:"${variant.id}"}`
+                    variantId:"${variant.id}"}`,
   );
 }
 
@@ -62,15 +62,9 @@ export const getValuesInArray = array =>
 export function getDataForDescriptionInVariables(descriptionJson) {
   return {
     variables: getValueWithDefault(descriptionJson, {
-      description: `{\"blocks\":[{\"type\":\"paragraph\",\"data\":{\"text\":\"${descriptionJson}\"}}]}`
+      description: `{\"blocks\":[{\"type\":\"paragraph\",\"data\":{\"text\":\"${descriptionJson}\"}}]}`,
     }),
-    mutationVariables: getValueWithDefault(
-      descriptionJson,
-      `($description: JSONString!)`
-    ),
-    descriptionLine: getValueWithDefault(
-      descriptionJson,
-      `description: $description`
-    )
+    mutationVariables: getValueWithDefault(descriptionJson, `($description: JSONString!)`),
+    descriptionLine: getValueWithDefault(descriptionJson, `description: $description`),
   };
 }

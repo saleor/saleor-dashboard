@@ -1,2 +1,2 @@
-export { default } from './MoneyRange';
-export * from './MoneyRange';
+export { default } from "./MoneyRange";
+export * from "./MoneyRange";

@@ -1,7 +1,7 @@
-import { DEMO_MODE } from '@dashboard/config';
-import useForm, { FormChange, SubmitPromise } from '@dashboard/hooks/useForm';
-import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
-import React from 'react';
+import { DEMO_MODE } from "@dashboard/config";
+import useForm, { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import React from "react";
 
 export interface LoginFormData {
   email: string;
@@ -22,11 +22,11 @@ export interface LoginFormProps {
 const getLoginFormData = () => {
   if (DEMO_MODE) {
     return {
-      email: 'admin@example.com',
-      password: 'admin',
+      email: "admin@example.com",
+      password: "admin",
     };
   }
-  return { email: '', password: '' };
+  return { email: "", password: "" };
 };
 
 function useLoginForm(onSubmit: (data: LoginFormData) => SubmitPromise): UseLoginFormResult {
@@ -57,5 +57,5 @@ const LoginForm: React.FC<LoginFormProps> = ({ children, onSubmit }) => {
   return <form onSubmit={handleSubmit}>{children(props)}</form>;
 };
 
-LoginForm.displayName = 'LoginForm';
+LoginForm.displayName = "LoginForm";
 export default LoginForm;

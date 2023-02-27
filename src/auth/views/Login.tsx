@@ -1,15 +1,15 @@
-import { useAvailableExternalAuthenticationsQuery } from '@dashboard/graphql';
-import useLocalStorage from '@dashboard/hooks/useLocalStorage';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { getAppMountUriForRedirect } from '@dashboard/utils/urls';
-import React, { useEffect } from 'react';
-import urlJoin from 'url-join';
-import useRouter from 'use-react-router';
+import { useAvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
+import React, { useEffect } from "react";
+import urlJoin from "url-join";
+import useRouter from "use-react-router";
 
-import { useUser } from '..';
-import LoginPage from '../components/LoginPage';
-import { LoginFormData } from '../components/LoginPage/types';
-import { loginCallbackPath, LoginUrlQueryParams } from '../urls';
+import { useUser } from "..";
+import LoginPage from "../components/LoginPage";
+import { LoginFormData } from "../components/LoginPage/types";
+import { loginCallbackPath, LoginUrlQueryParams } from "../urls";
 
 interface LoginViewProps {
   params: LoginUrlQueryParams;
@@ -18,12 +18,16 @@ interface LoginViewProps {
 const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   const navigate = useNavigator();
   const { location } = useRouter();
-  const { login, requestLoginByExternalPlugin, loginByExternalPlugin, authenticating, errors } = useUser();
+  const { login, requestLoginByExternalPlugin, loginByExternalPlugin, authenticating, errors } =
+    useUser();
   const { data: externalAuthentications, loading: externalAuthenticationsLoading } =
     useAvailableExternalAuthenticationsQuery();
-  const [requestedExternalPluginId, setRequestedExternalPluginId] = useLocalStorage('requestedExternalPluginId', null);
+  const [requestedExternalPluginId, setRequestedExternalPluginId] = useLocalStorage(
+    "requestedExternalPluginId",
+    null,
+  );
 
-  const [fallbackUri, setFallbackUri] = useLocalStorage('externalLoginFallbackUri', null);
+  const [fallbackUri, setFallbackUri] = useLocalStorage("externalLoginFallbackUri", null);
 
   const handleSubmit = async (data: LoginFormData) => {
     const result = await login(data.email, data.password);
@@ -38,7 +42,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     const result = await requestLoginByExternalPlugin(pluginId, {
       redirectUri: urlJoin(window.location.origin, getAppMountUriForRedirect(), loginCallbackPath),
     });
-    const data = JSON.parse(result?.authenticationData || '');
+    const data = JSON.parse(result?.authenticationData || "");
     if (data && !result?.errors?.length) {
       setRequestedExternalPluginId(pluginId);
       window.location.href = data.authorizationUrl;
@@ -52,7 +56,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     });
     setRequestedExternalPluginId(null);
     if (result && !result?.errors?.length) {
-      navigate(fallbackUri ?? '/');
+      navigate(fallbackUri ?? "/");
       setFallbackUri(null);
     }
   };
@@ -80,5 +84,5 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     />
   );
 };
-LoginView.displayName = 'LoginView';
+LoginView.displayName = "LoginView";
 export default LoginView;

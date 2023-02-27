@@ -1,2 +1,2 @@
-export * from './AppInstall';
-export { default } from './AppInstall';
+export * from "./AppInstall";
+export { default } from "./AppInstall";

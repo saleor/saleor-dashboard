@@ -1,2 +1,2 @@
-export { default } from './ResetPasswordSuccessPage';
-export * from './ResetPasswordSuccessPage';
+export { default } from "./ResetPasswordSuccessPage";
+export * from "./ResetPasswordSuccessPage";

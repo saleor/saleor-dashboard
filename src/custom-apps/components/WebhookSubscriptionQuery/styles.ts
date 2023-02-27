@@ -1,9 +1,9 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
     disabled: {
-      pointerEvents: 'none',
+      pointerEvents: "none",
       opacity: 0.6,
     },
     cardContent: {
@@ -17,5 +17,5 @@ export const useStyles = makeStyles(
       paddingLeft: 0,
     },
   }),
-  { name: 'WebhookSubscriptionQuery' },
+  { name: "WebhookSubscriptionQuery" },
 );

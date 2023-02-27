@@ -1,12 +1,12 @@
-import { ChannelShippingData } from '@dashboard/channels/utils';
-import { Content } from '@dashboard/components/AppLayout/Content';
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import ChannelsAvailabilityCard from '@dashboard/components/ChannelsAvailabilityCard';
-import { WithFormId } from '@dashboard/components/Form';
-import Savebar from '@dashboard/components/Savebar';
+import { ChannelShippingData } from "@dashboard/channels/utils";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import { WithFormId } from "@dashboard/components/Form";
+import Savebar from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
   PostalCodeRuleInclusionTypeEnum,
@@ -15,33 +15,33 @@ import {
   ShippingMethodTypeEnum,
   ShippingMethodTypeFragment,
   TaxClassBaseFragment,
-} from '@dashboard/graphql';
-import useForm, { SubmitPromise } from '@dashboard/hooks/useForm';
-import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { validatePrice } from '@dashboard/products/utils/validation';
-import { handleTaxClassChange } from '@dashboard/productTypes/handlers';
-import OrderValue from '@dashboard/shipping/components/OrderValue';
-import OrderWeight from '@dashboard/shipping/components/OrderWeight';
-import PricingCard from '@dashboard/shipping/components/PricingCard';
-import ShippingRateInfo from '@dashboard/shipping/components/ShippingRateInfo';
-import { createChannelsChangeHandler } from '@dashboard/shipping/handlers';
-import { FetchMoreProps } from '@dashboard/types';
-import { RichTextContext } from '@dashboard/utils/richText/context';
-import useRichText from '@dashboard/utils/richText/useRichText';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React, { FormEventHandler } from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { validatePrice } from "@dashboard/products/utils/validation";
+import { handleTaxClassChange } from "@dashboard/productTypes/handlers";
+import OrderValue from "@dashboard/shipping/components/OrderValue";
+import OrderWeight from "@dashboard/shipping/components/OrderWeight";
+import PricingCard from "@dashboard/shipping/components/PricingCard";
+import ShippingRateInfo from "@dashboard/shipping/components/ShippingRateInfo";
+import { createChannelsChangeHandler } from "@dashboard/shipping/handlers";
+import { FetchMoreProps } from "@dashboard/types";
+import { RichTextContext } from "@dashboard/utils/richText/context";
+import useRichText from "@dashboard/utils/richText/useRichText";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React, { FormEventHandler } from "react";
+import { useIntl } from "react-intl";
 
-import ShippingMethodTaxes from '../ShippingMethodTaxes';
-import ShippingZonePostalCodes from '../ShippingZonePostalCodes';
-import { ShippingZoneRateCommonFormData } from '../ShippingZoneRatesPage/types';
+import ShippingMethodTaxes from "../ShippingMethodTaxes";
+import ShippingZonePostalCodes from "../ShippingZonePostalCodes";
+import { ShippingZoneRateCommonFormData } from "../ShippingZoneRatesPage/types";
 
 export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   allChannelsCount?: number;
   shippingChannels: ChannelShippingData[];
   disabled: boolean;
-  postalCodes?: ShippingMethodTypeFragment['postalCodeRules'];
+  postalCodes?: ShippingMethodTypeFragment["postalCodeRules"];
   channelErrors: ShippingChannelsErrorFragment[];
   errors: ShippingErrorFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -85,18 +85,18 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
   const isPriceVariant = variant === ShippingMethodTypeEnum.PRICE;
   const initialForm: ShippingZoneRateCommonFormData = {
     channelListings: shippingChannels,
-    maxDays: '',
-    maxValue: '',
-    minDays: '',
-    minValue: '',
-    name: '',
+    maxDays: "",
+    maxValue: "",
+    minDays: "",
+    minValue: "",
+    name: "",
     description: null,
     orderValueRestricted: true,
     type: null,
-    taxClassId: '',
+    taxClassId: "",
   };
 
-  const [taxClassDisplayName, setTaxClassDisplayName] = React.useState('');
+  const [taxClassDisplayName, setTaxClassDisplayName] = React.useState("");
 
   const {
     change,
@@ -132,7 +132,11 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
 
   const handleSubmit = async () => handleFormSubmit(await getData());
 
-  const handleChannelsChange = createChannelsChangeHandler(shippingChannels, onChannelsChange, triggerChange);
+  const handleChannelsChange = createChannelsChangeHandler(
+    shippingChannels,
+    onChannelsChange,
+    triggerChange,
+  );
   const isValid = !data.channelListings?.some(channel => validatePrice(channel.price));
   const isSaveDisabled = disabled || !isValid;
   setIsSubmitDisabled(isSaveDisabled);
@@ -146,14 +150,14 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
             title={
               isPriceVariant
                 ? intl.formatMessage({
-                    id: 'RXPGi/',
-                    defaultMessage: 'Price Rate Create',
-                    description: 'page title',
+                    id: "RXPGi/",
+                    defaultMessage: "Price Rate Create",
+                    description: "page title",
                   })
                 : intl.formatMessage({
-                    id: 'NDm2Fe',
-                    defaultMessage: 'Weight Rate Create',
-                    description: 'page title',
+                    id: "NDm2Fe",
+                    defaultMessage: "Weight Rate Create",
+                    description: "page title",
                   })
             }
           />
@@ -208,7 +212,9 @@ export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePagePr
               taxClassDisplayName={taxClassDisplayName}
               taxClasses={taxClasses}
               disabled={false}
-              onChange={event => handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)}
+              onChange={event =>
+                handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
+              }
               onFetchMore={fetchMoreTaxClasses}
             />
           </RightSidebar>

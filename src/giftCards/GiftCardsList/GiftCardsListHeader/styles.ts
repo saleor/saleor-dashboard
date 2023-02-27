@@ -1,16 +1,16 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(
   theme => ({
     preview: {
-      position: 'absolute',
+      position: "absolute",
       top: theme.spacing(-4),
     },
     title: {
-      position: 'relative',
+      position: "relative",
     },
   }),
-  { name: 'GiftCardListHeader' },
+  { name: "GiftCardListHeader" },
 );
 
 export default useStyles;

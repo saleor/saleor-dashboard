@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { OrderDetailsQuery } from '@dashboard/graphql';
+import { OrderDetailsQuery } from "@dashboard/graphql";
 import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps,
-} from '@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider';
+} from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import {
   OrderLineDiscountContext,
   OrderLineDiscountContextConsumerProps,
-} from '@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider';
-import React from 'react';
+} from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import React from "react";
 
-export const getDiscountsProvidersWrapper = (order: OrderDetailsQuery['order']) => {
+export const getDiscountsProvidersWrapper = (order: OrderDetailsQuery["order"]) => {
   const mockedCommonDiscountProviderValues = {
     openDialog: () => {},
     closeDialog: () => {},
@@ -20,8 +20,8 @@ export const getDiscountsProvidersWrapper = (order: OrderDetailsQuery['order']) 
   const MockOrderDiscountProvider = ({ children }) => {
     const mockedOrderDiscountProviderValues: OrderDiscountContextConsumerProps = {
       ...mockedCommonDiscountProviderValues,
-      orderDiscountAddStatus: 'default',
-      orderDiscountRemoveStatus: 'default',
+      orderDiscountAddStatus: "default",
+      orderDiscountRemoveStatus: "default",
       orderDiscount: null,
       addOrderDiscount: () => {},
       removeOrderDiscount: () => {},
@@ -42,8 +42,8 @@ export const getDiscountsProvidersWrapper = (order: OrderDetailsQuery['order']) 
       addOrderLineDiscount: () => {},
       removeOrderLineDiscount: () => {},
       orderLineDiscount: null,
-      orderLineDiscountUpdateStatus: 'default',
-      orderLineDiscountRemoveStatus: 'default',
+      orderLineDiscountUpdateStatus: "default",
+      orderLineDiscountRemoveStatus: "default",
       totalDiscountedPrice: order.lines[0].totalPrice.gross,
       unitUndiscountedPrice: order.lines[0].undiscountedUnitPrice.gross,
       unitDiscountedPrice: order.lines[0].unitPrice.gross,

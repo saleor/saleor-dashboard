@@ -1,2 +1,2 @@
-export { default } from './CategoryUpdatePage';
-export * from './CategoryUpdatePage';
+export { default } from "./CategoryUpdatePage";
+export * from "./CategoryUpdatePage";

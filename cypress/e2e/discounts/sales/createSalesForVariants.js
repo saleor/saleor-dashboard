@@ -12,10 +12,7 @@ import {
   deleteSalesStartsWith,
 } from "../../../support/api/utils/discounts/salesUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../../support/api/utils/shippingUtils";
+import { createShipping, deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import {
   getDefaultTaxClass,
   updateTaxConfigurationForChannel,
@@ -146,13 +143,9 @@ describe("Sales discounts for variant", () => {
             const variantRespNotOnSale = checkout.lines[1].variant.pricing;
 
             expect(variantRespOnSale.onSale).to.be.true;
-            expect(variantRespOnSale.price.gross.amount).to.eq(
-              productPriceOnSale,
-            );
+            expect(variantRespOnSale.price.gross.amount).to.eq(productPriceOnSale);
             expect(variantRespNotOnSale.onSale).to.be.false;
-            expect(variantRespNotOnSale.price.gross.amount).to.eq(
-              productData.price,
-            );
+            expect(variantRespNotOnSale.price.gross.amount).to.eq(productData.price);
           });
         });
     },

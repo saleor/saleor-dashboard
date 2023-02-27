@@ -1,13 +1,19 @@
-import { saleList } from '@dashboard/discounts/fixtures';
-import { SaleListUrlSortField } from '@dashboard/discounts/urls';
-import { filterPageProps, listActionsProps, pageListProps, sortPageProps, tabPageProps } from '@dashboard/fixtures';
-import { DiscountStatusEnum, DiscountValueTypeEnum } from '@dashboard/graphql';
-import Decorator from '@dashboard/storybook/Decorator';
-import { PaginatorContextDecorator } from '@dashboard/storybook/PaginatorContextDecorator';
-import { storiesOf } from '@storybook/react';
-import React from 'react';
+import { saleList } from "@dashboard/discounts/fixtures";
+import { SaleListUrlSortField } from "@dashboard/discounts/urls";
+import {
+  filterPageProps,
+  listActionsProps,
+  pageListProps,
+  sortPageProps,
+  tabPageProps,
+} from "@dashboard/fixtures";
+import { DiscountStatusEnum, DiscountValueTypeEnum } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
-import SaleListPage, { SaleListPageProps } from './SaleListPage';
+import SaleListPage, { SaleListPageProps } from "./SaleListPage";
 
 const props: SaleListPageProps = {
   ...listActionsProps,
@@ -18,11 +24,11 @@ const props: SaleListPageProps = {
   filterOpts: {
     channel: {
       active: false,
-      value: 'default-channel',
+      value: "default-channel",
       choices: [
         {
-          value: 'default-channel',
-          label: 'Default channel',
+          value: "default-channel",
+          label: "Default channel",
         },
       ],
     },
@@ -43,19 +49,23 @@ const props: SaleListPageProps = {
     },
   },
   sales: saleList,
-  selectedChannelId: '123',
+  selectedChannelId: "123",
   sort: {
     ...sortPageProps.sort,
     sort: SaleListUrlSortField.name,
   },
 };
 
-storiesOf('Discounts / Sale list', module)
+storiesOf("Discounts / Sale list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
-  .add('default', () => <SaleListPage {...props} />)
-  .add('loading', () => <SaleListPage {...props} sales={undefined} />)
-  .add('no data', () => <SaleListPage {...props} sales={[]} />)
-  .add('no channels', () => (
-    <SaleListPage {...props} sales={saleList.map(sale => ({ ...sale, channelListings: [] }))} selectedChannelId="" />
+  .add("default", () => <SaleListPage {...props} />)
+  .add("loading", () => <SaleListPage {...props} sales={undefined} />)
+  .add("no data", () => <SaleListPage {...props} sales={[]} />)
+  .add("no channels", () => (
+    <SaleListPage
+      {...props}
+      sales={saleList.map(sale => ({ ...sale, channelListings: [] }))}
+      selectedChannelId=""
+    />
   ));

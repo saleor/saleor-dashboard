@@ -1,22 +1,24 @@
-import { FormChange } from '@dashboard/hooks/useForm';
-import useStateFromProps from '@dashboard/hooks/useStateFromProps';
-import { FetchMoreProps } from '@dashboard/types';
-import { ClickAwayListener, Grow, Popper } from '@material-ui/core';
-import { Choice, ColumnsIcon, IconButton, IconButtonProps, makeStyles } from '@saleor/macaw-ui';
-import { score } from 'fuzzaldrin';
-import sortBy from 'lodash/sortBy';
-import React from 'react';
+import { FormChange } from "@dashboard/hooks/useForm";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { FetchMoreProps } from "@dashboard/types";
+import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
+import { Choice, ColumnsIcon, IconButton, IconButtonProps, makeStyles } from "@saleor/macaw-ui";
+import { score } from "fuzzaldrin";
+import sortBy from "lodash/sortBy";
+import React from "react";
 
-import { MultiAutocompleteChoiceType } from '../MultiAutocompleteSelectField';
-import ColumnPickerContent, { ColumnPickerContentProps } from './ColumnPickerContent';
+import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
+import ColumnPickerContent, { ColumnPickerContentProps } from "./ColumnPickerContent";
 
-export interface ColumnPickerProps extends FetchMoreProps, Pick<ColumnPickerContentProps, 'onQueryChange'> {
+export interface ColumnPickerProps
+  extends FetchMoreProps,
+    Pick<ColumnPickerContentProps, "onQueryChange"> {
   className?: string;
   availableColumns: MultiAutocompleteChoiceType[];
   defaultColumns: string[];
   initialColumns: Choice[];
   initialOpen?: boolean;
-  IconButtonProps?: Omit<IconButtonProps, 'ref'>;
+  IconButtonProps?: Omit<IconButtonProps, "ref">;
   query: string;
   onSave: (columns: string[]) => void;
 }
@@ -29,7 +31,7 @@ const useStyles = makeStyles(
     },
   }),
   {
-    name: 'ColumnPicker',
+    name: "ColumnPicker",
   },
 );
 
@@ -74,7 +76,7 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
       value,
     }));
     setInitialColumnsChoices(defaultColumnsChoices);
-    onChange({ target: { name: '', value: defaultColumns } });
+    onChange({ target: { name: "", value: defaultColumns } });
   };
 
   const handleSave = () => {
@@ -87,7 +89,7 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
       ...column,
       score: -score(column.label, query),
     })),
-    'score',
+    "score",
   );
 
   return (
@@ -95,7 +97,7 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
       <div ref={anchor} className={className}>
         <IconButton
           {...IconButtonProps}
-          state={isExpanded ? 'active' : 'default'}
+          state={isExpanded ? "active" : "default"}
           onClick={() => setExpansionState(prevState => !prevState)}
         >
           <ColumnsIcon />
@@ -111,7 +113,7 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
             <Grow
               {...TransitionProps}
               style={{
-                transformOrigin: placement === 'bottom' ? 'right bottom' : 'right top',
+                transformOrigin: placement === "bottom" ? "right bottom" : "right top",
               }}
             >
               <ColumnPickerContent

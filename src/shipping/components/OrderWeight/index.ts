@@ -1,2 +1,2 @@
-export * from './OrderWeight';
-export { default } from './OrderWeight';
+export * from "./OrderWeight";
+export { default } from "./OrderWeight";

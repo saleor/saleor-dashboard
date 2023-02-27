@@ -1,12 +1,12 @@
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import CardTitle from '@dashboard/components/CardTitle';
-import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
-import Form from '@dashboard/components/Form';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Savebar from '@dashboard/components/Savebar';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableRowLink from '@dashboard/components/TableRowLink';
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import Form from "@dashboard/components/Form";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Savebar from "@dashboard/components/Savebar";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
 import {
   FulfillOrderMutation,
   OrderErrorCode,
@@ -14,30 +14,34 @@ import {
   OrderFulfillLineFragment,
   OrderFulfillStockInput,
   ShopOrderSettingsFragment,
-} from '@dashboard/graphql';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import useFormset, { FormsetData } from '@dashboard/hooks/useFormset';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { commonMessages } from '@dashboard/intl';
-import { renderCollection } from '@dashboard/misc';
-import OrderChangeWarehouseDialog from '@dashboard/orders/components/OrderChangeWarehouseDialog';
-import { OrderFulfillUrlDialog, OrderFulfillUrlQueryParams, orderUrl } from '@dashboard/orders/urls';
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useFormset, { FormsetData } from "@dashboard/hooks/useFormset";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { commonMessages } from "@dashboard/intl";
+import { renderCollection } from "@dashboard/misc";
+import OrderChangeWarehouseDialog from "@dashboard/orders/components/OrderChangeWarehouseDialog";
+import {
+  OrderFulfillUrlDialog,
+  OrderFulfillUrlQueryParams,
+  orderUrl,
+} from "@dashboard/orders/urls";
 import {
   getAttributesCaption,
   getLineAllocationWithHighestQuantity,
   getToFulfillOrderLines,
   OrderFulfillLineFormData,
-} from '@dashboard/orders/utils/data';
-import { Card, CardContent, TableBody, TableCell, TableHead } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@dashboard/orders/utils/data";
+import { Card, CardContent, TableBody, TableCell, TableHead } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import OrderFulfillLine from '../OrderFulfillLine/OrderFulfillLine';
-import OrderFulfillStockExceededDialog from '../OrderFulfillStockExceededDialog';
-import { messages } from './messages';
-import { useStyles } from './styles';
+import OrderFulfillLine from "../OrderFulfillLine/OrderFulfillLine";
+import OrderFulfillStockExceededDialog from "../OrderFulfillStockExceededDialog";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 interface OrderFulfillFormData {
   sendInfo: boolean;
@@ -49,8 +53,8 @@ export interface OrderFulfillSubmitData extends OrderFulfillFormData {
 export interface OrderFulfillPageProps {
   params: OrderFulfillUrlQueryParams;
   loading: boolean;
-  errors: FulfillOrderMutation['orderFulfill']['errors'];
-  order: OrderFulfillDataQuery['order'];
+  errors: FulfillOrderMutation["orderFulfill"]["errors"];
+  order: OrderFulfillDataQuery["order"];
   saveButtonBar: ConfirmButtonTransitionState;
   shopSettings?: ShopOrderSettingsFragment;
   onSubmit: (data: OrderFulfillSubmitData) => SubmitPromise;
@@ -64,7 +68,17 @@ const initialFormData: OrderFulfillFormData = {
 };
 
 const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
-  const { params, loading, errors, order, saveButtonBar, shopSettings, onSubmit, openModal, closeModal } = props;
+  const {
+    params,
+    loading,
+    errors,
+    order,
+    saveButtonBar,
+    shopSettings,
+    onSubmit,
+    openModal,
+    closeModal,
+  } = props;
 
   const intl = useIntl();
   const classes = useStyles(props);
@@ -203,7 +217,7 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
                           formsetData={formsetData}
                           formsetChange={formsetChange}
                           onWarehouseChange={() =>
-                            openModal('change-warehouse', {
+                            openModal("change-warehouse", {
                               lineId: line.id,
                               warehouseId: formsetData[lineIndex]?.value?.[0]?.warehouse?.id,
                             })
@@ -245,7 +259,9 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
               }}
               state={saveButtonBar}
               tooltips={{
-                confirm: notAllowedToFulfillUnpaid && intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder),
+                confirm:
+                  notAllowedToFulfillUnpaid &&
+                  intl.formatMessage(commonMessages.cannotFullfillUnpaidOrder),
               }}
               onSubmit={submit}
               onCancel={() => navigate(orderUrl(order?.id))}
@@ -262,11 +278,12 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
         )}
       </Form>
       <OrderChangeWarehouseDialog
-        open={params.action === 'change-warehouse'}
+        open={params.action === "change-warehouse"}
         line={order?.lines.find(line => line.id === params.lineId)}
         currentWarehouseId={params.warehouseId}
         onConfirm={warehouse => {
-          const lineFormQuantity = formsetData.find(item => item.id === params.lineId)?.value?.[0]?.quantity;
+          const lineFormQuantity = formsetData.find(item => item.id === params.lineId)?.value?.[0]
+            ?.quantity;
 
           formsetChange(params.lineId, [
             {
@@ -281,5 +298,5 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   );
 };
 
-OrderFulfillPage.displayName = 'OrderFulfillPage';
+OrderFulfillPage.displayName = "OrderFulfillPage";
 export default OrderFulfillPage;

@@ -1,8 +1,8 @@
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import { Card, CardContent } from '@material-ui/core';
-import React from 'react';
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { Card, CardContent } from "@material-ui/core";
+import React from "react";
 
-import { useStyles } from '../../styles';
+import { useStyles } from "../../styles";
 
 export interface CardContainerProps {
   children: React.ReactNode;
@@ -24,5 +24,5 @@ const CardContainer: React.FC<CardContainerProps> = ({ children, header }) => {
   );
 };
 
-CardContainer.displayName = 'CardContainer';
+CardContainer.displayName = "CardContainer";
 export default CardContainer;

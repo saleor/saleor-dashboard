@@ -25,9 +25,7 @@ export function getApps(first, search) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .then(resp => resp.body.data.apps.edges);
+  return cy.sendRequestWithQuery(mutation).then(resp => resp.body.data.apps.edges);
 }
 
 export function deleteApp(appId) {

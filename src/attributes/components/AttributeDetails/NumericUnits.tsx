@@ -1,35 +1,42 @@
-import { AttributePageFormData } from '@dashboard/attributes/components/AttributePage';
-import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
-import SingleSelectField from '@dashboard/components/SingleSelectField';
-import { MeasurementUnitsEnum } from '@dashboard/graphql';
-import { UseFormResult } from '@dashboard/hooks/useForm';
-import { commonMessages } from '@dashboard/intl';
-import { makeStyles } from '@saleor/macaw-ui';
-import React, { useEffect, useMemo, useState } from 'react';
-import { useIntl } from 'react-intl';
+import { AttributePageFormData } from "@dashboard/attributes/components/AttributePage";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import SingleSelectField from "@dashboard/components/SingleSelectField";
+import { MeasurementUnitsEnum } from "@dashboard/graphql";
+import { UseFormResult } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
+import { makeStyles } from "@saleor/macaw-ui";
+import React, { useEffect, useMemo, useState } from "react";
+import { useIntl } from "react-intl";
 
-import * as M from './messages';
-import { getUnitChoices, unitMapping, UnitSystem, unitSystemChoices, UnitType, unitTypeChoices } from './utils';
+import * as M from "./messages";
+import {
+  getUnitChoices,
+  unitMapping,
+  UnitSystem,
+  unitSystemChoices,
+  UnitType,
+  unitTypeChoices,
+} from "./utils";
 
 const useStyles = makeStyles(
   theme => ({
     unitsRow: {
       columnGap: theme.spacing(2),
-      display: 'flex',
-      [theme.breakpoints.down('sm')]: {
-        flexFlow: 'wrap',
+      display: "flex",
+      [theme.breakpoints.down("sm")]: {
+        flexFlow: "wrap",
         rowGap: theme.spacing(3),
       },
     },
     hr: {
-      border: 'none',
+      border: "none",
       borderTop: `1px solid ${theme.palette.divider}`,
       height: 0,
-      margin: '0.5rem 0',
-      width: '100%',
+      margin: "0.5rem 0",
+      width: "100%",
     },
   }),
-  { name: 'NumericUnits' },
+  { name: "NumericUnits" },
 );
 
 interface UnitData {
@@ -39,11 +46,21 @@ interface UnitData {
 }
 
 interface NumericUnitsProps
-  extends Pick<UseFormResult<AttributePageFormData>, 'set' | 'setError' | 'data' | 'errors' | 'clearErrors'> {
+  extends Pick<
+    UseFormResult<AttributePageFormData>,
+    "set" | "setError" | "data" | "errors" | "clearErrors"
+  > {
   disabled: boolean;
 }
 
-export const NumericUnits: React.FC<NumericUnitsProps> = ({ data, disabled, errors, set, setError, clearErrors }) => {
+export const NumericUnits: React.FC<NumericUnitsProps> = ({
+  data,
+  disabled,
+  errors,
+  set,
+  setError,
+  clearErrors,
+}) => {
   const { formatMessage } = useIntl();
   const classes = useStyles();
   const [unitData, setUnitData] = useState<UnitData>({
@@ -100,10 +117,10 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({ data, disabled, erro
 
   useEffect(() => {
     if (unit === undefined && !errors.unit) {
-      setError('unit', formatMessage(commonMessages.requiredField));
+      setError("unit", formatMessage(commonMessages.requiredField));
     }
     if (errors.unit && (unit || unit === null)) {
-      clearErrors('unit');
+      clearErrors("unit");
     }
   }, [unitData, errors]);
 
@@ -160,7 +177,9 @@ export const NumericUnits: React.FC<NumericUnitsProps> = ({ data, disabled, erro
               }))
             }
             disabled={!type || disabled}
-            value={type && system && unit && unitMapping[system][type].includes(unit) ? unit : undefined}
+            value={
+              type && system && unit && unitMapping[system][type].includes(unit) ? unit : undefined
+            }
           />
         </div>
       )}

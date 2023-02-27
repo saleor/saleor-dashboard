@@ -1,12 +1,12 @@
-import { AppInstallationFragment } from '@dashboard/graphql';
-import { buttonMessages } from '@dashboard/intl';
-import { appInstallationStatusMessages } from '@dashboard/new-apps/messages';
-import { Typography } from '@material-ui/core';
-import { Button, Indicator, Tooltip, TooltipMountWrapper } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { AppInstallationFragment } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import { appInstallationStatusMessages } from "@dashboard/new-apps/messages";
+import { Typography } from "@material-ui/core";
+import { Button, Indicator, Tooltip, TooltipMountWrapper } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { useActionsStyles } from './styles';
+import { useActionsStyles } from "./styles";
 
 interface InstallErrorActionProps {
   appInstallation?: AppInstallationFragment;
@@ -14,7 +14,11 @@ interface InstallErrorActionProps {
   removeInstall?: () => void;
 }
 
-const InstallErrorAction = ({ appInstallation, retryInstall, removeInstall }: InstallErrorActionProps) => {
+const InstallErrorAction = ({
+  appInstallation,
+  retryInstall,
+  removeInstall,
+}: InstallErrorActionProps) => {
   const classes = useActionsStyles();
 
   if (!retryInstall && !removeInstall) {
@@ -37,12 +41,16 @@ const InstallErrorAction = ({ appInstallation, retryInstall, removeInstall }: In
         </Button>
       )}
       {removeInstall && (
-        <Button variant="secondary" onClick={removeInstall} data-test-id="app-remove-install-button">
+        <Button
+          variant="secondary"
+          onClick={removeInstall}
+          data-test-id="app-remove-install-button"
+        >
           <FormattedMessage {...buttonMessages.cancel} />
         </Button>
       )}
     </>
   );
 };
-InstallErrorAction.displayName = 'InstallErrorAction';
+InstallErrorAction.displayName = "InstallErrorAction";
 export default InstallErrorAction;

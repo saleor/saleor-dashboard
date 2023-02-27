@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const rootCategories = gql`
   query RootCategories(
@@ -9,7 +9,15 @@ export const rootCategories = gql`
     $filter: CategoryFilterInput
     $sort: CategorySortingInput
   ) {
-    categories(level: 0, first: $first, after: $after, last: $last, before: $before, filter: $filter, sortBy: $sort) {
+    categories(
+      level: 0
+      first: $first
+      after: $after
+      last: $last
+      before: $before
+      filter: $filter
+      sortBy: $sort
+    ) {
       edges {
         node {
           ...Category

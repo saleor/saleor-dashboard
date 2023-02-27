@@ -1,11 +1,11 @@
-import { gql, useApolloClient } from '@apollo/client';
+import { gql, useApolloClient } from "@apollo/client";
 import {
   SearchAttributeValuesDocument,
   SearchAttributeValuesQuery,
   SearchAttributeValuesQueryVariables,
-} from '@dashboard/graphql';
-import makeSearch from '@dashboard/hooks/makeSearch';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
+} from "@dashboard/graphql";
+import makeSearch from "@dashboard/hooks/makeSearch";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 export const searchAttributeValues = gql`
   query SearchAttributeValues($id: ID, $after: String, $first: Int!, $query: String!) {
@@ -52,7 +52,9 @@ export default makeSearch<SearchAttributeValuesQuery, SearchAttributeValuesQuery
     if (result.data?.attribute.choices.pageInfo.hasNextPage) {
       result.loadMore(
         (prev, next) => {
-          if (prev.attribute.choices.pageInfo.endCursor === next.attribute.choices.pageInfo.endCursor) {
+          if (
+            prev.attribute.choices.pageInfo.endCursor === next.attribute.choices.pageInfo.endCursor
+          ) {
             return prev;
           }
 

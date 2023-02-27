@@ -18,10 +18,7 @@ export function createWarehouse({ name, address }) {
     .its("response.body.data.createWarehouse.warehouse");
 }
 
-export function visitAndEnablePickup(
-  warehouseId,
-  pickup = enableAllWarehousesPickup
-) {
+export function visitAndEnablePickup(warehouseId, pickup = enableAllWarehousesPickup) {
   cy.visit(warehouseDetailsUrl(warehouseId));
   pickup();
   return saveWarehouseAfterUpdate();
@@ -29,25 +26,19 @@ export function visitAndEnablePickup(
 
 export function visitSetPublicStockAndEnablePickup(
   warehouseId,
-  pickup = enableAllWarehousesPickup
+  pickup = enableAllWarehousesPickup,
 ) {
-  cy.visit(warehouseDetailsUrl(warehouseId))
-    .get(WAREHOUSES_DETAILS.publicRadioButton)
-    .click();
+  cy.visit(warehouseDetailsUrl(warehouseId)).get(WAREHOUSES_DETAILS.publicRadioButton).click();
   pickup();
   return saveWarehouseAfterUpdate();
 }
 
 export function enableAllWarehousesPickup() {
-  return cy
-    .get(WAREHOUSES_DETAILS.clickAndCollectAllWarehousesRadioButton)
-    .click();
+  return cy.get(WAREHOUSES_DETAILS.clickAndCollectAllWarehousesRadioButton).click();
 }
 
 export function enableLocalStockOnlyPickup() {
-  return cy
-    .get(WAREHOUSES_DETAILS.clickAndCollectLocalStockRadioButton)
-    .click();
+  return cy.get(WAREHOUSES_DETAILS.clickAndCollectLocalStockRadioButton).click();
 }
 
 function saveWarehouseAfterUpdate() {
@@ -60,5 +51,5 @@ function saveWarehouseAfterUpdate() {
 
 export const pickupOptions = {
   allWarehouses: enableAllWarehousesPickup,
-  local: enableLocalStockOnlyPickup
+  local: enableLocalStockOnlyPickup,
 };

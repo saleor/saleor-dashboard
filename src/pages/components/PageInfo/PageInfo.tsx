@@ -1,18 +1,18 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import RichTextEditor from '@dashboard/components/RichTextEditor';
-import { RichTextEditorLoading } from '@dashboard/components/RichTextEditor/RichTextEditorLoading';
-import { PageErrorFragment } from '@dashboard/graphql';
-import { commonMessages } from '@dashboard/intl';
-import { getFormErrors } from '@dashboard/utils/errors';
-import getPageErrorMessage from '@dashboard/utils/errors/page';
-import { useRichTextContext } from '@dashboard/utils/richText/context';
-import { Card, CardContent, TextField } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import RichTextEditor from "@dashboard/components/RichTextEditor";
+import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
+import { PageErrorFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getPageErrorMessage from "@dashboard/utils/errors/page";
+import { useRichTextContext } from "@dashboard/utils/richText/context";
+import { Card, CardContent, TextField } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { PageData } from '../PageDetailsPage/form';
+import { PageData } from "../PageDetailsPage/form";
 
 export interface PageInfoProps {
   data: PageData;
@@ -24,10 +24,10 @@ export interface PageInfoProps {
 const useStyles = makeStyles(
   {
     root: {
-      overflow: 'visible',
+      overflow: "visible",
     },
   },
-  { name: 'PageInfo' },
+  { name: "PageInfo" },
 );
 
 const PageInfo: React.FC<PageInfoProps> = props => {
@@ -37,7 +37,7 @@ const PageInfo: React.FC<PageInfoProps> = props => {
   const intl = useIntl();
 
   const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
-  const formErrors = getFormErrors(['title', 'content'], errors);
+  const formErrors = getFormErrors(["title", "content"], errors);
 
   return (
     <Card className={classes.root}>
@@ -49,11 +49,11 @@ const PageInfo: React.FC<PageInfoProps> = props => {
           fullWidth
           helperText={getPageErrorMessage(formErrors.title, intl)}
           label={intl.formatMessage({
-            id: 'gr+oXW',
-            defaultMessage: 'Title',
-            description: 'page title',
+            id: "gr+oXW",
+            defaultMessage: "Title",
+            description: "page title",
           })}
-          name={'title' as keyof PageData}
+          name={"title" as keyof PageData}
           value={data.title}
           onChange={onChange}
         />
@@ -67,25 +67,25 @@ const PageInfo: React.FC<PageInfoProps> = props => {
             error={!!formErrors.content}
             helperText={getPageErrorMessage(formErrors.content, intl)}
             label={intl.formatMessage({
-              id: 'gMwpNC',
-              defaultMessage: 'Content',
-              description: 'page content',
+              id: "gMwpNC",
+              defaultMessage: "Content",
+              description: "page content",
             })}
-            name={'content' as keyof PageData}
+            name={"content" as keyof PageData}
           />
         ) : (
           <RichTextEditorLoading
             label={intl.formatMessage({
-              id: 'gMwpNC',
-              defaultMessage: 'Content',
-              description: 'page content',
+              id: "gMwpNC",
+              defaultMessage: "Content",
+              description: "page content",
             })}
-            name={'content' as keyof PageData}
+            name={"content" as keyof PageData}
           />
         )}
       </CardContent>
     </Card>
   );
 };
-PageInfo.displayName = 'PageInfo';
+PageInfo.displayName = "PageInfo";
 export default PageInfo;

@@ -3,13 +3,13 @@ import {
   MenuItemCreateMutation,
   MenuItemUpdateMutation,
   MenuUpdateMutation,
-} from '@dashboard/graphql';
-import { commonMessages } from '@dashboard/intl';
-import { IntlShape } from 'react-intl';
+} from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { IntlShape } from "react-intl";
 
-import { UseNavigatorResult } from '../../../hooks/useNavigator';
-import { UseNotifierResult } from '../../../hooks/useNotifier';
-import { menuListUrl, menuUrl } from '../../urls';
+import { UseNavigatorResult } from "../../../hooks/useNavigator";
+import { UseNotifierResult } from "../../../hooks/useNotifier";
+import { menuListUrl, menuUrl } from "../../urls";
 
 export function handleItemCreate(
   data: MenuItemCreateMutation,
@@ -20,7 +20,7 @@ export function handleItemCreate(
   if (data.menuItemCreate.errors.length === 0) {
     closeModal();
     notify({
-      status: 'success',
+      status: "success",
       text: intl.formatMessage(commonMessages.savedChanges),
     });
   }
@@ -35,7 +35,7 @@ export function handleItemUpdate(
 ) {
   if (data.menuItemUpdate.errors.length === 0) {
     notify({
-      status: 'success',
+      status: "success",
       text: intl.formatMessage(commonMessages.savedChanges),
     });
     navigate(
@@ -55,7 +55,7 @@ export function handleDelete(
 ) {
   if (data.menuDelete.errors.length === 0) {
     notify({
-      status: 'success',
+      status: "success",
       text: intl.formatMessage(commonMessages.savedChanges),
     });
     navigate(menuListUrl(), { replace: true });
@@ -74,7 +74,7 @@ export function handleUpdate(
     data.menuUpdate.errors.length === 0
   ) {
     notify({
-      status: 'success',
+      status: "success",
       text: intl.formatMessage(commonMessages.savedChanges),
     });
     refetch();

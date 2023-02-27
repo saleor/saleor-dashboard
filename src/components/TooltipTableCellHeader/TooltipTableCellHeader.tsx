@@ -1,7 +1,7 @@
-import { Tooltip } from '@saleor/macaw-ui';
-import React from 'react';
+import { Tooltip } from "@saleor/macaw-ui";
+import React from "react";
 
-import TableCellHeader, { TableCellHeaderProps } from '../TableCellHeader';
+import TableCellHeader, { TableCellHeaderProps } from "../TableCellHeader";
 
 interface TooltipTableCellHeaderProps extends TableCellHeaderProps {
   tooltip?: string | React.ReactNodeArray;
@@ -26,5 +26,5 @@ export const TooltipTableCellHeader: React.FC<TooltipTableCellHeaderProps> = pro
   );
 };
 
-TooltipTableCellHeader.displayName = 'TooltipTableCellHeader';
+TooltipTableCellHeader.displayName = "TooltipTableCellHeader";
 export default TooltipTableCellHeader;

@@ -48,11 +48,7 @@ export const PERMISSIONS_OPTIONS = {
   },
   product: {
     user: ONE_PERMISSION_USERS.product,
-    permissions: [
-      PERMISSIONS.product,
-      PERMISSIONS.warehouse,
-      PERMISSIONS.taxes,
-    ],
+    permissions: [PERMISSIONS.product, PERMISSIONS.warehouse, PERMISSIONS.taxes],
     testCase: "TC: SALEOR_3410",
   },
   productTypeAndAttribute: {

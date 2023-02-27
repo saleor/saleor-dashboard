@@ -1,22 +1,22 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
     colName: {
       fontSize: 14,
       paddingLeft: 0,
-      width: 'auto',
+      width: "auto",
     },
     colPrice: {
       minWidth: 300,
     },
     colType: {
       fontSize: 14,
-      textAlign: 'right',
+      textAlign: "right",
       width: 300,
     },
     table: {
-      tableLayout: 'fixed',
+      tableLayout: "fixed",
     },
     tableContainer: {
       margin: theme.spacing(0, -3),
@@ -24,6 +24,6 @@ export const useStyles = makeStyles(
     },
   }),
   {
-    name: 'VoucherRequirements',
+    name: "VoucherRequirements",
   },
 );

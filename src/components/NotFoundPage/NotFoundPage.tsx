@@ -1,10 +1,10 @@
-import notFoundImage from '@assets/images/not-found-404.svg';
-import { Button } from '@dashboard/components/Button';
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import SVG from 'react-inlinesvg';
-import { FormattedMessage } from 'react-intl';
+import notFoundImage from "@assets/images/not-found-404.svg";
+import { Button } from "@dashboard/components/Button";
+import { Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import SVG from "react-inlinesvg";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -13,40 +13,40 @@ const useStyles = makeStyles(
       padding: 20,
     },
     container: {
-      [theme.breakpoints.down('sm')]: {
-        gridTemplateColumns: '1fr',
+      [theme.breakpoints.down("sm")]: {
+        gridTemplateColumns: "1fr",
         padding: theme.spacing(3),
-        width: '100%',
+        width: "100%",
       },
-      display: 'grid',
-      gridTemplateColumns: '1fr 487px',
-      margin: '0 auto',
+      display: "grid",
+      gridTemplateColumns: "1fr 487px",
+      margin: "0 auto",
       width: 830,
     },
     header: {
       fontWeight: 600 as 600,
     },
     innerContainer: {
-      [theme.breakpoints.down('sm')]: {
+      [theme.breakpoints.down("sm")]: {
         order: 1,
-        textAlign: 'center',
+        textAlign: "center",
       },
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
     },
     notFoundImage: {
-      '& svg': {
-        width: '100%',
+      "& svg": {
+        width: "100%",
       },
     },
     root: {
-      alignItems: 'center',
-      display: 'flex',
-      height: '100vh',
+      alignItems: "center",
+      display: "flex",
+      height: "100vh",
     },
   }),
-  { name: 'NotFoundPage' },
+  { name: "NotFoundPage" },
 );
 
 type NotFoundPageProps =
@@ -81,7 +81,11 @@ const NotFoundPage: React.FC<NotFoundPageProps> = props => {
           </div>
           <div>
             <Button className={classes.button} variant="primary" onClick={onBack} href={backHref}>
-              <FormattedMessage id="95oJ5d" defaultMessage="Go back to dashboard" description="button" />
+              <FormattedMessage
+                id="95oJ5d"
+                defaultMessage="Go back to dashboard"
+                description="button"
+              />
             </Button>
           </div>
         </div>
@@ -92,5 +96,5 @@ const NotFoundPage: React.FC<NotFoundPageProps> = props => {
     </div>
   );
 };
-NotFoundPage.displayName = 'NotFoundPage';
+NotFoundPage.displayName = "NotFoundPage";
 export default NotFoundPage;

@@ -1,16 +1,16 @@
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { LanguageFragment } from '@dashboard/graphql';
-import { languageEntitiesUrl } from '@dashboard/translations/urls';
-import { Card, CardContent, TableBody, TableCell } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import { vars } from '@saleor/macaw-ui/next';
-import { clsx } from 'clsx';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { LanguageFragment } from "@dashboard/graphql";
+import { languageEntitiesUrl } from "@dashboard/translations/urls";
+import { Card, CardContent, TableBody, TableCell } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
+import { clsx } from "clsx";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { maybe, renderCollection } from '../../../misc';
+import { maybe, renderCollection } from "../../../misc";
 
 export interface TranslationsLanguageListProps {
   languages: LanguageFragment[];
@@ -19,21 +19,21 @@ export interface TranslationsLanguageListProps {
 const useStyles = makeStyles(
   {
     capitalize: {
-      textTransform: 'capitalize',
+      textTransform: "capitalize",
     },
     cardContent: {
       paddingLeft: 0,
     },
     link: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
     rowLink: {
-      '& .MuiTableCell-root': {
+      "& .MuiTableCell-root": {
         paddingLeft: `${vars.space[9]} !important`,
       },
     },
   },
-  { name: 'TranslationsLanguageList' },
+  { name: "TranslationsLanguageList" },
 );
 
 const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props => {
@@ -50,7 +50,7 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
               languages,
               language => (
                 <TableRowLink
-                  data-test-id={language ? language.code : 'skeleton'}
+                  data-test-id={language ? language.code : "skeleton"}
                   // className={!!language ? classes.link : undefined}
                   className={clsx(
                     {
@@ -59,7 +59,7 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
                     classes.rowLink,
                   )}
                   hover={!!language}
-                  key={language ? language.code : 'skeleton'}
+                  key={language ? language.code : "skeleton"}
                   href={language && languageEntitiesUrl(language.code, {})}
                 >
                   <TableCell className={classes.capitalize}>
@@ -81,5 +81,5 @@ const TranslationsLanguageList: React.FC<TranslationsLanguageListProps> = props 
     </Card>
   );
 };
-TranslationsLanguageList.displayName = 'TranslationsLanguageList';
+TranslationsLanguageList.displayName = "TranslationsLanguageList";
 export default TranslationsLanguageList;

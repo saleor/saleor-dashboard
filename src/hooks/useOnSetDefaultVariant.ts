@@ -1,7 +1,7 @@
-import { Node, useProductVariantSetDefaultMutation } from '@dashboard/graphql';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { getProductErrorMessage } from '@dashboard/utils/errors';
-import { useIntl } from 'react-intl';
+import { Node, useProductVariantSetDefaultMutation } from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getProductErrorMessage } from "@dashboard/utils/errors";
+import { useIntl } from "react-intl";
 
 function useOnSetDefaultVariant(productId: string, variant: Node) {
   const notify = useNotifier();
@@ -13,7 +13,7 @@ function useOnSetDefaultVariant(productId: string, variant: Node) {
       if (errors.length) {
         errors.map(error =>
           notify({
-            status: 'error',
+            status: "error",
             text: getProductErrorMessage(error, intl),
           }),
         );
@@ -23,11 +23,11 @@ function useOnSetDefaultVariant(productId: string, variant: Node) {
         );
         if (defaultVariant) {
           notify({
-            status: 'success',
+            status: "success",
             text: intl.formatMessage(
               {
-                id: 'gSQ0Ge',
-                defaultMessage: 'Variant {name} has been set as default.',
+                id: "gSQ0Ge",
+                defaultMessage: "Variant {name} has been set as default.",
               },
               { name: defaultVariant.name },
             ),

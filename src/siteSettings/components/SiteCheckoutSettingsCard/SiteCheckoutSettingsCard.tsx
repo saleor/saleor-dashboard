@@ -1,13 +1,13 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import { ShopErrorFragment } from '@dashboard/graphql';
-import { getFormErrors } from '@dashboard/utils/errors';
-import { Card, CardContent, TextField, Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { ShopErrorFragment } from "@dashboard/graphql";
+import { getFormErrors } from "@dashboard/utils/errors";
+import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { SiteSettingsPageFormData } from '../SiteSettingsPage';
-import { messages } from './messages';
+import { SiteSettingsPageFormData } from "../SiteSettingsPage";
+import { messages } from "./messages";
 
 interface SiteCheckoutSettingsCardProps {
   data: SiteSettingsPageFormData;
@@ -16,11 +16,20 @@ interface SiteCheckoutSettingsCardProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({ data, disabled, errors, onChange }) => {
+const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({
+  data,
+  disabled,
+  errors,
+  onChange,
+}) => {
   const intl = useIntl();
 
   const formErrors = getFormErrors(
-    ['reserveStockDurationAuthenticatedUser', 'reserveStockDurationAnonymousUser', 'limitQuantityPerCheckout'],
+    [
+      "reserveStockDurationAuthenticatedUser",
+      "reserveStockDurationAnonymousUser",
+      "limitQuantityPerCheckout",
+    ],
     errors,
   );
 
@@ -40,11 +49,15 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({ dat
           name="reserveStockDurationAuthenticatedUser"
           label={intl.formatMessage(messages.stockReservationForAuthenticatedUser)}
           helperText={intl.formatMessage(messages.stockWillNotBeReserved)}
-          value={!!data.reserveStockDurationAuthenticatedUser ? String(data.reserveStockDurationAuthenticatedUser) : ''}
+          value={
+            !!data.reserveStockDurationAuthenticatedUser
+              ? String(data.reserveStockDurationAuthenticatedUser)
+              : ""
+          }
           onChange={onChange}
           InputProps={{
             inputProps: {
-              autoComplete: 'none',
+              autoComplete: "none",
             },
           }}
         />
@@ -57,11 +70,15 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({ dat
           name="reserveStockDurationAnonymousUser"
           label={intl.formatMessage(messages.stockReservationForAnonymousUser)}
           helperText={intl.formatMessage(messages.stockWillNotBeReserved)}
-          value={!!data.reserveStockDurationAnonymousUser ? String(data.reserveStockDurationAnonymousUser) : ''}
+          value={
+            !!data.reserveStockDurationAnonymousUser
+              ? String(data.reserveStockDurationAnonymousUser)
+              : ""
+          }
           onChange={onChange}
           InputProps={{
             inputProps: {
-              autoComplete: 'none',
+              autoComplete: "none",
             },
           }}
         />
@@ -76,11 +93,11 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({ dat
           name="limitQuantityPerCheckout"
           label={intl.formatMessage(messages.checkoutLineLimit)}
           helperText={intl.formatMessage(messages.checkoutLimitsDescription)}
-          value={!!data.limitQuantityPerCheckout ? String(data.limitQuantityPerCheckout) : ''}
+          value={!!data.limitQuantityPerCheckout ? String(data.limitQuantityPerCheckout) : ""}
           onChange={onChange}
           InputProps={{
             inputProps: {
-              autoComplete: 'none',
+              autoComplete: "none",
               min: 0,
             },
           }}
@@ -89,5 +106,5 @@ const SiteCheckoutSettingsCard: React.FC<SiteCheckoutSettingsCardProps> = ({ dat
     </Card>
   );
 };
-SiteCheckoutSettingsCard.displayName = 'SiteCheckoutSettingsCard';
+SiteCheckoutSettingsCard.displayName = "SiteCheckoutSettingsCard";
 export default SiteCheckoutSettingsCard;

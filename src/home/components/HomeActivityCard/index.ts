@@ -1,2 +1,2 @@
-export { default } from './HomeActivityCard';
-export * from './HomeActivityCard';
+export { default } from "./HomeActivityCard";
+export * from "./HomeActivityCard";

@@ -1,2 +1,2 @@
-export * from './CollectionWithDividers';
-export { default } from './CollectionWithDividers';
+export * from "./CollectionWithDividers";
+export { default } from "./CollectionWithDividers";

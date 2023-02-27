@@ -4,14 +4,14 @@ import {
   createDigitalContent,
   createTypeProduct,
   productAttributeAssignmentUpdate,
-  setProductTypeAsDigital
+  setProductTypeAsDigital,
 } from "../requests/ProductType";
 
 export function addDigitalContentAndUpdateProductType(
   variantId,
   productTypeId,
   channelId,
-  price = 1
+  price = 1,
 ) {
   createDigitalContent(variantId);
   setProductTypeAsDigital(productTypeId);
@@ -21,7 +21,7 @@ export function addDigitalContentAndUpdateProductType(
 export function createProductTypeWithNewVariantSelectionAttribute({
   name,
   inputType,
-  attributeValues
+  attributeValues,
 }) {
   let attribute;
   let productType;
@@ -29,14 +29,14 @@ export function createProductTypeWithNewVariantSelectionAttribute({
   return createAttribute({
     name,
     inputType,
-    attributeValues
+    attributeValues,
   })
     .then(attributeResp => {
       attribute = attributeResp;
       createTypeProduct({
         name,
         attributeId: attribute.id,
-        productAttributes: false
+        productAttributes: false,
       });
     })
     .then(productTypeResp => {
@@ -44,7 +44,7 @@ export function createProductTypeWithNewVariantSelectionAttribute({
       productAttributeAssignmentUpdate({
         productTypeId: productType.id,
         attributeId: attribute.id,
-        variantSelection: true
+        variantSelection: true,
       });
     })
     .then(() => ({ attribute, productType }));

@@ -1,11 +1,17 @@
-import { listActionsProps, pageListProps, searchPageProps, sortPageProps, tabPageProps } from '@dashboard/fixtures';
-import Decorator from '@dashboard/storybook/Decorator';
-import { PaginatorContextDecorator } from '@dashboard/storybook/PaginatorContextDecorator';
-import { storiesOf } from '@storybook/react';
-import React from 'react';
+import {
+  listActionsProps,
+  pageListProps,
+  searchPageProps,
+  sortPageProps,
+  tabPageProps,
+} from "@dashboard/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
-import { appsInProgress, appsList } from '../../fixtures';
-import AppsListPage, { AppsListPageProps } from './AppsListPage';
+import { appsInProgress, appsList } from "../../fixtures";
+import AppsListPage, { AppsListPageProps } from "./AppsListPage";
 
 const props: AppsListPageProps = {
   ...listActionsProps,
@@ -14,7 +20,7 @@ const props: AppsListPageProps = {
   ...sortPageProps,
   ...tabPageProps,
   appsInProgressList: {
-    __typename: 'Query',
+    __typename: "Query",
     appsInstallations: appsInProgress,
   },
   disabled: false,
@@ -24,11 +30,18 @@ const props: AppsListPageProps = {
   onSettingsAppOpen: () => undefined,
 };
 
-storiesOf('Apps / Apps list', module)
+storiesOf("Apps / Apps list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
-  .add('default', () => <AppsListPage {...props} />)
-  .add('loading', () => (
-    <AppsListPage {...props} appsInProgressList={undefined} disabled={true} installedAppsList={[]} />
+  .add("default", () => <AppsListPage {...props} />)
+  .add("loading", () => (
+    <AppsListPage
+      {...props}
+      appsInProgressList={undefined}
+      disabled={true}
+      installedAppsList={[]}
+    />
   ))
-  .add('no data', () => <AppsListPage {...props} appsInProgressList={undefined} installedAppsList={[]} />);
+  .add("no data", () => (
+    <AppsListPage {...props} appsInProgressList={undefined} installedAppsList={[]} />
+  ));

@@ -1,33 +1,33 @@
-import RequirePermissions from '@dashboard/components/RequirePermissions';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { PermissionEnum } from '@dashboard/graphql';
-import { Card, CardContent, TableBody, TableCell, Typography } from '@material-ui/core';
-import KeyboardArrowRight from '@material-ui/icons/KeyboardArrowRight';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import RequirePermissions from "@dashboard/components/RequirePermissions";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { PermissionEnum } from "@dashboard/graphql";
+import { Card, CardContent, TableBody, TableCell, Typography } from "@material-ui/core";
+import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { homeNotificationTableMessages as messages } from './messages';
+import { homeNotificationTableMessages as messages } from "./messages";
 
 const useStyles = makeStyles(
   () => ({
     arrowIcon: {
-      textAlign: 'right',
+      textAlign: "right",
       width: 100,
     },
     tableCard: {
-      overflow: 'hidden',
+      overflow: "hidden",
     },
     tableRow: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
     cardContent: {
       padding: 0,
     },
   }),
-  { name: 'HomeNotificationTable' },
+  { name: "HomeNotificationTable" },
 );
 
 interface HomeNotificationTableProps {
@@ -138,5 +138,5 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
     </Card>
   );
 };
-HomeNotificationTable.displayName = 'HomeNotificationTable';
+HomeNotificationTable.displayName = "HomeNotificationTable";
 export default HomeNotificationTable;

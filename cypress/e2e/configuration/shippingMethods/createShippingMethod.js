@@ -60,11 +60,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
         });
       })
       .then(
-        ({
-          productType: productTypeResp,
-          category: categoryResp,
-          attribute: attributeResp,
-        }) => {
+        ({ productType: productTypeResp, category: categoryResp, attribute: attributeResp }) => {
           attribute = attributeResp;
 
           productsUtils.createProductInChannel({
@@ -115,10 +111,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
     { tags: ["@shipping", "@allEnv", "@stable", "@oldRelease"] },
     () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
-      cy.clearSessionData().loginUserViaRequest(
-        "auth",
-        ONE_PERMISSION_USERS.shipping,
-      );
+      cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping);
       cy.visit(urlList.shippingMethods).expectSkeletonIsVisible();
       createShippingZone(
         shippingName,
@@ -151,10 +144,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
           });
         })
         .then(({ checkout }) => {
-          const isShippingAvailable = isShippingAvailableInCheckout(
-            checkout,
-            shippingName,
-          );
+          const isShippingAvailable = isShippingAvailableInCheckout(checkout, shippingName);
           expect(isShippingAvailable).to.be.false;
         });
     },
@@ -165,10 +155,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
       const shippingName = `${startsWith}${faker.datatype.number()}`;
-      cy.clearSessionData().loginUserViaRequest(
-        "auth",
-        ONE_PERMISSION_USERS.shipping,
-      );
+      cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping);
       cy.visit(urlList.shippingMethods).expectSkeletonIsVisible();
       createShippingZone(
         shippingName,
@@ -201,10 +188,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
           });
         })
         .then(({ checkout }) => {
-          const isShippingAvailable = isShippingAvailableInCheckout(
-            checkout,
-            shippingName,
-          );
+          const isShippingAvailable = isShippingAvailableInCheckout(checkout, shippingName);
           expect(isShippingAvailable).to.be.false;
         });
     },

@@ -14,16 +14,10 @@ export function updateShopWeightUnit(weightUnit) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .wait(5000)
-    .its("body.data.shopSettingsUpdate");
+  return cy.sendRequestWithQuery(mutation).wait(5000).its("body.data.shopSettingsUpdate");
 }
 
-export function updateStockReservation({
-  authenticatedUserStock = 0,
-  anonymousUserStock = 0,
-}) {
+export function updateStockReservation({ authenticatedUserStock = 0, anonymousUserStock = 0 }) {
   const mutation = `mutation{
     shopSettingsUpdate(input:{
       reserveStockDurationAnonymousUser: ${anonymousUserStock},

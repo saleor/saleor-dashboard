@@ -2,19 +2,19 @@ import {
   LanguageCodeEnum,
   useUpdateVoucherTranslationsMutation,
   useVoucherTranslationDetailsQuery,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import useShop from '@dashboard/hooks/useShop';
-import { commonMessages } from '@dashboard/intl';
-import { stringifyQs } from '@dashboard/utils/urls';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import { stringifyQs } from "@dashboard/utils/urls";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { extractMutationErrors, maybe } from '../../misc';
-import TranslationsVouchersPage from '../components/TranslationsVouchersPage';
-import { TranslationField, TranslationInputFieldName } from '../types';
-import { getParsedTranslationInputData } from '../utils';
+import { extractMutationErrors, maybe } from "../../misc";
+import TranslationsVouchersPage from "../components/TranslationsVouchersPage";
+import { TranslationField, TranslationInputFieldName } from "../types";
+import { getParsedTranslationInputData } from "../utils";
 
 export interface TranslationsVouchersQueryParams {
   activeField: string;
@@ -25,7 +25,11 @@ export interface TranslationsVouchersProps {
   params: TranslationsVouchersQueryParams;
 }
 
-const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({ id, languageCode, params }) => {
+const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({
+  id,
+  languageCode,
+  params,
+}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -40,17 +44,17 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({ id, languag
       if (data.voucherTranslate.errors.length === 0) {
         voucherTranslations.refetch();
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
-        navigate('?', { replace: true });
+        navigate("?", { replace: true });
       }
     },
   });
 
   const onEdit = (field: string) =>
     navigate(
-      '?' +
+      "?" +
         stringifyQs({
           activeField: field,
         }),
@@ -58,10 +62,13 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({ id, languag
     );
 
   const onDiscard = () => {
-    navigate('?', { replace: true });
+    navigate("?", { replace: true });
   };
 
-  const handleSubmit = ({ name: fieldName }: TranslationField<TranslationInputFieldName>, data: string) =>
+  const handleSubmit = (
+    { name: fieldName }: TranslationField<TranslationInputFieldName>,
+    data: string,
+  ) =>
     extractMutationErrors(
       updateTranslations({
         variables: {
@@ -88,9 +95,9 @@ const TranslationsVouchers: React.FC<TranslationsVouchersProps> = ({ id, languag
       onEdit={onEdit}
       onDiscard={onDiscard}
       onSubmit={handleSubmit}
-      data={translation?.__typename === 'VoucherTranslatableContent' ? translation : null}
+      data={translation?.__typename === "VoucherTranslatableContent" ? translation : null}
     />
   );
 };
-TranslationsVouchers.displayName = 'TranslationsVouchers';
+TranslationsVouchers.displayName = "TranslationsVouchers";
 export default TranslationsVouchers;

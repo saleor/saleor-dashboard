@@ -1,18 +1,18 @@
-import { ChannelCollectionData } from '@dashboard/channels/utils';
-import { createChannelsChangeHandler } from '@dashboard/collections/utils';
-import { COLLECTION_DETAILS_FORM_ID } from '@dashboard/collections/views/consts';
-import { useExitFormDialog } from '@dashboard/components/Form/useExitFormDialog';
-import { MetadataFormData } from '@dashboard/components/Metadata';
-import { CollectionDetailsFragment } from '@dashboard/graphql';
-import useForm, { CommonUseFormResultWithHandlers, FormChange } from '@dashboard/hooks/useForm';
-import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
-import { mapMetadataItemToInput } from '@dashboard/utils/maps';
-import getMetadata from '@dashboard/utils/metadata/getMetadata';
-import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
-import { RichTextContext, RichTextContextValues } from '@dashboard/utils/richText/context';
-import useRichText from '@dashboard/utils/richText/useRichText';
-import { OutputData } from '@editorjs/editorjs';
-import React, { useEffect } from 'react';
+import { ChannelCollectionData } from "@dashboard/channels/utils";
+import { createChannelsChangeHandler } from "@dashboard/collections/utils";
+import { COLLECTION_DETAILS_FORM_ID } from "@dashboard/collections/views/consts";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { MetadataFormData } from "@dashboard/components/Metadata";
+import { CollectionDetailsFragment } from "@dashboard/graphql";
+import useForm, { CommonUseFormResultWithHandlers, FormChange } from "@dashboard/hooks/useForm";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
+import getMetadata from "@dashboard/utils/metadata/getMetadata";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext, RichTextContextValues } from "@dashboard/utils/richText/context";
+import useRichText from "@dashboard/utils/richText/useRichText";
+import { OutputData } from "@editorjs/editorjs";
+import React, { useEffect } from "react";
 
 export interface CollectionUpdateFormData extends MetadataFormData {
   backgroundImageAlt: string;
@@ -28,7 +28,7 @@ export interface CollectionUpdateData extends CollectionUpdateFormData {
 
 interface CollectionUpdateHandlers {
   changeMetadata: FormChange;
-  changeChannels: (id: string, data: Omit<ChannelCollectionData, 'name' | 'id'>) => void;
+  changeChannels: (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => void;
 }
 export type UseCollectionUpdateFormResult = CommonUseFormResultWithHandlers<
   CollectionUpdateData,
@@ -48,14 +48,14 @@ const getInitialData = (
   collection: CollectionDetailsFragment,
   currentChannels: ChannelCollectionData[],
 ): CollectionUpdateFormData => ({
-  backgroundImageAlt: collection?.backgroundImage?.alt || '',
+  backgroundImageAlt: collection?.backgroundImage?.alt || "",
   channelListings: currentChannels,
   metadata: collection?.metadata?.map(mapMetadataItemToInput),
-  name: collection?.name || '',
+  name: collection?.name || "",
   privateMetadata: collection?.privateMetadata?.map(mapMetadataItemToInput),
-  seoDescription: collection?.seoDescription || '',
-  seoTitle: collection?.seoTitle || '',
-  slug: collection?.slug || '',
+  seoDescription: collection?.seoDescription || "",
+  seoTitle: collection?.seoTitle || "",
+  slug: collection?.slug || "",
 });
 
 function useCollectionUpdateForm(
@@ -115,7 +115,11 @@ function useCollectionUpdateForm(
     ...getMetadata(formData, isMetadataModified, isPrivateMetadataModified),
   });
 
-  const handleChannelChange = createChannelsChangeHandler(currentChannels, setChannels, triggerChange);
+  const handleChannelChange = createChannelsChangeHandler(
+    currentChannels,
+    setChannels,
+    triggerChange,
+  );
 
   const submit = async () => handleFormSubmit(await getSubmitData());
 
@@ -143,7 +147,13 @@ const CollectionUpdateForm: React.FC<CollectionUpdateFormProps> = ({
   onSubmit,
   disabled,
 }) => {
-  const { richText, ...props } = useCollectionUpdateForm(collection, currentChannels, setChannels, onSubmit, disabled);
+  const { richText, ...props } = useCollectionUpdateForm(
+    collection,
+    currentChannels,
+    setChannels,
+    onSubmit,
+    disabled,
+  );
 
   return (
     <form onSubmit={props.submit}>
@@ -152,5 +162,5 @@ const CollectionUpdateForm: React.FC<CollectionUpdateFormProps> = ({
   );
 };
 
-CollectionUpdateForm.displayName = 'CollectionUpdateForm';
+CollectionUpdateForm.displayName = "CollectionUpdateForm";
 export default CollectionUpdateForm;

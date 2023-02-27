@@ -1,2 +1,2 @@
-export * from './GiftCardTagInput';
-export { default } from './GiftCardTagInput';
+export * from "./GiftCardTagInput";
+export { default } from "./GiftCardTagInput";

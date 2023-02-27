@@ -1,15 +1,19 @@
-import { ChannelCollectionData } from '@dashboard/channels/utils';
-import { createChannelsChangeHandler } from '@dashboard/collections/utils';
-import { COLLECTION_CREATE_FORM_ID } from '@dashboard/collections/views/consts';
-import { useExitFormDialog } from '@dashboard/components/Form/useExitFormDialog';
-import { MetadataFormData } from '@dashboard/components/Metadata';
-import useForm, { CommonUseFormResultWithHandlers, FormChange, SubmitPromise } from '@dashboard/hooks/useForm';
-import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
-import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
-import { RichTextContext, RichTextContextValues } from '@dashboard/utils/richText/context';
-import useRichText from '@dashboard/utils/richText/useRichText';
-import { OutputData } from '@editorjs/editorjs';
-import React, { useEffect } from 'react';
+import { ChannelCollectionData } from "@dashboard/channels/utils";
+import { createChannelsChangeHandler } from "@dashboard/collections/utils";
+import { COLLECTION_CREATE_FORM_ID } from "@dashboard/collections/views/consts";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { MetadataFormData } from "@dashboard/components/Metadata";
+import useForm, {
+  CommonUseFormResultWithHandlers,
+  FormChange,
+  SubmitPromise,
+} from "@dashboard/hooks/useForm";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext, RichTextContextValues } from "@dashboard/utils/richText/context";
+import useRichText from "@dashboard/utils/richText/useRichText";
+import { OutputData } from "@editorjs/editorjs";
+import React, { useEffect } from "react";
 
 export interface CollectionCreateFormData extends MetadataFormData {
   backgroundImage: {
@@ -29,7 +33,7 @@ export interface CollectionCreateData extends CollectionCreateFormData {
 
 interface CollectionCreateHandlers {
   changeMetadata: FormChange;
-  changeChannels: (id: string, data: Omit<ChannelCollectionData, 'name' | 'id'>) => void;
+  changeChannels: (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => void;
 }
 export type UseCollectionCreateFormResult = CommonUseFormResultWithHandlers<
   CollectionCreateData,
@@ -49,14 +53,14 @@ const getInitialData = (currentChannels: ChannelCollectionData[]): CollectionCre
     url: null,
     value: null,
   },
-  backgroundImageAlt: '',
+  backgroundImageAlt: "",
   channelListings: currentChannels,
   metadata: [],
-  name: '',
+  name: "",
   privateMetadata: [],
-  seoDescription: '',
-  seoTitle: '',
-  slug: '',
+  seoDescription: "",
+  seoTitle: "",
+  slug: "",
 });
 
 function useCollectionCreateForm(
@@ -105,7 +109,11 @@ function useCollectionCreateForm(
     description: await richText.getValue(),
   });
 
-  const handleChannelChange = createChannelsChangeHandler(currentChannels, setChannels, triggerChange);
+  const handleChannelChange = createChannelsChangeHandler(
+    currentChannels,
+    setChannels,
+    triggerChange,
+  );
 
   const submit = async () => handleFormSubmit(await getData());
 
@@ -134,7 +142,12 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   onSubmit,
   disabled,
 }) => {
-  const { richText, ...props } = useCollectionCreateForm(currentChannels, setChannels, onSubmit, disabled);
+  const { richText, ...props } = useCollectionCreateForm(
+    currentChannels,
+    setChannels,
+    onSubmit,
+    disabled,
+  );
 
   return (
     <form onSubmit={props.submit}>
@@ -143,5 +156,5 @@ const CollectionCreateForm: React.FC<CollectionCreateFormProps> = ({
   );
 };
 
-CollectionCreateForm.displayName = 'CollectionCreateForm';
+CollectionCreateForm.displayName = "CollectionCreateForm";
 export default CollectionCreateForm;

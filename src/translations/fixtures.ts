@@ -1,24 +1,24 @@
-import { LanguageCodeEnum, LanguageFragment } from '@dashboard/graphql';
+import { LanguageCodeEnum, LanguageFragment } from "@dashboard/graphql";
 
 export const languages: LanguageFragment[] = [
   {
-    __typename: 'LanguageDisplay',
+    __typename: "LanguageDisplay",
     code: LanguageCodeEnum.DE,
-    language: 'niemiecki',
+    language: "niemiecki",
   },
   {
-    __typename: 'LanguageDisplay',
+    __typename: "LanguageDisplay",
     code: LanguageCodeEnum.EN,
-    language: 'angielski',
+    language: "angielski",
   },
   {
-    __typename: 'LanguageDisplay',
+    __typename: "LanguageDisplay",
     code: LanguageCodeEnum.ES,
-    language: 'hiszpański',
+    language: "hiszpański",
   },
   {
-    __typename: 'LanguageDisplay',
+    __typename: "LanguageDisplay",
     code: LanguageCodeEnum.PL,
-    language: 'polski',
+    language: "polski",
   },
 ];

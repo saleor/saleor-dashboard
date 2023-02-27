@@ -1,3 +1,3 @@
-export { useServiceFlags } from './useServiceFlags';
-export { useAllServiceFlags } from './useAllServiceFlags';
-export { FlagsServiceProvider } from './flagsServiceProvider';
+export { useServiceFlags } from "./useServiceFlags";
+export { useAllServiceFlags } from "./useAllServiceFlags";
+export { FlagsServiceProvider } from "./flagsServiceProvider";

@@ -1,1 +1,1 @@
-export const SEPARATOR_CHARACTERS = [',', '.'];
+export const SEPARATOR_CHARACTERS = [",", "."];

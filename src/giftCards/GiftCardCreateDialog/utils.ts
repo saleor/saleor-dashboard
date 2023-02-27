@@ -1,12 +1,12 @@
-import { IMessage } from '@dashboard/components/messages';
-import { GiftCardCreateMutation, TimePeriodTypeEnum } from '@dashboard/graphql';
-import commonErrorMessages from '@dashboard/utils/errors/common';
-import moment from 'moment-timezone';
-import { IntlShape } from 'react-intl';
+import { IMessage } from "@dashboard/components/messages";
+import { GiftCardCreateMutation, TimePeriodTypeEnum } from "@dashboard/graphql";
+import commonErrorMessages from "@dashboard/utils/errors/common";
+import moment from "moment-timezone";
+import { IntlShape } from "react-intl";
 
-import { GiftCardCreateCommonFormData } from '../GiftCardBulkCreateDialog/types';
-import { giftCardUpdateFormMessages } from '../GiftCardsList/messages';
-import { giftCardCreateMessages as messages } from './messages';
+import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
+import { giftCardUpdateFormMessages } from "../GiftCardsList/messages";
+import { giftCardCreateMessages as messages } from "./messages";
 
 const addToCurrentDate = (
   currentDate: number,
@@ -21,13 +21,13 @@ export const getExpiryPeriodTerminationDate = (
 ): moment.Moment | null => {
   switch (expiryPeriodType) {
     case TimePeriodTypeEnum.DAY:
-      return addToCurrentDate(currentDate, expiryPeriodAmount, 'd');
+      return addToCurrentDate(currentDate, expiryPeriodAmount, "d");
     case TimePeriodTypeEnum.WEEK:
-      return addToCurrentDate(currentDate, expiryPeriodAmount, 'w');
+      return addToCurrentDate(currentDate, expiryPeriodAmount, "w");
     case TimePeriodTypeEnum.MONTH:
-      return addToCurrentDate(currentDate, expiryPeriodAmount, 'M');
+      return addToCurrentDate(currentDate, expiryPeriodAmount, "M");
     case TimePeriodTypeEnum.YEAR:
-      return addToCurrentDate(currentDate, expiryPeriodAmount, 'y');
+      return addToCurrentDate(currentDate, expiryPeriodAmount, "y");
     default:
       return null;
   }
@@ -36,17 +36,17 @@ export const getExpiryPeriodTerminationDate = (
 export const getGiftCardExpiryError = (intl: IntlShape): IMessage => ({
   title: intl.formatMessage(giftCardUpdateFormMessages.giftCardInvalidExpiryDateHeader),
   text: intl.formatMessage(giftCardUpdateFormMessages.giftCardInvalidExpiryDateContent),
-  status: 'error',
+  status: "error",
 });
 
 export const getGiftCardCreateOnCompletedMessage = (
-  errors: GiftCardCreateMutation['giftCardCreate']['errors'],
+  errors: GiftCardCreateMutation["giftCardCreate"]["errors"],
   intl: IntlShape,
   successMessage?: IMessage,
 ): IMessage => {
-  const hasExpiryError = errors.some(error => error.field === 'expiryDate');
+  const hasExpiryError = errors.some(error => error.field === "expiryDate");
   const successGiftCardMessage = successMessage || {
-    status: 'success',
+    status: "success",
     text: intl.formatMessage(messages.createdSuccessAlertTitle),
   };
 
@@ -56,22 +56,32 @@ export const getGiftCardCreateOnCompletedMessage = (
 
   return !!errors?.length
     ? {
-        status: 'error',
+        status: "error",
         text: intl.formatMessage(commonErrorMessages.unknownError),
       }
     : successGiftCardMessage;
 };
 
 export const getGiftCardExpiryInputData = (
-  { expirySelected, expiryType, expiryDate, expiryPeriodAmount, expiryPeriodType }: GiftCardCreateCommonFormData,
+  {
+    expirySelected,
+    expiryType,
+    expiryDate,
+    expiryPeriodAmount,
+    expiryPeriodType,
+  }: GiftCardCreateCommonFormData,
   currentDate: number,
 ): string => {
   if (!expirySelected) {
     return;
   }
 
-  if (expiryType === 'EXPIRY_PERIOD') {
-    return getExpiryPeriodTerminationDate(currentDate, expiryPeriodType, expiryPeriodAmount)?.format('YYYY-MM-DD');
+  if (expiryType === "EXPIRY_PERIOD") {
+    return getExpiryPeriodTerminationDate(
+      currentDate,
+      expiryPeriodType,
+      expiryPeriodAmount,
+    )?.format("YYYY-MM-DD");
   }
 
   return expiryDate;

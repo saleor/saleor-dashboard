@@ -14,10 +14,7 @@ export function getPageType(pageTypeId) {
 }
 
 export function createPageType({ name, attributeId }) {
-  const attributeLine = getValueWithDefault(
-    attributeId,
-    `addAttributes:["${attributeId}"]`
-  );
+  const attributeLine = getValueWithDefault(attributeId, `addAttributes:["${attributeId}"]`);
 
   const mutation = `mutation{
     pageTypeCreate(input:{ name: "${name}" ${attributeLine}}){
@@ -47,9 +44,7 @@ export function getPageTypes(first, search) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(query)
-    .then(resp => resp.body.data.pageTypes.edges);
+  return cy.sendRequestWithQuery(query).then(resp => resp.body.data.pageTypes.edges);
 }
 
 export function deletePageType(pageTypeId) {

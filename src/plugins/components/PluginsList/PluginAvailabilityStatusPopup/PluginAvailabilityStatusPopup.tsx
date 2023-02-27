@@ -1,12 +1,12 @@
-import ChannelsAvailabilityMenuContent from '@dashboard/components/ChannelsAvailabilityMenuContent';
-import { PluginBaseFragment } from '@dashboard/graphql';
-import { isPluginGlobal } from '@dashboard/plugins/views/utils';
-import { Card, Popper } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
+import ChannelsAvailabilityMenuContent from "@dashboard/components/ChannelsAvailabilityMenuContent";
+import { PluginBaseFragment } from "@dashboard/graphql";
+import { isPluginGlobal } from "@dashboard/plugins/views/utils";
+import { Card, Popper } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
 
-import { mapPluginsToPills } from '../utils';
-import GlobalConfigPluginPopupBody from './GlobalConfigPluginPopupBody';
+import { mapPluginsToPills } from "../utils";
+import GlobalConfigPluginPopupBody from "./GlobalConfigPluginPopupBody";
 
 const useStyles = makeStyles(
   () => ({
@@ -15,7 +15,7 @@ const useStyles = makeStyles(
       zIndex: 1000,
     },
   }),
-  { name: 'PluginChannelsAvailabilityStatusPopup' },
+  { name: "PluginChannelsAvailabilityStatusPopup" },
 );
 
 interface PluginAvailabilityStatusPopupProps {
@@ -24,7 +24,11 @@ interface PluginAvailabilityStatusPopupProps {
   anchor: React.RefObject<HTMLTableCellElement>;
 }
 
-const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps> = ({ plugin, isOpen, anchor }) => {
+const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps> = ({
+  plugin,
+  isOpen,
+  anchor,
+}) => {
   const classes = useStyles({});
 
   const isGlobalPlugin = isPluginGlobal(plugin.globalConfiguration);
@@ -35,7 +39,9 @@ const PluginAvailabilityStatusPopup: React.FC<PluginAvailabilityStatusPopupProps
         {isGlobalPlugin ? (
           <GlobalConfigPluginPopupBody plugin={plugin} />
         ) : (
-          <ChannelsAvailabilityMenuContent pills={mapPluginsToPills(plugin.channelConfigurations)} />
+          <ChannelsAvailabilityMenuContent
+            pills={mapPluginsToPills(plugin.channelConfigurations)}
+          />
         )}
       </Card>
     </Popper>

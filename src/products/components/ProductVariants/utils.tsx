@@ -1,16 +1,26 @@
-import { ChannelData } from '@dashboard/channels/utils';
-import { booleanCell, dropdownCell, moneyCell, numberCell, textCell } from '@dashboard/components/Datagrid/cells';
-import { emptyDropdownCellValue } from '@dashboard/components/Datagrid/DropdownCell';
-import { numberCellEmptyValue } from '@dashboard/components/Datagrid/NumberCell';
-import { AvailableColumn } from '@dashboard/components/Datagrid/types';
-import { DatagridChange } from '@dashboard/components/Datagrid/useDatagridChange';
-import { Choice } from '@dashboard/components/SingleSelectField';
-import { ProductDetailsVariantFragment, ProductFragment, WarehouseFragment } from '@dashboard/graphql';
-import { ProductVariantListError } from '@dashboard/products/views/ProductUpdate/handlers/errors';
-import { mapNodeToChoice } from '@dashboard/utils/maps';
-import { GridCell } from '@glideapps/glide-data-grid';
-import { MutableRefObject } from 'react';
-import { IntlShape } from 'react-intl';
+import { ChannelData } from "@dashboard/channels/utils";
+import {
+  booleanCell,
+  dropdownCell,
+  moneyCell,
+  numberCell,
+  textCell,
+} from "@dashboard/components/Datagrid/cells";
+import { emptyDropdownCellValue } from "@dashboard/components/Datagrid/DropdownCell";
+import { numberCellEmptyValue } from "@dashboard/components/Datagrid/NumberCell";
+import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { DatagridChange } from "@dashboard/components/Datagrid/useDatagridChange";
+import { Choice } from "@dashboard/components/SingleSelectField";
+import {
+  ProductDetailsVariantFragment,
+  ProductFragment,
+  WarehouseFragment,
+} from "@dashboard/graphql";
+import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
+import { mapNodeToChoice } from "@dashboard/utils/maps";
+import { GridCell } from "@glideapps/glide-data-grid";
+import { MutableRefObject } from "react";
+import { IntlShape } from "react-intl";
 
 import {
   getColumnAttribute,
@@ -18,22 +28,22 @@ import {
   getColumnChannelAvailability,
   getColumnName,
   getColumnStock,
-} from '../../utils/datagrid';
-import messages from './messages';
+} from "../../utils/datagrid";
+import messages from "./messages";
 
 function errorMatchesColumn(error: ProductVariantListError, columnId: string): boolean {
-  if (error.type === 'channel') {
+  if (error.type === "channel") {
     return (
       error.channelIds.includes(getColumnChannel(columnId)) ||
       error.channelIds.includes(getColumnChannelAvailability(columnId))
     );
   }
 
-  if (error.type === 'stock') {
+  if (error.type === "stock") {
     return error.warehouseId.includes(getColumnStock(columnId));
   }
 
-  if (error.type === 'variantData') {
+  if (error.type === "variantData") {
     if (error.attributes?.length > 0) {
       return error.attributes.includes(getColumnAttribute(columnId));
     }
@@ -54,10 +64,13 @@ export function getError(
   const variantId = variants[row + removed.filter(r => r <= row).length]?.id;
 
   if (!variantId) {
-    return errors.some(err => err.type === 'create' && err.index === row - variants.length);
+    return errors.some(err => err.type === "create" && err.index === row - variants.length);
   }
 
-  return errors.some(err => err.type !== 'create' && err.variantId === variantId && errorMatchesColumn(err, columnId));
+  return errors.some(
+    err =>
+      err.type !== "create" && err.variantId === variantId && errorMatchesColumn(err, columnId),
+  );
 }
 
 interface GetDataOrError {
@@ -87,18 +100,20 @@ export function getData({
 }: GetDataOrError): GridCell {
   // For some reason it happens when user deselects channel
   if (column === -1) {
-    return textCell('');
+    return textCell("");
   }
 
   const columnId = availableColumns[column].id;
   const change = changes.current[getChangeIndex(columnId, row)]?.data;
-  const dataRow = added.includes(row) ? undefined : variants[row + removed.filter(r => r <= row).length];
+  const dataRow = added.includes(row)
+    ? undefined
+    : variants[row + removed.filter(r => r <= row).length];
 
   switch (columnId) {
-    case 'name':
-    case 'sku':
-      const value = change ?? (dataRow ? dataRow[columnId] : '');
-      return textCell(value || '');
+    case "name":
+    case "sku":
+      const value = change ?? (dataRow ? dataRow[columnId] : "");
+      return textCell(value || "");
   }
 
   if (getColumnStock(columnId)) {
@@ -113,7 +128,8 @@ export function getData({
   if (getColumnChannel(columnId)) {
     const channelId = getColumnChannel(columnId);
     const listing = dataRow?.channelListings.find(listing => listing.channel.id === channelId);
-    const available = changes.current[getChangeIndex(`availableInChannel:${channelId}`, row)]?.data ?? !!listing;
+    const available =
+      changes.current[getChangeIndex(`availableInChannel:${channelId}`, row)]?.data ?? !!listing;
 
     if (!available) {
       return {
@@ -141,7 +157,9 @@ export function getData({
     const value =
       change?.value ??
       mapNodeToChoice(
-        dataRow?.attributes.find(attribute => attribute.attribute.id === getColumnAttribute(columnId))?.values,
+        dataRow?.attributes.find(
+          attribute => attribute.attribute.id === getColumnAttribute(columnId),
+        )?.values,
       )[0] ??
       emptyDropdownCellValue;
 
@@ -157,7 +175,7 @@ export function getColumnData(
   name: string,
   channels: ChannelData[],
   warehouses: WarehouseFragment[],
-  variantAttributes: ProductFragment['productType']['variantAttributes'],
+  variantAttributes: ProductFragment["productType"]["variantAttributes"],
   intl: IntlShape,
 ): AvailableColumn {
   const common = {
@@ -165,10 +183,10 @@ export function getColumnData(
     width: 200,
     // Now we don't weirdly merge top-left header with the frozen column (name),
     // leaving rest unnamed group columns (sku in this case) unmerged
-    group: ' ',
+    group: " ",
   };
 
-  if (['name', 'sku'].includes(name)) {
+  if (["name", "sku"].includes(name)) {
     return {
       ...common,
       title: intl.formatMessage(messages[name]),

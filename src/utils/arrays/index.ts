@@ -1,1 +1,1 @@
-export * from './arrays';
+export * from "./arrays";

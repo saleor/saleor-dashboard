@@ -1,29 +1,29 @@
-import { Content } from '@dashboard/components/AppLayout/Content';
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import Form from '@dashboard/components/Form';
-import Grid from '@dashboard/components/Grid';
-import Savebar from '@dashboard/components/Savebar';
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import Savebar from "@dashboard/components/Savebar";
 import {
   ConfigurationItemInput,
   PluginConfigurationExtendedFragment,
   PluginErrorFragment,
   PluginsDetailsFragment,
-} from '@dashboard/graphql';
-import { ChangeEvent, SubmitPromise } from '@dashboard/hooks/useForm';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { getStringOrPlaceholder } from '@dashboard/misc';
-import { pluginListUrl } from '@dashboard/plugins/urls';
-import { isSecretField } from '@dashboard/plugins/utils';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import { ChangeEvent, SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import { pluginListUrl } from "@dashboard/plugins/urls";
+import { isSecretField } from "@dashboard/plugins/utils";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import PluginAuthorization from '../PluginAuthorization';
-import PluginDetailsChannelsCard from '../PluginDetailsChannelsCard';
-import PluginInfo from '../PluginInfo';
-import PluginSettings from '../PluginSettings';
+import PluginAuthorization from "../PluginAuthorization";
+import PluginDetailsChannelsCard from "../PluginDetailsChannelsCard";
+import PluginInfo from "../PluginInfo";
+import PluginSettings from "../PluginSettings";
 
 export interface PluginDetailsPageFormData {
   active: boolean;
@@ -62,19 +62,25 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
       ?.filter(field => !isSecretField(selectedConfig?.configuration || [], field.name))
       .map(field => ({
         ...field,
-        value: field.value || '',
+        value: field.value || "",
       })),
   };
 
   const selectedChannelId = selectedConfig?.channel?.id;
 
   return (
-    <Form confirmLeave initial={initialFormData} onSubmit={onSubmit} key={selectedChannelId} disabled={disabled}>
+    <Form
+      confirmLeave
+      initial={initialFormData}
+      onSubmit={onSubmit}
+      key={selectedChannelId}
+      disabled={disabled}
+    >
       {({ data, submit, set, isSaveDisabled }) => {
         const onChange = (event: ChangeEvent) => {
           const { name, value } = event.target;
           const newData = {
-            active: name === 'active' ? value : data.active,
+            active: name === "active" ? value : data.active,
             configuration: data.configuration.map(configItem =>
               configItem.name === name
                 ? {
@@ -93,9 +99,9 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
               href={pluginListUrl()}
               title={intl.formatMessage(
                 {
-                  id: 'EtGDeK',
-                  defaultMessage: '{pluginName} Details',
-                  description: 'header',
+                  id: "EtGDeK",
+                  defaultMessage: "{pluginName} Details",
+                  description: "header",
                 },
                 {
                   pluginName: getStringOrPlaceholder(plugin?.name),
@@ -114,9 +120,9 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                 <div>
                   <PluginInfo
                     data={data}
-                    description={plugin?.description || ''}
+                    description={plugin?.description || ""}
                     errors={errors}
-                    name={plugin?.name || ''}
+                    name={plugin?.name || ""}
                     onChange={onChange}
                   />
                   <CardSpacer />

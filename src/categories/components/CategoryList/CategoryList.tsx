@@ -1,25 +1,25 @@
-import { CategoryListUrlSortField, categoryUrl } from '@dashboard/categories/urls';
-import Checkbox from '@dashboard/components/Checkbox';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableCellHeader from '@dashboard/components/TableCellHeader';
-import TableHead from '@dashboard/components/TableHead';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { CategoryFragment } from '@dashboard/graphql';
-import { maybe, renderCollection } from '@dashboard/misc';
-import { ListActions, ListProps, SortPage } from '@dashboard/types';
-import { getArrowDirection } from '@dashboard/utils/sort';
-import { TableBody, TableCell, TableFooter } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { CategoryListUrlSortField, categoryUrl } from "@dashboard/categories/urls";
+import Checkbox from "@dashboard/components/Checkbox";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { CategoryFragment } from "@dashboard/graphql";
+import { maybe, renderCollection } from "@dashboard/misc";
+import { ListActions, ListProps, SortPage } from "@dashboard/types";
+import { getArrowDirection } from "@dashboard/utils/sort";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       colName: {
-        width: 'auto',
+        width: "auto",
       },
       colProducts: {
         width: 160,
@@ -32,16 +32,16 @@ const useStyles = makeStyles(
       paddingLeft: 0,
     },
     colProducts: {
-      textAlign: 'center',
+      textAlign: "center",
     },
     colSubcategories: {
-      textAlign: 'center',
+      textAlign: "center",
     },
     tableRow: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
   }),
-  { name: 'CategoryList' },
+  { name: "CategoryList" },
 );
 
 interface CategoryListProps extends ListProps, ListActions, SortPage<CategoryListUrlSortField> {
@@ -79,7 +79,11 @@ const CategoryList: React.FC<CategoryListProps> = props => {
         toolbar={toolbar}
       >
         <TableCellHeader
-          direction={isRoot && sort.sort === CategoryListUrlSortField.name ? getArrowDirection(sort.asc) : undefined}
+          direction={
+            isRoot && sort.sort === CategoryListUrlSortField.name
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
           arrowPosition="right"
           className={classes.colName}
           disabled={!isRoot}
@@ -89,23 +93,35 @@ const CategoryList: React.FC<CategoryListProps> = props => {
         </TableCellHeader>
         <TableCellHeader
           direction={
-            isRoot && sort.sort === CategoryListUrlSortField.subcategoryCount ? getArrowDirection(sort.asc) : undefined
+            isRoot && sort.sort === CategoryListUrlSortField.subcategoryCount
+              ? getArrowDirection(sort.asc)
+              : undefined
           }
           className={classes.colSubcategories}
           disabled={!isRoot}
           onClick={() => isRoot && onSort(CategoryListUrlSortField.subcategoryCount)}
         >
-          <FormattedMessage id="BHQrgz" defaultMessage="Subcategories" description="number of subcategories" />
+          <FormattedMessage
+            id="BHQrgz"
+            defaultMessage="Subcategories"
+            description="number of subcategories"
+          />
         </TableCellHeader>
         <TableCellHeader
           direction={
-            isRoot && sort.sort === CategoryListUrlSortField.productCount ? getArrowDirection(sort.asc) : undefined
+            isRoot && sort.sort === CategoryListUrlSortField.productCount
+              ? getArrowDirection(sort.asc)
+              : undefined
           }
           className={classes.colProducts}
           disabled={!isRoot}
           onClick={() => isRoot && onSort(CategoryListUrlSortField.productCount)}
         >
-          <FormattedMessage id="k8ZJ5L" defaultMessage="No. of Products" description="number of products" />
+          <FormattedMessage
+            id="k8ZJ5L"
+            defaultMessage="No. of Products"
+            description="number of products"
+          />
         </TableCellHeader>
       </TableHead>
       <TableFooter>
@@ -128,9 +144,9 @@ const CategoryList: React.FC<CategoryListProps> = props => {
                 className={classes.tableRow}
                 hover={!!category}
                 href={category && categoryUrl(category.id)}
-                key={category ? category.id : 'skeleton'}
+                key={category ? category.id : "skeleton"}
                 selected={isSelected}
-                data-test-id={'id-' + maybe(() => category.id)}
+                data-test-id={"id-" + maybe(() => category.id)}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -177,5 +193,5 @@ const CategoryList: React.FC<CategoryListProps> = props => {
   );
 };
 
-CategoryList.displayName = 'CategoryList';
+CategoryList.displayName = "CategoryList";
 export default CategoryList;

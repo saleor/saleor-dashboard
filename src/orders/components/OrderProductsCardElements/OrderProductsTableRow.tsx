@@ -1,13 +1,13 @@
-import Money from '@dashboard/components/Money';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableCellAvatar from '@dashboard/components/TableCellAvatar';
-import { AVATAR_MARGIN } from '@dashboard/components/TableCellAvatar/Avatar';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { OrderDetailsFragment, OrderLineFragment } from '@dashboard/graphql';
-import { maybe } from '@dashboard/misc';
-import { TableCell } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
+import Money from "@dashboard/components/Money";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import { AVATAR_MARGIN } from "@dashboard/components/TableCellAvatar/Avatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { OrderDetailsFragment, OrderLineFragment } from "@dashboard/graphql";
+import { maybe } from "@dashboard/misc";
+import { TableCell } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
@@ -16,20 +16,20 @@ const useStyles = makeStyles(
       marginLeft: AVATAR_MARGIN,
     },
     colPrice: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     colQuantity: {
-      textAlign: 'center',
+      textAlign: "center",
     },
     colSku: {
-      textAlign: 'right',
-      textOverflow: 'ellipsis',
+      textAlign: "right",
+      textOverflow: "ellipsis",
     },
     colTotal: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     infoLabel: {
-      display: 'inline-block',
+      display: "inline-block",
     },
     infoLabelWithMargin: {
       marginBottom: theme.spacing(),
@@ -38,18 +38,18 @@ const useStyles = makeStyles(
       padding: theme.spacing(2, 3),
     },
     orderNumber: {
-      display: 'inline',
+      display: "inline",
       marginLeft: theme.spacing(1),
     },
     statusBar: {
       paddingTop: 0,
     },
   }),
-  { name: 'TableLine' },
+  { name: "TableLine" },
 );
 
 interface TableLineProps {
-  line: OrderDetailsFragment['fulfillments'][0]['lines'][0] | OrderLineFragment;
+  line: OrderDetailsFragment["fulfillments"][0]["lines"][0] | OrderLineFragment;
   isOrderLine?: boolean;
 }
 
@@ -65,20 +65,29 @@ const TableLine: React.FC<TableLineProps> = ({ line: lineData, isOrderLine = fal
     ? ({
         ...lineData,
         orderLine: lineData,
-      } as OrderDetailsFragment['fulfillments'][0]['lines'][0])
-    : (lineData as OrderDetailsFragment['fulfillments'][0]['lines'][0]);
+      } as OrderDetailsFragment["fulfillments"][0]["lines"][0])
+    : (lineData as OrderDetailsFragment["fulfillments"][0]["lines"][0]);
 
   const quantityToDisplay = isOrderLine ? quantityToFulfill : quantity;
 
   return (
     <TableRowLink key={line.id}>
-      <TableCellAvatar className={classes.colName} thumbnail={maybe(() => line.orderLine.thumbnail.url)}>
+      <TableCellAvatar
+        className={classes.colName}
+        thumbnail={maybe(() => line.orderLine.thumbnail.url)}
+      >
         {maybe(() => line.orderLine.productName) || <Skeleton />}
       </TableCellAvatar>
-      <TableCell className={classes.colSku}>{line?.orderLine ? line.orderLine.productSku : <Skeleton />}</TableCell>
+      <TableCell className={classes.colSku}>
+        {line?.orderLine ? line.orderLine.productSku : <Skeleton />}
+      </TableCell>
       <TableCell className={classes.colQuantity}>{quantityToDisplay || <Skeleton />}</TableCell>
       <TableCell className={classes.colPrice} align="right">
-        {maybe(() => line.orderLine.unitPrice.gross) ? <Money money={line.orderLine.unitPrice.gross} /> : <Skeleton />}
+        {maybe(() => line.orderLine.unitPrice.gross) ? (
+          <Money money={line.orderLine.unitPrice.gross} />
+        ) : (
+          <Skeleton />
+        )}
       </TableCell>
       <TableCell className={classes.colTotal} align="right">
         <Money

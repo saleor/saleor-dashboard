@@ -1,13 +1,13 @@
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import TableCellAvatar from '@dashboard/components/TableCellAvatar';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { SearchProductsQuery } from '@dashboard/graphql';
-import useModalDialogOpen from '@dashboard/hooks/useModalDialogOpen';
-import useSearchQuery from '@dashboard/hooks/useSearchQuery';
-import { maybe } from '@dashboard/misc';
-import useScrollableDialogStyle from '@dashboard/styles/useScrollableDialogStyle';
-import { DialogProps, FetchMoreProps, RelayToFlat } from '@dashboard/types';
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { SearchProductsQuery } from "@dashboard/graphql";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { maybe } from "@dashboard/misc";
+import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
+import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import {
   CircularProgress,
   Dialog,
@@ -17,36 +17,46 @@ import {
   TableBody,
   TableCell,
   TextField,
-} from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React, { useEffect } from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React, { useEffect } from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import BackButton from '../BackButton';
-import Checkbox from '../Checkbox';
-import { messages } from './messages';
-import { useStyles } from './styles';
+import BackButton from "../BackButton";
+import Checkbox from "../Checkbox";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 export interface AssignProductDialogFormData {
-  products: RelayToFlat<SearchProductsQuery['search']>;
+  products: RelayToFlat<SearchProductsQuery["search"]>;
   query: string;
 }
 
 export interface AssignProductDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  products: RelayToFlat<SearchProductsQuery['search']>;
+  products: RelayToFlat<SearchProductsQuery["search"]>;
   selectedIds?: Record<string, boolean>;
   loading: boolean;
   onFetch: (value: string) => void;
   onSubmit: (data: string[]) => void;
 }
 
-const scrollableTargetId = 'assignProductScrollableDialog';
+const scrollableTargetId = "assignProductScrollableDialog";
 
 const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
-  const { confirmButtonState, hasMore, open, loading, products, onClose, onFetch, onFetchMore, onSubmit, selectedIds } =
-    props;
+  const {
+    confirmButtonState,
+    hasMore,
+    open,
+    loading,
+    products,
+    onClose,
+    onFetch,
+    onFetchMore,
+    onSubmit,
+    selectedIds,
+  } = props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
   const intl = useIntl();
@@ -59,7 +69,9 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
         const prevIds = Object.keys(prev);
         const newIds = Object.keys(selectedIds);
 
-        const preSelected = newIds.filter(n => !prevIds.includes(n)).reduce((p, c) => ({ ...p, [c]: true }), {});
+        const preSelected = newIds
+          .filter(n => !prevIds.includes(n))
+          .reduce((p, c) => ({ ...p, [c]: true }), {});
 
         return { ...prev, ...preSelected };
       });
@@ -89,7 +101,13 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
   };
 
   return (
-    <Dialog onClose={onClose} open={open} classes={{ paper: scrollableDialogClasses.dialog }} fullWidth maxWidth="sm">
+    <Dialog
+      onClose={onClose}
+      open={open}
+      classes={{ paper: scrollableDialogClasses.dialog }}
+      fullWidth
+      maxWidth="sm"
+    >
       <DialogTitle disableTypography>
         <FormattedMessage {...messages.assignVariantDialogHeader} />
       </DialogTitle>
@@ -102,7 +120,7 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
           placeholder={intl.formatMessage(messages.assignProductDialogContent)}
           fullWidth
           InputProps={{
-            autoComplete: 'off',
+            autoComplete: "off",
             endAdornment: loading && <CircularProgress size={16} />,
           }}
         />
@@ -128,7 +146,10 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
 
                   return (
                     <TableRowLink key={product.id} data-test-id="assign-product-table-row">
-                      <TableCellAvatar className={classes.avatar} thumbnail={maybe(() => product.thumbnail.url)} />
+                      <TableCellAvatar
+                        className={classes.avatar}
+                        thumbnail={maybe(() => product.thumbnail.url)}
+                      />
                       <TableCell className={classes.colName}>{product.name}</TableCell>
                       <TableCell padding="checkbox" className={classes.checkboxCell}>
                         <Checkbox checked={isSelected} onChange={() => handleChange(product.id)} />
@@ -142,12 +163,17 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
       </DialogContent>
       <DialogActions>
         <BackButton onClick={onClose} />
-        <ConfirmButton data-test-id="submit" transitionState={confirmButtonState} type="submit" onClick={handleSubmit}>
+        <ConfirmButton
+          data-test-id="submit"
+          transitionState={confirmButtonState}
+          type="submit"
+          onClick={handleSubmit}
+        >
           <FormattedMessage {...messages.assignProductDialogButton} />
         </ConfirmButton>
       </DialogActions>
     </Dialog>
   );
 };
-AssignProductDialog.displayName = 'AssignProductDialog';
+AssignProductDialog.displayName = "AssignProductDialog";
 export default AssignProductDialog;

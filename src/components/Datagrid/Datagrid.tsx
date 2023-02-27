@@ -1,27 +1,33 @@
-import '@glideapps/glide-data-grid/dist/index.css';
+import "@glideapps/glide-data-grid/dist/index.css";
 
-import { usePreventHistoryBack } from '@dashboard/hooks/usePreventHistoryBack';
-import DataEditor, { DataEditorRef, EditableGridCell, GridCell, GridSelection, Item } from '@glideapps/glide-data-grid';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import { useTheme } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import range from 'lodash/range';
-import throttle from 'lodash/throttle';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
+import DataEditor, {
+  DataEditorRef,
+  EditableGridCell,
+  GridCell,
+  GridSelection,
+  Item,
+} from "@glideapps/glide-data-grid";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import { useTheme } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import range from "lodash/range";
+import throttle from "lodash/throttle";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { CardMenuItem } from '../CardMenu';
-import ColumnPicker from '../ColumnPicker';
-import { FullScreenContainer } from './FullScreenContainer';
-import { Header } from './Header';
-import { RowActions } from './RowActions';
-import useStyles, { cellHeight, useDatagridTheme, useFullScreenStyles } from './styles';
-import { AvailableColumn } from './types';
-import useCells from './useCells';
-import useColumns from './useColumns';
-import useDatagridChange, { DatagridChange, OnDatagridChange } from './useDatagridChange';
-import { useFullScreenMode } from './useFullScreenMode';
-import { usePortalClasses } from './usePortalClasses';
+import { CardMenuItem } from "../CardMenu";
+import ColumnPicker from "../ColumnPicker";
+import { FullScreenContainer } from "./FullScreenContainer";
+import { Header } from "./Header";
+import { RowActions } from "./RowActions";
+import useStyles, { cellHeight, useDatagridTheme, useFullScreenStyles } from "./styles";
+import { AvailableColumn } from "./types";
+import useCells from "./useCells";
+import useColumns from "./useColumns";
+import useDatagridChange, { DatagridChange, OnDatagridChange } from "./useDatagridChange";
+import { useFullScreenMode } from "./useFullScreenMode";
+import { usePortalClasses } from "./usePortalClasses";
 
 export interface GetCellContentOpts {
   changes: React.MutableRefObject<DatagridChange[]>;
@@ -82,17 +88,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
     picker,
   } = useColumns(availableColumns);
 
-  const { added, onCellEdited, onRowsRemoved, changes, removed, getChangeIndex, onRowAdded } = useDatagridChange(
-    availableColumns,
-    rows,
-    onChange,
-  );
+  const { added, onCellEdited, onRowsRemoved, changes, removed, getChangeIndex, onRowAdded } =
+    useDatagridChange(availableColumns, rows, onChange);
 
   const theme = useTheme();
 
   const [scrolledToRight, setScrolledToRight] = React.useState(false);
-  const scroller: HTMLDivElement = document.querySelector('.dvn-scroller');
-  const scrollerInner: HTMLDivElement = document.querySelector('.dvn-scroll-inner');
+  const scroller: HTMLDivElement = document.querySelector(".dvn-scroller");
+  const scrollerInner: HTMLDivElement = document.querySelector(".dvn-scroll-inner");
 
   usePreventHistoryBack(scroller);
 
@@ -102,17 +105,21 @@ export const Datagrid: React.FC<DatagridProps> = ({
     }
 
     const handler = throttle(() => {
-      const isScrolledToRight = scroller.scrollWidth - scroller.clientWidth - scroller.scrollLeft < 2;
+      const isScrolledToRight =
+        scroller.scrollWidth - scroller.clientWidth - scroller.scrollLeft < 2;
       setScrolledToRight(isScrolledToRight);
     }, 100);
-    scroller.addEventListener('scroll', handler);
+    scroller.addEventListener("scroll", handler);
 
-    return () => scroller.removeEventListener('scroll', handler);
+    return () => scroller.removeEventListener("scroll", handler);
   }, [scroller, scrollerInner]);
 
   const getCellContentEnh = React.useCallback(
     ([column, row]: Item): GridCell => {
-      const item = [availableColumns.findIndex(ac => ac.id === displayedColumns[column]), row] as const;
+      const item = [
+        availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
+        row,
+      ] as const;
       const opts = { changes, added, removed, getChangeIndex };
       const columnId = availableColumns[column].id;
       const changed = !!changes.current[getChangeIndex(columnId, row)]?.data;
@@ -124,7 +131,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           ? {
               themeOverride: {
                 bgCell:
-                  theme.palette.saleor.theme === 'light'
+                  theme.palette.saleor.theme === "light"
                     ? theme.palette.saleor.fail.light
                     : theme.palette.saleor.errorAction[5],
               },
@@ -137,7 +144,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const onCellEditedEnh = React.useCallback(
     ([column, row]: Item, newValue: EditableGridCell): void => {
-      onCellEdited([availableColumns.findIndex(ac => ac.id === displayedColumns[column]), row], newValue);
+      onCellEdited(
+        [availableColumns.findIndex(ac => ac.id === displayedColumns[column]), row],
+        newValue,
+      );
       editor.current.updateCells(
         range(displayedColumns.length).map(offset => ({
           cell: [column + offset, row],
@@ -162,7 +172,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
   );
 
   const selectionActionsComponent = React.useMemo(
-    () => (selection?.rows.length > 0 ? selectionActions(Array.from(selection.rows), { removeRows }) : null),
+    () =>
+      selection?.rows.length > 0
+        ? selectionActions(Array.from(selection.rows), { removeRows })
+        : null,
     [selection, selectionActions, removeRows],
   );
 
@@ -176,7 +189,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
         <Header title={headerTitle}>
           <Header.ButtonFullScreen isOpen={isOpen} onToggle={toggle}>
             {isOpen ? (
-              <FormattedMessage id="QjPJ78" defaultMessage="Close" description="close full-screen" />
+              <FormattedMessage
+                id="QjPJ78"
+                defaultMessage="Close"
+                description="close full-screen"
+              />
             ) : (
               <FormattedMessage id="483Xnh" defaultMessage="Open" description="open full-screen" />
             )}
@@ -186,7 +203,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
         <CardContent classes={{ root: classes.cardContentRoot }}>
           {rowsTotal > 0 ? (
             <>
-              {selection?.rows.length > 0 && <div className={classes.actionBtnBar}>{selectionActionsComponent}</div>}
+              {selection?.rows.length > 0 && (
+                <div className={classes.actionBtnBar}>{selectionActionsComponent}</div>
+              )}
               <div className={classes.editorContainer}>
                 <DataEditor
                   {...props}
@@ -230,7 +249,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                         <ColumnPicker
                           IconButtonProps={{
                             className: classes.ghostIcon,
-                            variant: 'ghost',
+                            variant: "ghost",
                             hoverOutline: false,
                           }}
                           availableColumns={availableColumnsChoices}
@@ -254,7 +273,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
                       {Array(rowsTotal)
                         .fill(0)
                         .map((_, index) => (
-                          <RowActions menuItems={menuItems(index)} disabled={index >= rowsTotal - added.length} />
+                          <RowActions
+                            menuItems={menuItems(index)}
+                            disabled={index >= rowsTotal - added.length}
+                          />
                         ))}
                     </div>
                   }
@@ -273,5 +295,5 @@ export const Datagrid: React.FC<DatagridProps> = ({
   );
 };
 
-Datagrid.displayName = 'Datagrid';
+Datagrid.displayName = "Datagrid";
 export default Datagrid;

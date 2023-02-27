@@ -1,22 +1,22 @@
-import CardSpacer from '@dashboard/components/CardSpacer';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import { FulfillmentStatus, OrderDetailsFragment } from '@dashboard/graphql';
-import TrashIcon from '@dashboard/icons/Trash';
-import { mergeRepeatedOrderLines } from '@dashboard/orders/utils/data';
-import { Card, CardContent, TableBody } from '@material-ui/core';
-import { IconButton } from '@saleor/macaw-ui';
-import React from 'react';
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
+import TrashIcon from "@dashboard/icons/Trash";
+import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
+import { Card, CardContent, TableBody } from "@material-ui/core";
+import { IconButton } from "@saleor/macaw-ui";
+import React from "react";
 
-import { renderCollection } from '../../../misc';
-import OrderCardTitle from '../OrderCardTitle';
-import TableHeader from '../OrderProductsCardElements/OrderProductsCardHeader';
-import TableLine from '../OrderProductsCardElements/OrderProductsTableRow';
-import ActionButtons from './ActionButtons';
-import ExtraInfoLines from './ExtraInfoLines';
-import useStyles from './styles';
+import { renderCollection } from "../../../misc";
+import OrderCardTitle from "../OrderCardTitle";
+import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
+import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
+import ActionButtons from "./ActionButtons";
+import ExtraInfoLines from "./ExtraInfoLines";
+import useStyles from "./styles";
 
 interface OrderFulfilledProductsCardProps {
-  fulfillment: OrderDetailsFragment['fulfillments'][0];
+  fulfillment: OrderDetailsFragment["fulfillments"][0];
   fulfillmentAllowUnpaid: boolean;
   order?: OrderDetailsFragment;
   onOrderFulfillmentApprove: () => void;

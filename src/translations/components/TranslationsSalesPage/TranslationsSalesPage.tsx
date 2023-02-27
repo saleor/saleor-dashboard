@@ -1,22 +1,26 @@
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import LanguageSwitch from '@dashboard/components/LanguageSwitch';
-import { LanguageCodeEnum, SaleTranslationFragment } from '@dashboard/graphql';
-import { commonMessages } from '@dashboard/intl';
-import { getStringOrPlaceholder } from '@dashboard/misc';
-import { TranslationsEntitiesPageProps } from '@dashboard/translations/types';
-import { languageEntitiesUrl, languageEntityUrl, TranslatableEntities } from '@dashboard/translations/urls';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { LanguageCodeEnum, SaleTranslationFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import { TranslationsEntitiesPageProps } from "@dashboard/translations/types";
+import {
+  languageEntitiesUrl,
+  languageEntityUrl,
+  TranslatableEntities,
+} from "@dashboard/translations/urls";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import TranslationFields from '../TranslationFields';
+import TranslationFields from "../TranslationFields";
 
 export interface TranslationsSalesPageProps extends TranslationsEntitiesPageProps {
   data: SaleTranslationFragment;
 }
 
 export const fieldNames = {
-  name: 'name',
+  name: "name",
 };
 
 const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
@@ -41,9 +45,9 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
         })}
         title={intl.formatMessage(
           {
-            id: 'zjkAMs',
+            id: "zjkAMs",
             defaultMessage: 'Translation Sale "{saleName}" - {languageCode}',
-            description: 'header',
+            description: "header",
           },
           {
             languageCode,
@@ -54,7 +58,9 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          getLanguageUrl={lang => languageEntityUrl(lang, TranslatableEntities.sales, translationId)}
+          getLanguageUrl={lang =>
+            languageEntityUrl(lang, TranslatableEntities.sales, translationId)
+          }
         />
       </TopNav>
       <TranslationFields
@@ -65,12 +71,12 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
-              id: 's40PZt',
-              defaultMessage: 'Sale Name',
+              id: "s40PZt",
+              defaultMessage: "Sale Name",
             }),
             name: fieldNames.name,
             translation: data?.translation?.name || null,
-            type: 'short' as 'short',
+            type: "short" as "short",
             value: data?.sale?.name,
           },
         ]}
@@ -83,5 +89,5 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
     </DetailedContent>
   );
 };
-TranslationsSalesPage.displayName = 'TranslationsSalesPage';
+TranslationsSalesPage.displayName = "TranslationsSalesPage";
 export default TranslationsSalesPage;

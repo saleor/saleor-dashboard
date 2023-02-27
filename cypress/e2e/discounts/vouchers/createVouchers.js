@@ -8,10 +8,7 @@ import { createChannel } from "../../../support/api/requests/Channels";
 import { completeCheckout } from "../../../support/api/requests/Checkout";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import { deleteVouchersStartsWith } from "../../../support/api/utils/discounts/vouchersUtils";
-import {
-  addPayment,
-  createCheckoutWithVoucher,
-} from "../../../support/api/utils/ordersUtils";
+import { addPayment, createCheckoutWithVoucher } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
 import {
@@ -88,16 +85,12 @@ describe("As an admin I want to create voucher", () => {
         channelName: defaultChannel.name,
         dataForCheckout,
       }).then(({ addPromoCodeResp, checkout: checkoutResp }) => {
-        expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(
-          expectedAmount,
-        );
+        expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(expectedAmount);
         dataForCheckout.voucherCode = voucherCode;
         checkout = checkoutResp;
 
         addPayment(checkout.id);
-        completeCheckout(checkout.id)
-          .its("order.total.gross.amount")
-          .should("eq", expectedAmount);
+        completeCheckout(checkout.id).its("order.total.gross.amount").should("eq", expectedAmount);
       });
     },
   );
@@ -107,8 +100,7 @@ describe("As an admin I want to create voucher", () => {
     { tags: ["@vouchers", "@allEnv", "@stable"] },
     () => {
       const voucherCode = `${startsWith}${faker.datatype.number()}`;
-      const expectedAmount =
-        (productPrice * voucherValue) / 100 + shippingPrice;
+      const expectedAmount = (productPrice * voucherValue) / 100 + shippingPrice;
       let checkout;
 
       loginAndCreateCheckoutForVoucherWithDiscount({
@@ -118,16 +110,12 @@ describe("As an admin I want to create voucher", () => {
         channelName: defaultChannel.name,
         dataForCheckout,
       }).then(({ addPromoCodeResp, checkout: checkoutResp }) => {
-        expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(
-          expectedAmount,
-        );
+        expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(expectedAmount);
         dataForCheckout.voucherCode = voucherCode;
         checkout = checkoutResp;
 
         addPayment(checkout.id);
-        completeCheckout(checkout.id)
-          .its("order.total.gross.amount")
-          .should("eq", expectedAmount);
+        completeCheckout(checkout.id).its("order.total.gross.amount").should("eq", expectedAmount);
       });
     },
   );
@@ -146,16 +134,12 @@ describe("As an admin I want to create voucher", () => {
         channelName: defaultChannel.name,
         dataForCheckout,
       }).then(({ addPromoCodeResp, checkout: checkoutResp }) => {
-        expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(
-          expectedAmount,
-        );
+        expect(addPromoCodeResp.checkout.totalPrice.gross.amount).to.be.eq(expectedAmount);
         dataForCheckout.voucherCode = voucherCode;
         checkout = checkoutResp;
 
         addPayment(checkout.id);
-        completeCheckout(checkout.id)
-          .its("order.total.gross.amount")
-          .should("eq", productPrice);
+        completeCheckout(checkout.id).its("order.total.gross.amount").should("eq", productPrice);
       });
     },
   );

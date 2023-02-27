@@ -1,11 +1,11 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import { getStringOrPlaceholder } from '@dashboard/misc';
-import { DialogContentText } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import { DialogContentText } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import msgs from './messages';
+import msgs from "./messages";
 
 export interface AppInProgressDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -24,7 +24,7 @@ const AppInProgressDeleteDialog = ({
 }: AppInProgressDeleteDialogProps) => {
   const intl = useIntl();
 
-  const isNameMissing = name === null || name === '';
+  const isNameMissing = name === null || name === "";
 
   const getMainText = () => {
     if (isNameMissing) {
@@ -48,5 +48,5 @@ const AppInProgressDeleteDialog = ({
     </ActionDialog>
   );
 };
-AppInProgressDeleteDialog.displayName = 'AppInProgressDeleteDialog';
+AppInProgressDeleteDialog.displayName = "AppInProgressDeleteDialog";
 export default AppInProgressDeleteDialog;

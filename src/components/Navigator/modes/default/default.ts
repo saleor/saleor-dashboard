@@ -1,12 +1,12 @@
-import { MutationFunction } from '@apollo/client';
-import { OrderDraftCreateMutation } from '@dashboard/graphql';
-import { UseNavigatorResult } from '@dashboard/hooks/useNavigator';
-import { IntlShape } from 'react-intl';
+import { MutationFunction } from "@apollo/client";
+import { OrderDraftCreateMutation } from "@dashboard/graphql";
+import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import { IntlShape } from "react-intl";
 
-import { QuickSearchAction, QuickSearchMode } from '../../types';
-import { searchInCommands } from '../commands';
-import { sortScores } from '../utils';
-import searchInViews from './views';
+import { QuickSearchAction, QuickSearchMode } from "../../types";
+import { searchInCommands } from "../commands";
+import { sortScores } from "../utils";
+import searchInViews from "./views";
 
 const threshold = 0.05;
 const maxActions = 5;
@@ -18,7 +18,10 @@ function getDefaultModeActions(
   createOrder: MutationFunction<OrderDraftCreateMutation, {}>,
   setMode: (mode: QuickSearchMode) => void,
 ): QuickSearchAction[] {
-  return [...searchInViews(query, intl, navigate), ...searchInCommands(query, intl, navigate, createOrder, setMode)]
+  return [
+    ...searchInViews(query, intl, navigate),
+    ...searchInCommands(query, intl, navigate, createOrder, setMode),
+  ]
     .filter(action => action.score >= threshold)
     .sort(sortScores)
     .slice(0, maxActions);

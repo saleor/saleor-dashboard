@@ -1,19 +1,27 @@
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { FormChange } from '@dashboard/hooks/useForm';
-import { Card, CardActions, CardContent, Table, TableCell, TableHead, Typography } from '@material-ui/core';
-import { ExpandIcon, IconButton } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React, { useEffect, useMemo, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { FormChange } from "@dashboard/hooks/useForm";
+import {
+  Card,
+  CardActions,
+  CardContent,
+  Table,
+  TableCell,
+  TableHead,
+  Typography,
+} from "@material-ui/core";
+import { ExpandIcon, IconButton } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React, { useEffect, useMemo, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { WebhookFormData } from '../WebhookDetailsPage';
-import { messages } from './messages';
-import useStyles from './styles';
-import { mapHeaders, stringifyHeaders } from './utils';
-import WebhookHeadersTableBody from './WebhookHeadersTableBody';
+import { WebhookFormData } from "../WebhookDetailsPage";
+import { messages } from "./messages";
+import useStyles from "./styles";
+import { mapHeaders, stringifyHeaders } from "./utils";
+import WebhookHeadersTableBody from "./WebhookHeadersTableBody";
 
 export interface WebhookHeadersProps {
   data: WebhookFormData;
@@ -34,11 +42,11 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }
 
   const add = () => {
     const items = [...headers];
-    items.push({ name: '', value: '', error: false });
+    items.push({ name: "", value: "", error: false });
 
     onChange({
       target: {
-        name: 'customHeaders',
+        name: "customHeaders",
         value: stringifyHeaders(items),
       },
     });
@@ -130,5 +138,5 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({ data: { customHeaders }
   );
 };
 
-WebhookHeaders.displayName = 'WebhookHeaders';
+WebhookHeaders.displayName = "WebhookHeaders";
 export default WebhookHeaders;

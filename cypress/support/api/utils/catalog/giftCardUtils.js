@@ -1,12 +1,5 @@
-import {
-  deleteGiftCard,
-  getGiftCards,
-  getGiftCardWithId
-} from "../../requests/GiftCard";
-import {
-  createCheckoutWithVoucher,
-  purchaseProductWithPromoCode
-} from "../ordersUtils";
+import { deleteGiftCard, getGiftCards, getGiftCardWithId } from "../../requests/GiftCard";
+import { createCheckoutWithVoucher, purchaseProductWithPromoCode } from "../ordersUtils";
 
 export function deleteGiftCardsWithTagStartsWith(tag) {
   getGiftCards(100).then(resp => {
@@ -14,7 +7,7 @@ export function deleteGiftCardsWithTagStartsWith(tag) {
     if (giftCardArray) {
       giftCardArray.edges.forEach(element => {
         const includes = element.node.tags.find(element =>
-          element.name.toLowerCase().includes(tag.toLowerCase())
+          element.name.toLowerCase().includes(tag.toLowerCase()),
         );
         if (includes) {
           deleteGiftCard(element.node.id);
@@ -28,7 +21,7 @@ export function isGiftCardDataAsExpected({
   giftCardId,
   expectedAmount,
   userEmail,
-  initialBalance
+  initialBalance,
 }) {
   let dataAsExpected = true;
   return getGiftCardWithId(giftCardId).then(giftCard => {
@@ -52,7 +45,7 @@ export function createCheckoutWithDisabledGiftCard({
   address,
   shippingMethodName,
   voucherCode,
-  auth
+  auth,
 }) {
   return createCheckoutWithVoucher({
     channelSlug,
@@ -61,7 +54,7 @@ export function createCheckoutWithDisabledGiftCard({
     address,
     shippingMethodName,
     voucherCode,
-    auth
+    auth,
   }).then(({ addPromoCodeResp, checkout }) => {
     expect(addPromoCodeResp.errors[0].field).to.eq("promoCode");
     return checkout;
@@ -73,7 +66,7 @@ export function purchaseProductWithActiveGiftCard({
   expectedAmount,
   initialAmount,
   dataForCheckout,
-  expectedOrderPrice
+  expectedOrderPrice,
 }) {
   return purchaseProductWithPromoCode(dataForCheckout).then(({ order }) => {
     expect(order.total.gross.amount).to.eq(expectedOrderPrice);
@@ -82,7 +75,7 @@ export function purchaseProductWithActiveGiftCard({
       giftCardId: giftCard.id,
       expectedAmount,
       userEmail: dataForCheckout.email,
-      initialBalance: initialAmount
+      initialBalance: initialAmount,
     });
   });
 }

@@ -1,14 +1,22 @@
-import { useUser } from '@dashboard/auth';
-import { isDarkTheme } from '@dashboard/misc';
-import { staffMemberDetailsUrl } from '@dashboard/staff/urls';
-import { useTheme } from '@dashboard/theme';
-import { useTheme as useLegacyTheme } from '@saleor/macaw-ui';
-import { Box, Button, Dropdown, List, MoreOptionsIcon, sprinkles, Text } from '@saleor/macaw-ui/next';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { useUser } from "@dashboard/auth";
+import { isDarkTheme } from "@dashboard/misc";
+import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
+import { useTheme } from "@dashboard/theme";
+import { useTheme as useLegacyTheme } from "@saleor/macaw-ui";
+import {
+  Box,
+  Button,
+  Dropdown,
+  List,
+  MoreOptionsIcon,
+  sprinkles,
+  Text,
+} from "@saleor/macaw-ui/next";
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
 
-import { ThemeSwitcher } from './ThemeSwitcher';
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 export const UserControls = () => {
   const { user, logout } = useUser();
@@ -16,25 +24,35 @@ export const UserControls = () => {
   const { themeType: legacyThemeType, setTheme: setLegacyTheme } = useLegacyTheme();
 
   const handleClick = () => {
-    setLegacyTheme(isDarkTheme(legacyThemeType) ? 'light' : 'dark');
-    setTheme(theme === 'defaultLight' ? 'defaultDark' : 'defaultLight');
+    setLegacyTheme(isDarkTheme(legacyThemeType) ? "light" : "dark");
+    setTheme(theme === "defaultLight" ? "defaultDark" : "defaultLight");
   };
 
   return (
     <Dropdown>
       <Dropdown.Trigger>
-        <Button variant="tertiary" icon={<MoreOptionsIcon />} data-test-id="userMenu" size="medium" />
+        <Button
+          variant="tertiary"
+          icon={<MoreOptionsIcon />}
+          data-test-id="userMenu"
+          size="medium"
+        />
       </Dropdown.Trigger>
       <Dropdown.Content align="end">
         <Box __minWidth={192}>
-          <List padding={5} borderRadius={4} boxShadow="overlay" backgroundColor="surfaceNeutralPlain">
+          <List
+            padding={5}
+            borderRadius={4}
+            boxShadow="overlay"
+            backgroundColor="surfaceNeutralPlain"
+          >
             <Dropdown.Item>
               <List.Item borderRadius={4} data-test-id="account-settings-button">
                 <Link
                   to={staffMemberDetailsUrl(user?.id)}
                   className={sprinkles({
-                    display: 'block',
-                    width: '100%',
+                    display: "block",
+                    width: "100%",
                     ...listItemStyles,
                   })}
                 >

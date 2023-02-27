@@ -1,12 +1,12 @@
-import { appsSection } from '@dashboard/apps/urls';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { useCallback, useMemo } from 'react';
-import useRouter from 'use-react-router';
+import { appsSection } from "@dashboard/apps/urls";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { useCallback, useMemo } from "react";
+import useRouter from "use-react-router";
 
-export type AppPagePathSegment = 'third-party' | 'saleor-apps';
+export type AppPagePathSegment = "third-party" | "saleor-apps";
 
-const defaultTab: AppPagePathSegment = 'third-party';
-const appTypeQueryParam = 'type';
+const defaultTab: AppPagePathSegment = "third-party";
+const appTypeQueryParam = "type";
 
 export const useAppsPageNavigation = () => {
   const navigate = useNavigator();

@@ -1,14 +1,14 @@
-import { useExitFormDialog } from '@dashboard/components/Form/useExitFormDialog';
-import { TaxClassFragment } from '@dashboard/graphql';
-import useForm, { FormChange, SubmitPromise } from '@dashboard/hooks/useForm';
-import useFormset from '@dashboard/hooks/useFormset';
-import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
-import { TaxClassesPageFormData } from '@dashboard/taxes/types';
-import { getTaxClassInitialFormData } from '@dashboard/taxes/utils/data';
-import { validateTaxClassFormData } from '@dashboard/taxes/utils/validation';
-import { TaxClassError } from '@dashboard/utils/errors/taxes';
-import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
-import React, { useState } from 'react';
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { TaxClassFragment } from "@dashboard/graphql";
+import useForm, { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
+import useFormset from "@dashboard/hooks/useFormset";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import { TaxClassesPageFormData } from "@dashboard/taxes/types";
+import { getTaxClassInitialFormData } from "@dashboard/taxes/utils/data";
+import { validateTaxClassFormData } from "@dashboard/taxes/utils/validation";
+import { TaxClassError } from "@dashboard/utils/errors/taxes";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import React, { useState } from "react";
 
 interface TaxClassesFormHandlers {
   handleRateChange: (id: string, value: string) => void;
@@ -39,7 +39,7 @@ function useTaxClassesForm(
 ): UseTaxClassesFormResult {
   // Initial
 
-  const isNewTaxClass = taxClass?.id === 'new';
+  const isNewTaxClass = taxClass?.id === "new";
 
   const initialFormData = getTaxClassInitialFormData(taxClass);
   const initialFormsetData = initialFormData.updateTaxClassRates;
@@ -126,5 +126,5 @@ const TaxClassesForm: React.FC<TaxClassesFormProps> = ({
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };
 
-TaxClassesForm.displayName = 'TaxClassesForm';
+TaxClassesForm.displayName = "TaxClassesForm";
 export default TaxClassesForm;

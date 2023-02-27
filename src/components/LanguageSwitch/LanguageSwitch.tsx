@@ -1,4 +1,4 @@
-import { LanguageCodeEnum, LanguageFragment } from '@dashboard/graphql';
+import { LanguageCodeEnum, LanguageFragment } from "@dashboard/graphql";
 import {
   Card,
   ClickAwayListener,
@@ -8,13 +8,13 @@ import {
   Paper,
   Popper,
   Typography,
-} from '@material-ui/core';
-import ArrowDropDown from '@material-ui/icons/ArrowDropDown';
-import { makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
-import { Link } from 'react-router-dom';
+} from "@material-ui/core";
+import ArrowDropDown from "@material-ui/icons/ArrowDropDown";
+import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage } from "react-intl";
+import { Link } from "react-router-dom";
 
 export interface LanguageSwitchProps {
   currentLanguage: LanguageCodeEnum;
@@ -26,34 +26,34 @@ const useStyles = makeStyles(
   theme => ({
     arrow: {
       color: theme.palette.primary.main,
-      transition: theme.transitions.duration.standard + 'ms',
+      transition: theme.transitions.duration.standard + "ms",
     },
     container: {
       paddingBottom: theme.spacing(1),
     },
     menuContainer: {
-      cursor: 'pointer',
-      display: 'flex',
-      justifyContent: 'space-between',
+      cursor: "pointer",
+      display: "flex",
+      justifyContent: "space-between",
       minWidth: 90,
       padding: theme.spacing(),
-      position: 'relative',
+      position: "relative",
     },
     menuItem: {
-      textAlign: 'justify',
+      textAlign: "justify",
     },
     menuPaper: {
       maxHeight: 600,
-      overflow: 'scroll',
+      overflow: "scroll",
     },
     popover: {
       zIndex: 1,
     },
     rotate: {
-      transform: 'rotate(180deg)',
+      transform: "rotate(180deg)",
     },
   }),
-  { name: 'LanguageSwitch' },
+  { name: "LanguageSwitch" },
 );
 
 const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
@@ -73,12 +73,18 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
           })}
         />
       </Card>
-      <Popper className={classes.popover} open={isExpanded} anchorEl={anchor.current} transition placement="bottom-end">
+      <Popper
+        className={classes.popover}
+        open={isExpanded}
+        anchorEl={anchor.current}
+        transition
+        placement="bottom-end"
+      >
         {({ TransitionProps, placement }) => (
           <Grow
             {...TransitionProps}
             style={{
-              transformOrigin: placement === 'bottom' ? 'right top' : 'right bottom',
+              transformOrigin: placement === "bottom" ? "right top" : "right bottom",
             }}
           >
             <Paper className={classes.menuPaper} elevation={8}>
@@ -114,5 +120,5 @@ const LanguageSwitch: React.FC<LanguageSwitchProps> = props => {
     </div>
   );
 };
-LanguageSwitch.displayName = 'LanguageSwitch';
+LanguageSwitch.displayName = "LanguageSwitch";
 export default LanguageSwitch;

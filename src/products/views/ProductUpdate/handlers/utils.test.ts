@@ -1,27 +1,31 @@
-import { DatagridChangeOpts } from '@dashboard/components/Datagrid/useDatagridChange';
-import { ProductFragment } from '@dashboard/graphql';
-import { ProductUpdateSubmitData } from '@dashboard/products/components/ProductUpdatePage/types';
+import { DatagridChangeOpts } from "@dashboard/components/Datagrid/useDatagridChange";
+import { ProductFragment } from "@dashboard/graphql";
+import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
 
-import { product } from '../../../fixtures';
-import { getBulkVariantUpdateInputs, getCreateVariantInput, inferProductChannelsAfterUpdate } from './utils';
+import { product } from "../../../fixtures";
+import {
+  getBulkVariantUpdateInputs,
+  getCreateVariantInput,
+  inferProductChannelsAfterUpdate,
+} from "./utils";
 
-describe('Product update utils', () => {
-  it('should infer product channels after update with data', () => {
+describe("Product update utils", () => {
+  it("should infer product channels after update with data", () => {
     const product = {
       channelListings: [
         {
           channel: {
-            id: '1',
+            id: "1",
           },
         },
         {
           channel: {
-            id: '2',
+            id: "2",
           },
         },
         {
           channel: {
-            id: '3',
+            id: "3",
           },
         },
       ],
@@ -31,37 +35,37 @@ describe('Product update utils', () => {
       channels: {
         updateChannels: [
           {
-            channelId: '1',
+            channelId: "1",
           },
           {
-            channelId: '4',
+            channelId: "4",
           },
         ],
-        removeChannels: ['2'],
+        removeChannels: ["2"],
       },
     } as ProductUpdateSubmitData;
 
     const result = inferProductChannelsAfterUpdate(product, submitData);
 
-    expect(result).toEqual(['1', '3', '4']);
+    expect(result).toEqual(["1", "3", "4"]);
   });
 
-  it('should infer product channels after update without data', () => {
+  it("should infer product channels after update without data", () => {
     const product = {
       channelListings: [
         {
           channel: {
-            id: '1',
+            id: "1",
           },
         },
         {
           channel: {
-            id: '2',
+            id: "2",
           },
         },
         {
           channel: {
-            id: '3',
+            id: "3",
           },
         },
       ],
@@ -73,72 +77,72 @@ describe('Product update utils', () => {
 
     const result = inferProductChannelsAfterUpdate(product, submitData);
 
-    expect(result).toEqual(['1', '2', '3']);
+    expect(result).toEqual(["1", "2", "3"]);
   });
 });
 
-describe('getCreateVariantInput', () => {
-  test('should return input data base on datagrid change data', () => {
+describe("getCreateVariantInput", () => {
+  test("should return input data base on datagrid change data", () => {
     // Arrange
     const inputData: DatagridChangeOpts = {
       updates: [
         {
-          data: 'new item',
-          column: 'name',
+          data: "new item",
+          column: "name",
           row: 1,
         },
         {
-          data: '23423',
-          column: 'sku',
+          data: "23423",
+          column: "sku",
           row: 1,
         },
         {
           data: true,
-          column: 'availableInChannel:Q2hhbm5lbDoyMjQz',
+          column: "availableInChannel:Q2hhbm5lbDoyMjQz",
           row: 1,
         },
         {
           data: {
-            kind: 'money-cell',
+            kind: "money-cell",
             value: 33434,
-            currency: 'USD',
+            currency: "USD",
           },
-          column: 'channel:Q2hhbm5lbDoyMjQz',
+          column: "channel:Q2hhbm5lbDoyMjQz",
           row: 1,
         },
         {
           data: true,
-          column: 'availableInChannel:Q2hhbm5lbDoyNTQy',
+          column: "availableInChannel:Q2hhbm5lbDoyNTQy",
           row: 1,
         },
         {
           data: {
-            kind: 'money-cell',
+            kind: "money-cell",
             value: 434,
-            currency: 'BHD',
+            currency: "BHD",
           },
-          column: 'channel:Q2hhbm5lbDoyNTQy',
+          column: "channel:Q2hhbm5lbDoyNTQy",
           row: 1,
         },
         {
           data: {
-            kind: 'number-cell',
+            kind: "number-cell",
             value: 3223,
           },
-          column: 'stock:V2FyZWhvdXNlOmQ0YzI0ODQxLTg2MDgtNGFiNC04MDkzLWUxNmQ4NWNlYjdkYQ==',
+          column: "stock:V2FyZWhvdXNlOmQ0YzI0ODQxLTg2MDgtNGFiNC04MDkzLWUxNmQ4NWNlYjdkYQ==",
           row: 1,
         },
         {
           data: {
             allowCustomValues: true,
             emptyOption: true,
-            kind: 'dropdown-cell',
+            kind: "dropdown-cell",
             value: {
-              label: '1l',
-              value: '1l',
+              label: "1l",
+              value: "1l",
             },
           },
-          column: 'attribute:QXR0cmlidXRlOjE1',
+          column: "attribute:QXR0cmlidXRlOjE1",
           row: 1,
         },
       ],
@@ -152,43 +156,43 @@ describe('getCreateVariantInput', () => {
     expect(createDataInput).toEqual({
       attributes: [
         {
-          id: 'QXR0cmlidXRlOjE1',
-          values: ['1l'],
+          id: "QXR0cmlidXRlOjE1",
+          values: ["1l"],
         },
       ],
-      sku: '23423',
-      name: 'new item',
+      sku: "23423",
+      name: "new item",
       channelListings: [
         {
-          channelId: 'Q2hhbm5lbDoyMjQz',
+          channelId: "Q2hhbm5lbDoyMjQz",
           price: 33434,
         },
         {
-          channelId: 'Q2hhbm5lbDoyNTQy',
+          channelId: "Q2hhbm5lbDoyNTQy",
           price: 434,
         },
       ],
       stocks: [
         {
-          warehouse: 'V2FyZWhvdXNlOmQ0YzI0ODQxLTg2MDgtNGFiNC04MDkzLWUxNmQ4NWNlYjdkYQ==',
+          warehouse: "V2FyZWhvdXNlOmQ0YzI0ODQxLTg2MDgtNGFiNC04MDkzLWUxNmQ4NWNlYjdkYQ==",
           quantity: 3223,
         },
       ],
     });
   });
 
-  test('should return only sku and name', () => {
+  test("should return only sku and name", () => {
     // Arrange
     const inputData: DatagridChangeOpts = {
       updates: [
         {
-          data: 'new item',
-          column: 'name',
+          data: "new item",
+          column: "name",
           row: 1,
         },
         {
-          data: '23423',
-          column: 'sku',
+          data: "23423",
+          column: "sku",
           row: 1,
         },
       ],
@@ -202,57 +206,57 @@ describe('getCreateVariantInput', () => {
     // Assert
     expect(createDataInput).toEqual({
       attributes: [],
-      sku: '23423',
-      name: 'new item',
+      sku: "23423",
+      name: "new item",
       channelListings: [],
       stocks: [],
     });
   });
 });
 
-describe('getBulkVariantUpdateInputs', () => {
-  test('should return input data base on datagrid change data for multiple variants', () => {
+describe("getBulkVariantUpdateInputs", () => {
+  test("should return input data base on datagrid change data for multiple variants", () => {
     // Arrange
-    const variants: ProductFragment['variants'] = product('http://google.com').variants;
+    const variants: ProductFragment["variants"] = product("http://google.com").variants;
 
     const inputData: DatagridChangeOpts = {
       updates: [
         {
-          data: 'item 1',
-          column: 'name',
+          data: "item 1",
+          column: "name",
           row: 1,
         },
         {
-          data: 'new item',
-          column: 'name',
+          data: "new item",
+          column: "name",
           row: 2,
         },
         {
-          data: '2345555',
-          column: 'sku',
+          data: "2345555",
+          column: "sku",
           row: 2,
         },
         {
           data: {
-            kind: 'money-cell',
+            kind: "money-cell",
             value: 234,
-            currency: 'USD',
+            currency: "USD",
           },
           column: `channel:${variants[2].channelListings[0].channel.id}`,
           row: 2,
         },
         {
           data: {
-            kind: 'money-cell',
+            kind: "money-cell",
             value: 565,
-            currency: 'BHD',
+            currency: "BHD",
           },
           column: `channel:${variants[2].channelListings[1].channel.id}`,
           row: 2,
         },
         {
           data: {
-            kind: 'number-cell',
+            kind: "number-cell",
             value: 2344,
           },
           column: `stock:${variants[2].stocks[0].warehouse.id}`,
@@ -262,10 +266,10 @@ describe('getBulkVariantUpdateInputs', () => {
           data: {
             allowCustomValues: true,
             emptyOption: true,
-            kind: 'dropdown-cell',
+            kind: "dropdown-cell",
             value: {
-              label: '2l',
-              value: '2l',
+              label: "2l",
+              value: "2l",
             },
           },
           column: `attribute:${variants[2].attributes[0].attribute.id}`,
@@ -285,7 +289,7 @@ describe('getBulkVariantUpdateInputs', () => {
       {
         id: variants[1].id,
         attributes: [],
-        name: 'item 1',
+        name: "item 1",
         stocks: {
           create: [],
           remove: [],
@@ -302,11 +306,11 @@ describe('getBulkVariantUpdateInputs', () => {
         attributes: [
           {
             id: variants[2].attributes[0].attribute.id,
-            values: ['2l'],
+            values: ["2l"],
           },
         ],
-        sku: '2345555',
-        name: 'new item',
+        sku: "2345555",
+        name: "new item",
         stocks: {
           update: [
             {

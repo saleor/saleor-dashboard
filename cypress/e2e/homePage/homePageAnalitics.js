@@ -90,27 +90,17 @@ describe("As an admin I want to see correct information on dashboard home page",
             );
           });
 
-        homePageUtils
-          .getProductsOutOfStock(defaultChannel.slug)
-          .then(productsOutOfStockBefore => {
-            productsOutOfStockRegexp = getProductsOutOfStockRegex(
-              productsOutOfStockBefore,
-              1,
-            );
-          });
-
-        homePageUtils.getSalesAmount(defaultChannel.slug).then(salesAmount => {
-          salesAmountRegexp = getSalesAmountRegex(
-            salesAmount,
-            (productPrice + shippingPrice) * 2,
-          );
+        homePageUtils.getProductsOutOfStock(defaultChannel.slug).then(productsOutOfStockBefore => {
+          productsOutOfStockRegexp = getProductsOutOfStockRegex(productsOutOfStockBefore, 1);
         });
 
-        homePageUtils
-          .getTodaysOrders(defaultChannel.slug)
-          .then(ordersBefore => {
-            ordersRegexp = getTodaysOrdersRegex(ordersBefore, 2);
-          });
+        homePageUtils.getSalesAmount(defaultChannel.slug).then(salesAmount => {
+          salesAmountRegexp = getSalesAmountRegex(salesAmount, (productPrice + shippingPrice) * 2);
+        });
+
+        homePageUtils.getTodaysOrders(defaultChannel.slug).then(ordersBefore => {
+          ordersRegexp = getTodaysOrdersRegex(ordersBefore, 2);
+        });
       })
       .then(() => {
         createReadyToFulfillOrder({
@@ -129,8 +119,7 @@ describe("As an admin I want to see correct information on dashboard home page",
           address,
         });
 
-        const productOutOfStockRandomName =
-          startsWith + faker.datatype.number();
+        const productOutOfStockRandomName = startsWith + faker.datatype.number();
 
         productsUtils.createProductInChannel({
           name: productOutOfStockRandomName,
@@ -156,21 +145,16 @@ describe("As an admin I want to see correct information on dashboard home page",
       cy.visit(urlList.homePage);
       changeChannel(defaultChannel.name);
       cy.contains(HOMEPAGE_SELECTORS.orders, ordersRegexp).should("be.visible");
-      cy.contains(
-        HOMEPAGE_SELECTORS.ordersReadyToFulfill,
-        ordersReadyToFulfillRegexp,
-      ).should("be.visible");
-      cy.contains(
-        HOMEPAGE_SELECTORS.paymentsWaitingForCapture,
-        ordersReadyForCaptureRegexp,
-      ).should("be.visible");
-      cy.contains(HOMEPAGE_SELECTORS.sales, salesAmountRegexp).should(
+      cy.contains(HOMEPAGE_SELECTORS.ordersReadyToFulfill, ordersReadyToFulfillRegexp).should(
         "be.visible",
       );
-      cy.contains(
-        HOMEPAGE_SELECTORS.productsOutOfStock,
-        productsOutOfStockRegexp,
-      ).should("be.visible");
+      cy.contains(HOMEPAGE_SELECTORS.paymentsWaitingForCapture, ordersReadyForCaptureRegexp).should(
+        "be.visible",
+      );
+      cy.contains(HOMEPAGE_SELECTORS.sales, salesAmountRegexp).should("be.visible");
+      cy.contains(HOMEPAGE_SELECTORS.productsOutOfStock, productsOutOfStockRegexp).should(
+        "be.visible",
+      );
     },
   );
 });

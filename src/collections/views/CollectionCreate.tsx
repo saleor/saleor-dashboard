@@ -1,30 +1,30 @@
-import { ChannelsAction } from '@dashboard/channels/urls';
-import { createCollectionChannels } from '@dashboard/channels/utils';
-import useAppChannel from '@dashboard/components/AppLayout/AppChannelContext';
-import ChannelsAvailabilityDialog from '@dashboard/components/ChannelsAvailabilityDialog';
-import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { ChannelsAction } from "@dashboard/channels/urls";
+import { createCollectionChannels } from "@dashboard/channels/utils";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CollectionCreateInput,
   useCollectionChannelListingUpdateMutation,
   useCreateCollectionMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from '@dashboard/graphql';
-import useChannels from '@dashboard/hooks/useChannels';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { commonMessages } from '@dashboard/intl';
-import { getMutationErrors } from '@dashboard/misc';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import createMetadataCreateHandler from '@dashboard/utils/handlers/metadataCreateHandler';
-import { getParsedDataForJsonStringField } from '@dashboard/utils/richText/misc';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useChannels from "@dashboard/hooks/useChannels";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import { getMutationErrors } from "@dashboard/misc";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import CollectionCreatePage from '../components/CollectionCreatePage/CollectionCreatePage';
-import { CollectionCreateData } from '../components/CollectionCreatePage/form';
-import { collectionAddUrl, CollectionCreateUrlQueryParams, collectionUrl } from '../urls';
-import { COLLECTION_CREATE_FORM_ID } from './consts';
+import CollectionCreatePage from "../components/CollectionCreatePage/CollectionCreatePage";
+import { CollectionCreateData } from "../components/CollectionCreatePage/form";
+import { collectionAddUrl, CollectionCreateUrlQueryParams, collectionUrl } from "../urls";
+import { COLLECTION_CREATE_FORM_ID } from "./consts";
 
 interface CollectionCreateProps {
   params: CollectionCreateUrlQueryParams;
@@ -37,11 +37,10 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const [openModal, closeModal] = createDialogActionHandlers<ChannelsAction, CollectionCreateUrlQueryParams>(
-    navigate,
-    params => collectionAddUrl(params),
-    params,
-  );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ChannelsAction,
+    CollectionCreateUrlQueryParams
+  >(navigate, params => collectionAddUrl(params), params);
 
   const [updateChannels, updateChannelsOpts] = useCollectionChannelListingUpdateMutation({});
   const { availableChannels } = useAppChannel(false);
@@ -61,23 +60,28 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
     isChannelsModalOpen,
     setCurrentChannels,
     toggleAllChannels,
-  } = useChannels(allChannels, params?.action, { closeModal, openModal }, { formId: COLLECTION_CREATE_FORM_ID });
+  } = useChannels(
+    allChannels,
+    params?.action,
+    { closeModal, openModal },
+    { formId: COLLECTION_CREATE_FORM_ID },
+  );
 
   const [createCollection, createCollectionOpts] = useCreateCollectionMutation({
     onCompleted: data => {
       if (data.collectionCreate.errors.length === 0) {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         navigate(collectionUrl(data.collectionCreate.collection.id));
       } else {
         const backgroundImageError = data.collectionCreate.errors.find(
-          error => error.field === ('backgroundImage' as keyof CollectionCreateInput),
+          error => error.field === ("backgroundImage" as keyof CollectionCreateInput),
         );
         if (backgroundImageError) {
           notify({
-            status: 'error',
+            status: "error",
             text: intl.formatMessage(commonMessages.somethingWentWrong),
           });
         }
@@ -121,15 +125,19 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
     return { id, errors: getMutationErrors(result) };
   };
 
-  const handleSubmit = createMetadataCreateHandler(handleCreate, updateMetadata, updatePrivateMetadata);
+  const handleSubmit = createMetadataCreateHandler(
+    handleCreate,
+    updateMetadata,
+    updatePrivateMetadata,
+  );
 
   return (
     <>
       <WindowTitle
         title={intl.formatMessage({
-          id: 'ttMauu',
-          defaultMessage: 'Create collection',
-          description: 'window title',
+          id: "ttMauu",
+          defaultMessage: "Create collection",
+          description: "window title",
         })}
       />
       {!!allChannels?.length && (
@@ -141,8 +149,8 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({ params }) =>
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
-            id: 'I1Mz7h',
-            defaultMessage: 'Manage Collection Channel Availability',
+            id: "I1Mz7h",
+            defaultMessage: "Manage Collection Channel Availability",
           })}
           confirmButtonState="default"
           selected={channelListElements.length}

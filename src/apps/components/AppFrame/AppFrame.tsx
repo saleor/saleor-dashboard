@@ -1,14 +1,18 @@
-import { useAppDashboardUpdates } from '@dashboard/apps/components/AppFrame/useAppDashboardUpdates';
-import { AppDetailsUrlQueryParams, prepareFeatureFlagsList, resolveAppIframeUrl } from '@dashboard/apps/urls';
-import { useAllFlags } from '@dashboard/hooks/useFlags';
-import { CircularProgress } from '@material-ui/core';
-import { useTheme } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
+import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useAppDashboardUpdates";
+import {
+  AppDetailsUrlQueryParams,
+  prepareFeatureFlagsList,
+  resolveAppIframeUrl,
+} from "@dashboard/apps/urls";
+import { useAllFlags } from "@dashboard/hooks/useFlags";
+import { CircularProgress } from "@material-ui/core";
+import { useTheme } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
 
-import { useStyles } from './styles';
-import { useAppActions } from './useAppActions';
-import useTokenRefresh from './useTokenRefresh';
+import { useStyles } from "./styles";
+import { useAppActions } from "./useAppActions";
+import useTokenRefresh from "./useTokenRefresh";
 
 interface Props {
   src: string;
@@ -64,7 +68,7 @@ export const AppFrame: React.FC<Props> = ({
      * Currently handshake it 2 times, for compatibility
      */
     postToExtension({
-      type: 'handshake',
+      type: "handshake",
       payload: {
         token: appToken,
         version: 1,

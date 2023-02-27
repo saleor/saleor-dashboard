@@ -1,5 +1,5 @@
-import { ExportScope } from '@dashboard/graphql';
-import { ExportSettingsFormData } from '@dashboard/products/components/ProductExportDialog/types';
+import { ExportScope } from "@dashboard/graphql";
+import { ExportSettingsFormData } from "@dashboard/products/components/ProductExportDialog/types";
 
 interface ExportGiftCardsInputProps {
   ids: string[] | null;

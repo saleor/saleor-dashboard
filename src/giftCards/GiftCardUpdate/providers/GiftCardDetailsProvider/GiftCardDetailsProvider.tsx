@@ -1,8 +1,8 @@
-import { GiftCardDetailsQuery, useGiftCardDetailsQuery } from '@dashboard/graphql';
-import React, { createContext } from 'react';
+import { GiftCardDetailsQuery, useGiftCardDetailsQuery } from "@dashboard/graphql";
+import React, { createContext } from "react";
 
-import { ExtendedGiftCard } from './types';
-import { getExtendedGiftCard } from './utils';
+import { ExtendedGiftCard } from "./types";
+import { getExtendedGiftCard } from "./utils";
 
 interface GiftCardDetailsProviderProps {
   children: React.ReactNode;
@@ -10,7 +10,7 @@ interface GiftCardDetailsProviderProps {
 }
 
 export interface GiftCardDetailsConsumerProps {
-  giftCard: ExtendedGiftCard<GiftCardDetailsQuery['giftCard']> | undefined;
+  giftCard: ExtendedGiftCard<GiftCardDetailsQuery["giftCard"]> | undefined;
   loading: boolean;
 }
 
@@ -27,7 +27,11 @@ const GiftCardDetailsProvider: React.FC<GiftCardDetailsProviderProps> = ({ child
     loading,
   };
 
-  return <GiftCardDetailsContext.Provider value={providerValues}>{children}</GiftCardDetailsContext.Provider>;
+  return (
+    <GiftCardDetailsContext.Provider value={providerValues}>
+      {children}
+    </GiftCardDetailsContext.Provider>
+  );
 };
 
 export default GiftCardDetailsProvider;

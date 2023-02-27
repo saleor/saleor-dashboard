@@ -13,9 +13,7 @@ export function getPermissionGroups(first, startsWith) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(query)
-    .then(resp => resp.body.data.permissionGroups.edges);
+  return cy.sendRequestWithQuery(query).then(resp => resp.body.data.permissionGroups.edges);
 }
 
 export function deletePermissionGroup(permissionGroupId) {
@@ -30,11 +28,7 @@ export function deletePermissionGroup(permissionGroupId) {
   return cy.sendRequestWithQuery(mutation);
 }
 
-export function createPermissionGroup({
-  name,
-  userIdsArray,
-  permissionsArray
-}) {
+export function createPermissionGroup({ name, userIdsArray, permissionsArray }) {
   const users = getValueWithDefault(userIdsArray, `addUsers:${userIdsArray}`);
   const mutation = `mutation{
     permissionGroupCreate(input:{
@@ -52,9 +46,7 @@ export function createPermissionGroup({
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.permissionGroupCreate");
+  return cy.sendRequestWithQuery(mutation).its("body.data.permissionGroupCreate");
 }
 
 export function getPermissionGroup(permissionGroupId) {

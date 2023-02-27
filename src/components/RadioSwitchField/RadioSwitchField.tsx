@@ -1,34 +1,34 @@
-import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
+import { FormControl, FormControlLabel, Radio, RadioGroup } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
     formControl: {
       padding: 0,
-      width: '100%',
+      width: "100%",
     },
     formLabel: {
-      marginLeft: '-5px',
-      paddingBottom: '10px',
+      marginLeft: "-5px",
+      paddingBottom: "10px",
     },
     radioLabel: {
-      '& > span': {
+      "& > span": {
         paddingTop: theme.spacing(),
         paddingBottom: theme.spacing(),
       },
     },
     secondLabel: {
-      display: 'block',
-      fontSize: '12px',
+      display: "block",
+      fontSize: "12px",
     },
   }),
-  { name: 'RadioSwitchField' },
+  { name: "RadioSwitchField" },
 );
 
 interface RadioSwitchFieldProps {
-  classes?: Record<'radioLabel', string>;
+  classes?: Record<"radioLabel", string>;
   className?: string;
   disabled?: boolean;
   error?: boolean;
@@ -53,20 +53,25 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
   } = props;
   const classes = useStyles(props);
 
-  const initialValue = value ? 'true' : 'false';
+  const initialValue = value ? "true" : "false";
 
   const change = event => {
     onChange({
       target: {
         name: event.target.name,
-        value: event.target.value === 'true' ? true : false,
+        value: event.target.value === "true" ? true : false,
       },
     } as any);
   };
 
   return (
     <FormControl className={clsx(classes.formControl, className)} error={error} disabled={disabled}>
-      <RadioGroup aria-label={name} name={name} value={initialValue} onChange={event => change(event)}>
+      <RadioGroup
+        aria-label={name}
+        name={name}
+        value={initialValue}
+        onChange={event => change(event)}
+      >
         <FormControlLabel
           value="true"
           className={clsx(classes.radioLabel, overrideClasses?.radioLabel)}
@@ -85,5 +90,5 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
     </FormControl>
   );
 };
-RadioSwitchField.displayName = 'RadioSwitchField';
+RadioSwitchField.displayName = "RadioSwitchField";
 export default RadioSwitchField;

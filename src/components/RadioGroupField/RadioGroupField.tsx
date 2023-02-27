@@ -1,9 +1,16 @@
-import { FormControl, FormControlLabel, FormHelperText, MenuItem, Radio, RadioGroup } from '@material-ui/core';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import {
+  FormControl,
+  FormControlLabel,
+  FormHelperText,
+  MenuItem,
+  Radio,
+  RadioGroup,
+} from "@material-ui/core";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 export interface RadioGroupFieldChoice<T extends string | number = string | number> {
   disabled?: boolean;
@@ -22,7 +29,7 @@ interface RadioGroupFieldProps {
   label?: React.ReactNode;
   name?: string;
   value: string | number;
-  variant?: 'block' | 'inline' | 'inlineJustify';
+  variant?: "block" | "inline" | "inlineJustify";
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
@@ -38,7 +45,7 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
     onChange,
     name,
     hint,
-    variant = 'block',
+    variant = "block",
     innerContainerClassName,
   } = props;
   const classes = useStyles(props);
@@ -58,7 +65,7 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
         value={value}
         onChange={onChange}
         className={clsx({
-          [classes.radioGroupInline]: variant === 'inline',
+          [classes.radioGroupInline]: variant === "inline",
           [innerContainerClassName]: !!innerContainerClassName,
         })}
       >
@@ -68,8 +75,8 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
               disabled={choice.disabled}
               value={choice.value}
               className={clsx({
-                [classes.radioLabel]: variant !== 'inline',
-                [classes.radioLabelInline]: variant === 'inline',
+                [classes.radioLabel]: variant !== "inline",
+                [classes.radioLabelInline]: variant === "inline",
               })}
               classes={{
                 label: classes.label,
@@ -96,5 +103,5 @@ export const RadioGroupField: React.FC<RadioGroupFieldProps> = props => {
     </FormControl>
   );
 };
-RadioGroupField.displayName = 'RadioGroupField';
+RadioGroupField.displayName = "RadioGroupField";
 export default RadioGroupField;

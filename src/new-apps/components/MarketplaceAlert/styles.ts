@@ -1,4 +1,4 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -6,5 +6,5 @@ export const useStyles = makeStyles(
       margin: theme.spacing(6, 0, 12, 0),
     },
   }),
-  { name: 'MarketplaceAlert' },
+  { name: "MarketplaceAlert" },
 );

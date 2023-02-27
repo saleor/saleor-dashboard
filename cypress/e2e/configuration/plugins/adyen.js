@@ -20,10 +20,7 @@ import {
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../../support/api/utils/shippingUtils";
+import { createShipping, deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 
 describe("Adyen payments", () => {
   const startsWith = "Adyen";
@@ -66,19 +63,12 @@ describe("Adyen payments", () => {
           price: 10,
         });
       })
-      .then(
-        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
-          warehouse = warehouseResp;
-          shippingMethod = shippingMethodResp;
-        },
-      )
+      .then(({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
+        warehouse = warehouseResp;
+        shippingMethod = shippingMethodResp;
+      })
       .then(() => {
-        updatePlugin(
-          "mirumee.payments.adyen",
-          "adyen-auto-capture",
-          true,
-          defaultChannel.id,
-        );
+        updatePlugin("mirumee.payments.adyen", "adyen-auto-capture", true, defaultChannel.id);
       });
     createTypeAttributeAndCategoryForProduct({ name })
       .then(({ productType, attribute, category }) => {
@@ -117,10 +107,7 @@ describe("Adyen payments", () => {
       auth: "token",
     })
       .then(({ checkout: checkoutResp }) => {
-        const shippingMethodId = getShippingMethodIdFromCheckout(
-          checkoutResp,
-          shippingMethod.name,
-        );
+        const shippingMethodId = getShippingMethodIdFromCheckout(checkoutResp, shippingMethod.name);
         checkout = checkoutResp;
         addShippingMethod(checkout.id, shippingMethodId);
       })
@@ -129,102 +116,72 @@ describe("Adyen payments", () => {
       });
   });
 
-  it(
-    "should purchase products with simple card",
-    { tags: ["@payments", "@allEnv"] },
-    () => {
-      const simpleCard = cardData;
-      simpleCard.encryptedCardNumber =
-        paymentCards.cards.simpleCard.encryptedCardNumber;
-      simpleCard.brand = paymentCards.cards.simpleCard.brand;
-      completeCheckout(checkout.id, simpleCard)
-        .then(({ order }) => {
-          getOrder(order.id);
-        })
-        .then(order => {
-          expect(order.paymentStatus).to.eq("FULLY_CHARGED");
-        });
-    },
-  );
-
-  it(
-    "should purchase product with 3D secure 2 Auth",
-    { tags: ["@payments", "@allEnv"] },
-    () => {
-      const threeDSecureCard = cardData;
-      threeDSecureCard.encryptedCardNumber =
-        paymentCards.cards.threeDSecureTwoAuth.encryptedCardNumber;
-      threeDSecureCard.brand = paymentCards.cards.threeDSecureTwoAuth.brand;
-      completeCheckout(checkout.id, threeDSecureCard)
-        .then(({ order }) => {
-          getOrder(order.id);
-        })
-        .then(order => {
-          expect(order.paymentStatus).to.eq("FULLY_CHARGED");
-        });
-    },
-  );
-
-  it(
-    "should purchase product with 3D secure 1 Auth",
-    { tags: ["@payments", "@allEnv"] },
-    () => {
-      const threeDSecureCardOneAuth = cardData;
-      threeDSecureCardOneAuth.encryptedCardNumber =
-        paymentCards.cards.threeDSecureOneAuth.encryptedCardNumber;
-      threeDSecureCardOneAuth.brand =
-        paymentCards.cards.threeDSecureOneAuth.brand;
-      completeCheckout(checkout.id, threeDSecureCardOneAuth)
-        .then(({ order }) => {
-          getOrder(order.id);
-        })
-        .then(order => {
-          expect(order.paymentStatus).to.eq("FULLY_CHARGED");
-        });
-    },
-  );
-
-  it(
-    "should fail with unknown security number",
-    { tags: ["@payments", "@allEnv"] },
-    () => {
-      const simpleCard = cardData;
-      simpleCard.encryptedCardNumber =
-        paymentCards.cards.simpleCard.encryptedCardNumber;
-      simpleCard.brand = paymentCards.cards.simpleCard.brand;
-      simpleCard.encryptedSecurityCode =
-        paymentCards.encryptedSecurityCodes.unknown;
-      completeCheckout(checkout.id, simpleCard).then(({ errors }) => {
-        expect(errors).to.have.length(1);
+  it("should purchase products with simple card", { tags: ["@payments", "@allEnv"] }, () => {
+    const simpleCard = cardData;
+    simpleCard.encryptedCardNumber = paymentCards.cards.simpleCard.encryptedCardNumber;
+    simpleCard.brand = paymentCards.cards.simpleCard.brand;
+    completeCheckout(checkout.id, simpleCard)
+      .then(({ order }) => {
+        getOrder(order.id);
+      })
+      .then(order => {
+        expect(order.paymentStatus).to.eq("FULLY_CHARGED");
       });
-    },
-  );
+  });
 
-  it(
-    "should fail with timeout in 3D authorization",
-    { tags: ["@payments", "@allEnv"] },
-    () => {
-      const errorCard = cardData;
-      errorCard.encryptedCardNumber =
-        paymentCards.cards.errorCard.encryptedCardNumber;
-      errorCard.brand = paymentCards.cards.errorCard.brand;
-      completeCheckout(checkout.id, errorCard).then(({ errors }) => {
-        expect(errors).to.have.length(1);
+  it("should purchase product with 3D secure 2 Auth", { tags: ["@payments", "@allEnv"] }, () => {
+    const threeDSecureCard = cardData;
+    threeDSecureCard.encryptedCardNumber =
+      paymentCards.cards.threeDSecureTwoAuth.encryptedCardNumber;
+    threeDSecureCard.brand = paymentCards.cards.threeDSecureTwoAuth.brand;
+    completeCheckout(checkout.id, threeDSecureCard)
+      .then(({ order }) => {
+        getOrder(order.id);
+      })
+      .then(order => {
+        expect(order.paymentStatus).to.eq("FULLY_CHARGED");
       });
-    },
-  );
+  });
 
-  it(
-    "should fail with closed account",
-    { tags: ["@payments", "@allEnv"] },
-    () => {
-      const closeAccount = cardData;
-      closeAccount.encryptedCardNumber =
-        paymentCards.cards.closeAccount.encryptedCardNumber;
-      closeAccount.brand = paymentCards.cards.closeAccount.brand;
-      completeCheckout(checkout.id, closeAccount).then(({ errors }) => {
-        expect(errors).to.have.length(1);
+  it("should purchase product with 3D secure 1 Auth", { tags: ["@payments", "@allEnv"] }, () => {
+    const threeDSecureCardOneAuth = cardData;
+    threeDSecureCardOneAuth.encryptedCardNumber =
+      paymentCards.cards.threeDSecureOneAuth.encryptedCardNumber;
+    threeDSecureCardOneAuth.brand = paymentCards.cards.threeDSecureOneAuth.brand;
+    completeCheckout(checkout.id, threeDSecureCardOneAuth)
+      .then(({ order }) => {
+        getOrder(order.id);
+      })
+      .then(order => {
+        expect(order.paymentStatus).to.eq("FULLY_CHARGED");
       });
-    },
-  );
+  });
+
+  it("should fail with unknown security number", { tags: ["@payments", "@allEnv"] }, () => {
+    const simpleCard = cardData;
+    simpleCard.encryptedCardNumber = paymentCards.cards.simpleCard.encryptedCardNumber;
+    simpleCard.brand = paymentCards.cards.simpleCard.brand;
+    simpleCard.encryptedSecurityCode = paymentCards.encryptedSecurityCodes.unknown;
+    completeCheckout(checkout.id, simpleCard).then(({ errors }) => {
+      expect(errors).to.have.length(1);
+    });
+  });
+
+  it("should fail with timeout in 3D authorization", { tags: ["@payments", "@allEnv"] }, () => {
+    const errorCard = cardData;
+    errorCard.encryptedCardNumber = paymentCards.cards.errorCard.encryptedCardNumber;
+    errorCard.brand = paymentCards.cards.errorCard.brand;
+    completeCheckout(checkout.id, errorCard).then(({ errors }) => {
+      expect(errors).to.have.length(1);
+    });
+  });
+
+  it("should fail with closed account", { tags: ["@payments", "@allEnv"] }, () => {
+    const closeAccount = cardData;
+    closeAccount.encryptedCardNumber = paymentCards.cards.closeAccount.encryptedCardNumber;
+    closeAccount.brand = paymentCards.cards.closeAccount.brand;
+    completeCheckout(checkout.id, closeAccount).then(({ errors }) => {
+      expect(errors).to.have.length(1);
+    });
+  });
 });

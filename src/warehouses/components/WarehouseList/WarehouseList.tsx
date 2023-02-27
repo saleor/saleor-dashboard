@@ -1,24 +1,24 @@
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
-import TableCellHeader from '@dashboard/components/TableCellHeader';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { WarehouseWithShippingFragment } from '@dashboard/graphql';
-import { renderCollection, stopPropagation } from '@dashboard/misc';
-import { ListProps, SortPage } from '@dashboard/types';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import { getArrowDirection } from '@dashboard/utils/sort';
-import { WarehouseListUrlSortField, warehouseUrl } from '@dashboard/warehouses/urls';
-import { TableBody, TableCell, TableFooter, TableHead } from '@material-ui/core';
-import EditIcon from '@material-ui/icons/Edit';
-import { DeleteIcon, IconButton, makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { WarehouseWithShippingFragment } from "@dashboard/graphql";
+import { renderCollection, stopPropagation } from "@dashboard/misc";
+import { ListProps, SortPage } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getArrowDirection } from "@dashboard/utils/sort";
+import { WarehouseListUrlSortField, warehouseUrl } from "@dashboard/warehouses/urls";
+import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core";
+import EditIcon from "@material-ui/icons/Edit";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       colActions: {
         width: 160,
       },
@@ -26,19 +26,19 @@ const useStyles = makeStyles(
         width: 400,
       },
       colZones: {
-        width: 'auto',
+        width: "auto",
       },
     },
     actions: {
-      alignItems: 'center',
-      display: 'flex',
-      justifyContent: 'flex-end',
-      position: 'relative',
+      alignItems: "center",
+      display: "flex",
+      justifyContent: "flex-end",
+      position: "relative",
       right: theme.spacing(-1.5),
       gap: theme.spacing(1),
     },
     colActions: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     colName: {
       paddingLeft: 0,
@@ -47,10 +47,10 @@ const useStyles = makeStyles(
       paddingLeft: 0,
     },
     tableRow: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
   }),
-  { name: 'WarehouseList' },
+  { name: "WarehouseList" },
 );
 
 interface WarehouseListProps extends ListProps, SortPage<WarehouseListUrlSortField> {
@@ -70,7 +70,11 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
       <TableHead>
         <TableRowLink>
           <TableCellHeader
-            direction={sort.sort === WarehouseListUrlSortField.name ? getArrowDirection(!!sort.asc) : undefined}
+            direction={
+              sort.sort === WarehouseListUrlSortField.name
+                ? getArrowDirection(!!sort.asc)
+                : undefined
+            }
             arrowPosition="right"
             className={classes.colName}
             onClick={() => onSort(WarehouseListUrlSortField.name)}
@@ -103,8 +107,8 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
               href={warehouse && warehouseUrl(warehouse.id)}
               className={classes.tableRow}
               hover={!!warehouse}
-              key={warehouse ? warehouse.id : 'skeleton'}
-              data-test-id={'warehouse-entry-' + warehouse?.name.toLowerCase().replace(' ', '')}
+              key={warehouse ? warehouse.id : "skeleton"}
+              data-test-id={"warehouse-entry-" + warehouse?.name.toLowerCase().replace(" ", "")}
             >
               <TableCell className={classes.colName} data-test-id="name">
                 {warehouse?.name ?? <Skeleton />}
@@ -115,7 +119,7 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
                 ) : (
                   mapEdgesToItems(warehouse?.shippingZones)
                     ?.map(({ name }) => name)
-                    .join(', ') || '-'
+                    .join(", ") || "-"
                 )}
               </TableCell>
               <TableCell className={classes.colActions}>
@@ -149,5 +153,5 @@ const WarehouseList: React.FC<WarehouseListProps> = props => {
   );
 };
 
-WarehouseList.displayName = 'WarehouseList';
+WarehouseList.displayName = "WarehouseList";
 export default WarehouseList;

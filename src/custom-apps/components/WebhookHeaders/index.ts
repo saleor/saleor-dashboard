@@ -1,2 +1,2 @@
-export { default } from './WebhookHeaders';
-export * from './WebhookHeaders';
+export { default } from "./WebhookHeaders";
+export * from "./WebhookHeaders";

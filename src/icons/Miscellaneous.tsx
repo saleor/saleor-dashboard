@@ -1,5 +1,5 @@
-import { createSvgIcon, SvgIconProps } from '@material-ui/core';
-import React from 'react';
+import { createSvgIcon, SvgIconProps } from "@material-ui/core";
+import React from "react";
 
 const Miscellaneous = createSvgIcon(
   <>
@@ -28,7 +28,9 @@ const Miscellaneous = createSvgIcon(
       fill="currentColor"
     />
   </>,
-  'Miscellaneous',
+  "Miscellaneous",
 );
 
-export default (props: SvgIconProps) => <Miscellaneous {...props} viewBox="0 0 24 24" fill="none" />;
+export default (props: SvgIconProps) => (
+  <Miscellaneous {...props} viewBox="0 0 24 24" fill="none" />
+);

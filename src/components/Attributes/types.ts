@@ -2,17 +2,17 @@ import {
   AttributeValueFragment,
   PageErrorWithAttributesFragment,
   ProductErrorWithAttributesFragment,
-} from '@dashboard/graphql';
-import { FormsetChange } from '@dashboard/hooks/useFormset';
-import { FetchMoreProps, ReorderEvent } from '@dashboard/types';
-import { RichTextGetters } from '@dashboard/utils/richText/useMultipleRichText';
+} from "@dashboard/graphql";
+import { FormsetChange } from "@dashboard/hooks/useFormset";
+import { FetchMoreProps, ReorderEvent } from "@dashboard/types";
+import { RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 
-import { AttributeInput } from './Attributes';
+import { AttributeInput } from "./Attributes";
 
 export enum VariantAttributeScope {
-  ALL = 'ALL',
-  VARIANT_SELECTION = 'VARIANT_SELECTION',
-  NOT_VARIANT_SELECTION = 'NOT_VARIANT_SELECTION',
+  ALL = "ALL",
+  VARIANT_SELECTION = "VARIANT_SELECTION",
+  NOT_VARIANT_SELECTION = "NOT_VARIANT_SELECTION",
 }
 
 export interface AttributeRowHandlers {

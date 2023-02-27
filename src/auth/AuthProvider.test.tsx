@@ -1,14 +1,14 @@
 /** @jest-environment setup-polly-jest/jest-environment-jsdom */
 
-import { getApiUrl } from '@dashboard/config';
-import { createSaleorClient, SaleorProvider } from '@saleor/sdk';
-import setupApi from '@test/api';
-import { act, renderHook } from '@testing-library/react-hooks';
-import React from 'react';
-import { IntlProvider } from 'react-intl';
-import { MemoryRouter as Router } from 'react-router-dom';
+import { getApiUrl } from "@dashboard/config";
+import { createSaleorClient, SaleorProvider } from "@saleor/sdk";
+import setupApi from "@test/api";
+import { act, renderHook } from "@testing-library/react-hooks";
+import React from "react";
+import { IntlProvider } from "react-intl";
+import { MemoryRouter as Router } from "react-router-dom";
 
-import { useAuthProvider } from './hooks/useAuthProvider';
+import { useAuthProvider } from "./hooks/useAuthProvider";
 
 const apolloClient = setupApi();
 
@@ -19,7 +19,7 @@ function renderAuthProvider() {
   const notify = jest.fn();
   const saleorClient = createSaleorClient({
     apiUrl: getApiUrl(),
-    channel: '',
+    channel: "",
   });
   const wrapper = ({ children }) => (
     <IntlProvider defaultLocale="en" locale="en">
@@ -29,20 +29,23 @@ function renderAuthProvider() {
     </IntlProvider>
   );
 
-  const { result } = renderHook(() => useAuthProvider({ intl: intl as any, notify, apolloClient }), { wrapper });
+  const { result } = renderHook(
+    () => useAuthProvider({ intl: intl as any, notify, apolloClient }),
+    { wrapper },
+  );
 
   return result;
 }
 
 const adminCredentials = {
-  email: 'admin@example.com',
-  password: 'admin',
+  email: "admin@example.com",
+  password: "admin",
   token: null,
 };
 
 const nonStaffUserCredentials = {
-  email: 'client@example.com',
-  password: 'password',
+  email: "client@example.com",
+  password: "password",
 };
 
 beforeEach(() => {
@@ -50,8 +53,8 @@ beforeEach(() => {
   sessionStorage.clear();
 });
 
-describe('User', () => {
-  it('will be logged in if has valid credentials', async () => {
+describe("User", () => {
+  it("will be logged in if has valid credentials", async () => {
     const hook = renderAuthProvider();
 
     await act(async () => {
@@ -65,17 +68,20 @@ describe('User', () => {
     const hook = renderAuthProvider();
 
     await act(async () => {
-      const result = await hook.current.login(adminCredentials.email, 'NotAValidPassword123!');
+      const result = await hook.current.login(adminCredentials.email, "NotAValidPassword123!");
       expect(result.user).toBe(null);
     });
     expect(hook.current.authenticated).toBe(false);
   });
 
-  it('will not be logged in if is non-staff', async () => {
+  it("will not be logged in if is non-staff", async () => {
     const hook = renderAuthProvider();
 
     await act(async () => {
-      const result = await hook.current.login(nonStaffUserCredentials.email, nonStaffUserCredentials.password);
+      const result = await hook.current.login(
+        nonStaffUserCredentials.email,
+        nonStaffUserCredentials.password,
+      );
       expect(result.user).toBe(null);
     });
     expect(hook.current.authenticated).toBe(false);

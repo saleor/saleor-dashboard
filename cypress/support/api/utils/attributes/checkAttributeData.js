@@ -1,12 +1,6 @@
 export function expectCorrectDataInAttribute(
   attribute,
-  {
-    attributeName,
-    attributeType,
-    entityType = null,
-    unit = null,
-    valueRequired = true,
-  },
+  { attributeName, attributeType, entityType = null, unit = null, valueRequired = true },
 ) {
   expect(attribute.name).to.eq(attributeName);
   expect(attribute.slug).to.eq(attributeName);

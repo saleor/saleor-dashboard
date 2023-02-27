@@ -1,2 +1,2 @@
-export { default } from './ImageUpload';
-export * from './ImageUpload';
+export { default } from "./ImageUpload";
+export * from "./ImageUpload";

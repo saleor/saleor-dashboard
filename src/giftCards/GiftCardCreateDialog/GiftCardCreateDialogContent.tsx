@@ -1,19 +1,23 @@
-import { GiftCardCreateInput, useChannelCurrenciesQuery, useGiftCardCreateMutation } from '@dashboard/graphql';
-import useCurrentDate from '@dashboard/hooks/useCurrentDate';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { DialogProps } from '@dashboard/types';
-import { DialogTitle } from '@material-ui/core';
-import React, { useState } from 'react';
-import { useIntl } from 'react-intl';
+import {
+  GiftCardCreateInput,
+  useChannelCurrenciesQuery,
+  useGiftCardCreateMutation,
+} from "@dashboard/graphql";
+import useCurrentDate from "@dashboard/hooks/useCurrentDate";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { DialogProps } from "@dashboard/types";
+import { DialogTitle } from "@material-ui/core";
+import React, { useState } from "react";
+import { useIntl } from "react-intl";
 
-import ContentWithProgress from './ContentWithProgress';
-import GiftCardCreateDialogCodeContent from './GiftCardCreateDialogCodeContent';
-import GiftCardCreateDialogForm, { GiftCardCreateFormData } from './GiftCardCreateDialogForm';
-import { giftCardCreateMessages as messages } from './messages';
-import { GiftCardCreateFormCustomer } from './types';
-import { getGiftCardCreateOnCompletedMessage, getGiftCardExpiryInputData } from './utils';
+import ContentWithProgress from "./ContentWithProgress";
+import GiftCardCreateDialogCodeContent from "./GiftCardCreateDialogCodeContent";
+import GiftCardCreateDialogForm, { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
+import { giftCardCreateMessages as messages } from "./messages";
+import { GiftCardCreateFormCustomer } from "./types";
+import { getGiftCardCreateOnCompletedMessage, getGiftCardExpiryInputData } from "./utils";
 
-interface GiftCardCreateDialogContentProps extends Pick<DialogProps, 'onClose'> {
+interface GiftCardCreateDialogContentProps extends Pick<DialogProps, "onClose"> {
   refetchQueries: string[];
   initialCustomer?: GiftCardCreateFormCustomer | null;
 }

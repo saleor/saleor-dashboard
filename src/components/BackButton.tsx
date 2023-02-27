@@ -1,8 +1,8 @@
-import { Button } from '@dashboard/components/Button';
-import { buttonMessages } from '@dashboard/intl';
-import { ButtonProps } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import { buttonMessages } from "@dashboard/intl";
+import { ButtonProps } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 const BackButton: React.FC<ButtonProps> = props => (
   <Button data-test-id="back" variant="secondary" color="text" {...props}>
@@ -10,5 +10,5 @@ const BackButton: React.FC<ButtonProps> = props => (
   </Button>
 );
 
-BackButton.displayName = 'BackButton';
+BackButton.displayName = "BackButton";
 export default BackButton;

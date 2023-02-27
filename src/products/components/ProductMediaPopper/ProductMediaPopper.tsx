@@ -1,6 +1,13 @@
-import { ClickAwayListener, Grow, MenuItem, MenuList as Menu, Paper, Popper } from '@material-ui/core';
-import React from 'react';
-import { defineMessages, useIntl } from 'react-intl';
+import {
+  ClickAwayListener,
+  Grow,
+  MenuItem,
+  MenuList as Menu,
+  Paper,
+  Popper,
+} from "@material-ui/core";
+import React from "react";
+import { defineMessages, useIntl } from "react-intl";
 
 interface ProductMediaPopperProps {
   anchorRef: HTMLButtonElement;
@@ -12,14 +19,14 @@ interface ProductMediaPopperProps {
 
 const messages = defineMessages({
   uploadImages: {
-    id: '9CEu8k',
-    defaultMessage: 'Upload Images',
-    description: 'modal button images upload',
+    id: "9CEu8k",
+    defaultMessage: "Upload Images",
+    description: "modal button images upload",
   },
   uploadUrl: {
-    id: 'Q2UXlW',
-    defaultMessage: 'Upload URL',
-    description: 'modal button url upload',
+    id: "Q2UXlW",
+    defaultMessage: "Upload URL",
+    description: "modal button url upload",
   },
 });
 
@@ -39,10 +46,18 @@ export const ProductMediaPopper = ({
           <Paper>
             <ClickAwayListener onClickAway={() => setPopperStatus(false)} mouseEvent="onClick">
               <Menu>
-                <MenuItem onClick={() => imagesUploadRef.click()} data-test-id="upload-images" key="upload-images">
+                <MenuItem
+                  onClick={() => imagesUploadRef.click()}
+                  data-test-id="upload-images"
+                  key="upload-images"
+                >
                   {intl.formatMessage(messages.uploadImages)}
                 </MenuItem>
-                <MenuItem onClick={openMediaUrlModal} data-test-id="upload-media-url" key="upload-media-url">
+                <MenuItem
+                  onClick={openMediaUrlModal}
+                  data-test-id="upload-media-url"
+                  key="upload-media-url"
+                >
                   {intl.formatMessage(messages.uploadUrl)}
                 </MenuItem>
               </Menu>

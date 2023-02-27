@@ -1,12 +1,12 @@
-import Debounce from '@dashboard/components/Debounce';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { OrderFulfillLineFragment, WarehouseFragment } from '@dashboard/graphql';
-import { buttonMessages } from '@dashboard/intl';
-import { getById } from '@dashboard/misc';
-import { getLineAvailableQuantityInWarehouse } from '@dashboard/orders/utils/data';
-import useWarehouseSearch from '@dashboard/searches/useWarehouseSearch';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
+import Debounce from "@dashboard/components/Debounce";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { OrderFulfillLineFragment, WarehouseFragment } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import { getById } from "@dashboard/misc";
+import { getLineAvailableQuantityInWarehouse } from "@dashboard/orders/utils/data";
+import useWarehouseSearch from "@dashboard/searches/useWarehouseSearch";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import {
   Dialog,
   DialogActions,
@@ -18,7 +18,7 @@ import {
   TableCell,
   TextField,
   Typography,
-} from '@material-ui/core';
+} from "@material-ui/core";
 import {
   Button,
   DialogHeader,
@@ -28,12 +28,12 @@ import {
   ScrollShadow,
   SearchIcon,
   useElementScroll,
-} from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { changeWarehouseDialogMessages as messages } from './messages';
-import { useStyles } from './styles';
+import { changeWarehouseDialogMessages as messages } from "./messages";
+import { useStyles } from "./styles";
 
 export interface OrderChangeWarehouseDialogProps {
   open: boolean;
@@ -57,7 +57,7 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
   const topShadow = isScrolledToTop(anchor, position, 20) === false;
   const bottomShadow = isScrolledToBottom(anchor, position, 20) === false;
 
-  const [query, setQuery] = React.useState<string>('');
+  const [query, setQuery] = React.useState<string>("");
   const [selectedWarehouseId, setSelectedWarehouseId] = React.useState<string | null>(null);
 
   React.useEffect(() => {
@@ -74,12 +74,12 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
     variables: {
       after: null,
       first: 20,
-      query: '',
+      query: "",
     },
   });
   const filteredWarehouses = mapEdgesToItems(warehousesOpts?.data?.search);
 
-  const selectedWarehouse = filteredWarehouses?.find(getById(selectedWarehouseId ?? ''));
+  const selectedWarehouse = filteredWarehouses?.find(getById(selectedWarehouseId ?? ""));
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSelectedWarehouseId(e.target.value);
@@ -145,7 +145,11 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
 
       <DialogTable ref={setAnchor}>
         {filteredWarehouses ? (
-          <RadioGroup value={selectedWarehouseId} onChange={handleChange} className={classes.tableBody}>
+          <RadioGroup
+            value={selectedWarehouseId}
+            onChange={handleChange}
+            className={classes.tableBody}
+          >
             {filteredWarehouses.map(warehouse => {
               const lineQuantityInWarehouse = getLineAvailableQuantityInWarehouse(line, warehouse);
               return (
@@ -184,7 +188,12 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
       </DialogTable>
       <ScrollShadow variant="bottom" show={bottomShadow}>
         <DialogActions>
-          <Button onClick={handleSubmit} color="primary" variant="primary" disabled={!selectedWarehouse}>
+          <Button
+            onClick={handleSubmit}
+            color="primary"
+            variant="primary"
+            disabled={!selectedWarehouse}
+          >
             {intl.formatMessage(buttonMessages.select)}
           </Button>
         </DialogActions>
@@ -192,5 +201,5 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
     </Dialog>
   );
 };
-OrderChangeWarehouseDialog.displayName = 'OrderChangeWarehouseDialog';
+OrderChangeWarehouseDialog.displayName = "OrderChangeWarehouseDialog";
 export default OrderChangeWarehouseDialog;

@@ -1,19 +1,19 @@
-import { ChannelData, ChannelPriceAndPreorderArgs } from '@dashboard/channels/utils';
-import CardTitle from '@dashboard/components/CardTitle';
-import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
-import { DateTimeTimezoneField } from '@dashboard/components/DateTimeTimezoneField';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import Hr from '@dashboard/components/Hr';
-import Link from '@dashboard/components/Link';
-import PreviewPill from '@dashboard/components/PreviewPill';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { ProductErrorFragment, WarehouseFragment } from '@dashboard/graphql';
-import { FormChange, FormErrors } from '@dashboard/hooks/useForm';
-import { FormsetAtomicData, FormsetChange } from '@dashboard/hooks/useFormset';
-import { sectionNames } from '@dashboard/intl';
-import { renderCollection } from '@dashboard/misc';
-import { getFormErrors, getProductErrorMessage } from '@dashboard/utils/errors';
-import createNonNegativeValueChangeHandler from '@dashboard/utils/handlers/nonNegativeValueChangeHandler';
+import { ChannelData, ChannelPriceAndPreorderArgs } from "@dashboard/channels/utils";
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { DateTimeTimezoneField } from "@dashboard/components/DateTimeTimezoneField";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Hr from "@dashboard/components/Hr";
+import Link from "@dashboard/components/Link";
+import PreviewPill from "@dashboard/components/PreviewPill";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { ProductErrorFragment, WarehouseFragment } from "@dashboard/graphql";
+import { FormChange, FormErrors } from "@dashboard/hooks/useForm";
+import { FormsetAtomicData, FormsetChange } from "@dashboard/hooks/useFormset";
+import { sectionNames } from "@dashboard/intl";
+import { renderCollection } from "@dashboard/misc";
+import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
+import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import {
   Card,
   CardContent,
@@ -28,16 +28,16 @@ import {
   TableHead,
   TextField,
   Typography,
-} from '@material-ui/core';
-import { Button, DeleteIcon, IconButton, PlusIcon } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@material-ui/core";
+import { Button, DeleteIcon, IconButton, PlusIcon } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { ProductCreateData } from '../ProductCreatePage';
-import { ProductVariantCreateData } from '../ProductVariantCreatePage/form';
-import { ProductVariantUpdateData } from '../ProductVariantPage/form';
-import { messages } from './messages';
-import { useStyles } from './styles';
+import { ProductCreateData } from "../ProductCreatePage";
+import { ProductVariantCreateData } from "../ProductVariantCreatePage/form";
+import { ProductVariantUpdateData } from "../ProductVariantPage/form";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 export interface ProductStockFormsetData {
   quantityAllocated: number;
@@ -100,8 +100,9 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   const [isExpanded, setExpansionState] = React.useState(false);
   const unitsLeft = parseInt(data.globalThreshold, 10) - data.globalSoldUnits;
 
-  const warehousesToAssign = warehouses?.filter(warehouse => !stocks.some(stock => stock.id === warehouse.id)) || [];
-  const formErrors = getFormErrors(['sku'], errors);
+  const warehousesToAssign =
+    warehouses?.filter(warehouse => !stocks.some(stock => stock.id === warehouse.id)) || [];
+  const formErrors = getFormErrors(["sku"], errors);
 
   const onThresholdChange = createNonNegativeValueChangeHandler(onFormDataChange);
 
@@ -121,7 +122,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
     onFormDataChange(e);
     onFormDataChange({
       target: {
-        name: 'variantName',
+        name: "variantName",
         value: e.target.value,
       },
     });
@@ -147,7 +148,9 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
         <ControlledCheckbox
           checked={data.isPreorder}
           name="isPreorder"
-          onChange={onEndPreorderTrigger && data.isPreorder ? onEndPreorderTrigger : onFormDataChange}
+          onChange={
+            onEndPreorderTrigger && data.isPreorder ? onEndPreorderTrigger : onFormDataChange
+          }
           disabled={disabled}
           label={
             <>
@@ -251,7 +254,9 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               return (
                 <TableRowLink key={stock.id}>
                   <TableCell className={classes.colName}>{stock.label}</TableCell>
-                  <TableCell className={classes.colQuantity}>{stock.data?.quantityAllocated || 0}</TableCell>
+                  <TableCell className={classes.colQuantity}>
+                    {stock.data?.quantityAllocated || 0}
+                  </TableCell>
                   <TableCell className={classes.colQuantity}>
                     <TextField
                       data-test-id="stock-input"
@@ -260,15 +265,21 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                       inputProps={{
                         className: classes.input,
                         min: 0,
-                        type: 'number',
+                        type: "number",
                       }}
                       onChange={handleQuantityChange}
                       value={stock.value}
-                      inputRef={input => stocks.length === index + 1 && handleStockInputFocus(input)}
+                      inputRef={input =>
+                        stocks.length === index + 1 && handleStockInputFocus(input)
+                      }
                     />
                   </TableCell>
                   <TableCell className={classes.colAction}>
-                    <IconButton variant="secondary" color="primary" onClick={() => onWarehouseStockDelete(stock.id)}>
+                    <IconButton
+                      variant="secondary"
+                      color="primary"
+                      onClick={() => onWarehouseStockDelete(stock.id)}
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -277,7 +288,10 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             })}
             {warehousesToAssign.length > 0 && (
               <ClickAwayListener onClickAway={() => setExpansionState(false)}>
-                <TableRowLink className={classes.addRow} onClick={() => setExpansionState(!isExpanded)}>
+                <TableRowLink
+                  className={classes.addRow}
+                  onClick={() => setExpansionState(!isExpanded)}
+                >
                   <TableCell colSpan={3} className={classes.actionableText}>
                     <Typography variant="body2">
                       <FormattedMessage {...messages.assignWarehouse} />
@@ -304,7 +318,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                           <Grow
                             {...TransitionProps}
                             style={{
-                              transformOrigin: 'right top',
+                              transformOrigin: "right top",
                             }}
                           >
                             <Paper className={classes.paper} elevation={8}>
@@ -337,7 +351,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           {data.hasPreorderEndDate && (
             <div className={classes.dateTimeInputs}>
               <DateTimeTimezoneField
-                name={'preorderEndDateTime'}
+                name={"preorderEndDateTime"}
                 disabled={disabled}
                 futureDatesOnly
                 fullWidth={false}
@@ -346,7 +360,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                 onChange={event =>
                   onChangePreorderEndDate({
                     target: {
-                      name: 'preorderEndDateTime',
+                      name: "preorderEndDateTime",
                       value: event,
                     },
                   })
@@ -361,7 +375,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             onClick={() =>
               onFormDataChange({
                 target: {
-                  name: 'hasPreorderEndDate',
+                  name: "hasPreorderEndDate",
                   value: !data.hasPreorderEndDate,
                 },
               })
@@ -385,7 +399,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               label={intl.formatMessage(messages.preorderTresholdLabel)}
               name="globalThreshold"
               onChange={onThresholdChange}
-              value={data.globalThreshold ?? ''}
+              value={data.globalThreshold ?? ""}
               className={classes.thresholdInput}
             />
             {productVariantChannelListings?.length > 0 && (
@@ -439,17 +453,18 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                       inputProps={{
                         className: classes.input,
                         min: 0,
-                        type: 'number',
+                        type: "number",
                       }}
                       placeholder={intl.formatMessage(messages.preorderTresholdUnlimited)}
                       onChange={e => {
                         onVariantChannelListingChange(listing.id, {
                           costPrice: listing.costPrice,
                           price: listing.price,
-                          preorderThreshold: e.target.value === '' ? undefined : Number(e.target.value),
+                          preorderThreshold:
+                            e.target.value === "" ? undefined : Number(e.target.value),
                         });
                       }}
-                      value={listing?.preorderThreshold ?? ''}
+                      value={listing?.preorderThreshold ?? ""}
                     />
                   </TableCell>
                 </TableRowLink>
@@ -462,5 +477,5 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   );
 };
 
-ProductStocks.displayName = 'ProductStocks';
+ProductStocks.displayName = "ProductStocks";
 export default ProductStocks;

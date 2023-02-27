@@ -7,10 +7,7 @@ import { ATTRIBUTES_DETAILS } from "../../../elements/attribute/attributes_detai
 import { ATTRIBUTES_LIST } from "../../../elements/attribute/attributes_list";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { attributeDetailsUrl, urlList } from "../../../fixtures/urlList";
-import {
-  createAttribute,
-  getAttribute,
-} from "../../../support/api/requests/Attribute";
+import { createAttribute, getAttribute } from "../../../support/api/requests/Attribute";
 import { deleteAttributesStartsWith } from "../../../support/api/utils/attributes/attributeUtils";
 import { expectCorrectDataInAttribute } from "../../../support/api/utils/attributes/checkAttributeData";
 import {

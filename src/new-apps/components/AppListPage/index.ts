@@ -1,2 +1,2 @@
-export * from './AppListPage';
-export { default } from './AppListPage';
+export * from "./AppListPage";
+export { default } from "./AppListPage";

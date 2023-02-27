@@ -6,5 +6,4 @@ export const GIFT_CARD_LIST = {
   selectedAmount: '[data-test-id="SelectedText"]',
 };
 
-export const giftCardRow = giftCardId =>
-  `[data-test-id="gift-card-row-${giftCardId}"]`;
+export const giftCardRow = giftCardId => `[data-test-id="gift-card-row-${giftCardId}"]`;

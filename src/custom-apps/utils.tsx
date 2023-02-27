@@ -1,4 +1,4 @@
-import { WebhookEventTypeAsyncEnum, WebhookFragment } from '@dashboard/graphql';
+import { WebhookEventTypeAsyncEnum, WebhookFragment } from "@dashboard/graphql";
 
 export function isUnnamed(webhook: WebhookFragment | undefined): boolean {
   return !webhook?.name;

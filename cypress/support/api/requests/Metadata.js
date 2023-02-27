@@ -25,7 +25,5 @@ export function updatePrivateMetadata(token, key, value) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.updatePrivateMetadata");
+  return cy.sendRequestWithQuery(mutation).its("body.data.updatePrivateMetadata");
 }

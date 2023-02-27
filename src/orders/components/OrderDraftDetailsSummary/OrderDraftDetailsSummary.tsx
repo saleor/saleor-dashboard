@@ -1,58 +1,62 @@
-import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
-import Link from '@dashboard/components/Link';
-import Money from '@dashboard/components/Money';
-import { DiscountValueTypeEnum, OrderDetailsFragment, OrderErrorFragment } from '@dashboard/graphql';
-import { OrderDiscountContextConsumerProps } from '@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider';
-import { OrderDiscountData } from '@dashboard/products/components/OrderDiscountProviders/types';
-import { getFormErrors } from '@dashboard/utils/errors';
-import getOrderErrorMessage from '@dashboard/utils/errors/order';
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React, { useRef } from 'react';
-import { useIntl } from 'react-intl';
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import Link from "@dashboard/components/Link";
+import Money from "@dashboard/components/Money";
+import {
+  DiscountValueTypeEnum,
+  OrderDetailsFragment,
+  OrderErrorFragment,
+} from "@dashboard/graphql";
+import { OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import { Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React, { useRef } from "react";
+import { useIntl } from "react-intl";
 
-import OrderDiscountCommonModal from '../OrderDiscountCommonModal';
-import { ORDER_DISCOUNT } from '../OrderDiscountCommonModal/types';
-import { messages } from './messages';
+import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
+import { ORDER_DISCOUNT } from "../OrderDiscountCommonModal/types";
+import { messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
     root: {
       ...theme.typography.body1,
       lineHeight: 1.9,
-      width: '100%',
+      width: "100%",
     },
     textRight: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     textError: {
       color: theme.palette.error.main,
       marginLeft: theme.spacing(1.5),
-      display: 'inline',
+      display: "inline",
     },
     subtitle: {
       color: theme.palette.grey[500],
       paddingRight: theme.spacing(1),
     },
     relativeRow: {
-      position: 'relative',
+      position: "relative",
     },
     percentDiscountLabelContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'baseline',
-      justifyContent: 'flex-end',
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "baseline",
+      justifyContent: "flex-end",
     },
     shippingMethodContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'baseline',
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "baseline",
     },
   }),
-  { name: 'OrderDraftDetailsSummary' },
+  { name: "OrderDraftDetailsSummary" },
 );
 
-const PRICE_PLACEHOLDER = '---';
+const PRICE_PLACEHOLDER = "---";
 
 interface OrderDraftDetailsSummaryProps extends OrderDiscountContextConsumerProps {
   disabled?: boolean;
@@ -97,7 +101,7 @@ const OrderDraftDetailsSummary: React.FC<OrderDraftDetailsSummaryProps> = props 
     isShippingRequired,
   } = order;
 
-  const formErrors = getFormErrors(['shipping'], errors);
+  const formErrors = getFormErrors(["shipping"], errors);
 
   const hasChosenShippingMethod = shippingMethod !== null && shippingMethodName !== null;
 

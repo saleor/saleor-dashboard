@@ -1,16 +1,16 @@
-import { usePaginatorContext } from '@dashboard/hooks/usePaginator';
-import React from 'react';
+import { usePaginatorContext } from "@dashboard/hooks/usePaginator";
+import React from "react";
 
-import TablePagination, { PaginationProps } from './TablePagination';
+import TablePagination, { PaginationProps } from "./TablePagination";
 
 export type TablePaginationWithContextProps = Omit<
   PaginationProps,
-  'nextHref' | 'prevHref' | 'hasNextPage' | 'hasPreviousPage' | 'onNextPage' | 'onPreviousPage'
+  "nextHref" | "prevHref" | "hasNextPage" | "hasPreviousPage" | "onNextPage" | "onPreviousPage"
 >;
 export const TablePaginationWithContext = (props: TablePaginationWithContextProps) => {
   const { hasNextPage, hasPreviousPage, paginatorType, ...paginationProps } = usePaginatorContext();
 
-  if (paginatorType === 'click') {
+  if (paginatorType === "click") {
     const { loadNextPage, loadPreviousPage } = paginationProps;
 
     return (

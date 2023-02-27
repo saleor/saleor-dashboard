@@ -1,13 +1,13 @@
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import Hr from '@dashboard/components/Hr';
-import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from '@dashboard/graphql';
-import { buttonMessages } from '@dashboard/intl';
-import { isSecretField } from '@dashboard/plugins/utils';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import Hr from "@dashboard/components/Hr";
+import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import { isSecretField } from "@dashboard/plugins/utils";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface PluginAuthorizationProps {
   fields: ConfigurationItemFragment[];
@@ -24,14 +24,14 @@ const useStyles = makeStyles(
       margin: theme.spacing(2, 0),
     },
     item: {
-      alignItems: 'center',
-      display: 'flex',
+      alignItems: "center",
+      display: "flex",
     },
     spacer: {
       flex: 1,
     },
   }),
-  { name: 'PluginAuthorization' },
+  { name: "PluginAuthorization" },
 );
 
 const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
@@ -46,9 +46,9 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: '6aBkJm',
-          defaultMessage: 'Authorization',
-          description: 'section header',
+          id: "6aBkJm",
+          defaultMessage: "Authorization",
+          description: "section header",
         })}
       />
       <CardContent>
@@ -88,5 +88,5 @@ const PluginAuthorization: React.FC<PluginAuthorizationProps> = props => {
   );
 };
 
-PluginAuthorization.displayName = 'PluginAuthorization';
+PluginAuthorization.displayName = "PluginAuthorization";
 export default PluginAuthorization;

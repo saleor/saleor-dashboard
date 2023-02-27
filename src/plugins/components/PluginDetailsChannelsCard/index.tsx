@@ -1,2 +1,2 @@
-export * from './PluginDetailsChannelsCard';
-export { default } from './PluginDetailsChannelsCard';
+export * from "./PluginDetailsChannelsCard";
+export { default } from "./PluginDetailsChannelsCard";

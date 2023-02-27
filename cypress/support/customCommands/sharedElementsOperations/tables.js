@@ -15,13 +15,7 @@ Cypress.Commands.add("searchInTable", query => {
 // action function is click or select checkbox on table with parameter id
 Cypress.Commands.add(
   "findElementsAndMakeActionOnTable",
-  ({
-    elementsGraphqlAlias,
-    elementsName,
-    elementsIds,
-    counter = 0,
-    actionFunction
-  }) => {
+  ({ elementsGraphqlAlias, elementsName, elementsIds, counter = 0, actionFunction }) => {
     cy.wait(`@${elementsGraphqlAlias}`)
       .its("response.body")
       .then(body => {
@@ -39,9 +33,7 @@ Cypress.Commands.add(
         const notSelectedElements = [];
         elementsIds = Array.isArray(elementsIds) ? elementsIds : [elementsIds];
         elementsIds.forEach(id => {
-          const isShippingOnList = shippingList.find(
-            element => element.node.id === id
-          );
+          const isShippingOnList = shippingList.find(element => element.node.id === id);
           if (isShippingOnList) {
             actionFunction(id);
             counter += 1;
@@ -64,8 +56,8 @@ Cypress.Commands.add(
             actionFunction,
             counter,
             elementsGraphqlAlias,
-            elementsName
+            elementsName,
           });
       });
-  }
+  },
 );

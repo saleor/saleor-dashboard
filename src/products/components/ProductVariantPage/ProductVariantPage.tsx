@@ -1,15 +1,21 @@
-import { getReferenceAttributeEntityTypeFromAttribute, mergeAttributeValues } from '@dashboard/attributes/utils/data';
-import { ChannelPriceData } from '@dashboard/channels/utils';
-import { Content } from '@dashboard/components/AppLayout/Content';
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import AssignAttributeValueDialog from '@dashboard/components/AssignAttributeValueDialog';
-import Attributes, { AttributeInput, VariantAttributeScope } from '@dashboard/components/Attributes';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import Grid from '@dashboard/components/Grid';
-import { MetadataFormData } from '@dashboard/components/Metadata';
-import Metadata from '@dashboard/components/Metadata/Metadata';
-import Savebar from '@dashboard/components/Savebar';
+import {
+  getReferenceAttributeEntityTypeFromAttribute,
+  mergeAttributeValues,
+} from "@dashboard/attributes/utils/data";
+import { ChannelPriceData } from "@dashboard/channels/utils";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
+import Attributes, {
+  AttributeInput,
+  VariantAttributeScope,
+} from "@dashboard/components/Attributes";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Grid from "@dashboard/components/Grid";
+import { MetadataFormData } from "@dashboard/components/Metadata";
+import Metadata from "@dashboard/components/Metadata/Metadata";
+import Savebar from "@dashboard/components/Savebar";
 import {
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
@@ -18,44 +24,44 @@ import {
   SearchPagesQuery,
   SearchProductsQuery,
   WarehouseFragment,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { VariantDetailsChannelsAvailabilityCard } from '@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard';
-import { productUrl } from '@dashboard/products/urls';
-import { getSelectedMedia } from '@dashboard/products/utils/data';
-import { FetchMoreProps, RelayToFlat, ReorderAction } from '@dashboard/types';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { defineMessages, useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
+import { productUrl } from "@dashboard/products/urls";
+import { getSelectedMedia } from "@dashboard/products/utils/data";
+import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { defineMessages, useIntl } from "react-intl";
 
-import ProductShipping from '../ProductShipping/ProductShipping';
-import ProductStocks, { ProductStockInput } from '../ProductStocks';
-import { useManageChannels } from '../ProductVariantChannels/useManageChannels';
-import { VariantChannelsDialog } from '../ProductVariantChannels/VariantChannelsDialog';
-import ProductVariantCheckoutSettings from '../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings';
-import ProductVariantEndPreorderDialog from '../ProductVariantEndPreorderDialog';
-import ProductVariantMediaSelectDialog from '../ProductVariantImageSelectDialog';
-import ProductVariantMedia from '../ProductVariantMedia';
-import ProductVariantName from '../ProductVariantName';
-import ProductVariantNavigation from '../ProductVariantNavigation';
-import ProductVariantPrice from '../ProductVariantPrice';
-import ProductVariantSetDefault from '../ProductVariantSetDefault';
+import ProductShipping from "../ProductShipping/ProductShipping";
+import ProductStocks, { ProductStockInput } from "../ProductStocks";
+import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
+import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannelsDialog";
+import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
+import ProductVariantEndPreorderDialog from "../ProductVariantEndPreorderDialog";
+import ProductVariantMediaSelectDialog from "../ProductVariantImageSelectDialog";
+import ProductVariantMedia from "../ProductVariantMedia";
+import ProductVariantName from "../ProductVariantName";
+import ProductVariantNavigation from "../ProductVariantNavigation";
+import ProductVariantPrice from "../ProductVariantPrice";
+import ProductVariantSetDefault from "../ProductVariantSetDefault";
 import ProductVariantUpdateForm, {
   ProductVariantUpdateData,
   ProductVariantUpdateHandlers,
   ProductVariantUpdateSubmitData,
-} from './form';
+} from "./form";
 
 const messages = defineMessages({
   nonSelectionAttributes: {
-    id: 'f3B4tc',
-    defaultMessage: 'Variant Attributes',
-    description: 'attributes, section header',
+    id: "f3B4tc",
+    defaultMessage: "Variant Attributes",
+    description: "attributes, section header",
   },
   selectionAttributesHeader: {
-    id: 'o6260f',
-    defaultMessage: 'Variant Selection Attributes',
-    description: 'attributes, section header',
+    id: "o6260f",
+    defaultMessage: "Variant Selection Attributes",
+    description: "attributes, section header",
   },
 });
 
@@ -92,9 +98,9 @@ interface ProductVariantPageProps {
   saveButtonBarState: ConfirmButtonTransitionState;
   variant?: ProductVariantFragment;
   warehouses: WarehouseFragment[];
-  referencePages?: RelayToFlat<SearchPagesQuery['search']>;
-  referenceProducts?: RelayToFlat<SearchProductsQuery['search']>;
-  attributeValues: RelayToFlat<SearchAttributeValuesQuery['attribute']['choices']>;
+  referencePages?: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts?: RelayToFlat<SearchProductsQuery["search"]>;
+  attributeValues: RelayToFlat<SearchAttributeValuesQuery["attribute"]["choices"]>;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchMoreReferenceProducts?: FetchMoreProps;
   fetchMoreAttributeValues?: FetchMoreProps;
@@ -234,9 +240,17 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     />
                   </div>
                   <div>
-                    <ProductVariantName value={data.variantName} onChange={change} disabled={loading} errors={errors} />
+                    <ProductVariantName
+                      value={data.variantName}
+                      onChange={change}
+                      disabled={loading}
+                      errors={errors}
+                    />
                     <CardSpacer />
-                    <VariantDetailsChannelsAvailabilityCard variant={variant} onManageClick={toggleManageChannels} />
+                    <VariantDetailsChannelsAvailabilityCard
+                      variant={variant}
+                      onManageClick={toggleManageChannels}
+                    />
                     {nonSelectionAttributes.length > 0 && (
                       <>
                         <Attributes
@@ -301,7 +315,12 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       onChange={handlers.changeChannels}
                     />
                     <CardSpacer />
-                    <ProductVariantCheckoutSettings data={data} disabled={loading} errors={errors} onChange={change} />
+                    <ProductVariantCheckoutSettings
+                      data={data}
+                      disabled={loading}
+                      errors={errors}
+                      onChange={change}
+                    />
                     <CardSpacer />
 
                     <ProductShipping
@@ -328,7 +347,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       onChange={handlers.changeStock}
                       onFormDataChange={change}
                       onChangePreorderEndDate={handlers.changePreorderEndDate}
-                      onEndPreorderTrigger={!!variant?.preorder ? () => setIsEndPreorderModalOpened(true) : null}
+                      onEndPreorderTrigger={
+                        !!variant?.preorder ? () => setIsEndPreorderModalOpened(true) : null
+                      }
                       onWarehouseStockAdd={handlers.addStock}
                       onWarehouseStockDelete={handlers.deleteStock}
                       onWarehouseConfigure={onWarehouseConfigure}
@@ -350,7 +371,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                       assignReferencesAttributeId,
                       data.attributes,
                     )}
-                    confirmButtonState={'default'}
+                    confirmButtonState={"default"}
                     products={referenceProducts}
                     pages={referencePages}
                     hasMore={handlers.fetchMoreReferences?.hasMore}
@@ -359,7 +380,9 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
                     onFetchMore={handlers.fetchMoreReferences?.onFetchMore}
                     loading={handlers.fetchMoreReferences?.loading}
                     onClose={onCloseDialog}
-                    onSubmit={attributeValues => handleAssignReferenceAttribute(attributeValues, data, handlers)}
+                    onSubmit={attributeValues =>
+                      handleAssignReferenceAttribute(attributeValues, data, handlers)
+                    }
                   />
                 )}
                 {variant && (
@@ -397,5 +420,5 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
     </DetailedContent>
   );
 };
-ProductVariantPage.displayName = 'ProductVariantPage';
+ProductVariantPage.displayName = "ProductVariantPage";
 export default ProductVariantPage;

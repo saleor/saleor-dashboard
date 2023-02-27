@@ -1,19 +1,19 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { DiscountErrorFragment } from '@dashboard/graphql';
-import { renderCollection } from '@dashboard/misc';
-import { getFormErrors } from '@dashboard/utils/errors';
-import getDiscountErrorMessage from '@dashboard/utils/errors/discounts';
-import { Card, CardContent, TableBody, TableCell, TableHead, Typography } from '@material-ui/core';
-import * as React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { DiscountErrorFragment } from "@dashboard/graphql";
+import { renderCollection } from "@dashboard/misc";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
+import { Card, CardContent, TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
+import * as React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { SaleDetailsPageFormData } from '../SaleDetailsPage';
-import SaleValueTextField from './SaleValueTextField';
-import { useStyles } from './styles';
-import { SaleValueInputOnChangeType } from './types';
+import { SaleDetailsPageFormData } from "../SaleDetailsPage";
+import SaleValueTextField from "./SaleValueTextField";
+import { useStyles } from "./styles";
+import { SaleValueInputOnChangeType } from "./types";
 
 export interface SaleValueProps {
   data: SaleDetailsPageFormData;
@@ -28,15 +28,15 @@ const SaleValue: React.FC<SaleValueProps> = ({ data, disabled, errors, onChange 
   const { type } = data;
   const intl = useIntl();
   const classes = useStyles({});
-  const formErrors = getFormErrors(['value'], errors);
+  const formErrors = getFormErrors(["value"], errors);
 
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'wHdMAX',
-          defaultMessage: 'Value',
-          description: 'sale value, header',
+          id: "wHdMAX",
+          defaultMessage: "Value",
+          description: "sale value, header",
         })}
       />
       <CardContent className={classes.card}>
@@ -56,12 +56,20 @@ const SaleValue: React.FC<SaleValueProps> = ({ data, disabled, errors, onChange 
         <TableHead>
           <TableCell className={classes.colName}>
             <span>
-              <FormattedMessage id="Hj3T7P" defaultMessage="Channel name" description="column title" />
+              <FormattedMessage
+                id="Hj3T7P"
+                defaultMessage="Channel name"
+                description="column title"
+              />
             </span>
           </TableCell>
           <TableCell className={classes.colType}>
             <span>
-              <FormattedMessage id="wHdMAX" defaultMessage="Value" description="sale value, header" />
+              <FormattedMessage
+                id="wHdMAX"
+                defaultMessage="Value"
+                description="sale value, header"
+              />
             </span>
           </TableCell>
         </TableHead>
@@ -80,7 +88,7 @@ const SaleValue: React.FC<SaleValueProps> = ({ data, disabled, errors, onChange 
                     {listing ? (
                       <SaleValueTextField
                         dataType={type}
-                        helperText={error ? getDiscountErrorMessage(formErrors.value, intl) : ''}
+                        helperText={error ? getDiscountErrorMessage(formErrors.value, intl) : ""}
                         error={!!error}
                         disabled={disabled}
                         listing={listing}
@@ -107,5 +115,5 @@ const SaleValue: React.FC<SaleValueProps> = ({ data, disabled, errors, onChange 
   );
 };
 
-SaleValue.displayName = 'SaleValue';
+SaleValue.displayName = "SaleValue";
 export default SaleValue;

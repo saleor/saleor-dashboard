@@ -1,8 +1,8 @@
-import { IFilter } from '@dashboard/components/Filter';
-import { UseNavigatorResult } from '@dashboard/hooks/useNavigator';
-import { ActiveTab, Pagination, Search, Sort } from '@dashboard/types';
+import { IFilter } from "@dashboard/components/Filter";
+import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
+import { ActiveTab, Pagination, Search, Sort } from "@dashboard/types";
 
-import { GetFilterQueryParam, getFilterQueryParams } from '../filters';
+import { GetFilterQueryParam, getFilterQueryParams } from "../filters";
 
 type RequiredParams = ActiveTab & Search & Sort<any> & Pagination;
 type CreateUrl = (params: RequiredParams) => string;

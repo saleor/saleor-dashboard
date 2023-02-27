@@ -1,15 +1,15 @@
-import { useAddressValidationRulesQuery } from '@dashboard/graphql';
-import { renderHook } from '@testing-library/react-hooks';
+import { useAddressValidationRulesQuery } from "@dashboard/graphql";
+import { renderHook } from "@testing-library/react-hooks";
 
-import { useAddressValidation } from './useAddressValidation';
+import { useAddressValidation } from "./useAddressValidation";
 
-jest.mock('@dashboard/graphql', () => ({
-  CountryCode: jest.requireActual('@dashboard/graphql').CountryCode,
+jest.mock("@dashboard/graphql", () => ({
+  CountryCode: jest.requireActual("@dashboard/graphql").CountryCode,
   useAddressValidationRulesQuery: jest.fn(),
 }));
 
-describe('useAddressValidation', () => {
-  it('skips loading validation rules when country is not provided', () => {
+describe("useAddressValidation", () => {
+  it("skips loading validation rules when country is not provided", () => {
     // Arrange
     (useAddressValidationRulesQuery as jest.Mock).mockReturnValue({
       data: null,
@@ -27,19 +27,19 @@ describe('useAddressValidation', () => {
       skip: true,
       variables: { countryCode: undefined },
     });
-    expect(current.isFieldAllowed('country')).toBeFalsy();
+    expect(current.isFieldAllowed("country")).toBeFalsy();
   });
 
-  it('loads validation rules when country is provided', () => {
+  it("loads validation rules when country is provided", () => {
     // Arrange
     (useAddressValidationRulesQuery as jest.Mock).mockReturnValue({
       data: {
         addressValidationRules: {
           countryAreaChoices: [
-            { raw: 'AL', verbose: 'Alabama' },
-            { raw: 'AN', verbose: 'Ancona' },
+            { raw: "AL", verbose: "Alabama" },
+            { raw: "AN", verbose: "Ancona" },
           ],
-          allowedFields: ['country'],
+          allowedFields: ["country"],
         },
       },
       loading: false,
@@ -47,19 +47,19 @@ describe('useAddressValidation', () => {
     // Act
     const {
       result: { current },
-    } = renderHook(() => useAddressValidation('US'));
+    } = renderHook(() => useAddressValidation("US"));
 
     // Assert
     expect(current.areas).toEqual([
-      { label: 'Alabama', value: 'Alabama', raw: 'AL' },
-      { label: 'Ancona', value: 'Ancona', raw: 'AN' },
+      { label: "Alabama", value: "Alabama", raw: "AL" },
+      { label: "Ancona", value: "Ancona", raw: "AN" },
     ]);
     expect(current.loading).toBeFalsy();
     expect(useAddressValidationRulesQuery).toBeCalledWith({
       skip: false,
-      variables: { countryCode: 'US' },
+      variables: { countryCode: "US" },
     });
-    expect(current.isFieldAllowed('country')).toBeTruthy();
-    expect(current.isFieldAllowed('countryArea')).toBeFalsy();
+    expect(current.isFieldAllowed("country")).toBeTruthy();
+    expect(current.isFieldAllowed("countryArea")).toBeFalsy();
   });
 });

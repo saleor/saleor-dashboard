@@ -1,46 +1,48 @@
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import Checkbox from '@dashboard/components/Checkbox';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableCellAvatar from '@dashboard/components/TableCellAvatar';
-import TableHead from '@dashboard/components/TableHead';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { ShippingZoneQuery } from '@dashboard/graphql';
-import { renderCollection } from '@dashboard/misc';
-import { ListActions, ListProps, RelayToFlat } from '@dashboard/types';
-import { Card, TableBody, TableCell, TableFooter, Typography } from '@material-ui/core';
-import { DeleteIcon, IconButton, makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import Checkbox from "@dashboard/components/Checkbox";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { ShippingZoneQuery } from "@dashboard/graphql";
+import { renderCollection } from "@dashboard/misc";
+import { ListActions, ListProps, RelayToFlat } from "@dashboard/types";
+import { Card, TableBody, TableCell, TableFooter, Typography } from "@material-ui/core";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
     colAction: {
-      '&:last-child': {
+      "&:last-child": {
         paddingRight: theme.spacing(3),
       },
-      textAlign: 'right',
+      textAlign: "right",
       width: 100,
     },
     colName: {
-      width: 'auto',
+      width: "auto",
     },
     colProductName: {
       paddingLeft: 0,
     },
     table: {
-      tableLayout: 'fixed',
+      tableLayout: "fixed",
     },
   }),
-  { name: 'ShippingMethodProducts' },
+  { name: "ShippingMethodProducts" },
 );
 
 export interface ShippingMethodProductsProps
-  extends Pick<ListProps, Exclude<keyof ListProps, 'getRowHref'>>,
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
     ListActions {
-  products: RelayToFlat<ShippingZoneQuery['shippingZone']['shippingMethods'][0]['excludedProducts']>;
+  products: RelayToFlat<
+    ShippingZoneQuery["shippingZone"]["shippingMethods"][0]["excludedProducts"]
+  >;
   onProductAssign: () => void;
   onProductUnassign: (ids: string[]) => void;
 }
@@ -48,8 +50,17 @@ export interface ShippingMethodProductsProps
 const numberOfColumns = 3;
 
 const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
-  const { disabled, products, onProductAssign, onProductUnassign, isChecked, selected, toggle, toggleAll, toolbar } =
-    props;
+  const {
+    disabled,
+    products,
+    onProductAssign,
+    onProductUnassign,
+    isChecked,
+    selected,
+    toggle,
+    toggleAll,
+    toolbar,
+  } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -58,9 +69,9 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 't3aiWF',
-          defaultMessage: 'Excluded Products',
-          description: 'section header',
+          id: "t3aiWF",
+          defaultMessage: "Excluded Products",
+          description: "section header",
         })}
         toolbar={
           <Button variant="tertiary" onClick={onProductAssign}>
@@ -104,7 +115,7 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
             renderCollection(products, product => {
               const isSelected = product ? isChecked(product.id) : false;
               return (
-                <TableRowLink key={product ? product.id : 'skeleton'}>
+                <TableRowLink key={product ? product.id : "skeleton"}>
                   <TableCell padding="checkbox">
                     <Checkbox
                       checked={isSelected}
@@ -114,7 +125,11 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
                     />
                   </TableCell>
                   <TableCellAvatar className={classes.colName} thumbnail={product?.thumbnail?.url}>
-                    {product?.name ? <Typography variant="body2">{product.name}</Typography> : <Skeleton />}
+                    {product?.name ? (
+                      <Typography variant="body2">{product.name}</Typography>
+                    ) : (
+                      <Skeleton />
+                    )}
                   </TableCellAvatar>
                   <TableCell className={classes.colAction}>
                     <IconButton variant="secondary" onClick={() => onProductUnassign([product.id])}>
@@ -130,5 +145,5 @@ const ShippingMethodProducts: React.FC<ShippingMethodProductsProps> = props => {
     </Card>
   );
 };
-ShippingMethodProducts.displayName = 'ShippingMethodProducts';
+ShippingMethodProducts.displayName = "ShippingMethodProducts";
 export default ShippingMethodProducts;

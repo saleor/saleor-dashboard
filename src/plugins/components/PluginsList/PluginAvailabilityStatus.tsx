@@ -1,11 +1,11 @@
-import { PluginBaseFragment } from '@dashboard/graphql';
-import { isPluginGlobal } from '@dashboard/plugins/views/utils';
-import { Pill } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { PluginBaseFragment } from "@dashboard/graphql";
+import { isPluginGlobal } from "@dashboard/plugins/views/utils";
+import { Pill } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { pluginAvailabilityStatusMessages as messages, pluginStatusMessages } from './messages';
-import { getActiveChannelConfigsCount } from './utils';
+import { pluginAvailabilityStatusMessages as messages, pluginStatusMessages } from "./messages";
+import { getActiveChannelConfigsCount } from "./utils";
 
 interface PluginAvailabilityStatusProps {
   plugin: PluginBaseFragment;
@@ -35,7 +35,7 @@ const PluginAvailabilityStatus: React.FC<PluginAvailabilityStatusProps> = ({
               activeChannelsCount,
             })
       }
-      color={isStatusActive ? 'success' : 'error'}
+      color={isStatusActive ? "success" : "error"}
       outlined
     />
   );

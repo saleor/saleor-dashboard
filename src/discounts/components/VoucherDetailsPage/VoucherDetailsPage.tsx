@@ -1,55 +1,55 @@
-import { ChannelVoucherData } from '@dashboard/channels/utils';
-import { Content } from '@dashboard/components/AppLayout/Content';
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import ChannelsAvailabilityCard from '@dashboard/components/ChannelsAvailabilityCard';
-import CountryList from '@dashboard/components/CountryList';
-import Form from '@dashboard/components/Form';
-import Metadata, { MetadataFormData } from '@dashboard/components/Metadata';
-import Savebar from '@dashboard/components/Savebar';
-import { Tab, TabContainer } from '@dashboard/components/Tab';
+import { ChannelVoucherData } from "@dashboard/channels/utils";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import CountryList from "@dashboard/components/CountryList";
+import Form from "@dashboard/components/Form";
+import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
+import Savebar from "@dashboard/components/Savebar";
+import { Tab, TabContainer } from "@dashboard/components/Tab";
 import {
   createChannelsChangeHandler,
   createDiscountTypeChangeHandler,
   createVoucherUpdateHandler,
-} from '@dashboard/discounts/handlers';
-import { itemsQuantityMessages } from '@dashboard/discounts/translations';
-import { DiscountTypeEnum, RequirementsPicker } from '@dashboard/discounts/types';
-import { voucherListUrl } from '@dashboard/discounts/urls';
+} from "@dashboard/discounts/handlers";
+import { itemsQuantityMessages } from "@dashboard/discounts/translations";
+import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
+import { voucherListUrl } from "@dashboard/discounts/urls";
 import {
   DiscountErrorFragment,
   DiscountValueTypeEnum,
   PermissionEnum,
   VoucherDetailsFragment,
   VoucherTypeEnum,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { mapEdgesToItems, mapMetadataItemToInput } from '@dashboard/utils/maps';
-import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
-import { Typography } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { Typography } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { splitDateTime } from '../../../misc';
-import { ChannelProps, ListProps, TabListActions } from '../../../types';
-import DiscountCategories from '../DiscountCategories';
-import DiscountCollections from '../DiscountCollections';
-import DiscountDates from '../DiscountDates';
-import DiscountProducts from '../DiscountProducts';
-import VoucherInfo from '../VoucherInfo';
-import VoucherLimits from '../VoucherLimits';
-import VoucherRequirements from '../VoucherRequirements';
-import VoucherSummary from '../VoucherSummary';
-import VoucherTypes from '../VoucherTypes';
-import VoucherValue from '../VoucherValue';
+import { splitDateTime } from "../../../misc";
+import { ChannelProps, ListProps, TabListActions } from "../../../types";
+import DiscountCategories from "../DiscountCategories";
+import DiscountCollections from "../DiscountCollections";
+import DiscountDates from "../DiscountDates";
+import DiscountProducts from "../DiscountProducts";
+import VoucherInfo from "../VoucherInfo";
+import VoucherLimits from "../VoucherLimits";
+import VoucherRequirements from "../VoucherRequirements";
+import VoucherSummary from "../VoucherSummary";
+import VoucherTypes from "../VoucherTypes";
+import VoucherValue from "../VoucherValue";
 
 export enum VoucherDetailsPageTab {
-  categories = 'categories',
-  collections = 'collections',
-  products = 'products',
+  categories = "categories",
+  collections = "collections",
+  products = "products",
 }
 
 export type VoucherTabItemsCount = Partial<Record<VoucherDetailsPageTab, number>>;
@@ -75,8 +75,8 @@ export interface VoucherDetailsPageFormData extends MetadataFormData {
 }
 
 export interface VoucherDetailsPageProps
-  extends Pick<ListProps, Exclude<keyof ListProps, 'getRowHref'>>,
-    TabListActions<'categoryListToolbar' | 'collectionListToolbar' | 'productListToolbar'>,
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
+    TabListActions<"categoryListToolbar" | "collectionListToolbar" | "productListToolbar">,
     ChannelProps {
   activeTab: VoucherDetailsPageTab;
   tabItemsCount: VoucherTabItemsCount;
@@ -141,7 +141,9 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
   const [localErrors, setLocalErrors] = React.useState<DiscountErrorFragment[]>([]);
 
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
-  const channel = voucher?.channelListings?.find(listing => listing.channel.id === selectedChannelId);
+  const channel = voucher?.channelListings?.find(
+    listing => listing.channel.id === selectedChannelId,
+  );
   let requirementsPickerInitValue;
   if (voucher?.minCheckoutItemsQuantity > 0) {
     requirementsPickerInitValue = RequirementsPicker.ITEM;
@@ -163,16 +165,16 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     applyOncePerOrder: voucher?.applyOncePerOrder || false,
     onlyForStaff: voucher?.onlyForStaff || false,
     channelListings,
-    code: voucher?.code || '',
+    code: voucher?.code || "",
     discountType,
-    endDate: splitDateTime(voucher?.endDate ?? '').date,
-    endTime: splitDateTime(voucher?.endDate ?? '').time,
+    endDate: splitDateTime(voucher?.endDate ?? "").date,
+    endTime: splitDateTime(voucher?.endDate ?? "").time,
     hasEndDate: !!voucher?.endDate,
     hasUsageLimit: !!voucher?.usageLimit,
-    minCheckoutItemsQuantity: voucher?.minCheckoutItemsQuantity?.toString() ?? '0',
+    minCheckoutItemsQuantity: voucher?.minCheckoutItemsQuantity?.toString() ?? "0",
     requirementsPicker: requirementsPickerInitValue,
-    startDate: splitDateTime(voucher?.startDate ?? '').date,
-    startTime: splitDateTime(voucher?.startDate ?? '').time,
+    startDate: splitDateTime(voucher?.startDate ?? "").date,
+    startTime: splitDateTime(voucher?.startDate ?? "").time,
     type: voucher?.type ?? VoucherTypeEnum.ENTIRE_ORDER,
     usageLimit: voucher?.usageLimit ?? 1,
     used: voucher?.used ?? 0,
@@ -184,7 +186,11 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ change, data, submit, triggerChange, set }) => {
         const handleDiscountTypeChange = createDiscountTypeChangeHandler(change);
-        const handleChannelChange = createChannelsChangeHandler(data.channelListings, onChannelsChange, triggerChange);
+        const handleChannelChange = createChannelsChangeHandler(
+          data.channelListings,
+          onChannelsChange,
+          triggerChange,
+        );
         const changeMetadata = makeMetadataChangeHandler(change);
 
         const handleSubmit = createVoucherUpdateHandler(submit, setLocalErrors);
@@ -195,7 +201,13 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
           <DetailedContent>
             <TopNav href={voucherListUrl()} title={voucher?.code} />
             <Content>
-              <VoucherInfo data={data} disabled={disabled} errors={errors} onChange={change} variant="update" />
+              <VoucherInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+                variant="update"
+              />
               <CardSpacer />
               <VoucherTypes
                 data={data}
@@ -204,7 +216,7 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 onChange={event => handleDiscountTypeChange(data, event)}
               />
               <CardSpacer />
-              {data.discountType.toString() !== 'SHIPPING' ? (
+              {data.discountType.toString() !== "SHIPPING" ? (
                 <VoucherValue
                   data={data}
                   disabled={disabled}
@@ -215,22 +227,32 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 />
               ) : null}
               <CardSpacer />
-              {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT && data.discountType.toString() !== 'SHIPPING' ? (
+              {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
+              data.discountType.toString() !== "SHIPPING" ? (
                 <>
                   <TabContainer>
-                    <CategoriesTab isActive={activeTab === VoucherDetailsPageTab.categories} changeTab={onTabClick}>
+                    <CategoriesTab
+                      isActive={activeTab === VoucherDetailsPageTab.categories}
+                      changeTab={onTabClick}
+                    >
                       {intl.formatMessage(itemsQuantityMessages.categories, {
-                        quantity: tabItemsCount.categories?.toString() || '…',
+                        quantity: tabItemsCount.categories?.toString() || "…",
                       })}
                     </CategoriesTab>
-                    <CollectionsTab isActive={activeTab === VoucherDetailsPageTab.collections} changeTab={onTabClick}>
+                    <CollectionsTab
+                      isActive={activeTab === VoucherDetailsPageTab.collections}
+                      changeTab={onTabClick}
+                    >
                       {intl.formatMessage(itemsQuantityMessages.collections, {
-                        quantity: tabItemsCount.collections?.toString() || '…',
+                        quantity: tabItemsCount.collections?.toString() || "…",
                       })}
                     </CollectionsTab>
-                    <ProductsTab isActive={activeTab === VoucherDetailsPageTab.products} changeTab={onTabClick}>
+                    <ProductsTab
+                      isActive={activeTab === VoucherDetailsPageTab.products}
+                      changeTab={onTabClick}
+                    >
                       {intl.formatMessage(itemsQuantityMessages.products, {
-                        quantity: tabItemsCount.products?.toString() || '…',
+                        quantity: tabItemsCount.products?.toString() || "…",
                       })}
                     </ProductsTab>
                   </TabContainer>
@@ -275,23 +297,26 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 </>
               ) : null}
               <CardSpacer />
-              {data.discountType.toString() === 'SHIPPING' ? (
+              {data.discountType.toString() === "SHIPPING" ? (
                 <CountryList
                   countries={voucher?.countries}
                   disabled={disabled}
                   emptyText={intl.formatMessage({
-                    id: 'jd/LWa',
-                    defaultMessage: 'Voucher applies to all countries',
+                    id: "jd/LWa",
+                    defaultMessage: "Voucher applies to all countries",
                   })}
                   title={
                     <>
                       {intl.formatMessage({
-                        id: 'ibnmEd',
-                        defaultMessage: 'Countries',
-                        description: 'voucher country range',
+                        id: "ibnmEd",
+                        defaultMessage: "Countries",
+                        description: "voucher country range",
                       })}
                       <Typography variant="caption">
-                        <FormattedMessage id="glT6fm" defaultMessage="Voucher is limited to these countries" />
+                        <FormattedMessage
+                          id="glT6fm"
+                          defaultMessage="Voucher is limited to these countries"
+                        />
                       </Typography>
                     </>
                   }
@@ -348,6 +373,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
     </Form>
   );
 };
-VoucherDetailsPage.displayName = 'VoucherDetailsPage';
+VoucherDetailsPage.displayName = "VoucherDetailsPage";
 
 export default VoucherDetailsPage;

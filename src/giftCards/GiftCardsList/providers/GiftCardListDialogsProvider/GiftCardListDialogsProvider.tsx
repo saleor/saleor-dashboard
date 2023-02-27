@@ -1,15 +1,15 @@
-import GiftCardListPageDeleteDialog from '@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog';
-import GiftCardBulkCreateDialog from '@dashboard/giftCards/GiftCardBulkCreateDialog';
-import GiftCardCreateDialogContent from '@dashboard/giftCards/GiftCardCreateDialog';
-import GiftCardExportDialogContent from '@dashboard/giftCards/GiftCardExportDialogContent';
-import { giftCardListUrl } from '@dashboard/giftCards/urls';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import { Dialog } from '@material-ui/core';
-import React, { createContext, useContext } from 'react';
+import GiftCardListPageDeleteDialog from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
+import GiftCardBulkCreateDialog from "@dashboard/giftCards/GiftCardBulkCreateDialog";
+import GiftCardCreateDialogContent from "@dashboard/giftCards/GiftCardCreateDialog";
+import GiftCardExportDialogContent from "@dashboard/giftCards/GiftCardExportDialogContent";
+import { giftCardListUrl } from "@dashboard/giftCards/urls";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { Dialog } from "@material-ui/core";
+import React, { createContext, useContext } from "react";
 
-import { GIFT_CARD_LIST_QUERY } from '../../queries';
-import { GiftCardListActionParamsEnum, GiftCardListUrlQueryParams } from '../../types';
+import { GIFT_CARD_LIST_QUERY } from "../../queries";
+import { GiftCardListActionParamsEnum, GiftCardListUrlQueryParams } from "../../types";
 
 interface GiftCardListDialogsProviderProps {
   children: React.ReactNode;
@@ -31,18 +31,20 @@ export const GiftCardListDialogsContext = createContext<GiftCardListDialogsConsu
 
 export const useGiftCardListDialogs = () => useContext(GiftCardListDialogsContext);
 
-const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = ({ children, params }) => {
+const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = ({
+  children,
+  params,
+}) => {
   const navigate = useNavigator();
 
   const id = params?.id;
 
   const { CREATE, DELETE, EXPORT, BULK_CREATE } = GiftCardListActionParamsEnum;
 
-  const [openDialog, onClose] = createDialogActionHandlers<GiftCardListActionParamsEnum, GiftCardListUrlQueryParams>(
-    navigate,
-    giftCardListUrl,
-    params,
-  );
+  const [openDialog, onClose] = createDialogActionHandlers<
+    GiftCardListActionParamsEnum,
+    GiftCardListUrlQueryParams
+  >(navigate, giftCardListUrl, params);
 
   const handleOpenDialog = (type: GiftCardListActionParamsEnum) => () => openDialog(type);
 

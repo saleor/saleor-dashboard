@@ -1,22 +1,25 @@
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
-import TableCellHeader from '@dashboard/components/TableCellHeader';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { PermissionGroupFragment } from '@dashboard/graphql';
-import { maybe, renderCollection, stopPropagation } from '@dashboard/misc';
-import { permissionGroupDetailsUrl, PermissionGroupListUrlSortField } from '@dashboard/permissionGroups/urls';
-import { ListProps, SortPage } from '@dashboard/types';
-import { getArrowDirection } from '@dashboard/utils/sort';
-import { TableBody, TableCell, TableFooter, TableHead } from '@material-ui/core';
-import { DeleteIcon, IconButton, makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { PermissionGroupFragment } from "@dashboard/graphql";
+import { maybe, renderCollection, stopPropagation } from "@dashboard/misc";
+import {
+  permissionGroupDetailsUrl,
+  PermissionGroupListUrlSortField,
+} from "@dashboard/permissionGroups/urls";
+import { ListProps, SortPage } from "@dashboard/types";
+import { getArrowDirection } from "@dashboard/utils/sort";
+import { TableBody, TableCell, TableFooter, TableHead } from "@material-ui/core";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       colActions: {
         width: 180,
       },
@@ -24,27 +27,27 @@ const useStyles = makeStyles(
         width: 180,
       },
       colName: {
-        width: 'auto',
+        width: "auto",
       },
     },
     colActions: {
       paddingRight: theme.spacing(),
-      textAlign: 'right',
+      textAlign: "right",
     },
     colActionsHeader: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     colMembers: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     colName: {
       paddingLeft: 0,
     },
     link: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
   }),
-  { name: 'PermissionGroupList' },
+  { name: "PermissionGroupList" },
 );
 const numberOfColumns = 3;
 
@@ -62,12 +65,20 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
       <TableHead>
         <TableRowLink>
           <TableCellHeader
-            direction={sort.sort === PermissionGroupListUrlSortField.name ? getArrowDirection(sort.asc) : undefined}
+            direction={
+              sort.sort === PermissionGroupListUrlSortField.name
+                ? getArrowDirection(sort.asc)
+                : undefined
+            }
             arrowPosition="right"
             onClick={() => onSort(PermissionGroupListUrlSortField.name)}
             className={classes.colName}
           >
-            <FormattedMessage id="szXISP" defaultMessage="Permission Group Name" description="permission group name" />
+            <FormattedMessage
+              id="szXISP"
+              defaultMessage="Permission Group Name"
+              description="permission group name"
+            />
           </TableCellHeader>
           <TableCellHeader className={classes.colMembers} textAlign="right">
             <FormattedMessage id="+a+2ug" defaultMessage="Members" />
@@ -89,15 +100,23 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
             <TableRowLink
               className={!!permissionGroup ? classes.link : undefined}
               hover={!!permissionGroup}
-              key={permissionGroup ? permissionGroup.id : 'skeleton'}
+              key={permissionGroup ? permissionGroup.id : "skeleton"}
               href={permissionGroup && permissionGroupDetailsUrl(permissionGroup.id)}
-              data-test-id={'id-' + maybe(() => permissionGroup.id)}
+              data-test-id={"id-" + maybe(() => permissionGroup.id)}
             >
               <TableCell className={classes.colName}>
-                {permissionGroup ? <span data-test-id="name">{permissionGroup.name}</span> : <Skeleton />}
+                {permissionGroup ? (
+                  <span data-test-id="name">{permissionGroup.name}</span>
+                ) : (
+                  <Skeleton />
+                )}
               </TableCell>
               <TableCell className={classes.colMembers}>
-                {permissionGroup ? <span data-test-id="members">{permissionGroup.users.length}</span> : <Skeleton />}
+                {permissionGroup ? (
+                  <span data-test-id="members">{permissionGroup.users.length}</span>
+                ) : (
+                  <Skeleton />
+                )}
               </TableCell>
               <TableCell className={classes.colActions}>
                 {permissionGroup ? (
@@ -133,5 +152,5 @@ const PermissionGroupList: React.FC<PermissionGroupListProps> = props => {
     </ResponsiveTable>
   );
 };
-PermissionGroupList.displayName = 'PermissionGroupList';
+PermissionGroupList.displayName = "PermissionGroupList";
 export default PermissionGroupList;

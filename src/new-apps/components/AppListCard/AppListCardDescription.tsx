@@ -1,6 +1,6 @@
-import { GetV2SaleorAppsResponse } from '@dashboard/new-apps/marketplace.types';
-import { Box, Text } from '@saleor/macaw-ui/next';
-import React from 'react';
+import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
+import { Box, Text } from "@saleor/macaw-ui/next";
+import React from "react";
 
 interface AppListCardDescriptionProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
@@ -29,7 +29,7 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({ app }) 
             data-test-id="app-logo-placeholder"
             color="textNeutralContrasted"
           >
-            {app.name.en[0] || ''}
+            {app.name.en[0] || ""}
           </Text>
         )}
       </Box>
@@ -42,5 +42,5 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({ app }) 
     </Text>
   </Box>
 );
-AppListCardDescription.displayName = 'AppListCardDescription';
+AppListCardDescription.displayName = "AppListCardDescription";
 export default AppListCardDescription;

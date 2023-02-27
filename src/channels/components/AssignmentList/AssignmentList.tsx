@@ -1,21 +1,21 @@
-import Skeleton from '@dashboard/components/Skeleton';
-import { ReorderEvent } from '@dashboard/types';
-import { Accordion, Divider, Typography } from '@material-ui/core';
-import React from 'react';
-import { defineMessages, useIntl } from 'react-intl';
+import Skeleton from "@dashboard/components/Skeleton";
+import { ReorderEvent } from "@dashboard/types";
+import { Accordion, Divider, Typography } from "@material-ui/core";
+import React from "react";
+import { defineMessages, useIntl } from "react-intl";
 
-import AssignmentListFooter from './AssignmentListFooter';
-import AssignmentListHeader from './AssignmentListHeader';
-import Item from './Item';
-import SortableContainer from './SortableContainer';
-import { useExpanderStyles, useStyles } from './styles';
-import { AssignmentListProps } from './types';
+import AssignmentListFooter from "./AssignmentListFooter";
+import AssignmentListHeader from "./AssignmentListHeader";
+import Item from "./Item";
+import SortableContainer from "./SortableContainer";
+import { useExpanderStyles, useStyles } from "./styles";
+import { AssignmentListProps } from "./types";
 
 const messages = defineMessages({
   allSelectedMessage: {
-    id: 'uKlrEk',
-    defaultMessage: 'All available {itemsName} have been selected',
-    description: 'all selected items message',
+    id: "uKlrEk",
+    defaultMessage: "All available {itemsName} have been selected",
+    description: "all selected items message",
   },
 });
 
@@ -54,7 +54,13 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
           >
             <div>
               {items.map((item, itemIndex) => (
-                <Item key={itemIndex} index={itemIndex} item={item} onDelete={removeItem} sortable={!!reorderItem} />
+                <Item
+                  key={itemIndex}
+                  index={itemIndex}
+                  item={item}
+                  onDelete={removeItem}
+                  sortable={!!reorderItem}
+                />
               ))}
             </div>
           </SortableContainer>

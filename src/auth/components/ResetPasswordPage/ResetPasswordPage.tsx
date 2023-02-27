@@ -1,17 +1,17 @@
-import { Button } from '@dashboard/components/Button';
-import Form from '@dashboard/components/Form';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import { IconButton } from '@dashboard/components/IconButton';
-import { getAppMountUri } from '@dashboard/config';
-import { RequestPasswordResetMutation } from '@dashboard/graphql';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import { commonMessages } from '@dashboard/intl';
-import { TextField, Typography } from '@material-ui/core';
-import { ArrowRightIcon } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { IconButton } from "@dashboard/components/IconButton";
+import { getAppMountUri } from "@dashboard/config";
+import { RequestPasswordResetMutation } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
+import { TextField, Typography } from "@material-ui/core";
+import { ArrowRightIcon } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import useStyles from '../styles';
+import useStyles from "../styles";
 
 export interface ResetPasswordPageFormData {
   email: string;
@@ -21,7 +21,7 @@ export interface ResetPasswordPageProps {
   error: string;
   onSubmit: (
     data: ResetPasswordPageFormData,
-  ) => SubmitPromise<RequestPasswordResetMutation['requestPasswordReset']['errors']>;
+  ) => SubmitPromise<RequestPasswordResetMutation["requestPasswordReset"]["errors"]>;
 }
 
 const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
@@ -31,7 +31,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
   const intl = useIntl();
 
   return (
-    <Form initial={{ email: '' }} onSubmit={onSubmit}>
+    <Form initial={{ email: "" }} onSubmit={onSubmit}>
       {({ change: handleChange, data, submit: handleSubmit }) => (
         <>
           <IconButton className={classes.backBtn} href={getAppMountUri()} variant="secondary">
@@ -58,7 +58,7 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
             onChange={handleChange}
             value={data.email}
             inputProps={{
-              'data-test-id': 'email',
+              "data-test-id": "email",
               spellCheck: false,
             }}
           />
@@ -83,5 +83,5 @@ const ResetPasswordPage: React.FC<ResetPasswordPageProps> = props => {
   );
 };
 
-ResetPasswordPage.displayName = 'ResetPasswordPage';
+ResetPasswordPage.displayName = "ResetPasswordPage";
 export default ResetPasswordPage;

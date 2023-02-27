@@ -11,15 +11,9 @@ import {
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
+import { createShipping, deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import { deleteWarehouseStartsWith } from "../../support/api/utils/warehouseUtils";
-import {
-  enterSiteSettingAndSetStockReservation,
-  userType,
-} from "../../support/pages/siteSettings";
+import { enterSiteSettingAndSetStockReservation, userType } from "../../support/pages/siteSettings";
 
 describe("As an admin I want to manage stock reservation", () => {
   const startsWith = "manageStocks";
@@ -82,9 +76,7 @@ describe("As an admin I want to manage stock reservation", () => {
   });
 
   after(() => {
-    updateStockReservation({})
-      .its("errors")
-      .should("be.empty");
+    updateStockReservation({}).its("errors").should("be.empty");
   });
 
   beforeEach(() => {
@@ -119,9 +111,7 @@ describe("As an admin I want to manage stock reservation", () => {
 
       updateStockReservation({});
       enterSiteSettingAndSetStockReservation(userType.authenticated, 10);
-      createCheckout(dataForCheckout)
-        .its("checkout")
-        .should("be.ok");
+      createCheckout(dataForCheckout).its("checkout").should("be.ok");
       createCheckout(dataForCheckout)
         .its("errors.0")
         .should("include", { field: "quantity" })
@@ -139,9 +129,7 @@ describe("As an admin I want to manage stock reservation", () => {
 
       updateStockReservation({});
       enterSiteSettingAndSetStockReservation(userType.anonymous, 10);
-      createCheckout(dataForCheckout)
-        .its("checkout")
-        .should("be.ok");
+      createCheckout(dataForCheckout).its("checkout").should("be.ok");
       createCheckout(dataForCheckout)
         .its("errors.0")
         .should("include", { field: "quantity" })
@@ -159,13 +147,8 @@ describe("As an admin I want to manage stock reservation", () => {
 
       updateStockReservation({ authenticatedUserStock: 10 });
       enterSiteSettingAndSetStockReservation(userType.authenticated);
-      createCheckout(dataForCheckout)
-        .its("checkout")
-        .should("be.ok");
-      createCheckout(dataForCheckout)
-        .should("be.ok")
-        .its("errors")
-        .should("be.empty");
+      createCheckout(dataForCheckout).its("checkout").should("be.ok");
+      createCheckout(dataForCheckout).should("be.ok").its("errors").should("be.empty");
     },
   );
 
@@ -177,13 +160,8 @@ describe("As an admin I want to manage stock reservation", () => {
 
       updateStockReservation({ anonymousUserStock: 10 });
       enterSiteSettingAndSetStockReservation(userType.anonymous);
-      createCheckout(dataForCheckout)
-        .its("checkout")
-        .should("be.ok");
-      createCheckout(dataForCheckout)
-        .should("be.ok")
-        .its("errors")
-        .should("be.empty");
+      createCheckout(dataForCheckout).its("checkout").should("be.ok");
+      createCheckout(dataForCheckout).should("be.ok").its("errors").should("be.empty");
     },
   );
 });

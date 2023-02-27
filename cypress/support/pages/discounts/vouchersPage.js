@@ -24,17 +24,12 @@ export function createVoucher({
 }) {
   cy.get(VOUCHERS_SELECTORS.createVoucherButton).click();
   selectChannelInDetailsPages(channelName);
-  cy.get(VOUCHERS_SELECTORS.voucherCodeInput)
-    .type(voucherCode)
-    .get(discountOption)
-    .click();
+  cy.get(VOUCHERS_SELECTORS.voucherCodeInput).type(voucherCode).get(discountOption).click();
   if (discountOption !== discountOptions.SHIPPING) {
     cy.get(VOUCHERS_SELECTORS.discountValueInputs).type(voucherValue);
   }
   if (usageLimit) {
-    cy.get(VOUCHERS_SELECTORS.limits.usageLimitCheckbox)
-      .click()
-      .type(usageLimit);
+    cy.get(VOUCHERS_SELECTORS.limits.usageLimitCheckbox).click().type(usageLimit);
   }
   if (applyOnePerCustomer) {
     cy.get(VOUCHERS_SELECTORS.limits.applyOncePerCustomerCheckbox).click();
@@ -54,18 +49,10 @@ export function createVoucher({
       .get(VOUCHERS_SELECTORS.requirements.minCheckoutItemsQuantityInput)
       .type(minAmountOfItems);
   }
-  cy.get(BUTTON_SELECTORS.confirm)
-    .click()
-    .confirmationMessageShouldAppear();
+  cy.get(BUTTON_SELECTORS.confirm).click().confirmationMessageShouldAppear();
 }
 
-export function setVoucherDate({
-  voucherId,
-  startDate,
-  endDate,
-  endTime,
-  hasEndDate = false,
-}) {
+export function setVoucherDate({ voucherId, startDate, endDate, endTime, hasEndDate = false }) {
   cy.visit(voucherDetailsUrl(voucherId)).waitForProgressBarToNotBeVisible();
   if (startDate) {
     cy.get(VOUCHERS_SELECTORS.startDateInput).type(startDate);

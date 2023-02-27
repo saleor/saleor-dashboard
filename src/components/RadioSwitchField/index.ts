@@ -1,2 +1,2 @@
-export { default } from './RadioSwitchField';
-export * from './RadioSwitchField';
+export { default } from "./RadioSwitchField";
+export * from "./RadioSwitchField";

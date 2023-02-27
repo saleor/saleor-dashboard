@@ -1,21 +1,21 @@
-import { borderHeight, topBarHeight } from '@dashboard/components/AppLayout/consts';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import { Button } from '@dashboard/components/Button';
-import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { CustomAppUrls } from '@dashboard/custom-apps/urls';
-import { AppListItemFragment } from '@dashboard/graphql';
-import { sectionNames } from '@dashboard/intl';
-import { renderCollection } from '@dashboard/misc';
-import { TableBody, TableCell, Typography } from '@material-ui/core';
-import { DeleteIcon, IconButton, ResponsiveTable } from '@saleor/macaw-ui';
-import { Box, Text } from '@saleor/macaw-ui/next';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { borderHeight, topBarHeight } from "@dashboard/components/AppLayout/consts";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { Button } from "@dashboard/components/Button";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+import { AppListItemFragment } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { renderCollection } from "@dashboard/misc";
+import { TableBody, TableCell, Typography } from "@material-ui/core";
+import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
+import { Box, Text } from "@saleor/macaw-ui/next";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import AppsSkeleton from '../../../apps/components/AppsSkeleton';
-import DeactivatedText from '../../../apps/components/DeactivatedText';
-import { useStyles } from '../../../apps/styles';
+import AppsSkeleton from "../../../apps/components/AppsSkeleton";
+import DeactivatedText from "../../../apps/components/DeactivatedText";
+import { useStyles } from "../../../apps/styles";
 
 export interface CustomAppListPageProps {
   appsList: AppListItemFragment[];
@@ -23,7 +23,11 @@ export interface CustomAppListPageProps {
   onRemove: (id: string) => void;
 }
 
-const CustomAppListPage: React.FC<CustomAppListPageProps> = ({ appsList, onRemove, getCustomAppHref }) => {
+const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
+  appsList,
+  onRemove,
+  getCustomAppHref,
+}) => {
   const intl = useIntl();
   const classes = useStyles({});
 
@@ -31,7 +35,11 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({ appsList, onRemov
     <>
       <TopNav title={intl.formatMessage(sectionNames.webhooksAndEvents)}>
         <Button variant="secondary" href={CustomAppUrls.appAddUrl} data-test-id="create-app">
-          <FormattedMessage id="XB2Jj9" defaultMessage="Create App" description="create app button" />
+          <FormattedMessage
+            id="XB2Jj9"
+            defaultMessage="Create App"
+            description="create app button"
+          />
         </Button>
       </TopNav>
       <Box padding={9} __height={`calc(100vh - ${topBarHeight} - ${borderHeight})`}>
@@ -51,7 +59,11 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({ appsList, onRemov
               appsList,
               (app, index) =>
                 app ? (
-                  <TableRowLink key={app.id} className={classes.tableRow} href={getCustomAppHref(app.id)}>
+                  <TableRowLink
+                    key={app.id}
+                    className={classes.tableRow}
+                    href={getCustomAppHref(app.id)}
+                  >
                     <TableCell className={classes.colName}>
                       <span data-tc="name" className={classes.appName}>
                         {app.name}
@@ -64,7 +76,11 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({ appsList, onRemov
                     </TableCell>
                     <TableCell className={classes.colAction}>
                       <TableButtonWrapper>
-                        <IconButton variant="secondary" color="primary" onClick={() => onRemove(app.id)}>
+                        <IconButton
+                          variant="secondary"
+                          color="primary"
+                          onClick={() => onRemove(app.id)}
+                        >
                           <DeleteIcon />
                         </IconButton>
                       </TableButtonWrapper>
@@ -94,5 +110,5 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({ appsList, onRemov
   );
 };
 
-CustomAppListPage.displayName = 'CustomAppListPage';
+CustomAppListPage.displayName = "CustomAppListPage";
 export default CustomAppListPage;

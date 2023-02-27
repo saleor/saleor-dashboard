@@ -1,24 +1,27 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import { FormSpacer } from '@dashboard/components/FormSpacer';
-import Link from '@dashboard/components/Link';
-import PreviewPill from '@dashboard/components/PreviewPill';
-import { RadioGroupField } from '@dashboard/components/RadioGroupField';
-import Skeleton from '@dashboard/components/Skeleton';
-import { WarehouseClickAndCollectOptionEnum, WarehouseWithShippingFragment } from '@dashboard/graphql';
-import { sectionNames } from '@dashboard/intl';
-import { renderCollection } from '@dashboard/misc';
-import { shippingZoneUrl } from '@dashboard/shipping/urls';
-import { RelayToFlat } from '@dashboard/types';
-import { Card, CardContent, Divider, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
+import Link from "@dashboard/components/Link";
+import PreviewPill from "@dashboard/components/PreviewPill";
+import { RadioGroupField } from "@dashboard/components/RadioGroupField";
+import Skeleton from "@dashboard/components/Skeleton";
+import {
+  WarehouseClickAndCollectOptionEnum,
+  WarehouseWithShippingFragment,
+} from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { renderCollection } from "@dashboard/misc";
+import { shippingZoneUrl } from "@dashboard/shipping/urls";
+import { RelayToFlat } from "@dashboard/types";
+import { Card, CardContent, Divider, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { WarehouseDetailsPageFormData } from './../WarehouseDetailsPage';
-import messages from './messages';
+import { WarehouseDetailsPageFormData } from "./../WarehouseDetailsPage";
+import messages from "./messages";
 
 export interface WarehouseSettingsProps {
-  zones: RelayToFlat<WarehouseWithShippingFragment['shippingZones']>;
+  zones: RelayToFlat<WarehouseWithShippingFragment["shippingZones"]>;
   disabled: boolean;
   data: WarehouseDetailsPageFormData;
   onChange: (event: React.ChangeEvent<any>) => void;
@@ -28,7 +31,7 @@ export interface WarehouseSettingsProps {
 const useStyles = makeStyles(
   theme => ({
     link: {
-      '&:not(:last-of-type)': {
+      "&:not(:last-of-type)": {
         marginBottom: theme.spacing(),
       },
     },
@@ -37,11 +40,17 @@ const useStyles = makeStyles(
     },
   }),
   {
-    name: 'WarehouseInfoProps',
+    name: "WarehouseInfoProps",
   },
 );
 
-const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({ zones, disabled, data, onChange, setData }) => {
+const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({
+  zones,
+  disabled,
+  data,
+  onChange,
+  setData,
+}) => {
   React.useEffect(() => {
     if (data.isPrivate && data.clickAndCollectOption === WarehouseClickAndCollectOptionEnum.LOCAL) {
       setData({
@@ -53,7 +62,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({ zones, disabled, 
   const classes = useStyles({});
 
   const booleanRadioHandler = ({ target: { name, value } }) => {
-    setData({ [name]: value === 'true' });
+    setData({ [name]: value === "true" });
   };
 
   const isPrivateChoices = [
@@ -67,7 +76,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({ zones, disabled, 
           <FormSpacer />
         </>
       ),
-      value: 'true',
+      value: "true",
     },
     {
       label: (
@@ -78,7 +87,7 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({ zones, disabled, 
           </Typography>
         </>
       ),
-      value: 'false',
+      value: "false",
     },
   ];
 
@@ -182,5 +191,5 @@ const WarehouseSettings: React.FC<WarehouseSettingsProps> = ({ zones, disabled, 
   );
 };
 
-WarehouseSettings.displayName = 'WarehouseInfo';
+WarehouseSettings.displayName = "WarehouseInfo";
 export default WarehouseSettings;

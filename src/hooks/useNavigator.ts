@@ -1,6 +1,6 @@
-import { ExitFormDialogContext } from '@dashboard/components/Form/ExitFormDialogProvider';
-import { useContext } from 'react';
-import useRouter from 'use-react-router';
+import { ExitFormDialogContext } from "@dashboard/components/Form/ExitFormDialogProvider";
+import { useContext } from "react";
+import useRouter from "use-react-router";
 
 export type UseNavigatorResult = (
   url: string,
@@ -31,7 +31,7 @@ function useNavigator(): UseNavigatorResult {
       history.push(targetUrl);
     }
     if (resetScroll) {
-      window.scrollTo({ behavior: 'smooth', top: 0 });
+      window.scrollTo({ behavior: "smooth", top: 0 });
     }
   };
 }

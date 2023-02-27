@@ -1,17 +1,17 @@
-import ChannelAllocationStrategy from '@dashboard/channels/components/ChannelAllocationStrategy';
-import ShippingZones from '@dashboard/channels/components/ShippingZones';
-import Warehouses from '@dashboard/channels/components/Warehouses';
-import { channelsListUrl } from '@dashboard/channels/urls';
-import { validateChannelFormData } from '@dashboard/channels/validation';
-import { Content } from '@dashboard/components/AppLayout/Content';
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import Form from '@dashboard/components/Form';
-import RequirePermissions from '@dashboard/components/RequirePermissions';
-import Savebar from '@dashboard/components/Savebar';
-import { SingleAutocompleteChoiceType } from '@dashboard/components/SingleAutocompleteSelectField';
+import ChannelAllocationStrategy from "@dashboard/channels/components/ChannelAllocationStrategy";
+import ShippingZones from "@dashboard/channels/components/ShippingZones";
+import Warehouses from "@dashboard/channels/components/Warehouses";
+import { channelsListUrl } from "@dashboard/channels/urls";
+import { validateChannelFormData } from "@dashboard/channels/validation";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Form from "@dashboard/components/Form";
+import RequirePermissions from "@dashboard/components/RequirePermissions";
+import Savebar from "@dashboard/components/Savebar";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   AllocationStrategyEnum,
   ChannelDetailsFragment,
@@ -22,29 +22,29 @@ import {
   SearchShippingZonesQuery,
   SearchWarehousesQuery,
   StockSettingsInput,
-} from '@dashboard/graphql';
-import { SearchData } from '@dashboard/hooks/makeTopLevelSearch';
-import { getParsedSearchData } from '@dashboard/hooks/makeTopLevelSearch/utils';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useStateFromProps from '@dashboard/hooks/useStateFromProps';
-import { FetchMoreProps, RelayToFlat } from '@dashboard/types';
-import createSingleAutocompleteSelectHandler from '@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler';
-import { mapCountriesToChoices } from '@dashboard/utils/maps';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React, { useState } from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
+import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { mapCountriesToChoices } from "@dashboard/utils/maps";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React, { useState } from "react";
+import { useIntl } from "react-intl";
 
-import { ChannelForm, FormData } from '../../components/ChannelForm';
-import { ChannelStatus } from '../../components/ChannelStatus/ChannelStatus';
+import { ChannelForm, FormData } from "../../components/ChannelForm";
+import { ChannelStatus } from "../../components/ChannelStatus/ChannelStatus";
 import {
   createShippingZoneAddHandler,
   createShippingZoneRemoveHandler,
   createWarehouseAddHandler,
   createWarehouseRemoveHandler,
   createWarehouseReorderHandler,
-} from './handlers';
-import { ChannelShippingZones, ChannelWarehouses } from './types';
+} from "./handlers";
+import { ChannelShippingZones, ChannelWarehouses } from "./types";
 
 export interface ChannelDetailsPageProps<TErrors extends ChannelErrorFragment[]> {
   channel?: ChannelDetailsFragment;
@@ -96,9 +96,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
 
   const [validationErrors, setValidationErrors] = useState<ChannelErrorFragment[]>([]);
 
-  const [selectedCurrencyCode, setSelectedCurrencyCode] = useState('');
+  const [selectedCurrencyCode, setSelectedCurrencyCode] = useState("");
   const [selectedCountryDisplayName, setSelectedCountryDisplayName] = useStateFromProps(
-    channel?.defaultCountry.country || '',
+    channel?.defaultCountry.country || "",
   );
 
   const countryChoices = mapCountriesToChoices(countries || []);
@@ -109,14 +109,14 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     ...stockSettings,
   };
   const initialData: FormData = {
-    currencyCode: '',
-    name: '',
-    slug: '',
+    currencyCode: "",
+    name: "",
+    slug: "",
     shippingZonesIdsToAdd: [],
     shippingZonesIdsToRemove: [],
     warehousesIdsToAdd: [],
     warehousesIdsToRemove: [],
-    defaultCountry: (defaultCountry?.code || '') as CountryCode,
+    defaultCountry: (defaultCountry?.code || "") as CountryCode,
     ...formData,
     ...initialStockSettings,
     shippingZonesToDisplay: channelShippingZones,
@@ -125,16 +125,17 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
 
   const getFilteredShippingZonesChoices = (
     shippingZonesToDisplay: ChannelShippingZones,
-  ): RelayToFlat<SearchShippingZonesQuery['search']> =>
+  ): RelayToFlat<SearchShippingZonesQuery["search"]> =>
     getParsedSearchData({ data: searchShippingZonesData }).filter(
       ({ id: searchedZoneId }) => !shippingZonesToDisplay.some(({ id }) => id === searchedZoneId),
     );
 
   const getFilteredWarehousesChoices = (
     warehousesToDisplay: ChannelWarehouses,
-  ): RelayToFlat<SearchWarehousesQuery['search']> =>
+  ): RelayToFlat<SearchWarehousesQuery["search"]> =>
     getParsedSearchData({ data: searchWarehousesData }).filter(
-      ({ id: searchedWarehouseId }) => !warehousesToDisplay.some(({ id }) => id === searchedWarehouseId),
+      ({ id: searchedWarehouseId }) =>
+        !warehousesToDisplay.some(({ id }) => id === searchedWarehouseId),
     );
 
   const handleSubmit = async (data: FormData) => {
@@ -163,10 +164,20 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
           countryChoices,
         );
 
-        const addShippingZone = createShippingZoneAddHandler(data, searchShippingZonesData, set, triggerChange);
+        const addShippingZone = createShippingZoneAddHandler(
+          data,
+          searchShippingZonesData,
+          set,
+          triggerChange,
+        );
         const removeShippingZone = createShippingZoneRemoveHandler(data, set, triggerChange);
 
-        const addWarehouse = createWarehouseAddHandler(data, searchWarehousesData, set, triggerChange);
+        const addWarehouse = createWarehouseAddHandler(
+          data,
+          searchWarehousesData,
+          set,
+          triggerChange,
+        );
         const removeWarehouse = createWarehouseRemoveHandler(data, set, triggerChange);
         const reorderWarehouse = createWarehouseReorderHandler(data, set);
 
@@ -179,9 +190,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               title={
                 channel?.name ||
                 intl.formatMessage({
-                  id: 'DnghuS',
-                  defaultMessage: 'New Channel',
-                  description: 'channel create',
+                  id: "DnghuS",
+                  defaultMessage: "New Channel",
+                  description: "channel create",
                 })
               }
             />
@@ -212,7 +223,9 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               )}
               <RequirePermissions requiredPermissions={[PermissionEnum.MANAGE_SHIPPING]}>
                 <ShippingZones
-                  shippingZonesChoices={getFilteredShippingZonesChoices(data.shippingZonesToDisplay)}
+                  shippingZonesChoices={getFilteredShippingZonesChoices(
+                    data.shippingZonesToDisplay,
+                  )}
                   shippingZones={data.shippingZonesToDisplay}
                   addShippingZone={addShippingZone}
                   removeShippingZone={removeShippingZone}
@@ -259,5 +272,5 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   );
 };
 
-ChannelDetailsPage.displayName = 'ChannelDetailsPage';
+ChannelDetailsPage.displayName = "ChannelDetailsPage";
 export default ChannelDetailsPage;

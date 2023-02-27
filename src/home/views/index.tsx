@@ -1,20 +1,20 @@
-import { useUser } from '@dashboard/auth';
-import { channelsListUrl } from '@dashboard/channels/urls';
-import useAppChannel from '@dashboard/components/AppLayout/AppChannelContext';
-import { OrderStatusFilter, StockAvailability, useHomeQuery } from '@dashboard/graphql';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import React from 'react';
+import { useUser } from "@dashboard/auth";
+import { channelsListUrl } from "@dashboard/channels/urls";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { OrderStatusFilter, StockAvailability, useHomeQuery } from "@dashboard/graphql";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import React from "react";
 
-import { getDatePeriod, getUserName } from '../../misc';
-import { orderListUrl } from '../../orders/urls';
-import { productListUrl } from '../../products/urls';
-import HomePage from '../components/HomePage';
+import { getDatePeriod, getUserName } from "../../misc";
+import { orderListUrl } from "../../orders/urls";
+import { productListUrl } from "../../products/urls";
+import HomePage from "../components/HomePage";
 
 const HomeSection = () => {
   const { user } = useUser();
   const { channel } = useAppChannel();
 
-  const noChannel = !channel && typeof channel !== 'undefined';
+  const noChannel = !channel && typeof channel !== "undefined";
 
   const { data } = useHomeQuery({
     displayLoader: true,

@@ -1,10 +1,13 @@
-import { RichTextProps } from '@dashboard/attributes/utils/data';
-import { AttributeInput } from '@dashboard/components/Attributes';
-import { ChannelOpts } from '@dashboard/components/ChannelsAvailabilityCard/types';
-import { DatagridChangeOpts, UseDatagridChangeState } from '@dashboard/components/Datagrid/useDatagridChange';
-import { MetadataFormData } from '@dashboard/components/Metadata';
-import { MultiAutocompleteChoiceType } from '@dashboard/components/MultiAutocompleteSelectField';
-import { SingleAutocompleteChoiceType } from '@dashboard/components/SingleAutocompleteSelectField';
+import { RichTextProps } from "@dashboard/attributes/utils/data";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/types";
+import {
+  DatagridChangeOpts,
+  UseDatagridChangeState,
+} from "@dashboard/components/Datagrid/useDatagridChange";
+import { MetadataFormData } from "@dashboard/components/Metadata";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   MetadataErrorFragment,
   ProductChannelListingUpdateInput,
@@ -12,14 +15,19 @@ import {
   SearchPagesQuery,
   SearchProductsQuery,
   SearchWarehousesQuery,
-} from '@dashboard/graphql';
-import { CommonUseFormResultWithHandlers, FormChange, FormErrors, SubmitPromise } from '@dashboard/hooks/useForm';
-import { FormsetAtomicData, FormsetChange, FormsetData } from '@dashboard/hooks/useFormset';
-import { UseProductUpdateHandlerError } from '@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler';
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from '@dashboard/types';
-import { OutputData } from '@editorjs/editorjs';
+} from "@dashboard/graphql";
+import {
+  CommonUseFormResultWithHandlers,
+  FormChange,
+  FormErrors,
+  SubmitPromise,
+} from "@dashboard/hooks/useForm";
+import { FormsetAtomicData, FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
+import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
+import { OutputData } from "@editorjs/editorjs";
 
-import { ProductChannelsListingDialogSubmit } from './ProductChannelsListingsDialog';
+import { ProductChannelsListingDialogSubmit } from "./ProductChannelsListingsDialog";
 
 export interface ProductUpdateFormData extends MetadataFormData {
   category: string | null;
@@ -64,8 +72,11 @@ export interface ProductUpdateSubmitData extends ProductUpdateFormData {
 }
 
 export interface ProductUpdateHandlers
-  extends Record<'changeMetadata' | 'selectCategory' | 'selectCollection' | 'selectTaxClass', FormChange>,
-    Record<'selectAttribute' | 'selectAttributeMultiple', FormsetChange<string>> {
+  extends Record<
+      "changeMetadata" | "selectCategory" | "selectCollection" | "selectTaxClass",
+      FormChange
+    >,
+    Record<"selectAttribute" | "selectAttributeMultiple", FormsetChange<string>> {
   changeChannels: (id: string, data: ChannelOpts) => void;
   selectAttributeReference: FormsetChange<string[]>;
   selectAttributeFile: FormsetChange<File>;
@@ -83,18 +94,21 @@ export interface UseProductUpdateFormOutput
   formErrors: FormErrors<ProductUpdateSubmitData>;
 }
 
-export type UseProductUpdateFormRenderProps = Omit<UseProductUpdateFormOutput, 'datagrid' | 'richText'>;
+export type UseProductUpdateFormRenderProps = Omit<
+  UseProductUpdateFormOutput,
+  "datagrid" | "richText"
+>;
 
 export interface UseProductUpdateFormOpts
-  extends Record<'categories' | 'collections' | 'taxClasses', SingleAutocompleteChoiceType[]> {
+  extends Record<"categories" | "collections" | "taxClasses", SingleAutocompleteChoiceType[]> {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string>>;
   setSelectedCollections: React.Dispatch<React.SetStateAction<MultiAutocompleteChoiceType[]>>;
   setSelectedTaxClass: React.Dispatch<React.SetStateAction<string>>;
   selectedCollections: MultiAutocompleteChoiceType[];
-  warehouses: RelayToFlat<SearchWarehousesQuery['search']>;
+  warehouses: RelayToFlat<SearchWarehousesQuery["search"]>;
   hasVariants: boolean;
-  referencePages: RelayToFlat<SearchPagesQuery['search']>;
-  referenceProducts: RelayToFlat<SearchProductsQuery['search']>;
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
@@ -103,7 +117,9 @@ export interface UseProductUpdateFormOpts
   isSimpleProduct: boolean;
 }
 
-export type SubmitResult = SubmitPromise<Array<UseProductUpdateHandlerError | MetadataErrorFragment>>;
+export type SubmitResult = SubmitPromise<
+  Array<UseProductUpdateHandlerError | MetadataErrorFragment>
+>;
 
 export interface ProductUpdateFormProps extends UseProductUpdateFormOpts {
   children: (props: UseProductUpdateFormRenderProps) => React.ReactNode;

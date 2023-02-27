@@ -1,10 +1,10 @@
-import { FieldType, FilterFieldBaseProps } from '@dashboard/components/Filter';
-import Arrow from '@dashboard/components/Filter/Arrow';
-import { TextField } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FieldType, FilterFieldBaseProps } from "@dashboard/components/Filter";
+import Arrow from "@dashboard/components/Filter/Arrow";
+import { TextField } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { filterTestingContext, useCommonStyles } from './utils';
+import { filterTestingContext, useCommonStyles } from "./utils";
 
 type FilterNumericFieldProps = FilterFieldBaseProps<string, FieldType.number | FieldType.price> & {
   currencySymbol: string | undefined;
@@ -26,7 +26,7 @@ export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
           value,
         },
       },
-      type: 'set-property',
+      type: "set-property",
     });
 
   return (
@@ -36,19 +36,21 @@ export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
           <Arrow className={classes.arrow} />
         </div>
         <TextField
-          {...(isMultiple && { 'data-test-range-type': 'min' })}
+          {...(isMultiple && { "data-test-range-type": "min" })}
           data-test-id={filterTestingContext + filter.name}
           fullWidth
-          name={filter.name + (isMultiple ? '_min' : '')}
+          name={filter.name + (isMultiple ? "_min" : "")}
           InputProps={{
             classes: {
               input: classes.input,
             },
-            type: 'number',
+            type: "number",
             endAdornment: filter.type === FieldType.price && currencySymbol,
           }}
           value={filter.value[0]}
-          onChange={({ target: { value } }) => handleChange(isMultiple ? [value, filter.value[1]] : [value])}
+          onChange={({ target: { value } }) =>
+            handleChange(isMultiple ? [value, filter.value[1]] : [value])
+          }
         />
       </div>
       {filter.multiple && (
@@ -56,7 +58,11 @@ export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
           <div className={classes.inputRange}>
             <div className={classes.spacer} />
             <span className={classes.andLabel}>
-              <FormattedMessage id="34F7Jk" defaultMessage="and" description="filter range separator" />
+              <FormattedMessage
+                id="34F7Jk"
+                defaultMessage="and"
+                description="filter range separator"
+              />
             </span>
           </div>
           <div className={classes.inputRange}>
@@ -65,12 +71,12 @@ export const FilterNumericField: React.FC<FilterNumericFieldProps> = ({
               data-test-id={filterTestingContext + filter.name}
               data-test-range-type="max"
               fullWidth
-              name={filter.name + '_max'}
+              name={filter.name + "_max"}
               InputProps={{
                 classes: {
                   input: classes.input,
                 },
-                type: 'number',
+                type: "number",
                 endAdornment: filter.type === FieldType.price && currencySymbol,
               }}
               value={filter.value[1]}

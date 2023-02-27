@@ -1,5 +1,5 @@
-import { FlagsResults } from '../types';
-import { flagNameToEnvName, isFlagEnabled, readFlagFromEnv } from './helpers';
+import { FlagsResults } from "../types";
+import { flagNameToEnvName, isFlagEnabled, readFlagFromEnv } from "./helpers";
 
 export const useEnvFlags = <T extends readonly string[]>(flags: readonly [...T]): FlagsResults<T> =>
   flags.reduce((acc, flag) => {
@@ -13,7 +13,7 @@ export const useEnvFlags = <T extends readonly string[]>(flags: readonly [...T])
     } else {
       acc[flag] = {
         enabled: false,
-        value: '',
+        value: "",
       };
     }
 

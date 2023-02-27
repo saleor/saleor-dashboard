@@ -1,2 +1,2 @@
-export { default } from './TaxCountryExceptionListItem';
-export * from './TaxCountryExceptionListItem';
+export { default } from "./TaxCountryExceptionListItem";
+export * from "./TaxCountryExceptionListItem";

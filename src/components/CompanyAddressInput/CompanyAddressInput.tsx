@@ -1,10 +1,10 @@
-import { Card, CardContent } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
+import { Card, CardContent } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
 
-import CardTitle from '../CardTitle';
-import CompanyAddressForm, { CompanyAddressFormProps } from './CompanyAddressForm';
+import CardTitle from "../CardTitle";
+import CompanyAddressForm, { CompanyAddressFormProps } from "./CompanyAddressForm";
 
 interface CompanyAddressInputProps extends CompanyAddressFormProps {
   className?: string;
@@ -14,10 +14,10 @@ interface CompanyAddressInputProps extends CompanyAddressFormProps {
 const useStyles = makeStyles(
   {
     root: {
-      overflow: 'visible',
+      overflow: "visible",
     },
   },
-  { name: 'CompanyAddressInput' },
+  { name: "CompanyAddressInput" },
 );
 
 const CompanyAddressInput: React.FC<CompanyAddressInputProps> = props => {
@@ -33,5 +33,5 @@ const CompanyAddressInput: React.FC<CompanyAddressInputProps> = props => {
     </Card>
   );
 };
-CompanyAddressInput.displayName = 'CompanyAddressInput';
+CompanyAddressInput.displayName = "CompanyAddressInput";
 export default CompanyAddressInput;

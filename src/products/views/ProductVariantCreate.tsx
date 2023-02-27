@@ -1,9 +1,12 @@
-import { getAttributesAfterFileAttributesUpdate } from '@dashboard/attributes/utils/data';
-import { handleUploadMultipleFiles, prepareAttributesInput } from '@dashboard/attributes/utils/handlers';
-import { AttributeInput } from '@dashboard/components/Attributes';
-import NotFoundPage from '@dashboard/components/NotFoundPage';
-import { WindowTitle } from '@dashboard/components/WindowTitle';
-import { DEFAULT_INITIAL_SEARCH_DATA } from '@dashboard/config';
+import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
+import {
+  handleUploadMultipleFiles,
+  prepareAttributesInput,
+} from "@dashboard/attributes/utils/handlers";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   useFileUploadMutation,
   useProductVariantChannelListingUpdateMutation,
@@ -13,25 +16,30 @@ import {
   useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
   useWarehouseListQuery,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import useShop from '@dashboard/hooks/useShop';
-import usePageSearch from '@dashboard/searches/usePageSearch';
-import useProductSearch from '@dashboard/searches/useProductSearch';
-import useAttributeValueSearchHandler from '@dashboard/utils/handlers/attributeValueSearchHandler';
-import createMetadataCreateHandler from '@dashboard/utils/handlers/metadataCreateHandler';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import { warehouseAddPath } from '@dashboard/warehouses/urls';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import usePageSearch from "@dashboard/searches/usePageSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { warehouseAddPath } from "@dashboard/warehouses/urls";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { getMutationErrors, weight } from '../../misc';
-import ProductVariantCreatePage from '../components/ProductVariantCreatePage';
-import { ProductVariantCreateData } from '../components/ProductVariantCreatePage/form';
-import { productListUrl, productVariantAddUrl, ProductVariantAddUrlQueryParams, productVariantEditUrl } from '../urls';
-import { variantCreateMessages as messages } from './messages';
-import { createVariantReorderHandler } from './ProductUpdate/handlers';
+import { getMutationErrors, weight } from "../../misc";
+import ProductVariantCreatePage from "../components/ProductVariantCreatePage";
+import { ProductVariantCreateData } from "../components/ProductVariantCreatePage/form";
+import {
+  productListUrl,
+  productVariantAddUrl,
+  ProductVariantAddUrlQueryParams,
+  productVariantEditUrl,
+} from "../urls";
+import { variantCreateMessages as messages } from "./messages";
+import { createVariantReorderHandler } from "./ProductUpdate/handlers";
 
 interface ProductVariantCreateProps {
   productId: string;
@@ -68,7 +76,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
       const variantId = data.productVariantCreate.productVariant.id;
 
       notify({
-        status: 'success',
+        status: "success",
         text: intl.formatMessage(messages.variantCreatedSuccess),
       });
       navigate(productVariantEditUrl(productId, variantId), {
@@ -85,8 +93,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
   const handleVariantReorder = createVariantReorderHandler(product, reorderProductVariants);
 
   const handleCreate = async (formData: ProductVariantCreateData) => {
-    const uploadFilesResult = await handleUploadMultipleFiles(formData.attributesWithNewFileValue, variables =>
-      uploadFile({ variables }),
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      formData.attributesWithNewFileValue,
+      variables => uploadFile({ variables }),
     );
 
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
@@ -98,7 +107,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
       variables: {
         input: {
           attributes: prepareAttributesInput({
-            attributes: formData.attributes.filter(attribute => attribute.value?.length && attribute.value[0] !== ''),
+            attributes: formData.attributes.filter(
+              attribute => attribute.value?.length && attribute.value[0] !== "",
+            ),
             prevAttributes: null,
             updatedFileAttributes,
           }),
@@ -114,7 +125,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
           quantityLimitPerCustomer: Number(formData.quantityLimitPerCustomer) || null,
           preorder: formData.isPreorder
             ? {
-                globalThreshold: formData.globalThreshold ? parseInt(formData.globalThreshold, 10) : null,
+                globalThreshold: formData.globalThreshold
+                  ? parseInt(formData.globalThreshold, 10)
+                  : null,
                 endDate: formData.preorderEndDateTime || null,
               }
             : undefined,
@@ -148,13 +161,17 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
     return { id, errors: updateChannelsErrors };
   };
 
-  const handleSubmit = createMetadataCreateHandler(handleCreate, updateMetadata, updatePrivateMetadata);
+  const handleSubmit = createMetadataCreateHandler(
+    handleCreate,
+    updateMetadata,
+    updatePrivateMetadata,
+  );
   const handleVariantClick = (id: string) => navigate(productVariantEditUrl(productId, id));
 
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productVariantAddUrl(productId, {
-        action: 'assign-attribute-value',
+        action: "assign-attribute-value",
         id: attribute.id,
       }),
     );
@@ -199,7 +216,10 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
   const attributeValues = mapEdgesToItems(searchAttributeValuesOpts?.data?.attribute.choices) || [];
 
   const disableForm =
-    productLoading || uploadFileOpts.loading || variantCreateResult.loading || reorderProductVariantsOpts.loading;
+    productLoading ||
+    uploadFileOpts.loading ||
+    variantCreateResult.loading ||
+    reorderProductVariantsOpts.loading;
 
   if (product === null) {
     return <NotFoundPage onBack={() => navigate(productListUrl())} />;
@@ -209,9 +229,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
     <>
       <WindowTitle
         title={intl.formatMessage({
-          id: 'MyM2oR',
-          defaultMessage: 'Create variant',
-          description: 'window title',
+          id: "MyM2oR",
+          defaultMessage: "Create variant",
+          description: "window title",
         })}
       />
       <ProductVariantCreatePage
@@ -220,9 +240,9 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
         disabled={disableForm}
         errors={variantCreateResult.data?.productVariantCreate.errors || []}
         header={intl.formatMessage({
-          id: 'T6dXGG',
-          defaultMessage: 'Create Variant',
-          description: 'header',
+          id: "T6dXGG",
+          defaultMessage: "Create Variant",
+          description: "header",
         })}
         product={data?.product}
         attributeValues={attributeValues}
@@ -233,7 +253,7 @@ export const ProductVariant: React.FC<ProductVariantCreateProps> = ({ productId,
         saveButtonBarState={variantCreateResult.status}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         weightUnit={shop?.defaultWeightUnit}
-        assignReferencesAttributeId={params.action === 'assign-attribute-value' && params.id}
+        assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}

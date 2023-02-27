@@ -1,16 +1,19 @@
-import Date, { DateTime } from '@dashboard/components/Date';
-import Skeleton from '@dashboard/components/Skeleton';
-import { ProductListAttributeFragment } from '@dashboard/graphql';
-import React from 'react';
+import Date, { DateTime } from "@dashboard/components/Date";
+import Skeleton from "@dashboard/components/Skeleton";
+import { ProductListAttributeFragment } from "@dashboard/graphql";
+import React from "react";
 
-import { getAttributeIdFromColumnValue } from '../ProductListPage/utils';
+import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
 
 export interface ProductListAttributeProps {
   attribute: string;
   productAttributes: ProductListAttributeFragment[];
 }
 
-const ProductListAttribute: React.FC<ProductListAttributeProps> = ({ attribute: gridAttribute, productAttributes }) => {
+const ProductListAttribute: React.FC<ProductListAttributeProps> = ({
+  attribute: gridAttribute,
+  productAttributes,
+}) => {
   if (!productAttributes) {
     return <Skeleton />;
   }
@@ -28,7 +31,7 @@ const ProductListAttribute: React.FC<ProductListAttributeProps> = ({ attribute: 
       }
     }
 
-    const textValue = productAttribute.values.map(value => value.name).join(', ');
+    const textValue = productAttribute.values.map(value => value.name).join(", ");
 
     return <span title={textValue}>{textValue}</span>;
   }

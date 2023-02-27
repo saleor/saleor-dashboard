@@ -1,9 +1,9 @@
-import { DialogContentText } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { DialogContentText } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import ActionDialog from '../ActionDialog';
+import ActionDialog from "../ActionDialog";
 
 export interface DeleteFilterTabDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -29,9 +29,9 @@ const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
       onClose={onClose}
       onConfirm={onSubmit}
       title={intl.formatMessage({
-        id: '7NfoiJ',
-        defaultMessage: 'Delete Search',
-        description: 'custom search delete, dialog header',
+        id: "7NfoiJ",
+        defaultMessage: "Delete Search",
+        description: "custom search delete, dialog header",
       })}
       variant="delete"
     >
@@ -47,5 +47,5 @@ const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
     </ActionDialog>
   );
 };
-DeleteFilterTabDialog.displayName = 'DeleteFilterTabDialog';
+DeleteFilterTabDialog.displayName = "DeleteFilterTabDialog";
 export default DeleteFilterTabDialog;

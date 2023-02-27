@@ -1,15 +1,15 @@
-import BackButton from '@dashboard/components/BackButton';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { SearchStaffMembersQuery } from '@dashboard/graphql';
-import useElementScroll, { isScrolledToBottom } from '@dashboard/hooks/useElementScroll';
-import useSearchQuery from '@dashboard/hooks/useSearchQuery';
-import { buttonMessages } from '@dashboard/intl';
-import { getUserInitials, getUserName, renderCollection } from '@dashboard/misc';
-import { DialogProps, FetchMoreProps, RelayToFlat, SearchPageProps } from '@dashboard/types';
+import BackButton from "@dashboard/components/BackButton";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { SearchStaffMembersQuery } from "@dashboard/graphql";
+import useElementScroll, { isScrolledToBottom } from "@dashboard/hooks/useElementScroll";
+import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { buttonMessages } from "@dashboard/intl";
+import { getUserInitials, getUserName, renderCollection } from "@dashboard/misc";
+import { DialogProps, FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
 import {
   Checkbox,
   CircularProgress,
@@ -21,25 +21,25 @@ import {
   TableCell,
   TextField,
   Typography,
-} from '@material-ui/core';
-import { ConfirmButtonTransitionState, makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@material-ui/core";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { messages } from './messages';
+import { messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
     avatar: {
-      alignItems: 'center',
-      borderRadius: '100%',
-      display: 'grid',
-      float: 'left',
+      alignItems: "center",
+      borderRadius: "100%",
+      display: "grid",
+      float: "left",
       height: 32,
-      justifyContent: 'center',
-      overflow: 'hidden',
+      justifyContent: "center",
+      overflow: "hidden",
       width: 32,
     },
     avatarCell: {
@@ -47,55 +47,55 @@ const useStyles = makeStyles(
       width: 32,
     },
     avatarDefault: {
-      '& div': {
-        color: '#fff',
+      "& div": {
+        color: "#fff",
         lineHeight: 2.8,
-        fontSize: '0.75rem',
+        fontSize: "0.75rem",
       },
       background: theme.palette.primary.main,
       height: 32,
-      textAlign: 'center',
+      textAlign: "center",
       width: 32,
     },
     avatarImage: {
-      pointerEvents: 'none',
-      width: '100%',
+      pointerEvents: "none",
+      width: "100%",
     },
     checkboxCell: {
-      '&&:not(first-child)': {
+      "&&:not(first-child)": {
         paddingLeft: 0,
         paddingRight: 0,
         width: 48,
       },
     },
     colActions: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     colName: {
       paddingLeft: theme.spacing(),
     },
     dialogPaper: {
-      overflow: 'hidden',
+      overflow: "hidden",
     },
     dropShadow: {
       boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`,
     },
     inputContainer: {
-      overflowY: 'visible',
+      overflowY: "visible",
     },
     loadMoreLoaderContainer: {
-      alignItems: 'center',
-      display: 'flex',
-      gridColumnEnd: 'span 3',
+      alignItems: "center",
+      display: "flex",
+      gridColumnEnd: "span 3",
       height: theme.spacing(4),
-      justifyContent: 'center',
+      justifyContent: "center",
     },
     overflow: {
-      overflowY: 'visible',
+      overflowY: "visible",
     },
     scrollArea: {
       maxHeight: 400,
-      overflowY: 'scroll',
+      overflowY: "scroll",
       paddingTop: 0,
       paddingBottom: 0,
     },
@@ -103,29 +103,29 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(3),
     },
     statusText: {
-      color: '#9E9D9D',
+      color: "#9E9D9D",
     },
     wideCell: {
-      width: '80%',
+      width: "80%",
     },
   }),
-  { name: 'AssignStaffMembersDialog' },
+  { name: "AssignStaffMembersDialog" },
 );
 
 export interface AssignMembersDialogProps extends DialogProps, FetchMoreProps, SearchPageProps {
   confirmButtonState: ConfirmButtonTransitionState;
   disabled: boolean;
-  staffMembers: RelayToFlat<SearchStaffMembersQuery['search']>;
+  staffMembers: RelayToFlat<SearchStaffMembersQuery["search"]>;
   hasMore: boolean;
   onFetchMore: () => void;
-  onSubmit: (data: RelayToFlat<SearchStaffMembersQuery['search']>) => void;
+  onSubmit: (data: RelayToFlat<SearchStaffMembersQuery["search"]>) => void;
 }
 
 function handleStaffMemberAssign(
-  member: RelayToFlat<SearchStaffMembersQuery['search']>[0],
+  member: RelayToFlat<SearchStaffMembersQuery["search"]>[0],
   isSelected: boolean,
-  selectedMembers: RelayToFlat<SearchStaffMembersQuery['search']>,
-  setSelectedMembers: (data: RelayToFlat<SearchStaffMembersQuery['search']>) => void,
+  selectedMembers: RelayToFlat<SearchStaffMembersQuery["search"]>,
+  setSelectedMembers: (data: RelayToFlat<SearchStaffMembersQuery["search"]>) => void,
 ) {
   if (isSelected) {
     setSelectedMembers(selectedMembers.filter(selectedMember => selectedMember.id !== member.id));
@@ -134,7 +134,7 @@ function handleStaffMemberAssign(
   }
 }
 
-const scrollableTargetId = 'assignMembersScrollableDialog';
+const scrollableTargetId = "assignMembersScrollableDialog";
 
 const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   confirmButtonState,
@@ -152,7 +152,9 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   const classes = useStyles({});
   const [query, onQueryChange] = useSearchQuery(onSearchChange);
 
-  const [selectedMembers, setSelectedMembers] = React.useState<RelayToFlat<SearchStaffMembersQuery['search']>>([]);
+  const [selectedMembers, setSelectedMembers] = React.useState<
+    RelayToFlat<SearchStaffMembersQuery["search"]>
+  >([]);
 
   const anchor = React.useRef<HTMLDivElement>();
   const scrollPosition = useElementScroll(anchor);
@@ -180,7 +182,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           placeholder={intl.formatMessage(messages.searchInputPlaceholder)}
           fullWidth
           InputProps={{
-            autoComplete: 'off',
+            autoComplete: "off",
             endAdornment: loading && <CircularProgress size={16} />,
           }}
           disabled={disabled}
@@ -210,7 +212,9 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                   if (!member) {
                     return null;
                   }
-                  const isSelected = selectedMembers.some(selectedMember => selectedMember.id === member.id);
+                  const isSelected = selectedMembers.some(
+                    selectedMember => selectedMember.id === member.id,
+                  );
 
                   return (
                     <TableRowLink key={member.id} data-test-id="user-row">
@@ -219,7 +223,12 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                           color="primary"
                           checked={isSelected}
                           onChange={() =>
-                            handleStaffMemberAssign(member, isSelected, selectedMembers, setSelectedMembers)
+                            handleStaffMemberAssign(
+                              member,
+                              isSelected,
+                              selectedMembers,
+                              setSelectedMembers,
+                            )
                           }
                         />
                       </TableCell>
@@ -236,7 +245,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                       </TableCell>
                       <TableCell className={classes.colName}>
                         <Typography>{getUserName(member) || <Skeleton />}</Typography>
-                        <Typography variant={'caption'} className={classes.statusText}>
+                        <Typography variant={"caption"} className={classes.statusText}>
                           {!!member ? (
                             member.isActive ? (
                               intl.formatMessage(messages.staffActive)
@@ -284,5 +293,5 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
     </Dialog>
   );
 };
-AssignMembersDialog.displayName = 'AssignMembersDialog';
+AssignMembersDialog.displayName = "AssignMembersDialog";
 export default AssignMembersDialog;

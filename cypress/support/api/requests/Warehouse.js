@@ -1,10 +1,7 @@
 import { getDefaultAddress, getValueWithDefault } from "./utils/Utils";
 
 export function createWarehouse({ name, shippingZone, address, slug = name }) {
-  const shippingZoneLine = getValueWithDefault(
-    shippingZone,
-    `shippingZones:"${shippingZone}"`
-  );
+  const shippingZoneLine = getValueWithDefault(shippingZone, `shippingZones:"${shippingZone}"`);
   const mutation = `mutation{
     createWarehouse(input:{
       name:"${name}"
@@ -22,9 +19,7 @@ export function createWarehouse({ name, shippingZone, address, slug = name }) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.createWarehouse.warehouse");
+  return cy.sendRequestWithQuery(mutation).its("body.data.createWarehouse.warehouse");
 }
 
 export function getWarehouses(first, search) {
@@ -40,9 +35,7 @@ export function getWarehouses(first, search) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(query)
-    .then(resp => resp.body.data.warehouses.edges);
+  return cy.sendRequestWithQuery(query).then(resp => resp.body.data.warehouses.edges);
 }
 
 export function deleteWarehouse(warehouseId) {
@@ -83,11 +76,7 @@ export function getWarehouse(warehouseId) {
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.warehouse");
 }
-export function updateWarehouse({
-  id,
-  isPrivate,
-  clickAndCollectOption = "ALL"
-}) {
+export function updateWarehouse({ id, isPrivate, clickAndCollectOption = "ALL" }) {
   const mutation = `mutation{
     updateWarehouse(id:"${id}" input:{
       isPrivate:${isPrivate}

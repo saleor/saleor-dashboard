@@ -1,49 +1,58 @@
-import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
-import { UseFormResult } from '@dashboard/hooks/useForm';
-import { RequireOnlyOne } from '@dashboard/misc';
-import commonErrorMessages from '@dashboard/utils/errors/common';
-import { TextField } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import Hue from '@uiw/react-color-hue';
-import Saturation from '@uiw/react-color-saturation';
-import convert from 'color-convert';
-import { RGB } from 'color-convert/conversions';
-import React, { useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import { UseFormResult } from "@dashboard/hooks/useForm";
+import { RequireOnlyOne } from "@dashboard/misc";
+import commonErrorMessages from "@dashboard/utils/errors/common";
+import { TextField } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import Hue from "@uiw/react-color-hue";
+import Saturation from "@uiw/react-color-saturation";
+import convert from "color-convert";
+import { RGB } from "color-convert/conversions";
+import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
     picker: {
-      display: 'flex',
+      display: "flex",
     },
 
     saturation: {
-      width: '220px !important',
-      height: '220px !important',
+      width: "220px !important",
+      height: "220px !important",
     },
 
     colorInput: {
-      whiteSpace: 'nowrap',
-      width: '170px',
+      whiteSpace: "nowrap",
+      width: "170px",
       marginBottom: theme.spacing(1),
 
-      '& input': {
-        textAlign: 'right',
-        padding: '15px',
+      "& input": {
+        textAlign: "right",
+        padding: "15px",
       },
     },
   }),
-  { name: 'ColorPicker' },
+  { name: "ColorPicker" },
 );
 
-export type ColorPickerProps<T = any> = Pick<UseFormResult<T>, 'setError' | 'errors' | 'clearErrors' | 'data'> & {
+export type ColorPickerProps<T = any> = Pick<
+  UseFormResult<T>,
+  "setError" | "errors" | "clearErrors" | "data"
+> & {
   onColorChange: (hex: string) => void;
 };
 
-export const ColorPicker: React.FC<ColorPickerProps> = ({ clearErrors, setError, errors, onColorChange, data }) => {
+export const ColorPicker: React.FC<ColorPickerProps> = ({
+  clearErrors,
+  setError,
+  errors,
+  onColorChange,
+  data,
+}) => {
   const classes = useStyles();
   const intl = useIntl();
-  const [hex, setHex] = useState<string>(data.value ? data.value.replace('#', '') : '000000');
+  const [hex, setHex] = useState<string>(data.value ? data.value.replace("#", "") : "000000");
   const [hue, setHue] = useState<number>(convert.hex.hsv(hex)[0]);
 
   const [, s, v] = convert.hex.hsv(hex);
@@ -59,21 +68,23 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ clearErrors, setError,
       return parsedVal > 255 ? 255 : parsedVal;
     };
 
-    setHex(convert.rgb.hex([getValue(rgbColor.r), getValue(rgbColor.g), getValue(rgbColor.b)] as RGB));
+    setHex(
+      convert.rgb.hex([getValue(rgbColor.r), getValue(rgbColor.g), getValue(rgbColor.b)] as RGB),
+    );
   };
 
-  const handleHEXChange = (hexColor: string) => setHex(hexColor.replace(/ |#/g, ''));
+  const handleHEXChange = (hexColor: string) => setHex(hexColor.replace(/ |#/g, ""));
 
   useEffect(() => {
     if (isValidColor) {
-      if ('value' in errors) {
-        clearErrors('value');
+      if ("value" in errors) {
+        clearErrors("value");
       }
 
       onColorChange(`#${hex}`);
     } else {
-      if (!('value' in errors)) {
-        setError('value', intl.formatMessage(commonErrorMessages.invalid));
+      if (!("value" in errors)) {
+        setError("value", intl.formatMessage(commonErrorMessages.invalid));
       }
     }
   }, [errors, hex]);
@@ -104,19 +115,19 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ clearErrors, setError,
       <div>
         <TextField
           className={classes.colorInput}
-          InputProps={{ startAdornment: 'R' }}
+          InputProps={{ startAdornment: "R" }}
           value={r}
           onChange={event => handleRGBChange({ r: event.target.value })}
         />
         <TextField
           className={classes.colorInput}
-          InputProps={{ startAdornment: 'G' }}
+          InputProps={{ startAdornment: "G" }}
           value={g}
           onChange={event => handleRGBChange({ g: event.target.value })}
         />
         <TextField
           className={classes.colorInput}
-          InputProps={{ startAdornment: 'B' }}
+          InputProps={{ startAdornment: "B" }}
           value={b}
           onChange={event => handleRGBChange({ b: event.target.value })}
         />
@@ -124,8 +135,8 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ clearErrors, setError,
           error={!isValidColor}
           helperText={errors?.value}
           className={classes.colorInput}
-          InputProps={{ startAdornment: 'HEX' }}
-          inputProps={{ pattern: '[A-Za-z0-9]{6}', maxLength: 7 }}
+          InputProps={{ startAdornment: "HEX" }}
+          inputProps={{ pattern: "[A-Za-z0-9]{6}", maxLength: 7 }}
           value={`#${hex}`}
           onChange={event => handleHEXChange(event.target.value)}
         />

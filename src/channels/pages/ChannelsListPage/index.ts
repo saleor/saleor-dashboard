@@ -1,2 +1,2 @@
-export * from './ChannelsListPage';
-export { default } from './ChannelsListPage';
+export * from "./ChannelsListPage";
+export { default } from "./ChannelsListPage";

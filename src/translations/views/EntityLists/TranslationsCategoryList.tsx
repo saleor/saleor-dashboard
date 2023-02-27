@@ -1,12 +1,12 @@
-import { useCategoryTranslationsQuery } from '@dashboard/graphql';
-import usePaginator, { PaginatorContext } from '@dashboard/hooks/usePaginator';
-import TranslationsEntitiesList from '@dashboard/translations/components/TranslationsEntitiesList';
-import { languageEntityUrl, TranslatableEntities } from '@dashboard/translations/urls';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import React from 'react';
+import { useCategoryTranslationsQuery } from "@dashboard/graphql";
+import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import React from "react";
 
-import { TranslationsEntityListProps } from './types';
-import { sumCompleted } from './utils';
+import { TranslationsEntityListProps } from "./types";
+import { sumCompleted } from "./utils";
 
 const TranslationsCategoryList: React.FC<TranslationsEntityListProps> = ({ params, variables }) => {
   const { data, loading } = useCategoryTranslationsQuery({
@@ -26,7 +26,7 @@ const TranslationsCategoryList: React.FC<TranslationsEntityListProps> = ({ param
         disabled={loading}
         entities={mapEdgesToItems(data?.translations)?.map(
           node =>
-            node.__typename === 'CategoryTranslatableContent' && {
+            node.__typename === "CategoryTranslatableContent" && {
               completion: {
                 current: sumCompleted([
                   node.translation?.description,
@@ -40,7 +40,9 @@ const TranslationsCategoryList: React.FC<TranslationsEntityListProps> = ({ param
               name: node?.category?.name,
             },
         )}
-        getRowHref={id => languageEntityUrl(variables.language, TranslatableEntities.categories, id)}
+        getRowHref={id =>
+          languageEntityUrl(variables.language, TranslatableEntities.categories, id)
+        }
       />
     </PaginatorContext.Provider>
   );

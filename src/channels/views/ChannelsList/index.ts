@@ -1,2 +1,2 @@
-export * from './ChannelsList';
-export { default } from './ChannelsList';
+export * from "./ChannelsList";
+export { default } from "./ChannelsList";

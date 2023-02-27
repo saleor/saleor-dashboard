@@ -1,6 +1,6 @@
-import { RecursiveMenuItem } from '@dashboard/navigation/types';
+import { RecursiveMenuItem } from "@dashboard/navigation/types";
 
-import { TreeOperation } from '../MenuItems';
+import { TreeOperation } from "../MenuItems";
 
 export function findNode(tree: RecursiveMenuItem[], id: string): number[] {
   const foundNodeIndex = tree.findIndex(node => node.id === id);
@@ -60,7 +60,10 @@ function insertNode({ tree, path, node, position }: InsertNodeInput): RecursiveM
   return tree;
 }
 
-function removeNodeAndChildren(tree: RecursiveMenuItem[], operation: TreeOperation): RecursiveMenuItem[] {
+function removeNodeAndChildren(
+  tree: RecursiveMenuItem[],
+  operation: TreeOperation,
+): RecursiveMenuItem[] {
   const sourcePath = findNode(tree, operation.id);
   const node = getNode(tree, sourcePath);
 
@@ -69,7 +72,7 @@ function removeNodeAndChildren(tree: RecursiveMenuItem[], operation: TreeOperati
       (acc, child) =>
         removeNodeAndChildren(acc, {
           id: child.id,
-          type: 'remove',
+          type: "remove",
         }),
       tree,
     );
@@ -80,7 +83,10 @@ function removeNodeAndChildren(tree: RecursiveMenuItem[], operation: TreeOperati
   return removeNode(tree, sourcePath);
 }
 
-function permuteRelativeNode(tree: RecursiveMenuItem[], permutation: TreeOperation): RecursiveMenuItem[] {
+function permuteRelativeNode(
+  tree: RecursiveMenuItem[],
+  permutation: TreeOperation,
+): RecursiveMenuItem[] {
   const sourcePath = findNode(tree, permutation.id);
   const node = getNode(tree, sourcePath);
 
@@ -102,11 +108,19 @@ function permuteRelativeNode(tree: RecursiveMenuItem[], permutation: TreeOperati
   return treeAfterInsertion;
 }
 
-function executeRelativeOperation(tree: RecursiveMenuItem[], operation: TreeOperation): RecursiveMenuItem[] {
-  return operation.type === 'move' ? permuteRelativeNode(tree, operation) : removeNodeAndChildren(tree, operation);
+function executeRelativeOperation(
+  tree: RecursiveMenuItem[],
+  operation: TreeOperation,
+): RecursiveMenuItem[] {
+  return operation.type === "move"
+    ? permuteRelativeNode(tree, operation)
+    : removeNodeAndChildren(tree, operation);
 }
 
-export function computeRelativeTree(tree: RecursiveMenuItem[], operations: TreeOperation[]): RecursiveMenuItem[] {
+export function computeRelativeTree(
+  tree: RecursiveMenuItem[],
+  operations: TreeOperation[],
+): RecursiveMenuItem[] {
   const newTree = operations.reduce(
     (acc, operation) => executeRelativeOperation(acc, operation),
     JSON.parse(JSON.stringify(tree)),

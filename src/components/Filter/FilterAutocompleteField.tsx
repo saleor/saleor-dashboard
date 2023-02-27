@@ -1,16 +1,17 @@
-import { toggle } from '@dashboard/utils/lists';
-import { FormControlLabel, TextField, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { toggle } from "@dashboard/utils/lists";
+import { FormControlLabel, TextField, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import Checkbox from '../Checkbox';
-import Hr from '../Hr';
-import Link from '../Link';
-import { MultiAutocompleteChoiceType } from '../MultiAutocompleteSelectField';
-import { FieldType, FilterFieldBaseProps } from './types';
+import Checkbox from "../Checkbox";
+import Hr from "../Hr";
+import Link from "../Link";
+import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
+import { FieldType, FilterFieldBaseProps } from "./types";
 
-interface FilterAutocompleteFieldProps extends FilterFieldBaseProps<string, FieldType.autocomplete> {
+interface FilterAutocompleteFieldProps
+  extends FilterFieldBaseProps<string, FieldType.autocomplete> {
   displayValues: FilterAutocompleteDisplayValues;
   setDisplayValues: (values: FilterAutocompleteDisplayValues) => void;
   initialDisplayValues: FilterAutocompleteDisplayValues;
@@ -25,7 +26,7 @@ const useStyles = makeStyles(
       margin: theme.spacing(1, 0),
     },
     input: {
-      padding: '12px 0 9px 12px',
+      padding: "12px 0 9px 12px",
     },
     inputContainer: {
       marginBottom: theme.spacing(1),
@@ -36,14 +37,14 @@ const useStyles = makeStyles(
     },
     option: {
       left: theme.spacing(-0.5),
-      position: 'relative',
+      position: "relative",
     },
     showMore: {
-      display: 'inline-block',
+      display: "inline-block",
       marginTop: theme.spacing(1),
     },
   }),
-  { name: 'FilterAutocompleteField' },
+  { name: "FilterAutocompleteField" },
 );
 
 const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
@@ -80,7 +81,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
           value: getUpdatedFilterValue(option),
         },
       },
-      type: 'set-property',
+      type: "set-property",
     });
 
     if (filter.multiple) {
@@ -91,11 +92,14 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
     }
   };
 
-  const isValueChecked = (displayValue: MultiAutocompleteChoiceType) => filter.value.includes(displayValue.value);
+  const isValueChecked = (displayValue: MultiAutocompleteChoiceType) =>
+    filter.value.includes(displayValue.value);
 
   const filteredValuesChecked = initialFieldDisplayValues.filter(isValueChecked);
 
-  const filteredValuesUnchecked = fieldDisplayValues.filter(displayValue => !isValueChecked(displayValue));
+  const filteredValuesUnchecked = fieldDisplayValues.filter(
+    displayValue => !isValueChecked(displayValue),
+  );
 
   const displayHr = !!filteredValuesChecked.length;
 
@@ -106,7 +110,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
           data-test-id="filter-field-autocomplete-input"
           className={classes.inputContainer}
           fullWidth
-          name={filter.name + '_autocomplete'}
+          name={filter.name + "_autocomplete"}
           InputProps={{
             classes: {
               input: classes.input,
@@ -120,7 +124,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
           <FormControlLabel
             control={
               <Checkbox
-                data-test-id={'filter-field-autocomplete-selected-' + filter.value}
+                data-test-id={"filter-field-autocomplete-selected-" + filter.value}
                 checked={filter.value.includes(displayValue.value)}
               />
             }
@@ -145,7 +149,7 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
           <FormControlLabel
             control={
               <Checkbox
-                data-test-id={'filter-field-autocomplete-option-' + filter.value}
+                data-test-id={"filter-field-autocomplete-option-" + filter.value}
                 checked={filter.value.includes(option.value)}
               />
             }
@@ -169,5 +173,5 @@ const FilterAutocompleteField: React.FC<FilterAutocompleteFieldProps> = ({
   );
 };
 
-FilterAutocompleteField.displayName = 'FilterAutocompleteField';
+FilterAutocompleteField.displayName = "FilterAutocompleteField";
 export default FilterAutocompleteField;

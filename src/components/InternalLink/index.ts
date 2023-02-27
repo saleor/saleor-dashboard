@@ -1,1 +1,1 @@
-export * from './InternalLink';
+export * from "./InternalLink";

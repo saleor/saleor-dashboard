@@ -1,12 +1,12 @@
-import { useVoucherTranslationsQuery } from '@dashboard/graphql';
-import usePaginator, { PaginatorContext } from '@dashboard/hooks/usePaginator';
-import TranslationsEntitiesList from '@dashboard/translations/components/TranslationsEntitiesList';
-import { languageEntityUrl, TranslatableEntities } from '@dashboard/translations/urls';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import React from 'react';
+import { useVoucherTranslationsQuery } from "@dashboard/graphql";
+import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import React from "react";
 
-import { TranslationsEntityListProps } from './types';
-import { sumCompleted } from './utils';
+import { TranslationsEntityListProps } from "./types";
+import { sumCompleted } from "./utils";
 
 const TranslationsVoucherList: React.FC<TranslationsEntityListProps> = ({ params, variables }) => {
   const { data, loading } = useVoucherTranslationsQuery({
@@ -26,13 +26,13 @@ const TranslationsVoucherList: React.FC<TranslationsEntityListProps> = ({ params
         disabled={loading}
         entities={mapEdgesToItems(data?.translations)?.map(
           node =>
-            node.__typename === 'VoucherTranslatableContent' && {
+            node.__typename === "VoucherTranslatableContent" && {
               completion: {
                 current: sumCompleted([node.translation?.name]),
                 max: 1,
               },
               id: node.voucher?.id,
-              name: node.voucher?.name || '-',
+              name: node.voucher?.name || "-",
             },
         )}
         getRowHref={id => languageEntityUrl(variables.language, TranslatableEntities.vouchers, id)}

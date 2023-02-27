@@ -1,13 +1,13 @@
-import { DatagridChange } from '@dashboard/components/Datagrid/useDatagridChange';
+import { DatagridChange } from "@dashboard/components/Datagrid/useDatagridChange";
 
-import { getAttributeData } from './attributes';
+import { getAttributeData } from "./attributes";
 
-describe('getAttributeData', () => {
-  test('should filter and map data to attribute format', () => {
+describe("getAttributeData", () => {
+  test("should filter and map data to attribute format", () => {
     // Arrage
     const changeData: DatagridChange[] = [
-      { column: 'attribute:1', row: 1, data: { value: { value: 'test' } } },
-      { column: 'attribute:2', row: 1, data: { value: { value: 'test2' } } },
+      { column: "attribute:1", row: 1, data: { value: { value: "test" } } },
+      { column: "attribute:2", row: 1, data: { value: { value: "test2" } } },
     ];
 
     // Act
@@ -15,16 +15,16 @@ describe('getAttributeData', () => {
 
     // Assert
     expect(attributes).toEqual([
-      { id: '1', values: ['test'] },
-      { id: '2', values: ['test2'] },
+      { id: "1", values: ["test"] },
+      { id: "2", values: ["test2"] },
     ]);
   });
 
-  test('should return empty array when no changes for given row', () => {
+  test("should return empty array when no changes for given row", () => {
     // Arrage
     const changeData: DatagridChange[] = [
-      { column: 'attribute:1', row: 1, data: { value: { value: 'test' } } },
-      { column: 'attribute:2', row: 1, data: { value: { value: 'test2' } } },
+      { column: "attribute:1", row: 1, data: { value: { value: "test" } } },
+      { column: "attribute:2", row: 1, data: { value: { value: "test2" } } },
     ];
 
     // Act
@@ -34,11 +34,11 @@ describe('getAttributeData', () => {
     expect(attributes).toEqual([]);
   });
 
-  test('should return empty array when no changes for attributes column', () => {
+  test("should return empty array when no changes for attributes column", () => {
     // Arrage
     const changeData: DatagridChange[] = [
-      { column: 'channel:1', row: 1, data: { value: { value: 'test' } } },
-      { column: 'channel:2', row: 1, data: { value: { value: 'test2' } } },
+      { column: "channel:1", row: 1, data: { value: { value: "test" } } },
+      { column: "channel:2", row: 1, data: { value: { value: "test2" } } },
     ];
 
     // Act

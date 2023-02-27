@@ -13,7 +13,12 @@ export function addAtIndex<TData>(data: TData, list: List<TData>, index: number)
   return [...list.slice(0, index), data, ...list.slice(index)];
 }
 
-export function move<TData>(data: TData, list: List<TData>, compare: Compare<TData>, index: number) {
+export function move<TData>(
+  data: TData,
+  list: List<TData>,
+  compare: Compare<TData>,
+  index: number,
+) {
   return addAtIndex(data, remove(data, list, compare), index);
 }
 
@@ -25,7 +30,7 @@ export function update<TData>(data: TData, list: List<TData>, compare: Compare<T
 
 export function updateAtIndex<TData>(data: TData, list: List<TData>, index: number) {
   if (!index.toFixed) {
-    throw new Error('Index is not a number');
+    throw new Error("Index is not a number");
   }
   return addAtIndex(data, removeAtIndex(list, index), index);
 }

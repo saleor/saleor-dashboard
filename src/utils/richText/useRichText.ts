@@ -1,6 +1,6 @@
-import { EditorCore } from '@dashboard/components/RichTextEditor';
-import { OutputData } from '@editorjs/editorjs';
-import { MutableRefObject, useMemo, useRef, useState } from 'react';
+import { EditorCore } from "@dashboard/components/RichTextEditor";
+import { OutputData } from "@editorjs/editorjs";
+import { MutableRefObject, useMemo, useRef, useState } from "react";
 
 interface UseRichTextOptions {
   initial: string | null | undefined;
@@ -16,7 +16,11 @@ interface UseRichTextResult {
   isReadyForMount: boolean;
 }
 
-export function useRichText({ initial, loading, triggerChange }: UseRichTextOptions): UseRichTextResult {
+export function useRichText({
+  initial,
+  loading,
+  triggerChange,
+}: UseRichTextOptions): UseRichTextResult {
   const editorRef = useRef<EditorCore | null>(null);
   const [isReadyForMount, setIsReadyForMount] = useState(false);
 
@@ -28,7 +32,7 @@ export function useRichText({ initial, loading, triggerChange }: UseRichTextOpti
     if (editorRef.current) {
       return editorRef.current.save();
     } else {
-      throw new Error('Editor instance is not available');
+      throw new Error("Editor instance is not available");
     }
   };
 
@@ -39,7 +43,7 @@ export function useRichText({ initial, loading, triggerChange }: UseRichTextOpti
 
     if (!initial) {
       setIsReadyForMount(true);
-      return '';
+      return "";
     }
 
     try {

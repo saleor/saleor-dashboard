@@ -5,17 +5,17 @@ import {
   listActionsProps,
   pageListProps,
   sortPageProps,
-} from '@dashboard/fixtures';
-import { OrderStatusFilter, PaymentChargeStatusEnum } from '@dashboard/graphql';
-import { orders } from '@dashboard/orders/fixtures';
-import { OrderListUrlSortField } from '@dashboard/orders/urls';
-import Decorator from '@dashboard/storybook/Decorator';
-import { PaginatorContextDecorator } from '@dashboard/storybook/PaginatorContextDecorator';
-import { storiesOf } from '@storybook/react';
-import React from 'react';
+} from "@dashboard/fixtures";
+import { OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
+import { orders } from "@dashboard/orders/fixtures";
+import { OrderListUrlSortField } from "@dashboard/orders/urls";
+import Decorator from "@dashboard/storybook/Decorator";
+import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
-import { OrderFilterGiftCard } from './filters';
-import OrderListPage, { OrderListPageProps } from './OrderListPage';
+import { OrderFilterGiftCard } from "./filters";
+import OrderListPage, { OrderListPageProps } from "./OrderListPage";
 
 const props: OrderListPageProps = {
   ...listActionsProps,
@@ -35,21 +35,21 @@ const props: OrderListPageProps = {
       active: false,
       value: [
         {
-          label: 'Channel PLN',
-          value: 'channelId',
+          label: "Channel PLN",
+          value: "channelId",
         },
       ],
     },
     created: {
       active: false,
       value: {
-        max: '400',
-        min: '50',
+        max: "400",
+        min: "50",
       },
     },
     customer: {
       active: false,
-      value: 'Jesse',
+      value: "Jesse",
     },
     status: {
       active: false,
@@ -65,7 +65,7 @@ const props: OrderListPageProps = {
     },
     metadata: {
       active: false,
-      value: [{ key: '123', value: '123' }, { key: '321' }],
+      value: [{ key: "123", value: "123" }, { key: "321" }],
     },
   },
   limits,
@@ -77,11 +77,13 @@ const props: OrderListPageProps = {
   },
 };
 
-storiesOf('Orders / Order list', module)
+storiesOf("Orders / Order list", module)
   .addDecorator(Decorator)
   .addDecorator(PaginatorContextDecorator)
-  .add('default', () => <OrderListPage {...props} />)
-  .add('loading', () => <OrderListPage {...props} orders={undefined} currentTab={undefined} disabled={true} />)
-  .add('when no data', () => <OrderListPage {...props} orders={[]} />)
-  .add('no limits', () => <OrderListPage {...props} limits={undefined} />)
-  .add('limits reached', () => <OrderListPage {...props} limits={limitsReached} />);
+  .add("default", () => <OrderListPage {...props} />)
+  .add("loading", () => (
+    <OrderListPage {...props} orders={undefined} currentTab={undefined} disabled={true} />
+  ))
+  .add("when no data", () => <OrderListPage {...props} orders={[]} />)
+  .add("no limits", () => <OrderListPage {...props} limits={undefined} />)
+  .add("limits reached", () => <OrderListPage {...props} limits={limitsReached} />);

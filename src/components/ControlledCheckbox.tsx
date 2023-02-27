@@ -1,5 +1,5 @@
-import { Checkbox, FormControlLabel } from '@material-ui/core';
-import React from 'react';
+import { Checkbox, FormControlLabel } from "@material-ui/core";
+import React from "react";
 
 export interface ControlledCheckboxProps {
   className?: string;
@@ -41,5 +41,5 @@ export const ControlledCheckbox: React.FC<ControlledCheckboxProps> = ({
     {...props}
   />
 );
-ControlledCheckbox.displayName = 'ControlledCheckbox';
+ControlledCheckbox.displayName = "ControlledCheckbox";
 export default ControlledCheckbox;

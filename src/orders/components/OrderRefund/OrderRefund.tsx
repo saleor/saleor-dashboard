@@ -1,17 +1,17 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import RadioGroupField from '@dashboard/components/RadioGroupField';
-import { Card, CardContent } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { defineMessages, useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import RadioGroupField from "@dashboard/components/RadioGroupField";
+import { Card, CardContent } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { defineMessages, useIntl } from "react-intl";
 
-import { OrderRefundFormData, OrderRefundType } from '../OrderRefundPage/form';
+import { OrderRefundFormData, OrderRefundType } from "../OrderRefundPage/form";
 
 const useStyles = makeStyles(
   {
     cartContent: { paddingBottom: 0 },
   },
-  { name: 'OrderRefund' },
+  { name: "OrderRefund" },
 );
 
 interface OrderRefundProps {
@@ -22,14 +22,14 @@ interface OrderRefundProps {
 
 const messages = defineMessages({
   refundMiscellaneous: {
-    id: 'LKpQYh',
-    defaultMessage: 'Miscellaneous Refund',
-    description: 'refund type',
+    id: "LKpQYh",
+    defaultMessage: "Miscellaneous Refund",
+    description: "refund type",
   },
   refundProducts: {
-    id: 'CLB1k9',
-    defaultMessage: 'Refund Products',
-    description: 'refund type',
+    id: "CLB1k9",
+    defaultMessage: "Refund Products",
+    description: "refund type",
   },
 });
 
@@ -42,9 +42,9 @@ const OrderRefund: React.FC<OrderRefundProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'bqAJCT',
-          defaultMessage: 'Refund Order',
-          description: 'section header',
+          id: "bqAJCT",
+          defaultMessage: "Refund Order",
+          description: "section header",
         })}
       />
       <CardContent className={classes.cartContent}>
@@ -60,7 +60,7 @@ const OrderRefund: React.FC<OrderRefundProps> = props => {
             },
           ]}
           disabled={disabled}
-          name={'type' as keyof FormData}
+          name={"type" as keyof FormData}
           value={data.type}
           onChange={onChange}
           variant="inline"
@@ -69,5 +69,5 @@ const OrderRefund: React.FC<OrderRefundProps> = props => {
     </Card>
   );
 };
-OrderRefund.displayName = 'OrderRefund';
+OrderRefund.displayName = "OrderRefund";
 export default OrderRefund;

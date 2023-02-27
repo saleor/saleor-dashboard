@@ -1,7 +1,13 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const categoryTranslations = gql`
-  query CategoryTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
+  query CategoryTranslations(
+    $language: LanguageCodeEnum!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
     translations(kind: CATEGORY, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
@@ -16,7 +22,13 @@ export const categoryTranslations = gql`
 `;
 
 export const collectionTranslations = gql`
-  query CollectionTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
+  query CollectionTranslations(
+    $language: LanguageCodeEnum!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
     translations(kind: COLLECTION, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
@@ -31,7 +43,13 @@ export const collectionTranslations = gql`
 `;
 
 export const productTranslations = gql`
-  query ProductTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
+  query ProductTranslations(
+    $language: LanguageCodeEnum!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
     translations(kind: PRODUCT, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
@@ -46,7 +64,13 @@ export const productTranslations = gql`
 `;
 
 export const pageTranslations = gql`
-  query PageTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
+  query PageTranslations(
+    $language: LanguageCodeEnum!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
     translations(kind: PAGE, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
@@ -61,7 +85,13 @@ export const pageTranslations = gql`
 `;
 
 export const voucherTranslations = gql`
-  query VoucherTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
+  query VoucherTranslations(
+    $language: LanguageCodeEnum!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
     translations(kind: VOUCHER, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
@@ -76,7 +106,13 @@ export const voucherTranslations = gql`
 `;
 
 export const saleTranslations = gql`
-  query SaleTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
+  query SaleTranslations(
+    $language: LanguageCodeEnum!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
     translations(kind: SALE, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
@@ -91,7 +127,13 @@ export const saleTranslations = gql`
 `;
 
 export const attributeTranslations = gql`
-  query AttributeTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
+  query AttributeTranslations(
+    $language: LanguageCodeEnum!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
     translations(kind: ATTRIBUTE, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {
@@ -113,7 +155,13 @@ export const shippingMethodTranslations = gql`
     $last: Int
     $before: String
   ) {
-    translations(kind: SHIPPING_METHOD, before: $before, after: $after, first: $first, last: $last) {
+    translations(
+      kind: SHIPPING_METHOD
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+    ) {
       edges {
         node {
           ...ShippingMethodTranslation
@@ -127,7 +175,13 @@ export const shippingMethodTranslations = gql`
 `;
 
 export const menuItemTranslations = gql`
-  query MenuItemTranslations($language: LanguageCodeEnum!, $first: Int, $after: String, $last: Int, $before: String) {
+  query MenuItemTranslations(
+    $language: LanguageCodeEnum!
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+  ) {
     translations(kind: MENU_ITEM, before: $before, after: $after, first: $first, last: $last) {
       edges {
         node {

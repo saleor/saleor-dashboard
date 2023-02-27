@@ -1,10 +1,10 @@
-import { DialogProps } from '@dashboard/types';
-import { Dialog, DialogContent, DialogTitle } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
+import { DialogProps } from "@dashboard/types";
+import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
 
-import DialogButtons from './DialogButtons';
-import { ActionDialogVariant, Size } from './types';
+import DialogButtons from "./DialogButtons";
+import { ActionDialogVariant, Size } from "./types";
 
 export interface ActionDialogProps extends DialogProps {
   children?: React.ReactNode;
@@ -30,8 +30,8 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
 };
 
 ActionDialog.defaultProps = {
-  maxWidth: 'xs',
+  maxWidth: "xs",
 };
 
-ActionDialog.displayName = 'ActionDialog';
+ActionDialog.displayName = "ActionDialog";
 export default ActionDialog;

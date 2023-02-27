@@ -1,14 +1,14 @@
-import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
-import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
-import { getGiftCardSettingsErrorMessage } from '@dashboard/giftCards/GiftCardSettings/messages';
-import { GiftCardSettingsErrorFragment, TimePeriodTypeEnum } from '@dashboard/graphql';
-import { FormChange } from '@dashboard/hooks/useForm';
-import { Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { getGiftCardSettingsErrorMessage } from "@dashboard/giftCards/GiftCardSettings/messages";
+import { GiftCardSettingsErrorFragment, TimePeriodTypeEnum } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import TimePeriodField from '../TimePeriodField/TimePeriodField';
-import { giftCardSettingsExpirySelectMessages as messages } from './messages';
+import TimePeriodField from "../TimePeriodField/TimePeriodField";
+import { giftCardSettingsExpirySelectMessages as messages } from "./messages";
 
 export interface GiftCardSettingsExpirySelectProps {
   change: FormChange;
@@ -16,7 +16,7 @@ export interface GiftCardSettingsExpirySelectProps {
   expiryPeriodActive: boolean;
   expiryPeriodType: TimePeriodTypeEnum;
   expiryPeriodAmount: number;
-  errors?: Record<'expiryPeriod', GiftCardSettingsErrorFragment>;
+  errors?: Record<"expiryPeriod", GiftCardSettingsErrorFragment>;
 }
 
 const GiftCardSettingsExpirySelect: React.FC<GiftCardSettingsExpirySelectProps> = ({
@@ -32,7 +32,7 @@ const GiftCardSettingsExpirySelect: React.FC<GiftCardSettingsExpirySelectProps> 
   return (
     <>
       <ControlledCheckbox
-        name={'expiryPeriodActive'}
+        name={"expiryPeriodActive"}
         label={
           <>
             <FormattedMessage {...messages.setExpirationPeriodTitle} />
@@ -56,8 +56,8 @@ const GiftCardSettingsExpirySelect: React.FC<GiftCardSettingsExpirySelectProps> 
             change={change}
             periodType={expiryPeriodType}
             periodAmount={expiryPeriodAmount}
-            amountFieldName={'expiryPeriodAmount'}
-            typeFieldName={'expiryPeriodType'}
+            amountFieldName={"expiryPeriodAmount"}
+            typeFieldName={"expiryPeriodType"}
           />
         </>
       )}

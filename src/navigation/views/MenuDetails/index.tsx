@@ -1,39 +1,42 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import { DEFAULT_INITIAL_SEARCH_DATA } from '@dashboard/config';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   useMenuDeleteMutation,
   useMenuDetailsQuery,
   useMenuItemCreateMutation,
   useMenuItemUpdateMutation,
   useMenuUpdateMutation,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import useCategorySearch from '@dashboard/searches/useCategorySearch';
-import useCollectionSearch from '@dashboard/searches/useCollectionSearch';
-import usePageSearch from '@dashboard/searches/usePageSearch';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import { DialogContentText } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import usePageSearch from "@dashboard/searches/usePageSearch";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { DialogContentText } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { categoryUrl } from '../../../categories/urls';
-import { collectionUrl } from '../../../collections/urls';
-import { extractMutationErrors, maybe } from '../../../misc';
-import { pageUrl } from '../../../pages/urls';
-import MenuDetailsPage, { MenuDetailsSubmitData } from '../../components/MenuDetailsPage';
-import { findNode, getNode } from '../../components/MenuDetailsPage/tree';
-import MenuItemDialog, { MenuItemDialogFormData, MenuItemType } from '../../components/MenuItemDialog';
-import { getItemId, getItemType, unknownTypeError } from '../../components/MenuItems';
-import { menuUrl, MenuUrlQueryParams } from '../../urls';
-import { handleDelete, handleItemCreate, handleItemUpdate, handleUpdate } from './successHandlers';
+import { categoryUrl } from "../../../categories/urls";
+import { collectionUrl } from "../../../collections/urls";
+import { extractMutationErrors, maybe } from "../../../misc";
+import { pageUrl } from "../../../pages/urls";
+import MenuDetailsPage, { MenuDetailsSubmitData } from "../../components/MenuDetailsPage";
+import { findNode, getNode } from "../../components/MenuDetailsPage/tree";
+import MenuItemDialog, {
+  MenuItemDialogFormData,
+  MenuItemType,
+} from "../../components/MenuItemDialog";
+import { getItemId, getItemType, unknownTypeError } from "../../components/MenuItems";
+import { menuUrl, MenuUrlQueryParams } from "../../urls";
+import { handleDelete, handleItemCreate, handleItemUpdate, handleUpdate } from "./successHandlers";
 import {
   getInitialDisplayValue,
   getMenuItemCreateInputData,
   getMenuItemInputData,
   getMoves,
   getRemoveIds,
-} from './utils';
+} from "./utils";
 
 interface MenuDetailsProps {
   id: string;
@@ -86,20 +89,20 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
 
   const handleItemClick = (id: string, type: MenuItemType) => {
     switch (type) {
-      case 'category':
+      case "category":
         navigate(categoryUrl(id));
         break;
 
-      case 'collection':
+      case "collection":
         navigate(collectionUrl(id));
         break;
 
-      case 'page':
+      case "page":
         navigate(pageUrl(id));
         break;
 
-      case 'link':
-        window.open(id, 'blank');
+      case "link":
+        window.open(id, "blank");
         break;
 
       default:
@@ -143,8 +146,8 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
 
   const initialMenuItemUpdateFormData: MenuItemDialogFormData = {
     id: maybe(() => getItemId(menuItem)),
-    name: maybe(() => menuItem.name, '...'),
-    type: maybe<MenuItemType>(() => getItemType(menuItem), 'category'),
+    name: maybe(() => menuItem.name, "..."),
+    type: maybe<MenuItemType>(() => getItemType(menuItem), "category"),
   };
 
   // This is a workaround to let know <MenuDetailsPage />
@@ -180,14 +183,14 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         onDelete={() =>
           navigate(
             menuUrl(id, {
-              action: 'remove',
+              action: "remove",
             }),
           )
         }
         onItemAdd={() =>
           navigate(
             menuUrl(id, {
-              action: 'add-item',
+              action: "add-item",
             }),
           )
         }
@@ -195,7 +198,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         onItemEdit={itemId =>
           navigate(
             menuUrl(id, {
-              action: 'edit-item',
+              action: "edit-item",
               id: itemId,
             }),
           )
@@ -204,15 +207,15 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         saveButtonState={menuUpdateOpts.status}
       />
       <ActionDialog
-        open={params.action === 'remove'}
+        open={params.action === "remove"}
         onClose={closeModal}
         confirmButtonState={menuDeleteOpts.status}
         onConfirm={() => extractMutationErrors(menuDelete({ variables: { id } }))}
         variant="delete"
         title={intl.formatMessage({
-          id: 'QzseV7',
-          defaultMessage: 'Delete Menu',
-          description: 'dialog header',
+          id: "QzseV7",
+          defaultMessage: "Delete Menu",
+          description: "dialog header",
         })}
       >
         <DialogContentText>
@@ -220,14 +223,14 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
             id="G/SYtU"
             defaultMessage="Are you sure you want to delete menu {menuName}?"
             values={{
-              menuName: <strong>{maybe(() => data.menu.name, '...')}</strong>,
+              menuName: <strong>{maybe(() => data.menu.name, "...")}</strong>,
             }}
           />
         </DialogContentText>
       </ActionDialog>
 
       <MenuItemDialog
-        open={params.action === 'add-item'}
+        open={params.action === "add-item"}
         categories={categories}
         collections={collections}
         errors={maybe(() => menuItemCreateOpts.data.menuItemCreate.errors, [])}
@@ -240,7 +243,7 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
         onQueryChange={handleQueryChange}
       />
       <MenuItemDialog
-        open={params.action === 'edit-item'}
+        open={params.action === "edit-item"}
         categories={categories}
         collections={collections}
         errors={maybe(() => menuItemUpdateOpts.data.menuItemUpdate.errors, [])}
@@ -257,6 +260,6 @@ const MenuDetails: React.FC<MenuDetailsProps> = ({ id, params }) => {
     </>
   );
 };
-MenuDetails.displayName = 'MenuDetails';
+MenuDetails.displayName = "MenuDetails";
 
 export default MenuDetails;

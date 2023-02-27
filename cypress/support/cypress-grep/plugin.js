@@ -63,10 +63,7 @@ function cypressGrepPlugin(config) {
     debug("%o", specFiles);
     let greppedSpecs = [];
     if (grep) {
-      console.log(
-        'cypress-grep: filtering specs using "%s" in the title',
-        grep,
-      );
+      console.log('cypress-grep: filtering specs using "%s" in the title', grep);
       const parsedGrep = parseGrep(grep);
       debug("parsed grep %o", parsedGrep);
       greppedSpecs = specFiles.filter(specFile => {

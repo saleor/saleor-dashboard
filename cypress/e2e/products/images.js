@@ -41,69 +41,57 @@ describe("Tests for images", () => {
                 });
             })
             .then(images => {
-              const expectedProductsSvgAvatars =
-                products.length - images.length;
-              cy.get(PRODUCTS_LIST.imageIcon).should(
-                "have.length",
-                expectedProductsSvgAvatars,
-              );
+              const expectedProductsSvgAvatars = products.length - images.length;
+              cy.get(PRODUCTS_LIST.imageIcon).should("have.length", expectedProductsSvgAvatars);
             });
         });
     },
   );
 
-  it(
-    "Should display product image",
-    { tags: ["@products", "@allEnv", "@stable"] },
-    () => {
-      getFirstProducts(1, demoProductsNames.carrotJuice)
-        .then(resp => {
-          const product = resp[0].node;
-          cy.visit(productDetailsUrl(product.id))
-            .get(PRODUCT_DETAILS.productImage)
-            .find("img")
-            .invoke("attr", "src");
-        })
-        .then(imageUrl => {
-          cy.request(imageUrl);
-        })
-        .then(imageResp => {
-          expect(imageResp.status).to.equal(200);
-        });
-    },
-  );
+  it("Should display product image", { tags: ["@products", "@allEnv", "@stable"] }, () => {
+    getFirstProducts(1, demoProductsNames.carrotJuice)
+      .then(resp => {
+        const product = resp[0].node;
+        cy.visit(productDetailsUrl(product.id))
+          .get(PRODUCT_DETAILS.productImage)
+          .find("img")
+          .invoke("attr", "src");
+      })
+      .then(imageUrl => {
+        cy.request(imageUrl);
+      })
+      .then(imageResp => {
+        expect(imageResp.status).to.equal(200);
+      });
+  });
 
-  it(
-    "Should upload saved image",
-    { tags: ["@products", "@allEnv", "@stable"] },
-    () => {
-      const name = "CyImages";
+  it("Should upload saved image", { tags: ["@products", "@allEnv", "@stable"] }, () => {
+    const name = "CyImages";
 
-      deleteProductsStartsWith(name);
-      deleteCollectionsStartsWith(name);
-      cy.clearSessionData().loginUserViaRequest();
-      createNewProductWithNewDataAndDefaultChannel({ name })
-        .then(({ product }) => {
-          cy.visit(productDetailsUrl(product.id))
-            .waitForProgressBarToNotBeVisible()
-            .get(PRODUCT_DETAILS.uploadImageButton)
-            .click()
-            .get(PRODUCT_DETAILS.uploadSavedImagesButton)
-            .click()
-            .get(SHARED_ELEMENTS.fileInput)
-            .attachFile("images/saleorDemoProductSneakers.png")
-            .get(PRODUCT_DETAILS.productImage)
-            .find("img")
-            .invoke("attr", "src");
-        })
-        .then(imageUrl => {
-          cy.request(imageUrl);
-        })
-        .then(imageResp => {
-          expect(imageResp.status).to.equal(200);
-        });
-    },
-  );
+    deleteProductsStartsWith(name);
+    deleteCollectionsStartsWith(name);
+    cy.clearSessionData().loginUserViaRequest();
+    createNewProductWithNewDataAndDefaultChannel({ name })
+      .then(({ product }) => {
+        cy.visit(productDetailsUrl(product.id))
+          .waitForProgressBarToNotBeVisible()
+          .get(PRODUCT_DETAILS.uploadImageButton)
+          .click()
+          .get(PRODUCT_DETAILS.uploadSavedImagesButton)
+          .click()
+          .get(SHARED_ELEMENTS.fileInput)
+          .attachFile("images/saleorDemoProductSneakers.png")
+          .get(PRODUCT_DETAILS.productImage)
+          .find("img")
+          .invoke("attr", "src");
+      })
+      .then(imageUrl => {
+        cy.request(imageUrl);
+      })
+      .then(imageResp => {
+        expect(imageResp.status).to.equal(200);
+      });
+  });
 
   it(
     "should create thumbnail url after entering image url",

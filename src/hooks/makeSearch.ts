@@ -1,9 +1,9 @@
-import { QueryResult } from '@apollo/client';
-import { DocumentNode } from 'graphql';
-import { useState } from 'react';
+import { QueryResult } from "@apollo/client";
+import { DocumentNode } from "graphql";
+import { useState } from "react";
 
-import makeQuery, { UseQueryResult } from './makeQuery';
-import useDebounce from './useDebounce';
+import makeQuery, { UseQueryResult } from "./makeQuery";
+import useDebounce from "./useDebounce";
 
 export interface SearchVariables {
   after?: string | null;
@@ -32,7 +32,7 @@ function makeSearch<TData, TVariables extends SearchVariables>(
   const useSearchQuery = makeQuery<TData, TVariables>(query);
 
   function useSearch(opts: UseSearchOpts<TVariables>): UseSearchResult<TData, TVariables> {
-    const [searchQuery, setSearchQuery] = useState('');
+    const [searchQuery, setSearchQuery] = useState("");
     const debouncedSearch = useDebounce(setSearchQuery);
     const result = useSearchQuery({
       ...opts,

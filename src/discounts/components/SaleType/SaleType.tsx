@@ -1,13 +1,13 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import RadioGroupField, { RadioGroupFieldChoice } from '@dashboard/components/RadioGroupField';
-import { SaleType as SaleTypeEnum } from '@dashboard/graphql';
-import { FormChange } from '@dashboard/hooks/useForm';
-import { Card, CardContent } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { IntlShape, useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import RadioGroupField, { RadioGroupFieldChoice } from "@dashboard/components/RadioGroupField";
+import { SaleType as SaleTypeEnum } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { Card, CardContent } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { IntlShape, useIntl } from "react-intl";
 
-import { SaleDetailsPageFormData } from '../SaleDetailsPage';
+import { SaleDetailsPageFormData } from "../SaleDetailsPage";
 
 export interface SaleTypeProps {
   data: SaleDetailsPageFormData;
@@ -18,13 +18,13 @@ export interface SaleTypeProps {
 const useStyles = makeStyles(
   theme => ({
     root: {
-      '&&': {
+      "&&": {
         paddingBottom: theme.spacing(1.5),
       },
     },
   }),
   {
-    name: 'SaleType',
+    name: "SaleType",
   },
 );
 
@@ -32,17 +32,17 @@ function createChoices(intl: IntlShape): RadioGroupFieldChoice[] {
   return [
     {
       label: intl.formatMessage({
-        id: 's17U7u',
-        defaultMessage: 'Percentage',
-        description: 'discount type',
+        id: "s17U7u",
+        defaultMessage: "Percentage",
+        description: "discount type",
       }),
       value: SaleTypeEnum.PERCENTAGE,
     },
     {
       label: intl.formatMessage({
-        id: 'JnzDrI',
-        defaultMessage: 'Fixed Amount',
-        description: 'discount type',
+        id: "JnzDrI",
+        defaultMessage: "Fixed Amount",
+        description: "discount type",
       }),
       value: SaleTypeEnum.FIXED,
     },
@@ -61,16 +61,16 @@ const SaleType: React.FC<SaleTypeProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'WkxE8/',
-          defaultMessage: 'Discount Type',
-          description: 'percentage or fixed, header',
+          id: "WkxE8/",
+          defaultMessage: "Discount Type",
+          description: "percentage or fixed, header",
         })}
       />
       <CardContent className={classes.root}>
         <RadioGroupField
           choices={choices}
           disabled={disabled}
-          name={'type' as keyof SaleDetailsPageFormData}
+          name={"type" as keyof SaleDetailsPageFormData}
           value={data.type}
           onChange={onChange}
         />
@@ -79,5 +79,5 @@ const SaleType: React.FC<SaleTypeProps> = props => {
   );
 };
 
-SaleType.displayName = 'SaleType';
+SaleType.displayName = "SaleType";
 export default SaleType;

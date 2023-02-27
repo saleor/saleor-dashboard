@@ -13,10 +13,7 @@ import {
 } from "../../requests/ProductType";
 import { deleteAttributesStartsWith } from "../attributes/attributeUtils";
 import { getDefaultChannel } from "../channelsUtils";
-import {
-  createShipping,
-  createShippingWithDefaultChannelAndAddress,
-} from "../shippingUtils";
+import { createShipping, createShippingWithDefaultChannelAndAddress } from "../shippingUtils";
 
 export function createProductInChannel({
   name,
@@ -156,29 +153,23 @@ export function createNewProductWithNewDataAndChannel({
       collection = collectionResp;
       createTypeAttributeAndCategoryForProduct({ name, attributeValues });
     })
-    .then(
-      ({
-        attribute: attributeResp,
-        category: categoryResp,
-        productType: productTypeResp,
-      }) => {
-        attribute = attributeResp;
-        category = categoryResp;
-        productType = productTypeResp;
-        createProductInChannel({
-          attributeId: attribute.id,
-          categoryId: category.id,
-          productTypeId: productType.id,
-          channelId: defaultChannel.id,
-          name,
-          collectionId: collection.id,
-          description,
-          warehouseId,
-          price: productPrice,
-          sku,
-        });
-      },
-    )
+    .then(({ attribute: attributeResp, category: categoryResp, productType: productTypeResp }) => {
+      attribute = attributeResp;
+      category = categoryResp;
+      productType = productTypeResp;
+      createProductInChannel({
+        attributeId: attribute.id,
+        categoryId: category.id,
+        productTypeId: productType.id,
+        channelId: defaultChannel.id,
+        name,
+        collectionId: collection.id,
+        description,
+        warehouseId,
+        price: productPrice,
+        sku,
+      });
+    })
     .then(({ product, variantsList }) => ({
       product,
       variantsList,
@@ -387,41 +378,33 @@ export function createNewProductWithSeveralVariants(name, variantsData) {
         address,
       });
     })
-    .then(
-      ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
-        warehouse = warehouseResp;
-        shippingMethod = shippingMethodResp;
+    .then(({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
+      warehouse = warehouseResp;
+      shippingMethod = shippingMethodResp;
 
-        const attributeValues = [];
-        variantsData.forEach(variant => {
-          attributeValues.push(variant.name);
-        });
+      const attributeValues = [];
+      variantsData.forEach(variant => {
+        attributeValues.push(variant.name);
+      });
 
-        createTypeAttributeAndCategoryForProduct({
-          name,
-          attributeValues,
-        });
-      },
-    )
-    .then(
-      ({
-        attribute: attributeResp,
-        category: categoryResp,
-        productType: productTypeResp,
-      }) => {
-        attribute = attributeResp;
-        category = categoryResp;
-        productType = productTypeResp;
+      createTypeAttributeAndCategoryForProduct({
+        name,
+        attributeValues,
+      });
+    })
+    .then(({ attribute: attributeResp, category: categoryResp, productType: productTypeResp }) => {
+      attribute = attributeResp;
+      category = categoryResp;
+      productType = productTypeResp;
 
-        createProductInChannelWithoutVariants({
-          attributeId: attribute.id,
-          categoryId: category.id,
-          productTypeId: productType.id,
-          channelId: defaultChannel.id,
-          name,
-        });
-      },
-    )
+      createProductInChannelWithoutVariants({
+        attributeId: attribute.id,
+        categoryId: category.id,
+        productTypeId: productType.id,
+        channelId: defaultChannel.id,
+        name,
+      });
+    })
     .then(product => {
       variantsData.forEach(variant => {
         productRequest
@@ -442,10 +425,7 @@ export function createNewProductWithSeveralVariants(name, variantsData) {
     .then(() => ({ createdVariants, address, shippingMethod, defaultChannel }));
 }
 
-export function createShippingProductTypeAttributeAndCategory(
-  name,
-  attributeValues,
-) {
+export function createShippingProductTypeAttributeAndCategory(name, attributeValues) {
   let warehouse;
   let defaultChannel;
   let shippingMethod;
@@ -500,15 +480,13 @@ export function sendRequestForMediaThumbnails(thumbnailUrl, productId) {
 }
 
 export function sendRequestForThumbnails(thumbnailUrl, productId) {
-  return cy
-    .request({ url: thumbnailUrl, failOnStatusCode: false })
-    .then(response => {
-      if (response.status !== 200) {
-        return `product: ${productId}, expectedStatus: 200, status: ${response.status}`;
-      } else {
-        return null;
-      }
-    });
+  return cy.request({ url: thumbnailUrl, failOnStatusCode: false }).then(response => {
+    if (response.status !== 200) {
+      return `product: ${productId}, expectedStatus: 200, status: ${response.status}`;
+    } else {
+      return null;
+    }
+  });
 }
 
 export function checkThumbnailTypeAndSendRequest(thumbnailUrl, productId) {
@@ -527,13 +505,11 @@ export function iterateThroughThumbnails(productsWithThumbnails) {
   const failedRequests = [];
   productsWithThumbnails.forEach(product => {
     const thumbnailUrl = product.node.thumbnail.url;
-    checkThumbnailTypeAndSendRequest(thumbnailUrl, product.node.id).then(
-      notCorrectStatus => {
-        if (notCorrectStatus) {
-          failedRequests.push(notCorrectStatus);
-        }
-      },
-    );
+    checkThumbnailTypeAndSendRequest(thumbnailUrl, product.node.id).then(notCorrectStatus => {
+      if (notCorrectStatus) {
+        failedRequests.push(notCorrectStatus);
+      }
+    });
   });
   return failedRequests;
 }

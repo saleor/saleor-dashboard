@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { Provider } from './DateContext';
+import { Provider } from "./DateContext";
 
 interface DateProviderState {
   date: number;

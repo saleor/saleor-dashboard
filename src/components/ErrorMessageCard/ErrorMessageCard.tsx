@@ -1,6 +1,6 @@
-import { Card, CardContent, Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { Card, CardContent, Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 interface ErrorMessageCardProps {
   message: string;
 }
@@ -15,5 +15,5 @@ const ErrorMessageCard: React.FC<ErrorMessageCardProps> = ({ message }) => (
     </CardContent>
   </Card>
 );
-ErrorMessageCard.displayName = 'ErrorMessageCard';
+ErrorMessageCard.displayName = "ErrorMessageCard";
 export default ErrorMessageCard;

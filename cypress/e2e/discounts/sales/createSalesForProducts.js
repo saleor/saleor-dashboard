@@ -9,10 +9,7 @@ import { updateChannelInProduct } from "../../../support/api/requests/Product";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import { deleteSalesStartsWith } from "../../../support/api/utils/discounts/salesUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../../support/api/utils/shippingUtils";
+import { createShipping, deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import { getProductPrice } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
   getDefaultTaxClass,
@@ -48,11 +45,7 @@ describe("As an admin I want to create sale for products", () => {
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(
-        ({
-          productType: productTypeResp,
-          attribute: attributeResp,
-          category: categoryResp,
-        }) => {
+        ({ productType: productTypeResp, attribute: attributeResp, category: categoryResp }) => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;
@@ -149,9 +142,7 @@ describe("As an admin I want to create sale for products", () => {
       let channel;
       let product;
 
-      createChannel({ name: saleName }).then(
-        channelResp => (channel = channelResp),
-      );
+      createChannel({ name: saleName }).then(channelResp => (channel = channelResp));
       productsUtils
         .createProductInChannel({
           name: saleName,
@@ -174,9 +165,7 @@ describe("As an admin I want to create sale for products", () => {
            cy.clearSessionData()
           .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
           */
-          cy.visit(urlList.sales)
-            .expectSkeletonIsVisible()
-            .waitForProgressBarToNotExist();
+          cy.visit(urlList.sales).expectSkeletonIsVisible().waitForProgressBarToNotExist();
           createSale({
             saleName,
             channelName: channel.name,

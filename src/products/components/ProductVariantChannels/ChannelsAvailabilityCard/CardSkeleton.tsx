@@ -1,8 +1,8 @@
-import Skeleton from '@dashboard/components/Skeleton';
-import { CardContent } from '@material-ui/core';
-import React from 'react';
+import Skeleton from "@dashboard/components/Skeleton";
+import { CardContent } from "@material-ui/core";
+import React from "react";
 
-import CardContainer from './VariantDetailsChannelsAvailabilityCardContainer';
+import CardContainer from "./VariantDetailsChannelsAvailabilityCardContainer";
 
 export const CardSkeleton: React.FC = () => (
   <CardContainer>

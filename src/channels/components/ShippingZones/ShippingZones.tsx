@@ -1,14 +1,14 @@
-import { ChannelShippingZones } from '@dashboard/channels/pages/ChannelDetailsPage/types';
-import CardTitle from '@dashboard/components/CardTitle';
-import { SearchShippingZonesQuery } from '@dashboard/graphql';
-import { sectionNames } from '@dashboard/intl';
-import { FetchMoreProps, RelayToFlat } from '@dashboard/types';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { ChannelShippingZones } from "@dashboard/channels/pages/ChannelDetailsPage/types";
+import CardTitle from "@dashboard/components/CardTitle";
+import { SearchShippingZonesQuery } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import AssignmentList from '../AssignmentList';
-import { messages } from './messages';
+import AssignmentList from "../AssignmentList";
+import { messages } from "./messages";
 
 export interface ShippingZonesProps {
   addShippingZone: (id: string) => void;
@@ -18,7 +18,7 @@ export interface ShippingZonesProps {
   totalCount: number;
   fetchMoreShippingZones: FetchMoreProps;
   shippingZones: ChannelShippingZones;
-  shippingZonesChoices: RelayToFlat<SearchShippingZonesQuery['search']>;
+  shippingZonesChoices: RelayToFlat<SearchShippingZonesQuery["search"]>;
 }
 
 const ShippingZones: React.FC<ShippingZonesProps> = props => {

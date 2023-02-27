@@ -1,15 +1,15 @@
-import { DEFAULT_NOTIFICATION_SHOW_TIME } from '@dashboard/config';
-import { commonMessages } from '@dashboard/intl';
-import { Notification } from '@saleor/macaw-ui';
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useIntl } from 'react-intl';
-import { TransitionGroup } from 'react-transition-group';
+import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
+import { commonMessages } from "@dashboard/intl";
+import { Notification } from "@saleor/macaw-ui";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useIntl } from "react-intl";
+import { TransitionGroup } from "react-transition-group";
 
-import { INotification, ITimer, MessageContext } from '.';
-import Container from './Container';
-import { messages as notificationMessages } from './messages';
-import { useStyles } from './styles';
-import Transition from './Transition';
+import { INotification, ITimer, MessageContext } from ".";
+import Container from "./Container";
+import { messages as notificationMessages } from "./messages";
+import { useStyles } from "./styles";
+import Transition from "./Transition";
 
 const MessageManagerProvider = ({ children }) => {
   const timer = useRef(0);
@@ -32,11 +32,15 @@ const MessageManagerProvider = ({ children }) => {
   };
 
   const remove = useCallback(notificationId => {
-    setNotifications(currentNotifications => currentNotifications.filter(n => n.id !== notificationId));
+    setNotifications(currentNotifications =>
+      currentNotifications.filter(n => n.id !== notificationId),
+    );
   }, []);
 
   const clearErrorNotifications = useCallback(() => {
-    setNotifications(notifications => notifications.filter(notification => notification.message.status !== 'error'));
+    setNotifications(notifications =>
+      notifications.filter(notification => notification.message.status !== "error"),
+    );
   }, []);
 
   const show = useCallback((message = {}, timeout = DEFAULT_NOTIFICATION_SHOW_TIME) => {
@@ -83,14 +87,19 @@ const MessageManagerProvider = ({ children }) => {
     const currentTimer = getCurrentTimer(notification);
     if (currentTimer) {
       currentTimer.start = new Date().getTime();
-      currentTimer.timeoutId = window.setTimeout(() => timerCallback(notification), currentTimer.remaining);
+      currentTimer.timeoutId = window.setTimeout(
+        () => timerCallback(notification),
+        currentTimer.remaining,
+      );
     }
   };
 
   return (
     <>
-      <MessageContext.Provider value={{ remove, show, clearErrorNotifications }}>{children}</MessageContext.Provider>
-      <TransitionGroup appear options={{ position: 'top right' }} component={Container}>
+      <MessageContext.Provider value={{ remove, show, clearErrorNotifications }}>
+        {children}
+      </MessageContext.Provider>
+      <TransitionGroup appear options={{ position: "top right" }} component={Container}>
         {!!notifications.length &&
           notifications.map(notification => (
             <Transition key={notification.id}>
@@ -107,15 +116,15 @@ const MessageManagerProvider = ({ children }) => {
                     ? intl.formatMessage(commonMessages.defaultErrorTitle)
                     : notification.message.title
                 }
-                type={notification.message.status || 'info'}
+                type={notification.message.status || "info"}
                 content={notification.message.text}
                 apiMessage={
                   notification.message.apiMessage && {
                     apiMessageContent: (
                       <pre
                         style={{
-                          overflowWrap: 'anywhere',
-                          whiteSpace: 'pre-wrap',
+                          overflowWrap: "anywhere",
+                          whiteSpace: "pre-wrap",
                         }}
                       >
                         {notification.message.apiMessage}

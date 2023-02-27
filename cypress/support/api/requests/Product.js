@@ -27,9 +27,7 @@ export function getFirstProducts(first, search) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(query)
-    .then(resp => resp.body.data.products.edges);
+  return cy.sendRequestWithQuery(query).then(resp => resp.body.data.products.edges);
 }
 
 export function updateProduct(productId, input) {
@@ -45,9 +43,7 @@ export function updateProduct(productId, input) {
     }
   }
   `;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.productUpdate.product");
+  return cy.sendRequestWithQuery(mutation).its("body.data.productUpdate.product");
 }
 
 export function updateChannelInProduct({
@@ -104,16 +100,10 @@ export function createProduct({
   description,
   taxClassId,
 }) {
-  const collection = getValueWithDefault(
-    collectionId,
-    `collections:["${collectionId}"]`,
-  );
+  const collection = getValueWithDefault(collectionId, `collections:["${collectionId}"]`);
   const category = getValueWithDefault(categoryId, `category:"${categoryId}"`);
   const descriptionData = getDataForDescriptionInVariables(description);
-  const attributeValuesLine = getValueWithDefault(
-    attributeValue,
-    `values:["${attributeValue}"]`,
-  );
+  const attributeValuesLine = getValueWithDefault(attributeValue, `values:["${attributeValue}"]`);
   const attributes = getValueWithDefault(
     attributeId,
     `attributes:[{
@@ -265,9 +255,7 @@ export function createVariantForSimpleProduct({
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.productVariantCreate.productVariant");
+  return cy.sendRequestWithQuery(mutation).its("body.data.productVariantCreate.productVariant");
 }
 
 export function deleteProduct(productId) {
@@ -358,17 +346,11 @@ export function updateVariantPrice({ variantId, channelId, price }) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.productVariantChannelListingUpdate");
+  return cy.sendRequestWithQuery(mutation).its("body.data.productVariantChannelListingUpdate");
 }
 
 export function updateVariantWarehouse({ variantId, warehouseId, quantity }) {
-  const quantityInWarehouse = getValueWithDefault(
-    quantity,
-    `quantity:${quantity}`,
-    `quantity: 0`,
-  );
+  const quantityInWarehouse = getValueWithDefault(quantity, `quantity:${quantity}`, `quantity: 0`);
 
   const mutation = `mutation{
     productVariantStocksCreate(variantId: "${variantId}", 

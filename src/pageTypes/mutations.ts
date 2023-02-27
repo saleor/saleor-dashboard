@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const pageTypeUpdateMutation = gql`
   mutation PageTypeUpdate($id: ID!, $input: PageTypeUpdateInput!) {

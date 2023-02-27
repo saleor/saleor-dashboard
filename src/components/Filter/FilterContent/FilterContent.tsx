@@ -1,16 +1,16 @@
-import CollectionWithDividers from '@dashboard/components/CollectionWithDividers';
-import useStateFromProps from '@dashboard/hooks/useStateFromProps';
-import { makeStyles, Paper, Typography } from '@material-ui/core';
-import { Accordion, AccordionSummary } from '@saleor/macaw-ui';
-import React, { useState } from 'react';
+import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { makeStyles, Paper, Typography } from "@material-ui/core";
+import { Accordion, AccordionSummary } from "@saleor/macaw-ui";
+import React, { useState } from "react";
 
-import { FilterAutocompleteDisplayValues } from '../FilterAutocompleteField';
-import { FilterReducerAction } from '../reducer';
-import { FieldType, FilterElement, FilterErrorMessages, IFilter, InvalidFilters } from '../types';
-import FilterContentBody, { FilterContentBodyProps } from './FilterContentBody';
-import FilterContentBodyNameField from './FilterContentBodyNameField';
-import FilterContentHeader from './FilterContentHeader';
-import FilterErrorsList from './FilterErrorsList';
+import { FilterAutocompleteDisplayValues } from "../FilterAutocompleteField";
+import { FilterReducerAction } from "../reducer";
+import { FieldType, FilterElement, FilterErrorMessages, IFilter, InvalidFilters } from "../types";
+import FilterContentBody, { FilterContentBodyProps } from "./FilterContentBody";
+import FilterContentBodyNameField from "./FilterContentBodyNameField";
+import FilterContentHeader from "./FilterContentHeader";
+import FilterErrorsList from "./FilterErrorsList";
 
 const useExpanderStyles = makeStyles(
   theme => ({
@@ -20,40 +20,40 @@ const useExpanderStyles = makeStyles(
 
     expanded: {},
     root: {
-      boxShadow: 'none',
+      boxShadow: "none",
       margin: 0,
       padding: 0,
 
-      '&:before': {
-        content: 'none',
+      "&:before": {
+        content: "none",
       },
 
-      '&$expanded': {
+      "&$expanded": {
         margin: 0,
-        border: 'none',
+        border: "none",
       },
     },
   }),
-  { name: 'FilterContentExpander' },
+  { name: "FilterContentExpander" },
 );
 
 const useSummaryStyles = makeStyles(
   theme => ({
     expanded: {},
     root: {
-      width: '100%',
-      border: 'none',
+      width: "100%",
+      border: "none",
       margin: 0,
       padding: 0,
       minHeight: 0,
       paddingRight: theme.spacing(2),
 
-      '&$expanded': {
+      "&$expanded": {
         minHeight: 0,
       },
     },
   }),
-  { name: 'FilterContentExpanderSummary' },
+  { name: "FilterContentExpanderSummary" },
 );
 
 export interface FilterContentProps<K extends string = string> {
@@ -106,11 +106,13 @@ const FilterContent: React.FC<FilterContentProps> = ({
     return getAutocompleteValuesWithNewValues(acc, filterField);
   }, {});
 
-  const [autocompleteDisplayValues, setAutocompleteDisplayValues] = useStateFromProps<FilterAutocompleteDisplayValues>(
-    initialAutocompleteDisplayValues,
-  );
+  const [autocompleteDisplayValues, setAutocompleteDisplayValues] =
+    useStateFromProps<FilterAutocompleteDisplayValues>(initialAutocompleteDisplayValues);
 
-  const commonFilterBodyProps: Omit<FilterContentBodyProps<string>, 'filter' | 'onFilterPropertyChange'> = {
+  const commonFilterBodyProps: Omit<
+    FilterContentBodyProps<string>,
+    "filter" | "onFilterPropertyChange"
+  > = {
     currencySymbol,
     autocompleteDisplayValues,
     setAutocompleteDisplayValues,
@@ -181,7 +183,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
               <Accordion
                 key={filter.name}
                 classes={expanderClasses}
-                data-test-id={'channel-availability-item-' + filter.name}
+                data-test-id={"channel-availability-item-" + filter.name}
                 expanded={filter.name === openedFilter?.name}
               >
                 <AccordionSummary
@@ -197,12 +199,18 @@ const FilterContent: React.FC<FilterContentProps> = ({
                   {currentFilter && (
                     <FilterContentBodyNameField
                       filter={currentFilter}
-                      onFilterPropertyChange={action => handleFilterPropertyGroupChange(action, filter)}
+                      onFilterPropertyChange={action =>
+                        handleFilterPropertyGroupChange(action, filter)
+                      }
                     />
                   )}
                 </AccordionSummary>
                 {currentFilter?.active && (
-                  <FilterErrorsList errors={errors?.[filter.name]} errorMessages={errorMessages} filter={filter} />
+                  <FilterErrorsList
+                    errors={errors?.[filter.name]}
+                    errorMessages={errorMessages}
+                    filter={filter}
+                  />
                 )}
                 {filter.multipleFields ? (
                   <CollectionWithDividers
@@ -234,5 +242,5 @@ const FilterContent: React.FC<FilterContentProps> = ({
     </Paper>
   );
 };
-FilterContent.displayName = 'FilterContent';
+FilterContent.displayName = "FilterContent";
 export default FilterContent;

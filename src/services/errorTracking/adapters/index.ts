@@ -1,1 +1,1 @@
-export { SentryAdapter } from './Sentry';
+export { SentryAdapter } from "./Sentry";

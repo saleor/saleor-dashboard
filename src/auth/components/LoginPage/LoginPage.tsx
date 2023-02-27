@@ -1,31 +1,38 @@
-import { UserContextError } from '@dashboard/auth/types';
-import { passwordResetUrl } from '@dashboard/auth/urls';
-import { Button } from '@dashboard/components/Button';
-import { FormSpacer } from '@dashboard/components/FormSpacer';
-import { AvailableExternalAuthenticationsQuery } from '@dashboard/graphql';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import { commonMessages } from '@dashboard/intl';
-import { CircularProgress, Divider, TextField, Typography } from '@material-ui/core';
-import { EyeIcon, IconButton } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { Link } from 'react-router-dom';
+import { UserContextError } from "@dashboard/auth/types";
+import { passwordResetUrl } from "@dashboard/auth/urls";
+import { Button } from "@dashboard/components/Button";
+import { FormSpacer } from "@dashboard/components/FormSpacer";
+import { AvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
+import { CircularProgress, Divider, TextField, Typography } from "@material-ui/core";
+import { EyeIcon, IconButton } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
-import useStyles from '../styles';
-import LoginForm, { LoginFormData } from './form';
-import { getErrorMessage } from './messages';
+import useStyles from "../styles";
+import LoginForm, { LoginFormData } from "./form";
+import { getErrorMessage } from "./messages";
 
 export interface LoginCardProps {
   errors: UserContextError[];
   disabled: boolean;
   loading: boolean;
-  externalAuthentications?: AvailableExternalAuthenticationsQuery['shop']['availableExternalAuthentications'];
+  externalAuthentications?: AvailableExternalAuthenticationsQuery["shop"]["availableExternalAuthentications"];
   onExternalAuthentication: (pluginId: string) => void;
   onSubmit?: (event: LoginFormData) => SubmitPromise;
 }
 
 const LoginCard: React.FC<LoginCardProps> = props => {
-  const { errors, disabled, loading, externalAuthentications = [], onExternalAuthentication, onSubmit } = props;
+  const {
+    errors,
+    disabled,
+    loading,
+    externalAuthentications = [],
+    onExternalAuthentication,
+    onSubmit,
+  } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -60,7 +67,7 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             onChange={handleChange}
             value={data.email}
             inputProps={{
-              'data-test-id': 'email',
+              "data-test-id": "email",
               spellCheck: false,
             }}
             disabled={disabled}
@@ -71,15 +78,15 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               fullWidth
               autoComplete="password"
               label={intl.formatMessage({
-                id: '5sg7KC',
-                defaultMessage: 'Password',
+                id: "5sg7KC",
+                defaultMessage: "Password",
               })}
               name="password"
               onChange={handleChange}
-              type={showPassword ? 'text' : 'password'}
+              type={showPassword ? "text" : "password"}
               value={data.password}
               inputProps={{
-                'data-test-id': 'password',
+                "data-test-id": "password",
                 spellCheck: false,
               }}
               disabled={disabled}
@@ -102,7 +109,11 @@ const LoginCard: React.FC<LoginCardProps> = props => {
             variant="body2"
             data-test-id="reset-password-link"
           >
-            <FormattedMessage id="3tbL7x" defaultMessage="Forgot password?" description="description" />
+            <FormattedMessage
+              id="3tbL7x"
+              defaultMessage="Forgot password?"
+              description="description"
+            />
           </Typography>
           <div className={classes.buttonContainer}>
             <Button
@@ -122,7 +133,11 @@ const LoginCard: React.FC<LoginCardProps> = props => {
               <Divider />
               <FormSpacer />
               <Typography>
-                <FormattedMessage id="ENBELI" defaultMessage="or login using" description="description" />
+                <FormattedMessage
+                  id="ENBELI"
+                  defaultMessage="or login using"
+                  description="description"
+                />
               </Typography>
             </>
           )}
@@ -145,5 +160,5 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     </LoginForm>
   );
 };
-LoginCard.displayName = 'LoginCard';
+LoginCard.displayName = "LoginCard";
 export default LoginCard;

@@ -1,32 +1,32 @@
-import { InputAdornment, TextField } from '@material-ui/core';
-import { InputProps } from '@material-ui/core/Input';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
+import { InputAdornment, TextField } from "@material-ui/core";
+import { InputProps } from "@material-ui/core/Input";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
 
-import { usePriceField } from './usePriceField';
+import { usePriceField } from "./usePriceField";
 
 const useStyles = makeStyles(
   theme => ({
     currencySymbol: {
-      fontSize: '0.875rem',
+      fontSize: "0.875rem",
     },
     inputContainer: {
-      display: 'grid',
-      gridTemplateColumns: '1fr 2rem 1fr',
+      display: "grid",
+      gridTemplateColumns: "1fr 2rem 1fr",
     },
     pullDown: {
       marginTop: theme.spacing(2),
     },
     separator: {
       marginTop: theme.spacing(3),
-      textAlign: 'center',
-      width: '100%',
+      textAlign: "center",
+      width: "100%",
     },
     widgetContainer: {
       marginTop: theme.spacing(2),
     },
   }),
-  { name: 'PriceField' },
+  { name: "PriceField" },
 );
 
 interface PriceFieldProps {
@@ -39,7 +39,7 @@ interface PriceFieldProps {
   name?: string;
   value?: string;
   InputProps?: InputProps;
-  inputProps?: InputProps['inputProps'];
+  inputProps?: InputProps["inputProps"];
   required?: boolean;
   onChange(event: any);
 }
@@ -50,7 +50,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
     disabled,
     error,
     label,
-    hint = '',
+    hint = "",
     currencySymbol,
     name,
     onChange: onChangeBase,
@@ -85,11 +85,11 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
           step,
           ...InputProps?.inputProps,
         },
-        type: 'number',
+        type: "number",
       }}
       inputProps={{
         min: minValue,
-        type: 'number',
+        type: "number",
         ...inputProps,
       }}
       name={name}
@@ -101,8 +101,8 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
   );
 };
 PriceField.defaultProps = {
-  name: 'price',
+  name: "price",
 };
 
-PriceField.displayName = 'PriceField';
+PriceField.displayName = "PriceField";
 export default PriceField;

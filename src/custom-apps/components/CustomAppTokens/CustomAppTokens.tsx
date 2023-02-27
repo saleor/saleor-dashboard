@@ -1,19 +1,19 @@
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { AppUpdateMutation } from '@dashboard/graphql';
-import { renderCollection } from '@dashboard/misc';
-import { Card, CardContent, TableBody, TableCell, TableHead } from '@material-ui/core';
-import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { AppUpdateMutation } from "@dashboard/graphql";
+import { renderCollection } from "@dashboard/misc";
+import { Card, CardContent, TableBody, TableCell, TableHead } from "@material-ui/core";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 export interface CustomAppTokensProps {
-  tokens: AppUpdateMutation['appUpdate']['app']['tokens'] | null;
+  tokens: AppUpdateMutation["appUpdate"]["app"]["tokens"] | null;
   onCreate: () => void;
   onDelete: (id: string) => void;
 }
@@ -29,9 +29,9 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: '0Mg8o5',
-          defaultMessage: 'Tokens',
-          description: 'header',
+          id: "0Mg8o5",
+          defaultMessage: "Tokens",
+          description: "header",
         })}
         className={classes.cardTitle}
         toolbar={
@@ -48,10 +48,18 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
                 <FormattedMessage id="0DRBjg" defaultMessage="Token Note" />
               </TableCell>
               <TableCell className={classes.colKey}>
-                <FormattedMessage id="MAsLIT" defaultMessage="Key" description="custom app token key" />
+                <FormattedMessage
+                  id="MAsLIT"
+                  defaultMessage="Key"
+                  description="custom app token key"
+                />
               </TableCell>
               <TableCell className={classes.colActions}>
-                <FormattedMessage id="VHuzgq" defaultMessage="Actions" description="table actions" />
+                <FormattedMessage
+                  id="VHuzgq"
+                  defaultMessage="Actions"
+                  description="table actions"
+                />
               </TableCell>
             </TableRowLink>
           </TableHead>
@@ -59,13 +67,17 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
             {renderCollection(
               tokens,
               token => (
-                <TableRowLink key={token ? token.id : 'skeleton'}>
+                <TableRowLink key={token ? token.id : "skeleton"}>
                   <TableCell className={classes.colNote}>{token?.name || <Skeleton />}</TableCell>
                   <TableCell className={classes.colKey}>
                     {token?.authToken ? `**** ${token.authToken}` : <Skeleton />}
                   </TableCell>
                   <TableCell className={classes.colActions}>
-                    <IconButton variant="secondary" color="primary" onClick={() => onDelete(token.id)}>
+                    <IconButton
+                      variant="secondary"
+                      color="primary"
+                      onClick={() => onDelete(token.id)}
+                    >
                       <DeleteIcon />
                     </IconButton>
                   </TableCell>
@@ -86,5 +98,5 @@ const CustomAppTokens: React.FC<CustomAppTokensProps> = props => {
   );
 };
 
-CustomAppTokens.displayName = 'CustomAppTokens';
+CustomAppTokens.displayName = "CustomAppTokens";
 export default CustomAppTokens;

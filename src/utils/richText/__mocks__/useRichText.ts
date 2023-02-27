@@ -1,4 +1,4 @@
-import { useRichText } from '../useRichText';
+import { useRichText } from "../useRichText";
 
 const useRichTextMocked = ({ initial, triggerChange }): ReturnType<typeof useRichText> => ({
   editorRef: { current: null },

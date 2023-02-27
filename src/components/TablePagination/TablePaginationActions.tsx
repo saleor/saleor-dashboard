@@ -1,44 +1,44 @@
-import { isDarkTheme } from '@dashboard/misc';
-import { alpha } from '@material-ui/core/styles';
-import ArrowLeft from '@material-ui/icons/ArrowLeft';
-import ArrowRight from '@material-ui/icons/ArrowRight';
-import { IconButton, makeStyles, useTheme } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
+import { isDarkTheme } from "@dashboard/misc";
+import { alpha } from "@material-ui/core/styles";
+import ArrowLeft from "@material-ui/icons/ArrowLeft";
+import ArrowRight from "@material-ui/icons/ArrowRight";
+import { IconButton, makeStyles, useTheme } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
     dark: {
-      '& svg': {
+      "& svg": {
         color: theme.palette.primary.main,
       },
-      '&$disabled': {
-        '& svg': {
+      "&$disabled": {
+        "& svg": {
           color: alpha(theme.palette.primary.main, 0.2),
         },
       },
-      '&:focus, &:hover': {
-        '& > span:first-of-type': {
+      "&:focus, &:hover": {
+        "& > span:first-of-type": {
           backgroundColor: alpha(theme.palette.primary.main, 0.2),
         },
       },
     },
     disabled: {},
     iconButton: {
-      '& > span:first-of-type': {
+      "& > span:first-of-type": {
         backgroundColor: theme.palette.background.default,
-        borderRadius: '100%',
-        transition: theme.transitions.duration.standard + 'ms',
+        borderRadius: "100%",
+        transition: theme.transitions.duration.standard + "ms",
       },
-      '& svg': {
+      "& svg": {
         border: `solid 1px #BDBDBD`,
-        borderRadius: '50%',
+        borderRadius: "50%",
       },
-      '&:focus, &:hover': {
-        '& > span:first-of-type': {
+      "&:focus, &:hover": {
+        "& > span:first-of-type": {
           backgroundColor: alpha(theme.palette.primary.main, 0.2),
         },
-        backgroundColor: 'transparent',
+        backgroundColor: "transparent",
       },
       padding: 6,
     },
@@ -48,7 +48,7 @@ const useStyles = makeStyles(
       margin: theme.spacing(0, 2.5),
     },
   }),
-  { name: 'TablePaginationActions' },
+  { name: "TablePaginationActions" },
 );
 
 export interface TablePaginationActionsProps {
@@ -91,7 +91,7 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = pro
         data-test-id="button-pagination-back"
         {...backIconButtonProps}
       >
-        {direction === 'rtl' ? <ArrowRight /> : <ArrowLeft />}
+        {direction === "rtl" ? <ArrowRight /> : <ArrowLeft />}
       </IconButton>
       <IconButton
         className={clsx(classes.iconButton, {
@@ -103,11 +103,11 @@ export const TablePaginationActions: React.FC<TablePaginationActionsProps> = pro
         data-test-id="button-pagination-next"
         {...nextIconButtonProps}
       >
-        {direction === 'rtl' ? <ArrowLeft /> : <ArrowRight />}
+        {direction === "rtl" ? <ArrowLeft /> : <ArrowRight />}
       </IconButton>
     </div>
   );
 };
 
-TablePaginationActions.displayName = 'TablePaginationActions';
+TablePaginationActions.displayName = "TablePaginationActions";
 export default TablePaginationActions;

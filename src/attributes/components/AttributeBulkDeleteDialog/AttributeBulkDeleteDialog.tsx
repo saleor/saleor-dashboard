@@ -1,8 +1,8 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import { DialogContentText } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { DialogContentText } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface AttributeBulkDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -28,9 +28,9 @@ const AttributeBulkDeleteDialog: React.FC<AttributeBulkDeleteDialogProps> = ({
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
-        id: 'rKf4LU',
-        defaultMessage: 'Delete attributes',
-        description: 'dialog title',
+        id: "rKf4LU",
+        defaultMessage: "Delete attributes",
+        description: "dialog title",
       })}
       variant="delete"
     >
@@ -48,5 +48,5 @@ const AttributeBulkDeleteDialog: React.FC<AttributeBulkDeleteDialogProps> = ({
     </ActionDialog>
   );
 };
-AttributeBulkDeleteDialog.displayName = 'AttributeBulkDeleteDialog';
+AttributeBulkDeleteDialog.displayName = "AttributeBulkDeleteDialog";
 export default AttributeBulkDeleteDialog;

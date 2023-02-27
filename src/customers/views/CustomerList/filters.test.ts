@@ -1,27 +1,27 @@
-import { createFilterStructure } from '@dashboard/customers/components/CustomerListPage';
-import { CustomerListUrlFilters } from '@dashboard/customers/urls';
-import { date } from '@dashboard/fixtures';
-import { PermissionEnum } from '@dashboard/graphql';
-import { getFilterQueryParams } from '@dashboard/utils/filters';
-import { stringifyQs } from '@dashboard/utils/urls';
-import { getExistingKeys, setFilterOptsStatus } from '@test/filters';
-import { config } from '@test/intl';
-import { createIntl } from 'react-intl';
+import { createFilterStructure } from "@dashboard/customers/components/CustomerListPage";
+import { CustomerListUrlFilters } from "@dashboard/customers/urls";
+import { date } from "@dashboard/fixtures";
+import { PermissionEnum } from "@dashboard/graphql";
+import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { stringifyQs } from "@dashboard/utils/urls";
+import { getExistingKeys, setFilterOptsStatus } from "@test/filters";
+import { config } from "@test/intl";
+import { createIntl } from "react-intl";
 
-import { getFilterQueryParam, getFilterVariables } from './filters';
+import { getFilterQueryParam, getFilterVariables } from "./filters";
 
-describe('Filtering query params', () => {
-  it('should be empty object if no params given', () => {
+describe("Filtering query params", () => {
+  it("should be empty object if no params given", () => {
     const params: CustomerListUrlFilters = {};
     const filterVariables = getFilterVariables(params);
 
     expect(getExistingKeys(filterVariables)).toHaveLength(0);
   });
 
-  it('should not be empty object if params given', () => {
+  it("should not be empty object if params given", () => {
     const params: CustomerListUrlFilters = {
       joinedFrom: date.from,
-      numberOfOrdersTo: '5',
+      numberOfOrdersTo: "5",
     };
     const filterVariables = getFilterVariables(params);
 
@@ -29,7 +29,7 @@ describe('Filtering query params', () => {
   });
 });
 
-describe('Filtering URL params', () => {
+describe("Filtering URL params", () => {
   const intl = createIntl(config);
 
   const filters = createFilterStructure(
@@ -45,33 +45,36 @@ describe('Filtering URL params', () => {
       numberOfOrders: {
         active: false,
         value: {
-          max: '5',
-          min: '1',
+          max: "5",
+          min: "1",
         },
       },
     },
     [
       {
         code: PermissionEnum.MANAGE_USERS,
-        name: 'Manage customers.',
-        __typename: 'UserPermission',
+        name: "Manage customers.",
+        __typename: "UserPermission",
       },
       {
         code: PermissionEnum.MANAGE_ORDERS,
-        name: 'Manage orders..',
-        __typename: 'UserPermission',
+        name: "Manage orders..",
+        __typename: "UserPermission",
       },
     ],
   );
 
-  it('should be empty if no active filters', () => {
+  it("should be empty if no active filters", () => {
     const filterQueryParams = getFilterQueryParams(filters, getFilterQueryParam);
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
   });
 
-  it('should not be empty if active filters are present', () => {
-    const filterQueryParams = getFilterQueryParams(setFilterOptsStatus(filters, true), getFilterQueryParam);
+  it("should not be empty if active filters are present", () => {
+    const filterQueryParams = getFilterQueryParams(
+      setFilterOptsStatus(filters, true),
+      getFilterQueryParam,
+    );
 
     expect(filterQueryParams).toMatchSnapshot();
     expect(stringifyQs(filterQueryParams)).toMatchSnapshot();

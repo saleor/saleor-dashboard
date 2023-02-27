@@ -1,38 +1,38 @@
-import { InvoiceErrorCode, InvoiceErrorFragment } from '@dashboard/graphql';
-import { defineMessages, IntlShape } from 'react-intl';
+import { InvoiceErrorCode, InvoiceErrorFragment } from "@dashboard/graphql";
+import { defineMessages, IntlShape } from "react-intl";
 
-import { getCommonFormFieldErrorMessage } from './common';
+import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   emailNotSet: {
-    id: 'abTH5q',
-    defaultMessage: 'Email address is not set',
-    description: 'error message',
+    id: "abTH5q",
+    defaultMessage: "Email address is not set",
+    description: "error message",
   },
   invalidStatus: {
-    id: 'dxCVWI',
-    defaultMessage: 'Cannot request an invoice for draft order',
-    description: 'error message',
+    id: "dxCVWI",
+    defaultMessage: "Cannot request an invoice for draft order",
+    description: "error message",
   },
   notFound: {
-    id: 'uRTj1Q',
-    defaultMessage: 'Invoice not found',
-    description: 'error message',
+    id: "uRTj1Q",
+    defaultMessage: "Invoice not found",
+    description: "error message",
   },
   notReady: {
-    id: 'Fz3kic',
-    defaultMessage: 'Billing address is not set or invoice is not ready to be send',
-    description: 'error message',
+    id: "Fz3kic",
+    defaultMessage: "Billing address is not set or invoice is not ready to be send",
+    description: "error message",
   },
   numberNotSet: {
-    id: 'N43t3/',
-    defaultMessage: 'Number not set for an invoice',
-    description: 'error message',
+    id: "N43t3/",
+    defaultMessage: "Number not set for an invoice",
+    description: "error message",
   },
   urlNotSet: {
-    id: 'vP7g2+',
-    defaultMessage: 'URL not set for an invoice',
-    description: 'error message',
+    id: "vP7g2+",
+    defaultMessage: "URL not set for an invoice",
+    description: "error message",
   },
 });
 

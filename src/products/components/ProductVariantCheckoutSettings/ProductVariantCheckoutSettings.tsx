@@ -1,14 +1,14 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import PreviewPill from '@dashboard/components/PreviewPill';
-import { ProductErrorFragment } from '@dashboard/graphql';
-import { FormChange } from '@dashboard/hooks/useForm';
-import { getFormErrors } from '@dashboard/utils/errors';
-import { Card, CardContent, TextField } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import PreviewPill from "@dashboard/components/PreviewPill";
+import { ProductErrorFragment } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { getFormErrors } from "@dashboard/utils/errors";
+import { Card, CardContent, TextField } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { messages } from './messages';
-import useStyles from './styles';
+import { messages } from "./messages";
+import useStyles from "./styles";
 
 interface ProductVariantCheckoutSettingsProps {
   data: {
@@ -25,7 +25,7 @@ const ProductVariantCheckoutSettings: React.FC<ProductVariantCheckoutSettingsPro
   const intl = useIntl();
   const classes = useStyles();
 
-  const formErrors = getFormErrors(['quantityLimitPerCustomer'], errors);
+  const formErrors = getFormErrors(["quantityLimitPerCustomer"], errors);
 
   return (
     <Card>
@@ -46,11 +46,11 @@ const ProductVariantCheckoutSettings: React.FC<ProductVariantCheckoutSettingsPro
           name="quantityLimitPerCustomer"
           label={intl.formatMessage(messages.checkoutLineLimit)}
           helperText={intl.formatMessage(messages.checkoutLimitsDescription)}
-          value={!!data.quantityLimitPerCustomer ? String(data.quantityLimitPerCustomer) : ''}
+          value={!!data.quantityLimitPerCustomer ? String(data.quantityLimitPerCustomer) : ""}
           onChange={onChange}
           InputProps={{
             inputProps: {
-              autoComplete: 'none',
+              autoComplete: "none",
               min: 1,
             },
           }}
@@ -60,5 +60,5 @@ const ProductVariantCheckoutSettings: React.FC<ProductVariantCheckoutSettingsPro
   );
 };
 
-ProductVariantCheckoutSettings.displayName = 'ProductVariantCheckoutSettings';
+ProductVariantCheckoutSettings.displayName = "ProductVariantCheckoutSettings";
 export default ProductVariantCheckoutSettings;

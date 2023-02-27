@@ -1,31 +1,36 @@
-import { Content } from '@dashboard/components/AppLayout/Content';
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import { OrderDetailsFragment, OrderErrorFragment } from '@dashboard/graphql';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import { renderCollection } from '@dashboard/misc';
-import { orderUrl } from '@dashboard/orders/urls';
-import React from 'react';
-import { defineMessages, useIntl } from 'react-intl';
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { renderCollection } from "@dashboard/misc";
+import { orderUrl } from "@dashboard/orders/urls";
+import React from "react";
+import { defineMessages, useIntl } from "react-intl";
 
-import OrderAmount from '../OrderRefundReturnAmount';
-import { getReturnProductsAmountValues } from '../OrderRefundReturnAmount/utils';
-import OrderRefundForm, { OrderRefundSubmitData } from './form';
-import ItemsCard from './OrderReturnRefundItemsCard/ReturnItemsCard';
-import { getFulfilledFulfillemnts, getParsedLines, getUnfulfilledLines, getWaitingFulfillments } from './utils';
+import OrderAmount from "../OrderRefundReturnAmount";
+import { getReturnProductsAmountValues } from "../OrderRefundReturnAmount/utils";
+import OrderRefundForm, { OrderRefundSubmitData } from "./form";
+import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
+import {
+  getFulfilledFulfillemnts,
+  getParsedLines,
+  getUnfulfilledLines,
+  getWaitingFulfillments,
+} from "./utils";
 
 const messages = defineMessages({
   appTitle: {
-    id: 'rVIlBs',
-    defaultMessage: 'Order #{orderNumber}',
-    description: 'page header with order number',
+    id: "rVIlBs",
+    defaultMessage: "Order #{orderNumber}",
+    description: "page header with order number",
   },
   pageTitle: {
-    id: 'BBIQxQ',
-    defaultMessage: 'Order no. {orderNumber} - Replace/Return',
-    description: 'page header',
+    id: "BBIQxQ",
+    defaultMessage: "Order no. {orderNumber} - Replace/Return",
+    description: "page header",
   },
 });
 

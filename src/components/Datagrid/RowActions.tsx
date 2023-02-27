@@ -1,8 +1,8 @@
-import { IconButton, MoreHorizontalIcon } from '@saleor/macaw-ui';
-import React from 'react';
+import { IconButton, MoreHorizontalIcon } from "@saleor/macaw-ui";
+import React from "react";
 
-import CardMenu, { CardMenuItem } from '../CardMenu';
-import useStyles from './styles';
+import CardMenu, { CardMenuItem } from "../CardMenu";
+import useStyles from "./styles";
 
 interface RowActionsProps {
   menuItems: CardMenuItem[];
@@ -41,7 +41,7 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
           IconButtonProps={{
             className: classes.ghostIcon,
             hoverOutline: false,
-            state: 'default',
+            state: "default",
           }}
           menuItems={menuItems}
         />

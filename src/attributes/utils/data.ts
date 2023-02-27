@@ -1,5 +1,5 @@
-import { FetchResult } from '@apollo/client';
-import { AttributeInput, AttributeInputData } from '@dashboard/components/Attributes';
+import { FetchResult } from "@apollo/client";
+import { AttributeInput, AttributeInputData } from "@dashboard/components/Attributes";
 import {
   AttributeEntityTypeEnum,
   AttributeErrorFragment,
@@ -17,16 +17,16 @@ import {
   SelectedVariantAttributeFragment,
   UploadErrorFragment,
   VariantAttributeFragment,
-} from '@dashboard/graphql';
-import { FormsetData } from '@dashboard/hooks/useFormset';
-import { RelayToFlat } from '@dashboard/types';
-import { mapEdgesToItems, mapNodeToChoice, mapPagesToChoices } from '@dashboard/utils/maps';
-import { RichTextContextValues } from '@dashboard/utils/richText/context';
-import { GetRichTextValues, RichTextGetters } from '@dashboard/utils/richText/useMultipleRichText';
+} from "@dashboard/graphql";
+import { FormsetData } from "@dashboard/hooks/useFormset";
+import { RelayToFlat } from "@dashboard/types";
+import { mapEdgesToItems, mapNodeToChoice, mapPagesToChoices } from "@dashboard/utils/maps";
+import { RichTextContextValues } from "@dashboard/utils/richText/context";
+import { GetRichTextValues, RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
 
-import { AttributePageFormData } from '../components/AttributePage';
+import { AttributePageFormData } from "../components/AttributePage";
 
-type AtributesOfFiles = Pick<AttributeValueInput, 'file' | 'id' | 'values' | 'contentType'>;
+type AtributesOfFiles = Pick<AttributeValueInput, "file" | "id" | "values" | "contentType">;
 
 export interface RichTextProps {
   richText: RichTextContextValues;
@@ -49,7 +49,7 @@ export const ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION = [
   AttributeInputTypeEnum.SWATCH,
 ];
 
-export function filterable(attribute: Pick<AttributeFragment, 'inputType'>): boolean {
+export function filterable(attribute: Pick<AttributeFragment, "inputType">): boolean {
   return ATTRIBUTE_TYPES_WITH_CONFIGURABLE_FACED_NAVIGATION.includes(attribute.inputType!);
 }
 
@@ -69,14 +69,17 @@ export function attributeValueFragmentToFormData(
   data: AttributeValueFragment | null,
 ): AttributeValueEditDialogFormData {
   return {
-    name: data?.name ?? '',
-    value: data?.value ?? '',
-    contentType: data?.file?.contentType ?? '',
+    name: data?.name ?? "",
+    value: data?.value ?? "",
+    contentType: data?.file?.contentType ?? "",
     fileUrl: data?.file?.url,
   };
 }
 
-function getSimpleAttributeData(data: AttributePageFormData, values: AttributeValueEditDialogFormData[]) {
+function getSimpleAttributeData(
+  data: AttributePageFormData,
+  values: AttributeValueEditDialogFormData[],
+) {
   return {
     ...data,
     metadata: undefined,
@@ -88,14 +91,22 @@ function getSimpleAttributeData(data: AttributePageFormData, values: AttributeVa
   };
 }
 
-function getAttributeValueTypeFields({ fileUrl, value, name, contentType }: AttributeValueEditDialogFormData) {
+function getAttributeValueTypeFields({
+  fileUrl,
+  value,
+  name,
+  contentType,
+}: AttributeValueEditDialogFormData) {
   return {
     name,
     ...(fileUrl ? { fileUrl, contentType } : { value }),
   };
 }
 
-function getSwatchAttributeData(data: AttributePageFormData, values: AttributeValueEditDialogFormData[]) {
+function getSwatchAttributeData(
+  data: AttributePageFormData,
+  values: AttributeValueEditDialogFormData[],
+) {
   return {
     ...data,
     metadata: undefined,
@@ -105,7 +116,10 @@ function getSwatchAttributeData(data: AttributePageFormData, values: AttributeVa
   };
 }
 
-function getFileOrReferenceAttributeData(data: AttributePageFormData, values: AttributeValueEditDialogFormData[]) {
+function getFileOrReferenceAttributeData(
+  data: AttributePageFormData,
+  values: AttributeValueEditDialogFormData[],
+) {
   return {
     ...getSimpleAttributeData(data, values),
     availableInGrid: undefined,
@@ -114,7 +128,10 @@ function getFileOrReferenceAttributeData(data: AttributePageFormData, values: At
   };
 }
 
-export function getAttributeData(data: AttributePageFormData, values: AttributeValueEditDialogFormData[]) {
+export function getAttributeData(
+  data: AttributePageFormData,
+  values: AttributeValueEditDialogFormData[],
+) {
   if (data.inputType === AttributeInputTypeEnum.SWATCH) {
     return getSwatchAttributeData(data, values);
   } else if (ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(data.inputType)) {
@@ -127,7 +144,7 @@ export function getAttributeData(data: AttributePageFormData, values: AttributeV
 export function getDefaultAttributeValues(attribute: VariantAttributeFragment) {
   switch (attribute.inputType) {
     case AttributeInputTypeEnum.BOOLEAN:
-      return ['false'];
+      return ["false"];
 
     default:
       return [];
@@ -135,7 +152,10 @@ export function getDefaultAttributeValues(attribute: VariantAttributeFragment) {
 }
 
 export function getSelectedAttributeValues(
-  attribute: PageSelectedAttributeFragment | ProductFragment['attributes'][0] | SelectedVariantAttributeFragment,
+  attribute:
+    | PageSelectedAttributeFragment
+    | ProductFragment["attributes"][0]
+    | SelectedVariantAttributeFragment,
 ) {
   switch (attribute.attribute.inputType) {
     case AttributeInputTypeEnum.REFERENCE:
@@ -151,7 +171,7 @@ export function getSelectedAttributeValues(
       return [attribute.values[0]?.name];
 
     case AttributeInputTypeEnum.BOOLEAN:
-      return [attribute.values[0]?.boolean ?? 'false'];
+      return [attribute.values[0]?.boolean ?? "false"];
 
     case AttributeInputTypeEnum.DATE:
       return [attribute.values[0]?.date];
@@ -168,7 +188,7 @@ export const isFileValueUnused = (
   attributesWithNewFileValue: FormsetData<null, File>,
   existingAttribute:
     | PageSelectedAttributeFragment
-    | ProductFragment['attributes'][0]
+    | ProductFragment["attributes"][0]
     | SelectedVariantAttributeFragment,
 ) => {
   if (existingAttribute.attribute.inputType !== AttributeInputTypeEnum.FILE) {
@@ -208,10 +228,15 @@ export const mergeAttributeValueDeleteErrors = (
   }, []);
 
 export const mergeChoicesWithValues = (
-  attribute: ProductFragment['attributes'][0] | PageSelectedAttributeFragment | SelectedVariantAttributeFragment,
+  attribute:
+    | ProductFragment["attributes"][0]
+    | PageSelectedAttributeFragment
+    | SelectedVariantAttributeFragment,
 ) => {
   const choices = mapEdgesToItems(attribute.attribute.choices) || [];
-  const valuesToConcat = attribute.values.filter(value => !choices.some(choice => choice.id === value.id));
+  const valuesToConcat = attribute.values.filter(
+    value => !choices.some(choice => choice.id === value.id),
+  );
 
   return choices.concat(valuesToConcat);
 };
@@ -244,7 +269,9 @@ export function getRichTextAttributesFromMap(
     }));
 }
 
-export function getRichTextDataFromAttributes(attributes: AttributeInput[] = []): Record<string, string> {
+export function getRichTextDataFromAttributes(
+  attributes: AttributeInput[] = [],
+): Record<string, string> {
   const keyValuePairs = attributes
     .filter(attribute => attribute.data.inputType === AttributeInputTypeEnum.RICH_TEXT)
     .map(attribute => [attribute.id, attribute.value[0]]);
@@ -252,13 +279,17 @@ export function getRichTextDataFromAttributes(attributes: AttributeInput[] = [])
   return Object.fromEntries(keyValuePairs);
 }
 
-export const getFileValuesToUploadFromAttributes = (attributesWithNewFileValue: FormsetData<null, File>) =>
-  attributesWithNewFileValue.filter(fileAttribute => !!fileAttribute.value);
+export const getFileValuesToUploadFromAttributes = (
+  attributesWithNewFileValue: FormsetData<null, File>,
+) => attributesWithNewFileValue.filter(fileAttribute => !!fileAttribute.value);
 
-export const getFileValuesRemovedFromAttributes = (attributesWithNewFileValue: FormsetData<null, File>) =>
-  attributesWithNewFileValue.filter(attribute => !attribute.value);
+export const getFileValuesRemovedFromAttributes = (
+  attributesWithNewFileValue: FormsetData<null, File>,
+) => attributesWithNewFileValue.filter(attribute => !attribute.value);
 
-export const getAttributesOfRemovedFiles = (fileAttributesRemoved: FormsetData<null, File>): AtributesOfFiles[] =>
+export const getAttributesOfRemovedFiles = (
+  fileAttributesRemoved: FormsetData<null, File>,
+): AtributesOfFiles[] =>
   fileAttributesRemoved.map(attribute => ({
     file: undefined,
     id: attribute.id,
@@ -289,7 +320,10 @@ export const getAttributesAfterFileAttributesUpdate = (
   const fileValuesToUpload = getFileValuesToUploadFromAttributes(attributesWithNewFileValue);
 
   const removedFileAttributes = getAttributesOfRemovedFiles(removedFileValues);
-  const uploadedFileAttributes = getAttributesOfUploadedFiles(fileValuesToUpload, uploadFilesResult);
+  const uploadedFileAttributes = getAttributesOfUploadedFiles(
+    fileValuesToUpload,
+    uploadFilesResult,
+  );
 
   return uploadedFileAttributes.concat(removedFileAttributes);
 };
@@ -313,7 +347,7 @@ export const getFileAttributeDisplayData = (
 
 export const getPageReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referencePages: RelayToFlat<NonNullable<SearchPagesQuery['search']>>,
+  referencePages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
 ) => ({
   ...attribute,
   data: {
@@ -321,14 +355,17 @@ export const getPageReferenceAttributeDisplayData = (
     references:
       referencePages?.length > 0 && attribute.value?.length > 0
         ? mapPagesToChoices(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchPagesQuery['search']>>>((acc, value) => {
-              const reference = referencePages.find(reference => reference.id === value);
+            attribute.value.reduce<RelayToFlat<NonNullable<SearchPagesQuery["search"]>>>(
+              (acc, value) => {
+                const reference = referencePages.find(reference => reference.id === value);
 
-              if (reference) {
-                acc.push(reference);
-              }
-              return acc;
-            }, []),
+                if (reference) {
+                  acc.push(reference);
+                }
+                return acc;
+              },
+              [],
+            ),
           )
         : [],
   },
@@ -336,7 +373,7 @@ export const getPageReferenceAttributeDisplayData = (
 
 export const getProductReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery['search']>>,
+  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) => ({
   ...attribute,
   data: {
@@ -344,14 +381,17 @@ export const getProductReferenceAttributeDisplayData = (
     references:
       referenceProducts?.length > 0 && attribute.value?.length > 0
         ? mapNodeToChoice(
-            attribute.value.reduce<RelayToFlat<NonNullable<SearchProductsQuery['search']>>>((acc, value) => {
-              const reference = referenceProducts.find(reference => reference.id === value);
+            attribute.value.reduce<RelayToFlat<NonNullable<SearchProductsQuery["search"]>>>(
+              (acc, value) => {
+                const reference = referenceProducts.find(reference => reference.id === value);
 
-              if (reference) {
-                acc.push(reference);
-              }
-              return acc;
-            }, []),
+                if (reference) {
+                  acc.push(reference);
+                }
+                return acc;
+              },
+              [],
+            ),
           )
         : [],
   },
@@ -359,7 +399,7 @@ export const getProductReferenceAttributeDisplayData = (
 
 export const getProductVariantReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery['search']>>,
+  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) => ({
   ...attribute,
   data: {
@@ -367,7 +407,7 @@ export const getProductVariantReferenceAttributeDisplayData = (
     references:
       referenceProducts?.length > 0 && attribute.value?.length > 0
         ? mapNodeToChoice(
-            attribute.value.reduce<Array<Node & Record<'name', string>>>((acc, value) => {
+            attribute.value.reduce<Array<Node & Record<"name", string>>>((acc, value) => {
               const reference = mapReferenceProductsToVariants(referenceProducts).find(
                 reference => reference.id === value,
               );
@@ -384,8 +424,8 @@ export const getProductVariantReferenceAttributeDisplayData = (
 
 export const getReferenceAttributeDisplayData = (
   attribute: AttributeInput,
-  referencePages: RelayToFlat<NonNullable<SearchPagesQuery['search']>>,
-  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery['search']>>,
+  referencePages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
+  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) => {
   if (attribute.data.entityType === AttributeEntityTypeEnum.PAGE) {
     return getPageReferenceAttributeDisplayData(attribute, referencePages);
@@ -399,8 +439,8 @@ export const getReferenceAttributeDisplayData = (
 export const getAttributesDisplayData = (
   attributes: AttributeInput[],
   attributesWithNewFileValue: FormsetData<null, File>,
-  referencePages: RelayToFlat<NonNullable<SearchPagesQuery['search']>>,
-  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery['search']>>,
+  referencePages: RelayToFlat<NonNullable<SearchPagesQuery["search"]>>,
+  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) =>
   attributes.map(attribute => {
     if (attribute.data.inputType === AttributeInputTypeEnum.REFERENCE) {
@@ -412,16 +452,22 @@ export const getAttributesDisplayData = (
     return attribute;
   });
 
-export const getSelectedReferencesFromAttribute = <T extends Node>(attribute?: AttributeInput, references?: T[]) =>
-  references?.filter(value => !attribute?.value?.some(selectedValue => selectedValue === value.id)) || [];
+export const getSelectedReferencesFromAttribute = <T extends Node>(
+  attribute?: AttributeInput,
+  references?: T[],
+) =>
+  references?.filter(
+    value => !attribute?.value?.some(selectedValue => selectedValue === value.id),
+  ) || [];
 
 export const getReferenceAttributeEntityTypeFromAttribute = (
   attributeId: string,
   attributes?: AttributeInput[],
-): AttributeEntityTypeEnum | undefined => attributes?.find(attribute => attribute.id === attributeId)?.data?.entityType;
+): AttributeEntityTypeEnum | undefined =>
+  attributes?.find(attribute => attribute.id === attributeId)?.data?.entityType;
 
 export const mapReferenceProductsToVariants = (
-  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery['search']>>,
+  referenceProducts: RelayToFlat<NonNullable<SearchProductsQuery["search"]>>,
 ) =>
   referenceProducts.flatMap(product =>
     (product.variants || []).map(variant => ({

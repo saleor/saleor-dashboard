@@ -1,18 +1,18 @@
-import { ApolloError } from '@apollo/client';
-import { findValueInEnum } from '@dashboard/misc';
-import { GraphQLError } from 'graphql';
+import { ApolloError } from "@apollo/client";
+import { findValueInEnum } from "@dashboard/misc";
+import { GraphQLError } from "graphql";
 
-import { UserContextError } from './types';
+import { UserContextError } from "./types";
 
 export enum JWTError {
-  invalid = 'InvalidTokenError',
-  invalidSignature = 'InvalidSignatureError',
-  expired = 'ExpiredSignatureError',
+  invalid = "InvalidTokenError",
+  invalidSignature = "InvalidSignatureError",
+  expired = "ExpiredSignatureError",
 }
 
 export const AuthError = {
-  PermissionDenied: 'PermissionDenied',
-  OAuthError: 'OAuthError',
+  PermissionDenied: "PermissionDenied",
+  OAuthError: "OAuthError",
 } as const;
 
 export type AuthError = (typeof AuthError)[keyof typeof AuthError];

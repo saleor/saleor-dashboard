@@ -1,26 +1,26 @@
-import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
-import ActionDialog from '@dashboard/components/ActionDialog';
-import { useChannelsSearch } from '@dashboard/components/ChannelsAvailabilityDialog/utils';
-import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
-import { IMessage } from '@dashboard/components/messages';
-import SingleAutocompleteSelectField from '@dashboard/components/SingleAutocompleteSelectField';
-import { useChannelsQuery, useGiftCardResendMutation } from '@dashboard/graphql';
-import useForm from '@dashboard/hooks/useForm';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { getBySlug } from '@dashboard/misc';
-import { DialogProps } from '@dashboard/types';
-import commonErrorMessages from '@dashboard/utils/errors/common';
-import { mapSlugNodeToChoice } from '@dashboard/utils/maps';
-import { CircularProgress, TextField, Typography } from '@material-ui/core';
-import React, { useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { IMessage } from "@dashboard/components/messages";
+import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import { useChannelsQuery, useGiftCardResendMutation } from "@dashboard/graphql";
+import useForm from "@dashboard/hooks/useForm";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getBySlug } from "@dashboard/misc";
+import { DialogProps } from "@dashboard/types";
+import commonErrorMessages from "@dashboard/utils/errors/common";
+import { mapSlugNodeToChoice } from "@dashboard/utils/maps";
+import { CircularProgress, TextField, Typography } from "@material-ui/core";
+import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 
-import { useGiftCardDeleteDialogContentStyles as useProgressStyles } from '../../components/GiftCardDeleteDialog/styles';
-import { useUpdateBalanceDialogStyles as useStyles } from '../GiftCardUpdateBalanceDialog/styles';
-import { getGiftCardErrorMessage } from '../messages';
-import useGiftCardDetails from '../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails';
-import { giftCardResendCodeDialogMessages as messages } from './messages';
-import { useDialogFormReset } from './utils';
+import { useGiftCardDeleteDialogContentStyles as useProgressStyles } from "../../components/GiftCardDeleteDialog/styles";
+import { useUpdateBalanceDialogStyles as useStyles } from "../GiftCardUpdateBalanceDialog/styles";
+import { getGiftCardErrorMessage } from "../messages";
+import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
+import { giftCardResendCodeDialogMessages as messages } from "./messages";
+import { useDialogFormReset } from "./utils";
 
 export interface GiftCardResendCodeFormData {
   email: string;
@@ -48,8 +48,8 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
   const { onQueryChange, filteredChannels } = useChannelsSearch(activeChannels);
 
   const initialFormData: GiftCardResendCodeFormData = {
-    email: '',
-    channelSlug: initialChannelSlug || '',
+    email: "",
+    channelSlug: initialChannelSlug || "",
   };
 
   const {
@@ -78,11 +78,11 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
 
       const notifierData: IMessage = !!errors?.length
         ? {
-            status: 'error',
+            status: "error",
             text: intl.formatMessage(commonErrorMessages.unknownError),
           }
         : {
-            status: 'success',
+            status: "success",
             text: intl.formatMessage(messages.successResendAlertText),
           };
 
@@ -101,7 +101,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
     open,
     reset,
     apiErrors: submitData?.giftCardResend?.errors,
-    keys: ['email'],
+    keys: ["email"],
   });
 
   useEffect(reset, [consentSelected]);

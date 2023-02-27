@@ -1,27 +1,29 @@
-import useForm, { SubmitPromise } from '@dashboard/hooks/useForm';
-import { act, renderHook } from '@testing-library/react-hooks';
-import React from 'react';
-import { useHistory } from 'react-router';
-import { MemoryRouter } from 'react-router-dom';
+import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
+import { act, renderHook } from "@testing-library/react-hooks";
+import React from "react";
+import { useHistory } from "react-router";
+import { MemoryRouter } from "react-router-dom";
 
-import { ExitFormDialogContext } from './ExitFormDialogProvider';
-import { useExitFormDialog } from './useExitFormDialog';
-import { useExitFormDialogProvider } from './useExitFormDialogProvider';
+import { ExitFormDialogContext } from "./ExitFormDialogProvider";
+import { useExitFormDialog } from "./useExitFormDialog";
+import { useExitFormDialogProvider } from "./useExitFormDialogProvider";
 
-jest.mock('../../hooks/useNotifier', () => undefined);
+jest.mock("../../hooks/useNotifier", () => undefined);
 
 const MockExitFormDialogProvider = ({ children }) => {
   const { providerData } = useExitFormDialogProvider();
-  return <ExitFormDialogContext.Provider value={providerData}>{children}</ExitFormDialogContext.Provider>;
+  return (
+    <ExitFormDialogContext.Provider value={providerData}>{children}</ExitFormDialogContext.Provider>
+  );
 };
 
-const initialPath = '/';
-const targetPath = '/path';
+const initialPath = "/";
+const targetPath = "/path";
 
 const setup = (submitFn: () => SubmitPromise, confirmLeave = true) =>
   renderHook(
     () => {
-      const form = useForm({ field: '' }, submitFn, { confirmLeave });
+      const form = useForm({ field: "" }, submitFn, { confirmLeave });
       const exit = useExitFormDialog();
       const history = useHistory();
 
@@ -33,15 +35,15 @@ const setup = (submitFn: () => SubmitPromise, confirmLeave = true) =>
     },
     {
       wrapper: ({ children }) => (
-        <MemoryRouter initialEntries={[{ pathname: '/' }]}>
+        <MemoryRouter initialEntries={[{ pathname: "/" }]}>
           <MockExitFormDialogProvider>{children}</MockExitFormDialogProvider>
         </MemoryRouter>
       ),
     },
   );
 
-describe('useExitFormDialog', () => {
-  it('blocks navigation after leaving dirty form', async () => {
+describe("useExitFormDialog", () => {
+  it("blocks navigation after leaving dirty form", async () => {
     // Given
     const submitFn = jest.fn(() => Promise.resolve([]));
     const { result } = setup(submitFn);
@@ -49,7 +51,7 @@ describe('useExitFormDialog', () => {
     // When
     act(() => {
       result.current.form.change({
-        target: { name: 'field', value: 'something' },
+        target: { name: "field", value: "something" },
       });
     });
     act(() => {
@@ -61,7 +63,7 @@ describe('useExitFormDialog', () => {
     expect(result.current.history.location.pathname).toBe(initialPath);
   });
 
-  it('allows navigation after leaving dirty form if no confirmation is needed', async () => {
+  it("allows navigation after leaving dirty form if no confirmation is needed", async () => {
     // Given
     const submitFn = jest.fn(() => Promise.resolve([]));
     const { result } = setup(submitFn, false);
@@ -69,7 +71,7 @@ describe('useExitFormDialog', () => {
     // When
     act(() => {
       result.current.form.change({
-        target: { name: 'field', value: 'something' },
+        target: { name: "field", value: "something" },
       });
     });
     act(() => {
@@ -80,17 +82,17 @@ describe('useExitFormDialog', () => {
     expect(result.current.exit.shouldBlockNavigation()).toBe(false);
     expect(result.current.history.location.pathname).toBe(targetPath);
   });
-  it('navigates to full url with querystring', async () => {
+  it("navigates to full url with querystring", async () => {
     // Given
     const submitFn = jest.fn(() => Promise.resolve([]));
     const { result } = setup(submitFn);
-    const qs = '?param=value';
+    const qs = "?param=value";
     const targetPathWithQs = targetPath + qs;
 
     // When
     act(() => {
       result.current.form.change({
-        target: { name: 'field', value: 'something' },
+        target: { name: "field", value: "something" },
       });
     });
     act(() => {

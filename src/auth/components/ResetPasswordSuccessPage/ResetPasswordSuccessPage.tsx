@@ -1,10 +1,10 @@
-import { Button } from '@dashboard/components/Button';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import { Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import useStyles from '../styles';
+import useStyles from "../styles";
 
 export interface ResetPasswordSuccessPageFormData {
   email: string;
@@ -37,5 +37,5 @@ const ResetPasswordSuccessPage: React.FC<ResetPasswordSuccessPageProps> = props 
   );
 };
 
-ResetPasswordSuccessPage.displayName = 'ResetPasswordSuccessPage';
+ResetPasswordSuccessPage.displayName = "ResetPasswordSuccessPage";
 export default ResetPasswordSuccessPage;

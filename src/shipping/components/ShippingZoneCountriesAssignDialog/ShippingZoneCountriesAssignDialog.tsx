@@ -1,14 +1,14 @@
-import BackButton from '@dashboard/components/BackButton';
-import Checkbox from '@dashboard/components/Checkbox';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import Form from '@dashboard/components/Form';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import Hr from '@dashboard/components/Hr';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { CountryWithCodeFragment } from '@dashboard/graphql';
-import { getCountrySelectionMap, isRestWorldCountriesSelected } from '@dashboard/shipping/handlers';
-import useScrollableDialogStyle from '@dashboard/styles/useScrollableDialogStyle';
+import BackButton from "@dashboard/components/BackButton";
+import Checkbox from "@dashboard/components/Checkbox";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Hr from "@dashboard/components/Hr";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { CountryWithCodeFragment } from "@dashboard/graphql";
+import { getCountrySelectionMap, isRestWorldCountriesSelected } from "@dashboard/shipping/handlers";
+import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
 import {
   Dialog,
   DialogActions,
@@ -18,15 +18,15 @@ import {
   TableCell,
   TextField,
   Typography,
-} from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import { filter } from 'fuzzaldrin';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { filter } from "fuzzaldrin";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { createCountryChangeHandler, createRestOfTheWorldChangeHandler } from './handlers';
-import { messages } from './messages';
-import { useStyles } from './styles';
+import { createCountryChangeHandler, createRestOfTheWorldChangeHandler } from "./handlers";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 interface FormData {
   countries: string[];
@@ -43,8 +43,11 @@ export interface ShippingZoneCountriesAssignDialogProps {
   onConfirm: (data: FormData) => void;
 }
 
-const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDialogProps> = props => {
-  const { confirmButtonState, onClose, countries, restWorldCountries, open, initial, onConfirm } = props;
+const ShippingZoneCountriesAssignDialog: React.FC<
+  ShippingZoneCountriesAssignDialogProps
+> = props => {
+  const { confirmButtonState, onClose, countries, restWorldCountries, open, initial, onConfirm } =
+    props;
 
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle();
@@ -52,7 +55,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
 
   const initialForm: FormData = {
     countries: initial,
-    query: '',
+    query: "",
   };
 
   return (
@@ -60,7 +63,10 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
       <Form initial={initialForm} onSubmit={onConfirm} className={scrollableDialogClasses.form}>
         {({ data, change }) => {
           const countrySelectionMap = getCountrySelectionMap(countries, data.countries);
-          const isRestOfTheWorldSelected = isRestWorldCountriesSelected(restWorldCountries, countrySelectionMap);
+          const isRestOfTheWorldSelected = isRestWorldCountriesSelected(
+            restWorldCountries,
+            countrySelectionMap,
+          );
           const handleCountryChange = createCountryChangeHandler(data.countries, change);
           const handleRestOfTheWorldChange = createRestOfTheWorldChangeHandler(
             countrySelectionMap,
@@ -125,7 +131,7 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
                 <ResponsiveTable className={classes.table}>
                   <TableBody>
                     {filter(countries, data.query, {
-                      key: 'country',
+                      key: "country",
                     }).map(country => {
                       const isChecked = countrySelectionMap[country.code];
 
@@ -158,5 +164,5 @@ const ShippingZoneCountriesAssignDialog: React.FC<ShippingZoneCountriesAssignDia
     </Dialog>
   );
 };
-ShippingZoneCountriesAssignDialog.displayName = 'ShippingZoneCountriesAssignDialog';
+ShippingZoneCountriesAssignDialog.displayName = "ShippingZoneCountriesAssignDialog";
 export default ShippingZoneCountriesAssignDialog;

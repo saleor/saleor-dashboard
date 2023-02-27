@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const collectionUpdate = gql`
   mutation CollectionUpdate($id: ID!, $input: CollectionInput!) {

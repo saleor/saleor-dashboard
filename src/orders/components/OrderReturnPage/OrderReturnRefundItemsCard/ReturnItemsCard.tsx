@@ -1,20 +1,28 @@
-import Money from '@dashboard/components/Money';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableCellAvatar from '@dashboard/components/TableCellAvatar';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { OrderDetailsFragment, OrderErrorFragment, OrderLineFragment } from '@dashboard/graphql';
-import { FormsetChange } from '@dashboard/hooks/useFormset';
-import { getById, renderCollection } from '@dashboard/misc';
-import { Card, CardContent, Checkbox, TableBody, TableCell, TableHead, TextField } from '@material-ui/core';
-import { makeStyles, ResponsiveTable } from '@saleor/macaw-ui';
-import React, { CSSProperties } from 'react';
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import Money from "@dashboard/components/Money";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { OrderDetailsFragment, OrderErrorFragment, OrderLineFragment } from "@dashboard/graphql";
+import { FormsetChange } from "@dashboard/hooks/useFormset";
+import { getById, renderCollection } from "@dashboard/misc";
+import {
+  Card,
+  CardContent,
+  Checkbox,
+  TableBody,
+  TableCell,
+  TableHead,
+  TextField,
+} from "@material-ui/core";
+import { makeStyles, ResponsiveTable } from "@saleor/macaw-ui";
+import React, { CSSProperties } from "react";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import OrderCardTitle from '../../OrderCardTitle';
-import { FormsetQuantityData, FormsetReplacementData } from '../form';
-import { getQuantityDataFromItems, getReplacementDataFromItems } from '../utils';
-import MaximalButton from './MaximalButton';
-import ProductErrorCell from './ProductErrorCell';
+import OrderCardTitle from "../../OrderCardTitle";
+import { FormsetQuantityData, FormsetReplacementData } from "../form";
+import { getQuantityDataFromItems, getReplacementDataFromItems } from "../utils";
+import MaximalButton from "./MaximalButton";
+import ProductErrorCell from "./ProductErrorCell";
 
 const useStyles = makeStyles(
   theme => {
@@ -35,7 +43,7 @@ const useStyles = makeStyles(
       },
 
       quantityField: {
-        minWidth: '80px',
+        minWidth: "80px",
       },
       quantityInnerInput: {
         ...inputPadding,
@@ -46,7 +54,7 @@ const useStyles = makeStyles(
       remainingQuantity: {
         ...inputPadding,
         color: theme.palette.text.secondary,
-        whiteSpace: 'nowrap',
+        whiteSpace: "nowrap",
       },
       setMaximalQuantityButton: {
         marginBottom: theme.spacing(1),
@@ -55,25 +63,25 @@ const useStyles = makeStyles(
       },
     };
   },
-  { name: 'ItemsCard' },
+  { name: "ItemsCard" },
 );
 
 const messages = defineMessages({
   improperValue: {
-    id: 'xoyCZ/',
-    defaultMessage: 'Improper value',
-    description: 'error message',
+    id: "xoyCZ/",
+    defaultMessage: "Improper value",
+    description: "error message",
   },
 
   titleFulfilled: {
-    id: 'NxRsHQ',
-    defaultMessage: 'Fulfillment - #{fulfilmentId}',
-    description: 'section header',
+    id: "NxRsHQ",
+    defaultMessage: "Fulfillment - #{fulfilmentId}",
+    description: "section header",
   },
   titleUnfulfilled: {
-    id: 'BkFke9',
-    defaultMessage: 'Unfulfilled Items',
-    description: 'section header',
+    id: "BkFke9",
+    defaultMessage: "Unfulfilled Items",
+    description: "section header",
   },
 });
 
@@ -123,17 +131,33 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
         <TableHead>
           <TableRowLink>
             <TableCell>
-              <FormattedMessage id="aAAxKp" defaultMessage="Product" description="table column header" />
+              <FormattedMessage
+                id="aAAxKp"
+                defaultMessage="Product"
+                description="table column header"
+              />
             </TableCell>
             <TableCell />
             <TableCell align="right">
-              <FormattedMessage id="Y299ST" defaultMessage="Price" description="table column header" />
+              <FormattedMessage
+                id="Y299ST"
+                defaultMessage="Price"
+                description="table column header"
+              />
             </TableCell>
             <TableCell align="right">
-              <FormattedMessage id="0qg33z" defaultMessage="Return" description="table column header" />
+              <FormattedMessage
+                id="0qg33z"
+                defaultMessage="Return"
+                description="table column header"
+              />
             </TableCell>
             <TableCell align="center">
-              <FormattedMessage id="ikM00B" defaultMessage="Replace" description="table column header" />
+              <FormattedMessage
+                id="ikM00B"
+                defaultMessage="Replace"
+                description="table column header"
+              />
             </TableCell>
           </TableRowLink>
         </TableHead>
@@ -141,7 +165,15 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
           {renderCollection(
             lines,
             line => {
-              const { quantity, quantityToFulfill, id, thumbnail, unitPrice, productName, variant } = line;
+              const {
+                quantity,
+                quantityToFulfill,
+                id,
+                thumbnail,
+                unitPrice,
+                productName,
+                variant,
+              } = line;
               const isValueError = false;
               const { isRefunded, currentQuantity } = getQuantityDataFromItems(itemsQuantities, id);
               const { isSelected } = getReplacementDataFromItems(itemsSelections, id);
@@ -150,11 +182,14 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
               const isPreorder = !!variant?.preorder;
               const lineQuantity = fulfilmentId ? quantity : quantityToFulfill;
               const anyLineWithoutVariant = lines.some(({ variant }) => !variant);
-              const productNameCellWidth = anyLineWithoutVariant ? '30%' : '50%';
+              const productNameCellWidth = anyLineWithoutVariant ? "30%" : "50%";
 
               return (
                 <TableRowLink key={id}>
-                  <TableCellAvatar thumbnail={thumbnail?.url} style={{ width: productNameCellWidth }}>
+                  <TableCellAvatar
+                    thumbnail={thumbnail?.url}
+                    style={{ width: productNameCellWidth }}
+                  >
                     {productName || <Skeleton />}
                   </TableCellAvatar>
                   <ProductErrorCell hasVariant={isReturnable} />
@@ -173,11 +208,11 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                         type="number"
                         inputProps={{
                           className: classes.quantityInnerInput,
-                          'data-test': 'quantityInput',
-                          'data-test-id': id,
+                          "data-test": "quantityInput",
+                          "data-test-id": id,
                           max: lineQuantity.toString(),
                           min: 0,
-                          style: { textAlign: 'right' },
+                          style: { textAlign: "right" },
                         }}
                         fullWidth
                         value={currentQuantity}
@@ -194,7 +229,10 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
                   </TableCell>
                   <TableCell align="center">
                     {isReplacable && !isPreorder && (
-                      <Checkbox checked={isSelected} onChange={() => onChangeSelected(id, !isSelected)} />
+                      <Checkbox
+                        checked={isSelected}
+                        onChange={() => onChangeSelected(id, !isSelected)}
+                      />
                     )}
                   </TableCell>
                 </TableRowLink>

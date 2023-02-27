@@ -1,2 +1,2 @@
-export { default } from './AttributeSwatchField';
-export * from './AttributeSwatchField';
+export { default } from "./AttributeSwatchField";
+export * from "./AttributeSwatchField";

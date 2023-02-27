@@ -1,44 +1,44 @@
-import { ChannelsAvailabilityDropdown } from '@dashboard/components/ChannelsAvailabilityDropdown';
+import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import {
   getChannelAvailabilityColor,
   getChannelAvailabilityLabel,
-} from '@dashboard/components/ChannelsAvailabilityDropdown/utils';
-import Checkbox from '@dashboard/components/Checkbox';
-import Date from '@dashboard/components/Date';
-import MoneyRange from '@dashboard/components/MoneyRange';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableCellAvatar from '@dashboard/components/TableCellAvatar';
-import TableCellHeader from '@dashboard/components/TableCellHeader';
-import TableHead from '@dashboard/components/TableHead';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import TooltipTableCellHeader from '@dashboard/components/TooltipTableCellHeader';
-import { commonTooltipMessages } from '@dashboard/components/TooltipTableCellHeader/messages';
-import { ProductListColumns } from '@dashboard/config';
-import { GridAttributesQuery, ProductListQuery } from '@dashboard/graphql';
-import { maybe, renderCollection } from '@dashboard/misc';
+} from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
+import Checkbox from "@dashboard/components/Checkbox";
+import Date from "@dashboard/components/Date";
+import MoneyRange from "@dashboard/components/MoneyRange";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import TooltipTableCellHeader from "@dashboard/components/TooltipTableCellHeader";
+import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
+import { ProductListColumns } from "@dashboard/config";
+import { GridAttributesQuery, ProductListQuery } from "@dashboard/graphql";
+import { maybe, renderCollection } from "@dashboard/misc";
 import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue,
-} from '@dashboard/products/components/ProductListPage/utils';
-import { ProductListUrlSortField, productUrl } from '@dashboard/products/urls';
-import { canBeSorted } from '@dashboard/products/views/ProductList/sort';
-import { ChannelProps, ListActions, ListProps, RelayToFlat, SortPage } from '@dashboard/types';
-import TDisplayColumn, { DisplayColumnProps } from '@dashboard/utils/columns/DisplayColumn';
-import { getArrowDirection } from '@dashboard/utils/sort';
-import { TableBody, TableCell, TableFooter } from '@material-ui/core';
-import { makeStyles, Pill } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@dashboard/products/components/ProductListPage/utils";
+import { ProductListUrlSortField, productUrl } from "@dashboard/products/urls";
+import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
+import { ChannelProps, ListActions, ListProps, RelayToFlat, SortPage } from "@dashboard/types";
+import TDisplayColumn, { DisplayColumnProps } from "@dashboard/utils/columns/DisplayColumn";
+import { getArrowDirection } from "@dashboard/utils/sort";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { makeStyles, Pill } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { columnsMessages } from './messages';
-import ProductListAttribute from './ProductListAttribute';
+import { columnsMessages } from "./messages";
+import ProductListAttribute from "./ProductListAttribute";
 
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up('md')]: {
+    [theme.breakpoints.up("md")]: {
       colName: {
         minWidth: 300,
       },
@@ -57,55 +57,57 @@ const useStyles = makeStyles(
     },
     colAttribute: {
       width: 200,
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
     },
     colFill: {
       padding: 0,
-      width: '100%',
+      width: "100%",
     },
     colName: {
-      wordBreak: 'break-all',
+      wordBreak: "break-all",
       paddingLeft: 0,
-      '&$colNameFixed': {
+      "&$colNameFixed": {
         width: 300,
       },
     },
     colAvatar: {
-      wordBreak: 'break-all',
+      wordBreak: "break-all",
     },
     colNameFixed: {},
     colNameWrapper: {
-      display: 'block',
+      display: "block",
     },
     colPrice: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     colPublished: {},
     colType: {
-      wordBreak: 'break-all',
+      wordBreak: "break-all",
     },
     link: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
     table: {
-      tableLayout: 'fixed',
+      tableLayout: "fixed",
     },
     tableContainer: {
-      overflowX: 'scroll',
+      overflowX: "scroll",
     },
     textLeft: {
-      textAlign: 'left',
+      textAlign: "left",
     },
     textRight: {
-      textAlign: 'right',
+      textAlign: "right",
     },
   }),
-  { name: 'ProductList' },
+  { name: "ProductList" },
 );
 
-const DisplayColumn = TDisplayColumn as React.FunctionComponent<DisplayColumnProps<ProductListColumns>>;
+const DisplayColumn = TDisplayColumn as React.FunctionComponent<
+  DisplayColumnProps<ProductListColumns>
+>;
 
 interface ProductListProps
   extends ListProps<ProductListColumns>,
@@ -113,8 +115,8 @@ interface ProductListProps
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
-  gridAttributes: RelayToFlat<GridAttributesQuery['grid']>;
-  products: RelayToFlat<ProductListQuery['products']>;
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
+  products: RelayToFlat<ProductListQuery["products"]>;
 }
 
 export const ProductList: React.FC<ProductListProps> = props => {
@@ -177,7 +179,9 @@ export const ProductList: React.FC<ProductListProps> = props => {
             className={clsx(classes.colName, {
               [classes.colNameFixed]: settings.columns.length > 4,
             })}
-            direction={sort.sort === ProductListUrlSortField.name ? getArrowDirection(sort.asc) : undefined}
+            direction={
+              sort.sort === ProductListUrlSortField.name ? getArrowDirection(sort.asc) : undefined
+            }
             onClick={() => onSort(ProductListUrlSortField.name)}
           >
             <FormattedMessage id="VQLIXd" defaultMessage="Name" description="product" />
@@ -186,7 +190,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
             <TableCellHeader
               data-test-id="col-type-header"
               className={classes.colType}
-              direction={sort.sort === ProductListUrlSortField.productType ? getArrowDirection(sort.asc) : undefined}
+              direction={
+                sort.sort === ProductListUrlSortField.productType
+                  ? getArrowDirection(sort.asc)
+                  : undefined
+              }
               onClick={() => onSort(ProductListUrlSortField.productType)}
             >
               <FormattedMessage {...columnsMessages.type} />
@@ -196,7 +204,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
             <TooltipTableCellHeader
               data-test-id="col-availability-header"
               className={classes.colPublished}
-              direction={sort.sort === ProductListUrlSortField.status ? getArrowDirection(sort.asc) : undefined}
+              direction={
+                sort.sort === ProductListUrlSortField.status
+                  ? getArrowDirection(sort.asc)
+                  : undefined
+              }
               onClick={() => onSort(ProductListUrlSortField.status)}
               disabled={!canBeSorted(ProductListUrlSortField.status, !!selectedChannelId)}
               tooltip={intl.formatMessage(commonTooltipMessages.noFilterSelected, {
@@ -213,7 +225,8 @@ export const ProductList: React.FC<ProductListProps> = props => {
               <TableCellHeader
                 className={classes.colAttribute}
                 direction={
-                  sort.sort === ProductListUrlSortField.attribute && attributeId === activeAttributeSortId
+                  sort.sort === ProductListUrlSortField.attribute &&
+                  attributeId === activeAttributeSortId
                     ? getArrowDirection(sort.asc)
                     : undefined
                 }
@@ -231,7 +244,9 @@ export const ProductList: React.FC<ProductListProps> = props => {
             <TableCellHeader
               data-test-id="col-date-header"
               className={classes.colDate}
-              direction={sort.sort === ProductListUrlSortField.date ? getArrowDirection(sort.asc) : undefined}
+              direction={
+                sort.sort === ProductListUrlSortField.date ? getArrowDirection(sort.asc) : undefined
+              }
               onClick={() => onSort(ProductListUrlSortField.date)}
             >
               <FormattedMessage {...columnsMessages.updatedAt} />
@@ -241,7 +256,11 @@ export const ProductList: React.FC<ProductListProps> = props => {
             <TooltipTableCellHeader
               data-test-id="col-price-header"
               className={classes.colPrice}
-              direction={sort.sort === ProductListUrlSortField.price ? getArrowDirection(sort.asc) : undefined}
+              direction={
+                sort.sort === ProductListUrlSortField.price
+                  ? getArrowDirection(sort.asc)
+                  : undefined
+              }
               textAlign="right"
               onClick={() => onSort(ProductListUrlSortField.price)}
               disabled={!canBeSorted(ProductListUrlSortField.price, !!selectedChannelId)}
@@ -267,16 +286,18 @@ export const ProductList: React.FC<ProductListProps> = props => {
             products,
             product => {
               const isSelected = product ? isChecked(product.id) : false;
-              const channel = product?.channelListings.find(listing => listing.channel.id === selectedChannelId);
+              const channel = product?.channelListings.find(
+                listing => listing.channel.id === selectedChannelId,
+              );
 
               return (
                 <TableRowLink
                   selected={isSelected}
                   hover={!!product}
-                  key={product ? product.id : 'skeleton'}
+                  key={product ? product.id : "skeleton"}
                   href={product && productUrl(product.id)}
                   className={classes.link}
-                  data-test-id={'id-' + (product ? product?.id : 'skeleton')}
+                  data-test-id={"id-" + (product ? product?.id : "skeleton")}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -286,7 +307,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       onChange={() => toggle(product.id)}
                     />
                   </TableCell>
-                  <TableCellAvatar className={classes.colAvatar} thumbnail={maybe(() => product.thumbnail.url)}>
+                  <TableCellAvatar
+                    className={classes.colAvatar}
+                    thumbnail={maybe(() => product.thumbnail.url)}
+                  >
                     {product?.name ? <span data-test-id="name">{product.name}</span> : <Skeleton />}
                   </TableCellAvatar>
                   <DisplayColumn column="productType" displayColumns={settings.columns}>
@@ -318,7 +342,10 @@ export const ProductList: React.FC<ProductListProps> = props => {
                       data-test-id="attribute"
                       data-test-attribute={getAttributeIdFromColumnValue(gridAttribute)}
                     >
-                      <ProductListAttribute attribute={gridAttribute} productAttributes={product?.attributes} />
+                      <ProductListAttribute
+                        attribute={gridAttribute}
+                        productAttributes={product?.attributes}
+                      />
                     </TableCell>
                   ))}
                   <DisplayColumn column="date" displayColumns={settings.columns}>
@@ -354,5 +381,5 @@ export const ProductList: React.FC<ProductListProps> = props => {
     </div>
   );
 };
-ProductList.displayName = 'ProductList';
+ProductList.displayName = "ProductList";
 export default ProductList;

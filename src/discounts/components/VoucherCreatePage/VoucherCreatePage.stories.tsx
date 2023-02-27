@@ -1,11 +1,11 @@
-import { channelsList } from '@dashboard/channels/fixtures';
-import { createVoucherChannels } from '@dashboard/channels/utils';
-import { DiscountErrorCode } from '@dashboard/graphql';
-import Decorator from '@dashboard/storybook/Decorator';
-import { storiesOf } from '@storybook/react';
-import React from 'react';
+import { channelsList } from "@dashboard/channels/fixtures";
+import { createVoucherChannels } from "@dashboard/channels/utils";
+import { DiscountErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
-import VoucherCreatePage, { FormData, VoucherCreatePageProps } from './VoucherCreatePage';
+import VoucherCreatePage, { FormData, VoucherCreatePageProps } from "./VoucherCreatePage";
 
 const channels = createVoucherChannels(channelsList);
 
@@ -17,34 +17,34 @@ const props: VoucherCreatePageProps = {
   onChannelsChange: () => undefined,
   onSubmit: () => undefined,
   openChannelsModal: () => undefined,
-  saveButtonBarState: 'default',
+  saveButtonBarState: "default",
 };
 
-storiesOf('Discounts / Voucher create', module)
+storiesOf("Discounts / Voucher create", module)
   .addDecorator(Decorator)
-  .add('default', () => <VoucherCreatePage {...props} />)
-  .add('form errors', () => (
+  .add("default", () => <VoucherCreatePage {...props} />)
+  .add("form errors", () => (
     <VoucherCreatePage
       {...props}
       errors={(
         [
-          'applyOncePerOrder',
-          'code',
-          'discountType',
-          'endDate',
-          'minSpent',
-          'name',
-          'startDate',
-          'type',
-          'usageLimit',
-          'value',
+          "applyOncePerOrder",
+          "code",
+          "discountType",
+          "endDate",
+          "minSpent",
+          "name",
+          "startDate",
+          "type",
+          "usageLimit",
+          "value",
         ] as Array<keyof FormData>
       ).map(field => ({
-        __typename: 'DiscountError',
+        __typename: "DiscountError",
         channels: [],
         code: DiscountErrorCode.INVALID,
         field,
-        message: 'Discount invalid',
+        message: "Discount invalid",
       }))}
     />
   ));

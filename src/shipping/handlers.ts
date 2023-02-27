@@ -1,4 +1,4 @@
-import { ChannelShippingData } from '@dashboard/channels/utils';
+import { ChannelShippingData } from "@dashboard/channels/utils";
 import {
   CountryFragment,
   CreateShippingRateMutationVariables,
@@ -11,17 +11,17 @@ import {
   useCreateShippingRateMutation,
   useDeleteShippingRateMutation,
   useShippingMethodChannelListingUpdateMutation,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { commonMessages } from '@dashboard/intl';
-import { extractMutationErrors, getMutationState } from '@dashboard/misc';
-import { getParsedDataForJsonStringField } from '@dashboard/utils/richText/misc';
-import differenceBy from 'lodash/differenceBy';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import { extractMutationErrors, getMutationState } from "@dashboard/misc";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import differenceBy from "lodash/differenceBy";
+import { useIntl } from "react-intl";
 
-import { ShippingZoneRateCommonFormData } from './components/ShippingZoneRatesPage/types';
-import { shippingRateEditUrl } from './urls';
+import { ShippingZoneRateCommonFormData } from "./components/ShippingZoneRatesPage/types";
+import { shippingRateEditUrl } from "./urls";
 
 export const createChannelsChangeHandler =
   (
@@ -45,9 +45,9 @@ export const createChannelsChangeHandler =
     triggerChange();
   };
 
-const getPostalCodeRulesToAdd = (rules: ShippingMethodTypeFragment['postalCodeRules']) =>
+const getPostalCodeRulesToAdd = (rules: ShippingMethodTypeFragment["postalCodeRules"]) =>
   rules
-    .filter(code => !code.id || code.id === '0')
+    .filter(code => !code.id || code.id === "0")
     .map(
       code =>
         ({
@@ -59,7 +59,7 @@ const getPostalCodeRulesToAdd = (rules: ShippingMethodTypeFragment['postalCodeRu
 export function getCreateShippingPriceRateVariables(
   data: ShippingZoneRateCommonFormData,
   id: string,
-  addPostalCodeRules: ShippingMethodTypeFragment['postalCodeRules'],
+  addPostalCodeRules: ShippingMethodTypeFragment["postalCodeRules"],
   inclusionType: PostalCodeRuleInclusionTypeEnum,
 ): CreateShippingRateMutationVariables {
   const parsedMinDays = parseInt(data.minDays, 10);
@@ -82,7 +82,7 @@ export function getCreateShippingPriceRateVariables(
 export function getCreateShippingWeightRateVariables(
   data: ShippingZoneRateCommonFormData,
   id: string,
-  addPostalCodeRules: ShippingMethodTypeFragment['postalCodeRules'],
+  addPostalCodeRules: ShippingMethodTypeFragment["postalCodeRules"],
   inclusionType: PostalCodeRuleInclusionTypeEnum,
 ): CreateShippingRateMutationVariables {
   const parsedMinValue = parseFloat(data.minValue);
@@ -111,7 +111,7 @@ export function getUpdateShippingPriceRateVariables(
   data: ShippingZoneRateCommonFormData,
   id: string,
   rateId: string,
-  addPostalCodeRules: ShippingMethodTypeFragment['postalCodeRules'],
+  addPostalCodeRules: ShippingMethodTypeFragment["postalCodeRules"],
   deletePostalCodeRules: string[],
 ): UpdateShippingRateMutationVariables {
   const parsedMinDays = parseInt(data.minDays, 10);
@@ -122,7 +122,8 @@ export function getUpdateShippingPriceRateVariables(
     input: {
       addPostalCodeRules: postalCodeRules,
       deletePostalCodeRules,
-      inclusionType: addPostalCodeRules[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+      inclusionType:
+        addPostalCodeRules[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE,
       maximumDeliveryDays: parsedMaxDays,
       minimumDeliveryDays: parsedMinDays,
       name: data.name,
@@ -138,7 +139,7 @@ export function getUpdateShippingWeightRateVariables(
   data: ShippingZoneRateCommonFormData,
   id: string,
   rateId: string,
-  addPostalCodeRules: ShippingMethodTypeFragment['postalCodeRules'],
+  addPostalCodeRules: ShippingMethodTypeFragment["postalCodeRules"],
   deletePostalCodeRules: string[],
 ): UpdateShippingRateMutationVariables {
   const parsedMinValue = parseFloat(data.minValue);
@@ -152,7 +153,8 @@ export function getUpdateShippingWeightRateVariables(
     input: {
       addPostalCodeRules: postalCodeRules,
       deletePostalCodeRules,
-      inclusionType: addPostalCodeRules[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE,
+      inclusionType:
+        addPostalCodeRules[0]?.inclusionType || PostalCodeRuleInclusionTypeEnum.EXCLUDE,
       maximumDeliveryDays: parsedMaxDays,
       maximumOrderWeight: isWeightSet ? parsedMaxValue : null,
       minimumDeliveryDays: parsedMinDays,
@@ -171,7 +173,9 @@ export function getShippingMethodChannelVariables(
   formChannels: ChannelShippingData[],
   prevChannels?: ChannelShippingData[],
 ): ShippingMethodChannelListingUpdateMutationVariables {
-  const removeChannels = prevChannels ? differenceBy(prevChannels, formChannels, 'id').map(({ id }) => id) : [];
+  const removeChannels = prevChannels
+    ? differenceBy(prevChannels, formChannels, "id").map(({ id }) => id)
+    : [];
 
   return {
     id,
@@ -191,7 +195,7 @@ export function getShippingMethodChannelVariables(
 export function useShippingRateCreator(
   shippingZoneId: string,
   type: ShippingMethodTypeEnum,
-  postalCodes: ShippingMethodTypeFragment['postalCodeRules'],
+  postalCodes: ShippingMethodTypeFragment["postalCodeRules"],
   inclusionType: PostalCodeRuleInclusionTypeEnum,
 ) {
   const intl = useIntl();
@@ -203,7 +207,9 @@ export function useShippingRateCreator(
   const [deleteShippingRate] = useDeleteShippingRateMutation({});
 
   const getVariables =
-    type === ShippingMethodTypeEnum.PRICE ? getCreateShippingPriceRateVariables : getCreateShippingWeightRateVariables;
+    type === ShippingMethodTypeEnum.PRICE
+      ? getCreateShippingPriceRateVariables
+      : getCreateShippingWeightRateVariables;
 
   const createShippingRate = async (data: ShippingZoneRateCommonFormData) => {
     const response = await createBaseShippingRate({
@@ -220,7 +226,11 @@ export function useShippingRateCreator(
 
     const errors = await extractMutationErrors(
       updateShippingMethodChannelListing({
-        variables: getShippingMethodChannelVariables(rateId, data.orderValueRestricted, data.channelListings),
+        variables: getShippingMethodChannelVariables(
+          rateId,
+          data.orderValueRestricted,
+          data.channelListings,
+        ),
       }),
     );
 
@@ -232,14 +242,14 @@ export function useShippingRateCreator(
       });
 
       notify({
-        status: 'error',
+        status: "error",
         text: intl.formatMessage(commonMessages.somethingWentWrong),
       });
 
       return errors;
     } else {
       notify({
-        status: 'success',
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
       navigate(shippingRateEditUrl(shippingZoneId, rateId));
@@ -248,9 +258,11 @@ export function useShippingRateCreator(
   };
 
   const called = createBaseShippingRateOpts.called || updateShippingMethodChannelListingOpts.called;
-  const loading = createBaseShippingRateOpts.loading || updateShippingMethodChannelListingOpts.loading;
+  const loading =
+    createBaseShippingRateOpts.loading || updateShippingMethodChannelListingOpts.loading;
   const errors = [...(createBaseShippingRateOpts.data?.shippingPriceCreate.errors || [])];
-  const channelErrors = updateShippingMethodChannelListingOpts.data?.shippingMethodChannelListingUpdate.errors || [];
+  const channelErrors =
+    updateShippingMethodChannelListingOpts.data?.shippingMethodChannelListingUpdate.errors || [];
 
   return {
     channelErrors,
@@ -260,11 +272,16 @@ export function useShippingRateCreator(
   };
 }
 
-export function getCountrySelectionMap(countries?: CountryFragment[], countriesSelected?: string[]) {
+export function getCountrySelectionMap(
+  countries?: CountryFragment[],
+  countriesSelected?: string[],
+) {
   return (
     countriesSelected &&
     countries?.reduce((acc, country) => {
-      acc[country.code] = !!countriesSelected.find(selectedCountries => selectedCountries === country.code);
+      acc[country.code] = !!countriesSelected.find(
+        selectedCountries => selectedCountries === country.code,
+      );
       return acc;
     }, {} as Map<string, boolean>)
   );
@@ -274,5 +291,8 @@ export function isRestWorldCountriesSelected(
   restWorldCountries?: string[],
   countrySelectionMap?: Map<string, boolean>,
 ) {
-  return countrySelectionMap && restWorldCountries?.every(countryCode => countrySelectionMap[countryCode]);
+  return (
+    countrySelectionMap &&
+    restWorldCountries?.every(countryCode => countrySelectionMap[countryCode])
+  );
 }

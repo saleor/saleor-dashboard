@@ -1,2 +1,2 @@
-export { default } from './OrderDraftDetailsProducts';
-export * from './OrderDraftDetailsProducts';
+export { default } from "./OrderDraftDetailsProducts";
+export * from "./OrderDraftDetailsProducts";

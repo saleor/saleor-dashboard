@@ -1,21 +1,28 @@
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import LanguageSwitch from '@dashboard/components/LanguageSwitch';
-import { LanguageCodeEnum, PageTranslationFragment } from '@dashboard/graphql';
-import { commonMessages } from '@dashboard/intl';
-import { getStringOrPlaceholder } from '@dashboard/misc';
-import { PageTranslationInputFieldName, TranslationsEntitiesPageProps } from '@dashboard/translations/types';
-import { languageEntitiesUrl, languageEntityUrl, TranslatableEntities } from '@dashboard/translations/urls';
-import { mapAttributeValuesToTranslationFields } from '@dashboard/translations/utils';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { LanguageCodeEnum, PageTranslationFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import {
+  PageTranslationInputFieldName,
+  TranslationsEntitiesPageProps,
+} from "@dashboard/translations/types";
+import {
+  languageEntitiesUrl,
+  languageEntityUrl,
+  TranslatableEntities,
+} from "@dashboard/translations/urls";
+import { mapAttributeValuesToTranslationFields } from "@dashboard/translations/utils";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import TranslationFields from '../TranslationFields';
+import TranslationFields from "../TranslationFields";
 
 export interface TranslationsPagesPageProps extends TranslationsEntitiesPageProps {
   data: PageTranslationFragment;
-  onAttributeValueSubmit: TranslationsEntitiesPageProps['onSubmit'];
+  onAttributeValueSubmit: TranslationsEntitiesPageProps["onSubmit"];
 }
 
 const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
@@ -41,9 +48,9 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         })}
         title={intl.formatMessage(
           {
-            id: 'oUWXLO',
+            id: "oUWXLO",
             defaultMessage: 'Translation Page "{pageName}" - {languageCode}',
-            description: 'header',
+            description: "header",
           },
           {
             languageCode,
@@ -54,7 +61,9 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          getLanguageUrl={lang => languageEntityUrl(lang, TranslatableEntities.pages, translationId)}
+          getLanguageUrl={lang =>
+            languageEntityUrl(lang, TranslatableEntities.pages, translationId)
+          }
         />
       </TopNav>
       <TranslationFields
@@ -65,23 +74,23 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
-              id: 'gvOzOl',
-              defaultMessage: 'Page Title',
+              id: "gvOzOl",
+              defaultMessage: "Page Title",
             }),
             name: PageTranslationInputFieldName.title,
             translation: data?.translation?.title || null,
-            type: 'short',
+            type: "short",
             value: data?.page?.title,
           },
           {
             displayName: intl.formatMessage({
-              id: 'gMwpNC',
-              defaultMessage: 'Content',
-              description: 'page content',
+              id: "gMwpNC",
+              defaultMessage: "Content",
+              description: "page content",
             }),
             name: PageTranslationInputFieldName.content,
             translation: data?.translation?.content || null,
-            type: 'rich',
+            type: "rich",
             value: data?.page?.content,
           },
         ]}
@@ -98,28 +107,28 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
         disabled={disabled}
         initialState={true}
         title={intl.formatMessage({
-          id: 'TGX4T1',
-          defaultMessage: 'Search Engine Preview',
+          id: "TGX4T1",
+          defaultMessage: "Search Engine Preview",
         })}
         fields={[
           {
             displayName: intl.formatMessage({
-              id: 'HlEpii',
-              defaultMessage: 'Search Engine Title',
+              id: "HlEpii",
+              defaultMessage: "Search Engine Title",
             }),
             name: PageTranslationInputFieldName.seoTitle,
             translation: data?.translation?.seoTitle || null,
-            type: 'short',
+            type: "short",
             value: data?.page?.seoTitle,
           },
           {
             displayName: intl.formatMessage({
-              id: 'US3IPU',
-              defaultMessage: 'Search Engine Description',
+              id: "US3IPU",
+              defaultMessage: "Search Engine Description",
             }),
             name: PageTranslationInputFieldName.seoDescription,
             translation: data?.translation?.seoDescription || null,
-            type: 'long',
+            type: "long",
             value: data?.page?.seoDescription,
           },
         ]}
@@ -150,5 +159,5 @@ const TranslationsPagesPage: React.FC<TranslationsPagesPageProps> = ({
     </DetailedContent>
   );
 };
-TranslationsPagesPage.displayName = 'TranslationsPagesPage';
+TranslationsPagesPage.displayName = "TranslationsPagesPage";
 export default TranslationsPagesPage;

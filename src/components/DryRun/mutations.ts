@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const triggerWebhookDryRun = gql`
   mutation TriggerWebhookDryRun($objectId: ID!, $query: String!) {

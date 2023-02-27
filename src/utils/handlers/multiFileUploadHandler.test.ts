@@ -1,11 +1,11 @@
-import createMultiFileUploadHandler from './multiFileUploadHandler';
+import createMultiFileUploadHandler from "./multiFileUploadHandler";
 
 const testFiles = Array(5)
   .fill(0)
-  .map(() => new File([''], 'mockFile'));
+  .map(() => new File([""], "mockFile"));
 
-describe('Multiple file upload handler', () => {
-  it('properly handles success', done => {
+describe("Multiple file upload handler", () => {
+  it("properly handles success", done => {
     const cbs = {
       onAfterUpload: jest.fn(),
       onBeforeUpload: jest.fn(),
@@ -31,7 +31,7 @@ describe('Multiple file upload handler', () => {
     });
   });
 
-  it('properly handles error', done => {
+  it("properly handles error", done => {
     const cbs = {
       onAfterUpload: jest.fn(),
       onBeforeUpload: jest.fn(),

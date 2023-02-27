@@ -1,8 +1,8 @@
-import { ProductTypeKindEnum } from '@dashboard/graphql';
-import { isInEnum } from '@dashboard/misc';
-import { IntlShape } from 'react-intl';
+import { ProductTypeKindEnum } from "@dashboard/graphql";
+import { isInEnum } from "@dashboard/misc";
+import { IntlShape } from "react-intl";
 
-import { productKindMessages as messages } from './messages';
+import { productKindMessages as messages } from "./messages";
 
 interface ProductKindChoice {
   label: string;
@@ -15,7 +15,10 @@ export const getAvailableProductKinds = (): ProductKindChoice[] =>
     value: kind as ProductTypeKindEnum,
   }));
 
-export const getProductKindOpts = (availableProducts: ProductKindChoice[], intl: IntlShape): ProductKindChoice[] =>
+export const getProductKindOpts = (
+  availableProducts: ProductKindChoice[],
+  intl: IntlShape,
+): ProductKindChoice[] =>
   availableProducts.map(kind => {
     switch (kind.value) {
       case ProductTypeKindEnum.GIFT_CARD:

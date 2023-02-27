@@ -1,8 +1,8 @@
-import { makeStyles, SearchLargeIcon } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { makeStyles, SearchLargeIcon } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { QuickSearchMode } from './types';
+import { QuickSearchMode } from "./types";
 
 const useStyles = makeStyles(
   theme => {
@@ -10,37 +10,37 @@ const useStyles = makeStyles(
       ...theme.typography.body1,
       color: theme.palette.saleor.main[1],
       fontWeight: 500,
-      letterSpacing: '0.02rem',
+      letterSpacing: "0.02rem",
     };
 
     return {
       adornment: {
         ...typography,
-        alignSelf: 'center',
+        alignSelf: "center",
         color: theme.palette.text.secondary,
         marginRight: theme.spacing(1),
-        textAlign: 'center',
+        textAlign: "center",
         width: 32,
       },
       input: {
-        '&::placeholder': {
+        "&::placeholder": {
           color: theme.palette.saleor.main[3],
         },
         ...typography,
-        background: 'transparent',
-        border: 'none',
+        background: "transparent",
+        border: "none",
         outline: 0,
         padding: 0,
-        width: '100%',
+        width: "100%",
       },
       root: {
         background: theme.palette.background.paper,
-        display: 'flex',
+        display: "flex",
         padding: theme.spacing(2, 3),
         height: 72,
       },
       searchIcon: {
-        alignSelf: 'center',
+        alignSelf: "center",
         width: 32,
         height: 32,
         marginRight: theme.spacing(1),
@@ -48,7 +48,7 @@ const useStyles = makeStyles(
     };
   },
   {
-    name: 'NavigatorInput',
+    name: "NavigatorInput",
   },
 );
 
@@ -63,17 +63,17 @@ const NavigatorInput = React.forwardRef<HTMLInputElement, NavigatorInputProps>((
 
   return (
     <div className={classes.root}>
-      {mode !== 'default' ? (
+      {mode !== "default" ? (
         <span className={classes.adornment}>
-          {mode === 'orders'
-            ? '#'
-            : mode === 'customers'
-            ? '@'
-            : mode === 'catalog'
-            ? '$'
-            : mode === 'help'
-            ? '?'
-            : '>'}
+          {mode === "orders"
+            ? "#"
+            : mode === "customers"
+            ? "@"
+            : mode === "catalog"
+            ? "$"
+            : mode === "help"
+            ? "?"
+            : ">"}
         </span>
       ) : (
         <SearchLargeIcon className={classes.searchIcon} />
@@ -83,36 +83,36 @@ const NavigatorInput = React.forwardRef<HTMLInputElement, NavigatorInputProps>((
         autoComplete="off"
         className={classes.input}
         placeholder={
-          mode === 'orders'
+          mode === "orders"
             ? intl.formatMessage({
-                id: '8B8E+3',
-                defaultMessage: 'Order Number',
-                description: 'navigator placeholder',
+                id: "8B8E+3",
+                defaultMessage: "Order Number",
+                description: "navigator placeholder",
               })
-            : mode === 'commands'
+            : mode === "commands"
             ? intl.formatMessage({
-                id: 'NqxvFh',
-                defaultMessage: 'Type Command',
-                description: 'navigator placeholder',
+                id: "NqxvFh",
+                defaultMessage: "Type Command",
+                description: "navigator placeholder",
               })
-            : mode === 'catalog'
+            : mode === "catalog"
             ? intl.formatMessage({
-                id: 'AOI4LW',
-                defaultMessage: 'Search in Catalog',
-                description: 'navigator placeholder',
+                id: "AOI4LW",
+                defaultMessage: "Search in Catalog",
+                description: "navigator placeholder",
               })
-            : mode === 'customers'
+            : mode === "customers"
             ? intl.formatMessage({
-                id: 'TpPx7V',
-                defaultMessage: 'Search Customer',
-                description: 'navigator placeholder',
+                id: "TpPx7V",
+                defaultMessage: "Search Customer",
+                description: "navigator placeholder",
               })
-            : mode === 'default'
+            : mode === "default"
             ? intl.formatMessage(
                 {
-                  id: 'BooQvo',
-                  defaultMessage: 'Type {key} to see available actions',
-                  description: 'navigator placeholder',
+                  id: "BooQvo",
+                  defaultMessage: "Type {key} to see available actions",
+                  description: "navigator placeholder",
                 },
                 {
                   key: "'?'",
@@ -127,5 +127,5 @@ const NavigatorInput = React.forwardRef<HTMLInputElement, NavigatorInputProps>((
   );
 });
 
-NavigatorInput.displayName = 'NavigatorInput';
+NavigatorInput.displayName = "NavigatorInput";
 export default NavigatorInput;

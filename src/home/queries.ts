@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const home = gql`
   query Home(
@@ -7,13 +7,15 @@ export const home = gql`
     $PERMISSION_MANAGE_PRODUCTS: Boolean!
     $PERMISSION_MANAGE_ORDERS: Boolean!
   ) {
-    salesToday: ordersTotal(period: TODAY, channel: $channel) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    salesToday: ordersTotal(period: TODAY, channel: $channel)
+      @include(if: $PERMISSION_MANAGE_ORDERS) {
       gross {
         amount
         currency
       }
     }
-    ordersToday: orders(filter: { created: $datePeriod }, channel: $channel) @include(if: $PERMISSION_MANAGE_ORDERS) {
+    ordersToday: orders(filter: { created: $datePeriod }, channel: $channel)
+      @include(if: $PERMISSION_MANAGE_ORDERS) {
       totalCount
     }
     ordersToFulfill: orders(filter: { status: READY_TO_FULFILL }, channel: $channel)

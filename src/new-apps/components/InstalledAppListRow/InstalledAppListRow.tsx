@@ -1,17 +1,17 @@
-import Link from '@dashboard/components/Link';
-import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
-import { useAppListContext } from '@dashboard/new-apps/context';
-import { appsMessages } from '@dashboard/new-apps/messages';
-import { InstalledApp } from '@dashboard/new-apps/types';
-import { AppUrls } from '@dashboard/new-apps/urls';
-import { isAppInTunnel } from '@dashboard/new-apps/utils';
-import { Box, Button, Chip, List, sprinkles, Text } from '@saleor/macaw-ui/next';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import Link from "@dashboard/components/Link";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import { useAppListContext } from "@dashboard/new-apps/context";
+import { appsMessages } from "@dashboard/new-apps/messages";
+import { InstalledApp } from "@dashboard/new-apps/types";
+import { AppUrls } from "@dashboard/new-apps/urls";
+import { isAppInTunnel } from "@dashboard/new-apps/utils";
+import { Box, Button, Chip, List, sprinkles, Text } from "@saleor/macaw-ui/next";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { AppAvatar } from '../AppAvatar/AppAvatar';
-import AppPermissions from '../AppPermissions';
-import { messages } from './messages';
+import { AppAvatar } from "../AppAvatar/AppAvatar";
+import AppPermissions from "../AppPermissions";
+import { messages } from "./messages";
 
 export const InstalledAppListRow: React.FC<InstalledApp> = props => {
   const { app, isExternal, logo } = props;
@@ -19,7 +19,11 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
   const { openAppSettings } = useAppListContext();
 
   return (
-    <Link href={AppUrls.resolveAppUrl(app.id)} className={sprinkles({ display: 'contents' })} inline={false}>
+    <Link
+      href={AppUrls.resolveAppUrl(app.id)}
+      className={sprinkles({ display: "contents" })}
+      inline={false}
+    >
       <List.Item
         padding={7}
         borderTopStyle="solid"
@@ -31,7 +35,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
       >
         <Box
           display="flex"
-          justifyContent={{ mobile: 'space-between', desktop: 'flex-start' }}
+          justifyContent={{ mobile: "space-between", desktop: "flex-start" }}
           gap={5}
           alignItems="center"
         >
@@ -57,12 +61,16 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
           display="flex"
           marginTop={{ mobile: 4, desktop: 0 }}
           flexDirection="row"
-          justifyContent={{ mobile: 'flex-end', desktop: 'flex-start' }}
+          justifyContent={{ mobile: "flex-end", desktop: "flex-start" }}
           gap={6}
         >
           <AppPermissions permissions={app.permissions} />
           <TableButtonWrapper>
-            <Button variant="secondary" onClick={() => openAppSettings(app.id)} data-test-id="app-settings-button">
+            <Button
+              variant="secondary"
+              onClick={() => openAppSettings(app.id)}
+              data-test-id="app-settings-button"
+            >
               <FormattedMessage {...messages.settings} />
             </Button>
           </TableButtonWrapper>

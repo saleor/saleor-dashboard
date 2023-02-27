@@ -1,44 +1,47 @@
-import { ChannelSaleData, validateSalePrice } from '@dashboard/channels/utils';
-import { Content } from '@dashboard/components/AppLayout/Content';
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import ChannelsAvailabilityCard from '@dashboard/components/ChannelsAvailabilityCard';
-import Form from '@dashboard/components/Form';
-import Metadata, { MetadataFormData } from '@dashboard/components/Metadata';
-import Savebar from '@dashboard/components/Savebar';
-import { Tab, TabContainer } from '@dashboard/components/Tab';
-import { createSaleChannelsChangeHandler, createSaleUpdateHandler } from '@dashboard/discounts/handlers';
-import { itemsQuantityMessages } from '@dashboard/discounts/translations';
-import { saleListUrl } from '@dashboard/discounts/urls';
-import { SALE_UPDATE_FORM_ID } from '@dashboard/discounts/views/SaleDetails/types';
+import { ChannelSaleData, validateSalePrice } from "@dashboard/channels/utils";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import Form from "@dashboard/components/Form";
+import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
+import Savebar from "@dashboard/components/Savebar";
+import { Tab, TabContainer } from "@dashboard/components/Tab";
+import {
+  createSaleChannelsChangeHandler,
+  createSaleUpdateHandler,
+} from "@dashboard/discounts/handlers";
+import { itemsQuantityMessages } from "@dashboard/discounts/translations";
+import { saleListUrl } from "@dashboard/discounts/urls";
+import { SALE_UPDATE_FORM_ID } from "@dashboard/discounts/views/SaleDetails/types";
 import {
   DiscountErrorFragment,
   PermissionEnum,
   SaleDetailsFragment,
   SaleType as SaleTypeEnum,
-} from '@dashboard/graphql';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { mapEdgesToItems, mapMetadataItemToInput } from '@dashboard/utils/maps';
-import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import { sprinkles } from '@saleor/macaw-ui/next';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { sprinkles } from "@saleor/macaw-ui/next";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { splitDateTime } from '../../../misc';
-import { ChannelProps, ListProps, TabListActions } from '../../../types';
-import DiscountCategories from '../DiscountCategories';
-import DiscountCollections from '../DiscountCollections';
-import DiscountDates from '../DiscountDates';
-import DiscountProducts from '../DiscountProducts';
-import DiscountVariants from '../DiscountVariants';
-import SaleInfo from '../SaleInfo';
-import SaleSummary from '../SaleSummary';
-import SaleType from '../SaleType';
-import SaleValue from '../SaleValue';
+import { splitDateTime } from "../../../misc";
+import { ChannelProps, ListProps, TabListActions } from "../../../types";
+import DiscountCategories from "../DiscountCategories";
+import DiscountCollections from "../DiscountCollections";
+import DiscountDates from "../DiscountDates";
+import DiscountProducts from "../DiscountProducts";
+import DiscountVariants from "../DiscountVariants";
+import SaleInfo from "../SaleInfo";
+import SaleSummary from "../SaleSummary";
+import SaleType from "../SaleType";
+import SaleValue from "../SaleValue";
 
 export interface ChannelSaleFormData extends ChannelSaleData {
   percentageValue: string;
@@ -56,17 +59,19 @@ export interface SaleDetailsPageFormData extends MetadataFormData {
 }
 
 export enum SaleDetailsPageTab {
-  categories = 'categories',
-  collections = 'collections',
-  products = 'products',
-  variants = 'variants',
+  categories = "categories",
+  collections = "collections",
+  products = "products",
+  variants = "variants",
 }
 
 export type SaleTabItemsCount = Partial<Record<SaleDetailsPageTab, number>>;
 
 export interface SaleDetailsPageProps
-  extends Pick<ListProps, Exclude<keyof ListProps, 'getRowHref'>>,
-    TabListActions<'categoryListToolbar' | 'collectionListToolbar' | 'productListToolbar' | 'variantListToolbar'>,
+  extends Pick<ListProps, Exclude<keyof ListProps, "getRowHref">>,
+    TabListActions<
+      "categoryListToolbar" | "collectionListToolbar" | "productListToolbar" | "variantListToolbar"
+    >,
     ChannelProps {
   activeTab: SaleDetailsPageTab;
   tabItemsCount: SaleTabItemsCount;
@@ -136,12 +141,12 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
 
   const initialForm: SaleDetailsPageFormData = {
     channelListings,
-    endDate: splitDateTime(sale?.endDate ?? '').date,
-    endTime: splitDateTime(sale?.endDate ?? '').time,
+    endDate: splitDateTime(sale?.endDate ?? "").date,
+    endTime: splitDateTime(sale?.endDate ?? "").time,
     hasEndDate: !!sale?.endDate,
-    name: sale?.name ?? '',
-    startDate: splitDateTime(sale?.startDate ?? '').date,
-    startTime: splitDateTime(sale?.startDate ?? '').time,
+    name: sale?.name ?? "",
+    startDate: splitDateTime(sale?.startDate ?? "").date,
+    startTime: splitDateTime(sale?.startDate ?? "").time,
     type: sale?.type ?? SaleTypeEnum.FIXED,
     metadata: sale?.metadata.map(mapMetadataItemToInput),
     privateMetadata: sale?.privateMetadata.map(mapMetadataItemToInput),
@@ -179,7 +184,12 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
               <CardSpacer />
               <SaleType data={data} disabled={disabled} onChange={change} />
               <CardSpacer />
-              <SaleValue data={data} disabled={disabled} errors={allErrors} onChange={handleChannelChange} />
+              <SaleValue
+                data={data}
+                disabled={disabled}
+                errors={allErrors}
+                onChange={handleChannelChange}
+              />
               <CardSpacer />
               <TabContainer className={sprinkles({ paddingX: 9 })}>
                 <CategoriesTab
@@ -188,7 +198,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   changeTab={onTabClick}
                 >
                   {intl.formatMessage(itemsQuantityMessages.categories, {
-                    quantity: tabItemsCount.categories?.toString() || '…',
+                    quantity: tabItemsCount.categories?.toString() || "…",
                   })}
                 </CategoriesTab>
                 <CollectionsTab
@@ -197,7 +207,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   changeTab={onTabClick}
                 >
                   {intl.formatMessage(itemsQuantityMessages.collections, {
-                    quantity: tabItemsCount.collections?.toString() || '…',
+                    quantity: tabItemsCount.collections?.toString() || "…",
                   })}
                 </CollectionsTab>
                 <ProductsTab
@@ -206,7 +216,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   changeTab={onTabClick}
                 >
                   {intl.formatMessage(itemsQuantityMessages.products, {
-                    quantity: tabItemsCount.products?.toString() || '…',
+                    quantity: tabItemsCount.products?.toString() || "…",
                   })}
                 </ProductsTab>
                 <VariantsTab
@@ -215,7 +225,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                   changeTab={onTabClick}
                 >
                   {intl.formatMessage(itemsQuantityMessages.variants, {
-                    quantity: tabItemsCount.variants?.toString() || '…',
+                    quantity: tabItemsCount.variants?.toString() || "…",
                   })}
                 </VariantsTab>
               </TabContainer>
@@ -300,5 +310,5 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
     </Form>
   );
 };
-SaleDetailsPage.displayName = 'SaleDetailsPage';
+SaleDetailsPage.displayName = "SaleDetailsPage";
 export default SaleDetailsPage;

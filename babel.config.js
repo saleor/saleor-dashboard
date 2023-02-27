@@ -7,11 +7,11 @@ module.exports = api => {
       {
         corejs: "3.2.1",
         modules: "auto",
-        useBuiltIns: "usage"
-      }
+        useBuiltIns: "usage",
+      },
     ],
     "@babel/preset-react",
-    "@babel/preset-typescript"
+    "@babel/preset-typescript",
   ];
 
   const plugins = [
@@ -21,16 +21,16 @@ module.exports = api => {
     [
       "@babel/plugin-proposal-decorators",
       {
-        decoratorsBeforeExport: true
-      }
+        decoratorsBeforeExport: true,
+      },
     ],
     "@babel/plugin-proposal-object-rest-spread",
     "@babel/plugin-proposal-nullish-coalescing-operator",
-    "macros"
+    "macros",
   ];
 
   return {
     plugins,
-    presets
+    presets,
   };
 };

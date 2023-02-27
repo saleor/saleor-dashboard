@@ -1,11 +1,11 @@
-import { AppPermissionFragment } from '@dashboard/graphql';
-import { Tooltip } from '@saleor/macaw-ui';
-import { Box, InfoIcon } from '@saleor/macaw-ui/next';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { AppPermissionFragment } from "@dashboard/graphql";
+import { Tooltip } from "@saleor/macaw-ui";
+import { Box, InfoIcon } from "@saleor/macaw-ui/next";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { messages } from './messages';
-import { useStyles } from './styles';
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 interface AppPermissionsProps {
   permissions?: AppPermissionFragment[] | null;
@@ -35,5 +35,5 @@ export const AppPermissions: React.FC<AppPermissionsProps> = ({ permissions }) =
     </Tooltip>
   );
 };
-AppPermissions.displayName = 'AppPermissions';
+AppPermissions.displayName = "AppPermissions";
 export default AppPermissions;

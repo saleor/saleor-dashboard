@@ -1,34 +1,38 @@
-import Checkbox from '@dashboard/components/Checkbox';
-import Date from '@dashboard/components/Date';
-import Money from '@dashboard/components/Money';
-import Percent from '@dashboard/components/Percent';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableCellHeader from '@dashboard/components/TableCellHeader';
-import TableHead from '@dashboard/components/TableHead';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import TooltipTableCellHeader from '@dashboard/components/TooltipTableCellHeader';
-import { commonTooltipMessages } from '@dashboard/components/TooltipTableCellHeader/messages';
-import { VoucherListUrlSortField, voucherUrl } from '@dashboard/discounts/urls';
-import { canBeSorted } from '@dashboard/discounts/views/VoucherList/sort';
-import { DiscountValueTypeEnum, VoucherFragment } from '@dashboard/graphql';
-import { maybe, renderCollection } from '@dashboard/misc';
-import { ChannelProps, ListActions, ListProps, SortPage } from '@dashboard/types';
-import { getArrowDirection } from '@dashboard/utils/sort';
-import { TableBody, TableCell, TableFooter } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import Checkbox from "@dashboard/components/Checkbox";
+import Date from "@dashboard/components/Date";
+import Money from "@dashboard/components/Money";
+import Percent from "@dashboard/components/Percent";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import TooltipTableCellHeader from "@dashboard/components/TooltipTableCellHeader";
+import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
+import { VoucherListUrlSortField, voucherUrl } from "@dashboard/discounts/urls";
+import { canBeSorted } from "@dashboard/discounts/views/VoucherList/sort";
+import { DiscountValueTypeEnum, VoucherFragment } from "@dashboard/graphql";
+import { maybe, renderCollection } from "@dashboard/misc";
+import { ChannelProps, ListActions, ListProps, SortPage } from "@dashboard/types";
+import { getArrowDirection } from "@dashboard/utils/sort";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-export interface VoucherListProps extends ListProps, ListActions, SortPage<VoucherListUrlSortField>, ChannelProps {
+export interface VoucherListProps
+  extends ListProps,
+    ListActions,
+    SortPage<VoucherListUrlSortField>,
+    ChannelProps {
   vouchers: VoucherFragment[];
 }
 
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       colEnd: {
         width: 180,
       },
@@ -47,35 +51,35 @@ const useStyles = makeStyles(
       },
     },
     colEnd: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     colMinSpent: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     colName: {
       paddingLeft: 0,
     },
     colStart: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     colUses: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     colValue: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     tableRow: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
     textRight: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     textOverflow: {
-      textOverflow: 'ellipsis',
-      overflow: 'hidden',
+      textOverflow: "ellipsis",
+      overflow: "hidden",
     },
   }),
-  { name: 'VoucherList' },
+  { name: "VoucherList" },
 );
 
 const numberOfColumns = 7;
@@ -111,7 +115,9 @@ const VoucherList: React.FC<VoucherListProps> = props => {
         toolbar={toolbar}
       >
         <TableCellHeader
-          direction={sort.sort === VoucherListUrlSortField.code ? getArrowDirection(sort.asc) : undefined}
+          direction={
+            sort.sort === VoucherListUrlSortField.code ? getArrowDirection(sort.asc) : undefined
+          }
           arrowPosition="right"
           onClick={() => onSort(VoucherListUrlSortField.code)}
           className={classes.colName}
@@ -119,7 +125,9 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           <FormattedMessage id="JsPIOX" defaultMessage="Code" description="voucher code" />
         </TableCellHeader>
         <TooltipTableCellHeader
-          direction={sort.sort === VoucherListUrlSortField.minSpent ? getArrowDirection(sort.asc) : undefined}
+          direction={
+            sort.sort === VoucherListUrlSortField.minSpent ? getArrowDirection(sort.asc) : undefined
+          }
           textAlign="right"
           onClick={() => onSort(VoucherListUrlSortField.minSpent)}
           disabled={!canBeSorted(VoucherListUrlSortField.minSpent, !!selectedChannelId)}
@@ -135,23 +143,39 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           />
         </TooltipTableCellHeader>
         <TableCellHeader
-          direction={sort.sort === VoucherListUrlSortField.startDate ? getArrowDirection(sort.asc) : undefined}
+          direction={
+            sort.sort === VoucherListUrlSortField.startDate
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
           textAlign="right"
           onClick={() => onSort(VoucherListUrlSortField.startDate)}
           className={classes.colStart}
         >
-          <FormattedMessage id="5u7b3V" defaultMessage="Starts" description="voucher is active from date" />
+          <FormattedMessage
+            id="5u7b3V"
+            defaultMessage="Starts"
+            description="voucher is active from date"
+          />
         </TableCellHeader>
         <TableCellHeader
-          direction={sort.sort === VoucherListUrlSortField.endDate ? getArrowDirection(sort.asc) : undefined}
+          direction={
+            sort.sort === VoucherListUrlSortField.endDate ? getArrowDirection(sort.asc) : undefined
+          }
           textAlign="right"
           onClick={() => onSort(VoucherListUrlSortField.endDate)}
           className={classes.colEnd}
         >
-          <FormattedMessage id="b6L9n7" defaultMessage="Ends" description="voucher is active until date" />
+          <FormattedMessage
+            id="b6L9n7"
+            defaultMessage="Ends"
+            description="voucher is active until date"
+          />
         </TableCellHeader>
         <TooltipTableCellHeader
-          direction={sort.sort === VoucherListUrlSortField.value ? getArrowDirection(sort.asc) : undefined}
+          direction={
+            sort.sort === VoucherListUrlSortField.value ? getArrowDirection(sort.asc) : undefined
+          }
           textAlign="right"
           onClick={() => onSort(VoucherListUrlSortField.value)}
           disabled={!canBeSorted(VoucherListUrlSortField.minSpent, !!selectedChannelId)}
@@ -163,7 +187,9 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           <FormattedMessage id="JV+EiM" defaultMessage="Value" description="voucher value" />
         </TooltipTableCellHeader>
         <TableCellHeader
-          direction={sort.sort === VoucherListUrlSortField.limit ? getArrowDirection(sort.asc) : undefined}
+          direction={
+            sort.sort === VoucherListUrlSortField.limit ? getArrowDirection(sort.asc) : undefined
+          }
           textAlign="right"
           onClick={() => onSort(VoucherListUrlSortField.limit)}
           className={classes.colUses}
@@ -185,14 +211,16 @@ const VoucherList: React.FC<VoucherListProps> = props => {
           vouchers,
           voucher => {
             const isSelected = voucher ? isChecked(voucher.id) : false;
-            const channel = voucher?.channelListings?.find(listing => listing.channel.id === selectedChannelId);
+            const channel = voucher?.channelListings?.find(
+              listing => listing.channel.id === selectedChannelId,
+            );
             const hasChannelsLoaded = voucher?.channelListings?.length;
 
             return (
               <TableRowLink
                 className={!!voucher ? classes.tableRow : undefined}
                 hover={!!voucher}
-                key={voucher ? voucher.id : 'skeleton'}
+                key={voucher ? voucher.id : "skeleton"}
                 selected={isSelected}
                 href={voucher && voucherUrl(voucher.id)}
               >
@@ -208,7 +236,15 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                   {voucher?.code ?? <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.colMinSpent}>
-                  {voucher?.code ? hasChannelsLoaded ? <Money money={channel?.minSpent} /> : '-' : <Skeleton />}
+                  {voucher?.code ? (
+                    hasChannelsLoaded ? (
+                      <Money money={channel?.minSpent} />
+                    ) : (
+                      "-"
+                    )
+                  ) : (
+                    <Skeleton />
+                  )}
                 </TableCell>
                 <TableCell className={classes.colStart}>
                   {voucher?.startDate ? <Date date={voucher.startDate} /> : <Skeleton />}
@@ -217,7 +253,7 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                   {voucher?.endDate ? (
                     <Date date={voucher.endDate} />
                   ) : voucher && voucher.endDate === null ? (
-                    '-'
+                    "-"
                   ) : (
                     <Skeleton />
                   )}
@@ -238,14 +274,17 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                         <Percent amount={channel?.discountValue} />
                       )
                     ) : (
-                      '-'
+                      "-"
                     )
                   ) : (
                     <Skeleton />
                   )}
                 </TableCell>
                 <TableCell className={classes.colUses}>
-                  {maybe<React.ReactNode>(() => (voucher.usageLimit === null ? '-' : voucher.usageLimit), <Skeleton />)}
+                  {maybe<React.ReactNode>(
+                    () => (voucher.usageLimit === null ? "-" : voucher.usageLimit),
+                    <Skeleton />,
+                  )}
                 </TableCell>
               </TableRowLink>
             );
@@ -262,5 +301,5 @@ const VoucherList: React.FC<VoucherListProps> = props => {
     </ResponsiveTable>
   );
 };
-VoucherList.displayName = 'VoucherList';
+VoucherList.displayName = "VoucherList";
 export default VoucherList;

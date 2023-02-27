@@ -1,21 +1,23 @@
-import { Channel as ChannelList, ChannelData } from '@dashboard/channels/utils';
-import Hr from '@dashboard/components/Hr';
-import { PermissionEnum } from '@dashboard/graphql';
-import useDateLocalize from '@dashboard/hooks/useDateLocalize';
-import { RequireOnlyOne } from '@dashboard/misc';
-import { Typography } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { Channel as ChannelList, ChannelData } from "@dashboard/channels/utils";
+import Hr from "@dashboard/components/Hr";
+import { PermissionEnum } from "@dashboard/graphql";
+import useDateLocalize from "@dashboard/hooks/useDateLocalize";
+import { RequireOnlyOne } from "@dashboard/misc";
+import { Typography } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import ChannelAvailabilityItemContent from './Channel/ChannelAvailabilityItemContent';
-import ChannelAvailabilityItemWrapper from './Channel/ChannelAvailabilityItemWrapper';
-import ChannelsAvailabilityCardWrapper, { ChannelsAvailabilityWrapperProps } from './ChannelsAvailabilityCardWrapper';
-import { useStyles } from './styles';
-import { ChannelOpts, ChannelsAvailabilityError, Messages } from './types';
-import { getChannelsAvailabilityMessages } from './utils';
+import ChannelAvailabilityItemContent from "./Channel/ChannelAvailabilityItemContent";
+import ChannelAvailabilityItemWrapper from "./Channel/ChannelAvailabilityItemWrapper";
+import ChannelsAvailabilityCardWrapper, {
+  ChannelsAvailabilityWrapperProps,
+} from "./ChannelsAvailabilityCardWrapper";
+import { useStyles } from "./styles";
+import { ChannelOpts, ChannelsAvailabilityError, Messages } from "./types";
+import { getChannelsAvailabilityMessages } from "./utils";
 
 export interface ChannelsAvailability
-  extends Omit<ChannelsAvailabilityWrapperProps, 'children' | 'selectedChannelsCount'> {
+  extends Omit<ChannelsAvailabilityWrapperProps, "children" | "selectedChannelsCount"> {
   channels: ChannelData[];
   /** Channels that have no settings */
   channelsList: ChannelList[];
@@ -26,7 +28,10 @@ export interface ChannelsAvailability
   onChange?: (id: string, data: ChannelOpts) => void;
 }
 
-export type ChannelsAvailabilityCardProps = RequireOnlyOne<ChannelsAvailability, 'channels' | 'channelsList'>;
+export type ChannelsAvailabilityCardProps = RequireOnlyOne<
+  ChannelsAvailability,
+  "channels" | "channelsList"
+>;
 
 export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = props => {
   const {

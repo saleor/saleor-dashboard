@@ -1,26 +1,26 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import { WindowTitle } from '@dashboard/components/WindowTitle';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   ConfigurationItemFragment,
   ConfigurationItemInput,
   usePluginQuery,
   usePluginUpdateMutation,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import useStateFromProps from '@dashboard/hooks/useStateFromProps';
-import { commonMessages } from '@dashboard/intl';
-import { extractMutationErrors } from '@dashboard/misc';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import { DialogContentText } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { commonMessages } from "@dashboard/intl";
+import { extractMutationErrors } from "@dashboard/misc";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { DialogContentText } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import PluginsDetailsPage, { PluginDetailsPageFormData } from '../components/PluginsDetailsPage';
-import PluginSecretFieldDialog from '../components/PluginSecretFieldDialog';
-import { pluginUrl, PluginUrlDialog, PluginUrlQueryParams } from '../urls';
-import { isSecretField } from '../utils';
-import { getConfigByChannelId, isPluginGlobal } from './utils';
+import PluginsDetailsPage, { PluginDetailsPageFormData } from "../components/PluginsDetailsPage";
+import PluginSecretFieldDialog from "../components/PluginSecretFieldDialog";
+import { pluginUrl, PluginUrlDialog, PluginUrlQueryParams } from "../urls";
+import { isSecretField } from "../utils";
+import { getConfigByChannelId, isPluginGlobal } from "./utils";
 
 export interface PluginsDetailsProps {
   id: string;
@@ -56,7 +56,9 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) =>
   const plugin = pluginData?.plugin;
 
   const initialSelectedChannelValue =
-    plugin && !isPluginGlobal(plugin.globalConfiguration) ? plugin.channelConfigurations[0].channel.id : null;
+    plugin && !isPluginGlobal(plugin.globalConfiguration)
+      ? plugin.channelConfigurations[0].channel.id
+      : null;
 
   const [selectedChannelId, setSelectedChannelId] = useStateFromProps(initialSelectedChannelValue);
 
@@ -74,7 +76,7 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) =>
     onCompleted: data => {
       if (data.pluginUpdate.errors.length === 0) {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         closeModal();
@@ -108,7 +110,10 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) =>
           id,
           input: {
             active: formData.active,
-            configuration: getConfigurationInput(selectedConfig?.configuration, formData.configuration),
+            configuration: getConfigurationInput(
+              selectedConfig?.configuration,
+              formData.configuration,
+            ),
           },
         },
       }),
@@ -120,15 +125,15 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) =>
       <PluginsDetailsPage
         disabled={loading}
         errors={formErrors}
-        saveButtonBarState={!params.action ? pluginUpdateOpts.status : 'default'}
+        saveButtonBarState={!params.action ? pluginUpdateOpts.status : "default"}
         plugin={plugin}
         onClear={id =>
-          openModal('clear', {
+          openModal("clear", {
             id,
           })
         }
         onEdit={id =>
-          openModal('edit', {
+          openModal("edit", {
             id,
           })
         }
@@ -139,13 +144,13 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) =>
       {selectedConfig && (
         <>
           <ActionDialog
-            confirmButtonState={!!params.action ? pluginUpdateOpts.status : 'default'}
+            confirmButtonState={!!params.action ? pluginUpdateOpts.status : "default"}
             onClose={closeModal}
-            open={params.action === 'clear' && !!params.id}
+            open={params.action === "clear" && !!params.id}
             title={intl.formatMessage({
-              id: 'N6lfS/',
-              defaultMessage: 'Authorization Field Delete',
-              description: 'header',
+              id: "N6lfS/",
+              defaultMessage: "Authorization Field Delete",
+              description: "header",
             })}
             onConfirm={() => handleFieldUpdate(null)}
           >
@@ -157,16 +162,16 @@ export const PluginsDetails: React.FC<PluginsDetailsProps> = ({ id, params }) =>
             </DialogContentText>
           </ActionDialog>
           <PluginSecretFieldDialog
-            confirmButtonState={!!params.action ? pluginUpdateOpts.status : 'default'}
+            confirmButtonState={!!params.action ? pluginUpdateOpts.status : "default"}
             field={selectedConfig?.configuration.find(field => field.name === params.id)}
             onClose={closeModal}
             onConfirm={formData => handleFieldUpdate(formData.value)}
-            open={params.action === 'edit' && !!params.id}
+            open={params.action === "edit" && !!params.id}
           />
         </>
       )}
     </>
   );
 };
-PluginsDetails.displayName = 'PluginsDetails';
+PluginsDetails.displayName = "PluginsDetails";
 export default PluginsDetails;

@@ -1,13 +1,20 @@
-import BackButton from '@dashboard/components/BackButton';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import Form from '@dashboard/components/Form';
-import Grid from '@dashboard/components/Grid';
-import { commonMessages } from '@dashboard/intl';
-import { DialogProps, MinMax } from '@dashboard/types';
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@material-ui/core';
-import { ConfirmButtonTransitionState, makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import { commonMessages } from "@dashboard/intl";
+import { DialogProps, MinMax } from "@dashboard/types";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ShippingZonePostalCodeRangeDialogProps extends DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -21,7 +28,7 @@ const useStyles = makeStyles(
     },
   }),
   {
-    name: 'ShippingZonePostalCodeRangeDialog',
+    name: "ShippingZonePostalCodeRangeDialog",
   },
 );
 
@@ -35,14 +42,18 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
   const intl = useIntl();
 
   const initial: MinMax = {
-    max: '',
-    min: '',
+    max: "",
+    min: "",
   };
 
   return (
     <Dialog open={open}>
       <DialogTitle disableTypography>
-        <FormattedMessage id="2Xt+sw" defaultMessage="Add postal codes" description="dialog header" />
+        <FormattedMessage
+          id="2Xt+sw"
+          defaultMessage="Add postal codes"
+          description="dialog header"
+        />
       </DialogTitle>
       <Form initial={initial} onSubmit={onSubmit}>
         {({ change, data }) => (
@@ -57,9 +68,9 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
               <Grid variant="uniform">
                 <TextField
                   label={intl.formatMessage({
-                    id: '1T1fP8',
-                    defaultMessage: 'Postal codes (start)',
-                    description: 'range input label',
+                    id: "1T1fP8",
+                    defaultMessage: "Postal codes (start)",
+                    description: "range input label",
                   })}
                   name="min"
                   value={data.min}
@@ -67,9 +78,9 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
                 />
                 <TextField
                   label={intl.formatMessage({
-                    id: 'axFFaD',
-                    defaultMessage: 'Postal codes (end)',
-                    description: 'range input label',
+                    id: "axFFaD",
+                    defaultMessage: "Postal codes (end)",
+                    description: "range input label",
                   })}
                   name="max"
                   helperText={intl.formatMessage(commonMessages.optionalField)}
@@ -86,7 +97,11 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
                 type="submit"
                 data-test-id="submit"
               >
-                <FormattedMessage id="DM/Ha1" defaultMessage="Add" description="add postal code range, button" />
+                <FormattedMessage
+                  id="DM/Ha1"
+                  defaultMessage="Add"
+                  description="add postal code range, button"
+                />
               </ConfirmButton>
             </DialogActions>
           </>
@@ -96,5 +111,5 @@ const ShippingZonePostalCodeRangeDialog: React.FC<ShippingZonePostalCodeRangeDia
   );
 };
 
-ShippingZonePostalCodeRangeDialog.displayName = 'ShippingZonePostalCodeRangeDialog';
+ShippingZonePostalCodeRangeDialog.displayName = "ShippingZonePostalCodeRangeDialog";
 export default ShippingZonePostalCodeRangeDialog;

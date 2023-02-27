@@ -1,19 +1,19 @@
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { FormChange } from '@dashboard/hooks/useForm';
-import { removeAtIndex, updateAtIndex } from '@dashboard/utils/lists';
-import { TableBody, TableCell, TextField } from '@material-ui/core';
-import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React, { ChangeEvent } from 'react';
-import { useIntl } from 'react-intl';
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
+import { TableBody, TableCell, TextField } from "@material-ui/core";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React, { ChangeEvent } from "react";
+import { useIntl } from "react-intl";
 
-import { messages } from './messages';
-import useStyles from './styles';
-import { Header, stringifyHeaders } from './utils';
+import { messages } from "./messages";
+import useStyles from "./styles";
+import { Header, stringifyHeaders } from "./utils";
 
-const nameSeparator = ':';
-const nameInputPrefix = 'name';
-const valueInputPrefix = 'value';
+const nameSeparator = ":";
+const nameInputPrefix = "name";
+const valueInputPrefix = "value";
 
 export interface WebhookHeadersTableBodyProps {
   onChange: FormChange;
@@ -48,7 +48,7 @@ const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({ onCha
 
     onChange({
       target: {
-        name: 'customHeaders',
+        name: "customHeaders",
         value: stringifyHeaders(updateAtIndex(item, headers, index)),
       },
     });
@@ -66,14 +66,14 @@ const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({ onCha
                 },
               }}
               inputProps={{
-                'aria-label': `${nameInputPrefix}${nameSeparator}${fieldIndex}`,
+                "aria-label": `${nameInputPrefix}${nameSeparator}${fieldIndex}`,
               }}
               name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
               fullWidth
               onChange={change}
               value={field.name}
               error={field.error}
-              helperText={(field.error && intl.formatMessage(messages.headerNameError)) || ' '}
+              helperText={(field.error && intl.formatMessage(messages.headerNameError)) || " "}
             />
           </TableCell>
           <TableCell className={clsx(classes.colValue, classes.tableCell)}>
@@ -84,23 +84,23 @@ const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({ onCha
                 },
               }}
               inputProps={{
-                'aria-label': `${valueInputPrefix}${nameSeparator}${fieldIndex}`,
+                "aria-label": `${valueInputPrefix}${nameSeparator}${fieldIndex}`,
               }}
               name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
               fullWidth
               onChange={change}
               value={field.value}
-              helperText={' '}
+              helperText={" "}
             />
           </TableCell>
           <TableCell className={classes.colAction}>
             <IconButton
               variant="secondary"
-              data-test-id={'delete-field-' + fieldIndex}
+              data-test-id={"delete-field-" + fieldIndex}
               onClick={() =>
                 onChange({
                   target: {
-                    name: 'customHeaders',
+                    name: "customHeaders",
                     value: stringifyHeaders(removeAtIndex(headers, fieldIndex)),
                   },
                 })
@@ -115,5 +115,5 @@ const WebhookHeadersTableBody: React.FC<WebhookHeadersTableBodyProps> = ({ onCha
   );
 };
 
-WebhookHeadersTableBody.displayName = 'WebhookHeadersTableRow';
+WebhookHeadersTableBody.displayName = "WebhookHeadersTableRow";
 export default WebhookHeadersTableBody;

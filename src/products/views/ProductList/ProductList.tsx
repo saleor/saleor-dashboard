@@ -1,16 +1,18 @@
-import { filterable } from '@dashboard/attributes/utils/data';
-import ActionDialog from '@dashboard/components/ActionDialog';
-import useAppChannel from '@dashboard/components/AppLayout/AppChannelContext';
-import DeleteFilterTabDialog from '@dashboard/components/DeleteFilterTabDialog';
-import SaveFilterTabDialog, { SaveFilterTabDialogFormData } from '@dashboard/components/SaveFilterTabDialog';
-import { useShopLimitsQuery } from '@dashboard/components/Shop/queries';
+import { filterable } from "@dashboard/attributes/utils/data";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
+import SaveFilterTabDialog, {
+  SaveFilterTabDialogFormData,
+} from "@dashboard/components/SaveFilterTabDialog";
+import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
   DEFAULT_INITIAL_PAGINATION_DATA,
   DEFAULT_INITIAL_SEARCH_DATA,
   defaultListSettings,
   ProductListColumns,
-} from '@dashboard/config';
-import { Task } from '@dashboard/containers/BackgroundTasks/types';
+} from "@dashboard/config";
+import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   ProductListQueryVariables,
   useGridAttributesQuery,
@@ -23,47 +25,50 @@ import {
   useProductExportMutation,
   useProductListQuery,
   useWarehouseListQuery,
-} from '@dashboard/graphql';
-import useBackgroundTask from '@dashboard/hooks/useBackgroundTask';
-import useBulkActions from '@dashboard/hooks/useBulkActions';
-import useListSettings from '@dashboard/hooks/useListSettings';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { usePaginationReset } from '@dashboard/hooks/usePaginationReset';
-import usePaginator, { createPaginationState, PaginatorContext } from '@dashboard/hooks/usePaginator';
-import { commonMessages } from '@dashboard/intl';
-import { maybe } from '@dashboard/misc';
-import ProductExportDialog from '@dashboard/products/components/ProductExportDialog';
+} from "@dashboard/graphql";
+import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useListSettings from "@dashboard/hooks/useListSettings";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
+import usePaginator, {
+  createPaginationState,
+  PaginatorContext,
+} from "@dashboard/hooks/usePaginator";
+import { commonMessages } from "@dashboard/intl";
+import { maybe } from "@dashboard/misc";
+import ProductExportDialog from "@dashboard/products/components/ProductExportDialog";
 import {
   getAttributeIdFromColumnValue,
   isAttributeColumnValue,
-} from '@dashboard/products/components/ProductListPage/utils';
-import ProductTypePickerDialog from '@dashboard/products/components/ProductTypePickerDialog';
+} from "@dashboard/products/components/ProductListPage/utils";
+import ProductTypePickerDialog from "@dashboard/products/components/ProductTypePickerDialog";
 import {
   productAddUrl,
   productListUrl,
   ProductListUrlDialog,
   ProductListUrlQueryParams,
   ProductListUrlSortField,
-} from '@dashboard/products/urls';
-import useAttributeSearch from '@dashboard/searches/useAttributeSearch';
-import useAttributeValueSearch from '@dashboard/searches/useAttributeValueSearch';
-import useAvailableInGridAttributesSearch from '@dashboard/searches/useAvailableInGridAttributesSearch';
-import useCategorySearch from '@dashboard/searches/useCategorySearch';
-import useCollectionSearch from '@dashboard/searches/useCollectionSearch';
-import useProductTypeSearch from '@dashboard/searches/useProductTypeSearch';
-import { ListViews } from '@dashboard/types';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import createFilterHandlers from '@dashboard/utils/handlers/filterHandlers';
-import { mapEdgesToItems, mapNodeToChoice } from '@dashboard/utils/maps';
-import { getSortUrlVariables } from '@dashboard/utils/sort';
-import { DialogContentText } from '@material-ui/core';
-import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
-import React, { useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@dashboard/products/urls";
+import useAttributeSearch from "@dashboard/searches/useAttributeSearch";
+import useAttributeValueSearch from "@dashboard/searches/useAttributeValueSearch";
+import useAvailableInGridAttributesSearch from "@dashboard/searches/useAvailableInGridAttributesSearch";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
+import { ListViews } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
+import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
+import { getSortUrlVariables } from "@dashboard/utils/sort";
+import { DialogContentText } from "@material-ui/core";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import React, { useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { useSortRedirects } from '../../../hooks/useSortRedirects';
-import ProductListPage from '../../components/ProductListPage';
+import { useSortRedirects } from "../../../hooks/useSortRedirects";
+import ProductListPage from "../../components/ProductListPage";
 import {
   deleteFilterTab,
   getActiveFilters,
@@ -73,9 +78,9 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
-} from './filters';
-import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from './sort';
-import { getAvailableProductKinds, getProductKindOpts } from './utils';
+} from "./filters";
+import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
+import { getAvailableProductKinds, getProductKindOpts } from "./utils";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -86,7 +91,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(params.ids);
-  const { updateListSettings, settings } = useListSettings<ProductListColumns>(ListViews.PRODUCT_LIST);
+  const { updateListSettings, settings } = useListSettings<ProductListColumns>(
+    ListViews.PRODUCT_LIST,
+  );
 
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
@@ -147,7 +154,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     variables: {
       first: 100,
     },
-    skip: params.action !== 'export',
+    skip: params.action !== "export",
   });
   const availableProductKinds = getAvailableProductKinds();
   const { availableChannels } = useAppChannel(false);
@@ -166,18 +173,17 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     resetToDefault: !canBeSorted(params.sort, !!selectedChannel),
   });
 
-  const [openModal, closeModal] = createDialogActionHandlers<ProductListUrlDialog, ProductListUrlQueryParams>(
-    navigate,
-    productListUrl,
-    params,
-  );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductListUrlDialog,
+    ProductListUrlQueryParams
+  >(navigate, productListUrl, params);
 
   const tabs = getFilterTabs();
 
   const currentTab = getFiltersCurrentTab(params, tabs);
 
   const countAllProducts = useProductCountQuery({
-    skip: params.action !== 'export',
+    skip: params.action !== "export",
   });
 
   const [exportProducts, exportProductsOpts] = useProductExportMutation({
@@ -185,14 +191,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       if (data.exportProducts.errors.length === 0) {
         notify({
           text: intl.formatMessage({
-            id: 'dPYqy0',
+            id: "dPYqy0",
             defaultMessage:
-              'We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address',
+              "We are currently exporting your requested CSV. As soon as it is available it will be sent to your email address",
           }),
           title: intl.formatMessage({
-            id: '5QKsu+',
-            defaultMessage: 'Exporting CSV',
-            description: 'waiting for export to end, header',
+            id: "5QKsu+",
+            defaultMessage: "Exporting CSV",
+            description: "waiting for export to end, header",
           }),
         });
         queue(Task.EXPORT, {
@@ -245,10 +251,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const kindOpts = getProductKindOpts(availableProductKinds, intl);
   const paginationState = createPaginationState(settings.rowNumber, params);
-  const channelOpts = availableChannels ? mapNodeToChoice(availableChannels, channel => channel.slug) : null;
+  const channelOpts = availableChannels
+    ? mapNodeToChoice(availableChannels, channel => channel.slug)
+    : null;
   const filter = getFilterVariables(params, !!selectedChannel);
   const sort = getSortQueryVariables(params, !!selectedChannel);
-  const queryVariables = React.useMemo<Omit<ProductListQueryVariables, 'hasChannel' | 'hasSelectedAttributes'>>(
+  const queryVariables = React.useMemo<
+    Omit<ProductListQueryVariables, "hasChannel" | "hasSelectedAttributes">
+  >(
     () => ({
       ...paginationState,
       filter,
@@ -258,7 +268,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     [params, settings.rowNumber],
   );
 
-  const filteredColumnIds = settings.columns.filter(isAttributeColumnValue).map(getAttributeIdFromColumnValue);
+  const filteredColumnIds = settings.columns
+    .filter(isAttributeColumnValue)
+    .map(getAttributeIdFromColumnValue);
 
   const { data, loading, refetch } = useProductListQuery({
     displayLoader: true,
@@ -285,7 +297,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       if (data.productBulkDelete.errors.length === 0) {
         closeModal();
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         reset();
@@ -344,15 +356,20 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           sort: params.sort,
         }}
         onSort={handleSort}
-        availableInGridAttributes={mapEdgesToItems(availableInGridAttributesOpts.result?.data?.availableInGrid) || []}
-        currencySymbol={selectedChannel?.currencyCode || ''}
+        availableInGridAttributes={
+          mapEdgesToItems(availableInGridAttributesOpts.result?.data?.availableInGrid) || []
+        }
+        currencySymbol={selectedChannel?.currencyCode || ""}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
         gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
         settings={settings}
         loading={availableInGridAttributesOpts.result.loading || gridAttributes.loading}
-        hasMore={maybe(() => availableInGridAttributesOpts.result.data.availableInGrid.pageInfo.hasNextPage, false)}
+        hasMore={maybe(
+          () => availableInGridAttributesOpts.result.data.availableInGrid.pageInfo.hasNextPage,
+          false,
+        )}
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}
@@ -360,14 +377,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onColumnQueryChange={availableInGridAttributesOpts.search}
         onFetchMore={availableInGridAttributesOpts.loadMore}
         onUpdateListSettings={updateListSettings}
-        onAdd={() => openModal('create-product')}
+        onAdd={() => openModal("create-product")}
         onAll={resetFilters}
         toolbar={
           <IconButton
             variant="secondary"
             color="primary"
             onClick={() =>
-              openModal('delete', {
+              openModal("delete", {
                 ids: listElements,
               })
             }
@@ -382,17 +399,17 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}
         onFilterAttributeFocus={setFocusedAttribute}
-        onTabSave={() => openModal('save-search')}
-        onTabDelete={() => openModal('delete-search')}
+        onTabSave={() => openModal("save-search")}
+        onTabDelete={() => openModal("delete-search")}
         onTabChange={handleTabChange}
-        initialSearch={params.query || ''}
+        initialSearch={params.query || ""}
         tabs={getFilterTabs().map(tab => tab.name)}
-        onExport={() => openModal('export')}
+        onExport={() => openModal("export")}
         selectedChannelId={selectedChannel?.id}
         columnQuery={availableInGridAttributesOpts.query}
       />
       <ActionDialog
-        open={params.action === 'delete'}
+        open={params.action === "delete"}
         confirmButtonState={productBulkDeleteOpts.status}
         onClose={closeModal}
         onConfirm={() =>
@@ -401,9 +418,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           })
         }
         title={intl.formatMessage({
-          id: 'F4WdSO',
-          defaultMessage: 'Delete Products',
-          description: 'dialog header',
+          id: "F4WdSO",
+          defaultMessage: "Delete Products",
+          description: "dialog header",
         })}
         variant="delete"
       >
@@ -425,7 +442,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         loading={searchAttributes.result.loading || countAllProducts.loading || warehouses.loading}
         onFetch={searchAttributes.search}
         onFetchMore={searchAttributes.loadMore}
-        open={params.action === 'export'}
+        open={params.action === "export"}
         confirmButtonState={exportProductsOpts.status}
         errors={exportProductsOpts.data?.exportProducts.errors || []}
         productQuantity={{
@@ -449,21 +466,21 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         }
       />
       <SaveFilterTabDialog
-        open={params.action === 'save-search'}
+        open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleFilterTabSave}
       />
       <DeleteFilterTabDialog
-        open={params.action === 'delete-search'}
+        open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleFilterTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, '...')}
+        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
       <ProductTypePickerDialog
         confirmButtonState="success"
-        open={params.action === 'create-product'}
+        open={params.action === "create-product"}
         productTypes={mapNodeToChoice(mapEdgesToItems(searchDialogProductTypesOpts?.data?.search))}
         fetchProductTypes={searchDialogProductTypes}
         fetchMoreProductTypes={fetchMoreDialogProductTypes}
@@ -471,7 +488,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onConfirm={productTypeId =>
           navigate(
             productAddUrl({
-              'product-type-id': productTypeId,
+              "product-type-id": productTypeId,
             }),
           )
         }

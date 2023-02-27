@@ -1,24 +1,27 @@
-import { FieldType } from '@dashboard/components/Filter';
-import { PluginConfigurationType } from '@dashboard/graphql';
-import { createFilterStructure, PluginFilterKeys } from '@dashboard/plugins/components/PluginsListPage';
-import { PluginListUrlFilters } from '@dashboard/plugins/urls';
-import { getFilterQueryParams } from '@dashboard/utils/filters';
-import { stringifyQs } from '@dashboard/utils/urls';
-import { getExistingKeys } from '@test/filters';
-import { config } from '@test/intl';
-import { createIntl } from 'react-intl';
+import { FieldType } from "@dashboard/components/Filter";
+import { PluginConfigurationType } from "@dashboard/graphql";
+import {
+  createFilterStructure,
+  PluginFilterKeys,
+} from "@dashboard/plugins/components/PluginsListPage";
+import { PluginListUrlFilters } from "@dashboard/plugins/urls";
+import { getFilterQueryParams } from "@dashboard/utils/filters";
+import { stringifyQs } from "@dashboard/utils/urls";
+import { getExistingKeys } from "@test/filters";
+import { config } from "@test/intl";
+import { createIntl } from "react-intl";
 
-import { getFilterQueryParam, getFilterVariables } from './filters';
+import { getFilterQueryParam, getFilterVariables } from "./filters";
 
-describe('Filtering query params', () => {
-  it('should be empty object if no params given', () => {
+describe("Filtering query params", () => {
+  it("should be empty object if no params given", () => {
     const params: PluginListUrlFilters = {};
     const filterVariables = getFilterVariables(params);
 
     expect(getExistingKeys(filterVariables)).toHaveLength(0);
   });
 
-  it('should not be empty object if params given', () => {
+  it("should not be empty object if params given", () => {
     const params: PluginListUrlFilters = {
       type: PluginConfigurationType.GLOBAL,
     };
@@ -28,7 +31,7 @@ describe('Filtering query params', () => {
   });
 });
 
-describe('Filtering URL params', () => {
+describe("Filtering URL params", () => {
   const intl = createIntl(config);
 
   const filters = createFilterStructure(intl, {
@@ -40,7 +43,7 @@ describe('Filtering URL params', () => {
       active: false,
       choices: [],
       displayValues: [],
-      initialSearch: '',
+      initialSearch: "",
       hasMore: false,
       loading: false,
       onFetchMore: () => undefined,
@@ -57,27 +60,27 @@ describe('Filtering URL params', () => {
     },
   });
 
-  it('should be empty if no active filters', () => {
+  it("should be empty if no active filters", () => {
     const filterQueryParams = getFilterQueryParams(filters, getFilterQueryParam);
 
     expect(getExistingKeys(filterQueryParams)).toHaveLength(0);
   });
 
-  it('should not be empty if active filters are present', () => {
+  it("should not be empty if active filters are present", () => {
     const filterQueryParams = getFilterQueryParams(
       [
         {
           name: PluginFilterKeys.active,
           type: FieldType.options,
-          label: 'Active',
+          label: "Active",
           multiple: false,
           active: true,
-          value: ['true'],
+          value: ["true"],
         },
         {
           name: PluginFilterKeys.type,
           type: FieldType.options,
-          label: 'Configuration type',
+          label: "Configuration type",
           multiple: false,
           active: true,
           value: [PluginConfigurationType.GLOBAL],

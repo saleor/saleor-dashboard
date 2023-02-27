@@ -1,2 +1,2 @@
-export { default } from './FileUploadField';
-export * from './FileUploadField';
+export { default } from "./FileUploadField";
+export * from "./FileUploadField";

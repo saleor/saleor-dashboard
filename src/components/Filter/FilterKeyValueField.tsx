@@ -1,52 +1,55 @@
-import { KeyValue } from '@dashboard/types';
-import { TextField } from '@material-ui/core';
-import { Button, DeleteIcon, IconButton, makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { KeyValue } from "@dashboard/types";
+import { TextField } from "@material-ui/core";
+import { Button, DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { keyValueMessages } from './messages';
-import { FieldType, FilterFieldBaseProps } from './types';
+import { keyValueMessages } from "./messages";
+import { FieldType, FilterFieldBaseProps } from "./types";
 
 const useStyles = makeStyles(
   theme => ({
     metadataField: {
-      display: 'flex',
-      alignItems: 'center',
+      display: "flex",
+      alignItems: "center",
       gap: theme.spacing(0.5),
     },
     fieldsWrapper: {
-      display: 'flex',
-      flexDirection: 'column',
+      display: "flex",
+      flexDirection: "column",
       gap: theme.spacing(0.5),
       marginBottom: theme.spacing(1),
     },
     formWrapper: {
-      display: 'flex',
-      flexDirection: 'column',
+      display: "flex",
+      flexDirection: "column",
     },
     addButton: {
-      alignSelf: 'flex-end',
+      alignSelf: "flex-end",
     },
     deleteButton: {
-      marginLeft: '0.25rem',
-      marginRight: '-0.75rem',
+      marginLeft: "0.25rem",
+      marginRight: "-0.75rem",
     },
   }),
-  { name: 'FilterKeyValueField' },
+  { name: "FilterKeyValueField" },
 );
 
 const getUpdateArrayFn =
-  <T,>(key: 'key' | 'value') =>
+  <T,>(key: "key" | "value") =>
   (array: T[], index: number, value: string) => {
     const item = array[index];
     return [...array.slice(0, index), { ...item, [key]: value }, ...array.slice(index + 1)];
   };
 
-const updateKeyFn = getUpdateArrayFn<KeyValue>('key');
-const updateValueFn = getUpdateArrayFn<KeyValue>('value');
-const createEmptyPair = (array: KeyValue[]) => [...array, { key: '' }];
+const updateKeyFn = getUpdateArrayFn<KeyValue>("key");
+const updateValueFn = getUpdateArrayFn<KeyValue>("value");
+const createEmptyPair = (array: KeyValue[]) => [...array, { key: "" }];
 
-type FilterKeyValueFieldProps<K extends string = string> = FilterFieldBaseProps<K, FieldType.keyValue>;
+type FilterKeyValueFieldProps<K extends string = string> = FilterFieldBaseProps<
+  K,
+  FieldType.keyValue
+>;
 
 export const FilterKeyValueField = <K extends string = string>({
   filter,
@@ -55,7 +58,7 @@ export const FilterKeyValueField = <K extends string = string>({
   const intl = useIntl();
   const classes = useStyles();
 
-  const values = filter.value?.length ? filter.value : ([{ key: '' }] as KeyValue[]);
+  const values = filter.value?.length ? filter.value : ([{ key: "" }] as KeyValue[]);
 
   return (
     <div className={classes.formWrapper}>
@@ -75,7 +78,7 @@ export const FilterKeyValueField = <K extends string = string>({
                       value: updateKeyFn(values, index, event.target.value),
                     },
                   },
-                  type: 'set-property',
+                  type: "set-property",
                 })
               }
             />
@@ -83,7 +86,7 @@ export const FilterKeyValueField = <K extends string = string>({
               fullWidth
               name={filter.name}
               label={intl.formatMessage(keyValueMessages.value)}
-              value={innerField.value ?? ''}
+              value={innerField.value ?? ""}
               onChange={event =>
                 onFilterPropertyChange({
                   payload: {
@@ -92,7 +95,7 @@ export const FilterKeyValueField = <K extends string = string>({
                       value: updateValueFn(values, index, event.target.value),
                     },
                   },
-                  type: 'set-property',
+                  type: "set-property",
                 })
               }
             />
@@ -107,7 +110,7 @@ export const FilterKeyValueField = <K extends string = string>({
                       value: values.filter((_, i) => i !== index),
                     },
                   },
-                  type: 'set-property',
+                  type: "set-property",
                 });
               }}
             >
@@ -127,7 +130,7 @@ export const FilterKeyValueField = <K extends string = string>({
                 value: createEmptyPair(values),
               },
             },
-            type: 'set-property',
+            type: "set-property",
           });
         }}
       >

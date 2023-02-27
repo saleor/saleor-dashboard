@@ -14,12 +14,10 @@ export const attributesTypes = {
 
 export function fillUpPageTypeDialog({ pageTypeName }) {
   const organization = {};
-  return cy
-    .fillAutocompleteSelect(PAGES_LIST.dialogPageTypeInput, pageTypeName)
-    .then(selected => {
-      organization.pageType = selected;
-      return organization;
-    });
+  return cy.fillAutocompleteSelect(PAGES_LIST.dialogPageTypeInput, pageTypeName).then(selected => {
+    organization.pageType = selected;
+    return organization;
+  });
 }
 
 export function createPage({
@@ -56,26 +54,14 @@ export function addNumericAttributeValue(attributeValue) {
   cy.get(PAGE_DETAILS.numericAttributeValueInput).type(attributeValue);
 }
 
-function openCreatePageAndFillUpGeneralFields({
-  pageName,
-  pageTypeName,
-  isPublished,
-}) {
-  cy.visit(urlList.pages)
-    .get(PAGES_LIST.createPageButton)
-    .click();
+function openCreatePageAndFillUpGeneralFields({ pageName, pageTypeName, isPublished }) {
+  cy.visit(urlList.pages).get(PAGES_LIST.createPageButton).click();
   fillUpPageTypeDialog({ pageTypeName });
-  cy.get(BUTTON_SELECTORS.submit)
-    .click()
-    .get(PAGE_DETAILS.nameInput)
-    .type(pageName);
+  cy.get(BUTTON_SELECTORS.submit).click().get(PAGE_DETAILS.nameInput).type(pageName);
   if (!isPublished) {
     cy.get(PAGE_DETAILS.isNotPublishedCheckbox).click();
   }
-  cy.fillAutocompleteSelect(
-    PAGE_DETAILS.pageTypesAutocompleteSelect,
-    pageTypeName,
-  );
+  cy.fillAutocompleteSelect(PAGE_DETAILS.pageTypesAutocompleteSelect, pageTypeName);
 }
 
 function savePage() {

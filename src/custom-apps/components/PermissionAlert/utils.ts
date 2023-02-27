@@ -1,5 +1,5 @@
-import { gql } from '@apollo/client';
-import { FieldNode, parse, SelectionNode, visit } from 'graphql';
+import { gql } from "@apollo/client";
+import { FieldNode, parse, SelectionNode, visit } from "graphql";
 
 interface IntrospectionNode {
   kind: string;
@@ -48,8 +48,8 @@ const uniq = <T>(value: T, index: number, self: T[]) => self.indexOf(value) === 
 // As we move forward, there will be changes in the core to make it
 // separated and independant, yet easily accessible
 export const extractPermissions = (description?: string) => {
-  const match = (description || '').match(/following permissions(.*): (.*?)\./);
-  const permissions = match ? match[2].split(',') : [];
+  const match = (description || "").match(/following permissions(.*): (.*?)\./);
+  const permissions = match ? match[2].split(",") : [];
 
   return permissions;
 };
@@ -61,7 +61,7 @@ export const getPermissions = (query: string, permissionMapping: PermissionMap) 
 
 export const buildPermissionMap = (elements: IntrospectionNode[]): PermissionMap =>
   elements
-    .filter(({ kind }) => kind === 'OBJECT')
+    .filter(({ kind }) => kind === "OBJECT")
     .filter(({ name }) => !/(Created|Create|Delete|Deleted|Update|Updated)$/.test(name))
     .reduce((saved, { name, description, fields }) => {
       const permissions = extractPermissions(description);
@@ -86,7 +86,7 @@ export const buildPermissionMap = (elements: IntrospectionNode[]): PermissionMap
 
 const byKind = (name: string) => (element: SelectionNode) => element.kind === name;
 const extractValue = (element: FieldNode) => element.name.value;
-const isNotEvent = (value: string) => value !== 'event';
+const isNotEvent = (value: string) => value !== "event";
 
 export const extractCursorsFromQuery = (query: string) => {
   const cursors: string[][] = [];
@@ -96,8 +96,8 @@ export const extractCursorsFromQuery = (query: string) => {
 
     visit(ast, {
       Field(node, _key, _parent, _path, ancestors) {
-        if (node.name.value !== '__typename') {
-          const cursor = ancestors.filter(byKind('Field')).map(extractValue).filter(isNotEvent);
+        if (node.name.value !== "__typename") {
+          const cursor = ancestors.filter(byKind("Field")).map(extractValue).filter(isNotEvent);
 
           if (cursor.length > 0) {
             cursors.push([...cursor, node.name.value]);
@@ -126,7 +126,7 @@ const groupBy = <T>(list: T[], groupSize = 2) =>
 // so we can check first ir `order` contains permission, then `invoices`
 // and then `name`
 export const findPermission = (permissions: PermissionMap) => (cursor: string[]) => {
-  const groups = groupBy(['query', ...cursor]);
+  const groups = groupBy(["query", ...cursor]);
 
   return groups.reduce(
     (saved, [parent, child]) => [

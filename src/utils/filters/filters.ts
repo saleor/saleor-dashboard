@@ -1,6 +1,11 @@
-import { FilterElement, FilterElementKeyValue, FilterElementRegular, IFilter } from '@dashboard/components/Filter';
-import { findValueInEnum } from '@dashboard/misc';
-import { ActiveTab } from '@dashboard/types';
+import {
+  FilterElement,
+  FilterElementKeyValue,
+  FilterElementRegular,
+  IFilter,
+} from "@dashboard/components/Filter";
+import { findValueInEnum } from "@dashboard/misc";
+import { ActiveTab } from "@dashboard/types";
 
 function createFilterUtils<TQueryParams extends {}, TFilters extends {}>(filters: {}) {
   function getActiveFilters(params: TQueryParams): TFilters {
@@ -16,7 +21,10 @@ function createFilterUtils<TQueryParams extends {}, TFilters extends {}>(filters
     return Object.keys(getActiveFilters(params)).some(key => !!params[key]);
   }
 
-  function getFiltersCurrentTab<TQueryTabParams extends ActiveTab>(params: TQueryTabParams, tabs: unknown[]) {
+  function getFiltersCurrentTab<TQueryTabParams extends ActiveTab>(
+    params: TQueryTabParams,
+    tabs: unknown[],
+  ) {
     return params.activeTab === undefined
       ? areFiltersApplied(params as unknown as TQueryParams)
         ? tabs.length + 1
@@ -56,10 +64,12 @@ export function getFilterQueryParams<TFilterKeys extends string, TUrlFilters ext
   );
 }
 
-export type GteLte<T> = Partial<Record<'gte' | 'lte', T>>;
+export type GteLte<T> = Partial<Record<"gte" | "lte", T>>;
 export function getGteLteVariables<T>(variables: GteLte<T>): GteLte<T> | null {
   if (
-    !![variables.gte, variables.lte].some(v => v !== undefined && v !== null && !(typeof v === 'number' && isNaN(v)))
+    !![variables.gte, variables.lte].some(
+      v => v !== undefined && v !== null && !(typeof v === "number" && isNaN(v)),
+    )
   ) {
     return variables;
   }
@@ -84,11 +94,11 @@ export function getSingleValueQueryParam<TKey extends string, TUrlKey extends st
   };
 }
 
-export function getSingleEnumValueQueryParam<TKey extends string, TUrlKey extends string, TEnum extends {}>(
-  param: FilterElementRegular<TKey>,
-  key: TUrlKey,
-  haystack: TEnum,
-) {
+export function getSingleEnumValueQueryParam<
+  TKey extends string,
+  TUrlKey extends string,
+  TEnum extends {},
+>(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: TEnum) {
   const { active, value } = param;
 
   if (!active) {
@@ -102,11 +112,11 @@ export function getSingleEnumValueQueryParam<TKey extends string, TUrlKey extend
   };
 }
 
-export function getMultipleEnumValueQueryParam<TKey extends string, TUrlKey extends string, TEnum extends {}>(
-  param: FilterElementRegular<TKey>,
-  key: TUrlKey,
-  haystack: TEnum,
-) {
+export function getMultipleEnumValueQueryParam<
+  TKey extends string,
+  TUrlKey extends string,
+  TEnum extends {},
+>(param: FilterElementRegular<TKey>, key: TUrlKey, haystack: TEnum) {
   const { active, value } = param;
 
   if (!active) {
@@ -176,7 +186,7 @@ export function getKeyValueQueryParam<TKey extends string, TUrlKey extends strin
     };
   }
 
-  const filledOutPairs = value.filter(keyValuePair => keyValuePair.key !== '');
+  const filledOutPairs = value.filter(keyValuePair => keyValuePair.key !== "");
 
   return {
     [key]: filledOutPairs,

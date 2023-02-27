@@ -1,10 +1,7 @@
 /// <reference types="cypress"/>
 /// <reference types="../../../support"/>
 
-import {
-  getElementByDataTestId,
-  SHARED_ELEMENTS,
-} from "../../../elements/shared/sharedElements";
+import { getElementByDataTestId, SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { updateAttribute } from "../../../support/api/requests/Attribute";
 import { createProduct } from "../../../support/api/requests/Product";
 import {
@@ -45,22 +42,16 @@ xdescribe("Tests for using attributes in filters", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  it(
-    "should use attribute as filter. TC: SALEOR_0601",
-    { tags: ["@attribute", "@allEnv"] },
-    () => {
-      updateAttribute({
-        attributeId: attribute.id,
-        filterableInDashboard: false,
-      });
-      enterAttributeAndChanegeIsFilterableInDashbord(attribute.id);
-      enterProductListPage();
-      selectAttributeFilter(attribute.slug, attribute.name);
-      cy.contains(SHARED_ELEMENTS.tableRow, attribute.name).should(
-        "be.visible",
-      );
-    },
-  );
+  it("should use attribute as filter. TC: SALEOR_0601", { tags: ["@attribute", "@allEnv"] }, () => {
+    updateAttribute({
+      attributeId: attribute.id,
+      filterableInDashboard: false,
+    });
+    enterAttributeAndChanegeIsFilterableInDashbord(attribute.id);
+    enterProductListPage();
+    selectAttributeFilter(attribute.slug, attribute.name);
+    cy.contains(SHARED_ELEMENTS.tableRow, attribute.name).should("be.visible");
+  });
 
   it(
     "should remove attribute from filters. TC: SALEOR_0602",

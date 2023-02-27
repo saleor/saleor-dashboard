@@ -1,6 +1,6 @@
-import LimitReachedAlert from '@dashboard/components/LimitReachedAlert';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export const OrderLimitReached: React.FC = () => {
   const intl = useIntl();
@@ -8,9 +8,9 @@ export const OrderLimitReached: React.FC = () => {
   return (
     <LimitReachedAlert
       title={intl.formatMessage({
-        id: '+svQBN',
-        defaultMessage: 'Order limit reached',
-        description: 'alert',
+        id: "+svQBN",
+        defaultMessage: "Order limit reached",
+        description: "alert",
       })}
     >
       <FormattedMessage
@@ -21,5 +21,5 @@ export const OrderLimitReached: React.FC = () => {
   );
 };
 
-OrderLimitReached.displayName = 'OrderLimitReached';
+OrderLimitReached.displayName = "OrderLimitReached";
 export default OrderLimitReached;

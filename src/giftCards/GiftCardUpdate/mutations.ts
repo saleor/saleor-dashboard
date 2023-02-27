@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const giftCardUpdate = gql`
   mutation GiftCardUpdate($id: ID!, $input: GiftCardUpdateInput!) {

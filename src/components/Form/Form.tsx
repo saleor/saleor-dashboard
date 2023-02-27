@@ -1,11 +1,12 @@
-import useForm, { SubmitPromise, UseFormResult } from '@dashboard/hooks/useForm';
-import React from 'react';
+import useForm, { SubmitPromise, UseFormResult } from "@dashboard/hooks/useForm";
+import React from "react";
 
-import { FormId } from './types';
+import { FormId } from "./types";
 
 export type CheckIfSaveIsDisabledFnType<T> = (data: T) => boolean;
 
-export interface FormProps<TData, TErrors> extends Omit<React.HTMLProps<HTMLFormElement>, 'onSubmit'> {
+export interface FormProps<TData, TErrors>
+  extends Omit<React.HTMLProps<HTMLFormElement>, "onSubmit"> {
   children: (props: UseFormResult<TData>) => React.ReactNode;
   confirmLeave?: boolean;
   initial?: TData;
@@ -61,6 +62,6 @@ function Form<TData, Terrors>({
     </form>
   );
 }
-Form.displayName = 'Form';
+Form.displayName = "Form";
 
 export default Form;

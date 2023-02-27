@@ -1,27 +1,27 @@
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import Checkbox from '@dashboard/components/Checkbox';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
-import TableCellAvatar from '@dashboard/components/TableCellAvatar';
-import TableHead from '@dashboard/components/TableHead';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { SaleDetailsFragment } from '@dashboard/graphql';
-import { productVariantEditPath } from '@dashboard/products/urls';
-import { Card, TableBody, TableCell, TableFooter } from '@material-ui/core';
-import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import Checkbox from "@dashboard/components/Checkbox";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { SaleDetailsFragment } from "@dashboard/graphql";
+import { productVariantEditPath } from "@dashboard/products/urls";
+import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, renderCollection } from '../../../misc';
-import { ListActions, ListProps, RelayToFlat } from '../../../types';
-import { messages } from './messages';
-import { useStyles } from './styles';
+import { maybe, renderCollection } from "../../../misc";
+import { ListActions, ListProps, RelayToFlat } from "../../../types";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 export interface SaleVariantsProps extends ListProps, ListActions {
-  variants: RelayToFlat<SaleDetailsFragment['variants']> | null;
+  variants: RelayToFlat<SaleDetailsFragment["variants"]> | null;
   onVariantAssign: () => void;
   onVariantUnassign: (id: string) => void;
 }
@@ -29,8 +29,17 @@ export interface SaleVariantsProps extends ListProps, ListActions {
 const numberOfColumns = 5;
 
 const DiscountVariants: React.FC<SaleVariantsProps> = props => {
-  const { variants, disabled, onVariantAssign, onVariantUnassign, isChecked, selected, toggle, toggleAll, toolbar } =
-    props;
+  const {
+    variants,
+    disabled,
+    onVariantAssign,
+    onVariantUnassign,
+    isChecked,
+    selected,
+    toggle,
+    toggleAll,
+    toolbar,
+  } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -88,7 +97,7 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
               return (
                 <TableRowLink
                   hover={!!variant}
-                  key={variant ? variant.id : 'skeleton'}
+                  key={variant ? variant.id : "skeleton"}
                   href={variant && productVariantEditPath(variant.product.id, variant.id)}
                   className={classes.tableRow}
                   selected={isSelected}
@@ -143,5 +152,5 @@ const DiscountVariants: React.FC<SaleVariantsProps> = props => {
     </Card>
   );
 };
-DiscountVariants.displayName = 'DiscountVariants';
+DiscountVariants.displayName = "DiscountVariants";
 export default DiscountVariants;

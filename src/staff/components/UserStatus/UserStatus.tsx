@@ -1,10 +1,10 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import { ControlledCheckbox } from '@dashboard/components/ControlledCheckbox';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { userStatusMessages as messages } from './messages';
+import { userStatusMessages as messages } from "./messages";
 
 interface AppStatusProps {
   data: {
@@ -22,7 +22,9 @@ const AppStatus: React.FC<AppStatusProps> = ({ data, disabled, label, onChange }
     <Card>
       <CardTitle title={intl.formatMessage(messages.userStatus)} />
       <CardContent>
-        <Typography variant="body2">{intl.formatMessage(messages.userDisableInstruction)}</Typography>
+        <Typography variant="body2">
+          {intl.formatMessage(messages.userDisableInstruction)}
+        </Typography>
         <ControlledCheckbox
           checked={data.isActive}
           disabled={disabled}
@@ -34,5 +36,5 @@ const AppStatus: React.FC<AppStatusProps> = ({ data, disabled, label, onChange }
     </Card>
   );
 };
-AppStatus.displayName = 'AppStatus';
+AppStatus.displayName = "AppStatus";
 export default AppStatus;

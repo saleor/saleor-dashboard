@@ -1,14 +1,14 @@
-import Checkbox from '@dashboard/components/Checkbox';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { AvailableAttributeFragment } from '@dashboard/graphql';
-import useElementScroll, { isScrolledToBottom } from '@dashboard/hooks/useElementScroll';
-import useModalDialogErrors from '@dashboard/hooks/useModalDialogErrors';
-import useModalDialogOpen from '@dashboard/hooks/useModalDialogOpen';
-import useSearchQuery from '@dashboard/hooks/useSearchQuery';
-import { maybe, renderCollection } from '@dashboard/misc';
-import { FetchMoreProps } from '@dashboard/types';
+import Checkbox from "@dashboard/components/Checkbox";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { AvailableAttributeFragment } from "@dashboard/graphql";
+import useElementScroll, { isScrolledToBottom } from "@dashboard/hooks/useElementScroll";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { maybe, renderCollection } from "@dashboard/misc";
+import { FetchMoreProps } from "@dashboard/types";
 import {
   CircularProgress,
   Dialog,
@@ -20,53 +20,53 @@ import {
   TableCell,
   TextField,
   Typography,
-} from '@material-ui/core';
-import { ConfirmButtonTransitionState, makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@material-ui/core";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import BackButton from '../BackButton';
-import { messages } from './messages';
+import BackButton from "../BackButton";
+import { messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
     actions: {
-      boxShadow: '0px 4px 4px rgba(0, 0, 0, 0.25)',
+      boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.25)",
     },
     checkboxCell: {
       paddingLeft: 0,
     },
     dialogPaper: {
-      overflow: 'hidden',
+      overflow: "hidden",
     },
     dropShadow: {
       boxShadow: `0px -5px 10px 0px ${theme.palette.divider}`,
     },
     loadMoreLoaderContainer: {
-      alignItems: 'center',
-      display: 'flex',
+      alignItems: "center",
+      display: "flex",
       marginTop: theme.spacing(2),
       height: theme.spacing(3),
-      justifyContent: 'center',
+      justifyContent: "center",
     },
     searchArea: {
       marginBottom: theme.spacing(3),
-      overflowY: 'hidden',
+      overflowY: "hidden",
       paddingBottom: theme.spacing(6),
     },
     scrollArea: {
       maxHeight: 700,
-      overflowY: 'scroll',
+      overflowY: "scroll",
       paddingTop: 0,
       marginBottom: theme.spacing(3),
     },
     wideCell: {
-      width: '100%',
+      width: "100%",
     },
   }),
-  { name: 'AssignAttributeDialog' },
+  { name: "AssignAttributeDialog" },
 );
 
 export interface AssignAttributeDialogProps extends FetchMoreProps {
@@ -82,7 +82,7 @@ export interface AssignAttributeDialogProps extends FetchMoreProps {
   onToggle: (id: string) => void;
 }
 
-const scrollableTargetId = 'assignAttributeScrollableDialog';
+const scrollableTargetId = "assignAttributeScrollableDialog";
 
 const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
   attributes,
@@ -133,7 +133,7 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
           placeholder={intl.formatMessage(messages.searchInputPlaceholder)}
           fullWidth
           InputProps={{
-            autoComplete: 'off',
+            autoComplete: "off",
             endAdornment: loading && <CircularProgress size={16} />,
           }}
         />
@@ -159,7 +159,9 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
                   if (!attribute) {
                     return null;
                   }
-                  const isChecked = !!selected.find(selectedAttribute => selectedAttribute === attribute.id);
+                  const isChecked = !!selected.find(
+                    selectedAttribute => selectedAttribute === attribute.id,
+                  );
 
                   return (
                     <TableRowLink key={maybe(() => attribute.id)}>
@@ -208,5 +210,5 @@ const AssignAttributeDialog: React.FC<AssignAttributeDialogProps> = ({
     </Dialog>
   );
 };
-AssignAttributeDialog.displayName = 'AssignAttributeDialog';
+AssignAttributeDialog.displayName = "AssignAttributeDialog";
 export default AssignAttributeDialog;

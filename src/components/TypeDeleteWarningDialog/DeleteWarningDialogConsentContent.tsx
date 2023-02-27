@@ -1,9 +1,9 @@
-import { Typography } from '@material-ui/core';
-import React, { ChangeEvent } from 'react';
+import { Typography } from "@material-ui/core";
+import React, { ChangeEvent } from "react";
 
-import CardSpacer from '../CardSpacer';
-import ControlledCheckbox from '../ControlledCheckbox';
-import { useTypeDeleteWarningDialogStyles as useStyles } from './styles';
+import CardSpacer from "../CardSpacer";
+import ControlledCheckbox from "../ControlledCheckbox";
+import { useTypeDeleteWarningDialogStyles as useStyles } from "./styles";
 
 interface DeleteWarningDialogConsentContentProps {
   description: string | React.ReactNode[] | readonly React.ReactNode[];

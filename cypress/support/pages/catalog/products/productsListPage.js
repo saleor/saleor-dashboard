@@ -22,9 +22,7 @@ export function isNumberOfProductsSameAsInSelectResultsOnPage() {
       numberOfResults = text;
       getDisplayedColumnArray("name");
     })
-    .then(
-      productsList => productsList.length === parseInt(numberOfResults, 10),
-    );
+    .then(productsList => productsList.length === parseInt(numberOfResults, 10));
 }
 
 export function getDisplayedColumnArray(columnName) {
@@ -57,11 +55,7 @@ export function selectFilterOption(filter, optionName) {
 
 export function selectAttributeFilter(attributeSlug, attributeValue) {
   selectFilterByAttribute(attributeSlug);
-  cy.get(
-    `${getElementByDataTestId(attributeSlug)}${
-      PRODUCTS_LIST.filters.filterField.filterField
-    }`,
-  )
+  cy.get(`${getElementByDataTestId(attributeSlug)}${PRODUCTS_LIST.filters.filterField.filterField}`)
     .find(PRODUCTS_LIST.filters.filterOption)
     .should("be.visible")
     .contains(attributeValue)
@@ -80,9 +74,7 @@ export function selectProductsOutOfStock() {
 }
 
 export function selectFilterBy(filter) {
-  return showFilters()
-    .get(PRODUCTS_LIST.filters.filterBy[filter])
-    .click();
+  return showFilters().get(PRODUCTS_LIST.filters.filterBy[filter]).click();
 }
 
 export function selectFilterByAttribute(attributeSlug) {
@@ -114,9 +106,7 @@ export function submitFilters() {
 }
 
 export function enterProductListPage() {
-  cy.visit(urlList.products)
-    .expectSkeletonIsVisible()
-    .waitForProgressBarToNotExist();
+  cy.visit(urlList.products).expectSkeletonIsVisible().waitForProgressBarToNotExist();
 }
 
 export function sortProductsBy(sortBy) {

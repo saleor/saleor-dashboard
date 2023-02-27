@@ -1,11 +1,11 @@
-import { isExternalURL } from '@dashboard/utils/urls';
-import { TableRow, TableRowTypeMap } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React, { forwardRef } from 'react';
-import { Link } from 'react-router-dom';
+import { isExternalURL } from "@dashboard/utils/urls";
+import { TableRow, TableRowTypeMap } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React, { forwardRef } from "react";
+import { Link } from "react-router-dom";
 
-type MaterialTableRowPropsType = TableRowTypeMap['props'];
+type MaterialTableRowPropsType = TableRowTypeMap["props"];
 
 export interface TableRowLinkProps extends MaterialTableRowPropsType {
   children: React.ReactNode;
@@ -18,11 +18,11 @@ export interface TableRowLinkProps extends MaterialTableRowPropsType {
 const useStyles = makeStyles(
   {
     link: {
-      all: 'inherit',
-      display: 'contents',
+      all: "inherit",
+      display: "contents",
     },
   },
-  { name: 'TableRowLink' },
+  { name: "TableRowLink" },
 );
 
 const TableRowLink = forwardRef<HTMLTableRowElement, TableRowLinkProps>((props, ref) => {
@@ -46,5 +46,5 @@ const TableRowLink = forwardRef<HTMLTableRowElement, TableRowLinkProps>((props, 
   );
 });
 
-TableRowLink.displayName = 'TableRowLink';
+TableRowLink.displayName = "TableRowLink";
 export default TableRowLink;

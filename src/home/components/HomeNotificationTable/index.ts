@@ -1,2 +1,2 @@
-export { default } from './HomeNotificationTable';
-export * from './HomeNotificationTable';
+export { default } from "./HomeNotificationTable";
+export * from "./HomeNotificationTable";

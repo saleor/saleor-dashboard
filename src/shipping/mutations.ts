@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const deleteShippingZone = gql`
   mutation DeleteShippingZone($id: ID!) {
@@ -120,7 +120,10 @@ export const bulkDeleteShippingRate = gql`
 `;
 
 export const shippingMethodChannelListingUpdate = gql`
-  mutation ShippingMethodChannelListingUpdate($id: ID!, $input: ShippingMethodChannelListingInput!) {
+  mutation ShippingMethodChannelListingUpdate(
+    $id: ID!
+    $input: ShippingMethodChannelListingInput!
+  ) {
     shippingMethodChannelListingUpdate(id: $id, input: $input) {
       shippingMethod {
         ...ShippingMethodType

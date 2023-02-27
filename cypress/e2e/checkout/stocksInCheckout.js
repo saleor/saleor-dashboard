@@ -3,10 +3,7 @@
 
 import faker from "faker";
 
-import {
-  addProductsToCheckout,
-  createCheckout,
-} from "../../support/api/requests/Checkout";
+import { addProductsToCheckout, createCheckout } from "../../support/api/requests/Checkout";
 import { getVariants } from "../../support/api/requests/Product";
 import { createWaitingForCaptureOrder } from "../../support/api/utils/ordersUtils";
 import { createNewProductWithSeveralVariants } from "../../support/api/utils/products/productsUtils";
@@ -83,10 +80,10 @@ describe("Manage products stocks in checkout", () => {
           addProductsToCheckout(checkout.id, [variantsWithLowStock], 2);
         })
         .then(({ errors }) => {
-          expect(
-            errors[0],
-            "should return error on field quantity",
-          ).to.have.property("field", "quantity");
+          expect(errors[0], "should return error on field quantity").to.have.property(
+            "field",
+            "quantity",
+          );
         });
     },
   );

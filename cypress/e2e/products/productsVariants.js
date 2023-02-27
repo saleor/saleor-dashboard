@@ -7,10 +7,7 @@ import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details
 import { urlList } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { createChannel } from "../../support/api/requests/Channels";
-import {
-  createProduct,
-  updateChannelInProduct,
-} from "../../support/api/requests/Product";
+import { createProduct, updateChannelInProduct } from "../../support/api/requests/Product";
 import * as productUtils from "../../support/api/utils/products/productsUtils";
 import { getProductVariants } from "../../support/api/utils/storeFront/storeFrontProductUtils";
 import { updateTaxConfigurationForChannel } from "../../support/api/utils/taxesUtils";
@@ -69,10 +66,7 @@ describe("As an admin I should be able to create variant", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(
@@ -100,9 +94,7 @@ describe("As an admin I should be able to create variant", () => {
             productId: createdProduct.id,
             channelId: newChannel.id,
           });
-          cy.visit(
-            `${urlList.products}${createdProduct.id}`,
-          ).waitForProgressBarToNotBeVisible();
+          cy.visit(`${urlList.products}${createdProduct.id}`).waitForProgressBarToNotBeVisible();
           addVariantToDataGrid(name);
           enterVariantEditPage();
           selectChannelsForVariant();
@@ -150,9 +142,7 @@ describe("As an admin I should be able to create variant", () => {
           productId: createdProduct.id,
           channelId: newChannel.id,
         });
-        cy.visit(
-          `${urlList.products}${createdProduct.id}`,
-        ).waitForProgressBarToNotBeVisible();
+        cy.visit(`${urlList.products}${createdProduct.id}`).waitForProgressBarToNotBeVisible();
         addVariantToDataGrid(name);
       });
     },
@@ -201,10 +191,7 @@ describe("As an admin I should be able to create variant", () => {
               expect(firstVariant).to.have.property("name", "value");
               expect(firstVariant).to.have.property("currency", "USD");
               expect(secondVariant).to.have.property("name", secondVariantSku);
-              expect(secondVariant).to.have.property(
-                "price",
-                variants[1].price,
-              );
+              expect(secondVariant).to.have.property("price", variants[1].price);
               expect(secondVariant).to.have.property("currency", "USD");
             });
         });

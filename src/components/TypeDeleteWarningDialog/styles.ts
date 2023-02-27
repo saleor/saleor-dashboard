@@ -1,12 +1,12 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useTypeDeleteWarningDialogStyles = makeStyles(
   theme => ({
     centerContainer: {
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      height: '100%',
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      height: "100%",
     },
     content: {
       width: 600,
@@ -15,9 +15,9 @@ export const useTypeDeleteWarningDialogStyles = makeStyles(
       color: theme.palette.primary.main,
     },
     buttonsSection: {
-      display: 'flex',
-      justifyContent: 'flex-end',
+      display: "flex",
+      justifyContent: "flex-end",
     },
   }),
-  { name: 'ProductTypeDeleteWarningDialog' },
+  { name: "ProductTypeDeleteWarningDialog" },
 );

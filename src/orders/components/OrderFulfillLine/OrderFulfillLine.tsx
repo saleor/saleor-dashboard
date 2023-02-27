@@ -1,22 +1,22 @@
-import Skeleton from '@dashboard/components/Skeleton';
-import TableCellAvatar from '@dashboard/components/TableCellAvatar';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { OrderFulfillLineFragment } from '@dashboard/graphql';
-import { FormsetChange, FormsetData } from '@dashboard/hooks/useFormset';
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { OrderFulfillLineFragment } from "@dashboard/graphql";
+import { FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
 import {
   getAttributesCaption,
   getOrderLineAvailableQuantity,
   getWarehouseStock,
   OrderFulfillLineFormData,
-} from '@dashboard/orders/utils/data';
-import { TableCell, TextField, Typography } from '@material-ui/core';
-import { ChevronIcon, IconButton, Tooltip, WarningIcon } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/orders/utils/data";
+import { TableCell, TextField, Typography } from "@material-ui/core";
+import { ChevronIcon, IconButton, Tooltip, WarningIcon } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { messages } from './messages';
-import { useStyles } from './styles';
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 interface OrderFulfillLineProps {
   line: OrderFulfillLineFragment;
@@ -74,7 +74,9 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
           isPreorder || !line?.variant ? (
             <Tooltip
               variant="warning"
-              title={intl.formatMessage(isPreorder ? messages.preorderWarning : messages.deletedVariantWarning)}
+              title={intl.formatMessage(
+                isPreorder ? messages.preorderWarning : messages.deletedVariantWarning,
+              )}
             >
               <div className={classes.warningIcon}>
                 <WarningIcon />
@@ -92,7 +94,10 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
       {isPreorder ? (
         <TableCell className={classes.colQuantity} />
       ) : (
-        <TableCell className={classes.colQuantity} key={warehouseStock?.id ?? 'deletedVariant' + lineIndex}>
+        <TableCell
+          className={classes.colQuantity}
+          key={warehouseStock?.id ?? "deletedVariant" + lineIndex}
+        >
           <TextField
             type="number"
             inputProps={{
@@ -100,7 +105,7 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
                 [classes.quantityInnerInputNoRemaining]: !line.variant?.trackInventory,
               }),
               min: 0,
-              style: { textAlign: 'right' },
+              style: { textAlign: "right" },
             }}
             fullWidth
             value={lineFormQuantity}
@@ -121,23 +126,25 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
                     notchedOutline: classes.warning,
                   }),
               },
-              endAdornment: <div className={classes.remainingQuantity}>/ {line.quantityToFulfill}</div>,
+              endAdornment: (
+                <div className={classes.remainingQuantity}>/ {line.quantityToFulfill}</div>
+              ),
             }}
           />
         </TableCell>
       )}
       <TableCell className={classes.colStock} key="total">
-        {lineFormWarehouse ? (isPreorder || isDeletedVariant ? undefined : availableQuantity) : '-'}
+        {lineFormWarehouse ? (isPreorder || isDeletedVariant ? undefined : availableQuantity) : "-"}
       </TableCell>
       <TableCell className={classes.colWarehouse}>
         {isPreorder ? (
-          '-'
+          "-"
         ) : (
           <IconButton
             onClick={onWarehouseChange}
             className={clsx(
               classes.warehouseButton,
-              'MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd',
+              "MuiInputBase-root MuiOutlinedInput-root MuiInputBase-fullWidth MuiInputBase-formControl MuiInputBase-adornedEnd MuiOutlinedInput-adornedEnd",
             )}
             data-test-id="select-warehouse-button"
           >
@@ -153,5 +160,5 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
     </TableRowLink>
   );
 };
-OrderFulfillLine.displayName = 'OrderFulfillLine';
+OrderFulfillLine.displayName = "OrderFulfillLine";
 export default OrderFulfillLine;

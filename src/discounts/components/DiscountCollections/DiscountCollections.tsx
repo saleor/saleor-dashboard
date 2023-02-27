@@ -1,24 +1,24 @@
-import { collectionUrl } from '@dashboard/collections/urls';
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import Checkbox from '@dashboard/components/Checkbox';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
-import TableHead from '@dashboard/components/TableHead';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { SaleDetailsFragment, VoucherDetailsFragment } from '@dashboard/graphql';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import { Card, TableBody, TableCell, TableFooter } from '@material-ui/core';
-import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { collectionUrl } from "@dashboard/collections/urls";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import Checkbox from "@dashboard/components/Checkbox";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, renderCollection } from '../../../misc';
-import { ListActions, ListProps } from '../../../types';
-import { messages } from './messages';
-import { useStyles } from './styles';
+import { maybe, renderCollection } from "../../../misc";
+import { ListActions, ListProps } from "../../../types";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 export interface DiscountCollectionsProps extends ListProps, ListActions {
   discount: SaleDetailsFragment | VoucherDetailsFragment;
@@ -91,7 +91,7 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
                 <TableRowLink
                   selected={isSelected}
                   hover={!!collection}
-                  key={collection ? collection.id : 'skeleton'}
+                  key={collection ? collection.id : "skeleton"}
                   href={collection && collectionUrl(collection.id)}
                   className={classes.tableRow}
                 >
@@ -139,5 +139,5 @@ const DiscountCollections: React.FC<DiscountCollectionsProps> = props => {
     </Card>
   );
 };
-DiscountCollections.displayName = 'DiscountCollections';
+DiscountCollections.displayName = "DiscountCollections";
 export default DiscountCollections;

@@ -1,9 +1,9 @@
-import { ChannelData, createSortedChannelsData } from '@dashboard/channels/utils';
-import useAppChannel from '@dashboard/components/AppLayout/AppChannelContext';
-import { AttributeInput } from '@dashboard/components/Attributes';
-import ChannelsAvailabilityDialog from '@dashboard/components/ChannelsAvailabilityDialog';
-import { WindowTitle } from '@dashboard/components/WindowTitle';
-import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from '@dashboard/config';
+import { ChannelData, createSortedChannelsData } from "@dashboard/channels/utils";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   ProductChannelListingErrorFragment,
   ProductErrorWithAttributesFragment,
@@ -17,36 +17,38 @@ import {
   useUpdatePrivateMetadataMutation,
   useVariantCreateMutation,
   useWarehouseListQuery,
-} from '@dashboard/graphql';
-import useChannels from '@dashboard/hooks/useChannels';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import useShop from '@dashboard/hooks/useShop';
-import { getMutationErrors } from '@dashboard/misc';
-import ProductCreatePage, { ProductCreateData } from '@dashboard/products/components/ProductCreatePage';
+} from "@dashboard/graphql";
+import useChannels from "@dashboard/hooks/useChannels";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { getMutationErrors } from "@dashboard/misc";
+import ProductCreatePage, {
+  ProductCreateData,
+} from "@dashboard/products/components/ProductCreatePage";
 import {
   productAddUrl,
   ProductCreateUrlDialog,
   ProductCreateUrlQueryParams,
   productUrl,
-} from '@dashboard/products/urls';
-import useCategorySearch from '@dashboard/searches/useCategorySearch';
-import useCollectionSearch from '@dashboard/searches/useCollectionSearch';
-import usePageSearch from '@dashboard/searches/usePageSearch';
-import useProductSearch from '@dashboard/searches/useProductSearch';
-import useProductTypeSearch from '@dashboard/searches/useProductTypeSearch';
-import { useTaxClassFetchMore } from '@dashboard/taxes/utils/useTaxClassFetchMore';
-import { getProductErrorMessage } from '@dashboard/utils/errors';
-import useAttributeValueSearchHandler from '@dashboard/utils/handlers/attributeValueSearchHandler';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import createMetadataCreateHandler from '@dashboard/utils/handlers/metadataCreateHandler';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import { warehouseAddPath } from '@dashboard/warehouses/urls';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/products/urls";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import usePageSearch from "@dashboard/searches/usePageSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
+import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
+import { getProductErrorMessage } from "@dashboard/utils/errors";
+import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { warehouseAddPath } from "@dashboard/warehouses/urls";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { PRODUCT_CREATE_FORM_ID } from './consts';
-import { createHandler } from './handlers';
+import { PRODUCT_CREATE_FORM_ID } from "./consts";
+import { createHandler } from "./handlers";
 
 interface ProductCreateProps {
   params: ProductCreateUrlQueryParams;
@@ -58,21 +60,20 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const shop = useShop();
   const intl = useIntl();
   const [productCreateComplete, setProductCreateComplete] = React.useState(false);
-  const selectedProductTypeId = params['product-type-id'];
+  const selectedProductTypeId = params["product-type-id"];
 
   const handleSelectProductType = (productTypeId: string) =>
     navigate(
       productAddUrl({
         ...params,
-        'product-type-id': productTypeId,
+        "product-type-id": productTypeId,
       }),
     );
 
-  const [openModal, closeModal] = createDialogActionHandlers<ProductCreateUrlDialog, ProductCreateUrlQueryParams>(
-    navigate,
-    params => productAddUrl(params),
-    params,
-  );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductCreateUrlDialog,
+    ProductCreateUrlQueryParams
+  >(navigate, params => productAddUrl(params), params);
 
   const {
     loadMore: loadMoreCategories,
@@ -166,10 +167,10 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
 
   const handleSuccess = (productId: string) => {
     notify({
-      status: 'success',
+      status: "success",
       text: intl.formatMessage({
-        id: 'DO8+uV',
-        defaultMessage: 'Product created',
+        id: "DO8+uV",
+        defaultMessage: "Product created",
       }),
     });
     navigate(productUrl(productId));
@@ -178,7 +179,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
   const [updateChannels, updateChannelsOpts] = useProductChannelListingUpdateMutation({});
-  const [updateVariantChannels, updateVariantChannelsOpts] = useProductVariantChannelListingUpdateMutation({});
+  const [updateVariantChannels, updateVariantChannelsOpts] =
+    useProductVariantChannelListingUpdateMutation({});
 
   const [productCreate, productCreateOpts] = useProductCreateMutation({});
   const [deleteProduct] = useProductDeleteMutation({});
@@ -188,7 +190,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
       if (errors.length) {
         errors.map(error =>
           notify({
-            status: 'error',
+            status: "error",
             text: getProductErrorMessage(error, intl),
           }),
         );
@@ -222,7 +224,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     navigate(
       productAddUrl({
         ...params,
-        action: 'assign-attribute-value',
+        action: "assign-attribute-value",
         id: attribute.id,
       }),
     );
@@ -286,9 +288,9 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
     <>
       <WindowTitle
         title={intl.formatMessage({
-          id: 'PXx4Jk',
-          defaultMessage: 'Create Product',
-          description: 'window title',
+          id: "PXx4Jk",
+          defaultMessage: "Create Product",
+          description: "window title",
         })}
       />
       {!!allChannels?.length && (
@@ -299,8 +301,8 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
           onClose={handleChannelsModalClose}
           open={isChannelsModalOpen}
           title={intl.formatMessage({
-            id: 'Eau5AV',
-            defaultMessage: 'Manage Products Channel Availability',
+            id: "Eau5AV",
+            defaultMessage: "Manage Products Channel Availability",
           })}
           confirmButtonState="default"
           selected={channelListElements.length}
@@ -322,9 +324,9 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         fetchProductTypes={searchProductTypes}
         fetchAttributeValues={searchAttributeValues}
         header={intl.formatMessage({
-          id: 'NBP8uu',
-          defaultMessage: 'New Product',
-          description: 'page header',
+          id: "NBP8uu",
+          defaultMessage: "New Product",
+          description: "page header",
         })}
         productTypes={productTypes}
         onSubmit={handleSubmit}
@@ -339,7 +341,7 @@ export const ProductCreateView: React.FC<ProductCreateProps> = ({ params }) => {
         weightUnit={shop?.defaultWeightUnit}
         openChannelsModal={handleChannelsModalOpen}
         onChannelsChange={setCurrentChannels}
-        assignReferencesAttributeId={params.action === 'assign-attribute-value' && params.id}
+        assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}

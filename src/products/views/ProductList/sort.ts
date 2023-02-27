@@ -1,6 +1,6 @@
-import { ProductOrder, ProductOrderField } from '@dashboard/graphql';
-import { ProductListUrlQueryParams, ProductListUrlSortField } from '@dashboard/products/urls';
-import { getOrderDirection } from '@dashboard/utils/sort';
+import { ProductOrder, ProductOrderField } from "@dashboard/graphql";
+import { ProductListUrlQueryParams, ProductListUrlSortField } from "@dashboard/products/urls";
+import { getOrderDirection } from "@dashboard/utils/sort";
 
 export const DEFAULT_SORT_KEY = ProductListUrlSortField.name;
 
@@ -39,7 +39,10 @@ export function getSortQueryField(sort: ProductListUrlSortField): ProductOrderFi
   }
 }
 
-export function getSortQueryVariables(params: ProductListUrlQueryParams, isChannelSelected: boolean): ProductOrder {
+export function getSortQueryVariables(
+  params: ProductListUrlQueryParams,
+  isChannelSelected: boolean,
+): ProductOrder {
   if (!canBeSorted(params.sort, isChannelSelected)) {
     return;
   }

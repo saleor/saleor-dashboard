@@ -5,10 +5,7 @@ import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/cat
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../../support/api/utils/shippingUtils";
+import { createShipping, deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 
 describe("As a customer I should be able to purchase gift card as a product", () => {
   const startsWith = "GiftCardsCheckout";
@@ -40,11 +37,7 @@ describe("As a customer I should be able to purchase gift card as a product", ()
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name, kind: "GIFT_CARD" })
       .then(
-        ({
-          productType: productTypeResp,
-          attribute: attributeResp,
-          category: categoryResp,
-        }) => {
+        ({ productType: productTypeResp, attribute: attributeResp, category: categoryResp }) => {
           productType = productTypeResp;
           attribute = attributeResp;
           category = categoryResp;

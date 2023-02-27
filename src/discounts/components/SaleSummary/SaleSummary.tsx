@@ -1,20 +1,20 @@
-import CardSpacer from '@dashboard/components/CardSpacer';
-import CardTitle from '@dashboard/components/CardTitle';
-import Date from '@dashboard/components/Date';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import Hr from '@dashboard/components/Hr';
-import Money from '@dashboard/components/Money';
-import Percent from '@dashboard/components/Percent';
-import Skeleton from '@dashboard/components/Skeleton';
-import { SaleDetailsFragment, SaleType } from '@dashboard/graphql';
-import { commonMessages } from '@dashboard/intl';
-import { ChannelProps } from '@dashboard/types';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import Date from "@dashboard/components/Date";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Hr from "@dashboard/components/Hr";
+import Money from "@dashboard/components/Money";
+import Percent from "@dashboard/components/Percent";
+import Skeleton from "@dashboard/components/Skeleton";
+import { SaleDetailsFragment, SaleType } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { ChannelProps } from "@dashboard/types";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe } from '../../../misc';
-import useStyles from './styles';
+import { maybe } from "../../../misc";
+import useStyles from "./styles";
 
 export interface SaleSummaryProps extends ChannelProps {
   sale: SaleDetailsFragment;
@@ -32,7 +32,9 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
         <Typography variant="caption">
           <FormattedMessage id="F56hOz" defaultMessage="Name" description="sale name" />
         </Typography>
-        <Typography className={classes.ellipsis}>{maybe<React.ReactNode>(() => sale.name, <Skeleton />)}</Typography>
+        <Typography className={classes.ellipsis}>
+          {maybe<React.ReactNode>(() => sale.name, <Skeleton />)}
+        </Typography>
         <FormSpacer />
 
         <Typography variant="caption">
@@ -50,7 +52,7 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
             ) : channel?.discountValue ? (
               <Percent amount={channel?.discountValue} />
             ) : (
-              '-'
+              "-"
             )
           ) : (
             <Skeleton />
@@ -79,7 +81,7 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
         </Typography>
         <Typography>
           {maybe<React.ReactNode>(
-            () => (sale.endDate === null ? '-' : <Date date={sale.endDate} plain />),
+            () => (sale.endDate === null ? "-" : <Date date={sale.endDate} plain />),
             <Skeleton />,
           )}
         </Typography>
@@ -87,5 +89,5 @@ const SaleSummary: React.FC<SaleSummaryProps> = ({ selectedChannelId, sale }) =>
     </Card>
   );
 };
-SaleSummary.displayName = 'SaleSummary';
+SaleSummary.displayName = "SaleSummary";
 export default SaleSummary;

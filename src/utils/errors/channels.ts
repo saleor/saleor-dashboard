@@ -1,25 +1,25 @@
-import { ChannelErrorCode, ChannelErrorFragment } from '@dashboard/graphql';
-import { defineMessages, IntlShape } from 'react-intl';
+import { ChannelErrorCode, ChannelErrorFragment } from "@dashboard/graphql";
+import { defineMessages, IntlShape } from "react-intl";
 
-import { getCommonFormFieldErrorMessage } from './common';
+import { getCommonFormFieldErrorMessage } from "./common";
 
 const messages = defineMessages({
   channelAlreadyExist: {
-    id: 'DK+8PB',
-    defaultMessage: 'This channel has already been created',
+    id: "DK+8PB",
+    defaultMessage: "This channel has already been created",
   },
   channelSameCurrency: {
-    id: 'V2BBQu',
-    defaultMessage: 'Currency in both channels must be the same',
+    id: "V2BBQu",
+    defaultMessage: "Currency in both channels must be the same",
   },
   channelUnique: {
-    id: 'QFCUEt',
-    defaultMessage: 'Slug must be unique',
+    id: "QFCUEt",
+    defaultMessage: "Slug must be unique",
   },
 });
 
 function getChannelsErrorMessage(
-  err: Omit<ChannelErrorFragment, '__typename'> | undefined,
+  err: Omit<ChannelErrorFragment, "__typename"> | undefined,
   intl: IntlShape,
 ): string | undefined {
   if (err) {

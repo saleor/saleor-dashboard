@@ -66,15 +66,9 @@ describe("Tests for customer", () => {
           getCustomer(customer.id);
         })
         .then(customer => {
-          expect(customer.firstName, "Expect correct first name").to.eq(
-            randomName,
-          );
-          expect(customer.lastName, "Expect correct last name").to.eq(
-            randomName,
-          );
-          expect(customer.email, "Expect correct email").to.eq(
-            email.toLowerCase(),
-          );
+          expect(customer.firstName, "Expect correct first name").to.eq(randomName);
+          expect(customer.lastName, "Expect correct last name").to.eq(randomName);
+          expect(customer.email, "Expect correct email").to.eq(email.toLowerCase());
           expect(customer.note, "Expect correct note").to.eq(note);
           cy.expectCorrectFullAddress(customer.addresses[0], address);
         });
@@ -201,8 +195,7 @@ describe("Tests for customer", () => {
         getCustomer(user.id).then(({ addresses }) => {
           expect(addresses).to.have.length(2);
           const addedAddress = addresses.find(
-            element =>
-              element.city.toUpperCase() === secondAddress.city.toUpperCase(),
+            element => element.city.toUpperCase() === secondAddress.city.toUpperCase(),
           );
           cy.expectCorrectFullAddress(addedAddress, secondAddress);
         });
@@ -275,9 +268,7 @@ describe("Tests for customer", () => {
           .click()
           .wait("@UpdateCustomer");
         getCustomer(user.id).then(user => {
-          expect(user.firstName, "Expect correct first name").to.eq(
-            updatedName,
-          );
+          expect(user.firstName, "Expect correct first name").to.eq(updatedName);
           expect(user.lastName, "Expect correct last name").to.eq(updatedName);
           expect(user.email, "Expect correct email").to.eq(
             `${updatedName}@example.com`.toLowerCase(),

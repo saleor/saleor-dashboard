@@ -4,10 +4,10 @@ import {
   ProductMediaCreateMutationVariables,
   ProductMediaReorderMutationVariables,
   ProductVariantReorderMutationFn,
-} from '@dashboard/graphql';
-import { ReorderEvent } from '@dashboard/types';
-import { move } from '@dashboard/utils/lists';
-import { arrayMove } from 'react-sortable-hoc';
+} from "@dashboard/graphql";
+import { ReorderEvent } from "@dashboard/types";
+import { move } from "@dashboard/utils/lists";
+import { arrayMove } from "react-sortable-hoc";
 
 export function createImageUploadHandler(
   id: string,
@@ -15,7 +15,7 @@ export function createImageUploadHandler(
 ) {
   return (file: File) =>
     createProductImage({
-      alt: '',
+      alt: "",
       image: file,
       product: id,
     });
@@ -55,15 +55,20 @@ export function createVariantReorderHandler<T extends { id: string; variants: an
         productId: product.id,
       },
       optimisticResponse: () => ({
-        __typename: 'Mutation',
+        __typename: "Mutation",
         productVariantReorder: {
-          __typename: 'ProductVariantReorder',
+          __typename: "ProductVariantReorder",
           errors: [],
           product: {
-            __typename: 'Product',
+            __typename: "Product",
             id: product.id,
             variants: [
-              ...move<T['variants'][0]>(product.variants[oldIndex], product!.variants, areVariantsEqual, newIndex),
+              ...move<T["variants"][0]>(
+                product.variants[oldIndex],
+                product!.variants,
+                areVariantsEqual,
+                newIndex,
+              ),
             ],
           },
         },

@@ -1,5 +1,5 @@
-import { marketplaceUrlResolver } from '@dashboard/marketplace/marketplace-url-resolver';
-import { useCallback, useState } from 'react';
+import { marketplaceUrlResolver } from "@dashboard/marketplace/marketplace-url-resolver";
+import { useCallback, useState } from "react";
 
 export interface SaleorApp {
   name: string;
@@ -19,7 +19,9 @@ export const useSaleorApps = () => {
     return fetch(marketplaceUrlResolver.getSaleorAppsJsonEndpoint())
       .then(response => response.json())
       .then((data: SaleorApp[]) => {
-        if (!data.every(item => typeof item.hostname === 'string' || typeof item.name === 'string')) {
+        if (
+          !data.every(item => typeof item.hostname === "string" || typeof item.name === "string")
+        ) {
           console.error(
             'Invalid Saleor Apps data received from Marketplace. Expected array of objects with "name" and "hostname" properties',
           );

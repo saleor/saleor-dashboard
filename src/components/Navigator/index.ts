@@ -1,2 +1,2 @@
-export { default } from './Navigator';
-export * from './Navigator';
+export { default } from "./Navigator";
+export * from "./Navigator";

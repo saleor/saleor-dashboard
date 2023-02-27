@@ -17,10 +17,7 @@ export function createCheckout({
 }) {
   const lines = getVariantsLines(variantsList, productQuantity);
   const shippingAddress = getDefaultAddress(address, "shippingAddress");
-  const billingAddressLines = getDefaultAddress(
-    billingAddress,
-    "billingAddress",
-  );
+  const billingAddressLines = getDefaultAddress(billingAddress, "billingAddress");
 
   const availableCollectionPointsLines = getValueWithDefault(
     returnAvailableCollectionPoints,
@@ -71,9 +68,7 @@ export function createCheckout({
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation, auth)
-    .its("body.data.checkoutCreate");
+  return cy.sendRequestWithQuery(mutation, auth).its("body.data.checkoutCreate");
 }
 
 export function addShippingMethod(checkoutId, shippingMethodId) {
@@ -98,9 +93,7 @@ export function addShippingMethod(checkoutId, shippingMethodId) {
     	}
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.checkoutShippingMethodUpdate");
+  return cy.sendRequestWithQuery(mutation).its("body.data.checkoutShippingMethodUpdate");
 }
 
 export function deliveryMethodUpdate(deliveryMethodId, checkoutToken) {
@@ -131,9 +124,7 @@ export function addPayment({ checkoutId, gateway, token, amount }) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.checkoutPaymentCreate");
+  return cy.sendRequestWithQuery(mutation).its("body.data.checkoutPaymentCreate");
 }
 
 export function completeCheckout(checkoutId, paymentData) {
@@ -209,9 +200,7 @@ export function checkoutShippingMethodUpdate(checkoutId, shippingMethodId) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.checkoutShippingMethodUpdate");
+  return cy.sendRequestWithQuery(mutation).its("body.data.checkoutShippingMethodUpdate");
 }
 
 export function checkoutShippingAddressUpdate(checkoutId, address) {
@@ -229,11 +218,7 @@ export function checkoutShippingAddressUpdate(checkoutId, address) {
   return cy.sendRequestWithQuery(mutation);
 }
 
-export function addProductsToCheckout(
-  checkoutId,
-  variantsList,
-  productQuantity,
-) {
+export function addProductsToCheckout(checkoutId, variantsList, productQuantity) {
   const lines = getVariantsLines(variantsList, productQuantity);
   const mutation = `mutation{
     checkoutLinesUpdate(checkoutId:"${checkoutId}" lines:[${lines.join()}]){
@@ -280,11 +265,7 @@ export function getCheckout(token) {
   return cy.sendRequestWithQuery(query).its("body.data.checkout");
 }
 
-export function orderCreateFromCheckout(
-  checkoutId,
-  token,
-  removeCheckoutFlag = true,
-) {
+export function orderCreateFromCheckout(checkoutId, token, removeCheckoutFlag = true) {
   const mutation = `mutation {
     orderCreateFromCheckout(id: "${checkoutId}", removeCheckout: ${removeCheckoutFlag})
     {
@@ -297,7 +278,5 @@ export function orderCreateFromCheckout(
           }
       }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation, token)
-    .its("body.data.orderCreateFromCheckout.order");
+  return cy.sendRequestWithQuery(mutation, token).its("body.data.orderCreateFromCheckout.order");
 }

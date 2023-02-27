@@ -7,5 +7,5 @@ Cypress.Commands.add("deleteElementWithReqAlias", alias =>
     .addAliasToGraphRequest(alias)
     .get(BUTTON_SELECTORS.submit)
     .click()
-    .waitForRequestAndCheckIfNoErrors(`@${alias}`)
+    .waitForRequestAndCheckIfNoErrors(`@${alias}`),
 );

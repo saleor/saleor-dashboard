@@ -1,21 +1,21 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import { IMessage } from '@dashboard/components/messages';
-import { useGiftCardUpdateMutation } from '@dashboard/graphql';
-import useForm from '@dashboard/hooks/useForm';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { DialogProps } from '@dashboard/types';
-import commonErrorMessages from '@dashboard/utils/errors/common';
-import { TextField, Typography } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import { IMessage } from "@dashboard/components/messages";
+import { useGiftCardUpdateMutation } from "@dashboard/graphql";
+import useForm from "@dashboard/hooks/useForm";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { DialogProps } from "@dashboard/types";
+import commonErrorMessages from "@dashboard/utils/errors/common";
+import { TextField, Typography } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { giftCardsListTableMessages as tableMessages } from '../../GiftCardsList/messages';
-import { useDialogFormReset } from '../GiftCardResendCodeDialog/utils';
-import { getGiftCardErrorMessage } from '../messages';
-import useGiftCardDetails from '../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails';
-import { giftCardUpdateBalanceDialogMessages as messages } from './messages';
-import { useUpdateBalanceDialogStyles as useStyles } from './styles';
+import { giftCardsListTableMessages as tableMessages } from "../../GiftCardsList/messages";
+import { useDialogFormReset } from "../GiftCardResendCodeDialog/utils";
+import { getGiftCardErrorMessage } from "../messages";
+import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
+import { giftCardUpdateBalanceDialogMessages as messages } from "./messages";
+import { useUpdateBalanceDialogStyles as useStyles } from "./styles";
 
 export interface GiftCardBalanceUpdateFormData {
   balanceAmount: number;
@@ -43,11 +43,11 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) =
 
       const notifierData: IMessage = !!errors?.length
         ? {
-            status: 'error',
+            status: "error",
             text: intl.formatMessage(commonErrorMessages.unknownError),
           }
         : {
-            status: 'success',
+            status: "success",
             text: intl.formatMessage(messages.updatedSuccessAlertTitle),
           };
 
@@ -79,7 +79,7 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({ open, onClose }) =
   const { formErrors } = useDialogFormReset({
     open,
     reset,
-    keys: ['initialBalanceAmount'],
+    keys: ["initialBalanceAmount"],
     apiErrors: submitData?.giftCardUpdate?.errors,
   });
 

@@ -1,19 +1,19 @@
-import { Checkbox, FormControlLabel } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
+import { Checkbox, FormControlLabel } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
 
-import { FilterFieldBaseProps } from '../types';
+import { FilterFieldBaseProps } from "../types";
 
 const useStyles = makeStyles(
   theme => ({
     container: {
-      '&:not(:last-of-type)': {
+      "&:not(:last-of-type)": {
         borderBottom: `1px solid ${theme.palette.divider}`,
       },
       padding: theme.spacing(1, 2.5),
     },
   }),
-  { name: 'FilterGroupLabel' },
+  { name: "FilterGroupLabel" },
 );
 
 export type FilterGroupLabelProps<K extends string = string> = FilterFieldBaseProps<K>;
@@ -28,7 +28,9 @@ const FilterGroupLabel: React.FC<FilterGroupLabelProps> = ({ filter, onFilterPro
   return (
     <div className={classes.container}>
       <FormControlLabel
-        control={<Checkbox data-test-id={'filter-group-active-' + filter.name} checked={filter.active} />}
+        control={
+          <Checkbox data-test-id={"filter-group-active-" + filter.name} checked={filter.active} />
+        }
         label={filter.label}
         onClick={event => event.stopPropagation()}
         onChange={() =>
@@ -39,7 +41,7 @@ const FilterGroupLabel: React.FC<FilterGroupLabelProps> = ({ filter, onFilterPro
                 active: !filter.active,
               },
             },
-            type: 'set-property',
+            type: "set-property",
           })
         }
       />

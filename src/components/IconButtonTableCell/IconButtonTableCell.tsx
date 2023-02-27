@@ -1,9 +1,9 @@
-import { TableCell } from '@material-ui/core';
-import { IconButton, ICONBUTTON_SIZE, makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
+import { TableCell } from "@material-ui/core";
+import { IconButton, ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
 
-import { stopPropagation } from '../../misc';
+import { stopPropagation } from "../../misc";
 
 export interface IconButtonTableCellProps {
   children: React.ReactNode;
@@ -15,14 +15,14 @@ export interface IconButtonTableCellProps {
 const useStyles = makeStyles(
   theme => ({
     root: {
-      '&:last-child': {
+      "&:last-child": {
         paddingRight: 0,
       },
       paddingRight: 0,
       width: `calc(${ICONBUTTON_SIZE}px + ${theme.spacing(0.5)})`,
     },
   }),
-  { name: 'IconButtonTableCell' },
+  { name: "IconButtonTableCell" },
 );
 const IconButtonTableCell: React.FC<IconButtonTableCellProps> = props => {
   const { children, className, disabled, onClick } = props;
@@ -31,11 +31,16 @@ const IconButtonTableCell: React.FC<IconButtonTableCellProps> = props => {
 
   return (
     <TableCell className={clsx(classes.root, className)}>
-      <IconButton variant="secondary" color="primary" disabled={disabled} onClick={stopPropagation(onClick)}>
+      <IconButton
+        variant="secondary"
+        color="primary"
+        disabled={disabled}
+        onClick={stopPropagation(onClick)}
+      >
         {children}
       </IconButton>
     </TableCell>
   );
 };
-IconButtonTableCell.displayName = 'IconButtonTableCell';
+IconButtonTableCell.displayName = "IconButtonTableCell";
 export default IconButtonTableCell;

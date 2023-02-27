@@ -1,17 +1,17 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import Skeleton from '@dashboard/components/Skeleton';
-import { Card, CardContent } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import { vars } from '@saleor/macaw-ui/next';
-import clsx from 'clsx';
-import React from 'react';
-import { defineMessages, useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import Skeleton from "@dashboard/components/Skeleton";
+import { Card, CardContent } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
+import clsx from "clsx";
+import React from "react";
+import { defineMessages, useIntl } from "react-intl";
 
 const messages = defineMessages({
   allMedia: {
-    id: 'XUU9sU',
-    defaultMessage: 'All Media',
-    description: 'section header',
+    id: "XUU9sU",
+    defaultMessage: "All Media",
+    description: "section header",
   },
 });
 
@@ -24,29 +24,29 @@ const useStyles = makeStyles(
       borderColor: theme.palette.primary.main,
     },
     image: {
-      height: '100%',
-      objectFit: 'contain',
-      userSelect: 'none',
-      width: '100%',
+      height: "100%",
+      objectFit: "contain",
+      userSelect: "none",
+      width: "100%",
     },
     imageContainer: {
       border: `2px solid ${vars.colors.border.neutralPlain}`,
       borderRadius: theme.spacing(),
-      cursor: 'pointer',
+      cursor: "pointer",
       height: 48,
-      overflow: 'hidden',
+      overflow: "hidden",
       padding: theme.spacing(0.5),
-      position: 'relative',
+      position: "relative",
     },
     root: {
-      display: 'grid',
+      display: "grid",
       gridColumnGap: theme.spacing(2),
       gridRowGap: theme.spacing(1),
-      gridTemplateColumns: 'repeat(4, 1fr)',
+      gridTemplateColumns: "repeat(4, 1fr)",
     },
     toolbar: { marginTop: theme.spacing(-0.5) },
   }),
-  { name: 'ProductMediaNavigation' },
+  { name: "ProductMediaNavigation" },
 );
 
 interface ProductMediaNavigationProps {
@@ -98,5 +98,5 @@ const ProductMediaNavigation: React.FC<ProductMediaNavigationProps> = props => {
     </Card>
   );
 };
-ProductMediaNavigation.displayName = 'ProductMediaNavigation';
+ProductMediaNavigation.displayName = "ProductMediaNavigation";
 export default ProductMediaNavigation;

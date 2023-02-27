@@ -1,11 +1,11 @@
-import { ChannelFragment } from '@dashboard/graphql';
-import { ChannelProps } from '@dashboard/types';
-import { mapNodeToChoice } from '@dashboard/utils/maps';
-import { makeStyles } from '@saleor/macaw-ui';
-import { vars } from '@saleor/macaw-ui/next';
-import React from 'react';
+import { ChannelFragment } from "@dashboard/graphql";
+import { ChannelProps } from "@dashboard/types";
+import { mapNodeToChoice } from "@dashboard/utils/maps";
+import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
+import React from "react";
 
-import SingleSelectField from '../SingleSelectField';
+import SingleSelectField from "../SingleSelectField";
 
 const useStyles = makeStyles(
   {
@@ -13,7 +13,7 @@ const useStyles = makeStyles(
       height: 40,
     },
     root: {
-      '&& fieldset': {
+      "&& fieldset": {
         borderColor: vars.colors.border.neutralPlain,
       },
       width: 192,
@@ -21,7 +21,7 @@ const useStyles = makeStyles(
     },
   },
   {
-    name: 'AppChannelSelect',
+    name: "AppChannelSelect",
   },
 );
 
@@ -30,7 +30,11 @@ export interface AppChannelSelectProps extends ChannelProps {
   onChannelSelect: (id: string) => void;
 }
 
-const AppChannelSelect: React.FC<AppChannelSelectProps> = ({ channels, onChannelSelect, selectedChannelId }) => {
+const AppChannelSelect: React.FC<AppChannelSelectProps> = ({
+  channels,
+  onChannelSelect,
+  selectedChannelId,
+}) => {
   const classes = useStyles({});
 
   return (
@@ -48,5 +52,5 @@ const AppChannelSelect: React.FC<AppChannelSelectProps> = ({ channels, onChannel
   );
 };
 
-AppChannelSelect.displayName = 'AppChannelSelect';
+AppChannelSelect.displayName = "AppChannelSelect";
 export default AppChannelSelect;

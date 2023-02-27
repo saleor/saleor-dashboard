@@ -1,20 +1,20 @@
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import Checkbox from '@dashboard/components/Checkbox';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
-import TableHead from '@dashboard/components/TableHead';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { ShippingZoneFragment } from '@dashboard/graphql';
-import { maybe, renderCollection } from '@dashboard/misc';
-import { shippingZoneAddUrl, shippingZoneUrl } from '@dashboard/shipping/urls';
-import { ListActions, ListProps } from '@dashboard/types';
-import { Card, TableBody, TableCell, TableFooter } from '@material-ui/core';
-import { DeleteIcon, IconButton, makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import Checkbox from "@dashboard/components/Checkbox";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { ShippingZoneFragment } from "@dashboard/graphql";
+import { maybe, renderCollection } from "@dashboard/misc";
+import { shippingZoneAddUrl, shippingZoneUrl } from "@dashboard/shipping/urls";
+import { ListActions, ListProps } from "@dashboard/types";
+import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface ShippingZonesListProps extends ListProps, ListActions {
   shippingZones: ShippingZoneFragment[];
@@ -24,7 +24,7 @@ export interface ShippingZonesListProps extends ListProps, ListActions {
 const useStyles = makeStyles(
   theme => ({
     colAction: {
-      '&:last-child': {
+      "&:last-child": {
         paddingRight: theme.spacing(1),
       },
       width: 92,
@@ -36,10 +36,10 @@ const useStyles = makeStyles(
       paddingLeft: 0,
     },
     row: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
   }),
-  { name: 'ShippingZonesList' },
+  { name: "ShippingZonesList" },
 );
 
 const numberOfColumns = 4;
@@ -65,13 +65,17 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'h5r9+x',
-          defaultMessage: 'Shipping By Zone',
-          description: 'sort shipping methods by zone, section header',
+          id: "h5r9+x",
+          defaultMessage: "Shipping By Zone",
+          description: "sort shipping methods by zone, section header",
         })}
         toolbar={
           <Button href={shippingZoneAddUrl} data-test-id="add-shipping-zone">
-            <FormattedMessage id="mIUNgR" defaultMessage="Create shipping zone" description="button" />
+            <FormattedMessage
+              id="mIUNgR"
+              defaultMessage="Create shipping zone"
+              description="button"
+            />
           </Button>
         }
       />
@@ -118,7 +122,7 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                 <TableRowLink
                   className={classes.row}
                   hover={!!shippingZone}
-                  key={shippingZone ? shippingZone.id : 'skeleton'}
+                  key={shippingZone ? shippingZone.id : "skeleton"}
                   href={shippingZone && shippingZoneUrl(shippingZone.id)}
                   selected={isSelected}
                 >
@@ -128,10 +132,13 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
                       disabled={disabled}
                       disableClickPropagation
                       onChange={() => toggle(shippingZone.id)}
-                      data-test-id={maybe(() => shippingZone.id + '-checkbox')}
+                      data-test-id={maybe(() => shippingZone.id + "-checkbox")}
                     />
                   </TableCell>
-                  <TableCell className={classes.colName} data-test-id={maybe(() => shippingZone.id + '-name')}>
+                  <TableCell
+                    className={classes.colName}
+                    data-test-id={maybe(() => shippingZone.id + "-name")}
+                  >
                     {maybe<React.ReactNode>(() => shippingZone.name, <Skeleton />)}
                   </TableCell>
                   <TableCell className={classes.colCountries}>
@@ -168,5 +175,5 @@ const ShippingZonesList: React.FC<ShippingZonesListProps> = props => {
     </Card>
   );
 };
-ShippingZonesList.displayName = 'ShippingZonesList';
+ShippingZonesList.displayName = "ShippingZonesList";
 export default ShippingZonesList;

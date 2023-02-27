@@ -1,2 +1,2 @@
-export * from './SaleCreate';
-export { default } from './SaleCreate';
+export * from "./SaleCreate";
+export { default } from "./SaleCreate";

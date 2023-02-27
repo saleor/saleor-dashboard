@@ -1,15 +1,15 @@
-import AddressFormatter from '@dashboard/components/AddressFormatter';
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import { Hr } from '@dashboard/components/Hr';
-import { CustomerDetailsFragment } from '@dashboard/graphql';
-import { buttonMessages } from '@dashboard/intl';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import AddressFormatter from "@dashboard/components/AddressFormatter";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import { Hr } from "@dashboard/components/Hr";
+import { CustomerDetailsFragment } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe } from '../../../misc';
+import { maybe } from "../../../misc";
 
 const useStyles = makeStyles(
   theme => ({
@@ -18,7 +18,7 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(1),
     },
   }),
-  { name: 'CustomerAddresses' },
+  { name: "CustomerAddresses" },
 );
 
 export interface CustomerAddressesProps {
@@ -37,22 +37,32 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'BfJGij',
-          defaultMessage: 'Address Information',
-          description: 'header',
+          id: "BfJGij",
+          defaultMessage: "Address Information",
+          description: "header",
         })}
         toolbar={
-          <Button data-test-id="manage-addresses" disabled={disabled} variant="tertiary" href={manageAddressHref}>
+          <Button
+            data-test-id="manage-addresses"
+            disabled={disabled}
+            variant="tertiary"
+            href={manageAddressHref}
+          >
             <FormattedMessage {...buttonMessages.manage} />
           </Button>
         }
       />
-      {maybe(() => customer.defaultBillingAddress.id) !== maybe(() => customer.defaultShippingAddress.id) ? (
+      {maybe(() => customer.defaultBillingAddress.id) !==
+      maybe(() => customer.defaultShippingAddress.id) ? (
         <>
           {maybe(() => customer.defaultBillingAddress) !== null && (
             <CardContent>
               <Typography className={classes.label}>
-                <FormattedMessage id="biVFKU" defaultMessage="Billing Address" description="subsection header" />
+                <FormattedMessage
+                  id="biVFKU"
+                  defaultMessage="Billing Address"
+                  description="subsection header"
+                />
               </Typography>
               <AddressFormatter address={maybe(() => customer.defaultBillingAddress)} />
             </CardContent>
@@ -61,7 +71,11 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
           {maybe(() => customer.defaultShippingAddress) && (
             <CardContent>
               <Typography className={classes.label}>
-                <FormattedMessage id="Zd3Eew" defaultMessage="Shipping Address" description="subsection header" />
+                <FormattedMessage
+                  id="Zd3Eew"
+                  defaultMessage="Shipping Address"
+                  description="subsection header"
+                />
               </Typography>
               <AddressFormatter address={maybe(() => customer.defaultShippingAddress)} />
             </CardContent>
@@ -77,7 +91,11 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
       ) : (
         <CardContent>
           <Typography className={classes.label}>
-            <FormattedMessage id="bHdFph" defaultMessage="Address" description="subsection header" />
+            <FormattedMessage
+              id="bHdFph"
+              defaultMessage="Address"
+              description="subsection header"
+            />
           </Typography>
           <AddressFormatter address={maybe(() => customer.defaultBillingAddress)} />
         </CardContent>
@@ -85,5 +103,5 @@ const CustomerAddresses: React.FC<CustomerAddressesProps> = props => {
     </Card>
   );
 };
-CustomerAddresses.displayName = 'CustomerAddresses';
+CustomerAddresses.displayName = "CustomerAddresses";
 export default CustomerAddresses;

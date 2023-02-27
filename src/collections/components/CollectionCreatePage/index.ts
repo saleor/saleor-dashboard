@@ -1,2 +1,2 @@
-export { default } from './CollectionCreatePage';
-export * from './CollectionCreatePage';
+export { default } from "./CollectionCreatePage";
+export * from "./CollectionCreatePage";

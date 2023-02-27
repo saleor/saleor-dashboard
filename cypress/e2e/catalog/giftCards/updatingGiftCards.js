@@ -8,10 +8,7 @@ import { GIFT_CARD_UPDATE } from "../../../elements/catalog/giftCard/giftCardUpd
 import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-elements-selectors.js";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { giftCardDetailsUrl } from "../../../fixtures/urlList";
-import {
-  createGiftCard,
-  getGiftCardWithId,
-} from "../../../support/api/requests/GiftCard";
+import { createGiftCard, getGiftCardWithId } from "../../../support/api/requests/GiftCard";
 import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
 import { formatDate } from "../../../support/formatData/formatDate";
 import { enterAndSelectGiftCards } from "../../../support/pages/catalog/giftCardPage";
@@ -88,9 +85,7 @@ describe("As an admin I want to update gift card", () => {
           getGiftCardWithId(giftCard.id);
         })
         .then(giftCard => {
-          expect(giftCard.tags[0].name.toLowerCase()).to.eq(
-            updatedName.toLowerCase(),
-          );
+          expect(giftCard.tags[0].name.toLowerCase()).to.eq(updatedName.toLowerCase());
           expect(giftCard.expiryDate).to.eq(date);
         });
     },

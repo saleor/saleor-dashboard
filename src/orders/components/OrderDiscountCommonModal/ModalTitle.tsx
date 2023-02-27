@@ -1,20 +1,20 @@
-import CardSpacer from '@dashboard/components/CardSpacer';
-import { Divider, Typography } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
+import CardSpacer from "@dashboard/components/CardSpacer";
+import { Divider, Typography } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
     container: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'center',
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "center",
       padding: theme.spacing(3, 3, 0, 3),
     },
   }),
-  { name: 'ModalTitle' },
+  { name: "ModalTitle" },
 );
 
 interface ModalTitleProps {

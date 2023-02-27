@@ -1,18 +1,18 @@
-import placeholderImage from '@assets/images/placeholder255x255.png';
-import { ProductErrorCode } from '@dashboard/graphql';
-import Decorator from '@dashboard/storybook/Decorator';
-import { warehouseList } from '@dashboard/warehouses/fixtures';
-import { storiesOf } from '@storybook/react';
-import React from 'react';
+import placeholderImage from "@assets/images/placeholder255x255.png";
+import { ProductErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { warehouseList } from "@dashboard/warehouses/fixtures";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
-import { product as productFixture } from '../../fixtures';
-import ProductVariantCreatePage from './ProductVariantCreatePage';
+import { product as productFixture } from "../../fixtures";
+import ProductVariantCreatePage from "./ProductVariantCreatePage";
 
 const product = productFixture(placeholderImage);
 
-storiesOf('Products / Create product variant', module)
+storiesOf("Products / Create product variant", module)
   .addDecorator(Decorator)
-  .add('default', () => (
+  .add("default", () => (
     <ProductVariantCreatePage
       productId=""
       weightUnit="kg"
@@ -35,7 +35,7 @@ storiesOf('Products / Create product variant', module)
       onAttributeSelectBlur={() => undefined}
     />
   ))
-  .add('with errors', () => (
+  .add("with errors", () => (
     <ProductVariantCreatePage
       productId=""
       weightUnit="kg"
@@ -44,23 +44,23 @@ storiesOf('Products / Create product variant', module)
         {
           attributes: [product.productType.variantAttributes[0].id],
           code: ProductErrorCode.REQUIRED,
-          field: 'attributes',
-          message: 'Attributes required',
+          field: "attributes",
+          message: "Attributes required",
         },
         {
           attributes: null,
           code: ProductErrorCode.UNIQUE,
-          field: 'attributes',
-          message: 'Attributes has unique',
+          field: "attributes",
+          message: "Attributes has unique",
         },
         {
           attributes: null,
           code: ProductErrorCode.ALREADY_EXISTS,
-          field: 'sku',
-          message: 'Sku already exists',
+          field: "sku",
+          message: "Sku already exists",
         },
       ].map(error => ({
-        __typename: 'ProductError',
+        __typename: "ProductError",
         ...error,
       }))}
       header="Add variant"
@@ -80,7 +80,7 @@ storiesOf('Products / Create product variant', module)
       onAttributeSelectBlur={() => undefined}
     />
   ))
-  .add('when loading data', () => (
+  .add("when loading data", () => (
     <ProductVariantCreatePage
       productId=""
       weightUnit="kg"
@@ -103,7 +103,7 @@ storiesOf('Products / Create product variant', module)
       onAttributeSelectBlur={() => undefined}
     />
   ))
-  .add('add first variant', () => (
+  .add("add first variant", () => (
     <ProductVariantCreatePage
       productId=""
       weightUnit="kg"
@@ -129,7 +129,7 @@ storiesOf('Products / Create product variant', module)
       onAttributeSelectBlur={() => undefined}
     />
   ))
-  .add('no warehouses', () => (
+  .add("no warehouses", () => (
     <ProductVariantCreatePage
       productId=""
       weightUnit="kg"

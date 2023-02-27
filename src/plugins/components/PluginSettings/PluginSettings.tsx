@@ -1,15 +1,15 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import ControlledSwitch from '@dashboard/components/ControlledSwitch';
-import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from '@dashboard/graphql';
-import { UserError } from '@dashboard/types';
-import { getFieldError } from '@dashboard/utils/errors';
-import { Card, CardContent, TextField, Tooltip, Typography } from '@material-ui/core';
-import InfoIcon from '@material-ui/icons/Info';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledSwitch from "@dashboard/components/ControlledSwitch";
+import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
+import { UserError } from "@dashboard/types";
+import { getFieldError } from "@dashboard/utils/errors";
+import { Card, CardContent, TextField, Tooltip, Typography } from "@material-ui/core";
+import InfoIcon from "@material-ui/icons/Info";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { PluginDetailsPageFormData } from '../PluginsDetailsPage';
-import { useStyles } from './styles';
+import { PluginDetailsPageFormData } from "../PluginsDetailsPage";
+import { useStyles } from "./styles";
 
 interface PluginSettingsProps {
   data: PluginDetailsPageFormData;
@@ -19,7 +19,13 @@ interface PluginSettingsProps {
   fields: ConfigurationItemFragment[];
 }
 
-const PluginSettings: React.FC<PluginSettingsProps> = ({ data, disabled, errors, onChange, fields }) => {
+const PluginSettings: React.FC<PluginSettingsProps> = ({
+  data,
+  disabled,
+  errors,
+  onChange,
+  fields,
+}) => {
   const classes = useStyles({});
   const intl = useIntl();
 
@@ -27,9 +33,9 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({ data, disabled, errors,
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'Egyh2T',
-          defaultMessage: 'Plugin Settings',
-          description: 'section header',
+          id: "Egyh2T",
+          defaultMessage: "Plugin Settings",
+          description: "section header",
         })}
       />
       <CardContent>
@@ -43,7 +49,9 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({ data, disabled, errors,
                   <ControlledSwitch
                     name={field.name}
                     label={fieldData.label}
-                    checked={typeof field.value !== 'boolean' ? field.value === 'true' : field.value}
+                    checked={
+                      typeof field.value !== "boolean" ? field.value === "true" : field.value
+                    }
                     onChange={onChange}
                     disabled={disabled}
                   />
@@ -62,7 +70,7 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({ data, disabled, errors,
               ) : (
                 <TextField
                   disabled={disabled}
-                  error={!!getFieldError(errors, 'name')}
+                  error={!!getFieldError(errors, "name")}
                   helperText={fieldData.helpText}
                   label={fieldData.label}
                   name={field.name}
@@ -88,5 +96,5 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({ data, disabled, errors,
     </Card>
   );
 };
-PluginSettings.displayName = 'PluginSettings';
+PluginSettings.displayName = "PluginSettings";
 export default PluginSettings;

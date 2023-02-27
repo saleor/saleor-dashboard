@@ -1,13 +1,13 @@
-import { getById } from '@dashboard/misc';
-import ModalTitle from '@dashboard/orders/components/OrderDiscountCommonModal/ModalTitle';
-import { Card, CardContent, CircularProgress, Modal } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { getById } from "@dashboard/misc";
+import ModalTitle from "@dashboard/orders/components/OrderDiscountCommonModal/ModalTitle";
+import { Card, CardContent, CircularProgress, Modal } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { useTypeDeleteWarningDialogStyles as useStyles } from './styles';
-import ProductTypeDeleteWarningDialogContent from './TypeDeleteWarningDialogContent';
-import { CommonTypeDeleteWarningMessages, TypeDeleteWarningMessages } from './types';
+import { useTypeDeleteWarningDialogStyles as useStyles } from "./styles";
+import ProductTypeDeleteWarningDialogContent from "./TypeDeleteWarningDialogContent";
+import { CommonTypeDeleteWarningMessages, TypeDeleteWarningMessages } from "./types";
 
 export interface TypeBaseData {
   id: string;
@@ -61,7 +61,9 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
 
   const selectMessages = () => {
     if (showMultiple) {
-      const multipleMessages = hasAssignedItems ? multipleWithItemsMessages : multipleWithoutItemsMessages;
+      const multipleMessages = hasAssignedItems
+        ? multipleWithItemsMessages
+        : multipleWithoutItemsMessages;
 
       return {
         ...multipleMessages,

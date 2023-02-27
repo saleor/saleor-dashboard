@@ -1,9 +1,9 @@
-import { TextField } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
+import { TextField } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
 
-import { SearchPageProps } from '../../types';
-import Debounce from '../Debounce';
+import { SearchPageProps } from "../../types";
+import Debounce from "../Debounce";
 
 export interface SearchInputProps extends SearchPageProps {
   placeholder: string;
@@ -12,14 +12,14 @@ export interface SearchInputProps extends SearchPageProps {
 const useStyles = makeStyles(
   {
     input: {
-      padding: '10.5px 12px',
+      padding: "10.5px 12px",
     },
     root: {
       flex: 1,
     },
   },
   {
-    name: 'SearchInput',
+    name: "SearchInput",
   },
 );
 
@@ -56,5 +56,5 @@ const SearchInput: React.FC<SearchInputProps> = props => {
   );
 };
 
-SearchInput.displayName = 'SearchInput';
+SearchInput.displayName = "SearchInput";
 export default SearchInput;

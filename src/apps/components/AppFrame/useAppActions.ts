@@ -1,7 +1,7 @@
-import { AppActionsHandler } from '@dashboard/apps/components/AppFrame/appActionsHandler';
-import { usePostToExtension } from '@dashboard/apps/components/AppFrame/usePostToExtension';
-import { Actions, DispatchResponseEvent } from '@saleor/app-sdk/app-bridge';
-import React, { useState } from 'react';
+import { AppActionsHandler } from "@dashboard/apps/components/AppFrame/appActionsHandler";
+import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostToExtension";
+import { Actions, DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
+import React, { useState } from "react";
 
 export const useAppActions = (
   frameEl: HTMLIFrameElement | null,
@@ -14,7 +14,11 @@ export const useAppActions = (
   const { handle: handleNotification } = AppActionsHandler.useHandleNotificationAction();
   const { handle: handleUpdateRouting } = AppActionsHandler.useHandleUpdateRoutingAction(appId);
   const { handle: handleRedirect } = AppActionsHandler.useHandleRedirectAction(appId);
-  const { handle: handleNotifyReady } = AppActionsHandler.useNotifyReadyAction(frameEl, appOrigin, appToken);
+  const { handle: handleNotifyReady } = AppActionsHandler.useNotifyReadyAction(
+    frameEl,
+    appOrigin,
+    appToken,
+  );
 
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
@@ -23,19 +27,19 @@ export const useAppActions = (
 
   const handleAction = (action: Actions | undefined): DispatchResponseEvent => {
     switch (action?.type) {
-      case 'notification': {
+      case "notification": {
         return handleNotification(action);
       }
-      case 'redirect': {
+      case "redirect": {
         return handleRedirect(action);
       }
-      case 'updateRouting': {
+      case "updateRouting": {
         return handleUpdateRouting(action);
       }
       /**
        * Send handshake after app informs its ready and mounted
        */
-      case 'notifyReady': {
+      case "notifyReady": {
         const response = handleNotifyReady(action);
 
         setHandshakeDone(true);
@@ -43,7 +47,7 @@ export const useAppActions = (
         return response;
       }
       default: {
-        throw new Error('Unknown action type');
+        throw new Error("Unknown action type");
       }
     }
   };
@@ -57,10 +61,10 @@ export const useAppActions = (
       }
     };
 
-    window.addEventListener('message', handler);
+    window.addEventListener("message", handler);
 
     return () => {
-      window.removeEventListener('message', handler);
+      window.removeEventListener("message", handler);
     };
   }, [appOrigin, handleAction, postToExtension]);
 

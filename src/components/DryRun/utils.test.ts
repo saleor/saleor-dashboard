@@ -1,7 +1,7 @@
-import { getUnavailableObjects } from './utils';
+import { getUnavailableObjects } from "./utils";
 
-describe('getUnavailableObjects', () => {
-  it('should return unavailable for dry run events from provided query', () => {
+describe("getUnavailableObjects", () => {
+  it("should return unavailable for dry run events from provided query", () => {
     const query = `
     subscription {
       event {
@@ -19,6 +19,6 @@ describe('getUnavailableObjects', () => {
 
     const events = getUnavailableObjects(query);
 
-    expect(events).toEqual(['AddressUpdated']);
+    expect(events).toEqual(["AddressUpdated"]);
   });
 });

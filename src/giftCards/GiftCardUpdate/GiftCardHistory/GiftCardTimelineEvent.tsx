@@ -1,20 +1,20 @@
-import { appPath } from '@dashboard/apps/urls';
-import Link from '@dashboard/components/Link';
-import { TimelineEvent } from '@dashboard/components/Timeline';
-import { customerPath } from '@dashboard/customers/urls';
-import { GiftCardEventFragment, GiftCardEventsEnum } from '@dashboard/graphql';
-import { orderUrl } from '@dashboard/orders/urls';
-import { staffMemberDetailsUrl } from '@dashboard/staff/urls';
-import React from 'react';
-import { IntlShape, useIntl } from 'react-intl';
+import { appPath } from "@dashboard/apps/urls";
+import Link from "@dashboard/components/Link";
+import { TimelineEvent } from "@dashboard/components/Timeline";
+import { customerPath } from "@dashboard/customers/urls";
+import { GiftCardEventFragment, GiftCardEventsEnum } from "@dashboard/graphql";
+import { orderUrl } from "@dashboard/orders/urls";
+import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
+import React from "react";
+import { IntlShape, useIntl } from "react-intl";
 
-import { giftCardHistoryTimelineMessages as timelineMessages } from './messages';
+import { giftCardHistoryTimelineMessages as timelineMessages } from "./messages";
 
 const getUserOrApp = (event: GiftCardEventFragment): string | null => {
   if (event.user) {
     const { firstName, lastName, email } = event.user;
 
-    if (lastName === '' || firstName === '') {
+    if (lastName === "" || firstName === "") {
       return email;
     }
 

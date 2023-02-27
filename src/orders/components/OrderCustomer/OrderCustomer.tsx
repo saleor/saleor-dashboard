@@ -1,33 +1,33 @@
-import AddressFormatter from '@dashboard/components/AddressFormatter';
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import ExternalLink from '@dashboard/components/ExternalLink';
-import Form from '@dashboard/components/Form';
-import Hr from '@dashboard/components/Hr';
-import Link from '@dashboard/components/Link';
-import RequirePermissions from '@dashboard/components/RequirePermissions';
-import SingleAutocompleteSelectField from '@dashboard/components/SingleAutocompleteSelectField';
-import Skeleton from '@dashboard/components/Skeleton';
+import AddressFormatter from "@dashboard/components/AddressFormatter";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import ExternalLink from "@dashboard/components/ExternalLink";
+import Form from "@dashboard/components/Form";
+import Hr from "@dashboard/components/Hr";
+import Link from "@dashboard/components/Link";
+import RequirePermissions from "@dashboard/components/RequirePermissions";
+import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderDetailsFragment,
   OrderErrorCode,
   OrderErrorFragment,
   PermissionEnum,
   SearchCustomersQuery,
-} from '@dashboard/graphql';
-import useStateFromProps from '@dashboard/hooks/useStateFromProps';
-import { buttonMessages } from '@dashboard/intl';
-import { FetchMoreProps, RelayToFlat } from '@dashboard/types';
-import createSingleAutocompleteSelectHandler from '@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { buttonMessages } from "@dashboard/intl";
+import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { customerUrl } from '../../../customers/urls';
-import { maybe } from '../../../misc';
-import { AddressTextError } from './AddrssTextError';
-import { PickupAnnotation } from './PickupAnnotation';
-import { useStyles } from './styles';
+import { customerUrl } from "../../../customers/urls";
+import { maybe } from "../../../misc";
+import { AddressTextError } from "./AddrssTextError";
+import { PickupAnnotation } from "./PickupAnnotation";
+import { useStyles } from "./styles";
 
 export interface CustomerEditData {
   user?: string;
@@ -38,7 +38,7 @@ export interface CustomerEditData {
 
 export interface OrderCustomerProps extends Partial<FetchMoreProps> {
   order: OrderDetailsFragment;
-  users?: RelayToFlat<SearchCustomersQuery['search']>;
+  users?: RelayToFlat<SearchCustomersQuery["search"]>;
   loading?: boolean;
   errors: OrderErrorFragment[];
   canEditAddresses: boolean;
@@ -73,23 +73,27 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
   const user = maybe(() => order.user);
   const userEmail = maybe(() => order.userEmail);
 
-  const [userDisplayName, setUserDisplayName] = useStateFromProps(maybe(() => user.email, ''));
+  const [userDisplayName, setUserDisplayName] = useStateFromProps(maybe(() => user.email, ""));
   const [isInEditMode, setEditModeStatus] = React.useState(false);
   const toggleEditMode = () => setEditModeStatus(!isInEditMode);
 
   const billingAddress = maybe(() => order.billingAddress);
   const shippingAddress = maybe(() => order.shippingAddress);
 
-  const noBillingAddressError = errors.find(error => error.code === OrderErrorCode.BILLING_ADDRESS_NOT_SET);
-  const noShippingAddressError = errors.find(error => error.code === OrderErrorCode.ORDER_NO_SHIPPING_ADDRESS);
+  const noBillingAddressError = errors.find(
+    error => error.code === OrderErrorCode.BILLING_ADDRESS_NOT_SET,
+  );
+  const noShippingAddressError = errors.find(
+    error => error.code === OrderErrorCode.ORDER_NO_SHIPPING_ADDRESS,
+  );
 
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'Y7M1YQ',
-          defaultMessage: 'Customer',
-          description: 'section header',
+          id: "Y7M1YQ",
+          defaultMessage: "Customer",
+          description: "section header",
         })}
         toolbar={
           !!canEditCustomer && (
@@ -110,7 +114,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
         {user === undefined ? (
           <Skeleton />
         ) : isInEditMode && canEditCustomer ? (
-          <Form confirmLeave initial={{ query: '' }}>
+          <Form confirmLeave initial={{ query: "" }}>
             {({ change, data }) => {
               const handleChange = (event: React.ChangeEvent<any>) => {
                 change(event);
@@ -119,7 +123,7 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                 onCustomerEdit({
                   prevUser: user?.id,
                   prevUserEmail: userEmail,
-                  [value.includes('@') ? 'userEmail' : 'user']: value,
+                  [value.includes("@") ? "userEmail" : "user"]: value,
                 });
                 toggleEditMode();
               };
@@ -142,8 +146,8 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                   hasMore={hasMoreUsers}
                   loading={loading}
                   placeholder={intl.formatMessage({
-                    id: 'hkSkNx',
-                    defaultMessage: 'Search Customers',
+                    id: "hkSkNx",
+                    defaultMessage: "Search Customers",
                   })}
                   onChange={handleUserChange}
                   onFetchMore={onFetchMoreUsers}
@@ -192,7 +196,11 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
           <CardContent>
             <div className={classes.sectionHeader}>
               <Typography className={classes.sectionHeaderTitle}>
-                <FormattedMessage id="4Jp83O" defaultMessage="Contact Information" description="subheader" />
+                <FormattedMessage
+                  id="4Jp83O"
+                  defaultMessage="Contact Information"
+                  description="subheader"
+                />
               </Typography>
             </div>
 
@@ -207,7 +215,10 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
                 />
               </Typography>
             ) : (
-              <ExternalLink href={`mailto:${maybe(() => order.userEmail)}`} typographyProps={{ color: 'primary' }}>
+              <ExternalLink
+                href={`mailto:${maybe(() => order.userEmail)}`}
+                typographyProps={{ color: "primary" }}
+              >
                 {maybe(() => order.userEmail)}
               </ExternalLink>
             )}
@@ -281,11 +292,19 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
             {noBillingAddressError && <AddressTextError orderError={noBillingAddressError} />}
             {billingAddress === null ? (
               <Typography>
-                <FormattedMessage id="YI6Fhj" defaultMessage="Not set" description="no address is set in draft order" />
+                <FormattedMessage
+                  id="YI6Fhj"
+                  defaultMessage="Not set"
+                  description="no address is set in draft order"
+                />
               </Typography>
             ) : maybe(() => shippingAddress.id) === billingAddress.id ? (
               <Typography>
-                <FormattedMessage id="GLX9II" defaultMessage="Same as shipping address" description="billing address" />
+                <FormattedMessage
+                  id="GLX9II"
+                  defaultMessage="Same as shipping address"
+                  description="billing address"
+                />
               </Typography>
             ) : (
               <AddressFormatter address={billingAddress} />
@@ -297,5 +316,5 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
   );
 };
 
-OrderCustomer.displayName = 'OrderCustomer';
+OrderCustomer.displayName = "OrderCustomer";
 export default OrderCustomer;

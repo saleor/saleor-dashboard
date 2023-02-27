@@ -1,17 +1,17 @@
-import { Button } from '@dashboard/components/Button';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import { OrderLineFragment } from '@dashboard/graphql';
-import { commonMessages } from '@dashboard/intl';
-import { renderCollection } from '@dashboard/misc';
-import { Card, CardActions, CardContent, TableBody, Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import { OrderLineFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { renderCollection } from "@dashboard/misc";
+import { Card, CardActions, CardContent, TableBody, Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import OrderCardTitle from '../OrderCardTitle';
-import TableHeader from '../OrderProductsCardElements/OrderProductsCardHeader';
-import TableLine from '../OrderProductsCardElements/OrderProductsTableRow';
-import { useStyles } from './styles';
+import OrderCardTitle from "../OrderCardTitle";
+import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
+import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
+import { useStyles } from "./styles";
 
 interface OrderUnfulfilledProductsCardProps {
   showFulfillmentAction: boolean;
@@ -31,7 +31,12 @@ const OrderUnfulfilledProductsCard: React.FC<OrderUnfulfilledProductsCardProps> 
   return (
     <>
       <Card>
-        <OrderCardTitle lines={lines} withStatus status="unfulfilled" className={classes.cardTitle} />
+        <OrderCardTitle
+          lines={lines}
+          withStatus
+          status="unfulfilled"
+          className={classes.cardTitle}
+        />
         <CardContent>
           <ResponsiveTable className={classes.table}>
             <TableHeader />

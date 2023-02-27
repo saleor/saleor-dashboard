@@ -1,25 +1,25 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import { CardSpacer } from '@dashboard/components/CardSpacer';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { FulfillmentFragment, OrderFulfillLineFragment } from '@dashboard/graphql';
-import { renderCollection } from '@dashboard/misc';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { CardSpacer } from "@dashboard/components/CardSpacer";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { FulfillmentFragment, OrderFulfillLineFragment } from "@dashboard/graphql";
+import { renderCollection } from "@dashboard/misc";
 import {
   getFulfillmentFormsetQuantity,
   getOrderLineAvailableQuantity,
   OrderFulfillStockFormsetData,
-} from '@dashboard/orders/utils/data';
-import { TableBody, TableCell, TableHead, Typography } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/orders/utils/data";
+import { TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import OrderFulfillStockExceededDialogLine from '../OrderFulfillStockExceededDialogLine';
-import { stockExceededDialogMessages as messages } from './messages';
-import { useStyles } from './styles';
+import OrderFulfillStockExceededDialogLine from "../OrderFulfillStockExceededDialogLine";
+import { stockExceededDialogMessages as messages } from "./messages";
+import { useStyles } from "./styles";
 
 export interface OrderFulfillStockExceededDialogProps {
-  lines: Array<FulfillmentFragment['lines'][0] | OrderFulfillLineFragment>;
+  lines: Array<FulfillmentFragment["lines"][0] | OrderFulfillLineFragment>;
   open: boolean;
   formsetData: OrderFulfillStockFormsetData;
   confirmButtonState: ConfirmButtonTransitionState;
@@ -34,11 +34,13 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
   const classes = useStyles(props);
 
   const exceededLines = lines?.filter(el => {
-    const line = 'orderLine' in el ? el.orderLine : el;
+    const line = "orderLine" in el ? el.orderLine : el;
     const lineFormWarehouse = formsetData?.find(item => item.id === el.id)?.value?.[0]?.warehouse;
     const stock = line.variant?.stocks.find(stock => stock.warehouse.id === lineFormWarehouse?.id);
 
-    return getFulfillmentFormsetQuantity(formsetData, line) > getOrderLineAvailableQuantity(line, stock);
+    return (
+      getFulfillmentFormsetQuantity(formsetData, line) > getOrderLineAvailableQuantity(line, stock)
+    );
   });
 
   return (
@@ -59,7 +61,9 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
             {!!lines?.length && (
               <TableHead>
                 <TableRowLink>
-                  <TableCell className={classes.colName}>{intl.formatMessage(messages.productLabel)}</TableCell>
+                  <TableCell className={classes.colName}>
+                    {intl.formatMessage(messages.productLabel)}
+                  </TableCell>
                   <TableCell className={classes.colQuantity}>
                     {intl.formatMessage(messages.requiredStockLabel)}
                   </TableCell>
@@ -72,7 +76,8 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
 
             <TableBody>
               {renderCollection(exceededLines, line => {
-                const lineFormWarehouse = formsetData?.find(item => item.id === line.id)?.value?.[0]?.warehouse;
+                const lineFormWarehouse = formsetData?.find(item => item.id === line.id)?.value?.[0]
+                  ?.warehouse;
 
                 return (
                   <OrderFulfillStockExceededDialogLine
@@ -93,5 +98,5 @@ const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogP
   );
 };
 
-OrderFulfillStockExceededDialog.displayName = 'OrderFulfillStockExceededDialog';
+OrderFulfillStockExceededDialog.displayName = "OrderFulfillStockExceededDialog";
 export default OrderFulfillStockExceededDialog;

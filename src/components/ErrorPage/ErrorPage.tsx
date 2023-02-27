@@ -1,14 +1,14 @@
-import notFoundImage from '@assets/images/what.svg';
-import useAppState from '@dashboard/hooks/useAppState';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { Typography } from '@material-ui/core';
-import { Button } from '@saleor/macaw-ui';
-import React from 'react';
-import SVG from 'react-inlinesvg';
-import { FormattedMessage } from 'react-intl';
+import notFoundImage from "@assets/images/what.svg";
+import useAppState from "@dashboard/hooks/useAppState";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { Typography } from "@material-ui/core";
+import { Button } from "@saleor/macaw-ui";
+import React from "react";
+import SVG from "react-inlinesvg";
+import { FormattedMessage } from "react-intl";
 
-import messages from './messages';
-import useStyles from './styles';
+import messages from "./messages";
+import useStyles from "./styles";
 
 export interface ErrorPageProps {
   onBack: () => void;
@@ -21,17 +21,17 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh }) => {
   const [appState, dispatchAppState] = useAppState();
 
   const handleOnBack = () => {
-    navigate('/', { replace: true });
+    navigate("/", { replace: true });
     dispatchAppState({
       payload: {
         error: null,
       },
-      type: 'displayError',
+      type: "displayError",
     });
     onBack();
   };
 
-  const errorTrackingId = appState.error?.type === 'unhandled' ? appState.error.id : null;
+  const errorTrackingId = appState.error?.type === "unhandled" ? appState.error.id : null;
 
   return (
     <div className={classes.root}>
@@ -70,5 +70,5 @@ const ErrorPage: React.FC<ErrorPageProps> = ({ onBack, onRefresh }) => {
     </div>
   );
 };
-ErrorPage.displayName = 'ErrorPage';
+ErrorPage.displayName = "ErrorPage";
 export default ErrorPage;

@@ -1,2 +1,2 @@
-export { default } from './ProductVariantDeleteDialog';
-export * from './ProductVariantDeleteDialog';
+export { default } from "./ProductVariantDeleteDialog";
+export * from "./ProductVariantDeleteDialog";

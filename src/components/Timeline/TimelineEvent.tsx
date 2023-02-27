@@ -1,48 +1,48 @@
-import { Typography } from '@material-ui/core';
-import { Accordion, AccordionDetails, AccordionSummary, makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
+import { Typography } from "@material-ui/core";
+import { Accordion, AccordionDetails, AccordionSummary, makeStyles } from "@saleor/macaw-ui";
+import React from "react";
 
-import TimelineEventHeader, { TitleElement } from './TimelineEventHeader';
+import TimelineEventHeader, { TitleElement } from "./TimelineEventHeader";
 
 const useStyles = makeStyles(
   theme => ({
     dot: {
       backgroundColor: theme.palette.primary.main,
-      borderRadius: '100%',
+      borderRadius: "100%",
       height: 7,
       left: -28,
-      position: 'absolute',
+      position: "absolute",
       top: 6,
       width: 7,
     },
     panel: {
-      '& .MuiAccordionDetails-root': {
+      "& .MuiAccordionDetails-root": {
         padding: 0,
         paddingTop: theme.spacing(2),
       },
-      '&.Mui-expanded': {
+      "&.Mui-expanded": {
         margin: 0,
         minHeight: 0,
       },
-      '&:before': {
-        display: 'none',
+      "&:before": {
+        display: "none",
       },
-      background: 'none',
-      display: '',
+      background: "none",
+      display: "",
       margin: 0,
       minHeight: 0,
-      width: '100%',
+      width: "100%",
     },
     panelExpander: {
-      '&.MuiAccordionSummary-root.Mui-expanded': {
+      "&.MuiAccordionSummary-root.Mui-expanded": {
         minHeight: 0,
       },
-      '&> .MuiAccordionSummary-content': {
+      "&> .MuiAccordionSummary-content": {
         margin: 0,
       },
-      '&> .MuiAccordionSummary-expandIcon': {
+      "&> .MuiAccordionSummary-expandIcon": {
         padding: 0,
-        position: 'absolute',
+        position: "absolute",
         right: theme.spacing(24),
       },
       margin: 0,
@@ -50,24 +50,24 @@ const useStyles = makeStyles(
       padding: 0,
     },
     root: {
-      '&:last-child:after': {
+      "&:last-child:after": {
         background: theme.palette.background.default,
         content: "''",
-        height: 'calc(50% - 4px)',
+        height: "calc(50% - 4px)",
         left: -26,
-        position: 'absolute',
-        top: 'calc(50% + 4px)',
-        width: '2px',
+        position: "absolute",
+        top: "calc(50% + 4px)",
+        width: "2px",
       },
-      alignItems: 'center',
-      display: 'flex',
+      alignItems: "center",
+      display: "flex",
       marginBottom: theme.spacing(3),
       marginTop: 0,
-      position: 'relative',
-      width: '100%',
+      position: "relative",
+      width: "100%",
     },
   }),
-  { name: 'TimelineEvent' },
+  { name: "TimelineEvent" },
 );
 
 export interface TimelineEventProps {
@@ -90,7 +90,12 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
       {children ? (
         <Accordion className={classes.panel} elevation={0}>
           <AccordionSummary className={classes.panelExpander}>
-            <TimelineEventHeader title={title} date={date} titleElements={titleElements} hasPlainDate={hasPlainDate} />
+            <TimelineEventHeader
+              title={title}
+              date={date}
+              titleElements={titleElements}
+              hasPlainDate={hasPlainDate}
+            />
           </AccordionSummary>
           <AccordionDetails>
             <Typography>{children}</Typography>
@@ -108,5 +113,5 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
     </div>
   );
 };
-TimelineEvent.displayName = 'TimelineEvent';
+TimelineEvent.displayName = "TimelineEvent";
 export default TimelineEvent;

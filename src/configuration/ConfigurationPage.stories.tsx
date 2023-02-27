@@ -1,12 +1,12 @@
-import { createConfigurationMenu } from '@dashboard/configuration';
-import { UserFragment } from '@dashboard/graphql';
-import { staffMember } from '@dashboard/staff/fixtures';
-import Decorator from '@dashboard/storybook/Decorator';
-import { storiesOf } from '@storybook/react';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { createConfigurationMenu } from "@dashboard/configuration";
+import { UserFragment } from "@dashboard/graphql";
+import { staffMember } from "@dashboard/staff/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import ConfigurationPage from './ConfigurationPage';
+import ConfigurationPage from "./ConfigurationPage";
 
 const user = {
   __typename: staffMember.__typename,
@@ -15,29 +15,31 @@ const user = {
     url: staffMember.avatar.url,
   },
   email: staffMember.email,
-  firstName: 'Adam Evan',
+  firstName: "Adam Evan",
   id: staffMember.id,
   isStaff: true,
-  lastName: 'Newton',
+  lastName: "Newton",
   note: null,
   userPermissions: staffMember.userPermissions,
 };
 
 const versions = {
-  dashboardVersion: '3.0.0-b.3',
-  coreVersion: '3.0.0-b.15',
+  dashboardVersion: "3.0.0-b.3",
+  coreVersion: "3.0.0-b.15",
 };
 
 const Story: React.FC<{ user: UserFragment }> = ({ user }) => {
   const intl = useIntl();
 
-  return <ConfigurationPage menu={createConfigurationMenu(intl)} user={user} versionInfo={versions} />;
+  return (
+    <ConfigurationPage menu={createConfigurationMenu(intl)} user={user} versionInfo={versions} />
+  );
 };
 
-storiesOf('Configuration', module)
+storiesOf("Configuration", module)
   .addDecorator(Decorator)
-  .add('default', () => <Story user={user} />)
-  .add('partial access', () => (
+  .add("default", () => <Story user={user} />)
+  .add("partial access", () => (
     <Story
       user={{
         ...user,

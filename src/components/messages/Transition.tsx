@@ -1,5 +1,5 @@
-import React from 'react';
-import { Transition as MessageManagerTransition } from 'react-transition-group';
+import React from "react";
+import { Transition as MessageManagerTransition } from "react-transition-group";
 
 const duration = 250;
 

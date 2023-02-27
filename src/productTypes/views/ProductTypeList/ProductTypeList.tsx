@@ -1,28 +1,37 @@
-import DeleteFilterTabDialog from '@dashboard/components/DeleteFilterTabDialog';
-import SaveFilterTabDialog, { SaveFilterTabDialogFormData } from '@dashboard/components/SaveFilterTabDialog';
-import { useProductTypeBulkDeleteMutation, useProductTypeListQuery } from '@dashboard/graphql';
-import useBulkActions from '@dashboard/hooks/useBulkActions';
-import useListSettings from '@dashboard/hooks/useListSettings';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { usePaginationReset } from '@dashboard/hooks/usePaginationReset';
-import usePaginator, { createPaginationState, PaginatorContext } from '@dashboard/hooks/usePaginator';
-import { commonMessages } from '@dashboard/intl';
-import useProductTypeDelete from '@dashboard/productTypes/hooks/useProductTypeDelete';
-import { ListViews } from '@dashboard/types';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import createFilterHandlers from '@dashboard/utils/handlers/filterHandlers';
-import createSortHandler from '@dashboard/utils/handlers/sortHandler';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import { getSortParams } from '@dashboard/utils/sort';
-import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
+import SaveFilterTabDialog, {
+  SaveFilterTabDialogFormData,
+} from "@dashboard/components/SaveFilterTabDialog";
+import { useProductTypeBulkDeleteMutation, useProductTypeListQuery } from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useListSettings from "@dashboard/hooks/useListSettings";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
+import usePaginator, {
+  createPaginationState,
+  PaginatorContext,
+} from "@dashboard/hooks/usePaginator";
+import { commonMessages } from "@dashboard/intl";
+import useProductTypeDelete from "@dashboard/productTypes/hooks/useProductTypeDelete";
+import { ListViews } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
+import createSortHandler from "@dashboard/utils/handlers/sortHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { getSortParams } from "@dashboard/utils/sort";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import TypeDeleteWarningDialog from '../../../components/TypeDeleteWarningDialog/TypeDeleteWarningDialog';
-import { maybe } from '../../../misc';
-import ProductTypeListPage from '../../components/ProductTypeListPage';
-import { productTypeListUrl, ProductTypeListUrlDialog, ProductTypeListUrlQueryParams } from '../../urls';
+import TypeDeleteWarningDialog from "../../../components/TypeDeleteWarningDialog/TypeDeleteWarningDialog";
+import { maybe } from "../../../misc";
+import ProductTypeListPage from "../../components/ProductTypeListPage";
+import {
+  productTypeListUrl,
+  ProductTypeListUrlDialog,
+  ProductTypeListUrlQueryParams,
+} from "../../urls";
 import {
   deleteFilterTab,
   getActiveFilters,
@@ -32,8 +41,8 @@ import {
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
-} from './filters';
-import { getSortQueryVariables } from './sort';
+} from "./filters";
+import { getSortQueryVariables } from "./sort";
 
 interface ProductTypeListProps {
   params: ProductTypeListUrlQueryParams;
@@ -42,7 +51,13 @@ interface ProductTypeListProps {
 export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { isSelected, listElements: selectedProductTypes, reset, toggle, toggleAll } = useBulkActions(params.ids);
+  const {
+    isSelected,
+    listElements: selectedProductTypes,
+    reset,
+    toggle,
+    toggleAll,
+  } = useBulkActions(params.ids);
 
   const { settings } = useListSettings(ListViews.PRODUCT_LIST);
   const intl = useIntl();
@@ -75,11 +90,10 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     params,
   });
 
-  const [openModal, closeModal] = createDialogActionHandlers<ProductTypeListUrlDialog, ProductTypeListUrlQueryParams>(
-    navigate,
-    productTypeListUrl,
-    params,
-  );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductTypeListUrlDialog,
+    ProductTypeListUrlQueryParams
+  >(navigate, productTypeListUrl, params);
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -121,7 +135,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
     onCompleted: data => {
       if (data.productTypeBulkDelete.errors.length === 0) {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         reset();
@@ -149,13 +163,13 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
       <ProductTypeListPage
         currentTab={currentTab}
         filterOpts={getFilterOpts(params)}
-        initialSearch={params.query || ''}
+        initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}
         onAll={resetFilters}
         onTabChange={handleTabChange}
-        onTabDelete={() => openModal('delete-search')}
-        onTabSave={() => openModal('save-search')}
+        onTabDelete={() => openModal("delete-search")}
+        onTabSave={() => openModal("save-search")}
         tabs={tabs.map(tab => tab.name)}
         disabled={loading}
         productTypes={productTypesData}
@@ -170,7 +184,7 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
             variant="secondary"
             color="primary"
             onClick={() =>
-              openModal('remove', {
+              openModal("remove", {
                 ids: selectedProductTypes,
               })
             }
@@ -190,20 +204,20 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
         />
       )}
       <SaveFilterTabDialog
-        open={params.action === 'save-search'}
+        open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabSave}
       />
       <DeleteFilterTabDialog
-        open={params.action === 'delete-search'}
+        open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, '...')}
+        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
     </PaginatorContext.Provider>
   );
 };
-ProductTypeList.displayName = 'ProductTypeList';
+ProductTypeList.displayName = "ProductTypeList";
 export default ProductTypeList;

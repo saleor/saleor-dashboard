@@ -1,4 +1,4 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -15,5 +15,5 @@ export const useStyles = makeStyles(
       paddingLeft: 0,
     },
   }),
-  { name: 'WebhookInfo' },
+  { name: "WebhookInfo" },
 );

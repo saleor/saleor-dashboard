@@ -6,22 +6,22 @@ import {
   OutlinedInput,
   OutlinedInputProps,
   Select,
-} from '@material-ui/core';
-import { SelectProps } from '@material-ui/core/Select';
-import { makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+} from "@material-ui/core";
+import { SelectProps } from "@material-ui/core/Select";
+import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { singleSelectFieldItemHeight } from './consts';
+import { singleSelectFieldItemHeight } from "./consts";
 
 const useStyles = makeStyles(
   theme => ({
     formControl: {
-      '& label': {
-        top: '-3px',
+      "& label": {
+        top: "-3px",
       },
-      width: '100%',
+      width: "100%",
     },
     label: {
       zIndex: 3,
@@ -33,10 +33,10 @@ const useStyles = makeStyles(
       maxHeight: `calc(${singleSelectFieldItemHeight}px * 10 + ${singleSelectFieldItemHeight}px * 0.5)`,
     },
     disabledMenuItem: {
-      pointerEvents: 'none',
+      pointerEvents: "none",
     },
   }),
-  { name: 'SingleSelectField' },
+  { name: "SingleSelectField" },
 );
 
 export interface Choice<T = string, L = string | React.ReactNode> {
@@ -97,8 +97,10 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
         data-test-id={testId}
         variant="outlined"
         fullWidth
-        renderValue={choiceValue => (choiceValue ? choicesByKey[choiceValue.toString()] : placeholder)}
-        value={value || ''}
+        renderValue={choiceValue =>
+          choiceValue ? choicesByKey[choiceValue.toString()] : placeholder
+        }
+        value={value || ""}
         onChange={onChange}
         input={
           <OutlinedInput
@@ -125,7 +127,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
             <MenuItem
               disabled={choice.disabled}
               className={clsx(choice.disabled && classes.disabledMenuItem)}
-              data-test-id={'select-field-option-' + choice.value}
+              data-test-id={"select-field-option-" + choice.value}
               value={choice.value}
               key={choice.value}
             >
@@ -142,5 +144,5 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
     </FormControl>
   );
 };
-SingleSelectField.displayName = 'SingleSelectField';
+SingleSelectField.displayName = "SingleSelectField";
 export default SingleSelectField;

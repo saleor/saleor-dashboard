@@ -1,3 +1,3 @@
-export { default } from './CollectionListPage';
-export * from './CollectionListPage';
-export * from './filters';
+export { default } from "./CollectionListPage";
+export * from "./CollectionListPage";
+export * from "./filters";

@@ -10,10 +10,7 @@ import {
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
+import { createShipping, deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 
 describe("Warehouses in checkout", () => {
   const startsWith = `CyWarehouseCheckout`;

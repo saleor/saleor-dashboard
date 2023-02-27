@@ -53,11 +53,7 @@ describe("As an admin I want to manage collections.", () => {
         });
       })
       .then(
-        ({
-          attribute: attributeResp,
-          productType: productTypeResp,
-          category: categoryResp,
-        }) => {
+        ({ attribute: attributeResp, productType: productTypeResp, category: categoryResp }) => {
           attribute = attributeResp;
           productType = productTypeResp;
           category = categoryResp;
@@ -94,19 +90,17 @@ describe("As an admin I want to manage collections.", () => {
       let collection;
 
       cy.visit(urlList.collections).expectSkeletonIsVisible();
-      createCollection(collectionName, false, defaultChannel).then(
-        collectionResp => {
-          collection = collectionResp;
+      createCollection(collectionName, false, defaultChannel).then(collectionResp => {
+        collection = collectionResp;
 
-          assignProductsToCollection(productName);
-          getCollection({
-            collectionId: collection.id,
-            channelSlug: defaultChannel.slug,
-          })
-            .its("collection.channelListings.0.isPublished")
-            .should("eq", false);
-        },
-      );
+        assignProductsToCollection(productName);
+        getCollection({
+          collectionId: collection.id,
+          channelSlug: defaultChannel.slug,
+        })
+          .its("collection.channelListings.0.isPublished")
+          .should("eq", false);
+      });
     },
   );
 
@@ -118,19 +112,17 @@ describe("As an admin I want to manage collections.", () => {
       let collection;
 
       cy.visit(urlList.collections).expectSkeletonIsVisible();
-      createCollection(collectionName, true, defaultChannel).then(
-        collectionResp => {
-          collection = collectionResp;
+      createCollection(collectionName, true, defaultChannel).then(collectionResp => {
+        collection = collectionResp;
 
-          assignProductsToCollection(productName);
-          getCollection({
-            collectionId: collection.id,
-            channelSlug: defaultChannel.slug,
-          })
-            .its("collection.channelListings.0.isPublished")
-            .should("eq", true);
-        },
-      );
+        assignProductsToCollection(productName);
+        getCollection({
+          collectionId: collection.id,
+          channelSlug: defaultChannel.slug,
+        })
+          .its("collection.channelListings.0.isPublished")
+          .should("eq", true);
+      });
     },
   );
 
@@ -147,19 +139,17 @@ describe("As an admin I want to manage collections.", () => {
 
         updateChannelInProduct(product.id, channel.id);
         cy.visit(urlList.collections).expectSkeletonIsVisible();
-        createCollection(collectionName, false, channel).then(
-          collectionResp => {
-            collection = collectionResp;
+        createCollection(collectionName, false, channel).then(collectionResp => {
+          collection = collectionResp;
 
-            assignProductsToCollection(productName);
-            getCollection({
-              collectionId: collection.id,
-              channelSlug: defaultChannel.slug,
-            })
-              .its("collection")
-              .should("be.null");
-          },
-        );
+          assignProductsToCollection(productName);
+          getCollection({
+            collectionId: collection.id,
+            channelSlug: defaultChannel.slug,
+          })
+            .its("collection")
+            .should("be.null");
+        });
       });
     },
   );
@@ -186,22 +176,18 @@ describe("As an admin I want to manage collections.", () => {
         .then(({ product: productResp }) => (createdProduct = productResp));
 
       cy.visit(urlList.collections).expectSkeletonIsVisible();
-      createCollection(collectionName, true, defaultChannel).then(
-        collectionResp => {
-          collection = collectionResp;
+      createCollection(collectionName, true, defaultChannel).then(collectionResp => {
+        collection = collectionResp;
 
-          assignProductsToCollection(collectionName);
-          getCollection({
-            collectionId: collection.id,
-            channelSlug: defaultChannel.slug,
-          })
-            .its("collection.products.edges.0.node.id")
-            .should("eq", createdProduct.id);
-          searchInShop(createdProduct.name)
-            .its("body.data.products.edges")
-            .should("be.empty");
-        },
-      );
+        assignProductsToCollection(collectionName);
+        getCollection({
+          collectionId: collection.id,
+          channelSlug: defaultChannel.slug,
+        })
+          .its("collection.products.edges.0.node.id")
+          .should("eq", createdProduct.id);
+        searchInShop(createdProduct.name).its("body.data.products.edges").should("be.empty");
+      });
     },
   );
 
@@ -219,9 +205,7 @@ describe("As an admin I want to manage collections.", () => {
           .get(BUTTON_SELECTORS.submit)
           .click()
           .waitForRequestAndCheckIfNoErrors("@RemoveCollection");
-        getCollection({ collectionId: collectionResp.id })
-          .its("collection")
-          .should("be.null");
+        getCollection({ collectionId: collectionResp.id }).its("collection").should("be.null");
       });
     },
   );
@@ -238,9 +222,7 @@ describe("As an admin I want to manage collections.", () => {
       createCollectionRequest(collectionName).then(collectionResp => {
         collection = collectionResp;
 
-        cy.visitAndWaitForProgressBarToDisappear(
-          collectionDetailsUrl(collection.id),
-        );
+        cy.visitAndWaitForProgressBarToDisappear(collectionDetailsUrl(collection.id));
         addChannelToCollection({
           collectionId: collection.id,
           channelId: defaultChannel.id,
@@ -287,9 +269,7 @@ describe("As an admin I want to manage collections.", () => {
           .then(({ product: productResp }) => {
             productToAssign = productResp;
 
-            cy.visitAndWaitForProgressBarToDisappear(
-              collectionDetailsUrl(collection.id),
-            );
+            cy.visitAndWaitForProgressBarToDisappear(collectionDetailsUrl(collection.id));
             cy.reload();
             assignProductsToCollection(productToAssign.name);
             getCollection({
@@ -335,9 +315,7 @@ describe("As an admin I want to manage collections.", () => {
               collectionId: collection.id,
               productId: productToAssign.id,
             });
-            cy.visitAndWaitForProgressBarToDisappear(
-              collectionDetailsUrl(collection.id),
-            );
+            cy.visitAndWaitForProgressBarToDisappear(collectionDetailsUrl(collection.id));
             getProductDetails(productToAssign.id, defaultChannel.slug)
               .its("body.data.product.collections")
               .should("have.length", 1);
@@ -389,12 +367,8 @@ describe("As an admin I want to manage collections.", () => {
           .get(BUTTON_SELECTORS.submit)
           .click()
           .waitForRequestAndCheckIfNoErrors("@CollectionBulkDelete");
-        getCollection({ collectionId: firstCollection.id })
-          .its("collection")
-          .should("be.null");
-        getCollection({ collectionId: secondCollection.id })
-          .its("collection")
-          .should("be.null");
+        getCollection({ collectionId: firstCollection.id }).its("collection").should("be.null");
+        getCollection({ collectionId: secondCollection.id }).its("collection").should("be.null");
       });
     },
   );

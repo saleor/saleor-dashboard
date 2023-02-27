@@ -1,2 +1,2 @@
-export { default } from './UserStatus';
-export * from './UserStatus';
+export { default } from "./UserStatus";
+export * from "./UserStatus";

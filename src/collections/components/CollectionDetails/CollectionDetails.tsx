@@ -1,15 +1,15 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import RichTextEditor from '@dashboard/components/RichTextEditor';
-import { RichTextEditorLoading } from '@dashboard/components/RichTextEditor/RichTextEditorLoading';
-import { CollectionErrorFragment } from '@dashboard/graphql';
-import { commonMessages } from '@dashboard/intl';
-import { getFormErrors, getProductErrorMessage } from '@dashboard/utils/errors';
-import { useRichTextContext } from '@dashboard/utils/richText/context';
-import { OutputData } from '@editorjs/editorjs';
-import { Card, CardContent, TextField } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import RichTextEditor from "@dashboard/components/RichTextEditor";
+import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
+import { CollectionErrorFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
+import { useRichTextContext } from "@dashboard/utils/richText/context";
+import { OutputData } from "@editorjs/editorjs";
+import { Card, CardContent, TextField } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
 export interface CollectionDetailsProps {
   data: {
@@ -21,10 +21,15 @@ export interface CollectionDetailsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const CollectionDetails: React.FC<CollectionDetailsProps> = ({ disabled, data, onChange, errors }) => {
+const CollectionDetails: React.FC<CollectionDetailsProps> = ({
+  disabled,
+  data,
+  onChange,
+  errors,
+}) => {
   const intl = useIntl();
   const { defaultValue, editorRef, isReadyForMount, handleChange } = useRichTextContext();
-  const formErrors = getFormErrors(['name', 'description'], errors);
+  const formErrors = getFormErrors(["name", "description"], errors);
 
   return (
     <Card>
@@ -32,9 +37,9 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({ disabled, data, o
       <CardContent>
         <TextField
           label={intl.formatMessage({
-            id: '/WXs6H',
-            defaultMessage: 'Name',
-            description: 'collection name',
+            id: "/WXs6H",
+            defaultMessage: "Name",
+            description: "collection name",
           })}
           name="name"
           disabled={disabled}
@@ -57,7 +62,10 @@ const CollectionDetails: React.FC<CollectionDetailsProps> = ({ disabled, data, o
             disabled={disabled}
           />
         ) : (
-          <RichTextEditorLoading label={intl.formatMessage(commonMessages.description)} name="description" />
+          <RichTextEditorLoading
+            label={intl.formatMessage(commonMessages.description)}
+            name="description"
+          />
         )}
       </CardContent>
     </Card>

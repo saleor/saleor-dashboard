@@ -1,5 +1,5 @@
-import { stringifyQs } from '@dashboard/utils/urls';
-import urlJoin from 'url-join';
+import { stringifyQs } from "@dashboard/utils/urls";
+import urlJoin from "url-join";
 
 import {
   ActiveTab,
@@ -12,45 +12,45 @@ import {
   SingleAction,
   Sort,
   TabActionDialog,
-} from '../types';
-import { OrderFilterGiftCard } from './components/OrderListPage';
+} from "../types";
+import { OrderFilterGiftCard } from "./components/OrderListPage";
 
-const orderSectionUrl = '/orders';
+const orderSectionUrl = "/orders";
 
-type CreateOrderDialog = 'create-order';
+type CreateOrderDialog = "create-order";
 
 export const orderListPath = orderSectionUrl;
 export enum OrderListUrlFiltersEnum {
-  createdFrom = 'createdFrom',
-  createdTo = 'createdTo',
-  customer = 'customer',
-  payment = 'payment',
-  query = 'query',
-  clickAndCollect = 'clickAndCollect',
-  preorder = 'preorder',
+  createdFrom = "createdFrom",
+  createdTo = "createdTo",
+  customer = "customer",
+  payment = "payment",
+  query = "query",
+  clickAndCollect = "clickAndCollect",
+  preorder = "preorder",
 }
 export enum OrderListUrlFiltersWithMultipleValues {
-  status = 'status',
-  paymentStatus = 'paymentStatus',
-  channel = 'channel',
-  giftCard = 'giftCard',
+  status = "status",
+  paymentStatus = "paymentStatus",
+  channel = "channel",
+  giftCard = "giftCard",
 }
 export enum OrderListFitersWithKeyValueValues {
-  metadata = 'metadata',
+  metadata = "metadata",
 }
 
 export type OrderListUrlFilters = Filters<OrderListUrlFiltersEnum> &
   FiltersWithMultipleValues<OrderListUrlFiltersWithMultipleValues> &
   FiltersWithKeyValueValues<OrderListFitersWithKeyValueValues>;
-export type OrderListUrlDialog = 'cancel' | CreateOrderDialog | TabActionDialog;
+export type OrderListUrlDialog = "cancel" | CreateOrderDialog | TabActionDialog;
 export enum OrderListUrlSortField {
-  number = 'number',
-  customer = 'customer',
-  date = 'date',
-  fulfillment = 'status',
-  payment = 'payment',
-  total = 'total',
-  rank = 'rank',
+  number = "number",
+  customer = "customer",
+  date = "date",
+  fulfillment = "status",
+  payment = "payment",
+  total = "total",
+  rank = "rank",
 }
 export type OrderListUrlSort = Sort<OrderListUrlSortField>;
 export type OrderListUrlQueryParams = BulkAction &
@@ -64,24 +64,24 @@ export const orderListUrl = (params?: OrderListUrlQueryParams): string => {
   if (params === undefined) {
     return orderList;
   } else {
-    return urlJoin(orderList, '?' + stringifyQs(params));
+    return urlJoin(orderList, "?" + stringifyQs(params));
   }
 };
 
-export const orderDraftListPath = urlJoin(orderSectionUrl, 'drafts');
+export const orderDraftListPath = urlJoin(orderSectionUrl, "drafts");
 export enum OrderDraftListUrlFiltersEnum {
-  createdFrom = 'createdFrom',
-  createdTo = 'createdTo',
-  customer = 'customer',
-  query = 'query',
+  createdFrom = "createdFrom",
+  createdTo = "createdTo",
+  customer = "customer",
+  query = "query",
 }
 export type OrderDraftListUrlFilters = Filters<OrderDraftListUrlFiltersEnum>;
-export type OrderDraftListUrlDialog = 'remove' | CreateOrderDialog | TabActionDialog;
+export type OrderDraftListUrlDialog = "remove" | CreateOrderDialog | TabActionDialog;
 export enum OrderDraftListUrlSortField {
-  number = 'number',
-  customer = 'customer',
-  date = 'date',
-  total = 'total',
+  number = "number",
+  customer = "customer",
+  date = "date",
+  total = "total",
 }
 export type OrderDraftListUrlSort = Sort<OrderDraftListUrlSortField>;
 export type OrderDraftListUrlQueryParams = ActiveTab &
@@ -95,50 +95,50 @@ export const orderDraftListUrl = (params?: OrderDraftListUrlQueryParams): string
   if (params === undefined) {
     return orderDraftList;
   } else {
-    return urlJoin(orderDraftList, '?' + stringifyQs(params));
+    return urlJoin(orderDraftList, "?" + stringifyQs(params));
   }
 };
 
 export const orderPath = (id: string) => urlJoin(orderSectionUrl, id);
 
 export type OrderUrlDialog =
-  | 'add-order-line'
-  | 'approve-fulfillment'
-  | 'cancel'
-  | 'cancel-fulfillment'
-  | 'capture'
-  | 'change-warehouse'
-  | 'customer-change'
-  | 'edit-customer-addresses'
-  | 'edit-billing-address'
-  | 'edit-fulfillment'
-  | 'edit-shipping'
-  | 'edit-shipping-address'
-  | 'finalize'
-  | 'mark-paid'
-  | 'void'
-  | 'invoice-send';
+  | "add-order-line"
+  | "approve-fulfillment"
+  | "cancel"
+  | "cancel-fulfillment"
+  | "capture"
+  | "change-warehouse"
+  | "customer-change"
+  | "edit-customer-addresses"
+  | "edit-billing-address"
+  | "edit-fulfillment"
+  | "edit-shipping"
+  | "edit-shipping-address"
+  | "finalize"
+  | "mark-paid"
+  | "void"
+  | "invoice-send";
 
 export type OrderUrlQueryParams = Dialog<OrderUrlDialog> & SingleAction;
 
-export type OrderFulfillUrlFiltersType = 'warehouseId' | 'lineId';
+export type OrderFulfillUrlFiltersType = "warehouseId" | "lineId";
 export type OrderFulfillUrlFilters = Filters<OrderFulfillUrlFiltersType>;
-export type OrderFulfillUrlDialog = 'change-warehouse';
+export type OrderFulfillUrlDialog = "change-warehouse";
 export type OrderFulfillUrlQueryParams = Dialog<OrderFulfillUrlDialog> & OrderFulfillUrlFilters;
 
 export const orderUrl = (id: string, params?: OrderUrlQueryParams) =>
-  orderPath(encodeURIComponent(id)) + '?' + stringifyQs(params);
+  orderPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
-export const orderFulfillPath = (id: string) => urlJoin(orderPath(id), 'fulfill');
+export const orderFulfillPath = (id: string) => urlJoin(orderPath(id), "fulfill");
 
-export const orderReturnPath = (id: string) => urlJoin(orderPath(id), 'return');
+export const orderReturnPath = (id: string) => urlJoin(orderPath(id), "return");
 
 export const orderFulfillUrl = (id: string, params?: OrderFulfillUrlQueryParams) =>
-  orderFulfillPath(encodeURIComponent(id)) + '?' + stringifyQs(params);
+  orderFulfillPath(encodeURIComponent(id)) + "?" + stringifyQs(params);
 
-export const orderSettingsPath = urlJoin(orderSectionUrl, 'settings');
+export const orderSettingsPath = urlJoin(orderSectionUrl, "settings");
 
-export const orderRefundPath = (id: string) => urlJoin(orderPath(id), 'refund');
+export const orderRefundPath = (id: string) => urlJoin(orderPath(id), "refund");
 
 export const orderRefundUrl = (id: string) => orderRefundPath(encodeURIComponent(id));
 

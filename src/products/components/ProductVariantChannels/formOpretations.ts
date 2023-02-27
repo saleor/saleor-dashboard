@@ -1,24 +1,25 @@
-import { ChannelPriceAndPreorderData } from '@dashboard/channels/utils';
-import { ProductVariantCreateDataQuery } from '@dashboard/graphql';
-import { UseFormsetOutput } from '@dashboard/hooks/useFormset';
-import { getChannelsInput } from '@dashboard/products/utils/handlers';
-import { validateCostPrice, validatePrice } from '@dashboard/products/utils/validation';
+import { ChannelPriceAndPreorderData } from "@dashboard/channels/utils";
+import { ProductVariantCreateDataQuery } from "@dashboard/graphql";
+import { UseFormsetOutput } from "@dashboard/hooks/useFormset";
+import { getChannelsInput } from "@dashboard/products/utils/handlers";
+import { validateCostPrice, validatePrice } from "@dashboard/products/utils/validation";
 
-import { VariantChannelListing } from './types';
+import { VariantChannelListing } from "./types";
 
 type FormChannels = UseFormsetOutput<ChannelPriceAndPreorderData>;
 
-export const validateChannels = (channels: FormChannels['data']) =>
+export const validateChannels = (channels: FormChannels["data"]) =>
   channels.some(
-    channelData => validatePrice(channelData.value.price) || validateCostPrice(channelData.value.costPrice),
+    channelData =>
+      validatePrice(channelData.value.price) || validateCostPrice(channelData.value.costPrice),
   );
 
-export const createChannelsWithPreorderInfo = (product: ProductVariantCreateDataQuery['product']) =>
+export const createChannelsWithPreorderInfo = (product: ProductVariantCreateDataQuery["product"]) =>
   product
     ? product.channelListings.map(listing => ({
         ...listing.channel,
         currency: listing.channel.currencyCode,
-        price: '',
+        price: "",
       }))
     : [];
 
@@ -35,7 +36,9 @@ export const concatChannelsBySelection = (
   return getChannelsInput(newlySelected).concat(includedAndSelected);
 };
 
-export const extractChannelPricesFromVariantChannel = (variantChannel: VariantChannelListing[number]) => {
+export const extractChannelPricesFromVariantChannel = (
+  variantChannel: VariantChannelListing[number],
+) => {
   const { costPrice, price } = variantChannel;
 
   return {

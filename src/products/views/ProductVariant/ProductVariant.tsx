@@ -1,19 +1,19 @@
-import placeholderImg from '@assets/images/placeholder255x255.png';
+import placeholderImg from "@assets/images/placeholder255x255.png";
 import {
   getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
   mergeFileUploadErrors,
-} from '@dashboard/attributes/utils/data';
+} from "@dashboard/attributes/utils/data";
 import {
   handleDeleteMultipleAttributeValues,
   handleUploadMultipleFiles,
   prepareAttributesInput,
-} from '@dashboard/attributes/utils/handlers';
-import { createVariantChannels } from '@dashboard/channels/utils';
-import { AttributeInput } from '@dashboard/components/Attributes';
-import NotFoundPage from '@dashboard/components/NotFoundPage';
-import { WindowTitle } from '@dashboard/components/WindowTitle';
-import { DEFAULT_INITIAL_SEARCH_DATA } from '@dashboard/config';
+} from "@dashboard/attributes/utils/handlers";
+import { createVariantChannels } from "@dashboard/channels/utils";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   ProductErrorWithAttributesFragment,
   useAttributeValueDeleteMutation,
@@ -28,37 +28,37 @@ import {
   useVariantMediaUnassignMutation,
   useVariantUpdateMutation,
   useWarehouseListQuery,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import useOnSetDefaultVariant from '@dashboard/hooks/useOnSetDefaultVariant';
-import useShop from '@dashboard/hooks/useShop';
-import { commonMessages } from '@dashboard/intl';
-import { weight } from '@dashboard/misc';
-import { getAttributeInputFromVariant } from '@dashboard/products/utils/data';
-import { handleAssignMedia } from '@dashboard/products/utils/handlers';
-import usePageSearch from '@dashboard/searches/usePageSearch';
-import useProductSearch from '@dashboard/searches/useProductSearch';
-import useAttributeValueSearchHandler from '@dashboard/utils/handlers/attributeValueSearchHandler';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import createMetadataUpdateHandler from '@dashboard/utils/handlers/metadataUpdateHandler';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import { warehouseAddPath } from '@dashboard/warehouses/urls';
-import React, { useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useOnSetDefaultVariant from "@dashboard/hooks/useOnSetDefaultVariant";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import { weight } from "@dashboard/misc";
+import { getAttributeInputFromVariant } from "@dashboard/products/utils/data";
+import { handleAssignMedia } from "@dashboard/products/utils/handlers";
+import usePageSearch from "@dashboard/searches/usePageSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { warehouseAddPath } from "@dashboard/warehouses/urls";
+import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 
-import ProductVariantDeleteDialog from '../../components/ProductVariantDeleteDialog';
-import ProductVariantPage from '../../components/ProductVariantPage';
-import { ProductVariantUpdateSubmitData } from '../../components/ProductVariantPage/form';
+import ProductVariantDeleteDialog from "../../components/ProductVariantDeleteDialog";
+import ProductVariantPage from "../../components/ProductVariantPage";
+import { ProductVariantUpdateSubmitData } from "../../components/ProductVariantPage/form";
 import {
   productUrl,
   productVariantEditUrl,
   ProductVariantEditUrlDialog,
   ProductVariantEditUrlQueryParams,
-} from '../../urls';
-import { mapFormsetStockToStockInput } from '../../utils/data';
-import { createVariantReorderHandler } from './../ProductUpdate/handlers';
-import { useSubmitChannels } from './useSubmitChannels';
+} from "../../urls";
+import { mapFormsetStockToStockInput } from "../../utils/data";
+import { createVariantReorderHandler } from "./../ProductUpdate/handlers";
+import { useSubmitChannels } from "./useSubmitChannels";
 
 interface ProductUpdateProps {
   variantId: string;
@@ -86,11 +86,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const [openModal] = createDialogActionHandlers<ProductVariantEditUrlDialog, ProductVariantEditUrlQueryParams>(
-    navigate,
-    params => productVariantEditUrl(productId, variantId, params),
-    params,
-  );
+  const [openModal] = createDialogActionHandlers<
+    ProductVariantEditUrlDialog,
+    ProductVariantEditUrlQueryParams
+  >(navigate, params => productVariantEditUrl(productId, variantId, params), params);
 
   const [uploadFile, uploadFileOpts] = useFileUploadMutation({});
 
@@ -99,10 +98,10 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
   const [deleteVariant, deleteVariantOpts] = useVariantDeleteMutation({
     onCompleted: () => {
       notify({
-        status: 'success',
+        status: "success",
         text: intl.formatMessage({
-          id: 'BUKMzM',
-          defaultMessage: 'Variant removed',
+          id: "BUKMzM",
+          defaultMessage: "Variant removed",
         }),
       });
       navigate(productUrl(productId));
@@ -113,7 +112,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
     onCompleted: data => {
       if (data.productVariantUpdate.errors.length === 0) {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
@@ -138,14 +137,19 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
     },
   });
 
-  const [deactivatePreorder, deactivatePreoderOpts] = useProductVariantPreorderDeactivateMutation({});
+  const [deactivatePreorder, deactivatePreoderOpts] = useProductVariantPreorderDeactivateMutation(
+    {},
+  );
   const handleDeactivateVariantPreorder = (id: string) => deactivatePreorder({ variables: { id } });
 
   const [reorderProductVariants, reorderProductVariantsOpts] = useProductVariantReorderMutation({});
 
   const onSetDefaultVariant = useOnSetDefaultVariant(productId, variant);
 
-  const handleVariantReorder = createVariantReorderHandler(variant?.product, reorderProductVariants);
+  const handleVariantReorder = createVariantReorderHandler(
+    variant?.product,
+    reorderProductVariants,
+  );
 
   const disableFormSave =
     loading ||
@@ -159,8 +163,9 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
     deleteAttributeValueOpts.loading;
 
   const handleUpdate = async (data: ProductVariantUpdateSubmitData) => {
-    const uploadFilesResult = await handleUploadMultipleFiles(data.attributesWithNewFileValue, variables =>
-      uploadFile({ variables }),
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      data.attributesWithNewFileValue,
+      variables => uploadFile({ variables }),
     );
 
     const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
@@ -230,7 +235,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productVariantEditUrl(productId, variantId, {
-        action: 'assign-attribute-value',
+        action: "assign-attribute-value",
         id: attribute.id,
       }),
     );
@@ -296,13 +301,13 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
         variant={variant}
         header={variant?.name || variant?.sku}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
-        onDelete={() => openModal('remove')}
+        onDelete={() => openModal("remove")}
         onSubmit={handleSubmit}
         onWarehouseConfigure={() => navigate(warehouseAddPath)}
         onVariantPreorderDeactivate={handleDeactivateVariantPreorder}
         variantDeactivatePreoderButtonState={deactivatePreoderOpts.status}
         onVariantReorder={handleVariantReorder}
-        assignReferencesAttributeId={params.action === 'assign-attribute-value' && params.id}
+        assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
@@ -325,7 +330,7 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({ variantId, produc
             },
           })
         }
-        open={params.action === 'remove'}
+        open={params.action === "remove"}
         name={data?.productVariant?.name}
       />
     </>

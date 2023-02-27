@@ -1,7 +1,7 @@
-import { List, Text } from '@saleor/macaw-ui/next';
-import React from 'react';
+import { List, Text } from "@saleor/macaw-ui/next";
+import React from "react";
 
-import { SidebarMenuItem } from './types';
+import { SidebarMenuItem } from "./types";
 
 interface Props {
   menuItem: SidebarMenuItem;

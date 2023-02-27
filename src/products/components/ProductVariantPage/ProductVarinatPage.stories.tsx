@@ -1,20 +1,20 @@
-import placeholderImage from '@assets/images/placeholder60x60.png';
-import { createVariantChannels } from '@dashboard/channels/utils';
-import { ProductErrorCode } from '@dashboard/graphql';
-import Decorator from '@dashboard/storybook/Decorator';
-import { warehouseList } from '@dashboard/warehouses/fixtures';
-import { storiesOf } from '@storybook/react';
-import React from 'react';
+import placeholderImage from "@assets/images/placeholder60x60.png";
+import { createVariantChannels } from "@dashboard/channels/utils";
+import { ProductErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { warehouseList } from "@dashboard/warehouses/fixtures";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
-import { variant as variantFixture } from '../../fixtures';
-import ProductVariantPage from './ProductVariantPage';
+import { variant as variantFixture } from "../../fixtures";
+import ProductVariantPage from "./ProductVariantPage";
 
 const variant = variantFixture(placeholderImage);
 const channels = createVariantChannels(variant);
 
-storiesOf('Products / Product variant details', module)
+storiesOf("Products / Product variant details", module)
   .addDecorator(Decorator)
-  .add('when loaded data', () => (
+  .add("when loaded data", () => (
     <ProductVariantPage
       productId=""
       defaultWeightUnit="kg"
@@ -41,7 +41,7 @@ storiesOf('Products / Product variant details', module)
       onVariantPreorderDeactivate={() => undefined}
     />
   ))
-  .add('when loading data', () => (
+  .add("when loading data", () => (
     <ProductVariantPage
       productId=""
       defaultWeightUnit="kg"
@@ -69,7 +69,7 @@ storiesOf('Products / Product variant details', module)
       onVariantPreorderDeactivate={() => undefined}
     />
   ))
-  .add('no warehouses', () => (
+  .add("no warehouses", () => (
     <ProductVariantPage
       productId=""
       defaultWeightUnit="kg"
@@ -96,7 +96,7 @@ storiesOf('Products / Product variant details', module)
       onVariantPreorderDeactivate={() => undefined}
     />
   ))
-  .add('attribute errors', () => (
+  .add("attribute errors", () => (
     <ProductVariantPage
       productId=""
       defaultWeightUnit="kg"
@@ -113,30 +113,30 @@ storiesOf('Products / Product variant details', module)
         {
           attributes: [variant.selectionAttributes[0].attribute.id],
           code: ProductErrorCode.REQUIRED,
-          field: 'attributes',
+          field: "attributes",
         },
         {
           attributes: null,
           code: ProductErrorCode.UNIQUE,
-          field: 'attributes',
+          field: "attributes",
         },
         {
           attributes: null,
           code: ProductErrorCode.ALREADY_EXISTS,
-          field: 'sku',
+          field: "sku",
         },
       ].map(error => ({
-        __typename: 'ProductError',
-        message: 'Generic form error',
+        __typename: "ProductError",
+        message: "Generic form error",
         ...error,
       }))}
       channelErrors={[
         {
-          __typename: 'ProductChannelListingError',
-          channels: ['Q2hhbm5lbDox'],
+          __typename: "ProductChannelListingError",
+          channels: ["Q2hhbm5lbDox"],
           code: ProductErrorCode.INVALID,
-          field: 'price',
-          message: 'Product price cannot be lower than 0.',
+          field: "price",
+          message: "Product price cannot be lower than 0.",
         },
       ]}
       warehouses={warehouseList}

@@ -21,7 +21,7 @@ export function inviteStaffMember({
   isActive = true,
   firstName = "",
   lastName = "",
-  permissionId
+  permissionId,
 }) {
   const mutation = `mutation createStaff{
     staffCreate(input:{

@@ -1,2 +1,2 @@
-export { default } from './TranslationsAttributesPage';
-export * from './TranslationsAttributesPage';
+export { default } from "./TranslationsAttributesPage";
+export * from "./TranslationsAttributesPage";

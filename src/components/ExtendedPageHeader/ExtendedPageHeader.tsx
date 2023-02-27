@@ -1,17 +1,17 @@
-import { Divider } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
+import { Divider } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
     action: {
-      flex: '0 0 auto',
+      flex: "0 0 auto",
     },
     block: {
-      [theme.breakpoints.down('xs')]: {
-        '&&': {
-          display: 'block',
+      [theme.breakpoints.down("xs")]: {
+        "&&": {
+          display: "block",
         },
       },
     },
@@ -22,34 +22,34 @@ const useStyles = makeStyles(
       padding: theme.spacing(2),
     },
     menuButton: {
-      flex: '0 0 auto',
+      flex: "0 0 auto",
       marginLeft: theme.spacing(-2),
       marginRight: theme.spacing(3),
       marginTop: theme.spacing(-2),
     },
     root: {
-      alignItems: 'center',
-      display: 'flex',
+      alignItems: "center",
+      display: "flex",
       marginBottom: theme.spacing(3),
-      wordBreak: 'break-all',
+      wordBreak: "break-all",
     },
     subtitle: {
-      alignItems: 'center',
-      display: 'flex',
+      alignItems: "center",
+      display: "flex",
       marginBottom: theme.spacing(2),
     },
     titleRow: {
       flex: 1,
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      justifyContent: 'space-between',
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
       minWidth: 0,
-      textOverflow: 'ellipsis',
+      textOverflow: "ellipsis",
     },
   }),
   {
-    name: 'ExtendedPageHeader',
+    name: "ExtendedPageHeader",
   },
 );
 
@@ -88,5 +88,5 @@ const ExtendedPageHeader: React.FC<ExtendedPageHeaderProps> = props => {
     </>
   );
 };
-ExtendedPageHeader.displayName = 'ExtendedPageHeader';
+ExtendedPageHeader.displayName = "ExtendedPageHeader";
 export default ExtendedPageHeader;

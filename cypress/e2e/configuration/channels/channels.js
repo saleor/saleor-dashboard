@@ -34,11 +34,9 @@ describe("Channels", () => {
     deleteChannelsStartsWith(channelStartsWith);
     deleteShippingStartsWith(channelStartsWith);
     deleteWarehouseStartsWith(channelStartsWith);
-    createShippingZoneWithoutWarehouse(randomName, "US").then(
-      shippingZoneResp => {
-        shippingZone = shippingZoneResp;
-      },
-    );
+    createShippingZoneWithoutWarehouse(randomName, "US").then(shippingZoneResp => {
+      shippingZone = shippingZoneResp;
+    });
     cy.fixture("addresses")
       .then(addresses => {
         usAddress = addresses.usAddress;
@@ -53,10 +51,7 @@ describe("Channels", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.channel,
-    );
+    cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.channel);
   });
 
   it(
@@ -144,9 +139,7 @@ describe("Channels", () => {
       cy.visit(urlList.channels);
       cy.expectSkeletonIsVisible();
       createChannelByView({ name: randomChannel, currency });
-      cy.get(ADD_CHANNEL_FORM_SELECTORS.slugValidationMessage).should(
-        "be.visible",
-      );
+      cy.get(ADD_CHANNEL_FORM_SELECTORS.slugValidationMessage).should("be.visible");
     },
   );
 
@@ -161,38 +154,30 @@ describe("Channels", () => {
         name: randomChannel,
         currency: "notExistingCurrency",
       });
-      cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyValidationMessage).should(
-        "be.visible",
-      );
+      cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyValidationMessage).should("be.visible");
     },
   );
 
-  it(
-    "should delete channel. TC: SALEOR_0705",
-    { tags: ["@channel", "@allEnv", "@stable"] },
-    () => {
-      const randomChannelToDelete = `${channelStartsWith} ${faker.datatype.number()}`;
-      createChannel({
-        isActive: false,
-        name: randomChannelToDelete,
-        slug: randomChannelToDelete,
-        currencyCode: currency,
-      });
-      cy.addAliasToGraphRequest("Channels");
-      cy.visit(urlList.channels);
-      cy.expectSkeletonIsVisible();
-      cy.wait("@Channels");
-      cy.contains(CHANNELS_SELECTORS.channelName, randomChannelToDelete)
-        .parentsUntil(CHANNELS_SELECTORS.channelsTable)
-        .find("button")
-        .click();
-      cy.addAliasToGraphRequest("Channels");
-      cy.get(BUTTON_SELECTORS.submit).click();
-      cy.waitForRequestAndCheckIfNoErrors("@Channels");
+  it("should delete channel. TC: SALEOR_0705", { tags: ["@channel", "@allEnv", "@stable"] }, () => {
+    const randomChannelToDelete = `${channelStartsWith} ${faker.datatype.number()}`;
+    createChannel({
+      isActive: false,
+      name: randomChannelToDelete,
+      slug: randomChannelToDelete,
+      currencyCode: currency,
+    });
+    cy.addAliasToGraphRequest("Channels");
+    cy.visit(urlList.channels);
+    cy.expectSkeletonIsVisible();
+    cy.wait("@Channels");
+    cy.contains(CHANNELS_SELECTORS.channelName, randomChannelToDelete)
+      .parentsUntil(CHANNELS_SELECTORS.channelsTable)
+      .find("button")
+      .click();
+    cy.addAliasToGraphRequest("Channels");
+    cy.get(BUTTON_SELECTORS.submit).click();
+    cy.waitForRequestAndCheckIfNoErrors("@Channels");
 
-      cy.get(CHANNELS_SELECTORS.channelName)
-        .contains(randomChannelToDelete)
-        .should("not.exist");
-    },
-  );
+    cy.get(CHANNELS_SELECTORS.channelName).contains(randomChannelToDelete).should("not.exist");
+  });
 });

@@ -1,2 +1,2 @@
-export * from './ShippingZonePostalCodeRangeDialog';
-export { default } from './ShippingZonePostalCodeRangeDialog';
+export * from "./ShippingZonePostalCodeRangeDialog";
+export { default } from "./ShippingZonePostalCodeRangeDialog";

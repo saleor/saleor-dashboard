@@ -1,2 +1,2 @@
-export * from './SectionHeader';
-export { default } from './SectionHeader';
+export * from "./SectionHeader";
+export { default } from "./SectionHeader";

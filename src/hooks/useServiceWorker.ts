@@ -1,5 +1,5 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
-import { register } from 'register-service-worker';
+import { useCallback, useEffect, useRef, useState } from "react";
+import { register } from "register-service-worker";
 
 export const useServiceWorker = (timeout: number) => {
   const [updateAvailable, setUpdateAvailable] = useState<boolean>(false);
@@ -24,12 +24,12 @@ export const useServiceWorker = (timeout: number) => {
 
   const update = useCallback(() => {
     if (updateAvailable && registrationRef.current?.waiting) {
-      registrationRef.current.waiting.postMessage('update');
+      registrationRef.current.waiting.postMessage("update");
     }
   }, [updateAvailable]);
 
   useEffect(() => {
-    register('/sw.js', {
+    register("/sw.js", {
       registered: onRegistered,
       updated: onUpdate,
     });

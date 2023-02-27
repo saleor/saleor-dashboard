@@ -7,11 +7,7 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHIPPING_ZONE_DETAILS } from "../../../elements/shipping/shipping-zone-details";
 import { WAREHOUSES_DETAILS } from "../../../elements/warehouses/warehouse-details";
 import { WAREHOUSES_LIST } from "../../../elements/warehouses/warehouses-list";
-import {
-  shippingZoneDetailsUrl,
-  urlList,
-  warehouseDetailsUrl,
-} from "../../../fixtures/urlList";
+import { shippingZoneDetailsUrl, urlList, warehouseDetailsUrl } from "../../../fixtures/urlList";
 import { updateChannelWarehouses } from "../../../support/api/requests/Channels";
 import {
   createShippingZone,
@@ -98,10 +94,7 @@ describe("As an admin I want to manage warehouses", () => {
           shippingZone = shippingZoneResp;
 
           cy.visit(shippingZoneDetailsUrl(shippingZone.id))
-            .fillAutocompleteSelect(
-              SHIPPING_ZONE_DETAILS.warehouseSelector,
-              warehouse.name,
-            )
+            .fillAutocompleteSelect(SHIPPING_ZONE_DETAILS.warehouseSelector, warehouse.name)
             .addAliasToGraphRequest("UpdateShippingZone")
             .get(BUTTON_SELECTORS.confirm)
             .click()
@@ -109,9 +102,7 @@ describe("As an admin I want to manage warehouses", () => {
           getWarehouse(warehouse.id);
         })
         .then(warehouseResp => {
-          expect(warehouseResp.shippingZones.edges[0].node.id).to.be.eq(
-            shippingZone.id,
-          );
+          expect(warehouseResp.shippingZones.edges[0].node.id).to.be.eq(shippingZone.id);
         });
     },
   );

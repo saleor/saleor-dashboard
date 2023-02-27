@@ -1,5 +1,5 @@
-import keyBy from 'lodash/keyBy';
-import mapValues from 'lodash/mapValues';
+import keyBy from "lodash/keyBy";
+import mapValues from "lodash/mapValues";
 
 export interface Header {
   name: string;
@@ -8,14 +8,14 @@ export interface Header {
 }
 
 export const stringifyHeaders = (headers: Header[]): string =>
-  JSON.stringify(mapValues(keyBy(headers, 'name'), 'value'));
+  JSON.stringify(mapValues(keyBy(headers, "name"), "value"));
 
 const validateName = (name: string) => {
-  if (name.toLowerCase().match('(^x$)|(^x-)|(^authorization$)|(^authorization-)')) {
+  if (name.toLowerCase().match("(^x$)|(^x-)|(^authorization$)|(^authorization-)")) {
     return false;
   }
 
-  if (name === '') {
+  if (name === "") {
     return false;
   }
 

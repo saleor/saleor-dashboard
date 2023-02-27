@@ -1,23 +1,23 @@
-import { getAppsConfig } from '@dashboard/config';
-import { AppInstallationFragment, JobStatusEnum } from '@dashboard/graphql';
-import { IntlShape } from 'react-intl';
+import { getAppsConfig } from "@dashboard/config";
+import { AppInstallationFragment, JobStatusEnum } from "@dashboard/graphql";
+import { IntlShape } from "react-intl";
 
-import { GetV2SaleorAppsResponse } from './marketplace.types';
-import { appsMessages } from './messages';
-import { AppLink } from './types';
+import { GetV2SaleorAppsResponse } from "./marketplace.types";
+import { appsMessages } from "./messages";
+import { AppLink } from "./types";
 
 const getInstallableMarketplaceApps = (marketplaceAppList?: GetV2SaleorAppsResponse.SaleorApp[]) =>
-  marketplaceAppList?.filter(app => 'manifestUrl' in app || 'githubForkUrl' in app) as
+  marketplaceAppList?.filter(app => "manifestUrl" in app || "githubForkUrl" in app) as
     | GetV2SaleorAppsResponse.ReleasedSaleorApp[]
     | undefined;
 
 const getComingSoonMarketplaceApps = (marketplaceAppList?: GetV2SaleorAppsResponse.SaleorApp[]) =>
-  marketplaceAppList?.filter(app => !('manifestUrl' in app) && !('githubForkUrl' in app) && 'releaseDate' in app) as
-    | GetV2SaleorAppsResponse.ComingSoonSaleorApp[]
-    | undefined;
+  marketplaceAppList?.filter(
+    app => !("manifestUrl" in app) && !("githubForkUrl" in app) && "releaseDate" in app,
+  ) as GetV2SaleorAppsResponse.ComingSoonSaleorApp[] | undefined;
 
 const getAppManifestUrl = (marketplaceApp: GetV2SaleorAppsResponse.SaleorApp) => {
-  if ('manifestUrl' in marketplaceApp) {
+  if ("manifestUrl" in marketplaceApp) {
     return marketplaceApp.manifestUrl;
   }
 };
@@ -51,9 +51,14 @@ export const getMarketplaceAppsLists = (
 };
 
 export const isAppInTunnel = (manifestUrl: string) =>
-  Boolean(getAppsConfig().tunnelUrlKeywords.find(keyword => new URL(manifestUrl).host.includes(keyword)));
+  Boolean(
+    getAppsConfig().tunnelUrlKeywords.find(keyword => new URL(manifestUrl).host.includes(keyword)),
+  );
 
-const prepareAppLinks = (intl: IntlShape, app: GetV2SaleorAppsResponse.ReleasedSaleorApp): AppLink[] => [
+const prepareAppLinks = (
+  intl: IntlShape,
+  app: GetV2SaleorAppsResponse.ReleasedSaleorApp,
+): AppLink[] => [
   {
     name: intl.formatMessage(appsMessages.repository),
     url: app.repositoryUrl,
@@ -87,24 +92,32 @@ export const getAppDetails = ({
   retryAppInstallation,
   removeAppInstallation,
 }: GetAppDetailsOpts) => {
-  const isAppComingSoon = !('manifestUrl' in app);
+  const isAppComingSoon = !("manifestUrl" in app);
 
-  const isAppInstallable = 'manifestUrl' in app && app.manifestUrl !== null && !!navigateToAppInstallPage;
-  const isAppForkableOnGithub = 'githubForkUrl' in app && !!navigateToGithubForkPage;
+  const isAppInstallable =
+    "manifestUrl" in app && app.manifestUrl !== null && !!navigateToAppInstallPage;
+  const isAppForkableOnGithub = "githubForkUrl" in app && !!navigateToGithubForkPage;
   const installationPending = appInstallation && appInstallation.status === JobStatusEnum.PENDING;
 
   return {
     releaseDate: !appInstallation && isAppComingSoon ? app.releaseDate : undefined,
-    installHandler: !appInstallation && isAppInstallable ? () => navigateToAppInstallPage(app.manifestUrl) : undefined,
+    installHandler:
+      !appInstallation && isAppInstallable
+        ? () => navigateToAppInstallPage(app.manifestUrl)
+        : undefined,
     githubForkHandler:
       !appInstallation && isAppForkableOnGithub && !!app.githubForkUrl
         ? () => navigateToGithubForkPage(app.githubForkUrl)
         : undefined,
     installationPending,
     retryInstallHandler:
-      appInstallation && !installationPending ? () => retryAppInstallation(appInstallation.id) : undefined,
+      appInstallation && !installationPending
+        ? () => retryAppInstallation(appInstallation.id)
+        : undefined,
     removeInstallHandler:
-      appInstallation && !installationPending ? () => removeAppInstallation(appInstallation.id) : undefined,
+      appInstallation && !installationPending
+        ? () => removeAppInstallation(appInstallation.id)
+        : undefined,
     links: isAppComingSoon ? [] : prepareAppLinks(intl, app),
   };
 };

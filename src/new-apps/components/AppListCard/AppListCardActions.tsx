@@ -1,12 +1,12 @@
-import { AppInstallationFragment } from '@dashboard/graphql';
-import { buttonMessages } from '@dashboard/intl';
-import { appInstallationStatusMessages } from '@dashboard/new-apps/messages';
-import { Box, Button, Text } from '@saleor/macaw-ui/next';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { AppInstallationFragment } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import { appInstallationStatusMessages } from "@dashboard/new-apps/messages";
+import { Box, Button, Text } from "@saleor/macaw-ui/next";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import InstallErrorAction from './ErrorInstallAction';
-import { messages } from './messages';
+import InstallErrorAction from "./ErrorInstallAction";
+import { messages } from "./messages";
 
 interface AppListCardActionsProps {
   releaseDate: string | undefined;
@@ -41,7 +41,11 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
   return (
     <Box display="flex" justifyContent="flex-end" gap={6}>
       {githubForkHandler && (
-        <Button variant="secondary" onClick={githubForkHandler} data-test-id="app-fork-on-github-button">
+        <Button
+          variant="secondary"
+          onClick={githubForkHandler}
+          data-test-id="app-fork-on-github-button"
+        >
           <FormattedMessage {...messages.forkOnGithub} />
         </Button>
       )}
@@ -51,7 +55,12 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
         </Button>
       )}
       {installationPending && (
-        <Text color="textNeutralSubdued" variant="body" size="small" data-test-id="app-installation-pending">
+        <Text
+          color="textNeutralSubdued"
+          variant="body"
+          size="small"
+          data-test-id="app-installation-pending"
+        >
           <FormattedMessage {...appInstallationStatusMessages.pending} />
         </Text>
       )}
@@ -73,5 +82,5 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
     </Box>
   );
 };
-AppListCardActions.displayName = 'AppListCardActions';
+AppListCardActions.displayName = "AppListCardActions";
 export default AppListCardActions;

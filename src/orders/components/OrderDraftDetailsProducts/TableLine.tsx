@@ -1,26 +1,26 @@
-import Link from '@dashboard/components/Link';
-import Money from '@dashboard/components/Money';
-import TableCellAvatar from '@dashboard/components/TableCellAvatar';
-import { AVATAR_MARGIN } from '@dashboard/components/TableCellAvatar/Avatar';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { OrderErrorFragment, OrderLineFragment, OrderLineInput } from '@dashboard/graphql';
-import { OrderLineDiscountContextConsumerProps } from '@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider';
-import { TableCell, Typography } from '@material-ui/core';
-import { DeleteIcon, IconButton, makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React, { useRef } from 'react';
+import Link from "@dashboard/components/Link";
+import Money from "@dashboard/components/Money";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import { AVATAR_MARGIN } from "@dashboard/components/TableCellAvatar/Avatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { OrderErrorFragment, OrderLineFragment, OrderLineInput } from "@dashboard/graphql";
+import { OrderLineDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import { TableCell, Typography } from "@material-ui/core";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React, { useRef } from "react";
 
-import { maybe } from '../../../misc';
-import OrderDiscountCommonModal from '../OrderDiscountCommonModal';
-import { ORDER_LINE_DISCOUNT } from '../OrderDiscountCommonModal/types';
-import TableLineAlert from './TableLineAlert';
-import TableLineForm from './TableLineForm';
-import useLineAlerts from './useLineAlerts';
+import { maybe } from "../../../misc";
+import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
+import { ORDER_LINE_DISCOUNT } from "../OrderDiscountCommonModal/types";
+import TableLineAlert from "./TableLineAlert";
+import TableLineForm from "./TableLineForm";
+import useLineAlerts from "./useLineAlerts";
 
 const useStyles = makeStyles(
   theme => ({
     colStatusEmpty: {
-      '&:first-child:not(.MuiTableCell-paddingCheckbox)': {
+      "&:first-child:not(.MuiTableCell-paddingCheckbox)": {
         paddingRight: 0,
       },
     },
@@ -28,26 +28,26 @@ const useStyles = makeStyles(
       width: `calc(76px + ${theme.spacing(0.5)})`,
     },
     colName: {
-      width: 'auto',
+      width: "auto",
     },
     colNameLabel: {
       marginLeft: AVATAR_MARGIN,
     },
     colPrice: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     colQuantity: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     colTotal: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     strike: {
-      textDecoration: 'line-through',
+      textDecoration: "line-through",
       color: theme.palette.grey[400],
     },
   }),
-  { name: 'OrderDraftDetailsProducts' },
+  { name: "OrderDraftDetailsProducts" },
 );
 
 interface TableLineProps extends OrderLineDiscountContextConsumerProps {
@@ -107,7 +107,9 @@ const TableLine: React.FC<TableLineProps> = ({
           [classes.colStatusEmpty]: !alerts.length,
         })}
       >
-        {!!alerts.length && <TableLineAlert alerts={alerts} variant={!!error ? 'error' : 'warning'} />}
+        {!!alerts.length && (
+          <TableLineAlert alerts={alerts} variant={!!error ? "error" : "warning"} />
+        )}
       </TableCell>
       <TableCellAvatar className={classes.colName} thumbnail={maybe(() => thumbnail.url)}>
         <Typography variant="body2">{productName}</Typography>

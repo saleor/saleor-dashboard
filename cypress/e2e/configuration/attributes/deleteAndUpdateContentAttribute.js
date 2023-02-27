@@ -5,10 +5,7 @@ import faker from "faker";
 
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { attributeDetailsUrl } from "../../../fixtures/urlList";
-import {
-  createAttribute,
-  getAttribute,
-} from "../../../support/api/requests/Attribute";
+import { createAttribute, getAttribute } from "../../../support/api/requests/Attribute";
 import { deleteAttributesStartsWith } from "../../../support/api/utils/attributes/attributeUtils";
 import { fillUpAttributeNameAndCode } from "../../../support/pages/attributesPage";
 

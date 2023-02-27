@@ -1,18 +1,18 @@
-import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   usePageTypeCreateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { getMutationErrors } from '@dashboard/misc';
-import createMetadataCreateHandler from '@dashboard/utils/handlers/metadataCreateHandler';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getMutationErrors } from "@dashboard/misc";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import PageTypeCreatePage, { PageTypeForm } from '../components/PageTypeCreatePage';
-import { pageTypeUrl } from '../urls';
+import PageTypeCreatePage, { PageTypeForm } from "../components/PageTypeCreatePage";
+import { pageTypeUrl } from "../urls";
 
 export const PageTypeCreate: React.FC = () => {
   const navigate = useNavigator();
@@ -25,10 +25,10 @@ export const PageTypeCreate: React.FC = () => {
     onCompleted: updateData => {
       if (updateData.pageTypeCreate.errors.length === 0) {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage({
-            id: '5bJ26s',
-            defaultMessage: 'Successfully created page type',
+            id: "5bJ26s",
+            defaultMessage: "Successfully created page type",
           }),
         });
         navigate(pageTypeUrl(updateData.pageTypeCreate.pageType.id));
@@ -51,15 +51,19 @@ export const PageTypeCreate: React.FC = () => {
     };
   };
 
-  const handleSubmit = createMetadataCreateHandler(handleCreate, updateMetadata, updatePrivateMetadata);
+  const handleSubmit = createMetadataCreateHandler(
+    handleCreate,
+    updateMetadata,
+    updatePrivateMetadata,
+  );
 
   return (
     <>
       <WindowTitle
         title={intl.formatMessage({
-          id: 'BftZHy',
-          defaultMessage: 'Create Page Type',
-          description: 'window title',
+          id: "BftZHy",
+          defaultMessage: "Create Page Type",
+          description: "window title",
         })}
       />
       <PageTypeCreatePage

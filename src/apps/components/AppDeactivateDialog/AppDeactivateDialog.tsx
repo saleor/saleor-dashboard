@@ -1,11 +1,11 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import { getStringOrPlaceholder } from '@dashboard/misc';
-import { DialogContentText } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import { DialogContentText } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import msgs from './messages';
+import msgs from "./messages";
 
 export interface AppDeactivateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -29,23 +29,23 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
   return (
     <ActionDialog
       confirmButtonLabel={intl.formatMessage({
-        id: 'W+AFZY',
-        defaultMessage: 'Deactivate',
-        description: 'button label',
+        id: "W+AFZY",
+        defaultMessage: "Deactivate",
+        description: "button label",
       })}
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
-        id: 'yMi8I8',
-        defaultMessage: 'Dectivate App',
-        description: 'dialog header',
+        id: "yMi8I8",
+        defaultMessage: "Dectivate App",
+        description: "dialog header",
       })}
       variant="delete"
     >
       <DialogContentText>
-        {['', null].includes(name) ? (
+        {["", null].includes(name) ? (
           <FormattedMessage {...(thirdParty ? msgs.deactivateApp : msgs.deactivateLocalApp)} />
         ) : (
           <FormattedMessage
@@ -59,5 +59,5 @@ const AppDeactivateDialog: React.FC<AppDeactivateDialogProps> = ({
     </ActionDialog>
   );
 };
-AppDeactivateDialog.displayName = 'AppDeactivateDialog';
+AppDeactivateDialog.displayName = "AppDeactivateDialog";
 export default AppDeactivateDialog;

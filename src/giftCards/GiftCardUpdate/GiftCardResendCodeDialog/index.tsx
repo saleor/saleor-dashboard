@@ -1,2 +1,2 @@
-export * from './GiftCardResendCodeDialog';
-export { default } from './GiftCardResendCodeDialog';
+export * from "./GiftCardResendCodeDialog";
+export { default } from "./GiftCardResendCodeDialog";

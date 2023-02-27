@@ -1,8 +1,8 @@
-import { AppInstallationFragment, AppListItemFragment } from '@dashboard/graphql';
-import { GetV2SaleorAppsResponse } from '@dashboard/new-apps/marketplace.types';
-import { AppInstallation, InstalledApp } from '@dashboard/new-apps/types';
+import { AppInstallationFragment, AppListItemFragment } from "@dashboard/graphql";
+import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
+import { AppInstallation, InstalledApp } from "@dashboard/new-apps/types";
 
-import { AppListPageSections } from './types';
+import { AppListPageSections } from "./types";
 
 export const resolveSectionsAvailability = ({
   appsInstallations,
@@ -10,7 +10,8 @@ export const resolveSectionsAvailability = ({
   installableMarketplaceApps,
   comingSoonMarketplaceApps,
 }: AppListPageSections) => ({
-  installed: !installedApps || !!installedApps.length || !appsInstallations || !!appsInstallations.length,
+  installed:
+    !installedApps || !!installedApps.length || !appsInstallations || !!appsInstallations.length,
   all: !installableMarketplaceApps || !!installableMarketplaceApps.length,
   comingSoon: !comingSoonMarketplaceApps || !!comingSoonMarketplaceApps.length,
 });
@@ -45,7 +46,10 @@ export const getVerifiedAppsInstallations = (
   installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
 ): AppInstallation[] | undefined =>
   appsInstallations?.map(appInstallation => {
-    const marketplaceApp = findAppInMarketplace(appInstallation.manifestUrl, installableMarketplaceApps);
+    const marketplaceApp = findAppInMarketplace(
+      appInstallation.manifestUrl,
+      installableMarketplaceApps,
+    );
 
     return {
       appInstallation,

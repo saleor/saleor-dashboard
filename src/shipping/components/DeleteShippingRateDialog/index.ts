@@ -1,2 +1,2 @@
-export * from './DeleteShippingRateDialog';
-export { default } from './DeleteShippingRateDialog';
+export * from "./DeleteShippingRateDialog";
+export { default } from "./DeleteShippingRateDialog";

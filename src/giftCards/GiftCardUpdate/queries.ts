@@ -1,5 +1,5 @@
-import { gql } from '@apollo/client';
-import { getOperationAST } from 'graphql';
+import { gql } from "@apollo/client";
+import { getOperationAST } from "graphql";
 
 export const giftCardDetails = gql`
   query GiftCardDetails($id: ID!) {

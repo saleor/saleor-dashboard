@@ -33,9 +33,7 @@ export function getMenus(first, search) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .then(resp => resp.body.data.menus.edges);
+  return cy.sendRequestWithQuery(mutation).then(resp => resp.body.data.menus.edges);
 }
 
 export function deleteMenu(menuId) {

@@ -1,10 +1,13 @@
-import compact from 'lodash/compact';
+import compact from "lodash/compact";
 
-import { FieldType, FilterElement, InvalidFilters, ValidationErrorCode } from './types';
+import { FieldType, FilterElement, InvalidFilters, ValidationErrorCode } from "./types";
 
-export const getByName = (nameToCompare: string) => (obj: { name: string }) => obj.name === nameToCompare;
+export const getByName = (nameToCompare: string) => (obj: { name: string }) =>
+  obj.name === nameToCompare;
 
-export const isAutocompleteFilterFieldValid = function <T extends string>({ value }: FilterElement<T>) {
+export const isAutocompleteFilterFieldValid = function <T extends string>({
+  value,
+}: FilterElement<T>) {
   return !!compact(value).length;
 };
 

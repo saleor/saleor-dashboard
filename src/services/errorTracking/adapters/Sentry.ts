@@ -1,6 +1,6 @@
-import * as Sentry from '@sentry/react';
+import * as Sentry from "@sentry/react";
 
-import { TrackerMethods } from '../types';
+import { TrackerMethods } from "../types";
 
 interface Config {
   dsn: string;
@@ -8,7 +8,7 @@ interface Config {
 }
 
 export const SentryAdapter = (config: Config): TrackerMethods => {
-  const init: TrackerMethods['init'] = () => {
+  const init: TrackerMethods["init"] = () => {
     if (config?.dsn) {
       Sentry.init({
         dsn: config.dsn,
@@ -20,9 +20,10 @@ export const SentryAdapter = (config: Config): TrackerMethods => {
     return false;
   };
 
-  const setUserData: TrackerMethods['setUserData'] = userData => Sentry.setUser(userData);
+  const setUserData: TrackerMethods["setUserData"] = userData => Sentry.setUser(userData);
 
-  const captureException: TrackerMethods['captureException'] = (e: Error) => Sentry.captureException(e);
+  const captureException: TrackerMethods["captureException"] = (e: Error) =>
+    Sentry.captureException(e);
 
   return {
     captureException,

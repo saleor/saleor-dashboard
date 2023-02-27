@@ -1,8 +1,8 @@
-import { FilterElement, FilterElementRegular } from '@dashboard/components/Filter';
-import { SingleAutocompleteChoiceType } from '@dashboard/components/SingleAutocompleteSelectField';
-import { SaleFilterKeys, SaleListFilterOpts } from '@dashboard/discounts/components/SaleListPage';
-import { DiscountStatusEnum, DiscountValueTypeEnum, SaleFilterInput } from '@dashboard/graphql';
-import { findValueInEnum, joinDateTime, maybe } from '@dashboard/misc';
+import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
+import { SaleFilterKeys, SaleListFilterOpts } from "@dashboard/discounts/components/SaleListPage";
+import { DiscountStatusEnum, DiscountValueTypeEnum, SaleFilterInput } from "@dashboard/graphql";
+import { findValueInEnum, joinDateTime, maybe } from "@dashboard/misc";
 
 import {
   createFilterTabUtils,
@@ -13,15 +13,15 @@ import {
   getMultipleEnumValueQueryParam,
   getSingleEnumValueQueryParam,
   getSingleValueQueryParam,
-} from '../../../utils/filters';
+} from "../../../utils/filters";
 import {
   SaleListUrlFilters,
   SaleListUrlFiltersEnum,
   SaleListUrlFiltersWithMultipleValues,
   SaleListUrlQueryParams,
-} from '../../urls';
+} from "../../urls";
 
-export const SALE_FILTERS_KEY = 'saleFilters';
+export const SALE_FILTERS_KEY = "saleFilters";
 
 export function getFilterOpts(
   params: SaleListUrlFilters,
@@ -38,15 +38,20 @@ export function getFilterOpts(
       value: maybe(() => findValueInEnum(params.type, DiscountValueTypeEnum)),
     },
     started: {
-      active: maybe(() => [params.startedFrom, params.startedTo].some(field => field !== undefined), false),
+      active: maybe(
+        () => [params.startedFrom, params.startedTo].some(field => field !== undefined),
+        false,
+      ),
       value: {
-        max: maybe(() => params.startedTo, ''),
-        min: maybe(() => params.startedFrom, ''),
+        max: maybe(() => params.startedTo, ""),
+        min: maybe(() => params.startedFrom, ""),
       },
     },
     status: {
       active: !!maybe(() => params.status),
-      value: dedupeFilter(params.status?.map(status => findValueInEnum(status, DiscountStatusEnum)) || []),
+      value: dedupeFilter(
+        params.status?.map(status => findValueInEnum(status, DiscountStatusEnum)) || [],
+      ),
     },
   };
 }
@@ -59,7 +64,8 @@ export function getFilterVariables(params: SaleListUrlFilters): SaleFilterInput 
       gte: joinDateTime(params.startedFrom),
       lte: joinDateTime(params.startedTo),
     }),
-    status: params.status && params.status.map(status => findValueInEnum(status, DiscountStatusEnum)),
+    status:
+      params.status && params.status.map(status => findValueInEnum(status, DiscountStatusEnum)),
   };
 }
 
@@ -75,7 +81,11 @@ export function getFilterQueryParam(filter: FilterElement<SaleFilterKeys>): Sale
       );
 
     case SaleFilterKeys.started:
-      return getMinMaxQueryParam(filter, SaleListUrlFiltersEnum.startedFrom, SaleListUrlFiltersEnum.startedTo);
+      return getMinMaxQueryParam(
+        filter,
+        SaleListUrlFiltersEnum.startedFrom,
+        SaleListUrlFiltersEnum.startedTo,
+      );
 
     case SaleFilterKeys.status:
       return getMultipleEnumValueQueryParam(

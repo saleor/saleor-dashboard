@@ -1,4 +1,4 @@
-import useStateFromProps from './useStateFromProps';
+import useStateFromProps from "./useStateFromProps";
 
 function useListActions<TData>(
   initial: TData[] = [],

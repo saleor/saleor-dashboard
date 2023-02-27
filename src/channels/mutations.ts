@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const channelCreateMutation = gql`
   mutation ChannelCreate($input: ChannelCreateInput!) {

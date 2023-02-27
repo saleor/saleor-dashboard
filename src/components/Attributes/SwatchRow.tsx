@@ -1,24 +1,24 @@
-import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
-import BasicAttributeRow from '@dashboard/components/Attributes/BasicAttributeRow';
-import { getErrorMessage, getSingleDisplayValue } from '@dashboard/components/Attributes/utils';
-import SingleAutocompleteSelectField from '@dashboard/components/SingleAutocompleteSelectField';
-import { getBySlug } from '@dashboard/misc';
-import { InputAdornment } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import BasicAttributeRow from "@dashboard/components/Attributes/BasicAttributeRow";
+import { getErrorMessage, getSingleDisplayValue } from "@dashboard/components/Attributes/utils";
+import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import { getBySlug } from "@dashboard/misc";
+import { InputAdornment } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { useStyles } from './styles';
-import { AttributeRowProps } from './types';
+import { useStyles } from "./styles";
+import { AttributeRowProps } from "./types";
 
 type SwatchRowProps = Pick<
   AttributeRowProps,
-  | 'attribute'
-  | 'attributeValues'
-  | 'disabled'
-  | 'error'
-  | 'onChange'
-  | 'fetchAttributeValues'
-  | 'fetchMoreAttributeValues'
+  | "attribute"
+  | "attributeValues"
+  | "disabled"
+  | "error"
+  | "onChange"
+  | "fetchAttributeValues"
+  | "fetchMoreAttributeValues"
 >;
 
 export const SwatchRow: React.FC<SwatchRowProps> = ({
@@ -67,7 +67,11 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
             <InputAdornment position="start">
               <div
                 className={classes.swatchPreview}
-                style={value?.file ? { backgroundImage: `url(${value.file.url})` } : { backgroundColor: value?.value }}
+                style={
+                  value?.file
+                    ? { backgroundImage: `url(${value.file.url})` }
+                    : { backgroundColor: value?.value }
+                }
               />
             </InputAdornment>
           ),

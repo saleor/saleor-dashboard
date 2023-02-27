@@ -7,10 +7,7 @@ import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { productTypeDetailsUrl } from "../../../fixtures/urlList";
 import { createAttribute } from "../../../support/api/requests/Attribute";
 import { createCategory } from "../../../support/api/requests/Category";
-import {
-  createTypeProduct,
-  getProductType,
-} from "../../../support/api/requests/ProductType";
+import { createTypeProduct, getProductType } from "../../../support/api/requests/ProductType";
 import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
@@ -46,9 +43,7 @@ describe("As an admin I want to manage product types", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createTypeProduct({ name, hasVariants: false }).then(productType => {
-        cy.visitAndWaitForProgressBarToDisappear(
-          productTypeDetailsUrl(productType.id),
-        )
+        cy.visitAndWaitForProgressBarToDisappear(productTypeDetailsUrl(productType.id))
           .get(BUTTON_SELECTORS.deleteButton)
           .click()
           .addAliasToGraphRequest("ProductTypeDelete")
@@ -78,9 +73,7 @@ describe("As an admin I want to manage product types", () => {
           });
         })
         .then(({ product }) => {
-          cy.visitAndWaitForProgressBarToDisappear(
-            productTypeDetailsUrl(productType.id),
-          )
+          cy.visitAndWaitForProgressBarToDisappear(productTypeDetailsUrl(productType.id))
             .get(BUTTON_SELECTORS.deleteButton)
             .click()
             .addAliasToGraphRequest("ProductTypeDelete")
@@ -92,9 +85,7 @@ describe("As an admin I want to manage product types", () => {
             .click()
             .waitForRequestAndCheckIfNoErrors("@ProductTypeDelete");
           getProductType(productType.id).should("be.null");
-          getProductDetails(product.id)
-            .its("body.data.product")
-            .should("be.null");
+          getProductDetails(product.id).its("body.data.product").should("be.null");
         });
     },
   );

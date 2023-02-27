@@ -1,8 +1,8 @@
-import { usePostToExtension } from '@dashboard/apps/components/AppFrame/usePostToExtension';
-import { getAppDeepPathFromDashboardUrl } from '@dashboard/apps/urls';
-import useLocale from '@dashboard/hooks/useLocale';
-import { useTheme } from '@saleor/macaw-ui';
-import { useEffect } from 'react';
+import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostToExtension";
+import { getAppDeepPathFromDashboardUrl } from "@dashboard/apps/urls";
+import useLocale from "@dashboard/hooks/useLocale";
+import { useTheme } from "@saleor/macaw-ui";
+import { useEffect } from "react";
 
 /**
  * TODO: Refactor prop-drilling, use context or some atomic state
@@ -24,7 +24,7 @@ export const useAppDashboardUpdates = (
     }
 
     postToExtension({
-      type: 'localeChanged',
+      type: "localeChanged",
       payload: {
         locale,
       },
@@ -37,7 +37,7 @@ export const useAppDashboardUpdates = (
     }
 
     postToExtension({
-      type: 'theme',
+      type: "theme",
       payload: {
         theme: themeType,
       },
@@ -49,7 +49,7 @@ export const useAppDashboardUpdates = (
       return;
     }
     postToExtension({
-      type: 'redirect',
+      type: "redirect",
       payload: {
         path: getAppDeepPathFromDashboardUrl(location.pathname, appId),
       },

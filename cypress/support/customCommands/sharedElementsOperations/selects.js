@@ -1,8 +1,5 @@
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import {
-  selectorWithDataValue,
-  SHARED_ELEMENTS,
-} from "../../../elements/shared/sharedElements";
+import { selectorWithDataValue, SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 
 Cypress.Commands.add("createNewOption", (selectSelector, newOption) => {
   cy.get(selectSelector).type(newOption);
@@ -36,20 +33,14 @@ Cypress.Commands.add("fillBaseSelect", (selectSelector, value) => {
 
 Cypress.Commands.add("fillAutocompleteSelect", (selectSelector, option) => {
   let selectedOption = option;
-  cy.get(selectSelector)
-    .click()
-    .get(BUTTON_SELECTORS.selectOption)
-    .should("be.visible");
+  cy.get(selectSelector).click().get(BUTTON_SELECTORS.selectOption).should("be.visible");
   if (option) {
     cy.get(BUTTON_SELECTORS.selectOption)
       .first()
       .then(detachedOption => {
         cy.get(selectSelector).then(select => {
           if (select.find("input").length > 0) {
-            cy.get(selectSelector)
-              .find("input")
-              .clear()
-              .type(option, { delay: 10 });
+            cy.get(selectSelector).find("input").clear().type(option, { delay: 10 });
           } else {
             cy.get(selectSelector).clear().type(option, { delay: 10 });
           }

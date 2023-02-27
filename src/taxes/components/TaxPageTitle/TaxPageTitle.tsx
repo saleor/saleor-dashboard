@@ -1,17 +1,17 @@
-import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
-import PreviewPill from '@dashboard/components/PreviewPill';
-import { sectionNames } from '@dashboard/intl';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import PreviewPill from "@dashboard/components/PreviewPill";
+import { sectionNames } from "@dashboard/intl";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   () => ({
     wrapper: {
-      display: 'flex',
+      display: "flex",
     },
   }),
-  { name: 'TaxPageTitle' },
+  { name: "TaxPageTitle" },
 );
 
 export const TaxPageTitle = () => {

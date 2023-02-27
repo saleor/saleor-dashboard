@@ -1,10 +1,12 @@
-import { permissions } from '@dashboard/fixtures';
-import Decorator from '@dashboard/storybook/Decorator';
-import { storiesOf } from '@storybook/react';
-import React from 'react';
+import { permissions } from "@dashboard/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
-import { errorsOfPermissionGroupCreate } from '../../fixtures';
-import PermissionGroupCreatePage, { PermissionGroupCreatePageProps } from './PermissionGroupCreatePage';
+import { errorsOfPermissionGroupCreate } from "../../fixtures";
+import PermissionGroupCreatePage, {
+  PermissionGroupCreatePageProps,
+} from "./PermissionGroupCreatePage";
 
 const props: PermissionGroupCreatePageProps = {
   disabled: false,
@@ -14,8 +16,10 @@ const props: PermissionGroupCreatePageProps = {
   saveButtonBarState: undefined,
 };
 
-storiesOf('Permission Groups / Permission Group Create', module)
+storiesOf("Permission Groups / Permission Group Create", module)
   .addDecorator(Decorator)
-  .add('default', () => <PermissionGroupCreatePage {...props} />)
-  .add('loading', () => <PermissionGroupCreatePage {...props} disabled={true} />)
-  .add('errors', () => <PermissionGroupCreatePage {...props} errors={errorsOfPermissionGroupCreate} />);
+  .add("default", () => <PermissionGroupCreatePage {...props} />)
+  .add("loading", () => <PermissionGroupCreatePage {...props} disabled={true} />)
+  .add("errors", () => (
+    <PermissionGroupCreatePage {...props} errors={errorsOfPermissionGroupCreate} />
+  ));

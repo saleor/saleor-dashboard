@@ -1,11 +1,11 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderSettingsFormData } from '../OrderSettingsPage/form';
+import { OrderSettingsFormData } from "../OrderSettingsPage/form";
 
 export interface OrderFulfillmentSettingsProps {
   data: OrderSettingsFormData;
@@ -13,21 +13,25 @@ export interface OrderFulfillmentSettingsProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({ data, disabled, onChange }) => {
+const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({
+  data,
+  disabled,
+  onChange,
+}) => {
   const intl = useIntl();
 
   return (
     <Card data-test-id="order-fulfillment-settings">
       <CardTitle
         title={intl.formatMessage({
-          id: 'G3ay2p',
-          defaultMessage: 'Fulfillment settings',
-          description: 'section header',
+          id: "G3ay2p",
+          defaultMessage: "Fulfillment settings",
+          description: "section header",
         })}
       />
       <CardContent>
         <ControlledCheckbox
-          name={'fulfillmentAutoApprove' as keyof OrderSettingsFormData}
+          name={"fulfillmentAutoApprove" as keyof OrderSettingsFormData}
           label={
             <>
               <FormattedMessage
@@ -51,7 +55,7 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({ dat
         />
         <FormSpacer />
         <ControlledCheckbox
-          name={'fulfillmentAllowUnpaid' as keyof OrderSettingsFormData}
+          name={"fulfillmentAllowUnpaid" as keyof OrderSettingsFormData}
           label={
             <>
               <FormattedMessage
@@ -77,5 +81,5 @@ const OrderFulfillmentSettings: React.FC<OrderFulfillmentSettingsProps> = ({ dat
     </Card>
   );
 };
-OrderFulfillmentSettings.displayName = 'OrderFulfillmentSettings';
+OrderFulfillmentSettings.displayName = "OrderFulfillmentSettings";
 export default OrderFulfillmentSettings;

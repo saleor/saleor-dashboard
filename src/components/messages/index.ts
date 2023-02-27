@@ -1,6 +1,6 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
-export type Status = 'success' | 'error' | 'info' | 'warning';
+export type Status = "success" | "error" | "info" | "warning";
 export interface IMessage {
   actionBtn?: {
     label: string;
@@ -31,10 +31,10 @@ export interface ITimer {
 }
 
 export const types = {
-  ERROR: 'error',
-  INFO: 'info',
-  SUCCESS: 'success',
-  WARNING: 'warning',
+  ERROR: "error",
+  INFO: "info",
+  SUCCESS: "success",
+  WARNING: "warning",
 };
 export interface INotificationContext {
   show: (message: IMessage, timeout?: number | null) => void;
@@ -45,5 +45,5 @@ export interface INotificationContext {
 export type IMessageContext = (message: IMessage) => void;
 export const MessageContext = createContext<INotificationContext>(null);
 
-export * from './MessageManagerProvider';
-export { default } from './MessageManagerProvider';
+export * from "./MessageManagerProvider";
+export { default } from "./MessageManagerProvider";

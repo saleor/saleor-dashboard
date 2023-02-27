@@ -1,2 +1,2 @@
-export { default } from './ShippingZoneAddWarehouseDialog';
-export * from './ShippingZoneAddWarehouseDialog';
+export { default } from "./ShippingZoneAddWarehouseDialog";
+export * from "./ShippingZoneAddWarehouseDialog";

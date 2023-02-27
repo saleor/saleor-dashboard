@@ -1,1 +1,1 @@
-export * from './GiftCardListProvider';
+export * from "./GiftCardListProvider";

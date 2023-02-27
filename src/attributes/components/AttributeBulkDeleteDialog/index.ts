@@ -1,2 +1,2 @@
-export { default } from './AttributeBulkDeleteDialog';
-export * from './AttributeBulkDeleteDialog';
+export { default } from "./AttributeBulkDeleteDialog";
+export * from "./AttributeBulkDeleteDialog";

@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const customerList = gql`
   query ListCustomers(
@@ -10,7 +10,14 @@ export const customerList = gql`
     $sort: UserSortingInput
     $PERMISSION_MANAGE_ORDERS: Boolean!
   ) {
-    customers(after: $after, before: $before, first: $first, last: $last, filter: $filter, sortBy: $sort) {
+    customers(
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      filter: $filter
+      sortBy: $sort
+    ) {
       edges {
         node {
           ...Customer

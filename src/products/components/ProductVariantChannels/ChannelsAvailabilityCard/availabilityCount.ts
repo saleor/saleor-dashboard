@@ -1,4 +1,4 @@
-import { ProductVariantCreateDataQuery, ProductVariantFragment } from '@dashboard/graphql';
+import { ProductVariantCreateDataQuery, ProductVariantFragment } from "@dashboard/graphql";
 
 export const getAvailabilityCountForVariant = (item: ProductVariantFragment) => {
   const variantChannelListingsChannelsIds = item.channelListings.map(({ channel: { id } }) => id);
@@ -7,7 +7,9 @@ export const getAvailabilityCountForVariant = (item: ProductVariantFragment) => 
     variantChannelListingsChannelsIds.includes(channel.id),
   );
 
-  const publishedInChannelsListings = allAvailableChannelsListings.filter(({ isPublished }) => isPublished);
+  const publishedInChannelsListings = allAvailableChannelsListings.filter(
+    ({ isPublished }) => isPublished,
+  );
 
   return {
     publishedInChannelsCount: publishedInChannelsListings.length,
@@ -15,7 +17,7 @@ export const getAvailabilityCountForVariant = (item: ProductVariantFragment) => 
   };
 };
 
-export const getAvailabilityCountForProduct = (item: ProductVariantCreateDataQuery['product']) => {
+export const getAvailabilityCountForProduct = (item: ProductVariantCreateDataQuery["product"]) => {
   const publishedInChannelsListings = item.channelListings.filter(({ isPublished }) => isPublished);
 
   return {

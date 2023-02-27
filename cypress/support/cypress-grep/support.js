@@ -23,11 +23,9 @@ function cypressGrep() {
   /** @type {string} Raw tags to grep string */
   const grepTags = Cypress.env("grepTags") || Cypress.env("grep-tags");
 
-  const burnSpecified =
-    Cypress.env("grepBurn") || Cypress.env("grep-burn") || Cypress.env("burn");
+  const burnSpecified = Cypress.env("grepBurn") || Cypress.env("grep-burn") || Cypress.env("burn");
 
-  const grepUntagged =
-    Cypress.env("grepUntagged") || Cypress.env("grep-untagged");
+  const grepUntagged = Cypress.env("grepUntagged") || Cypress.env("grep-untagged");
 
   if (!grep && !grepTags && !burnSpecified && !grepUntagged) {
     // nothing to do, the user has no specified the "grep" string
@@ -36,15 +34,10 @@ function cypressGrep() {
   }
 
   /** @type {number} Number of times to repeat each running test */
-  const grepBurn =
-    Cypress.env("grepBurn") ||
-    Cypress.env("grep-burn") ||
-    Cypress.env("burn") ||
-    1;
+  const grepBurn = Cypress.env("grepBurn") || Cypress.env("grep-burn") || Cypress.env("burn") || 1;
 
   /** @type {boolean} Omit filtered tests completely */
-  const omitFiltered =
-    Cypress.env("grepOmitFiltered") || Cypress.env("grep-omit-filtered");
+  const omitFiltered = Cypress.env("grepOmitFiltered") || Cypress.env("grep-omit-filtered");
 
   debug("grep %o", { grep, grepTags, grepBurn, omitFiltered, version });
   if (!Cypress._.isInteger(grepBurn) || grepBurn < 1) {
@@ -87,20 +80,10 @@ function cypressGrep() {
       .concat(configTags)
       .filter(Boolean);
 
-    const shouldRun = shouldTestRun(
-      parsedGrep,
-      nameToGrep,
-      tagsToGrep,
-      grepUntagged,
-    );
+    const shouldRun = shouldTestRun(parsedGrep, nameToGrep, tagsToGrep, grepUntagged);
 
     if (tagsToGrep && tagsToGrep.length) {
-      debug(
-        'should test "%s" with tags %s run? %s',
-        name,
-        tagsToGrep.join(","),
-        shouldRun,
-      );
+      debug('should test "%s" with tags %s run? %s', name, tagsToGrep.join(","), shouldRun);
     } else {
       debug('should test "%s" run? %s', nameToGrep, shouldRun);
     }

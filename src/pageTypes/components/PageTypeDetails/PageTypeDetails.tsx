@@ -1,11 +1,11 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import { PageErrorFragment } from '@dashboard/graphql';
-import { commonMessages } from '@dashboard/intl';
-import { getFormErrors } from '@dashboard/utils/errors';
-import getPageErrorMessage from '@dashboard/utils/errors/page';
-import { Card, CardContent, TextField } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import { PageErrorFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getPageErrorMessage from "@dashboard/utils/errors/page";
+import { Card, CardContent, TextField } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
 interface PageTypeDetailsProps {
   data?: {
@@ -20,7 +20,7 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
   const { data, disabled, errors, onChange } = props;
   const intl = useIntl();
 
-  const formErrors = getFormErrors(['name'], errors);
+  const formErrors = getFormErrors(["name"], errors);
 
   return (
     <Card>
@@ -32,8 +32,8 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
           error={!!formErrors.name}
           helperText={getPageErrorMessage(formErrors.name, intl)}
           label={intl.formatMessage({
-            id: 'jWna9Q',
-            defaultMessage: 'Content Type Name',
+            id: "jWna9Q",
+            defaultMessage: "Content Type Name",
           })}
           name="name"
           onChange={onChange}
@@ -46,5 +46,5 @@ const PageTypeDetails: React.FC<PageTypeDetailsProps> = props => {
 PageTypeDetails.defaultProps = {
   errors: [],
 };
-PageTypeDetails.displayName = 'PageTypeDetails';
+PageTypeDetails.displayName = "PageTypeDetails";
 export default PageTypeDetails;

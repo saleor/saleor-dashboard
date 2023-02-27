@@ -1,19 +1,19 @@
-import { addNodeUnderParent, find, insertNode, removeNode } from 'react-sortable-tree';
+import { addNodeUnderParent, find, insertNode, removeNode } from "react-sortable-tree";
 
-import { getDiff, MenuTreeItem } from './tree';
+import { getDiff, MenuTreeItem } from "./tree";
 
 const originalTree: MenuTreeItem[] = [
   {
     children: [
-      { children: [], expanded: true, id: '0jewelry', title: 'Jewelry' },
-      { children: [], expanded: true, id: '1glasses', title: 'Glasses' },
+      { children: [], expanded: true, id: "0jewelry", title: "Jewelry" },
+      { children: [], expanded: true, id: "1glasses", title: "Glasses" },
     ],
     expanded: true,
-    id: '2accessories',
-    title: 'Accessories',
+    id: "2accessories",
+    title: "Accessories",
   },
-  { children: [], expanded: true, id: '3groceries', title: 'Groceries' },
-  { children: [], expanded: true, id: '4apparel', title: 'Apparel' },
+  { children: [], expanded: true, id: "3groceries", title: "Groceries" },
+  { children: [], expanded: true, id: "4apparel", title: "Apparel" },
 ];
 
 function getNodeKey(node: any) {
@@ -61,15 +61,15 @@ function moveNode(tree: MenuTreeItem[], src: string, target: string, asChild: bo
   return treeAfterInsertion as MenuTreeItem[];
 }
 
-describe('Properly computes diffs', () => {
+describe("Properly computes diffs", () => {
   const testTable = [
-    moveNode(originalTree, '1glasses', '0jewelry', true),
-    moveNode(originalTree, '1glasses', '0jewelry', false),
-    moveNode(originalTree, '2accessories', '4apparel', true),
+    moveNode(originalTree, "1glasses", "0jewelry", true),
+    moveNode(originalTree, "1glasses", "0jewelry", false),
+    moveNode(originalTree, "2accessories", "4apparel", true),
   ];
 
   testTable.forEach(testData =>
-    it('#', () => {
+    it("#", () => {
       const diff = getDiff(originalTree, testData);
       expect(diff).toMatchSnapshot();
     }),

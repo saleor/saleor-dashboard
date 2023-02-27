@@ -1,2 +1,2 @@
-export { default } from './SortableChip';
-export * from './SortableChip';
+export { default } from "./SortableChip";
+export * from "./SortableChip";

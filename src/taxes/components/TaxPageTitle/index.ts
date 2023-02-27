@@ -1,2 +1,2 @@
-export { default } from './TaxPageTitle';
-export * from './TaxPageTitle';
+export { default } from "./TaxPageTitle";
+export * from "./TaxPageTitle";

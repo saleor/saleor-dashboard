@@ -13,9 +13,7 @@ export function getTaxConfigurationList() {
       }
     }
     `;
-  return cy
-    .sendRequestWithQuery(query)
-    .then(resp => resp.body.data.taxConfigurations.edges);
+  return cy.sendRequestWithQuery(query).then(resp => resp.body.data.taxConfigurations.edges);
 }
 
 export function updateTaxes({
@@ -54,7 +52,5 @@ export function getTaxClassList() {
       }
     }
     `;
-  return cy
-    .sendRequestWithQuery(query)
-    .then(resp => resp.body.data.taxClasses.edges);
+  return cy.sendRequestWithQuery(query).then(resp => resp.body.data.taxClasses.edges);
 }

@@ -43,12 +43,7 @@ export function createVariant({
     .should("be.enabled");
 }
 
-export function fillUpGeneralVariantInputs({
-  attributeName,
-  warehouseName,
-  sku,
-  quantity,
-}) {
+export function fillUpGeneralVariantInputs({ attributeName, warehouseName, sku, quantity }) {
   fillUpVariantAttributeAndSku({ attributeName, sku });
   cy.get(VARIANTS_SELECTORS.addWarehouseButton).click();
   if (warehouseName) {
@@ -99,8 +94,7 @@ export function fillUpVariantDetails({
   }
   if (warehouseId) {
     saveVariant().then(({ response }) => {
-      const variantId =
-        response.body.data.productVariantCreate.productVariant.id;
+      const variantId = response.body.data.productVariantCreate.productVariant.id;
       updateVariantWarehouse({ variantId, warehouseId, quantity });
     });
   }
@@ -124,9 +118,7 @@ export function selectChannelForVariantAndFillUpPrices({
   price,
   costPrice = price,
 }) {
-  cy.waitForProgressBarToNotBeVisible().addAliasToGraphRequest(
-    "ProductChannelListingUpdate",
-  );
+  cy.waitForProgressBarToNotBeVisible().addAliasToGraphRequest("ProductChannelListingUpdate");
   selectChannelVariantInDetailsPage(channelName, variantName);
   cy.get(BUTTON_SELECTORS.confirm)
     .click()
@@ -167,9 +159,7 @@ export function selectBooleanAttributeToTrue() {
 }
 
 export function selectDateAttribute() {
-  cy.get(VARIANTS_SELECTORS.attributeSelector)
-    .find("input")
-    .type(formatDate(new Date()));
+  cy.get(VARIANTS_SELECTORS.attributeSelector).find("input").type(formatDate(new Date()));
 }
 
 export function selectNumericAttribute(numeric) {

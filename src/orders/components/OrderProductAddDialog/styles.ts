@@ -1,4 +1,4 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -16,7 +16,7 @@ export const useStyles = makeStyles(
       marginBottom: theme.spacing(3),
     },
     content: {
-      overflowY: 'scroll',
+      overflowY: "scroll",
       paddingTop: 0,
       marginBottom: theme.spacing(3),
     },
@@ -24,31 +24,31 @@ export const useStyles = makeStyles(
       color: theme.palette.text.disabled,
     },
     loadMoreLoaderContainer: {
-      alignItems: 'center',
-      display: 'flex',
+      alignItems: "center",
+      display: "flex",
       height: theme.spacing(3),
-      justifyContent: 'center',
+      justifyContent: "center",
       marginTop: theme.spacing(3),
     },
     overflow: {
-      overflowY: 'hidden',
+      overflowY: "hidden",
     },
     productCheckboxCell: {
-      '&:first-child': {
+      "&:first-child": {
         paddingLeft: 0,
         paddingRight: 0,
       },
     },
     textRight: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     variantCheckbox: {
       left: theme.spacing(),
-      position: 'relative',
+      position: "relative",
     },
     wideCell: {
-      width: '100%',
+      width: "100%",
     },
   }),
-  { name: 'OrderProductAddDialog' },
+  { name: "OrderProductAddDialog" },
 );

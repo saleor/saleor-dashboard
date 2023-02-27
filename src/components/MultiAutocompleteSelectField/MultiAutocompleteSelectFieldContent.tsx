@@ -1,18 +1,18 @@
-import chevronDown from '@assets/images/ChevronDown.svg';
-import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
-import Checkbox from '@dashboard/components/Checkbox';
-import useElementScroll, { isScrolledToBottom } from '@dashboard/hooks/useElementScroll';
-import { FetchMoreProps } from '@dashboard/types';
-import { CircularProgress, MenuItem, Paper, Typography } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
-import { makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import { GetItemPropsOptions } from 'downshift';
-import React, { ReactNode } from 'react';
-import SVG from 'react-inlinesvg';
-import { FormattedMessage } from 'react-intl';
+import chevronDown from "@assets/images/ChevronDown.svg";
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import Checkbox from "@dashboard/components/Checkbox";
+import useElementScroll, { isScrolledToBottom } from "@dashboard/hooks/useElementScroll";
+import { FetchMoreProps } from "@dashboard/types";
+import { CircularProgress, MenuItem, Paper, Typography } from "@material-ui/core";
+import AddIcon from "@material-ui/icons/Add";
+import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import { GetItemPropsOptions } from "downshift";
+import React, { ReactNode } from "react";
+import SVG from "react-inlinesvg";
+import { FormattedMessage } from "react-intl";
 
-import Hr from '../Hr';
+import Hr from "../Hr";
 
 const menuItemHeight = 46;
 const maxMenuItems = 5;
@@ -43,7 +43,7 @@ const useStyles = makeStyles(
     add: {
       background: theme.palette.background.default,
       border: `1px solid ${theme.palette.divider}`,
-      borderRadius: '100%',
+      borderRadius: "100%",
       height: 24,
       margin: theme.spacing(),
       width: 24,
@@ -54,20 +54,20 @@ const useStyles = makeStyles(
       width: 20,
     },
     arrowContainer: {
-      position: 'relative',
+      position: "relative",
     },
     arrowInnerContainer: {
-      alignItems: 'center',
-      background: theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+      alignItems: "center",
+      background: theme.palette.type === "light" ? theme.palette.grey[50] : theme.palette.grey[900],
       bottom: 0,
       color: theme.palette.grey[500],
-      display: 'flex',
+      display: "flex",
       height: 30,
-      justifyContent: 'center',
+      justifyContent: "center",
       opacity: 1,
-      position: 'absolute',
-      transition: theme.transitions.duration.short + 'ms',
-      width: '100%',
+      position: "absolute",
+      transition: theme.transitions.duration.short + "ms",
+      width: "100%",
     },
     checkbox: {
       height: 24,
@@ -75,7 +75,7 @@ const useStyles = makeStyles(
     },
     content: {
       maxHeight: `calc(${menuItemHeight * maxMenuItems}px + ${theme.spacing(2)})`,
-      overflowY: 'scroll',
+      overflowY: "scroll",
       padding: 8,
     },
     hide: {
@@ -86,46 +86,46 @@ const useStyles = makeStyles(
       margin: theme.spacing(1, 0),
     },
     menuItem: {
-      '&:focus': {
-        backgroundColor: [theme.palette.background.default, '!important'] as any,
+      "&:focus": {
+        backgroundColor: [theme.palette.background.default, "!important"] as any,
         color: theme.palette.primary.main,
         fontWeight: 400,
       },
-      '&:hover': {
-        backgroundColor: [theme.palette.background.default, '!important'] as any,
+      "&:hover": {
+        backgroundColor: [theme.palette.background.default, "!important"] as any,
         color: theme.palette.primary.main,
         fontWeight: 700,
       },
       paddingLeft: theme.spacing(1.5),
       borderRadius: 4,
-      display: 'grid',
+      display: "grid",
       gridColumnGap: theme.spacing(1),
-      gridTemplateColumns: '30px 1fr',
-      height: 'auto',
+      gridTemplateColumns: "30px 1fr",
+      height: "auto",
       marginBottom: theme.spacing(0.5),
       padding: 0,
-      whiteSpace: 'normal',
+      whiteSpace: "normal",
     },
     menuItemLabel: {
-      display: 'flex',
-      overflowWrap: 'break-word',
+      display: "flex",
+      overflowWrap: "break-word",
     },
     progress: {},
     progressContainer: {
-      display: 'flex',
-      justifyContent: 'center',
+      display: "flex",
+      justifyContent: "center",
       padding: theme.spacing(1, 0),
     },
     root: {
       borderBottomLeftRadius: 8,
       borderBottomRightRadius: 8,
       margin: theme.spacing(1, 0),
-      overflow: 'hidden',
+      overflow: "hidden",
       zIndex: 22,
     },
   }),
   {
-    name: 'MultiAutocompleteSelectFieldContent',
+    name: "MultiAutocompleteSelectFieldContent",
   },
 );
 
@@ -146,7 +146,9 @@ function getChoiceIndex(
   return choiceIndex;
 }
 
-const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectFieldContentProps> = props => {
+const MultiAutocompleteSelectFieldContent: React.FC<
+  MultiAutocompleteSelectFieldContentProps
+> = props => {
   const {
     add,
     choices = [],
@@ -160,7 +162,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
     onFetchMore,
   } = props;
   if (!!add && !!displayCustomValue) {
-    throw new Error('Add and custom value cannot be displayed simultaneously');
+    throw new Error("Add and custom value cannot be displayed simultaneously");
   }
 
   const classes = useStyles(props);
@@ -187,7 +189,11 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
   return (
     <Paper className={classes.root} elevation={8}>
       {hasValuesToDisplay && (
-        <div className={classes.content} ref={anchor} data-test-id="multi-autocomplete-select-content">
+        <div
+          className={classes.content}
+          ref={anchor}
+          data-test-id="multi-autocomplete-select-content"
+        >
           <>
             {add && (
               <MenuItem
@@ -224,7 +230,9 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 />
               </MenuItem>
             )}
-            {(choices.length > 0 || displayValues?.length > 0) && displayCustomValue && <Hr className={classes.hr} />}
+            {(choices.length > 0 || displayValues?.length > 0) && displayCustomValue && (
+              <Hr className={classes.hr} />
+            )}
             {displayValues?.map(value => (
               <MenuItem
                 className={classes.menuItem}
@@ -237,7 +245,12 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                 })}
                 data-test-id="multi-autocomplete-select-option"
               >
-                <Checkbox className={classes.checkbox} checked={true} disabled={value.disabled} disableRipple />
+                <Checkbox
+                  className={classes.checkbox}
+                  checked={true}
+                  disabled={value.disabled}
+                  disableRipple
+                />
                 <span className={classes.menuItemLabel}>
                   {value.badge}
                   {value.badge && <HorizontalSpacer spacing={1} />}
@@ -262,7 +275,12 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
                   })}
                   data-test-id="multi-autocomplete-select-option"
                 >
-                  <Checkbox checked={false} disabled={suggestion.disabled} className={classes.checkbox} disableRipple />
+                  <Checkbox
+                    checked={false}
+                    disabled={suggestion.disabled}
+                    className={classes.checkbox}
+                    disableRipple
+                  />
 
                   <span className={classes.menuItemLabel}>
                     {suggestion.badge}
@@ -276,7 +294,11 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
         </div>
       )}
       {!loading && !hasValuesToDisplay && (
-        <MenuItem disabled={true} component="div" data-test-id="multi-autocomplete-select-no-options">
+        <MenuItem
+          disabled={true}
+          component="div"
+          data-test-id="multi-autocomplete-select-no-options"
+        >
           <FormattedMessage id="hX5PAb" defaultMessage="No results found" />
         </MenuItem>
       )}
@@ -305,5 +327,5 @@ const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectField
   );
 };
 
-MultiAutocompleteSelectFieldContent.displayName = 'MultiAutocompleteSelectFieldContent';
+MultiAutocompleteSelectFieldContent.displayName = "MultiAutocompleteSelectFieldContent";
 export default MultiAutocompleteSelectFieldContent;

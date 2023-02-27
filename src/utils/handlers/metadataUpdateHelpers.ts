@@ -1,6 +1,6 @@
-import { MetadataInput } from '@saleor/sdk/dist/apollo/types';
-import isEqual from 'lodash/isEqual';
-import sortBy from 'lodash/sortBy';
+import { MetadataInput } from "@saleor/sdk/dist/apollo/types";
+import isEqual from "lodash/isEqual";
+import sortBy from "lodash/sortBy";
 
 export interface GenericMetadataInput extends MetadataInput {
   __typename?: string;

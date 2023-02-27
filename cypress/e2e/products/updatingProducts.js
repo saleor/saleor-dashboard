@@ -128,9 +128,7 @@ describe("Update products", () => {
           productData.attribute = attribute;
           cy.loginUserViaRequest("token")
             .then(() => {
-              getProductDetails(product.id, defaultChannel.slug, "auth").its(
-                "body.data.product",
-              );
+              getProductDetails(product.id, defaultChannel.slug, "auth").its("body.data.product");
             })
             .then(resp => {
               expectCorrectProductInformation(resp, productData);
@@ -156,10 +154,7 @@ describe("Update products", () => {
         .then(() => {
           getProductDetails(product.id, defaultChannel.slug).its("body.data");
         })
-        .then(
-          productResp =>
-            expect(productResp.product, "Check if product exist").to.be.null,
-        );
+        .then(productResp => expect(productResp.product, "Check if product exist").to.be.null);
     },
   );
 });

@@ -10,15 +10,21 @@ import {
   useProductTypeAttributeReorderMutation,
   useProductTypeDeleteMutation,
   useUnassignProductAttributeMutation,
-} from '@dashboard/graphql';
+} from "@dashboard/graphql";
 
-import { getMutationProviderData } from '../../misc';
+import { getMutationProviderData } from "../../misc";
 
-function moveAttribute(attributes: ProductTypeDetailsFragment['productAttributes'], move: ReorderInput) {
+function moveAttribute(
+  attributes: ProductTypeDetailsFragment["productAttributes"],
+  move: ReorderInput,
+) {
   const attributeIndex = attributes.findIndex(attribute => attribute.id === move.id);
   const newIndex = attributeIndex + move.sortOrder;
 
-  const attributesWithoutMovedOne = [...attributes.slice(0, attributeIndex), ...attributes.slice(attributeIndex + 1)];
+  const attributesWithoutMovedOne = [
+    ...attributes.slice(0, attributeIndex),
+    ...attributes.slice(attributeIndex + 1),
+  ];
 
   return [
     ...attributesWithoutMovedOne.slice(0, newIndex),
@@ -54,9 +60,9 @@ function useProductTypeOperations({
   const [...reorderAttribute] = useProductTypeAttributeReorderMutation({
     onCompleted: onProductTypeAttributeReorder,
     optimisticResponse: variables => ({
-      __typename: 'Mutation',
+      __typename: "Mutation",
       productTypeReorderAttributes: {
-        __typename: 'ProductTypeReorderAttributes' as 'ProductTypeReorderAttributes',
+        __typename: "ProductTypeReorderAttributes" as "ProductTypeReorderAttributes",
         errors: [],
         productType: {
           ...productType,

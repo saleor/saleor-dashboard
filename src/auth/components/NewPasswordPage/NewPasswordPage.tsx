@@ -1,14 +1,14 @@
-import { Button } from '@dashboard/components/Button';
-import Form from '@dashboard/components/Form';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import getAccountErrorMessage from '@dashboard/utils/errors/account';
-import { TextField, Typography } from '@material-ui/core';
-import { SetPasswordData } from '@saleor/sdk';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import getAccountErrorMessage from "@dashboard/utils/errors/account";
+import { TextField, Typography } from "@material-ui/core";
+import { SetPasswordData } from "@saleor/sdk";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import useStyles from '../styles';
+import useStyles from "../styles";
 
 export interface NewPasswordPageFormData {
   password: string;
@@ -16,13 +16,13 @@ export interface NewPasswordPageFormData {
 }
 export interface NewPasswordPageProps {
   loading: boolean;
-  errors: SetPasswordData['errors'];
+  errors: SetPasswordData["errors"];
   onSubmit: (data: NewPasswordPageFormData) => SubmitPromise;
 }
 
 const initialForm: NewPasswordPageFormData = {
-  confirmPassword: '',
-  password: '',
+  confirmPassword: "",
+  password: "",
 };
 
 const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
@@ -39,7 +39,11 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
         return (
           <>
             <Typography variant="h3" className={classes.header}>
-              <FormattedMessage id="WhKGPA" defaultMessage="Set up new password" description="page title" />
+              <FormattedMessage
+                id="WhKGPA"
+                defaultMessage="Set up new password"
+                description="page title"
+              />
             </Typography>
             {errors.map(error => (
               <div className={classes.panel} key={`${error.code}-${error.field}`}>
@@ -59,15 +63,15 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               autoComplete="none"
               disabled={loading}
               label={intl.formatMessage({
-                id: 'Ev6SEF',
-                defaultMessage: 'New Password',
+                id: "Ev6SEF",
+                defaultMessage: "New Password",
               })}
               name="password"
               onChange={handleChange}
               type="password"
               value={data.password}
               inputProps={{
-                'data-test-id': 'password',
+                "data-test-id": "password",
                 spellCheck: false,
               }}
               required
@@ -79,8 +83,8 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               autoComplete="none"
               disabled={loading}
               label={intl.formatMessage({
-                id: 'vfG+nh',
-                defaultMessage: 'Confirm Password',
+                id: "vfG+nh",
+                defaultMessage: "Confirm Password",
               })}
               name="confirmPassword"
               onChange={handleChange}
@@ -89,12 +93,12 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               helperText={
                 passwordError &&
                 intl.formatMessage({
-                  id: '7Chrsf',
-                  defaultMessage: 'Passwords do not match',
+                  id: "7Chrsf",
+                  defaultMessage: "Passwords do not match",
                 })
               }
               inputProps={{
-                'data-test-id': 'confirm-password',
+                "data-test-id": "confirm-password",
                 spellCheck: false,
               }}
               required
@@ -108,7 +112,11 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
               onClick={handleSubmit}
               type="submit"
             >
-              <FormattedMessage id="S22jIs" defaultMessage="Set new password" description="button" />
+              <FormattedMessage
+                id="S22jIs"
+                defaultMessage="Set new password"
+                description="button"
+              />
             </Button>
           </>
         );
@@ -117,5 +125,5 @@ const NewPasswordPage: React.FC<NewPasswordPageProps> = props => {
   );
 };
 
-NewPasswordPage.displayName = 'NewPasswordPage';
+NewPasswordPage.displayName = "NewPasswordPage";
 export default NewPasswordPage;

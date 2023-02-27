@@ -1,21 +1,21 @@
-import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   ProductTypeKindEnum,
   useProductTypeCreateDataQuery,
   useProductTypeCreateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { useTaxClassFetchMore } from '@dashboard/taxes/utils/useTaxClassFetchMore';
-import createMetadataCreateHandler from '@dashboard/utils/handlers/metadataCreateHandler';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { getMutationErrors } from '../../misc';
-import ProductTypeCreatePage, { ProductTypeForm } from '../components/ProductTypeCreatePage';
-import { productTypeAddUrl, ProductTypeAddUrlQueryParams, productTypeUrl } from '../urls';
+import { getMutationErrors } from "../../misc";
+import ProductTypeCreatePage, { ProductTypeForm } from "../components/ProductTypeCreatePage";
+import { productTypeAddUrl, ProductTypeAddUrlQueryParams, productTypeUrl } from "../urls";
 
 interface ProductTypeCreateProps {
   params: ProductTypeAddUrlQueryParams;
@@ -46,10 +46,10 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({ params }) 
     onCompleted: data => {
       if (data.productTypeCreate.errors.length === 0) {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage({
-            id: 'paa4m0',
-            defaultMessage: 'Successfully created product type',
+            id: "paa4m0",
+            defaultMessage: "Successfully created product type",
           }),
         });
         navigate(productTypeUrl(data.productTypeCreate.productType.id));
@@ -77,15 +77,19 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({ params }) 
     };
   };
 
-  const handleSubmit = createMetadataCreateHandler(handleCreate, updateMetadata, updatePrivateMetadata);
+  const handleSubmit = createMetadataCreateHandler(
+    handleCreate,
+    updateMetadata,
+    updatePrivateMetadata,
+  );
 
   return (
     <>
       <WindowTitle
         title={intl.formatMessage({
-          id: 'SSWFo8',
-          defaultMessage: 'Create Product Type',
-          description: 'window title',
+          id: "SSWFo8",
+          defaultMessage: "Create Product Type",
+          description: "window title",
         })}
       />
       <ProductTypeCreatePage
@@ -93,9 +97,9 @@ export const ProductTypeCreate: React.FC<ProductTypeCreateProps> = ({ params }) 
         disabled={loading}
         errors={createProductTypeOpts.data?.productTypeCreate.errors || []}
         pageTitle={intl.formatMessage({
-          id: 'bq1eEx',
-          defaultMessage: 'Create Product Type',
-          description: 'header',
+          id: "bq1eEx",
+          defaultMessage: "Create Product Type",
+          description: "header",
         })}
         saveButtonBarState={createProductTypeOpts.status}
         taxClasses={taxClasses ?? []}

@@ -15,11 +15,7 @@ export function fillUpSetPassword(password) {
     .waitForRequestAndCheckIfNoErrors("@setPassword");
 }
 
-export function fillUpUserDetailsAndAddFirstPermission(
-  firstName,
-  lastName,
-  email,
-) {
+export function fillUpUserDetailsAndAddFirstPermission(firstName, lastName, email) {
   fillUpOnlyUserDetails(firstName, lastName, email);
   cy.confirmationMessageShouldDisappear()
     .fillAutocompleteSelect(STAFF_MEMBER_DETAILS.permissionsSelect)

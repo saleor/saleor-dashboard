@@ -1,10 +1,10 @@
-import { useGiftCardActivateMutation, useGiftCardDeactivateMutation } from '@dashboard/graphql';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import commonErrorMessages from '@dashboard/utils/errors/common';
-import { useIntl } from 'react-intl';
+import { useGiftCardActivateMutation, useGiftCardDeactivateMutation } from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import commonErrorMessages from "@dashboard/utils/errors/common";
+import { useIntl } from "react-intl";
 
-import { GIFT_CARD_DETAILS_QUERY } from '../../queries';
-import { giftCardEnableDisableSectionMessages as messages } from '../messages';
+import { GIFT_CARD_DETAILS_QUERY } from "../../queries";
+import { giftCardEnableDisableSectionMessages as messages } from "../messages";
 
 interface useGiftCardActivateToggleProps {
   onActivateActionComplete?: () => void | undefined;
@@ -26,7 +26,7 @@ const useGiftCardActivateToggle = ({
 
       if (!!errors?.length) {
         notify({
-          status: 'error',
+          status: "error",
           text: intl.formatMessage(commonErrorMessages.unknownError),
         });
 
@@ -34,7 +34,7 @@ const useGiftCardActivateToggle = ({
       }
 
       notify({
-        status: 'success',
+        status: "success",
         text: intl.formatMessage(messages.successfullyEnabledTitle),
       });
 
@@ -51,14 +51,14 @@ const useGiftCardActivateToggle = ({
 
       if (!!errors?.length) {
         notify({
-          status: 'error',
+          status: "error",
           text: intl.formatMessage(commonErrorMessages.unknownError),
         });
         return;
       }
 
       notify({
-        status: 'success',
+        status: "success",
         text: intl.formatMessage(messages.successfullyDisabledTitle),
       });
 

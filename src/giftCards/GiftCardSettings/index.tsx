@@ -1,2 +1,2 @@
-export * from './GiftCardSettingsPage';
-export { default } from './GiftCardSettingsPage';
+export * from "./GiftCardSettingsPage";
+export { default } from "./GiftCardSettingsPage";

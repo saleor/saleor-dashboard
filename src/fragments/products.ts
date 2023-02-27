@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const stockFragment = gql`
   fragment Stock on Stock {
@@ -133,7 +133,12 @@ export const productVariantAttributesFragment = gql`
         entityType
         valueRequired
         unit
-        choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
+        choices(
+          first: $firstValues
+          after: $afterValues
+          last: $lastValues
+          before: $beforeValues
+        ) {
           ...AttributeValueList
         }
       }
@@ -149,7 +154,12 @@ export const productVariantAttributesFragment = gql`
         inputType
         valueRequired
         unit
-        choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
+        choices(
+          first: $firstValues
+          after: $afterValues
+          last: $lastValues
+          before: $beforeValues
+        ) {
           ...AttributeValueList
         }
       }

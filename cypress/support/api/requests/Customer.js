@@ -75,11 +75,7 @@ export function getCustomers(startsWith) {
   return cy.sendRequestWithQuery(query);
 }
 
-export function customerRegistration({
-  email,
-  password = Cypress.env("USER_PASSWORD"),
-  channel,
-}) {
+export function customerRegistration({ email, password = Cypress.env("USER_PASSWORD"), channel }) {
   const mutation = `mutation{
     accountRegister(input:{
       email:"${email}",

@@ -20,10 +20,7 @@ import {
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../../support/api/utils/shippingUtils";
+import { createShipping, deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import {
   getDefaultTaxClass,
   updateTaxConfigurationForChannel,
@@ -164,37 +161,35 @@ describe("As an admin I want to update sales", () => {
       productData.name = productName;
       productData.sku = productName;
 
-      createProductInChannel(productData).then(
-        ({ variantsList, product: productResp }) => {
-          product = productResp;
-          variants = variantsList;
+      createProductInChannel(productData).then(({ variantsList, product: productResp }) => {
+        product = productResp;
+        variants = variantsList;
 
-          updateSale({
-            saleId: sale.id,
-            variants,
-          });
-          getVariant(variants[0].id, defaultChannel.slug)
-            .its("pricing")
-            .should("include", { onSale: true })
-            .its("price.gross.amount")
-            .should("eq", productPriceOnSale);
-          cy.visit(saleDetailsUrl(sale.id))
-            .get(SALES_SELECTORS.variantsTab)
-            .click()
-            .addAliasToGraphRequest("SaleCataloguesRemove");
-          cy.contains(SHARED_ELEMENTS.tableRow, product.name)
-            .find(BUTTON_SELECTORS.button)
-            .click()
-            .get(BUTTON_SELECTORS.submit)
-            .click()
-            .wait("@SaleCataloguesRemove");
-          getVariant(variants[0].id, defaultChannel.slug)
-            .its("pricing")
-            .should("include", { onSale: false })
-            .its("price.gross.amount")
-            .should("eq", productPrice);
-        },
-      );
+        updateSale({
+          saleId: sale.id,
+          variants,
+        });
+        getVariant(variants[0].id, defaultChannel.slug)
+          .its("pricing")
+          .should("include", { onSale: true })
+          .its("price.gross.amount")
+          .should("eq", productPriceOnSale);
+        cy.visit(saleDetailsUrl(sale.id))
+          .get(SALES_SELECTORS.variantsTab)
+          .click()
+          .addAliasToGraphRequest("SaleCataloguesRemove");
+        cy.contains(SHARED_ELEMENTS.tableRow, product.name)
+          .find(BUTTON_SELECTORS.button)
+          .click()
+          .get(BUTTON_SELECTORS.submit)
+          .click()
+          .wait("@SaleCataloguesRemove");
+        getVariant(variants[0].id, defaultChannel.slug)
+          .its("pricing")
+          .should("include", { onSale: false })
+          .its("price.gross.amount")
+          .should("eq", productPrice);
+      });
     },
   );
 });

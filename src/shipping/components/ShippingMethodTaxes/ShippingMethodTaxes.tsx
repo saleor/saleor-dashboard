@@ -1,15 +1,15 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import SingleAutocompleteSelectField from '@dashboard/components/SingleAutocompleteSelectField';
-import { TaxClassBaseFragment } from '@dashboard/graphql';
-import { sectionNames } from '@dashboard/intl';
-import { taxesMessages } from '@dashboard/taxes/messages';
-import { FetchMoreProps } from '@dashboard/types';
-import { Card, CardContent } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import { TaxClassBaseFragment } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { taxesMessages } from "@dashboard/taxes/messages";
+import { FetchMoreProps } from "@dashboard/types";
+import { Card, CardContent } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { ShippingZoneRateUpdateFormData } from '../ShippingZoneRatesPage/types';
+import { ShippingZoneRateUpdateFormData } from "../ShippingZoneRatesPage/types";
 
 interface ShippingMethodTaxesProps {
   value: string;
@@ -23,10 +23,10 @@ interface ShippingMethodTaxesProps {
 const useStyles = makeStyles(
   {
     root: {
-      overflow: 'visible',
+      overflow: "visible",
     },
   },
-  { name: 'ShippingMethodTaxes' },
+  { name: "ShippingMethodTaxes" },
 );
 
 const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
@@ -44,7 +44,7 @@ const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
           disabled={disabled}
           displayValue={taxClassDisplayName}
           label={intl.formatMessage(taxesMessages.taxClass)}
-          name={'taxClassId' as keyof ShippingZoneRateUpdateFormData}
+          name={"taxClassId" as keyof ShippingZoneRateUpdateFormData}
           onChange={onChange}
           value={value}
           choices={taxClasses.map(choice => ({
@@ -52,7 +52,7 @@ const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
             value: choice.id,
           }))}
           InputProps={{
-            autoComplete: 'off',
+            autoComplete: "off",
           }}
           {...onFetchMore}
         />
@@ -60,5 +60,5 @@ const ShippingMethodTaxes: React.FC<ShippingMethodTaxesProps> = props => {
     </Card>
   );
 };
-ShippingMethodTaxes.displayName = 'ShippingMethodTaxes';
+ShippingMethodTaxes.displayName = "ShippingMethodTaxes";
 export default ShippingMethodTaxes;

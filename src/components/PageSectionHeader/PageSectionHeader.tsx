@@ -1,7 +1,7 @@
-import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
-import { Typography } from '@material-ui/core';
-import { Box } from '@saleor/macaw-ui/next';
-import React from 'react';
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import { Typography } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui/next";
+import React from "react";
 
 interface PageSectionHeaderProps {
   title?: string;
@@ -20,5 +20,5 @@ const PageSectionHeader: React.FC<PageSectionHeaderProps> = props => {
   );
 };
 
-PageSectionHeader.displayName = 'PageSectionHeader';
+PageSectionHeader.displayName = "PageSectionHeader";
 export default PageSectionHeader;

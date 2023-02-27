@@ -1,9 +1,9 @@
-import closeIcon from '@assets/images/close-thin.svg';
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React, { useState } from 'react';
+import closeIcon from "@assets/images/close-thin.svg";
+import { Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React, { useState } from "react";
 
-import FormSpacer from '../FormSpacer';
+import FormSpacer from "../FormSpacer";
 
 const CLOSE_ICON_SIZE = 14;
 
@@ -11,24 +11,24 @@ const useStyles = makeStyles(
   theme => ({
     buttonText: {
       color: theme.palette.primary.main,
-      cursor: 'pointer',
+      cursor: "pointer",
       fontSize: 14,
       margin: theme.spacing(1, 0),
       paddingBottom: 10,
       paddingTop: 0,
     },
     container: {
-      alignItems: 'baseline',
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
+      alignItems: "baseline",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
     },
     icon: {
-      cursor: 'pointer',
+      cursor: "pointer",
       marginLeft: theme.spacing(2),
     },
   }),
-  { name: 'DateVisibilitySelector' },
+  { name: "DateVisibilitySelector" },
 );
 
 interface Props {

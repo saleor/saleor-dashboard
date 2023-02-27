@@ -1,15 +1,15 @@
-import BackButton from '@dashboard/components/BackButton';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import Form from '@dashboard/components/Form';
-import Skeleton from '@dashboard/components/Skeleton';
-import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from '@dashboard/graphql';
-import { buttonMessages } from '@dashboard/intl';
-import { maybe } from '@dashboard/misc';
-import { DialogProps } from '@dashboard/types';
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import Skeleton from "@dashboard/components/Skeleton";
+import { ConfigurationItemFragment, ConfigurationTypeFieldEnum } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import { maybe } from "@dashboard/misc";
+import { DialogProps } from "@dashboard/types";
+import { Dialog, DialogActions, DialogContent, DialogTitle, TextField } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface PluginSecretFieldDialogFormData {
   value: string;
@@ -30,7 +30,7 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
   const intl = useIntl();
 
   const initialForm: PluginSecretFieldDialogFormData = {
-    value: '',
+    value: "",
   };
 
   return (
@@ -39,15 +39,15 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
         {field ? (
           field.value === null ? (
             intl.formatMessage({
-              id: 'qCH2eZ',
-              defaultMessage: 'Add Value to Authorization Field',
-              description: 'header',
+              id: "qCH2eZ",
+              defaultMessage: "Add Value to Authorization Field",
+              description: "header",
             })
           ) : (
             intl.formatMessage({
-              id: 'Xy2T+y',
-              defaultMessage: 'Edit Authorization Field',
-              description: 'header',
+              id: "Xy2T+y",
+              defaultMessage: "Edit Authorization Field",
+              description: "header",
             })
           )
         ) : (
@@ -64,8 +64,8 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
                 fullWidth
                 label={field && field.label}
                 name="value"
-                type={maybe(() => field.type) === ConfigurationTypeFieldEnum.PASSWORD && 'password'}
-                value={data.value || ''}
+                type={maybe(() => field.type) === ConfigurationTypeFieldEnum.PASSWORD && "password"}
+                value={data.value || ""}
                 onChange={change}
               />
             </DialogContent>
@@ -82,5 +82,5 @@ const PluginSecretFieldDialog: React.FC<PluginSecretFieldDialogProps> = ({
   );
 };
 
-PluginSecretFieldDialog.displayName = 'PluginSecretFieldDialog';
+PluginSecretFieldDialog.displayName = "PluginSecretFieldDialog";
 export default PluginSecretFieldDialog;

@@ -1,2 +1,2 @@
-export { default } from './ShippingZoneRates';
-export * from './ShippingZoneRates';
+export { default } from "./ShippingZoneRates";
+export * from "./ShippingZoneRates";

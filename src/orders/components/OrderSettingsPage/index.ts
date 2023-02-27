@@ -1,2 +1,2 @@
-export { default } from './OrderSettingsPage';
-export * from './OrderSettingsPage';
+export { default } from "./OrderSettingsPage";
+export * from "./OrderSettingsPage";

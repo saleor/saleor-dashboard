@@ -1,7 +1,10 @@
-import { SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables } from '@dashboard/graphql';
-import { UseSearchResult } from '@dashboard/hooks/makeSearch';
-import useAttributeValueSearch from '@dashboard/searches/useAttributeValueSearch';
-import { useEffect, useState } from 'react';
+import {
+  SearchAttributeValuesQuery,
+  SearchAttributeValuesQueryVariables,
+} from "@dashboard/graphql";
+import { UseSearchResult } from "@dashboard/hooks/makeSearch";
+import useAttributeValueSearch from "@dashboard/searches/useAttributeValueSearch";
+import { useEffect, useState } from "react";
 
 interface AttributeValueSearchHandlerState {
   id: string | null;
@@ -9,7 +12,10 @@ interface AttributeValueSearchHandlerState {
 }
 
 export interface UseAttributeValueSearchHandler
-  extends Omit<UseSearchResult<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>, 'search'> {
+  extends Omit<
+    UseSearchResult<SearchAttributeValuesQuery, SearchAttributeValuesQueryVariables>,
+    "search"
+  > {
   reset: () => void;
   search: (query: string, id: string | null) => void;
 }
@@ -46,7 +52,7 @@ function useAttributeValueSearchHandler(
 
   useEffect(() => {
     if (state.id) {
-      search('');
+      search("");
     }
   }, [state.id]);
 

@@ -115,9 +115,7 @@ describe("Updating products without sku", () => {
         product = resp.product;
         variant = resp.variant;
 
-        cy.visitAndWaitForProgressBarToDisappear(
-          productVariantDetailUrl(product.id, variant.id),
-        )
+        cy.visitAndWaitForProgressBarToDisappear(productVariantDetailUrl(product.id, variant.id))
           .get(SHARED_ELEMENTS.skeleton)
           .should("not.exist")
           .get(VARIANTS_SELECTORS.skuTextField)
@@ -127,8 +125,7 @@ describe("Updating products without sku", () => {
           .click()
           .waitForRequestAndCheckIfNoErrors("@VariantUpdate")
           .then(({ response }) => {
-            const responseSku =
-              response.body.data.productVariantUpdate.productVariant.sku;
+            const responseSku = response.body.data.productVariantUpdate.productVariant.sku;
             expect(responseSku).to.equal(sku);
           });
       });
@@ -151,9 +148,7 @@ describe("Updating products without sku", () => {
       })
         .then(variantResp => {
           variant = variantResp[0];
-          cy.visitAndWaitForProgressBarToDisappear(
-            productVariantDetailUrl(product.id, variant.id),
-          )
+          cy.visitAndWaitForProgressBarToDisappear(productVariantDetailUrl(product.id, variant.id))
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
             .get(VARIANTS_SELECTORS.skuTextField)
@@ -186,9 +181,7 @@ describe("Updating products without sku", () => {
       })
         .then(variantResp => {
           variant = variantResp[0];
-          cy.visitAndWaitForProgressBarToDisappear(
-            productVariantDetailUrl(product.id, variant.id),
-          )
+          cy.visitAndWaitForProgressBarToDisappear(productVariantDetailUrl(product.id, variant.id))
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
             .get(VARIANTS_SELECTORS.skuTextField)

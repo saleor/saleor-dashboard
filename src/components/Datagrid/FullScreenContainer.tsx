@@ -1,20 +1,20 @@
-import { useTheme } from '@saleor/macaw-ui';
-import React, { CSSProperties, FC, PropsWithChildren } from 'react';
-import ReactDOM from 'react-dom';
+import { useTheme } from "@saleor/macaw-ui";
+import React, { CSSProperties, FC, PropsWithChildren } from "react";
+import ReactDOM from "react-dom";
 
-import { useDelayedState } from './useDelayedState';
+import { useDelayedState } from "./useDelayedState";
 
-const modalRoot = document.getElementById('modal-root') || document.createElement('div');
+const modalRoot = document.getElementById("modal-root") || document.createElement("div");
 
 const useEase = (duration: number) => {
   const { transitions } = useTheme();
   const { easeIn, easeOut } = transitions.easing;
   const options = { duration, delay: 0 };
-  const transitionIn = transitions.create('all', {
+  const transitionIn = transitions.create("all", {
     ...options,
     easing: easeIn,
   });
-  const transitionOut = transitions.create('all', {
+  const transitionOut = transitions.create("all", {
     ...options,
     easing: easeOut,
   });
@@ -27,7 +27,7 @@ const useAnimationStyles = (isOpen: boolean, duration: number) => {
 
   const initialStyles: CSSProperties = {
     opacity: 0,
-    position: 'fixed',
+    position: "fixed",
     inset: 0,
     zIndex: -1,
   };

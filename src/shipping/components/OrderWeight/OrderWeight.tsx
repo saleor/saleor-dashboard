@@ -1,16 +1,16 @@
-import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
-import CardTitle from '@dashboard/components/CardTitle';
-import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
-import { ShippingErrorFragment } from '@dashboard/graphql';
-import { ChangeEvent } from '@dashboard/hooks/useForm';
-import useShop from '@dashboard/hooks/useShop';
-import { getShippingWeightRateErrorMessage } from '@dashboard/shipping/errors';
-import { getFormErrors } from '@dashboard/utils/errors';
-import { Card, CardContent, InputAdornment, TextField, Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { ShippingErrorFragment } from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
+import useShop from "@dashboard/hooks/useShop";
+import { getShippingWeightRateErrorMessage } from "@dashboard/shipping/errors";
+import { getFormErrors } from "@dashboard/utils/errors";
+import { Card, CardContent, InputAdornment, TextField, Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 export interface OrderWeightProps {
   disabled: boolean;
@@ -25,24 +25,24 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
   orderValueRestricted,
   disabled,
   errors,
-  maxValue = '',
-  minValue = '',
+  maxValue = "",
+  minValue = "",
   onChange,
 }) => {
   const classes = useStyles({});
   const intl = useIntl();
   const shop = useShop();
 
-  const formFields = ['minimumOrderWeight', 'maximumOrderWeight'];
+  const formFields = ["minimumOrderWeight", "maximumOrderWeight"];
   const formErrors = getFormErrors(formFields, errors);
 
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'vWapBZ',
-          defaultMessage: 'Order Weight',
-          description: 'card title',
+          id: "vWapBZ",
+          defaultMessage: "Order Weight",
+          description: "card title",
         })}
       />
       <CardContent>
@@ -50,7 +50,11 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
           name="orderValueRestricted"
           label={
             <>
-              <FormattedMessage id="r2dojI" defaultMessage="Restrict order weight" description="checkbox label" />
+              <FormattedMessage
+                id="r2dojI"
+                defaultMessage="Restrict order weight"
+                description="checkbox label"
+              />
               <Typography variant="caption">
                 <FormattedMessage
                   id="7v8suW"
@@ -74,14 +78,14 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
                 error={!!formErrors.minimumOrderWeight}
                 fullWidth
                 label={intl.formatMessage({
-                  id: 'w+5Djm',
-                  defaultMessage: 'Min. Order Weight',
+                  id: "w+5Djm",
+                  defaultMessage: "Min. Order Weight",
                 })}
                 name="minValue"
                 type="number"
                 inputProps={{
                   min: 0,
-                  type: 'number',
+                  type: "number",
                 }}
                 InputProps={{
                   inputProps: { min: 0 },
@@ -100,8 +104,8 @@ export const OrderWeight: React.FC<OrderWeightProps> = ({
                 error={!!formErrors.maximumOrderWeight}
                 fullWidth
                 label={intl.formatMessage({
-                  id: 'u0V06N',
-                  defaultMessage: 'Max. Order Weight',
+                  id: "u0V06N",
+                  defaultMessage: "Max. Order Weight",
                 })}
                 name="maxValue"
                 type="number"

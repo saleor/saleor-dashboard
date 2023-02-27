@@ -1,5 +1,11 @@
-import { mergeAttributeValueDeleteErrors, mergeFileUploadErrors } from '@dashboard/attributes/utils/data';
-import { handleDeleteMultipleAttributeValues, handleUploadMultipleFiles } from '@dashboard/attributes/utils/handlers';
+import {
+  mergeAttributeValueDeleteErrors,
+  mergeFileUploadErrors,
+} from "@dashboard/attributes/utils/data";
+import {
+  handleDeleteMultipleAttributeValues,
+  handleUploadMultipleFiles,
+} from "@dashboard/attributes/utils/handlers";
 import {
   AttributeErrorFragment,
   ErrorPolicyEnum,
@@ -18,23 +24,27 @@ import {
   useProductVariantBulkUpdateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from '@dashboard/graphql';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { commonMessages } from '@dashboard/intl';
-import { ProductUpdateSubmitData } from '@dashboard/products/components/ProductUpdatePage/types';
-import { getProductErrorMessage } from '@dashboard/utils/errors';
-import createMetadataUpdateHandler from '@dashboard/utils/handlers/metadataUpdateHandler';
-import { useState } from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import { ProductUpdateSubmitData } from "@dashboard/products/components/ProductUpdatePage/types";
+import { getProductErrorMessage } from "@dashboard/utils/errors";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { useState } from "react";
+import { useIntl } from "react-intl";
 
-import { getCreateVariantMutationError, getVariantUpdateMutationErrors, ProductVariantListError } from './errors';
+import {
+  getCreateVariantMutationError,
+  getVariantUpdateMutationErrors,
+  ProductVariantListError,
+} from "./errors";
 import {
   getBulkVariantUpdateInputs,
   getCreateVariantInput,
   getProductChannelsUpdateVariables,
   getProductUpdateVariables,
   hasProductChannelsUpdate,
-} from './utils';
+} from "./utils";
 
 export type UseProductUpdateHandlerError =
   | ProductErrorWithAttributesFragment
@@ -79,7 +89,7 @@ export function useProductUpdateHandler(
       if (!!data.productChannelListingUpdate.errors.length) {
         data.productChannelListingUpdate.errors.forEach(error =>
           notify({
-            status: 'error',
+            status: "error",
             text: getProductErrorMessage(error, intl),
           }),
         );
@@ -89,12 +99,15 @@ export function useProductUpdateHandler(
 
   const [deleteAttributeValue] = useAttributeValueDeleteMutation();
 
-  const sendMutations = async (data: ProductUpdateSubmitData): Promise<UseProductUpdateHandlerError[]> => {
+  const sendMutations = async (
+    data: ProductUpdateSubmitData,
+  ): Promise<UseProductUpdateHandlerError[]> => {
     let errors: UseProductUpdateHandlerError[] = [];
     const variantErrors: ProductVariantListError[] = [];
 
-    const uploadFilesResult = await handleUploadMultipleFiles(data.attributesWithNewFileValue, variables =>
-      uploadFile({ variables }),
+    const uploadFilesResult = await handleUploadMultipleFiles(
+      data.attributesWithNewFileValue,
+      variables => uploadFile({ variables }),
     );
 
     const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
@@ -192,7 +205,7 @@ export function useProductUpdateHandler(
 
     if (errors.length === 0) {
       notify({
-        status: 'success',
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
     }

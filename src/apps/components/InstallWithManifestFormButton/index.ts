@@ -1,1 +1,1 @@
-export * from './InstallWithManifestFormButton';
+export * from "./InstallWithManifestFormButton";

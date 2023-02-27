@@ -8,13 +8,8 @@ import { editSeoSettings } from "../seoComponent";
 const valueTrue = AVAILABLE_CHANNELS_FORM.radioButtonsValueTrue;
 const valueFalse = AVAILABLE_CHANNELS_FORM.radioButtonsValueFalse;
 
-export function updateProductIsAvailableForPurchase(
-  productUrl,
-  isAvailableForPurchase,
-) {
-  const isAvailableForPurchaseSelector = isAvailableForPurchase
-    ? valueTrue
-    : valueFalse;
+export function updateProductIsAvailableForPurchase(productUrl, isAvailableForPurchase) {
+  const isAvailableForPurchaseSelector = isAvailableForPurchase ? valueTrue : valueFalse;
   const availableForPurchaseSelector = `${AVAILABLE_CHANNELS_FORM.availableForPurchaseRadioButtons}${isAvailableForPurchaseSelector}`;
   updateProductManageInChannel(productUrl, availableForPurchaseSelector);
 }
@@ -26,10 +21,7 @@ export function updateProductPublish(productUrl, isPublished) {
 }
 
 export function updateProductVisibleInListings(productUrl) {
-  updateProductManageInChannel(
-    productUrl,
-    AVAILABLE_CHANNELS_FORM.visibleInListingsButton,
-  );
+  updateProductManageInChannel(productUrl, AVAILABLE_CHANNELS_FORM.visibleInListingsButton);
 }
 
 function updateProductManageInChannel(productUrl, manageSelector) {
@@ -63,11 +55,7 @@ export function fillUpCommonFieldsForAllProductTypes(
     .then(productOrgResp => productOrgResp);
 }
 
-export function fillUpAllCommonFieldsInCreateAndUpdate({
-  generalInfo,
-  seo,
-  metadata,
-}) {
+export function fillUpAllCommonFieldsInCreateAndUpdate({ generalInfo, seo, metadata }) {
   return fillUpProductGeneralInfo(generalInfo)
     .then(() => {
       editSeoSettings(seo);
@@ -103,11 +91,7 @@ export function fillUpProductTypeDialog({ productType }) {
     });
 }
 
-export function fillUpProductOrganization({
-  productType,
-  category,
-  collection,
-}) {
+export function fillUpProductOrganization({ productType, category, collection }) {
   const organization = {};
   return cy
     .fillAutocompleteSelect(PRODUCT_DETAILS.productTypeInput, productType)

@@ -1,6 +1,6 @@
-import { VoucherListUrlSortField } from '@dashboard/discounts/urls';
-import { VoucherSortField } from '@dashboard/graphql';
-import { createGetSortQueryVariables } from '@dashboard/utils/sort';
+import { VoucherListUrlSortField } from "@dashboard/discounts/urls";
+import { VoucherSortField } from "@dashboard/graphql";
+import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 export const DEFAULT_SORT_KEY = VoucherListUrlSortField.code;
 

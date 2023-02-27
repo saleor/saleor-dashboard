@@ -1,10 +1,10 @@
-import { Button } from '@dashboard/components/Button';
-import { alpha } from '@material-ui/core/styles';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import { alpha } from "@material-ui/core/styles";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 interface ColumnPickerButtonProps {
   active: boolean;
@@ -16,10 +16,10 @@ const useStyles = makeStyles(
   theme => ({
     icon: {
       marginLeft: theme.spacing(2),
-      transition: theme.transitions.duration.short + 'ms',
+      transition: theme.transitions.duration.short + "ms",
     },
     root: {
-      '& span': {
+      "& span": {
         color: theme.palette.primary.main,
       },
       paddingRight: theme.spacing(1),
@@ -28,11 +28,11 @@ const useStyles = makeStyles(
       background: alpha(theme.palette.primary.main, 0.1),
     },
     rotate: {
-      transform: 'rotate(180deg)',
+      transform: "rotate(180deg)",
     },
   }),
   {
-    name: 'ColumnPickerButton',
+    name: "ColumnPickerButton",
   },
 );
 
@@ -48,7 +48,11 @@ const ColumnPickerButton: React.FC<ColumnPickerButtonProps> = props => {
       onClick={onClick}
       variant="secondary"
     >
-      <FormattedMessage id="142MJn" defaultMessage="Columns" description="select visible columns button" />
+      <FormattedMessage
+        id="142MJn"
+        defaultMessage="Columns"
+        description="select visible columns button"
+      />
       <ArrowDropDownIcon
         className={clsx(classes.icon, {
           [classes.rotate]: active,

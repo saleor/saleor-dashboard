@@ -1,20 +1,25 @@
-import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import { Hr } from '@dashboard/components/Hr';
-import Money from '@dashboard/components/Money';
-import Skeleton from '@dashboard/components/Skeleton';
-import { OrderAction, OrderDetailsFragment, OrderDiscountType, OrderStatus } from '@dashboard/graphql';
-import { Card, CardContent } from '@material-ui/core';
-import { Pill } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import { Hr } from "@dashboard/components/Hr";
+import Money from "@dashboard/components/Money";
+import Skeleton from "@dashboard/components/Skeleton";
+import {
+  OrderAction,
+  OrderDetailsFragment,
+  OrderDiscountType,
+  OrderStatus,
+} from "@dashboard/graphql";
+import { Card, CardContent } from "@material-ui/core";
+import { Pill } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { transformPaymentStatus } from '../../../misc';
-import { orderPaymentMessages, paymentButtonMessages } from './messages';
-import { useStyles } from './styles';
-import { extractOrderGiftCardUsedAmount, extractRefundedAmount } from './utils';
+import { transformPaymentStatus } from "../../../misc";
+import { orderPaymentMessages, paymentButtonMessages } from "./messages";
+import { useStyles } from "./styles";
+import { extractOrderGiftCardUsedAmount, extractRefundedAmount } from "./utils";
 
 interface OrderPaymentProps {
   order: OrderDetailsFragment;
@@ -68,31 +73,36 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             <div className={classes.titleContainer}>
               <FormattedMessage {...orderPaymentMessages.paymentTitle} />
               <HorizontalSpacer spacing={2} />
-              <Pill className={classes.rightmostLeftAlignedElement} label={payment.localized} color={payment.status} />
-              {order?.status !== OrderStatus.CANCELED && (canCapture || canRefund || canVoid || canMarkAsPaid) && (
-                <div className={classes.actions}>
-                  {canCapture && (
-                    <Button variant="tertiary" onClick={onCapture}>
-                      <FormattedMessage {...paymentButtonMessages.capture} />
-                    </Button>
-                  )}
-                  {canRefund && (
-                    <Button variant="tertiary" onClick={onRefund} data-test-id="refund-button">
-                      <FormattedMessage {...paymentButtonMessages.refund} />
-                    </Button>
-                  )}
-                  {canVoid && (
-                    <Button variant="tertiary" onClick={onVoid}>
-                      <FormattedMessage {...paymentButtonMessages.void} />
-                    </Button>
-                  )}
-                  {canMarkAsPaid && (
-                    <Button variant="tertiary" onClick={onMarkAsPaid}>
-                      <FormattedMessage {...paymentButtonMessages.markAsPaid} />
-                    </Button>
-                  )}
-                </div>
-              )}
+              <Pill
+                className={classes.rightmostLeftAlignedElement}
+                label={payment.localized}
+                color={payment.status}
+              />
+              {order?.status !== OrderStatus.CANCELED &&
+                (canCapture || canRefund || canVoid || canMarkAsPaid) && (
+                  <div className={classes.actions}>
+                    {canCapture && (
+                      <Button variant="tertiary" onClick={onCapture}>
+                        <FormattedMessage {...paymentButtonMessages.capture} />
+                      </Button>
+                    )}
+                    {canRefund && (
+                      <Button variant="tertiary" onClick={onRefund} data-test-id="refund-button">
+                        <FormattedMessage {...paymentButtonMessages.refund} />
+                      </Button>
+                    )}
+                    {canVoid && (
+                      <Button variant="tertiary" onClick={onVoid}>
+                        <FormattedMessage {...paymentButtonMessages.void} />
+                      </Button>
+                    )}
+                    {canMarkAsPaid && (
+                      <Button variant="tertiary" onClick={onMarkAsPaid}>
+                        <FormattedMessage {...paymentButtonMessages.markAsPaid} />
+                      </Button>
+                    )}
+                  </div>
+                )}
             </div>
           )
         }
@@ -110,7 +120,13 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                   <FormattedMessage {...orderPaymentMessages.voucher} />
                 )}
               </span>
-              <span className={clsx(classes.leftmostRightAlignedElement, classes.smallFont, classes.supportText)}>
+              <span
+                className={clsx(
+                  classes.leftmostRightAlignedElement,
+                  classes.smallFont,
+                  classes.supportText,
+                )}
+              >
                 <FormattedMessage {...orderPaymentMessages.includedInSubtotal} />
               </span>
               <HorizontalSpacer spacing={2} />
@@ -137,8 +153,14 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
             <FormattedMessage {...orderPaymentMessages.taxes} />
             {order?.total.tax.amount > 0 && (
               <>
-                <div className={clsx(classes.supportText, classes.smallFont, classes.leftmostRightAlignedElement)}>
-                  <FormattedMessage {...orderPaymentMessages.includedInPrices} />{' '}
+                <div
+                  className={clsx(
+                    classes.supportText,
+                    classes.smallFont,
+                    classes.leftmostRightAlignedElement,
+                  )}
+                >
+                  <FormattedMessage {...orderPaymentMessages.includedInPrices} />{" "}
                 </div>
                 <HorizontalSpacer spacing={2} />
               </>
@@ -193,10 +215,17 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           {!!refundedAmount?.amount && (
             <div>
               <FormattedMessage {...orderPaymentMessages.refunded} />
-              <div className={classes.leftmostRightAlignedElement}>{<Money money={refundedAmount} />}</div>
+              <div className={classes.leftmostRightAlignedElement}>
+                {<Money money={refundedAmount} />}
+              </div>
             </div>
           )}
-          <div className={clsx({ [classes.success]: order?.totalBalance.amount === 0 }, classes.totalRow)}>
+          <div
+            className={clsx(
+              { [classes.success]: order?.totalBalance.amount === 0 },
+              classes.totalRow,
+            )}
+          >
             <FormattedMessage {...orderPaymentMessages.outstanding} />
             <div className={classes.leftmostRightAlignedElement}>
               {order?.totalBalance.amount === 0 ? (
@@ -212,5 +241,5 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
     </Card>
   );
 };
-OrderPayment.displayName = 'OrderPayment';
+OrderPayment.displayName = "OrderPayment";
 export default OrderPayment;

@@ -1,6 +1,6 @@
-import { FormControlLabel, Switch } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
+import { FormControlLabel, Switch } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
 
 const useStyles = makeStyles(
   () => ({
@@ -8,7 +8,7 @@ const useStyles = makeStyles(
       fontSize: 14,
     },
   }),
-  { name: 'ControlledSwitch' },
+  { name: "ControlledSwitch" },
 );
 
 interface ControlledSwitchProps {
@@ -23,7 +23,8 @@ interface ControlledSwitchProps {
 }
 
 export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
-  const { checked, disabled, onChange, label, name, secondLabel, uncheckedLabel, className } = props;
+  const { checked, disabled, onChange, label, name, secondLabel, uncheckedLabel, className } =
+    props;
 
   const classes = useStyles(props);
 
@@ -31,7 +32,11 @@ export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
     <FormControlLabel
       className={className}
       control={
-        <Switch onChange={() => onChange({ target: { name, value: !checked } } as any)} checked={checked} name={name} />
+        <Switch
+          onChange={() => onChange({ target: { name, value: !checked } } as any)}
+          checked={checked}
+          name={name}
+        />
       }
       label={
         <div>
@@ -41,7 +46,7 @@ export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
             ) : (
               uncheckedLabel
             )
-          ) : typeof label === 'string' ? (
+          ) : typeof label === "string" ? (
             <span className={classes.labelText}>{label}</span>
           ) : (
             label
@@ -53,5 +58,5 @@ export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
     />
   );
 };
-ControlledSwitch.displayName = 'ControlledSwitch';
+ControlledSwitch.displayName = "ControlledSwitch";
 export default ControlledSwitch;

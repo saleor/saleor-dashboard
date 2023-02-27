@@ -1,30 +1,30 @@
-import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
-import DialogButtons from '@dashboard/components/ActionDialog/DialogButtons';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import GiftCardTagInput from '@dashboard/giftCards/components/GiftCardTagInput';
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
 import {
   GiftCardErrorFragment,
   GiftCardSettingsExpiryTypeEnum,
   TimePeriodTypeEnum,
   useGiftCardSettingsQuery,
-} from '@dashboard/graphql';
-import useForm from '@dashboard/hooks/useForm';
-import { commonMessages } from '@dashboard/intl';
-import Label from '@dashboard/orders/components/OrderHistory/Label';
-import { getFormErrors } from '@dashboard/utils/errors';
-import { DialogContent, Divider, TextField } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React, { useState } from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useForm from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
+import Label from "@dashboard/orders/components/OrderHistory/Label";
+import { getFormErrors } from "@dashboard/utils/errors";
+import { DialogContent, Divider, TextField } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React, { useState } from "react";
+import { useIntl } from "react-intl";
 
-import GiftCardSendToCustomer from '../components/GiftCardSendToCustomer/GiftCardSendToCustomer';
-import { GiftCardCreateCommonFormData } from '../GiftCardBulkCreateDialog/types';
-import GiftCardCreateExpirySelect from './GiftCardCreateExpirySelect';
-import GiftCardCreateMoneyInput from './GiftCardCreateMoneyInput';
-import GiftCardCreateRequiresActivationSection from './GiftCardCreateRequiresActivationSection';
-import { giftCardCreateMessages as messages } from './messages';
-import { useGiftCardCreateFormStyles as useStyles } from './styles';
-import { GiftCardCreateFormCommonProps, GiftCardCreateFormCustomer } from './types';
+import GiftCardSendToCustomer from "../components/GiftCardSendToCustomer/GiftCardSendToCustomer";
+import { GiftCardCreateCommonFormData } from "../GiftCardBulkCreateDialog/types";
+import GiftCardCreateExpirySelect from "./GiftCardCreateExpirySelect";
+import GiftCardCreateMoneyInput from "./GiftCardCreateMoneyInput";
+import GiftCardCreateRequiresActivationSection from "./GiftCardCreateRequiresActivationSection";
+import { giftCardCreateMessages as messages } from "./messages";
+import { useGiftCardCreateFormStyles as useStyles } from "./styles";
+import { GiftCardCreateFormCommonProps, GiftCardCreateFormCustomer } from "./types";
 
 export interface GiftCardCreateFormData extends GiftCardCreateCommonFormData {
   note: string;
@@ -37,11 +37,11 @@ export const initialData: GiftCardCreateFormData = {
   tags: [],
   balanceAmount: 1,
   balanceCurrency: null,
-  note: '',
+  note: "",
   sendToCustomerSelected: false,
   expirySelected: false,
-  expiryType: 'EXPIRY_PERIOD',
-  expiryDate: '',
+  expiryType: "EXPIRY_PERIOD",
+  expiryDate: "",
   expiryPeriodType: TimePeriodTypeEnum.MONTH,
   expiryPeriodAmount: 12,
   requiresActivation: true,
@@ -54,7 +54,7 @@ interface GiftCardCreateDialogFormProps {
   initialCustomer?: GiftCardCreateFormCustomer | null;
 }
 
-const defaultInitialCustomer = { email: '', name: '' };
+const defaultInitialCustomer = { email: "", name: "" };
 
 const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
   onSubmit,
@@ -96,14 +96,17 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
     {
       ...initialData,
       ...getInitialExpirySettingsData(),
-      balanceCurrency: '',
-      channelSlug: '',
+      balanceCurrency: "",
+      channelSlug: "",
       sendToCustomerSelected: !!initialCustomer,
     },
     handleSubmit,
   );
 
-  const formErrors = getFormErrors(['tags', 'expiryDate', 'customer', 'currency', 'amount', 'balance'], apiErrors);
+  const formErrors = getFormErrors(
+    ["tags", "expiryDate", "customer", "currency", "amount", "balance"],
+    apiErrors,
+  );
 
   const {
     tags,
@@ -121,7 +124,7 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
       return false;
     }
 
-    if (expirySelected && expiryType === 'EXPIRY_DATE') {
+    if (expirySelected && expiryType === "EXPIRY_DATE") {
       return !!expiryDate;
     }
 
@@ -140,7 +143,12 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
       <DialogContent className={classes.dialogContent}>
         <GiftCardCreateMoneyInput {...commonFormProps} set={set} />
         <CardSpacer />
-        <GiftCardTagInput error={formErrors?.tags} name="tags" values={tags} toggleChange={toggleValue} />
+        <GiftCardTagInput
+          error={formErrors?.tags}
+          name="tags"
+          values={tags}
+          toggleChange={toggleValue}
+        />
         <CardSpacer />
         <Divider />
         <GiftCardSendToCustomer
@@ -160,7 +168,9 @@ const GiftCardCreateDialogForm: React.FC<GiftCardCreateDialogFormProps> = ({
           onChange={change}
           multiline
           className={classes.noteField}
-          label={`${intl.formatMessage(messages.noteLabel)} *${intl.formatMessage(commonMessages.optionalField)}`}
+          label={`${intl.formatMessage(messages.noteLabel)} *${intl.formatMessage(
+            commonMessages.optionalField,
+          )}`}
         />
         <VerticalSpacer />
         <Label text={intl.formatMessage(messages.noteSubtitle)} />

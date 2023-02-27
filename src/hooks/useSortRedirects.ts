@@ -1,6 +1,6 @@
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { Sort } from '@dashboard/types';
-import { useEffect } from 'react';
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { Sort } from "@dashboard/types";
+import { useEffect } from "react";
 
 export type SortByRankUrlQueryParams<T extends string> = Sort<T> & {
   query?: string;
@@ -28,8 +28,8 @@ export function useSortRedirects<SortField extends string>({
   const hasQuery = !!params.query?.trim();
 
   useEffect(() => {
-    const sortWithQuery = 'rank' as SortField;
-    const sortWithoutQuery = params.sort === 'rank' ? defaultSortField : params.sort;
+    const sortWithQuery = "rank" as SortField;
+    const sortWithoutQuery = params.sort === "rank" ? defaultSortField : params.sort;
     navigate(
       urlFunc({
         ...params,

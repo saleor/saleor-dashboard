@@ -1,4 +1,4 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   {
@@ -6,8 +6,8 @@ export const useStyles = makeStyles(
       paddingLeft: 0,
     },
     wideCell: {
-      width: '100%',
+      width: "100%",
     },
   },
-  { name: 'DiscountCountrySelectDialog' },
+  { name: "DiscountCountrySelectDialog" },
 );

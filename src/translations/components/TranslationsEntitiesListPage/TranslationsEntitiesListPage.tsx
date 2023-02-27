@@ -1,12 +1,12 @@
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import FilterTabs, { FilterTab } from '@dashboard/components/TableFilter';
-import { LanguageFragment } from '@dashboard/graphql';
-import { maybe } from '@dashboard/misc';
-import { Card } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import FilterTabs, { FilterTab } from "@dashboard/components/TableFilter";
+import { LanguageFragment } from "@dashboard/graphql";
+import { maybe } from "@dashboard/misc";
+import { Card } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { languageListUrl, TranslatableEntities } from '../../urls';
+import { languageListUrl, TranslatableEntities } from "../../urls";
 
 export interface TranslationsEntitiesListPageProps {
   children: React.ReactNode;
@@ -30,15 +30,15 @@ export interface TranslationsEntitiesFilters {
 export type TranslationsEntitiesListFilterTab = keyof typeof TranslatableEntities;
 
 const tabs: TranslationsEntitiesListFilterTab[] = [
-  'categories',
-  'collections',
-  'products',
-  'sales',
-  'vouchers',
-  'pages',
-  'attributes',
-  'shippingMethods',
-  'menuItems',
+  "categories",
+  "collections",
+  "products",
+  "sales",
+  "vouchers",
+  "pages",
+  "attributes",
+  "shippingMethods",
+  "menuItems",
 ];
 
 const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> = props => {
@@ -54,12 +54,12 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
         href={languageListUrl}
         title={intl.formatMessage(
           {
-            id: 'FemBUF',
-            defaultMessage: 'Translations to {language}',
-            description: 'header',
+            id: "FemBUF",
+            defaultMessage: "Translations to {language}",
+            description: "header",
           },
           {
-            language: maybe(() => language.language, '...'),
+            language: maybe(() => language.language, "..."),
           },
         )}
       />
@@ -67,64 +67,64 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
         <FilterTabs currentTab={currentTab}>
           <FilterTab
             label={intl.formatMessage({
-              id: 'VKb1MS',
-              defaultMessage: 'Categories',
+              id: "VKb1MS",
+              defaultMessage: "Categories",
             })}
             onClick={filters.onCategoriesTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
-              id: 'ulh3kf',
-              defaultMessage: 'Collections',
+              id: "ulh3kf",
+              defaultMessage: "Collections",
             })}
             onClick={filters.onCollectionsTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
-              id: '7NFfmz',
-              defaultMessage: 'Products',
+              id: "7NFfmz",
+              defaultMessage: "Products",
             })}
             onClick={filters.onProductsTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
-              id: 'c8nvms',
-              defaultMessage: 'Sales',
+              id: "c8nvms",
+              defaultMessage: "Sales",
             })}
             onClick={filters.onSalesTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
-              id: 'etP0+D',
-              defaultMessage: 'Vouchers',
+              id: "etP0+D",
+              defaultMessage: "Vouchers",
             })}
             onClick={filters.onVouchersTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
-              id: 'CxfKLC',
-              defaultMessage: 'Pages',
+              id: "CxfKLC",
+              defaultMessage: "Pages",
             })}
             onClick={filters.onPagesTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
-              id: '+xTpT1',
-              defaultMessage: 'Attributes',
+              id: "+xTpT1",
+              defaultMessage: "Attributes",
             })}
             onClick={filters.onAttributesTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
-              id: 'RzsKm8',
-              defaultMessage: 'Shipping methods',
+              id: "RzsKm8",
+              defaultMessage: "Shipping methods",
             })}
             onClick={filters.onShippingMethodsTabClick}
           />
           <FilterTab
             label={intl.formatMessage({
-              id: 'AcMzwj',
-              defaultMessage: 'Menu items',
+              id: "AcMzwj",
+              defaultMessage: "Menu items",
             })}
             onClick={filters.onMenuItemsTabClick}
           />
@@ -134,5 +134,5 @@ const TranslationsEntitiesListPage: React.FC<TranslationsEntitiesListPageProps> 
     </>
   );
 };
-TranslationsEntitiesListPage.displayName = 'TranslationsEntitiesListPage';
+TranslationsEntitiesListPage.displayName = "TranslationsEntitiesListPage";
 export default TranslationsEntitiesListPage;

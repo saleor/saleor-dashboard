@@ -1,15 +1,31 @@
-import { FetchResult, MutationFunction, MutationResult } from '@apollo/client';
-import { AddressInput, CountryCode, DateRangeInput, OrderStatus, PaymentChargeStatusEnum } from '@dashboard/graphql';
-import { Node, SlugNode } from '@dashboard/types';
-import { ConfirmButtonTransitionState, ThemeType } from '@saleor/macaw-ui';
-import uniqBy from 'lodash/uniqBy';
-import moment from 'moment-timezone';
-import { IntlShape } from 'react-intl';
+import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
+import {
+  AddressInput,
+  CountryCode,
+  DateRangeInput,
+  OrderStatus,
+  PaymentChargeStatusEnum,
+} from "@dashboard/graphql";
+import { Node, SlugNode } from "@dashboard/types";
+import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
+import uniqBy from "lodash/uniqBy";
+import moment from "moment-timezone";
+import { IntlShape } from "react-intl";
 
-import { MultiAutocompleteChoiceType } from './components/MultiAutocompleteSelectField';
-import { AddressType, AddressTypeInput } from './customers/types';
-import { commonStatusMessages, errorMessages, orderStatusMessages, paymentStatusMessages } from './intl';
-import { MutationResultAdditionalProps, PartialMutationProviderOutput, StatusType, UserError } from './types';
+import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
+import { AddressType, AddressTypeInput } from "./customers/types";
+import {
+  commonStatusMessages,
+  errorMessages,
+  orderStatusMessages,
+  paymentStatusMessages,
+} from "./intl";
+import {
+  MutationResultAdditionalProps,
+  PartialMutationProviderOutput,
+  StatusType,
+  UserError,
+} from "./types";
 
 export type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
   { [K in Keys]-?: Required<Pick<T, K>> }[Keys];
@@ -34,19 +50,22 @@ export function renderCollection<T>(
 }
 
 export function decimal(value: string | number) {
-  if (typeof value === 'string') {
-    return value === '' ? null : value;
+  if (typeof value === "string") {
+    return value === "" ? null : value;
   }
   return value;
 }
 
 export function weight(value: string) {
-  return value === '' ? null : parseFloat(value);
+  return value === "" ? null : parseFloat(value);
 }
 
-export const removeDoubleSlashes = (url: string) => url.replace(/([^:]\/)\/+/g, '$1');
+export const removeDoubleSlashes = (url: string) => url.replace(/([^:]\/)\/+/g, "$1");
 
-export const transformPaymentStatus = (status: string, intl: IntlShape): { localized: string; status: StatusType } => {
+export const transformPaymentStatus = (
+  status: string,
+  intl: IntlShape,
+): { localized: string; status: StatusType } => {
   switch (status) {
     case PaymentChargeStatusEnum.PARTIALLY_CHARGED:
       return {
@@ -95,7 +114,10 @@ export const transformPaymentStatus = (status: string, intl: IntlShape): { local
   };
 };
 
-export const transformOrderStatus = (status: string, intl: IntlShape): { localized: string; status: StatusType } => {
+export const transformOrderStatus = (
+  status: string,
+  intl: IntlShape,
+): { localized: string; status: StatusType } => {
   switch (status) {
     case OrderStatus.FULFILLED:
       return {
@@ -145,17 +167,17 @@ export const transformOrderStatus = (status: string, intl: IntlShape): { localiz
 };
 
 export const transformAddressToForm = (data?: AddressType) => ({
-  city: data?.city || '',
-  cityArea: data?.cityArea || '',
-  companyName: data?.companyName || '',
-  country: data?.country?.code || '',
-  countryArea: data?.countryArea || '',
-  firstName: data?.firstName || '',
-  lastName: data?.lastName || '',
-  phone: data?.phone || '',
-  postalCode: data?.postalCode || '',
-  streetAddress1: data?.streetAddress1 || '',
-  streetAddress2: data?.streetAddress2 || '',
+  city: data?.city || "",
+  cityArea: data?.cityArea || "",
+  companyName: data?.companyName || "",
+  country: data?.country?.code || "",
+  countryArea: data?.countryArea || "",
+  firstName: data?.firstName || "",
+  lastName: data?.lastName || "",
+  phone: data?.phone || "",
+  postalCode: data?.postalCode || "",
+  streetAddress1: data?.streetAddress1 || "",
+  streetAddress2: data?.streetAddress2 || "",
 });
 
 export function maybe<T>(exp: () => T): T | undefined;
@@ -170,7 +192,9 @@ export function maybe(exp: any, d?: any) {
 }
 
 export function only<T>(obj: T, key: keyof T): boolean {
-  return Object.keys(obj).every(objKey => (objKey === key ? obj[key] !== undefined : obj[key] === undefined));
+  return Object.keys(obj).every(objKey =>
+    objKey === key ? obj[key] !== undefined : obj[key] === undefined,
+  );
 }
 
 export function empty(obj: {}): boolean {
@@ -187,12 +211,12 @@ export function getMutationState(
   ...errorList: any[][]
 ): ConfirmButtonTransitionState {
   if (loading) {
-    return 'loading';
+    return "loading";
   }
   if (called) {
-    return errorList.map(hasErrors).reduce((acc, curr) => acc || curr, false) ? 'error' : 'success';
+    return errorList.map(hasErrors).reduce((acc, curr) => acc || curr, false) ? "error" : "success";
   }
-  return 'default';
+  return "default";
 }
 
 export interface SaleorMutationResult {
@@ -224,8 +248,8 @@ export const hasMutationErrors = (result: FetchResult): boolean => {
 
 export const getMutationErrors = <
   T extends FetchResult<any>,
-  TData extends T['data'],
-  TErrors extends TData[keyof TData]['errors'],
+  TData extends T["data"],
+  TErrors extends TData[keyof TData]["errors"],
 >(
   result: T,
 ): TErrors[] => {
@@ -260,7 +284,15 @@ export function getMutationProviderData<TData, TVariables>(
   };
 }
 
-export const parseLogMessage = ({ intl, code, field }: { intl: IntlShape; code: string; field?: string }) =>
+export const parseLogMessage = ({
+  intl,
+  code,
+  field,
+}: {
+  intl: IntlShape;
+  code: string;
+  field?: string;
+}) =>
   intl.formatMessage(errorMessages.baseCodeErrorMessage, {
     errorCode: code,
     fieldError:
@@ -279,16 +311,19 @@ interface User {
 export function getUserName(user?: User, returnEmail?: boolean) {
   return user && (user.email || (user.firstName && user.lastName))
     ? user.firstName && user.lastName
-      ? [user.firstName, user.lastName].join(' ')
+      ? [user.firstName, user.lastName].join(" ")
       : returnEmail
       ? user.email
-      : user.email.split('@')[0]
+      : user.email.split("@")[0]
     : undefined;
 }
 
 export function getUserInitials(user?: User) {
   return user && (user.email || (user.firstName && user.lastName))
-    ? (user.firstName && user.lastName ? user.firstName[0] + user.lastName[0] : user.email.slice(0, 2)).toUpperCase()
+    ? (user.firstName && user.lastName
+        ? user.firstName[0] + user.lastName[0]
+        : user.email.slice(0, 2)
+      ).toUpperCase()
     : undefined;
 }
 
@@ -321,20 +356,20 @@ export function joinDateTime(date: string, time?: string) {
   if (!date) {
     return null;
   }
-  const setTime = time || '00:00';
-  const dateTime = moment(date + ' ' + setTime).format();
+  const setTime = time || "00:00";
+  const dateTime = moment(date + " " + setTime).format();
   return dateTime;
 }
 
 export function splitDateTime(dateTime: string) {
   if (!dateTime) {
     return {
-      date: '',
-      time: '',
+      date: "",
+      time: "",
     };
   }
   // Default html input format YYYY-MM-DD HH:mm
-  const splitDateTime = moment(dateTime).format('YYYY-MM-DD HH:mm').split(' ');
+  const splitDateTime = moment(dateTime).format("YYYY-MM-DD HH:mm").split(" ");
   return {
     date: splitDateTime[0],
     time: splitDateTime[1],
@@ -342,8 +377,8 @@ export function splitDateTime(dateTime: string) {
 }
 
 export function generateCode(charNum: number) {
-  let result = '';
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let result = "";
+  const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
   for (let i = 0; i < charNum; i++) {
     result += characters.charAt(Math.floor(Math.random() * characters.length));
   }
@@ -363,7 +398,10 @@ export function findInEnum<TEnum extends {}>(needle: string, haystack: TEnum) {
   throw new Error(`Key ${needle} not found in enum`);
 }
 
-export function findValueInEnum<TEnum extends {}>(needle: string, haystack: TEnum): TEnum[keyof TEnum] {
+export function findValueInEnum<TEnum extends {}>(
+  needle: string,
+  haystack: TEnum,
+): TEnum[keyof TEnum] {
   const match = Object.entries(haystack).find(([_, value]) => value === needle);
 
   if (!match) {
@@ -377,7 +415,7 @@ export function parseBoolean(a: string | undefined, defaultValue: boolean): bool
   if (a === undefined) {
     return defaultValue;
   }
-  return a === 'true';
+  return a === "true";
 }
 
 export function capitalize(s: string) {
@@ -392,7 +430,7 @@ export function transformFormToAddressInput<T>(address: T & AddressTypeInput): T
 }
 
 export function getStringOrPlaceholder(s: string | undefined, placeholder?: string): string {
-  return s || placeholder || '...';
+  return s || placeholder || "...";
 }
 
 export const getDatePeriod = (days: number): DateRangeInput => {
@@ -400,9 +438,9 @@ export const getDatePeriod = (days: number): DateRangeInput => {
     return {};
   }
 
-  const end = moment().startOf('day');
+  const end = moment().startOf("day");
   const start = end.subtract(days - 1);
-  const format = 'YYYY-MM-DD';
+  const format = "YYYY-MM-DD";
 
   return {
     gte: start.format(format),
@@ -410,25 +448,25 @@ export const getDatePeriod = (days: number): DateRangeInput => {
   };
 };
 
-export const isDarkTheme = (themeType: ThemeType) => themeType === 'dark';
+export const isDarkTheme = (themeType: ThemeType) => themeType === "dark";
 
 export const transformAddressToAddressInput = (data?: AddressType) => ({
-  city: data?.city || '',
-  cityArea: data?.cityArea || '',
-  companyName: data?.companyName || '',
-  country: findInEnum(data?.country?.code || '', CountryCode),
-  countryArea: data?.countryArea || '',
-  firstName: data?.firstName || '',
-  lastName: data?.lastName || '',
-  phone: data?.phone || '',
-  postalCode: data?.postalCode || '',
-  streetAddress1: data?.streetAddress1 || '',
-  streetAddress2: data?.streetAddress2 || '',
+  city: data?.city || "",
+  cityArea: data?.cityArea || "",
+  companyName: data?.companyName || "",
+  country: findInEnum(data?.country?.code || "", CountryCode),
+  countryArea: data?.countryArea || "",
+  firstName: data?.firstName || "",
+  lastName: data?.lastName || "",
+  phone: data?.phone || "",
+  postalCode: data?.postalCode || "",
+  streetAddress1: data?.streetAddress1 || "",
+  streetAddress2: data?.streetAddress2 || "",
 });
 
 export function getFullName<T extends { firstName: string; lastName: string }>(data: T) {
   if (!data || !data.firstName || !data.lastName) {
-    return '';
+    return "";
   }
 
   return `${data.firstName} ${data.lastName}`;
@@ -439,7 +477,7 @@ export const flatten = (obj: unknown) => {
   const result = {};
 
   Object.keys(obj).forEach(key => {
-    if (typeof obj[key] === 'object' && obj[key] !== null) {
+    if (typeof obj[key] === "object" && obj[key] !== null) {
       Object.assign(result, flatten(obj[key]));
     } else {
       result[key] = obj[key];
@@ -464,7 +502,7 @@ export function PromiseQueue() {
 export const combinedMultiAutocompleteChoices = (
   selected: MultiAutocompleteChoiceType[],
   choices: MultiAutocompleteChoiceType[],
-) => uniqBy([...selected, ...choices], 'value');
+) => uniqBy([...selected, ...choices], "value");
 
 export type WithOptional<T, K extends keyof T> = Omit<T, K> & Partial<Pick<T, K>>;
 
@@ -472,6 +510,7 @@ export const getBySlug = (slugToCompare: string) => (obj: SlugNode) => obj.slug 
 
 export const getById = (idToCompare: string) => (obj: Node) => obj.id === idToCompare;
 
-export const getByUnmatchingId = (idToCompare: string) => (obj: { id: string }) => obj.id !== idToCompare;
+export const getByUnmatchingId = (idToCompare: string) => (obj: { id: string }) =>
+  obj.id !== idToCompare;
 
 export const findById = <T extends Node>(id: string, list?: T[]) => list?.find(getById(id));

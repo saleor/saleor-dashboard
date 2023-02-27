@@ -8,10 +8,9 @@ export const SHIPPING_ZONE_DETAILS = {
   addWeightRateButton: "[data-test-id='add-weight-rate']",
   nameInput: "[name='name']",
   shippingRatePriceTableCell: "[data-test-id='shipping-rate-price']",
-  autocompleteContentDialog:
-    "[data-test-id='multi-autocomplete-select-content']",
+  autocompleteContentDialog: "[data-test-id='multi-autocomplete-select-content']",
   option: "[data-test-id='multi-autocomplete-select-option']",
   warehouseSelector: "[testId='warehouses']",
   channelSelector: "[testId='channels']",
-  removeWarehouseButton: "[data-test-id='warehouses-remove']"
+  removeWarehouseButton: "[data-test-id='warehouses-remove']",
 };

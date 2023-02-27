@@ -1,23 +1,28 @@
-import { AddressFragment, CustomerAddressesQuery, OrderDetailsQuery, OrderErrorFragment } from '@dashboard/graphql';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import { transformAddressToForm } from '@dashboard/misc';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
+import {
+  AddressFragment,
+  CustomerAddressesQuery,
+  OrderDetailsQuery,
+  OrderErrorFragment,
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { transformAddressToForm } from "@dashboard/misc";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
 
 import OrderCustomerAddressesEditDialog, {
   OrderCustomerAddressesEditDialogProps,
-} from '../OrderCustomerAddressesEditDialog';
+} from "../OrderCustomerAddressesEditDialog";
 import {
   AddressEditDialogVariant,
   OrderCustomerAddressesEditDialogOutput,
-} from '../OrderCustomerAddressesEditDialog/types';
+} from "../OrderCustomerAddressesEditDialog/types";
 
 interface OrderAddressFieldsProps {
   action: string;
   isDraft: boolean;
   customerAddressesLoading: boolean;
-  customer: CustomerAddressesQuery['user'];
-  countries: OrderDetailsQuery['shop']['countries'];
+  customer: CustomerAddressesQuery["user"];
+  countries: OrderDetailsQuery["shop"]["countries"];
   onClose: () => void;
   onConfirm: (data: OrderCustomerAddressesEditDialogOutput) => SubmitPromise;
   confirmButtonState: ConfirmButtonTransitionState;
@@ -39,7 +44,7 @@ const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
   orderShippingAddress,
   orderBillingAddress,
 }) => {
-  const addressFieldCommonProps: Omit<OrderCustomerAddressesEditDialogProps, 'open' | 'variant'> = {
+  const addressFieldCommonProps: Omit<OrderCustomerAddressesEditDialogProps, "open" | "variant"> = {
     loading: customerAddressesLoading,
     confirmButtonState,
     countries,
@@ -57,19 +62,19 @@ const OrderAddressFields: React.FC<OrderAddressFieldsProps> = ({
     <>
       {isDraft && (
         <OrderCustomerAddressesEditDialog
-          open={action === 'edit-customer-addresses'}
+          open={action === "edit-customer-addresses"}
           variant={AddressEditDialogVariant.CHANGE_CUSTOMER}
           {...addressFieldCommonProps}
         />
       )}
 
       <OrderCustomerAddressesEditDialog
-        open={action === 'edit-shipping-address'}
+        open={action === "edit-shipping-address"}
         variant={AddressEditDialogVariant.CHANGE_SHIPPING_ADDRESS}
         {...addressFieldCommonProps}
       />
       <OrderCustomerAddressesEditDialog
-        open={action === 'edit-billing-address'}
+        open={action === "edit-billing-address"}
         variant={AddressEditDialogVariant.CHANGE_BILLING_ADDRESS}
         {...addressFieldCommonProps}
       />

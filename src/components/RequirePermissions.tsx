@@ -1,6 +1,6 @@
-import { useUserPermissions } from '@dashboard/auth/hooks/useUserPermissions';
-import { PermissionEnum, UserPermissionFragment } from '@dashboard/graphql';
-import React from 'react';
+import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { PermissionEnum, UserPermissionFragment } from "@dashboard/graphql";
+import React from "react";
 
 const findPerm = (permList, perm) => permList.find(userPerm => userPerm.code === perm);
 
@@ -24,7 +24,11 @@ export interface RequirePermissionsProps {
   oneOfPermissions?: PermissionEnum[];
 }
 
-const RequirePermissions: React.FC<RequirePermissionsProps> = ({ children, requiredPermissions, oneOfPermissions }) => {
+const RequirePermissions: React.FC<RequirePermissionsProps> = ({
+  children,
+  requiredPermissions,
+  oneOfPermissions,
+}) => {
   const userPermissions = useUserPermissions();
 
   if (!userPermissions) {
@@ -42,5 +46,5 @@ const RequirePermissions: React.FC<RequirePermissionsProps> = ({ children, requi
   return null;
 };
 
-RequirePermissions.displayName = 'RequirePermissions';
+RequirePermissions.displayName = "RequirePermissions";
 export default RequirePermissions;

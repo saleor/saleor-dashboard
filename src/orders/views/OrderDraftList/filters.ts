@@ -1,7 +1,10 @@
-import { FilterElement } from '@dashboard/components/Filter';
-import { OrderDraftFilterInput } from '@dashboard/graphql';
-import { maybe } from '@dashboard/misc';
-import { OrderDraftFilterKeys, OrderDraftListFilterOpts } from '@dashboard/orders/components/OrderDraftListPage';
+import { FilterElement } from "@dashboard/components/Filter";
+import { OrderDraftFilterInput } from "@dashboard/graphql";
+import { maybe } from "@dashboard/misc";
+import {
+  OrderDraftFilterKeys,
+  OrderDraftListFilterOpts,
+} from "@dashboard/orders/components/OrderDraftListPage";
 
 import {
   createFilterTabUtils,
@@ -9,15 +12,22 @@ import {
   getGteLteVariables,
   getMinMaxQueryParam,
   getSingleValueQueryParam,
-} from '../../../utils/filters';
-import { OrderDraftListUrlFilters, OrderDraftListUrlFiltersEnum, OrderDraftListUrlQueryParams } from '../../urls';
+} from "../../../utils/filters";
+import {
+  OrderDraftListUrlFilters,
+  OrderDraftListUrlFiltersEnum,
+  OrderDraftListUrlQueryParams,
+} from "../../urls";
 
-export const ORDER_DRAFT_FILTERS_KEY = 'orderDraftFilters';
+export const ORDER_DRAFT_FILTERS_KEY = "orderDraftFilters";
 
 export function getFilterOpts(params: OrderDraftListUrlFilters): OrderDraftListFilterOpts {
   return {
     created: {
-      active: maybe(() => [params.createdFrom, params.createdTo].some(field => field !== undefined), false),
+      active: maybe(
+        () => [params.createdFrom, params.createdTo].some(field => field !== undefined),
+        false,
+      ),
       value: {
         max: maybe(() => params.createdTo),
         min: maybe(() => params.createdFrom),
@@ -41,7 +51,9 @@ export function getFilterVariables(params: OrderDraftListUrlFilters): OrderDraft
   };
 }
 
-export function getFilterQueryParam(filter: FilterElement<OrderDraftFilterKeys>): OrderDraftListUrlFilters {
+export function getFilterQueryParam(
+  filter: FilterElement<OrderDraftFilterKeys>,
+): OrderDraftListUrlFilters {
   const { name } = filter;
 
   switch (name) {

@@ -1,7 +1,7 @@
 import {
   SortableContainer as SortableContainerHoc,
   SortableContainerProps as SortableContainerHocProps,
-} from 'react-sortable-hoc';
+} from "react-sortable-hoc";
 
 interface SortableContainerProps extends SortableContainerHocProps {
   children: React.ReactElement;

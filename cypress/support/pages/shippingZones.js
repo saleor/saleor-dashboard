@@ -1,20 +1,17 @@
 import {
   SHIPPING_ZONE_CHECKBOX,
-  SHIPPING_ZONE_NAME
+  SHIPPING_ZONE_NAME,
 } from "../../elements/shipping/shipping-zones-list";
 import { urlList } from "../../fixtures/urlList";
 
-export function enterAndSelectShippings(
-  shippingIds,
-  actionFunction = selectShippingZone
-) {
+export function enterAndSelectShippings(shippingIds, actionFunction = selectShippingZone) {
   cy.addAliasToGraphRequest("ShippingZones")
     .visit(urlList.shippingMethods)
     .findElementsAndMakeActionOnTable({
       elementsGraphqlAlias: "ShippingZones",
       elementsName: "shippingZones",
       elementsIds: shippingIds,
-      actionFunction
+      actionFunction,
     });
 }
 

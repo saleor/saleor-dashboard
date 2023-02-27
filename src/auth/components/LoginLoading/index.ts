@@ -1,2 +1,2 @@
-export { default } from './LoginLoading';
-export * from './LoginLoading';
+export { default } from "./LoginLoading";
+export * from "./LoginLoading";

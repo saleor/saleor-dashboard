@@ -1,20 +1,20 @@
-import { useExitFormDialog } from '@dashboard/components/Form/useExitFormDialog';
-import { OrderRefundDataQuery } from '@dashboard/graphql';
-import useForm, { CommonUseFormResultWithHandlers, SubmitPromise } from '@dashboard/hooks/useForm';
-import useFormset, { FormsetChange, FormsetData } from '@dashboard/hooks/useFormset';
-import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
-import React, { useEffect } from 'react';
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { OrderRefundDataQuery } from "@dashboard/graphql";
+import useForm, { CommonUseFormResultWithHandlers, SubmitPromise } from "@dashboard/hooks/useForm";
+import useFormset, { FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import React, { useEffect } from "react";
 
-import { refundFulfilledStatuses } from './OrderRefundPage';
+import { refundFulfilledStatuses } from "./OrderRefundPage";
 
 export enum OrderRefundType {
-  MISCELLANEOUS = 'miscellaneous',
-  PRODUCTS = 'products',
+  MISCELLANEOUS = "miscellaneous",
+  PRODUCTS = "products",
 }
 export enum OrderRefundAmountCalculationMode {
-  AUTOMATIC = 'automatic',
-  MANUAL = 'manual',
-  NONE = 'none',
+  AUTOMATIC = "automatic",
+  MANUAL = "manual",
+  NONE = "none",
 }
 
 export interface OrderRefundData {
@@ -45,7 +45,7 @@ export interface UseOrderRefundFormResult
 
 interface OrderRefundFormProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
-  order: OrderRefundDataQuery['order'];
+  order: OrderRefundDataQuery["order"];
   defaultType: OrderRefundType;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
   disabled: boolean;
@@ -61,7 +61,7 @@ function getOrderRefundPageFormData(defaultType: OrderRefundType): OrderRefundDa
 }
 
 function useOrderRefundForm(
-  order: OrderRefundDataQuery['order'],
+  order: OrderRefundDataQuery["order"],
   defaultType: OrderRefundType,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise,
   disabled: boolean,
@@ -87,7 +87,7 @@ function useOrderRefundForm(
         data: null,
         id: line.id,
         label: null,
-        value: '0',
+        value: "0",
       })),
   );
   const refundedFulfilledProductQuantities = useFormset<null, string>(
@@ -100,7 +100,7 @@ function useOrderRefundForm(
               data: null,
               id: fulfillmentLine.id,
               label: null,
-              value: '0',
+              value: "0",
             })),
           ),
         [],
@@ -116,34 +116,38 @@ function useOrderRefundForm(
     refundedFulfilledProductQuantities.change(id, value);
   };
   const handleMaximalRefundedProductQuantitiesSet = () => {
-    const newQuantities: FormsetData<null, string> = refundedProductQuantities.data.map(selectedLine => {
-      const line = order.lines.find(line => line.id === selectedLine.id);
+    const newQuantities: FormsetData<null, string> = refundedProductQuantities.data.map(
+      selectedLine => {
+        const line = order.lines.find(line => line.id === selectedLine.id);
 
-      return {
-        data: null,
-        id: line.id,
-        label: null,
-        value: line.quantityToFulfill.toString(),
-      };
-    });
+        return {
+          data: null,
+          id: line.id,
+          label: null,
+          value: line.quantityToFulfill.toString(),
+        };
+      },
+    );
     refundedProductQuantities.set(newQuantities);
     triggerChange();
   };
   const handleMaximalRefundedFulfilledProductQuantitiesSet = (fulfillmentId: string) => {
     const fulfillment = order.fulfillments.find(fulfillment => fulfillment.id === fulfillmentId);
-    const newQuantities: FormsetData<null, string> = refundedFulfilledProductQuantities.data.map(selectedLine => {
-      const line = fulfillment.lines.find(line => line.id === selectedLine.id);
+    const newQuantities: FormsetData<null, string> = refundedFulfilledProductQuantities.data.map(
+      selectedLine => {
+        const line = fulfillment.lines.find(line => line.id === selectedLine.id);
 
-      if (line) {
-        return {
-          data: null,
-          id: line.id,
-          label: null,
-          value: line.quantity.toString(),
-        };
-      }
-      return selectedLine;
-    });
+        if (line) {
+          return {
+            data: null,
+            id: line.id,
+            label: null,
+            value: line.quantity.toString(),
+          };
+        }
+        return selectedLine;
+      },
+    );
     refundedFulfilledProductQuantities.set(newQuantities);
     triggerChange();
   };
@@ -173,7 +177,8 @@ function useOrderRefundForm(
     handlers: {
       changeRefundedFulfilledProductQuantity: handleRefundedFulFilledProductQuantityChange,
       changeRefundedProductQuantity: handleRefundedProductQuantityChange,
-      setMaximalRefundedFulfilledProductQuantities: handleMaximalRefundedFulfilledProductQuantitiesSet,
+      setMaximalRefundedFulfilledProductQuantities:
+        handleMaximalRefundedFulfilledProductQuantitiesSet,
       setMaximalRefundedProductQuantities: handleMaximalRefundedProductQuantitiesSet,
     },
     submit,
@@ -181,11 +186,17 @@ function useOrderRefundForm(
   };
 }
 
-const OrderRefundForm: React.FC<OrderRefundFormProps> = ({ children, order, defaultType, onSubmit, disabled }) => {
+const OrderRefundForm: React.FC<OrderRefundFormProps> = ({
+  children,
+  order,
+  defaultType,
+  onSubmit,
+  disabled,
+}) => {
   const props = useOrderRefundForm(order, defaultType, onSubmit, disabled);
 
   return <form onSubmit={props.submit}>{children(props)}</form>;
 };
 
-OrderRefundForm.displayName = 'OrderRefundForm';
+OrderRefundForm.displayName = "OrderRefundForm";
 export default OrderRefundForm;

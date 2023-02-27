@@ -1,13 +1,17 @@
-import { MultiAutocompleteChoiceType } from '@dashboard/components/MultiAutocompleteSelectField';
-import { OrderFilterInput, OrderStatusFilter, PaymentChargeStatusEnum } from '@dashboard/graphql';
-import { findInEnum, findValueInEnum, parseBoolean } from '@dashboard/misc';
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { OrderFilterInput, OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
+import { findInEnum, findValueInEnum, parseBoolean } from "@dashboard/misc";
 import {
   OrderFilterGiftCard,
   OrderFilterKeys,
   OrderListFilterOpts,
-} from '@dashboard/orders/components/OrderListPage/filters';
+} from "@dashboard/orders/components/OrderListPage/filters";
 
-import { FilterElement, FilterElementKeyValue, FilterElementRegular } from '../../../components/Filter';
+import {
+  FilterElement,
+  FilterElementKeyValue,
+  FilterElementRegular,
+} from "../../../components/Filter";
 import {
   createFilterTabUtils,
   createFilterUtils,
@@ -18,16 +22,16 @@ import {
   getMultipleEnumValueQueryParam,
   getMultipleValueQueryParam,
   getSingleValueQueryParam,
-} from '../../../utils/filters';
+} from "../../../utils/filters";
 import {
   OrderListFitersWithKeyValueValues,
   OrderListUrlFilters,
   OrderListUrlFiltersEnum,
   OrderListUrlFiltersWithMultipleValues,
   OrderListUrlQueryParams,
-} from '../../urls';
+} from "../../urls";
 
-export const ORDER_FILTERS_KEY = 'orderFilters';
+export const ORDER_FILTERS_KEY = "orderFilters";
 
 export function getFilterOpts(
   params: OrderListUrlFilters,
@@ -51,8 +55,8 @@ export function getFilterOpts(
     created: {
       active: [params?.createdFrom, params?.createdTo].some(field => field !== undefined),
       value: {
-        max: params?.createdTo || '',
-        min: params?.createdFrom || '',
+        max: params?.createdTo || "",
+        min: params?.createdFrom || "",
       },
     },
     giftCard: {
@@ -67,12 +71,16 @@ export function getFilterOpts(
     },
     status: {
       active: params?.status !== undefined,
-      value: dedupeFilter(params.status?.map(status => findValueInEnum(status, OrderStatusFilter)) || []),
+      value: dedupeFilter(
+        params.status?.map(status => findValueInEnum(status, OrderStatusFilter)) || [],
+      ),
     },
     paymentStatus: {
       active: params?.paymentStatus !== undefined,
       value: dedupeFilter(
-        params.paymentStatus?.map(paymentStatus => findValueInEnum(paymentStatus, PaymentChargeStatusEnum)) || [],
+        params.paymentStatus?.map(paymentStatus =>
+          findValueInEnum(paymentStatus, PaymentChargeStatusEnum),
+        ) || [],
       ),
     },
     metadata: {
@@ -92,10 +100,16 @@ export function getFilterVariables(params: OrderListUrlFilters): OrderFilterInpu
     customer: params.customer,
     search: params.query,
     status: params?.status?.map(status => findInEnum(status, OrderStatusFilter)),
-    paymentStatus: params?.paymentStatus?.map(paymentStatus => findInEnum(paymentStatus, PaymentChargeStatusEnum)),
-    isClickAndCollect: params.clickAndCollect !== undefined ? parseBoolean(params.clickAndCollect, false) : undefined,
+    paymentStatus: params?.paymentStatus?.map(paymentStatus =>
+      findInEnum(paymentStatus, PaymentChargeStatusEnum),
+    ),
+    isClickAndCollect:
+      params.clickAndCollect !== undefined
+        ? parseBoolean(params.clickAndCollect, false)
+        : undefined,
     isPreorder: params.preorder !== undefined ? parseBoolean(params.preorder, false) : undefined,
-    giftCardBought: params?.giftCard?.some(param => param === OrderFilterGiftCard.bought) || undefined,
+    giftCardBought:
+      params?.giftCard?.some(param => param === OrderFilterGiftCard.bought) || undefined,
     giftCardUsed: params?.giftCard?.some(param => param === OrderFilterGiftCard.paid) || undefined,
     metadata: params?.metadata,
   };
@@ -111,7 +125,11 @@ export function getFilterQueryParam(filter: FilterElement<OrderFilterKeys>): Ord
       return getSingleValueQueryParam(filter, OrderListUrlFiltersEnum.preorder);
 
     case OrderFilterKeys.created:
-      return getMinMaxQueryParam(filter, OrderListUrlFiltersEnum.createdFrom, OrderListUrlFiltersEnum.createdTo);
+      return getMinMaxQueryParam(
+        filter,
+        OrderListUrlFiltersEnum.createdFrom,
+        OrderListUrlFiltersEnum.createdTo,
+      );
 
     case OrderFilterKeys.status:
       return getMultipleEnumValueQueryParam(

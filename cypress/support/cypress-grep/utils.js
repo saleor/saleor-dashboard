@@ -136,8 +136,7 @@ function shouldTestRunTitle(parsedGrep, testName) {
 
   return (
     inverted.every(titleGrep => !testName.includes(titleGrep.title)) &&
-    (!straight.length ||
-      straight.some(titleGrep => testName.includes(titleGrep.title)))
+    (!straight.length || straight.some(titleGrep => testName.includes(titleGrep.title)))
   );
 }
 
@@ -153,10 +152,7 @@ function shouldTestRun(parsedGrep, testName, tags = [], grepUntagged = false) {
     testName = undefined;
   }
 
-  return (
-    shouldTestRunTitle(parsedGrep.title, testName) &&
-    shouldTestRunTags(parsedGrep.tags, tags)
-  );
+  return shouldTestRunTitle(parsedGrep.title, testName) && shouldTestRunTags(parsedGrep.tags, tags);
 }
 
 function parseGrep(titlePart, tags) {

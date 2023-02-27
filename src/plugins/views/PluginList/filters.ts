@@ -1,9 +1,12 @@
-import { FilterElement, FilterElementRegular } from '@dashboard/components/Filter';
-import { PluginConfigurationType, PluginFilterInput } from '@dashboard/graphql';
-import { ChannelsWithLoadMoreProps } from '@dashboard/hooks/useChannelsSearch';
-import { maybe, parseBoolean } from '@dashboard/misc';
-import { PluginFilterKeys, PluginListFilterOpts } from '@dashboard/plugins/components/PluginsListPage';
-import { mapNodeToChoice } from '@dashboard/utils/maps';
+import { FilterElement, FilterElementRegular } from "@dashboard/components/Filter";
+import { PluginConfigurationType, PluginFilterInput } from "@dashboard/graphql";
+import { ChannelsWithLoadMoreProps } from "@dashboard/hooks/useChannelsSearch";
+import { maybe, parseBoolean } from "@dashboard/misc";
+import {
+  PluginFilterKeys,
+  PluginListFilterOpts,
+} from "@dashboard/plugins/components/PluginsListPage";
+import { mapNodeToChoice } from "@dashboard/utils/maps";
 
 import {
   createFilterTabUtils,
@@ -12,10 +15,14 @@ import {
   getMultipleValueQueryParam,
   getSingleEnumValueQueryParam,
   getSingleValueQueryParam,
-} from '../../../utils/filters';
-import { PluginListUrlFilters, PluginListUrlFiltersEnum, PluginListUrlQueryParams } from '../../urls';
+} from "../../../utils/filters";
+import {
+  PluginListUrlFilters,
+  PluginListUrlFiltersEnum,
+  PluginListUrlQueryParams,
+} from "../../urls";
 
-export const PLUGIN_FILTERS_KEY = 'pluginFilters';
+export const PLUGIN_FILTERS_KEY = "pluginFilters";
 
 export function getFilterOpts(
   params: PluginListUrlFilters,
@@ -30,7 +37,7 @@ export function getFilterOpts(
       active: !!params.channels,
       choices: mapNodeToChoice(channels),
       displayValues: mapNodeToChoice(channels),
-      initialSearch: '',
+      initialSearch: "",
       hasMore,
       loading,
       onFetchMore,
@@ -48,7 +55,8 @@ export function getFilterOpts(
   };
 }
 
-const getParsedConfigType = (configTypeString?: string) => PluginConfigurationType[configTypeString] || undefined;
+const getParsedConfigType = (configTypeString?: string) =>
+  PluginConfigurationType[configTypeString] || undefined;
 
 export function getFilterVariables(params: PluginListUrlFilters): PluginFilterInput {
   const baseParams = {

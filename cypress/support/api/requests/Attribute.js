@@ -6,11 +6,7 @@ export function createAttribute({
   filterableInDashboard = false,
   values = [],
 }) {
-  if (
-    inputType === "MULTISELECT" ||
-    inputType === "DROPDOWN" ||
-    inputType === "SWATCH"
-  ) {
+  if (inputType === "MULTISELECT" || inputType === "DROPDOWN" || inputType === "SWATCH") {
     values = attributeValues.map(element => `{name:"${element}"}`);
   }
   const mutation = `mutation{
@@ -40,9 +36,7 @@ export function createAttribute({
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.attributeCreate.attribute");
+  return cy.sendRequestWithQuery(mutation).its("body.data.attributeCreate.attribute");
 }
 
 export function getAttributes(first, search) {
@@ -58,9 +52,7 @@ export function getAttributes(first, search) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .then(resp => resp.body.data.attributes.edges);
+  return cy.sendRequestWithQuery(mutation).then(resp => resp.body.data.attributes.edges);
 }
 
 export function deleteAttribute(attributeId) {

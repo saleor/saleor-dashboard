@@ -1,15 +1,15 @@
-import { ClickAwayListener, Grow, Popper, Typography } from '@material-ui/core';
-import { alpha } from '@material-ui/core/styles';
-import { Button, makeStyles } from '@saleor/macaw-ui';
-import { vars } from '@saleor/macaw-ui/next';
-import clsx from 'clsx';
-import React, { useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { ClickAwayListener, Grow, Popper, Typography } from "@material-ui/core";
+import { alpha } from "@material-ui/core/styles";
+import { Button, makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
+import clsx from "clsx";
+import React, { useState } from "react";
+import { FormattedMessage } from "react-intl";
 
-import { FilterContent } from '.';
-import { FilterElement, FilterErrorMessages, IFilter, InvalidFilters } from './types';
-import useFilter from './useFilter';
-import { extractInvalidFilters } from './utils';
+import { FilterContent } from ".";
+import { FilterElement, FilterErrorMessages, IFilter, InvalidFilters } from "./types";
+import useFilter from "./useFilter";
+import { extractInvalidFilters } from "./utils";
 
 export interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol?: string;
@@ -22,26 +22,26 @@ export interface FilterProps<TFilterKeys extends string = string> {
 const useStyles = makeStyles(
   theme => ({
     addFilterButton: {
-      '&$filterButton': {
-        '&:hover, &:focus': {
+      "&$filterButton": {
+        "&:hover, &:focus": {
           backgroundColor: alpha(theme.palette.primary.main, 0.1),
         },
         backgroundColor: theme.palette.background.paper,
         border: `1px solid ${theme.palette.primary.main}`,
-        cursor: 'pointer',
+        cursor: "pointer",
         marginBottom: 0,
         marginRight: theme.spacing(2),
         marginTop: 0,
-        transition: theme.transitions.duration.short + 'ms',
+        transition: theme.transitions.duration.short + "ms",
       },
     },
     addFilterButtonActive: {
-      '&$addFilterButton': {
+      "&$addFilterButton": {
         backgroundColor: alpha(theme.palette.primary.main, 0.1),
       },
     },
     addFilterIcon: {
-      transition: theme.transitions.duration.short + 'ms',
+      transition: theme.transitions.duration.short + "ms",
     },
     addFilterText: {
       color: theme.palette.primary.main,
@@ -53,7 +53,7 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(2),
     },
     paper: {
-      '& p': {
+      "& p": {
         paddingBottom: 10,
       },
       marginTop: theme.spacing(2),
@@ -62,24 +62,24 @@ const useStyles = makeStyles(
     },
     popover: {
       backgroundColor: vars.colors.background.surfaceNeutralPlain,
-      overflowY: 'scroll',
+      overflowY: "scroll",
       boxShadow: `0px 6px 11px 9px ${theme.palette.divider}`,
       height: 450,
       width: 376,
       zIndex: 3,
     },
     rotate: {
-      transform: 'rotate(180deg)',
+      transform: "rotate(180deg)",
     },
     separator: {
       backgroundColor: theme.palette.primary.main,
-      display: 'inline-block',
+      display: "inline-block",
       height: 14,
       margin: theme.spacing(0, 1.5, 0, 1),
       width: 1,
     },
   }),
-  { name: 'Filter' },
+  { name: "Filter" },
 );
 const Filter: React.FC<FilterProps> = props => {
   const { currencySymbol, menu, onFilterAdd, onFilterAttributeFocus, errorMessages } = props;
@@ -113,7 +113,7 @@ const Filter: React.FC<FilterProps> = props => {
   return (
     <ClickAwayListener
       onClickAway={event => {
-        if ((event.target as HTMLElement).getAttribute('role') !== 'option') {
+        if ((event.target as HTMLElement).getAttribute("role") !== "option") {
           setFilterMenuOpened(false);
         }
       }}
@@ -163,7 +163,7 @@ const Filter: React.FC<FilterProps> = props => {
               enabled: false,
             },
             preventOverflow: {
-              boundariesElement: 'scrollParent',
+              boundariesElement: "scrollParent",
               enabled: false,
             },
           }}
@@ -188,5 +188,5 @@ const Filter: React.FC<FilterProps> = props => {
     </ClickAwayListener>
   );
 };
-Filter.displayName = 'Filter';
+Filter.displayName = "Filter";
 export default Filter;

@@ -1,7 +1,7 @@
-import { Typography } from '@material-ui/core';
-import React, { ReactNode } from 'react';
+import { Typography } from "@material-ui/core";
+import React, { ReactNode } from "react";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 interface SectionHeaderProps {
   title: ReactNode;
@@ -16,5 +16,5 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({ title }) => {
     </Typography>
   );
 };
-SectionHeader.displayName = 'SectionHeader';
+SectionHeader.displayName = "SectionHeader";
 export default SectionHeader;

@@ -1,7 +1,7 @@
-import { FetchResult } from '@apollo/client';
-import { VoucherDetailsPageFormData } from '@dashboard/discounts/components/VoucherDetailsPage';
-import { getChannelsVariables } from '@dashboard/discounts/handlers';
-import { DiscountTypeEnum, RequirementsPicker } from '@dashboard/discounts/types';
+import { FetchResult } from "@apollo/client";
+import { VoucherDetailsPageFormData } from "@dashboard/discounts/components/VoucherDetailsPage";
+import { getChannelsVariables } from "@dashboard/discounts/handlers";
+import { DiscountTypeEnum, RequirementsPicker } from "@dashboard/discounts/types";
 import {
   DiscountValueTypeEnum,
   VoucherChannelListingUpdateMutation,
@@ -9,11 +9,13 @@ import {
   VoucherCreateMutation,
   VoucherCreateMutationVariables,
   VoucherTypeEnum,
-} from '@dashboard/graphql';
-import { extractMutationErrors, getMutationErrors, joinDateTime } from '@dashboard/misc';
+} from "@dashboard/graphql";
+import { extractMutationErrors, getMutationErrors, joinDateTime } from "@dashboard/misc";
 
 export function createHandler(
-  voucherCreate: (variables: VoucherCreateMutationVariables) => Promise<FetchResult<VoucherCreateMutation>>,
+  voucherCreate: (
+    variables: VoucherCreateMutationVariables,
+  ) => Promise<FetchResult<VoucherCreateMutation>>,
   updateChannels: (options: {
     variables: VoucherChannelListingUpdateMutationVariables;
   }) => Promise<FetchResult<VoucherChannelListingUpdateMutation>>,
@@ -33,9 +35,14 @@ export function createHandler(
             : DiscountValueTypeEnum.PERCENTAGE,
         endDate: formData.hasEndDate ? joinDateTime(formData.endDate, formData.endTime) : null,
         minCheckoutItemsQuantity:
-          formData.requirementsPicker !== RequirementsPicker.ITEM ? 0 : parseFloat(formData.minCheckoutItemsQuantity),
+          formData.requirementsPicker !== RequirementsPicker.ITEM
+            ? 0
+            : parseFloat(formData.minCheckoutItemsQuantity),
         startDate: joinDateTime(formData.startDate, formData.startTime),
-        type: formData.discountType === DiscountTypeEnum.SHIPPING ? VoucherTypeEnum.SHIPPING : formData.type,
+        type:
+          formData.discountType === DiscountTypeEnum.SHIPPING
+            ? VoucherTypeEnum.SHIPPING
+            : formData.type,
         usageLimit: formData.hasUsageLimit ? formData.usageLimit : null,
       },
     });
@@ -48,7 +55,11 @@ export function createHandler(
 
     const channelsUpdateErrors = await extractMutationErrors(
       updateChannels({
-        variables: getChannelsVariables(response.data.voucherCreate.voucher.id, formData, formData.channelListings),
+        variables: getChannelsVariables(
+          response.data.voucherCreate.voucher.id,
+          formData,
+          formData.channelListings,
+        ),
       }),
     );
 

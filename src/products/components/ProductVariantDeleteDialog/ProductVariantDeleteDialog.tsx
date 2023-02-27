@@ -1,21 +1,27 @@
-import BackButton from '@dashboard/components/BackButton';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
-import { ConfirmButtonTransitionState, makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
     deleteButton: {
-      '&:hover': {
+      "&:hover": {
         backgroundColor: theme.palette.error.main,
       },
       backgroundColor: theme.palette.error.main,
       color: theme.palette.error.contrastText,
     },
   }),
-  { name: 'ProductVariantDeleteDialog' },
+  { name: "ProductVariantDeleteDialog" },
 );
 
 export interface ProductVariantDeleteDialogProps {
@@ -50,12 +56,16 @@ const ProductVariantDeleteDialog: React.FC<ProductVariantDeleteDialogProps> = pr
       </DialogContent>
       <DialogActions>
         <BackButton onClick={onClose} />
-        <ConfirmButton transitionState={confirmButtonState} className={classes.deleteButton} onClick={onConfirm}>
+        <ConfirmButton
+          transitionState={confirmButtonState}
+          className={classes.deleteButton}
+          onClick={onConfirm}
+        >
           <FormattedMessage id="rbkmfG" defaultMessage="Delete variant" description="button" />
         </ConfirmButton>
       </DialogActions>
     </Dialog>
   );
 };
-ProductVariantDeleteDialog.displayName = 'ProductVariantDeleteDialog';
+ProductVariantDeleteDialog.displayName = "ProductVariantDeleteDialog";
 export default ProductVariantDeleteDialog;

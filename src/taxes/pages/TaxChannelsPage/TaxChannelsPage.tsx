@@ -1,13 +1,13 @@
-import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
-import { Content } from '@dashboard/components/AppLayout/Content';
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardTitle from '@dashboard/components/CardTitle';
-import Form from '@dashboard/components/Form';
-import Grid from '@dashboard/components/Grid';
-import Savebar from '@dashboard/components/Savebar';
-import Skeleton from '@dashboard/components/Skeleton';
-import { configurationMenuUrl } from '@dashboard/configuration';
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardTitle from "@dashboard/components/CardTitle";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import Savebar from "@dashboard/components/Savebar";
+import Skeleton from "@dashboard/components/Skeleton";
+import { configurationMenuUrl } from "@dashboard/configuration";
 import {
   CountryCode,
   CountryFragment,
@@ -15,13 +15,13 @@ import {
   TaxConfigurationFragment,
   TaxConfigurationPerCountryFragment,
   TaxConfigurationUpdateInput,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import TaxCountryDialog from '@dashboard/taxes/components/TaxCountryDialog';
-import TaxPageTitle from '@dashboard/taxes/components/TaxPageTitle';
-import { taxesMessages } from '@dashboard/taxes/messages';
-import { isLastElement } from '@dashboard/taxes/utils/utils';
-import { Card, CardContent, Divider } from '@material-ui/core';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import TaxCountryDialog from "@dashboard/taxes/components/TaxCountryDialog";
+import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle";
+import { taxesMessages } from "@dashboard/taxes/messages";
+import { isLastElement } from "@dashboard/taxes/utils/utils";
+import { Card, CardContent, Divider } from "@material-ui/core";
 import {
   Button,
   ConfirmButtonTransitionState,
@@ -31,15 +31,15 @@ import {
   ListItemCell,
   PageTab,
   PageTabs,
-} from '@saleor/macaw-ui';
-import { Box } from '@saleor/macaw-ui/next';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from './styles';
-import TaxChannelsMenu from './TaxChannelsMenu';
-import TaxCountryExceptionListItem from './TaxCountryExceptionListItem';
-import TaxSettingsCard from './TaxSettingsCard';
+import { useStyles } from "./styles";
+import TaxChannelsMenu from "./TaxChannelsMenu";
+import TaxCountryExceptionListItem from "./TaxCountryExceptionListItem";
+import TaxSettingsCard from "./TaxSettingsCard";
 
 interface TaxChannelsPageProps {
   taxConfigurations: TaxConfigurationFragment[] | undefined;
@@ -96,14 +96,13 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
 
   const handleSubmit = (data: TaxConfigurationFormData) => {
     const { updateCountriesConfiguration, removeCountriesConfiguration } = data;
-    const parsedUpdate: TaxConfigurationUpdateInput['updateCountriesConfiguration'] = updateCountriesConfiguration.map(
-      config => ({
+    const parsedUpdate: TaxConfigurationUpdateInput["updateCountriesConfiguration"] =
+      updateCountriesConfiguration.map(config => ({
         countryCode: config.country.code as CountryCode,
         chargeTaxes: config.chargeTaxes,
         taxCalculationStrategy: config.taxCalculationStrategy,
         displayGrossPrices: config.displayGrossPrices,
-      }),
-    );
+      }));
     onSubmit({
       chargeTaxes: data.chargeTaxes,
       taxCalculationStrategy: data.chargeTaxes ? data.taxCalculationStrategy : null,
@@ -145,7 +144,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
         const handleCountryChange = (country: CountryFragment) => {
           closeDialog();
           const input: TaxConfigurationPerCountryFragment = {
-            __typename: 'TaxConfigurationPerCountry',
+            __typename: "TaxConfigurationPerCountry",
             country,
             chargeTaxes: data.chargeTaxes,
             displayGrossPrices: data.displayGrossPrices,
@@ -164,9 +163,18 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
             <Content>
               <Box padding={9}>
                 <PageTabs value="channels" onChange={handleTabChange}>
-                  <PageTab label={intl.formatMessage(taxesMessages.channelsSection)} value="channels" />
-                  <PageTab label={intl.formatMessage(taxesMessages.countriesSection)} value="countries" />
-                  <PageTab label={intl.formatMessage(taxesMessages.taxClassesSection)} value="tax-classes" />
+                  <PageTab
+                    label={intl.formatMessage(taxesMessages.channelsSection)}
+                    value="channels"
+                  />
+                  <PageTab
+                    label={intl.formatMessage(taxesMessages.countriesSection)}
+                    value="countries"
+                  />
+                  <PageTab
+                    label={intl.formatMessage(taxesMessages.taxClassesSection)}
+                    value="tax-classes"
+                  />
                 </PageTabs>
                 <VerticalSpacer spacing={2} />
                 <Grid variant="inverted">
@@ -177,14 +185,18 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                     />
                   </div>
                   <div>
-                    <TaxSettingsCard values={data} strategyChoices={taxStrategyChoices} onChange={change} />
+                    <TaxSettingsCard
+                      values={data}
+                      strategyChoices={taxStrategyChoices}
+                      onChange={change}
+                    />
                     <VerticalSpacer spacing={3} />
                     <Card>
                       <CardTitle
                         className={classes.toolbarMargin}
                         title={intl.formatMessage(taxesMessages.countryExceptions)}
                         toolbar={
-                          <Button variant="secondary" onClick={() => openDialog('add-country')}>
+                          <Button variant="secondary" onClick={() => openDialog("add-country")}>
                             <FormattedMessage {...taxesMessages.addCountryLabel} />
                           </Button>
                         }
@@ -194,7 +206,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                           <FormattedMessage {...taxesMessages.noExceptionsForChannel} />
                         </CardContent>
                       ) : (
-                        <List gridTemplate={['4fr 3fr 3fr 1fr']}>
+                        <List gridTemplate={["4fr 3fr 3fr 1fr"]}>
                           <ListHeader>
                             <ListItem>
                               <ListItemCell>
@@ -246,7 +258,10 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
                   <TaxCountryDialog
                     open={isDialogOpen}
                     countries={allCountries
-                      .filter(({ code }) => !countryExceptions?.some(({ country }) => country.code === code))
+                      .filter(
+                        ({ code }) =>
+                          !countryExceptions?.some(({ country }) => country.code === code),
+                      )
                       .map(country => ({ checked: false, ...country }))}
                     onConfirm={handleCountryChange}
                     onClose={closeDialog}

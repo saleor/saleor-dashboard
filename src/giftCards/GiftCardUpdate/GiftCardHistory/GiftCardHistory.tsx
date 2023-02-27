@@ -1,18 +1,18 @@
-import Form from '@dashboard/components/Form';
-import Hr from '@dashboard/components/Hr';
-import Skeleton from '@dashboard/components/Skeleton';
-import Timeline, { TimelineAddNote, TimelineNote } from '@dashboard/components/Timeline';
-import { GiftCardEventsEnum, useGiftCardAddNoteMutation } from '@dashboard/graphql';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import Form from "@dashboard/components/Form";
+import Hr from "@dashboard/components/Hr";
+import Skeleton from "@dashboard/components/Skeleton";
+import Timeline, { TimelineAddNote, TimelineNote } from "@dashboard/components/Timeline";
+import { GiftCardEventsEnum, useGiftCardAddNoteMutation } from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { GIFT_CARD_DETAILS_QUERY } from '../queries';
-import GiftCardTimelineEvent from './GiftCardTimelineEvent';
-import useGiftCardHistoryEvents from './hooks/useGiftCardHistoryEvents';
-import { giftCardHistoryMessages as messages } from './messages';
-import useStyles from './styles';
+import { GIFT_CARD_DETAILS_QUERY } from "../queries";
+import GiftCardTimelineEvent from "./GiftCardTimelineEvent";
+import useGiftCardHistoryEvents from "./hooks/useGiftCardHistoryEvents";
+import { giftCardHistoryMessages as messages } from "./messages";
+import useStyles from "./styles";
 
 interface FormData {
   message: string;
@@ -31,12 +31,12 @@ const GiftCardHistory: React.FC = () => {
 
       if (errors.length > 0) {
         notify({
-          status: 'error',
+          status: "error",
           text: intl.formatMessage(messages.noteAddError),
         });
       } else {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(messages.noteAddedSuccessfully),
         });
       }
@@ -57,7 +57,7 @@ const GiftCardHistory: React.FC = () => {
       <Timeline>
         {events ? (
           <>
-            <Form initial={{ message: '' }} onSubmit={onNoteAdd} resetOnSubmit>
+            <Form initial={{ message: "" }} onSubmit={onNoteAdd} resetOnSubmit>
               {({ change, data, reset, submit }) => (
                 <TimelineAddNote
                   message={data.message}

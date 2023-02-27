@@ -1,14 +1,14 @@
-import { appMessages } from '@dashboard/apps/messages';
-import NotFoundPage from '@dashboard/components/NotFoundPage';
-import { useAppQuery } from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import React, { useCallback } from 'react';
-import { useIntl } from 'react-intl';
-import { useLocation } from 'react-router';
+import { appMessages } from "@dashboard/apps/messages";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { useAppQuery } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import React, { useCallback } from "react";
+import { useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
-import { AppPage } from '../../components/AppPage';
-import { appsListPath, getAppCompleteUrlFromDashboardUrl } from '../../urls';
+import { AppPage } from "../../components/AppPage";
+import { appsListPath, getAppCompleteUrlFromDashboardUrl } from "../../urls";
 
 interface AppProps {
   id: string;
@@ -30,7 +30,7 @@ export const AppView: React.FC<AppProps> = ({ id }) => {
   const handleError = useCallback(
     () =>
       notify({
-        status: 'error',
+        status: "error",
         text: intl.formatMessage(appMessages.failedToFetchAppSettings),
       }),
     [intl, notify],
@@ -40,7 +40,11 @@ export const AppView: React.FC<AppProps> = ({ id }) => {
     return <NotFoundPage onBack={() => navigate(appsListPath)} />;
   }
 
-  const appCompleteUrl = getAppCompleteUrlFromDashboardUrl(location.pathname, data?.app?.appUrl || '', id);
+  const appCompleteUrl = getAppCompleteUrlFromDashboardUrl(
+    location.pathname,
+    data?.app?.appUrl || "",
+    id,
+  );
 
   if (!data || !appCompleteUrl) {
     return null;

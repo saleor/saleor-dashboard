@@ -1,2 +1,2 @@
-export { default } from './TextFieldWithChoice';
-export * from './TextFieldWithChoice';
+export { default } from "./TextFieldWithChoice";
+export * from "./TextFieldWithChoice";

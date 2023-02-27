@@ -3,25 +3,19 @@ import {
   createSale,
   deleteSale,
   getSales,
-  updateSale
+  updateSale,
 } from "../../requests/Discounts/Sales";
 
 export function deleteSalesStartsWith(startsWith) {
   cy.deleteElementsStartsWith(deleteSale, getSales, startsWith);
 }
 
-export function createSaleInChannel({
-  name,
-  type,
-  value,
-  channelId,
-  discountValue = value
-}) {
+export function createSaleInChannel({ name, type, value, channelId, discountValue = value }) {
   let sale;
   return createSale({
     name,
     type,
-    value
+    value,
   })
     .then(saleResp => {
       sale = saleResp;
@@ -36,21 +30,21 @@ export function createSaleInChannelWithProduct({
   value,
   channelId,
   variants,
-  productId
+  productId,
 }) {
   let sale;
   return createSaleInChannel({
     name,
     type,
     value,
-    channelId
+    channelId,
   })
     .then(saleResp => {
       sale = saleResp;
       updateSale({
         saleId: sale.id,
         variants,
-        productId
+        productId,
       });
     })
     .then(() => sale);

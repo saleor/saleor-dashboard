@@ -1,2 +1,2 @@
-export * from './ChannelStatus';
-export { default } from './ChannelStatus';
+export * from "./ChannelStatus";
+export { default } from "./ChannelStatus";

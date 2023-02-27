@@ -1,10 +1,13 @@
-import React from 'react';
+import React from "react";
 
-import { Channel, Product, Variant } from './../types';
-import { AvailabilityCard } from './AvailabilityCard';
-import { getAvailabilityCountForProduct, getAvailabilityCountForVariant } from './availabilityCount';
-import { CardSkeleton } from './CardSkeleton';
-import { CreateVariantTitle } from './CreateVariantTitle';
+import { Channel, Product, Variant } from "./../types";
+import { AvailabilityCard } from "./AvailabilityCard";
+import {
+  getAvailabilityCountForProduct,
+  getAvailabilityCountForVariant,
+} from "./availabilityCount";
+import { CardSkeleton } from "./CardSkeleton";
+import { CreateVariantTitle } from "./CreateVariantTitle";
 
 interface VariantDetailsChannelsAvailabilityCardProps {
   variant: Variant;
@@ -31,10 +34,9 @@ const Wrapper: React.FC<WrapperProps> = ({ item, children }) => {
   return children({ channels });
 };
 
-export const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAvailabilityCardProps> = ({
-  variant,
-  onManageClick,
-}) => (
+export const VariantDetailsChannelsAvailabilityCard: React.FC<
+  VariantDetailsChannelsAvailabilityCardProps
+> = ({ variant, onManageClick }) => (
   <Wrapper item={variant}>
     {({ channels }) => (
       <AvailabilityCard
@@ -48,10 +50,9 @@ export const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChan
   </Wrapper>
 );
 
-export const ProductDetailsChannelsAvailabilityCard: React.FC<ProductDetailsChannelsAvailabilityCardProps> = ({
-  product,
-  onManageClick,
-}) => (
+export const ProductDetailsChannelsAvailabilityCard: React.FC<
+  ProductDetailsChannelsAvailabilityCardProps
+> = ({ product, onManageClick }) => (
   <Wrapper item={product}>
     {({ channels }) => (
       <AvailabilityCard

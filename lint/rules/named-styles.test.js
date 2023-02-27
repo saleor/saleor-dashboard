@@ -40,19 +40,19 @@ const badCode = `const useStyles = makeStyles(theme => ({
 }));`;
 
 const ruleTester = new RuleTester({
-  parser: require.resolve("@typescript-eslint/parser")
+  parser: require.resolve("@typescript-eslint/parser"),
 });
 
 ruleTester.run("named-styles", namedStylesRule, {
   invalid: [
     {
       code: badCode,
-      errors: [{ message: "makeStyles hook should be named." }]
-    }
+      errors: [{ message: "makeStyles hook should be named." }],
+    },
   ],
   valid: [
     {
-      code: okCode
-    }
-  ]
+      code: okCode,
+    },
+  ],
 });

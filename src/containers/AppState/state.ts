@@ -1,5 +1,5 @@
 export interface AppError {
-  type: 'unhandled';
+  type: "unhandled";
   id: string | null | undefined;
 }
 

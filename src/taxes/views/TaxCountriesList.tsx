@@ -5,21 +5,27 @@ import {
   useTaxCountriesListQuery,
   useTaxCountryConfigurationDeleteMutation,
   useTaxCountryConfigurationUpdateMutation,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import useShop from '@dashboard/hooks/useShop';
-import { commonMessages } from '@dashboard/intl';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import TaxCountryDialog from '../components/TaxCountryDialog';
-import TaxCountriesPage from '../pages/TaxCountriesPage';
-import { taxCountriesListUrl, TaxesUrlDialog, TaxesUrlQueryParams, TaxTab, taxTabPath } from '../urls';
-import { useTaxUrlRedirect } from '../utils/useTaxUrlRedirect';
-import { excludeExistingCountries, mapUndefinedTaxRatesToCountries } from '../utils/utils';
+import TaxCountryDialog from "../components/TaxCountryDialog";
+import TaxCountriesPage from "../pages/TaxCountriesPage";
+import {
+  taxCountriesListUrl,
+  TaxesUrlDialog,
+  TaxesUrlQueryParams,
+  TaxTab,
+  taxTabPath,
+} from "../urls";
+import { useTaxUrlRedirect } from "../utils/useTaxUrlRedirect";
+import { excludeExistingCountries, mapUndefinedTaxRatesToCountries } from "../utils/utils";
 
 interface TaxCountriesListProps {
   id: string | undefined;
@@ -35,24 +41,26 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }
     navigate(taxTabPath(tab));
   };
 
-  const [taxCountryConfigurationUpdateMutation, { status: mutationStatus, loading: mutationInProgress }] =
-    useTaxCountryConfigurationUpdateMutation({
-      onCompleted: data => {
-        const errors = data?.taxCountryConfigurationUpdate?.errors;
-        if (errors.length === 0) {
-          notify({
-            status: 'success',
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-        }
-      },
-    });
+  const [
+    taxCountryConfigurationUpdateMutation,
+    { status: mutationStatus, loading: mutationInProgress },
+  ] = useTaxCountryConfigurationUpdateMutation({
+    onCompleted: data => {
+      const errors = data?.taxCountryConfigurationUpdate?.errors;
+      if (errors.length === 0) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
+    },
+  });
   const [taxCountryConfigurationDeleteMutation] = useTaxCountryConfigurationDeleteMutation({
     onCompleted: data => {
       const errors = data?.taxCountryConfigurationDelete?.errors;
       if (errors.length === 0) {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
@@ -133,24 +141,24 @@ export const TaxCountriesList: React.FC<TaxCountriesListProps> = ({ id, params }
       />
       {shop?.countries && (
         <TaxCountryDialog
-          open={params?.action === 'add-country'}
+          open={params?.action === "add-country"}
           countries={excludeExistingCountries(shop?.countries, allCountryTaxes)}
           onConfirm={data => {
             closeDialog();
             const taxClassCountryRates = taxClasses.map(taxClass => ({
-              __typename: 'TaxClassCountryRate' as const,
+              __typename: "TaxClassCountryRate" as const,
               rate: undefined,
               taxClass,
             }));
             taxClassCountryRates.unshift({
               rate: undefined,
               taxClass: null,
-              __typename: 'TaxClassCountryRate' as const,
+              __typename: "TaxClassCountryRate" as const,
             });
             setNewCountry({
               country: data,
               taxClassCountryRates,
-              __typename: 'TaxCountryConfiguration' as const,
+              __typename: "TaxCountryConfiguration" as const,
             });
             navigate(taxCountriesListUrl(data.code));
           }}

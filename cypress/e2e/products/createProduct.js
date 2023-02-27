@@ -90,8 +90,7 @@ describe("As an admin I should be able to create product", () => {
         .then(resp => {
           let productResp;
           if (Array.isArray(resp)) {
-            productResp = resp.find(element => element.data.product).data
-              .product;
+            productResp = resp.find(element => element.data.product).data.product;
           } else {
             productResp = resp.data.product;
           }
@@ -132,26 +131,17 @@ describe("As an admin I should be able to create product", () => {
         .then(resp => {
           let productResp;
           if (Array.isArray(resp)) {
-            productResp = resp.find(element => element.data.product).data
-              .product;
+            productResp = resp.find(element => element.data.product).data.product;
           } else {
             productResp = resp.data.product;
           }
           expectCorrectProductInformation(productResp, productData);
-          expectCorrectProductVariantInformation(
-            productResp.variants,
-            randomName,
-            prices,
-          );
+          expectCorrectProductVariantInformation(productResp.variants, randomName, prices);
         });
     },
   );
 
-  function createTpeAndFillUpProductFields(
-    randomName,
-    hasVariants,
-    productData,
-  ) {
+  function createTpeAndFillUpProductFields(randomName, hasVariants, productData) {
     createTypeProduct({
       name: randomName,
       attributeId: attribute.id,

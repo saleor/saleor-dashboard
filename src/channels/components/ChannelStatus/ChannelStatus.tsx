@@ -1,10 +1,10 @@
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from '../styles';
+import { useStyles } from "../styles";
 
 export interface ChannelStatusProps {
   isActive: boolean;
@@ -12,7 +12,11 @@ export interface ChannelStatusProps {
   updateChannelStatus: () => void;
 }
 
-export const ChannelStatus: React.FC<ChannelStatusProps> = ({ disabled, isActive, updateChannelStatus }) => {
+export const ChannelStatus: React.FC<ChannelStatusProps> = ({
+  disabled,
+  isActive,
+  updateChannelStatus,
+}) => {
   const intl = useIntl();
   const classes = useStyles({});
 
@@ -20,9 +24,9 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({ disabled, isActive
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'TSJRiZ',
-          defaultMessage: 'Channel Status',
-          description: 'channel status title',
+          id: "TSJRiZ",
+          defaultMessage: "Channel Status",
+          description: "channel status title",
         })}
       />
       <CardContent>
@@ -36,7 +40,11 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({ disabled, isActive
             <FormattedMessage id="X8qjg3" defaultMessage="Inactive" description="inactive" />
           )}
         </Typography>
-        <Button className={classes.activeBtn} disabled={disabled} onClick={() => updateChannelStatus()}>
+        <Button
+          className={classes.activeBtn}
+          disabled={disabled}
+          onClick={() => updateChannelStatus()}
+        >
           {isActive ? (
             <FormattedMessage id="MHVglr" defaultMessage="Deactivate" description="deactivate" />
           ) : (
@@ -48,5 +56,5 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({ disabled, isActive
   );
 };
 
-ChannelStatus.displayName = 'ChannelStatus';
+ChannelStatus.displayName = "ChannelStatus";
 export default ChannelStatus;

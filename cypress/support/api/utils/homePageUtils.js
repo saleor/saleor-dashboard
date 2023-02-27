@@ -12,9 +12,7 @@ export function getOrdersReadyForCapture(channelSlug) {
     .its("body.data.orders.totalCount");
 }
 export function getProductsOutOfStock(channelSlug) {
-  return homePage
-    .getProductsOutOfStock(channelSlug)
-    .its("body.data.products.totalCount");
+  return homePage.getProductsOutOfStock(channelSlug).its("body.data.products.totalCount");
 }
 export function getSalesAmount(channelSlug) {
   return homePage
@@ -24,7 +22,5 @@ export function getSalesAmount(channelSlug) {
 export function getTodaysOrders(channelSlug) {
   const today = getDatePeriod(1);
 
-  return homePage
-    .getOrdersForChannel(channelSlug, today)
-    .its("body.data.orders.totalCount");
+  return homePage.getOrdersForChannel(channelSlug, today).its("body.data.orders.totalCount");
 }

@@ -3,10 +3,7 @@
 
 import faker from "faker";
 
-import {
-  CATEGORIES_LIST,
-  categoryRow,
-} from "../../elements/catalog/categories/categories-list";
+import { CATEGORIES_LIST, categoryRow } from "../../elements/catalog/categories/categories-list";
 import { CATEGORY_DETAILS } from "../../elements/catalog/categories/category-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
@@ -19,10 +16,7 @@ import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/cate
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
-import {
-  createCategory,
-  updateCategory,
-} from "../../support/pages/catalog/categoriesPage";
+import { createCategory, updateCategory } from "../../support/pages/catalog/categoriesPage";
 
 describe("As an admin I want to manage categories", () => {
   const startsWith = "CyCategories";
@@ -49,11 +43,7 @@ describe("As an admin I want to manage categories", () => {
         productsUtils.createTypeAttributeAndCategoryForProduct({ name });
       })
       .then(
-        ({
-          category: categoryResp,
-          attribute: attributeResp,
-          productType: productTypeResp,
-        }) => {
+        ({ category: categoryResp, attribute: attributeResp, productType: productTypeResp }) => {
           category = categoryResp;
           attribute = attributeResp;
           productType = productTypeResp;
@@ -88,9 +78,7 @@ describe("As an admin I want to manage categories", () => {
     () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
 
-      cy.visit(urlList.categories)
-        .get(CATEGORIES_LIST.addCategoryButton)
-        .click();
+      cy.visit(urlList.categories).get(CATEGORIES_LIST.addCategoryButton).click();
       createCategory({ name: categoryName, description: categoryName })
         .its("response.body.data.categoryCreate.category")
         .then(newCategory => {
@@ -142,9 +130,7 @@ describe("As an admin I want to manage categories", () => {
     "should be able to remove product from category. TC: SALEOR_0204",
     { tags: ["@category", "@allEnv", "@stable"] },
     () => {
-      cy.visit(categoryDetailsUrl(category.id))
-        .get(CATEGORY_DETAILS.productsTab)
-        .click();
+      cy.visit(categoryDetailsUrl(category.id)).get(CATEGORY_DETAILS.productsTab).click();
       cy.contains(CATEGORY_DETAILS.productRow, product.name)
         .find(BUTTON_SELECTORS.checkbox)
         .click()
@@ -167,9 +153,7 @@ describe("As an admin I want to manage categories", () => {
     "should be able to enter category details page. TC: SALEOR_0205",
     { tags: ["@category", "@allEnv", "@stable"] },
     () => {
-      cy.visit(urlList.categories)
-        .get(SHARED_ELEMENTS.searchInput)
-        .type(category.name);
+      cy.visit(urlList.categories).get(SHARED_ELEMENTS.searchInput).type(category.name);
       cy.contains(SHARED_ELEMENTS.tableRow, category.name).click();
       cy.contains(SHARED_ELEMENTS.header, category.name).should("be.visible");
     },
@@ -207,9 +191,7 @@ describe("As an admin I want to manage categories", () => {
         name: categoryName,
       })
         .then(categoryResp => {
-          cy.visitAndWaitForProgressBarToDisappear(
-            categoryDetailsUrl(categoryResp.id),
-          );
+          cy.visitAndWaitForProgressBarToDisappear(categoryDetailsUrl(categoryResp.id));
           updateCategory({ name: updatedName, description: updatedName });
           getCategory(categoryResp.id);
         })

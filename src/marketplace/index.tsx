@@ -1,20 +1,20 @@
-import { AppFrame } from '@dashboard/apps/components/AppFrame';
-import NotFoundPage from '@dashboard/components/NotFoundPage';
-import PreviewPill from '@dashboard/components/PreviewPill';
-import { WindowTitle } from '@dashboard/components/WindowTitle';
-import { MARKETPLACE_URL } from '@dashboard/config';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { sectionNames } from '@dashboard/intl';
-import { marketplaceUrlResolver } from '@dashboard/marketplace/marketplace-url-resolver';
-import { marketplaceUrl } from '@dashboard/marketplace/urls';
-import { Container } from '@material-ui/core';
-import React, { useMemo } from 'react';
-import { useIntl } from 'react-intl';
-import useRouter from 'use-react-router';
+import { AppFrame } from "@dashboard/apps/components/AppFrame";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import PreviewPill from "@dashboard/components/PreviewPill";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { MARKETPLACE_URL } from "@dashboard/config";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { marketplaceUrlResolver } from "@dashboard/marketplace/marketplace-url-resolver";
+import { marketplaceUrl } from "@dashboard/marketplace/urls";
+import { Container } from "@material-ui/core";
+import React, { useMemo } from "react";
+import { useIntl } from "react-intl";
+import useRouter from "use-react-router";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
-const getDeepPath = (path: string) => path.replace(marketplaceUrl, '');
+const getDeepPath = (path: string) => path.replace(marketplaceUrl, "");
 
 const Component = () => {
   const classes = useStyles();
@@ -28,7 +28,7 @@ const Component = () => {
   );
 
   if (!marketplaceUrlResolver.checkMarketplaceConfigExists()) {
-    return <NotFoundPage onBack={() => navigate('/')} />;
+    return <NotFoundPage onBack={() => navigate("/")} />;
   }
 
   return (

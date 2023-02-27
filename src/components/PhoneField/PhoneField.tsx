@@ -1,17 +1,17 @@
-import SingleSelectField from '@dashboard/components/SingleSelectField';
-import { TextField } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
+import SingleSelectField from "@dashboard/components/SingleSelectField";
+import { TextField } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
 
 const useStyles = makeStyles(
   theme => ({
     root: {
-      display: 'grid',
+      display: "grid",
       gridColumnGap: theme.spacing(2),
-      gridTemplateColumns: '5rem 1fr',
+      gridTemplateColumns: "5rem 1fr",
     },
   }),
-  { name: 'PhoneField' },
+  { name: "PhoneField" },
 );
 
 interface PhoneFieldProps {
@@ -31,15 +31,15 @@ const PhoneField: React.FC<PhoneFieldProps> = props => {
   return (
     <div className={classes.root}>
       <SingleSelectField
-        name={name + '_prefix'}
-        choices={prefixes.map(p => ({ label: '+' + p, value: p }))}
+        name={name + "_prefix"}
+        choices={prefixes.map(p => ({ label: "+" + p, value: p }))}
         onChange={onChange}
         value={prefix}
         label={label}
       />
-      <TextField name={name + '_number'} onChange={onChange} value={phoneNumber} label="&nbsp;" />
+      <TextField name={name + "_number"} onChange={onChange} value={phoneNumber} label="&nbsp;" />
     </div>
   );
 };
-PhoneField.displayName = 'PhoneField';
+PhoneField.displayName = "PhoneField";
 export default PhoneField;

@@ -14,9 +14,14 @@ export const getColumnChannelAvailability = makeGetColumnData(/^availableInChann
 export const getColumnStock = makeGetColumnData(/^stock:(.*)/);
 
 export const getColumnName = (column: string) => {
-  const splited = column.split(':');
+  const splited = column.split(":");
   return splited[0];
 };
 
-export const isCurrentRow = (datagridChangeIndex: number, variantIndex: number, datagridRemovedRowsIds: number[]) =>
-  datagridChangeIndex === variantIndex + datagridRemovedRowsIds.filter(index => index <= variantIndex).length;
+export const isCurrentRow = (
+  datagridChangeIndex: number,
+  variantIndex: number,
+  datagridRemovedRowsIds: number[],
+) =>
+  datagridChangeIndex ===
+  variantIndex + datagridRemovedRowsIds.filter(index => index <= variantIndex).length;

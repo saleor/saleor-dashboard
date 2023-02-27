@@ -1,13 +1,13 @@
-import useAppState from '@dashboard/hooks/useAppState';
-import { LinearProgress } from '@material-ui/core';
-import { useActionBar } from '@saleor/macaw-ui';
-import { Box } from '@saleor/macaw-ui/next';
-import React from 'react';
+import useAppState from "@dashboard/hooks/useAppState";
+import { LinearProgress } from "@material-ui/core";
+import { useActionBar } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
+import React from "react";
 
-import Navigator from '../Navigator';
-import { Sidebar } from '../Sidebar';
-import { contentMaxWidth } from './consts';
-import { useStyles } from './styles';
+import Navigator from "../Navigator";
+import { Sidebar } from "../Sidebar";
+import { contentMaxWidth } from "./consts";
+import { useStyles } from "./styles";
 
 interface AppLayoutProps {
   children: React.ReactNode;

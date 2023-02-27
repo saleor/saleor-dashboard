@@ -1,7 +1,7 @@
-import { GetV2SaleorAppsResponse } from '@dashboard/new-apps/marketplace.types';
-import { useTheme } from '@saleor/macaw-ui';
-import { Box, Text } from '@saleor/macaw-ui/next';
-import React from 'react';
+import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
+import { useTheme } from "@saleor/macaw-ui";
+import { Box, Text } from "@saleor/macaw-ui/next";
+import React from "react";
 
 interface AppListCardIntegrationsProps {
   app: GetV2SaleorAppsResponse.SaleorApp;
@@ -30,7 +30,9 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({ app }
           >
             <img
               title={integration.name}
-              src={themeType === 'dark' ? integration.logo.dark.source : integration.logo.light.source}
+              src={
+                themeType === "dark" ? integration.logo.dark.source : integration.logo.light.source
+              }
               alt={integration.name}
             />
           </Box>
@@ -42,5 +44,5 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({ app }
     </Box>
   );
 };
-AppListCardIntegrations.displayName = 'AppListCardIntegrations';
+AppListCardIntegrations.displayName = "AppListCardIntegrations";
 export default AppListCardIntegrations;

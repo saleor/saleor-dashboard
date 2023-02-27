@@ -1,8 +1,8 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import { DialogContentText } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { DialogContentText } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface MembersErrorDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -11,7 +11,12 @@ export interface MembersErrorDialogProps {
   onClose: () => void;
 }
 
-const MembersErrorDialog: React.FC<MembersErrorDialogProps> = ({ confirmButtonState, onClose, onConfirm, open }) => {
+const MembersErrorDialog: React.FC<MembersErrorDialogProps> = ({
+  confirmButtonState,
+  onClose,
+  onConfirm,
+  open,
+}) => {
   const intl = useIntl();
 
   return (
@@ -21,9 +26,9 @@ const MembersErrorDialog: React.FC<MembersErrorDialogProps> = ({ confirmButtonSt
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
-        id: 'lT5MYM',
-        defaultMessage: 'Unassign users',
-        description: 'dialog title',
+        id: "lT5MYM",
+        defaultMessage: "Unassign users",
+        description: "dialog title",
       })}
       variant="info"
     >
@@ -37,5 +42,5 @@ const MembersErrorDialog: React.FC<MembersErrorDialogProps> = ({ confirmButtonSt
     </ActionDialog>
   );
 };
-MembersErrorDialog.displayName = 'MembersErrorDialog';
+MembersErrorDialog.displayName = "MembersErrorDialog";
 export default MembersErrorDialog;

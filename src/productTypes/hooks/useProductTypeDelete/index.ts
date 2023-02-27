@@ -1,2 +1,2 @@
-export * from './useProductTypeDelete';
-export { default } from './useProductTypeDelete';
+export * from "./useProductTypeDelete";
+export { default } from "./useProductTypeDelete";

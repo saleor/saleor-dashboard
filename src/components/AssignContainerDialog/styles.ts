@@ -1,9 +1,9 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   {
     avatar: {
-      '&:first-child': {
+      "&:first-child": {
         paddingLeft: 0,
       },
     },
@@ -11,8 +11,8 @@ export const useStyles = makeStyles(
       paddingLeft: 0,
     },
     wideCell: {
-      width: '100%',
+      width: "100%",
     },
   },
-  { name: 'AssignContainerDialog' },
+  { name: "AssignContainerDialog" },
 );

@@ -1,11 +1,11 @@
-import { appDeepUrl } from '@dashboard/apps/urls';
-import { AppExtensionTargetEnum } from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import React from 'react';
+import { appDeepUrl } from "@dashboard/apps/urls";
+import { AppExtensionTargetEnum } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import React from "react";
 
-import { AppDialog } from '../AppDialog';
-import { AppFrame } from '../AppFrame';
-import { AppData, ExternalAppContext } from './context';
+import { AppDialog } from "../AppDialog";
+import { AppFrame } from "../AppFrame";
+import { AppData, ExternalAppContext } from "./context";
 
 export const ExternalAppProvider: React.FC = ({ children }) => {
   const [open, setOpen] = React.useState(false);
@@ -21,7 +21,12 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
       {children}
       <AppDialog open={open} onClose={handleClose} title={appData?.label}>
         {open && appData && (
-          <AppFrame src={appData.src} appToken={appData.appToken} appId={appData.id} params={appData.params} />
+          <AppFrame
+            src={appData.src}
+            appToken={appData.appToken}
+            appId={appData.id}
+            params={appData.params}
+          />
         )}
       </AppDialog>
     </ExternalAppContext.Provider>

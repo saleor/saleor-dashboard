@@ -1,13 +1,13 @@
-import ErrorExclamationCircleIcon from '@dashboard/icons/ErrorExclamationCircle';
-import { Popper, TableCell, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React, { useState } from 'react';
-import { defineMessages, useIntl } from 'react-intl';
+import ErrorExclamationCircleIcon from "@dashboard/icons/ErrorExclamationCircle";
+import { Popper, TableCell, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React, { useState } from "react";
+import { defineMessages, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
     container: {
-      position: 'relative',
+      position: "relative",
     },
     errorBox: {
       backgroundColor: theme.palette.error.main,
@@ -18,7 +18,7 @@ const useStyles = makeStyles(
       zIndex: 1000,
     },
     errorText: {
-      color: 'white',
+      color: "white",
       fontSize: 14,
     },
     errorTextHighlighted: {
@@ -27,25 +27,25 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(1),
     },
     titleContainer: {
-      alignItems: 'center',
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'flex-end',
+      alignItems: "center",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "flex-end",
     },
   }),
-  { name: 'ProductErrorCell' },
+  { name: "ProductErrorCell" },
 );
 
 const messages = defineMessages({
   description: {
-    id: 'RlbhwF',
-    defaultMessage: 'This product is no longer in database so it can’t be replaced, nor returned',
-    description: 'product no longer exists error description',
+    id: "RlbhwF",
+    defaultMessage: "This product is no longer in database so it can’t be replaced, nor returned",
+    description: "product no longer exists error description",
   },
   title: {
-    id: 'p4zuQp',
-    defaultMessage: 'Product no longer exists',
-    description: 'product no longer exists error title',
+    id: "p4zuQp",
+    defaultMessage: "Product no longer exists",
+    description: "product no longer exists error title",
   },
 });
 
@@ -71,12 +71,16 @@ const ProductErrorCell: React.FC<ProductErrorCellProps> = ({ hasVariant }) => {
         onMouseEnter={() => setShowErrorBox(true)}
         onMouseLeave={() => setShowErrorBox(false)}
       >
-        <Typography className={classes.errorTextHighlighted}>{intl.formatMessage(messages.title)}</Typography>
+        <Typography className={classes.errorTextHighlighted}>
+          {intl.formatMessage(messages.title)}
+        </Typography>
         <ErrorExclamationCircleIcon />
       </div>
       <Popper placement="bottom-end" open={showErrorBox} anchorEl={popperAnchorRef.current}>
         <div className={classes.errorBox}>
-          <Typography className={classes.errorText}>{intl.formatMessage(messages.description)}</Typography>
+          <Typography className={classes.errorText}>
+            {intl.formatMessage(messages.description)}
+          </Typography>
         </div>
       </Popper>
     </TableCell>

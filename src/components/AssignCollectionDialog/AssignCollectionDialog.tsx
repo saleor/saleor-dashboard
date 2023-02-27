@@ -1,16 +1,20 @@
-import { SearchCollectionsQuery } from '@dashboard/graphql';
-import { RelayToFlat } from '@dashboard/types';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { SearchCollectionsQuery } from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import AssignContainerDialog, { AssignContainerDialogProps } from '../AssignContainerDialog';
-import { messages } from './messages';
+import AssignContainerDialog, { AssignContainerDialogProps } from "../AssignContainerDialog";
+import { messages } from "./messages";
 
-interface AssignCollectionDialogProps extends Omit<AssignContainerDialogProps, 'containers' | 'labels'> {
-  collections: RelayToFlat<SearchCollectionsQuery['search']>;
+interface AssignCollectionDialogProps
+  extends Omit<AssignContainerDialogProps, "containers" | "labels"> {
+  collections: RelayToFlat<SearchCollectionsQuery["search"]>;
 }
 
-const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({ collections, ...rest }) => {
+const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({
+  collections,
+  ...rest
+}) => {
   const intl = useIntl();
 
   return (
@@ -27,5 +31,5 @@ const AssignCollectionDialog: React.FC<AssignCollectionDialogProps> = ({ collect
   );
 };
 
-AssignCollectionDialog.displayName = 'AssignCollectionDialog';
+AssignCollectionDialog.displayName = "AssignCollectionDialog";
 export default AssignCollectionDialog;

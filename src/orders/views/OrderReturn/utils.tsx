@@ -3,10 +3,13 @@ import {
   OrderReturnFulfillmentLineInput,
   OrderReturnLineInput,
   OrderReturnProductsInput,
-} from '@dashboard/graphql';
-import { getById } from '@dashboard/misc';
-import { OrderRefundAmountCalculationMode } from '@dashboard/orders/components/OrderRefundPage/form';
-import { FormsetQuantityData, OrderReturnFormData } from '@dashboard/orders/components/OrderReturnPage/form';
+} from "@dashboard/graphql";
+import { getById } from "@dashboard/misc";
+import { OrderRefundAmountCalculationMode } from "@dashboard/orders/components/OrderRefundPage/form";
+import {
+  FormsetQuantityData,
+  OrderReturnFormData,
+} from "@dashboard/orders/components/OrderReturnPage/form";
 
 class ReturnFormDataParser {
   private order: OrderDetailsFragment;
@@ -18,20 +21,27 @@ class ReturnFormDataParser {
   }
 
   public getParsedData = (): OrderReturnProductsInput => {
-    const { fulfilledItemsQuantities, waitingItemsQuantities, unfulfilledItemsQuantities, refundShipmentCosts } =
-      this.formData;
+    const {
+      fulfilledItemsQuantities,
+      waitingItemsQuantities,
+      unfulfilledItemsQuantities,
+      refundShipmentCosts,
+    } = this.formData;
 
     const fulfillmentLines = this.getParsedLineData<OrderReturnFulfillmentLineInput>(
       fulfilledItemsQuantities,
-      'fulfillmentLineId',
+      "fulfillmentLineId",
     );
 
     const waitingLines = this.getParsedLineData<OrderReturnFulfillmentLineInput>(
       waitingItemsQuantities,
-      'fulfillmentLineId',
+      "fulfillmentLineId",
     );
 
-    const orderLines = this.getParsedLineData<OrderReturnLineInput>(unfulfilledItemsQuantities, 'orderLineId');
+    const orderLines = this.getParsedLineData<OrderReturnLineInput>(
+      unfulfilledItemsQuantities,
+      "orderLineId",
+    );
 
     return {
       amountToRefund: this.getAmountToRefund(),
@@ -43,11 +53,13 @@ class ReturnFormDataParser {
   };
 
   private getAmountToRefund = (): number | undefined =>
-    this.formData.amountCalculationMode === OrderRefundAmountCalculationMode.MANUAL ? this.formData.amount : undefined;
+    this.formData.amountCalculationMode === OrderRefundAmountCalculationMode.MANUAL
+      ? this.formData.amount
+      : undefined;
 
   private getParsedLineData = <T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput>(
     itemsQuantities: FormsetQuantityData,
-    idKey: 'fulfillmentLineId' | 'orderLineId',
+    idKey: "fulfillmentLineId" | "orderLineId",
   ): T[] => {
     const { itemsToBeReplaced } = this.formData;
 
@@ -84,9 +96,9 @@ class ReturnFormDataParser {
   };
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  private static isLineRefundable = function <T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput>({
-    replace,
-  }: T) {
+  private static isLineRefundable = function <
+    T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput,
+  >({ replace }: T) {
     return !replace;
   };
 }

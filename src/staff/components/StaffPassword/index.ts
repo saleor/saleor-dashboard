@@ -1,2 +1,2 @@
-export { default } from './StaffPassword';
-export * from './StaffPassword';
+export { default } from "./StaffPassword";
+export * from "./StaffPassword";

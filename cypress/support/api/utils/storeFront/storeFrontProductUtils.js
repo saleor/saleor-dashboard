@@ -12,10 +12,7 @@ export const isProductAvailableForPurchase = resp => {
 
 export const isProductVisibleInSearchResult = (resp, productName) => {
   const productsList = resp.body.data.products;
-  return (
-    productsList.totalCount !== 0 &&
-    productsList.edges[0].node.name === productName
-  );
+  return productsList.totalCount !== 0 && productsList.edges[0].node.name === productName;
 };
 
 export const getProductVariants = (productId, channelSlug) => {

@@ -1,34 +1,39 @@
-import saleorDarkLogoSmall from '@assets/images/logo-dark-small.svg';
-import plusIcon from '@assets/images/plus-icon.svg';
-import { Content } from '@dashboard/components/AppLayout/Content';
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import CardTitle from '@dashboard/components/CardTitle';
-import Hr from '@dashboard/components/Hr';
-import Skeleton from '@dashboard/components/Skeleton';
-import { AppFetchMutation, AppInstallMutation } from '@dashboard/graphql';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import { buttonMessages } from '@dashboard/intl';
-import { Card, CardContent, CircularProgress, Typography } from '@material-ui/core';
-import { Box, Button, GenericAppIcon } from '@saleor/macaw-ui/next';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
+import plusIcon from "@assets/images/plus-icon.svg";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import Hr from "@dashboard/components/Hr";
+import Skeleton from "@dashboard/components/Skeleton";
+import { AppFetchMutation, AppInstallMutation } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { buttonMessages } from "@dashboard/intl";
+import { Card, CardContent, CircularProgress, Typography } from "@material-ui/core";
+import { Box, Button, GenericAppIcon } from "@saleor/macaw-ui/next";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from '../../styles';
+import { useStyles } from "../../styles";
 
 export interface AppInstallPageProps {
-  data: NonNullable<AppFetchMutation['appFetchManifest']>['manifest'];
+  data: NonNullable<AppFetchMutation["appFetchManifest"]>["manifest"];
   loading: boolean;
   navigateToAppsList: () => void;
-  onSubmit: () => SubmitPromise<NonNullable<AppInstallMutation['appInstall']>['errors']>;
+  onSubmit: () => SubmitPromise<NonNullable<AppInstallMutation["appInstall"]>["errors"]>;
 }
 
-export const AppInstallPage: React.FC<AppInstallPageProps> = ({ data, loading, navigateToAppsList, onSubmit }) => {
+export const AppInstallPage: React.FC<AppInstallPageProps> = ({
+  data,
+  loading,
+  navigateToAppsList,
+  onSubmit,
+}) => {
   const intl = useIntl();
   const classes = useStyles({});
 
-  const name = data?.name || '';
+  const name = data?.name || "";
 
   return (
     <DetailedContent useSingleColumn constHeight>
@@ -42,9 +47,9 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({ data, loading, n
               ) : (
                 intl.formatMessage(
                   {
-                    id: 'Id7C0X',
+                    id: "Id7C0X",
                     defaultMessage: `You are about to install {name}`,
-                    description: 'section header',
+                    description: "section header",
                   },
                   { name },
                 )
@@ -72,9 +77,9 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({ data, loading, n
           {!loading && (
             <CardTitle
               title={intl.formatMessage({
-                id: 'VsGcdP',
-                defaultMessage: 'App permissions',
-                description: 'section header',
+                id: "VsGcdP",
+                defaultMessage: "App permissions",
+                description: "section header",
               })}
             />
           )}
@@ -126,7 +131,11 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({ data, loading, n
             <FormattedMessage {...buttonMessages.cancel} />
           </Button>
           <Button variant="primary" onClick={onSubmit}>
-            <FormattedMessage id="PkCmGU" defaultMessage="Install App" description="install button" />
+            <FormattedMessage
+              id="PkCmGU"
+              defaultMessage="Install App"
+              description="install button"
+            />
           </Button>
         </Box>
       </Content>
@@ -134,5 +143,5 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({ data, loading, n
   );
 };
 
-AppInstallPage.displayName = 'AppInstallPage';
+AppInstallPage.displayName = "AppInstallPage";
 export default AppInstallPage;

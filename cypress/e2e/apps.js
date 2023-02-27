@@ -25,10 +25,7 @@ import {
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith,
 } from "../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../support/api/utils/shippingUtils";
+import { createShipping, deleteShippingStartsWith } from "../support/api/utils/shippingUtils";
 import { discountOptions } from "../support/pages/discounts/vouchersPage";
 
 describe("As a staff user I want to manage apps", () => {
@@ -67,12 +64,10 @@ describe("As a staff user I want to manage apps", () => {
           price: 10,
         });
       })
-      .then(
-        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
-          warehouse = warehouseResp;
-          shippingMethod = shippingMethodResp;
-        },
-      );
+      .then(({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
+        warehouse = warehouseResp;
+        shippingMethod = shippingMethodResp;
+      });
     createTypeAttributeAndCategoryForProduct({ name })
       .then(({ productType, attribute, category }) => {
         createProductInChannel({
@@ -179,12 +174,8 @@ describe("As a staff user I want to manage apps", () => {
           getApp(createdApp.app.id);
         })
         .then(app => {
-          const token = app.tokens.find(
-            element => element.name === randomTokenName,
-          );
-          const tokenLastFourDigits = expectedToken.slice(
-            expectedToken.length - 4,
-          );
+          const token = app.tokens.find(element => element.name === randomTokenName);
+          const tokenLastFourDigits = expectedToken.slice(expectedToken.length - 4);
           expect(token.authToken).to.eq(tokenLastFourDigits);
         });
     },
@@ -241,10 +232,7 @@ describe("As a staff user I want to manage apps", () => {
         billingAddress: address,
         auth: "token",
       }).then(({ checkout: checkoutResp }) => {
-        const shippingMethodId = getShippingMethodIdFromCheckout(
-          checkoutResp,
-          shippingMethod.name,
-        );
+        const shippingMethodId = getShippingMethodIdFromCheckout(checkoutResp, shippingMethod.name);
         checkout = checkoutResp;
         addShippingMethod(checkout.id, shippingMethodId);
         orderCreateFromCheckout(checkout.id, token).then(resp => {

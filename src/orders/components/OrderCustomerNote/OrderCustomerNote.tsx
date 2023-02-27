@@ -1,8 +1,8 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import Skeleton from '@dashboard/components/Skeleton';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import Skeleton from "@dashboard/components/Skeleton";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface OrderCustomerNoteProps {
   note: string;
@@ -15,15 +15,15 @@ export const OrderCustomerNote: React.FC<OrderCustomerNoteProps> = ({ note }) =>
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'puALFo',
-          defaultMessage: 'Notes',
-          description: 'notes about customer, header',
+          id: "puALFo",
+          defaultMessage: "Notes",
+          description: "notes about customer, header",
         })}
       />
       <CardContent>
         {note === undefined ? (
           <Skeleton />
-        ) : note === '' ? (
+        ) : note === "" ? (
           <Typography color="textSecondary">
             <FormattedMessage id="VrFy8e" defaultMessage="No notes from customer" />
           </Typography>

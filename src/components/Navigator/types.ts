@@ -1,4 +1,4 @@
-export type QuickSearchActionType = 'action' | 'catalog' | 'customer' | 'view';
+export type QuickSearchActionType = "action" | "catalog" | "customer" | "view";
 
 export interface QuickSearchAction {
   caption?: string;
@@ -15,4 +15,4 @@ export interface QuickSearchActionInput extends QuickSearchAction {
   text: string;
 }
 
-export type QuickSearchMode = 'default' | 'catalog' | 'commands' | 'customers' | 'help' | 'orders';
+export type QuickSearchMode = "default" | "catalog" | "commands" | "customers" | "help" | "orders";

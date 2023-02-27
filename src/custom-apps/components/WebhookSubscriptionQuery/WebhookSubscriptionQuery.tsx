@@ -1,21 +1,21 @@
-import 'graphiql/graphiql.min.css';
+import "graphiql/graphiql.min.css";
 
-import CardTitle from '@dashboard/components/CardTitle';
-import { useExplorerPlugin } from '@graphiql/plugin-explorer';
-import { createGraphiQLFetcher } from '@graphiql/toolkit';
-import { Card, CardContent } from '@material-ui/core';
-import React from 'react';
-import { defineMessages, useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import { useExplorerPlugin } from "@graphiql/plugin-explorer";
+import { createGraphiQLFetcher } from "@graphiql/toolkit";
+import { Card, CardContent } from "@material-ui/core";
+import React from "react";
+import { defineMessages, useIntl } from "react-intl";
 
-import GraphiQL from '../../../components/GraphiQL';
-import { WebhookFormData } from '../WebhookDetailsPage';
-import { useStyles } from './styles';
+import GraphiQL from "../../../components/GraphiQL";
+import { WebhookFormData } from "../WebhookDetailsPage";
+import { useStyles } from "./styles";
 
 const messages = defineMessages({
   title: {
-    id: 'lEG/12',
-    defaultMessage: 'Subscription Query',
-    description: 'Webhook subscription query card title',
+    id: "lEG/12",
+    defaultMessage: "Subscription Query",
+    description: "Webhook subscription query card title",
   },
 });
 
@@ -29,7 +29,11 @@ const fetcher = createGraphiQLFetcher({
   url: process.env.API_URI,
 });
 
-const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({ query, setQuery, data }) => {
+const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
+  query,
+  setQuery,
+  data,
+}) => {
   const intl = useIntl();
 
   const explorerPlugin = useExplorerPlugin({
@@ -45,7 +49,7 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({ que
       <CardContent className={classes.cardContent}>
         <GraphiQL
           data-test-id="graphiql-webhook"
-          defaultEditorToolsVisibility={'headers'}
+          defaultEditorToolsVisibility={"headers"}
           fetcher={fetcher}
           query={query}
           storage={null}
@@ -59,5 +63,5 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({ que
   );
 };
 
-WebhookSubscriptionQuery.displayName = 'WebhookSubscriptionQuery';
+WebhookSubscriptionQuery.displayName = "WebhookSubscriptionQuery";
 export default WebhookSubscriptionQuery;

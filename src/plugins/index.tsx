@@ -1,20 +1,20 @@
-import { sectionNames } from '@dashboard/intl';
-import { asSortParams } from '@dashboard/utils/sort';
-import { parse as parseQs } from 'qs';
-import React from 'react';
-import { useIntl } from 'react-intl';
-import { Route, RouteComponentProps, Switch } from 'react-router-dom';
+import { sectionNames } from "@dashboard/intl";
+import { asSortParams } from "@dashboard/utils/sort";
+import { parse as parseQs } from "qs";
+import React from "react";
+import { useIntl } from "react-intl";
+import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { WindowTitle } from '../components/WindowTitle';
+import { WindowTitle } from "../components/WindowTitle";
 import {
   pluginListPath,
   PluginListUrlQueryParams,
   PluginListUrlSortField,
   pluginPath,
   PluginUrlQueryParams,
-} from './urls';
-import PluginsListComponent from './views/PluginList';
-import PluginsDetailsComponent from './views/PluginsDetails';
+} from "./urls";
+import PluginsListComponent from "./views/PluginList";
+import PluginsDetailsComponent from "./views/PluginsDetails";
 
 const PluginList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
@@ -36,7 +36,7 @@ const Component = () => {
       <WindowTitle title={intl.formatMessage(sectionNames.plugins)} />
       <Switch>
         <Route exact path={pluginListPath} component={PluginList} />
-        <Route path={pluginPath(':id')} component={PageDetails} />
+        <Route path={pluginPath(":id")} component={PageDetails} />
       </Switch>
     </>
   );

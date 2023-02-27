@@ -1,6 +1,6 @@
-import { TaxClassBaseFragment, useTaxClassAssignQuery } from '@dashboard/graphql';
-import { FetchMoreProps } from '@dashboard/types';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
+import { TaxClassBaseFragment, useTaxClassAssignQuery } from "@dashboard/graphql";
+import { FetchMoreProps } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 
 interface UseTaxClassFetchMoreHookResult {
   taxClasses: TaxClassBaseFragment[];

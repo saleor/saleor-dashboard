@@ -1,9 +1,6 @@
 import * as checkoutRequest from "../requests/Checkout";
 import * as orderRequest from "../requests/Order";
-import {
-  getPaymentMethodStripeId,
-  sendConfirmationToStripe,
-} from "../requests/stripe";
+import { getPaymentMethodStripeId, sendConfirmationToStripe } from "../requests/stripe";
 import { createProductInChannel } from "./products/productsUtils";
 
 export function createWaitingForCaptureOrder({
@@ -27,10 +24,7 @@ export function createWaitingForCaptureOrder({
     })
     .then(({ checkout: checkoutResp }) => {
       checkout = checkoutResp;
-      const shippingMethodId = getShippingMethodIdFromCheckout(
-        checkout,
-        shippingMethodName,
-      );
+      const shippingMethodId = getShippingMethodIdFromCheckout(checkout, shippingMethodName);
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
     })
     .then(() => addPayment(checkout.id))
@@ -43,22 +37,14 @@ export function getShippingMethodIdFromCheckout(checkout, shippingMethodName) {
   if (availableShippingMethodsLength === 0) {
     return null;
   } else {
-    return checkout.shippingMethods.find(
-      element => element.name === shippingMethodName,
-    ).id;
+    return checkout.shippingMethods.find(element => element.name === shippingMethodName).id;
   }
 }
 
 export function updateShippingInCheckout(checkoutToken, shippingMethodName) {
   return checkoutRequest.getCheckout(checkoutToken).then(checkout => {
-    const shippingMethodId = getShippingMethodIdFromCheckout(
-      checkout,
-      shippingMethodName,
-    );
-    return checkoutRequest.checkoutShippingMethodUpdate(
-      checkout.id,
-      shippingMethodId,
-    );
+    const shippingMethodId = getShippingMethodIdFromCheckout(checkout, shippingMethodName);
+    return checkoutRequest.checkoutShippingMethodUpdate(checkout.id, shippingMethodId);
   });
 }
 
@@ -85,10 +71,7 @@ export function createCheckoutWithVoucher({
     })
     .then(({ checkout: checkoutResp }) => {
       checkout = checkoutResp;
-      const shippingMethodId = getShippingMethodIdFromCheckout(
-        checkout,
-        shippingMethodName,
-      );
+      const shippingMethodId = getShippingMethodIdFromCheckout(checkout, shippingMethodName);
       checkoutRequest.addShippingMethod(checkout.id, shippingMethodId);
     })
     .then(() => {
@@ -143,10 +126,7 @@ export function createReadyToFulfillOrder({
       assignVariantsToOrder(order, variantsList);
     })
     .then(orderResp => {
-      shippingMethod = getShippingMethodIdFromCheckout(
-        orderResp.order,
-        shippingMethod.name,
-      );
+      shippingMethod = getShippingMethodIdFromCheckout(orderResp.order, shippingMethod.name);
       orderRequest.addShippingMethod(order.id, shippingMethod);
     })
     .then(() => orderRequest.completeOrder(order.id))
@@ -178,13 +158,7 @@ export function createFulfilledOrder({
   });
 }
 
-export function createOrder({
-  customerId,
-  shippingMethod,
-  channelId,
-  variantsList,
-  address,
-}) {
+export function createOrder({ customerId, shippingMethod, channelId, variantsList, address }) {
   let order;
   return orderRequest
     .createDraftOrder({ customerId, channelId, address })
@@ -193,10 +167,7 @@ export function createOrder({
       assignVariantsToOrder(order, variantsList);
     })
     .then(orderResp => {
-      shippingMethod = getShippingMethodIdFromCheckout(
-        orderResp.order,
-        shippingMethod.name,
-      );
+      shippingMethod = getShippingMethodIdFromCheckout(orderResp.order, shippingMethod.name);
       orderRequest.addShippingMethod(order.id, shippingMethod);
     })
     .then(() => orderRequest.completeOrder(order.id))
@@ -287,11 +258,7 @@ export function createOrderWithNewProduct({
     .then(({ order, checkout }) => ({ order, checkout, variantsList }));
 }
 
-export function addStripePaymentAndGetConfirmationData({
-  card,
-  checkoutId,
-  amount,
-}) {
+export function addStripePaymentAndGetConfirmationData({ card, checkoutId, amount }) {
   let paymentMethodId;
 
   return getPaymentMethodStripeId(card)

@@ -1,8 +1,8 @@
-import { update } from '@dashboard/utils/lists';
+import { update } from "@dashboard/utils/lists";
 
-import { FieldType, IFilter, IFilterElementMutableDataGeneric } from './types';
+import { FieldType, IFilter, IFilterElementMutableDataGeneric } from "./types";
 
-export type FilterReducerActionType = 'clear' | 'merge' | 'reset' | 'set-property';
+export type FilterReducerActionType = "clear" | "merge" | "reset" | "set-property";
 export interface FilterReducerAction<K extends string, T extends FieldType> {
   type: FilterReducerActionType;
   payload: Partial<{
@@ -49,11 +49,11 @@ function reduceFilter<K extends string, T extends FieldType>(
   action: FilterReducerAction<K, T>,
 ): IFilter<K> {
   switch (action.type) {
-    case 'set-property':
+    case "set-property":
       return setProperty<K, T>(prevState, action.payload.name, action.payload.update);
-    case 'merge':
+    case "merge":
       return merge(prevState, action.payload.new);
-    case 'reset':
+    case "reset":
       return action.payload.new;
 
     default:

@@ -1,8 +1,15 @@
-import { Dialog, DialogContent, DialogProps, DialogTitle, IconButton, Typography } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
-import React from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogProps,
+  DialogTitle,
+  IconButton,
+  Typography,
+} from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import React from "react";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 interface AppDialogProps extends DialogProps {
   onClose: () => void;

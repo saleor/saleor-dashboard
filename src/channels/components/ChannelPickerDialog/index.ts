@@ -1,2 +1,2 @@
-export * from './ChannelPickerDialog';
-export { default } from './ChannelPickerDialog';
+export * from "./ChannelPickerDialog";
+export { default } from "./ChannelPickerDialog";

@@ -1,9 +1,9 @@
-import { Channel } from '@dashboard/channels/utils';
-import { ControlledCheckbox } from '@dashboard/components/ControlledCheckbox';
-import Hr from '@dashboard/components/Hr';
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
+import { Channel } from "@dashboard/channels/utils";
+import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
+import Hr from "@dashboard/components/Hr";
+import { Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -11,15 +11,15 @@ export const useStyles = makeStyles(
       fontSize: 14,
     },
     option: {
-      '&:last-child': {
-        '& hr': {
-          display: 'none',
+      "&:last-child": {
+        "& hr": {
+          display: "none",
         },
       },
       margin: theme.spacing(1, 0),
     },
   }),
-  { name: 'ChannelsAvailabilityContent' },
+  { name: "ChannelsAvailabilityContent" },
 );
 
 export interface ChannelsAvailabilityContentProps {

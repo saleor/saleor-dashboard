@@ -1,2 +1,2 @@
-export { default } from './Percent';
-export * from './Percent';
+export { default } from "./Percent";
+export * from "./Percent";

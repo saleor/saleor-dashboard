@@ -1,27 +1,27 @@
-import { appsListPath } from '@dashboard/apps/urls';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import CardTitle from '@dashboard/components/CardTitle';
-import ExternalLink from '@dashboard/components/ExternalLink';
-import Skeleton from '@dashboard/components/Skeleton';
-import { AppQuery } from '@dashboard/graphql';
-import { buttonMessages } from '@dashboard/intl';
-import { ButtonBase, Card, CardContent, Typography } from '@material-ui/core';
-import { Box, Button } from '@saleor/macaw-ui/next';
-import React from 'react';
-import SVG from 'react-inlinesvg';
-import { FormattedMessage, useIntl } from 'react-intl';
-import ReactMarkdown from 'react-markdown';
+import { appsListPath } from "@dashboard/apps/urls";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import ExternalLink from "@dashboard/components/ExternalLink";
+import Skeleton from "@dashboard/components/Skeleton";
+import { AppQuery } from "@dashboard/graphql";
+import { buttonMessages } from "@dashboard/intl";
+import { ButtonBase, Card, CardContent, Typography } from "@material-ui/core";
+import { Box, Button } from "@saleor/macaw-ui/next";
+import React from "react";
+import SVG from "react-inlinesvg";
+import { FormattedMessage, useIntl } from "react-intl";
+import ReactMarkdown from "react-markdown";
 
-import activateIcon from '../../../../assets/images/activate-icon.svg';
-import deleteIcon from '../../../../assets/images/delete.svg';
-import supportIcon from '../../../../assets/images/support-icon.svg';
-import { useStyles } from '../../styles';
-import DeactivatedText from '../DeactivatedText';
+import activateIcon from "../../../../assets/images/activate-icon.svg";
+import deleteIcon from "../../../../assets/images/delete.svg";
+import supportIcon from "../../../../assets/images/support-icon.svg";
+import { useStyles } from "../../styles";
+import DeactivatedText from "../DeactivatedText";
 
 export interface AppDetailsPageProps {
   loading: boolean;
-  data: AppQuery['app'];
+  data: AppQuery["app"];
   navigateToApp: () => void;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
@@ -56,7 +56,11 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
       <Box marginX={10}>
         {data ? (
           <div className={classes.appHeaderLinks}>
-            <ExternalLink className={classes.headerLinkContainer} href={data.supportUrl || ''} target="_blank">
+            <ExternalLink
+              className={classes.headerLinkContainer}
+              href={data.supportUrl || ""}
+              target="_blank"
+            >
               <SVG src={supportIcon} />
               <FormattedMessage id="Gjb6eq" defaultMessage="Get Support" description="link" />
             </ExternalLink>
@@ -72,7 +76,11 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
                 <FormattedMessage {...buttonMessages.activate} />
               )}
             </ButtonBase>
-            <ButtonBase className={classes.headerLinkContainer} disableRipple onClick={onAppDeleteOpen}>
+            <ButtonBase
+              className={classes.headerLinkContainer}
+              disableRipple
+              onClick={onAppDeleteOpen}
+            >
               <SVG src={deleteIcon} />
               <FormattedMessage {...buttonMessages.delete} />
             </ButtonBase>
@@ -86,20 +94,22 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
       <Card>
         <CardTitle
           title={intl.formatMessage({
-            id: 'jDIRQV',
-            defaultMessage: 'About this app',
-            description: 'section header',
+            id: "jDIRQV",
+            defaultMessage: "About this app",
+            description: "section header",
           })}
         />
-        <CardContent>{!loading ? <ReactMarkdown source={data?.aboutApp ?? ''} /> : <Skeleton />}</CardContent>
+        <CardContent>
+          {!loading ? <ReactMarkdown source={data?.aboutApp ?? ""} /> : <Skeleton />}
+        </CardContent>
       </Card>
       <CardSpacer />
       <Card>
         <CardTitle
           title={intl.formatMessage({
-            id: 'VsGcdP',
-            defaultMessage: 'App permissions',
-            description: 'section header',
+            id: "VsGcdP",
+            defaultMessage: "App permissions",
+            description: "section header",
           })}
         />
         <CardContent>
@@ -131,14 +141,18 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
         <Card>
           <CardTitle
             title={intl.formatMessage({
-              id: 'a55zOn',
-              defaultMessage: 'Data privacy',
-              description: 'section header',
+              id: "a55zOn",
+              defaultMessage: "Data privacy",
+              description: "section header",
             })}
           />
           <CardContent>
             {!loading ? (
-              <ExternalLink className={classes.linkContainer} href={data.dataPrivacyUrl} target="_blank">
+              <ExternalLink
+                className={classes.linkContainer}
+                href={data.dataPrivacyUrl}
+                target="_blank"
+              >
                 <FormattedMessage
                   id="Go50v2"
                   defaultMessage="View this app’s privacy policy"
@@ -156,5 +170,5 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   );
 };
 
-AppDetailsPage.displayName = 'AppDetailsPage';
+AppDetailsPage.displayName = "AppDetailsPage";
 export default AppDetailsPage;

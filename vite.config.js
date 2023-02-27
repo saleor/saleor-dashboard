@@ -48,8 +48,7 @@ export default defineConfig(({ command, mode }) => {
 
   const sourcemap = SKIP_SOURCEMAPS ? false : true;
 
-  const enableSentry =
-    SENTRY_ORG && SENTRY_PROJECT && SENTRY_DSN && SENTRY_AUTH_TOKEN;
+  const enableSentry = SENTRY_ORG && SENTRY_PROJECT && SENTRY_DSN && SENTRY_AUTH_TOKEN;
 
   const plugins = [
     swcReactRefresh(),
@@ -183,10 +182,7 @@ export default defineConfig(({ command, mode }) => {
           Vite resolves it by using jsnext:main https://github.com/moment/moment/blob/develop/package.json#L26.
           We enforce to use a different path, ignoring jsnext:main field.
         */
-        moment: path.resolve(
-          __dirname,
-          "./node_modules/moment/min/moment-with-locales.js",
-        ),
+        moment: path.resolve(__dirname, "./node_modules/moment/min/moment-with-locales.js"),
       },
     },
     plugins,

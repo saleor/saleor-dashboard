@@ -1,13 +1,13 @@
-import { Button } from '@dashboard/components/Button';
-import Link from '@dashboard/components/Link';
-import useClipboard from '@dashboard/hooks/useClipboard';
-import { Card, CardContent, Paper, Typography } from '@material-ui/core';
-import CloseIcon from '@material-ui/icons/Close';
-import { IconButton } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import Link from "@dashboard/components/Link";
+import useClipboard from "@dashboard/hooks/useClipboard";
+import { Card, CardContent, Paper, Typography } from "@material-ui/core";
+import CloseIcon from "@material-ui/icons/Close";
+import { IconButton } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 export interface CustomAppDefaultTokenProps {
   apiUrl: string;
@@ -70,5 +70,5 @@ const CustomAppDefaultToken: React.FC<CustomAppDefaultTokenProps> = props => {
   );
 };
 
-CustomAppDefaultToken.displayName = 'CustomAppDefaultToken';
+CustomAppDefaultToken.displayName = "CustomAppDefaultToken";
 export default CustomAppDefaultToken;

@@ -1,6 +1,10 @@
-import { OrderDetailsFragment } from '@dashboard/graphql';
+import { OrderDetailsFragment } from "@dashboard/graphql";
 
-import { getFulfilledFulfillemnts, getUnfulfilledLines, getWaitingFulfillments } from '../OrderReturnPage/utils';
+import {
+  getFulfilledFulfillemnts,
+  getUnfulfilledLines,
+  getWaitingFulfillments,
+} from "../OrderReturnPage/utils";
 
 export const hasAnyItemsReplaceable = (order?: OrderDetailsFragment) => {
   if (!order) {

@@ -1,5 +1,5 @@
-import { ICONBUTTON_SIZE, makeStyles } from '@saleor/macaw-ui';
-import { vars } from '@saleor/macaw-ui/next';
+import { ICONBUTTON_SIZE, makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -9,15 +9,15 @@ export const useStyles = makeStyles(
     },
     colName: {},
     colQuantity: {
-      textAlign: 'right',
+      textAlign: "right",
       width: 150,
     },
     colSoldUnits: {
-      textAlign: 'right',
+      textAlign: "right",
       width: 150,
     },
     colThreshold: {
-      textAlign: 'right',
+      textAlign: "right",
       width: 180,
     },
     editWarehouses: {
@@ -25,10 +25,10 @@ export const useStyles = makeStyles(
     },
     input: {
       padding: theme.spacing(1.5),
-      textAlign: 'right',
+      textAlign: "right",
     },
     menuItem: {
-      '&:not(:last-of-type)': {
+      "&:not(:last-of-type)": {
         marginBottom: theme.spacing(2),
       },
     },
@@ -38,7 +38,7 @@ export const useStyles = makeStyles(
     paper: {
       padding: theme.spacing(2),
       maxHeight: 400,
-      overflow: 'scroll',
+      overflow: "scroll",
       border: `1px solid ${vars.colors.border.neutralDefault}`,
       borderRadius: vars.borderRadius[3],
     },
@@ -50,14 +50,14 @@ export const useStyles = makeStyles(
       paddingTop: theme.spacing(),
     },
     quantityHeader: {
-      alignItems: 'center',
-      display: 'flex',
-      justifyContent: 'space-between',
+      alignItems: "center",
+      display: "flex",
+      justifyContent: "space-between",
     },
     skuInputContainer: {
-      display: 'grid',
+      display: "grid",
       gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: 'repeat(2, 1fr)',
+      gridTemplateColumns: "repeat(2, 1fr)",
     },
     dateTimeInputs: {
       marginTop: theme.spacing(2),
@@ -66,24 +66,24 @@ export const useStyles = makeStyles(
     preorderInfo: {
       marginBottom: theme.spacing(2),
       marginTop: theme.spacing(2),
-      display: 'block',
+      display: "block",
     },
     caption: {
       fontSize: 14,
     },
     thresholdRow: {
-      display: 'grid',
+      display: "grid",
       gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: '3fr 1fr',
+      gridTemplateColumns: "3fr 1fr",
       marginTop: theme.spacing(1),
     },
     thresholdInput: {
       maxWidth: 400,
     },
     addRow: {
-      '&:hover': {
-        cursor: 'pointer',
-        '& $actionableText': {
+      "&:hover": {
+        cursor: "pointer",
+        "& $actionableText": {
           color: theme.palette.primary.main,
         },
       },
@@ -92,7 +92,7 @@ export const useStyles = makeStyles(
     preorderItemsLeftCount: {
       fontSize: 14,
       paddingTop: theme.spacing(2),
-      textAlign: 'center',
+      textAlign: "center",
     },
     preorderLimitInfo: {
       marginTop: theme.spacing(3),
@@ -102,6 +102,6 @@ export const useStyles = makeStyles(
     },
   }),
   {
-    name: 'ProductStocks',
+    name: "ProductStocks",
   },
 );

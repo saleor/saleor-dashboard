@@ -3,23 +3,23 @@ import {
   useAttributeTranslationDetailsQuery,
   useUpdateAttributeTranslationsMutation,
   useUpdateAttributeValueTranslationsMutation,
-} from '@dashboard/graphql';
-import useListSettings from '@dashboard/hooks/useListSettings';
-import useLocalPaginator, { useLocalPaginationState } from '@dashboard/hooks/useLocalPaginator';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { PaginatorContext } from '@dashboard/hooks/usePaginator';
-import useShop from '@dashboard/hooks/useShop';
-import { commonMessages } from '@dashboard/intl';
-import { ListViews, Pagination } from '@dashboard/types';
-import { stringifyQs } from '@dashboard/utils/urls';
-import { OutputData } from '@editorjs/editorjs';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useListSettings from "@dashboard/hooks/useListSettings";
+import useLocalPaginator, { useLocalPaginationState } from "@dashboard/hooks/useLocalPaginator";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import { ListViews, Pagination } from "@dashboard/types";
+import { stringifyQs } from "@dashboard/utils/urls";
+import { OutputData } from "@editorjs/editorjs";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { extractMutationErrors, getMutationState, maybe } from '../../misc';
-import TranslationsAttributesPage, { fieldNames } from '../components/TranslationsAttributesPage';
-import { TranslationField } from '../types';
+import { extractMutationErrors, getMutationState, maybe } from "../../misc";
+import TranslationsAttributesPage, { fieldNames } from "../components/TranslationsAttributesPage";
+import { TranslationField } from "../types";
 
 export interface TranslationsAttributesQueryParams extends Pagination {
   activeField: string;
@@ -30,14 +30,22 @@ export interface TranslationsAttributesProps {
   params: TranslationsAttributesQueryParams;
 }
 
-const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({ id, languageCode, params }) => {
+const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
+  id,
+  languageCode,
+  params,
+}) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
   const intl = useIntl();
 
-  const { updateListSettings, settings } = useListSettings(ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST);
-  const [valuesPaginationState, setValuesPaginationState] = useLocalPaginationState(settings?.rowNumber);
+  const { updateListSettings, settings } = useListSettings(
+    ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST,
+  );
+  const [valuesPaginationState, setValuesPaginationState] = useLocalPaginationState(
+    settings?.rowNumber,
+  );
 
   const attributeTranslations = useAttributeTranslationDetailsQuery({
     variables: {
@@ -50,23 +58,28 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({ id, lan
     },
   });
   const translationData = attributeTranslations?.data?.translation;
-  const translation = translationData?.__typename === 'AttributeTranslatableContent' ? translationData : null;
+  const translation =
+    translationData?.__typename === "AttributeTranslatableContent" ? translationData : null;
 
   const paginate = useLocalPaginator(setValuesPaginationState);
-  const { pageInfo, ...paginationValues } = paginate(translation?.attribute?.choices?.pageInfo, valuesPaginationState);
+  const { pageInfo, ...paginationValues } = paginate(
+    translation?.attribute?.choices?.pageInfo,
+    valuesPaginationState,
+  );
 
-  const [updateAttributeTranslations, updateAttributeTranslationsOpts] = useUpdateAttributeTranslationsMutation({
-    onCompleted: data => {
-      if (data.attributeTranslate.errors.length === 0) {
-        attributeTranslations.refetch();
-        notify({
-          status: 'success',
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate('?', { replace: true });
-      }
-    },
-  });
+  const [updateAttributeTranslations, updateAttributeTranslationsOpts] =
+    useUpdateAttributeTranslationsMutation({
+      onCompleted: data => {
+        if (data.attributeTranslate.errors.length === 0) {
+          attributeTranslations.refetch();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          navigate("?", { replace: true });
+        }
+      },
+    });
 
   const [updateAttributeValueTranslations, updateAttributeValueTranslationsOpts] =
     useUpdateAttributeValueTranslationsMutation({
@@ -74,17 +87,17 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({ id, lan
         if (data.attributeValueTranslate.errors.length === 0) {
           attributeTranslations.refetch();
           notify({
-            status: 'success',
+            status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
           });
-          navigate('?', { replace: true });
+          navigate("?", { replace: true });
         }
       },
     });
 
   const onEdit = (field: string) =>
     navigate(
-      '?' +
+      "?" +
         stringifyQs({
           activeField: field,
         }),
@@ -92,11 +105,11 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({ id, lan
     );
 
   const onDiscard = () => {
-    navigate('?', { replace: true });
+    navigate("?", { replace: true });
   };
 
   const handleSubmit = ({ name }: TranslationField, data: string | OutputData) => {
-    const [fieldName, fieldId] = name.split(':');
+    const [fieldName, fieldId] = name.split(":");
 
     if (fieldName === fieldNames.attribute) {
       updateAttributeTranslations({
@@ -151,5 +164,5 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({ id, lan
     </PaginatorContext.Provider>
   );
 };
-TranslationsAttributes.displayName = 'TranslationsAttributes';
+TranslationsAttributes.displayName = "TranslationsAttributes";
 export default TranslationsAttributes;

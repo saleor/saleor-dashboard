@@ -1,21 +1,21 @@
-import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   CategoryCreateMutation,
   useCategoryCreateMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { getMutationErrors } from '@dashboard/misc';
-import createMetadataCreateHandler from '@dashboard/utils/handlers/metadataCreateHandler';
-import { getParsedDataForJsonStringField } from '@dashboard/utils/richText/misc';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getMutationErrors } from "@dashboard/misc";
+import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
+import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import CategoryCreatePage from '../components/CategoryCreatePage';
-import { CategoryCreateData } from '../components/CategoryCreatePage/form';
-import { categoryListUrl, categoryUrl } from '../urls';
+import CategoryCreatePage from "../components/CategoryCreatePage";
+import { CategoryCreateData } from "../components/CategoryCreatePage/form";
+import { categoryListUrl, categoryUrl } from "../urls";
 
 interface CategoryCreateViewProps {
   parentId: string;
@@ -31,10 +31,10 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({ parentId
   const handleSuccess = (data: CategoryCreateMutation) => {
     if (data.categoryCreate.errors.length === 0) {
       notify({
-        status: 'success',
+        status: "success",
         text: intl.formatMessage({
-          id: 'xl7Fag',
-          defaultMessage: 'Category created',
+          id: "xl7Fag",
+          defaultMessage: "Category created",
         }),
       });
       navigate(categoryUrl(data.categoryCreate.category.id));
@@ -67,15 +67,19 @@ export const CategoryCreateView: React.FC<CategoryCreateViewProps> = ({ parentId
     };
   };
 
-  const handleSubmit = createMetadataCreateHandler(handleCreate, updateMetadata, updatePrivateMetadata);
+  const handleSubmit = createMetadataCreateHandler(
+    handleCreate,
+    updateMetadata,
+    updatePrivateMetadata,
+  );
 
   return (
     <>
       <WindowTitle
         title={intl.formatMessage({
-          id: 'Irflxf',
-          defaultMessage: 'Create category',
-          description: 'window title',
+          id: "Irflxf",
+          defaultMessage: "Create category",
+          description: "window title",
         })}
       />
       <CategoryCreatePage

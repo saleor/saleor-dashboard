@@ -1,7 +1,11 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const updateProductTranslations = gql`
-  mutation UpdateProductTranslations($id: ID!, $input: TranslationInput!, $language: LanguageCodeEnum!) {
+  mutation UpdateProductTranslations(
+    $id: ID!
+    $input: TranslationInput!
+    $language: LanguageCodeEnum!
+  ) {
     productTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
         ...ProductTranslateErrorFragment
@@ -29,7 +33,11 @@ export const updateProductTranslations = gql`
 `;
 
 export const updateProductVariantTranslations = gql`
-  mutation UpdateProductVariantTranslations($id: ID!, $input: NameTranslationInput!, $language: LanguageCodeEnum!) {
+  mutation UpdateProductVariantTranslations(
+    $id: ID!
+    $input: NameTranslationInput!
+    $language: LanguageCodeEnum!
+  ) {
     productVariantTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
         ...ProductVariantTranslateErrorFragment
@@ -51,7 +59,11 @@ export const updateProductVariantTranslations = gql`
 `;
 
 export const updateCategoryTranslations = gql`
-  mutation UpdateCategoryTranslations($id: ID!, $input: TranslationInput!, $language: LanguageCodeEnum!) {
+  mutation UpdateCategoryTranslations(
+    $id: ID!
+    $input: TranslationInput!
+    $language: LanguageCodeEnum!
+  ) {
     categoryTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
         ...CategoryTranslateErrorFragment
@@ -78,7 +90,11 @@ export const updateCategoryTranslations = gql`
 `;
 
 export const updateCollectionTranslations = gql`
-  mutation UpdateCollectionTranslations($id: ID!, $input: TranslationInput!, $language: LanguageCodeEnum!) {
+  mutation UpdateCollectionTranslations(
+    $id: ID!
+    $input: TranslationInput!
+    $language: LanguageCodeEnum!
+  ) {
     collectionTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
         ...CollectionTranslateErrorFragment
@@ -105,7 +121,11 @@ export const updateCollectionTranslations = gql`
 `;
 
 export const updatePageTranslations = gql`
-  mutation UpdatePageTranslations($id: ID!, $input: PageTranslationInput!, $language: LanguageCodeEnum!) {
+  mutation UpdatePageTranslations(
+    $id: ID!
+    $input: PageTranslationInput!
+    $language: LanguageCodeEnum!
+  ) {
     pageTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
         ...PageTranslateErrorFragment
@@ -118,7 +138,11 @@ export const updatePageTranslations = gql`
 `;
 
 export const updateVoucherTranslations = gql`
-  mutation UpdateVoucherTranslations($id: ID!, $input: NameTranslationInput!, $language: LanguageCodeEnum!) {
+  mutation UpdateVoucherTranslations(
+    $id: ID!
+    $input: NameTranslationInput!
+    $language: LanguageCodeEnum!
+  ) {
     voucherTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
         ...VoucherTranslateErrorFragment
@@ -140,7 +164,11 @@ export const updateVoucherTranslations = gql`
 `;
 
 export const updateSaleTranslations = gql`
-  mutation UpdateSaleTranslations($id: ID!, $input: NameTranslationInput!, $language: LanguageCodeEnum!) {
+  mutation UpdateSaleTranslations(
+    $id: ID!
+    $input: NameTranslationInput!
+    $language: LanguageCodeEnum!
+  ) {
     saleTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
         ...SaleTranslateErrorFragment
@@ -162,7 +190,11 @@ export const updateSaleTranslations = gql`
 `;
 
 export const updateAttributeTranslations = gql`
-  mutation UpdateAttributeTranslations($id: ID!, $input: NameTranslationInput!, $language: LanguageCodeEnum!) {
+  mutation UpdateAttributeTranslations(
+    $id: ID!
+    $input: NameTranslationInput!
+    $language: LanguageCodeEnum!
+  ) {
     attributeTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
         ...AttributeTranslateErrorFragment
@@ -231,7 +263,11 @@ export const updateShippingMethodTranslations = gql`
 `;
 
 export const updateMethodItemTranslations = gql`
-  mutation UpdateMenuItemTranslations($id: ID!, $input: NameTranslationInput!, $language: LanguageCodeEnum!) {
+  mutation UpdateMenuItemTranslations(
+    $id: ID!
+    $input: NameTranslationInput!
+    $language: LanguageCodeEnum!
+  ) {
     menuItemTranslate(id: $id, input: $input, languageCode: $language) {
       errors {
         field

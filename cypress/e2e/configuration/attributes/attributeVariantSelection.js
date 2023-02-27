@@ -45,9 +45,7 @@ describe("As an admin I want to use attributes in variant selection", () => {
       `should create variant with ${attributeType.key} attribute. TC: ${attributeType.TC}`,
       { tags: ["@attribute", "@allEnv"] },
       () => {
-        const name = `${startsWith}${
-          attributeType.key
-        }${faker.datatype.number()}`;
+        const name = `${startsWith}${attributeType.key}${faker.datatype.number()}`;
         const inputType = attributeType.key;
         const attributeValues = ["1", "2"];
         let productType;
@@ -71,9 +69,7 @@ describe("As an admin I want to use attributes in variant selection", () => {
           .then(productResp => {
             product = productResp;
 
-            cy.visit(addVariantUrl(product.id)).addAliasToGraphRequest(
-              "VariantCreate",
-            );
+            cy.visit(addVariantUrl(product.id)).addAliasToGraphRequest("VariantCreate");
 
             fillUpVariantDetails({
               sku: name,
@@ -86,8 +82,7 @@ describe("As an admin I want to use attributes in variant selection", () => {
             cy.wait("@VariantCreate");
           })
           .then(({ response }) => {
-            const variant =
-              response.body.data.productVariantCreate.productVariant;
+            const variant = response.body.data.productVariantCreate.productVariant;
             getVariant(variant.id, channel.slug);
           })
           .then(({ attributes }) => {

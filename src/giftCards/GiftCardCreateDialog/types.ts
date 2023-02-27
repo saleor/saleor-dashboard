@@ -1,9 +1,9 @@
-import { GiftCardErrorFragment } from '@dashboard/graphql';
-import { FormChange } from '@dashboard/hooks/useForm';
+import { GiftCardErrorFragment } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
 
-import { GiftCardCreateFormData } from './GiftCardCreateDialogForm';
+import { GiftCardCreateFormData } from "./GiftCardCreateDialogForm";
 
-export type GiftCardExpiryType = 'EXPIRY_DATE' | 'EXPIRY_PERIOD';
+export type GiftCardExpiryType = "EXPIRY_DATE" | "EXPIRY_PERIOD";
 
 export interface GiftCardCreateFormCustomer {
   name: string;
@@ -11,11 +11,12 @@ export interface GiftCardCreateFormCustomer {
 }
 
 export type GiftCardCreateCommonFormErrors = Record<
-  'tags' | 'expiryDate' | 'currency' | 'amount' | 'balance',
+  "tags" | "expiryDate" | "currency" | "amount" | "balance",
   GiftCardErrorFragment
 >;
 
-export type GiftCardCreateFormErrors = GiftCardCreateCommonFormErrors & Record<'customer', GiftCardErrorFragment>;
+export type GiftCardCreateFormErrors = GiftCardCreateCommonFormErrors &
+  Record<"customer", GiftCardErrorFragment>;
 
 export interface GiftCardCreateFormCommonProps {
   change: FormChange;

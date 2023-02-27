@@ -1,9 +1,9 @@
-import { WebhookEventTypeAsyncEnum } from '@dashboard/graphql';
+import { WebhookEventTypeAsyncEnum } from "@dashboard/graphql";
 
-import { filterSelectedAsyncEvents } from './utils';
+import { filterSelectedAsyncEvents } from "./utils";
 
-describe('Custom Apps filtering events', () => {
-  it('should return selected async event types when not any event selected', () => {
+describe("Custom Apps filtering events", () => {
+  it("should return selected async event types when not any event selected", () => {
     // Arrange
     const selectedEvents: WebhookEventTypeAsyncEnum[] = [
       WebhookEventTypeAsyncEnum.PAGE_CREATED,
@@ -18,7 +18,7 @@ describe('Custom Apps filtering events', () => {
     expect(asyncEvents).toEqual(selectedEvents);
   });
 
-  it('should return only any async event type when any event selected', () => {
+  it("should return only any async event type when any event selected", () => {
     // Arrange
     const selectedEvents: WebhookEventTypeAsyncEnum[] = [
       WebhookEventTypeAsyncEnum.ANY_EVENTS,

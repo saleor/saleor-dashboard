@@ -1,13 +1,13 @@
-import { IMoney } from '@dashboard/components/Money';
-import PriceField from '@dashboard/components/PriceField';
-import { OrderErrorFragment } from '@dashboard/graphql';
-import { getFormErrors } from '@dashboard/utils/errors';
-import getOrderErrorMessage from '@dashboard/utils/errors/order';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { defineMessages, useIntl } from 'react-intl';
+import { IMoney } from "@dashboard/components/Money";
+import PriceField from "@dashboard/components/PriceField";
+import { OrderErrorFragment } from "@dashboard/graphql";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { defineMessages, useIntl } from "react-intl";
 
-import { OrderRefundFormData } from '../OrderRefundPage/form';
+import { OrderRefundFormData } from "../OrderRefundPage/form";
 
 const useStyles = makeStyles(
   theme => ({
@@ -29,13 +29,13 @@ const useStyles = makeStyles(
     root: {
       ...theme.typography.body1,
       lineHeight: 1.9,
-      width: '100%',
+      width: "100%",
     },
     textRight: {
-      textAlign: 'right',
+      textAlign: "right",
     },
   }),
-  { name: 'OrderRefundAmount' },
+  { name: "OrderRefundAmount" },
 );
 
 interface RefundAmountInputProps {
@@ -51,27 +51,36 @@ interface RefundAmountInputProps {
 
 const messages = defineMessages({
   amountTooBig: {
-    id: 'fbH51z',
-    defaultMessage: 'Amount cannot be bigger than max refund',
-    description: 'Amount error message',
+    id: "fbH51z",
+    defaultMessage: "Amount cannot be bigger than max refund",
+    description: "Amount error message",
   },
   amountTooSmall: {
-    id: 'IKvOK+',
-    defaultMessage: 'Amount must be bigger than 0',
-    description: 'Amount error message',
+    id: "IKvOK+",
+    defaultMessage: "Amount must be bigger than 0",
+    description: "Amount error message",
   },
   label: {
-    id: 'lrq8O6',
-    defaultMessage: 'Amount',
-    description: 'order refund amount, input label',
+    id: "lrq8O6",
+    defaultMessage: "Amount",
+    description: "order refund amount, input label",
   },
 });
 
 const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
-  const { data, maxRefund, amountTooSmall, amountTooBig, currencySymbol, disabled, errors, onChange } = props;
+  const {
+    data,
+    maxRefund,
+    amountTooSmall,
+    amountTooBig,
+    currencySymbol,
+    disabled,
+    errors,
+    onChange,
+  } = props;
   const intl = useIntl();
   const classes = useStyles(props);
-  const formErrors = getFormErrors(['amount'], errors);
+  const formErrors = getFormErrors(["amount"], errors);
 
   const isError = !!formErrors.amount || amountTooSmall || amountTooBig;
 
@@ -80,13 +89,13 @@ const RefundAmountInput: React.FC<RefundAmountInputProps> = props => {
       disabled={disabled}
       onChange={onChange}
       currencySymbol={currencySymbol}
-      name={'amount' as keyof FormData}
+      name={"amount" as keyof FormData}
       value={data.amount}
       label={intl.formatMessage(messages.label)}
       className={classes.priceField}
       InputProps={{ inputProps: { max: maxRefund?.amount } }}
       inputProps={{
-        'data-test-id': 'amountInput',
+        "data-test-id": "amountInput",
         max: maxRefund?.amount,
       }}
       error={isError}

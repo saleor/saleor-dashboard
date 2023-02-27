@@ -1,2 +1,2 @@
-export * from './DeleteIconButton';
-export { default } from './DeleteIconButton';
+export * from "./DeleteIconButton";
+export { default } from "./DeleteIconButton";

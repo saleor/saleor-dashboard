@@ -1,21 +1,24 @@
-import TextWithSelectField from '@dashboard/components/TextWithSelectField';
-import { useChannelCurrenciesQuery } from '@dashboard/graphql';
-import { ChangeEvent, FormChange } from '@dashboard/hooks/useForm';
-import useLocalStorage from '@dashboard/hooks/useLocalStorage';
-import { mapSingleValueNodeToChoice } from '@dashboard/utils/maps';
-import * as React from 'react';
-import { useEffect } from 'react';
-import { useIntl } from 'react-intl';
+import TextWithSelectField from "@dashboard/components/TextWithSelectField";
+import { useChannelCurrenciesQuery } from "@dashboard/graphql";
+import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import { mapSingleValueNodeToChoice } from "@dashboard/utils/maps";
+import * as React from "react";
+import { useEffect } from "react";
+import { useIntl } from "react-intl";
 
-import { GiftCardBulkCreateFormErrors, GiftCardCreateCommonFormData } from '../GiftCardBulkCreateDialog/types';
-import { getGiftCardErrorMessage } from '../GiftCardUpdate/messages';
-import { giftCardCreateMessages as messages } from './messages';
-import { useGiftCardCreateFormStyles as useStyles } from './styles';
+import {
+  GiftCardBulkCreateFormErrors,
+  GiftCardCreateCommonFormData,
+} from "../GiftCardBulkCreateDialog/types";
+import { getGiftCardErrorMessage } from "../GiftCardUpdate/messages";
+import { giftCardCreateMessages as messages } from "./messages";
+import { useGiftCardCreateFormStyles as useStyles } from "./styles";
 
 interface GiftCardCreateMoneyInputProps {
   change: FormChange;
   errors: GiftCardBulkCreateFormErrors;
-  data: Pick<GiftCardCreateCommonFormData, 'balanceCurrency' | 'balanceAmount'>;
+  data: Pick<GiftCardCreateCommonFormData, "balanceCurrency" | "balanceAmount">;
   set: (data: Partial<GiftCardCreateCommonFormData>) => void;
 }
 
@@ -32,10 +35,13 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
 
   const { channelCurrencies } = channelCurrenciesData?.shop;
 
-  const [savedCurrency, setCurrency] = useLocalStorage('giftCardCreateCurrency', undefined);
+  const [savedCurrency, setCurrency] = useLocalStorage("giftCardCreateCurrency", undefined);
 
   const getInitialCurrency = () => {
-    if (savedCurrency && !!channelCurrencies.find((currency: string) => currency === savedCurrency)) {
+    if (
+      savedCurrency &&
+      !!channelCurrencies.find((currency: string) => currency === savedCurrency)
+    ) {
       return savedCurrency;
     }
 
@@ -49,7 +55,7 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
   }, []);
 
   const handleInputChange = (event: ChangeEvent<any>) => {
-    if (event.target?.name === 'balanceCurrency') {
+    if (event.target?.name === "balanceCurrency") {
       setCurrency(event.target?.value);
     }
 
@@ -64,14 +70,14 @@ const GiftCardCreateMoneyInput: React.FC<GiftCardCreateMoneyInputProps> = ({
       choices={mapSingleValueNodeToChoice(channelCurrencies)}
       containerClassName={classes.fullWidthContainer}
       textFieldProps={{
-        type: 'float',
+        type: "float",
         label: intl.formatMessage(messages.amountLabel),
-        name: 'balanceAmount',
+        name: "balanceAmount",
         value: balanceAmount,
         minValue: 0,
       }}
       selectFieldProps={{
-        name: 'balanceCurrency',
+        name: "balanceCurrency",
         value: balanceCurrency,
         className: classes.currencySelectField,
       }}

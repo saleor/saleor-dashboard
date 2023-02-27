@@ -1,18 +1,27 @@
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import Money from '@dashboard/components/Money';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableCellAvatar from '@dashboard/components/TableCellAvatar';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { OrderRefundDataQuery } from '@dashboard/graphql';
-import { FormsetChange } from '@dashboard/hooks/useFormset';
-import { renderCollection } from '@dashboard/misc';
-import { Card, CardContent, Table, TableBody, TableCell, TableHead, TextField, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import Money from "@dashboard/components/Money";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { OrderRefundDataQuery } from "@dashboard/graphql";
+import { FormsetChange } from "@dashboard/hooks/useFormset";
+import { renderCollection } from "@dashboard/misc";
+import {
+  Card,
+  CardContent,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { OrderRefundFormData } from '../OrderRefundPage/form';
+import { OrderRefundFormData } from "../OrderRefundPage/form";
 
 const useStyles = makeStyles(
   theme => {
@@ -27,7 +36,7 @@ const useStyles = makeStyles(
         paddingTop: 0,
       },
       colQuantity: {
-        textAlign: 'right',
+        textAlign: "right",
         width: 210,
       },
       notice: {
@@ -43,18 +52,18 @@ const useStyles = makeStyles(
       remainingQuantity: {
         ...inputPadding,
         color: theme.palette.text.secondary,
-        whiteSpace: 'nowrap',
+        whiteSpace: "nowrap",
       },
       setMaximalQuantityButton: {
         marginTop: theme.spacing(1),
       },
     };
   },
-  { name: 'OrderRefundUnfulfilledProducts' },
+  { name: "OrderRefundUnfulfilledProducts" },
 );
 
 interface OrderRefundUnfulfilledProductsProps {
-  unfulfilledLines: OrderRefundDataQuery['order']['lines'];
+  unfulfilledLines: OrderRefundDataQuery["order"]["lines"];
   data: OrderRefundFormData;
   disabled: boolean;
   onRefundedProductQuantityChange: FormsetChange<string>;
@@ -62,7 +71,13 @@ interface OrderRefundUnfulfilledProductsProps {
 }
 
 const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsProps> = props => {
-  const { unfulfilledLines, data, disabled, onRefundedProductQuantityChange, onSetMaximalQuantities } = props;
+  const {
+    unfulfilledLines,
+    data,
+    disabled,
+    onRefundedProductQuantityChange,
+    onSetMaximalQuantities,
+  } = props;
   const classes = useStyles({});
   const intl = useIntl();
 
@@ -70,9 +85,9 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'B/y6LC',
-          defaultMessage: 'Unfulfilled Products',
-          description: 'section header',
+          id: "B/y6LC",
+          defaultMessage: "Unfulfilled Products",
+          description: "section header",
         })}
       />
       <CardContent className={classes.cartContent}>
@@ -88,23 +103,43 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
           onClick={onSetMaximalQuantities}
           data-test-id="set-maximal-quantity-unfulfilled-button"
         >
-          <FormattedMessage id="2W4EBM" defaultMessage="Set maximal quantities" description="button" />
+          <FormattedMessage
+            id="2W4EBM"
+            defaultMessage="Set maximal quantities"
+            description="button"
+          />
         </Button>
       </CardContent>
       <Table>
         <TableHead>
           <TableRowLink>
             <TableCell>
-              <FormattedMessage id="FNT4b+" defaultMessage="Product" description="tabel column header" />
+              <FormattedMessage
+                id="FNT4b+"
+                defaultMessage="Product"
+                description="tabel column header"
+              />
             </TableCell>
             <TableCell>
-              <FormattedMessage id="5aiFbL" defaultMessage="Price" description="tabel column header" />
+              <FormattedMessage
+                id="5aiFbL"
+                defaultMessage="Price"
+                description="tabel column header"
+              />
             </TableCell>
             <TableCell>
-              <FormattedMessage id="Tl+7X4" defaultMessage="Refunded Qty" description="tabel column header" />
+              <FormattedMessage
+                id="Tl+7X4"
+                defaultMessage="Refunded Qty"
+                description="tabel column header"
+              />
             </TableCell>
             <TableCell>
-              <FormattedMessage id="+PclgM" defaultMessage="Total" description="tabel column header" />
+              <FormattedMessage
+                id="+PclgM"
+                defaultMessage="Total"
+                description="tabel column header"
+              />
             </TableCell>
           </TableRowLink>
         </TableHead>
@@ -117,14 +152,17 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
               );
               const lineQuantity = line?.quantityToFulfill;
               const isError =
-                Number(selectedLineQuantity?.value) > lineQuantity || Number(selectedLineQuantity?.value) < 0;
+                Number(selectedLineQuantity?.value) > lineQuantity ||
+                Number(selectedLineQuantity?.value) < 0;
 
               return (
                 <TableRowLink key={line?.id}>
                   <TableCellAvatar thumbnail={line?.thumbnail?.url}>
                     {line?.productName ? line?.productName : <Skeleton />}
                   </TableCellAvatar>
-                  <TableCell>{line?.unitPrice ? <Money money={line?.unitPrice.gross} /> : <Skeleton />}</TableCell>
+                  <TableCell>
+                    {line?.unitPrice ? <Money money={line?.unitPrice.gross} /> : <Skeleton />}
+                  </TableCell>
                   <TableCell className={classes.colQuantity}>
                     {lineQuantity || lineQuantity === 0 ? (
                       <TextField
@@ -132,14 +170,16 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
                         type="number"
                         inputProps={{
                           className: classes.quantityInnerInput,
-                          'data-test-id': 'quantity-input' + line?.id,
+                          "data-test-id": "quantity-input" + line?.id,
                           max: lineQuantity.toString(),
                           min: 0,
-                          style: { textAlign: 'right' },
+                          style: { textAlign: "right" },
                         }}
                         fullWidth
                         value={selectedLineQuantity?.value}
-                        onChange={event => onRefundedProductQuantityChange(line.id, event.target.value)}
+                        onChange={event =>
+                          onRefundedProductQuantityChange(line.id, event.target.value)
+                        }
                         InputProps={{
                           endAdornment: lineQuantity && (
                             <div className={classes.remainingQuantity}>/ {lineQuantity}</div>
@@ -149,9 +189,9 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
                         helperText={
                           isError &&
                           intl.formatMessage({
-                            id: 'xoyCZ/',
-                            defaultMessage: 'Improper value',
-                            description: 'error message',
+                            id: "xoyCZ/",
+                            defaultMessage: "Improper value",
+                            description: "error message",
                           })
                         }
                       />
@@ -164,7 +204,9 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
                       <Money
                         money={{
                           ...line.unitPrice.gross,
-                          amount: (line.unitPrice.gross.amount ?? 0) * Number(selectedLineQuantity?.value),
+                          amount:
+                            (line.unitPrice.gross.amount ?? 0) *
+                            Number(selectedLineQuantity?.value),
                         }}
                       />
                     )) || <Skeleton />}
@@ -185,5 +227,5 @@ const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsPro
     </Card>
   );
 };
-OrderRefundUnfulfilledProducts.displayName = 'OrderRefundUnfulfilledProducts';
+OrderRefundUnfulfilledProducts.displayName = "OrderRefundUnfulfilledProducts";
 export default OrderRefundUnfulfilledProducts;

@@ -1,8 +1,4 @@
-import {
-  getTaxClassList,
-  getTaxConfigurationList,
-  updateTaxes,
-} from "../requests/Taxes";
+import { getTaxClassList, getTaxConfigurationList, updateTaxes } from "../requests/Taxes";
 
 export function updateTaxConfigurationForChannel({
   channelSlug = "default-channel",
@@ -25,9 +21,7 @@ export function updateTaxConfigurationForChannel({
 
 export function getDefaultTaxClass() {
   getTaxClassList().then(taxClassArray => {
-    const taxClass = taxClassArray.find(
-      taxClassItem => taxClassItem.node.name === "No Taxes",
-    );
+    const taxClass = taxClassArray.find(taxClassItem => taxClassItem.node.name === "No Taxes");
     return taxClass.node;
   });
 }

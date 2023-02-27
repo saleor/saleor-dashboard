@@ -10,5 +10,5 @@ export const CONFIGURATION_SELECTORS = {
   attributes: '[data-test-id*="configuration-menu-attributes"]',
   productTypes: '[data-test-id*="configuration-menu-product-types"]',
   plugin: '[data-test-id*="configuration-plugins-pages"]',
-  warehouse: '[data-test-id*="configuration-menu-warehouses"]'
+  warehouse: '[data-test-id*="configuration-menu-warehouses"]',
 };

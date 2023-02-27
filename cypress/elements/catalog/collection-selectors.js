@@ -7,6 +7,5 @@ export const COLLECTION_SELECTORS = {
   placeholder: "[data-placeholder]",
 };
 
-export const collectionRow = collectionId =>
-  `[data-test-id*="${collectionId}"]`;
+export const collectionRow = collectionId => `[data-test-id*="${collectionId}"]`;
 export const productRow = productId => `[data-test-id*="${productId}"]`;

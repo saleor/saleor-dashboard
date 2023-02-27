@@ -1,7 +1,11 @@
-import { DatagridChange } from '@dashboard/components/Datagrid/useDatagridChange';
-import { getColumnAttribute, isCurrentRow } from '@dashboard/products/utils/datagrid';
+import { DatagridChange } from "@dashboard/components/Datagrid/useDatagridChange";
+import { getColumnAttribute, isCurrentRow } from "@dashboard/products/utils/datagrid";
 
-export function getAttributeData(data: DatagridChange[], currentIndex: number, removedIds: number[]) {
+export function getAttributeData(
+  data: DatagridChange[],
+  currentIndex: number,
+  removedIds: number[],
+) {
   return data
     .filter(change => isCurrentRow(change.row, currentIndex, removedIds))
     .filter(byHavingAnyAttribute)

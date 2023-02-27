@@ -1,4 +1,4 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -6,12 +6,12 @@ export const useStyles = makeStyles(
       marginBottom: theme.spacing(3),
     },
     header: {
-      display: 'flex',
-      justifyContent: 'space-between',
+      display: "flex",
+      justifyContent: "space-between",
       marginBottom: 0,
     },
   }),
   {
-    name: 'OrderDetailsPage',
+    name: "OrderDetailsPage",
   },
 );

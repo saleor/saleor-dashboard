@@ -7,11 +7,7 @@ import { PERMISSION_GROUP_DETAILS } from "../../elements/permissionGroup/permiss
 import { PERMISSION_GROUP_LIST } from "../../elements/permissionGroup/permissionGroupsList";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import {
-  permissionGroupDetails,
-  staffMemberDetailsUrl,
-  urlList,
-} from "../../fixtures/urlList";
+import { permissionGroupDetails, staffMemberDetailsUrl, urlList } from "../../fixtures/urlList";
 import { TEST_ADMIN_USER } from "../../fixtures/users.js";
 import {
   createPermissionGroup,
@@ -46,9 +42,7 @@ describe("Permissions groups", () => {
         .type(permissionName)
         .get(PERMISSION_GROUP_DETAILS.productsPermissionCheckbox)
         .check()
-        .get(
-          PERMISSION_GROUP_DETAILS.productsTypesAndAttributesPermissionCheckbox,
-        )
+        .get(PERMISSION_GROUP_DETAILS.productsTypesAndAttributesPermissionCheckbox)
         .check()
         .get(BUTTON_SELECTORS.confirm)
         .click()
@@ -57,10 +51,7 @@ describe("Permissions groups", () => {
         .get(BUTTON_SELECTORS.back)
         .click()
         .waitForProgressBarToNotExist();
-      cy.contains(
-        PERMISSION_GROUP_LIST.permissionGroupRow,
-        permissionName,
-      ).should("be.visible");
+      cy.contains(PERMISSION_GROUP_LIST.permissionGroupRow, permissionName).should("be.visible");
     },
   );
 

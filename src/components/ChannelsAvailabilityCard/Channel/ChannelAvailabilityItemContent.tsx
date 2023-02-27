@@ -1,18 +1,18 @@
-import { ChannelData } from '@dashboard/channels/utils';
-import ControlledCheckbox from '@dashboard/components/ControlledCheckbox';
-import Hr from '@dashboard/components/Hr';
-import RadioSwitchField from '@dashboard/components/RadioSwitchField';
-import useCurrentDate from '@dashboard/hooks/useCurrentDate';
-import useDateLocalize from '@dashboard/hooks/useDateLocalize';
-import { getFormErrors, getProductErrorMessage } from '@dashboard/utils/errors';
-import { TextField, Typography } from '@material-ui/core';
-import clsx from 'clsx';
-import React, { useState } from 'react';
-import { useIntl } from 'react-intl';
+import { ChannelData } from "@dashboard/channels/utils";
+import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import Hr from "@dashboard/components/Hr";
+import RadioSwitchField from "@dashboard/components/RadioSwitchField";
+import useCurrentDate from "@dashboard/hooks/useCurrentDate";
+import useDateLocalize from "@dashboard/hooks/useDateLocalize";
+import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
+import { TextField, Typography } from "@material-ui/core";
+import clsx from "clsx";
+import React, { useState } from "react";
+import { useIntl } from "react-intl";
 
-import { useStyles } from '../styles';
-import { ChannelOpts, ChannelsAvailabilityError, Messages } from '../types';
-import { availabilityItemMessages } from './messages';
+import { useStyles } from "../styles";
+import { ChannelOpts, ChannelsAvailabilityError, Messages } from "../types";
+import { availabilityItemMessages } from "./messages";
 
 export interface ChannelContentProps {
   disabled?: boolean;
@@ -22,7 +22,13 @@ export interface ChannelContentProps {
   onChange: (id: string, data: ChannelOpts) => void;
 }
 
-const ChannelContent: React.FC<ChannelContentProps> = ({ data, disabled, errors, messages, onChange }) => {
+const ChannelContent: React.FC<ChannelContentProps> = ({
+  data,
+  disabled,
+  errors,
+  messages,
+  onChange,
+}) => {
   const {
     availableForPurchase,
     isAvailableForPurchase: isAvailable,
@@ -53,7 +59,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({ data, disabled, errors,
     intl.formatMessage(availabilityItemMessages.sinceDate, {
       date: localizeDate(date),
     });
-  const formErrors = getFormErrors(['availableForPurchaseDate', 'publicationDate'], errors);
+  const formErrors = getFormErrors(["availableForPurchaseDate", "publicationDate"], errors);
 
   return (
     <div className={classes.container}>
@@ -93,7 +99,10 @@ const ChannelContent: React.FC<ChannelContentProps> = ({ data, disabled, errors,
       />
       {!isPublished && (
         <>
-          <Typography className={classes.setPublicationDate} onClick={() => setPublicationDate(!isPublicationDate)}>
+          <Typography
+            className={classes.setPublicationDate}
+            onClick={() => setPublicationDate(!isPublicationDate)}
+          >
             {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
           </Typography>
           {isPublicationDate && (
@@ -104,8 +113,12 @@ const ChannelContent: React.FC<ChannelContentProps> = ({ data, disabled, errors,
               name={`channel:publicationDate:${id}`}
               type="date"
               fullWidth={true}
-              helperText={formErrors.publicationDate ? getProductErrorMessage(formErrors.publicationDate, intl) : ''}
-              value={publicationDate || ''}
+              helperText={
+                formErrors.publicationDate
+                  ? getProductErrorMessage(formErrors.publicationDate, intl)
+                  : ""
+              }
+              value={publicationDate || ""}
               onChange={e =>
                 onChange(id, {
                   ...formData,
@@ -132,9 +145,13 @@ const ChannelContent: React.FC<ChannelContentProps> = ({ data, disabled, errors,
             firstOptionLabel={
               <>
                 <p className={classes.label}>{messages.availableLabel}</p>
-                {isAvailable && availableForPurchase && Date.parse(availableForPurchase) < dateNow && (
-                  <span className={classes.secondLabel}>{visibleMessage(availableForPurchase)}</span>
-                )}
+                {isAvailable &&
+                  availableForPurchase &&
+                  Date.parse(availableForPurchase) < dateNow && (
+                    <span className={classes.secondLabel}>
+                      {visibleMessage(availableForPurchase)}
+                    </span>
+                  )}
               </>
             }
             name={`channel:isAvailableForPurchase:${id}`}
@@ -158,7 +175,10 @@ const ChannelContent: React.FC<ChannelContentProps> = ({ data, disabled, errors,
           />
           {!isAvailable && (
             <>
-              <Typography className={classes.setPublicationDate} onClick={() => setAvailableDate(!isAvailableDate)}>
+              <Typography
+                className={classes.setPublicationDate}
+                onClick={() => setAvailableDate(!isAvailableDate)}
+              >
                 {messages.setAvailabilityDateLabel}
               </Typography>
               {isAvailableDate && (
@@ -172,9 +192,9 @@ const ChannelContent: React.FC<ChannelContentProps> = ({ data, disabled, errors,
                   helperText={
                     formErrors.availableForPurchaseDate
                       ? getProductErrorMessage(formErrors.availableForPurchaseDate, intl)
-                      : ''
+                      : ""
                   }
-                  value={availableForPurchase ? availableForPurchase : ''}
+                  value={availableForPurchase ? availableForPurchase : ""}
                   onChange={e =>
                     onChange(id, {
                       ...formData,

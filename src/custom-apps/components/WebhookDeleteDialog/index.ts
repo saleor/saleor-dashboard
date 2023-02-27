@@ -1,2 +1,2 @@
-export { default } from './WebhookDeleteDialog';
-export * from './WebhookDeleteDialog';
+export { default } from "./WebhookDeleteDialog";
+export * from "./WebhookDeleteDialog";

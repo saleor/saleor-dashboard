@@ -1,19 +1,19 @@
-import { AppPageTabs } from '@dashboard/apps/components/AppPageTabs/AppPageTabs';
-import { useAppsPageNavigation } from '@dashboard/apps/hooks/useAppsPageNavigation';
-import { useSaleorApps } from '@dashboard/apps/hooks/useSaleorApps';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import { AppListItemFragment, AppsInstallationsQuery } from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { sectionNames } from '@dashboard/intl';
-import { marketplaceUrlResolver } from '@dashboard/marketplace/marketplace-url-resolver';
-import { ListProps } from '@dashboard/types';
-import { Button, makeStyles } from '@saleor/macaw-ui';
-import React, { useEffect, useMemo } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { AppPageTabs } from "@dashboard/apps/components/AppPageTabs/AppPageTabs";
+import { useAppsPageNavigation } from "@dashboard/apps/hooks/useAppsPageNavigation";
+import { useSaleorApps } from "@dashboard/apps/hooks/useSaleorApps";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import { AppListItemFragment, AppsInstallationsQuery } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { marketplaceUrlResolver } from "@dashboard/marketplace/marketplace-url-resolver";
+import { ListProps } from "@dashboard/types";
+import { Button, makeStyles } from "@saleor/macaw-ui";
+import React, { useEffect, useMemo } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import AppsInProgress from '../AppsInProgress/AppsInProgress';
-import InstalledApps from '../InstalledApps/InstalledApps';
+import AppsInProgress from "../AppsInProgress/AppsInProgress";
+import InstalledApps from "../InstalledApps/InstalledApps";
 
 export interface AppsListPageProps extends ListProps {
   installedAppsList: AppListItemFragment[];
@@ -29,12 +29,12 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(4),
     },
     browseMarketplaceContainer: {
-      display: 'flex',
-      justifyContent: 'flex-end',
+      display: "flex",
+      justifyContent: "flex-end",
     },
   }),
   {
-    name: 'AppsListPageStyles',
+    name: "AppsListPageStyles",
   },
 );
 
@@ -65,7 +65,10 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
   const thirdPartyApps = useMemo(
     () =>
       installedAppsList?.filter(
-        app => !(fetchedSaleorApps ?? []).find(fetchedApp => app.manifestUrl?.includes(fetchedApp.hostname)),
+        app =>
+          !(fetchedSaleorApps ?? []).find(fetchedApp =>
+            app.manifestUrl?.includes(fetchedApp.hostname),
+          ),
       ),
     [installedAppsList, fetchedSaleorApps],
   );
@@ -73,7 +76,9 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
   const saleorApps = useMemo<AppListItemFragment[]>(
     () =>
       (fetchedSaleorApps || []).reduce<AppListItemFragment[]>((acc, app) => {
-        const foundedApp = installedAppsList?.find(installedApp => installedApp.manifestUrl?.includes(app.hostname));
+        const foundedApp = installedAppsList?.find(installedApp =>
+          installedApp.manifestUrl?.includes(app.hostname),
+        );
 
         if (foundedApp) {
           acc.push(foundedApp);
@@ -86,7 +91,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
 
   const renderContent = () => {
     switch (activeTab) {
-      case 'third-party': {
+      case "third-party": {
         return (
           <>
             <p>
@@ -108,9 +113,9 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
             )}
             <InstalledApps
               title={intl.formatMessage({
-                id: 'BvmnJq',
-                defaultMessage: 'Third Party Apps',
-                description: 'section header',
+                id: "BvmnJq",
+                defaultMessage: "Third Party Apps",
+                description: "section header",
               })}
               appsList={thirdPartyApps}
               onSettingsClick={onSettingsAppOpen}
@@ -122,7 +127,7 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
           </>
         );
       }
-      case 'saleor-apps': {
+      case "saleor-apps": {
         return (
           <>
             <p>
@@ -134,9 +139,9 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
             </p>
             <InstalledApps
               title={intl.formatMessage({
-                id: 'PbQJY5',
-                defaultMessage: 'Saleor Apps',
-                description: 'section header',
+                id: "PbQJY5",
+                defaultMessage: "Saleor Apps",
+                description: "section header",
               })}
               appsList={saleorApps}
               onSettingsClick={onSettingsAppOpen}
@@ -172,5 +177,5 @@ const AppsListPage: React.FC<AppsListPageProps> = ({
   );
 };
 
-AppsListPage.displayName = 'AppsListPage';
+AppsListPage.displayName = "AppsListPage";
 export default AppsListPage;

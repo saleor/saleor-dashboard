@@ -17,10 +17,7 @@ import {
 } from "../../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../../support/api/utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../../../support/api/utils/storeFront/checkoutUtils";
-import {
-  createShippingRate,
-  rateOptions,
-} from "../../../../support/pages/shippingMethodPage";
+import { createShippingRate, rateOptions } from "../../../../support/pages/shippingMethodPage";
 
 describe("As a staff user I want to manage shipping weights", () => {
   const startsWith = "weightsLimits";
@@ -52,13 +49,11 @@ describe("As a staff user I want to manage shipping weights", () => {
           warehouse = warehouseResp;
 
           updateChannelWarehouses(defaultChannel.id, warehouse.id);
-          createShippingZone(name, "US", defaultChannel.id, warehouse.id).then(
-            shippingZoneResp => {
-              shippingZone = shippingZoneResp;
+          createShippingZone(name, "US", defaultChannel.id, warehouse.id).then(shippingZoneResp => {
+            shippingZone = shippingZoneResp;
 
-              createTypeAttributeAndCategoryForProduct({ name });
-            },
-          );
+            createTypeAttributeAndCategoryForProduct({ name });
+          });
         });
       })
       .then(({ attribute, productType, category }) => {

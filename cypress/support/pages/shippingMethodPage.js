@@ -4,12 +4,7 @@ import { SHIPPING_RATE_DETAILS } from "../../elements/shipping/shipping-rate-det
 import { SHIPPING_ZONE_DETAILS } from "../../elements/shipping/shipping-zone-details";
 import { SHIPPING_ZONES_LIST } from "../../elements/shipping/shipping-zones-list";
 
-export function createShippingZone(
-  shippingName,
-  warehouseName,
-  country,
-  channelName,
-) {
+export function createShippingZone(shippingName, warehouseName, country, channelName) {
   cy.get(SHIPPING_ZONES_LIST.addShippingZone).click();
   fillUpShippingZoneData({
     shippingName,
@@ -19,12 +14,7 @@ export function createShippingZone(
   });
 }
 
-export function fillUpShippingZoneData({
-  shippingName,
-  warehouseName,
-  country,
-  channelName,
-}) {
+export function fillUpShippingZoneData({ shippingName, warehouseName, country, channelName }) {
   cy.get(SHIPPING_ZONE_DETAILS.nameInput)
     .clearAndType(shippingName)
     .get(SHIPPING_ZONE_DETAILS.descriptionInput)
@@ -111,13 +101,7 @@ export function enterAndFillUpShippingRate({
   });
 }
 
-export function fillUpShippingRate({
-  rateName,
-  price,
-  weightLimits,
-  priceLimits,
-  deliveryTime,
-}) {
+export function fillUpShippingRate({ rateName, price, weightLimits, priceLimits, deliveryTime }) {
   cy.waitForProgressBarToNotBeVisible()
     .get(SHARED_ELEMENTS.richTextEditor.empty)
     .should("exist")

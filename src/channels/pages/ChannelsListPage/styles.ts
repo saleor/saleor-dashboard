@@ -1,19 +1,19 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       colName: {
-        '&&': {
-          width: 'auto',
+        "&&": {
+          width: "auto",
         },
       },
     },
     colAction: {
-      '&&': {
+      "&&": {
         paddingRight: theme.spacing(3),
       },
-      textAlign: 'right',
+      textAlign: "right",
       width: 140,
     },
     colName: {
@@ -21,17 +21,17 @@ export const useStyles = makeStyles(
       width: 250,
     },
     colRight: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     columnPicker: {
       marginRight: theme.spacing(3),
     },
     table: {
-      tableLayout: 'fixed',
+      tableLayout: "fixed",
     },
     tableRow: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
   }),
-  { name: 'ChannelsListPage' },
+  { name: "ChannelsListPage" },
 );

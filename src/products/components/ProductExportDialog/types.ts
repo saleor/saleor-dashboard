@@ -1,4 +1,4 @@
-import { ExportScope, FileTypesEnum } from '@dashboard/graphql';
+import { ExportScope, FileTypesEnum } from "@dashboard/graphql";
 
 export interface ExportSettingsInput {
   scope: ExportScope;

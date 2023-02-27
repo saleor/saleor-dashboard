@@ -15,10 +15,7 @@ import {
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
+import { createShipping, deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 
 describe("Products without shipment option", () => {
   const startsWith = "WithoutShipmentCheckout-";
@@ -55,19 +52,13 @@ describe("Products without shipment option", () => {
           minProductPrice: 100,
         });
       })
+      .then(({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
+        warehouse = warehouseResp;
+        shippingMethod = shippingMethodResp;
+        createTypeAttributeAndCategoryForProduct({ name });
+      })
       .then(
-        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
-          warehouse = warehouseResp;
-          shippingMethod = shippingMethodResp;
-          createTypeAttributeAndCategoryForProduct({ name });
-        },
-      )
-      .then(
-        ({
-          attribute: attributeResp,
-          productType: productTypeResp,
-          category: categoryResp,
-        }) => {
+        ({ attribute: attributeResp, productType: productTypeResp, category: categoryResp }) => {
           createProductInChannel({
             attributeId: attributeResp.id,
             categoryId: categoryResp.id,
@@ -110,23 +101,15 @@ describe("Products without shipment option", () => {
         auth: "token",
       })
         .then(({ checkout }) => {
-          expect(
-            checkout.shippingMethods,
-            "expect no available shipping",
-          ).to.have.length(0);
+          expect(checkout.shippingMethods, "expect no available shipping").to.have.length(0);
           addProductsToCheckout(checkout.id, productWithShipping, 1);
         })
         .then(({ checkout }) => {
-          expect(
-            checkout.shippingMethods,
-            "expect no available shipping",
-          ).to.have.length(0);
+          expect(checkout.shippingMethods, "expect no available shipping").to.have.length(0);
           addShippingMethod(checkout.id, shippingMethod.id);
         })
         .then(({ errors }) => {
-          expect(errors[0].field, "expect error in shipping method").to.be.eq(
-            "shippingMethodId",
-          );
+          expect(errors[0].field, "expect error in shipping method").to.be.eq("shippingMethodId");
         });
     },
   );

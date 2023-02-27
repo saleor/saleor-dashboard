@@ -1,17 +1,17 @@
-import placeholderImage from '@assets/images/placeholder255x255.png';
-import { channelsList } from '@dashboard/channels/fixtures';
-import { collections } from '@dashboard/collections/fixtures';
-import { fetchMoreProps, limits, limitsReached } from '@dashboard/fixtures';
-import { ProductErrorCode, ProductVariantBulkErrorCode } from '@dashboard/graphql';
-import Decorator from '@dashboard/storybook/Decorator';
-import { taxClasses } from '@dashboard/taxes/fixtures';
-import { warehouseList } from '@dashboard/warehouses/fixtures';
-import { storiesOf } from '@storybook/react';
-import React from 'react';
+import placeholderImage from "@assets/images/placeholder255x255.png";
+import { channelsList } from "@dashboard/channels/fixtures";
+import { collections } from "@dashboard/collections/fixtures";
+import { fetchMoreProps, limits, limitsReached } from "@dashboard/fixtures";
+import { ProductErrorCode, ProductVariantBulkErrorCode } from "@dashboard/graphql";
+import Decorator from "@dashboard/storybook/Decorator";
+import { taxClasses } from "@dashboard/taxes/fixtures";
+import { warehouseList } from "@dashboard/warehouses/fixtures";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
-import { product as productFixture } from '../../fixtures';
-import ProductUpdatePage, { ProductUpdatePageProps } from './ProductUpdatePage';
-import { ProductUpdateFormData } from './types';
+import { product as productFixture } from "../../fixtures";
+import ProductUpdatePage, { ProductUpdatePageProps } from "./ProductUpdatePage";
+import { ProductUpdateFormData } from "./types";
 
 const product = productFixture(placeholderImage);
 
@@ -19,14 +19,14 @@ const props: ProductUpdatePageProps = {
   channels: channelsList,
   variantListErrors: [
     {
-      __typename: 'DatagridError',
+      __typename: "DatagridError",
       variantId: product.variants[0].id,
-      type: 'channel',
+      type: "channel",
       channelIds: [channelsList[1].id],
       error: ProductVariantBulkErrorCode.PRODUCT_NOT_ASSIGNED_TO_CHANNEL,
     },
   ],
-  productId: '123',
+  productId: "123",
   isSimpleProduct: false,
   categories: [product.category],
   channelsErrors: [],
@@ -57,7 +57,7 @@ const props: ProductUpdatePageProps = {
   product,
   referencePages: [],
   referenceProducts: [],
-  saveButtonBarState: 'default',
+  saveButtonBarState: "default",
   taxClasses,
   fetchMoreTaxClasses: undefined,
   variants: product.variants,
@@ -65,11 +65,11 @@ const props: ProductUpdatePageProps = {
   attributeValues: [],
 };
 
-storiesOf('Products / Product edit', module)
+storiesOf("Products / Product edit", module)
   .addDecorator(Decorator)
-  .add('when data is fully loaded', () => <ProductUpdatePage {...props} />)
-  .add('when product has no images', () => <ProductUpdatePage {...props} media={[]} />)
-  .add('when product has no variants', () => (
+  .add("when data is fully loaded", () => <ProductUpdatePage {...props} />)
+  .add("when product has no images", () => <ProductUpdatePage {...props} media={[]} />)
+  .add("when product has no variants", () => (
     <ProductUpdatePage
       {...props}
       product={{
@@ -78,7 +78,7 @@ storiesOf('Products / Product edit', module)
       }}
     />
   ))
-  .add('when loading data', () => (
+  .add("when loading data", () => (
     <ProductUpdatePage
       {...props}
       disabled={true}
@@ -90,7 +90,7 @@ storiesOf('Products / Product edit', module)
       media={undefined}
     />
   ))
-  .add('no variants', () => (
+  .add("no variants", () => (
     <ProductUpdatePage
       {...props}
       product={{
@@ -102,7 +102,7 @@ storiesOf('Products / Product edit', module)
       }}
     />
   ))
-  .add('no stock and no variants', () => (
+  .add("no stock and no variants", () => (
     <ProductUpdatePage
       {...props}
       product={{
@@ -121,7 +121,7 @@ storiesOf('Products / Product edit', module)
       }}
     />
   ))
-  .add('no stock, no variants and no warehouses', () => (
+  .add("no stock, no variants and no warehouses", () => (
     <ProductUpdatePage
       {...props}
       warehouses={[]}
@@ -140,7 +140,7 @@ storiesOf('Products / Product edit', module)
       }}
     />
   ))
-  .add('no product attributes', () => (
+  .add("no product attributes", () => (
     <ProductUpdatePage
       {...props}
       product={{
@@ -149,30 +149,30 @@ storiesOf('Products / Product edit', module)
       }}
     />
   ))
-  .add('form errors', () => (
+  .add("form errors", () => (
     <ProductUpdatePage
       {...props}
       errors={(
         [
-          'attributes',
-          'category',
-          'chargeTaxes',
-          'collections',
-          'name',
-          'publicationDate',
-          'seoDescription',
-          'seoTitle',
-          'sku',
-          'stockQuantity',
-        ] as Array<keyof ProductUpdateFormData | 'attributes'>
+          "attributes",
+          "category",
+          "chargeTaxes",
+          "collections",
+          "name",
+          "publicationDate",
+          "seoDescription",
+          "seoTitle",
+          "sku",
+          "stockQuantity",
+        ] as Array<keyof ProductUpdateFormData | "attributes">
       ).map(field => ({
-        __typename: 'ProductError',
-        attributes: field === 'attributes' ? [product.attributes[0].attribute.id] : null,
+        __typename: "ProductError",
+        attributes: field === "attributes" ? [product.attributes[0].attribute.id] : null,
         code: ProductErrorCode.INVALID,
         field,
-        message: 'Attributes invalid',
+        message: "Attributes invalid",
       }))}
     />
   ))
-  .add('no limits', () => <ProductUpdatePage {...props} limits={undefined} />)
-  .add('limits reached', () => <ProductUpdatePage {...props} limits={limitsReached} />);
+  .add("no limits", () => <ProductUpdatePage {...props} limits={undefined} />)
+  .add("limits reached", () => <ProductUpdatePage {...props} limits={limitsReached} />);

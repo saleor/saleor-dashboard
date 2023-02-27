@@ -1,17 +1,17 @@
-import { AttributeInput } from '@dashboard/components/Attributes/Attributes';
-import { FileChoiceType } from '@dashboard/components/FileUploadField';
-import { MultiAutocompleteChoiceType } from '@dashboard/components/MultiAutocompleteSelectField';
-import { SingleAutocompleteChoiceType } from '@dashboard/components/SingleAutocompleteSelectField';
-import { SortableChipsFieldValueType } from '@dashboard/components/SortableChipsField';
+import { AttributeInput } from "@dashboard/components/Attributes/Attributes";
+import { FileChoiceType } from "@dashboard/components/FileUploadField";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
+import { SortableChipsFieldValueType } from "@dashboard/components/SortableChipsField";
 import {
   AttributeValueFragment,
   PageErrorWithAttributesFragment,
   ProductErrorWithAttributesFragment,
-} from '@dashboard/graphql';
-import { getProductErrorMessage } from '@dashboard/utils/errors';
-import getPageErrorMessage from '@dashboard/utils/errors/page';
-import { OutputData } from '@editorjs/editorjs';
-import { IntlShape } from 'react-intl';
+} from "@dashboard/graphql";
+import { getProductErrorMessage } from "@dashboard/utils/errors";
+import getPageErrorMessage from "@dashboard/utils/errors/page";
+import { OutputData } from "@editorjs/editorjs";
+import { IntlShape } from "react-intl";
 
 export function getSingleChoices(values: AttributeValueFragment[]): SingleAutocompleteChoiceType[] {
   return values.map(value => ({
@@ -28,7 +28,9 @@ export const getRichTextData = (attribute: AttributeInput): OutputData => {
 export function getFileChoice(attribute: AttributeInput): FileChoiceType {
   const attributeValue = attribute.value?.length > 0 && attribute.value[0];
 
-  const definedAttributeValue = attribute.data.values.find(definedValue => definedValue.slug === attributeValue);
+  const definedAttributeValue = attribute.data.values.find(
+    definedValue => definedValue.slug === attributeValue,
+  );
 
   if (definedAttributeValue) {
     return {
@@ -50,7 +52,9 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
   }
 
   return attribute.value.map(attributeValue => {
-    const definedAttributeValue = attribute.data.values.find(definedValue => definedValue.reference === attributeValue);
+    const definedAttributeValue = attribute.data.values.find(
+      definedValue => definedValue.reference === attributeValue,
+    );
     // If value has been previously assigned, use it's data
     if (!!definedAttributeValue) {
       return {
@@ -59,7 +63,9 @@ export function getReferenceDisplayValue(attribute: AttributeInput): SortableChi
       };
     }
 
-    const definedAttributeReference = attribute.data.references?.find(reference => reference.value === attributeValue);
+    const definedAttributeReference = attribute.data.references?.find(
+      reference => reference.value === attributeValue,
+    );
     // If value has not been yet assigned, use data of reference
     if (!!definedAttributeReference) {
       return definedAttributeReference;
@@ -79,12 +85,15 @@ export function getMultiChoices(values: AttributeValueFragment[]): MultiAutocomp
   }));
 }
 
-export function getSingleDisplayValue(attribute: AttributeInput, attributeValues: AttributeValueFragment[]): string {
+export function getSingleDisplayValue(
+  attribute: AttributeInput,
+  attributeValues: AttributeValueFragment[],
+): string {
   return (
     attributeValues.find(value => value.slug === attribute.value[0])?.name ||
     attribute.data.values.find(value => value.slug === attribute.value[0])?.name ||
     attribute.value[0] ||
-    ''
+    ""
   );
 }
 
@@ -119,9 +128,9 @@ export function getErrorMessage(
   intl: IntlShape,
 ): string {
   switch (err?.__typename) {
-    case 'ProductError':
+    case "ProductError":
       return getProductErrorMessage(err, intl);
-    case 'PageError':
+    case "PageError":
       return getPageErrorMessage(err, intl);
   }
 }

@@ -1,11 +1,11 @@
-import FormSpacer from '@dashboard/components/FormSpacer';
-import { OrderErrorFragment } from '@dashboard/graphql';
-import getOrderErrorMessage from '@dashboard/utils/errors/order';
-import { Typography } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { OrderErrorFragment } from "@dashboard/graphql";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import { Typography } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { useAddressTextErrorStyles } from './styles';
+import { useAddressTextErrorStyles } from "./styles";
 
 interface AddressTextErrorProps {
   orderError: OrderErrorFragment;

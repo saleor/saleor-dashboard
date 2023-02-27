@@ -1,58 +1,58 @@
-import Checkbox from '@dashboard/components/Checkbox';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableCellAvatar from '@dashboard/components/TableCellAvatar';
-import { AVATAR_MARGIN } from '@dashboard/components/TableCellAvatar/Avatar';
-import TableHead from '@dashboard/components/TableHead';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { CategoryDetailsQuery } from '@dashboard/graphql';
-import { maybe, renderCollection } from '@dashboard/misc';
-import { productUrl } from '@dashboard/products/urls';
-import { ListActions, ListProps, RelayToFlat } from '@dashboard/types';
-import { TableBody, TableCell, TableFooter } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import Checkbox from "@dashboard/components/Checkbox";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import { AVATAR_MARGIN } from "@dashboard/components/TableCellAvatar/Avatar";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { CategoryDetailsQuery } from "@dashboard/graphql";
+import { maybe, renderCollection } from "@dashboard/misc";
+import { productUrl } from "@dashboard/products/urls";
+import { ListActions, ListProps, RelayToFlat } from "@dashboard/types";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       colName: {
-        width: 'auto',
+        width: "auto",
       },
     },
     colFill: {
       padding: 0,
-      width: '100%',
+      width: "100%",
     },
     colName: {},
     colNameHeader: {
       marginLeft: AVATAR_MARGIN,
     },
     link: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
     table: {
-      tableLayout: 'fixed',
+      tableLayout: "fixed",
     },
     tableContainer: {
-      overflowX: 'scroll',
+      overflowX: "scroll",
     },
     textLeft: {
-      textAlign: 'left',
+      textAlign: "left",
     },
     textRight: {
-      textAlign: 'right',
+      textAlign: "right",
     },
   }),
   {
-    name: 'CategoryProductList',
+    name: "CategoryProductList",
   },
 );
 
 interface CategoryProductListProps extends ListProps, ListActions {
-  products: RelayToFlat<CategoryDetailsQuery['category']['products']>;
+  products: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
 }
 
 export const CategoryProductList: React.FC<CategoryProductListProps> = props => {
@@ -99,7 +99,7 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                   data-test-id="product-row"
                   selected={isSelected}
                   hover={!!product}
-                  key={product ? product.id : 'skeleton'}
+                  key={product ? product.id : "skeleton"}
                   href={product && productUrl(product.id)}
                   className={classes.link}
                 >
@@ -111,7 +111,10 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
                       onChange={() => toggle(product.id)}
                     />
                   </TableCell>
-                  <TableCellAvatar className={classes.colName} thumbnail={maybe(() => product.thumbnail.url)}>
+                  <TableCellAvatar
+                    className={classes.colName}
+                    thumbnail={maybe(() => product.thumbnail.url)}
+                  >
                     {product ? product.name : <Skeleton />}
                   </TableCellAvatar>
                 </TableRowLink>
@@ -131,5 +134,5 @@ export const CategoryProductList: React.FC<CategoryProductListProps> = props => 
   );
 };
 
-CategoryProductList.displayName = 'CategoryProductList';
+CategoryProductList.displayName = "CategoryProductList";
 export default CategoryProductList;

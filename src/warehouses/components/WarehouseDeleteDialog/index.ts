@@ -1,2 +1,2 @@
-export { default } from './WarehouseDeleteDialog';
-export * from './WarehouseDeleteDialog';
+export { default } from "./WarehouseDeleteDialog";
+export * from "./WarehouseDeleteDialog";

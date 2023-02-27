@@ -54,14 +54,9 @@ describe.skip("As a staff user I want to navigate through shop using different p
           const permissions = permissionOption.permissions;
 
           cy.clearSessionData();
-          permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(
-            permissionOption,
-          );
+          permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(permissionOption);
           permissionsSteps.getDisplayedSelectors().then(selectors => {
-            permissionsSteps.expectAllSelectorsPermitted(
-              permissions,
-              selectors,
-            );
+            permissionsSteps.expectAllSelectorsPermitted(permissions, selectors);
           });
           if (!permissions) {
             return;
@@ -72,10 +67,7 @@ describe.skip("As a staff user I want to navigate through shop using different p
               permissionsSteps
                 .getDisplayedSelectors(permission.parent.parentSelectors)
                 .then(parentSelectors => {
-                  permissionsSteps.expectAllSelectorsPermitted(
-                    permissions,
-                    parentSelectors,
-                  );
+                  permissionsSteps.expectAllSelectorsPermitted(permissions, parentSelectors);
                 });
             }
           });
@@ -91,9 +83,7 @@ describe.skip("As a staff user I want to navigate through shop using different p
       const permissionOption = permissionsOptions.all;
 
       cy.clearSessionData();
-      permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(
-        permissionOption,
-      );
+      permissionsSteps.navigateToAllAvailablePageAndCheckIfDisplayed(permissionOption);
     },
   );
 });

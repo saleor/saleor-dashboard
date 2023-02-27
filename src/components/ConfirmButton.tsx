@@ -1,13 +1,13 @@
-import { buttonMessages, commonMessages } from '@dashboard/intl';
+import { buttonMessages, commonMessages } from "@dashboard/intl";
 import {
   ConfirmButton as MacawConfirmButton,
   ConfirmButtonLabels,
   ConfirmButtonProps as MacawConfirmButtonProps,
-} from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-export interface ConfirmButtonProps extends Omit<MacawConfirmButtonProps, 'labels'> {
+export interface ConfirmButtonProps extends Omit<MacawConfirmButtonProps, "labels"> {
   labels?: Partial<ConfirmButtonLabels>;
 }
 
@@ -25,5 +25,5 @@ export const ConfirmButton: React.FC<ConfirmButtonProps> = ({ labels = {}, ...re
 
   return <MacawConfirmButton labels={componentLabels} {...rest} />;
 };
-ConfirmButton.displayName = 'ConfirmButton';
+ConfirmButton.displayName = "ConfirmButton";
 export default ConfirmButton;

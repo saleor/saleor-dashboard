@@ -1,5 +1,5 @@
-import { ChannelCollectionData } from '@dashboard/channels/utils';
-import { CollectionDetailsQuery, SearchProductsQuery } from '@dashboard/graphql';
+import { ChannelCollectionData } from "@dashboard/channels/utils";
+import { CollectionDetailsQuery, SearchProductsQuery } from "@dashboard/graphql";
 
 export const createChannelsChangeHandler =
   (
@@ -7,7 +7,7 @@ export const createChannelsChangeHandler =
     updateChannels: (data: ChannelCollectionData[]) => void,
     triggerChange: () => void,
   ) =>
-  (id: string, data: Omit<ChannelCollectionData, 'name' | 'id'>) => {
+  (id: string, data: Omit<ChannelCollectionData, "name" | "id">) => {
     const channelIndex = channelListings.findIndex(channel => channel.id === id);
     const channel = channelListings[channelIndex];
 
@@ -24,8 +24,8 @@ export const createChannelsChangeHandler =
   };
 
 export const getAssignedProductIdsToCollection = (
-  collection: CollectionDetailsQuery['collection'],
-  queryData: SearchProductsQuery['search'],
+  collection: CollectionDetailsQuery["collection"],
+  queryData: SearchProductsQuery["search"],
 ) => {
   if (!queryData || !collection) {
     return {};

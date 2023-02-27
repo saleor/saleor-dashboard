@@ -1,11 +1,11 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import { Locale, localeNames } from '@dashboard/components/Locale';
-import SingleAutocompleteSelectField from '@dashboard/components/SingleAutocompleteSelectField';
-import { capitalize } from '@dashboard/misc';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { Locale, localeNames } from "@dashboard/components/Locale";
+import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import { capitalize } from "@dashboard/misc";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 interface StaffPreferencesProps {
   locale: Locale;
@@ -19,9 +19,9 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'CLeDae',
-          defaultMessage: 'Preferences',
-          description: 'section header',
+          id: "CLeDae",
+          defaultMessage: "Preferences",
+          description: "section header",
         })}
       />
       <CardContent>
@@ -32,12 +32,12 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
           }))}
           displayValue={localeNames[locale]}
           helperText={intl.formatMessage({
-            id: 'JJgJwi',
-            defaultMessage: 'Selecting this will change the language of your dashboard',
+            id: "JJgJwi",
+            defaultMessage: "Selecting this will change the language of your dashboard",
           })}
           label={intl.formatMessage({
-            id: 'mr9jbO',
-            defaultMessage: 'Preferred Language',
+            id: "mr9jbO",
+            defaultMessage: "Preferred Language",
           })}
           name="locale"
           value={locale}
@@ -54,5 +54,5 @@ const StaffPreferences: React.FC<StaffPreferencesProps> = ({ locale, onLocaleCha
     </Card>
   );
 };
-StaffPreferences.displayName = 'StaffPreferences';
+StaffPreferences.displayName = "StaffPreferences";
 export default StaffPreferences;

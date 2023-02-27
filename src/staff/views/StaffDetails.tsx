@@ -1,23 +1,25 @@
-import { useUser } from '@dashboard/auth';
-import ActionDialog from '@dashboard/components/ActionDialog';
-import NotFoundPage from '@dashboard/components/NotFoundPage';
-import { hasPermissions } from '@dashboard/components/RequirePermissions';
-import { WindowTitle } from '@dashboard/components/WindowTitle';
-import { DEFAULT_INITIAL_SEARCH_DATA } from '@dashboard/config';
-import { PermissionEnum, useStaffMemberDetailsQuery } from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { extractMutationErrors, getStringOrPlaceholder } from '@dashboard/misc';
-import usePermissionGroupSearch from '@dashboard/searches/usePermissionGroupSearch';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import { DialogContentText } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { useUser } from "@dashboard/auth";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { hasPermissions } from "@dashboard/components/RequirePermissions";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import { PermissionEnum, useStaffMemberDetailsQuery } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
+import usePermissionGroupSearch from "@dashboard/searches/usePermissionGroupSearch";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { DialogContentText } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import StaffDetailsPage, { StaffDetailsFormData } from '../components/StaffDetailsPage/StaffDetailsPage';
-import StaffPasswordResetDialog from '../components/StaffPasswordResetDialog';
-import { useProfileOperations, useStaffUserOperations } from '../hooks';
-import { staffListUrl, staffMemberDetailsUrl, StaffMemberDetailsUrlQueryParams } from '../urls';
-import { groupsDiff } from '../utils';
+import StaffDetailsPage, {
+  StaffDetailsFormData,
+} from "../components/StaffDetailsPage/StaffDetailsPage";
+import StaffPasswordResetDialog from "../components/StaffPasswordResetDialog";
+import { useProfileOperations, useStaffUserOperations } from "../hooks";
+import { staffListUrl, staffMemberDetailsUrl, StaffMemberDetailsUrlQueryParams } from "../urls";
+import { groupsDiff } from "../utils";
 
 interface OrderListProps {
   id: string;
@@ -44,7 +46,8 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
     variables: { id },
     skip: isUserSameAsViewer,
   });
-  const { deleteResult, deleteStaffMember, updateStaffMember, updateStaffMemberOpts } = useStaffUserOperations();
+  const { deleteResult, deleteStaffMember, updateStaffMember, updateStaffMemberOpts } =
+    useStaffUserOperations();
 
   const {
     updateUserAccount,
@@ -57,7 +60,9 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
   } = useProfileOperations({ closeModal, id, refetch });
 
   const staffMember = isUserSameAsViewer ? user.user : data?.user;
-  const hasManageStaffPermission = hasPermissions(user.user.userPermissions, [PermissionEnum.MANAGE_STAFF]);
+  const hasManageStaffPermission = hasPermissions(user.user.userPermissions, [
+    PermissionEnum.MANAGE_STAFF,
+  ]);
 
   const {
     loadMore: loadMorePermissionGroups,
@@ -114,14 +119,14 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         onChangePassword={() =>
           navigate(
             staffMemberDetailsUrl(id, {
-              action: 'change-password',
+              action: "change-password",
             }),
           )
         }
         onDelete={() =>
           navigate(
             staffMemberDetailsUrl(id, {
-              action: 'remove',
+              action: "remove",
             }),
           )
         }
@@ -136,13 +141,15 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         onImageDelete={() =>
           navigate(
             staffMemberDetailsUrl(id, {
-              action: 'remove-avatar',
+              action: "remove-avatar",
             }),
           )
         }
         availablePermissionGroups={mapEdgesToItems(searchPermissionGroupsOpts?.data?.search)}
         staffMember={staffMember}
-        saveButtonBarState={isUserSameAsViewer ? updateUserAccountOpts.status : updateStaffMemberOpts.status}
+        saveButtonBarState={
+          isUserSameAsViewer ? updateUserAccountOpts.status : updateStaffMemberOpts.status
+        }
         fetchMorePermissionGroups={{
           hasMore: searchPermissionGroupsOpts.data?.search?.pageInfo.hasNextPage,
           loading: searchPermissionGroupsOpts.loading,
@@ -151,11 +158,11 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         onSearchChange={searchPermissionGroups}
       />
       <ActionDialog
-        open={params.action === 'remove'}
+        open={params.action === "remove"}
         title={intl.formatMessage({
-          id: 'GhXwO/',
-          defaultMessage: 'delete Staff User',
-          description: 'dialog header',
+          id: "GhXwO/",
+          defaultMessage: "delete Staff User",
+          description: "dialog header",
         })}
         confirmButtonState={deleteResult.status}
         variant="delete"
@@ -177,11 +184,11 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
         </DialogContentText>
       </ActionDialog>
       <ActionDialog
-        open={params.action === 'remove-avatar'}
+        open={params.action === "remove-avatar"}
         title={intl.formatMessage({
-          id: 'VKWPBf',
-          defaultMessage: 'Delete Staff User Avatar',
-          description: 'dialog header',
+          id: "VKWPBf",
+          defaultMessage: "Delete Staff User Avatar",
+          description: "dialog header",
         })}
         confirmButtonState={deleteAvatarResult.status}
         variant="delete"
@@ -201,7 +208,7 @@ export const StaffDetails: React.FC<OrderListProps> = ({ id, params }) => {
       <StaffPasswordResetDialog
         confirmButtonState={changePasswordOpts.status}
         errors={changePasswordOpts?.data?.passwordChange?.errors || []}
-        open={params.action === 'change-password'}
+        open={params.action === "change-password"}
         onClose={closeModal}
         onSubmit={data =>
           changePassword({

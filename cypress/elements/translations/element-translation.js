@@ -4,5 +4,5 @@ export const ELEMENT_TRANSLATION = {
   editSeoTitleButton: '[data-test-id="edit-seoTitle"]',
   editSeoDescriptionButton: '[data-test-id="edit-seoDescription"]',
   translationInputField: '[data-test-id="translation-field"]',
-  translationTextEditor: '[data-test-id="rich-text-editor-translation"]'
+  translationTextEditor: '[data-test-id="rich-text-editor-translation"]',
 };

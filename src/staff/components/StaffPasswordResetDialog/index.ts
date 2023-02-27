@@ -1,2 +1,2 @@
-export { default } from './StaffPasswordResetDialog';
-export * from './StaffPasswordResetDialog';
+export { default } from "./StaffPasswordResetDialog";
+export * from "./StaffPasswordResetDialog";

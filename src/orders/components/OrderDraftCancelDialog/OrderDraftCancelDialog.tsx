@@ -1,12 +1,12 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import { OrderErrorFragment } from '@dashboard/graphql';
-import useModalDialogErrors from '@dashboard/hooks/useModalDialogErrors';
-import getOrderErrorMessage from '@dashboard/utils/errors/order';
-import { DialogContentText } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { OrderErrorFragment } from "@dashboard/graphql";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import { DialogContentText } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface OrderDraftCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -35,9 +35,9 @@ const OrderDraftCancelDialog: React.FC<OrderDraftCancelDialogProps> = ({
       onConfirm={onConfirm}
       open={open}
       title={intl.formatMessage({
-        id: 'APcoSA',
-        defaultMessage: 'Delete Daft Order',
-        description: 'dialog header',
+        id: "APcoSA",
+        defaultMessage: "Delete Daft Order",
+        description: "dialog header",
       })}
       variant="delete"
     >
@@ -63,5 +63,5 @@ const OrderDraftCancelDialog: React.FC<OrderDraftCancelDialogProps> = ({
     </ActionDialog>
   );
 };
-OrderDraftCancelDialog.displayName = 'OrderDraftCancelDialog';
+OrderDraftCancelDialog.displayName = "OrderDraftCancelDialog";
 export default OrderDraftCancelDialog;

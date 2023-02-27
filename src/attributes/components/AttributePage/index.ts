@@ -1,2 +1,2 @@
-export { default } from './AttributePage';
-export * from './AttributePage';
+export { default } from "./AttributePage";
+export * from "./AttributePage";

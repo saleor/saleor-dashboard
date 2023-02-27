@@ -1,5 +1,5 @@
-import React from 'react';
-import { MessageDescriptor, useIntl } from 'react-intl';
+import React from "react";
+import { MessageDescriptor, useIntl } from "react-intl";
 
 interface OrderAlertsProps {
   alertsHeader?: string;
@@ -10,7 +10,7 @@ export const OrderAlerts: React.FC<OrderAlertsProps> = ({ alertsHeader, alerts }
   const intl = useIntl();
 
   const formattedAlerts = alerts.map((alert, index) => {
-    if (typeof alert === 'string') {
+    if (typeof alert === "string") {
       return { id: `${index}_${alert}`, text: alert };
     }
     return {
@@ -38,5 +38,5 @@ export const OrderAlerts: React.FC<OrderAlertsProps> = ({ alertsHeader, alerts }
     </>
   );
 };
-OrderAlerts.displayName = 'OrderAlerts';
+OrderAlerts.displayName = "OrderAlerts";
 export default OrderAlerts;

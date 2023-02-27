@@ -17,10 +17,7 @@ import {
   deleteChannelsStartsWith,
   getDefaultChannel,
 } from "../../../support/api/utils/channelsUtils";
-import {
-  getMailsForUser,
-  getMailWithResetPasswordLink,
-} from "../../../support/api/utils/users";
+import { getMailsForUser, getMailWithResetPasswordLink } from "../../../support/api/utils/users";
 
 describe("As an admin I want to manage plugins", () => {
   const startsWith = "Plugins";
@@ -43,10 +40,7 @@ describe("As an admin I want to manage plugins", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
-      .visit(urlList.plugins)
-      .expectSkeletonIsVisible();
+    cy.clearSessionData().loginUserViaRequest().visit(urlList.plugins).expectSkeletonIsVisible();
   });
 
   it(
@@ -55,9 +49,7 @@ describe("As an admin I want to manage plugins", () => {
     () => {
       const customerEmail = `${randomName}@example.com`;
 
-      cy.contains(PLUGINS_LIST.pluginRow, "User emails")
-        .click()
-        .waitForProgressBarToNotBeVisible();
+      cy.contains(PLUGINS_LIST.pluginRow, "User emails").click().waitForProgressBarToNotBeVisible();
       cy.contains(PLUGINS_DETAILS.channel, defaultChannel.name)
         .click()
         .get(PLUGINS_DETAILS.accountConfirmationSubjectInput)
@@ -69,9 +61,7 @@ describe("As an admin I want to manage plugins", () => {
         email: customerEmail,
         channel: defaultChannel.slug,
       });
-      getMailsForUser(customerEmail)
-        .its("0.Content.Headers.Subject.0")
-        .should("eq", randomName);
+      getMailsForUser(customerEmail).its("0.Content.Headers.Subject.0").should("eq", randomName);
     },
   );
 

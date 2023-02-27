@@ -1,24 +1,27 @@
-import { WindowTitle } from '@dashboard/components/WindowTitle';
-import { useAppFetchMutation, useAppInstallMutation } from '@dashboard/graphql';
-import useLocalStorage from '@dashboard/hooks/useLocalStorage';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { extractMutationErrors } from '@dashboard/misc';
-import getAppErrorMessage from '@dashboard/utils/errors/app';
-import React, { useEffect } from 'react';
-import { useIntl } from 'react-intl';
-import { RouteComponentProps } from 'react-router-dom';
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { useAppFetchMutation, useAppInstallMutation } from "@dashboard/graphql";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { extractMutationErrors } from "@dashboard/misc";
+import getAppErrorMessage from "@dashboard/utils/errors/app";
+import React, { useEffect } from "react";
+import { useIntl } from "react-intl";
+import { RouteComponentProps } from "react-router-dom";
 
-import AppInstallErrorPage from '../../components/AppInstallErrorPage';
-import AppInstallPage from '../../components/AppInstallPage';
-import { AppInstallUrlQueryParams, appsListUrl, MANIFEST_ATTR } from '../../urls';
-import { messages } from './messages';
+import AppInstallErrorPage from "../../components/AppInstallErrorPage";
+import AppInstallPage from "../../components/AppInstallPage";
+import { AppInstallUrlQueryParams, appsListUrl, MANIFEST_ATTR } from "../../urls";
+import { messages } from "./messages";
 
 interface InstallAppCreateProps extends RouteComponentProps {
   params: AppInstallUrlQueryParams;
 }
 export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({ params }) => {
-  const [, setActiveInstallations] = useLocalStorage<Array<Record<'id' | 'name', string>>>('activeInstallations', []);
+  const [, setActiveInstallations] = useLocalStorage<Array<Record<"id" | "name", string>>>(
+    "activeInstallations",
+    [],
+  );
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -29,7 +32,7 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({ params }) =>
       if (data?.appFetchManifest?.errors.length) {
         data.appFetchManifest.errors.forEach(error => {
           notify({
-            status: 'error',
+            status: "error",
             text: getAppErrorMessage(error, intl),
           });
         });
@@ -53,7 +56,7 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({ params }) =>
       } else {
         (data?.appInstall?.errors ?? []).forEach(error => {
           notify({
-            status: 'error',
+            status: "error",
             text: getAppErrorMessage(error, intl),
           });
         });
@@ -90,7 +93,7 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({ params }) =>
     <>
       <WindowTitle title={intl.formatMessage(messages.installApp)} />
       {!!fetchManifestOpts.data?.appFetchManifest?.errors?.length || !!fetchManifestOpts.error ? (
-        <AppInstallErrorPage onBack={() => navigate('/')} />
+        <AppInstallErrorPage onBack={() => navigate("/")} />
       ) : (
         <AppInstallPage
           data={fetchManifestOpts?.data?.appFetchManifest?.manifest ?? null}

@@ -84,9 +84,7 @@ describe("As a staff user I want to change shop default weight unit", () => {
       })
         .then(({ shippingMethod: shippingMethodResp }) => {
           shippingMethod = shippingMethodResp;
-          cy.visit(urlList.shippingMethods)
-            .get(SHARED_ELEMENTS.progressBar)
-            .should("not.exist");
+          cy.visit(urlList.shippingMethods).get(SHARED_ELEMENTS.progressBar).should("not.exist");
           changeWeightUnit("G");
 
           cy.addAliasToGraphRequest("ShippingZone");
@@ -95,11 +93,8 @@ describe("As a staff user I want to change shop default weight unit", () => {
             .its("response.body");
         })
         .then(responseArray => {
-          const shippingMethods =
-            responseArray.data.shippingZone.shippingMethods;
-          const rate = shippingMethods.find(
-            element => element.id === shippingMethod.id,
-          );
+          const shippingMethods = responseArray.data.shippingZone.shippingMethods;
+          const rate = shippingMethods.find(element => element.id === shippingMethod.id);
           cy.waitForProgressBarToNotBeVisible();
           expect(rate.minimumOrderWeight.unit).to.eq("G");
           cy.get(SHIPPING_RATE_DETAILS.restrictWeightLimitCheckbox)

@@ -4,7 +4,7 @@ import {
   getRichTextDataFromAttributes,
   mergeAttributes,
   RichTextProps,
-} from '@dashboard/attributes/utils/data';
+} from "@dashboard/attributes/utils/data";
 import {
   createAttributeChangeHandler,
   createAttributeFileChangeHandler,
@@ -13,33 +13,40 @@ import {
   createAttributeValueReorderHandler,
   createFetchMoreReferencesHandler,
   createFetchReferencesHandler,
-} from '@dashboard/attributes/utils/handlers';
-import { AttributeInput } from '@dashboard/components/Attributes';
-import { useExitFormDialog } from '@dashboard/components/Form/useExitFormDialog';
-import { MetadataFormData } from '@dashboard/components/Metadata';
+} from "@dashboard/attributes/utils/handlers";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
+import { MetadataFormData } from "@dashboard/components/Metadata";
 import {
   PageDetailsFragment,
   PageErrorWithAttributesFragment,
   SearchPagesQuery,
   SearchPageTypesQuery,
   SearchProductsQuery,
-} from '@dashboard/graphql';
-import useForm, { CommonUseFormResultWithHandlers, FormChange, SubmitPromise } from '@dashboard/hooks/useForm';
-import useFormset, { FormsetChange, FormsetData } from '@dashboard/hooks/useFormset';
-import useHandleFormSubmit from '@dashboard/hooks/useHandleFormSubmit';
-import { getAttributeInputFromPage, getAttributeInputFromPageType } from '@dashboard/pages/utils/data';
-import { createPageTypeSelectHandler } from '@dashboard/pages/utils/handlers';
-import { validatePageCreateData } from '@dashboard/pages/utils/validation';
-import { FetchMoreProps, RelayToFlat, ReorderEvent } from '@dashboard/types';
-import getPublicationData from '@dashboard/utils/data/getPublicationData';
-import { mapMetadataItemToInput } from '@dashboard/utils/maps';
-import getMetadata from '@dashboard/utils/metadata/getMetadata';
-import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
-import { RichTextContext } from '@dashboard/utils/richText/context';
-import { useMultipleRichText } from '@dashboard/utils/richText/useMultipleRichText';
-import useRichText from '@dashboard/utils/richText/useRichText';
-import { OutputData } from '@editorjs/editorjs';
-import React, { useEffect, useState } from 'react';
+} from "@dashboard/graphql";
+import useForm, {
+  CommonUseFormResultWithHandlers,
+  FormChange,
+  SubmitPromise,
+} from "@dashboard/hooks/useForm";
+import useFormset, { FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
+import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
+import {
+  getAttributeInputFromPage,
+  getAttributeInputFromPageType,
+} from "@dashboard/pages/utils/data";
+import { createPageTypeSelectHandler } from "@dashboard/pages/utils/handlers";
+import { validatePageCreateData } from "@dashboard/pages/utils/validation";
+import { FetchMoreProps, RelayToFlat, ReorderEvent } from "@dashboard/types";
+import getPublicationData from "@dashboard/utils/data/getPublicationData";
+import { mapMetadataItemToInput } from "@dashboard/utils/maps";
+import getMetadata from "@dashboard/utils/metadata/getMetadata";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { RichTextContext } from "@dashboard/utils/richText/context";
+import { useMultipleRichText } from "@dashboard/utils/richText/useMultipleRichText";
+import useRichText from "@dashboard/utils/richText/useRichText";
+import { OutputData } from "@editorjs/editorjs";
+import React, { useEffect, useState } from "react";
 
 export interface PageFormData extends MetadataFormData {
   isPublished: boolean;
@@ -48,7 +55,7 @@ export interface PageFormData extends MetadataFormData {
   seoTitle: string;
   slug: string;
   title: string;
-  pageType: PageDetailsFragment['pageType'];
+  pageType: PageDetailsFragment["pageType"];
 }
 export interface PageData extends PageFormData {
   attributes: AttributeInput[];
@@ -80,18 +87,18 @@ export interface UsePageUpdateFormOutput
   validationErrors: PageErrorWithAttributesFragment[];
 }
 
-export type UsePageUpdateFormRenderProps = Omit<UsePageUpdateFormOutput, 'richText'>;
+export type UsePageUpdateFormRenderProps = Omit<UsePageUpdateFormOutput, "richText">;
 
 export interface UsePageFormOpts {
-  pageTypes?: RelayToFlat<SearchPageTypesQuery['search']>;
-  referencePages: RelayToFlat<SearchPagesQuery['search']>;
-  referenceProducts: RelayToFlat<SearchProductsQuery['search']>;
+  pageTypes?: RelayToFlat<SearchPageTypesQuery["search"]>;
+  referencePages: RelayToFlat<SearchPagesQuery["search"]>;
+  referenceProducts: RelayToFlat<SearchProductsQuery["search"]>;
   fetchReferencePages?: (data: string) => void;
   fetchMoreReferencePages?: FetchMoreProps;
   fetchReferenceProducts?: (data: string) => void;
   fetchMoreReferenceProducts?: FetchMoreProps;
   assignReferencesAttributeId?: string;
-  selectedPageType?: PageDetailsFragment['pageType'];
+  selectedPageType?: PageDetailsFragment["pageType"];
   onSelectPageType: (pageTypeId: string) => void;
 }
 
@@ -107,11 +114,11 @@ const getInitialFormData = (pageExists: boolean, page?: PageDetailsFragment): Pa
   metadata: page?.metadata?.map(mapMetadataItemToInput) || [],
   pageType: null,
   privateMetadata: page?.privateMetadata?.map(mapMetadataItemToInput) || [],
-  publicationDate: pageExists ? page?.publicationDate : '',
-  seoDescription: page?.seoDescription || '',
-  seoTitle: page?.seoTitle || '',
-  slug: page?.slug || '',
-  title: page?.title || '',
+  publicationDate: pageExists ? page?.publicationDate : "",
+  seoDescription: page?.seoDescription || "",
+  seoTitle: page?.seoTitle || "",
+  slug: page?.slug || "",
+  title: page?.title || "",
 });
 
 function usePageForm(
@@ -140,10 +147,11 @@ function usePageForm(
       : [],
   );
 
-  const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } = useMultipleRichText({
-    initial: getRichTextDataFromAttributes(attributes.data),
-    triggerChange,
-  });
+  const { getters: attributeRichTextGetters, getValues: getAttributeRichTextValues } =
+    useMultipleRichText({
+      initial: getRichTextDataFromAttributes(attributes.data),
+      triggerChange,
+    });
   const attributesWithNewFileValue = useFormset<null, File>([]);
 
   const { setExitDialogSubmitRef, setIsSubmitDisabled, setIsDirty } = useExitFormDialog({
@@ -170,7 +178,10 @@ function usePageForm(
     attributes.data,
     triggerChange,
   );
-  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(attributes.change, triggerChange);
+  const handleAttributeReferenceChange = createAttributeReferenceChangeHandler(
+    attributes.change,
+    triggerChange,
+  );
   const handleFetchReferences = createFetchReferencesHandler(
     attributes.data,
     opts.assignReferencesAttributeId,
@@ -300,5 +311,5 @@ const PageForm: React.FC<PageFormProps> = ({ children, page, onSubmit, disabled,
   );
 };
 
-PageForm.displayName = 'PageForm';
+PageForm.displayName = "PageForm";
 export default PageForm;

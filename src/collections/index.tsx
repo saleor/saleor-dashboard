@@ -1,11 +1,11 @@
-import { sectionNames } from '@dashboard/intl';
-import { asSortParams } from '@dashboard/utils/sort';
-import { parse as parseQs } from 'qs';
-import React from 'react';
-import { useIntl } from 'react-intl';
-import { Route, RouteComponentProps, Switch } from 'react-router-dom';
+import { sectionNames } from "@dashboard/intl";
+import { asSortParams } from "@dashboard/utils/sort";
+import { parse as parseQs } from "qs";
+import React from "react";
+import { useIntl } from "react-intl";
+import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { WindowTitle } from '../components/WindowTitle';
+import { WindowTitle } from "../components/WindowTitle";
 import {
   collectionAddPath,
   CollectionCreateUrlQueryParams,
@@ -14,10 +14,10 @@ import {
   CollectionListUrlSortField,
   collectionPath,
   CollectionUrlQueryParams,
-} from './urls';
-import CollectionCreateView from './views/CollectionCreate';
-import CollectionDetailsView from './views/CollectionDetails';
-import CollectionListView from './views/CollectionList';
+} from "./urls";
+import CollectionCreateView from "./views/CollectionCreate";
+import CollectionDetailsView from "./views/CollectionDetails";
+import CollectionListView from "./views/CollectionList";
 
 const CollectionList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
@@ -28,7 +28,10 @@ const CollectionList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 interface CollectionDetailsRouteProps {
   id: string;
 }
-const CollectionDetails: React.FC<RouteComponentProps<CollectionDetailsRouteProps>> = ({ location, match }) => {
+const CollectionDetails: React.FC<RouteComponentProps<CollectionDetailsRouteProps>> = ({
+  location,
+  match,
+}) => {
   const qs = parseQs(location.search.substr(1));
   const params: CollectionUrlQueryParams = qs;
   return <CollectionDetailsView id={decodeURIComponent(match.params.id)} params={params} />;
@@ -49,7 +52,7 @@ const Component = () => {
       <Switch>
         <Route exact path={collectionListPath} component={CollectionList} />
         <Route exact path={collectionAddPath} component={CollectionCreate} />
-        <Route path={collectionPath(':id')} component={CollectionDetails} />
+        <Route path={collectionPath(":id")} component={CollectionDetails} />
       </Switch>
     </>
   );

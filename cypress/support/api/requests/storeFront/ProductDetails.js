@@ -1,10 +1,7 @@
 import { getValueWithDefault } from "../utils/Utils";
 
 export function getProductDetails(productId, channelSlug, auth = "token") {
-  const privateMetadataLine = getValueWithDefault(
-    auth === "auth",
-    `privateMetadata{key value}`,
-  );
+  const privateMetadataLine = getValueWithDefault(auth === "auth", `privateMetadata{key value}`);
 
   const query = `fragment BasicProductFields on Product {
     id
@@ -76,12 +73,7 @@ export function getProductDetails(productId, channelSlug, auth = "token") {
   return cy.sendRequestWithQuery(query, auth);
 }
 
-export function getProductMetadata({
-  productId,
-  channelSlug,
-  auth,
-  withPrivateMetadata,
-}) {
+export function getProductMetadata({ productId, channelSlug, auth, withPrivateMetadata }) {
   const privateMetadata = getValueWithDefault(
     withPrivateMetadata,
     `privateMetadata{

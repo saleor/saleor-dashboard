@@ -1,13 +1,13 @@
-import DiscountedPrice from '@dashboard/components/DiscountedPrice/DiscountedPrice';
-import Money from '@dashboard/components/Money';
-import { SearchOrderVariantQuery } from '@dashboard/graphql';
-import { Typography } from '@material-ui/core';
-import * as React from 'react';
+import DiscountedPrice from "@dashboard/components/DiscountedPrice/DiscountedPrice";
+import Money from "@dashboard/components/Money";
+import { SearchOrderVariantQuery } from "@dashboard/graphql";
+import { Typography } from "@material-ui/core";
+import * as React from "react";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 interface OrderPriceLabelProps {
-  pricing: SearchOrderVariantQuery['search']['edges'][0]['node']['variants'][0]['pricing'];
+  pricing: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"][0]["pricing"];
 }
 
 const OrderPriceLabel: React.FC<OrderPriceLabelProps> = ({ pricing }) => {

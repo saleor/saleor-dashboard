@@ -1,2 +1,2 @@
-export { default } from './ResponsiveTable';
-export * from './ResponsiveTable';
+export { default } from "./ResponsiveTable";
+export * from "./ResponsiveTable";

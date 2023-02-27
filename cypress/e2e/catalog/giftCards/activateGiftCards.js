@@ -3,10 +3,7 @@ import faker from "faker";
 
 import { GIFT_CARD_LIST } from "../../../elements/catalog/giftCard/giftCardList";
 import { completeCheckout } from "../../../support/api/requests/Checkout";
-import {
-  createGiftCard,
-  giftCardDeactivate,
-} from "../../../support/api/requests/GiftCard";
+import { createGiftCard, giftCardDeactivate } from "../../../support/api/requests/GiftCard";
 import {
   createCheckoutWithDisabledGiftCard,
   deleteGiftCardsWithTagStartsWith,
@@ -14,10 +11,7 @@ import {
   purchaseProductWithActiveGiftCard,
 } from "../../../support/api/utils/catalog/giftCardUtils";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import {
-  addPayment,
-  purchaseProductWithPromoCode,
-} from "../../../support/api/utils/ordersUtils";
+import { addPayment, purchaseProductWithPromoCode } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
@@ -50,22 +44,20 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
     deleteShippingStartsWith(startsWith);
     deleteGiftCardsWithTagStartsWith(startsWith);
 
-    productsUtils
-      .createProductWithShipping({ name, shippingPrice, productPrice })
-      .then(resp => {
-        defaultChannel = resp.defaultChannel;
-        address = resp.address;
+    productsUtils.createProductWithShipping({ name, shippingPrice, productPrice }).then(resp => {
+      defaultChannel = resp.defaultChannel;
+      address = resp.address;
 
-        dataForCheckout = {
-          address,
-          email,
-          auth: "token",
-          channelSlug: defaultChannel.slug,
-          shippingMethodName: resp.shippingMethod.name,
-          variantsList: resp.variantsList,
-        };
-        cy.checkIfDataAreNotNull(dataForCheckout);
-      });
+      dataForCheckout = {
+        address,
+        email,
+        auth: "token",
+        channelSlug: defaultChannel.slug,
+        shippingMethodName: resp.shippingMethod.name,
+        variantsList: resp.variantsList,
+      };
+      cy.checkIfDataAreNotNull(dataForCheckout);
+    });
   });
 
   beforeEach(() => {
@@ -80,8 +72,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
     "should be able to enable gift card and use it in checkout. TC: SALEOR_1006",
     { tags: ["@giftCard", "@allEnv", "@stable"] },
     () => {
-      const expectedGiftCardBalance =
-        giftCardData.amount - productPrice - shippingPrice;
+      const expectedGiftCardBalance = giftCardData.amount - productPrice - shippingPrice;
 
       giftCardData.tag = `${startsWith}${faker.datatype.number()}`;
       let giftCard;

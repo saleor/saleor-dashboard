@@ -1,12 +1,12 @@
-import { useMenuItemTranslationsQuery } from '@dashboard/graphql';
-import usePaginator, { PaginatorContext } from '@dashboard/hooks/usePaginator';
-import TranslationsEntitiesList from '@dashboard/translations/components/TranslationsEntitiesList';
-import { languageEntityUrl, TranslatableEntities } from '@dashboard/translations/urls';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import React from 'react';
+import { useMenuItemTranslationsQuery } from "@dashboard/graphql";
+import usePaginator, { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import TranslationsEntitiesList from "@dashboard/translations/components/TranslationsEntitiesList";
+import { languageEntityUrl, TranslatableEntities } from "@dashboard/translations/urls";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import React from "react";
 
-import { TranslationsEntityListProps } from './types';
-import { sumCompleted } from './utils';
+import { TranslationsEntityListProps } from "./types";
+import { sumCompleted } from "./utils";
 
 const TranslationsMenuItemList: React.FC<TranslationsEntityListProps> = ({ params, variables }) => {
   const { data, loading } = useMenuItemTranslationsQuery({
@@ -26,7 +26,7 @@ const TranslationsMenuItemList: React.FC<TranslationsEntityListProps> = ({ param
         disabled={loading}
         entities={mapEdgesToItems(data?.translations)?.map(
           node =>
-            node.__typename === 'MenuItemTranslatableContent' && {
+            node.__typename === "MenuItemTranslatableContent" && {
               completion: {
                 current: sumCompleted([node.translation?.name]),
                 max: 1,

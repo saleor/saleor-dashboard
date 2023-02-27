@@ -1,26 +1,32 @@
-import { useApolloClient } from '@apollo/client';
-import AppDeleteDialog from '@dashboard/apps/components/AppDeleteDialog';
-import { appMessages } from '@dashboard/apps/messages';
-import { EXTENSION_LIST_QUERY } from '@dashboard/apps/queries';
-import NotFoundPage from '@dashboard/components/NotFoundPage';
+import { useApolloClient } from "@apollo/client";
+import AppDeleteDialog from "@dashboard/apps/components/AppDeleteDialog";
+import { appMessages } from "@dashboard/apps/messages";
+import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
 import {
   useAppActivateMutation,
   useAppDeactivateMutation,
   useAppDeleteMutation,
   useAppQuery,
-} from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import getAppErrorMessage from '@dashboard/utils/errors/app';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import getAppErrorMessage from "@dashboard/utils/errors/app";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import AppActivateDialog from '../../components/AppActivateDialog';
-import AppDeactivateDialog from '../../components/AppDeactivateDialog';
-import AppDetailsPage from '../../components/AppDetailsPage';
-import { appDetailsUrl, AppDetailsUrlDialog, AppDetailsUrlQueryParams, appsListPath, appUrl } from '../../urls';
-import { messages } from './messages';
+import AppActivateDialog from "../../components/AppActivateDialog";
+import AppDeactivateDialog from "../../components/AppDeactivateDialog";
+import AppDetailsPage from "../../components/AppDetailsPage";
+import {
+  appDetailsUrl,
+  AppDetailsUrlDialog,
+  AppDetailsUrlQueryParams,
+  appsListPath,
+  appUrl,
+} from "../../urls";
+import { messages } from "./messages";
 
 interface AppDetailsProps {
   id: string;
@@ -45,7 +51,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
       const errors = data?.appActivate?.errors;
       if (errors?.length === 0) {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(appMessages.appActivated),
         });
         refetch();
@@ -54,7 +60,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
         if (appExists && errors) {
           errors.forEach(error =>
             notify({
-              status: 'error',
+              status: "error",
               text: getAppErrorMessage(error, intl),
             }),
           );
@@ -67,7 +73,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
       const errors = data?.appDeactivate?.errors;
       if (errors?.length === 0) {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(appMessages.appDeactivated),
         });
         refetch();
@@ -76,7 +82,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
         if (appExists && errors) {
           errors.forEach(error =>
             notify({
-              status: 'error',
+              status: "error",
               text: getAppErrorMessage(error, intl),
             }),
           );
@@ -93,7 +99,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
 
   const removeAppNotify = () => {
     notify({
-      status: 'success',
+      status: "success",
       text: intl.formatMessage(messages.appRemoved),
     });
   };
@@ -109,11 +115,10 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
     },
   });
 
-  const [openModal, closeModal] = createDialogActionHandlers<AppDetailsUrlDialog, AppDetailsUrlQueryParams>(
-    navigate,
-    params => appDetailsUrl(id, params),
-    params,
-  );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    AppDetailsUrlDialog,
+    AppDetailsUrlQueryParams
+  >(navigate, params => appDetailsUrl(id, params), params);
 
   const handleActivateConfirm = () => activateApp(mutationOpts);
   const handleDeactivateConfirm = () => deactivateApp(mutationOpts);
@@ -127,33 +132,33 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
     <>
       <AppActivateDialog
         confirmButtonState={activateAppResult.status}
-        name={data?.app?.name || ''}
+        name={data?.app?.name || ""}
         onClose={closeModal}
         onConfirm={handleActivateConfirm}
-        open={params.action === 'app-activate'}
+        open={params.action === "app-activate"}
       />
       <AppDeactivateDialog
         confirmButtonState={deactivateAppResult.status}
-        name={data?.app?.name || ''}
+        name={data?.app?.name || ""}
         onClose={closeModal}
         onConfirm={handleDeactivateConfirm}
-        open={params.action === 'app-deactivate'}
+        open={params.action === "app-deactivate"}
       />
       <AppDeleteDialog
         confirmButtonState={deleteAppOpts.status}
-        name={data?.app?.name || ''}
+        name={data?.app?.name || ""}
         onClose={closeModal}
         onConfirm={handleRemoveConfirm}
         type="EXTERNAL"
-        open={params.action === 'app-delete'}
+        open={params.action === "app-delete"}
       />
       <AppDetailsPage
         data={data?.app || null}
         loading={loading}
         navigateToApp={() => navigate(appUrl(id))}
-        onAppActivateOpen={() => openModal('app-activate')}
-        onAppDeactivateOpen={() => openModal('app-deactivate')}
-        onAppDeleteOpen={() => openModal('app-delete')}
+        onAppActivateOpen={() => openModal("app-activate")}
+        onAppDeactivateOpen={() => openModal("app-deactivate")}
+        onAppDeleteOpen={() => openModal("app-delete")}
       />
     </>
   );

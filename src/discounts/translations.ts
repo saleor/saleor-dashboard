@@ -1,44 +1,44 @@
-import { VoucherTypeEnum } from '@dashboard/graphql';
-import { defineMessages, IntlShape } from 'react-intl';
+import { VoucherTypeEnum } from "@dashboard/graphql";
+import { defineMessages, IntlShape } from "react-intl";
 
 const messages = defineMessages({
   order: {
-    id: 'ymo+cm',
-    defaultMessage: 'All products',
-    description: 'voucher discount',
+    id: "ymo+cm",
+    defaultMessage: "All products",
+    description: "voucher discount",
   },
   products: {
-    id: '45zP+r',
-    defaultMessage: 'Specific products',
-    description: 'voucher discount',
+    id: "45zP+r",
+    defaultMessage: "Specific products",
+    description: "voucher discount",
   },
   shipment: {
-    id: 'WasHjQ',
-    defaultMessage: 'Shipment',
-    description: 'voucher discount',
+    id: "WasHjQ",
+    defaultMessage: "Shipment",
+    description: "voucher discount",
   },
 });
 
 export const itemsQuantityMessages = defineMessages({
   categories: {
-    id: 'ppLwx3',
-    defaultMessage: 'Categories ({quantity})',
-    description: 'number of categories',
+    id: "ppLwx3",
+    defaultMessage: "Categories ({quantity})",
+    description: "number of categories",
   },
   collections: {
-    id: 'QdGzUf',
-    defaultMessage: 'Collections ({quantity})',
-    description: 'number of collections',
+    id: "QdGzUf",
+    defaultMessage: "Collections ({quantity})",
+    description: "number of collections",
   },
   products: {
-    id: 'bNw8PM',
-    defaultMessage: 'Products ({quantity})',
-    description: 'number of products',
+    id: "bNw8PM",
+    defaultMessage: "Products ({quantity})",
+    description: "number of products",
   },
   variants: {
-    id: 'HVlMK2',
-    defaultMessage: 'Variants ({quantity})',
-    description: 'number of variants',
+    id: "HVlMK2",
+    defaultMessage: "Variants ({quantity})",
+    description: "number of variants",
   },
 });
 

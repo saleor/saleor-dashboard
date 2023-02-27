@@ -1,11 +1,11 @@
-import { Theme } from '@material-ui/core/styles';
-import { dark, light, Themes } from '@saleor/macaw-ui';
-import { themes, vars } from '@saleor/macaw-ui/next';
+import { Theme } from "@material-ui/core/styles";
+import { dark, light, Themes } from "@saleor/macaw-ui";
+import { themes, vars } from "@saleor/macaw-ui/next";
 
 const breakpoints = {
-  keys: ['xs', 'sm', 'md', 'lg', 'xl'],
+  keys: ["xs", "sm", "md", "lg", "xl"],
   values: { lg: 1680, md: 1280, sm: 600, xl: 1920, xs: 0 },
-} as unknown as Theme['breakpoints'];
+} as unknown as Theme["breakpoints"];
 
 export const themeOverrides: Partial<Theme> = {
   breakpoints,
@@ -18,10 +18,10 @@ export const themeOverrides: Partial<Theme> = {
     },
     MuiTypography: {
       body2: {
-        fontSize: '13px',
+        fontSize: "13px",
       },
       caption: {
-        fontSize: '13px',
+        fontSize: "13px",
         fontWeight: 500,
       },
     },
@@ -40,8 +40,8 @@ export const themeOverrides: Partial<Theme> = {
         backgroundColor: vars.colors.background.surfaceNeutralPlain,
         borderColor: vars.colors.border.neutralPlain,
         color: vars.colors.foreground.textNeutralDefault,
-        '&:hover': {
-          boxShadow: 'none !important',
+        "&:hover": {
+          boxShadow: "none !important",
         },
       },
     },
@@ -76,7 +76,7 @@ export const themeOverrides: Partial<Theme> = {
     },
     MuiTable: {
       root: {
-        tableLayout: 'auto !important' as 'auto',
+        tableLayout: "auto !important" as "auto",
       },
     },
     MuiTableCell: {

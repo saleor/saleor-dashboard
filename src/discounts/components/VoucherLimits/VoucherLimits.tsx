@@ -1,16 +1,16 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import { ControlledCheckbox } from '@dashboard/components/ControlledCheckbox';
-import { Grid } from '@dashboard/components/Grid';
-import { DiscountErrorFragment } from '@dashboard/graphql';
-import { getFormErrors } from '@dashboard/utils/errors';
-import getDiscountErrorMessage from '@dashboard/utils/errors/discounts';
-import { Card, CardContent, TextField, Typography } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
+import { Grid } from "@dashboard/components/Grid";
+import { DiscountErrorFragment } from "@dashboard/graphql";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
+import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { VoucherDetailsPageFormData } from '../VoucherDetailsPage';
-import messages from './messages';
-import { useStyles } from './styles';
+import { VoucherDetailsPageFormData } from "../VoucherDetailsPage";
+import messages from "./messages";
+import { useStyles } from "./styles";
 
 interface VoucherLimitsProps {
   data: VoucherDetailsPageFormData;
@@ -34,7 +34,7 @@ const VoucherLimits = ({
   const intl = useIntl();
   const classes = useStyles();
 
-  const formErrors = getFormErrors(['usageLimit'], errors);
+  const formErrors = getFormErrors(["usageLimit"], errors);
 
   const usesLeft = data.usageLimit - data.used;
 
@@ -46,7 +46,7 @@ const VoucherLimits = ({
           testId="has-usage-limit"
           checked={data.hasUsageLimit}
           label={intl.formatMessage(messages.hasUsageLimit)}
-          name={'hasUsageLimit' as keyof VoucherDetailsPageFormData}
+          name={"hasUsageLimit" as keyof VoucherDetailsPageFormData}
           onChange={evt => {
             onChange(evt);
             setData({ usageLimit: initialUsageLimit });
@@ -60,7 +60,7 @@ const VoucherLimits = ({
               error={!!formErrors.usageLimit || data.usageLimit <= 0}
               helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
               label={intl.formatMessage(messages.usageLimit)}
-              name={'usageLimit' as keyof VoucherDetailsPageFormData}
+              name={"usageLimit" as keyof VoucherDetailsPageFormData}
               value={data.usageLimit}
               onChange={onChange}
               type="number"
@@ -77,7 +77,7 @@ const VoucherLimits = ({
                 error={!!formErrors.usageLimit || data.usageLimit <= 0}
                 helperText={getDiscountErrorMessage(formErrors.usageLimit, intl)}
                 label={intl.formatMessage(messages.usageLimit)}
-                name={'usageLimit' as keyof VoucherDetailsPageFormData}
+                name={"usageLimit" as keyof VoucherDetailsPageFormData}
                 value={data.usageLimit}
                 onChange={onChange}
                 type="number"
@@ -86,7 +86,9 @@ const VoucherLimits = ({
                 }}
               />
               <div className={classes.usesLeftLabelWrapper}>
-                <Typography variant="caption">{intl.formatMessage(messages.usesLeftCaption)}</Typography>
+                <Typography variant="caption">
+                  {intl.formatMessage(messages.usesLeftCaption)}
+                </Typography>
                 <Typography>{usesLeft >= 0 ? usesLeft : 0}</Typography>
               </div>
             </Grid>
@@ -95,14 +97,14 @@ const VoucherLimits = ({
           testId="apply-once-per-customer"
           checked={data.applyOncePerCustomer}
           label={intl.formatMessage(messages.applyOncePerCustomer)}
-          name={'applyOncePerCustomer' as keyof VoucherDetailsPageFormData}
+          name={"applyOncePerCustomer" as keyof VoucherDetailsPageFormData}
           onChange={onChange}
         />
         <ControlledCheckbox
           testId="only-for-staff"
           checked={data.onlyForStaff}
           label={intl.formatMessage(messages.onlyForStaff)}
-          name={'onlyForStaff' as keyof VoucherDetailsPageFormData}
+          name={"onlyForStaff" as keyof VoucherDetailsPageFormData}
           onChange={onChange}
         />
       </CardContent>

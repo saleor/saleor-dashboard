@@ -1,7 +1,13 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const menuList = gql`
-  query MenuList($first: Int, $after: String, $last: Int, $before: String, $sort: MenuSortingInput) {
+  query MenuList(
+    $first: Int
+    $after: String
+    $last: Int
+    $before: String
+    $sort: MenuSortingInput
+  ) {
     menus(first: $first, after: $after, before: $before, last: $last, sortBy: $sort) {
       edges {
         node {

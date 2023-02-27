@@ -1,5 +1,5 @@
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
 
 export interface HorizontalSpacerProps {
   spacing?: number;
@@ -11,7 +11,7 @@ const useStyles = makeStyles(
       width: theme.spacing(spacing),
     }),
   }),
-  { name: 'HorizontalSpacer' },
+  { name: "HorizontalSpacer" },
 );
 
 const HorizontalSpacer: React.FC<HorizontalSpacerProps> = ({ spacing = 1 }) => {

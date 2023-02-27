@@ -1,5 +1,5 @@
-import { FetchResult } from '@apollo/client';
-import { AttributeInput, AttributeInputData } from '@dashboard/components/Attributes';
+import { FetchResult } from "@apollo/client";
+import { AttributeInput, AttributeInputData } from "@dashboard/components/Attributes";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
@@ -11,13 +11,13 @@ import {
   PageSelectedAttributeFragment,
   ProductFragment,
   ProductVariantDetailsQuery,
-} from '@dashboard/graphql';
-import { FormsetAtomicData, FormsetChange, FormsetData } from '@dashboard/hooks/useFormset';
-import { FetchMoreProps, ReorderEvent } from '@dashboard/types';
-import { move, toggle } from '@dashboard/utils/lists';
-import isEqual from 'lodash/isEqual';
+} from "@dashboard/graphql";
+import { FormsetAtomicData, FormsetChange, FormsetData } from "@dashboard/hooks/useFormset";
+import { FetchMoreProps, ReorderEvent } from "@dashboard/types";
+import { move, toggle } from "@dashboard/utils/lists";
+import isEqual from "lodash/isEqual";
 
-import { getFileValuesToUploadFromAttributes, isFileValueUnused } from './data';
+import { getFileValuesToUploadFromAttributes, isFileValueUnused } from "./data";
 
 export function createAttributeChangeHandler(
   changeAttributeData: FormsetChange<string[]>,
@@ -25,7 +25,7 @@ export function createAttributeChangeHandler(
 ): FormsetChange<string> {
   return (attributeId: string, value: string) => {
     triggerChange();
-    changeAttributeData(attributeId, value === '' ? [] : [value]);
+    changeAttributeData(attributeId, value === "" ? [] : [value]);
   };
 }
 
@@ -71,7 +71,9 @@ export function createFetchReferencesHandler(
       fetchReferencePages(value);
     } else if (
       attribute.data?.entityType &&
-      [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(attribute.data.entityType) &&
+      [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(
+        attribute.data.entityType,
+      ) &&
       fetchReferenceProducts
     ) {
       fetchReferenceProducts(value);
@@ -95,7 +97,9 @@ export function createFetchMoreReferencesHandler(
     return fetchMoreReferencePages;
   } else if (
     attribute.data?.entityType &&
-    [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(attribute.data.entityType)
+    [AttributeEntityTypeEnum.PRODUCT, AttributeEntityTypeEnum.PRODUCT_VARIANT].includes(
+      attribute.data.entityType,
+    )
   ) {
     return fetchMoreReferenceProducts;
   }
@@ -111,7 +115,9 @@ export function createAttributeFileChangeHandler(
   return (attributeId: string, value: File) => {
     triggerChange();
 
-    const newFileValueAssigned = attributesWithNewFileValue.find(attribute => attribute.id === attributeId);
+    const newFileValueAssigned = attributesWithNewFileValue.find(
+      attribute => attribute.id === attributeId,
+    );
 
     if (newFileValueAssigned) {
       changeAttributeNewFileValue(attributeId, value);
@@ -119,7 +125,7 @@ export function createAttributeFileChangeHandler(
       addAttributeNewFileValue({
         data: null,
         id: attributeId,
-        label: '',
+        label: "",
         value,
       });
     }
@@ -139,7 +145,7 @@ export function createAttributeValueReorderHandler(
     const attribute = attributes.find(attribute => attribute.id === attributeId);
 
     const reorderedValues = move(
-      attribute?.value?.[reorder.oldIndex] ?? '',
+      attribute?.value?.[reorder.oldIndex] ?? "",
       attribute?.value ?? [],
       (a, b) => a === b,
       reorder.newIndex,
@@ -171,7 +177,7 @@ function getFileInput(attribute: AttributeInput, updatedFileAttributes: Attribut
 function getBooleanInput(attribute: AttributeInput) {
   return {
     id: attribute.id,
-    boolean: JSON.parse(attribute.value[0] ?? 'false'),
+    boolean: JSON.parse(attribute.value[0] ?? "false"),
   };
 }
 
@@ -281,8 +287,8 @@ export const handleDeleteMultipleAttributeValues = async (
   attributesWithNewFileValue: FormsetData<null, File>,
   attributes: Array<
     | PageSelectedAttributeFragment
-    | ProductFragment['attributes'][0]
-    | NonNullable<ProductVariantDetailsQuery['productVariant']>['nonSelectionAttributes'][0]
+    | ProductFragment["attributes"][0]
+    | NonNullable<ProductVariantDetailsQuery["productVariant"]>["nonSelectionAttributes"][0]
   >,
   deleteAttributeValue: (
     variables: AttributeValueDeleteMutationVariables,

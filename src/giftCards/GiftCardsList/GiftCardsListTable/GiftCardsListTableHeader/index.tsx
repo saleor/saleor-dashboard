@@ -1,2 +1,2 @@
-export * from './GiftCardsListTableHeader';
-export { default } from './GiftCardsListTableHeader';
+export * from "./GiftCardsListTableHeader";
+export { default } from "./GiftCardsListTableHeader";

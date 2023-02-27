@@ -1,25 +1,30 @@
-import Checkbox from '@dashboard/components/Checkbox';
-import { DateTime } from '@dashboard/components/Date';
-import Money from '@dashboard/components/Money';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableCellHeader from '@dashboard/components/TableCellHeader';
-import TableHead from '@dashboard/components/TableHead';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { OrderDraftListQuery } from '@dashboard/graphql';
-import { maybe, renderCollection, transformOrderStatus, transformPaymentStatus } from '@dashboard/misc';
-import { OrderDraftListUrlSortField, orderUrl } from '@dashboard/orders/urls';
-import { ListActions, ListProps, RelayToFlat, SortPage } from '@dashboard/types';
-import { getArrowDirection } from '@dashboard/utils/sort';
-import { TableBody, TableCell, TableFooter } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import Checkbox from "@dashboard/components/Checkbox";
+import { DateTime } from "@dashboard/components/Date";
+import Money from "@dashboard/components/Money";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { OrderDraftListQuery } from "@dashboard/graphql";
+import {
+  maybe,
+  renderCollection,
+  transformOrderStatus,
+  transformPaymentStatus,
+} from "@dashboard/misc";
+import { OrderDraftListUrlSortField, orderUrl } from "@dashboard/orders/urls";
+import { ListActions, ListProps, RelayToFlat, SortPage } from "@dashboard/types";
+import { getArrowDirection } from "@dashboard/utils/sort";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
-    [theme.breakpoints.up('lg')]: {
+    [theme.breakpoints.up("lg")]: {
       colCustomer: {
         width: 300,
       },
@@ -37,17 +42,17 @@ const useStyles = makeStyles(
       paddingLeft: 0,
     },
     colTotal: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     link: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
   }),
-  { name: 'OrderDraftList' },
+  { name: "OrderDraftList" },
 );
 
 interface OrderDraftListProps extends ListProps, ListActions, SortPage<OrderDraftListUrlSortField> {
-  orders: RelayToFlat<OrderDraftListQuery['draftOrders']>;
+  orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
 }
 
 export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
@@ -90,7 +95,11 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
         toolbar={toolbar}
       >
         <TableCellHeader
-          direction={sort.sort === OrderDraftListUrlSortField.number ? getArrowDirection(sort.asc) : undefined}
+          direction={
+            sort.sort === OrderDraftListUrlSortField.number
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
           arrowPosition="right"
           onClick={() => onSort(OrderDraftListUrlSortField.number)}
           className={classes.colNumber}
@@ -98,21 +107,35 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
           <FormattedMessage id="kFkPWB" defaultMessage="Number" />
         </TableCellHeader>
         <TableCellHeader
-          direction={sort.sort === OrderDraftListUrlSortField.date ? getArrowDirection(sort.asc) : undefined}
+          direction={
+            sort.sort === OrderDraftListUrlSortField.date ? getArrowDirection(sort.asc) : undefined
+          }
           onClick={() => onSort(OrderDraftListUrlSortField.date)}
           className={classes.colDate}
         >
-          <FormattedMessage id="mCP0UD" defaultMessage="Date" description="order draft creation date" />
+          <FormattedMessage
+            id="mCP0UD"
+            defaultMessage="Date"
+            description="order draft creation date"
+          />
         </TableCellHeader>
         <TableCellHeader
-          direction={sort.sort === OrderDraftListUrlSortField.customer ? getArrowDirection(sort.asc) : undefined}
+          direction={
+            sort.sort === OrderDraftListUrlSortField.customer
+              ? getArrowDirection(sort.asc)
+              : undefined
+          }
           onClick={() => onSort(OrderDraftListUrlSortField.customer)}
           className={classes.colCustomer}
         >
           <FormattedMessage id="hkENym" defaultMessage="Customer" />
         </TableCellHeader>
         <TableCellHeader textAlign="right" className={classes.colTotal}>
-          <FormattedMessage id="1Uj0Wd" defaultMessage="Total" description="order draft total price" />
+          <FormattedMessage
+            id="1Uj0Wd"
+            defaultMessage="Total"
+            description="order draft total price"
+          />
         </TableCellHeader>
       </TableHead>
       <TableFooter>
@@ -136,7 +159,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
                 hover={!!order}
                 className={!!order ? classes.link : undefined}
                 href={order && orderUrl(order.id)}
-                key={order ? order.id : 'skeleton'}
+                key={order ? order.id : "skeleton"}
                 selected={isSelected}
               >
                 <TableCell padding="checkbox">
@@ -148,10 +171,14 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
                   />
                 </TableCell>
                 <TableCell className={classes.colNumber}>
-                  {maybe(() => order.number) ? '#' + order.number : <Skeleton />}
+                  {maybe(() => order.number) ? "#" + order.number : <Skeleton />}
                 </TableCell>
                 <TableCell className={classes.colDate}>
-                  {maybe(() => order.created) ? <DateTime date={order.created} plain /> : <Skeleton />}
+                  {maybe(() => order.created) ? (
+                    <DateTime date={order.created} plain />
+                  ) : (
+                    <Skeleton />
+                  )}
                 </TableCell>
                 <TableCell className={classes.colCustomer}>
                   {maybe(() => order.billingAddress) ? (
@@ -167,7 +194,11 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
                   )}
                 </TableCell>
                 <TableCell className={classes.colTotal} align="right">
-                  {maybe(() => order.total.gross) ? <Money money={order.total.gross} /> : <Skeleton />}
+                  {maybe(() => order.total.gross) ? (
+                    <Money money={order.total.gross} />
+                  ) : (
+                    <Skeleton />
+                  )}
                 </TableCell>
               </TableRowLink>
             );
@@ -184,5 +215,5 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = props => {
     </ResponsiveTable>
   );
 };
-OrderDraftList.displayName = 'OrderDraftList';
+OrderDraftList.displayName = "OrderDraftList";
 export default OrderDraftList;

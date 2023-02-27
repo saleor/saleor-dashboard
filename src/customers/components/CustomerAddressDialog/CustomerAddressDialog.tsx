@@ -1,21 +1,26 @@
-import AddressEdit from '@dashboard/components/AddressEdit';
-import { createCountryHandler } from '@dashboard/components/AddressEdit/createCountryHandler';
-import BackButton from '@dashboard/components/BackButton';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import Form from '@dashboard/components/Form';
-import { AccountErrorFragment, AddressFragment, AddressInput, CountryWithCodeFragment } from '@dashboard/graphql';
-import useAddressValidation from '@dashboard/hooks/useAddressValidation';
-import useModalDialogErrors from '@dashboard/hooks/useModalDialogErrors';
-import useStateFromProps from '@dashboard/hooks/useStateFromProps';
-import { buttonMessages } from '@dashboard/intl';
-import createSingleAutocompleteSelectHandler from '@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler';
-import { mapCountriesToChoices } from '@dashboard/utils/maps';
-import { Dialog, DialogActions, DialogContent, DialogTitle } from '@material-ui/core';
-import { ConfirmButtonTransitionState, makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import AddressEdit from "@dashboard/components/AddressEdit";
+import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import {
+  AccountErrorFragment,
+  AddressFragment,
+  AddressInput,
+  CountryWithCodeFragment,
+} from "@dashboard/graphql";
+import useAddressValidation from "@dashboard/hooks/useAddressValidation";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { buttonMessages } from "@dashboard/intl";
+import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
+import { mapCountriesToChoices } from "@dashboard/utils/maps";
+import { Dialog, DialogActions, DialogContent, DialogTitle } from "@material-ui/core";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { AddressTypeInput } from '../../types';
+import { AddressTypeInput } from "../../types";
 
 export interface CustomerAddressDialogProps {
   address: AddressFragment;
@@ -23,7 +28,7 @@ export interface CustomerAddressDialogProps {
   countries: CountryWithCodeFragment[];
   errors: AccountErrorFragment[];
   open: boolean;
-  variant: 'create' | 'edit';
+  variant: "create" | "edit";
   onClose: () => void;
   onConfirm: (data: AddressInput) => void;
 }
@@ -31,10 +36,10 @@ export interface CustomerAddressDialogProps {
 const useStyles = makeStyles(
   {
     overflow: {
-      overflowY: 'visible',
+      overflowY: "visible",
     },
   },
-  { name: 'CustomerAddressDialog' },
+  { name: "CustomerAddressDialog" },
 );
 
 const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
@@ -48,41 +53,61 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
   onConfirm,
 }) => {
   const classes = useStyles();
-  const [countryDisplayName, setCountryDisplayName] = useStateFromProps(address?.country.country || '');
+  const [countryDisplayName, setCountryDisplayName] = useStateFromProps(
+    address?.country.country || "",
+  );
   const { errors: validationErrors, submit: handleSubmit } = useAddressValidation(onConfirm);
   const dialogErrors = useModalDialogErrors([...errors, ...validationErrors], open);
 
   const initialForm: AddressTypeInput = {
-    city: address?.city || '',
-    cityArea: address?.cityArea || '',
-    companyName: address?.companyName || '',
-    country: address?.country.code || '',
-    countryArea: address?.countryArea || '',
-    firstName: address?.firstName || '',
-    lastName: address?.lastName || '',
-    phone: address?.phone || '',
-    postalCode: address?.postalCode || '',
-    streetAddress1: address?.streetAddress1 || '',
-    streetAddress2: address?.streetAddress2 || '',
+    city: address?.city || "",
+    cityArea: address?.cityArea || "",
+    companyName: address?.companyName || "",
+    country: address?.country.code || "",
+    countryArea: address?.countryArea || "",
+    firstName: address?.firstName || "",
+    lastName: address?.lastName || "",
+    phone: address?.phone || "",
+    postalCode: address?.postalCode || "",
+    streetAddress1: address?.streetAddress1 || "",
+    streetAddress2: address?.streetAddress2 || "",
   };
 
   const countryChoices = mapCountriesToChoices(countries || []);
 
   return (
-    <Dialog onClose={onClose} open={open} classes={{ paper: classes.overflow }} fullWidth maxWidth="sm">
+    <Dialog
+      onClose={onClose}
+      open={open}
+      classes={{ paper: classes.overflow }}
+      fullWidth
+      maxWidth="sm"
+    >
       <Form initial={initialForm} onSubmit={handleSubmit}>
         {({ change, set, data }) => {
-          const countrySelect = createSingleAutocompleteSelectHandler(change, setCountryDisplayName, countryChoices);
+          const countrySelect = createSingleAutocompleteSelectHandler(
+            change,
+            setCountryDisplayName,
+            countryChoices,
+          );
 
           const handleCountrySelect = createCountryHandler(countrySelect, set);
 
           return (
             <>
               <DialogTitle disableTypography>
-                {variant === 'create' ? (
-                  <FormattedMessage id="W0kQd+" defaultMessage="Add Address" description="dialog title" />
+                {variant === "create" ? (
+                  <FormattedMessage
+                    id="W0kQd+"
+                    defaultMessage="Add Address"
+                    description="dialog title"
+                  />
                 ) : (
-                  <FormattedMessage id="gQGUsN" defaultMessage="Edit Address" description="dialog title" />
+                  <FormattedMessage
+                    id="gQGUsN"
+                    defaultMessage="Edit Address"
+                    description="dialog title"
+                  />
                 )}
               </DialogTitle>
               <DialogContent className={classes.overflow}>
@@ -97,7 +122,11 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
               </DialogContent>
               <DialogActions>
                 <BackButton onClick={onClose} />
-                <ConfirmButton transitionState={confirmButtonState} type="submit" data-test-id="submit">
+                <ConfirmButton
+                  transitionState={confirmButtonState}
+                  type="submit"
+                  data-test-id="submit"
+                >
                   <FormattedMessage {...buttonMessages.save} />
                 </ConfirmButton>
               </DialogActions>
@@ -108,5 +137,5 @@ const CustomerAddressDialog: React.FC<CustomerAddressDialogProps> = ({
     </Dialog>
   );
 };
-CustomerAddressDialog.displayName = 'CustomerAddressDialog';
+CustomerAddressDialog.displayName = "CustomerAddressDialog";
 export default CustomerAddressDialog;

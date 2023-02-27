@@ -1,8 +1,8 @@
-import { OrderDetailsQuery, OrderDiscountType } from '@dashboard/graphql';
-import { OrderDiscountCommonInput } from '@dashboard/orders/components/OrderDiscountCommonModal/types';
-import { useState } from 'react';
+import { OrderDetailsQuery, OrderDiscountType } from "@dashboard/graphql";
+import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
+import { useState } from "react";
 
-import { OrderLineDiscountData } from './types';
+import { OrderLineDiscountData } from "./types";
 
 export const useDiscountDialog = () => {
   const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
@@ -12,22 +12,26 @@ export const useDiscountDialog = () => {
 
   return { closeDialog, isDialogOpen, openDialog };
 };
-export const getManualOrderDiscount = (order: OrderDetailsQuery['order']) =>
+export const getManualOrderDiscount = (order: OrderDetailsQuery["order"]) =>
   order ? getOrderDiscount(order, OrderDiscountType.MANUAL) : null;
 
 export const getOrderDiscount = (
-  order: OrderDetailsQuery['order'],
+  order: OrderDetailsQuery["order"],
   discountType: OrderDiscountType,
-): OrderDetailsQuery['order']['discounts'][0] => order.discounts.find(({ type }) => type === discountType);
+): OrderDetailsQuery["order"]["discounts"][0] =>
+  order.discounts.find(({ type }) => type === discountType);
 
-export const getOrderLineDiscount = (order: OrderDetailsQuery['order'], orderLineId: string): OrderLineDiscountData => {
+export const getOrderLineDiscount = (
+  order: OrderDetailsQuery["order"],
+  orderLineId: string,
+): OrderLineDiscountData => {
   const {
     unitDiscount: moneyValue,
     unitDiscountReason: reason,
     unitDiscountValue: value,
     undiscountedUnitPrice: undiscountedPrice,
     unitDiscountType: calculationMode,
-  } = order.lines.find(({ id }: OrderDetailsQuery['order']['lines'][0]) => id === orderLineId);
+  } = order.lines.find(({ id }: OrderDetailsQuery["order"]["lines"][0]) => id === orderLineId);
 
   if (!value) {
     return null;
@@ -42,7 +46,11 @@ export const getOrderLineDiscount = (order: OrderDetailsQuery['order'], orderLin
   };
 };
 
-export const getParsedDiscountData = ({ value, calculationMode, reason }: OrderDiscountCommonInput) => ({
+export const getParsedDiscountData = ({
+  value,
+  calculationMode,
+  reason,
+}: OrderDiscountCommonInput) => ({
   reason,
   value,
   valueType: calculationMode,

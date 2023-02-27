@@ -1,12 +1,12 @@
-import { DateTime } from '@dashboard/components/Date';
-import { OrderDetailsFragment } from '@dashboard/graphql';
-import { transformOrderStatus } from '@dashboard/misc';
-import { Typography } from '@material-ui/core';
-import { Skeleton } from '@material-ui/lab';
-import { makeStyles, Pill } from '@saleor/macaw-ui';
-import { Box } from '@saleor/macaw-ui/next';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { DateTime } from "@dashboard/components/Date";
+import { OrderDetailsFragment } from "@dashboard/graphql";
+import { transformOrderStatus } from "@dashboard/misc";
+import { Typography } from "@material-ui/core";
+import { Skeleton } from "@material-ui/lab";
+import { makeStyles, Pill } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
+import React from "react";
+import { useIntl } from "react-intl";
 
 export interface TitleProps {
   order?: OrderDetailsFragment;
@@ -15,15 +15,15 @@ export interface TitleProps {
 const useStyles = makeStyles(
   theme => ({
     container: {
-      alignItems: 'center',
-      display: 'flex',
+      alignItems: "center",
+      display: "flex",
       gap: theme.spacing(2),
     },
     statusContainer: {
       marginLeft: theme.spacing(2),
     },
   }),
-  { name: 'OrderDetailsTitle' },
+  { name: "OrderDetailsTitle" },
 );
 
 const Title: React.FC<TitleProps> = props => {
@@ -40,7 +40,10 @@ const Title: React.FC<TitleProps> = props => {
   return (
     <div className={classes.container}>
       <Box display="flex" justifyContent="center" alignItems="center">
-        {intl.formatMessage({ id: 'AqXzM2', defaultMessage: 'Order #{orderNumber}' }, { orderNumber: order?.number })}
+        {intl.formatMessage(
+          { id: "AqXzM2", defaultMessage: "Order #{orderNumber}" },
+          { orderNumber: order?.number },
+        )}
         <div className={classes.statusContainer}>
           <Pill label={localized} color={status} />
         </div>
@@ -52,7 +55,7 @@ const Title: React.FC<TitleProps> = props => {
             <DateTime date={order.created} plain />
           </Typography>
         ) : (
-          <Skeleton style={{ width: '10em' }} />
+          <Skeleton style={{ width: "10em" }} />
         )}
       </div>
     </div>

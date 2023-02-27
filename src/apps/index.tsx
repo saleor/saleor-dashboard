@@ -1,11 +1,11 @@
-import WebhooksRoutes from '@dashboard/custom-apps';
-import { sectionNames } from '@dashboard/intl';
-import { parse as parseQs } from 'qs';
-import React from 'react';
-import { useIntl } from 'react-intl';
-import { Route, RouteComponentProps, Switch } from 'react-router-dom';
+import WebhooksRoutes from "@dashboard/custom-apps";
+import { sectionNames } from "@dashboard/intl";
+import { parse as parseQs } from "qs";
+import React from "react";
+import { useIntl } from "react-intl";
+import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
-import { WindowTitle } from '../components/WindowTitle';
+import { WindowTitle } from "../components/WindowTitle";
 import {
   appDetailsPath,
   AppDetailsUrlQueryParams,
@@ -14,11 +14,11 @@ import {
   AppListUrlQueryParams,
   appPath,
   appsListPath,
-} from './urls';
-import { AppView } from './views/App';
-import AppDetailsView from './views/AppDetails';
-import AppInstallView from './views/AppInstall';
-import AppsListView from './views/AppsList';
+} from "./urls";
+import { AppView } from "./views/App";
+import AppDetailsView from "./views/AppDetails";
+import AppInstallView from "./views/AppInstall";
+import AppsListView from "./views/AppsList";
 
 const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
@@ -53,8 +53,8 @@ const Component = () => {
       <Switch>
         <Route exact path={appsListPath} component={AppsList} />
         <Route exact path={appInstallPath} component={AppInstall} />
-        <Route exact path={appDetailsPath(':id')} component={AppDetails} />
-        <Route path={appPath(':id')} component={App} />
+        <Route exact path={appDetailsPath(":id")} component={AppDetails} />
+        <Route path={appPath(":id")} component={App} />
         <WebhooksRoutes />
       </Switch>
     </>

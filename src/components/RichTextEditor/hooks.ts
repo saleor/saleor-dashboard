@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useLayoutEffect, useState } from "react";
 
 export const useHasRendered = () => {
   const [hasRendered, setHasRendereed] = useState(false);

@@ -29,10 +29,7 @@ export const PERMISSIONS = {
       parentMenuSelector: menuSelectors.LEFT_MENU_SELECTORS.orders,
       parentSelectors: menuSelectors.ORDERS,
     },
-    permissionSelectors: [
-      menuSelectors.ORDERS.orders,
-      menuSelectors.ORDERS.draftOrders,
-    ],
+    permissionSelectors: [menuSelectors.ORDERS.orders, menuSelectors.ORDERS.draftOrders],
   },
   page: {
     parent: configurationAsParent,
@@ -58,24 +55,15 @@ export const PERMISSIONS = {
   },
   productTypeAndAttribute: {
     parent: configurationAsParent,
-    permissionSelectors: [
-      CONFIGURATION_SELECTORS.attributes,
-      CONFIGURATION_SELECTORS.productTypes,
-    ],
+    permissionSelectors: [CONFIGURATION_SELECTORS.attributes, CONFIGURATION_SELECTORS.productTypes],
   },
   pageTypeAndAttribute: {
     parent: configurationAsParent,
-    permissionSelectors: [
-      CONFIGURATION_SELECTORS.pageTypes,
-      CONFIGURATION_SELECTORS.attributes,
-    ],
+    permissionSelectors: [CONFIGURATION_SELECTORS.pageTypes, CONFIGURATION_SELECTORS.attributes],
   },
   settings: {
     parent: configurationAsParent,
-    permissionSelectors: [
-      CONFIGURATION_SELECTORS.taxes,
-      CONFIGURATION_SELECTORS.settings,
-    ],
+    permissionSelectors: [CONFIGURATION_SELECTORS.taxes, CONFIGURATION_SELECTORS.settings],
   },
   shipping: {
     parent: configurationAsParent,

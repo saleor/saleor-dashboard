@@ -1,16 +1,16 @@
-import chevronDown from '@assets/images/ChevronDown.svg';
-import useElementScroll, { isScrolledToBottom } from '@dashboard/hooks/useElementScroll';
-import { FetchMoreProps } from '@dashboard/types';
-import { CircularProgress, MenuItem, Paper, Typography } from '@material-ui/core';
-import Add from '@material-ui/icons/Add';
-import { makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import { GetItemPropsOptions } from 'downshift';
-import React, { ReactElement } from 'react';
-import SVG from 'react-inlinesvg';
-import { FormattedMessage } from 'react-intl';
+import chevronDown from "@assets/images/ChevronDown.svg";
+import useElementScroll, { isScrolledToBottom } from "@dashboard/hooks/useElementScroll";
+import { FetchMoreProps } from "@dashboard/types";
+import { CircularProgress, MenuItem, Paper, Typography } from "@material-ui/core";
+import Add from "@material-ui/icons/Add";
+import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import { GetItemPropsOptions } from "downshift";
+import React, { ReactElement } from "react";
+import SVG from "react-inlinesvg";
+import { FormattedMessage } from "react-intl";
 
-import Hr from '../Hr';
+import Hr from "../Hr";
 
 const menuItemHeight = 46;
 const maxMenuItems = 5;
@@ -43,30 +43,30 @@ const useStyles = makeStyles(
     add: {
       background: theme.palette.background.default,
       border: `1px solid ${theme.palette.divider}`,
-      borderRadius: '100%',
+      borderRadius: "100%",
       height: 24,
       marginRight: theme.spacing(),
       width: 24,
     },
     arrowContainer: {
-      position: 'relative',
+      position: "relative",
     },
     arrowInnerContainer: {
-      alignItems: 'center',
-      background: theme.palette.type === 'light' ? theme.palette.grey[50] : theme.palette.grey[900],
+      alignItems: "center",
+      background: theme.palette.type === "light" ? theme.palette.grey[50] : theme.palette.grey[900],
       bottom: 0,
       color: theme.palette.grey[500],
-      display: 'flex',
+      display: "flex",
       height: 30,
-      justifyContent: 'center',
+      justifyContent: "center",
       opacity: 1,
-      position: 'absolute',
-      transition: theme.transitions.duration.short + 'ms',
-      width: '100%',
+      position: "absolute",
+      transition: theme.transitions.duration.short + "ms",
+      width: "100%",
     },
     content: {
       maxHeight: `calc(${menuItemHeight * maxMenuItems}px + ${theme.spacing(2)})`,
-      overflow: 'scroll',
+      overflow: "scroll",
       padding: 8,
     },
     hide: {
@@ -77,28 +77,28 @@ const useStyles = makeStyles(
       margin: theme.spacing(1, 0),
     },
     menuItem: {
-      height: 'auto',
-      whiteSpace: 'normal',
+      height: "auto",
+      whiteSpace: "normal",
       '&[aria-selected="true"]': {
         backgroundColor: theme.palette.background.default,
       },
     },
     progress: {},
     progressContainer: {
-      display: 'flex',
-      justifyContent: 'center',
+      display: "flex",
+      justifyContent: "center",
       padding: theme.spacing(1, 0),
     },
     root: {
       borderBottomLeftRadius: 8,
       borderBottomRightRadius: 8,
       margin: theme.spacing(1, 0),
-      overflow: 'hidden',
+      overflow: "hidden",
       zIndex: 22,
     },
   }),
   {
-    name: 'SingleAutocompleteSelectFieldContent',
+    name: "SingleAutocompleteSelectFieldContent",
   },
 );
 
@@ -116,7 +116,9 @@ function getChoiceIndex(index: number, emptyValue: boolean, customValue: boolean
 
 const sliceSize = 20;
 
-const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFieldContentProps> = props => {
+const SingleAutocompleteSelectFieldContent: React.FC<
+  SingleAutocompleteSelectFieldContentProps
+> = props => {
   const {
     add,
     choices,
@@ -133,7 +135,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   } = props;
 
   if (!!add && !!displayCustomValue) {
-    throw new Error('Add and custom value cannot be displayed simultaneously');
+    throw new Error("Add and custom value cannot be displayed simultaneously");
   }
 
   const classes = useStyles(props);
@@ -177,7 +179,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   }, [loading]);
 
   const emptyOptionProps = getItemProps({
-    item: '',
+    item: "",
   });
 
   const choicesToDisplay = choices.slice(0, slice);
@@ -185,7 +187,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   return (
     <Paper
       // click-outside-ignore is used by glide-datagrid
-      className={clsx('click-outside-ignore', classes.root)}
+      className={clsx("click-outside-ignore", classes.root)}
       elevation={8}
       style={style}
     >
@@ -228,7 +230,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
             {displayCustomValue && (
               <MenuItem
                 className={classes.menuItem}
-                key={'customValue'}
+                key={"customValue"}
                 selected={isCustomValueSelected}
                 component="div"
                 {...getItemProps({
@@ -282,7 +284,11 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
             )}
           </>
         ) : (
-          <MenuItem disabled={true} component="div" data-test-id="single-autocomplete-select-no-options">
+          <MenuItem
+            disabled={true}
+            component="div"
+            data-test-id="single-autocomplete-select-no-options"
+          >
             <FormattedMessage id="hX5PAb" defaultMessage="No results found" />
           </MenuItem>
         )}
@@ -304,5 +310,5 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
   );
 };
 
-SingleAutocompleteSelectFieldContent.displayName = 'SingleAutocompleteSelectFieldContent';
+SingleAutocompleteSelectFieldContent.displayName = "SingleAutocompleteSelectFieldContent";
 export default SingleAutocompleteSelectFieldContent;

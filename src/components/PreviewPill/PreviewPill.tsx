@@ -1,10 +1,10 @@
-import { Grow, Paper, Popper, Typography } from '@material-ui/core';
-import { Pill } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { Grow, Paper, Popper, Typography } from "@material-ui/core";
+import { Pill } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import messages from './messages';
-import useStyles from './styles';
+import messages from "./messages";
+import useStyles from "./styles";
 
 export interface PreviewPillProps {
   className?: string;
@@ -28,11 +28,19 @@ export const PreviewPill: React.FC<PreviewPillProps> = ({ className }) => {
         onMouseEnter={() => setActive(true)}
         onMouseLeave={() => setActive(false)}
       />
-      <Popper className={classes.popper} open={active} anchorEl={anchor.current} transition placement="bottom-start">
+      <Popper
+        className={classes.popper}
+        open={active}
+        anchorEl={anchor.current}
+        transition
+        placement="bottom-start"
+      >
         {({ TransitionProps }) => (
           <Grow {...TransitionProps}>
             <Paper elevation={16} className={classes.tooltip}>
-              <Typography className={classes.tooltipText}>{intl.formatMessage(messages.tooltip)}</Typography>
+              <Typography className={classes.tooltipText}>
+                {intl.formatMessage(messages.tooltip)}
+              </Typography>
             </Paper>
           </Grow>
         )}
@@ -41,5 +49,5 @@ export const PreviewPill: React.FC<PreviewPillProps> = ({ className }) => {
   );
 };
 
-PreviewPill.displayName = 'PreviewPill';
+PreviewPill.displayName = "PreviewPill";
 export default PreviewPill;

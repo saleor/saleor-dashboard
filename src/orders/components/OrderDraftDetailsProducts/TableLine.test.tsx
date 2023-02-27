@@ -1,17 +1,17 @@
-import { order } from '@dashboard/orders/fixtures';
-import { render, screen } from '@testing-library/react';
-import React from 'react';
+import { order } from "@dashboard/orders/fixtures";
+import { render, screen } from "@testing-library/react";
+import React from "react";
 
-import TableLine from './TableLine';
+import TableLine from "./TableLine";
 
-jest.mock('react-intl', () => ({
+jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
 }));
 
-jest.mock('@saleor/macaw-ui', () => ({
+jest.mock("@saleor/macaw-ui", () => ({
   useStyles: jest.fn(() => () => ({})),
   makeStyles: jest.fn(() => () => ({})),
   Avatar: jest.fn(() => () => <></>),
@@ -20,10 +20,10 @@ jest.mock('@saleor/macaw-ui', () => ({
   ImageIcon: jest.fn(() => () => <></>),
 }));
 
-const mockedOrder = order('');
+const mockedOrder = order("");
 
-describe('TableLine rendering', () => {
-  it('renders with values from API', async () => {
+describe("TableLine rendering", () => {
+  it("renders with values from API", async () => {
     // Arrange
     const mockedLine = mockedOrder.lines[0];
     const props = {
@@ -32,8 +32,8 @@ describe('TableLine rendering', () => {
       onOrderLineRemove: jest.fn(),
       addOrderLineDiscount: jest.fn(),
       removeOrderLineDiscount: jest.fn(),
-      orderLineDiscountUpdateStatus: 'default' as const,
-      orderLineDiscountRemoveStatus: 'default' as const,
+      orderLineDiscountUpdateStatus: "default" as const,
+      orderLineDiscountRemoveStatus: "default" as const,
       openDialog: jest.fn(),
       closeDialog: jest.fn(),
       isDialogOpen: false,

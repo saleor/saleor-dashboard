@@ -1,2 +1,2 @@
-export * from './ChannelDeleteDialog';
-export { default } from './ChannelDeleteDialog';
+export * from "./ChannelDeleteDialog";
+export { default } from "./ChannelDeleteDialog";

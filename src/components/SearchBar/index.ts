@@ -1,2 +1,2 @@
-export { default } from './SearchBar';
-export * from './SearchBar';
+export { default } from "./SearchBar";
+export * from "./SearchBar";

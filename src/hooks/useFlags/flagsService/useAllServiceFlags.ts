@@ -1,3 +1,3 @@
-import { FlagWithName } from '../types';
+import { FlagWithName } from "../types";
 
 export const useAllServiceFlags = (): FlagWithName[] => [];

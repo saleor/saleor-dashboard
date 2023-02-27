@@ -1,20 +1,20 @@
-import Checkbox from '@dashboard/components/Checkbox';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableCellHeader from '@dashboard/components/TableCellHeader';
-import TableHead from '@dashboard/components/TableHead';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { PageTypeFragment } from '@dashboard/graphql';
-import { PageTypeListUrlSortField, pageTypeUrl } from '@dashboard/pageTypes/urls';
-import { getArrowDirection } from '@dashboard/utils/sort';
-import { TableBody, TableCell, TableFooter } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import Checkbox from "@dashboard/components/Checkbox";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableCellHeader from "@dashboard/components/TableCellHeader";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { PageTypeFragment } from "@dashboard/graphql";
+import { PageTypeListUrlSortField, pageTypeUrl } from "@dashboard/pageTypes/urls";
+import { getArrowDirection } from "@dashboard/utils/sort";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { renderCollection } from '../../../misc';
-import { ListActions, ListProps, SortPage } from '../../../types';
+import { renderCollection } from "../../../misc";
+import { ListActions, ListProps, SortPage } from "../../../types";
 
 const useStyles = makeStyles(
   {
@@ -22,10 +22,10 @@ const useStyles = makeStyles(
       paddingLeft: 0,
     },
     link: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
   },
-  { name: 'PageTypeList' },
+  { name: "PageTypeList" },
 );
 
 interface PageTypeListProps extends ListProps, ListActions, SortPage<PageTypeListUrlSortField> {
@@ -33,7 +33,8 @@ interface PageTypeListProps extends ListProps, ListActions, SortPage<PageTypeLis
 }
 
 const PageTypeList: React.FC<PageTypeListProps> = props => {
-  const { disabled, pageTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } = props;
+  const { disabled, pageTypes, onSort, isChecked, selected, sort, toggle, toggleAll, toolbar } =
+    props;
   const classes = useStyles(props);
   const numberOfColumns = pageTypes?.length === 0 ? 1 : 2;
 
@@ -48,12 +49,18 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
         toolbar={toolbar}
       >
         <TableCellHeader
-          direction={sort.sort === PageTypeListUrlSortField.name ? getArrowDirection(sort.asc) : undefined}
+          direction={
+            sort.sort === PageTypeListUrlSortField.name ? getArrowDirection(sort.asc) : undefined
+          }
           arrowPosition="right"
           onClick={() => onSort(PageTypeListUrlSortField.name)}
           className={classes.colName}
         >
-          <FormattedMessage id="BQ2NVl" defaultMessage="Content Type Name" description="page type name" />
+          <FormattedMessage
+            id="BQ2NVl"
+            defaultMessage="Content Type Name"
+            description="page type name"
+          />
         </TableCellHeader>
       </TableHead>
       <TableFooter>
@@ -70,10 +77,10 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
               <TableRowLink
                 className={!!pageType ? classes.link : undefined}
                 hover={!!pageType}
-                key={pageType ? pageType.id : 'skeleton'}
+                key={pageType ? pageType.id : "skeleton"}
                 href={pageType && pageTypeUrl(pageType.id)}
                 selected={isSelected}
-                data-test-id={'id-' + pageType?.id}
+                data-test-id={"id-" + pageType?.id}
               >
                 <TableCell padding="checkbox">
                   <Checkbox
@@ -101,5 +108,5 @@ const PageTypeList: React.FC<PageTypeListProps> = props => {
     </ResponsiveTable>
   );
 };
-PageTypeList.displayName = 'PageTypeList';
+PageTypeList.displayName = "PageTypeList";
 export default PageTypeList;

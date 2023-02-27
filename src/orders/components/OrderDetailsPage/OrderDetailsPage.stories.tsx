@@ -1,15 +1,15 @@
-import placeholderImage from '@assets/images/placeholder60x60.png';
-import { FulfillmentStatus, OrderStatus, PaymentChargeStatusEnum } from '@dashboard/graphql';
-import { order as orderFixture, shop as shopFixture } from '@dashboard/orders/fixtures';
-import Decorator from '@dashboard/storybook/Decorator';
-import { storiesOf } from '@storybook/react';
-import React from 'react';
+import placeholderImage from "@assets/images/placeholder60x60.png";
+import { FulfillmentStatus, OrderStatus, PaymentChargeStatusEnum } from "@dashboard/graphql";
+import { order as orderFixture, shop as shopFixture } from "@dashboard/orders/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
-import OrderDetailsPage, { OrderDetailsPageProps } from './OrderDetailsPage';
+import OrderDetailsPage, { OrderDetailsPageProps } from "./OrderDetailsPage";
 
 const order = orderFixture(placeholderImage);
 
-const props: Omit<OrderDetailsPageProps, 'classes'> = {
+const props: Omit<OrderDetailsPageProps, "classes"> = {
   disabled: false,
   onBillingAddressEdit: undefined,
   onFulfillmentApprove: () => undefined,
@@ -33,14 +33,14 @@ const props: Omit<OrderDetailsPageProps, 'classes'> = {
   order,
   errors: [],
   shop: shopFixture,
-  saveButtonBarState: 'default',
+  saveButtonBarState: "default",
 };
 
-storiesOf('Orders / Order details', module)
+storiesOf("Orders / Order details", module)
   .addDecorator(Decorator)
-  .add('default', () => <OrderDetailsPage {...props} />)
-  .add('loading', () => <OrderDetailsPage {...props} order={undefined} />)
-  .add('pending payment', () => (
+  .add("default", () => <OrderDetailsPage {...props} />)
+  .add("loading", () => <OrderDetailsPage {...props} order={undefined} />)
+  .add("pending payment", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -49,7 +49,7 @@ storiesOf('Orders / Order details', module)
       }}
     />
   ))
-  .add('payment error', () => (
+  .add("payment error", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -58,7 +58,7 @@ storiesOf('Orders / Order details', module)
       }}
     />
   ))
-  .add('payment confirmed', () => (
+  .add("payment confirmed", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -67,7 +67,7 @@ storiesOf('Orders / Order details', module)
       }}
     />
   ))
-  .add('no payment', () => (
+  .add("no payment", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -76,7 +76,7 @@ storiesOf('Orders / Order details', module)
       }}
     />
   ))
-  .add('refunded payment', () => (
+  .add("refunded payment", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -85,7 +85,7 @@ storiesOf('Orders / Order details', module)
       }}
     />
   ))
-  .add('rejected payment', () => (
+  .add("rejected payment", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -94,7 +94,7 @@ storiesOf('Orders / Order details', module)
       }}
     />
   ))
-  .add('cancelled', () => (
+  .add("cancelled", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -107,7 +107,7 @@ storiesOf('Orders / Order details', module)
       }}
     />
   ))
-  .add('fulfilled', () => (
+  .add("fulfilled", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -116,7 +116,7 @@ storiesOf('Orders / Order details', module)
       }}
     />
   ))
-  .add('partially fulfilled', () => (
+  .add("partially fulfilled", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -125,7 +125,7 @@ storiesOf('Orders / Order details', module)
       }}
     />
   ))
-  .add('unfulfilled', () => (
+  .add("unfulfilled", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -134,7 +134,7 @@ storiesOf('Orders / Order details', module)
       }}
     />
   ))
-  .add('no shipping address', () => (
+  .add("no shipping address", () => (
     <OrderDetailsPage
       {...props}
       order={{
@@ -143,12 +143,12 @@ storiesOf('Orders / Order details', module)
       }}
     />
   ))
-  .add('no customer note', () => (
+  .add("no customer note", () => (
     <OrderDetailsPage
       {...props}
       order={{
         ...props.order,
-        customerNote: '',
+        customerNote: "",
       }}
     />
   ));

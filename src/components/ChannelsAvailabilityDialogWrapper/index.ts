@@ -1,2 +1,2 @@
-export * from './ChannelsAvailabilityDialogWrapper';
-export { default } from './ChannelsAvailabilityDialogWrapper';
+export * from "./ChannelsAvailabilityDialogWrapper";
+export { default } from "./ChannelsAvailabilityDialogWrapper";

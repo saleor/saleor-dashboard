@@ -1,17 +1,23 @@
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import { Button } from '@dashboard/components/Button';
-import FilterBar from '@dashboard/components/FilterBar';
-import { configurationMenuUrl } from '@dashboard/configuration';
-import { ProductTypeFragment } from '@dashboard/graphql';
-import { sectionNames } from '@dashboard/intl';
-import { productTypeAddUrl, ProductTypeListUrlSortField } from '@dashboard/productTypes/urls';
-import { Card } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { Button } from "@dashboard/components/Button";
+import FilterBar from "@dashboard/components/FilterBar";
+import { configurationMenuUrl } from "@dashboard/configuration";
+import { ProductTypeFragment } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { productTypeAddUrl, ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
+import { Card } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { FilterPageProps, ListActions, PageListProps, SortPage, TabPageProps } from '../../../types';
-import ProductTypeList from '../ProductTypeList';
-import { createFilterStructure, ProductTypeFilterKeys, ProductTypeListFilterOpts } from './filters';
+import {
+  FilterPageProps,
+  ListActions,
+  PageListProps,
+  SortPage,
+  TabPageProps,
+} from "../../../types";
+import ProductTypeList from "../ProductTypeList";
+import { createFilterStructure, ProductTypeFilterKeys, ProductTypeListFilterOpts } from "./filters";
 
 export interface ProductTypeListPageProps
   extends PageListProps,
@@ -49,16 +55,16 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
-            id: '1KSqnn',
-            defaultMessage: 'All Product Types',
-            description: 'tab name',
+            id: "1KSqnn",
+            defaultMessage: "All Product Types",
+            description: "tab name",
           })}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
-            id: 'rpFdD1',
-            defaultMessage: 'Search Product Type',
+            id: "rpFdD1",
+            defaultMessage: "Search Product Type",
           })}
           tabs={tabs}
           onAll={onAll}
@@ -73,5 +79,5 @@ const ProductTypeListPage: React.FC<ProductTypeListPageProps> = ({
     </>
   );
 };
-ProductTypeListPage.displayName = 'ProductTypeListPage';
+ProductTypeListPage.displayName = "ProductTypeListPage";
 export default ProductTypeListPage;

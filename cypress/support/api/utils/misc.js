@@ -12,7 +12,7 @@ export function getDatePeriod(days) {
 
   return {
     gte: start.format(format),
-    lte: end.format(format)
+    lte: end.format(format),
   };
 }
 

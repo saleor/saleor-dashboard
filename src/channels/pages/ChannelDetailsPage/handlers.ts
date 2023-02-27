@@ -1,11 +1,11 @@
-import { FormData } from '@dashboard/channels/components/ChannelForm';
-import { SearchData } from '@dashboard/hooks/makeTopLevelSearch';
-import { getParsedSearchData } from '@dashboard/hooks/makeTopLevelSearch/utils';
-import { getById, getByUnmatchingId } from '@dashboard/misc';
-import { ReorderAction, ReorderEvent } from '@dashboard/types';
-import { move } from '@dashboard/utils/lists';
+import { FormData } from "@dashboard/channels/components/ChannelForm";
+import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
+import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import { getById, getByUnmatchingId } from "@dashboard/misc";
+import { ReorderAction, ReorderEvent } from "@dashboard/types";
+import { move } from "@dashboard/utils/lists";
 
-import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from './utils';
+import { getUpdatedIdsWithNewId, getUpdatedIdsWithoutNewId } from "./utils";
 
 export function createShippingZoneAddHandler(
   data: FormData,
@@ -83,7 +83,10 @@ export function createWarehouseRemoveHandler(
   };
 }
 
-export function createWarehouseReorderHandler(data: FormData, set: (data: Partial<FormData>) => void): ReorderAction {
+export function createWarehouseReorderHandler(
+  data: FormData,
+  set: (data: Partial<FormData>) => void,
+): ReorderAction {
   return ({ oldIndex, newIndex }: ReorderEvent) => {
     const updatedWarehousesToDisplay = move(
       data.warehousesToDisplay[oldIndex],

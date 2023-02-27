@@ -1,8 +1,10 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const productMediaCreateMutation = gql`
   mutation ProductMediaCreate($product: ID!, $image: Upload, $alt: String, $mediaUrl: String) {
-    productMediaCreate(input: { alt: $alt, image: $image, product: $product, mediaUrl: $mediaUrl }) {
+    productMediaCreate(
+      input: { alt: $alt, image: $image, product: $product, mediaUrl: $mediaUrl }
+    ) {
       errors {
         ...ProductError
       }
@@ -359,7 +361,10 @@ export const productVariantReorder = gql`
 `;
 
 export const ProductVariantChannelListingUpdateMutation = gql`
-  mutation ProductVariantChannelListingUpdate($id: ID!, $input: [ProductVariantChannelListingAddInput!]!) {
+  mutation ProductVariantChannelListingUpdate(
+    $id: ID!
+    $input: [ProductVariantChannelListingAddInput!]!
+  ) {
     productVariantChannelListingUpdate(id: $id, input: $input) {
       variant {
         id

@@ -1,6 +1,6 @@
-import { removeAtIndex } from '@dashboard/utils/lists';
+import { removeAtIndex } from "@dashboard/utils/lists";
 
-import useStateFromProps from './useStateFromProps';
+import useStateFromProps from "./useStateFromProps";
 
 export type FormsetChange<TValue = any> = (id: string, value: TValue) => void;
 export interface FormsetAtomicData<TData = {}, TValue = any> {
@@ -19,7 +19,9 @@ export interface UseFormsetOutput<TData = {}, TValue = any> {
   set: (data: FormsetData<TData, TValue>) => void;
   remove: (id: string) => void;
 }
-function useFormset<TData = {}, TValue = any>(initial: FormsetData<TData, TValue>): UseFormsetOutput<TData, TValue> {
+function useFormset<TData = {}, TValue = any>(
+  initial: FormsetData<TData, TValue>,
+): UseFormsetOutput<TData, TValue> {
   const [data, setData] = useStateFromProps<FormsetData<TData, TValue>>(initial || []);
 
   function addItem(itemData: FormsetAtomicData<TData, TValue>) {

@@ -1,22 +1,22 @@
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { createPaginationState } from '@dashboard/hooks/usePaginator';
-import useShop from '@dashboard/hooks/useShop';
-import { stringifyQs } from '@dashboard/utils/urls';
-import React from 'react';
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { createPaginationState } from "@dashboard/hooks/usePaginator";
+import useShop from "@dashboard/hooks/useShop";
+import { stringifyQs } from "@dashboard/utils/urls";
+import React from "react";
 
-import { PAGINATE_BY } from '../../config';
-import { maybe } from '../../misc';
-import TranslationsEntitiesListPage from '../components/TranslationsEntitiesListPage';
-import { LanguageEntitiesUrlQueryParams, TranslatableEntities } from '../urls';
-import TranslationsAttributeList from './EntityLists/TranslationsAttributeList';
-import TranslationsCategoryList from './EntityLists/TranslationsCategoryList';
-import TranslationsCollectionList from './EntityLists/TranslationsCollectionList';
-import TranslationsMenuItemList from './EntityLists/TranslationsMenuItemList';
-import TranslationsPageList from './EntityLists/TranslationsPageList';
-import TranslationsProductList from './EntityLists/TranslationsProductList';
-import TranslationsSaleList from './EntityLists/TranslationsSaleList';
-import TranslationsShippingMethodList from './EntityLists/TranslationsShippingMethodList';
-import TranslationsVoucherList from './EntityLists/TranslationsVoucherList';
+import { PAGINATE_BY } from "../../config";
+import { maybe } from "../../misc";
+import TranslationsEntitiesListPage from "../components/TranslationsEntitiesListPage";
+import { LanguageEntitiesUrlQueryParams, TranslatableEntities } from "../urls";
+import TranslationsAttributeList from "./EntityLists/TranslationsAttributeList";
+import TranslationsCategoryList from "./EntityLists/TranslationsCategoryList";
+import TranslationsCollectionList from "./EntityLists/TranslationsCollectionList";
+import TranslationsMenuItemList from "./EntityLists/TranslationsMenuItemList";
+import TranslationsPageList from "./EntityLists/TranslationsPageList";
+import TranslationsProductList from "./EntityLists/TranslationsProductList";
+import TranslationsSaleList from "./EntityLists/TranslationsSaleList";
+import TranslationsShippingMethodList from "./EntityLists/TranslationsShippingMethodList";
+import TranslationsVoucherList from "./EntityLists/TranslationsVoucherList";
 
 interface TranslationsEntitiesProps {
   language: string;
@@ -29,7 +29,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({ language, p
 
   if (Object.keys(TranslatableEntities).indexOf(params.tab) === -1) {
     navigate(
-      '?' +
+      "?" +
         stringifyQs({
           tab: TranslatableEntities.categories,
         }),
@@ -40,69 +40,71 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({ language, p
   const filterCallbacks = {
     onCategoriesTabClick: () =>
       navigate(
-        '?' +
+        "?" +
           stringifyQs({
             tab: TranslatableEntities.categories,
           }),
       ),
     onCollectionsTabClick: () =>
       navigate(
-        '?' +
+        "?" +
           stringifyQs({
             tab: TranslatableEntities.collections,
           }),
       ),
     onPagesTabClick: () =>
       navigate(
-        '?' +
+        "?" +
           stringifyQs({
             tab: TranslatableEntities.pages,
           }),
       ),
     onAttributesTabClick: () =>
       navigate(
-        '?' +
+        "?" +
           stringifyQs({
             tab: TranslatableEntities.attributes,
           }),
       ),
     onProductsTabClick: () =>
       navigate(
-        '?' +
+        "?" +
           stringifyQs({
             tab: TranslatableEntities.products,
           }),
       ),
     onSalesTabClick: () =>
       navigate(
-        '?' +
+        "?" +
           stringifyQs({
             tab: TranslatableEntities.sales,
           }),
       ),
     onShippingMethodsTabClick: () =>
       navigate(
-        '?' +
+        "?" +
           stringifyQs({
             tab: TranslatableEntities.shippingMethods,
           }),
       ),
     onVouchersTabClick: () =>
       navigate(
-        '?' +
+        "?" +
           stringifyQs({
             tab: TranslatableEntities.vouchers,
           }),
       ),
     onMenuItemsTabClick: () =>
       navigate(
-        '?' +
+        "?" +
           stringifyQs({
             tab: TranslatableEntities.menuItems,
           }),
       ),
   };
-  const lang = maybe(() => shop.languages.find(languageFromList => languageFromList.code === language));
+  const lang = maybe(() =>
+    shop.languages.find(languageFromList => languageFromList.code === language),
+  );
   const paginationState = createPaginationState(PAGINATE_BY, params);
   const queryVariables = React.useMemo(
     () => ({
@@ -119,27 +121,27 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({ language, p
       }}
       language={lang}
     >
-      {params.tab === 'categories' ? (
+      {params.tab === "categories" ? (
         <TranslationsCategoryList params={params} variables={queryVariables} />
-      ) : params.tab === 'products' ? (
+      ) : params.tab === "products" ? (
         <TranslationsProductList params={params} variables={queryVariables} />
-      ) : params.tab === 'collections' ? (
+      ) : params.tab === "collections" ? (
         <TranslationsCollectionList params={params} variables={queryVariables} />
-      ) : params.tab === 'sales' ? (
+      ) : params.tab === "sales" ? (
         <TranslationsSaleList params={params} variables={queryVariables} />
-      ) : params.tab === 'vouchers' ? (
+      ) : params.tab === "vouchers" ? (
         <TranslationsVoucherList params={params} variables={queryVariables} />
-      ) : params.tab === 'pages' ? (
+      ) : params.tab === "pages" ? (
         <TranslationsPageList params={params} variables={queryVariables} />
-      ) : params.tab === 'attributes' ? (
+      ) : params.tab === "attributes" ? (
         <TranslationsAttributeList params={params} variables={queryVariables} />
-      ) : params.tab === 'shippingMethods' ? (
+      ) : params.tab === "shippingMethods" ? (
         <TranslationsShippingMethodList params={params} variables={queryVariables} />
-      ) : params.tab === 'menuItems' ? (
+      ) : params.tab === "menuItems" ? (
         <TranslationsMenuItemList params={params} variables={queryVariables} />
       ) : null}
     </TranslationsEntitiesListPage>
   );
 };
-TranslationsEntities.displayName = 'TranslationsEntities';
+TranslationsEntities.displayName = "TranslationsEntities";
 export default TranslationsEntities;

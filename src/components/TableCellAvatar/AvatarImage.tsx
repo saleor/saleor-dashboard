@@ -1,9 +1,9 @@
-import { Avatar as MuiAvatar, Typography } from '@material-ui/core';
-import { ImageIcon } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
+import { Avatar as MuiAvatar, Typography } from "@material-ui/core";
+import { ImageIcon } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
 
-import { useAvatarImageStyles } from './styles';
+import { useAvatarImageStyles } from "./styles";
 
 interface AvatarImageProps {
   initials?: string;

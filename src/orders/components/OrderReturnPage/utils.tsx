@@ -1,8 +1,8 @@
-import { FulfillmentStatus, OrderDetailsFragment } from '@dashboard/graphql';
-import { getById } from '@dashboard/misc';
-import { Node } from '@dashboard/types';
+import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
+import { getById } from "@dashboard/misc";
+import { Node } from "@dashboard/types";
 
-import { FormsetQuantityData, FormsetReplacementData, LineItemOptions } from './form';
+import { FormsetQuantityData, FormsetReplacementData, LineItemOptions } from "./form";
 
 const fulfiledStatuses = [FulfillmentStatus.FULFILLED, FulfillmentStatus.REFUNDED];
 
@@ -21,10 +21,16 @@ export const getUnfulfilledLines = (order?: OrderDetailsFragment) =>
   order?.lines.filter(line => line.quantityToFulfill > 0) || [];
 
 export const getAllOrderFulfilledLines = (order?: OrderDetailsFragment) =>
-  getFulfilledFulfillemnts(order).reduce((result, { lines }) => [...result, ...getParsedLines(lines)], []);
+  getFulfilledFulfillemnts(order).reduce(
+    (result, { lines }) => [...result, ...getParsedLines(lines)],
+    [],
+  );
 
 export const getAllOrderWaitingLines = (order?: OrderDetailsFragment) =>
-  getWaitingFulfillments(order).reduce((result, { lines }) => [...result, ...getParsedLines(lines)], []);
+  getWaitingFulfillments(order).reduce(
+    (result, { lines }) => [...result, ...getParsedLines(lines)],
+    [],
+  );
 
 export function getLineItem<T>(
   { id }: Node,
@@ -38,7 +44,11 @@ export function getLineItem<T>(
   };
 }
 
-export function getParsedLineData<T>({ initialValue, isFulfillment = false, isRefunded = false }: LineItemOptions<T>) {
+export function getParsedLineData<T>({
+  initialValue,
+  isFulfillment = false,
+  isRefunded = false,
+}: LineItemOptions<T>) {
   return (item: Node) => getLineItem(item, { initialValue, isFulfillment, isRefunded });
 }
 
@@ -52,13 +62,15 @@ export function getParsedLineDataForFulfillmentStatus<T>(
   );
 }
 
-export const getFulfillmentsWithStatus = (order: OrderDetailsFragment, fulfillmentStatus: FulfillmentStatus) =>
-  order?.fulfillments.filter(({ status }) => status === fulfillmentStatus) || [];
+export const getFulfillmentsWithStatus = (
+  order: OrderDetailsFragment,
+  fulfillmentStatus: FulfillmentStatus,
+) => order?.fulfillments.filter(({ status }) => status === fulfillmentStatus) || [];
 
-export const getParsedLinesOfFulfillments = (fullfillments: OrderDetailsFragment['fulfillments']) =>
+export const getParsedLinesOfFulfillments = (fullfillments: OrderDetailsFragment["fulfillments"]) =>
   fullfillments.reduce((result, { lines }) => [...result, ...getParsedLines(lines)], []);
 
-export const getParsedLines = (lines: OrderDetailsFragment['fulfillments'][0]['lines']) =>
+export const getParsedLines = (lines: OrderDetailsFragment["fulfillments"][0]["lines"]) =>
   lines.map(({ id, quantity, orderLine }) => ({
     ...orderLine,
     id,
@@ -66,7 +78,7 @@ export const getParsedLines = (lines: OrderDetailsFragment['fulfillments'][0]['l
   }));
 
 const isIncludedInIds = function <T extends Node>(arrayToCompare: string[] | T[], obj: Node) {
-  const isSimpleIdsArray = (arrayToCompare as string[]).every(value => typeof value === 'string');
+  const isSimpleIdsArray = (arrayToCompare as string[]).every(value => typeof value === "string");
 
   const idsToCompare = isSimpleIdsArray
     ? (arrayToCompare as string[])

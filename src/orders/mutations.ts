@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const orderCancelMutation = gql`
   mutation OrderCancel($id: ID!) {
@@ -228,8 +228,16 @@ export const orderFulfillmentUpdateTrackingMutation = gql`
 `;
 
 export const orderFulfillmentApproveMutation = gql`
-  mutation OrderFulfillmentApprove($id: ID!, $notifyCustomer: Boolean!, $allowStockToBeExceeded: Boolean) {
-    orderFulfillmentApprove(id: $id, notifyCustomer: $notifyCustomer, allowStockToBeExceeded: $allowStockToBeExceeded) {
+  mutation OrderFulfillmentApprove(
+    $id: ID!
+    $notifyCustomer: Boolean!
+    $allowStockToBeExceeded: Boolean
+  ) {
+    orderFulfillmentApprove(
+      id: $id
+      notifyCustomer: $notifyCustomer
+      allowStockToBeExceeded: $allowStockToBeExceeded
+    ) {
       errors {
         ...OrderError
       }
@@ -443,7 +451,10 @@ export const invoiceEmailSendMutation = gql`
 `;
 
 export const orderSettingsUpdateMutation = gql`
-  mutation OrderSettingsUpdate($orderSettingsInput: OrderSettingsUpdateInput!, $shopSettingsInput: ShopSettingsInput!) {
+  mutation OrderSettingsUpdate(
+    $orderSettingsInput: OrderSettingsUpdateInput!
+    $shopSettingsInput: ShopSettingsInput!
+  ) {
     orderSettingsUpdate(input: $orderSettingsInput) {
       errors {
         ...OrderSettingsError

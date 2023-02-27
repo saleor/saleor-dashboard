@@ -1,6 +1,10 @@
-import { gql } from '@apollo/client';
-import { SearchPageTypesDocument, SearchPageTypesQuery, SearchPageTypesQueryVariables } from '@dashboard/graphql';
-import makeTopLevelSearch from '@dashboard/hooks/makeTopLevelSearch';
+import { gql } from "@apollo/client";
+import {
+  SearchPageTypesDocument,
+  SearchPageTypesQuery,
+  SearchPageTypesQueryVariables,
+} from "@dashboard/graphql";
+import makeTopLevelSearch from "@dashboard/hooks/makeTopLevelSearch";
 
 export const searchPageTypes = gql`
   query SearchPageTypes($after: String, $first: Int!, $query: String!) {
@@ -18,4 +22,6 @@ export const searchPageTypes = gql`
   }
 `;
 
-export default makeTopLevelSearch<SearchPageTypesQuery, SearchPageTypesQueryVariables>(SearchPageTypesDocument);
+export default makeTopLevelSearch<SearchPageTypesQuery, SearchPageTypesQueryVariables>(
+  SearchPageTypesDocument,
+);

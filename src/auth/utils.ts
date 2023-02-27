@@ -1,11 +1,11 @@
-import { ApolloError, ServerError } from '@apollo/client/core';
-import { IMessage, IMessageContext } from '@dashboard/components/messages';
-import { UseNotifierResult } from '@dashboard/hooks/useNotifier';
-import { commonMessages } from '@dashboard/intl';
-import { getMutationErrors, parseLogMessage } from '@dashboard/misc';
-import { IntlShape } from 'react-intl';
+import { ApolloError, ServerError } from "@apollo/client/core";
+import { IMessage, IMessageContext } from "@dashboard/components/messages";
+import { UseNotifierResult } from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import { getMutationErrors, parseLogMessage } from "@dashboard/misc";
+import { IntlShape } from "react-intl";
 
-import { isJwtError, isTokenExpired } from './errors';
+import { isJwtError, isTokenExpired } from "./errors";
 
 export const displayDemoMessage = (intl: IntlShape, notify: UseNotifierResult) => {
   notify({
@@ -37,11 +37,17 @@ const getAllErrorMessages = (error: ApolloError) => [
   ...getNetworkErrors(error),
 ];
 
-export const showAllErrors = ({ notify, error }: { notify: IMessageContext; error: ApolloError }) => {
+export const showAllErrors = ({
+  notify,
+  error,
+}: {
+  notify: IMessageContext;
+  error: ApolloError;
+}) => {
   getAllErrorMessages(error).forEach(message => {
     notify({
       text: error.message,
-      status: 'error',
+      status: "error",
       apiMessage: message,
     });
   });
@@ -61,7 +67,7 @@ export const handleNestedMutationErrors = ({
   if (mutationErrors.length > 0) {
     mutationErrors.forEach(error => {
       notify({
-        status: 'error',
+        status: "error",
         text: error.message,
         apiMessage: parseLogMessage({
           intl,
@@ -83,7 +89,7 @@ export async function handleQueryAuthError(
     logout();
     if (error.graphQLErrors.every(isTokenExpired)) {
       notify({
-        status: 'error',
+        status: "error",
         text: intl.formatMessage(commonMessages.sessionExpired),
       });
     } else {

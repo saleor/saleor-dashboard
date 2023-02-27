@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 export interface TableButtonWrapper {
   children: React.ReactElement<{
@@ -40,5 +40,5 @@ export const TableButtonWrapper = <T extends HTMLElement>({ children }: TableBut
 
   return children;
 };
-TableButtonWrapper.displayName = 'TableButtonWrapper';
+TableButtonWrapper.displayName = "TableButtonWrapper";
 export default TableButtonWrapper;

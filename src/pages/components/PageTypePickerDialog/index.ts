@@ -1,2 +1,2 @@
-export * from './PageTypePickerDialog';
-export { default } from './PageTypePickerDialog';
+export * from "./PageTypePickerDialog";
+export { default } from "./PageTypePickerDialog";

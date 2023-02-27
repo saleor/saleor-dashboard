@@ -13,9 +13,7 @@ export function getVouchers(first, startsWith) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(query)
-    .then(resp => resp.body.data.vouchers.edges);
+  return cy.sendRequestWithQuery(query).then(resp => resp.body.data.vouchers.edges);
 }
 
 export function deleteVouchers(voucherId) {
@@ -30,10 +28,7 @@ export function deleteVouchers(voucherId) {
   return cy.sendRequestWithQuery(mutation);
 }
 
-export function createVoucher(
-  { name, productId, code = name, type, country },
-  token,
-) {
+export function createVoucher({ name, productId, code = name, type, country }, token) {
   const discountTypeLines = getValueWithDefault(type, `type:${type}`);
   const countryLine = getValueWithDefault(country, `countries:["${country}"]`);
 

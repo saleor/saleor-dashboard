@@ -1,31 +1,33 @@
-import { resolveAppIframeUrl } from '@dashboard/apps/urls';
-import * as config from '@dashboard/config';
-import { ThemeType } from '@saleor/app-sdk/app-bridge';
+import { resolveAppIframeUrl } from "@dashboard/apps/urls";
+import * as config from "@dashboard/config";
+import { ThemeType } from "@saleor/app-sdk/app-bridge";
 
-describe('resolveAppIframeUrl', () => {
+describe("resolveAppIframeUrl", () => {
   afterAll(() => {
     jest.clearAllMocks();
   });
 
-  describe('For full URL provided in env', () => {
+  describe("For full URL provided in env", () => {
     beforeEach(() => {
-      jest.spyOn(config, 'getApiUrl').mockImplementation(() => 'https://shop.saleor.cloud/graphql/');
+      jest
+        .spyOn(config, "getApiUrl")
+        .mockImplementation(() => "https://shop.saleor.cloud/graphql/");
     });
 
     it.each<[string, string, Record<string, string> & { theme: ThemeType }, string]>([
       [
-        'XyZ123',
-        'https://my-app.vercel.app',
-        { param1: 'param1', theme: 'light' },
-        'https://my-app.vercel.app?domain=shop.saleor.cloud&saleorApiUrl=https%3A%2F%2Fshop.saleor.cloud%2Fgraphql%2F&id=XyZ123&param1=param1&theme=light',
+        "XyZ123",
+        "https://my-app.vercel.app",
+        { param1: "param1", theme: "light" },
+        "https://my-app.vercel.app?domain=shop.saleor.cloud&saleorApiUrl=https%3A%2F%2Fshop.saleor.cloud%2Fgraphql%2F&id=XyZ123&param1=param1&theme=light",
       ],
       [
-        'AbC987',
-        'https://my-app.vercel.app/configuration',
-        { param1: 'param1', param2: 'param2', theme: 'light' },
-        'https://my-app.vercel.app/configuration?domain=shop.saleor.cloud&saleorApiUrl=https%3A%2F%2Fshop.saleor.cloud%2Fgraphql%2F&id=AbC987&param1=param1&param2=param2&theme=light',
+        "AbC987",
+        "https://my-app.vercel.app/configuration",
+        { param1: "param1", param2: "param2", theme: "light" },
+        "https://my-app.vercel.app/configuration?domain=shop.saleor.cloud&saleorApiUrl=https%3A%2F%2Fshop.saleor.cloud%2Fgraphql%2F&id=AbC987&param1=param1&param2=param2&theme=light",
       ],
-    ])('Generates valid URL from segments', (id, appUrl, params, expectedUrl) => {
+    ])("Generates valid URL from segments", (id, appUrl, params, expectedUrl) => {
       const result = resolveAppIframeUrl(id, appUrl, params);
 
       expect(result).toEqual(expectedUrl);
@@ -37,5 +39,5 @@ describe('resolveAppIframeUrl', () => {
    *
    * Current jest is not set up for testing location/URL
    */
-  test.todo('Test if URL is valid when API_URL in env is absolute path like /graphql/');
+  test.todo("Test if URL is valid when API_URL in env is absolute path like /graphql/");
 });

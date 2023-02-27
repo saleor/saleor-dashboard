@@ -1,18 +1,10 @@
 import { GIFT_CARD_DIALOG } from "../../../elements/catalog/giftCard/giftCardDialog";
-import {
-  GIFT_CARD_LIST,
-  giftCardRow
-} from "../../../elements/catalog/giftCard/giftCardList";
+import { GIFT_CARD_LIST, giftCardRow } from "../../../elements/catalog/giftCard/giftCardList";
 import { GIFT_CARD_UPDATE } from "../../../elements/catalog/giftCard/giftCardUpdate";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { giftCardDetailsUrl, urlList } from "../../../fixtures/urlList";
 
-export function openAndFillUpCreateGiftCardDialog({
-  note,
-  tag,
-  amount,
-  currency
-}) {
+export function openAndFillUpCreateGiftCardDialog({ note, tag, amount, currency }) {
   cy.visit(urlList.giftCards)
     .get(GIFT_CARD_LIST.issueCardButton)
     .click()
@@ -39,7 +31,7 @@ export function saveGiftCard() {
 }
 
 export const expiryPeriods = {
-  MONTH: GIFT_CARD_DIALOG.expirationOptions.expiryPeriodMonthType
+  MONTH: GIFT_CARD_DIALOG.expirationOptions.expiryPeriodMonthType,
 };
 
 export function setExpiryPeriod(amount, period) {
@@ -72,20 +64,15 @@ export function changeGiftCardActiveStatus(giftCardId) {
 }
 
 export function selectGiftCard(giftCardId) {
-  return cy
-    .get(giftCardRow(giftCardId))
-    .find(GIFT_CARD_LIST.selectGiftCardCheckbox)
-    .click();
+  return cy.get(giftCardRow(giftCardId)).find(GIFT_CARD_LIST.selectGiftCardCheckbox).click();
 }
 
 export function enterAndSelectGiftCards(giftCardsIds) {
   const alias = "GiftCardList";
-  cy.addAliasToGraphRequest(alias)
-    .visit(urlList.giftCards)
-    .findElementsAndMakeActionOnTable({
-      elementsGraphqlAlias: alias,
-      elementsName: "giftCards",
-      elementsIds: giftCardsIds,
-      actionFunction: selectGiftCard
-    });
+  cy.addAliasToGraphRequest(alias).visit(urlList.giftCards).findElementsAndMakeActionOnTable({
+    elementsGraphqlAlias: alias,
+    elementsName: "giftCards",
+    elementsIds: giftCardsIds,
+    actionFunction: selectGiftCard,
+  });
 }

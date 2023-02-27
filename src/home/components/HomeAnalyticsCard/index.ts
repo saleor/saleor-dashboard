@@ -1,2 +1,2 @@
-export { default } from './HomeAnalyticsCard';
-export * from './HomeAnalyticsCard';
+export { default } from "./HomeAnalyticsCard";
+export * from "./HomeAnalyticsCard";

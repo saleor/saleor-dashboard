@@ -1,9 +1,9 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import { getStringOrPlaceholder } from '@dashboard/misc';
-import { DialogContentText } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import { DialogContentText } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface DeleteShippingRateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -28,9 +28,9 @@ export const DeleteShippingRateDialog: React.FC<DeleteShippingRateDialogProps> =
       onConfirm={handleConfirm}
       open={open}
       title={intl.formatMessage({
-        id: 'nNeWAx',
-        defaultMessage: 'Delete Shipping Method',
-        description: 'dialog header',
+        id: "nNeWAx",
+        defaultMessage: "Delete Shipping Method",
+        description: "dialog header",
       })}
       variant="delete"
     >

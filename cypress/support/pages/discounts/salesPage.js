@@ -101,9 +101,7 @@ export function createSaleWithNewProduct({
        cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
       */
-    cy.visit(urlList.sales)
-      .expectSkeletonIsVisible()
-      .waitForProgressBarToNotExist();
+    cy.visit(urlList.sales).expectSkeletonIsVisible().waitForProgressBarToNotExist();
     createSale({
       saleName: name,
       channelName: channel.name,
@@ -140,9 +138,7 @@ export function createSaleWithNewVariant({
        cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
       */
-    cy.visit(urlList.sales)
-      .expectSkeletonIsVisible()
-      .waitForProgressBarToNotExist();
+    cy.visit(urlList.sales).expectSkeletonIsVisible().waitForProgressBarToNotExist();
     createSale({
       saleName: name,
       channelName: channel.name,

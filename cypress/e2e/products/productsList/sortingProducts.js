@@ -37,9 +37,7 @@ describe("As an admin I should be able to sort products", () => {
     () => {
       selectChannel(defaultChannel.slug);
       submitFilters();
-      cy.get(PRODUCTS_LIST.tableHeaders.price)
-        .click()
-        .waitForProgressBarToNotExist();
+      cy.get(PRODUCTS_LIST.tableHeaders.price).click().waitForProgressBarToNotExist();
       sortProductsBy("price");
     },
   );
@@ -48,9 +46,7 @@ describe("As an admin I should be able to sort products", () => {
     "should be able to sort products by type. TC: SALEOR_2608",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
-      cy.get(PRODUCTS_LIST.tableHeaders.type)
-        .click()
-        .waitForProgressBarToNotExist();
+      cy.get(PRODUCTS_LIST.tableHeaders.type).click().waitForProgressBarToNotExist();
       sortProductsBy("type");
     },
   );

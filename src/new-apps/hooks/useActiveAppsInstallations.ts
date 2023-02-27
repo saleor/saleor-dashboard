@@ -1,14 +1,14 @@
-import { useApolloClient } from '@apollo/client';
-import { EXTENSION_LIST_QUERY } from '@dashboard/apps/queries';
+import { useApolloClient } from "@apollo/client";
+import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
 import {
   AppInstallationFragment,
   AppsInstallationsQuery,
   JobStatusEnum,
   useAppDeleteFailedInstallationMutation,
   useAppRetryInstallMutation,
-} from '@dashboard/graphql';
-import useLocalStorage from '@dashboard/hooks/useLocalStorage';
-import { useEffect, useRef } from 'react';
+} from "@dashboard/graphql";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import { useEffect, useRef } from "react";
 
 interface UseActiveAppsInstallations {
   appsInProgressData: AppsInstallationsQuery | undefined;
@@ -32,10 +32,9 @@ function useActiveAppsInstallations({
   onRemoveInProgressAppSuccess,
 }: UseActiveAppsInstallations) {
   const client = useApolloClient();
-  const [activeInstallations, setActiveInstallations] = useLocalStorage<Array<Record<'id' | 'name', string>>>(
-    'activeInstallations',
-    [],
-  );
+  const [activeInstallations, setActiveInstallations] = useLocalStorage<
+    Array<Record<"id" | "name", string>>
+  >("activeInstallations", []);
   const intervalId = useRef<null | number>(null);
 
   const refetchExtensionList = () => {

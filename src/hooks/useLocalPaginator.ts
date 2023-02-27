@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 
 export interface PageInfo {
   endCursor: string | null;
@@ -80,7 +80,10 @@ export function useSectionLocalPaginationState(
     }
   }, [paginationState]);
 
-  return [section === paginationSection ? paginationState : fallbackPaginationState, setPaginationState];
+  return [
+    section === paginationSection ? paginationState : fallbackPaginationState,
+    setPaginationState,
+  ];
 }
 
 function useLocalPaginator(setPaginationState: (paginationState: PaginationState) => void) {
@@ -110,7 +113,7 @@ function useLocalPaginator(setPaginationState: (paginationState: PaginationState
     return {
       loadNextPage,
       loadPreviousPage,
-      paginatorType: 'click' as const,
+      paginatorType: "click" as const,
       pageInfo: newPageInfo,
     };
   }

@@ -24,9 +24,7 @@ export function createChannel({
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(createChannelMutation)
-    .its("body.data.channelCreate.channel");
+  return cy.sendRequestWithQuery(createChannelMutation).its("body.data.channelCreate.channel");
 }
 
 export function getChannels() {

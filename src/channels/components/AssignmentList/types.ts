@@ -1,4 +1,4 @@
-import { FetchMoreProps, ReorderAction } from '@dashboard/types';
+import { FetchMoreProps, ReorderAction } from "@dashboard/types";
 
 export interface AssignItem {
   id: string;

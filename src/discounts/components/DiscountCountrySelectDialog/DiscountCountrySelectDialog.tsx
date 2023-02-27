@@ -1,14 +1,14 @@
-import BackButton from '@dashboard/components/BackButton';
-import Checkbox from '@dashboard/components/Checkbox';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import Form from '@dashboard/components/Form';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import Hr from '@dashboard/components/Hr';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { CountryWithCodeFragment } from '@dashboard/graphql';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import useScrollableDialogStyle from '@dashboard/styles/useScrollableDialogStyle';
+import BackButton from "@dashboard/components/BackButton";
+import Checkbox from "@dashboard/components/Checkbox";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Hr from "@dashboard/components/Hr";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { CountryWithCodeFragment } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
 import {
   Dialog,
   DialogActions,
@@ -18,13 +18,13 @@ import {
   TableCell,
   TextField,
   Typography,
-} from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import { filter } from 'fuzzaldrin';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { filter } from "fuzzaldrin";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 interface FormData {
   allCountries: boolean;
@@ -51,21 +51,27 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
   const initialForm: FormData = {
     allCountries: true,
     countries: initial,
-    query: '',
+    query: "",
   };
   return (
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
       <Form initial={initialForm} onSubmit={onConfirm} className={scrollableDialogClasses.form}>
         {({ data, change }) => {
           const countrySelectionMap = countries.reduce((acc, country) => {
-            acc[country.code] = !!data.countries.find(selectedCountries => selectedCountries === country.code);
+            acc[country.code] = !!data.countries.find(
+              selectedCountries => selectedCountries === country.code,
+            );
             return acc;
           }, {});
 
           return (
             <>
               <DialogTitle disableTypography>
-                <FormattedMessage id="cvVIV/" defaultMessage="Assign Countries" description="dialog header" />
+                <FormattedMessage
+                  id="cvVIV/"
+                  defaultMessage="Assign Countries"
+                  description="dialog header"
+                />
               </DialogTitle>
               <DialogContent>
                 <Typography>
@@ -80,14 +86,14 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                   value={data.query}
                   onChange={event => change(event /* TO BE CHECKED: () => fetch(data.query)*/)}
                   label={intl.formatMessage({
-                    id: '8EGagh',
-                    defaultMessage: 'Filter Countries',
-                    description: 'search box label',
+                    id: "8EGagh",
+                    defaultMessage: "Filter Countries",
+                    description: "search box label",
                   })}
                   placeholder={intl.formatMessage({
-                    id: 'dGqEJ9',
-                    defaultMessage: 'Search by country name',
-                    description: 'search box placeholder',
+                    id: "dGqEJ9",
+                    defaultMessage: "Search by country name",
+                    description: "search box placeholder",
                   })}
                   fullWidth
                 />
@@ -95,14 +101,18 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                 <Hr />
                 <FormSpacer />
                 <Typography variant="subtitle1">
-                  <FormattedMessage id="wgA48T" defaultMessage="Countries A to Z" description="country selection" />
+                  <FormattedMessage
+                    id="wgA48T"
+                    defaultMessage="Countries A to Z"
+                    description="country selection"
+                  />
                 </Typography>
               </DialogContent>
               <DialogContent className={scrollableDialogClasses.scrollArea}>
                 <ResponsiveTable>
                   <TableBody>
                     {filter(countries, data.query, {
-                      key: 'country',
+                      key: "country",
                     }).map(country => {
                       const isChecked = countrySelectionMap[country.code];
 
@@ -116,7 +126,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                                 isChecked
                                   ? change({
                                       target: {
-                                        name: 'countries' as keyof FormData,
+                                        name: "countries" as keyof FormData,
                                         value: data.countries.filter(
                                           selectedCountries => selectedCountries !== country.code,
                                         ),
@@ -124,7 +134,7 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
                                     } as any)
                                   : change({
                                       target: {
-                                        name: 'countries' as keyof FormData,
+                                        name: "countries" as keyof FormData,
                                         value: [...data.countries, country.code],
                                       },
                                     } as any)
@@ -140,7 +150,11 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
               <DialogActions>
                 <BackButton onClick={onClose} />
                 <ConfirmButton transitionState={confirmButtonState} type="submit">
-                  <FormattedMessage id="zZCCqz" defaultMessage="Assign countries" description="button" />
+                  <FormattedMessage
+                    id="zZCCqz"
+                    defaultMessage="Assign countries"
+                    description="button"
+                  />
                 </ConfirmButton>
               </DialogActions>
             </>
@@ -150,5 +164,5 @@ const DiscountCountrySelectDialog: React.FC<DiscountCountrySelectDialogProps> = 
     </Dialog>
   );
 };
-DiscountCountrySelectDialog.displayName = 'DiscountCountrySelectDialog';
+DiscountCountrySelectDialog.displayName = "DiscountCountrySelectDialog";
 export default DiscountCountrySelectDialog;

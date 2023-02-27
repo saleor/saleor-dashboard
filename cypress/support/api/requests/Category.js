@@ -1,7 +1,4 @@
-import {
-  getDataForDescriptionInVariables,
-  getValueWithDefault
-} from "./utils/Utils";
+import { getDataForDescriptionInVariables, getValueWithDefault } from "./utils/Utils";
 
 export function createCategory({ name, slug = name, parent }) {
   const parentLine = getValueWithDefault(parent, `parent:"${parent}"`);
@@ -17,9 +14,7 @@ export function createCategory({ name, slug = name, parent }) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.categoryCreate.category");
+  return cy.sendRequestWithQuery(mutation).its("body.data.categoryCreate.category");
 }
 
 export function getCategory(categoryId, translationLanguageCode) {
@@ -30,7 +25,7 @@ export function getCategory(categoryId, translationLanguageCode) {
     description
     seoTitle
     seoDescription
-  }`
+  }`,
   );
 
   const mutation = `query{
@@ -70,9 +65,7 @@ export function getCategories(first, search) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .then(resp => resp.body.data.categories.edges);
+  return cy.sendRequestWithQuery(mutation).then(resp => resp.body.data.categories.edges);
 }
 
 export function deleteCategory(categoryId) {
@@ -93,7 +86,7 @@ export function updateCategoryTranslation({
   seoTitle,
   seoDescription,
   name,
-  description
+  description,
 }) {
   const descriptionData = getDataForDescriptionInVariables(description);
   const mutation = `mutation Update_fields${descriptionData.mutationVariables}{
@@ -111,10 +104,5 @@ export function updateCategoryTranslation({
     }
   }
   `;
-  return cy.sendRequestWithQuery(
-    mutation,
-    "auth",
-    descriptionData.variables,
-    true
-  );
+  return cy.sendRequestWithQuery(mutation, "auth", descriptionData.variables, true);
 }

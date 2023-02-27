@@ -1,10 +1,10 @@
-import { SW_INTERVAL } from '@dashboard/config';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import React from 'react';
-import { useIntl } from 'react-intl';
-import { useServiceWorker } from 'src/hooks/useServiceWorker';
+import { SW_INTERVAL } from "@dashboard/config";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import React from "react";
+import { useIntl } from "react-intl";
+import { useServiceWorker } from "src/hooks/useServiceWorker";
 
-import messages from './messages';
+import messages from "./messages";
 
 const ServiceWorker: React.FC = () => {
   const { update, updateAvailable } = useServiceWorker(SW_INTERVAL * 1000);
@@ -21,7 +21,7 @@ const ServiceWorker: React.FC = () => {
           action: update,
         },
         autohide: null,
-        status: 'warning',
+        status: "warning",
       });
     }
   }, [updateAvailable]);

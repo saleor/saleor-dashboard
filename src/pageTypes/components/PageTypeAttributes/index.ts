@@ -1,2 +1,2 @@
-export { default } from './PageTypeAttributes';
-export * from './PageTypeAttributes';
+export { default } from "./PageTypeAttributes";
+export * from "./PageTypeAttributes";

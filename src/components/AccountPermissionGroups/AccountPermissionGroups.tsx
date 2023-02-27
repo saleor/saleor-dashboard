@@ -1,13 +1,15 @@
-import { SearchPermissionGroupsQuery, StaffErrorFragment } from '@dashboard/graphql';
-import { FormChange } from '@dashboard/hooks/useForm';
-import { FetchMoreProps, RelayToFlat, SearchPageProps } from '@dashboard/types';
-import { getFormErrors } from '@dashboard/utils/errors';
-import getStaffErrorMessage from '@dashboard/utils/errors/staff';
-import { Typography } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { SearchPermissionGroupsQuery, StaffErrorFragment } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { FetchMoreProps, RelayToFlat, SearchPageProps } from "@dashboard/types";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getStaffErrorMessage from "@dashboard/utils/errors/staff";
+import { Typography } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import MultiAutocompleteSelectField, { MultiAutocompleteChoiceType } from '../MultiAutocompleteSelectField';
+import MultiAutocompleteSelectField, {
+  MultiAutocompleteChoiceType,
+} from "../MultiAutocompleteSelectField";
 
 export interface AccountPermissionGroupsProps extends FetchMoreProps, SearchPageProps {
   formData: {
@@ -15,7 +17,7 @@ export interface AccountPermissionGroupsProps extends FetchMoreProps, SearchPage
   };
   disabled: boolean;
   errors: StaffErrorFragment[];
-  availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery['search']>;
+  availablePermissionGroups: RelayToFlat<SearchPermissionGroupsQuery["search"]>;
   onChange: FormChange;
   displayValues: MultiAutocompleteChoiceType[];
 }
@@ -41,14 +43,14 @@ const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props =>
     label: pg.name,
     value: pg.id,
   }));
-  const formErrors = getFormErrors(['addGroups', 'removeGroups'], errors);
+  const formErrors = getFormErrors(["addGroups", "removeGroups"], errors);
   return (
     <>
       <MultiAutocompleteSelectField
         displayValues={displayValues}
         label={intl.formatMessage({
-          id: 'C7eDb9',
-          defaultMessage: 'Permission groups',
+          id: "C7eDb9",
+          defaultMessage: "Permission groups",
         })}
         choices={disabled ? [] : choices}
         name="permissionGroups"
@@ -70,5 +72,5 @@ const AccountPermissionGroups: React.FC<AccountPermissionGroupsProps> = props =>
   );
 };
 
-AccountPermissionGroups.displayName = 'AccountPermissionGroups';
+AccountPermissionGroups.displayName = "AccountPermissionGroups";
 export default AccountPermissionGroups;

@@ -1,11 +1,11 @@
-import AssignAttributeDialog from '@dashboard/components/AssignAttributeDialog';
-import AttributeUnassignDialog from '@dashboard/components/AttributeUnassignDialog';
-import BulkAttributeUnassignDialog from '@dashboard/components/BulkAttributeUnassignDialog';
-import { Button } from '@dashboard/components/Button';
-import NotFoundPage from '@dashboard/components/NotFoundPage';
-import TypeDeleteWarningDialog from '@dashboard/components/TypeDeleteWarningDialog';
-import { WindowTitle } from '@dashboard/components/WindowTitle';
-import { DEFAULT_INITIAL_SEARCH_DATA } from '@dashboard/config';
+import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
+import AttributeUnassignDialog from "@dashboard/components/AttributeUnassignDialog";
+import BulkAttributeUnassignDialog from "@dashboard/components/BulkAttributeUnassignDialog";
+import { Button } from "@dashboard/components/Button";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import TypeDeleteWarningDialog from "@dashboard/components/TypeDeleteWarningDialog";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   useAssignPageAttributeMutation,
   usePageTypeAttributeReorderMutation,
@@ -15,23 +15,23 @@ import {
   useUnassignPageAttributeMutation,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from '@dashboard/graphql';
-import useBulkActions from '@dashboard/hooks/useBulkActions';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { commonMessages } from '@dashboard/intl';
-import { getStringOrPlaceholder } from '@dashboard/misc';
-import { ReorderEvent } from '@dashboard/types';
-import getPageErrorMessage from '@dashboard/utils/errors/page';
-import createMetadataUpdateHandler from '@dashboard/utils/handlers/metadataUpdateHandler';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useBulkActions from "@dashboard/hooks/useBulkActions";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import { ReorderEvent } from "@dashboard/types";
+import getPageErrorMessage from "@dashboard/utils/errors/page";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import useAvailablePageAttributeSearch from '../../searches/useAvailablePageAttributesSearch';
-import PageTypeDetailsPage, { PageTypeForm } from '../components/PageTypeDetailsPage';
-import usePageTypeDelete from '../hooks/usePageTypeDelete';
-import { pageTypeListUrl, pageTypeUrl, PageTypeUrlQueryParams } from '../urls';
+import useAvailablePageAttributeSearch from "../../searches/useAvailablePageAttributesSearch";
+import PageTypeDetailsPage, { PageTypeForm } from "../components/PageTypeDetailsPage";
+import usePageTypeDelete from "../hooks/usePageTypeDelete";
+import { pageTypeListUrl, pageTypeUrl, PageTypeUrlQueryParams } from "../urls";
 
 interface PageTypeDetailsProps {
   id: string;
@@ -46,7 +46,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
 
   const notifySaved = () =>
     notify({
-      status: 'success',
+      status: "success",
       text: intl.formatMessage(commonMessages.savedChanges),
     });
 
@@ -61,10 +61,10 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
     onCompleted: deleteData => {
       if (deleteData.pageTypeDelete.errors.length === 0) {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage({
-            id: 'NGc9kE',
-            defaultMessage: 'Page type deleted',
+            id: "NGc9kE",
+            defaultMessage: "Page type deleted",
           }),
         });
         navigate(pageTypeListUrl(), { replace: true });
@@ -83,7 +83,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
     onCompleted: data => {
       if (data.pageAttributeUnassign.errors.length === 0) {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
         closeModal();
@@ -192,7 +192,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
         onAttributeAdd={type =>
           navigate(
             pageTypeUrl(id, {
-              action: 'assign-attribute',
+              action: "assign-attribute",
               type,
             }),
           )
@@ -201,7 +201,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
         onAttributeUnassign={attributeId =>
           navigate(
             pageTypeUrl(id, {
-              action: 'unassign-attribute',
+              action: "unassign-attribute",
               id: attributeId,
             }),
           )
@@ -209,7 +209,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
         onDelete={() =>
           navigate(
             pageTypeUrl(id, {
-              action: 'remove',
+              action: "remove",
             }),
           )
         }
@@ -224,7 +224,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
               onClick={() =>
                 navigate(
                   pageTypeUrl(id, {
-                    action: 'unassign-attributes',
+                    action: "unassign-attributes",
                     ids: attributeListActions.listElements,
                   }),
                 )
@@ -255,7 +255,9 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
             confirmButtonState={assignAttributeOpts.status}
             errors={
               assignAttributeOpts.data?.pageAttributeAssign.errors
-                ? assignAttributeOpts.data.pageAttributeAssign.errors.map(err => getPageErrorMessage(err, intl))
+                ? assignAttributeOpts.data.pageAttributeAssign.errors.map(err =>
+                    getPageErrorMessage(err, intl),
+                  )
                 : []
             }
             loading={result.loading}
@@ -265,7 +267,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
             onFetchMore={loadMore}
             onOpen={result.refetch}
             hasMore={!!result.data?.pageType.availableAttributes.pageInfo.hasNextPage}
-            open={params.action === 'assign-attribute'}
+            open={params.action === "assign-attribute"}
             selected={params.ids || []}
             onToggle={attributeId => {
               const ids = params.ids || [];
@@ -283,22 +285,22 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
       )}
       <BulkAttributeUnassignDialog
         title={intl.formatMessage({
-          id: 'Rpfa+t',
-          defaultMessage: 'Unassign Attribute from Page Type',
-          description: 'dialog header',
+          id: "Rpfa+t",
+          defaultMessage: "Unassign Attribute from Page Type",
+          description: "dialog header",
         })}
         attributeQuantity={params.ids?.length}
         confirmButtonState={unassignAttributeOpts.status}
         onClose={closeModal}
         onConfirm={handleBulkAttributeUnassign}
-        open={params.action === 'unassign-attributes'}
+        open={params.action === "unassign-attributes"}
         itemTypeName={getStringOrPlaceholder(data?.pageType.name)}
       />
       <AttributeUnassignDialog
         title={intl.formatMessage({
-          id: '/L8wzi',
-          defaultMessage: 'Unassign Attribute From Page Type',
-          description: 'dialog header',
+          id: "/L8wzi",
+          defaultMessage: "Unassign Attribute From Page Type",
+          description: "dialog header",
         })}
         attributeName={getStringOrPlaceholder(
           data?.pageType.attributes.find(attribute => attribute.id === params.id)?.name,
@@ -306,7 +308,7 @@ export const PageTypeDetails: React.FC<PageTypeDetailsProps> = ({ id, params }) 
         confirmButtonState={unassignAttributeOpts.status}
         onClose={closeModal}
         onConfirm={handleAttributeUnassign}
-        open={params.action === 'unassign-attribute'}
+        open={params.action === "unassign-attribute"}
         itemTypeName={getStringOrPlaceholder(data?.pageType.name)}
       />
     </>

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
 
 const DEFAULT_ROWS_COUNT = 10;
 const FIRST_PAGINATED_PAGE = 1;

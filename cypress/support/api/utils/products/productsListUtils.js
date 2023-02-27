@@ -31,19 +31,14 @@ export function expectProductsSortedBy(columnName, inAscOrder = true) {
           sortedProductsArray.reverse();
         }
       } else {
-        sortedProductsArray = getSortedPriceColumn(
-          sortedProductsArray,
-          inAscOrder,
-        );
+        sortedProductsArray = getSortedPriceColumn(sortedProductsArray, inAscOrder);
         if (!inAscOrder) {
           sortedProductsArray.reverse();
         }
       }
     })
     .then(() => {
-      expect(
-        JSON.stringify(productsArray) === JSON.stringify(sortedProductsArray),
-      ).to.be.eq(true);
+      expect(JSON.stringify(productsArray) === JSON.stringify(sortedProductsArray)).to.be.eq(true);
     });
 }
 function getSortedPriceColumn(productsArray, inAscOrder) {
@@ -52,9 +47,7 @@ function getSortedPriceColumn(productsArray, inAscOrder) {
     : productsArray.sort(sortColumnByPrice).reverse();
 }
 function sortColumnByPrice(a, b) {
-  return (
-    getMinimalPriceFromPriceRangeCell(a) > getMinimalPriceFromPriceRangeCell(b)
-  );
+  return getMinimalPriceFromPriceRangeCell(a) > getMinimalPriceFromPriceRangeCell(b);
 }
 function getMinimalPriceFromPriceRangeCell(priceRange) {
   const regex = /\d+,\d+/;

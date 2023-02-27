@@ -1,5 +1,5 @@
-import { FetchResult } from '@apollo/client';
-import { MetadataFormData } from '@dashboard/components/Metadata/types';
+import { FetchResult } from "@apollo/client";
+import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import {
   MetadataErrorFragment,
   MetadataInput,
@@ -7,12 +7,12 @@ import {
   UpdateMetadataMutationVariables,
   UpdatePrivateMetadataMutation,
   UpdatePrivateMetadataMutationVariables,
-} from '@dashboard/graphql';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import { arrayDiff } from '@dashboard/utils/arrays';
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { arrayDiff } from "@dashboard/utils/arrays";
 
-import { filterMetadataArray } from './filterMetadataArray';
-import { areMetadataArraysEqual } from './metadataUpdateHelpers';
+import { filterMetadataArray } from "./filterMetadataArray";
+import { areMetadataArraysEqual } from "./metadataUpdateHelpers";
 
 interface ObjectWithMetadata {
   id: string;
@@ -23,7 +23,9 @@ interface ObjectWithMetadata {
 function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
   initial: ObjectWithMetadata,
   update: (data: TData) => SubmitPromise<TError[]>,
-  updateMetadata: (variables: UpdateMetadataMutationVariables) => Promise<FetchResult<UpdateMetadataMutation>>,
+  updateMetadata: (
+    variables: UpdateMetadataMutationVariables,
+  ) => Promise<FetchResult<UpdateMetadataMutation>>,
   updatePrivateMetadata: (
     variables: UpdatePrivateMetadataMutationVariables,
   ) => Promise<FetchResult<UpdatePrivateMetadataMutation>>,
@@ -32,7 +34,10 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
     const errors = await update(data);
 
     const hasMetadataChanged = !areMetadataArraysEqual(initial.metadata, data.metadata);
-    const hasPrivateMetadataChanged = !areMetadataArraysEqual(initial.privateMetadata, data.privateMetadata);
+    const hasPrivateMetadataChanged = !areMetadataArraysEqual(
+      initial.privateMetadata,
+      data.privateMetadata,
+    );
 
     if (errors.length > 0) {
       return errors;

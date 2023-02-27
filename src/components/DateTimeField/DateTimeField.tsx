@@ -1,25 +1,34 @@
-import { getErrorMessage } from '@dashboard/components/Attributes/utils';
-import { PageErrorWithAttributesFragment, ProductErrorWithAttributesFragment } from '@dashboard/graphql';
-import { commonMessages } from '@dashboard/intl';
-import { joinDateTime, splitDateTime } from '@dashboard/misc';
-import { TextField } from '@material-ui/core';
-import { TextFieldProps } from '@material-ui/core/TextField';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { getErrorMessage } from "@dashboard/components/Attributes/utils";
+import {
+  PageErrorWithAttributesFragment,
+  ProductErrorWithAttributesFragment,
+} from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { joinDateTime, splitDateTime } from "@dashboard/misc";
+import { TextField } from "@material-ui/core";
+import { TextFieldProps } from "@material-ui/core/TextField";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
-type DateTimeFieldProps = Omit<TextFieldProps, 'label' | 'error'> & {
+type DateTimeFieldProps = Omit<TextFieldProps, "label" | "error"> & {
   onChange: (value: string) => void;
   error: ProductErrorWithAttributesFragment | PageErrorWithAttributesFragment;
   value: string;
 };
 
-export const DateTimeField: React.FC<DateTimeFieldProps> = ({ disabled, error, name, onChange, value }) => {
+export const DateTimeField: React.FC<DateTimeFieldProps> = ({
+  disabled,
+  error,
+  name,
+  onChange,
+  value,
+}) => {
   const intl = useIntl();
   const classes = useStyles();
 
-  const parsedValue = value ? splitDateTime(value) : { date: '', time: '' };
+  const parsedValue = value ? splitDateTime(value) : { date: "", time: "" };
 
   return (
     <>

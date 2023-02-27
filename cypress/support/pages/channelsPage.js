@@ -33,10 +33,7 @@ export function createChannelByView({
       cy.get(ADD_CHANNEL_FORM_SELECTORS.currencyAutocompleteDropdown).click();
     }
   });
-  cy.fillAutocompleteSelect(
-    ADD_CHANNEL_FORM_SELECTORS.countryAutocompleteInput,
-    defaultCountry,
-  );
+  cy.fillAutocompleteSelect(ADD_CHANNEL_FORM_SELECTORS.countryAutocompleteInput, defaultCountry);
   if (shippingZone) {
     addShippingZone(shippingZone);
   }
@@ -52,10 +49,7 @@ export function addShippingZone(shippingZone) {
     .click()
     .get(ADD_CHANNEL_FORM_SELECTORS.addShippingZoneButton)
     .click()
-    .fillAutocompleteSelect(
-      ADD_CHANNEL_FORM_SELECTORS.shippingAutocompleteSelect,
-      shippingZone,
-    );
+    .fillAutocompleteSelect(ADD_CHANNEL_FORM_SELECTORS.shippingAutocompleteSelect, shippingZone);
 }
 
 export function addWarehouse(warehouse) {
@@ -64,10 +58,7 @@ export function addWarehouse(warehouse) {
     .click()
     .get(ADD_CHANNEL_FORM_SELECTORS.addWarehouseButton)
     .click()
-    .fillAutocompleteSelect(
-      ADD_CHANNEL_FORM_SELECTORS.warehouseAutocompleteSelect,
-      warehouse,
-    );
+    .fillAutocompleteSelect(ADD_CHANNEL_FORM_SELECTORS.warehouseAutocompleteSelect, warehouse);
 }
 
 export function selectChannelInPicker(channelName) {
@@ -92,9 +83,7 @@ export function selectChannelInDetailsPages(channelName) {
     .get(SELECT_CHANNELS_TO_ASSIGN.allChannelsCheckbox)
     .click();
   if (channelName) {
-    cy.get(SELECT_CHANNELS_TO_ASSIGN.listOfChannels)
-      .contains(channelName)
-      .click();
+    cy.get(SELECT_CHANNELS_TO_ASSIGN.listOfChannels).contains(channelName).click();
   } else {
     cy.get(SELECT_CHANNELS_TO_ASSIGN.channelRow)
       .first()
@@ -108,9 +97,7 @@ export function selectChannelInDetailsPages(channelName) {
 
 export function selectChannelVariantInDetailsPage(channelName, attributeName) {
   cy.get(AVAILABLE_CHANNELS_FORM.manageChannelsButton).click();
-  const channelsNames = Array.isArray(channelName)
-    ? channelName
-    : [channelName];
+  const channelsNames = Array.isArray(channelName) ? channelName : [channelName];
   channelsNames.forEach(name => {
     cy.contains(SELECT_CHANNELS_TO_ASSIGN.expandChannelRow, name)
       .find(BUTTON_SELECTORS.expandIcon)

@@ -1,7 +1,7 @@
-import { Button } from '@dashboard/components/Button';
-import { buttonMessages } from '@dashboard/intl';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import { buttonMessages } from "@dashboard/intl";
+import React from "react";
+import { useIntl } from "react-intl";
 
 interface DeleteButtonProps {
   onClick: () => void;
@@ -10,7 +10,12 @@ interface DeleteButtonProps {
   testId?: string;
 }
 
-const DeleteButton: React.FC<DeleteButtonProps> = ({ onClick, label, testId, disabled = false }) => {
+const DeleteButton: React.FC<DeleteButtonProps> = ({
+  onClick,
+  label,
+  testId,
+  disabled = false,
+}) => {
   const intl = useIntl();
 
   return (
@@ -18,7 +23,7 @@ const DeleteButton: React.FC<DeleteButtonProps> = ({ onClick, label, testId, dis
       error
       variant="primary"
       onClick={onClick}
-      data-test-id={testId ? 'confirm-delete' : 'button-bar-delete'}
+      data-test-id={testId ? "confirm-delete" : "button-bar-delete"}
       disabled={disabled}
     >
       {label || intl.formatMessage(buttonMessages.delete)}

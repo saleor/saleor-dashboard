@@ -1,5 +1,5 @@
-import throttle from 'lodash/throttle';
-import { useEffect, useState } from 'react';
+import throttle from "lodash/throttle";
+import { useEffect, useState } from "react";
 
 function getPosition() {
   return {
@@ -14,9 +14,9 @@ function useWindowScroll() {
   useEffect(() => {
     const handleScroll = throttle(() => setScroll(getPosition()), 100);
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   return scroll;

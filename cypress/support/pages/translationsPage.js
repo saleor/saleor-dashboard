@@ -49,9 +49,7 @@ export function updateTranslationToCategory({
 
 export function enterCategoryTranslation(language, categoryName) {
   cy.addAliasToGraphRequest("CategoryTranslations");
-  cy.get(language)
-    .click()
-    .waitForProgressBarToNotExist();
+  cy.get(language).click().waitForProgressBarToNotExist();
   getCategoryFromTable(categoryName);
 }
 
@@ -60,9 +58,7 @@ function getCategoryFromTable(categoryName) {
   cy.wait("@CategoryTranslations")
     .its("response.body.data.translations.edges")
     .then(edges => {
-      const isCategoryInResp = edges.find(
-        edge => edge.node.category.name === categoryName,
-      );
+      const isCategoryInResp = edges.find(edge => edge.node.category.name === categoryName);
 
       if (isCategoryInResp) {
         cy.contains(SHARED_ELEMENTS.tableRow, categoryName).click();

@@ -1,11 +1,11 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import { ProductErrorFragment } from '@dashboard/graphql';
-import { FormChange } from '@dashboard/hooks/useForm';
-import { commonMessages } from '@dashboard/intl';
-import { getFormErrors, getProductErrorMessage } from '@dashboard/utils/errors';
-import { Card, CardContent, TextField } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import { ProductErrorFragment } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
+import { Card, CardContent, TextField } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
 interface ProductVariantNameProps {
   value: string;
@@ -14,16 +14,21 @@ interface ProductVariantNameProps {
   errors: ProductErrorFragment[];
 }
 
-const ProductVariantName: React.FC<ProductVariantNameProps> = ({ value, onChange, disabled, errors }) => {
+const ProductVariantName: React.FC<ProductVariantNameProps> = ({
+  value,
+  onChange,
+  disabled,
+  errors,
+}) => {
   const intl = useIntl();
-  const formErrors = getFormErrors(['name'], errors);
+  const formErrors = getFormErrors(["name"], errors);
 
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'T1f2Yl',
-          defaultMessage: 'Variant Name',
+          id: "T1f2Yl",
+          defaultMessage: "Variant Name",
         })}
       />
       <CardContent>
@@ -43,5 +48,5 @@ const ProductVariantName: React.FC<ProductVariantNameProps> = ({ value, onChange
   );
 };
 
-ProductVariantName.displayName = 'ProductVariantName';
+ProductVariantName.displayName = "ProductVariantName";
 export default ProductVariantName;

@@ -1,34 +1,34 @@
-import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import { TimelineEvent } from '@dashboard/components/Timeline';
-import { TitleElement } from '@dashboard/components/Timeline/TimelineEventHeader';
-import { OrderEventFragment, OrderEventsEnum } from '@dashboard/graphql';
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { defineMessages, useIntl } from 'react-intl';
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import { TimelineEvent } from "@dashboard/components/Timeline";
+import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
+import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
+import { Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { defineMessages, useIntl } from "react-intl";
 
-import Label from '../Label';
-import MoneySection, { MoneySectionType } from './MoneySection';
+import Label from "../Label";
+import MoneySection, { MoneySectionType } from "./MoneySection";
 
 const useStyles = makeStyles(
   () => ({
     horizontalContainer: {
-      display: 'flex',
-      flexDirection: 'row',
-      justifyContent: 'space-between',
-      alignItems: 'baseline',
-      width: '100%',
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignItems: "baseline",
+      width: "100%",
     },
   }),
-  { name: 'ExtendedDiscountTimelineEvent' },
+  { name: "ExtendedDiscountTimelineEvent" },
 );
 
 export const messages = defineMessages({
   reasonLabel: {
-    id: 'kVOslW',
-    defaultMessage: 'Reason for discount',
-    description: 'reason for discount label',
+    id: "kVOslW",
+    defaultMessage: "Reason for discount",
+    description: "reason for discount label",
   },
 });
 
@@ -37,13 +37,17 @@ interface ExtendedTimelineEventProps {
   titleElements: TitleElement[];
 }
 
-const ExtendedDiscountTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({ event, titleElements }) => {
+const ExtendedDiscountTimelineEvent: React.FC<ExtendedTimelineEventProps> = ({
+  event,
+  titleElements,
+}) => {
   const classes = useStyles({});
   const intl = useIntl();
 
   const { lines, date, type } = event;
 
-  const parsedDiscount = type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED ? lines[0].discount : event.discount;
+  const parsedDiscount =
+    type === OrderEventsEnum.ORDER_LINE_DISCOUNT_UPDATED ? lines[0].discount : event.discount;
 
   const {
     valueType: calculationMode,

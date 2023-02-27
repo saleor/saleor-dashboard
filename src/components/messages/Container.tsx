@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 const Container = ({ children }) => {
   const classes = useStyles({});

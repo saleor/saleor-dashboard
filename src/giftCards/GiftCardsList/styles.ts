@@ -1,10 +1,10 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useTableStyles = makeStyles(
   theme => ({
     cardCodeContainer: {
-      display: 'flex',
-      alignItems: 'baseline',
+      display: "flex",
+      alignItems: "baseline",
     },
     colCardCode: {
       paddingLeft: 0,
@@ -23,29 +23,29 @@ export const useTableStyles = makeStyles(
       width: 150,
     },
     pill: {
-      display: 'block',
-      textOverflow: 'ellipsis',
-      whiteSpace: 'nowrap',
-      maxWidth: 'min-content',
-      overflow: 'hidden',
+      display: "block",
+      textOverflow: "ellipsis",
+      whiteSpace: "nowrap",
+      maxWidth: "min-content",
+      overflow: "hidden",
     },
     row: {
-      cursor: 'pointer',
+      cursor: "pointer",
       height: 70,
-      '& td, & th': {
-        height: 'auto',
+      "& td, & th": {
+        height: "auto",
       },
     },
     skeleton: {
       paddingLeft: 0,
     },
     toolbar: {
-      display: 'flex',
+      display: "flex",
       gap: theme.spacing(),
       marginRight: theme.spacing(-0.5),
     },
   }),
-  { name: 'GiftCardsListTable' },
+  { name: "GiftCardsListTable" },
 );
 
 export const useHeaderStyles = makeStyles(
@@ -54,5 +54,5 @@ export const useHeaderStyles = makeStyles(
       fontSize: theme.typography.body2.fontSize,
     },
   }),
-  { name: 'GiftCardsListHeader' },
+  { name: "GiftCardsListHeader" },
 );

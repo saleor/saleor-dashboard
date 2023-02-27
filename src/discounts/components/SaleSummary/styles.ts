@@ -1,14 +1,14 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(
   {
     ellipsis: {
-      overflow: 'hidden',
-      whiteSpace: 'nowrap',
-      textOverflow: 'ellipsis',
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      textOverflow: "ellipsis",
     },
   },
-  { name: 'SaleSummary' },
+  { name: "SaleSummary" },
 );
 
 export default useStyles;

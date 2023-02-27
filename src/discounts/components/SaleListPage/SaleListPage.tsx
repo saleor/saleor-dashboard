@@ -1,17 +1,24 @@
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import { Button } from '@dashboard/components/Button';
-import { getByName } from '@dashboard/components/Filter/utils';
-import FilterBar from '@dashboard/components/FilterBar';
-import { saleAddUrl, SaleListUrlSortField } from '@dashboard/discounts/urls';
-import { SaleFragment } from '@dashboard/graphql';
-import { sectionNames } from '@dashboard/intl';
-import { ChannelProps, FilterPageProps, ListActions, PageListProps, SortPage, TabPageProps } from '@dashboard/types';
-import { Card } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { Button } from "@dashboard/components/Button";
+import { getByName } from "@dashboard/components/Filter/utils";
+import FilterBar from "@dashboard/components/FilterBar";
+import { saleAddUrl, SaleListUrlSortField } from "@dashboard/discounts/urls";
+import { SaleFragment } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import {
+  ChannelProps,
+  FilterPageProps,
+  ListActions,
+  PageListProps,
+  SortPage,
+  TabPageProps,
+} from "@dashboard/types";
+import { Card } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import SaleList from '../SaleList';
-import { createFilterStructure, SaleFilterKeys, SaleListFilterOpts } from './filters';
+import SaleList from "../SaleList";
+import { createFilterStructure, SaleFilterKeys, SaleListFilterOpts } from "./filters";
 
 export interface SaleListPageProps
   extends PageListProps,
@@ -39,7 +46,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   const intl = useIntl();
   const structure = createFilterStructure(intl, filterOpts);
 
-  const filterDependency = structure.find(getByName('channel'));
+  const filterDependency = structure.find(getByName("channel"));
 
   return (
     <>
@@ -51,16 +58,16 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
-            id: 'Yjhgle',
-            defaultMessage: 'All Sales',
-            description: 'tab name',
+            id: "Yjhgle",
+            defaultMessage: "All Sales",
+            description: "tab name",
           })}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
-            id: 'MSD3A/',
-            defaultMessage: 'Search Sale',
+            id: "MSD3A/",
+            defaultMessage: "Search Sale",
           })}
           tabs={tabs}
           onAll={onAll}
@@ -75,5 +82,5 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
     </>
   );
 };
-SaleListPage.displayName = 'SaleListPage';
+SaleListPage.displayName = "SaleListPage";
 export default SaleListPage;

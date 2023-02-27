@@ -4,8 +4,7 @@ export const ORDERS_SELECTORS = {
   orderRow: "[data-test-id='order-table-row']",
   salesChannel: "[data-test-id='order-sales-channel']",
   cancelFulfillment: "[data-test-id='cancel-fulfillment-button']",
-  cancelFulfillmentSelectField:
-    "[data-test-id='cancel-fulfillment-select-field']",
+  cancelFulfillmentSelectField: "[data-test-id='cancel-fulfillment-select-field']",
   orderFulfillmentFrame: "[data-test-id='order-fulfillment']",
   refundButton: '[data-test-id="refund-button"]',
   fulfillMenuButton: '[data-test-id="fulfill-menu"]',

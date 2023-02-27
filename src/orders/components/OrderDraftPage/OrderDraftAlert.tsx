@@ -1,18 +1,23 @@
-import { ChannelUsabilityDataQuery, OrderDetailsFragment } from '@dashboard/graphql';
-import { Alert, AlertProps } from '@saleor/macaw-ui';
-import React from 'react';
-import { MessageDescriptor, useIntl } from 'react-intl';
+import { ChannelUsabilityDataQuery, OrderDetailsFragment } from "@dashboard/graphql";
+import { Alert, AlertProps } from "@saleor/macaw-ui";
+import React from "react";
+import { MessageDescriptor, useIntl } from "react-intl";
 
-import OrderAlerts from '../OrderAlerts';
-import { alertMessages } from './messages';
-import { useAlertStyles } from './styles';
+import OrderAlerts from "../OrderAlerts";
+import { alertMessages } from "./messages";
+import { useAlertStyles } from "./styles";
 
-const getAlerts = (order?: OrderDetailsFragment, channelUsabilityData?: ChannelUsabilityDataQuery) => {
-  const canDetermineShippingMethods = order?.shippingAddress?.country.code && !!order?.lines?.length;
+const getAlerts = (
+  order?: OrderDetailsFragment,
+  channelUsabilityData?: ChannelUsabilityDataQuery,
+) => {
+  const canDetermineShippingMethods =
+    order?.shippingAddress?.country.code && !!order?.lines?.length;
 
   const isChannelInactive = order && !order.channel.isActive;
   const noProductsInChannel = channelUsabilityData?.products.totalCount === 0;
-  const noShippingMethodsInChannel = canDetermineShippingMethods && order?.shippingMethods.length === 0;
+  const noShippingMethodsInChannel =
+    canDetermineShippingMethods && order?.shippingMethods.length === 0;
 
   let alerts: MessageDescriptor[] = [];
 
@@ -29,7 +34,7 @@ const getAlerts = (order?: OrderDetailsFragment, channelUsabilityData?: ChannelU
   return alerts;
 };
 
-export type OrderDraftAlertProps = Omit<AlertProps, 'variant' | 'close'> & {
+export type OrderDraftAlertProps = Omit<AlertProps, "variant" | "close"> & {
   order?: OrderDetailsFragment;
   channelUsabilityData?: ChannelUsabilityDataQuery;
 };
@@ -52,5 +57,5 @@ const OrderDraftAlert: React.FC<OrderDraftAlertProps> = props => {
   );
 };
 
-OrderDraftAlert.displayName = 'OrderDraftAlert';
+OrderDraftAlert.displayName = "OrderDraftAlert";
 export default OrderDraftAlert;

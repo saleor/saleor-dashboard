@@ -1,2 +1,2 @@
-export * from './InstalledAppListRow';
-export { default } from './InstalledAppListRow';
+export * from "./InstalledAppListRow";
+export { default } from "./InstalledAppListRow";

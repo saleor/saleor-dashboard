@@ -1,10 +1,10 @@
-import CardSpacer from '@dashboard/components/CardSpacer';
-import CardTitle from '@dashboard/components/CardTitle';
-import { Card } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import CardSpacer from "@dashboard/components/CardSpacer";
+import CardTitle from "@dashboard/components/CardTitle";
+import { Card } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { variantDetailsChannelsAvailabilityCardMessages as messages } from './../messages';
+import { variantDetailsChannelsAvailabilityCardMessages as messages } from "./../messages";
 
 interface VariantDetailsChannelsAvailabilityCardContainerProps {
   children: React.ReactNode;

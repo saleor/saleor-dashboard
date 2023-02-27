@@ -1,10 +1,10 @@
-import SingleSelectField, { Choices } from '@dashboard/components/SingleSelectField';
-import { ChangeEvent, FormChange } from '@dashboard/hooks/useForm';
-import { TextField } from '@material-ui/core';
-import clsx from 'clsx';
-import React from 'react';
+import SingleSelectField, { Choices } from "@dashboard/components/SingleSelectField";
+import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
+import { TextField } from "@material-ui/core";
+import clsx from "clsx";
+import React from "react";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 interface CommonFieldProps {
   name: string;
@@ -45,7 +45,11 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
     minValue: textFieldMinValue,
   } = textFieldProps;
 
-  const { name: selectFieldName, value: selectFieldValue, className: selectFieldClassName } = selectFieldProps;
+  const {
+    name: selectFieldName,
+    value: selectFieldValue,
+    className: selectFieldClassName,
+  } = selectFieldProps;
 
   const handleSelectChange = (event: ChangeEvent) => {
     // in case one of the fields in the form is empty
@@ -68,7 +72,8 @@ const TextWithSelectField: React.FC<TextWithSelectFieldProps> = ({
     };
 
     // handle parsing in case of text field of type number
-    const parsedValue = textFieldType === 'number' && typeof value === 'string' ? parseInt(value, 10) : value;
+    const parsedValue =
+      textFieldType === "number" && typeof value === "string" ? parseInt(value, 10) : value;
 
     change({
       ...event,

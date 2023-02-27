@@ -1,22 +1,25 @@
-import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
-import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
-import { Button } from '@dashboard/components/Button';
-import useClipboard from '@dashboard/hooks/useClipboard';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { buttonMessages } from '@dashboard/intl';
-import { DialogActions, DialogContent, Typography } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import { Button } from "@dashboard/components/Button";
+import useClipboard from "@dashboard/hooks/useClipboard";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { buttonMessages } from "@dashboard/intl";
+import { DialogActions, DialogContent, Typography } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { giftCardCreateMessages as messages } from './messages';
-import { useGiftCardCreateDialogCodeContentStyles as useStyles } from './styles';
+import { giftCardCreateMessages as messages } from "./messages";
+import { useGiftCardCreateDialogCodeContentStyles as useStyles } from "./styles";
 
 interface GiftCardCreateDialogCodeContentProps {
   cardCode: string;
   onClose: () => void;
 }
 
-const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentProps> = ({ cardCode, onClose }) => {
+const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentProps> = ({
+  cardCode,
+  onClose,
+}) => {
   const classes = useStyles({});
   const intl = useIntl();
   const notify = useNotifier();
@@ -25,7 +28,7 @@ const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentP
   const onCopyCode = () => {
     copy(cardCode);
     notify({
-      status: 'success',
+      status: "success",
       text: intl.formatMessage(messages.copiedToClipboardTitle),
     });
   };

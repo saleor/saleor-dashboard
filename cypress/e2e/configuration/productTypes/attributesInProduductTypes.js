@@ -37,9 +37,7 @@ describe("As an admin I want to manage attributes in product types", () => {
 
       createTypeProduct({ name })
         .then(productType => {
-          cy.visitAndWaitForProgressBarToDisappear(
-            productTypeDetailsUrl(productType.id),
-          )
+          cy.visitAndWaitForProgressBarToDisappear(productTypeDetailsUrl(productType.id))
             .get(PRODUCT_TYPE_DETAILS.assignProductAttributeButton)
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
@@ -62,9 +60,7 @@ describe("As an admin I want to manage attributes in product types", () => {
 
       createTypeProduct({ name, hasVariants: false })
         .then(productType => {
-          cy.visitAndWaitForProgressBarToDisappear(
-            productTypeDetailsUrl(productType.id),
-          )
+          cy.visitAndWaitForProgressBarToDisappear(productTypeDetailsUrl(productType.id))
             .get(PRODUCT_TYPE_DETAILS.hasVariantsButton)
             .should("be.enabled")
             .click({ force: true })
@@ -77,9 +73,7 @@ describe("As an admin I want to manage attributes in product types", () => {
           getProductType(productType.id);
         })
         .then(productType => {
-          expect(productType.assignedVariantAttributes[0].attribute.name).to.eq(
-            startsWith,
-          );
+          expect(productType.assignedVariantAttributes[0].attribute.name).to.eq(startsWith);
         });
     },
   );
@@ -97,9 +91,7 @@ describe("As an admin I want to manage attributes in product types", () => {
           assignAttribute(productType.id, attribute.id);
         })
         .then(() => {
-          cy.visitAndWaitForProgressBarToDisappear(
-            productTypeDetailsUrl(productType.id),
-          )
+          cy.visitAndWaitForProgressBarToDisappear(productTypeDetailsUrl(productType.id))
             .get(PRODUCT_TYPE_DETAILS.nameInput)
             .should("be.enabled")
             .get(BUTTON_SELECTORS.deleteIcon)
@@ -130,9 +122,7 @@ describe("As an admin I want to manage attributes in product types", () => {
           assignAttribute(productType.id, attribute.id, "PRODUCT");
         })
         .then(() => {
-          cy.visitAndWaitForProgressBarToDisappear(
-            productTypeDetailsUrl(productType.id),
-          )
+          cy.visitAndWaitForProgressBarToDisappear(productTypeDetailsUrl(productType.id))
             .get(PRODUCT_TYPE_DETAILS.nameInput)
             .should("be.enabled")
             .get(BUTTON_SELECTORS.deleteIcon)
@@ -163,9 +153,7 @@ describe("As an admin I want to manage attributes in product types", () => {
           assignAttribute(productType.id, attribute.id);
         })
         .then(() => {
-          cy.visitAndWaitForProgressBarToDisappear(
-            productTypeDetailsUrl(productType.id),
-          )
+          cy.visitAndWaitForProgressBarToDisappear(productTypeDetailsUrl(productType.id))
             .get(PRODUCT_TYPE_DETAILS.variantSelectionCheckbox)
             .click()
             .addAliasToGraphRequest("ProductAttributeAssignmentUpdate")
@@ -175,12 +163,8 @@ describe("As an admin I want to manage attributes in product types", () => {
           getProductType(productType.id);
         })
         .then(productType => {
-          expect(productType.assignedVariantAttributes[0].attribute.name).to.eq(
-            startsWith,
-          );
-          expect(
-            productType.assignedVariantAttributes[0].variantSelection,
-          ).to.eq(true);
+          expect(productType.assignedVariantAttributes[0].attribute.name).to.eq(startsWith);
+          expect(productType.assignedVariantAttributes[0].variantSelection).to.eq(true);
         });
     },
   );

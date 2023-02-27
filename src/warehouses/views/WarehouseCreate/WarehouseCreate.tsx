@@ -1,14 +1,16 @@
-import { WindowTitle } from '@dashboard/components/WindowTitle';
-import { CountryCode, useWarehouseCreateMutation } from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import useShop from '@dashboard/hooks/useShop';
-import { commonMessages } from '@dashboard/intl';
-import { extractMutationErrors, findValueInEnum, getMutationStatus } from '@dashboard/misc';
-import WarehouseCreatePage, { WarehouseCreatePageFormData } from '@dashboard/warehouses/components/WarehouseCreatePage';
-import { warehouseUrl } from '@dashboard/warehouses/urls';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { CountryCode, useWarehouseCreateMutation } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
+import { extractMutationErrors, findValueInEnum, getMutationStatus } from "@dashboard/misc";
+import WarehouseCreatePage, {
+  WarehouseCreatePageFormData,
+} from "@dashboard/warehouses/components/WarehouseCreatePage";
+import { warehouseUrl } from "@dashboard/warehouses/urls";
+import React from "react";
+import { useIntl } from "react-intl";
 
 const WarehouseCreate: React.FC = () => {
   const intl = useIntl();
@@ -23,7 +25,7 @@ const WarehouseCreate: React.FC = () => {
           navigate(warehouseUrl(warehouse.id));
         }
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
@@ -57,9 +59,9 @@ const WarehouseCreate: React.FC = () => {
     <>
       <WindowTitle
         title={intl.formatMessage({
-          id: 'GhcypC',
-          defaultMessage: 'Create Warehouse',
-          description: 'header',
+          id: "GhcypC",
+          defaultMessage: "Create Warehouse",
+          description: "header",
         })}
       />
       <WarehouseCreatePage
@@ -73,5 +75,5 @@ const WarehouseCreate: React.FC = () => {
   );
 };
 
-WarehouseCreate.displayName = 'WarehouseCreate';
+WarehouseCreate.displayName = "WarehouseCreate";
 export default WarehouseCreate;

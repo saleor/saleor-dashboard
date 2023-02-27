@@ -1,9 +1,9 @@
-import Decorator from '@dashboard/storybook/Decorator';
-import { storiesOf } from '@storybook/react';
-import React from 'react';
+import Decorator from "@dashboard/storybook/Decorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
-import NotFoundPage from './NotFoundPage';
+import NotFoundPage from "./NotFoundPage";
 
-storiesOf('Error / Not found', module)
+storiesOf("Error / Not found", module)
   .addDecorator(Decorator)
-  .add('default', () => <NotFoundPage onBack={() => undefined} />);
+  .add("default", () => <NotFoundPage onBack={() => undefined} />);

@@ -1,7 +1,7 @@
-import { LimitInfoFragment, RefreshLimitsQuery } from '@dashboard/graphql';
+import { LimitInfoFragment, RefreshLimitsQuery } from "@dashboard/graphql";
 
 export function hasLimits(
-  limits: RefreshLimitsQuery['shop']['limits'] | undefined,
+  limits: RefreshLimitsQuery["shop"]["limits"] | undefined,
   key: keyof LimitInfoFragment,
 ): boolean {
   if (limits === undefined) {
@@ -15,7 +15,7 @@ export function hasLimits(
  * If limits are undefined, returns false.
  * */
 export function isLimitReached(
-  limits: RefreshLimitsQuery['shop']['limits'] | undefined,
+  limits: RefreshLimitsQuery["shop"]["limits"] | undefined,
   key: keyof LimitInfoFragment,
 ): boolean {
   if (!hasLimits(limits, key)) {

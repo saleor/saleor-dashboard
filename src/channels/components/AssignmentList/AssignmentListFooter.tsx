@@ -1,18 +1,18 @@
-import SingleAutocompleteSelectField from '@dashboard/components/SingleAutocompleteSelectField';
-import CardAddItemsFooter from '@dashboard/products/components/ProductStocks/CardAddItemsFooter';
-import { mapNodeToChoice } from '@dashboard/utils/maps';
-import { ClickAwayListener } from '@material-ui/core';
-import React, { useEffect, useRef, useState } from 'react';
-import { defineMessages, useIntl } from 'react-intl';
+import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import CardAddItemsFooter from "@dashboard/products/components/ProductStocks/CardAddItemsFooter";
+import { mapNodeToChoice } from "@dashboard/utils/maps";
+import { ClickAwayListener } from "@material-ui/core";
+import React, { useEffect, useRef, useState } from "react";
+import { defineMessages, useIntl } from "react-intl";
 
-import { useStyles } from './styles';
-import { AssignItem, AssignmentListProps } from './types';
+import { useStyles } from "./styles";
+import { AssignItem, AssignmentListProps } from "./types";
 
 const messages = defineMessages({
   addItemTitle: {
-    id: 'EuOXmr',
-    defaultMessage: 'Add {itemsName}',
-    description: 'add items title',
+    id: "EuOXmr",
+    defaultMessage: "Add {itemsName}",
+    description: "add items title",
   },
 });
 
@@ -51,7 +51,7 @@ const AssignmentListFooter: React.FC<AssignmentListFooterProps> = ({
 
   const handleFooterClickAway = () => {
     setIsChoicesSelectShown(false);
-    searchItems('');
+    searchItems("");
   };
 
   return isChoicesSelectShown ? (

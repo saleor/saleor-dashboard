@@ -1,5 +1,5 @@
-import { createSvgIcon } from '@material-ui/core/utils';
-import React from 'react';
+import { createSvgIcon } from "@material-ui/core/utils";
+import React from "react";
 
 const Webhooks = createSvgIcon(
   <>
@@ -10,7 +10,7 @@ const Webhooks = createSvgIcon(
       fill="#06847B"
     />
   </>,
-  'Webhooks',
+  "Webhooks",
 );
 
 export default Webhooks;

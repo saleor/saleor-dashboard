@@ -1,27 +1,27 @@
-import { FormData } from '@dashboard/channels/components/ChannelForm/ChannelForm';
-import { WindowTitle } from '@dashboard/components/WindowTitle';
+import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   ChannelCreateMutation,
   ChannelErrorFragment,
   useChannelCreateMutation,
   useChannelReorderWarehousesMutation,
-} from '@dashboard/graphql';
-import { getSearchFetchMoreProps } from '@dashboard/hooks/makeTopLevelSearch/utils';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { getDefaultNotifierSuccessErrorData } from '@dashboard/hooks/useNotifier/utils';
-import useShop from '@dashboard/hooks/useShop';
-import { extractMutationErrors } from '@dashboard/misc';
-import getChannelsErrorMessage from '@dashboard/utils/errors/channels';
-import currencyCodes from 'currency-codes';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
+import useShop from "@dashboard/hooks/useShop";
+import { extractMutationErrors } from "@dashboard/misc";
+import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
+import currencyCodes from "currency-codes";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import ChannelDetailsPage from '../../pages/ChannelDetailsPage';
-import { channelPath } from '../../urls';
-import { calculateItemsOrderMoves } from '../ChannelDetails/handlers';
-import { useShippingZones } from '../ChannelDetails/useShippingZones';
-import { useWarehouses } from '../ChannelDetails/useWarehouses';
+import ChannelDetailsPage from "../../pages/ChannelDetailsPage";
+import { channelPath } from "../../urls";
+import { calculateItemsOrderMoves } from "../ChannelDetails/handlers";
+import { useShippingZones } from "../ChannelDetails/useShippingZones";
+import { useWarehouses } from "../ChannelDetails/useWarehouses";
 
 export const ChannelCreateView = ({}) => {
   const navigate = useNavigator();
@@ -31,7 +31,7 @@ export const ChannelCreateView = ({}) => {
 
   const handleError = (error: ChannelErrorFragment) => {
     notify({
-      status: 'error',
+      status: "error",
       text: getChannelsErrorMessage(error, intl),
     });
   };
@@ -42,16 +42,17 @@ export const ChannelCreateView = ({}) => {
     },
   });
 
-  const [reorderChannelWarehouses, reorderChannelWarehousesOpts] = useChannelReorderWarehousesMutation({
-    onCompleted: data => {
-      const errors = data.channelReorderWarehouses.errors;
-      if (errors.length) {
-        errors.forEach(error => handleError(error));
-      }
+  const [reorderChannelWarehouses, reorderChannelWarehousesOpts] =
+    useChannelReorderWarehousesMutation({
+      onCompleted: data => {
+        const errors = data.channelReorderWarehouses.errors;
+        if (errors.length) {
+          errors.forEach(error => handleError(error));
+        }
 
-      navigate(channelPath(data.channelReorderWarehouses.channel?.id));
-    },
-  });
+        navigate(channelPath(data.channelReorderWarehouses.channel?.id));
+      },
+    });
 
   const handleSubmit = async ({
     shippingZonesIdsToAdd,
@@ -83,7 +84,10 @@ export const ChannelCreateView = ({}) => {
     const errors = await extractMutationErrors(createChannelMutation);
 
     if (!errors?.length) {
-      const moves = calculateItemsOrderMoves(result.data?.channelCreate.channel?.warehouses, warehousesToDisplay);
+      const moves = calculateItemsOrderMoves(
+        result.data?.channelCreate.channel?.warehouses,
+        warehousesToDisplay,
+      );
 
       await reorderChannelWarehouses({
         variables: {
@@ -104,19 +108,24 @@ export const ChannelCreateView = ({}) => {
     searchShippingZonesResult,
   } = useShippingZones();
 
-  const { warehousesCountData, warehousesCountLoading, fetchMoreWarehouses, searchWarehouses, searchWarehousesResult } =
-    useWarehouses();
+  const {
+    warehousesCountData,
+    warehousesCountLoading,
+    fetchMoreWarehouses,
+    searchWarehouses,
+    searchWarehousesResult,
+  } = useWarehouses();
 
   const currencyCodeChoices = currencyCodes.data.map(currencyData => ({
     label: intl.formatMessage(
       {
-        id: 'J7mFhU',
-        defaultMessage: '{code} - {countries}',
-        description: 'currency code select',
+        id: "J7mFhU",
+        defaultMessage: "{code} - {countries}",
+        description: "currency code select",
       },
       {
         code: currencyData.code,
-        countries: currencyData.countries.join(','),
+        countries: currencyData.countries.join(","),
       },
     ),
     value: currencyData.code,
@@ -126,9 +135,9 @@ export const ChannelCreateView = ({}) => {
     <>
       <WindowTitle
         title={intl.formatMessage({
-          id: 'OrMr/k',
-          defaultMessage: 'Create Channel',
-          description: 'window title',
+          id: "OrMr/k",
+          defaultMessage: "Create Channel",
+          description: "window title",
         })}
       />
       <>
@@ -136,7 +145,10 @@ export const ChannelCreateView = ({}) => {
           allShippingZonesCount={shippingZonesCountData?.shippingZones?.totalCount}
           searchShippingZones={searchShippingZones}
           searchShippingZonesData={searchShippingZonesResult.data}
-          fetchMoreShippingZones={getSearchFetchMoreProps(searchShippingZonesResult, fetchMoreShippingZones)}
+          fetchMoreShippingZones={getSearchFetchMoreProps(
+            searchShippingZonesResult,
+            fetchMoreShippingZones,
+          )}
           allWarehousesCount={warehousesCountData?.warehouses?.totalCount}
           searchWarehouses={searchWarehouses}
           searchWarehousesData={searchWarehousesResult.data}

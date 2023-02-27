@@ -1,5 +1,5 @@
-import { createSvgIcon } from '@material-ui/core/utils';
-import React from 'react';
+import { createSvgIcon } from "@material-ui/core/utils";
+import React from "react";
 
 const Truck = createSvgIcon(
   <>
@@ -8,7 +8,7 @@ const Truck = createSvgIcon(
       fill="#616161"
     />
   </>,
-  'Truck',
+  "Truck",
 );
 
 export default Truck;

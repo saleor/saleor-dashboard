@@ -1,18 +1,25 @@
-import BackButton from '@dashboard/components/BackButton';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import Form from '@dashboard/components/Form';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import Money from '@dashboard/components/Money';
-import { SingleSelectField } from '@dashboard/components/SingleSelectField';
-import { OrderDetailsFragment, OrderErrorFragment } from '@dashboard/graphql';
-import useModalDialogErrors from '@dashboard/hooks/useModalDialogErrors';
-import { buttonMessages } from '@dashboard/intl';
-import { getFormErrors } from '@dashboard/utils/errors';
-import getOrderErrorMessage from '@dashboard/utils/errors/order';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography } from '@material-ui/core';
-import { ConfirmButtonTransitionState, makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Money from "@dashboard/components/Money";
+import { SingleSelectField } from "@dashboard/components/SingleSelectField";
+import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import { buttonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Typography,
+} from "@material-ui/core";
+import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface FormData {
   shippingMethod: string;
@@ -21,32 +28,32 @@ export interface FormData {
 const useStyles = makeStyles(
   theme => ({
     dialog: {
-      overflowY: 'visible',
+      overflowY: "visible",
     },
     menuItem: {
-      display: 'flex',
-      width: '100%',
-      flexWrap: 'wrap',
+      display: "flex",
+      width: "100%",
+      flexWrap: "wrap",
     },
     price: {
       marginRight: theme.spacing(3),
     },
     root: {
-      overflowY: 'visible',
+      overflowY: "visible",
       width: theme.breakpoints.values.sm,
       margin: 0,
       padding: theme.spacing(3),
     },
     shippingMethodName: {
       flex: 1,
-      overflowX: 'hidden',
-      textOverflow: 'ellipsis',
+      overflowX: "hidden",
+      textOverflow: "ellipsis",
     },
     message: {
-      width: '100%',
+      width: "100%",
     },
   }),
-  { name: 'OrderShippingMethodEditDialog' },
+  { name: "OrderShippingMethodEditDialog" },
 );
 
 export interface OrderShippingMethodEditDialogProps {
@@ -54,18 +61,26 @@ export interface OrderShippingMethodEditDialogProps {
   errors: OrderErrorFragment[];
   open: boolean;
   shippingMethod: string;
-  shippingMethods?: OrderDetailsFragment['shippingMethods'];
+  shippingMethods?: OrderDetailsFragment["shippingMethods"];
   onClose();
   onSubmit?(data: FormData);
 }
 
 const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps> = props => {
-  const { confirmButtonState, errors: apiErrors, open, shippingMethod, shippingMethods, onClose, onSubmit } = props;
+  const {
+    confirmButtonState,
+    errors: apiErrors,
+    open,
+    shippingMethod,
+    shippingMethods,
+    onClose,
+    onSubmit,
+  } = props;
   const classes = useStyles(props);
   const errors = useModalDialogErrors(apiErrors, open);
   const intl = useIntl();
 
-  const formFields = ['shippingMethod'];
+  const formFields = ["shippingMethod"];
   const formErrors = getFormErrors(formFields, errors);
   const nonFieldErrors = errors.filter(err => !formFields.includes(err.field));
 
@@ -98,7 +113,11 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
   return (
     <Dialog onClose={onClose} open={open} classes={{ paper: classes.dialog }}>
       <DialogTitle disableTypography>
-        <FormattedMessage id="V/YxJa" defaultMessage="Edit Shipping Method" description="dialog header" />
+        <FormattedMessage
+          id="V/YxJa"
+          defaultMessage="Edit Shipping Method"
+          description="dialog header"
+        />
       </DialogTitle>
       <Form initial={initialForm} onSubmit={onSubmit}>
         {({ change, data }) => (
@@ -125,7 +144,11 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
             </DialogContent>
             <DialogActions>
               <BackButton onClick={onClose} />
-              <ConfirmButton transitionState={confirmButtonState} type="submit" disabled={!data.shippingMethod}>
+              <ConfirmButton
+                transitionState={confirmButtonState}
+                type="submit"
+                disabled={!data.shippingMethod}
+              >
                 <FormattedMessage {...buttonMessages.confirm} />
               </ConfirmButton>
             </DialogActions>
@@ -135,5 +158,5 @@ const OrderShippingMethodEditDialog: React.FC<OrderShippingMethodEditDialogProps
     </Dialog>
   );
 };
-OrderShippingMethodEditDialog.displayName = 'OrderShippingMethodEditDialog';
+OrderShippingMethodEditDialog.displayName = "OrderShippingMethodEditDialog";
 export default OrderShippingMethodEditDialog;

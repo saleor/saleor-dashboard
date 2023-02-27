@@ -1,9 +1,9 @@
-import Grid from '@dashboard/components/Grid';
-import Hr from '@dashboard/components/Hr';
-import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from '@dashboard/graphql';
-import { ChangeEvent } from '@dashboard/hooks/useForm';
-import { capitalize } from '@dashboard/misc';
-import { Card, CardContent, Checkbox, Typography } from '@material-ui/core';
+import Grid from "@dashboard/components/Grid";
+import Hr from "@dashboard/components/Hr";
+import { WebhookEventTypeAsyncEnum, WebhookEventTypeSyncEnum } from "@dashboard/graphql";
+import { ChangeEvent } from "@dashboard/hooks/useForm";
+import { capitalize } from "@dashboard/misc";
+import { Card, CardContent, Checkbox, Typography } from "@material-ui/core";
 import {
   List,
   ListBody,
@@ -15,13 +15,13 @@ import {
   PageTabs,
   Pill,
   useListWidths,
-} from '@saleor/macaw-ui';
-import React, { Dispatch, SetStateAction, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@saleor/macaw-ui";
+import React, { Dispatch, SetStateAction, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { messages } from './messages';
-import { useStyles } from './styles';
-import { EventTypes, getEventName } from './utils';
+import { messages } from "./messages";
+import { useStyles } from "./styles";
+import { EventTypes, getEventName } from "./utils";
 
 interface WebhookEventsProps {
   data: {
@@ -33,16 +33,21 @@ interface WebhookEventsProps {
   onAsyncEventChange: (event: ChangeEvent) => void;
 }
 
-const WebhookEvents: React.FC<WebhookEventsProps> = ({ data, setQuery, onSyncEventChange, onAsyncEventChange }) => {
+const WebhookEvents: React.FC<WebhookEventsProps> = ({
+  data,
+  setQuery,
+  onSyncEventChange,
+  onAsyncEventChange,
+}) => {
   const intl = useIntl();
   const classes = useStyles();
   const { checkbox } = useListWidths();
 
-  const [tab, setTab] = useState('async');
+  const [tab, setTab] = useState("async");
   const [object, setObject] = useState<string | null>(null);
 
   const handleEventChange = event => {
-    if (tab === 'sync') {
+    if (tab === "sync") {
       return onSyncEventChange(event);
     }
 
@@ -51,12 +56,12 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({ data, setQuery, onSyncEve
 
   const handleTabChange = value => {
     setObject(null);
-    setQuery('');
+    setQuery("");
     setTab(value);
   };
 
   const countEvents = object => {
-    const selected = tab === 'sync' ? data.syncEvents : data.asyncEvents;
+    const selected = tab === "sync" ? data.syncEvents : data.asyncEvents;
     const objectEvents = EventTypes[tab][object].map(event => {
       if (event === object) {
         return object;
@@ -77,11 +82,11 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({ data, setQuery, onSyncEve
             <PageTab label={intl.formatMessage(messages.synchronous)} value="sync" />
           </PageTabs>
 
-          <Typography variant="subtitle2" style={{ padding: '1rem 0' }}>
-            <PageTabPanel show={tab === 'sync'}>
+          <Typography variant="subtitle2" style={{ padding: "1rem 0" }}>
+            <PageTabPanel show={tab === "sync"}>
               <FormattedMessage {...messages.synchronousDescription} />
             </PageTabPanel>
-            <PageTabPanel show={tab === 'async'}>
+            <PageTabPanel show={tab === "async"}>
               <FormattedMessage {...messages.asynchronousDescription} />
             </PageTabPanel>
           </Typography>
@@ -90,7 +95,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({ data, setQuery, onSyncEve
         <Grid variant="uniform">
           <div className={classes.objectsWrapper}>
             <PageTabPanel show={true}>
-              <List gridTemplate={['1fr 50px']}>
+              <List gridTemplate={["1fr 50px"]}>
                 <ListHeader>
                   <ListItem className={classes.listHeader}>
                     <ListItemCell className={classes.listItemCell}>
@@ -101,12 +106,18 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({ data, setQuery, onSyncEve
                 </ListHeader>
                 <ListBody className={classes.listBody}>
                   {Object.keys(EventTypes[tab]).map((object, idx) => (
-                    <ListItem key={idx} className={classes.listItem} onClick={() => setObject(object)}>
+                    <ListItem
+                      key={idx}
+                      className={classes.listItem}
+                      onClick={() => setObject(object)}
+                    >
                       <ListItemCell className={classes.listItemCell}>
-                        <strong>{capitalize(object.replaceAll('_', ' ').toLowerCase())}</strong>
+                        <strong>{capitalize(object.replaceAll("_", " ").toLowerCase())}</strong>
                       </ListItemCell>
                       <ListItemCell>
-                        {countEvents(object) > 0 && <Pill size="small" color="error" label={countEvents(object)} />}
+                        {countEvents(object) > 0 && (
+                          <Pill size="small" color="error" label={countEvents(object)} />
+                        )}
                       </ListItemCell>
                     </ListItem>
                   ))}
@@ -115,7 +126,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({ data, setQuery, onSyncEve
             </PageTabPanel>
           </div>
           <div className={classes.eventsWrapper}>
-            <List gridTemplate={['1fr', checkbox]}>
+            <List gridTemplate={["1fr", checkbox]}>
               <ListHeader>
                 <ListItem className={classes.listHeader}>
                   <ListItemCell className={classes.listItemCell}>
@@ -129,7 +140,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({ data, setQuery, onSyncEve
                   EventTypes[tab][object].map((event, idx) => (
                     <ListItem className={classes.listItem} key={idx}>
                       <ListItemCell className={classes.listItemCell}>
-                        <strong>{capitalize(event.toLowerCase().replaceAll('_', ' '))}</strong>
+                        <strong>{capitalize(event.toLowerCase().replaceAll("_", " "))}</strong>
                       </ListItemCell>
                       <ListItemCell>
                         <Checkbox
@@ -150,5 +161,5 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({ data, setQuery, onSyncEve
     </>
   );
 };
-WebhookEvents.displayName = 'WebhookEvents';
+WebhookEvents.displayName = "WebhookEvents";
 export default WebhookEvents;

@@ -1,19 +1,27 @@
-import { FilterDateTimeField } from '@dashboard/components/Filter/FilterContent/FilterDateTimeField';
-import { FilterNumericField } from '@dashboard/components/Filter/FilterContent/FilterNumericField';
-import { FilterSingleSelectField } from '@dashboard/components/Filter/FilterContent/FilterSingleSelectField';
-import { useCommonStyles } from '@dashboard/components/Filter/FilterContent/utils';
-import { MultiAutocompleteChoiceType } from '@dashboard/components/MultiAutocompleteSelectField';
-import Skeleton from '@dashboard/components/Skeleton';
-import { FormControlLabel, Radio, TextField } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
+import { FilterDateTimeField } from "@dashboard/components/Filter/FilterContent/FilterDateTimeField";
+import { FilterNumericField } from "@dashboard/components/Filter/FilterContent/FilterNumericField";
+import { FilterSingleSelectField } from "@dashboard/components/Filter/FilterContent/FilterSingleSelectField";
+import { useCommonStyles } from "@dashboard/components/Filter/FilterContent/utils";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import Skeleton from "@dashboard/components/Skeleton";
+import { FormControlLabel, Radio, TextField } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
 
-import FilterAutocompleteField, { FilterAutocompleteDisplayValues } from '../FilterAutocompleteField';
-import { FilterKeyValueField } from '../FilterKeyValueField';
-import FilterOptionField from '../FilterOptionField';
-import { FilterReducerAction } from '../reducer';
-import { FieldType, FilterElement, isFilterDateType, isFilterNumericType, isFilterType } from '../types';
+import FilterAutocompleteField, {
+  FilterAutocompleteDisplayValues,
+} from "../FilterAutocompleteField";
+import { FilterKeyValueField } from "../FilterKeyValueField";
+import FilterOptionField from "../FilterOptionField";
+import { FilterReducerAction } from "../reducer";
+import {
+  FieldType,
+  FilterElement,
+  isFilterDateType,
+  isFilterNumericType,
+  isFilterType,
+} from "../types";
 
 const useStyles = makeStyles(
   theme => ({
@@ -23,16 +31,16 @@ const useStyles = makeStyles(
 
     option: {
       left: -theme.spacing(0.5),
-      position: 'relative',
+      position: "relative",
     },
     optionRadio: {
       left: -theme.spacing(0.25),
     },
   }),
-  { name: 'FilterContentBody' },
+  { name: "FilterContentBody" },
 );
 
-const filterTestingContext = 'filter-field-';
+const filterTestingContext = "filter-field-";
 
 export interface FilterContentBodyProps<K extends string> {
   children?: React.ReactNode;
@@ -41,7 +49,9 @@ export interface FilterContentBodyProps<K extends string> {
   initialAutocompleteDisplayValues: FilterAutocompleteDisplayValues;
   onFilterPropertyChange: <T extends FieldType>(value: FilterReducerAction<K, T>) => void;
   autocompleteDisplayValues: FilterAutocompleteDisplayValues;
-  setAutocompleteDisplayValues: React.Dispatch<React.SetStateAction<Record<string, MultiAutocompleteChoiceType[]>>>;
+  setAutocompleteDisplayValues: React.Dispatch<
+    React.SetStateAction<Record<string, MultiAutocompleteChoiceType[]>>
+  >;
 }
 
 const FilterContentBody = <K extends string = string>({
@@ -78,20 +88,26 @@ const FilterContentBody = <K extends string = string>({
                   value: [event.target.value, filter.value[1]],
                 },
               },
-              type: 'set-property',
+              type: "set-property",
             })
           }
         />
       )}
       {isFilterDateType(filter) && (
         <>
-          <FilterSingleSelectField filter={filter} onFilterPropertyChange={onFilterPropertyChange} />
+          <FilterSingleSelectField
+            filter={filter}
+            onFilterPropertyChange={onFilterPropertyChange}
+          />
           <FilterDateTimeField filter={filter} onFilterPropertyChange={onFilterPropertyChange} />
         </>
       )}
       {isFilterNumericType(filter) && (
         <>
-          <FilterSingleSelectField filter={filter} onFilterPropertyChange={onFilterPropertyChange} />
+          <FilterSingleSelectField
+            filter={filter}
+            onFilterPropertyChange={onFilterPropertyChange}
+          />
           <FilterNumericField
             filter={filter}
             onFilterPropertyChange={onFilterPropertyChange}
@@ -129,7 +145,7 @@ const FilterContentBody = <K extends string = string>({
                       value: [option.value],
                     },
                   },
-                  type: 'set-property',
+                  type: "set-property",
                 })
               }
             />

@@ -28,7 +28,10 @@ function saveFilterTab<TUrlFilters>(name: string, data: TUrlFilters, key: string
 function deleteFilterTab(id: number, key: string) {
   const userFilters = getFilterTabs(key);
 
-  localStorage.setItem(key, JSON.stringify([...userFilters.slice(0, id - 1), ...userFilters.slice(id)]));
+  localStorage.setItem(
+    key,
+    JSON.stringify([...userFilters.slice(0, id - 1), ...userFilters.slice(id)]),
+  );
 }
 
 function createFilterTabUtils<TUrlFilters>(key: string) {

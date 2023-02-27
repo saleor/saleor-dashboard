@@ -1,35 +1,35 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import { DateTime } from '@dashboard/components/Date';
-import Skeleton from '@dashboard/components/Skeleton';
-import { HomeQuery } from '@dashboard/graphql';
-import { RelayToFlat } from '@dashboard/types';
-import { Card, CardContent, List, ListItem, ListItemText, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import { DateTime } from "@dashboard/components/Date";
+import Skeleton from "@dashboard/components/Skeleton";
+import { HomeQuery } from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
+import { Card, CardContent, List, ListItem, ListItemText, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { renderCollection } from '../../../misc';
-import { getActivityMessage } from './activityMessages';
+import { renderCollection } from "../../../misc";
+import { getActivityMessage } from "./activityMessages";
 
 const useStyles = makeStyles(
   {
     loadingProducts: {
-      paddingBottom: '10px',
-      paddingTop: '10px',
+      paddingBottom: "10px",
+      paddingTop: "10px",
     },
     noProducts: {
-      paddingBottom: '16px',
-      paddingTop: '16px',
+      paddingBottom: "16px",
+      paddingTop: "16px",
     },
     listItem: {
       paddingLeft: 0,
     },
   },
-  { name: 'HomeActivityCard' },
+  { name: "HomeActivityCard" },
 );
 
 interface HomeActivityCardProps {
-  activities: RelayToFlat<HomeQuery['activities']>;
+  activities: RelayToFlat<HomeQuery["activities"]>;
   testId?: string;
 }
 
@@ -43,9 +43,9 @@ const HomeActivityCard: React.FC<HomeActivityCardProps> = props => {
     <Card data-test-id={testId}>
       <CardTitle
         title={intl.formatMessage({
-          id: 'BXkF8Z',
-          defaultMessage: 'Activity',
-          description: 'header',
+          id: "BXkF8Z",
+          defaultMessage: "Activity",
+          description: "header",
         })}
       />
       <CardContent>
@@ -85,5 +85,5 @@ const HomeActivityCard: React.FC<HomeActivityCardProps> = props => {
     </Card>
   );
 };
-HomeActivityCard.displayName = 'HomeActivityCard';
+HomeActivityCard.displayName = "HomeActivityCard";
 export default HomeActivityCard;

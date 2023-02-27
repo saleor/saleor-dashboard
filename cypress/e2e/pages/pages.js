@@ -7,10 +7,7 @@ import { PAGE_DETAILS } from "../../elements/pages/page-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { pageDetailsUrl } from "../../fixtures/urlList";
 import { createAttribute } from "../../support/api/requests/Attribute";
-import {
-  createPage as createPageRequest,
-  getPage,
-} from "../../support/api/requests/Page";
+import { createPage as createPageRequest, getPage } from "../../support/api/requests/Page";
 import { createPageType } from "../../support/api/requests/PageType";
 import { deleteAttributesStartsWith } from "../../support/api/utils/attributes/attributeUtils";
 import { deletePageTypesStartsWith } from "../../support/api/utils/pageTypeUtils";
@@ -50,46 +47,38 @@ describe("Tests for pages", () => {
     cy.clearSessionData().loginUserViaRequest();
   });
 
-  it(
-    "should create not published page",
-    { tags: ["@pages", "@allEnv", "@stable"] },
-    () => {
-      const randomName = `${startsWith}${faker.datatype.number()}`;
+  it("should create not published page", { tags: ["@pages", "@allEnv", "@stable"] }, () => {
+    const randomName = `${startsWith}${faker.datatype.number()}`;
 
-      createPage({ pageName: randomName, pageTypeName: name })
-        .then(page => {
-          getPage(page.id);
-        })
-        .then(page => {
-          expect(page.title).to.eq(randomName);
-          expect(page.isPublished).to.be.false;
-          expect(page.attributes[0].attribute.id).to.eq(attribute.id);
-          getPage(page.id, "token").should("be.null");
-        });
-    },
-  );
-
-  it(
-    "should create published page",
-    { tags: ["@pages", "@allEnv", "@stable"] },
-    () => {
-      const randomName = `${startsWith}${faker.datatype.number()}`;
-
-      createPage({
-        pageName: randomName,
-        pageTypeName: name,
-        isPublished: true,
+    createPage({ pageName: randomName, pageTypeName: name })
+      .then(page => {
+        getPage(page.id);
       })
-        .then(page => {
-          getPage(page.id, "token");
-        })
-        .then(page => {
-          expect(page.title).to.eq(randomName);
-          expect(page.isPublished).to.be.true;
-          expect(page.attributes[0].attribute.id).to.eq(attribute.id);
-        });
-    },
-  );
+      .then(page => {
+        expect(page.title).to.eq(randomName);
+        expect(page.isPublished).to.be.false;
+        expect(page.attributes[0].attribute.id).to.eq(attribute.id);
+        getPage(page.id, "token").should("be.null");
+      });
+  });
+
+  it("should create published page", { tags: ["@pages", "@allEnv", "@stable"] }, () => {
+    const randomName = `${startsWith}${faker.datatype.number()}`;
+
+    createPage({
+      pageName: randomName,
+      pageTypeName: name,
+      isPublished: true,
+    })
+      .then(page => {
+        getPage(page.id, "token");
+      })
+      .then(page => {
+        expect(page.title).to.eq(randomName);
+        expect(page.isPublished).to.be.true;
+        expect(page.attributes[0].attribute.id).to.eq(attribute.id);
+      });
+  });
 
   Object.keys(attributesTypes).forEach(attributeType => {
     it(
@@ -123,9 +112,7 @@ describe("Tests for pages", () => {
                 attributeValuesOnPage[attributeType].toString(),
               );
             } else {
-              expect(page.attributes[0].values[0].name).to.includes(
-                "Yes".toString(),
-              );
+              expect(page.attributes[0].values[0].name).to.includes("Yes".toString());
             }
           });
       },

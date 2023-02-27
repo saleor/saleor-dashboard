@@ -1,16 +1,16 @@
-import { LogLevels, OutputData } from '@editorjs/editorjs';
-import { FormControl, FormHelperText, InputLabel } from '@material-ui/core';
-import { useId } from '@reach/auto-id';
-import { Props as ReactEditorJSProps } from '@react-editor-js/core';
-import clsx from 'clsx';
-import React from 'react';
-import { createReactEditorJS } from 'react-editor-js';
+import { LogLevels, OutputData } from "@editorjs/editorjs";
+import { FormControl, FormHelperText, InputLabel } from "@material-ui/core";
+import { useId } from "@reach/auto-id";
+import { Props as ReactEditorJSProps } from "@react-editor-js/core";
+import clsx from "clsx";
+import React from "react";
+import { createReactEditorJS } from "react-editor-js";
 
-import { tools } from './consts';
-import { useHasRendered } from './hooks';
-import useStyles from './styles';
+import { tools } from "./consts";
+import { useHasRendered } from "./hooks";
+import useStyles from "./styles";
 
-export type EditorJsProps = Omit<ReactEditorJSProps, 'factory'>;
+export type EditorJsProps = Omit<ReactEditorJSProps, "factory">;
 
 // https://github.com/Jungwoo-An/react-editor-js#how-to-access-editor-js-instance
 export interface EditorCore {
@@ -20,7 +20,7 @@ export interface EditorCore {
   render(data: OutputData): Promise<void>;
 }
 
-export interface RichTextEditorProps extends Omit<EditorJsProps, 'onChange'> {
+export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
   id?: string;
   disabled: boolean;
   error: boolean;
@@ -54,7 +54,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       onInitialize(editor);
     }
 
-    if (typeof editorRef === 'function') {
+    if (typeof editorRef === "function") {
       return editorRef(editor);
     }
     if (editorRef) {
@@ -67,7 +67,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
 
   return (
     <FormControl
-      data-test-id={'rich-text-editor-' + name}
+      data-test-id={"rich-text-editor-" + name}
       disabled={disabled}
       error={error}
       fullWidth
@@ -82,7 +82,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           holder={id}
           tools={tools}
           // LogLeves is undefined at runtime
-          logLevel={'ERROR' as LogLevels.ERROR}
+          logLevel={"ERROR" as LogLevels.ERROR}
           onInitialize={handleInitialize}
           {...props}
         >
@@ -103,5 +103,5 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   );
 };
 
-RichTextEditor.displayName = 'RichTextEditor';
+RichTextEditor.displayName = "RichTextEditor";
 export default RichTextEditor;

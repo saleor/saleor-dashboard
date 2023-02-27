@@ -1,5 +1,5 @@
-import { useApolloClient } from '@apollo/client';
-import { getAppInProgressName } from '@dashboard/apps/utils';
+import { useApolloClient } from "@apollo/client";
+import { getAppInProgressName } from "@dashboard/apps/utils";
 import {
   AppSortField,
   AppTypeEnum,
@@ -9,23 +9,27 @@ import {
   useAppRetryInstallMutation,
   useAppsInstallationsQuery,
   useAppsListQuery,
-} from '@dashboard/graphql';
-import useListSettings from '@dashboard/hooks/useListSettings';
-import useLocalStorage from '@dashboard/hooks/useLocalStorage';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import usePaginator, { createPaginationState, PageInfo, PaginatorContext } from '@dashboard/hooks/usePaginator';
-import { ListViews } from '@dashboard/types';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import React, { useEffect, useRef } from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useListSettings from "@dashboard/hooks/useListSettings";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import usePaginator, {
+  createPaginationState,
+  PageInfo,
+  PaginatorContext,
+} from "@dashboard/hooks/usePaginator";
+import { ListViews } from "@dashboard/types";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import React, { useEffect, useRef } from "react";
+import { useIntl } from "react-intl";
 
-import AppInProgressDeleteDialog from '../../components/AppInProgressDeleteDialog';
-import AppsListPage from '../../components/AppsListPage';
-import { EXTENSION_LIST_QUERY } from '../../queries';
-import { appDetailsUrl, AppListUrlDialog, AppListUrlQueryParams, appsListUrl } from '../../urls';
-import { messages } from './messages';
+import AppInProgressDeleteDialog from "../../components/AppInProgressDeleteDialog";
+import AppsListPage from "../../components/AppsListPage";
+import { EXTENSION_LIST_QUERY } from "../../queries";
+import { appDetailsUrl, AppListUrlDialog, AppListUrlQueryParams, appsListUrl } from "../../urls";
+import { messages } from "./messages";
 
 interface AppsListProps {
   params: AppListUrlQueryParams;
@@ -34,10 +38,9 @@ interface AppsListProps {
 export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const { action } = params;
   const client = useApolloClient();
-  const [activeInstallations, setActiveInstallations] = useLocalStorage<Array<Record<'id' | 'name', string>>>(
-    'activeInstallations',
-    [],
-  );
+  const [activeInstallations, setActiveInstallations] = useLocalStorage<
+    Array<Record<"id" | "name", string>>
+  >("activeInstallations", []);
   const notify = useNotifier();
   const intl = useIntl();
   const navigate = useNavigator();
@@ -82,7 +85,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
 
   const installedAppNotify = (name: string) => {
     notify({
-      status: 'success',
+      status: "success",
       text: intl.formatMessage(messages.appReadyToUse, { name }),
       title: intl.formatMessage(messages.appInstalled),
     });
@@ -103,11 +106,10 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
       }
     },
   });
-  const [openModal, closeModal] = createDialogActionHandlers<AppListUrlDialog, AppListUrlQueryParams>(
-    navigate,
-    appsListUrl,
-    params,
-  );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    AppListUrlDialog,
+    AppListUrlQueryParams
+  >(navigate, appsListUrl, params);
 
   const [deleteInProgressApp, deleteInProgressAppOpts] = useAppDeleteFailedInstallationMutation({
     onCompleted: data => {
@@ -141,7 +143,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         } else if (item.status === JobStatusEnum.FAILED) {
           removeInstallation(installation.id);
           notify({
-            status: 'error',
+            status: "error",
             text: item.message,
             title: intl.formatMessage(messages.appCouldntInstall, {
               name: item.appName,
@@ -169,13 +171,13 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
   const handleRemoveInProgressConfirm = () =>
     deleteInProgressApp({
       variables: {
-        id: params?.id || '',
+        id: params?.id || "",
       },
     });
 
   const removeAppNotify = () => {
     notify({
-      status: 'success',
+      status: "success",
       text: intl.formatMessage(messages.appRemoved),
     });
   };
@@ -188,10 +190,10 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     <PaginatorContext.Provider value={paginationValues}>
       <AppInProgressDeleteDialog
         confirmButtonState={deleteInProgressAppOpts.status}
-        name={getAppInProgressName(params.id || '', appsInProgressData?.appsInstallations)}
+        name={getAppInProgressName(params.id || "", appsInProgressData?.appsInstallations)}
         onClose={closeModal}
         onConfirm={handleRemoveInProgressConfirm}
-        open={action === 'app-installation-remove'}
+        open={action === "app-installation-remove"}
       />
       <AppsListPage
         installedAppsList={installedApps}
@@ -202,7 +204,7 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
         onAppInstallRetry={onAppInstallRetry}
         onSettingsAppOpen={id => navigate(appDetailsUrl(id))}
         onAppInProgressRemove={id =>
-          openModal('app-installation-remove', {
+          openModal("app-installation-remove", {
             id,
           })
         }

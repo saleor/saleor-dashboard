@@ -1,7 +1,7 @@
-import { Typography } from '@material-ui/core';
-import React from 'react';
+import { Typography } from "@material-ui/core";
+import React from "react";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 interface VersionInfoProps {
   dashboardVersion: string;
   coreVersion: string;
@@ -22,5 +22,5 @@ const VersionInfo: React.FC<VersionInfoProps> = ({ dashboardVersion, coreVersion
   );
 };
 
-VersionInfo.displayName = 'VersionInfo';
+VersionInfo.displayName = "VersionInfo";
 export default VersionInfo;

@@ -58,28 +58,22 @@ describe("Creating variants", () => {
       address = fixtureAddresses.plAddress;
     });
 
-    shippingUtils
-      .createShippingWithDefaultChannelAndAddress(name)
-      .then(resp => {
-        category = resp.category;
-        defaultChannel = resp.defaultChannel;
-        warehouse = resp.warehouse;
-        shippingMethod = resp.shippingMethod;
+    shippingUtils.createShippingWithDefaultChannelAndAddress(name).then(resp => {
+      category = resp.category;
+      defaultChannel = resp.defaultChannel;
+      warehouse = resp.warehouse;
+      shippingMethod = resp.shippingMethod;
 
-        updateTaxConfigurationForChannel({
-          channelSlug: defaultChannel.slug,
-          pricesEnteredWithTax: true,
-        });
+      updateTaxConfigurationForChannel({
+        channelSlug: defaultChannel.slug,
+        pricesEnteredWithTax: true,
       });
+    });
 
     productUtils
       .createTypeAttributeAndCategoryForProduct({ name, attributeValues })
       .then(
-        ({
-          attribute: attributeResp,
-          productType: productTypeResp,
-          category: categoryResp,
-        }) => {
+        ({ attribute: attributeResp, productType: productTypeResp, category: categoryResp }) => {
           attribute = attributeResp;
           productType = productTypeResp;
           category = categoryResp;
@@ -106,10 +100,7 @@ describe("Creating variants", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(
@@ -190,8 +181,7 @@ describe("Creating variants", () => {
         .confirmationMessageShouldDisappear()
         .wait("@VariantCreate")
         .then(({ response }) => {
-          const variantId =
-            response.body.data.productVariantCreate.productVariant.id;
+          const variantId = response.body.data.productVariantCreate.productVariant.id;
           updateVariantWarehouse({
             variantId,
             warehouseId: warehouse.id,
@@ -206,9 +196,7 @@ describe("Creating variants", () => {
         .confirmationMessageShouldDisappear()
         .wait("@VariantUpdate")
         .then(({ response }) => {
-          const variants = [
-            response.body.data.productVariantUpdate.productVariant,
-          ];
+          const variants = [response.body.data.productVariantUpdate.productVariant];
           createWaitingForCaptureOrder({
             channelSlug: defaultChannel.slug,
             email: "example@example.com",

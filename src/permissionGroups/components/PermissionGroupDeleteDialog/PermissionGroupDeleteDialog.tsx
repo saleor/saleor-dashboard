@@ -1,10 +1,10 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import { PermissionGroupErrorCode, PermissionGroupErrorFragment } from '@dashboard/graphql';
-import getPermissionGroupErrorMessage from '@dashboard/utils/errors/permissionGroups';
-import { DialogContentText, Typography } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { PermissionGroupErrorCode, PermissionGroupErrorFragment } from "@dashboard/graphql";
+import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
+import { DialogContentText, Typography } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface PermissionDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -28,9 +28,9 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
   let errorMessage;
   if (error?.code === PermissionGroupErrorCode.OUT_OF_SCOPE_PERMISSION) {
     errorMessage = intl.formatMessage({
-      id: 'O22NIZ',
+      id: "O22NIZ",
       defaultMessage: "Cant's delete group which is out of your permission scope",
-      description: 'deletion error message',
+      description: "deletion error message",
     });
   } else if (!!error) {
     errorMessage = getPermissionGroupErrorMessage(error, intl);
@@ -43,9 +43,9 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
       onClose={onClose}
       onConfirm={onConfirm}
       title={intl.formatMessage({
-        id: 'L6+p8a',
-        defaultMessage: 'Delete permission group',
-        description: 'dialog title',
+        id: "L6+p8a",
+        defaultMessage: "Delete permission group",
+        description: "dialog title",
       })}
       variant="delete"
     >
@@ -63,5 +63,5 @@ const PermissionGroupDeleteDialog: React.FC<PermissionDeleteDialogProps> = ({
     </ActionDialog>
   );
 };
-PermissionGroupDeleteDialog.displayName = 'PermissionGroupDeleteDialog';
+PermissionGroupDeleteDialog.displayName = "PermissionGroupDeleteDialog";
 export default PermissionGroupDeleteDialog;

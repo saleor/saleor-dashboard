@@ -1,13 +1,13 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import { MenuErrorFragment } from '@dashboard/graphql';
-import { commonMessages } from '@dashboard/intl';
-import { getFormErrors } from '@dashboard/utils/errors';
-import getMenuErrorMessage from '@dashboard/utils/errors/menu';
-import { Card, CardContent, TextField } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import { MenuErrorFragment } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getMenuErrorMessage from "@dashboard/utils/errors/menu";
+import { Card, CardContent, TextField } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { MenuDetailsFormData } from '../MenuDetailsPage';
+import { MenuDetailsFormData } from "../MenuDetailsPage";
 
 export interface MenuPropertiesProps {
   data: MenuDetailsFormData;
@@ -19,7 +19,7 @@ export interface MenuPropertiesProps {
 const MenuProperties: React.FC<MenuPropertiesProps> = ({ data, disabled, errors, onChange }) => {
   const intl = useIntl();
 
-  const formErrors = getFormErrors(['name'], errors);
+  const formErrors = getFormErrors(["name"], errors);
 
   return (
     <Card>
@@ -28,11 +28,11 @@ const MenuProperties: React.FC<MenuPropertiesProps> = ({ data, disabled, errors,
         <TextField
           disabled={disabled}
           error={!!formErrors.name}
-          name={'name' as keyof MenuDetailsFormData}
+          name={"name" as keyof MenuDetailsFormData}
           fullWidth
           label={intl.formatMessage({
-            id: 'jhh/D6',
-            defaultMessage: 'Menu Title',
+            id: "jhh/D6",
+            defaultMessage: "Menu Title",
           })}
           helperText={getMenuErrorMessage(formErrors.name, intl)}
           value={data.name}
@@ -42,5 +42,5 @@ const MenuProperties: React.FC<MenuPropertiesProps> = ({ data, disabled, errors,
     </Card>
   );
 };
-MenuProperties.displayName = 'MenuProperties';
+MenuProperties.displayName = "MenuProperties";
 export default MenuProperties;

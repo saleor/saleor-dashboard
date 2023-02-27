@@ -1,6 +1,6 @@
-import { LocaleContext } from '@dashboard/components/Locale';
-import moment from 'moment-timezone';
-import { useContext } from 'react';
+import { LocaleContext } from "@dashboard/components/Locale";
+import moment from "moment-timezone";
+import { useContext } from "react";
 
 export type LocalizeDate = (date: string, format?: string) => string;
 
@@ -10,7 +10,7 @@ function useDateLocalize(): LocalizeDate {
   return (date: string, format?: string) =>
     moment(date)
       .locale(locale)
-      .format(format || 'll');
+      .format(format || "ll");
 }
 
 export default useDateLocalize;

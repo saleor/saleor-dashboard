@@ -1,33 +1,33 @@
-import { makeStyles } from '@saleor/macaw-ui';
-import { vars } from '@saleor/macaw-ui/next';
+import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 
 export const useStyles = makeStyles(
   theme => ({
     header: {
-      display: 'flex',
-      justifyContent: 'space-between',
+      display: "flex",
+      justifyContent: "space-between",
     },
     root: {
       ...theme.typography.body1,
       lineHeight: 1.9,
-      width: '100%',
-      '& > div': {
-        display: 'flex',
-        justifyContent: 'flex-end',
+      width: "100%",
+      "& > div": {
+        display: "flex",
+        justifyContent: "flex-end",
       },
     },
     leftmostRightAlignedElement: {
-      marginLeft: 'auto',
+      marginLeft: "auto",
     },
     rightmostLeftAlignedElement: {
-      marginRight: 'auto',
+      marginRight: "auto",
     },
     totalRow: {
       fontWeight: 600,
     },
     titleContainer: {
-      display: 'flex',
-      alignItems: 'center',
+      display: "flex",
+      alignItems: "center",
     },
     supportText: {
       color: theme.palette.saleor.main[3],
@@ -40,13 +40,13 @@ export const useStyles = makeStyles(
     },
     actions: {
       gap: theme.spacing(1),
-      display: 'flex',
-      flexWrap: 'wrap',
-      justifyContent: 'right',
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "right",
     },
     payments: {
       paddingRight: vars.space[9],
     },
   }),
-  { name: 'OrderPayment' },
+  { name: "OrderPayment" },
 );

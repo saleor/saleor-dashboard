@@ -1,15 +1,15 @@
-import RichTextEditor from '@dashboard/components/RichTextEditor';
-import RichTextEditorContent from '@dashboard/components/RichTextEditor/RichTextEditorContent';
-import { RichTextEditorLoading } from '@dashboard/components/RichTextEditor/RichTextEditorLoading';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import { OutputData } from '@editorjs/editorjs';
-import { Typography } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import RichTextEditor from "@dashboard/components/RichTextEditor";
+import RichTextEditorContent from "@dashboard/components/RichTextEditor/RichTextEditorContent";
+import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { OutputData } from "@editorjs/editorjs";
+import { Typography } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import TranslationFieldsSave from './TranslationFieldsSave';
-import { useRichTextSubmit } from './useRichTextSubmit';
+import TranslationFieldsSave from "./TranslationFieldsSave";
+import { useRichTextSubmit } from "./useRichTextSubmit";
 
 interface TranslationFieldsRichProps {
   disabled: boolean;
@@ -32,7 +32,8 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
 }) => {
   const intl = useIntl();
 
-  const { isReadyForMount, handleSubmit, defaultValue, handleChange, editorRef } = useRichTextSubmit(initial, onSubmit);
+  const { isReadyForMount, handleSubmit, defaultValue, handleChange, editorRef } =
+    useRichTextSubmit(initial, onSubmit);
 
   return edit ? (
     <form onSubmit={handleSubmit}>
@@ -45,8 +46,8 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
           error={undefined}
           helperText={undefined}
           label={intl.formatMessage({
-            id: '/vCXIP',
-            defaultMessage: 'Translation',
+            id: "/vCXIP",
+            defaultMessage: "Translation",
           })}
           name="translation"
           data-test-id="translation-field"
@@ -54,22 +55,28 @@ const TranslationFieldsRich: React.FC<TranslationFieldsRichProps> = ({
       ) : (
         <RichTextEditorLoading
           label={intl.formatMessage({
-            id: '/vCXIP',
-            defaultMessage: 'Translation',
+            id: "/vCXIP",
+            defaultMessage: "Translation",
           })}
           name="translation"
           data-test-id="translation-field"
         />
       )}
-      <TranslationFieldsSave saveButtonState={saveButtonState} onDiscard={onDiscard} onSave={handleSubmit} />
+      <TranslationFieldsSave
+        saveButtonState={saveButtonState}
+        onDiscard={onDiscard}
+        onSave={handleSubmit}
+      />
     </form>
   ) : initial === null ? (
     <Typography color="textSecondary">
       <FormattedMessage id="T/5OyA" defaultMessage="No translation yet" />
     </Typography>
   ) : (
-    <Typography>{isReadyForMount && <RichTextEditorContent key={resetKey} value={defaultValue} />}</Typography>
+    <Typography>
+      {isReadyForMount && <RichTextEditorContent key={resetKey} value={defaultValue} />}
+    </Typography>
   );
 };
-TranslationFieldsRich.displayName = 'TranslationFieldsRich';
+TranslationFieldsRich.displayName = "TranslationFieldsRich";
 export default TranslationFieldsRich;

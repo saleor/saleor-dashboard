@@ -74,10 +74,7 @@ describe("Stripe payments", () => {
     })
       .then(({ checkout: checkoutResp }) => {
         checkout = checkoutResp;
-        const shippingMethodId = getShippingMethodIdFromCheckout(
-          checkoutResp,
-          shippingMethod.name,
-        );
+        const shippingMethodId = getShippingMethodIdFromCheckout(checkoutResp, shippingMethod.name);
         addShippingMethod(checkout.id, shippingMethodId);
       })
       .then(({ checkout: checkoutResp }) => {
@@ -85,28 +82,24 @@ describe("Stripe payments", () => {
       });
   });
 
-  it(
-    "should purchase products with simple card",
-    { tags: ["@payments", "@allEnv"] },
-    () => {
-      const simpleCard = cardData;
-      simpleCard.cardNumber = paymentCards.simpleCardNumber;
-      addStripePaymentAndGetConfirmationData({
-        card: simpleCard,
-        checkoutId: checkout.id,
-        amount: checkout.totalPrice.gross.amount,
+  it("should purchase products with simple card", { tags: ["@payments", "@allEnv"] }, () => {
+    const simpleCard = cardData;
+    simpleCard.cardNumber = paymentCards.simpleCardNumber;
+    addStripePaymentAndGetConfirmationData({
+      card: simpleCard,
+      checkoutId: checkout.id,
+      amount: checkout.totalPrice.gross.amount,
+    })
+      .then(() => {
+        completeCheckout(checkout.id);
       })
-        .then(() => {
-          completeCheckout(checkout.id);
-        })
-        .then(({ order }) => {
-          getOrder(order.id);
-        })
-        .then(order => {
-          expect(order.paymentStatus).to.eq("FULLY_CHARGED");
-        });
-    },
-  );
+      .then(({ order }) => {
+        getOrder(order.id);
+      })
+      .then(order => {
+        expect(order.paymentStatus).to.eq("FULLY_CHARGED");
+      });
+  });
 
   it(
     "should not purchase products with card with insufficient funds",
@@ -124,31 +117,27 @@ describe("Stripe payments", () => {
     },
   );
 
-  it(
-    "should purchase products with 3D secure card",
-    { tags: ["@payments", "@allEnv"] },
-    () => {
-      const threeDSecureCard = cardData;
-      threeDSecureCard.cardNumber = paymentCards.threeDSecureAuthCard;
-      addStripePaymentAndGetConfirmationData({
-        card: threeDSecureCard,
-        checkoutId: checkout.id,
-        amount: checkout.totalPrice.gross.amount,
+  it("should purchase products with 3D secure card", { tags: ["@payments", "@allEnv"] }, () => {
+    const threeDSecureCard = cardData;
+    threeDSecureCard.cardNumber = paymentCards.threeDSecureAuthCard;
+    addStripePaymentAndGetConfirmationData({
+      card: threeDSecureCard,
+      checkoutId: checkout.id,
+      amount: checkout.totalPrice.gross.amount,
+    })
+      .then(resp => {
+        confirmThreeDSecure(resp.body.next_action.redirect_to_url.url);
       })
-        .then(resp => {
-          confirmThreeDSecure(resp.body.next_action.redirect_to_url.url);
-        })
-        .then(() => {
-          completeCheckout(checkout.id);
-        })
-        .then(({ order }) => {
-          getOrder(order.id);
-        })
-        .then(order => {
-          expect(order.paymentStatus).to.eq("FULLY_CHARGED");
-        });
-    },
-  );
+      .then(() => {
+        completeCheckout(checkout.id);
+      })
+      .then(({ order }) => {
+        getOrder(order.id);
+      })
+      .then(order => {
+        expect(order.paymentStatus).to.eq("FULLY_CHARGED");
+      });
+  });
 
   it(
     "should not purchase product when 3D secure not pass",

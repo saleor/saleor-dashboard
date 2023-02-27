@@ -1,6 +1,10 @@
-import { gql } from '@apollo/client';
-import { RefreshLimitsQuery, RefreshLimitsQueryVariables, useRefreshLimitsQuery } from '@dashboard/graphql';
-import { QueryHookOptions } from '@dashboard/hooks/graphql';
+import { gql } from "@apollo/client";
+import {
+  RefreshLimitsQuery,
+  RefreshLimitsQueryVariables,
+  useRefreshLimitsQuery,
+} from "@dashboard/graphql";
+import { QueryHookOptions } from "@dashboard/hooks/graphql";
 
 export const shopInfo = gql`
   query ShopInfo {
@@ -62,7 +66,9 @@ export const limitInfo = gql`
     }
   }
 `;
-export const useShopLimitsQuery = (opts: QueryHookOptions<RefreshLimitsQuery, Partial<RefreshLimitsQueryVariables>>) =>
+export const useShopLimitsQuery = (
+  opts: QueryHookOptions<RefreshLimitsQuery, Partial<RefreshLimitsQueryVariables>>,
+) =>
   useRefreshLimitsQuery({
     ...opts,
     variables: {

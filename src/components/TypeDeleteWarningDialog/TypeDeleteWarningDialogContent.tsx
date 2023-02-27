@@ -1,14 +1,14 @@
-import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { CardContent } from '@material-ui/core';
-import React, { useState } from 'react';
-import { MessageDescriptor, useIntl } from 'react-intl';
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { CardContent } from "@material-ui/core";
+import React, { useState } from "react";
+import { MessageDescriptor, useIntl } from "react-intl";
 
-import DeleteButton from '../DeleteButton';
-import DeleteWarningDialogConsentContent from './DeleteWarningDialogConsentContent';
-import { useTypeDeleteWarningDialogStyles as useStyles } from './styles';
+import DeleteButton from "../DeleteButton";
+import DeleteWarningDialogConsentContent from "./DeleteWarningDialogConsentContent";
+import { useTypeDeleteWarningDialogStyles as useStyles } from "./styles";
 
 interface TypeDeleteWarningDialogContentProps {
   singleItemSelectedName?: string;

@@ -1,7 +1,7 @@
-import { Button } from '@dashboard/components/Button';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { MetadataInput } from '@dashboard/graphql';
-import { FormChange } from '@dashboard/hooks/useForm';
+import { Button } from "@dashboard/components/Button";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { MetadataInput } from "@dashboard/graphql";
+import { FormChange } from "@dashboard/hooks/useForm";
 import {
   Card,
   CardActions,
@@ -12,16 +12,16 @@ import {
   TableHead,
   TextField,
   Typography,
-} from '@material-ui/core';
-import { DeleteIcon, ExpandIcon, IconButton } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@material-ui/core";
+import { DeleteIcon, ExpandIcon, IconButton } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import CardTitle from '../CardTitle';
-import Skeleton from '../Skeleton';
-import useStyles from './styles';
-import { EventDataAction, EventDataField } from './types';
+import CardTitle from "../CardTitle";
+import Skeleton from "../Skeleton";
+import useStyles from "./styles";
+import { EventDataAction, EventDataField } from "./types";
 
 export interface MetadataCardProps {
   data: MetadataInput[];
@@ -29,7 +29,7 @@ export interface MetadataCardProps {
   onChange: FormChange;
 }
 
-export const nameSeparator = ':';
+export const nameSeparator = ":";
 export const nameInputPrefix = EventDataField.name;
 export const valueInputPrefix = EventDataField.value;
 
@@ -39,21 +39,25 @@ const MetadataCard: React.FC<MetadataCardProps> = ({ data, isPrivate, onChange }
   const classes = useStyles();
 
   return (
-    <Card data-test-id="metadata-editor" data-test-is-private={isPrivate} data-test-expanded={expanded}>
+    <Card
+      data-test-id="metadata-editor"
+      data-test-is-private={isPrivate}
+      data-test-expanded={expanded}
+    >
       <CardTitle
         className={classes.header}
         title={
           <>
             {isPrivate
               ? intl.formatMessage({
-                  id: 'ETHnjq',
-                  defaultMessage: 'Private Metadata',
-                  description: 'header',
+                  id: "ETHnjq",
+                  defaultMessage: "Private Metadata",
+                  description: "header",
                 })
               : intl.formatMessage({
-                  id: 'VcI+Zh',
-                  defaultMessage: 'Metadata',
-                  description: 'header',
+                  id: "VcI+Zh",
+                  defaultMessage: "Metadata",
+                  description: "header",
                 })}
             <IconButton
               className={clsx(classes.expandBtn, {
@@ -120,7 +124,11 @@ const MetadataCard: React.FC<MetadataCardProps> = ({ data, isPrivate, onChange }
                         />
                       </TableCell>
                       <TableCell className={classes.colActionHeader}>
-                        <FormattedMessage id="nEixpu" defaultMessage="Actions" description="table action" />
+                        <FormattedMessage
+                          id="nEixpu"
+                          defaultMessage="Actions"
+                          description="table action"
+                        />
                       </TableCell>
                     </TableRowLink>
                   </TableHead>
@@ -135,7 +143,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({ data, isPrivate, onChange }
                               },
                             }}
                             inputProps={{
-                              'aria-label': `${nameInputPrefix}${nameSeparator}${fieldIndex}`,
+                              "aria-label": `${nameInputPrefix}${nameSeparator}${fieldIndex}`,
                             }}
                             name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
                             fullWidth
@@ -151,7 +159,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({ data, isPrivate, onChange }
                               },
                             }}
                             inputProps={{
-                              'aria-label': `${valueInputPrefix}${nameSeparator}${fieldIndex}`,
+                              "aria-label": `${valueInputPrefix}${nameSeparator}${fieldIndex}`,
                             }}
                             multiline
                             name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
@@ -163,7 +171,7 @@ const MetadataCard: React.FC<MetadataCardProps> = ({ data, isPrivate, onChange }
                         <TableCell className={classes.colAction}>
                           <IconButton
                             variant="secondary"
-                            data-test-id={'delete-field-' + fieldIndex}
+                            data-test-id={"delete-field-" + fieldIndex}
                             onClick={() =>
                               onChange({
                                 target: {
@@ -194,7 +202,11 @@ const MetadataCard: React.FC<MetadataCardProps> = ({ data, isPrivate, onChange }
                     })
                   }
                 >
-                  <FormattedMessage id="GiDxS4" defaultMessage="Add Field" description="add metadata field,button" />
+                  <FormattedMessage
+                    id="GiDxS4"
+                    defaultMessage="Add Field"
+                    description="add metadata field,button"
+                  />
                 </Button>
               </CardActions>
             </>
@@ -205,5 +217,5 @@ const MetadataCard: React.FC<MetadataCardProps> = ({ data, isPrivate, onChange }
   );
 };
 
-MetadataCard.displayName = 'MetadataCard';
+MetadataCard.displayName = "MetadataCard";
 export default MetadataCard;

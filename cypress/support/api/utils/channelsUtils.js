@@ -8,12 +8,9 @@ export function deleteChannelsStartsWith(nameStartsWith) {
     }
     channelsArray.forEach(element => {
       if (element.name.startsWith(nameStartsWith)) {
-        const targetChannels = Array.from(channelsArray).filter(function(
-          channelElement
-        ) {
+        const targetChannels = Array.from(channelsArray).filter(function (channelElement) {
           return (
-            element.currencyCode === channelElement.currencyCode &&
-            element.id !== channelElement.id
+            element.currencyCode === channelElement.currencyCode && element.id !== channelElement.id
           );
         });
         if (targetChannels[0]) {
@@ -27,7 +24,7 @@ export function deleteChannelsStartsWith(nameStartsWith) {
 export function getDefaultChannel() {
   return channels.getChannels().then(resp => {
     const channelsArray = resp.body.data.channels;
-    return channelsArray.find(function(channelElement) {
+    return channelsArray.find(function (channelElement) {
       return channelElement.slug === "default-channel";
     });
   });

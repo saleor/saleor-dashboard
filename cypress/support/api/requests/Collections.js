@@ -1,4 +1,4 @@
-export function createCollection(name, slug = name) {
+export function createCollection(name) {
   const mutation = `mutation {
     collectionCreate(input:{
       name:"${name}",
@@ -14,9 +14,7 @@ export function createCollection(name, slug = name) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.collectionCreate.collection");
+  return cy.sendRequestWithQuery(mutation).its("body.data.collectionCreate.collection");
 }
 
 export function getCollections(first, search) {
@@ -36,9 +34,7 @@ export function getCollections(first, search) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(query)
-    .then(resp => resp.body.data.collections.edges);
+  return cy.sendRequestWithQuery(query).then(resp => resp.body.data.collections.edges);
 }
 export function deleteCollection(collectionId) {
   const mutation = `mutation{
@@ -80,11 +76,7 @@ export function addProductToCollection({ collectionId, productId }) {
   return cy.sendRequestWithQuery(mutation);
 }
 
-export function addChannelToCollection({
-  collectionId,
-  channelId,
-  isPublished = true,
-}) {
+export function addChannelToCollection({ collectionId, channelId, isPublished = true }) {
   const mutation = `mutation collectionChannelListingUpdate {
     collectionChannelListingUpdate(
       id: "${collectionId}", 

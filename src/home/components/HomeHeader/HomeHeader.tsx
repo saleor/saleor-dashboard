@@ -1,15 +1,15 @@
-import Skeleton from '@dashboard/components/Skeleton';
-import { Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import Skeleton from "@dashboard/components/Skeleton";
+import { Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
     headerContainer: {
-      alignItems: 'flex-end',
-      display: 'flex',
-      justifyContent: 'space-between',
+      alignItems: "flex-end",
+      display: "flex",
+      justifyContent: "space-between",
       marginBottom: theme.spacing(6),
     },
     pageHeader: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles(
       color: theme.typography.caption.color,
     },
   }),
-  { name: 'HomeHeader' },
+  { name: "HomeHeader" },
 );
 
 interface HomeOrdersCardProps {
@@ -45,7 +45,7 @@ const HomeOrdersCard: React.FC<HomeOrdersCardProps> = props => {
               }}
             />
           ) : (
-            <Skeleton style={{ width: '10em' }} />
+            <Skeleton style={{ width: "10em" }} />
           )}
         </Typography>
         <Typography className={classes.subtitle}>
@@ -56,12 +56,12 @@ const HomeOrdersCard: React.FC<HomeOrdersCardProps> = props => {
               description="subheader"
             />
           ) : (
-            <Skeleton style={{ width: '10em' }} />
+            <Skeleton style={{ width: "10em" }} />
           )}
         </Typography>
       </div>
     </div>
   );
 };
-HomeOrdersCard.displayName = 'HomeOrdersCard';
+HomeOrdersCard.displayName = "HomeOrdersCard";
 export default HomeOrdersCard;

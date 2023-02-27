@@ -1,8 +1,9 @@
-import { Node } from '../types';
-import useListActions from './useListActions';
+import { Node } from "../types";
+import useListActions from "./useListActions";
 
 function useBulkActions(initial: string[] = []) {
-  const { add, isSelected, listElements, remove, reset, set, toggle } = useListActions<string>(initial);
+  const { add, isSelected, listElements, remove, reset, set, toggle } =
+    useListActions<string>(initial);
 
   function toggleAll(items: Node[], selected: number) {
     const allItems = items.map(item => item.id);

@@ -1,27 +1,27 @@
-import VerticalSpacer from '@dashboard/apps/components/VerticalSpacer';
-import { Content } from '@dashboard/components/AppLayout/Content';
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardTitle from '@dashboard/components/CardTitle';
-import Grid from '@dashboard/components/Grid';
-import Metadata from '@dashboard/components/Metadata';
-import Savebar from '@dashboard/components/Savebar';
-import Skeleton from '@dashboard/components/Skeleton';
-import { configurationMenuUrl } from '@dashboard/configuration';
-import { TaxClassFragment } from '@dashboard/graphql';
-import { useClientPagination } from '@dashboard/hooks/useClientPagination/useClientPagination';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { getById } from '@dashboard/misc';
-import { parseQuery } from '@dashboard/orders/components/OrderCustomerAddressesEditDialog/utils';
-import TaxPageTitle from '@dashboard/taxes/components/TaxPageTitle';
-import { taxesMessages } from '@dashboard/taxes/messages';
-import { TaxClassesPageFormData } from '@dashboard/taxes/types';
-import { useAutofocus } from '@dashboard/taxes/utils/useAutofocus';
-import { isLastElement } from '@dashboard/taxes/utils/utils';
-import { getFormErrors } from '@dashboard/utils/errors';
-import getTaxesErrorMessage from '@dashboard/utils/errors/taxes';
-import { Card, CardContent, Divider, InputAdornment, TextField } from '@material-ui/core';
+import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardTitle from "@dashboard/components/CardTitle";
+import Grid from "@dashboard/components/Grid";
+import Metadata from "@dashboard/components/Metadata";
+import Savebar from "@dashboard/components/Savebar";
+import Skeleton from "@dashboard/components/Skeleton";
+import { configurationMenuUrl } from "@dashboard/configuration";
+import { TaxClassFragment } from "@dashboard/graphql";
+import { useClientPagination } from "@dashboard/hooks/useClientPagination/useClientPagination";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { getById } from "@dashboard/misc";
+import { parseQuery } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/utils";
+import TaxPageTitle from "@dashboard/taxes/components/TaxPageTitle";
+import { taxesMessages } from "@dashboard/taxes/messages";
+import { TaxClassesPageFormData } from "@dashboard/taxes/types";
+import { useAutofocus } from "@dashboard/taxes/utils/useAutofocus";
+import { isLastElement } from "@dashboard/taxes/utils/utils";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getTaxesErrorMessage from "@dashboard/utils/errors/taxes";
+import { Card, CardContent, Divider, InputAdornment, TextField } from "@material-ui/core";
 import {
   ConfirmButtonTransitionState,
   List,
@@ -31,16 +31,16 @@ import {
   PageTab,
   PageTabs,
   SearchIcon,
-} from '@saleor/macaw-ui';
-import { Box } from '@saleor/macaw-ui/next';
-import React, { useEffect, useMemo, useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
+import React, { useEffect, useMemo, useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import TaxInput from '../../components/TaxInput';
-import { TaxPagination } from '../../components/TaxPagination';
-import TaxClassesForm from './form';
-import { useStyles } from './styles';
-import TaxClassesMenu from './TaxClassesMenu';
+import TaxInput from "../../components/TaxInput";
+import { TaxPagination } from "../../components/TaxPagination";
+import TaxClassesForm from "./form";
+import { useStyles } from "./styles";
+import TaxClassesMenu from "./TaxClassesMenu";
 
 interface TaxClassesPageProps {
   taxClasses: TaxClassFragment[] | undefined;
@@ -70,16 +70,22 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
   const navigate = useNavigator();
   const classes = useStyles();
 
-  const [query, setQuery] = useState('');
-  const { rowNumber, currentPage, paginate, restartPagination, changeCurrentPage, changeRowNumber } =
-    useClientPagination();
+  const [query, setQuery] = useState("");
+  const {
+    rowNumber,
+    currentPage,
+    paginate,
+    restartPagination,
+    changeCurrentPage,
+    changeRowNumber,
+  } = useClientPagination();
 
   const currentTaxClass = useMemo(
     () => taxClasses?.find(getById(selectedTaxClassId)),
     [selectedTaxClassId, taxClasses],
   );
 
-  const nameInputRef = useAutofocus(currentTaxClass?.id === 'new', [currentTaxClass?.id]);
+  const nameInputRef = useAutofocus(currentTaxClass?.id === "new", [currentTaxClass?.id]);
 
   useEffect(() => {
     restartPagination();
@@ -94,12 +100,12 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
     >
       {({ data, validationErrors, handlers, submit, change }) => {
         const filteredRates = data.updateTaxClassRates.filter(
-          rate => rate.label.search(new RegExp(parseQuery(query), 'i')) >= 0,
+          rate => rate.label.search(new RegExp(parseQuery(query), "i")) >= 0,
         );
 
         const { data: paginatedRates, hasNextPage, hasPreviousPage } = paginate(filteredRates);
 
-        const formErrors = getFormErrors(['name'], validationErrors);
+        const formErrors = getFormErrors(["name"], validationErrors);
 
         return (
           <DetailedContent>
@@ -107,9 +113,18 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
             <Content>
               <Box padding={9}>
                 <PageTabs value="tax-classes" onChange={handleTabChange}>
-                  <PageTab label={intl.formatMessage(taxesMessages.channelsSection)} value="channels" />
-                  <PageTab label={intl.formatMessage(taxesMessages.countriesSection)} value="countries" />
-                  <PageTab label={intl.formatMessage(taxesMessages.taxClassesSection)} value="tax-classes" />
+                  <PageTab
+                    label={intl.formatMessage(taxesMessages.channelsSection)}
+                    value="channels"
+                  />
+                  <PageTab
+                    label={intl.formatMessage(taxesMessages.countriesSection)}
+                    value="countries"
+                  />
+                  <PageTab
+                    label={intl.formatMessage(taxesMessages.taxClassesSection)}
+                    value="tax-classes"
+                  />
                 </PageTabs>
                 <VerticalSpacer spacing={2} />
                 <Grid variant="inverted">
@@ -171,7 +186,7 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                                 }}
                               />
                             </CardContent>
-                            <List gridTemplate={['5fr 2fr']}>
+                            <List gridTemplate={["5fr 2fr"]}>
                               <ListHeader>
                                 <ListItem>
                                   <ListItemCell>
@@ -190,7 +205,9 @@ export const TaxClassesPage: React.FC<TaxClassesPageProps> = props => {
                                     <ListItemCell>
                                       <TaxInput
                                         value={countryRate.value}
-                                        change={e => handlers.handleRateChange(countryRate.id, e.target.value)}
+                                        change={e =>
+                                          handlers.handleRateChange(countryRate.id, e.target.value)
+                                        }
                                       />
                                     </ListItemCell>
                                   </ListItem>

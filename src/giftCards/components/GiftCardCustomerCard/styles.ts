@@ -1,7 +1,7 @@
-import { makeStyles } from '@material-ui/core';
+import { makeStyles } from "@material-ui/core";
 
 interface CustomerGiftCardsCardActionsProps {
-  buttonPosition: 'left' | 'right';
+  buttonPosition: "left" | "right";
 }
 
 export const useCardActionsStyles = makeStyles(
@@ -9,27 +9,27 @@ export const useCardActionsStyles = makeStyles(
     cardActions: {
       padding: `${theme.spacing(2)} ${theme.spacing(3)}`,
       flexDirection: ({ buttonPosition }: CustomerGiftCardsCardActionsProps) =>
-        buttonPosition === 'left' ? 'row' : 'row-reverse',
+        buttonPosition === "left" ? "row" : "row-reverse",
     },
     previewPill: {
       marginLeft: theme.spacing(1),
     },
   }),
-  { name: 'CustomerGiftCardsCard' },
+  { name: "CustomerGiftCardsCard" },
 );
 
 export const useListWrapperStyles = makeStyles(
   theme => ({
     listingWrapper: {
-      display: 'grid',
-      gridTemplateColumns: 'max-content 1fr min-content',
+      display: "grid",
+      gridTemplateColumns: "max-content 1fr min-content",
       margin: theme.spacing(2, 3),
-      alignItems: 'center',
-      justifyItems: 'center',
+      alignItems: "center",
+      justifyItems: "center",
     },
     listingMenu: {
-      gridColumn: '3',
+      gridColumn: "3",
     },
   }),
-  { name: 'CustomerGiftCardListCard' },
+  { name: "CustomerGiftCardListCard" },
 );

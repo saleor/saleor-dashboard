@@ -1,17 +1,25 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import ListItemLink from '@dashboard/components/ListItemLink';
-import Skeleton from '@dashboard/components/Skeleton';
-import { TaxClassFragment } from '@dashboard/graphql';
-import { taxesMessages } from '@dashboard/taxes/messages';
-import { taxClassesListUrl } from '@dashboard/taxes/urls';
-import { isLastElement } from '@dashboard/taxes/utils/utils';
-import { Card, CardContent, Divider } from '@material-ui/core';
-import { Button, DeleteIcon, IconButton, List, ListHeader, ListItem, ListItemCell } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import ListItemLink from "@dashboard/components/ListItemLink";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TaxClassFragment } from "@dashboard/graphql";
+import { taxesMessages } from "@dashboard/taxes/messages";
+import { taxClassesListUrl } from "@dashboard/taxes/urls";
+import { isLastElement } from "@dashboard/taxes/utils/utils";
+import { Card, CardContent, Divider } from "@material-ui/core";
+import {
+  Button,
+  DeleteIcon,
+  IconButton,
+  List,
+  ListHeader,
+  ListItem,
+  ListItemCell,
+} from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from '../../TaxCountriesPage/TaxCountriesMenu/styles';
+import { useStyles } from "../../TaxCountriesPage/TaxCountriesMenu/styles";
 
 interface TaxClassesMenuProps {
   taxClasses: TaxClassFragment[] | undefined;
@@ -29,7 +37,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
-  const isCreatingNew = selectedTaxClassId === 'new';
+  const isCreatingNew = selectedTaxClassId === "new";
 
   return (
     <Card className={classes.menu}>
@@ -52,7 +60,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
             </ListItem>
           </ListHeader>
           <Divider />
-          <List gridTemplate={['1fr']}>
+          <List gridTemplate={["1fr"]}>
             {taxClasses?.map((taxClass, taxClassId) => (
               <React.Fragment key={taxClass.id}>
                 <ListItemLink
@@ -64,7 +72,7 @@ export const TaxClassesMenu: React.FC<TaxClassesMenuProps> = ({
                   <ListItemCell>
                     <div className={classes.spaceBetween}>
                       {taxClass.name}
-                      {taxClass.id !== 'new' && (
+                      {taxClass.id !== "new" && (
                         <IconButton
                           variant="secondary"
                           onClick={event => {

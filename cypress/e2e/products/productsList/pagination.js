@@ -25,9 +25,7 @@ describe("As an admin I should be able to manage products table", () => {
         .get(PRODUCTS_LIST.previousPagePagination)
         .should("be.disabled");
       let firstPageProducts;
-      getDisplayedColumnArray("name").then(
-        productsList => (firstPageProducts = productsList),
-      );
+      getDisplayedColumnArray("name").then(productsList => (firstPageProducts = productsList));
       cy.addAliasToGraphRequest("ProductList")
         .get(PRODUCTS_LIST.nextPageButton)
         .click()
@@ -44,9 +42,7 @@ describe("As an admin I should be able to manage products table", () => {
         .get(PRODUCTS_LIST.emptyProductRow)
         .should("not.exist");
       getDisplayedColumnArray("name").then(productsList => {
-        expect(
-          JSON.stringify(productsList) === JSON.stringify(firstPageProducts),
-        ).to.be.true;
+        expect(JSON.stringify(productsList) === JSON.stringify(firstPageProducts)).to.be.true;
       });
     },
   );
@@ -58,14 +54,11 @@ describe("As an admin I should be able to manage products table", () => {
       cy.expectSkeletonIsVisible();
       isNumberOfProductsSameAsInSelectResultsOnPage().then(
         isTheSame =>
-          expect(isTheSame, "check if number of displayed products is correct")
-            .to.be.true,
+          expect(isTheSame, "check if number of displayed products is correct").to.be.true,
       );
       cy.get(PRODUCTS_LIST.resultsOnPageSelect)
         .click()
-        .get(
-          `${PRODUCTS_LIST.rowNumberOption}${BUTTON_SELECTORS.notSelectedOption}`,
-        )
+        .get(`${PRODUCTS_LIST.rowNumberOption}${BUTTON_SELECTORS.notSelectedOption}`)
         .first()
         .click()
         .waitForProgressBarToNotExist();

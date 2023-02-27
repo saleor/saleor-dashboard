@@ -3,16 +3,9 @@
 
 import faker from "faker";
 
-import {
-  createMenu as createMenuViaApi,
-  getMenu,
-} from "../../support/api/requests/Menu";
+import { createMenu as createMenuViaApi, getMenu } from "../../support/api/requests/Menu";
 import { deleteMenusStartsWith } from "../../support/api/utils/navigationUtils";
-import {
-  createMenu,
-  createNewMenuItem,
-  MENU_ITEM_TYPES,
-} from "../../support/pages/navigationPage";
+import { createMenu, createNewMenuItem, MENU_ITEM_TYPES } from "../../support/pages/navigationPage";
 
 describe("Tests for menu navigation", () => {
   const startsWith = "Navigation";

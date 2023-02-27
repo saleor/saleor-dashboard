@@ -49,10 +49,7 @@ const registerFont = (match, name) => {
   );
 };
 
-registerFontStyles(
-  /^https:\/\/fonts\.googleapis\.com/,
-  "google-fonts-stylesheets",
-);
+registerFontStyles(/^https:\/\/fonts\.googleapis\.com/, "google-fonts-stylesheets");
 registerFontStyles(/^https:\/\/rsms\.me\/.+\/.+\.css/, "rsms-stylesheet");
 
 registerFont(/^https:\/\/fonts\.gstatic\.com/, "google-fonts-webfonts");

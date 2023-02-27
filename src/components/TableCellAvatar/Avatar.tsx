@@ -1,8 +1,8 @@
-import clsx from 'clsx';
-import React from 'react';
+import clsx from "clsx";
+import React from "react";
 
-import AvatarImage from './AvatarImage';
-import { useAvatarStyles } from './styles';
+import AvatarImage from "./AvatarImage";
+import { useAvatarStyles } from "./styles";
 
 export const AVATAR_MARGIN = 40;
 
@@ -15,7 +15,14 @@ export interface AvatarProps {
   badge?: React.ReactNode;
 }
 
-const Avatar: React.FC<AvatarProps> = ({ children, alignRight, initials, thumbnail, avatarProps, badge }) => {
+const Avatar: React.FC<AvatarProps> = ({
+  children,
+  alignRight,
+  initials,
+  thumbnail,
+  avatarProps,
+  badge,
+}) => {
   const classes = useAvatarStyles();
 
   return (

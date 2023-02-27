@@ -1,2 +1,2 @@
-export { default } from './VisibilityCard';
-export * from './VisibilityCard';
+export { default } from "./VisibilityCard";
+export * from "./VisibilityCard";

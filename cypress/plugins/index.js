@@ -33,8 +33,7 @@ module.exports = async (on, config) => {
   config.env.USER_NAME = process.env.CYPRESS_USER_NAME;
   config.env.USER_PASSWORD = process.env.CYPRESS_USER_PASSWORD;
   config.env.SECOND_USER_NAME = process.env.CYPRESS_SECOND_USER_NAME;
-  config.env.PERMISSIONS_USERS_PASSWORD =
-    process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD;
+  config.env.PERMISSIONS_USERS_PASSWORD = process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD;
   config.env.mailHogUrl = process.env.CYPRESS_mailHogUrl;
   config.env.grepTags = process.env.CYPRESS_grepTags;
 
@@ -71,8 +70,6 @@ function getShopInfo(envVariables) {
     .then(data => {
       const token = data.tokenCreate.token;
       client.setHeader("Authorization", `JWT ${token}`);
-      return client
-        .request(getShopInfoQuery)
-        .then(shopInfo => shopInfo.shop.version);
+      return client.request(getShopInfoQuery).then(shopInfo => shopInfo.shop.version);
     });
 }

@@ -1,10 +1,12 @@
-import { permissions } from '@dashboard/fixtures';
-import Decorator from '@dashboard/storybook/Decorator';
-import { storiesOf } from '@storybook/react';
-import React from 'react';
+import { permissions } from "@dashboard/fixtures";
+import Decorator from "@dashboard/storybook/Decorator";
+import { storiesOf } from "@storybook/react";
+import React from "react";
 
-import { emptyPermissionGroup, permissionGroup, users } from '../../fixtures';
-import PermissionGroupDetailsPage, { PermissionGroupDetailsPageProps } from './PermissionGroupDetailsPage';
+import { emptyPermissionGroup, permissionGroup, users } from "../../fixtures";
+import PermissionGroupDetailsPage, {
+  PermissionGroupDetailsPageProps,
+} from "./PermissionGroupDetailsPage";
 
 const props: PermissionGroupDetailsPageProps = {
   disabled: false,
@@ -26,12 +28,17 @@ const props: PermissionGroupDetailsPageProps = {
   toolbar: null,
 };
 
-storiesOf('Permission Groups / Permission Group Details', module)
+storiesOf("Permission Groups / Permission Group Details", module)
   .addDecorator(Decorator)
-  .add('default', () => <PermissionGroupDetailsPage {...props} />)
-  .add('no members', () => (
+  .add("default", () => <PermissionGroupDetailsPage {...props} />)
+  .add("no members", () => (
     <PermissionGroupDetailsPage {...props} members={[]} permissionGroup={emptyPermissionGroup} />
   ))
-  .add('loading', () => (
-    <PermissionGroupDetailsPage {...props} disabled={true} permissionGroup={undefined} permissions={undefined} />
+  .add("loading", () => (
+    <PermissionGroupDetailsPage
+      {...props}
+      disabled={true}
+      permissionGroup={undefined}
+      permissions={undefined}
+    />
   ));

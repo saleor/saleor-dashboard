@@ -1,9 +1,9 @@
-import { FetchResult, MutationResult } from '@apollo/client';
-import { UserPermissionFragment } from '@dashboard/graphql';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
+import { FetchResult, MutationResult } from "@apollo/client";
+import { UserPermissionFragment } from "@dashboard/graphql";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 
-import { FilterElement, IFilter } from './components/Filter';
-import { MultiAutocompleteChoiceType } from './components/MultiAutocompleteSelectField';
+import { FilterElement, IFilter } from "./components/Filter";
+import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 
 export interface UserError {
   field: string | null;
@@ -21,35 +21,38 @@ export interface ListSettings<TColumn extends string = string> {
 }
 
 export enum ListViews {
-  APPS_LIST = 'APPS_LIST',
-  ATTRIBUTE_LIST = 'ATTRIBUTE_LIST',
-  ATTRIBUTE_VALUE_LIST = 'ATTRIBUTE_VALUE_LIST',
-  CATEGORY_LIST = 'CATEGORY_LIST',
-  COLLECTION_LIST = 'COLLECTION_LIST',
-  CUSTOMER_LIST = 'CUSTOMER_LIST',
-  DRAFT_LIST = 'DRAFT_LIST',
-  NAVIGATION_LIST = 'NAVIGATION_LIST',
-  ORDER_LIST = 'ORDER_LIST',
-  PAGES_LIST = 'PAGES_LIST',
-  PAGE_TYPES_LIST = 'PAGE_TYPES_LIST',
-  PLUGINS_LIST = 'PLUGIN_LIST',
-  PRODUCT_LIST = 'PRODUCT_LIST',
-  PERMISSION_GROUP_LIST = 'PERMISSION_GROUP_LIST',
-  PRODUCT_TYPE_LIST = 'PRODUCT_TYPE_LIST',
-  SALES_LIST = 'SALES_LIST',
-  SHIPPING_METHODS_LIST = 'SHIPPING_METHODS_LIST',
-  STAFF_MEMBERS_LIST = 'STAFF_MEMBERS_LIST',
-  VOUCHER_LIST = 'VOUCHER_LIST',
-  WAREHOUSE_LIST = 'WAREHOUSE_LIST',
-  WEBHOOK_LIST = 'WEBHOOK_LIST',
-  TRANSLATION_ATTRIBUTE_VALUE_LIST = 'TRANSLATION_ATTRIBUTE_VALUE_LIST',
-  GIFT_CARD_LIST = ' GIFT_CARD_LIST',
+  APPS_LIST = "APPS_LIST",
+  ATTRIBUTE_LIST = "ATTRIBUTE_LIST",
+  ATTRIBUTE_VALUE_LIST = "ATTRIBUTE_VALUE_LIST",
+  CATEGORY_LIST = "CATEGORY_LIST",
+  COLLECTION_LIST = "COLLECTION_LIST",
+  CUSTOMER_LIST = "CUSTOMER_LIST",
+  DRAFT_LIST = "DRAFT_LIST",
+  NAVIGATION_LIST = "NAVIGATION_LIST",
+  ORDER_LIST = "ORDER_LIST",
+  PAGES_LIST = "PAGES_LIST",
+  PAGE_TYPES_LIST = "PAGE_TYPES_LIST",
+  PLUGINS_LIST = "PLUGIN_LIST",
+  PRODUCT_LIST = "PRODUCT_LIST",
+  PERMISSION_GROUP_LIST = "PERMISSION_GROUP_LIST",
+  PRODUCT_TYPE_LIST = "PRODUCT_TYPE_LIST",
+  SALES_LIST = "SALES_LIST",
+  SHIPPING_METHODS_LIST = "SHIPPING_METHODS_LIST",
+  STAFF_MEMBERS_LIST = "STAFF_MEMBERS_LIST",
+  VOUCHER_LIST = "VOUCHER_LIST",
+  WAREHOUSE_LIST = "WAREHOUSE_LIST",
+  WEBHOOK_LIST = "WEBHOOK_LIST",
+  TRANSLATION_ATTRIBUTE_VALUE_LIST = "TRANSLATION_ATTRIBUTE_VALUE_LIST",
+  GIFT_CARD_LIST = " GIFT_CARD_LIST",
 }
 
 export interface ListProps<TColumns extends string = string> {
   disabled: boolean;
   settings?: ListSettings<TColumns>;
-  onUpdateListSettings?: <T extends keyof ListSettings<TColumns>>(key: T, value: ListSettings<TColumns>[T]) => void;
+  onUpdateListSettings?: <T extends keyof ListSettings<TColumns>>(
+    key: T,
+    value: ListSettings<TColumns>[T],
+  ) => void;
   onListSettingsReset?: () => void;
   filterDependency?: FilterElement;
 }
@@ -149,11 +152,15 @@ export type ActiveTab<TTab extends string = string> = Partial<{
   activeTab: TTab;
 }>;
 export type Filters<TFilters extends string> = Partial<Record<TFilters, string>>;
-export type FiltersWithMultipleValues<TFilters extends string> = Partial<Record<TFilters, string[]>>;
+export type FiltersWithMultipleValues<TFilters extends string> = Partial<
+  Record<TFilters, string[]>
+>;
 export type FiltersAsDictWithMultipleValues<TFilters extends string> = Partial<
   Record<TFilters, Record<string, string[]>>
 >;
-export type FiltersWithKeyValueValues<TFilters extends string> = Partial<Record<TFilters, KeyValue[]>>;
+export type FiltersWithKeyValueValues<TFilters extends string> = Partial<
+  Record<TFilters, KeyValue[]>
+>;
 export type Search = Partial<{
   query: string;
 }>;
@@ -181,7 +188,7 @@ export interface FetchMoreProps {
   onFetchMore: () => void;
 }
 
-export type TabActionDialog = 'save-search' | 'delete-search';
+export type TabActionDialog = "save-search" | "delete-search";
 
 export interface UserPermissionProps {
   userPermissions: UserPermissionFragment[];
@@ -196,7 +203,7 @@ export interface KeyValue {
   value?: string;
 }
 
-export type MinMax = Record<'min' | 'max', string>;
+export type MinMax = Record<"min" | "max", string>;
 
 export interface FilterOpts<T> {
   active: boolean;
@@ -211,10 +218,10 @@ export interface AutocompleteFilterOpts extends Partial<FetchMoreProps>, Partial
 export type Ids = string[];
 
 export enum StatusType {
-  INFO = 'info',
-  ERROR = 'error',
-  WARNING = 'warning',
-  SUCCESS = 'success',
+  INFO = "info",
+  ERROR = "error",
+  WARNING = "warning",
+  SUCCESS = "success",
 }
 
-export type RelayToFlat<T extends { edges: Array<{ node: any }> }> = Array<T['edges'][0]['node']>;
+export type RelayToFlat<T extends { edges: Array<{ node: any }> }> = Array<T["edges"][0]["node"]>;

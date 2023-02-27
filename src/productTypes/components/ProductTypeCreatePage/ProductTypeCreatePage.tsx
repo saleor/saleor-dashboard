@@ -1,25 +1,28 @@
-import { Content } from '@dashboard/components/AppLayout/Content';
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { RightSidebar } from '@dashboard/components/AppLayout/RightSidebar';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import Form from '@dashboard/components/Form';
-import Metadata, { MetadataFormData } from '@dashboard/components/Metadata';
-import Savebar from '@dashboard/components/Savebar';
-import { ProductTypeKindEnum, TaxClassBaseFragment, WeightUnitsEnum } from '@dashboard/graphql';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useStateFromProps from '@dashboard/hooks/useStateFromProps';
-import { handleTaxClassChange, makeProductTypeKindChangeHandler } from '@dashboard/productTypes/handlers';
-import { productTypeListUrl } from '@dashboard/productTypes/urls';
-import { FetchMoreProps, UserError } from '@dashboard/types';
-import useMetadataChangeTrigger from '@dashboard/utils/metadata/useMetadataChangeTrigger';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Form from "@dashboard/components/Form";
+import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
+import Savebar from "@dashboard/components/Savebar";
+import { ProductTypeKindEnum, TaxClassBaseFragment, WeightUnitsEnum } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import {
+  handleTaxClassChange,
+  makeProductTypeKindChangeHandler,
+} from "@dashboard/productTypes/handlers";
+import { productTypeListUrl } from "@dashboard/productTypes/urls";
+import { FetchMoreProps, UserError } from "@dashboard/types";
+import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
 
-import ProductTypeDetails from '../ProductTypeDetails/ProductTypeDetails';
-import ProductTypeShipping from '../ProductTypeShipping/ProductTypeShipping';
-import ProductTypeTaxes from '../ProductTypeTaxes/ProductTypeTaxes';
+import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";
+import ProductTypeShipping from "../ProductTypeShipping/ProductTypeShipping";
+import ProductTypeTaxes from "../ProductTypeTaxes/ProductTypeTaxes";
 
 export interface ProductTypeForm extends MetadataFormData {
   name: string;
@@ -45,10 +48,10 @@ export interface ProductTypeCreatePageProps {
 const formInitialData: ProductTypeForm = {
   isShippingRequired: false,
   metadata: [],
-  name: '',
+  name: "",
   kind: ProductTypeKindEnum.NORMAL,
   privateMetadata: [],
-  taxClassId: '',
+  taxClassId: "",
   weight: 0,
 };
 
@@ -66,7 +69,7 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
 }: ProductTypeCreatePageProps) => {
   const navigate = useNavigator();
 
-  const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps('');
+  const [taxClassDisplayName, setTaxClassDisplayName] = useStateFromProps("");
   const { makeChangeHandler: makeMetadataChangeHandler } = useMetadataChangeTrigger();
 
   const initialData = {
@@ -98,14 +101,21 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
                 data={data}
                 taxClasses={taxClasses}
                 taxClassDisplayName={taxClassDisplayName}
-                onChange={event => handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)}
+                onChange={event =>
+                  handleTaxClassChange(event, taxClasses, change, setTaxClassDisplayName)
+                }
                 onFetchMore={onFetchMoreTaxClasses}
               />
               <CardSpacer />
               <Metadata data={data} onChange={changeMetadata} />
             </Content>
             <RightSidebar>
-              <ProductTypeShipping disabled={disabled} data={data} weightUnit={defaultWeightUnit} onChange={change} />
+              <ProductTypeShipping
+                disabled={disabled}
+                data={data}
+                weightUnit={defaultWeightUnit}
+                onChange={change}
+              />
             </RightSidebar>
             <Savebar
               onCancel={() => navigate(productTypeListUrl())}
@@ -119,5 +129,5 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
     </Form>
   );
 };
-ProductTypeCreatePage.displayName = 'ProductTypeCreatePage';
+ProductTypeCreatePage.displayName = "ProductTypeCreatePage";
 export default ProductTypeCreatePage;

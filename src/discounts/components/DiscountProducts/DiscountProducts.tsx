@@ -1,28 +1,30 @@
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import { ChannelsAvailabilityDropdown } from '@dashboard/components/ChannelsAvailabilityDropdown';
-import Checkbox from '@dashboard/components/Checkbox';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
-import TableCellAvatar from '@dashboard/components/TableCellAvatar';
-import TableHead from '@dashboard/components/TableHead';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { SaleDetailsFragment, VoucherDetailsFragment } from '@dashboard/graphql';
-import { productUrl } from '@dashboard/products/urls';
-import { Card, TableBody, TableCell, TableFooter } from '@material-ui/core';
-import { DeleteIcon, IconButton } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
+import Checkbox from "@dashboard/components/Checkbox";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { SaleDetailsFragment, VoucherDetailsFragment } from "@dashboard/graphql";
+import { productUrl } from "@dashboard/products/urls";
+import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, renderCollection } from '../../../misc';
-import { ListActions, ListProps, RelayToFlat } from '../../../types';
-import { messages } from './messages';
-import { useStyles } from './styles';
+import { maybe, renderCollection } from "../../../misc";
+import { ListActions, ListProps, RelayToFlat } from "../../../types";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 export interface SaleProductsProps extends ListProps, ListActions {
-  products: RelayToFlat<SaleDetailsFragment['products']> | RelayToFlat<VoucherDetailsFragment['products']>;
+  products:
+    | RelayToFlat<SaleDetailsFragment["products"]>
+    | RelayToFlat<VoucherDetailsFragment["products"]>;
   onProductAssign: () => void;
   onProductUnassign: (id: string) => void;
 }
@@ -30,8 +32,17 @@ export interface SaleProductsProps extends ListProps, ListActions {
 const numberOfColumns = 5;
 
 const DiscountProducts: React.FC<SaleProductsProps> = props => {
-  const { products, disabled, onProductAssign, onProductUnassign, isChecked, selected, toggle, toggleAll, toolbar } =
-    props;
+  const {
+    products,
+    disabled,
+    onProductAssign,
+    onProductUnassign,
+    isChecked,
+    selected,
+    toggle,
+    toggleAll,
+    toolbar,
+  } = props;
   const classes = useStyles(props);
 
   const intl = useIntl();
@@ -89,7 +100,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
               return (
                 <TableRowLink
                   hover={!!product}
-                  key={product ? product.id : 'skeleton'}
+                  key={product ? product.id : "skeleton"}
                   href={product && productUrl(product.id)}
                   className={classes.tableRow}
                   selected={isSelected}
@@ -102,7 +113,10 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                       onChange={() => toggle(product.id)}
                     />
                   </TableCell>
-                  <TableCellAvatar className={classes.colName} thumbnail={maybe(() => product.thumbnail.url)}>
+                  <TableCellAvatar
+                    className={classes.colName}
+                    thumbnail={maybe(() => product.thumbnail.url)}
+                  >
                     {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
                   </TableCellAvatar>
                   <TableCell className={classes.colType}>
@@ -110,7 +124,7 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colType}>
                     {product && !product?.channelListings?.length ? (
-                      '-'
+                      "-"
                     ) : product?.channelListings !== undefined ? (
                       <ChannelsAvailabilityDropdown channels={product?.channelListings} />
                     ) : (
@@ -147,5 +161,5 @@ const DiscountProducts: React.FC<SaleProductsProps> = props => {
     </Card>
   );
 };
-DiscountProducts.displayName = 'DiscountProducts';
+DiscountProducts.displayName = "DiscountProducts";
 export default DiscountProducts;

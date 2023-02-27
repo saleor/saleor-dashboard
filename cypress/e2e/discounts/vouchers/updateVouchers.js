@@ -109,9 +109,7 @@ describe("As an admin I want to update vouchers", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const voucherUpdatedValue = 20;
       const expectedOrderAmount =
-        productPrice +
-        shippingPrice -
-        (productPrice * voucherUpdatedValue) / 100;
+        productPrice + shippingPrice - (productPrice * voucherUpdatedValue) / 100;
 
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
@@ -149,9 +147,7 @@ describe("As an admin I want to update vouchers", () => {
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const todayDate = formatDate(new Date());
-      const tomorrowDate = formatDate(
-        new Date().setDate(new Date().getDate() + 1),
-      );
+      const tomorrowDate = formatDate(new Date().setDate(new Date().getDate() + 1));
 
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({
@@ -192,9 +188,7 @@ describe("As an admin I want to update vouchers", () => {
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const todayDate = formatDate(new Date());
-      const tomorrowDate = formatDate(
-        new Date().setDate(new Date().getDate() + 1),
-      );
+      const tomorrowDate = formatDate(new Date().setDate(new Date().getDate() + 1));
 
       cy.clearSessionData().loginUserViaRequest();
       createVoucherInChannel({

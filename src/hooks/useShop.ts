@@ -1,5 +1,5 @@
-import { ShopContext } from '@dashboard/components/Shop';
-import { useContext } from 'react';
+import { ShopContext } from "@dashboard/components/Shop";
+import { useContext } from "react";
 
 function useShop() {
   return useContext(ShopContext);

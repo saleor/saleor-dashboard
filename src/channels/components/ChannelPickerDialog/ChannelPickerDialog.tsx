@@ -1,14 +1,14 @@
-import ActionDialog from '@dashboard/components/ActionDialog';
-import { Choice } from '@dashboard/components/SingleSelectField';
-import useChoiceSearch from '@dashboard/hooks/useChoiceSearch';
-import useModalDialogOpen from '@dashboard/hooks/useModalDialogOpen';
-import useStateFromProps from '@dashboard/hooks/useStateFromProps';
-import { MenuItem } from '@material-ui/core';
-import { Autocomplete, ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import ActionDialog from "@dashboard/components/ActionDialog";
+import { Choice } from "@dashboard/components/SingleSelectField";
+import useChoiceSearch from "@dashboard/hooks/useChoiceSearch";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { MenuItem } from "@material-ui/core";
+import { Autocomplete, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import { messages } from './messages';
+import { messages } from "./messages";
 
 export interface ChannelPickerDialogProps {
   channelsChoices: Array<Choice<string, string>>;
@@ -29,13 +29,13 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
 }) => {
   const intl = useIntl();
   const [choice, setChoice] = useStateFromProps(
-    defaultChoice || (!!channelsChoices.length ? channelsChoices[0].value : ''),
+    defaultChoice || (!!channelsChoices.length ? channelsChoices[0].value : ""),
   );
   const { result, search } = useChoiceSearch(channelsChoices);
 
   useModalDialogOpen(open, {
     onClose: () => {
-      search('');
+      search("");
       setChoice(defaultChoice);
     },
   });
@@ -73,5 +73,5 @@ const ChannelPickerDialog: React.FC<ChannelPickerDialogProps> = ({
     </ActionDialog>
   );
 };
-ChannelPickerDialog.displayName = 'ChannelPickerDialog';
+ChannelPickerDialog.displayName = "ChannelPickerDialog";
 export default ChannelPickerDialog;

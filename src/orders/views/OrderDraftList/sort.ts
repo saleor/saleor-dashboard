@@ -1,6 +1,6 @@
-import { OrderSortField } from '@dashboard/graphql';
-import { OrderDraftListUrlSortField } from '@dashboard/orders/urls';
-import { createGetSortQueryVariables } from '@dashboard/utils/sort';
+import { OrderSortField } from "@dashboard/graphql";
+import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
+import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 export function getSortQueryField(sort: OrderDraftListUrlSortField): OrderSortField {
   switch (sort) {

@@ -1,8 +1,8 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import { ControlledCheckbox } from '@dashboard/components/ControlledCheckbox';
-import { Card, CardContent, TextField } from '@material-ui/core';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
+import { Card, CardContent, TextField } from "@material-ui/core";
+import React from "react";
+import { useIntl } from "react-intl";
 
 interface ProductTypeShippingProps {
   data: {
@@ -14,16 +14,21 @@ interface ProductTypeShippingProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({ data, weightUnit, disabled, onChange }) => {
+const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({
+  data,
+  weightUnit,
+  disabled,
+  onChange,
+}) => {
   const intl = useIntl();
 
   return (
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: '/2OOMe',
-          defaultMessage: 'Shipping',
-          description: 'product type shipping settings, section header',
+          id: "/2OOMe",
+          defaultMessage: "Shipping",
+          description: "product type shipping settings, section header",
         })}
       />
       <CardContent>
@@ -31,9 +36,9 @@ const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({ data, weightU
           checked={data.isShippingRequired}
           disabled={disabled}
           label={intl.formatMessage({
-            id: 'IBw72y',
-            defaultMessage: 'Is this product shippable?',
-            description: 'switch button',
+            id: "IBw72y",
+            defaultMessage: "Is this product shippable?",
+            description: "switch button",
           })}
           name="isShippingRequired"
           onChange={onChange}
@@ -43,14 +48,14 @@ const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({ data, weightU
             disabled={disabled}
             InputProps={{ endAdornment: weightUnit }}
             label={intl.formatMessage({
-              id: 'zCb8fX',
-              defaultMessage: 'Weight',
+              id: "zCb8fX",
+              defaultMessage: "Weight",
             })}
             name="weight"
             helperText={intl.formatMessage({
-              id: 'VOiUXQ',
+              id: "VOiUXQ",
               defaultMessage:
-                'Used to calculate rates for shipping for products of this product type, when specific weight is not given',
+                "Used to calculate rates for shipping for products of this product type, when specific weight is not given",
             })}
             type="number"
             value={data.weight}
@@ -62,5 +67,5 @@ const ProductTypeShipping: React.FC<ProductTypeShippingProps> = ({ data, weightU
   );
 };
 
-ProductTypeShipping.displayName = 'ProductTypeShipping';
+ProductTypeShipping.displayName = "ProductTypeShipping";
 export default ProductTypeShipping;

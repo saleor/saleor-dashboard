@@ -1,6 +1,6 @@
-import { AttributeListUrlSortField } from '@dashboard/attributes/urls';
-import { AttributeSortField } from '@dashboard/graphql';
-import { createGetSortQueryVariables } from '@dashboard/utils/sort';
+import { AttributeListUrlSortField } from "@dashboard/attributes/urls";
+import { AttributeSortField } from "@dashboard/graphql";
+import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
 export function getSortQueryField(sort: AttributeListUrlSortField): AttributeSortField {
   switch (sort) {

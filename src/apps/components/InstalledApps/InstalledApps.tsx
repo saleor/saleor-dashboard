@@ -1,23 +1,23 @@
-import { AppManifestTableDisplay } from '@dashboard/apps/components/AppManifestTableDisplay/AppManifestTableDisplay';
-import { InstallWithManifestFormButton } from '@dashboard/apps/components/InstallWithManifestFormButton';
-import { appUrl, createAppInstallUrl } from '@dashboard/apps/urls';
-import { isAppInTunnel } from '@dashboard/apps/utils';
-import CardTitle from '@dashboard/components/CardTitle';
-import { IconButton } from '@dashboard/components/IconButton';
-import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { AppListItemFragment } from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { renderCollection } from '@dashboard/misc';
-import { ListProps } from '@dashboard/types';
-import { Card, TableBody, TableCell, Typography } from '@material-ui/core';
-import { ResponsiveTable, SettingsIcon } from '@saleor/macaw-ui';
-import React, { useCallback } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { AppManifestTableDisplay } from "@dashboard/apps/components/AppManifestTableDisplay/AppManifestTableDisplay";
+import { InstallWithManifestFormButton } from "@dashboard/apps/components/InstallWithManifestFormButton";
+import { appUrl, createAppInstallUrl } from "@dashboard/apps/urls";
+import { isAppInTunnel } from "@dashboard/apps/utils";
+import CardTitle from "@dashboard/components/CardTitle";
+import { IconButton } from "@dashboard/components/IconButton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { AppListItemFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { renderCollection } from "@dashboard/misc";
+import { ListProps } from "@dashboard/types";
+import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
+import { ResponsiveTable, SettingsIcon } from "@saleor/macaw-ui";
+import React, { useCallback } from "react";
+import { FormattedMessage } from "react-intl";
 
-import { useStyles } from '../../styles';
-import { AppPermissions } from '../AppPermissions/AppPermissions';
-import AppsSkeleton from '../AppsSkeleton';
+import { useStyles } from "../../styles";
+import { AppPermissions } from "../AppPermissions/AppPermissions";
+import AppsSkeleton from "../AppsSkeleton";
 
 export interface InstalledAppsProps extends ListProps {
   appsList: AppListItemFragment[];
@@ -75,7 +75,11 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
                     {app.manifestUrl && <AppManifestTableDisplay manifestUrl={app.manifestUrl} />}
                     <AppPermissions permissions={app.permissions || []} />
                     <TableButtonWrapper>
-                      <IconButton variant="secondary" color="primary" onClick={() => onSettingsClick(app.id)}>
+                      <IconButton
+                        variant="secondary"
+                        color="primary"
+                        onClick={() => onSettingsClick(app.id)}
+                      >
                         <SettingsIcon />
                       </IconButton>
                     </TableButtonWrapper>
@@ -104,5 +108,5 @@ const InstalledApps: React.FC<InstalledAppsProps> = ({
   );
 };
 
-InstalledApps.displayName = 'InstalledApps';
+InstalledApps.displayName = "InstalledApps";
 export default InstalledApps;

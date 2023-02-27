@@ -1,16 +1,18 @@
-import { useUser } from '@dashboard/auth';
-import { WindowTitle } from '@dashboard/components/WindowTitle';
-import { usePermissionGroupCreateMutation } from '@dashboard/graphql';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import useShop from '@dashboard/hooks/useShop';
-import { extractMutationErrors } from '@dashboard/misc';
-import { PermissionData } from '@dashboard/permissionGroups/components/PermissionGroupDetailsPage';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { useUser } from "@dashboard/auth";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { usePermissionGroupCreateMutation } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import useShop from "@dashboard/hooks/useShop";
+import { extractMutationErrors } from "@dashboard/misc";
+import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import PermissionGroupCreatePage, { PermissionGroupCreateFormData } from '../../components/PermissionGroupCreatePage';
-import { permissionGroupDetailsUrl } from '../../urls';
+import PermissionGroupCreatePage, {
+  PermissionGroupCreateFormData,
+} from "../../components/PermissionGroupCreatePage";
+import { permissionGroupDetailsUrl } from "../../urls";
 
 const PermissionGroupCreateView: React.FC = () => {
   const navigate = useNavigator();
@@ -23,10 +25,10 @@ const PermissionGroupCreateView: React.FC = () => {
     onCompleted: data => {
       if (data?.permissionGroupCreate?.errors.length === 0) {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage({
-            id: 'eUjFjW',
-            defaultMessage: 'Permission group created',
+            id: "eUjFjW",
+            defaultMessage: "Permission group created",
           }),
         });
         navigate(permissionGroupDetailsUrl(data.permissionGroupCreate.group.id));
@@ -41,7 +43,9 @@ const PermissionGroupCreateView: React.FC = () => {
       createPermissionGroup({
         variables: {
           input: {
-            addPermissions: formData.hasFullAccess ? shop.permissions.map(perm => perm.code) : formData.permissions,
+            addPermissions: formData.hasFullAccess
+              ? shop.permissions.map(perm => perm.code)
+              : formData.permissions,
             addUsers: [],
             name: formData.name,
           },
@@ -65,9 +69,9 @@ const PermissionGroupCreateView: React.FC = () => {
     <>
       <WindowTitle
         title={intl.formatMessage({
-          id: 'Irflxf',
-          defaultMessage: 'Create category',
-          description: 'window title',
+          id: "Irflxf",
+          defaultMessage: "Create category",
+          description: "window title",
         })}
       />
       <PermissionGroupCreatePage
@@ -80,6 +84,6 @@ const PermissionGroupCreateView: React.FC = () => {
     </>
   );
 };
-PermissionGroupCreateView.displayName = 'PermissionGroupCreateView';
+PermissionGroupCreateView.displayName = "PermissionGroupCreateView";
 
 export default PermissionGroupCreateView;

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-import Debounce from './Debounce';
+import Debounce from "./Debounce";
 
 export interface DebounceFormProps {
   change: (event: React.ChangeEvent<any>, cb?: () => void) => void;

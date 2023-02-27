@@ -1,11 +1,11 @@
-import { AppInstallationFragment } from '@dashboard/graphql';
-import { GetV2SaleorAppsResponse } from '@dashboard/new-apps/marketplace.types';
-import { resolveInstallationOfMarketplaceApp } from '@dashboard/new-apps/utils';
-import { Skeleton } from '@material-ui/lab';
-import { Box } from '@saleor/macaw-ui/next';
-import React from 'react';
+import { AppInstallationFragment } from "@dashboard/graphql";
+import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
+import { resolveInstallationOfMarketplaceApp } from "@dashboard/new-apps/utils";
+import { Skeleton } from "@material-ui/lab";
+import { Box } from "@saleor/macaw-ui/next";
+import React from "react";
 
-import AppListCard from '../AppListCard';
+import AppListCard from "../AppListCard";
 
 interface AllAppListProps {
   appList?: GetV2SaleorAppsResponse.SaleorApp[];

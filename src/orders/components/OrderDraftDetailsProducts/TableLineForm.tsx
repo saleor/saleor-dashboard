@@ -1,22 +1,22 @@
-import DebounceForm from '@dashboard/components/DebounceForm';
-import Form from '@dashboard/components/Form';
-import { OrderLineFragment, OrderLineInput } from '@dashboard/graphql';
-import createNonNegativeValueChangeHandler from '@dashboard/utils/handlers/nonNegativeValueChangeHandler';
-import { TextField } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
+import DebounceForm from "@dashboard/components/DebounceForm";
+import Form from "@dashboard/components/Form";
+import { OrderLineFragment, OrderLineInput } from "@dashboard/graphql";
+import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
+import { TextField } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
 
 const useStyles = makeStyles(
   () => ({
     quantityField: {
-      '& input': {
-        padding: '12px 12px 10px',
-        textAlign: 'right',
+      "& input": {
+        padding: "12px 12px 10px",
+        textAlign: "right",
       },
       width: 100,
     },
   }),
-  { name: 'TableLineForm' },
+  { name: "TableLineForm" },
 );
 interface TableLineFormProps {
   line: OrderLineFragment;

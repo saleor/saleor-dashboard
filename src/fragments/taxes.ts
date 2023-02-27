@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const taxedMoneyFragment = gql`
   fragment TaxedMoney on TaxedMoney {

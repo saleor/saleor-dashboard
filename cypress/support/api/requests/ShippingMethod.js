@@ -8,14 +8,8 @@ export function createShippingRate({
   minWeight,
   taxClassId,
 }) {
-  const maxOrderWeight = getValueWithDefault(
-    maxWeight,
-    `maximumOrderWeight: ${maxWeight}`,
-  );
-  const minOrderWeight = getValueWithDefault(
-    minWeight,
-    `minimumOrderWeight: ${minWeight}`,
-  );
+  const maxOrderWeight = getValueWithDefault(maxWeight, `maximumOrderWeight: ${maxWeight}`);
+  const minOrderWeight = getValueWithDefault(minWeight, `minimumOrderWeight: ${minWeight}`);
 
   const selectedTaxClass = getValueWithDefault(
     taxClassId,
@@ -46,10 +40,7 @@ export function createShippingRate({
 }
 
 export function createShippingZone(name, country, channelId, warehouseId) {
-  const channelsLines = getValueWithDefault(
-    channelId,
-    `addChannels:["${channelId}"]`,
-  );
+  const channelsLines = getValueWithDefault(channelId, `addChannels:["${channelId}"]`);
   const mutation = `mutation{
     shippingZoneCreate(input:{
       name: "${name}"
@@ -67,16 +58,11 @@ export function createShippingZone(name, country, channelId, warehouseId) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.shippingZoneCreate.shippingZone");
+  return cy.sendRequestWithQuery(mutation).its("body.data.shippingZoneCreate.shippingZone");
 }
 
 export function createShippingZoneWithoutWarehouse(name, country, channelId) {
-  const channelsLines = getValueWithDefault(
-    channelId,
-    `addChannels:["${channelId}"]`,
-  );
+  const channelsLines = getValueWithDefault(channelId, `addChannels:["${channelId}"]`);
   const mutation = `mutation{
     shippingZoneCreate(input:{
       name: "${name}"
@@ -93,9 +79,7 @@ export function createShippingZoneWithoutWarehouse(name, country, channelId) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation)
-    .its("body.data.shippingZoneCreate.shippingZone");
+  return cy.sendRequestWithQuery(mutation).its("body.data.shippingZoneCreate.shippingZone");
 }
 
 export function addChannelToShippingZone(shippingZoneId, channelId) {
@@ -112,12 +96,7 @@ export function addChannelToShippingZone(shippingZoneId, channelId) {
   return cy.sendRequestWithQuery(mutation);
 }
 
-export function addChannelToShippingMethod(
-  shippingRateId,
-  channelId,
-  price,
-  minProductPrice = 0,
-) {
+export function addChannelToShippingMethod(shippingRateId, channelId, price, minProductPrice = 0) {
   const mutation = `mutation{
     shippingMethodChannelListingUpdate(id:"${shippingRateId}", input:{
       addChannels: {
@@ -170,9 +149,7 @@ export function getShippingZones() {
     }
   }
   `;
-  return cy
-    .sendRequestWithQuery(query)
-    .then(resp => resp.body.data.shippingZones.edges);
+  return cy.sendRequestWithQuery(query).then(resp => resp.body.data.shippingZones.edges);
 }
 
 export function getShippingZone(shippingZoneId) {
@@ -217,7 +194,5 @@ export function getShippingZone(shippingZoneId) {
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(query)
-    .then(resp => resp.body.data.shippingZone);
+  return cy.sendRequestWithQuery(query).then(resp => resp.body.data.shippingZone);
 }

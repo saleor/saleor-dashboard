@@ -14,10 +14,7 @@ import {
 import { createWarehouse } from "../../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
-import {
-  fillUpShippingRate,
-  saveRateAfterUpdate,
-} from "../../../support/pages/shippingMethodPage";
+import { fillUpShippingRate, saveRateAfterUpdate } from "../../../support/pages/shippingMethodPage";
 
 describe("As a user I should be able to update and delete shipping method", () => {
   const startsWith = "EditShipping-";
@@ -47,18 +44,16 @@ describe("As a user I should be able to update and delete shipping method", () =
           warehouse = warehouseResp;
 
           updateChannelWarehouses(defaultChannel.id, warehouse.id);
-          createShippingZone(name, "US", defaultChannel.id, warehouse.id).then(
-            shippingZoneResp => {
-              shippingZone = shippingZoneResp;
-              cy.checkIfDataAreNotNull({
-                defaultChannel,
-                shippingZone,
-                shippingMethod,
-                warehouse,
-                usAddress,
-              });
-            },
-          );
+          createShippingZone(name, "US", defaultChannel.id, warehouse.id).then(shippingZoneResp => {
+            shippingZone = shippingZoneResp;
+            cy.checkIfDataAreNotNull({
+              defaultChannel,
+              shippingZone,
+              shippingMethod,
+              warehouse,
+              usAddress,
+            });
+          });
         });
       });
   });
@@ -92,15 +87,9 @@ describe("As a user I should be able to update and delete shipping method", () =
       saveRateAfterUpdate();
       getShippingZone(shippingZone.id).then(({ shippingMethods }) => {
         expect(shippingMethods).to.have.length(1);
-        expect(shippingMethods[0].minimumDeliveryDays).to.be.eq(
-          deliveryTime.min,
-        );
-        expect(shippingMethods[0].maximumDeliveryDays).to.be.eq(
-          deliveryTime.max,
-        );
-        expect(shippingMethods[0].channelListings[0].price.amount).to.be.eq(
-          price,
-        );
+        expect(shippingMethods[0].minimumDeliveryDays).to.be.eq(deliveryTime.min);
+        expect(shippingMethods[0].maximumDeliveryDays).to.be.eq(deliveryTime.max);
+        expect(shippingMethods[0].channelListings[0].price.amount).to.be.eq(price);
       });
     },
   );
@@ -109,13 +98,11 @@ describe("As a user I should be able to update and delete shipping method", () =
     "should be able to delete shipping rate. TC: SALEOR_0807",
     { tags: ["@shipping", "@allEnv", "@stable"] },
     () => {
-      cy.visit(
-        shippingRateUrl(shippingZone.id, shippingMethod.id),
-      ).deleteElementWithReqAlias("DeleteShippingRate");
+      cy.visit(shippingRateUrl(shippingZone.id, shippingMethod.id)).deleteElementWithReqAlias(
+        "DeleteShippingRate",
+      );
       getShippingZone(shippingZone.id).then(({ shippingMethods }) => {
-        const deletedShipping = shippingMethods.find(
-          element => element.id === shippingMethod.id,
-        );
+        const deletedShipping = shippingMethods.find(element => element.id === shippingMethod.id);
         expect(deletedShipping).to.be.not.ok;
       });
     },

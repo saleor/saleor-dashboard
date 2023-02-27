@@ -53,16 +53,19 @@ import {
   useOrderShippingMethodUpdateMutation,
   useOrderUpdateMutation,
   useOrderVoidMutation,
-} from '@dashboard/graphql';
-import React from 'react';
+} from "@dashboard/graphql";
+import React from "react";
 
-import { getMutationProviderData } from '../../misc';
-import { PartialMutationProviderOutput } from '../../types';
+import { getMutationProviderData } from "../../misc";
+import { PartialMutationProviderOutput } from "../../types";
 
 interface OrderOperationsProps {
   order: string;
   children: (props: {
-    orderAddNote: PartialMutationProviderOutput<OrderAddNoteMutation, OrderAddNoteMutationVariables>;
+    orderAddNote: PartialMutationProviderOutput<
+      OrderAddNoteMutation,
+      OrderAddNoteMutationVariables
+    >;
     orderCancel: PartialMutationProviderOutput<OrderCancelMutation, OrderCancelMutationVariables>;
     orderFulfillmentApprove: PartialMutationProviderOutput<
       OrderFulfillmentApproveMutation,
@@ -76,22 +79,52 @@ interface OrderOperationsProps {
       OrderFulfillmentUpdateTrackingMutation,
       OrderFulfillmentUpdateTrackingMutationVariables
     >;
-    orderPaymentCapture: PartialMutationProviderOutput<OrderCaptureMutation, OrderCaptureMutationVariables>;
-    orderPaymentMarkAsPaid: PartialMutationProviderOutput<OrderMarkAsPaidMutation, OrderMarkAsPaidMutationVariables>;
+    orderPaymentCapture: PartialMutationProviderOutput<
+      OrderCaptureMutation,
+      OrderCaptureMutationVariables
+    >;
+    orderPaymentMarkAsPaid: PartialMutationProviderOutput<
+      OrderMarkAsPaidMutation,
+      OrderMarkAsPaidMutationVariables
+    >;
     orderVoid: PartialMutationProviderOutput<OrderVoidMutation, OrderVoidMutationVariables>;
     orderUpdate: PartialMutationProviderOutput<OrderUpdateMutation, OrderUpdateMutationVariables>;
-    orderDraftCancel: PartialMutationProviderOutput<OrderDraftCancelMutation, OrderDraftCancelMutationVariables>;
-    orderDraftFinalize: PartialMutationProviderOutput<OrderDraftFinalizeMutation, OrderDraftFinalizeMutationVariables>;
-    orderDraftUpdate: PartialMutationProviderOutput<OrderDraftUpdateMutation, OrderDraftUpdateMutationVariables>;
+    orderDraftCancel: PartialMutationProviderOutput<
+      OrderDraftCancelMutation,
+      OrderDraftCancelMutationVariables
+    >;
+    orderDraftFinalize: PartialMutationProviderOutput<
+      OrderDraftFinalizeMutation,
+      OrderDraftFinalizeMutationVariables
+    >;
+    orderDraftUpdate: PartialMutationProviderOutput<
+      OrderDraftUpdateMutation,
+      OrderDraftUpdateMutationVariables
+    >;
     orderShippingMethodUpdate: PartialMutationProviderOutput<
       OrderShippingMethodUpdateMutation,
       OrderShippingMethodUpdateMutationVariables
     >;
-    orderLineDelete: PartialMutationProviderOutput<OrderLineDeleteMutation, OrderLineDeleteMutationVariables>;
-    orderLinesAdd: PartialMutationProviderOutput<OrderLinesAddMutation, OrderLinesAddMutationVariables>;
-    orderLineUpdate: PartialMutationProviderOutput<OrderLineUpdateMutation, OrderLineUpdateMutationVariables>;
-    orderInvoiceRequest: PartialMutationProviderOutput<InvoiceRequestMutation, InvoiceRequestMutationVariables>;
-    orderInvoiceSend: PartialMutationProviderOutput<InvoiceEmailSendMutation, InvoiceEmailSendMutationVariables>;
+    orderLineDelete: PartialMutationProviderOutput<
+      OrderLineDeleteMutation,
+      OrderLineDeleteMutationVariables
+    >;
+    orderLinesAdd: PartialMutationProviderOutput<
+      OrderLinesAddMutation,
+      OrderLinesAddMutationVariables
+    >;
+    orderLineUpdate: PartialMutationProviderOutput<
+      OrderLineUpdateMutation,
+      OrderLineUpdateMutationVariables
+    >;
+    orderInvoiceRequest: PartialMutationProviderOutput<
+      InvoiceRequestMutation,
+      InvoiceRequestMutationVariables
+    >;
+    orderInvoiceSend: PartialMutationProviderOutput<
+      InvoiceEmailSendMutation,
+      InvoiceEmailSendMutationVariables
+    >;
   }) => React.ReactNode;
   onOrderFulfillmentApprove: (data: OrderFulfillmentApproveMutation) => void;
   onOrderFulfillmentCancel: (data: OrderFulfillmentCancelMutation) => void;

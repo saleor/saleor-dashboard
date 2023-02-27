@@ -1,25 +1,25 @@
-import { Content } from '@dashboard/components/AppLayout/Content';
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { Backlink } from '@dashboard/components/Backlink';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import Form from '@dashboard/components/Form';
-import Grid from '@dashboard/components/Grid';
-import Savebar from '@dashboard/components/Savebar';
-import { MenuDetailsFragment, MenuErrorFragment } from '@dashboard/graphql';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { sectionNames } from '@dashboard/intl';
-import { menuListUrl } from '@dashboard/navigation/urls';
-import { Typography } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import { Box } from '@saleor/macaw-ui/next';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { Backlink } from "@dashboard/components/Backlink";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Form from "@dashboard/components/Form";
+import Grid from "@dashboard/components/Grid";
+import Savebar from "@dashboard/components/Savebar";
+import { MenuDetailsFragment, MenuErrorFragment } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { sectionNames } from "@dashboard/intl";
+import { menuListUrl } from "@dashboard/navigation/urls";
+import { Typography } from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { MenuItemType } from '../MenuItemDialog';
-import MenuItems, { TreeOperation } from '../MenuItems';
-import MenuProperties from '../MenuProperties';
-import { computeRelativeTree } from './tree';
+import { MenuItemType } from "../MenuItemDialog";
+import MenuItems, { TreeOperation } from "../MenuItems";
+import MenuProperties from "../MenuProperties";
+import { computeRelativeTree } from "./tree";
 
 export interface MenuDetailsFormData {
   name: string;
@@ -56,7 +56,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   const navigate = useNavigator();
 
   const initialForm: MenuDetailsFormData = {
-    name: menu?.name ?? '',
+    name: menu?.name ?? "",
   };
 
   const [treeOperations, setTreeOperations] = React.useState<TreeOperation[]>([]);
@@ -87,10 +87,14 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
         <DetailedContent useSingleColumn>
           <Content noTopNav>
             <Box padding={9} margin="auto" height="100vh">
-              <Backlink href={menuListUrl()}>{intl.formatMessage(sectionNames.navigation)}</Backlink>
+              <Backlink href={menuListUrl()}>
+                {intl.formatMessage(sectionNames.navigation)}
+              </Backlink>
               <Grid variant="inverted">
                 <div>
-                  <Typography variant="h5">{intl.formatMessage(sectionNames.navigation)}</Typography>
+                  <Typography variant="h5">
+                    {intl.formatMessage(sectionNames.navigation)}
+                  </Typography>
                   <Typography>
                     <FormattedMessage
                       id="E54eoT"
@@ -99,7 +103,12 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
                   </Typography>
                 </div>
                 <div>
-                  <MenuProperties data={data} disabled={disabled} errors={errors} onChange={change} />
+                  <MenuProperties
+                    data={data}
+                    disabled={disabled}
+                    errors={errors}
+                    onChange={change}
+                  />
                   <CardSpacer />
                   <MenuItems
                     canUndo={treeOperations.length > 0}
@@ -136,5 +145,5 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
     </Form>
   );
 };
-MenuDetailsPage.displayName = 'MenuDetailsPage';
+MenuDetailsPage.displayName = "MenuDetailsPage";
 export default MenuDetailsPage;

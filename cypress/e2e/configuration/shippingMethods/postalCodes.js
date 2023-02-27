@@ -46,31 +46,21 @@ describe("As a user I want to create shipping method with postal codes", () => {
 
         cy.fixture("addresses");
       })
-      .then(
-        ({
-          usAddress: usAddressResp,
-          secondUsAddress: secondUsAddressResp,
-        }) => {
-          usAddress = usAddressResp;
-          secondUsAddress = secondUsAddressResp;
+      .then(({ usAddress: usAddressResp, secondUsAddress: secondUsAddressResp }) => {
+        usAddress = usAddressResp;
+        secondUsAddress = secondUsAddressResp;
 
-          createWarehouse({ name, address: usAddress }).then(warehouseResp => {
-            warehouse = warehouseResp;
+        createWarehouse({ name, address: usAddress }).then(warehouseResp => {
+          warehouse = warehouseResp;
 
-            updateChannelWarehouses(defaultChannel.id, warehouse.id);
-            createShippingZone(
-              name,
-              "US",
-              defaultChannel.id,
-              warehouse.id,
-            ).then(shippingZoneResp => {
-              shippingZone = shippingZoneResp;
+          updateChannelWarehouses(defaultChannel.id, warehouse.id);
+          createShippingZone(name, "US", defaultChannel.id, warehouse.id).then(shippingZoneResp => {
+            shippingZone = shippingZoneResp;
 
-              createTypeAttributeAndCategoryForProduct({ name });
-            });
+            createTypeAttributeAndCategoryForProduct({ name });
           });
-        },
-      )
+        });
+      })
       .then(({ attribute, productType, category }) => {
         createProductInChannel({
           name,
@@ -150,8 +140,6 @@ describe("As a user I want to create shipping method with postal codes", () => {
       channelSlug: defaultChannel.slug,
       email: "example@example.com",
       variantsList,
-    }).then(({ checkout }) =>
-      isShippingAvailableInCheckout(checkout, rateName),
-    );
+    }).then(({ checkout }) => isShippingAvailableInCheckout(checkout, rateName));
   }
 });

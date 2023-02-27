@@ -1,2 +1,2 @@
-export { default } from './DemoBanner';
-export * from './DemoBanner';
+export { default } from "./DemoBanner";
+export * from "./DemoBanner";

@@ -1,9 +1,9 @@
-import { PLACEHOLDER } from '@dashboard/giftCards/GiftCardUpdate/types';
-import { GiftCardDataFragment } from '@dashboard/graphql';
+import { PLACEHOLDER } from "@dashboard/giftCards/GiftCardUpdate/types";
+import { GiftCardDataFragment } from "@dashboard/graphql";
 
-export const getTagCellText = (tags: GiftCardDataFragment['tags']) => {
+export const getTagCellText = (tags: GiftCardDataFragment["tags"]) => {
   if (!!tags.length) {
-    return tags.map(({ name }) => name).join(', ');
+    return tags.map(({ name }) => name).join(", ");
   }
 
   return PLACEHOLDER;

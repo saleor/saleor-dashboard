@@ -1,32 +1,35 @@
-import { Content } from '@dashboard/components/AppLayout/Content';
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import Form from '@dashboard/components/Form';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import Savebar from '@dashboard/components/Savebar';
-import WebhookEvents from '@dashboard/custom-apps/components/WebhookEvents';
-import WebhookInfo from '@dashboard/custom-apps/components/WebhookInfo';
-import WebhookStatus from '@dashboard/custom-apps/components/WebhookStatus';
-import { createAsyncEventsSelectHandler, createSyncEventsSelectHandler } from '@dashboard/custom-apps/handlers';
-import { CustomAppUrls } from '@dashboard/custom-apps/urls';
+import { Content } from "@dashboard/components/AppLayout/Content";
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import Savebar from "@dashboard/components/Savebar";
+import WebhookEvents from "@dashboard/custom-apps/components/WebhookEvents";
+import WebhookInfo from "@dashboard/custom-apps/components/WebhookInfo";
+import WebhookStatus from "@dashboard/custom-apps/components/WebhookStatus";
+import {
+  createAsyncEventsSelectHandler,
+  createSyncEventsSelectHandler,
+} from "@dashboard/custom-apps/handlers";
+import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import {
   WebhookDetailsFragment,
   WebhookErrorFragment,
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
-} from '@dashboard/graphql';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import { Box } from '@saleor/macaw-ui/next';
-import { parse, print } from 'graphql';
-import React, { useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
+import { parse, print } from "graphql";
+import React, { useEffect, useState } from "react";
+import { useIntl } from "react-intl";
 
-import PermissionAlert from '../PermissionAlert';
-import WebhookHeaders from '../WebhookHeaders';
-import WebhookSubscriptionQuery from '../WebhookSubscriptionQuery';
-import { getHeaderTitle } from './messages';
+import PermissionAlert from "../PermissionAlert";
+import WebhookHeaders from "../WebhookHeaders";
+import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
+import { getHeaderTitle } from "./messages";
 
 export interface WebhookFormData {
   syncEvents: WebhookEventTypeSyncEnum[];
@@ -62,20 +65,20 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
 
   let prettified: string;
   try {
-    prettified = print(parse(webhook?.subscriptionQuery || ''));
+    prettified = print(parse(webhook?.subscriptionQuery || ""));
   } catch {
-    prettified = webhook?.subscriptionQuery || '';
+    prettified = webhook?.subscriptionQuery || "";
   }
 
   const initialForm: WebhookFormData = {
     syncEvents: webhook?.syncEvents?.map(event => event.eventType) || [],
     asyncEvents: webhook?.asyncEvents?.map(event => event.eventType) || [],
     isActive: !!webhook?.isActive || true,
-    name: webhook?.name || '',
-    secretKey: webhook?.secretKey || '',
-    targetUrl: webhook?.targetUrl || '',
-    subscriptionQuery: prettified || '',
-    customHeaders: webhook?.customHeaders || '{}',
+    name: webhook?.name || "",
+    secretKey: webhook?.secretKey || "",
+    targetUrl: webhook?.targetUrl || "",
+    subscriptionQuery: prettified || "",
+    customHeaders: webhook?.customHeaders || "{}",
   };
 
   const backUrl = CustomAppUrls.resolveAppUrl(appId);
@@ -139,5 +142,5 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     </Form>
   );
 };
-WebhookDetailsPage.displayName = 'WebhookDetailsPage';
+WebhookDetailsPage.displayName = "WebhookDetailsPage";
 export default WebhookDetailsPage;

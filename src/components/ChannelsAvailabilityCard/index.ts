@@ -1,2 +1,2 @@
-export * from './ChannelsAvailabilityCard';
-export { default } from './ChannelsAvailabilityCard';
+export * from "./ChannelsAvailabilityCard";
+export { default } from "./ChannelsAvailabilityCard";

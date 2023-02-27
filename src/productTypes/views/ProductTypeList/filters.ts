@@ -1,15 +1,27 @@
-import { FilterElement } from '@dashboard/components/Filter';
-import { ProductTypeConfigurable, ProductTypeEnum, ProductTypeFilterInput } from '@dashboard/graphql';
-import { findValueInEnum, maybe } from '@dashboard/misc';
+import { FilterElement } from "@dashboard/components/Filter";
+import {
+  ProductTypeConfigurable,
+  ProductTypeEnum,
+  ProductTypeFilterInput,
+} from "@dashboard/graphql";
+import { findValueInEnum, maybe } from "@dashboard/misc";
 import {
   ProductTypeFilterKeys,
   ProductTypeListFilterOpts,
-} from '@dashboard/productTypes/components/ProductTypeListPage';
+} from "@dashboard/productTypes/components/ProductTypeListPage";
 
-import { createFilterTabUtils, createFilterUtils, getSingleValueQueryParam } from '../../../utils/filters';
-import { ProductTypeListUrlFilters, ProductTypeListUrlFiltersEnum, ProductTypeListUrlQueryParams } from '../../urls';
+import {
+  createFilterTabUtils,
+  createFilterUtils,
+  getSingleValueQueryParam,
+} from "../../../utils/filters";
+import {
+  ProductTypeListUrlFilters,
+  ProductTypeListUrlFiltersEnum,
+  ProductTypeListUrlQueryParams,
+} from "../../urls";
 
-export const PRODUCT_TYPE_FILTERS_KEY = 'productTypeFilters';
+export const PRODUCT_TYPE_FILTERS_KEY = "productTypeFilters";
 
 export function getFilterOpts(params: ProductTypeListUrlFilters): ProductTypeListFilterOpts {
   return {
@@ -26,13 +38,17 @@ export function getFilterOpts(params: ProductTypeListUrlFilters): ProductTypeLis
 
 export function getFilterVariables(params: ProductTypeListUrlFilters): ProductTypeFilterInput {
   return {
-    configurable: params.configurable ? findValueInEnum(params.configurable, ProductTypeConfigurable) : undefined,
+    configurable: params.configurable
+      ? findValueInEnum(params.configurable, ProductTypeConfigurable)
+      : undefined,
     productType: params.type ? findValueInEnum(params.type, ProductTypeEnum) : undefined,
     search: params.query,
   };
 }
 
-export function getFilterQueryParam(filter: FilterElement<ProductTypeFilterKeys>): ProductTypeListUrlFilters {
+export function getFilterQueryParam(
+  filter: FilterElement<ProductTypeFilterKeys>,
+): ProductTypeListUrlFilters {
   const { name } = filter;
 
   switch (name) {

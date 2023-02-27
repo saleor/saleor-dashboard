@@ -32,32 +32,25 @@ export const urlList = {
   warehouses: "warehouses/",
 };
 
-export const addVariantUrl = productId =>
-  `${urlList.products}${productId}/${urlList.variants}add`;
+export const addVariantUrl = productId => `${urlList.products}${productId}/${urlList.variants}add`;
 
 export const appDetailsUrl = appId => `${urlList.apps}${appId}`;
 
-export const attributeDetailsUrl = attributeId =>
-  `${urlList.attributes}${attributeId}`;
+export const attributeDetailsUrl = attributeId => `${urlList.attributes}${attributeId}`;
 
-export const categoryDetailsUrl = categoryId =>
-  `${urlList.categories}${categoryId}`;
+export const categoryDetailsUrl = categoryId => `${urlList.categories}${categoryId}`;
 
-export const collectionDetailsUrl = collectionId =>
-  `${urlList.collections}${collectionId}`;
+export const collectionDetailsUrl = collectionId => `${urlList.collections}${collectionId}`;
 
-export const customerDetailsUrl = customerId =>
-  `${urlList.customers}${customerId}`;
+export const customerDetailsUrl = customerId => `${urlList.customers}${customerId}`;
 
-export const giftCardDetailsUrl = giftCardId =>
-  `${urlList.giftCards}${giftCardId}`;
+export const giftCardDetailsUrl = giftCardId => `${urlList.giftCards}${giftCardId}`;
 
 export const menuDetailsUrl = menuId => `${urlList.navigation}${menuId}`;
 
 export const pageDetailsUrl = pageId => `${urlList.pages}${pageId}`;
 
-export const pageTypeDetailsUrl = pageTypeId =>
-  `${urlList.pageTypes}${pageTypeId}`;
+export const pageTypeDetailsUrl = pageTypeId => `${urlList.pageTypes}${pageTypeId}`;
 
 export const permissionGroupDetails = permissionGroupId =>
   `${urlList.permissionsGroups}${permissionGroupId}`;
@@ -67,11 +60,9 @@ export const productDetailsUrl = productId => `${urlList.products}${productId}`;
 export const productVariantDetailUrl = (productId, variantId) =>
   `${urlList.products}${productId}/${urlList.variants}${variantId}`;
 
-export const productTypeDetailsUrl = productTypeId =>
-  `${urlList.productTypes}${productTypeId}`;
+export const productTypeDetailsUrl = productTypeId => `${urlList.productTypes}${productTypeId}`;
 
-export const staffMemberDetailsUrl = staffMemberId =>
-  `${urlList.staffMembers}${staffMemberId}`;
+export const staffMemberDetailsUrl = staffMemberId => `${urlList.staffMembers}${staffMemberId}`;
 
 export const shippingZoneDetailsUrl = shippingZoneId =>
   `${urlList.shippingMethods}${shippingZoneId}`;
@@ -81,8 +72,7 @@ export const userDetailsUrl = userId => `${urlList.staffMembers}${userId}`;
 export const shippingRateUrl = (shippingZoneId, weightRateId) =>
   `${urlList.shippingMethods}${shippingZoneId}/${weightRateId}`;
 
-export const warehouseDetailsUrl = warehouseId =>
-  `${urlList.warehouses}${warehouseId}`;
+export const warehouseDetailsUrl = warehouseId => `${urlList.warehouses}${warehouseId}`;
 
 export const saleDetailsUrl = saleId => `${urlList.sales}${saleId}`;
 

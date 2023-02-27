@@ -1,15 +1,15 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import { ControlledCheckbox } from '@dashboard/components/ControlledCheckbox';
-import Skeleton from '@dashboard/components/Skeleton';
-import { AccountErrorFragment, CustomerDetailsQuery } from '@dashboard/graphql';
-import { maybe } from '@dashboard/misc';
-import { getFormErrors } from '@dashboard/utils/errors';
-import getAccountErrorMessage from '@dashboard/utils/errors/account';
-import { Card, CardContent, TextField, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import moment from 'moment-timezone';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import { ControlledCheckbox } from "@dashboard/components/ControlledCheckbox";
+import Skeleton from "@dashboard/components/Skeleton";
+import { AccountErrorFragment, CustomerDetailsQuery } from "@dashboard/graphql";
+import { maybe } from "@dashboard/misc";
+import { getFormErrors } from "@dashboard/utils/errors";
+import getAccountErrorMessage from "@dashboard/utils/errors/account";
+import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import moment from "moment-timezone";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -26,11 +26,11 @@ const useStyles = makeStyles(
       marginTop: theme.spacing(),
     },
   }),
-  { name: 'CustomerDetails' },
+  { name: "CustomerDetails" },
 );
 
 export interface CustomerDetailsProps {
-  customer: CustomerDetailsQuery['user'];
+  customer: CustomerDetailsQuery["user"];
   data: {
     isActive: boolean;
     note: string;
@@ -46,7 +46,7 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const formErrors = getFormErrors(['note'], errors);
+  const formErrors = getFormErrors(["note"], errors);
 
   return (
     <Card>
@@ -62,12 +62,12 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
                   defaultMessage="Active member since {date}"
                   description="section subheader"
                   values={{
-                    date: moment(customer.dateJoined).format('MMM YYYY'),
+                    date: moment(customer.dateJoined).format("MMM YYYY"),
                   }}
                 />
               </Typography>
             ) : (
-              <Skeleton style={{ width: '10rem' }} />
+              <Skeleton style={{ width: "10rem" }} />
             )}
           </>
         }
@@ -78,9 +78,9 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           className={classes.checkbox}
           disabled={disabled}
           label={intl.formatMessage({
-            id: '+NUzaQ',
-            defaultMessage: 'User account active',
-            description: 'check to mark this account as active',
+            id: "+NUzaQ",
+            defaultMessage: "User account active",
+            description: "check to mark this account as active",
           })}
           name="isActive"
           onChange={onChange}
@@ -93,9 +93,9 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
           helperText={getAccountErrorMessage(formErrors.note, intl)}
           name="note"
           label={intl.formatMessage({
-            id: 'uUQ+Al',
-            defaultMessage: 'Note',
-            description: 'note about customer',
+            id: "uUQ+Al",
+            defaultMessage: "Note",
+            description: "note about customer",
           })}
           value={data.note}
           onChange={onChange}
@@ -104,5 +104,5 @@ const CustomerDetails: React.FC<CustomerDetailsProps> = props => {
     </Card>
   );
 };
-CustomerDetails.displayName = 'CustomerDetails';
+CustomerDetails.displayName = "CustomerDetails";
 export default CustomerDetails;

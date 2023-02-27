@@ -1,2 +1,2 @@
-export * from './AppInstallErrorPage';
-export { default } from './AppInstallErrorPage';
+export * from "./AppInstallErrorPage";
+export { default } from "./AppInstallErrorPage";

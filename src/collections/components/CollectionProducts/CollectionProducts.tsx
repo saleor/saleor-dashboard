@@ -1,25 +1,25 @@
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import { ChannelsAvailabilityDropdown } from '@dashboard/components/ChannelsAvailabilityDropdown';
-import Checkbox from '@dashboard/components/Checkbox';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
-import TableCellAvatar from '@dashboard/components/TableCellAvatar';
-import { AVATAR_MARGIN } from '@dashboard/components/TableCellAvatar/Avatar';
-import TableHead from '@dashboard/components/TableHead';
-import { TablePaginationWithContext } from '@dashboard/components/TablePagination';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { CollectionDetailsQuery } from '@dashboard/graphql';
-import { productUrl } from '@dashboard/products/urls';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import { Card, TableBody, TableCell, TableFooter } from '@material-ui/core';
-import { DeleteIcon, IconButton, makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
+import Checkbox from "@dashboard/components/Checkbox";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import { AVATAR_MARGIN } from "@dashboard/components/TableCellAvatar/Avatar";
+import TableHead from "@dashboard/components/TableHead";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { CollectionDetailsQuery } from "@dashboard/graphql";
+import { productUrl } from "@dashboard/products/urls";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { maybe, renderCollection } from '../../../misc';
-import { ListActions, PageListProps } from '../../../types';
+import { maybe, renderCollection } from "../../../misc";
+import { ListActions, PageListProps } from "../../../types";
 
 const useStyles = makeStyles(
   theme => ({
@@ -29,7 +29,7 @@ const useStyles = makeStyles(
     },
     colName: {
       paddingLeft: 0,
-      width: 'auto',
+      width: "auto",
     },
     colNameLabel: {
       marginLeft: AVATAR_MARGIN,
@@ -41,23 +41,33 @@ const useStyles = makeStyles(
       width: 200,
     },
     table: {
-      tableLayout: 'fixed',
+      tableLayout: "fixed",
     },
     tableRow: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
   }),
-  { name: 'CollectionProducts' },
+  { name: "CollectionProducts" },
 );
 
 export interface CollectionProductsProps extends PageListProps, ListActions {
-  collection: CollectionDetailsQuery['collection'];
+  collection: CollectionDetailsQuery["collection"];
   onProductUnassign: (id: string, event: React.MouseEvent<any>) => void;
   onAdd: () => void;
 }
 
 const CollectionProducts: React.FC<CollectionProductsProps> = props => {
-  const { collection, disabled, onAdd, onProductUnassign, isChecked, selected, toggle, toggleAll, toolbar } = props;
+  const {
+    collection,
+    disabled,
+    onAdd,
+    onProductUnassign,
+    isChecked,
+    selected,
+    toggle,
+    toggleAll,
+    toolbar,
+  } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -72,12 +82,12 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
           !!collection ? (
             intl.formatMessage(
               {
-                id: '/dnWE8',
-                defaultMessage: 'Products in {name}',
-                description: 'products in collection',
+                id: "/dnWE8",
+                defaultMessage: "Products in {name}",
+                description: "products in collection",
               },
               {
-                name: maybe(() => collection.name, '...'),
+                name: maybe(() => collection.name, "..."),
               },
             )
           ) : (
@@ -108,7 +118,11 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
             <FormattedMessage id="k+HcTv" defaultMessage="Type" description="product type" />
           </TableCell>
           <TableCell className={classes.colPublished}>
-            <FormattedMessage id="Oe62bR" defaultMessage="Availability" description="product availability" />
+            <FormattedMessage
+              id="Oe62bR"
+              defaultMessage="Availability"
+              description="product availability"
+            />
           </TableCell>
           <TableCell className={classes.colActions} />
         </TableHead>
@@ -128,7 +142,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                   className={classes.tableRow}
                   hover={!!product}
                   href={product && productUrl(product.id)}
-                  key={product ? product.id : 'skeleton'}
+                  key={product ? product.id : "skeleton"}
                   selected={isSelected}
                 >
                   <TableCell padding="checkbox">
@@ -139,7 +153,10 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                       onChange={() => toggle(product.id)}
                     />
                   </TableCell>
-                  <TableCellAvatar className={classes.colName} thumbnail={maybe(() => product.thumbnail.url)}>
+                  <TableCellAvatar
+                    className={classes.colName}
+                    thumbnail={maybe(() => product.thumbnail.url)}
+                  >
                     {maybe<React.ReactNode>(() => product.name, <Skeleton />)}
                   </TableCellAvatar>
                   <TableCell className={classes.colType}>
@@ -147,7 +164,7 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
                   </TableCell>
                   <TableCell className={classes.colType}>
                     {product && !product?.channelListings?.length ? (
-                      '-'
+                      "-"
                     ) : product?.channelListings !== undefined ? (
                       <ChannelsAvailabilityDropdown channels={product?.channelListings} />
                     ) : (
@@ -183,5 +200,5 @@ const CollectionProducts: React.FC<CollectionProductsProps> = props => {
   );
 };
 
-CollectionProducts.displayName = 'CollectionProducts';
+CollectionProducts.displayName = "CollectionProducts";
 export default CollectionProducts;

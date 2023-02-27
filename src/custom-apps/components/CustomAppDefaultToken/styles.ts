@@ -1,5 +1,5 @@
-import { alpha } from '@material-ui/core/styles';
-import { makeStyles } from '@saleor/macaw-ui';
+import { alpha } from "@material-ui/core/styles";
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -7,21 +7,21 @@ export const useStyles = makeStyles(
       marginRight: theme.spacing(1),
     },
     closeContainer: {
-      display: 'flex',
-      justifyContent: 'flex-end',
-      position: 'relative',
+      display: "flex",
+      justifyContent: "flex-end",
+      position: "relative",
       right: theme.spacing(-1),
       top: theme.spacing(-1),
     },
     content: {
-      display: 'grid',
+      display: "grid",
       gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: '1fr 60px',
+      gridTemplateColumns: "1fr 60px",
       marginBottom: theme.spacing(3),
     },
     copy: {
       marginTop: theme.spacing(),
-      position: 'relative',
+      position: "relative",
       right: theme.spacing(1),
     },
     paper: {
@@ -29,10 +29,10 @@ export const useStyles = makeStyles(
       padding: theme.spacing(2, 3),
     },
     root: {
-      boxShadow: '0px 5px 10px rgba(0, 0, 0, 0.05)',
+      boxShadow: "0px 5px 10px rgba(0, 0, 0, 0.05)",
     },
   }),
   {
-    name: 'CustomAppTokenCreateDialog',
+    name: "CustomAppTokenCreateDialog",
   },
 );

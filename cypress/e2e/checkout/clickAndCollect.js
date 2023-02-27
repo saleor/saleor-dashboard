@@ -18,10 +18,7 @@ import {
   createTypeAttributeAndCategoryForProduct,
   deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
+import { createShipping, deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import {
   createWarehouse,
   pickupOptions,
@@ -119,9 +116,7 @@ describe("Warehouses in checkout", () => {
           createProductInChannel(productData);
         })
         .then(({ variantsList }) => {
-          checkoutData.variantsList = variantsList.concat(
-            variantsInOtherWarehouse,
-          );
+          checkoutData.variantsList = variantsList.concat(variantsInOtherWarehouse);
           createCheckout(checkoutData);
         })
         .then(({ checkout }) => {
@@ -157,9 +152,7 @@ describe("Warehouses in checkout", () => {
           createProductInChannel(productData);
         })
         .then(({ variantsList }) => {
-          checkoutData.variantsList = variantsList.concat(
-            variantsInOtherWarehouse,
-          );
+          checkoutData.variantsList = variantsList.concat(variantsInOtherWarehouse);
           createCheckout(checkoutData);
         })
         .then(({ checkout }) => {
@@ -197,9 +190,7 @@ describe("Warehouses in checkout", () => {
         })
         .then(({ variantsList }) => {
           variantsInLocalStock = variantsList;
-          checkoutData.variantsList = variantsInLocalStock.concat(
-            variantsInOtherWarehouse,
-          );
+          checkoutData.variantsList = variantsInLocalStock.concat(variantsInOtherWarehouse);
           createCheckout(checkoutData);
         })
         .then(({ checkout }) => {
@@ -227,9 +218,7 @@ describe("Warehouses in checkout", () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
       createWarehouse({ name, address: usAddress });
-      cy.get(WAREHOUSES_DETAILS.clickAndCollectLocalStockRadioButton).should(
-        "not.exist",
-      );
+      cy.get(WAREHOUSES_DETAILS.clickAndCollectLocalStockRadioButton).should("not.exist");
     },
   );
 

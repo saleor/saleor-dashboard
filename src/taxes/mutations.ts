@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const taxConfigurationUpdate = gql`
   mutation TaxConfigurationUpdate($id: ID!, $input: TaxConfigurationUpdateInput!) {
@@ -14,8 +14,14 @@ export const taxConfigurationUpdate = gql`
 `;
 
 export const taxCountryConfigurationUpdate = gql`
-  mutation TaxCountryConfigurationUpdate($countryCode: CountryCode!, $updateTaxClassRates: [TaxClassRateInput!]!) {
-    taxCountryConfigurationUpdate(countryCode: $countryCode, updateTaxClassRates: $updateTaxClassRates) {
+  mutation TaxCountryConfigurationUpdate(
+    $countryCode: CountryCode!
+    $updateTaxClassRates: [TaxClassRateInput!]!
+  ) {
+    taxCountryConfigurationUpdate(
+      countryCode: $countryCode
+      updateTaxClassRates: $updateTaxClassRates
+    ) {
       errors {
         ...TaxCountryConfigurationUpdateError
       }

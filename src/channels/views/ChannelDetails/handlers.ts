@@ -1,8 +1,11 @@
-import { ReorderInput } from '@dashboard/graphql';
-import { Node } from '@dashboard/types';
-import { move } from '@dashboard/utils/lists';
+import { ReorderInput } from "@dashboard/graphql";
+import { Node } from "@dashboard/types";
+import { move } from "@dashboard/utils/lists";
 
-export function calculateItemsOrderMoves<T extends Node>(itemsInputOrder: T[], itemsOutputOrder: T[]): ReorderInput[] {
+export function calculateItemsOrderMoves<T extends Node>(
+  itemsInputOrder: T[],
+  itemsOutputOrder: T[],
+): ReorderInput[] {
   const itemsInputOrderIds = itemsInputOrder.map(item => item.id);
   const itemsOutputOrderIds = itemsOutputOrder.map(item => item.id);
   let itemsIntermediateOrderIds = itemsInputOrderIds;

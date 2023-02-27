@@ -1,11 +1,11 @@
-import { Button } from '@dashboard/components/Button';
-import { DialogProps } from '@dashboard/types';
-import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from '@material-ui/core';
-import React, { useState } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import { DialogProps } from "@dashboard/types";
+import { Dialog, DialogActions, DialogContent, DialogTitle, Typography } from "@material-ui/core";
+import React, { useState } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import GiftCardExportDialogContent from '../GiftCardExportDialogContent';
-import { giftCardCreateMessages as messages } from './messages';
+import GiftCardExportDialogContent from "../GiftCardExportDialogContent";
+import { giftCardCreateMessages as messages } from "./messages";
 
 interface GiftCardBulkCreateSuccessDialogProps extends DialogProps {
   idsToExport: string[] | null;
@@ -27,7 +27,9 @@ const GiftCardBulkCreateSuccessDialog: React.FC<GiftCardBulkCreateSuccessDialogP
   return (
     <>
       <Dialog open={open} maxWidth="sm">
-        <DialogTitle disableTypography>{intl.formatMessage(messages.bulkCreateIssuedTitle)}</DialogTitle>
+        <DialogTitle disableTypography>
+          {intl.formatMessage(messages.bulkCreateIssuedTitle)}
+        </DialogTitle>
         <DialogContent>
           <Typography>{intl.formatMessage(messages.bulkCreateIssuedExplanation)}</Typography>
         </DialogContent>

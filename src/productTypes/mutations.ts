@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const productTypeDeleteMutation = gql`
   mutation ProductTypeDelete($id: ID!) {
@@ -76,7 +76,11 @@ export const productTypeCreateMutation = gql`
 `;
 
 export const productTypeAttributeReorder = gql`
-  mutation ProductTypeAttributeReorder($move: ReorderInput!, $productTypeId: ID!, $type: ProductAttributeType!) {
+  mutation ProductTypeAttributeReorder(
+    $move: ReorderInput!
+    $productTypeId: ID!
+    $type: ProductAttributeType!
+  ) {
     productTypeReorderAttributes(moves: [$move], productTypeId: $productTypeId, type: $type) {
       errors {
         ...ProductTypeReorderAttributesErrorFragment

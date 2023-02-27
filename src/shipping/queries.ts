@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const shippingZones = gql`
   query ShippingZones($first: Int, $after: String, $last: Int, $before: String) {

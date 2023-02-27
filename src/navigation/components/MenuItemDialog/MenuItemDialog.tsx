@@ -1,23 +1,35 @@
-import AutocompleteSelectMenu from '@dashboard/components/AutocompleteSelectMenu';
-import BackButton from '@dashboard/components/BackButton';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import { MenuErrorFragment, SearchCategoriesQuery, SearchCollectionsQuery, SearchPagesQuery } from '@dashboard/graphql';
-import useModalDialogErrors from '@dashboard/hooks/useModalDialogErrors';
-import useModalDialogOpen from '@dashboard/hooks/useModalDialogOpen';
-import useStateFromProps from '@dashboard/hooks/useStateFromProps';
-import { buttonMessages, sectionNames } from '@dashboard/intl';
-import { RelayToFlat } from '@dashboard/types';
-import { getFieldError, getFormErrors } from '@dashboard/utils/errors';
-import getMenuErrorMessage from '@dashboard/utils/errors/menu';
-import { getMenuItemByValue, IMenu } from '@dashboard/utils/menu';
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import isUrl from 'is-url';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import AutocompleteSelectMenu from "@dashboard/components/AutocompleteSelectMenu";
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import {
+  MenuErrorFragment,
+  SearchCategoriesQuery,
+  SearchCollectionsQuery,
+  SearchPagesQuery,
+} from "@dashboard/graphql";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { buttonMessages, sectionNames } from "@dashboard/intl";
+import { RelayToFlat } from "@dashboard/types";
+import { getFieldError, getFormErrors } from "@dashboard/utils/errors";
+import getMenuErrorMessage from "@dashboard/utils/errors/menu";
+import { getMenuItemByValue, IMenu } from "@dashboard/utils/menu";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import isUrl from "is-url";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-export type MenuItemType = 'category' | 'collection' | 'link' | 'page';
+export type MenuItemType = "category" | "collection" | "link" | "page";
 export interface MenuItemData {
   id: string;
   type: MenuItemType;
@@ -35,31 +47,31 @@ export interface MenuItemDialogProps {
   initialDisplayValue?: string;
   loading: boolean;
   open: boolean;
-  collections: RelayToFlat<SearchCollectionsQuery['search']>;
-  categories: RelayToFlat<SearchCategoriesQuery['search']>;
-  pages: RelayToFlat<SearchPagesQuery['search']>;
+  collections: RelayToFlat<SearchCollectionsQuery["search"]>;
+  categories: RelayToFlat<SearchCategoriesQuery["search"]>;
+  pages: RelayToFlat<SearchPagesQuery["search"]>;
   onClose: () => void;
   onSubmit: (data: MenuItemDialogFormData) => void;
   onQueryChange: (query: string) => void;
 }
 
 const defaultInitial: MenuItemDialogFormData = {
-  id: '',
-  name: '',
-  type: 'category',
+  id: "",
+  name: "",
+  type: "category",
 };
 
 function getMenuItemData(value: string): MenuItemData {
-  const [type, ...idParts] = value.split(':');
+  const [type, ...idParts] = value.split(":");
   return {
-    id: idParts.join(':'),
+    id: idParts.join(":"),
     type: type as MenuItemType,
   };
 }
 
 function getDisplayValue(menu: IMenu, value: string): string {
   const menuItemData = getMenuItemData(value);
-  if (menuItemData.type === 'link') {
+  if (menuItemData.type === "link") {
     return menuItemData.id;
   }
   return getMenuItemByValue(menu, value).label.toString();
@@ -82,7 +94,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
 }) => {
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
-  const [displayValue, setDisplayValue] = React.useState(initialDisplayValue || '');
+  const [displayValue, setDisplayValue] = React.useState(initialDisplayValue || "");
   const [data, setData] = useStateFromProps<MenuItemDialogFormData>(initial || defaultInitial);
   const [url, setUrl] = React.useState<string>(undefined);
 
@@ -99,9 +111,9 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   React.useEffect(() => setDisplayValue(initialDisplayValue), [initialDisplayValue]);
 
   const mutationErrors = errors.filter(err => err.field === null);
-  const formErrors = getFormErrors(['name'], errors);
-  const testIds = ['category', 'collection', 'page', 'url'];
-  const idError = ['category', 'collection', 'page', 'url']
+  const formErrors = getFormErrors(["name"], errors);
+  const testIds = ["category", "collection", "page", "url"];
+  const idError = ["category", "collection", "page", "url"]
     .map(field => getFieldError(errors, field))
     .reduce((acc, err) => acc || err);
 
@@ -115,7 +127,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           children: [],
           data: {},
           label: category.name,
-          value: 'category:' + category.id,
+          value: "category:" + category.id,
         })),
         data: {},
         label: intl.formatMessage(sectionNames.categories),
@@ -131,7 +143,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           children: [],
           data: {},
           label: collection.name,
-          value: 'collection:' + collection.id,
+          value: "collection:" + collection.id,
         })),
         data: {},
         label: intl.formatMessage(sectionNames.collections),
@@ -147,7 +159,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           children: [],
           data: {},
           label: page.title,
-          value: 'page:' + page.id,
+          value: "page:" + page.id,
         })),
         data: {},
         label: intl.formatMessage(sectionNames.pages),
@@ -170,7 +182,7 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
             }}
           />
         ),
-        value: 'link:' + url,
+        value: "link:" + url,
       },
     ];
   }
@@ -178,8 +190,8 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
   const handleQueryChange = (query: string) => {
     if (isUrl(query)) {
       setUrl(query);
-    } else if (isUrl('http://' + query)) {
-      setUrl('http://' + query);
+    } else if (isUrl("http://" + query)) {
+      setUrl("http://" + query);
     } else if (url) {
       setUrl(undefined);
     }
@@ -206,29 +218,29 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
       maxWidth="sm"
       fullWidth
       PaperProps={{
-        style: { overflowY: 'visible' },
+        style: { overflowY: "visible" },
       }}
     >
       <DialogTitle disableTypography>
         {!!initial
           ? intl.formatMessage({
-              id: 'KKQUMK',
-              defaultMessage: 'Edit Item',
-              description: 'edit menu item, header',
+              id: "KKQUMK",
+              defaultMessage: "Edit Item",
+              description: "edit menu item, header",
             })
           : intl.formatMessage({
-              id: 'H3Uirw',
-              defaultMessage: 'Add Item',
-              description: 'create new menu item, header',
+              id: "H3Uirw",
+              defaultMessage: "Add Item",
+              description: "create new menu item, header",
             })}
       </DialogTitle>
-      <DialogContent style={{ overflow: 'visible' }}>
+      <DialogContent style={{ overflow: "visible" }}>
         <TextField
           disabled={disabled}
           label={intl.formatMessage({
-            id: '0Vyr8h',
-            defaultMessage: 'Name',
-            description: 'menu item name',
+            id: "0Vyr8h",
+            defaultMessage: "Name",
+            description: "menu item name",
           })}
           fullWidth
           value={data.name}
@@ -248,9 +260,9 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           onChange={handleSelectChange}
           name="id"
           label={intl.formatMessage({
-            id: 'Urh2N3',
-            defaultMessage: 'Link',
-            description: 'label',
+            id: "Urh2N3",
+            defaultMessage: "Link",
+            description: "label",
           })}
           displayValue={displayValue}
           loading={loading}
@@ -259,8 +271,8 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
           error={!!idError}
           helperText={getMenuErrorMessage(idError, intl)}
           placeholder={intl.formatMessage({
-            id: '28GZnc',
-            defaultMessage: 'Start typing to begin search...',
+            id: "28GZnc",
+            defaultMessage: "Start typing to begin search...",
           })}
           onInputChange={handleQueryChange}
         />
@@ -277,12 +289,16 @@ const MenuItemDialog: React.FC<MenuItemDialogProps> = ({
       </DialogContent>
       <DialogActions>
         <BackButton onClick={onClose} />
-        <ConfirmButton data-test-id="submit" transitionState={confirmButtonState} onClick={handleSubmit}>
+        <ConfirmButton
+          data-test-id="submit"
+          transitionState={confirmButtonState}
+          onClick={handleSubmit}
+        >
           <FormattedMessage {...buttonMessages.confirm} />
         </ConfirmButton>
       </DialogActions>
     </Dialog>
   );
 };
-MenuItemDialog.displayName = 'MenuItemDialog';
+MenuItemDialog.displayName = "MenuItemDialog";
 export default MenuItemDialog;

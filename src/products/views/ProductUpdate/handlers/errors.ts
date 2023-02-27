@@ -1,47 +1,47 @@
-import { FetchResult } from '@apollo/client';
+import { FetchResult } from "@apollo/client";
 import {
   ProductErrorCode,
   ProductVariantBulkCreateMutation,
   ProductVariantBulkErrorCode,
   ProductVariantBulkErrorFragment,
   ProductVariantBulkUpdateMutation,
-} from '@dashboard/graphql';
+} from "@dashboard/graphql";
 
 export type ProductVariantListError =
   | {
-      __typename: 'DatagridError';
+      __typename: "DatagridError";
       attributes: string[] | null;
       error: ProductVariantBulkErrorCode;
       variantId: string;
       field?: string;
-      type: 'variantData';
+      type: "variantData";
     }
   | {
-      __typename: 'DatagridError';
+      __typename: "DatagridError";
       variantId: string;
       warehouseId: string;
-      type: 'stock';
+      type: "stock";
     }
   | {
-      __typename: 'DatagridError';
+      __typename: "DatagridError";
       error: ProductVariantBulkErrorCode;
       variantId: string;
       channelIds: string[];
-      type: 'channel';
+      type: "channel";
     }
   | {
-      __typename: 'DatagridError';
+      __typename: "DatagridError";
       error: ProductErrorCode;
       index: number;
-      type: 'create';
+      type: "create";
     };
 
 export function getCreateVariantMutationError(
   result: FetchResult<ProductVariantBulkCreateMutation>,
 ): ProductVariantListError[] {
   return result.data.productVariantBulkCreate.errors.map<ProductVariantListError>(error => ({
-    __typename: 'DatagridError',
-    type: 'create',
+    __typename: "DatagridError",
+    type: "create",
     index: error.index,
     error: error.code,
   }));
@@ -69,8 +69,8 @@ function getChannelErrors(errors: ProductVariantBulkErrorFragment[], varaintsIds
       const variantId = varaintsIds[index];
 
       acc.push({
-        __typename: 'DatagridError',
-        type: 'channel',
+        __typename: "DatagridError",
+        type: "channel",
         error: error.code,
         variantId,
         channelIds: error.channels,
@@ -90,10 +90,10 @@ function getStockErrors(errors: ProductVariantBulkErrorFragment[], varaintsIds: 
         ...error.warehouses.map(
           warehouse =>
             ({
-              __typename: 'DatagridError',
+              __typename: "DatagridError",
               variantId,
               warehouseId: warehouse,
-              type: 'stock',
+              type: "stock",
             } as const),
         ),
       );
@@ -109,8 +109,8 @@ function getRestOfErrors(errors: ProductVariantBulkErrorFragment[], varaintsIds:
       const variantId = varaintsIds[index];
 
       acc.push({
-        __typename: 'DatagridError',
-        type: 'variantData',
+        __typename: "DatagridError",
+        type: "variantData",
         variantId,
         error: error.code,
         attributes: error.attributes,

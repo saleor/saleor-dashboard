@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const webhookCreate = gql`
   mutation WebhookCreate($input: WebhookCreateInput!) {

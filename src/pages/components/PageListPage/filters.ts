@@ -1,18 +1,32 @@
-import { FilterElement, IFilter } from '@dashboard/components/Filter';
-import { SearchWithFetchMoreProps } from '@dashboard/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types';
-import { SearchPageTypesQuery } from '@dashboard/graphql';
-import { PageListUrlFilters, PageListUrlFiltersWithMultipleValues, PageListUrlSort } from '@dashboard/pages/urls';
-import { ActiveTab, AutocompleteFilterOpts, FilterOpts, Pagination, Search } from '@dashboard/types';
-import { createFilterTabUtils, createFilterUtils, getMultipleValueQueryParam } from '@dashboard/utils/filters';
-import { createAutocompleteField } from '@dashboard/utils/filters/fields';
-import { mapNodeToChoice, mapSingleValueNodeToChoice } from '@dashboard/utils/maps';
-import { defineMessages, IntlShape } from 'react-intl';
+import { FilterElement, IFilter } from "@dashboard/components/Filter";
+import { SearchWithFetchMoreProps } from "@dashboard/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types";
+import { SearchPageTypesQuery } from "@dashboard/graphql";
+import {
+  PageListUrlFilters,
+  PageListUrlFiltersWithMultipleValues,
+  PageListUrlSort,
+} from "@dashboard/pages/urls";
+import {
+  ActiveTab,
+  AutocompleteFilterOpts,
+  FilterOpts,
+  Pagination,
+  Search,
+} from "@dashboard/types";
+import {
+  createFilterTabUtils,
+  createFilterUtils,
+  getMultipleValueQueryParam,
+} from "@dashboard/utils/filters";
+import { createAutocompleteField } from "@dashboard/utils/filters/fields";
+import { mapNodeToChoice, mapSingleValueNodeToChoice } from "@dashboard/utils/maps";
+import { defineMessages, IntlShape } from "react-intl";
 
 export enum PageListFilterKeys {
-  pageTypes = 'pageTypes',
+  pageTypes = "pageTypes",
 }
 
-export const PAGES_FILTERS_KEY = 'pagesFilters';
+export const PAGES_FILTERS_KEY = "pagesFilters";
 
 export interface PageListFilterOpts {
   pageType: FilterOpts<string[]> & AutocompleteFilterOpts;
@@ -20,25 +34,29 @@ export interface PageListFilterOpts {
 
 const messages = defineMessages({
   pageType: {
-    id: 'Of19Pn',
-    defaultMessage: 'Page Types',
-    description: 'Types',
+    id: "Of19Pn",
+    defaultMessage: "Page Types",
+    description: "Types",
   },
 });
 
 interface PageListFilterOptsProps {
   params: PageListUrlFilters;
-  pageTypes: Array<SearchPageTypesQuery['search']['edges'][0]['node']>;
+  pageTypes: Array<SearchPageTypesQuery["search"]["edges"][0]["node"]>;
   pageTypesProps: SearchWithFetchMoreProps;
 }
 
-export const getFilterOpts = ({ params, pageTypes, pageTypesProps }: PageListFilterOptsProps): PageListFilterOpts => ({
+export const getFilterOpts = ({
+  params,
+  pageTypes,
+  pageTypesProps,
+}: PageListFilterOptsProps): PageListFilterOpts => ({
   pageType: {
     active: !!params?.pageTypes,
     value: params?.pageTypes,
     choices: mapNodeToChoice(pageTypes),
     displayValues: mapSingleValueNodeToChoice(pageTypes),
-    initialSearch: '',
+    initialSearch: "",
     hasMore: pageTypesProps.hasMore,
     loading: pageTypesProps.loading,
     onFetchMore: pageTypesProps.onFetchMore,
@@ -46,7 +64,10 @@ export const getFilterOpts = ({ params, pageTypes, pageTypesProps }: PageListFil
   },
 });
 
-export function createFilterStructure(intl: IntlShape, opts: PageListFilterOpts): IFilter<PageListFilterKeys> {
+export function createFilterStructure(
+  intl: IntlShape,
+  opts: PageListFilterOpts,
+): IFilter<PageListFilterKeys> {
   return [
     {
       ...createAutocompleteField(
@@ -58,7 +79,7 @@ export function createFilterStructure(intl: IntlShape, opts: PageListFilterOpts)
         opts.pageType.choices,
         {
           hasMore: opts.pageType.hasMore,
-          initialSearch: '',
+          initialSearch: "",
           loading: opts.pageType.loading,
           onFetchMore: opts.pageType.onFetchMore,
           onSearchChange: opts.pageType.onSearchChange,
@@ -80,7 +101,11 @@ export function getFilterQueryParam(filter: FilterElement<PageListFilterKeys>): 
   }
 }
 
-export type PageListUrlQueryParams = Pagination & PageListUrlFilters & PageListUrlSort & ActiveTab & Search;
+export type PageListUrlQueryParams = Pagination &
+  PageListUrlFilters &
+  PageListUrlSort &
+  ActiveTab &
+  Search;
 
 export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
   createFilterTabUtils<PageListUrlFilters>(PAGES_FILTERS_KEY);

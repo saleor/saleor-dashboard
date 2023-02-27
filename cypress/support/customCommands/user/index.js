@@ -17,10 +17,8 @@ Cypress.Commands.add("loginInShop", () => {
   cy.loginUserViaRequest("token");
 });
 
-Cypress.Commands.add(
-  "loginUserViaRequest",
-  (authorization = "auth", user = TEST_ADMIN_USER) => {
-    const mutation = `mutation TokenAuth{
+Cypress.Commands.add("loginUserViaRequest", (authorization = "auth", user = TEST_ADMIN_USER) => {
+  const mutation = `mutation TokenAuth{
     tokenCreate(email: "${user.email}", password: "${user.password}") {
       token
       csrfToken
@@ -35,15 +33,8 @@ Cypress.Commands.add(
       }
     }
   }`;
-    return cy.sendRequestWithQuery(mutation, null).then(resp => {
-      window.localStorage.setItem(
-        "_saleorCSRFToken",
-        resp.body.data.tokenCreate.csrfToken,
-      );
-      window.sessionStorage.setItem(
-        authorization,
-        resp.body.data.tokenCreate.token,
-      );
-    });
-  },
-);
+  return cy.sendRequestWithQuery(mutation, null).then(resp => {
+    window.localStorage.setItem("_saleorCSRFToken", resp.body.data.tokenCreate.csrfToken);
+    window.sessionStorage.setItem(authorization, resp.body.data.tokenCreate.token);
+  });
+});

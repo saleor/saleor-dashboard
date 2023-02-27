@@ -1,2 +1,2 @@
-export { default } from './ExtendedPageHeader';
-export * from './ExtendedPageHeader';
+export { default } from "./ExtendedPageHeader";
+export * from "./ExtendedPageHeader";

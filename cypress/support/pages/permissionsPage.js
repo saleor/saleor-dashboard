@@ -2,10 +2,7 @@ import { LEFT_MENU_SELECTORS } from "../../elements/account/left-menu/left-menu-
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { urlList } from "../../fixtures/urlList";
 
-export function navigateToAllAvailablePageAndCheckIfDisplayed({
-  user,
-  permissions,
-}) {
+export function navigateToAllAvailablePageAndCheckIfDisplayed({ user, permissions }) {
   cy.loginUserViaRequest("auth", user).visit(urlList.homePage);
   if (!permissions) {
     return;
@@ -52,8 +49,7 @@ export function expectAllSelectorsPermitted(permissions, selectors) {
   Object.values(selectors).forEach(selector => {
     const isSelectorPermitted = isPermitted(permissions, selector);
 
-    expect(isSelectorPermitted, `${selector} selector should be in permitted`)
-      .to.be.true;
+    expect(isSelectorPermitted, `${selector} selector should be in permitted`).to.be.true;
   });
 }
 
@@ -64,9 +60,7 @@ function isPermitted(permissions, selector) {
     if (permission.parent) {
       permittedSelectors.push(permission.parent.parentMenuSelector);
     }
-    permittedSelectors = permittedSelectors.concat(
-      permission.permissionSelectors,
-    );
+    permittedSelectors = permittedSelectors.concat(permission.permissionSelectors);
   });
   return permittedSelectors.includes(selector);
 }

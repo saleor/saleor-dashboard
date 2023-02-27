@@ -50,8 +50,7 @@ export const introspectionMocks: MockedResponse[] = [
             {
               kind: "OBJECT",
               name: "Product",
-              description:
-                "Represents an individual item for sale in the storefront.",
+              description: "Represents an individual item for sale in the storefront.",
               fields: [
                 {
                   name: "id",
@@ -152,8 +151,7 @@ export const introspectionMocks: MockedResponse[] = [
                 },
                 {
                   name: "isAvailable",
-                  description:
-                    "Whether the product is in stock and visible or not.",
+                  description: "Whether the product is in stock and visible or not.",
                 },
                 {
                   name: "attribute",
@@ -189,8 +187,7 @@ export const introspectionMocks: MockedResponse[] = [
                 },
                 {
                   name: "translation",
-                  description:
-                    "Returns translated product fields for the given language code.",
+                  description: "Returns translated product fields for the given language code.",
                 },
                 {
                   name: "availableForPurchaseAt",
@@ -207,8 +204,7 @@ export const introspectionMocks: MockedResponse[] = [
                 },
                 {
                   name: "externalReference",
-                  description:
-                    "External ID of this product. \n\nAdded in Saleor 3.10.",
+                  description: "External ID of this product. \n\nAdded in Saleor 3.10.",
                 },
               ],
             },
@@ -392,8 +388,7 @@ export const introspectionMocks: MockedResponse[] = [
                 },
                 {
                   name: "translation",
-                  description:
-                    "Returns translated sale fields for the given language code.",
+                  description: "Returns translated sale fields for the given language code.",
                 },
                 {
                   name: "channelListings",
@@ -531,8 +526,7 @@ export const introspectionMocks: MockedResponse[] = [
                 },
                 {
                   name: "original",
-                  description:
-                    "The ID of the order that was the base for this order.",
+                  description: "The ID of the order that was the base for this order.",
                 },
                 {
                   name: "origin",
@@ -658,8 +652,7 @@ export const introspectionMocks: MockedResponse[] = [
                 },
                 {
                   name: "totalBalance",
-                  description:
-                    "The difference between the paid and the order total amount.",
+                  description: "The difference between the paid and the order total amount.",
                 },
                 {
                   name: "userEmail",
@@ -685,8 +678,7 @@ export const introspectionMocks: MockedResponse[] = [
                 },
                 {
                   name: "errors",
-                  description:
-                    "List of errors that occurred during order validation.",
+                  description: "List of errors that occurred during order validation.",
                 },
                 {
                   name: "displayGrossPrices",
@@ -695,8 +687,7 @@ export const introspectionMocks: MockedResponse[] = [
                 },
                 {
                   name: "externalReference",
-                  description:
-                    "External ID of this order. \n\nAdded in Saleor 3.10.",
+                  description: "External ID of this order. \n\nAdded in Saleor 3.10.",
                 },
                 {
                   name: "checkoutId",
@@ -780,8 +771,7 @@ export const introspectionMocks: MockedResponse[] = [
                 },
                 {
                   name: "order",
-                  description:
-                    "Order related to the invoice.\n\nAdded in Saleor 3.10.",
+                  description: "Order related to the invoice.\n\nAdded in Saleor 3.10.",
                 },
               ],
             },

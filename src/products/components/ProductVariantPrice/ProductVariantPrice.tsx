@@ -1,45 +1,49 @@
-import { ChannelData, ChannelPriceAndPreorderArgs, ChannelPriceArgs } from '@dashboard/channels/utils';
-import CardTitle from '@dashboard/components/CardTitle';
-import PriceField from '@dashboard/components/PriceField';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { ProductChannelListingErrorFragment } from '@dashboard/graphql';
-import { renderCollection } from '@dashboard/misc';
-import { getFormChannelError, getFormChannelErrors } from '@dashboard/utils/errors';
-import getProductErrorMessage from '@dashboard/utils/errors/product';
-import { Card, CardContent, TableBody, TableCell, TableHead, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, MessageDescriptor, useIntl } from 'react-intl';
+import {
+  ChannelData,
+  ChannelPriceAndPreorderArgs,
+  ChannelPriceArgs,
+} from "@dashboard/channels/utils";
+import CardTitle from "@dashboard/components/CardTitle";
+import PriceField from "@dashboard/components/PriceField";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { ProductChannelListingErrorFragment } from "@dashboard/graphql";
+import { renderCollection } from "@dashboard/misc";
+import { getFormChannelError, getFormChannelErrors } from "@dashboard/utils/errors";
+import getProductErrorMessage from "@dashboard/utils/errors/product";
+import { Card, CardContent, TableBody, TableCell, TableHead, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, MessageDescriptor, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   () => ({
     colPrice: {
-      textAlign: 'right',
-      verticalAlign: 'middle',
+      textAlign: "right",
+      verticalAlign: "middle",
       width: 200,
     },
     colType: {
       fontSize: 14,
-      textAlign: 'right',
+      textAlign: "right",
       width: 200,
     },
     input: {
-      textAlign: 'left',
+      textAlign: "left",
     },
     pricingContent: {
-      '&:last-child': {
+      "&:last-child": {
         paddingBottom: 0,
       },
       paddingLeft: 0,
       paddingRight: 0,
     },
     table: {
-      tableLayout: 'fixed',
+      tableLayout: "fixed",
     },
   }),
-  { name: 'ProductVariantPrice' },
+  { name: "ProductVariantPrice" },
 );
 
 interface ProductVariantPriceProps {
@@ -64,25 +68,26 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
   } = props;
   const classes = useStyles(props);
   const intl = useIntl();
-  const formErrors = getFormChannelErrors(['price', 'costPrice'], errors);
+  const formErrors = getFormChannelErrors(["price", "costPrice"], errors);
 
   if (disabled || !ProductVariantChannelListings.length) {
     return (
       <Card>
         <CardTitle
           title={intl.formatMessage({
-            id: 'Xm9qOu',
-            defaultMessage: 'Pricing',
-            description: 'product pricing, section header',
+            id: "Xm9qOu",
+            defaultMessage: "Pricing",
+            description: "product pricing, section header",
           })}
         />
         <CardContent>
           <Typography variant="caption">
             {intl.formatMessage(
               disabledMessage || {
-                id: 'e48Igh',
-                defaultMessage: 'Assign this variant to a channel in the product channel manager to define prices',
-                description: 'variant pricing section subtitle',
+                id: "e48Igh",
+                defaultMessage:
+                  "Assign this variant to a channel in the product channel manager to define prices",
+                description: "variant pricing section subtitle",
               },
             )}
           </Typography>
@@ -95,18 +100,18 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'Xm9qOu',
-          defaultMessage: 'Pricing',
-          description: 'product pricing, section header',
+          id: "Xm9qOu",
+          defaultMessage: "Pricing",
+          description: "product pricing, section header",
         })}
       />
       <CardContent>
         <Typography variant="body2">
           {intl.formatMessage({
-            id: 'VvA7ai',
+            id: "VvA7ai",
             defaultMessage:
-              'Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency',
-            description: 'info text',
+              "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency",
+            description: "info text",
           })}
         </Typography>
       </CardContent>
@@ -114,13 +119,25 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
         <TableHead>
           <TableRowLink>
             <TableCell>
-              <FormattedMessage id="c8UT0c" defaultMessage="Channel Name" description="tabel column header" />
+              <FormattedMessage
+                id="c8UT0c"
+                defaultMessage="Channel Name"
+                description="tabel column header"
+              />
             </TableCell>
             <TableCell className={classes.colType}>
-              <FormattedMessage id="JFtFgc" defaultMessage="Selling Price" description="tabel column header" />
+              <FormattedMessage
+                id="JFtFgc"
+                defaultMessage="Selling Price"
+                description="tabel column header"
+              />
             </TableCell>
             <TableCell className={classes.colType}>
-              <FormattedMessage id="2zCmiR" defaultMessage="Cost price" description="tabel column header" />
+              <FormattedMessage
+                id="2zCmiR"
+                defaultMessage="Cost price"
+                description="tabel column header"
+              />
             </TableCell>
           </TableRowLink>
         </TableHead>
@@ -140,11 +157,11 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                         className={classes.input}
                         error={!!priceError}
                         label={intl.formatMessage({
-                          id: 'b1zuN9',
-                          defaultMessage: 'Price',
+                          id: "b1zuN9",
+                          defaultMessage: "Price",
                         })}
                         name={`${listing.id}-channel-price`}
-                        value={listing.price || ''}
+                        value={listing.price || ""}
                         currencySymbol={listing.currency}
                         onChange={e =>
                           onChange(listing.id, {
@@ -167,12 +184,12 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                         className={classes.input}
                         error={!!costPriceError}
                         label={intl.formatMessage({
-                          id: 'KQSONM',
-                          defaultMessage: 'Cost',
-                          description: 'tabel column header',
+                          id: "KQSONM",
+                          defaultMessage: "Cost",
+                          description: "tabel column header",
                         })}
                         name={`${listing.id}-channel-costPrice`}
-                        value={listing.costPrice || ''}
+                        value={listing.costPrice || ""}
                         currencySymbol={listing.currency}
                         onChange={e =>
                           onChange(listing.id, {
@@ -182,7 +199,7 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
                           })
                         }
                         disabled={loading}
-                        hint={costPriceError ? getProductErrorMessage(costPriceError, intl) : ''}
+                        hint={costPriceError ? getProductErrorMessage(costPriceError, intl) : ""}
                       />
                     ) : (
                       <Skeleton />
@@ -204,5 +221,5 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
     </Card>
   );
 };
-ProductVariantPrice.displayName = 'ProductVariantPrice';
+ProductVariantPrice.displayName = "ProductVariantPrice";
 export default ProductVariantPrice;

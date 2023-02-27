@@ -1,22 +1,22 @@
-import { appUrl } from '@dashboard/apps/urls';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import Link from '@dashboard/components/Link';
-import { customerUrl } from '@dashboard/customers/urls';
-import { GiftCardEventsEnum } from '@dashboard/graphql';
-import useDateLocalize from '@dashboard/hooks/useDateLocalize';
-import { getFullName, getStringOrPlaceholder } from '@dashboard/misc';
-import Label from '@dashboard/orders/components/OrderHistory/Label';
-import { getOrderNumberLinkObject } from '@dashboard/orders/components/OrderHistory/utils';
-import { getByType } from '@dashboard/orders/components/OrderReturnPage/utils';
-import { productUrl } from '@dashboard/products/urls';
-import { staffMemberDetailsUrl } from '@dashboard/staff/urls';
-import { Typography } from '@material-ui/core';
-import React from 'react';
-import { MessageDescriptor, useIntl } from 'react-intl';
+import { appUrl } from "@dashboard/apps/urls";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import Link from "@dashboard/components/Link";
+import { customerUrl } from "@dashboard/customers/urls";
+import { GiftCardEventsEnum } from "@dashboard/graphql";
+import useDateLocalize from "@dashboard/hooks/useDateLocalize";
+import { getFullName, getStringOrPlaceholder } from "@dashboard/misc";
+import Label from "@dashboard/orders/components/OrderHistory/Label";
+import { getOrderNumberLinkObject } from "@dashboard/orders/components/OrderHistory/utils";
+import { getByType } from "@dashboard/orders/components/OrderReturnPage/utils";
+import { productUrl } from "@dashboard/products/urls";
+import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
+import { Typography } from "@material-ui/core";
+import React from "react";
+import { MessageDescriptor, useIntl } from "react-intl";
 
-import useGiftCardDetails from '../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails';
-import { PLACEHOLDER } from '../types';
-import { giftCardUpdateInfoCardMessages as messages } from './messages';
+import useGiftCardDetails from "../providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
+import { PLACEHOLDER } from "../types";
+import { giftCardUpdateInfoCardMessages as messages } from "./messages";
 
 const GiftCardUpdateInfoCardContent: React.FC = () => {
   const intl = useIntl();
@@ -107,11 +107,19 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
       <CardSpacer />
 
       <Label text={intl.formatMessage(messages.orderNumberLabel)} />
-      {orderData ? <Link href={orderData.link}>{orderData.text}</Link> : <Typography>{PLACEHOLDER}</Typography>}
+      {orderData ? (
+        <Link href={orderData.link}>{orderData.text}</Link>
+      ) : (
+        <Typography>{PLACEHOLDER}</Typography>
+      )}
       <CardSpacer />
 
       <Label text={intl.formatMessage(messages.productLabel)} />
-      {product ? <Link href={productUrl(product?.id)}>{product?.name}</Link> : <Typography>{PLACEHOLDER}</Typography>}
+      {product ? (
+        <Link href={productUrl(product?.id)}>{product?.name}</Link>
+      ) : (
+        <Typography>{PLACEHOLDER}</Typography>
+      )}
       <CardSpacer />
 
       <Label text={intl.formatMessage(buyerLabelMessage)} />

@@ -1,9 +1,9 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 const useStyles = makeStyles(
   theme => ({
     actions: {
-      flexDirection: 'row-reverse',
+      flexDirection: "row-reverse",
       padding: theme.spacing(2, 0),
     },
     deleteIcon: {
@@ -13,16 +13,16 @@ const useStyles = makeStyles(
       width: 40,
     },
     table: {
-      '& td, & th': {
-        '&:not(:first-child):not(:last-child)': {
+      "& td, & th": {
+        "&:not(:first-child):not(:last-child)": {
           paddingLeft: theme.spacing(1),
           paddingRight: theme.spacing(1),
         },
       },
-      tableLayout: 'fixed',
+      tableLayout: "fixed",
     },
     infoLabel: {
-      display: 'inline-block',
+      display: "inline-block",
     },
     infoLabelWithMargin: {
       marginBottom: theme.spacing(),
@@ -31,7 +31,7 @@ const useStyles = makeStyles(
       padding: theme.spacing(2, 3),
     },
   }),
-  { name: 'OrderFulfilledProductsCard' },
+  { name: "OrderFulfilledProductsCard" },
 );
 
 export default useStyles;

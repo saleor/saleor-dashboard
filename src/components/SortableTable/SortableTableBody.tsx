@@ -1,9 +1,9 @@
-import { ReorderAction } from '@dashboard/types';
-import { TableBody } from '@material-ui/core';
-import { TableBodyProps } from '@material-ui/core/TableBody';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { SortableContainer } from 'react-sortable-hoc';
+import { ReorderAction } from "@dashboard/types";
+import { TableBody } from "@material-ui/core";
+import { TableBodyProps } from "@material-ui/core/TableBody";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { SortableContainer } from "react-sortable-hoc";
 
 const InnerSortableTableBody = SortableContainer<TableBodyProps>(({ children, ...props }) => (
   <TableBody {...props}>{children}</TableBody>
@@ -16,8 +16,8 @@ export interface SortableTableBodyProps {
 const useStyles = makeStyles(
   theme => ({
     ghost: {
-      '& td': {
-        borderBottom: 'none',
+      "& td": {
+        borderBottom: "none",
       },
       background: theme.palette.background.paper,
       fontFamily: theme.typography.fontFamily,
@@ -26,13 +26,21 @@ const useStyles = makeStyles(
       opacity: 0.5,
     },
   }),
-  { name: 'SortableTableBody' },
+  { name: "SortableTableBody" },
 );
 
-const SortableTableBody: React.FC<Omit<TableBodyProps & SortableTableBodyProps, 'ref'>> = props => {
+const SortableTableBody: React.FC<Omit<TableBodyProps & SortableTableBodyProps, "ref">> = props => {
   const classes = useStyles({});
 
-  return <InnerSortableTableBody helperClass={classes.ghost} axis="y" lockAxis="y" useDragHandle {...props} />;
+  return (
+    <InnerSortableTableBody
+      helperClass={classes.ghost}
+      axis="y"
+      lockAxis="y"
+      useDragHandle
+      {...props}
+    />
+  );
 };
 
 export default SortableTableBody;

@@ -1,15 +1,15 @@
-import CardTitle from '@dashboard/components/CardTitle';
-import PreviewPill from '@dashboard/components/PreviewPill';
-import RadioGroupField from '@dashboard/components/RadioGroupField';
-import { AllocationStrategyEnum, StockSettingsInput } from '@dashboard/graphql';
-import { Card, CardContent, Typography } from '@material-ui/core';
-import HelpOutline from '@material-ui/icons/HelpOutline';
-import { Tooltip } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import CardTitle from "@dashboard/components/CardTitle";
+import PreviewPill from "@dashboard/components/PreviewPill";
+import RadioGroupField from "@dashboard/components/RadioGroupField";
+import { AllocationStrategyEnum, StockSettingsInput } from "@dashboard/graphql";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import HelpOutline from "@material-ui/icons/HelpOutline";
+import { Tooltip } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { messages } from './messages';
-import { useStyles } from './styles';
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 const strategyOptions = [
   {
@@ -30,7 +30,11 @@ interface ChannelAllocationStrategyProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({ data, disabled, onChange }) => {
+const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
+  data,
+  disabled,
+  onChange,
+}) => {
   const classes = useStyles();
 
   return (
@@ -69,7 +73,10 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({ d
           }
           choices={strategyOptions.map(option => ({
             label: (
-              <div className={classes.option} data-test-id={`channel-allocation-strategy-option-${option.type}`}>
+              <div
+                className={classes.option}
+                data-test-id={`channel-allocation-strategy-option-${option.type}`}
+              >
                 <Typography variant="body1">
                   <FormattedMessage {...option.title} />
                 </Typography>
@@ -91,5 +98,5 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({ d
     </Card>
   );
 };
-ChannelAllocationStrategy.displayName = 'ChannelAllocationStrategy';
+ChannelAllocationStrategy.displayName = "ChannelAllocationStrategy";
 export default ChannelAllocationStrategy;

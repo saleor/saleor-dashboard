@@ -81,39 +81,26 @@ describe("Staff members", () => {
     },
   );
 
-  it(
-    "should deactivate user. TC: SALEOR_3502",
-    { tags: ["@staffMembers", "@allEnv"] },
-    () => {
-      updateStaffMember({ userId: user.id, isActive: true });
-      updateUserActiveFlag(user.id);
-      cy.clearSessionData()
-        .loginUserViaRequest("auth", { email, password })
-        .its("body.data.tokenCreate")
-        .then(tokenCreate => {
-          expect(
-            tokenCreate.errors[0].code,
-            "logging in should return error",
-          ).to.be.eq("INACTIVE");
-          expect(tokenCreate.token).to.be.not.ok;
-        });
-    },
-  );
+  it("should deactivate user. TC: SALEOR_3502", { tags: ["@staffMembers", "@allEnv"] }, () => {
+    updateStaffMember({ userId: user.id, isActive: true });
+    updateUserActiveFlag(user.id);
+    cy.clearSessionData()
+      .loginUserViaRequest("auth", { email, password })
+      .its("body.data.tokenCreate")
+      .then(tokenCreate => {
+        expect(tokenCreate.errors[0].code, "logging in should return error").to.be.eq("INACTIVE");
+        expect(tokenCreate.token).to.be.not.ok;
+      });
+  });
 
-  it(
-    "should activate user. TC: SALEOR_3503",
-    { tags: ["@staffMembers", "@allEnv"] },
-    () => {
-      const serverStoredEmail = email.toLowerCase();
+  it("should activate user. TC: SALEOR_3503", { tags: ["@staffMembers", "@allEnv"] }, () => {
+    const serverStoredEmail = email.toLowerCase();
 
-      updateStaffMember({ userId: user.id, isActive: false });
-      updateUserActiveFlag(user.id);
-      cy.clearSessionData()
-        .loginUserViaRequest("auth", { email, password })
-        .visit(urlList.homePage);
-      expectWelcomeMessageIncludes(serverStoredEmail);
-    },
-  );
+    updateStaffMember({ userId: user.id, isActive: false });
+    updateUserActiveFlag(user.id);
+    cy.clearSessionData().loginUserViaRequest("auth", { email, password }).visit(urlList.homePage);
+    expectWelcomeMessageIncludes(serverStoredEmail);
+  });
 
   it(
     "should remove user permissions. TC: SALEOR_3504",
@@ -135,48 +122,38 @@ describe("Staff members", () => {
       expectWelcomeMessageIncludes(serverStoredEmail);
       getDisplayedSelectors().then(displayedSelectors => {
         expect(Object.values(displayedSelectors)).to.have.length(1);
-        expect(Object.values(displayedSelectors)[0]).to.eq(
-          LEFT_MENU_SELECTORS.home,
-        );
+        expect(Object.values(displayedSelectors)[0]).to.eq(LEFT_MENU_SELECTORS.home);
       });
     },
   );
 
-  it(
-    "should reset password. TC: SALEOR_3505",
-    { tags: ["@staffMembers", "@allEnv"] },
-    () => {
-      const newPassword = faker.random.alphaNumeric(8);
-      updatePlugin(
-        "mirumee.notifications.admin_email",
-        "staff_password_reset_subject",
-        "Reset",
-      )
-        .then(() => {
-          cy.clearSessionData()
-            .visit(urlList.homePage)
-            .get(LOGIN_SELECTORS.resetPasswordLink)
-            .click()
-            .get(LOGIN_SELECTORS.emailAddressInput)
-            .type(email)
-            .get(BUTTON_SELECTORS.submit)
-            .click();
-          getMailActivationLinkForUserAndSubject(email, "Reset");
-        })
-        .then(link => {
-          cy.visit(link)
-            .get(LOGIN_SELECTORS.emailPasswordInput)
-            .type(newPassword)
-            .get(LOGIN_SELECTORS.confirmPassword)
-            .type(newPassword)
-            .get(BUTTON_SELECTORS.confirm)
-            .click()
-            .get(LOGIN_SELECTORS.welcomePage)
-            .should("be.visible")
-            .loginUserViaRequest({ email, password: newPassword });
-        });
-    },
-  );
+  it("should reset password. TC: SALEOR_3505", { tags: ["@staffMembers", "@allEnv"] }, () => {
+    const newPassword = faker.random.alphaNumeric(8);
+    updatePlugin("mirumee.notifications.admin_email", "staff_password_reset_subject", "Reset")
+      .then(() => {
+        cy.clearSessionData()
+          .visit(urlList.homePage)
+          .get(LOGIN_SELECTORS.resetPasswordLink)
+          .click()
+          .get(LOGIN_SELECTORS.emailAddressInput)
+          .type(email)
+          .get(BUTTON_SELECTORS.submit)
+          .click();
+        getMailActivationLinkForUserAndSubject(email, "Reset");
+      })
+      .then(link => {
+        cy.visit(link)
+          .get(LOGIN_SELECTORS.emailPasswordInput)
+          .type(newPassword)
+          .get(LOGIN_SELECTORS.confirmPassword)
+          .type(newPassword)
+          .get(BUTTON_SELECTORS.confirm)
+          .click()
+          .get(LOGIN_SELECTORS.welcomePage)
+          .should("be.visible")
+          .loginUserViaRequest({ email, password: newPassword });
+      });
+  });
 
   it(
     "should not be able to create staff member with not unique email. TC: SALEOR_3508",
@@ -189,9 +166,7 @@ describe("Staff members", () => {
         .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
         .click({ force: true });
       fillUpOnlyUserDetails(firstName, lastName, emailInvite);
-      cy.get(INVITE_STAFF_MEMBER_FORM.emailValidationMessage).should(
-        "be.visible",
-      );
+      cy.get(INVITE_STAFF_MEMBER_FORM.emailValidationMessage).should("be.visible");
       cy.get(BUTTON_SELECTORS.dialogBackButton).click();
       cy.confirmationErrorMessageShouldAppear();
     },
@@ -296,9 +271,7 @@ describe("Staff members", () => {
       cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.oldPassword).type(
         Cypress.env("USER_PASSWORD"),
       );
-      cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.newPassword).type(
-        newPass,
-      );
+      cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.newPassword).type(newPass);
       cy.get(BUTTON_SELECTORS.submit).click().confirmationMessageShouldAppear();
 
       cy.clearSessionData().loginUserViaRequest("auth", {

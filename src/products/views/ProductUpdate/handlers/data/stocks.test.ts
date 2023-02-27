@@ -1,21 +1,21 @@
-import { numberCellEmptyValue } from '@dashboard/components/Datagrid/NumberCell';
-import { DatagridChange } from '@dashboard/components/Datagrid/useDatagridChange';
-import { ProductFragment } from '@dashboard/graphql';
+import { numberCellEmptyValue } from "@dashboard/components/Datagrid/NumberCell";
+import { DatagridChange } from "@dashboard/components/Datagrid/useDatagridChange";
+import { ProductFragment } from "@dashboard/graphql";
 
-import { getStockData, getVaraintUpdateStockData } from './stock';
+import { getStockData, getVaraintUpdateStockData } from "./stock";
 
-describe('getStockData', () => {
-  test('should filter and map to stock format', () => {
+describe("getStockData", () => {
+  test("should filter and map to stock format", () => {
     // Arrange
     const changeData: DatagridChange[] = [
       {
         data: false,
-        column: 'availableInChannel:Q2hhbm5lbDox',
+        column: "availableInChannel:Q2hhbm5lbDox",
         row: 1,
       },
-      { column: 'attribute:2', row: 2, data: { value: { value: 'test2' } } },
-      { column: 'stock:Q2hhbm5lbDox', row: 1, data: { value: '12345' } },
-      { column: 'stock:Q2hhbm5lbDot', row: 1, data: { value: '5666' } },
+      { column: "attribute:2", row: 2, data: { value: { value: "test2" } } },
+      { column: "stock:Q2hhbm5lbDox", row: 1, data: { value: "12345" } },
+      { column: "stock:Q2hhbm5lbDot", row: 1, data: { value: "5666" } },
     ];
 
     // Act
@@ -24,19 +24,21 @@ describe('getStockData', () => {
     // Assert
     expect(stocks).toEqual([
       {
-        warehouse: 'Q2hhbm5lbDox',
-        quantity: '12345',
+        warehouse: "Q2hhbm5lbDox",
+        quantity: "12345",
       },
       {
-        warehouse: 'Q2hhbm5lbDot',
-        quantity: '5666',
+        warehouse: "Q2hhbm5lbDot",
+        quantity: "5666",
       },
     ]);
   });
 
-  test('should return empty array when no changes for given row', () => {
+  test("should return empty array when no changes for given row", () => {
     // Arrange
-    const changeData: DatagridChange[] = [{ column: 'attribute:2', row: 1, data: { value: { value: 'test2' } } }];
+    const changeData: DatagridChange[] = [
+      { column: "attribute:2", row: 1, data: { value: { value: "test2" } } },
+    ];
 
     // Act
     const stocks = getStockData(changeData, 1, []);
@@ -45,9 +47,9 @@ describe('getStockData', () => {
     expect(stocks).toEqual([]);
   });
 
-  test('should return empty string when no name column for given row', () => {
+  test("should return empty string when no name column for given row", () => {
     // Arrange
-    const changeData: DatagridChange[] = [{ column: 'name', row: 2, data: 'Joe' }];
+    const changeData: DatagridChange[] = [{ column: "name", row: 2, data: "Joe" }];
 
     // Act
     const stocks = getStockData(changeData, 1, []);
@@ -57,33 +59,33 @@ describe('getStockData', () => {
   });
 });
 
-describe('getVaraintUpdateStockData', () => {
+describe("getVaraintUpdateStockData", () => {
   const stocks = [
     {
-      id: 'UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjA=',
+      id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjA=",
       warehouse: {
-        id: 'Q2hhbm5lbDox',
+        id: "Q2hhbm5lbDox",
       },
     },
     {
-      id: 'UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjD=',
+      id: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjD=",
       warehouse: {
-        id: 'Q2hhbm5lbDot',
+        id: "Q2hhbm5lbDot",
       },
     },
   ];
 
-  test('should handle update stocks', () => {
+  test("should handle update stocks", () => {
     // Arrange
     const changeData: DatagridChange[] = [
-      { column: 'stock:Q2hhbm5lbDox', row: 1, data: { value: '12345' } },
-      { column: 'stock:Q2hhbm5lbDot', row: 1, data: { value: '5666' } },
+      { column: "stock:Q2hhbm5lbDox", row: 1, data: { value: "12345" } },
+      { column: "stock:Q2hhbm5lbDot", row: 1, data: { value: "5666" } },
     ];
 
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, [], {
       stocks,
-    } as ProductFragment['variants'][number]);
+    } as ProductFragment["variants"][number]);
 
     // Assert
     expect(variantStocks).toEqual({
@@ -91,27 +93,27 @@ describe('getVaraintUpdateStockData', () => {
       remove: [],
       update: [
         {
-          stock: 'UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjA=',
-          quantity: '12345',
+          stock: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjA=",
+          quantity: "12345",
         },
         {
-          stock: 'UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjD=',
-          quantity: '5666',
+          stock: "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjD=",
+          quantity: "5666",
         },
       ],
     });
   });
 
-  test('should handle remove stocks', () => {
+  test("should handle remove stocks", () => {
     // Arrange
     const changeData: DatagridChange[] = [
       {
-        column: 'stock:Q2hhbm5lbDox',
+        column: "stock:Q2hhbm5lbDox",
         row: 1,
         data: { value: numberCellEmptyValue },
       },
       {
-        column: 'stock:Q2hhbm5lbDot',
+        column: "stock:Q2hhbm5lbDot",
         row: 1,
         data: { value: numberCellEmptyValue },
       },
@@ -120,38 +122,41 @@ describe('getVaraintUpdateStockData', () => {
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, [], {
       stocks,
-    } as ProductFragment['variants'][number]);
+    } as ProductFragment["variants"][number]);
 
     // Assert
     expect(variantStocks).toEqual({
       create: [],
-      remove: ['UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjA=', 'UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjD='],
+      remove: [
+        "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjA=",
+        "UHJvZHVjdFZhcmlhbnRDaGFubmVsTGlzdGluZzoyNjD=",
+      ],
       update: [],
     });
   });
 
-  test('should handle create stocks', () => {
+  test("should handle create stocks", () => {
     // Arrange
     const changeData: DatagridChange[] = [
-      { column: 'stock:Q2hhbm5lbDof', row: 1, data: { value: '12345' } },
-      { column: 'stock:Q2hhbm5lbDod', row: 1, data: { value: '5666' } },
+      { column: "stock:Q2hhbm5lbDof", row: 1, data: { value: "12345" } },
+      { column: "stock:Q2hhbm5lbDod", row: 1, data: { value: "5666" } },
     ];
 
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, [], {
       stocks,
-    } as ProductFragment['variants'][number]);
+    } as ProductFragment["variants"][number]);
 
     // Assert
     expect(variantStocks).toEqual({
       create: [
         {
-          warehouse: 'Q2hhbm5lbDof',
-          quantity: '12345',
+          warehouse: "Q2hhbm5lbDof",
+          quantity: "12345",
         },
         {
-          warehouse: 'Q2hhbm5lbDod',
-          quantity: '5666',
+          warehouse: "Q2hhbm5lbDod",
+          quantity: "5666",
         },
       ],
       remove: [],
@@ -159,27 +164,29 @@ describe('getVaraintUpdateStockData', () => {
     });
   });
 
-  test('should return empty array when no changes for given row', () => {
+  test("should return empty array when no changes for given row", () => {
     // Arrange
-    const changeData: DatagridChange[] = [{ column: 'attribute:2', row: 1, data: { value: { value: 'test2' } } }];
+    const changeData: DatagridChange[] = [
+      { column: "attribute:2", row: 1, data: { value: { value: "test2" } } },
+    ];
 
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, [], {
       stocks,
-    } as ProductFragment['variants'][number]);
+    } as ProductFragment["variants"][number]);
 
     // Assert
     expect(variantStocks).toEqual({ create: [], remove: [], update: [] });
   });
 
-  test('should return empty string when no name column for given row', () => {
+  test("should return empty string when no name column for given row", () => {
     // Arrange
-    const changeData: DatagridChange[] = [{ column: 'name', row: 2, data: 'Joe' }];
+    const changeData: DatagridChange[] = [{ column: "name", row: 2, data: "Joe" }];
 
     // Act
     const variantStocks = getVaraintUpdateStockData(changeData, 1, [], {
       stocks,
-    } as ProductFragment['variants'][number]);
+    } as ProductFragment["variants"][number]);
 
     // Assert
     expect(variantStocks).toEqual({ create: [], remove: [], update: [] });

@@ -1,13 +1,13 @@
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import Money from '@dashboard/components/Money';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import TableCellAvatar from '@dashboard/components/TableCellAvatar';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { SearchProductsQuery } from '@dashboard/graphql';
-import useSearchQuery from '@dashboard/hooks/useSearchQuery';
-import { maybe, renderCollection } from '@dashboard/misc';
-import useScrollableDialogStyle from '@dashboard/styles/useScrollableDialogStyle';
-import { DialogProps, FetchMoreProps, RelayToFlat } from '@dashboard/types';
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import Money from "@dashboard/components/Money";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import TableCellAvatar from "@dashboard/components/TableCellAvatar";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { SearchProductsQuery } from "@dashboard/graphql";
+import useSearchQuery from "@dashboard/hooks/useSearchQuery";
+import { maybe, renderCollection } from "@dashboard/misc";
+import useScrollableDialogStyle from "@dashboard/styles/useScrollableDialogStyle";
+import { DialogProps, FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import {
   CircularProgress,
   Dialog,
@@ -18,40 +18,50 @@ import {
   TableCell,
   TextField,
   Typography,
-} from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import InfiniteScroll from 'react-infinite-scroll-component';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import BackButton from '../BackButton';
-import Checkbox from '../Checkbox';
-import { messages } from './messages';
-import { useStyles } from './styles';
+import BackButton from "../BackButton";
+import Checkbox from "../Checkbox";
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 import {
   handleProductAssign,
   handleVariantAssign,
   hasAllVariantsSelected,
   isVariantSelected,
   SearchVariant,
-} from './utils';
+} from "./utils";
 
 export interface AssignVariantDialogFormData {
-  products: RelayToFlat<SearchProductsQuery['search']>;
+  products: RelayToFlat<SearchProductsQuery["search"]>;
   query: string;
 }
 export interface AssignVariantDialogProps extends FetchMoreProps, DialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
-  products: RelayToFlat<SearchProductsQuery['search']>;
+  products: RelayToFlat<SearchProductsQuery["search"]>;
   loading: boolean;
   onFetch: (value: string) => void;
   onSubmit: (data: string[]) => void;
 }
 
-const scrollableTargetId = 'assignVariantScrollableDialog';
+const scrollableTargetId = "assignVariantScrollableDialog";
 
 const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
-  const { confirmButtonState, hasMore, open, loading, products, onClose, onFetch, onFetchMore, onSubmit } = props;
+  const {
+    confirmButtonState,
+    hasMore,
+    open,
+    loading,
+    products,
+    onClose,
+    onFetch,
+    onFetchMore,
+    onSubmit,
+  } = props;
   const classes = useStyles(props);
   const scrollableDialogClasses = useScrollableDialogStyle({});
 
@@ -62,7 +72,9 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
   const productChoices = products?.filter(product => product?.variants?.length > 0) || [];
 
   const selectedVariantsToProductsMap = productChoices
-    ? productChoices.map(product => product.variants.map(variant => isVariantSelected(variant, variants)))
+    ? productChoices.map(product =>
+        product.variants.map(variant => isVariantSelected(variant, variants)),
+      )
     : [];
 
   const productsWithAllVariantsSelected = productChoices
@@ -72,7 +84,13 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
   const handleSubmit = () => onSubmit(variants.map(variant => variant.id));
 
   return (
-    <Dialog onClose={onClose} open={open} classes={{ paper: scrollableDialogClasses.dialog }} fullWidth maxWidth="sm">
+    <Dialog
+      onClose={onClose}
+      open={open}
+      classes={{ paper: scrollableDialogClasses.dialog }}
+      fullWidth
+      maxWidth="sm"
+    >
       <DialogTitle disableTypography>
         <FormattedMessage {...messages.assignVariantDialogHeader} />
       </DialogTitle>
@@ -85,7 +103,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
           placeholder={intl.formatMessage(messages.assignVariantDialogContent)}
           fullWidth
           InputProps={{
-            autoComplete: 'off',
+            autoComplete: "off",
             endAdornment: loading && <CircularProgress size={16} />,
           }}
         />
@@ -108,7 +126,7 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
               {renderCollection(
                 productChoices,
                 (product, productIndex) => (
-                  <React.Fragment key={product ? product.id : 'skeleton'}>
+                  <React.Fragment key={product ? product.id : "skeleton"}>
                     <TableRowLink>
                       <TableCell padding="checkbox" className={classes.productCheckboxCell}>
                         <Checkbox
@@ -125,7 +143,10 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                           }
                         />
                       </TableCell>
-                      <TableCellAvatar className={classes.avatar} thumbnail={maybe(() => product.thumbnail.url)} />
+                      <TableCellAvatar
+                        className={classes.avatar}
+                        thumbnail={maybe(() => product.thumbnail.url)}
+                      />
                       <TableCell className={classes.colName} colSpan={2}>
                         {maybe(() => product.name)}
                       </TableCell>
@@ -162,7 +183,9 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
                           </div>
                         </TableCell>
                         <TableCell className={classes.textRight}>
-                          {variant?.channelListings[0]?.price && <Money money={variant.channelListings[0].price} />}
+                          {variant?.channelListings[0]?.price && (
+                            <Money money={variant.channelListings[0].price} />
+                          )}
                         </TableCell>
                       </TableRowLink>
                     ))}
@@ -182,12 +205,17 @@ const AssignVariantDialog: React.FC<AssignVariantDialogProps> = props => {
       </DialogContent>
       <DialogActions>
         <BackButton onClick={onClose} />
-        <ConfirmButton data-test-id="submit" transitionState={confirmButtonState} type="submit" onClick={handleSubmit}>
+        <ConfirmButton
+          data-test-id="submit"
+          transitionState={confirmButtonState}
+          type="submit"
+          onClick={handleSubmit}
+        >
           <FormattedMessage {...messages.assignVariantDialogButton} />
         </ConfirmButton>
       </DialogActions>
     </Dialog>
   );
 };
-AssignVariantDialog.displayName = 'AssignVariantDialog';
+AssignVariantDialog.displayName = "AssignVariantDialog";
 export default AssignVariantDialog;

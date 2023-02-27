@@ -1,17 +1,17 @@
-import { Button } from '@dashboard/components/Button';
-import CardTitle from '@dashboard/components/CardTitle';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { CountryFragment } from '@dashboard/graphql';
-import { Card, TableBody, TableCell } from '@material-ui/core';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import { DeleteIcon, IconButton, makeStyles } from '@saleor/macaw-ui';
-import clsx from 'clsx';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import { Button } from "@dashboard/components/Button";
+import CardTitle from "@dashboard/components/CardTitle";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { CountryFragment } from "@dashboard/graphql";
+import { Card, TableBody, TableCell } from "@material-ui/core";
+import ArrowDropDownIcon from "@material-ui/icons/ArrowDropDown";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { getStringOrPlaceholder, maybe, renderCollection } from '../../misc';
+import { getStringOrPlaceholder, maybe, renderCollection } from "../../misc";
 
 export interface CountryListProps {
   countries: CountryFragment[];
@@ -25,7 +25,7 @@ export interface CountryListProps {
 const useStyles = makeStyles(
   theme => ({
     iconCell: {
-      '&:last-child': {
+      "&:last-child": {
         paddingRight: theme.spacing(3),
         paddingLeft: 0,
       },
@@ -33,42 +33,42 @@ const useStyles = makeStyles(
     },
     indicator: {
       color: theme.palette.text.disabled,
-      display: 'inline-block',
+      display: "inline-block",
       left: 0,
       marginRight: theme.spacing(0.5),
-      position: 'absolute',
+      position: "absolute",
     },
     offsetCell: {
-      '&:first-child': {
+      "&:first-child": {
         paddingLeft: theme.spacing(3),
       },
-      position: 'relative',
+      position: "relative",
     },
     pointer: {
-      cursor: 'pointer',
+      cursor: "pointer",
     },
     root: {
-      '&:last-child': {
+      "&:last-child": {
         paddingBottom: 0,
       },
       paddingTop: 0,
     },
     rotate: {
-      transform: 'rotate(180deg)',
+      transform: "rotate(180deg)",
     },
     textRight: {
-      textAlign: 'right',
+      textAlign: "right",
     },
     toLeft: {
-      '&:first-child': {
+      "&:first-child": {
         paddingLeft: 0,
       },
     },
     wideColumn: {
-      width: '100%',
+      width: "100%",
     },
   }),
-  { name: 'CountryList' },
+  { name: "CountryList" },
 );
 
 const CountryList: React.FC<CountryListProps> = props => {
@@ -120,13 +120,14 @@ const CountryList: React.FC<CountryListProps> = props => {
             renderCollection(
               sortCountries(countries),
               (country, countryIndex) => (
-                <TableRowLink key={country ? country.code : 'skeleton'}>
+                <TableRowLink key={country ? country.code : "skeleton"}>
                   <TableCell className={classes.offsetCell}>
                     {maybe<React.ReactNode>(
                       () => (
                         <>
                           {(countryIndex === 0 ||
-                            countries[countryIndex].country[0] !== countries[countryIndex - 1].country[0]) && (
+                            countries[countryIndex].country[0] !==
+                              countries[countryIndex - 1].country[0]) && (
                             <span className={classes.indicator}>{country.country[0]}</span>
                           )}
                           {country.country}

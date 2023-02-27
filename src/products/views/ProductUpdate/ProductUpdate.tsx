@@ -1,11 +1,11 @@
-import placeholderImg from '@assets/images/placeholder255x255.png';
-import ActionDialog from '@dashboard/components/ActionDialog';
-import useAppChannel from '@dashboard/components/AppLayout/AppChannelContext';
-import { AttributeInput } from '@dashboard/components/Attributes';
-import NotFoundPage from '@dashboard/components/NotFoundPage';
-import { useShopLimitsQuery } from '@dashboard/components/Shop/queries';
-import { WindowTitle } from '@dashboard/components/WindowTitle';
-import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from '@dashboard/config';
+import placeholderImg from "@assets/images/placeholder255x255.png";
+import ActionDialog from "@dashboard/components/ActionDialog";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { AttributeInput } from "@dashboard/components/Attributes";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
+import { WindowTitle } from "@dashboard/components/WindowTitle";
+import { DEFAULT_INITIAL_SEARCH_DATA, VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   ProductMediaCreateMutationVariables,
   useProductDeleteMutation,
@@ -14,31 +14,37 @@ import {
   useProductMediaDeleteMutation,
   useProductMediaReorderMutation,
   useWarehouseListQuery,
-} from '@dashboard/graphql';
-import { getSearchFetchMoreProps } from '@dashboard/hooks/makeTopLevelSearch/utils';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { commonMessages, errorMessages } from '@dashboard/intl';
-import { useSearchAttributeValuesSuggestions } from '@dashboard/searches/useAttributeValueSearch';
-import useCategorySearch from '@dashboard/searches/useCategorySearch';
-import useCollectionSearch from '@dashboard/searches/useCollectionSearch';
-import usePageSearch from '@dashboard/searches/usePageSearch';
-import useProductSearch from '@dashboard/searches/useProductSearch';
-import { useTaxClassFetchMore } from '@dashboard/taxes/utils/useTaxClassFetchMore';
-import { getProductErrorMessage } from '@dashboard/utils/errors';
-import useAttributeValueSearchHandler from '@dashboard/utils/handlers/attributeValueSearchHandler';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import { mapEdgesToItems } from '@dashboard/utils/maps';
-import { DialogContentText } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages, errorMessages } from "@dashboard/intl";
+import { useSearchAttributeValuesSuggestions } from "@dashboard/searches/useAttributeValueSearch";
+import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
+import usePageSearch from "@dashboard/searches/usePageSearch";
+import useProductSearch from "@dashboard/searches/useProductSearch";
+import { useTaxClassFetchMore } from "@dashboard/taxes/utils/useTaxClassFetchMore";
+import { getProductErrorMessage } from "@dashboard/utils/errors";
+import useAttributeValueSearchHandler from "@dashboard/utils/handlers/attributeValueSearchHandler";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { DialogContentText } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import { getMutationState } from '../../../misc';
-import ProductUpdatePage from '../../components/ProductUpdatePage';
-import { productListUrl, productUrl, ProductUrlDialog, ProductUrlQueryParams, productVariantEditUrl } from '../../urls';
-import { createImageReorderHandler, createImageUploadHandler } from './handlers';
-import { useProductUpdateHandler } from './handlers/useProductUpdateHandler';
-import { productUpdatePageMessages as messages } from './messages';
+import { getMutationState } from "../../../misc";
+import ProductUpdatePage from "../../components/ProductUpdatePage";
+import {
+  productListUrl,
+  productUrl,
+  ProductUrlDialog,
+  ProductUrlQueryParams,
+  productVariantEditUrl,
+} from "../../urls";
+import { createImageReorderHandler, createImageUploadHandler } from "./handlers";
+import { useProductUpdateHandler } from "./handlers/useProductUpdateHandler";
+import { productUpdatePageMessages as messages } from "./messages";
 
 interface ProductUpdateProps {
   id: string;
@@ -107,10 +113,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [deleteProduct, deleteProductOpts] = useProductDeleteMutation({
     onCompleted: () => {
       notify({
-        status: 'success',
+        status: "success",
         text: intl.formatMessage({
-          id: 'vlVTmY',
-          defaultMessage: 'Product removed',
+          id: "vlVTmY",
+          defaultMessage: "Product removed",
         }),
       });
       navigate(productListUrl());
@@ -120,11 +126,11 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [createProductImage, createProductImageOpts] = useProductMediaCreateMutation({
     onCompleted: data => {
       const imageError = data.productMediaCreate.errors.find(
-        error => error.field === ('image' as keyof ProductMediaCreateMutationVariables),
+        error => error.field === ("image" as keyof ProductMediaCreateMutationVariables),
       );
       if (imageError) {
         notify({
-          status: 'error',
+          status: "error",
           title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
           text: intl.formatMessage(errorMessages.imageUploadErrorText),
         });
@@ -135,16 +141,15 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   const [deleteProductImage] = useProductMediaDeleteMutation({
     onCompleted: () =>
       notify({
-        status: 'success',
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       }),
   });
 
-  const [openModal, closeModal] = createDialogActionHandlers<ProductUrlDialog, ProductUrlQueryParams>(
-    navigate,
-    params => productUrl(id, params),
-    params,
-  );
+  const [openModal, closeModal] = createDialogActionHandlers<
+    ProductUrlDialog,
+    ProductUrlQueryParams
+  >(navigate, params => productUrl(id, params), params);
 
   const product = data?.product;
 
@@ -163,13 +168,13 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
       if (errors.length) {
         errors.map(error =>
           notify({
-            status: 'error',
+            status: "error",
             text: getProductErrorMessage(error, intl),
           }),
         );
       } else {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
         });
       }
@@ -178,7 +183,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
 
   const handleMediaUrlUpload = (mediaUrl: string) => {
     const variables = {
-      alt: '',
+      alt: "",
       mediaUrl,
       product: product.id,
     };
@@ -199,13 +204,17 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     [warehousesQuery.data],
   );
 
-  const handleImageUpload = createImageUploadHandler(id, variables => createProductImage({ variables }));
-  const handleImageReorder = createImageReorderHandler(product, variables => reorderProductImages({ variables }));
+  const handleImageUpload = createImageUploadHandler(id, variables =>
+    createProductImage({ variables }),
+  );
+  const handleImageReorder = createImageReorderHandler(product, variables =>
+    reorderProductImages({ variables }),
+  );
 
   const handleAssignAttributeReferenceClick = (attribute: AttributeInput) =>
     navigate(
       productUrl(id, {
-        action: 'assign-attribute-value',
+        action: "assign-attribute-value",
         id: attribute.id,
       }),
       { resetScroll: false },
@@ -280,7 +289,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         taxClasses={taxClasses ?? []}
         fetchMoreTaxClasses={fetchMoreTaxClasses}
         variants={product?.variants}
-        onDelete={() => openModal('remove')}
+        onDelete={() => openModal("remove")}
         onImageReorder={handleImageReorder}
         onMediaUrlUpload={handleMediaUrlUpload}
         onSubmit={submit}
@@ -293,7 +302,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onImageDelete={handleImageDelete}
         fetchMoreCategories={fetchMoreCategories}
         fetchMoreCollections={fetchMoreCollections}
-        assignReferencesAttributeId={params.action === 'assign-attribute-value' && params.id}
+        assignReferencesAttributeId={params.action === "assign-attribute-value" && params.id}
         onAssignReferencesClick={handleAssignAttributeReferenceClick}
         referencePages={mapEdgesToItems(searchPagesOpts?.data?.search) || []}
         referenceProducts={mapEdgesToItems(searchProductsOpts?.data?.search) || []}
@@ -307,7 +316,7 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         onAttributeValuesSearch={getAttributeValuesSuggestions}
       />
       <ActionDialog
-        open={params.action === 'remove'}
+        open={params.action === "remove"}
         onClose={closeModal}
         confirmButtonState={deleteProductOpts.status}
         onConfirm={() => deleteProduct({ variables: { id } })}
@@ -315,7 +324,10 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         title={intl.formatMessage(messages.deleteProductDialogTitle)}
       >
         <DialogContentText>
-          <FormattedMessage {...messages.deleteProductDialogSubtitle} values={{ name: product?.name }} />
+          <FormattedMessage
+            {...messages.deleteProductDialogSubtitle}
+            values={{ name: product?.name }}
+          />
         </DialogContentText>
       </ActionDialog>
     </>

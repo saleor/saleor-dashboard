@@ -1,2 +1,2 @@
-export { default } from './CollectionDetails';
-export * from './CollectionDetails';
+export { default } from "./CollectionDetails";
+export * from "./CollectionDetails";

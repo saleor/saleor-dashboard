@@ -2,22 +2,26 @@ import {
   ProductVariantFragment,
   useProductChannelListingUpdateMutation,
   useProductVariantChannelListingUpdateMutation,
-} from '@dashboard/graphql';
-import { extractMutationErrors } from '@dashboard/misc';
-import { ProductVariantUpdateSubmitData } from '@dashboard/products/components/ProductVariantPage/form';
+} from "@dashboard/graphql";
+import { extractMutationErrors } from "@dashboard/misc";
+import { ProductVariantUpdateSubmitData } from "@dashboard/products/components/ProductVariantPage/form";
 
 type Product = ProductVariantUpdateSubmitData;
 type Variant = ProductVariantFragment;
 
 const isFormDataChanged = (data: Product, variant: Variant) =>
   data.channelListings.some(channel => {
-    const variantChannel = variant.channelListings.find(variantChannel => variantChannel.channel.id === channel.id);
+    const variantChannel = variant.channelListings.find(
+      variantChannel => variantChannel.channel.id === channel.id,
+    );
 
     const priceHasChanged = channel.value.price !== variantChannel?.price?.amount.toString();
 
-    const costPriceHasChanged = channel.value.costPrice !== variantChannel?.costPrice?.amount.toString();
+    const costPriceHasChanged =
+      channel.value.costPrice !== variantChannel?.costPrice?.amount.toString();
 
-    const preorderThresholdHasChanged = channel.value?.preorderThreshold !== variantChannel?.preorderThreshold.quantity;
+    const preorderThresholdHasChanged =
+      channel.value?.preorderThreshold !== variantChannel?.preorderThreshold.quantity;
 
     return priceHasChanged || costPriceHasChanged || preorderThresholdHasChanged;
   });

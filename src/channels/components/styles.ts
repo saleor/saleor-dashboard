@@ -1,4 +1,4 @@
-import { makeStyles } from '@saleor/macaw-ui';
+import { makeStyles } from "@saleor/macaw-ui";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -10,7 +10,7 @@ export const useStyles = makeStyles(
       color: theme.palette.primary.main,
       fontSize: 14,
       fontWeight: 500,
-      textTransform: 'uppercase',
+      textTransform: "uppercase",
     },
     currencyTitle: {
       marginBottom: theme.spacing(1),
@@ -23,5 +23,5 @@ export const useStyles = makeStyles(
       marginTop: theme.spacing(2),
     },
   }),
-  { name: 'ChannelComponents' },
+  { name: "ChannelComponents" },
 );

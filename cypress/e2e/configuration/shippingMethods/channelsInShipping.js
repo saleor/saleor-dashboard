@@ -14,10 +14,7 @@ import {
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { selectChannelInHeader } from "../../../support/pages/channelsPage";
-import {
-  enterAndSelectShippings,
-  enterShippingZone,
-} from "../../../support/pages/shippingZones";
+import { enterAndSelectShippings, enterShippingZone } from "../../../support/pages/shippingZones";
 
 describe("As a staff user I want have different shipping method prices for each channel", () => {
   const startsWith = "ChannelShippingMethod";
@@ -63,35 +60,21 @@ describe("As a staff user I want have different shipping method prices for each 
             shippingMethod = shippingMethodResp;
             defaultChannel = defaultChannelResp;
 
-            addChannelToShippingZone(shippingZone.id, createdChannel.id).then(
-              () => {
-                addChannelToShippingMethod(
-                  shippingMethod.id,
-                  createdChannel.id,
-                  createdChannelPrice,
-                );
-              },
-            );
+            addChannelToShippingZone(shippingZone.id, createdChannel.id).then(() => {
+              addChannelToShippingMethod(shippingMethod.id, createdChannel.id, createdChannelPrice);
+            });
           },
         )
         .then(() => {
-          cy.clearSessionData().loginUserViaRequest(
-            "auth",
-            ONE_PERMISSION_USERS.shipping,
-          );
+          cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.shipping);
           enterAndSelectShippings(shippingZone.id, enterShippingZone);
           selectChannelInHeader(defaultChannel.name);
           cy.waitForProgressBarToNotBeVisible()
             .get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
-            .getTextFromElement(
-              SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell,
-            )
+            .getTextFromElement(SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell)
             .then(text => {
-              const value = defaultChannelPrice
-                .toFixed(2)
-                .toString()
-                .split(".");
+              const value = defaultChannelPrice.toFixed(2).toString().split(".");
               const valueRegex = new RegExp(value.join("(.|,)"));
               expect(text).to.match(valueRegex);
               expect(text).to.includes(defaultChannel.currencyCode);
@@ -101,15 +84,10 @@ describe("As a staff user I want have different shipping method prices for each 
                 .should("not.exist");
             })
             .then(() => {
-              cy.getTextFromElement(
-                SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell,
-              );
+              cy.getTextFromElement(SHIPPING_ZONE_DETAILS.shippingRatePriceTableCell);
             })
             .then(text => {
-              const value = createdChannelPrice
-                .toFixed(2)
-                .toString()
-                .split(".");
+              const value = createdChannelPrice.toFixed(2).toString().split(".");
               const valueRegex = new RegExp(value.join("(.|,)"));
               expect(text).to.match(valueRegex);
               expect(text).to.includes(createdChannelCurrency);

@@ -1,10 +1,7 @@
 import { getValueWithDefault } from "./utils/Utils";
 
 export function getGiftCardWithTag(tag, withCode = false) {
-  return getGiftCardsWithTag(1, tag, withCode)
-    .its("body.data.giftCards.edges")
-    .its(0)
-    .its("node");
+  return getGiftCardsWithTag(1, tag, withCode).its("body.data.giftCards.edges").its(0).its("node");
 }
 
 export function getGiftCardsWithTag(first, tag, withCode = false) {
@@ -107,10 +104,7 @@ export function getGiftCardWithId(id) {
   return cy.sendRequestWithQuery(query).its("body.data.giftCard");
 }
 
-export function createGiftCard(
-  { tag, currency, amount, isActive = true },
-  token,
-) {
+export function createGiftCard({ tag, currency, amount, isActive = true }, token) {
   const mutation = `mutation{
     giftCardCreate(input:{
       addTags:"${tag}"
@@ -131,9 +125,7 @@ export function createGiftCard(
       }
     }
   }`;
-  return cy
-    .sendRequestWithQuery(mutation, token)
-    .its("body.data.giftCardCreate.giftCard");
+  return cy.sendRequestWithQuery(mutation, token).its("body.data.giftCardCreate.giftCard");
 }
 
 export function giftCardDeactivate(giftCardId) {

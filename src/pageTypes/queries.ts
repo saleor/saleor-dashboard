@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const pageTypeListQuery = gql`
   query PageTypeList(
@@ -9,7 +9,14 @@ export const pageTypeListQuery = gql`
     $filter: PageTypeFilterInput
     $sort: PageTypeSortingInput
   ) {
-    pageTypes(after: $after, before: $before, first: $first, last: $last, filter: $filter, sortBy: $sort) {
+    pageTypes(
+      after: $after
+      before: $before
+      first: $first
+      last: $last
+      filter: $filter
+      sortBy: $sort
+    ) {
       edges {
         node {
           ...PageType

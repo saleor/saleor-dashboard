@@ -9,14 +9,8 @@ import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { urlList } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
-import {
-  createCustomer,
-  deleteCustomersStartsWith,
-} from "../../support/api/requests/Customer";
-import {
-  getOrder,
-  updateOrdersSettings,
-} from "../../support/api/requests/Order";
+import { createCustomer, deleteCustomersStartsWith } from "../../support/api/requests/Customer";
+import { getOrder, updateOrdersSettings } from "../../support/api/requests/Order";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createFulfilledOrder,
@@ -24,10 +18,7 @@ import {
   createReadyToFulfillOrder,
 } from "../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
+import { createShipping, deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import {
   getDefaultTaxClass,
   updateTaxConfigurationForChannel,
@@ -77,21 +68,15 @@ describe("Orders", () => {
           taxClassId: taxClass.id,
         });
       })
+      .then(({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
+        shippingMethod = shippingMethodResp;
+        warehouse = warehouseResp;
+        productsUtils.createTypeAttributeAndCategoryForProduct({
+          name: randomName,
+        });
+      })
       .then(
-        ({ warehouse: warehouseResp, shippingMethod: shippingMethodResp }) => {
-          shippingMethod = shippingMethodResp;
-          warehouse = warehouseResp;
-          productsUtils.createTypeAttributeAndCategoryForProduct({
-            name: randomName,
-          });
-        },
-      )
-      .then(
-        ({
-          productType: productTypeResp,
-          attribute: attributeResp,
-          category: categoryResp,
-        }) => {
+        ({ productType: productTypeResp, attribute: attributeResp, category: categoryResp }) => {
           productsUtils.createProductInChannel({
             name: randomName,
             channelId: defaultChannel.id,
@@ -117,10 +102,7 @@ describe("Orders", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.order,
-    );
+    cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.order);
   });
 
   it(
@@ -146,9 +128,7 @@ describe("Orders", () => {
       }).then(order => {
         cy.visit(urlList.orders);
         cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
-        cy.get(ORDERS_SELECTORS.salesChannel)
-          .find("[button]")
-          .should("not.exist");
+        cy.get(ORDERS_SELECTORS.salesChannel).find("[button]").should("not.exist");
       });
     },
   );
@@ -216,9 +196,7 @@ describe("Orders", () => {
             .addAliasToGraphRequest("OrderFulfillmentRefundProducts");
           cy.get(BUTTON_SELECTORS.submit)
             .click()
-            .waitForRequestAndCheckIfNoErrors(
-              "@OrderFulfillmentRefundProducts",
-            );
+            .waitForRequestAndCheckIfNoErrors("@OrderFulfillmentRefundProducts");
           getOrder(order.id);
         })
         .then(orderResp => {

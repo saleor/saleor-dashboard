@@ -1,14 +1,21 @@
-import { TextField } from '@material-ui/core';
-import React from 'react';
+import { TextField } from "@material-ui/core";
+import React from "react";
 
-import { FieldType, FilterFieldBaseProps } from '../types';
-import useStyles from './styles';
-import { filterTestingContext } from './utils';
+import { FieldType, FilterFieldBaseProps } from "../types";
+import useStyles from "./styles";
+import { filterTestingContext } from "./utils";
 
-export type FilterTextFieldProps = FilterFieldBaseProps<string, FieldType.text | FieldType.price | FieldType.date> & {
+export type FilterTextFieldProps = FilterFieldBaseProps<
+  string,
+  FieldType.text | FieldType.price | FieldType.date
+> & {
   currencySymbol: string | null;
 };
-const FilterTextField: React.FC<FilterTextFieldProps> = ({ currencySymbol, filter, onFilterPropertyChange }) => {
+const FilterTextField: React.FC<FilterTextFieldProps> = ({
+  currencySymbol,
+  filter,
+  onFilterPropertyChange,
+}) => {
   const classes = useStyles();
 
   return (
@@ -23,10 +30,10 @@ const FilterTextField: React.FC<FilterTextFieldProps> = ({ currencySymbol, filte
         endAdornment: filter.type === FieldType.price && currencySymbol,
         type:
           filter.type === FieldType.date
-            ? 'date'
+            ? "date"
             : [FieldType.number, FieldType.price].includes(filter.type)
-            ? 'number'
-            : 'text',
+            ? "number"
+            : "text",
       }}
       value={filter.value[0]}
       onChange={event =>
@@ -37,12 +44,12 @@ const FilterTextField: React.FC<FilterTextFieldProps> = ({ currencySymbol, filte
               value: [event.target.value, filter.value[1]],
             },
           },
-          type: 'set-property',
+          type: "set-property",
         })
       }
     />
   );
 };
 
-FilterTextField.displayName = 'FilterTextField';
+FilterTextField.displayName = "FilterTextField";
 export default FilterTextField;

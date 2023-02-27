@@ -1,10 +1,10 @@
-import { getGiftCardErrorMessage } from '@dashboard/giftCards/GiftCardUpdate/messages';
-import { DeleteGiftCardMutation, useDeleteGiftCardMutation } from '@dashboard/graphql';
-import { MutationResultWithOpts } from '@dashboard/hooks/makeMutation';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { useIntl } from 'react-intl';
+import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
+import { DeleteGiftCardMutation, useDeleteGiftCardMutation } from "@dashboard/graphql";
+import { MutationResultWithOpts } from "@dashboard/hooks/makeMutation";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { useIntl } from "react-intl";
 
-import { giftCardDeleteDialogMessages as messages } from './messages';
+import { giftCardDeleteDialogMessages as messages } from "./messages";
 
 interface UseGiftCardSingleDeleteProps {
   onDeleteGiftCard: () => void;
@@ -31,7 +31,7 @@ const useGiftCardSingleDelete = ({
 
       if (!errors.length) {
         notify({
-          status: 'success',
+          status: "success",
           text: intl.formatMessage(messages.deleteSuccessAlertText, {
             selectedItemsCount: 1,
           }),
@@ -48,7 +48,7 @@ const useGiftCardSingleDelete = ({
 
       errors.map(error =>
         notify({
-          status: 'error',
+          status: "error",
           text: getGiftCardErrorMessage(error, intl),
         }),
       );

@@ -1,15 +1,21 @@
-import { categoryAddUrl, CategoryListUrlSortField } from '@dashboard/categories/urls';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import { Button } from '@dashboard/components/Button';
-import SearchBar from '@dashboard/components/SearchBar';
-import { CategoryFragment } from '@dashboard/graphql';
-import { sectionNames } from '@dashboard/intl';
-import { ListActions, PageListProps, SearchPageProps, SortPage, TabPageProps } from '@dashboard/types';
-import { Card } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import { categoryAddUrl, CategoryListUrlSortField } from "@dashboard/categories/urls";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { Button } from "@dashboard/components/Button";
+import SearchBar from "@dashboard/components/SearchBar";
+import { CategoryFragment } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import {
+  ListActions,
+  PageListProps,
+  SearchPageProps,
+  SortPage,
+  TabPageProps,
+} from "@dashboard/types";
+import { Card } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import CategoryList from '../CategoryList';
+import CategoryList from "../CategoryList";
 
 export interface CategoryTableProps
   extends PageListProps,
@@ -52,15 +58,15 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
       <Card>
         <SearchBar
           allTabLabel={intl.formatMessage({
-            id: 'vy7fjd',
-            defaultMessage: 'All Categories',
-            description: 'tab name',
+            id: "vy7fjd",
+            defaultMessage: "All Categories",
+            description: "tab name",
           })}
           currentTab={currentTab}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
-            id: 'JiXNEV',
-            defaultMessage: 'Search Category',
+            id: "JiXNEV",
+            defaultMessage: "Search Category",
           })}
           tabs={tabs}
           onAll={onAll}
@@ -86,5 +92,5 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
     </>
   );
 };
-CategoryListPage.displayName = 'CategoryListPage';
+CategoryListPage.displayName = "CategoryListPage";
 export default CategoryListPage;

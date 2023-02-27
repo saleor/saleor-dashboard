@@ -5,5 +5,5 @@ export const ASSIGN_ELEMENTS_SELECTORS = {
   variantTableRow: "[data-test-id='assign-variant-table-row']",
   checkbox: "[type='checkbox']",
   submitButton: "[type='submit']",
-  dialogContent: '[data-test-id="search-query"]'
+  dialogContent: '[data-test-id="search-query"]',
 };

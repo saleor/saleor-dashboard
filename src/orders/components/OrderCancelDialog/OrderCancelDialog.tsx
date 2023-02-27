@@ -1,14 +1,20 @@
-import BackButton from '@dashboard/components/BackButton';
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import { OrderErrorFragment } from '@dashboard/graphql';
-import useModalDialogErrors from '@dashboard/hooks/useModalDialogErrors';
-import { buttonMessages } from '@dashboard/intl';
-import getOrderErrorMessage from '@dashboard/utils/errors/order';
-import { Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle } from '@material-ui/core';
-import { ConfirmButtonTransitionState } from '@saleor/macaw-ui';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+import BackButton from "@dashboard/components/BackButton";
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { OrderErrorFragment } from "@dashboard/graphql";
+import useModalDialogErrors from "@dashboard/hooks/useModalDialogErrors";
+import { buttonMessages } from "@dashboard/intl";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@material-ui/core";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
 export interface OrderCancelDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
@@ -20,7 +26,14 @@ export interface OrderCancelDialogProps {
 }
 
 const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
-  const { confirmButtonState, errors: apiErrors, number: orderNumber, open, onSubmit, onClose } = props;
+  const {
+    confirmButtonState,
+    errors: apiErrors,
+    number: orderNumber,
+    open,
+    onSubmit,
+    onClose,
+  } = props;
 
   const intl = useIntl();
   const errors = useModalDialogErrors(apiErrors, open);
@@ -61,5 +74,5 @@ const OrderCancelDialog: React.FC<OrderCancelDialogProps> = props => {
     </Dialog>
   );
 };
-OrderCancelDialog.displayName = 'OrderCancelDialog';
+OrderCancelDialog.displayName = "OrderCancelDialog";
 export default OrderCancelDialog;

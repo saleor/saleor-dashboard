@@ -1,17 +1,24 @@
-import { IFilter } from '@dashboard/components/Filter';
-import { PluginConfigurationType } from '@dashboard/graphql';
-import { sectionNames } from '@dashboard/intl';
-import { AutocompleteFilterOpts, FilterOpts } from '@dashboard/types';
-import { createAutocompleteField, createBooleanField, createOptionsField } from '@dashboard/utils/filters/fields';
-import { defineMessages, IntlShape } from 'react-intl';
+import { IFilter } from "@dashboard/components/Filter";
+import { PluginConfigurationType } from "@dashboard/graphql";
+import { sectionNames } from "@dashboard/intl";
+import { AutocompleteFilterOpts, FilterOpts } from "@dashboard/types";
+import {
+  createAutocompleteField,
+  createBooleanField,
+  createOptionsField,
+} from "@dashboard/utils/filters/fields";
+import { defineMessages, IntlShape } from "react-intl";
 
-import { pluginChannelConfigurationCellMessages, pluginStatusMessages } from '../PluginsList/messages';
+import {
+  pluginChannelConfigurationCellMessages,
+  pluginStatusMessages,
+} from "../PluginsList/messages";
 
 export enum PluginFilterKeys {
-  active = 'active',
-  channels = 'channels',
-  status = 'status',
-  type = 'type',
+  active = "active",
+  channels = "channels",
+  status = "status",
+  type = "type",
 }
 
 export interface PluginListFilterOpts {
@@ -23,23 +30,26 @@ export interface PluginListFilterOpts {
 
 const messages = defineMessages({
   channelStatusSectionTitle: {
-    id: 'TC/EOG',
-    defaultMessage: 'Status in channel',
-    description: 'status section title',
+    id: "TC/EOG",
+    defaultMessage: "Status in channel",
+    description: "status section title",
   },
   channelStatusSectionSubtitle: {
-    id: 'zQnYKn',
-    defaultMessage: 'Channel status',
-    description: 'status section subtitle',
+    id: "zQnYKn",
+    defaultMessage: "Channel status",
+    description: "status section subtitle",
   },
   configTypeSectionTitle: {
-    id: 'cwoN25',
-    defaultMessage: 'Configuration Type',
-    description: 'config type section title',
+    id: "cwoN25",
+    defaultMessage: "Configuration Type",
+    description: "config type section title",
   },
 });
 
-export function createFilterStructure(intl: IntlShape, opts: PluginListFilterOpts): IFilter<PluginFilterKeys> {
+export function createFilterStructure(
+  intl: IntlShape,
+  opts: PluginListFilterOpts,
+): IFilter<PluginFilterKeys> {
   return [
     {
       active: opts.status.active,
@@ -70,7 +80,7 @@ export function createFilterStructure(intl: IntlShape, opts: PluginListFilterOpt
             opts.channels.choices,
             {
               hasMore: opts.channels.hasMore,
-              initialSearch: '',
+              initialSearch: "",
               loading: opts.channels.loading,
               onFetchMore: opts.channels.onFetchMore,
               onSearchChange: opts.channels.onSearchChange,
@@ -82,16 +92,22 @@ export function createFilterStructure(intl: IntlShape, opts: PluginListFilterOpt
     {
       active: opts.type.active,
       name: PluginFilterKeys.type,
-      ...createOptionsField(PluginFilterKeys.type, intl.formatMessage(messages.configTypeSectionTitle), [], false, [
-        {
-          value: PluginConfigurationType.GLOBAL,
-          label: intl.formatMessage(pluginChannelConfigurationCellMessages.globalLabel),
-        },
-        {
-          value: PluginConfigurationType.PER_CHANNEL,
-          label: intl.formatMessage(pluginChannelConfigurationCellMessages.channelLabel),
-        },
-      ]),
+      ...createOptionsField(
+        PluginFilterKeys.type,
+        intl.formatMessage(messages.configTypeSectionTitle),
+        [],
+        false,
+        [
+          {
+            value: PluginConfigurationType.GLOBAL,
+            label: intl.formatMessage(pluginChannelConfigurationCellMessages.globalLabel),
+          },
+          {
+            value: PluginConfigurationType.PER_CHANNEL,
+            label: intl.formatMessage(pluginChannelConfigurationCellMessages.channelLabel),
+          },
+        ],
+      ),
     },
   ];
 }

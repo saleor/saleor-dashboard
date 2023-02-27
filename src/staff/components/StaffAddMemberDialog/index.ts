@@ -1,2 +1,2 @@
-export { default } from './StaffAddMemberDialog';
-export * from './StaffAddMemberDialog';
+export { default } from "./StaffAddMemberDialog";
+export * from "./StaffAddMemberDialog";

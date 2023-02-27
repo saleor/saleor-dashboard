@@ -1,6 +1,6 @@
-import ConfirmButton from '@dashboard/components/ConfirmButton';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import { buttonMessages } from '@dashboard/intl';
+import ConfirmButton from "@dashboard/components/ConfirmButton";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { buttonMessages } from "@dashboard/intl";
 import {
   Dialog,
   DialogActions,
@@ -10,13 +10,13 @@ import {
   Radio,
   RadioGroup,
   Typography,
-} from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
+} from "@material-ui/core";
+import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
-import OrderCustomerChangeForm, { CustomerChangeActionEnum, OrderCustomerChangeData } from './form';
-import messages from './messages';
-import { useStyles } from './styles';
+import OrderCustomerChangeForm, { CustomerChangeActionEnum, OrderCustomerChangeData } from "./form";
+import messages from "./messages";
+import { useStyles } from "./styles";
 
 export interface OrderCustomerChangeDialogProps {
   open: boolean;
@@ -75,5 +75,5 @@ const OrderCustomerChangeDialog: React.FC<OrderCustomerChangeDialogProps> = prop
   );
 };
 
-OrderCustomerChangeDialog.displayName = 'OrderCustomerChangeDialog';
+OrderCustomerChangeDialog.displayName = "OrderCustomerChangeDialog";
 export default OrderCustomerChangeDialog;

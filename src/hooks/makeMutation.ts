@@ -4,21 +4,24 @@ import {
   MutationHookOptions as BaseMutationHookOptions,
   MutationResult,
   useMutation as useBaseMutation,
-} from '@apollo/client';
-import { handleNestedMutationErrors, showAllErrors, useUser } from '@dashboard/auth';
-import { isJwtError } from '@dashboard/auth/errors';
-import { commonMessages } from '@dashboard/intl';
-import { getMutationStatus } from '@dashboard/misc';
-import { MutationResultAdditionalProps } from '@dashboard/types';
-import { GqlErrors, hasError } from '@dashboard/utils/api';
-import { DocumentNode } from 'graphql';
-import { useIntl } from 'react-intl';
+} from "@apollo/client";
+import { handleNestedMutationErrors, showAllErrors, useUser } from "@dashboard/auth";
+import { isJwtError } from "@dashboard/auth/errors";
+import { commonMessages } from "@dashboard/intl";
+import { getMutationStatus } from "@dashboard/misc";
+import { MutationResultAdditionalProps } from "@dashboard/types";
+import { GqlErrors, hasError } from "@dashboard/utils/api";
+import { DocumentNode } from "graphql";
+import { useIntl } from "react-intl";
 
-import useNotifier from './useNotifier';
+import useNotifier from "./useNotifier";
 
 export type MutationResultWithOpts<TData> = MutationResult<TData> & MutationResultAdditionalProps;
 
-export type UseMutation<TData, TVariables> = [MutationFunction<TData, TVariables>, MutationResultWithOpts<TData>];
+export type UseMutation<TData, TVariables> = [
+  MutationFunction<TData, TVariables>,
+  MutationResultWithOpts<TData>,
+];
 export type UseMutationHook<TData, TVariables> = (
   cbs: MutationHookOptions<TData, TVariables>,
 ) => UseMutation<TData, TVariables>;
@@ -55,19 +58,19 @@ export function useMutation<TData, TVariables>(
         if (err.graphQLErrors) {
           if (hasError(err, GqlErrors.ReadOnlyException)) {
             notify({
-              status: 'error',
+              status: "error",
               text: intl.formatMessage(commonMessages.readOnly),
             });
           } else if (err.graphQLErrors.some(isJwtError)) {
             user.logout();
             notify({
-              status: 'error',
+              status: "error",
               text: intl.formatMessage(commonMessages.sessionExpired),
             });
           } else if (!hasError(err, GqlErrors.LimitReachedException)) {
             err.graphQLErrors.map(graphQLError => {
               notify({
-                status: 'error',
+                status: "error",
                 apiMessage: graphQLError.message,
               });
             });
@@ -92,8 +95,11 @@ export function useMutation<TData, TVariables>(
   ];
 }
 
-function makeMutation<TData, TVariables>(mutation: DocumentNode): UseMutationHook<TData, TVariables> {
-  return (opts: MutationHookOptions<TData, TVariables>) => useMutation<TData, TVariables>(mutation, opts);
+function makeMutation<TData, TVariables>(
+  mutation: DocumentNode,
+): UseMutationHook<TData, TVariables> {
+  return (opts: MutationHookOptions<TData, TVariables>) =>
+    useMutation<TData, TVariables>(mutation, opts);
 }
 
 export default makeMutation;

@@ -1,1 +1,1 @@
-export * from './TaxPagination';
+export * from "./TaxPagination";

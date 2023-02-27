@@ -7,10 +7,7 @@ import { CHANNEL_FORM_SELECTORS } from "../../../elements/channels/channel-form-
 import { DRAFT_ORDER_SELECTORS } from "../../../elements/orders/draft-order-selectors";
 import { ORDERS_SELECTORS } from "../../../elements/orders/orders-selectors";
 import { urlList } from "../../../fixtures/urlList";
-import {
-  activateChannel,
-  createChannel,
-} from "../../../support/api/requests/Channels";
+import { activateChannel, createChannel } from "../../../support/api/requests/Channels";
 import { createCheckout } from "../../../support/api/requests/Checkout";
 import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
 import {
@@ -145,10 +142,7 @@ describe("Tests on inactive channel", () => {
         })
         .then(resp => {
           const isVisible = isProductVisible(resp, randomChannel);
-          expect(
-            isVisible,
-            "product with inactive channel shouldn't be visible",
-          ).to.be.eq(false);
+          expect(isVisible, "product with inactive channel shouldn't be visible").to.be.eq(false);
           activateChannel(channel.id);
         })
         .then(() => {
@@ -156,10 +150,7 @@ describe("Tests on inactive channel", () => {
         })
         .then(resp => {
           const isVisible = isProductVisible(resp, randomChannel);
-          expect(
-            isVisible,
-            "product with active channel should be visible",
-          ).to.be.eq(true);
+          expect(isVisible, "product with active channel should be visible").to.be.eq(true);
         });
     },
   );

@@ -1,16 +1,23 @@
-import { DetailedContent } from '@dashboard/components/AppLayout/DetailedContent';
-import { TopNav } from '@dashboard/components/AppLayout/TopNav';
-import CardSpacer from '@dashboard/components/CardSpacer';
-import LanguageSwitch from '@dashboard/components/LanguageSwitch';
-import { CategoryTranslationFragment, LanguageCodeEnum } from '@dashboard/graphql';
-import { commonMessages } from '@dashboard/intl';
-import { getStringOrPlaceholder } from '@dashboard/misc';
-import { TranslationInputFieldName, TranslationsEntitiesPageProps } from '@dashboard/translations/types';
-import { languageEntitiesUrl, languageEntityUrl, TranslatableEntities } from '@dashboard/translations/urls';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import CardSpacer from "@dashboard/components/CardSpacer";
+import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { CategoryTranslationFragment, LanguageCodeEnum } from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
+import { getStringOrPlaceholder } from "@dashboard/misc";
+import {
+  TranslationInputFieldName,
+  TranslationsEntitiesPageProps,
+} from "@dashboard/translations/types";
+import {
+  languageEntitiesUrl,
+  languageEntityUrl,
+  TranslatableEntities,
+} from "@dashboard/translations/urls";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import TranslationFields from '../TranslationFields';
+import TranslationFields from "../TranslationFields";
 
 export interface TranslationsCategoriesPageProps extends TranslationsEntitiesPageProps {
   data: CategoryTranslationFragment;
@@ -38,7 +45,7 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
         })}
         title={intl.formatMessage(
           {
-            id: 'XitW/z',
+            id: "XitW/z",
             defaultMessage: 'Translation Category "{categoryName}" - {languageCode}',
           },
           {
@@ -50,7 +57,9 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
         <LanguageSwitch
           currentLanguage={LanguageCodeEnum[languageCode]}
           languages={languages}
-          getLanguageUrl={lang => languageEntityUrl(lang, TranslatableEntities.categories, translationId)}
+          getLanguageUrl={lang =>
+            languageEntityUrl(lang, TranslatableEntities.categories, translationId)
+          }
         />
       </TopNav>
       <TranslationFields
@@ -61,19 +70,19 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
         fields={[
           {
             displayName: intl.formatMessage({
-              id: 'vEYtiq',
-              defaultMessage: 'Category Name',
+              id: "vEYtiq",
+              defaultMessage: "Category Name",
             }),
             name: TranslationInputFieldName.name,
             translation: data?.translation?.name || null,
-            type: 'short' as 'short',
+            type: "short" as "short",
             value: data?.category?.name,
           },
           {
             displayName: intl.formatMessage(commonMessages.description),
             name: TranslationInputFieldName.description,
             translation: data?.translation?.description || null,
-            type: 'rich' as 'rich',
+            type: "rich" as "rich",
             value: data?.category?.description,
           },
         ]}
@@ -89,28 +98,28 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
         disabled={disabled}
         initialState={true}
         title={intl.formatMessage({
-          id: 'TGX4T1',
-          defaultMessage: 'Search Engine Preview',
+          id: "TGX4T1",
+          defaultMessage: "Search Engine Preview",
         })}
         fields={[
           {
             displayName: intl.formatMessage({
-              id: 'HlEpii',
-              defaultMessage: 'Search Engine Title',
+              id: "HlEpii",
+              defaultMessage: "Search Engine Title",
             }),
             name: TranslationInputFieldName.seoTitle,
             translation: data?.translation?.seoTitle || null,
-            type: 'short' as 'short',
+            type: "short" as "short",
             value: data?.category?.seoTitle,
           },
           {
             displayName: intl.formatMessage({
-              id: 'US3IPU',
-              defaultMessage: 'Search Engine Description',
+              id: "US3IPU",
+              defaultMessage: "Search Engine Description",
             }),
             name: TranslationInputFieldName.seoDescription,
             translation: data?.translation?.seoDescription || null,
-            type: 'long' as 'long',
+            type: "long" as "long",
             value: data?.category?.seoDescription,
           },
         ]}
@@ -123,5 +132,5 @@ const TranslationsCategoriesPage: React.FC<TranslationsCategoriesPageProps> = ({
     </DetailedContent>
   );
 };
-TranslationsCategoriesPage.displayName = 'TranslationsCategoriesPage';
+TranslationsCategoriesPage.displayName = "TranslationsCategoriesPage";
 export default TranslationsCategoriesPage;

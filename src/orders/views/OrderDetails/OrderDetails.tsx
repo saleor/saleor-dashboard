@@ -1,6 +1,6 @@
-import { MetadataFormData } from '@dashboard/components/Metadata';
-import NotFoundPage from '@dashboard/components/NotFoundPage';
-import { Task } from '@dashboard/containers/BackgroundTasks/types';
+import { MetadataFormData } from "@dashboard/components/Metadata";
+import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
   OrderStatus,
@@ -8,23 +8,23 @@ import {
   useOrderDetailsQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
-} from '@dashboard/graphql';
-import useBackgroundTask from '@dashboard/hooks/useBackgroundTask';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import useNotifier from '@dashboard/hooks/useNotifier';
-import { commonMessages } from '@dashboard/intl';
-import getOrderErrorMessage from '@dashboard/utils/errors/order';
-import createDialogActionHandlers from '@dashboard/utils/handlers/dialogActionHandlers';
-import createMetadataUpdateHandler from '@dashboard/utils/handlers/metadataUpdateHandler';
-import React from 'react';
-import { useIntl } from 'react-intl';
+} from "@dashboard/graphql";
+import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import useNotifier from "@dashboard/hooks/useNotifier";
+import { commonMessages } from "@dashboard/intl";
+import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
+import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import React from "react";
+import { useIntl } from "react-intl";
 
-import OrderOperations from '../../containers/OrderOperations';
-import { orderListUrl, orderUrl, OrderUrlDialog, OrderUrlQueryParams } from '../../urls';
-import { OrderDetailsMessages } from './OrderDetailsMessages';
-import { OrderDraftDetails } from './OrderDraftDetails';
-import { OrderNormalDetails } from './OrderNormalDetails';
-import { OrderUnconfirmedDetails } from './OrderUnconfirmedDetails';
+import OrderOperations from "../../containers/OrderOperations";
+import { orderListUrl, orderUrl, OrderUrlDialog, OrderUrlQueryParams } from "../../urls";
+import { OrderDetailsMessages } from "./OrderDetailsMessages";
+import { OrderDraftDetails } from "./OrderDraftDetails";
+import { OrderNormalDetails } from "./OrderNormalDetails";
+import { OrderUnconfirmedDetails } from "./OrderUnconfirmedDetails";
 
 interface OrderDetailsProps {
   id: string;
@@ -53,8 +53,8 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
       const isError = !!errors.length;
 
       notify({
-        status: isError ? 'error' : 'success',
-        text: isError ? getOrderErrorMessage(errors[0], intl) : 'Confirmed Order',
+        status: isError ? "error" : "success",
+        text: isError ? getOrderErrorMessage(errors[0], intl) : "Confirmed Order",
       });
     },
   });
@@ -88,7 +88,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
 
     if (result.length === 0) {
       notify({
-        status: 'success',
+        status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
     }

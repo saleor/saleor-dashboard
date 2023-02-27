@@ -1,4 +1,4 @@
-import { GiftCardUrlSortField } from './types';
+import { GiftCardUrlSortField } from "./types";
 
 export function canBeSorted(sort: GiftCardUrlSortField, isCurrencySelected: boolean) {
   switch (sort) {

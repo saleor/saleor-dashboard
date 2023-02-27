@@ -1,35 +1,35 @@
-import HorizontalSpacer from '@dashboard/apps/components/HorizontalSpacer';
-import Checkbox from '@dashboard/components/Checkbox';
-import DeleteIconButton from '@dashboard/components/DeleteIconButton';
-import Link from '@dashboard/components/Link';
-import Money from '@dashboard/components/Money';
-import ResponsiveTable from '@dashboard/components/ResponsiveTable';
-import Skeleton from '@dashboard/components/Skeleton';
-import { TableButtonWrapper } from '@dashboard/components/TableButtonWrapper/TableButtonWrapper';
-import TableRowLink from '@dashboard/components/TableRowLink';
-import { customerUrl } from '@dashboard/customers/urls';
-import GiftCardStatusChip from '@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip';
-import { PLACEHOLDER } from '@dashboard/giftCards/GiftCardUpdate/types';
-import { giftCardListUrl, giftCardUrl } from '@dashboard/giftCards/urls';
-import useNavigator from '@dashboard/hooks/useNavigator';
-import { renderCollection } from '@dashboard/misc';
-import { productUrl } from '@dashboard/products/urls';
-import { Card, TableBody, TableCell, Typography } from '@material-ui/core';
-import { PillLink } from '@saleor/macaw-ui';
-import React, { useEffect } from 'react';
-import { FormattedMessage, useIntl } from 'react-intl';
-import { Link as RouterLink } from 'react-router-dom';
+import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import Checkbox from "@dashboard/components/Checkbox";
+import DeleteIconButton from "@dashboard/components/DeleteIconButton";
+import Link from "@dashboard/components/Link";
+import Money from "@dashboard/components/Money";
+import ResponsiveTable from "@dashboard/components/ResponsiveTable";
+import Skeleton from "@dashboard/components/Skeleton";
+import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
+import TableRowLink from "@dashboard/components/TableRowLink";
+import { customerUrl } from "@dashboard/customers/urls";
+import GiftCardStatusChip from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
+import { PLACEHOLDER } from "@dashboard/giftCards/GiftCardUpdate/types";
+import { giftCardListUrl, giftCardUrl } from "@dashboard/giftCards/urls";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { renderCollection } from "@dashboard/misc";
+import { productUrl } from "@dashboard/products/urls";
+import { Card, TableBody, TableCell, Typography } from "@material-ui/core";
+import { PillLink } from "@saleor/macaw-ui";
+import React, { useEffect } from "react";
+import { FormattedMessage, useIntl } from "react-intl";
+import { Link as RouterLink } from "react-router-dom";
 
-import GiftCardListSearchAndFilters from '../GiftCardListSearchAndFilters';
-import { giftCardsListTableMessages as messages } from '../messages';
-import { useGiftCardListDialogs } from '../providers/GiftCardListDialogsProvider';
-import { useGiftCardList } from '../providers/GiftCardListProvider';
-import { canBeSorted } from '../sort';
-import { useTableStyles as useStyles } from '../styles';
-import { GiftCardUrlSortField } from '../types';
-import GiftCardsListTableFooter from './GiftCardsListTableFooter';
-import GiftCardsListTableHeader from './GiftCardsListTableHeader';
-import { getTagCellText } from './utils';
+import GiftCardListSearchAndFilters from "../GiftCardListSearchAndFilters";
+import { giftCardsListTableMessages as messages } from "../messages";
+import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
+import { useGiftCardList } from "../providers/GiftCardListProvider";
+import { canBeSorted } from "../sort";
+import { useTableStyles as useStyles } from "../styles";
+import { GiftCardUrlSortField } from "../types";
+import GiftCardsListTableFooter from "./GiftCardsListTableFooter";
+import GiftCardsListTableHeader from "./GiftCardsListTableHeader";
+import { getTagCellText } from "./utils";
 
 const GiftCardsListTable: React.FC = () => {
   const intl = useIntl();
@@ -78,7 +78,8 @@ const GiftCardsListTable: React.FC = () => {
                 );
               }
 
-              const { id, last4CodeChars, usedBy, usedByEmail, tags, product, currentBalance } = giftCard;
+              const { id, last4CodeChars, usedBy, usedByEmail, tags, product, currentBalance } =
+                giftCard;
 
               return (
                 <TableRowLink
@@ -86,7 +87,7 @@ const GiftCardsListTable: React.FC = () => {
                   className={classes.row}
                   key={id}
                   hover={!!giftCard}
-                  data-test-id={'gift-card-row-' + id}
+                  data-test-id={"gift-card-row-" + id}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -135,7 +136,9 @@ const GiftCardsListTable: React.FC = () => {
                   <TableCell>
                     {usedBy ? (
                       <TableButtonWrapper>
-                        <Link href={customerUrl(usedBy?.id)}>{`${usedBy?.firstName} ${usedBy?.lastName}`}</Link>
+                        <Link
+                          href={customerUrl(usedBy?.id)}
+                        >{`${usedBy?.firstName} ${usedBy?.lastName}`}</Link>
                       </TableButtonWrapper>
                     ) : (
                       <Typography noWrap>{usedByEmail || PLACEHOLDER}</Typography>

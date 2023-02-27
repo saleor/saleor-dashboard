@@ -1,2 +1,2 @@
-export * from './GiftCardListDialogsProvider';
-export { default } from './GiftCardListDialogsProvider';
+export * from "./GiftCardListDialogsProvider";
+export { default } from "./GiftCardListDialogsProvider";

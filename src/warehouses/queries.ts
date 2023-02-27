@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const warehouseList = gql`
   query WarehouseList(
@@ -9,7 +9,14 @@ export const warehouseList = gql`
     $filter: WarehouseFilterInput
     $sort: WarehouseSortingInput
   ) {
-    warehouses(before: $before, after: $after, first: $first, last: $last, filter: $filter, sortBy: $sort) {
+    warehouses(
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+      filter: $filter
+      sortBy: $sort
+    ) {
       edges {
         node {
           ...WarehouseWithShipping

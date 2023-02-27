@@ -1,11 +1,20 @@
-import { useUser } from '@dashboard/auth';
-import CardTitle from '@dashboard/components/CardTitle';
-import Skeleton from '@dashboard/components/Skeleton';
-import { PermissionData } from '@dashboard/permissionGroups/components/PermissionGroupDetailsPage/PermissionGroupDetailsPage';
-import { Card, CardContent, Checkbox, List, ListItem, ListItemIcon, ListItemText, Typography } from '@material-ui/core';
-import { makeStyles } from '@saleor/macaw-ui';
-import React from 'react';
-import { useIntl } from 'react-intl';
+import { useUser } from "@dashboard/auth";
+import CardTitle from "@dashboard/components/CardTitle";
+import Skeleton from "@dashboard/components/Skeleton";
+import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
+import {
+  Card,
+  CardContent,
+  Checkbox,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Typography,
+} from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React from "react";
+import { useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
@@ -14,13 +23,13 @@ const useStyles = makeStyles(
     },
     hr: {
       backgroundColor: theme.palette.divider,
-      border: 'none',
+      border: "none",
       height: 1,
       marginBottom: 0,
       marginTop: 0,
     },
   }),
-  { name: 'AccountPermissions' },
+  { name: "AccountPermissions" },
 );
 
 interface AccountPermissionsProps {
@@ -38,8 +47,16 @@ interface AccountPermissionsProps {
 }
 
 const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
-  const { data, disabled, permissions, permissionsExceeded, onChange, description, fullAccessLabel, errorMessage } =
-    props;
+  const {
+    data,
+    disabled,
+    permissions,
+    permissionsExceeded,
+    onChange,
+    description,
+    fullAccessLabel,
+    errorMessage,
+  } = props;
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -48,13 +65,13 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
   const handleFullAccessChange = () => {
     onChange({
       target: {
-        name: 'permissions',
+        name: "permissions",
         value: !data.hasFullAccess ? permissions.map(perm => perm.code) : [],
       },
     } as any);
     onChange({
       target: {
-        name: 'hasFullAccess',
+        name: "hasFullAccess",
         value: !data.hasFullAccess,
       },
     } as any);
@@ -62,8 +79,10 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
   const handlePermissionChange = (key, value) => () => {
     onChange({
       target: {
-        name: 'permissions',
-        value: !value ? data.permissions.concat([key]) : data.permissions.filter(perm => perm !== key),
+        name: "permissions",
+        value: !value
+          ? data.permissions.concat([key])
+          : data.permissions.filter(perm => perm !== key),
       },
     } as any);
   };
@@ -72,9 +91,9 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     <Card>
       <CardTitle
         title={intl.formatMessage({
-          id: 'Fbr4Vp',
-          defaultMessage: 'Permissions',
-          description: 'dialog header',
+          id: "Fbr4Vp",
+          defaultMessage: "Permissions",
+          description: "dialog header",
         })}
       />
       {permissionsExceeded && (
@@ -82,10 +101,10 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
           <CardContent style={{ paddingLeft: 0 }}>
             <Typography variant="body2">
               {intl.formatMessage({
-                id: 'MVU6ol',
+                id: "MVU6ol",
                 defaultMessage:
-                  'This groups permissions exceeds your own. You are able only to manage permissions that you have.',
-                description: 'exceeded permissions description',
+                  "This groups permissions exceeds your own. You are able only to manage permissions that you have.",
+                description: "exceeded permissions description",
               })}
             </Typography>
           </CardContent>
@@ -93,9 +112,9 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
           <CardContent>
             <Typography variant="body2">
               {intl.formatMessage({
-                id: '6cS4Rd',
-                defaultMessage: 'Available permissions',
-                description: 'card section description',
+                id: "6cS4Rd",
+                defaultMessage: "Available permissions",
+                description: "card section description",
               })}
             </Typography>
             <List dense={true}>
@@ -122,7 +141,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                   disabled={disabled}
                   tabIndex={-1}
                   disableRipple
-                  inputProps={{ 'aria-labelledby': 'fullAccess' }}
+                  inputProps={{ "aria-labelledby": "fullAccess" }}
                 />
               </ListItemIcon>
               <ListItemText primary={fullAccessLabel} />
@@ -151,22 +170,24 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                         <Checkbox
                           color="secondary"
                           edge="start"
-                          checked={data.permissions.filter(userPerm => userPerm === perm.code).length === 1}
+                          checked={
+                            data.permissions.filter(userPerm => userPerm === perm.code).length === 1
+                          }
                           tabIndex={-1}
                           disableRipple
                           name={perm.code}
-                          inputProps={{ 'aria-labelledby': perm.code }}
+                          inputProps={{ "aria-labelledby": perm.code }}
                         />
                       </ListItemIcon>
                       <ListItemText
                         id={perm.code}
-                        primary={perm.name.replace(/\./, '')}
+                        primary={perm.name.replace(/\./, "")}
                         secondary={
                           perm.lastSource &&
                           intl.formatMessage({
-                            id: 'VmMDLN',
-                            defaultMessage: 'This group is last source of that permission',
-                            description: 'permission list item description',
+                            id: "VmMDLN",
+                            defaultMessage: "This group is last source of that permission",
+                            description: "permission list item description",
                           })
                         }
                       />
@@ -192,5 +213,5 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
   );
 };
 
-AccountPermissions.displayName = 'AccountPermissions';
+AccountPermissions.displayName = "AccountPermissions";
 export default AccountPermissions;

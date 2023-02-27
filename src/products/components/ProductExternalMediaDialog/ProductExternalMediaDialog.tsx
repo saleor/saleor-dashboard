@@ -1,12 +1,19 @@
-import BackButton from '@dashboard/components/BackButton';
-import { Button } from '@dashboard/components/Button';
-import Form from '@dashboard/components/Form';
-import FormSpacer from '@dashboard/components/FormSpacer';
-import { ProductFragment } from '@dashboard/graphql';
-import { SubmitPromise } from '@dashboard/hooks/useForm';
-import { Dialog, DialogActions, DialogContent, DialogTitle, TextField, Typography } from '@material-ui/core';
-import React from 'react';
-import { defineMessages, FormattedMessage, useIntl } from 'react-intl';
+import BackButton from "@dashboard/components/BackButton";
+import { Button } from "@dashboard/components/Button";
+import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
+import { ProductFragment } from "@dashboard/graphql";
+import { SubmitPromise } from "@dashboard/hooks/useForm";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+  TextField,
+  Typography,
+} from "@material-ui/core";
+import React from "react";
+import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 interface ProductExternalMediaDialogProps {
   product: ProductFragment;
@@ -21,16 +28,20 @@ interface FormValues {
 
 const messages = defineMessages({
   buttonMessage: {
-    id: '4W/CKn',
-    defaultMessage: 'Upload URL',
-    description: 'modal button',
+    id: "4W/CKn",
+    defaultMessage: "Upload URL",
+    description: "modal button",
   },
 });
 
-const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({ open, onClose, onSubmit }) => {
+const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
+  open,
+  onClose,
+  onSubmit,
+}) => {
   const intl = useIntl();
   const initialValues: FormValues = {
-    mediaUrl: '',
+    mediaUrl: "",
   };
 
   const handleOnSubmit = (values: FormValues) => {

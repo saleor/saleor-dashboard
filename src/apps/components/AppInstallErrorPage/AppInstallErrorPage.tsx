@@ -1,11 +1,11 @@
-import errorImg from '@assets/images/app-install-error.svg';
-import { Button } from '@dashboard/components/Button';
-import Container from '@dashboard/components/Container';
-import { Grid, Typography } from '@material-ui/core';
-import React from 'react';
-import { FormattedMessage } from 'react-intl';
+import errorImg from "@assets/images/app-install-error.svg";
+import { Button } from "@dashboard/components/Button";
+import Container from "@dashboard/components/Container";
+import { Grid, Typography } from "@material-ui/core";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
-import { useStyles } from './styles';
+import { useStyles } from "./styles";
 
 interface AppInstallErrorPageProps {
   onBack: () => void;
@@ -22,7 +22,11 @@ export const AppInstallErrorPage: React.FC<AppInstallErrorPageProps> = ({ onBack
         </Grid>
         <Grid xs={12} sm={6} item>
           <Typography variant="h3" component="h3">
-            <FormattedMessage id="WnlZMO" defaultMessage="There’s a problem with app." description="title" />
+            <FormattedMessage
+              id="WnlZMO"
+              defaultMessage="There’s a problem with app."
+              description="title"
+            />
           </Typography>
           <Typography variant="body2">
             <FormattedMessage

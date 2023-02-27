@@ -1,2 +1,2 @@
-export * from './DeletableItem';
-export { default } from './DeletableItem';
+export * from "./DeletableItem";
+export { default } from "./DeletableItem";

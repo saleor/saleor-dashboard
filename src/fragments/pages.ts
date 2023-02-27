@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const pageFragment = gql`
   fragment Page on Page {
@@ -43,7 +43,12 @@ export const pageAttributesFragment = gql`
         inputType
         entityType
         valueRequired
-        choices(first: $firstValues, after: $afterValues, last: $lastValues, before: $beforeValues) {
+        choices(
+          first: $firstValues
+          after: $afterValues
+          last: $lastValues
+          before: $beforeValues
+        ) {
           ...AttributeValueList
         }
       }

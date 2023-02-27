@@ -1,5 +1,5 @@
-import jwt_decode from 'jwt-decode';
-import { useEffect, useRef } from 'react';
+import jwt_decode from "jwt-decode";
+import { useEffect, useRef } from "react";
 
 interface AppToken {
   exp?: number;

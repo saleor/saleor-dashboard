@@ -1,2 +1,2 @@
-export * from './AppDeleteDialog';
-export { default } from './AppDeleteDialog';
+export * from "./AppDeleteDialog";
+export { default } from "./AppDeleteDialog";
