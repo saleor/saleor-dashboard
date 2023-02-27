@@ -144,10 +144,6 @@ export function useMenuStructure() {
       type: "itemGroup",
     },
     {
-      id: "divider-1",
-      type: "divider",
-    },
-    {
       children: [
         {
           label: intl.formatMessage(commonMessages.drafts),
@@ -210,10 +206,6 @@ export function useMenuStructure() {
       type: "itemGroup",
     },
     {
-      id: "divider-2",
-      type: "divider",
-    },
-    {
       children: !isEmpty(extensions.NAVIGATION_PAGES) && [
         ...mapToExtensionsItems(
           extensions.NAVIGATION_PAGES,
@@ -241,6 +233,7 @@ export function useMenuStructure() {
       url: languageListUrl,
       type: !isEmpty(extensions.NAVIGATION_TRANSLATIONS) ? "itemGroup" : "item",
     },
+    getAppSection(),
     {
       icon: <ConfigurationIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.configuration),
@@ -249,11 +242,6 @@ export function useMenuStructure() {
       url: configurationMenuUrl,
       type: "item",
     },
-    {
-      id: "divider-3",
-      type: "divider",
-    },
-    getAppSection(),
   ];
 
   const isMenuItemPermitted = (menuItem: SidebarMenuItem) => {
