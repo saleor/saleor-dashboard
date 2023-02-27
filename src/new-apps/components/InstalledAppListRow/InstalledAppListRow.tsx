@@ -15,6 +15,7 @@ import {
 } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+import { useLocation } from "react-router";
 
 import { AppAvatar } from "../AppAvatar/AppAvatar";
 import AppPermissions from "../AppPermissions";
@@ -24,10 +25,12 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
   const { app, isExternal, logo } = props;
   const intl = useIntl();
   const { openAppSettings } = useAppListContext();
+  const location = useLocation();
 
   return (
     <Link
       href={AppUrls.resolveAppUrl(app.id)}
+      state={{ from: location.pathname }}
       className={sprinkles({ display: "contents" })}
       inline={false}
     >
