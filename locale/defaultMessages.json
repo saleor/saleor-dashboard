@@ -566,10 +566,6 @@
     "context": "CreateVariantTitle manage",
     "string": "Manage"
   },
-  "2E1xZ0": {
-    "context": "page header",
-    "string": "Create Sale"
-  },
   "2FQsYj": {
     "context": "button",
     "string": "Clear"
@@ -2263,6 +2259,10 @@
   "FSOOH7": {
     "context": "option title",
     "string": "Prioritize warehouses by sorting order"
+  },
+  "FWbv/u": {
+    "context": "page header",
+    "string": "Create Discount"
   },
   "FYfoiF": {
     "context": "section name",

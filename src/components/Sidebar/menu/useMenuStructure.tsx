@@ -192,12 +192,6 @@ export function useMenuStructure() {
     {
       children: [
         {
-          label: intl.formatMessage(sectionNames.sales),
-          id: "sales",
-          url: saleListUrl(),
-          type: "item",
-        },
-        {
           label: intl.formatMessage(sectionNames.vouchers),
           id: "vouchers",
           url: voucherListUrl(),

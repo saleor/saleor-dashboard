@@ -4,7 +4,7 @@ import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
 import { saleAddUrl, SaleListUrlSortField } from "@dashboard/discounts/urls";
 import { SaleFragment } from "@dashboard/graphql";
-import { sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import {
   ChannelProps,
   FilterPageProps,
@@ -54,7 +54,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
 
   return (
     <>
-      <TopNav title={intl.formatMessage(sectionNames.sales)}>
+      <TopNav title={intl.formatMessage(commonMessages.discounts)}>
         <Button
           href={saleAddUrl()}
           variant="primary"
