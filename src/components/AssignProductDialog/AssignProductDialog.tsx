@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ConfirmButton from "@dashboard/components/ConfirmButton";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { defaultListSettings } from "@dashboard/config";
 import { ListViews } from "@dashboard/types";
 import { renderHook } from "@testing-library/react-hooks";

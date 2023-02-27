@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
@@ -80,7 +81,9 @@ interface OrderUnconfirmedDetailsProps {
   closeModal: any;
 }
 
-export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = ({
+export const OrderUnconfirmedDetails: React.FC<
+  OrderUnconfirmedDetailsProps
+> = ({
   id,
   params,
   data,
@@ -126,15 +129,13 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
     },
   });
 
-  const {
-    data: customerAddresses,
-    loading: customerAddressesLoading,
-  } = useCustomerAddressesQuery({
-    variables: {
-      id: order?.user?.id,
-    },
-    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
-  });
+  const { data: customerAddresses, loading: customerAddressesLoading } =
+    useCustomerAddressesQuery({
+      variables: {
+        id: order?.user?.id,
+      },
+      skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
+    });
 
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>,

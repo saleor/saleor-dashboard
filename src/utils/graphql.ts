@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { getApiUrl } from "@dashboard/config";
 import LzString from "lz-string";
 

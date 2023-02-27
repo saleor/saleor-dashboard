@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import React from "react";
 import { IntlProvider, ReactIntlErrorCode } from "react-intl";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { Avatar, CardContent, TextField } from "@material-ui/core";
 import deepPurple from "@material-ui/core/colors/deepPurple";

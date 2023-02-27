@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import ListItemLink from "@dashboard/components/ListItemLink";
 import Skeleton from "@dashboard/components/Skeleton";

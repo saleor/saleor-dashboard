@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AddressTypeInput } from "@dashboard/customers/types";
 import { AccountErrorFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
@@ -61,9 +62,8 @@ const PossibleFormFields = {
   STREET_ADDRESS_2: "streetAddress2",
 } as const;
 
-const formFields: Array<keyof AddressTypeInput> = Object.values(
-  PossibleFormFields,
-);
+const formFields: Array<keyof AddressTypeInput> =
+  Object.values(PossibleFormFields);
 
 const AddressEdit: React.FC<AddressEditProps> = props => {
   const {

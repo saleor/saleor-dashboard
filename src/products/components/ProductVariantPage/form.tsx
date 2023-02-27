@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   getAttributesDisplayData,
   getRichTextAttributesFromMap,
@@ -313,9 +314,8 @@ function useProductVariantUpdateForm(
       );
 
       if (variantChannel) {
-        const { costPrice, price } = extractChannelPricesFromVariantChannel(
-          variantChannel,
-        );
+        const { costPrice, price } =
+          extractChannelPricesFromVariantChannel(variantChannel);
 
         return {
           ...variantChannel.channel,

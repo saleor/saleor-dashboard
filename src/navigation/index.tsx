@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
 import React from "react";

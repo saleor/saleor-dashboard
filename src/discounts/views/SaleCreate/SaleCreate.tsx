@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelsAction } from "@dashboard/channels/urls";
 import { createSortedSaleData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
@@ -46,9 +47,8 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
   >(navigate, params => saleAddUrl(params), params);
 
   const { availableChannels } = useAppChannel(false);
-  const allChannels: ChannelSaleFormData[] = createSortedSaleData(
-    availableChannels,
-  );
+  const allChannels: ChannelSaleFormData[] =
+    createSortedSaleData(availableChannels);
 
   const {
     channelListElements,
@@ -68,10 +68,8 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
     { formId: SALE_CREATE_FORM_ID },
   );
 
-  const [
-    updateChannels,
-    updateChannelsOpts,
-  ] = useSaleChannelListingUpdateMutation({});
+  const [updateChannels, updateChannelsOpts] =
+    useSaleChannelListingUpdateMutation({});
 
   const [saleCreate, saleCreateOpts] = useSaleCreateMutation({
     onCompleted: data => {

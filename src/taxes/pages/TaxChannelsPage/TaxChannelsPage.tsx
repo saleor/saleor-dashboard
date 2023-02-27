@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";

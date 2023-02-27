@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
 import React from "react";
@@ -31,9 +32,9 @@ const ShippingZonesList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 interface ShippingZoneDetailsRouteProps {
   id: string;
 }
-const ShippingZoneDetails: React.FC<RouteComponentProps<
-  ShippingZoneDetailsRouteProps
->> = ({ location, match }) => {
+const ShippingZoneDetails: React.FC<
+  RouteComponentProps<ShippingZoneDetailsRouteProps>
+> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ShippingZoneUrlQueryParams = qs;
   return (
@@ -58,10 +59,12 @@ const RateCreate: React.FC<RouteComponentProps<{ id: string }>> = ({
   );
 };
 
-const RateUpdate: React.FC<RouteComponentProps<{
-  id: string;
-  rateId: string;
-}>> = ({ match }) => {
+const RateUpdate: React.FC<
+  RouteComponentProps<{
+    id: string;
+    rateId: string;
+  }>
+> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ShippingRateUrlQueryParams = qs;
 

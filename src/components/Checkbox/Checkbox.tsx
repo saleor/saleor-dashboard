@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import MuiCheckbox, {
   CheckboxProps as MuiCheckboxProps,
 } from "@material-ui/core/Checkbox";

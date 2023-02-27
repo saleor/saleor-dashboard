@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
 import { getMeasurementUnitMessage } from "@dashboard/attributes/components/AttributeDetails/utils";
 import BasicAttributeRow from "@dashboard/components/Attributes/BasicAttributeRow";

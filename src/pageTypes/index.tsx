@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -30,9 +31,9 @@ const PageTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 interface PageTypeDetailsRouteParams {
   id: string;
 }
-const PageTypeDetails: React.FC<RouteComponentProps<
-  PageTypeDetailsRouteParams
->> = ({ match }) => {
+const PageTypeDetails: React.FC<
+  RouteComponentProps<PageTypeDetailsRouteParams>
+> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: PageTypeUrlQueryParams = qs;
 

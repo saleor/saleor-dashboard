@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -31,9 +32,9 @@ const CollectionList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 interface CollectionDetailsRouteProps {
   id: string;
 }
-const CollectionDetails: React.FC<RouteComponentProps<
-  CollectionDetailsRouteProps
->> = ({ location, match }) => {
+const CollectionDetails: React.FC<
+  RouteComponentProps<CollectionDetailsRouteProps>
+> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CollectionUrlQueryParams = qs;
   return (

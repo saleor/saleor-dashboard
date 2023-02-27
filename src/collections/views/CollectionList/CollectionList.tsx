@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
@@ -65,17 +66,14 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
 
   usePaginationReset(collectionListUrl, params, settings.rowNumber);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    cleanupFn: reset,
-    createUrl: collectionListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      cleanupFn: reset,
+      createUrl: collectionListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+    });
 
   const { availableChannels } = useAppChannel(false);
   const channelOpts = availableChannels
@@ -100,22 +98,20 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     variables: queryVariables,
   });
 
-  const [
-    collectionBulkDelete,
-    collectionBulkDeleteOpts,
-  ] = useCollectionBulkDeleteMutation({
-    onCompleted: data => {
-      if (data.collectionBulkDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        refetch();
-        reset();
-        closeModal();
-      }
-    },
-  });
+  const [collectionBulkDelete, collectionBulkDeleteOpts] =
+    useCollectionBulkDeleteMutation({
+      onCompleted: data => {
+        if (data.collectionBulkDelete.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          refetch();
+          reset();
+          closeModal();
+        }
+      },
+    });
 
   const filterOpts = getFilterOpts(params, channelOpts);
   const tabs = getFilterTabs();

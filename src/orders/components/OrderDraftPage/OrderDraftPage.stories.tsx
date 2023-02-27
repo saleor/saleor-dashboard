@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { fetchMoreProps } from "@dashboard/fixtures";
 import { OrderErrorCode, OrderErrorFragment } from "@dashboard/graphql";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import isEqual from "lodash/isEqual";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Link from "@dashboard/components/Link";
 import { orderGiftCardBoughtPath } from "@dashboard/orders/urls";
 import { Typography } from "@material-ui/core";

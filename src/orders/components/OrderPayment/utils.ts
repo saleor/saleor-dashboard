@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { IMoney, subtractMoney } from "@dashboard/components/Money";
 import {
   GiftCardEventsEnum,

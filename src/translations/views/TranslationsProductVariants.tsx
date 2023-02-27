@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   LanguageCodeEnum,
   useProductVariantTranslationDetailsQuery,
@@ -31,12 +32,9 @@ export interface TranslationsProductVariantsProps {
   params: TranslationsProductVariantsQueryParams;
 }
 
-const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = ({
-  id,
-  productId,
-  languageCode,
-  params,
-}) => {
+const TranslationsProductVariants: React.FC<
+  TranslationsProductVariantsProps
+> = ({ id, productId, languageCode, params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const shop = useShop();
@@ -57,18 +55,15 @@ const TranslationsProductVariants: React.FC<TranslationsProductVariantsProps> = 
     }
   };
 
-  const [
-    updateTranslations,
-    updateTranslationsOpts,
-  ] = useUpdateProductVariantTranslationsMutation({
-    onCompleted: data => onUpdate(data.productVariantTranslate.errors),
-  });
+  const [updateTranslations, updateTranslationsOpts] =
+    useUpdateProductVariantTranslationsMutation({
+      onCompleted: data => onUpdate(data.productVariantTranslate.errors),
+    });
 
-  const [
-    updateAttributeValueTranslations,
-  ] = useUpdateAttributeValueTranslationsMutation({
-    onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
-  });
+  const [updateAttributeValueTranslations] =
+    useUpdateAttributeValueTranslationsMutation({
+      onCompleted: data => onUpdate(data.attributeValueTranslate.errors),
+    });
 
   const onEdit = (field: string) =>
     navigate(

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { countries } from "@dashboard/fixtures";
 import { CountryFragment } from "@dashboard/graphql";
 import Decorator from "@dashboard/storybook/Decorator";

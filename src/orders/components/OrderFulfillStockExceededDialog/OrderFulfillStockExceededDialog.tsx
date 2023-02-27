@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -30,15 +31,11 @@ export interface OrderFulfillStockExceededDialogProps {
   onClose();
 }
 
-const OrderFulfillStockExceededDialog: React.FC<OrderFulfillStockExceededDialogProps> = props => {
-  const {
-    lines,
-    open,
-    formsetData,
-    confirmButtonState,
-    onClose,
-    onSubmit,
-  } = props;
+const OrderFulfillStockExceededDialog: React.FC<
+  OrderFulfillStockExceededDialogProps
+> = props => {
+  const { lines, open, formsetData, confirmButtonState, onClose, onSubmit } =
+    props;
 
   const intl = useIntl();
   const classes = useStyles(props);

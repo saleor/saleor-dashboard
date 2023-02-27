@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Node, useProductVariantSetDefaultMutation } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { getProductErrorMessage } from "@dashboard/utils/errors";
@@ -18,11 +19,12 @@ function useOnSetDefaultVariant(productId: string, variant: Node) {
           }),
         );
       } else {
-        const defaultVariant = data.productVariantSetDefault.product.variants.find(
-          variant =>
-            variant.id ===
-            data.productVariantSetDefault.product.defaultVariant.id,
-        );
+        const defaultVariant =
+          data.productVariantSetDefault.product.variants.find(
+            variant =>
+              variant.id ===
+              data.productVariantSetDefault.product.defaultVariant.id,
+          );
         if (defaultVariant) {
           notify({
             status: "success",

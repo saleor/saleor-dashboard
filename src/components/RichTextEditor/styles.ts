@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { MockedProvider, MockedResponse } from "@apollo/client/testing";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import { productsMocks } from "@test/mocks/products";

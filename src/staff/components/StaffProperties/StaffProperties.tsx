@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import photoIcon from "@assets/images/photo-icon.svg";
 import CardTitle from "@dashboard/components/CardTitle";
 import {

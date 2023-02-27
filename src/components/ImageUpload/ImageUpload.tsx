@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Typography } from "@material-ui/core";
 import { alpha } from "@material-ui/core/styles";
 import { ImageIcon, makeStyles } from "@saleor/macaw-ui";

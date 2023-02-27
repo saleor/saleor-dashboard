@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import WebhooksRoutes from "@dashboard/custom-apps";
 import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";

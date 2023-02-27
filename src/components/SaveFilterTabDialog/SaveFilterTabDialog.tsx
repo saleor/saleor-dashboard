@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { buttonMessages } from "@dashboard/intl";
 import {
   Dialog,

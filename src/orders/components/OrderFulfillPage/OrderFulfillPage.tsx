@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
@@ -99,9 +100,8 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
   >(
     (getToFulfillOrderLines(order?.lines) as OrderFulfillLineFragment[]).map(
       line => {
-        const highestQuantityAllocation = getLineAllocationWithHighestQuantity(
-          line,
-        );
+        const highestQuantityAllocation =
+          getLineAllocationWithHighestQuantity(line);
 
         return {
           data: null,
@@ -120,10 +120,8 @@ const OrderFulfillPage: React.FC<OrderFulfillPageProps> = props => {
     ),
   );
 
-  const [
-    displayStockExceededDialog,
-    setDisplayStockExceededDialog,
-  ] = React.useState(false);
+  const [displayStockExceededDialog, setDisplayStockExceededDialog] =
+    React.useState(false);
 
   const handleSubmit = ({
     formData,

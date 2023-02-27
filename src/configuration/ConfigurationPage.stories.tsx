@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { createConfigurationMenu } from "@dashboard/configuration";
 import { UserFragment } from "@dashboard/graphql";
 import { staffMember } from "@dashboard/staff/fixtures";

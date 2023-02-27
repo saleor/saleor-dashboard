@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import TablePagination from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import usePaginator from "@dashboard/hooks/usePaginator";

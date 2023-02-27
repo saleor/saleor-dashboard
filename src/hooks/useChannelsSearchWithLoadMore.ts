@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useBaseChannelsQuery } from "@dashboard/graphql";
 import chunk from "lodash/chunk";
 import compact from "lodash/compact";

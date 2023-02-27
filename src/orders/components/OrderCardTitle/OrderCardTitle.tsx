@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import DefaultCardTitle from "@dashboard/components/CardTitle";
 import { FulfillmentStatus } from "@dashboard/graphql";

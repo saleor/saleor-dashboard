@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { LanguageCodeEnum } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
@@ -116,10 +117,9 @@ type TranslationsProductVariantProps = RouteComponentProps<{
   id: string;
   languageCode: string;
 }>;
-const TranslationsProductVariants: React.FC<TranslationsProductVariantProps> = ({
-  location,
-  match,
-}) => {
+const TranslationsProductVariants: React.FC<
+  TranslationsProductVariantProps
+> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsProductVariantsQueryParams = {
     activeField: qs.activeField,

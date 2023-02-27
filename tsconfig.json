@@ -1,9 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": ".",
-    // Migration to strict null checks is in progress.
-    // https://github.com/saleor/saleor-dashboard/issues/2584
-    "strictNullChecks": false,
     "esModuleInterop": true,
     "jsx": "react",
     "lib": ["es2017", "dom", "esnext"],
@@ -12,17 +9,20 @@
     "target": "es5",
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "strictBindCallApply": true,
-    "useUnknownInCatchVariables": true,
+    "strict": false,
     "paths": {
       "@assets/*": ["assets/*"],
       "@locale/*": ["locale/*"],
       "@dashboard/*": ["src/*"],
       "@test/*": ["testUtils/*"]
     },
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "plugins": [
+      {
+        "name": "typescript-strict-plugin",
+        "paths": ["./src"]
+      }
+    ],
   },
   "exclude": ["node_modules", "cypress"]
 }

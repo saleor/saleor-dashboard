@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
 import {
   AddressInput,

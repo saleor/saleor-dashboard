@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   deleteFilterTab,
   getActiveFilters,
@@ -68,26 +69,24 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     variables: queryVariables,
   });
 
-  const [
-    attributeBulkDelete,
-    attributeBulkDeleteOpts,
-  ] = useAttributeBulkDeleteMutation({
-    onCompleted: data => {
-      if (data.attributeBulkDelete?.errors.length === 0) {
-        closeModal();
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "lw9WIk",
-            defaultMessage: "Attributes successfully delete",
-            description: "deleted multiple attributes",
-          }),
-        });
-        reset();
-        refetch();
-      }
-    },
-  });
+  const [attributeBulkDelete, attributeBulkDeleteOpts] =
+    useAttributeBulkDeleteMutation({
+      onCompleted: data => {
+        if (data.attributeBulkDelete?.errors.length === 0) {
+          closeModal();
+          notify({
+            status: "success",
+            text: intl.formatMessage({
+              id: "lw9WIk",
+              defaultMessage: "Attributes successfully delete",
+              description: "deleted multiple attributes",
+            }),
+          });
+          reset();
+          refetch();
+        }
+      },
+    });
 
   const tabs = getFilterTabs();
 
@@ -98,17 +97,14 @@ const AttributeList: React.FC<AttributeListProps> = ({ params }) => {
     AttributeListUrlQueryParams
   >(navigate, attributeListUrl, params);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    cleanupFn: reset,
-    createUrl: attributeListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      cleanupFn: reset,
+      createUrl: attributeListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+    });
 
   const handleTabChange = (tab: number) => {
     reset();

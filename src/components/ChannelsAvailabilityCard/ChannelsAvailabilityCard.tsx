@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Channel as ChannelList, ChannelData } from "@dashboard/channels/utils";
 import Hr from "@dashboard/components/Hr";
 import { PermissionEnum } from "@dashboard/graphql";
@@ -36,7 +37,9 @@ export type ChannelsAvailabilityCardProps = RequireOnlyOne<
   "channels" | "channelsList"
 >;
 
-export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = props => {
+export const ChannelsAvailability: React.FC<
+  ChannelsAvailabilityCardProps
+> = props => {
   const {
     channelsList,
     errors = [],

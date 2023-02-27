@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { DEFAULT_NOTIFICATION_SHOW_TIME } from "@dashboard/config";
 import { commonMessages } from "@dashboard/intl";
 import { Notification } from "@saleor/macaw-ui";

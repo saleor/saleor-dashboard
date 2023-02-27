@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import { Button } from "@dashboard/components/Button";
 import { buttonMessages } from "@dashboard/intl";

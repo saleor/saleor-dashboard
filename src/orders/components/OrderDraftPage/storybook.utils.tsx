@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 /* eslint-disable @typescript-eslint/no-empty-function */
 import { OrderDetailsQuery } from "@dashboard/graphql";
 import {
@@ -20,16 +21,17 @@ export const getDiscountsProvidersWrapper = (
   };
 
   const MockOrderDiscountProvider = ({ children }) => {
-    const mockedOrderDiscountProviderValues: OrderDiscountContextConsumerProps = {
-      ...mockedCommonDiscountProviderValues,
-      orderDiscountAddStatus: "default",
-      orderDiscountRemoveStatus: "default",
-      orderDiscount: null,
-      addOrderDiscount: () => {},
-      removeOrderDiscount: () => {},
-      discountedPrice: order.total.gross,
-      undiscountedPrice: order.undiscountedTotal.gross,
-    };
+    const mockedOrderDiscountProviderValues: OrderDiscountContextConsumerProps =
+      {
+        ...mockedCommonDiscountProviderValues,
+        orderDiscountAddStatus: "default",
+        orderDiscountRemoveStatus: "default",
+        orderDiscount: null,
+        addOrderDiscount: () => {},
+        removeOrderDiscount: () => {},
+        discountedPrice: order.total.gross,
+        undiscountedPrice: order.undiscountedTotal.gross,
+      };
 
     return (
       <OrderDiscountContext.Provider value={mockedOrderDiscountProviderValues}>
@@ -39,17 +41,18 @@ export const getDiscountsProvidersWrapper = (
   };
 
   const MockOrderLineDiscountProvider = ({ children }) => {
-    const mockedOrderDiscountProviderValues = (): OrderLineDiscountContextConsumerProps => ({
-      ...mockedCommonDiscountProviderValues,
-      addOrderLineDiscount: () => {},
-      removeOrderLineDiscount: () => {},
-      orderLineDiscount: null,
-      orderLineDiscountUpdateStatus: "default",
-      orderLineDiscountRemoveStatus: "default",
-      totalDiscountedPrice: order.lines[0].totalPrice.gross,
-      unitUndiscountedPrice: order.lines[0].undiscountedUnitPrice.gross,
-      unitDiscountedPrice: order.lines[0].unitPrice.gross,
-    });
+    const mockedOrderDiscountProviderValues =
+      (): OrderLineDiscountContextConsumerProps => ({
+        ...mockedCommonDiscountProviderValues,
+        addOrderLineDiscount: () => {},
+        removeOrderLineDiscount: () => {},
+        orderLineDiscount: null,
+        orderLineDiscountUpdateStatus: "default",
+        orderLineDiscountRemoveStatus: "default",
+        totalDiscountedPrice: order.lines[0].totalPrice.gross,
+        unitUndiscountedPrice: order.lines[0].undiscountedUnitPrice.gross,
+        unitDiscountedPrice: order.lines[0].unitPrice.gross,
+      });
 
     return (
       <OrderLineDiscountContext.Provider

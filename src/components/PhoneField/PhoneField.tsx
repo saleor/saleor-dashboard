@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import SingleSelectField from "@dashboard/components/SingleSelectField";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";

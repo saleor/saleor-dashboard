@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { parse as parseQs } from "qs";
 import React from "react";
 import { Route, RouteComponentProps } from "react-router-dom";

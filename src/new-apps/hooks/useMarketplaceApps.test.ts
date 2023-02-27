@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { renderHook } from "@testing-library/react-hooks";
 
 import { comingSoonApp, releasedApp } from "../fixtures";
@@ -7,16 +8,16 @@ const mockApps = [releasedApp, comingSoonApp];
 
 global.fetch = jest.fn(url => {
   if (url === "https://marketplace.com/apps") {
-    return Promise.resolve(({
+    return Promise.resolve({
       ok: true,
       json: jest.fn(() => Promise.resolve(mockApps)),
-    } as unknown) as Response);
+    } as unknown as Response);
   }
   if (url === "https://marketplace.com/failing-apps-endpoint") {
-    return Promise.resolve(({
+    return Promise.resolve({
       ok: false,
       statusText: "API error",
-    } as unknown) as Response);
+    } as unknown as Response);
   }
   return Promise.reject(new Error("API is down"));
 });

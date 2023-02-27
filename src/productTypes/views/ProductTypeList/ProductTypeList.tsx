@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
@@ -85,17 +86,14 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
 
   const currentTab = getFiltersCurrentTab(params, tabs);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    cleanupFn: reset,
-    createUrl: productTypeListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      cleanupFn: reset,
+      createUrl: productTypeListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+    });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductTypeListUrlDialog,
@@ -138,28 +136,26 @@ export const ProductTypeList: React.FC<ProductTypeListProps> = ({ params }) => {
 
   const productTypesData = mapEdgesToItems(data?.productTypes);
 
-  const [
-    productTypeBulkDelete,
-    productTypeBulkDeleteOpts,
-  ] = useProductTypeBulkDeleteMutation({
-    onCompleted: data => {
-      if (data.productTypeBulkDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        reset();
-        refetch();
-        navigate(
-          productTypeListUrl({
-            ...params,
-            action: undefined,
-            ids: undefined,
-          }),
-        );
-      }
-    },
-  });
+  const [productTypeBulkDelete, productTypeBulkDeleteOpts] =
+    useProductTypeBulkDeleteMutation({
+      onCompleted: data => {
+        if (data.productTypeBulkDelete.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          reset();
+          refetch();
+          navigate(
+            productTypeListUrl({
+              ...params,
+              action: undefined,
+              ids: undefined,
+            }),
+          );
+        }
+      },
+    });
 
   const onProductTypeBulkDelete = () =>
     productTypeBulkDelete({

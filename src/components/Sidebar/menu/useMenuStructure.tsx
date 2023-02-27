@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { appsListPath } from "@dashboard/apps/urls";
 import {
   extensionMountPoints,

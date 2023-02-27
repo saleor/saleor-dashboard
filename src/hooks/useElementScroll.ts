@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import throttle from "lodash/throttle";
 import { MutableRefObject, useEffect, useState } from "react";
 

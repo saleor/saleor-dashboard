@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelShippingData } from "@dashboard/channels/utils";
 import {
   CountryFragment,
@@ -23,28 +24,30 @@ import { useIntl } from "react-intl";
 import { ShippingZoneRateCommonFormData } from "./components/ShippingZoneRatesPage/types";
 import { shippingRateEditUrl } from "./urls";
 
-export const createChannelsChangeHandler = (
-  selectedChannels: ChannelShippingData[],
-  setSelectedChannels: (channels: ChannelShippingData[]) => void,
-  triggerChange: () => void,
-) => (
-  channelId: string,
-  value: { maxValue: string; minValue: string; price: string },
-) => {
-  const itemIndex = selectedChannels.findIndex(item => item.id === channelId);
-  const channel = selectedChannels[itemIndex];
-  setSelectedChannels([
-    ...selectedChannels.slice(0, itemIndex),
-    {
-      ...channel,
-      maxValue: value.maxValue,
-      minValue: value.minValue,
-      price: value.price,
-    },
-    ...selectedChannels.slice(itemIndex + 1),
-  ]);
-  triggerChange();
-};
+export const createChannelsChangeHandler =
+  (
+    selectedChannels: ChannelShippingData[],
+    setSelectedChannels: (channels: ChannelShippingData[]) => void,
+    triggerChange: () => void,
+  ) =>
+  (
+    channelId: string,
+    value: { maxValue: string; minValue: string; price: string },
+  ) => {
+    const itemIndex = selectedChannels.findIndex(item => item.id === channelId);
+    const channel = selectedChannels[itemIndex];
+    setSelectedChannels([
+      ...selectedChannels.slice(0, itemIndex),
+      {
+        ...channel,
+        maxValue: value.maxValue,
+        minValue: value.minValue,
+        price: value.price,
+      },
+      ...selectedChannels.slice(itemIndex + 1),
+    ]);
+    triggerChange();
+  };
 
 const getPostalCodeRulesToAdd = (
   rules: ShippingMethodTypeFragment["postalCodeRules"],
@@ -208,10 +211,8 @@ export function useShippingRateCreator(
   const intl = useIntl();
   const notify = useNotifier();
   const navigate = useNavigator();
-  const [
-    createBaseShippingRate,
-    createBaseShippingRateOpts,
-  ] = useCreateShippingRateMutation({});
+  const [createBaseShippingRate, createBaseShippingRateOpts] =
+    useCreateShippingRateMutation({});
   const [
     updateShippingMethodChannelListing,
     updateShippingMethodChannelListingOpts,

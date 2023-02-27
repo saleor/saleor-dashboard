@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { borderHeight, savebarHeight, topBarHeight } from "./consts";
 
 export const useContentHeight = () => {

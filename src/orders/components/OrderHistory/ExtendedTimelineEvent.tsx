@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Money from "@dashboard/components/Money";
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";

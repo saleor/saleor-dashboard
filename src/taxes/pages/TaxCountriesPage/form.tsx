@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import {
   TaxClassFragment,
@@ -88,10 +89,10 @@ function useTaxCountriesForm(
     formId,
   });
 
-  React.useEffect(() => setExitDialogSubmitRef(submit), [
-    setExitDialogSubmitRef,
-    submit,
-  ]);
+  React.useEffect(
+    () => setExitDialogSubmitRef(submit),
+    [setExitDialogSubmitRef, submit],
+  );
   setIsSubmitDisabled(disabled);
 
   return { data: formset.data, handlers: { handleRateChange }, submit };

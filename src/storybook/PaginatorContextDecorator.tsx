@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { paginatorContextValues } from "@dashboard/fixtures";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import React from "react";

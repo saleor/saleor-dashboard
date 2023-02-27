@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import keyBy from "lodash/keyBy";
 import mapValues from "lodash/mapValues";
 

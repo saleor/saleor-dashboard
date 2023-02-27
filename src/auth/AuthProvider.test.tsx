@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 /** @jest-environment setup-polly-jest/jest-environment-jsdom */
 
 import { getApiUrl } from "@dashboard/config";

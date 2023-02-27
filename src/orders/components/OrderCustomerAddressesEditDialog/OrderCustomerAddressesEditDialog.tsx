@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import Checkbox from "@dashboard/components/Checkbox";
 import ConfirmButton from "@dashboard/components/ConfirmButton";
@@ -71,7 +72,9 @@ const defaultSearchState: OrderCustomerSearchAddressState = {
   type: undefined,
 };
 
-const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialogProps> = props => {
+const OrderCustomerAddressesEditDialog: React.FC<
+  OrderCustomerAddressesEditDialogProps
+> = props => {
   const {
     open,
     variant,
@@ -94,14 +97,10 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
   const hasCustomerChanged =
     variant === AddressEditDialogVariant.CHANGE_CUSTOMER;
 
-  const {
-    errors: shippingValidationErrors,
-    submit: handleShippingSubmit,
-  } = useAddressValidation(address => address, AddressTypeEnum.SHIPPING);
-  const {
-    errors: billingValidationErrors,
-    submit: handleBillingSubmit,
-  } = useAddressValidation(address => address, AddressTypeEnum.BILLING);
+  const { errors: shippingValidationErrors, submit: handleShippingSubmit } =
+    useAddressValidation(address => address, AddressTypeEnum.SHIPPING);
+  const { errors: billingValidationErrors, submit: handleBillingSubmit } =
+    useAddressValidation(address => address, AddressTypeEnum.BILLING);
 
   const dialogErrors = useModalDialogErrors(
     [...errors, ...shippingValidationErrors, ...billingValidationErrors],
@@ -223,9 +222,8 @@ const OrderCustomerAddressesEditDialog: React.FC<OrderCustomerAddressesEditDialo
 
   const countryChoices = mapCountriesToChoices(countries);
 
-  const [addressSearchState, setAddressSearchState] = React.useState<
-    OrderCustomerSearchAddressState
-  >(defaultSearchState);
+  const [addressSearchState, setAddressSearchState] =
+    React.useState<OrderCustomerSearchAddressState>(defaultSearchState);
 
   const validatedDefaultShippingAddress = validateDefaultAddress(
     defaultShippingAddress,

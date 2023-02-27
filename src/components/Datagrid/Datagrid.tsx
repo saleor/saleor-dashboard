@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import "@glideapps/glide-data-grid/dist/index.css";
 
 import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";

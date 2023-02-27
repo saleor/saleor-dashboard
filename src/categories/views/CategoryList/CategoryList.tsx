@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
@@ -131,12 +132,10 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     }
   };
 
-  const [
-    categoryBulkDelete,
-    categoryBulkDeleteOpts,
-  ] = useCategoryBulkDeleteMutation({
-    onCompleted: handleCategoryBulkDelete,
-  });
+  const [categoryBulkDelete, categoryBulkDeleteOpts] =
+    useCategoryBulkDeleteMutation({
+      onCompleted: handleCategoryBulkDelete,
+    });
 
   const handleSort = createSortHandler(navigate, categoryListUrl, params);
 

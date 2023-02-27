@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import merge from "lodash/merge";
 

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Decorator from "@dashboard/storybook/Decorator";
 import { taxClasses } from "@dashboard/taxes/fixtures";
 import { storiesOf } from "@storybook/react";

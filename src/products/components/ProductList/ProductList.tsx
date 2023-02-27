@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelsAvailabilityDropdown } from "@dashboard/components/ChannelsAvailabilityDropdown";
 import {
   getChannelAvailabilityColor,

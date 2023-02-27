@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
 import { Typography } from "@material-ui/core";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -34,9 +35,9 @@ const CustomerListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 interface CustomerDetailsRouteParams {
   id: string;
 }
-const CustomerDetailsView: React.FC<RouteComponentProps<
-  CustomerDetailsRouteParams
->> = ({ location, match }) => {
+const CustomerDetailsView: React.FC<
+  RouteComponentProps<CustomerDetailsRouteParams>
+> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomerUrlQueryParams = qs;
 
@@ -51,9 +52,9 @@ const CustomerDetailsView: React.FC<RouteComponentProps<
 interface CustomerAddressesRouteParams {
   id: string;
 }
-const CustomerAddressesView: React.FC<RouteComponentProps<
-  CustomerAddressesRouteParams
->> = ({ match }) => {
+const CustomerAddressesView: React.FC<
+  RouteComponentProps<CustomerAddressesRouteParams>
+> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomerAddressesUrlQueryParams = qs;
 

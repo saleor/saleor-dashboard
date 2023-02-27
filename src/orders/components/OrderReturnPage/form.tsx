@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import useForm, {
@@ -179,14 +180,13 @@ function useOrderReturnForm(
   );
 
   const handleSetMaximalUnfulfiledItemsQuantities = () => {
-    const newQuantities: FormsetQuantityData = unfulfiledItemsQuantites.data.map(
-      ({ id }) => {
+    const newQuantities: FormsetQuantityData =
+      unfulfiledItemsQuantites.data.map(({ id }) => {
         const line = order.lines.find(getById(id));
         const initialValue = line.quantityToFulfill;
 
         return getLineItem(line, { initialValue });
-      },
-    );
+      });
 
     triggerChange();
     unfulfiledItemsQuantites.set(newQuantities);

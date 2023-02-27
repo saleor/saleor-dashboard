@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import React from "react";
 
 import ExitFormDialog from "./ExitFormDialog";
@@ -18,13 +19,8 @@ export const ExitFormDialogContext = React.createContext<ExitFormDialogData>({
 });
 
 const ExitFormDialogProvider = ({ children }) => {
-  const {
-    handleClose,
-    handleLeave,
-    providerData,
-    showDialog,
-    shouldBlockNav,
-  } = useExitFormDialogProvider();
+  const { handleClose, handleLeave, providerData, showDialog, shouldBlockNav } =
+    useExitFormDialogProvider();
 
   useBeforeUnload(e => {
     // If form is dirty and user does a refresh,

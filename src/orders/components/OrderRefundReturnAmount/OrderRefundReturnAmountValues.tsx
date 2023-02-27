@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Money, { IMoney } from "@dashboard/components/Money";
 import Skeleton from "@dashboard/components/Skeleton";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -81,7 +82,9 @@ const messages = defineMessages({
   },
 });
 
-const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = props => {
+const OrderRefundAmountValues: React.FC<
+  OrderRefundAmountValuesProps
+> = props => {
   const intl = useIntl();
   const classes = useStyles({});
 

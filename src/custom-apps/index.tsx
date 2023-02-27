@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";

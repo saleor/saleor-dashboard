@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AccountErrorCode } from "@dashboard/graphql";
 import Decorator from "@dashboard/storybook/Decorator";
 import { MockedUserProvider } from "@dashboard/storybook/MockedUserProvider";
@@ -41,9 +42,11 @@ storiesOf("Customers / Customer details", module)
   .add("form errors", () => (
     <CustomerDetailsPage
       {...props}
-      errors={(["email", "firstName", "lastName"] as Array<
-        keyof CustomerDetailsPageErrors
-      >).map(field => ({
+      errors={(
+        ["email", "firstName", "lastName"] as Array<
+          keyof CustomerDetailsPageErrors
+        >
+      ).map(field => ({
         __typename: "AccountError",
         code: AccountErrorCode.INVALID,
         field,

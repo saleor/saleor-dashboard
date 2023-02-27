@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
 import {

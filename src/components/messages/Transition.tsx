@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import React from "react";
 import { Transition as MessageManagerTransition } from "react-transition-group";
 

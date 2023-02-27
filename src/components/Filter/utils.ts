@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import compact from "lodash/compact";
 
 import {
@@ -10,13 +11,13 @@ import {
 export const getByName = (nameToCompare: string) => (obj: { name: string }) =>
   obj.name === nameToCompare;
 
-export const isAutocompleteFilterFieldValid = function<T extends string>({
+export const isAutocompleteFilterFieldValid = function <T extends string>({
   value,
 }: FilterElement<T>) {
   return !!compact(value).length;
 };
 
-export const isNumberFilterFieldValid = function<T extends string>({
+export const isNumberFilterFieldValid = function <T extends string>({
   value,
 }: FilterElement<T>) {
   const [min, max] = value;
@@ -28,7 +29,7 @@ export const isNumberFilterFieldValid = function<T extends string>({
   return true;
 };
 
-export const isFilterFieldValid = function<T extends string>(
+export const isFilterFieldValid = function <T extends string>(
   filter: FilterElement<T>,
 ) {
   const { type } = filter;
@@ -47,7 +48,7 @@ export const isFilterFieldValid = function<T extends string>(
   }
 };
 
-export const isFilterValid = function<T extends string>(
+export const isFilterValid = function <T extends string>(
   filter: FilterElement<T>,
 ) {
   const { required, active } = filter;
@@ -59,7 +60,7 @@ export const isFilterValid = function<T extends string>(
   return isFilterFieldValid(filter);
 };
 
-export const extractInvalidFilters = function<T extends string>(
+export const extractInvalidFilters = function <T extends string>(
   filtersData: Array<FilterElement<T>>,
   filtersDataStructure: Array<FilterElement<T>>,
 ): InvalidFilters<T> {

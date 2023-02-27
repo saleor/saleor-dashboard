@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Skeleton from "@dashboard/components/Skeleton";
 import { useStyles } from "@dashboard/custom-apps/components/WebhookEvents/styles";
 import { useQuery } from "@dashboard/hooks/graphql";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelsAction } from "@dashboard/channels/urls";
 import {
   ChannelVoucherData,
@@ -47,9 +48,8 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   >(navigate, params => voucherAddUrl(params), params);
 
   const { availableChannels } = useAppChannel(false);
-  const allChannels: ChannelVoucherData[] = createSortedVoucherData(
-    availableChannels,
-  );
+  const allChannels: ChannelVoucherData[] =
+    createSortedVoucherData(availableChannels);
 
   const {
     channelListElements,
@@ -69,10 +69,8 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
     { formId: VOUCHER_CREATE_FORM_ID },
   );
 
-  const [
-    updateChannels,
-    updateChannelsOpts,
-  ] = useVoucherChannelListingUpdateMutation({});
+  const [updateChannels, updateChannelsOpts] =
+    useVoucherChannelListingUpdateMutation({});
 
   const [voucherCreate, voucherCreateOpts] = useVoucherCreateMutation({
     onCompleted: data => {

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import MultiAutocompleteSelectField from "@dashboard/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteSelectFieldProps } from "@dashboard/components/SingleAutocompleteSelectField";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";

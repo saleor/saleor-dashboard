@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import { getById } from "@dashboard/misc";
 import { Node } from "@dashboard/types";
@@ -101,7 +102,7 @@ export const getParsedLines = (
     quantity,
   }));
 
-const isIncludedInIds = function<T extends Node>(
+const isIncludedInIds = function <T extends Node>(
   arrayToCompare: string[] | T[],
   obj: Node,
 ) {

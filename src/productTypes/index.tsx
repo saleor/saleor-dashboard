@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -31,9 +32,9 @@ const ProductTypeList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 interface ProductTypeCreateRouteParams {
   id: string;
 }
-const ProductTypeCreate: React.FC<RouteComponentProps<
-  ProductTypeCreateRouteParams
->> = ({ location }) => {
+const ProductTypeCreate: React.FC<
+  RouteComponentProps<ProductTypeCreateRouteParams>
+> = ({ location }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductTypeAddUrlQueryParams = qs;
 
@@ -43,9 +44,9 @@ const ProductTypeCreate: React.FC<RouteComponentProps<
 interface ProductTypeUpdateRouteParams {
   id: string;
 }
-const ProductTypeUpdate: React.FC<RouteComponentProps<
-  ProductTypeUpdateRouteParams
->> = ({ match }) => {
+const ProductTypeUpdate: React.FC<
+  RouteComponentProps<ProductTypeUpdateRouteParams>
+> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: ProductTypeUrlQueryParams = qs;
 

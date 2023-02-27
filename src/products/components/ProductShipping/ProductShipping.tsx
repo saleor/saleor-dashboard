@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import Grid from "@dashboard/components/Grid";
 import { ProductErrorFragment } from "@dashboard/graphql";

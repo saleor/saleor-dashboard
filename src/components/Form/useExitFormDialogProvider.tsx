@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { useEffect, useRef, useState } from "react";
 import { useHistory } from "react-router";

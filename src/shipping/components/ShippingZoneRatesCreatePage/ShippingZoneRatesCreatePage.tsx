@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelShippingData } from "@dashboard/channels/utils";
 import { Content } from "@dashboard/components/AppLayout/Content";
 import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
@@ -60,7 +61,9 @@ export interface ShippingZoneRatesCreatePageProps extends WithFormId {
   fetchMoreTaxClasses: FetchMoreProps;
 }
 
-export const ShippingZoneRatesCreatePage: React.FC<ShippingZoneRatesCreatePageProps> = ({
+export const ShippingZoneRatesCreatePage: React.FC<
+  ShippingZoneRatesCreatePageProps
+> = ({
   allChannelsCount,
   shippingChannels,
   channelErrors,

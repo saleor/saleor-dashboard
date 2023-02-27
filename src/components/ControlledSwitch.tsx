@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FormControlLabel, Switch } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";

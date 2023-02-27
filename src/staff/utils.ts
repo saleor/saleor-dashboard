@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { StaffMemberDetailsFragment, UserFragment } from "@dashboard/graphql";
 import difference from "lodash/difference";
 

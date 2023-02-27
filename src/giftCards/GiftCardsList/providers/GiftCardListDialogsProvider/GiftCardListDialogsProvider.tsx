@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import GiftCardListPageDeleteDialog from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
 import GiftCardBulkCreateDialog from "@dashboard/giftCards/GiftCardBulkCreateDialog";
 import GiftCardCreateDialogContent from "@dashboard/giftCards/GiftCardCreateDialog";
@@ -30,17 +31,15 @@ export interface GiftCardListDialogsConsumerProps {
   id: string;
 }
 
-export const GiftCardListDialogsContext = createContext<
-  GiftCardListDialogsConsumerProps
->(null);
+export const GiftCardListDialogsContext =
+  createContext<GiftCardListDialogsConsumerProps>(null);
 
 export const useGiftCardListDialogs = () =>
   useContext(GiftCardListDialogsContext);
 
-const GiftCardListDialogsProvider: React.FC<GiftCardListDialogsProviderProps> = ({
-  children,
-  params,
-}) => {
+const GiftCardListDialogsProvider: React.FC<
+  GiftCardListDialogsProviderProps
+> = ({ children, params }) => {
   const navigate = useNavigator();
 
   const id = params?.id;

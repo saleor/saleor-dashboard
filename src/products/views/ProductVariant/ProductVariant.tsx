@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import placeholderImg from "@assets/images/placeholder255x255.png";
 import {
   getAttributesAfterFileAttributesUpdate,
@@ -132,10 +133,8 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     },
   });
 
-  const [
-    deleteAttributeValue,
-    deleteAttributeValueOpts,
-  ] = useAttributeValueDeleteMutation({});
+  const [deleteAttributeValue, deleteAttributeValueOpts] =
+    useAttributeValueDeleteMutation({});
 
   const { handleSubmitChannels, updateChannelsOpts } = useSubmitChannels();
 
@@ -152,17 +151,13 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     },
   });
 
-  const [
-    deactivatePreorder,
-    deactivatePreoderOpts,
-  ] = useProductVariantPreorderDeactivateMutation({});
+  const [deactivatePreorder, deactivatePreoderOpts] =
+    useProductVariantPreorderDeactivateMutation({});
   const handleDeactivateVariantPreorder = (id: string) =>
     deactivatePreorder({ variables: { id } });
 
-  const [
-    reorderProductVariants,
-    reorderProductVariantsOpts,
-  ] = useProductVariantReorderMutation({});
+  const [reorderProductVariants, reorderProductVariantsOpts] =
+    useProductVariantReorderMutation({});
 
   const onSetDefaultVariant = useOnSetDefaultVariant(productId, variant);
 
@@ -188,11 +183,12 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
       variables => uploadFile({ variables }),
     );
 
-    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
-      data.attributesWithNewFileValue,
-      variant?.nonSelectionAttributes,
-      variables => deleteAttributeValue({ variables }),
-    );
+    const deleteAttributeValuesResult =
+      await handleDeleteMultipleAttributeValues(
+        data.attributesWithNewFileValue,
+        variant?.nonSelectionAttributes,
+        variables => deleteAttributeValue({ variables }),
+      );
 
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
@@ -294,8 +290,9 @@ export const ProductVariant: React.FC<ProductUpdateProps> = ({
     onFetchMore: loadMoreProducts,
   };
   const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
-      ?.hasNextPage,
+    hasMore:
+      !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
+        ?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
     onFetchMore: loadMoreAttributeValues,
   };

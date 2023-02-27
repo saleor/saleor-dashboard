@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import uniq from "lodash/uniq";
 
 export const getUpdatedIdsWithNewId = (ids: string[], newId: string) =>

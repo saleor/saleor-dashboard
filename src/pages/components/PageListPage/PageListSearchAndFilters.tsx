@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import FilterBar from "@dashboard/components/FilterBar";
 import SaveFilterTabDialog, {
@@ -63,17 +64,14 @@ const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
     },
   });
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    createUrl: pageListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-    cleanupFn: reset,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      createUrl: pageListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+      cleanupFn: reset,
+    });
 
   const filterStructure = createFilterStructure(intl, filterOpts);
 

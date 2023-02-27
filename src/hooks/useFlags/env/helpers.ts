@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import camelCase from "lodash/camelCase";
 import snakeCase from "lodash/snakeCase";
 

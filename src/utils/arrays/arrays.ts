@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import difference from "lodash/difference";
 import intersection from "lodash/intersection";
 

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { DialogProps } from "@dashboard/types";
 import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";

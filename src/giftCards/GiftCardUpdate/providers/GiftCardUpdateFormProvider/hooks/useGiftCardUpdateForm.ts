@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { UseFormResult } from "@dashboard/hooks/useForm";
 import omit from "lodash/omit";
 import { useContext } from "react";

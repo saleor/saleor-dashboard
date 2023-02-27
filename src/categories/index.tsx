@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -21,9 +22,9 @@ import CategoryListComponent from "./views/CategoryList";
 interface CategoryDetailsRouteParams {
   id: string;
 }
-const CategoryDetails: React.FC<RouteComponentProps<
-  CategoryDetailsRouteParams
->> = ({ location, match }) => {
+const CategoryDetails: React.FC<
+  RouteComponentProps<CategoryDetailsRouteParams>
+> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CategoryUrlQueryParams = qs;
 
@@ -38,9 +39,9 @@ const CategoryDetails: React.FC<RouteComponentProps<
 interface CategoryCreateRouteParams {
   id: string;
 }
-const CategoryCreate: React.FC<RouteComponentProps<
-  CategoryCreateRouteParams
->> = ({ match }) => (
+const CategoryCreate: React.FC<
+  RouteComponentProps<CategoryCreateRouteParams>
+> = ({ match }) => (
   <CategoryCreateView
     parentId={match.params.id ? decodeURIComponent(match.params.id) : undefined}
   />

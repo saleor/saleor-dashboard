@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   LanguageCodeEnum,
   useMenuItemTranslationDetailsQuery,
@@ -39,21 +40,19 @@ const TranslationsMenuItem: React.FC<TranslationsMenuItemProps> = ({
     variables: { id, language: languageCode },
   });
 
-  const [
-    updateTranslations,
-    updateTranslationsOpts,
-  ] = useUpdateMenuItemTranslationsMutation({
-    onCompleted: data => {
-      if (data.menuItemTranslate.errors.length === 0) {
-        menuItemTranslations.refetch();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate("?", { replace: true });
-      }
-    },
-  });
+  const [updateTranslations, updateTranslationsOpts] =
+    useUpdateMenuItemTranslationsMutation({
+      onCompleted: data => {
+        if (data.menuItemTranslate.errors.length === 0) {
+          menuItemTranslations.refetch();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          navigate("?", { replace: true });
+        }
+      },
+    });
 
   const onEdit = (field: string) =>
     navigate(
