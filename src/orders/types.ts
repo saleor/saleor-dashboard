@@ -87,6 +87,7 @@ export type TransactionEventStatus =
   | "FAILED"
   | "PENDING"
   | "REQUEST"
+  | "INFO"
   | null;
 
 export interface TransactionMappingResult {

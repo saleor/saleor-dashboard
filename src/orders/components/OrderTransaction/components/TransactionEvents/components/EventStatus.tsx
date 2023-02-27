@@ -37,6 +37,10 @@ export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
       return (
         <Pill color="info" label={intl.formatMessage(statusMessages.request)} />
       );
+    case "INFO":
+      return (
+        <Pill color="generic" label={intl.formatMessage(statusMessages.info)} />
+      );
     default:
       const _exhaustiveCheck: never = status;
       return _exhaustiveCheck;

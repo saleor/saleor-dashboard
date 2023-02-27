@@ -98,13 +98,13 @@ export const EventItem: React.FC<EventItemProps> = ({
         <EventStatus status={status} />
       </TableCell>
       <TableCell>
-        <Money money={event.amount} />
+        {event.amount?.currency && <Money money={event.amount} />}
       </TableCell>
       <TableCell
         className={classes.colSmall}
         colSpan={!event.pspReference && 2}
       >
-        <EventType type={type} />
+        <EventType type={type} message={event.message} />
       </TableCell>
       {event.pspReference && (
         <TableCell className={clsx(classes.colSmall, classes.colPspReference)}>

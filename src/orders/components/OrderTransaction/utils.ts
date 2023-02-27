@@ -119,7 +119,7 @@ export const mapTransactionEvent = (
 
   return {
     type: null,
-    status: null,
+    status: "INFO",
   };
 };
 
