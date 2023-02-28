@@ -5,10 +5,12 @@ import DataEditor, {
   DataEditorRef,
   EditableGridCell,
   GridCell,
+  GridMouseEventArgs,
   GridSelection,
   HeaderClickedEventArgs,
   Item,
 } from "@glideapps/glide-data-grid";
+import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
@@ -68,6 +70,7 @@ export interface DatagridProps {
   renderColumnPicker?: (
     defaultProps: Partial<ColumnPickerProps>,
   ) => ReactElement;
+  onRowClick?: (item: Item) => void;
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -84,6 +87,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   onHeaderClicked,
   onChange,
   renderColumnPicker,
+  onRowClick,
 }): React.ReactElement => {
   const classes = useStyles();
   const fullScreenClasses = useFullScreenStyles(classes);
@@ -196,7 +200,35 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [onCellEdited, getCellContent, availableColumns, displayedColumns],
   );
 
+  const onCellClicked = React.useCallback(
+    (item: Item) => {
+      if (onRowClick && item[0] !== -1) {
+        onRowClick(item);
+      }
+    },
+    [onRowClick],
+  );
+
   const [selection, setSelection] = React.useState<GridSelection>();
+
+  const [hoverRow, setHoverRow] = React.useState<number | undefined>(undefined);
+
+  const onItemHovered = React.useCallback((args: GridMouseEventArgs) => {
+    setHoverRow(args.kind !== "cell" ? undefined : args.location[1]);
+  }, []);
+
+  const getRowThemeOverride = React.useCallback<GetRowThemeCallback>(
+    row => {
+      if (row !== hoverRow) {
+        return undefined;
+      }
+      return {
+        bgCell: "hsla(212, 44%, 13%, 0.06)",
+        bgCellMedium: "hsla(212, 44%, 13%, 0.06)",
+      };
+    },
+    [hoverRow],
+  );
 
   const props = useCells();
 
@@ -219,6 +251,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   );
 
   const rowsTotal = rows - removed.length + added.length;
+  const hasMenuItem = !!menuItems(0).length;
   const hasColumnGroups = columns.some(col => col.group);
   const headerTitle = isAnimationOpenFinished
     ? fullScreenTitle ?? title
@@ -281,7 +314,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   onColumnMoved={onColumnMoved}
                   onColumnResize={onColumnResize}
                   onHeaderClicked={onHeaderClicked}
+                  onCellClicked={onCellClicked}
                   onGridSelectionChange={setSelection}
+                  onItemHovered={onItemHovered}
+                  getRowThemeOverride={getRowThemeOverride}
                   gridSelection={selection}
                   rowHeight={cellHeight}
                   headerHeight={cellHeight}
@@ -294,14 +330,20 @@ export const Datagrid: React.FC<DatagridProps> = ({
                     <div
                       className={clsx(classes.rowActionBar, {
                         [classes.rowActionBarScrolledToRight]: scrolledToRight,
+                        [classes.rowActionvBarWithItems]: hasMenuItem,
                       })}
                     >
                       <div
                         className={clsx(classes.rowActionBarShadow, {
-                          [classes.rowActionBarShadowActive]: !scrolledToRight,
+                          [classes.rowActionBarShadowActive]:
+                            !scrolledToRight && hasMenuItem,
                         })}
                       />
-                      <div className={classes.columnPicker}>
+                      <div
+                        className={clsx(classes.columnPicker, {
+                          [classes.columnPickerBackground]: !hasMenuItem,
+                        })}
+                      >
                         {renderColumnPicker ? (
                           renderColumnPicker(defualtColumnPickerProps)
                         ) : (
@@ -326,14 +368,15 @@ export const Datagrid: React.FC<DatagridProps> = ({
                           })}
                         />
                       )}
-                      {Array(rowsTotal)
-                        .fill(0)
-                        .map((_, index) => (
-                          <RowActions
-                            menuItems={menuItems(index)}
-                            disabled={index >= rowsTotal - added.length}
-                          />
-                        ))}
+                      {hasMenuItem &&
+                        Array(rowsTotal)
+                          .fill(0)
+                          .map((_, index) => (
+                            <RowActions
+                              menuItems={menuItems(index)}
+                              disabled={index >= rowsTotal - added.length}
+                            />
+                          ))}
                     </div>
                   }
                   rowMarkerWidth={48}

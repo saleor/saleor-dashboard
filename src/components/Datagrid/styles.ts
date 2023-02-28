@@ -36,6 +36,9 @@ const useStyles = makeStyles(
         justifyContent: "center",
         height: cellHeight,
       },
+      columnPickerBackground: {
+        background: theme.palette.background.paper,
+      },
       ghostIcon: {
         color: theme.palette.saleor.main[3],
       },
@@ -100,9 +103,11 @@ const useStyles = makeStyles(
       },
       rowActionBar: {
         height: "100%",
-        background: theme.palette.background.paper,
-        borderLeft: `1px solid ${activeBorderColor}`,
         width: 36,
+      },
+      rowActionvBarWithItems: {
+        borderLeft: `1px solid ${activeBorderColor}`,
+        background: theme.palette.background.paper,
       },
       rowActionBarScrolledToRight: {
         borderLeftColor: theme.palette.divider,
@@ -188,18 +193,18 @@ export function useDatagridTheme() {
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
       accentColor: newTheme.colors.border.brandDefault,
-      accentLight: newTheme.colors.border.brandDefault,
+      accentLight: newTheme.colors.background.subdued,
       accentFg: "transparent",
       bgCell: newTheme.colors.background.plain,
       bgHeader: newTheme.colors.background.plain,
       bgHeaderHasFocus: newTheme.colors.background.plain,
       bgHeaderHovered: newTheme.colors.background.plain,
       bgBubbleSelected: newTheme.colors.background.plain,
-      textHeader: newTheme.colors.foreground.textNeutralDisabled,
+      textHeader: newTheme.colors.foreground.iconNeutralPlain,
       borderColor: newTheme.colors.border.neutralHighlight,
       fontFamily: newTheme.fontFamily.body,
       baseFontStyle: newTheme.fontSize.bodySmall,
-      headerFontStyle: newTheme.fontSize.bodySmall,
+      headerFontStyle: newTheme.fontSize.captionSmall,
       editorFontSize: newTheme.fontSize.bodySmall,
       textMedium: newTheme.colors.foreground.text1Decorative,
       textGroupHeader: theme.palette.text.secondary,

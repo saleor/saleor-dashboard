@@ -22,7 +22,8 @@ import {
   RelayToFlat,
   SortPage,
 } from "@dashboard/types";
-import { Button, EditIcon, makeStyles } from "@saleor/macaw-ui";
+import { Item } from "@glideapps/glide-data-grid";
+import { Button, makeStyles } from "@saleor/macaw-ui";
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -157,6 +158,14 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [columns, onSort, selectedChannelId],
   );
 
+  const onRowClicked = useCallback(
+    ([_, row]: Item) => {
+      const rowData = products[row];
+      onRowClick(rowData.id);
+    },
+    [onRowClick, products],
+  );
+
   const onColumnsChange = useCallback(
     (columns: ProductListColumns[]) => onUpdateListSettings("columns", columns),
     [onUpdateListSettings],
@@ -170,13 +179,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         emptyText={intl.formatMessage(messages.emptyText)}
         getCellContent={getCellContent}
         getCellError={() => false}
-        menuItems={index => [
-          {
-            label: intl.formatMessage(messages.editProduct),
-            onSelect: () => onRowClick(products[index].id),
-            Icon: <EditIcon />,
-          },
-        ]}
+        menuItems={() => []}
         rows={getProductRowsLength(disabled, products)}
         selectionActions={(indexes, { removeRows }) => (
           <Button variant="tertiary" onClick={() => removeRows(indexes)}>
@@ -186,6 +189,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         title=""
         fullScreenTitle={intl.formatMessage(messages.products)}
         onChange={onChange}
+        onRowClick={onRowClicked}
         renderColumnPicker={defaultProps => (
           <ColumnPicker
             {...defaultProps}
