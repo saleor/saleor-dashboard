@@ -71,6 +71,7 @@ interface TimelineNoteProps {
     firstName?: string;
     lastName?: string;
   };
+  hasPlainDate?: boolean;
 }
 
 interface NoteMessageProps {
@@ -90,7 +91,7 @@ const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
 );
 
 export const TimelineNote: React.FC<TimelineNoteProps> = props => {
-  const { date, user, message } = props;
+  const { date, user, message, hasPlainDate } = props;
   const { user: currentUser } = useUser();
 
   const classes = useStyles(props);
@@ -127,7 +128,7 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
       <div className={classes.title}>
         <Typography>{getUserTitleOrEmail()}</Typography>
         <Typography>
-          <DateTime date={date} />
+          <DateTime date={date} plain={hasPlainDate} />
         </Typography>
       </div>
       <Card className={classes.card} elevation={16}>

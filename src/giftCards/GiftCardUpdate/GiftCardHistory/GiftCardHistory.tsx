@@ -87,6 +87,7 @@ const GiftCardHistory: React.FC = () => {
                       user={user}
                       message={message}
                       key={id}
+                      hasPlainDate
                     />
                   );
                 }

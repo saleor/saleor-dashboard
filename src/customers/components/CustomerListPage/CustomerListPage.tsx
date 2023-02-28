@@ -76,10 +76,8 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   const userPermissions = useUserPermissions();
   const structure = createFilterStructure(intl, filterOpts, userPermissions);
 
-  const {
-    CUSTOMER_OVERVIEW_CREATE,
-    CUSTOMER_OVERVIEW_MORE_ACTIONS,
-  } = useExtensions(extensionMountPoints.CUSTOMER_LIST);
+  const { CUSTOMER_OVERVIEW_CREATE, CUSTOMER_OVERVIEW_MORE_ACTIONS } =
+    useExtensions(extensionMountPoints.CUSTOMER_LIST);
   const extensionMenuItems = mapToMenuItemsForCustomerOverviewActions(
     CUSTOMER_OVERVIEW_MORE_ACTIONS,
     selectedCustomerIds,

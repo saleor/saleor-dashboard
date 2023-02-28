@@ -416,7 +416,7 @@ export const ProductList: React.FC<ProductListProps> = props => {
                   >
                     <TableCell className={classes.colDate} data-test-id="date">
                       {product?.updatedAt ? (
-                        <Date date={product.updatedAt} />
+                        <Date date={product.updatedAt} plain />
                       ) : (
                         <Skeleton />
                       )}
