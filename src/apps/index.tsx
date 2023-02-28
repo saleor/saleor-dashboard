@@ -12,10 +12,8 @@ import {
   appInstallPath,
   AppInstallUrlQueryParams,
   AppListUrlQueryParams,
-  appPath,
   appsListPath,
 } from "./urls";
-import { AppView } from "./views/App";
 import AppDetailsView from "./views/AppDetails";
 import AppInstallView from "./views/AppInstall";
 import AppsListView from "./views/AppsList";
@@ -30,10 +28,6 @@ const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
     <AppDetailsView id={decodeURIComponent(match.params.id)} params={params} />
   );
 };
-
-const App: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => (
-  <AppView id={decodeURIComponent(match.params.id)} />
-);
 
 const AppInstall: React.FC<RouteComponentProps> = props => {
   const qs = parseQs(location.search.substr(1));
@@ -58,7 +52,6 @@ const Component = () => {
         <Route exact path={appsListPath} component={AppsList} />
         <Route exact path={appInstallPath} component={AppInstall} />
         <Route exact path={appDetailsPath(":id")} component={AppDetails} />
-        <Route path={appPath(":id")} component={App} />
         <WebhooksRoutes />
       </Switch>
     </>

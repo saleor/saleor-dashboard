@@ -1,7 +1,7 @@
 import {
   extensionMountPoints,
   useExtensions,
-} from "@dashboard/apps/useExtensions";
+} from "@dashboard/new-apps/hooks/useExtensions";
 import { Box, List, sprinkles, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { Link } from "react-router-dom";

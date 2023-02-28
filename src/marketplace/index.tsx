@@ -1,4 +1,3 @@
-import { AppFrame } from "@dashboard/apps/components/AppFrame";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -7,6 +6,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { marketplaceUrlResolver } from "@dashboard/marketplace/marketplace-url-resolver";
 import { marketplaceUrl } from "@dashboard/marketplace/urls";
+import { AppFrame } from "@dashboard/new-apps/components/AppFrame";
 import { Container } from "@material-ui/core";
 import React, { useMemo } from "react";
 import { useIntl } from "react-intl";

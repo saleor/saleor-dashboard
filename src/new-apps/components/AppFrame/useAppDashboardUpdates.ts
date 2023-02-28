@@ -1,6 +1,6 @@
-import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostToExtension";
-import { getAppDeepPathFromDashboardUrl } from "@dashboard/apps/urls";
 import useLocale from "@dashboard/hooks/useLocale";
+import { usePostToExtension } from "@dashboard/new-apps/components/AppFrame/usePostToExtension";
+import { AppUrls } from "@dashboard/new-apps/urls";
 import { useTheme } from "@saleor/macaw-ui";
 import { useEffect } from "react";
 
@@ -51,7 +51,10 @@ export const useAppDashboardUpdates = (
     postToExtension({
       type: "redirect",
       payload: {
-        path: getAppDeepPathFromDashboardUrl(location.pathname, appId),
+        path: AppUrls.resolveAppDeepPathFromDashboardUrl(
+          location.pathname,
+          appId,
+        ),
       },
     });
   }, [appId, enabled, postToExtension]);
