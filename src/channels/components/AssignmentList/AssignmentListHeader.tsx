@@ -1,4 +1,4 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Skeleton from "@dashboard/components/Skeleton";
 import { Typography } from "@material-ui/core";
 import { AccordionSummary } from "@saleor/macaw-ui";

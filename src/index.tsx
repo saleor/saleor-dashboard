@@ -15,7 +15,6 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import { useLocationState } from "./apps/hooks/useLocationState";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
 import Auth, { useUser } from "./auth";
@@ -52,6 +51,7 @@ import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
 import HomePage from "./home";
 import { FlagsServiceProvider } from "./hooks/useFlags/flagsService";
+import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import MarketplaceSection from "./marketplace";
 import { marketplaceUrl } from "./marketplace/urls";

@@ -1,7 +1,7 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import SingleSelectField from "@dashboard/components/SingleSelectField";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import GiftCardCustomerSelectField from "@dashboard/giftCards/GiftCardCreateDialog/GiftCardCustomerSelectField";
 import { GiftCardCreateFormCustomer } from "@dashboard/giftCards/GiftCardCreateDialog/types";
 import { FormChange } from "@dashboard/hooks/useForm";

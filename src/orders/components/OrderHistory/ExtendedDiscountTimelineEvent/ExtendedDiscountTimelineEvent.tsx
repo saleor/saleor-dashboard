@@ -1,5 +1,5 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
 import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";

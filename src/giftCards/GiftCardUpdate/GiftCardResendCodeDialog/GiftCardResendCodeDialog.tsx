@@ -1,9 +1,9 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import { IMessage } from "@dashboard/components/messages";
 import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import {
   useChannelsQuery,
   useGiftCardResendMutation,
@@ -81,31 +81,29 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
     handleSubmit,
   );
 
-  const [
-    resendGiftCardCode,
-    resendGiftCardCodeOpts,
-  ] = useGiftCardResendMutation({
-    onCompleted: data => {
-      const errors = data?.giftCardResend?.errors;
+  const [resendGiftCardCode, resendGiftCardCodeOpts] =
+    useGiftCardResendMutation({
+      onCompleted: data => {
+        const errors = data?.giftCardResend?.errors;
 
-      const notifierData: IMessage = !!errors?.length
-        ? {
-            status: "error",
-            text: intl.formatMessage(commonErrorMessages.unknownError),
-          }
-        : {
-            status: "success",
-            text: intl.formatMessage(messages.successResendAlertText),
-          };
+        const notifierData: IMessage = !!errors?.length
+          ? {
+              status: "error",
+              text: intl.formatMessage(commonErrorMessages.unknownError),
+            }
+          : {
+              status: "success",
+              text: intl.formatMessage(messages.successResendAlertText),
+            };
 
-      notify(notifierData);
+        notify(notifierData);
 
-      if (!errors.length) {
-        onClose();
-        reset();
-      }
-    },
-  });
+        if (!errors.length) {
+          onClose();
+          reset();
+        }
+      },
+    });
 
   const { loading, status, data: submitData } = resendGiftCardCodeOpts;
 

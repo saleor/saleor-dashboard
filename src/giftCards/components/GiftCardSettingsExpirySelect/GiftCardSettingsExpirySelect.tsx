@@ -1,5 +1,5 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { getGiftCardSettingsErrorMessage } from "@dashboard/giftCards/GiftCardSettings/messages";
 import {
   GiftCardSettingsErrorFragment,
@@ -22,7 +22,9 @@ export interface GiftCardSettingsExpirySelectProps {
   errors?: Record<"expiryPeriod", GiftCardSettingsErrorFragment>;
 }
 
-const GiftCardSettingsExpirySelect: React.FC<GiftCardSettingsExpirySelectProps> = ({
+const GiftCardSettingsExpirySelect: React.FC<
+  GiftCardSettingsExpirySelectProps
+> = ({
   errors,
   change,
   disabled,

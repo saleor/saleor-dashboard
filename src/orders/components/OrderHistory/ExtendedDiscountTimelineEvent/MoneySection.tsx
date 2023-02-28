@@ -1,4 +1,4 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";

@@ -1,4 +1,3 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardTitle from "@dashboard/components/CardTitle";
 import Form from "@dashboard/components/Form";
@@ -6,6 +5,7 @@ import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import {
   CountryCode,

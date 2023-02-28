@@ -1,9 +1,9 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
 import { AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
 import { ColorPicker } from "@dashboard/components/ColorPicker";
 import FileUploadField from "@dashboard/components/FileUploadField";
 import { RadioGroupField } from "@dashboard/components/RadioGroupField";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { useFileUploadMutation } from "@dashboard/graphql";
 import { UseFormResult } from "@dashboard/hooks/useForm";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -21,9 +21,9 @@ type AttributeSwatchFieldProps<T> = Pick<
 
 type SwatchType = "picker" | "image";
 
-const AttributeSwatchField: React.FC<AttributeSwatchFieldProps<
-  AttributeValueEditDialogFormData
->> = ({ set, ...props }) => {
+const AttributeSwatchField: React.FC<
+  AttributeSwatchFieldProps<AttributeValueEditDialogFormData>
+> = ({ set, ...props }) => {
   const { data } = props;
   const notify = useNotifier();
   const intl = useIntl();

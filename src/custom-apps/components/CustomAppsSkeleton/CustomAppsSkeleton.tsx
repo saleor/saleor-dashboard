@@ -3,10 +3,10 @@ import TableRowLink from "@dashboard/components/TableRowLink";
 import { TableCell } from "@material-ui/core";
 import React from "react";
 
-import { useStyles } from "../../styles";
+import { useStyles } from "./styles";
 
-export const AppsSkeleton = () => {
-  const classes = useStyles({});
+export const CustomAppsSkeleton = () => {
+  const classes = useStyles();
 
   return (
     <TableRowLink className={classes.tableRow}>
@@ -17,5 +17,5 @@ export const AppsSkeleton = () => {
   );
 };
 
-AppsSkeleton.displayName = "AppsSkeleton";
-export default AppsSkeleton;
+CustomAppsSkeleton.displayName = "CustomAppsSkeleton";
+export default CustomAppsSkeleton;
