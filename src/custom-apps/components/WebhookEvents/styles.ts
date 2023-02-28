@@ -25,6 +25,7 @@ export const useStyles = makeStyles(
       minHeight: 0,
       gap: 0,
       padding: theme.spacing(1),
+      cursor: "pointer",
     },
     listItemCell: {
       paddingLeft: "0 !important",
@@ -35,6 +36,9 @@ export const useStyles = makeStyles(
     },
     card: {
       paddingLeft: 0,
+    },
+    cardHeader: {
+      padding: "2.4rem 3.2rem",
     },
   }),
   { name: "WebhookEvents" },

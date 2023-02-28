@@ -3675,6 +3675,10 @@
     "context": "caption",
     "string": "If enabled, you’ll be able to use this attribute to filter products in product list."
   },
+  "QAisk4": {
+    "context": "Webhook events header",
+    "string": "Webhook events"
+  },
   "QBxN6z": {
     "context": "is filter range or value",
     "string": "between"
