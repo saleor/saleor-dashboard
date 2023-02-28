@@ -6370,6 +6370,10 @@
     "context": "assign reference to a page, button",
     "string": "Assign and save"
   },
+  "if9gAZ": {
+    "context": "Transaction event status - unknown status, info without event data",
+    "string": "Info"
+  },
   "ij7olm": {
     "context": "error message",
     "string": "This fulfillment cannot be cancelled"
