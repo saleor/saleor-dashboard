@@ -68,7 +68,7 @@ export const isOrderWithTransactions = (
 export const orderHasTransactions = (
   order: any,
   featureFlag: boolean,
-): boolean => {
+): order is OrderDetailsWithTransactionsFragment => {
   if (isOrderWithTransactions(order, featureFlag)) {
     return order?.transactions?.length > 0;
   }

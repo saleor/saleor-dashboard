@@ -2,8 +2,8 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import { TransactionActionEnum } from "@dashboard/graphql/transactions";
 import { useFlags } from "@dashboard/hooks/useFlags";
 import {
-  isOrderWithTransactions,
   OrderBothTypes,
+  orderHasTransactions,
   ShopBothTypes,
   ShopWithTransactions,
 } from "@dashboard/orders/types";
@@ -39,7 +39,7 @@ export const OrderPaymentOrTransaction: React.FC<
 }) => {
   const { orderTransactions } = useFlags(["orderTransactions"]);
 
-  if (isOrderWithTransactions(order, orderTransactions.enabled)) {
+  if (orderHasTransactions(order, orderTransactions.enabled)) {
     return (
       <OrderTransactionsWrapper
         order={order}

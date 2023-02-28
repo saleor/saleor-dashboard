@@ -7,7 +7,10 @@ import {
   OrderDetailsFragment,
 } from "@dashboard/graphql/transactions";
 import { transformPaymentStatus } from "@dashboard/misc";
-import { orderGrantRefundUrl, orderRefundUrl } from "@dashboard/orders/urls";
+import {
+  orderGrantRefundUrl,
+  orderSendRefundUrl,
+} from "@dashboard/orders/urls";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { Pill } from "@saleor/macaw-ui";
 import React from "react";
@@ -110,7 +113,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
                 {canSendRefund && (
                   <Button
                     variant="secondary"
-                    href={orderRefundUrl(order.id)}
+                    href={orderSendRefundUrl(order.id)}
                     data-test-id="refund-button"
                   >
                     <FormattedMessage
