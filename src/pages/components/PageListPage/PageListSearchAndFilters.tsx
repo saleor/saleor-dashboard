@@ -63,17 +63,14 @@ const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
     },
   });
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    createUrl: pageListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-    cleanupFn: reset,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      createUrl: pageListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+      cleanupFn: reset,
+    });
 
   const filterStructure = createFilterStructure(intl, filterOpts);
 
@@ -111,7 +108,7 @@ const PageListSearchAndFilters: React.FC<PageListSearchAndFiltersProps> = ({
         onFilterChange={changeFilters}
         onSearchChange={handleSearchChange}
         searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
-        allTabLabel={"All Pages"}
+        allTabLabel={"All Content"}
         tabs={tabs.map(({ name }) => name)}
         currentTab={currentTab}
         onTabDelete={handleTabDelete}

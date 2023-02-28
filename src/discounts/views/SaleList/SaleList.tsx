@@ -18,7 +18,7 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -98,17 +98,14 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
 
   const currentTab = getFiltersCurrentTab(params, tabs);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    cleanupFn: reset,
-    createUrl: saleListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      cleanupFn: reset,
+      createUrl: saleListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+    });
 
   useEffect(() => {
     if (!canBeSorted(params.sort, !!selectedChannel)) {
@@ -175,7 +172,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
-      <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
+      <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
       <SaleListPage
         currentTab={currentTab}
         filterOpts={getFilterOpts(params, channelOpts)}

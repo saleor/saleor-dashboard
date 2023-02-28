@@ -5,7 +5,7 @@ import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { saleAddUrl, SaleListUrlSortField } from "@dashboard/discounts/urls";
 import { SaleFragment } from "@dashboard/graphql";
-import { sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import {
   ChannelProps,
   FilterPageProps,
@@ -55,15 +55,15 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
 
   return (
     <ListPageLayout>
-      <TopNav title={intl.formatMessage(sectionNames.sales)}>
+      <TopNav title={intl.formatMessage(commonMessages.discounts)}>
         <Button
           href={saleAddUrl()}
           variant="primary"
           data-test-id="create-sale"
         >
           <FormattedMessage
-            id="JHfbXR"
-            defaultMessage="Create Sale"
+            id="+MJW+8"
+            defaultMessage="Create Discount"
             description="button"
           />
         </Button>
@@ -71,16 +71,16 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
       <Card>
         <FilterBar
           allTabLabel={intl.formatMessage({
-            id: "Yjhgle",
-            defaultMessage: "All Sales",
+            id: "c8zJID",
+            defaultMessage: "All Discounts",
             description: "tab name",
           })}
           currentTab={currentTab}
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
-            id: "MSD3A/",
-            defaultMessage: "Search Sale",
+            id: "lit2zF",
+            defaultMessage: "Search Discounts",
           })}
           tabs={tabs}
           onAll={onAll}

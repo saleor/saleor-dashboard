@@ -20,7 +20,7 @@ import {
 import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import React from "react";
@@ -46,9 +46,8 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
   >(navigate, params => saleAddUrl(params), params);
 
   const { availableChannels } = useAppChannel(false);
-  const allChannels: ChannelSaleFormData[] = createSortedSaleData(
-    availableChannels,
-  );
+  const allChannels: ChannelSaleFormData[] =
+    createSortedSaleData(availableChannels);
 
   const {
     channelListElements,
@@ -68,10 +67,8 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
     { formId: SALE_CREATE_FORM_ID },
   );
 
-  const [
-    updateChannels,
-    updateChannelsOpts,
-  ] = useSaleChannelListingUpdateMutation({});
+  const [updateChannels, updateChannelsOpts] =
+    useSaleChannelListingUpdateMutation({});
 
   const [saleCreate, saleCreateOpts] = useSaleCreateMutation({
     onCompleted: data => {
@@ -100,7 +97,7 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
 
   return (
     <>
-      <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
+      <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}

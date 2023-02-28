@@ -39,11 +39,11 @@ const PageListPage: React.FC<PageListPageProps> = ({
 
   return (
     <>
-      <TopNav title={intl.formatMessage(sectionNames.pages)}>
+      <TopNav title={intl.formatMessage(sectionNames.content)}>
         <Button onClick={onAdd} variant="primary" data-test-id="create-page">
           <FormattedMessage
-            id="AHRDWt"
-            defaultMessage="Create page"
+            id="DOVEZF"
+            defaultMessage="Create content"
             description="button"
           />
         </Button>
