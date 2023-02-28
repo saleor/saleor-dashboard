@@ -30,7 +30,7 @@ export const AppPage: React.FC<AppPageProps> = ({
       />
 
       <div className={classes.iframeContainer}>
-        {url && data.id && data.accessToken && (
+        {url && data?.id && data?.accessToken && (
           <AppFrame
             src={url}
             appToken={data?.accessToken ?? ""}

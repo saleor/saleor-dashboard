@@ -8,9 +8,9 @@ import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
 
 interface AppPageNavProps {
-  name: string | undefined;
-  supportUrl: string | undefined;
-  homepageUrl: string | undefined;
+  name: string | undefined | null;
+  supportUrl: string | undefined | null;
+  homepageUrl: string | undefined | null;
 }
 
 export const AppPageNav: React.FC<AppPageNavProps> = ({
