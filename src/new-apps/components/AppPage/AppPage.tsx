@@ -1,4 +1,4 @@
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { AppQuery } from "@dashboard/graphql";
 import React from "react";
 
@@ -22,7 +22,7 @@ export const AppPage: React.FC<AppPageProps> = ({
   const classes = useStyles();
 
   return (
-    <DetailedContent useSingleColumn>
+    <DetailPageLayout gridTemplateColumns={1}>
       <AppPageNav
         name={data?.name}
         supportUrl={data?.supportUrl}
@@ -40,7 +40,7 @@ export const AppPage: React.FC<AppPageProps> = ({
           />
         )}
       </div>
-    </DetailedContent>
+    </DetailPageLayout>
   );
 };
 

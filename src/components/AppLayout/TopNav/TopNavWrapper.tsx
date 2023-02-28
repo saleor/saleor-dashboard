@@ -14,9 +14,10 @@ export const TopNavWrapper: React.FC = ({ children }) => (
     borderColor="neutralPlain"
     position="relative"
     data-test-id="page-header"
-    gap={7}
     __height={topBarHeight}
-    __gridArea="nav"
+    gridColumn="8"
+    gridRowStart="1"
+    backgroundColor="plain"
   >
     {children}
   </Box>

@@ -22,7 +22,7 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
   return (
     <TopNavWrapper>
       {href && <TopNavLink to={href} />}
-      <Box __flex={1}>
+      <Box __flex={1} marginLeft={5}>
         <Text variant="title">{title}</Text>
       </Box>
       <Box display="flex" flexWrap="nowrap">
