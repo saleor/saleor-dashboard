@@ -3,7 +3,7 @@ import { TransactionActionEnum } from "@dashboard/graphql/transactions";
 import { useFlags } from "@dashboard/hooks/useFlags";
 import {
   OrderBothTypes,
-  orderHasTransactions,
+  orderChannelUseTransactions,
   ShopBothTypes,
   ShopWithTransactions,
 } from "@dashboard/orders/types";
@@ -39,7 +39,7 @@ export const OrderPaymentOrTransaction: React.FC<
 }) => {
   const { orderTransactions } = useFlags(["orderTransactions"]);
 
-  if (orderHasTransactions(order, orderTransactions.enabled)) {
+  if (orderChannelUseTransactions(order, orderTransactions.enabled)) {
     return (
       <OrderTransactionsWrapper
         order={order}

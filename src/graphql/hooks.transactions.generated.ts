@@ -1825,6 +1825,9 @@ export const OrderDetailsWithTransactionsFragmentDoc = gql`
     defaultCountry {
       code
     }
+    orderSettings {
+      markAsPaidStrategy
+    }
   }
   isPaid
 }

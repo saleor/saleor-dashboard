@@ -8,6 +8,7 @@ import {
   OrderRefundDataQuery,
 } from "@dashboard/graphql";
 import {
+  MarkAsPaidStrategyEnum,
   OrderDetailsWithTransactionsFragment,
   OrderDetailsWithTransactionsQuery,
   OrderErrorCode as OrderErrorCodeWithTransactions,
@@ -71,6 +72,24 @@ export const orderHasTransactions = (
 ): order is OrderDetailsWithTransactionsFragment => {
   if (isOrderWithTransactions(order, featureFlag)) {
     return order?.transactions?.length > 0;
+  }
+
+  return false;
+};
+
+export const orderChannelUseTransactions = (
+  order: any,
+  featureFlag: boolean,
+): order is OrderDetailsWithTransactionsFragment => {
+  if (orderHasTransactions(order, featureFlag)) {
+    return true;
+  }
+
+  if (isOrderWithTransactions(order, featureFlag)) {
+    return (
+      order?.channel?.orderSettings?.markAsPaidStrategy ===
+      MarkAsPaidStrategyEnum.TRANSACTION_FLOW
+    );
   }
 
   return false;
