@@ -38,20 +38,10 @@ export const thumbnailCellRenderer: CustomCellRenderer<ThumbnailCell> = {
       ctx.restore();
     } else {
       ctx.save();
-      const backupImg = size - 5;
-      const startY = drawY + 2;
       ctx.beginPath();
-      ctx.rect(drawX, startY, backupImg, backupImg);
-      ctx.strokeStyle = theme.textDark;
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.moveTo(drawX, drawY + backupImg);
-      ctx.lineTo(drawX + backupImg / 3, startY + backupImg / 2);
-      ctx.lineTo(drawX + backupImg / 2, startY + backupImg / 1.5);
-      ctx.lineTo(drawX + backupImg / 1.5, startY + backupImg / 2.5);
-      ctx.lineTo(drawX + backupImg / 1.2, startY + backupImg / 1.5);
-      ctx.lineTo(drawX + backupImg, startY + backupImg / 1.2);
-      ctx.stroke();
+      ctx.roundRect(drawX, drawY, size, size, 4);
+      ctx.fillStyle = theme.borderColor;
+      ctx.fill();
       ctx.restore();
     }
 
