@@ -2,7 +2,6 @@ import { appsListUrl } from "@dashboard/apps/urls";
 import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
 import { LinkState } from "@dashboard/components/Link";
 import { AppAvatar } from "@dashboard/new-apps/components/AppAvatar/AppAvatar";
-import { GitHub, OfflineBoltOutlined } from "@material-ui/icons";
 import { Box, Button, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -46,7 +45,6 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
                 window.open(supportUrl, "_blank");
               }}
             >
-              <GitHub />
               <FormattedMessage defaultMessage="Support" id="HqRNN8" />
             </Button>
           )}
@@ -58,7 +56,6 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
                 window.open(homepageUrl, "_blank");
               }}
             >
-              <OfflineBoltOutlined />
               <FormattedMessage defaultMessage="Homepage" id="rxNddi" />
             </Button>
           )}
