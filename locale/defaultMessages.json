@@ -2302,6 +2302,9 @@
     "context": "sale name",
     "string": "Name"
   },
+  "F5OqYa": {
+    "string": "Creates a single payment when unchecked"
+  },
   "F69lwk": {
     "context": "settings menu item",
     "string": "Settings"
@@ -3532,6 +3535,9 @@
   "Nj9iSB": {
     "context": "table header column",
     "string": "Tax rate"
+  },
+  "NkLZBG": {
+    "string": "Mark as paid uses Transactions API"
   },
   "NlEVVT": {
     "context": "label for button",
@@ -6369,6 +6375,10 @@
   "idr+JK": {
     "context": "assign reference to a page, button",
     "string": "Assign and save"
+  },
+  "if9gAZ": {
+    "context": "Transaction event status - unknown status, info without event data",
+    "string": "Info"
   },
   "ij7olm": {
     "context": "error message",
