@@ -21,7 +21,6 @@ export const RootLayout: React.FC<DetailPageLayoutProps> = ({
   withSavebar = true,
 }) => (
   <Box
-    as="article"
     display="grid"
     margin="auto"
     gridTemplateColumns={gridTemplateColumns}
