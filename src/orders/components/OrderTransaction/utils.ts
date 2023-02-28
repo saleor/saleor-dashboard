@@ -30,15 +30,15 @@ export const mapActionToMessage: Record<
 const typeMap: Record<TransactionEventTypeEnum, TransactionMappingResult> = {
   CHARGE_BACK: {
     type: "CHARGEBACK",
-    status: null,
+    status: "INFO",
   },
   REFUND_REVERSE: {
     type: "REFUND_REVERSED",
-    status: null,
+    status: "INFO",
   },
   AUTHORIZATION_ADJUSTMENT: {
     type: "AUTHORIZATION_ADJUSTMENT",
-    status: null,
+    status: "INFO",
   },
 
   // Authorization
