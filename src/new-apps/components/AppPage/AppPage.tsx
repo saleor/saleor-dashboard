@@ -1,7 +1,9 @@
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { AppQuery } from "@dashboard/graphql";
 import React from "react";
 
 import { AppFrame } from "../AppFrame";
+import { AppPageNav } from "./AppPageNav";
 import { useStyles } from "./styles";
 
 export interface AppPageProps {
@@ -20,17 +22,25 @@ export const AppPage: React.FC<AppPageProps> = ({
   const classes = useStyles();
 
   return (
-    <div className={classes.iframeContainer}>
-      {url && data.id && data.accessToken && (
-        <AppFrame
-          src={url}
-          appToken={data?.accessToken}
-          onError={onError}
-          appId={data?.id}
-          refetch={refetch}
-        />
-      )}
-    </div>
+    <DetailPageLayout gridTemplateColumns={1}>
+      <AppPageNav
+        name={data?.name}
+        supportUrl={data?.supportUrl}
+        homepageUrl={data?.homepageUrl}
+      />
+
+      <div className={classes.iframeContainer}>
+        {url && data?.id && data?.accessToken && (
+          <AppFrame
+            src={url}
+            appToken={data?.accessToken ?? ""}
+            onError={onError}
+            appId={data?.id ?? ""}
+            refetch={refetch}
+          />
+        )}
+      </div>
+    </DetailPageLayout>
   );
 };
 
