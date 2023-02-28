@@ -28,7 +28,7 @@ export function textCell(value: string): GridCell {
 
 export function readonlyTextCell(value: string): GridCell {
   return {
-    allowOverlay: true,
+    allowOverlay: false,
     readonly: true,
     data: value,
     displayData: value,

@@ -34,7 +34,7 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: cellHeight,
+        height: cellHeight + 16,
       },
       columnPickerBackground: {
         background: theme.palette.background.paper,
@@ -130,6 +130,9 @@ const useStyles = makeStyles(
         justifyContent: "center",
         height: `calc(${cellHeight}px - 1px)`,
       },
+      rowColumnGroup: {
+        height: cellHeight + 15,
+      },
       rowActionScrolledToRight: {
         borderLeftColor: theme.palette.divider,
       },
@@ -191,8 +194,8 @@ export function useDatagridTheme() {
 
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: theme.colors.border.brandDefault,
-      accentLight: theme.colors.background.subdued,
+      accentColor: theme.colors.background.interactiveBrandDefault,
+      accentLight: theme.colors.background.surfaceBrandHighlight,
       accentFg: "transparent",
       bgCell: theme.colors.background.plain,
       bgHeader: theme.colors.background.plain,
@@ -205,7 +208,7 @@ export function useDatagridTheme() {
       baseFontStyle: theme.fontSize.bodySmall,
       headerFontStyle: theme.fontSize.captionSmall,
       editorFontSize: theme.fontSize.bodySmall,
-      textMedium: theme.colors.foreground.text1Decorative,
+      textMedium: theme.colors.background.interactiveNeutralDefault,
       textGroupHeader: theme.colors.foreground.iconNeutralPlain,
       textBubble: theme.colors.background.interactiveNeutralDefault,
       textDark: theme.colors.background.interactiveNeutralDefault,
@@ -216,7 +219,6 @@ export function useDatagridTheme() {
     }),
     [theme],
   );
-
   return datagridTheme;
 }
 

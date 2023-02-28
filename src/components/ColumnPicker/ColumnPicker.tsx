@@ -4,11 +4,11 @@ import { FetchMoreProps } from "@dashboard/types";
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
 import {
   Choice,
-  ColumnsIcon,
   IconButton,
   IconButtonProps,
   makeStyles,
 } from "@saleor/macaw-ui";
+import { TableEditIcon } from "@saleor/macaw-ui/next";
 import { score } from "fuzzaldrin";
 import sortBy from "lodash/sortBy";
 import React from "react";
@@ -111,7 +111,7 @@ const ColumnPicker: React.FC<ColumnPickerProps> = props => {
           state={isExpanded ? "active" : "default"}
           onClick={() => setExpansionState(prevState => !prevState)}
         >
-          <ColumnsIcon />
+          <TableEditIcon />
         </IconButton>
         <Popper
           className={classes.popper}

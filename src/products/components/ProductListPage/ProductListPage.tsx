@@ -185,6 +185,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       )}
       <Card>
         <FilterBar
+          withoutBorder
           currencySymbol={currencySymbol}
           currentTab={currentTab}
           initialSearch={initialSearch}

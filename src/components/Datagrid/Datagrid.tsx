@@ -2,6 +2,7 @@ import "@glideapps/glide-data-grid/dist/index.css";
 
 import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
 import DataEditor, {
+  DataEditorProps,
   DataEditorRef,
   EditableGridCell,
   GridCell,
@@ -72,6 +73,8 @@ export interface DatagridProps {
     defaultProps: Partial<ColumnPickerProps>,
   ) => ReactElement;
   onRowClick?: (item: Item) => void;
+  readonly?: boolean;
+  rowMarkers?: DataEditorProps["rowMarkers"];
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -89,6 +92,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
   onChange,
   renderColumnPicker,
   onRowClick,
+  readonly = false,
+  rowMarkers = "checkbox",
 }): React.ReactElement => {
   const classes = useStyles();
   const fullScreenClasses = useFullScreenStyles(classes);
@@ -220,6 +225,12 @@ export const Datagrid: React.FC<DatagridProps> = ({
     setHoverRow(args.kind !== "cell" ? undefined : args.location[1]);
   }, []);
 
+  const onGridSelectionChange = (gridSelection: GridSelection) => {
+    if (!readonly) {
+      setSelection(gridSelection);
+    }
+  };
+
   const getRowThemeOverride = React.useCallback<GetRowThemeCallback>(
     row => {
       if (row !== hoverRow) {
@@ -266,28 +277,30 @@ export const Datagrid: React.FC<DatagridProps> = ({
       className={fullScreenClasses.fullScreenContainer}
     >
       <Card className={classes.root}>
-        <Header title={headerTitle}>
-          <Header.ButtonFullScreen isOpen={isOpen} onToggle={toggle}>
-            {isOpen ? (
-              <FormattedMessage
-                id="QjPJ78"
-                defaultMessage="Close"
-                description="close full-screen"
-              />
-            ) : (
-              <FormattedMessage
-                id="483Xnh"
-                defaultMessage="Open"
-                description="open full-screen"
-              />
+        {!readonly && (
+          <Header title={headerTitle}>
+            <Header.ButtonFullScreen isOpen={isOpen} onToggle={toggle}>
+              {isOpen ? (
+                <FormattedMessage
+                  id="QjPJ78"
+                  defaultMessage="Close"
+                  description="close full-screen"
+                />
+              ) : (
+                <FormattedMessage
+                  id="483Xnh"
+                  defaultMessage="Open"
+                  description="open full-screen"
+                />
+              )}
+            </Header.ButtonFullScreen>
+            {addButtonLabel && (
+              <Header.ButtonAddRow onAddRow={onRowAdded}>
+                {addButtonLabel}
+              </Header.ButtonAddRow>
             )}
-          </Header.ButtonFullScreen>
-          {addButtonLabel && (
-            <Header.ButtonAddRow onAddRow={onRowAdded}>
-              {addButtonLabel}
-            </Header.ButtonAddRow>
-          )}
-        </Header>
+          </Header>
+        )}
         <CardContent classes={{ root: classes.cardContentRoot }}>
           {rowsTotal > 0 ? (
             <>
@@ -308,7 +321,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   rows={rowsTotal}
                   freezeColumns={1}
                   smoothScrollX
-                  rowMarkers="checkbox"
+                  rowMarkers={rowMarkers}
                   rowSelect="multi"
                   rowSelectionMode="multi"
                   rangeSelect="multi-rect"
@@ -318,12 +331,12 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   onColumnResize={onColumnResize}
                   onHeaderClicked={onHeaderClicked}
                   onCellClicked={onCellClicked}
-                  onGridSelectionChange={setSelection}
+                  onGridSelectionChange={onGridSelectionChange}
                   onItemHovered={onItemHovered}
                   getRowThemeOverride={getRowThemeOverride}
                   gridSelection={selection}
                   rowHeight={cellHeight}
-                  headerHeight={cellHeight}
+                  headerHeight={cellHeight + 16}
                   ref={editor}
                   onPaste
                   rightElementProps={{
@@ -366,9 +379,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
                       </div>
                       {hasColumnGroups && (
                         <div
-                          className={clsx(classes.rowAction, {
-                            [classes.rowActionScrolledToRight]: scrolledToRight,
-                          })}
+                          className={clsx(
+                            classes.rowAction,
+                            classes.rowColumnGroup,
+                            {
+                              [classes.rowActionScrolledToRight]:
+                                scrolledToRight,
+                            },
+                          )}
                         />
                       )}
                       {hasMenuItem &&

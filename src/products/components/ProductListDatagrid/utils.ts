@@ -1,7 +1,7 @@
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 import { getChannelAvailabilityLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import {
-  // dropdownCell,
+  dropdownCell,
   loadingCell,
   readonlyTextCell,
   textCell,
@@ -141,7 +141,7 @@ interface GetCellContentProps {
 
 export function createGetCellContent({
   columns,
-  // getProductTypes,
+  getProductTypes,
   intl,
   locale,
   products,
@@ -172,9 +172,7 @@ export function createGetCellContent({
 
     switch (columnId) {
       case "productType":
-        // return getProductTypeCellContent(change, rowData, getProductTypes);
-        return getProductTypeCellContent(change, rowData);
-
+        return getProductTypeCellContent(change, rowData, getProductTypes);
       case "availability":
         return getAvailabilityCellContent(rowData, intl, channel);
 
@@ -200,17 +198,15 @@ export function createGetCellContent({
 function getProductTypeCellContent(
   change: { value: DropdownChoice },
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
-  // getProductTypes: (query: string) => Promise<DropdownChoice[]>,
+  getProductTypes: (query: string) => Promise<DropdownChoice[]>,
 ) {
   const value = change?.value ?? getRowDataValue(rowData, change?.value);
 
-  return readonlyTextCell(value.label);
-
-  // return dropdownCell(value, {
-  //   allowCustomValues: false,
-  //   emptyOption: false,
-  //   update: (text: string) => getProductTypes(value.label !== text ? text : ""),
-  // });
+  return dropdownCell(value, {
+    allowCustomValues: false,
+    emptyOption: false,
+    update: (text: string) => getProductTypes(value.label !== text ? text : ""),
+  });
 }
 
 function getRowDataValue(
@@ -279,7 +275,7 @@ function getNameCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   const name = change?.name ?? rowData?.name ?? "";
-  return thumbnailCell(name, rowData?.thumbnail?.url ?? "", true);
+  return thumbnailCell(name, rowData?.thumbnail?.url ?? "");
 }
 
 function getPriceCellContent(
