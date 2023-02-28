@@ -2,6 +2,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import { saleAddUrl, SaleListUrlSortField } from "@dashboard/discounts/urls";
 import { SaleFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -53,7 +54,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   const filterDependency = structure.find(getByName("channel"));
 
   return (
-    <>
+    <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.sales)}>
         <Button
           href={saleAddUrl()}
@@ -91,7 +92,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
         />
         <SaleList filterDependency={filterDependency} {...listProps} />
       </Card>
-    </>
+    </ListPageLayout>
   );
 };
 SaleListPage.displayName = "SaleListPage";

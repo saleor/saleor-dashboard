@@ -1,10 +1,8 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CountryList from "@dashboard/components/CountryList";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import Savebar from "@dashboard/components/Savebar";
@@ -152,9 +150,9 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav href={shippingZonesListUrl()} title={shippingZone?.name} />
-            <Content>
+            <DetailPageLayout.Content>
               <ShippingZoneInfo
                 data={data}
                 disabled={disabled}
@@ -201,8 +199,8 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
               />
               <CardSpacer />
               <Metadata data={data} onChange={changeMetadata} />
-            </Content>
-            <RightSidebar>
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               <ShippingZoneSettingsCard
                 formData={data}
                 warehousesDisplayValues={warehouseDisplayValues}
@@ -217,7 +215,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
                 channelsDisplayValues={channelsDisplayValues}
                 onChannelChange={handleChannelChange}
               />
-            </RightSidebar>
+            </DetailPageLayout.RightSidebar>
             <Savebar
               disabled={isSaveDisabled}
               onCancel={() => navigate(shippingZonesListUrl())}
@@ -225,7 +223,7 @@ const ShippingZoneDetailsPage: React.FC<ShippingZoneDetailsPageProps> = ({
               onSubmit={submit}
               state={saveButtonBarState}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

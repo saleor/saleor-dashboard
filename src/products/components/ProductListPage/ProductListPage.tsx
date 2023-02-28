@@ -9,6 +9,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
 import FilterBar from "@dashboard/components/FilterBar";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { ProductListColumns } from "@dashboard/config";
 import {
@@ -122,7 +123,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const extensionCreateButtonItems = mapToMenuItems(PRODUCT_OVERVIEW_CREATE);
 
   return (
-    <>
+    <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.products)}>
         <CardMenu
           className={classes.settings}
@@ -226,7 +227,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           }}
         />
       </Card>
-    </>
+    </ListPageLayout>
   );
 };
 ProductListPage.displayName = "ProductListPage";

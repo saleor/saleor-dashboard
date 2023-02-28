@@ -2,6 +2,7 @@ import { channelAddUrl, channelUrl } from "@dashboard/channels/urls";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -39,7 +40,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
   const limitReached = isLimitReached(limits, "channels");
 
   return (
-    <>
+    <ListPageLayout>
       <TopNav
         href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.channels)}
@@ -154,7 +155,7 @@ export const ChannelsListPage: React.FC<ChannelsListPageProps> = ({
           </TableBody>
         </ResponsiveTable>
       </Card>
-    </>
+    </ListPageLayout>
   );
 };
 

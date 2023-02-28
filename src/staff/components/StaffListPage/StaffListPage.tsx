@@ -2,6 +2,7 @@ import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import FilterBar from "@dashboard/components/FilterBar";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { RefreshLimitsQuery, StaffListQuery } from "@dashboard/graphql";
@@ -57,7 +58,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
   const reachedLimit = isLimitReached(limits, "staffUsers");
 
   return (
-    <>
+    <ListPageLayout>
       <TopNav
         href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.staff)}
@@ -128,7 +129,7 @@ const StaffListPage: React.FC<StaffListPageProps> = ({
         />
         <StaffList {...listProps} />
       </Card>
-    </>
+    </ListPageLayout>
   );
 };
 StaffListPage.displayName = "StaffListPage";

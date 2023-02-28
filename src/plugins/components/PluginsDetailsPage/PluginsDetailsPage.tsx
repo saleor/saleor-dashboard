@@ -1,9 +1,8 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import {
   ConfigurationItemInput,
@@ -97,7 +96,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
           set(newData);
         };
         return (
-          <DetailedContent useSingleColumn>
+          <DetailPageLayout gridTemplateColumns={1}>
             <TopNav
               href={pluginListUrl()}
               title={intl.formatMessage(
@@ -111,7 +110,7 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                 },
               )}
             />
-            <Content>
+            <DetailPageLayout.Content>
               <Grid variant="inverted">
                 <div>
                   <PluginDetailsChannelsCard
@@ -163,8 +162,8 @@ const PluginsDetailsPage: React.FC<PluginsDetailsPageProps> = ({
                 onCancel={() => navigate(pluginListUrl())}
                 onSubmit={submit}
               />
-            </Content>
-          </DetailedContent>
+            </DetailPageLayout.Content>
+          </DetailPageLayout>
         );
       }}
     </Form>

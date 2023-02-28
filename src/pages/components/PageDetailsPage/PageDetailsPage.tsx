@@ -2,13 +2,11 @@ import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import SeoForm from "@dashboard/components/SeoForm";
@@ -150,14 +148,14 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
         const errors = [...apiErrors, ...validationErrors];
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav
               href={pageListUrl()}
               title={
                 !pageExists ? intl.formatMessage(messages.title) : page?.title
               }
             />
-            <Content>
+            <DetailPageLayout.Content>
               <PageInfo
                 data={data}
                 disabled={loading}
@@ -200,8 +198,8 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
               )}
               <CardSpacer />
               <Metadata data={data} onChange={handlers.changeMetadata} />
-            </Content>
-            <RightSidebar>
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               <VisibilityCard
                 data={data}
                 errors={errors}
@@ -231,7 +229,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 fetchMorePageTypes={fetchMorePageTypes}
                 canChangeType={!page?.pageType}
               />
-            </RightSidebar>
+            </DetailPageLayout.RightSidebar>
             <Savebar
               disabled={loading}
               state={saveButtonBarState}
@@ -263,7 +261,7 @@ const PageDetailsPage: React.FC<PageDetailsPageProps> = ({
                 }
               />
             )}
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </PageForm>

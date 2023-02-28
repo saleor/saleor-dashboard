@@ -214,14 +214,14 @@ const SaleList: React.FC<SaleListProps> = props => {
                 </TableCell>
                 <TableCell className={classes.colStart}>
                   {sale && sale.startDate ? (
-                    <Date date={sale.startDate} />
+                    <Date date={sale.startDate} plain />
                   ) : (
                     <Skeleton />
                   )}
                 </TableCell>
                 <TableCell className={classes.colEnd}>
                   {sale && sale.endDate ? (
-                    <Date date={sale.endDate} />
+                    <Date date={sale.endDate} plain />
                   ) : sale && sale.endDate === null ? (
                     "-"
                   ) : (

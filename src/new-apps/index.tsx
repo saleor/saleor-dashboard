@@ -2,7 +2,7 @@ import {
   AppDetailsUrlQueryParams,
   AppInstallUrlQueryParams,
 } from "@dashboard/apps/urls";
-import AppView from "@dashboard/apps/views/App";
+import { AppView } from "@dashboard/apps/views/App";
 import AppDetailsView from "@dashboard/apps/views/AppDetails";
 import AppInstallView from "@dashboard/apps/views/AppInstall";
 import { sectionNames } from "@dashboard/intl";
@@ -26,9 +26,9 @@ const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   );
 };
 
-const App: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => (
-  <AppView id={decodeURIComponent(match.params.id)} />
-);
+const AppViewRoute: React.FC<RouteComponentProps<{ id: string }>> = ({
+  match,
+}) => <AppView id={decodeURIComponent(match.params.id)} />;
 
 const AppInstall: React.FC<RouteComponentProps> = props => {
   const qs = parseQs(location.search.substr(1));
@@ -58,7 +58,7 @@ const Apps = () => {
           path={AppPaths.resolveAppDetailsPath(":id")}
           component={AppDetails}
         />
-        <Route path={AppPaths.resolveAppPath(":id")} component={App} />
+        <Route path={AppPaths.resolveAppPath(":id")} component={AppViewRoute} />
       </Switch>
     </>
   );

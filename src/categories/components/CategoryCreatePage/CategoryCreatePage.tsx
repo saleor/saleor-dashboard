@@ -1,7 +1,6 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import SeoForm from "@dashboard/components/SeoForm";
@@ -36,7 +35,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
   return (
     <CategoryCreateForm onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, handlers, submit, isSaveDisabled }) => (
-        <DetailedContent useSingleColumn>
+        <DetailPageLayout gridTemplateColumns={1}>
           <TopNav
             href={backUrl}
             title={intl.formatMessage({
@@ -45,7 +44,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               description: "page header",
             })}
           />
-          <Content>
+          <DetailPageLayout.Content>
             <Box height="100vh" __marginBottom="auto">
               <CategoryDetailsForm
                 data={data}
@@ -74,14 +73,14 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
               <CardSpacer />
               <Metadata data={data} onChange={handlers.changeMetadata} />
             </Box>
-          </Content>
+          </DetailPageLayout.Content>
           <Savebar
             onCancel={() => navigate(backUrl)}
             onSubmit={submit}
             state={saveButtonBarState}
             disabled={isSaveDisabled}
           />
-        </DetailedContent>
+        </DetailPageLayout>
       )}
     </CategoryCreateForm>
   );

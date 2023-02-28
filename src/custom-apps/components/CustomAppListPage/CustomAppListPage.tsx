@@ -1,9 +1,6 @@
-import {
-  borderHeight,
-  topBarHeight,
-} from "@dashboard/components/AppLayout/consts";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
@@ -35,7 +32,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
   const classes = useStyles({});
 
   return (
-    <>
+    <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.webhooksAndEvents)}>
         <Button
           variant="secondary"
@@ -49,10 +46,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
           />
         </Button>
       </TopNav>
-      <Box
-        padding={9}
-        __height={`calc(100vh - ${topBarHeight} - ${borderHeight})`}
-      >
+      <Box padding={9}>
         <Box marginBottom={4}>
           <Text as="p">
             <FormattedMessage
@@ -116,7 +110,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
           </TableBody>
         </ResponsiveTable>
       </Box>
-    </>
+    </ListPageLayout>
   );
 };
 

@@ -1,9 +1,7 @@
 import AccountPermissions from "@dashboard/components/AccountPermissions";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import {
@@ -58,7 +56,7 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
       disabled={disabled}
     >
       {({ data, change, submit, isSaveDisabled }) => (
-        <DetailedContent>
+        <DetailPageLayout>
           <TopNav
             href={CustomAppUrls.resolveAppListUrl()}
             title={intl.formatMessage({
@@ -66,16 +64,16 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
               defaultMessage: "Create New App",
               description: "header",
             })}
-          ></TopNav>
-          <Content>
+          />
+          <DetailPageLayout.Content>
             <CustomAppInformation
               data={data}
               disabled={disabled}
               errors={errors}
               onChange={change}
             />
-          </Content>
-          <RightSidebar>
+          </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar>
             <AccountPermissions
               data={data}
               errorMessage={permissionsError}
@@ -95,14 +93,14 @@ const CustomAppCreatePage: React.FC<CustomAppCreatePageProps> = props => {
                 description: "card description",
               })}
             />
-          </RightSidebar>
+          </DetailPageLayout.RightSidebar>
           <Savebar
             disabled={isSaveDisabled}
             state={saveButtonBarState}
             onCancel={() => navigate(CustomAppUrls.resolveAppListUrl())}
             onSubmit={submit}
           />
-        </DetailedContent>
+        </DetailPageLayout>
       )}
     </Form>
   );

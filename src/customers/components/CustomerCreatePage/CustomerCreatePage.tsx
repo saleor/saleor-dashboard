@@ -1,9 +1,8 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { customerListUrl } from "@dashboard/customers/urls";
 import {
@@ -152,7 +151,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <DetailedContent useSingleColumn>
+          <DetailPageLayout gridTemplateColumns={1}>
             <TopNav
               href={customerListUrl()}
               title={intl.formatMessage({
@@ -161,7 +160,7 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
                 description: "page header",
               })}
             />
-            <Content>
+            <DetailPageLayout.Content>
               <div>
                 <CustomerCreateDetails
                   data={data}
@@ -193,8 +192,8 @@ const CustomerCreatePage: React.FC<CustomerCreatePageProps> = ({
                 onSubmit={submit}
                 onCancel={() => navigate(customerListUrl())}
               />
-            </Content>
-          </DetailedContent>
+            </DetailPageLayout.Content>
+          </DetailPageLayout>
         );
       }}
     </Form>

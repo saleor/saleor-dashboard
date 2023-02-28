@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import { sectionNames } from "@dashboard/intl";
 import {
   FilterPageProps,
@@ -51,7 +52,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   const filterDependency = filterStructure.find(getByName("channel"));
 
   return (
-    <>
+    <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.collections)}>
         <Button
           disabled={disabled}
@@ -96,7 +97,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           {...listProps}
         />
       </Card>
-    </>
+    </ListPageLayout>
   );
 };
 CollectionListPage.displayName = "CollectionListPage";
