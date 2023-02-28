@@ -1,11 +1,9 @@
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { collectionListUrl } from "@dashboard/collections/urls";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import SeoForm from "@dashboard/components/SeoForm";
@@ -58,7 +56,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
       disabled={disabled}
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
-        <DetailedContent>
+        <DetailPageLayout>
           <TopNav
             href={collectionListUrl()}
             title={intl.formatMessage({
@@ -67,7 +65,7 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
               description: "page header",
             })}
           />
-          <Content>
+          <DetailPageLayout.Content>
             <CollectionDetails
               data={data}
               disabled={disabled}
@@ -129,8 +127,8 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
             />
             <CardSpacer />
             <Metadata data={data} onChange={handlers.changeMetadata} />
-          </Content>
-          <RightSidebar>
+          </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar>
             <ChannelsAvailabilityCard
               messages={{
                 hiddenLabel: intl.formatMessage({
@@ -153,14 +151,14 @@ const CollectionCreatePage: React.FC<CollectionCreatePageProps> = ({
               onChange={handlers.changeChannels}
               openModal={openChannelsModal}
             />
-          </RightSidebar>
+          </DetailPageLayout.RightSidebar>
           <Savebar
             state={saveButtonBarState}
             disabled={isSaveDisabled}
             onCancel={() => navigate(collectionListUrl())}
             onSubmit={submit}
           />
-        </DetailedContent>
+        </DetailPageLayout>
       )}
     </CollectionCreateForm>
   );

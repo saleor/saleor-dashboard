@@ -1,6 +1,6 @@
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { LanguageCodeEnum, SaleTranslationFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
@@ -39,7 +39,7 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
   const intl = useIntl();
 
   return (
-    <DetailedContent useSingleColumn>
+    <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.sales,
@@ -64,30 +64,32 @@ const TranslationsSalesPage: React.FC<TranslationsSalesPageProps> = ({
           }
         />
       </TopNav>
-      <TranslationFields
-        activeField={activeField}
-        disabled={disabled}
-        initialState={true}
-        title={intl.formatMessage(commonMessages.generalInformations)}
-        fields={[
-          {
-            displayName: intl.formatMessage({
-              id: "s40PZt",
-              defaultMessage: "Sale Name",
-            }),
-            name: fieldNames.name,
-            translation: data?.translation?.name || null,
-            type: "short" as "short",
-            value: data?.sale?.name,
-          },
-        ]}
-        saveButtonState={saveButtonState}
-        richTextResetKey={languageCode}
-        onEdit={onEdit}
-        onDiscard={onDiscard}
-        onSubmit={onSubmit}
-      />
-    </DetailedContent>
+      <DetailPageLayout.Content>
+        <TranslationFields
+          activeField={activeField}
+          disabled={disabled}
+          initialState={true}
+          title={intl.formatMessage(commonMessages.generalInformations)}
+          fields={[
+            {
+              displayName: intl.formatMessage({
+                id: "s40PZt",
+                defaultMessage: "Sale Name",
+              }),
+              name: fieldNames.name,
+              translation: data?.translation?.name || null,
+              type: "short" as "short",
+              value: data?.sale?.name,
+            },
+          ]}
+          saveButtonState={saveButtonState}
+          richTextResetKey={languageCode}
+          onEdit={onEdit}
+          onDiscard={onDiscard}
+          onSubmit={onSubmit}
+        />
+      </DetailPageLayout.Content>
+    </DetailPageLayout>
   );
 };
 TranslationsSalesPage.displayName = "TranslationsSalesPage";

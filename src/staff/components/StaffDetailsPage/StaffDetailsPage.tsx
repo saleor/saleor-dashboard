@@ -1,11 +1,9 @@
 import AccountPermissionGroups from "@dashboard/components/AccountPermissionGroups";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import Savebar from "@dashboard/components/Savebar";
 import {
@@ -36,7 +34,6 @@ import StaffPassword from "../StaffPassword/StaffPassword";
 import StaffPreferences from "../StaffPreferences";
 import StaffProperties from "../StaffProperties/StaffProperties";
 import { staffDetailsPageMessages as messages } from "./messages";
-import useStyles from "./styles";
 
 export interface StaffDetailsFormData {
   email: string;
@@ -84,7 +81,6 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
   staffMember,
 }: StaffDetailsPageProps) => {
   const intl = useIntl();
-  const classes = useStyles();
   const navigate = useNavigator();
 
   const { locale, setLocale } = useLocale();
@@ -128,9 +124,9 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
         );
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav href={staffListUrl()} title={getUserName(staffMember)} />
-            <Content>
+            <DetailPageLayout.Content>
               <StaffProperties
                 errors={errors}
                 data={formData}
@@ -147,9 +143,9 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                   <StaffPassword onChangePassword={onChangePassword} />
                 </>
               )}
-            </Content>
+            </DetailPageLayout.Content>
 
-            <RightSidebar className={classes.noOverflow}>
+            <DetailPageLayout.RightSidebar>
               {canEditPreferences && (
                 <StaffPreferences locale={locale} onLocaleChange={setLocale} />
               )}
@@ -194,7 +190,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
                   </Card>
                 </>
               )}
-            </RightSidebar>
+            </DetailPageLayout.RightSidebar>
             <Savebar
               disabled={isSaveDisabled}
               state={saveButtonBarState}
@@ -202,7 +198,7 @@ const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({
               onSubmit={submit}
               onDelete={canRemove ? onDelete : undefined}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

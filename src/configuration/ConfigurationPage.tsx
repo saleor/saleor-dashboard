@@ -1,6 +1,5 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { UserFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { Typography } from "@material-ui/core";
@@ -95,11 +94,11 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
   const intl = useIntl();
 
   return (
-    <DetailedContent useSingleColumn>
+    <DetailPageLayout gridTemplateColumns={1} withSavebar={false}>
       <TopNav title={intl.formatMessage(sectionNames.configuration)}>
         {isSmUp && renderVersionInfo}
       </TopNav>
-      <Content noSavebar>
+      <DetailPageLayout.Content>
         <Box paddingX={9} __maxWidth={"1024px"} margin="auto">
           {menus
             .filter(menu =>
@@ -137,9 +136,9 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
               </div>
             ))}
         </Box>
-      </Content>
-    </DetailedContent>
+      </DetailPageLayout.Content>
+    </DetailPageLayout>
   );
 };
+
 ConfigurationPage.displayName = "ConfigurationPage";
-export default ConfigurationPage;

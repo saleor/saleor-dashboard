@@ -1,7 +1,7 @@
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
 import {
   AttributeTranslationDetailsFragment,
@@ -55,7 +55,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
   const withChoices = data?.attribute?.withChoices;
 
   return (
-    <DetailedContent useSingleColumn>
+    <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.attributes,
@@ -127,7 +127,7 @@ const TranslationsAttributesPage: React.FC<TranslationsAttributesPageProps> = ({
           onSubmit={onSubmit}
         />
       )}
-    </DetailedContent>
+    </DetailPageLayout>
   );
 };
 TranslationsAttributesPage.displayName = "TranslationsAttributesPage";

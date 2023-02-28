@@ -3,12 +3,10 @@ import ShippingZones from "@dashboard/channels/components/ShippingZones";
 import Warehouses from "@dashboard/channels/components/Warehouses";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import { validateChannelFormData } from "@dashboard/channels/validation";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import Savebar from "@dashboard/components/Savebar";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
@@ -198,7 +196,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
         const allErrors = [...errors, ...validationErrors];
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav
               href={channelsListUrl()}
               title={
@@ -210,7 +208,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 })
               }
             />
-            <Content>
+            <DetailPageLayout.Content>
               <ChannelForm
                 data={data}
                 disabled={disabled}
@@ -223,8 +221,8 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 onDefaultCountryChange={handleDefaultCountrySelect}
                 errors={allErrors}
               />
-            </Content>
-            <RightSidebar>
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               {!!updateChannelStatus && (
                 <>
                   <ChannelStatus
@@ -279,7 +277,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 disabled={disabled}
                 onChange={change}
               />
-            </RightSidebar>
+            </DetailPageLayout.RightSidebar>
             <Savebar
               onCancel={() => navigate(channelsListUrl())}
               onSubmit={submit}
@@ -287,7 +285,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
               state={saveButtonBarState}
               disabled={disabled}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

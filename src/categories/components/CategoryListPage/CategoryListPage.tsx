@@ -4,6 +4,7 @@ import {
 } from "@dashboard/categories/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import SearchBar from "@dashboard/components/SearchBar";
 import { CategoryFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -52,7 +53,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   const intl = useIntl();
 
   return (
-    <>
+    <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.categories)}>
         <Button
           variant="primary"
@@ -100,7 +101,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
           {...listProps}
         />
       </Card>
-    </>
+    </ListPageLayout>
   );
 };
 CategoryListPage.displayName = "CategoryListPage";
