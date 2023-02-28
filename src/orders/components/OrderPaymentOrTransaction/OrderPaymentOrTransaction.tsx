@@ -17,7 +17,6 @@ interface OrderPaymentOrTransactionProps {
   shop: ShopBothTypes;
   onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
   onPaymentCapture();
-  onPaymentPaid();
   onPaymentVoid();
   onPaymentRefund();
   onMarkAsPaid();
@@ -31,7 +30,6 @@ export const OrderPaymentOrTransaction: React.FC<
   shop,
   onTransactionAction,
   onPaymentCapture,
-  onPaymentPaid,
   onPaymentVoid,
   onPaymentRefund,
   onMarkAsPaid,
@@ -46,7 +44,7 @@ export const OrderPaymentOrTransaction: React.FC<
         shop={shop as ShopWithTransactions}
         onTransactionAction={onTransactionAction}
         onPaymentCapture={onPaymentCapture}
-        onPaymentPaid={onPaymentPaid}
+        onMarkAsPaid={onMarkAsPaid}
         onPaymentVoid={onPaymentVoid}
         onAddManualTransaction={onAddManualTransaction}
       />

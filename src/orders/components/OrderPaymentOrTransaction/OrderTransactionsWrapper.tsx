@@ -21,7 +21,7 @@ interface OrderTransactionsWrapper {
   shop: OrderDetailsWithTransactionsQuery["shop"];
   onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
   onPaymentCapture();
-  onPaymentPaid();
+  onMarkAsPaid();
   onPaymentVoid();
   onAddManualTransaction();
 }
@@ -31,7 +31,7 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
   shop,
   onTransactionAction,
   onPaymentCapture,
-  onPaymentPaid,
+  onMarkAsPaid,
   onPaymentVoid,
   onAddManualTransaction,
 }) => {
@@ -45,7 +45,7 @@ export const OrderTransactionsWrapper: React.FC<OrderTransactionsWrapper> = ({
     <>
       <div className={classes.cardGrid}>
         <OrderSummaryCard order={order} />
-        <OrderPaymentSummaryCard order={order} onMarkAsPaid={onPaymentPaid} />
+        <OrderPaymentSummaryCard order={order} onMarkAsPaid={onMarkAsPaid} />
       </div>
       <CardSpacer />
       {order?.grantedRefunds?.length !== 0 ? (

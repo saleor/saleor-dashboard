@@ -261,7 +261,7 @@ export const OrderUnconfirmedDetails: React.FC<
             onProductClick={id => () => navigate(productUrl(id))}
             onBillingAddressEdit={() => openModal("edit-billing-address")}
             onShippingAddressEdit={() => openModal("edit-shipping-address")}
-            onPaymentPaid={() => openModal("mark-paid")}
+            onMarkAsPaid={() => openModal("mark-paid")}
             onProfileView={() => navigate(customerUrl(order.user.id))}
             onAddManualTransaction={() => openModal("add-manual-transaction")}
             onInvoiceClick={id =>

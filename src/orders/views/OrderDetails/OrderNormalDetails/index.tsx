@@ -255,7 +255,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         onProductClick={id => () => navigate(productUrl(id))}
         onBillingAddressEdit={() => openModal("edit-billing-address")}
         onShippingAddressEdit={() => openModal("edit-shipping-address")}
-        onPaymentPaid={() => openModal("mark-paid")}
+        onMarkAsPaid={() => openModal("mark-paid")}
         onProfileView={() => navigate(customerUrl(order.user.id))}
         onAddManualTransaction={() => openModal("add-manual-transaction")}
         onInvoiceClick={id =>
