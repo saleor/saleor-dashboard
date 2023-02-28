@@ -13,6 +13,7 @@ import DataEditor, {
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { useTheme } from "@saleor/macaw-ui";
+import { themes, useTheme as useNewTheme } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import range from "lodash/range";
 import throttle from "lodash/throttle";
@@ -121,6 +122,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
   } = useDatagridChange(availableColumns, rows, onChange);
 
   const theme = useTheme();
+  const { theme: selectedTheme } = useNewTheme();
+  const currentTheme = themes[selectedTheme];
 
   const [scrolledToRight, setScrolledToRight] = React.useState(false);
   const scroller: HTMLDivElement = document.querySelector(".dvn-scroller");
@@ -223,11 +226,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
         return undefined;
       }
       return {
-        bgCell: "hsla(212, 44%, 13%, 0.06)",
-        bgCellMedium: "hsla(212, 44%, 13%, 0.06)",
+        bgCell: currentTheme.colors.background.surfaceNeutralHighlight,
+        bgCellMedium: currentTheme.colors.background.surfaceNeutralHighlight,
       };
     },
-    [hoverRow],
+    [currentTheme, hoverRow],
   );
 
   const props = useCells();

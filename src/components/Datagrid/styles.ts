@@ -1,5 +1,5 @@
 import { Theme } from "@glideapps/glide-data-grid";
-import { makeStyles, useTheme } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { themes, useTheme as useNewTheme } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
 
@@ -186,31 +186,30 @@ export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(
 );
 
 export function useDatagridTheme() {
-  const theme = useTheme();
   const { theme: selectedTheme } = useNewTheme();
-  const newTheme = themes[selectedTheme];
+  const theme = themes[selectedTheme];
 
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: newTheme.colors.border.brandDefault,
-      accentLight: newTheme.colors.background.subdued,
+      accentColor: theme.colors.border.brandDefault,
+      accentLight: theme.colors.background.subdued,
       accentFg: "transparent",
-      bgCell: newTheme.colors.background.plain,
-      bgHeader: newTheme.colors.background.plain,
-      bgHeaderHasFocus: newTheme.colors.background.plain,
-      bgHeaderHovered: newTheme.colors.background.plain,
-      bgBubbleSelected: newTheme.colors.background.plain,
-      textHeader: newTheme.colors.foreground.iconNeutralPlain,
-      borderColor: newTheme.colors.border.neutralHighlight,
-      fontFamily: newTheme.fontFamily.body,
-      baseFontStyle: newTheme.fontSize.bodySmall,
-      headerFontStyle: newTheme.fontSize.captionSmall,
-      editorFontSize: newTheme.fontSize.bodySmall,
-      textMedium: newTheme.colors.foreground.text1Decorative,
-      textGroupHeader: theme.palette.text.secondary,
-      textBubble: theme.palette.text.primary,
-      textDark: theme.palette.text.primary,
-      textLight: theme.palette.text.primary,
+      bgCell: theme.colors.background.plain,
+      bgHeader: theme.colors.background.plain,
+      bgHeaderHasFocus: theme.colors.background.plain,
+      bgHeaderHovered: theme.colors.background.plain,
+      bgBubbleSelected: theme.colors.background.plain,
+      textHeader: theme.colors.foreground.iconNeutralPlain,
+      borderColor: theme.colors.border.neutralHighlight,
+      fontFamily: theme.fontFamily.body,
+      baseFontStyle: theme.fontSize.bodySmall,
+      headerFontStyle: theme.fontSize.captionSmall,
+      editorFontSize: theme.fontSize.bodySmall,
+      textMedium: theme.colors.foreground.text1Decorative,
+      textGroupHeader: theme.colors.foreground.iconNeutralPlain,
+      textBubble: theme.colors.background.interactiveNeutralDefault,
+      textDark: theme.colors.background.interactiveNeutralDefault,
+      textLight: theme.colors.background.interactiveNeutralDefault,
       cellHorizontalPadding: 8,
       cellVerticalPadding: 8,
       lineHeight: 20,
