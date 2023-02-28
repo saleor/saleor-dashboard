@@ -6,21 +6,8 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
-import {
-  appInstallPath,
-  AppInstallUrlQueryParams,
-  AppListUrlQueryParams,
-  appsListPath,
-} from "./urls";
-import AppInstallView from "./views/AppInstall";
+import { AppListUrlQueryParams, appsListPath } from "./urls";
 import AppsListView from "./views/AppsList";
-
-const AppInstall: React.FC<RouteComponentProps> = props => {
-  const qs = parseQs(location.search.substr(1));
-  const params: AppInstallUrlQueryParams = qs;
-
-  return <AppInstallView params={params} {...props} />;
-};
 
 const AppsList: React.FC<RouteComponentProps> = () => {
   const qs = parseQs(location.search.substr(1));
@@ -36,7 +23,6 @@ const Component = () => {
       <WindowTitle title={intl.formatMessage(sectionNames.apps)} />
       <Switch>
         <Route exact path={appsListPath} component={AppsList} />
-        <Route exact path={appInstallPath} component={AppInstall} />
         <WebhooksRoutes />
       </Switch>
     </>

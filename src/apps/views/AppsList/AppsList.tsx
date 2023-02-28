@@ -25,9 +25,9 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React, { useEffect, useRef } from "react";
 import { useIntl } from "react-intl";
 
+import { EXTENSION_LIST_QUERY } from "../../../new-apps/queries";
 import AppInProgressDeleteDialog from "../../components/AppInProgressDeleteDialog";
 import AppsListPage from "../../components/AppsListPage";
-import { EXTENSION_LIST_QUERY } from "../../queries";
 import {
   appDetailsUrl,
   AppListUrlDialog,

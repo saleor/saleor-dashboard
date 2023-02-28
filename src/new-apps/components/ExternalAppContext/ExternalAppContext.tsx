@@ -1,6 +1,6 @@
-import { appDeepUrl } from "@dashboard/apps/urls";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { AppUrls } from "@dashboard/new-apps/urls";
 import React from "react";
 
 import { AppDialog } from "../AppDialog";
@@ -42,9 +42,12 @@ export const useExternalApp = () => {
       setOpen(true);
       setAppData(appData);
     } else {
-      navigate(appDeepUrl(appData.id, appData.src, appData.params), {
-        resetScroll: true,
-      });
+      navigate(
+        AppUrls.resolveAppDeepUrl(appData.id, appData.src, appData.params),
+        {
+          resetScroll: true,
+        },
+      );
     }
   };
 

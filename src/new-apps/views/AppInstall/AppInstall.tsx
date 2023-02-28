@@ -4,23 +4,24 @@ import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { extractMutationErrors } from "@dashboard/misc";
+import AppInstallErrorPage from "@dashboard/new-apps/components/AppInstallErrorPage";
+import AppInstallPage from "@dashboard/new-apps/components/AppInstallPage";
+import {
+  AppInstallUrlQueryParams,
+  AppUrls,
+  MANIFEST_ATTR,
+} from "@dashboard/new-apps/urls";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import React, { useEffect } from "react";
 import { useIntl } from "react-intl";
 import { RouteComponentProps } from "react-router-dom";
 
-import AppInstallErrorPage from "../../components/AppInstallErrorPage";
-import AppInstallPage from "../../components/AppInstallPage";
-import {
-  AppInstallUrlQueryParams,
-  appsListUrl,
-  MANIFEST_ATTR,
-} from "../../urls";
 import { messages } from "./messages";
 
 interface InstallAppCreateProps extends RouteComponentProps {
   params: AppInstallUrlQueryParams;
 }
+
 export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
   params,
 }) => {
@@ -69,7 +70,7 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
     },
   });
 
-  const navigateToAppsList = () => navigate(appsListUrl());
+  const navigateToAppsList = () => navigate(AppUrls.resolveAppListUrl());
 
   const handleSubmit = () => {
     const manifest = fetchManifestOpts?.data?.appFetchManifest?.manifest;
@@ -92,7 +93,7 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
     if (manifestUrl) {
       fetchManifest({ variables: { manifestUrl } });
     } else {
-      navigate(appsListUrl());
+      navigate(AppUrls.resolveAppListUrl());
     }
   }, []);
 

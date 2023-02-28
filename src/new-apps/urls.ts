@@ -54,6 +54,8 @@ export const AppPaths = {
   appListPath: AppSections.appsSection,
   resolveAppPath: (id: string) => urlJoin(AppSections.appsSection, id, "app"),
   resolveAppDetailsPath: (id: string) => urlJoin(AppSections.appsSection, id),
+  resolveAppDeepPath: (id: string, subPath: string) =>
+    urlJoin(AppPaths.resolveAppPath(id), subPath),
   appInstallPath: urlJoin(AppSections.appsSection, "install"),
 };
 
@@ -68,6 +70,14 @@ export const AppUrls = {
     stringifyQs(params),
   resolveAppInstallUrl: (manifestUrl: string) =>
     `${AppPaths.appInstallPath}?manifestUrl=${manifestUrl}`,
+  resolveAppDeepUrl: (
+    id: string,
+    subPath: string,
+    params?: AppDetailsUrlQueryParams,
+  ) =>
+    AppPaths.resolveAppDeepPath(encodeURIComponent(id), subPath) +
+    "?" +
+    stringifyQs(params),
   isAppDeepUrlChange: (appId: string, from: string, to: string) => {
     const appCompletePath = AppPaths.resolveAppPath(encodeURIComponent(appId));
 

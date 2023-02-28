@@ -1,5 +1,4 @@
 import { useApolloClient } from "@apollo/client";
-import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   AppSortField,
@@ -13,6 +12,7 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { sectionNames } from "@dashboard/intl";
 import { findById } from "@dashboard/misc";
 import AppDeleteDialog from "@dashboard/new-apps/components/AppDeleteDialog";
+import { EXTENSION_LIST_QUERY } from "@dashboard/new-apps/queries";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
