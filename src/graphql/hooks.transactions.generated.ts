@@ -3316,6 +3316,47 @@ export function useChannelOrderSettingsUpdateMutation(baseOptions?: ApolloReactH
 export type ChannelOrderSettingsUpdateMutationHookResult = ReturnType<typeof useChannelOrderSettingsUpdateMutation>;
 export type ChannelOrderSettingsUpdateMutationResult = Apollo.MutationResult<Types.ChannelOrderSettingsUpdateMutation>;
 export type ChannelOrderSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ChannelOrderSettingsUpdateMutation, Types.ChannelOrderSettingsUpdateMutationVariables>;
+export const ChannelCreateWithSettingsDocument = gql`
+    mutation ChannelCreateWithSettings($input: ChannelCreateInput!) {
+  channelCreate(input: $input) {
+    channel {
+      ...ChannelDetails
+      ...ChannelOrderSettings
+    }
+    errors {
+      ...ChannelError
+    }
+  }
+}
+    ${ChannelDetailsFragmentDoc}
+${ChannelOrderSettingsFragmentDoc}
+${ChannelErrorFragmentDoc}`;
+export type ChannelCreateWithSettingsMutationFn = Apollo.MutationFunction<Types.ChannelCreateWithSettingsMutation, Types.ChannelCreateWithSettingsMutationVariables>;
+
+/**
+ * __useChannelCreateWithSettingsMutation__
+ *
+ * To run a mutation, you first call `useChannelCreateWithSettingsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChannelCreateWithSettingsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [channelCreateWithSettingsMutation, { data, loading, error }] = useChannelCreateWithSettingsMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useChannelCreateWithSettingsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChannelCreateWithSettingsMutation, Types.ChannelCreateWithSettingsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ChannelCreateWithSettingsMutation, Types.ChannelCreateWithSettingsMutationVariables>(ChannelCreateWithSettingsDocument, options);
+      }
+export type ChannelCreateWithSettingsMutationHookResult = ReturnType<typeof useChannelCreateWithSettingsMutation>;
+export type ChannelCreateWithSettingsMutationResult = Apollo.MutationResult<Types.ChannelCreateWithSettingsMutation>;
+export type ChannelCreateWithSettingsMutationOptions = Apollo.BaseMutationOptions<Types.ChannelCreateWithSettingsMutation, Types.ChannelCreateWithSettingsMutationVariables>;
 export const ChannelOrderSettingsDocument = gql`
     query ChannelOrderSettings($id: ID!) {
   channel(id: $id) {

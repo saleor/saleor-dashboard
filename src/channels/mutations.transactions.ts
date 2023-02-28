@@ -13,3 +13,17 @@ export const channelOrderSettingsUpdateMutation = gql`
     }
   }
 `;
+
+export const channelCreateWithSettingsMutation = gql`
+  mutation ChannelCreateWithSettings($input: ChannelCreateInput!) {
+    channelCreate(input: $input) {
+      channel {
+        ...ChannelDetails
+        ...ChannelOrderSettings
+      }
+      errors {
+        ...ChannelError
+      }
+    }
+  }
+`;
