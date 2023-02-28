@@ -58,10 +58,23 @@ export const OrderEventsEnum = {
   ...OrderEventsEnumWithoutTransactions,
 };
 
+/** Type guard for order with transactions */
 export const isOrderWithTransactions = (
   _order: any,
   featureFlag: boolean,
 ): _order is OrderDetailsWithTransactionsFragment => featureFlag;
+
+/** Check if order has transactions & feature flag enabled */
+export const orderHasTransactions = (
+  order: any,
+  featureFlag: boolean,
+): boolean => {
+  if (isOrderWithTransactions(order, featureFlag)) {
+    return order?.transactions?.length > 0;
+  }
+
+  return false;
+};
 
 export type OrderRefundData = OrderRefundDataQuery["order"];
 export type OrderRefundSharedType = Pick<

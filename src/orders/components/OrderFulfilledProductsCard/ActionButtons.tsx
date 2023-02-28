@@ -15,6 +15,7 @@ interface AcionButtonsProps {
   trackingNumber?: string;
   orderIsPaid?: boolean;
   fulfillmentAllowUnpaid: boolean;
+  hasTransactions: boolean;
   onTrackingCodeAdd();
   onApprove();
 }
@@ -31,6 +32,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   trackingNumber,
   orderIsPaid,
   fulfillmentAllowUnpaid,
+  hasTransactions,
   onTrackingCodeAdd,
   onApprove,
 }) => {
@@ -59,7 +61,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
     );
   }
 
-  if (status === FulfillmentStatus.RETURNED) {
+  if (status === FulfillmentStatus.RETURNED && !hasTransactions) {
     return (
       <CardActions>
         <Button variant="primary" href={orderRefundUrl(orderId)}>
