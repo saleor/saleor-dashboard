@@ -2625,6 +2625,9 @@
     "context": "search",
     "string": "No results"
   },
+  "HqRNN8": {
+    "string": "Support"
+  },
   "HqeqEV": {
     "context": "create gift card product alert message",
     "string": "Create a gift card product"
@@ -4341,9 +4344,6 @@
   "UxdBmI": {
     "context": "collection availability",
     "string": "Availability"
-  },
-  "UxeJFE": {
-    "string": "Repository"
   },
   "UycVMp": {
     "context": "button",
@@ -7205,6 +7205,9 @@
   "rwOx2s": {
     "string": "Please provide a transaction reference using the input below:"
   },
+  "rxNddi": {
+    "string": "Homepage"
+  },
   "ryAyPr": {
     "string": "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
   },
@@ -7380,9 +7383,6 @@
   "tA5HJx": {
     "context": "webhook input help text",
     "string": "secret key is used to create a hash signature with each payload. *optional field"
-  },
-  "tDlWb6": {
-    "string": "Request a feature"
   },
   "tEdFmZ": {
     "context": "notification title",

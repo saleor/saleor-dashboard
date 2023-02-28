@@ -1,7 +1,6 @@
 import { appsListUrl } from "@dashboard/apps/urls";
 import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
 import { LinkState } from "@dashboard/components/Link";
-import { AppQuery } from "@dashboard/graphql";
 import { AppAvatar } from "@dashboard/new-apps/components/AppAvatar/AppAvatar";
 import { GitHub, OfflineBoltOutlined } from "@material-ui/icons";
 import { Box, Button, Text } from "@saleor/macaw-ui/next";
@@ -10,9 +9,9 @@ import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
 
 interface AppPageNavProps {
-  name: AppQuery["app"]["name"];
-  supportUrl: AppQuery["app"]["supportUrl"];
-  homepageUrl: AppQuery["app"]["homepageUrl"];
+  name: string | undefined;
+  supportUrl: string | undefined;
+  homepageUrl: string | undefined;
 }
 
 export const AppPageNav: React.FC<AppPageNavProps> = ({
@@ -48,7 +47,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
               }}
             >
               <GitHub />
-              <FormattedMessage defaultMessage="Repository" id="UxeJFE" />
+              <FormattedMessage defaultMessage="Support" id="HqRNN8" />
             </Button>
           )}
           {homepageUrl && (
@@ -60,10 +59,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
               }}
             >
               <OfflineBoltOutlined />
-              <FormattedMessage
-                defaultMessage="Request a feature"
-                id="tDlWb6"
-              />
+              <FormattedMessage defaultMessage="Homepage" id="rxNddi" />
             </Button>
           )}
         </Box>
