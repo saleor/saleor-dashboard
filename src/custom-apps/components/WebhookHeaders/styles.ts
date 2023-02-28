@@ -7,14 +7,29 @@ const useStyles = makeStyles(
       width: 130,
     };
     const colName: React.CSSProperties = {
-      width: 220,
+      width: 250,
+      textAlign: "right",
     };
 
     return {
+      tableCell: {
+        paddingTop: theme.spacing(3),
+        paddingLeft: theme.spacing(1),
+        paddingRight: theme.spacing(1),
+
+        "& .MuiFormHelperText-root": {
+          margin: 0,
+        },
+
+        "&.MuiTableCell-root:first-child:not(.MuiTableCell-paddingCheckbox)": {
+          paddingRight: theme.spacing(0),
+          paddingTop: theme.spacing(3),
+        },
+      },
       colAction: {
         "&:last-child": {
           ...colAction,
-          paddingRight: theme.spacing(4),
+          paddingRight: theme.spacing(3),
         },
       },
       colActionHeader: {
@@ -31,7 +46,6 @@ const useStyles = makeStyles(
         "&&": {
           paddingBottom: theme.spacing(2),
           paddingTop: theme.spacing(2),
-          paddingLeft: theme.spacing(4),
         },
       },
       content: {
@@ -57,14 +71,15 @@ const useStyles = makeStyles(
         },
       },
       input: {
-        padding: theme.spacing(0.5, 2),
-      },
-      nameInput: {
-        padding: `13px 16px`,
+        padding: theme.spacing(1.5, 2),
       },
       table: {
         marginTop: theme.spacing(2),
         tableLayout: "fixed",
+
+        head: {
+          padding: 0,
+        },
       },
       rotate: {
         transform: "rotate(-180deg)",
@@ -72,7 +87,7 @@ const useStyles = makeStyles(
     };
   },
   {
-    name: "Metadata",
+    name: "WebhookHeaders",
   },
 );
 

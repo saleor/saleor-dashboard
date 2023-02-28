@@ -4,6 +4,10 @@ const { defineConfig } = require("cypress");
 const fs = require("fs");
 
 module.exports = defineConfig({
+  reporter: "junit",
+  reporterOptions: {
+    mochaFile: "results/my-test-output-[hash].xml",
+  },
   projectId: "51ef7c",
   chromeWebSecurity: false,
   defaultCommandTimeout: 20000,
@@ -34,7 +38,7 @@ module.exports = defineConfig({
       });
       return config;
     },
-    baseUrl: "http://localhost:4173/",
+    baseUrl: "http://localhost:4137/",
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
   },
 });

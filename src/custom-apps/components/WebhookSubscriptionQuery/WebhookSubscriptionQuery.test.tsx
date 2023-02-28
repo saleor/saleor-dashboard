@@ -47,6 +47,7 @@ describe("WebhookSubscriptionQuery", () => {
         name: "",
         targetUrl: "",
         subscriptionQuery: "",
+        customHeaders: "",
       },
     };
 

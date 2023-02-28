@@ -15,7 +15,7 @@ import {
   appPath,
   appsListPath,
 } from "./urls";
-import AppView from "./views/App";
+import { AppView } from "./views/App";
 import AppDetailsView from "./views/AppDetails";
 import AppInstallView from "./views/AppInstall";
 import AppsListView from "./views/AppsList";

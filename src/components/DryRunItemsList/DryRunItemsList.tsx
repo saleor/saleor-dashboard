@@ -18,17 +18,21 @@ import { useIntl } from "react-intl";
 import Avatar from "../TableCellAvatar/Avatar";
 import { messages } from "./messages";
 import { DocumentMap, TData, TVariables } from "./utils";
-interface DryRunItemsListProps {
+
+export interface DryRunItemsListProps {
   objectId: string;
   setObjectId: React.Dispatch<any>;
   object: string;
 }
 
-const DryRunItemsList = (props: DryRunItemsListProps) => {
+const DryRunItemsList: React.FC<DryRunItemsListProps> = ({
+  object,
+  objectId,
+  setObjectId,
+}: DryRunItemsListProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const { checkbox } = useListWidths();
-  const { object, objectId, setObjectId } = props;
   const objectDocument = DocumentMap[object];
   const objectCollection =
     objectDocument.collection ?? camelCase(`${object.toLowerCase()}s`);

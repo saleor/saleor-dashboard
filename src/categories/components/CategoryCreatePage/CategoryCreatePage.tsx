@@ -36,7 +36,7 @@ export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({
   return (
     <CategoryCreateForm onSubmit={onSubmit} disabled={disabled}>
       {({ data, change, handlers, submit, isSaveDisabled }) => (
-        <DetailedContent>
+        <DetailedContent useSingleColumn>
           <TopNav
             href={backUrl}
             title={intl.formatMessage({
