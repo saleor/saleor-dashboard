@@ -1,22 +1,32 @@
 import { AppActionsHandler } from "@dashboard/apps/components/AppFrame/appActionsHandler";
-import {
-  Actions,
-  DispatchResponseEvent,
-  Events,
-} from "@saleor/app-sdk/app-bridge";
-import React from "react";
+import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostToExtension";
+import { Actions, DispatchResponseEvent } from "@saleor/app-sdk/app-bridge";
+import React, { useState } from "react";
 
 export const useAppActions = (
-  frameEl: React.MutableRefObject<HTMLIFrameElement | null>,
+  frameEl: HTMLIFrameElement | null,
   appOrigin: string,
   appId: string,
+  appToken: string,
 ) => {
+  const postToExtension = usePostToExtension(frameEl, appOrigin);
+
   const { handle: handleNotification } =
     AppActionsHandler.useHandleNotificationAction();
   const { handle: handleUpdateRouting } =
     AppActionsHandler.useHandleUpdateRoutingAction(appId);
   const { handle: handleRedirect } =
     AppActionsHandler.useHandleRedirectAction(appId);
+  const { handle: handleNotifyReady } = AppActionsHandler.useNotifyReadyAction(
+    frameEl,
+    appOrigin,
+    appToken,
+  );
+
+  /**
+   * Store if app has performed a handshake with Dashboard, to avoid sending events before that
+   */
+  const [handshakeDone, setHandshakeDone] = useState(false);
 
   const handleAction = (action: Actions | undefined): DispatchResponseEvent => {
     switch (action?.type) {
@@ -29,18 +39,19 @@ export const useAppActions = (
       case "updateRouting": {
         return handleUpdateRouting(action);
       }
+      /**
+       * Send handshake after app informs its ready and mounted
+       */
       case "notifyReady": {
-        console.warn("Not implemented");
+        const response = handleNotifyReady(action);
+
+        setHandshakeDone(true);
+
+        return response;
       }
       default: {
         throw new Error("Unknown action type");
       }
-    }
-  };
-
-  const postToExtension = (event: Events) => {
-    if (frameEl?.current?.contentWindow) {
-      frameEl.current.contentWindow.postMessage(event, appOrigin);
     }
   };
 
@@ -58,9 +69,11 @@ export const useAppActions = (
     return () => {
       window.removeEventListener("message", handler);
     };
-  }, []);
+  }, [appOrigin, handleAction, postToExtension]);
 
   return {
+    handshakeDone,
     postToExtension,
+    setHandshakeDone,
   };
 };

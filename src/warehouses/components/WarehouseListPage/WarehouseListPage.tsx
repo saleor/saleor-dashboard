@@ -2,6 +2,7 @@ import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import { Button } from "@dashboard/components/Button";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import SearchBar from "@dashboard/components/SearchBar";
 import { configurationMenuUrl } from "@dashboard/configuration";
@@ -59,7 +60,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
   const limitReached = isLimitReached(limits, "warehouses");
 
   return (
-    <>
+    <ListPageLayout>
       <Backlink href={configurationMenuUrl}>
         <FormattedMessage {...sectionNames.configuration} />
       </Backlink>
@@ -138,7 +139,7 @@ export const WarehouseListPage: React.FC<WarehouseListPageProps> = ({
           {...listProps}
         />
       </Card>
-    </>
+    </ListPageLayout>
   );
 };
 WarehouseListPage.displayName = "WarehouseListPage";

@@ -1,9 +1,8 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import { PageErrorFragment } from "@dashboard/graphql";
@@ -68,7 +67,7 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <DetailedContent>
+          <DetailPageLayout gridTemplateColumns={1}>
             <TopNav
               href={pageTypeListUrl()}
               title={intl.formatMessage({
@@ -77,7 +76,7 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
                 description: "header",
               })}
             />
-            <Content>
+            <DetailPageLayout.Content>
               <Grid
                 variant="inverted"
                 className={sprinkles({
@@ -115,14 +114,14 @@ const PageTypeCreatePage: React.FC<PageTypeCreatePageProps> = props => {
                 </div>
                 <Metadata data={data} onChange={changeMetadata} />
               </Grid>
-            </Content>
+            </DetailPageLayout.Content>
             <Savebar
               onCancel={() => navigate(pageTypeListUrl())}
               onSubmit={submit}
               disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

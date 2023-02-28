@@ -144,11 +144,10 @@ export function addVariantToDataGrid(variantName) {
     .should("be.visible")
     .get(PRODUCT_DETAILS.firstRowDataGrid)
     .click({ force: true })
-    .type(variantName)
+    .type(variantName, { force: true })
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldAppear()
-    .reload()
     .waitForProgressBarToNotBeVisible();
 }
 

@@ -6,6 +6,7 @@ export const useStyles = makeStyles(
       height: "100%",
     },
     iframeContainer: {
+      position: "relative",
       lineHeight: 0, // It removes extra space between iframe and container
       height: "100%",
       "& > iframe": {

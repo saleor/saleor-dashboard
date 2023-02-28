@@ -1,6 +1,6 @@
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import {
   LanguageCodeEnum,
   VoucherTranslationFragment,
@@ -42,7 +42,7 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
   const intl = useIntl();
 
   return (
-    <DetailedContent useSingleColumn>
+    <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.vouchers,
@@ -72,30 +72,32 @@ const TranslationsVouchersPage: React.FC<TranslationsVouchersPageProps> = ({
           }
         />
       </TopNav>
-      <TranslationFields
-        activeField={activeField}
-        disabled={disabled}
-        initialState={true}
-        title={intl.formatMessage(commonMessages.generalInformations)}
-        fields={[
-          {
-            displayName: intl.formatMessage({
-              id: "sfErC+",
-              defaultMessage: "Voucher Name",
-            }),
-            name: fieldNames.name,
-            translation: data?.translation?.name || null,
-            type: "short" as "short",
-            value: data?.voucher?.name,
-          },
-        ]}
-        saveButtonState={saveButtonState}
-        richTextResetKey={languageCode}
-        onEdit={onEdit}
-        onDiscard={onDiscard}
-        onSubmit={onSubmit}
-      />
-    </DetailedContent>
+      <DetailPageLayout.Content>
+        <TranslationFields
+          activeField={activeField}
+          disabled={disabled}
+          initialState={true}
+          title={intl.formatMessage(commonMessages.generalInformations)}
+          fields={[
+            {
+              displayName: intl.formatMessage({
+                id: "sfErC+",
+                defaultMessage: "Voucher Name",
+              }),
+              name: fieldNames.name,
+              translation: data?.translation?.name || null,
+              type: "short" as "short",
+              value: data?.voucher?.name,
+            },
+          ]}
+          saveButtonState={saveButtonState}
+          richTextResetKey={languageCode}
+          onEdit={onEdit}
+          onDiscard={onDiscard}
+          onSubmit={onSubmit}
+        />
+      </DetailPageLayout.Content>
+    </DetailPageLayout>
   );
 };
 TranslationsVouchersPage.displayName = "TranslationsVouchersPage";

@@ -2,6 +2,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import {
   voucherAddUrl,
   VoucherListUrlSortField,
@@ -55,7 +56,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
   const filterDependency = structure.find(getByName("channel"));
 
   return (
-    <>
+    <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.vouchers)}>
         <Button
           href={voucherAddUrl()}
@@ -93,7 +94,7 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
         />
         <VoucherList filterDependency={filterDependency} {...listProps} />
       </Card>
-    </>
+    </ListPageLayout>
   );
 };
 VoucherListPage.displayName = "VoucherListPage";

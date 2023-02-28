@@ -4,14 +4,12 @@ import {
 } from "@dashboard/attributes/utils/data";
 import CannotDefineChannelsAvailabilityCard from "@dashboard/channels/components/CannotDefineChannelsAvailabilityCard/CannotDefineChannelsAvailabilityCard";
 import { ChannelData } from "@dashboard/channels/utils";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import Savebar from "@dashboard/components/Savebar";
@@ -236,9 +234,9 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         );
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav href={productListUrl()} title={header} />
-            <Content>
+            <DetailPageLayout.Content>
               <ProductDetailsForm
                 data={data}
                 disabled={loading}
@@ -319,8 +317,8 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
               />
               <CardSpacer />
               <Metadata data={data} onChange={handlers.changeMetadata} />
-            </Content>
-            <RightSidebar>
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               <ProductOrganization
                 canChangeType={true}
                 categories={categories}
@@ -379,7 +377,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 taxClasses={taxClasses}
                 onFetchMore={fetchMoreTaxClasses}
               />
-            </RightSidebar>
+            </DetailPageLayout.RightSidebar>
             <Savebar
               onCancel={() => navigate(productListUrl())}
               onSubmit={submit}
@@ -407,7 +405,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 }
               />
             )}
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </ProductCreateForm>

@@ -1,5 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import SearchBar from "@dashboard/components/SearchBar";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { PageTypeFragment } from "@dashboard/graphql";
@@ -43,7 +44,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
 }) => {
   const intl = useIntl();
   return (
-    <>
+    <ListPageLayout>
       <TopNav
         href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.pageTypes)}
@@ -82,7 +83,7 @@ const PageTypeListPage: React.FC<PageTypeListPageProps> = ({
         />
         <PageTypeList {...listProps} />
       </Card>
-    </>
+    </ListPageLayout>
   );
 };
 PageTypeListPage.displayName = "PageTypeListPage";

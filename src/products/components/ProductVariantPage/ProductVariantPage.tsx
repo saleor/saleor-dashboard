@@ -3,8 +3,6 @@ import {
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
 import { ChannelPriceData } from "@dashboard/channels/utils";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, {
@@ -13,6 +11,7 @@ import Attributes, {
 } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Grid from "@dashboard/components/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import Savebar from "@dashboard/components/Savebar";
@@ -195,13 +194,13 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
   };
 
   return (
-    <DetailedContent useSingleColumn>
+    <DetailPageLayout gridTemplateColumns={1}>
       <TopNav href={productUrl(productId)} title={header}>
         {variant?.product?.defaultVariant?.id !== variant?.id && (
           <ProductVariantSetDefault onSetDefaultVariant={onSetDefaultVariant} />
         )}
       </TopNav>
-      <Content>
+      <DetailPageLayout.Content>
         <ProductVariantUpdateForm
           variant={variant}
           onSubmit={onSubmit}
@@ -431,7 +430,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
             );
           }}
         </ProductVariantUpdateForm>
-      </Content>
+      </DetailPageLayout.Content>
       {!!variant?.preorder && (
         <ProductVariantEndPreorderDialog
           confirmButtonState={variantDeactivatePreoderButtonState}
@@ -441,7 +440,7 @@ const ProductVariantPage: React.FC<ProductVariantPageProps> = ({
           variantGlobalSoldUnits={variant?.preorder?.globalSoldUnits}
         />
       )}
-    </DetailedContent>
+    </DetailPageLayout>
   );
 };
 ProductVariantPage.displayName = "ProductVariantPage";

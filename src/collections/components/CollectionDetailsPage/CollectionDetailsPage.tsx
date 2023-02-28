@@ -1,11 +1,9 @@
 import { ChannelCollectionData } from "@dashboard/channels/utils";
 import { collectionListUrl } from "@dashboard/collections/urls";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import SeoForm from "@dashboard/components/SeoForm";
@@ -75,9 +73,9 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
       disabled={disabled}
     >
       {({ change, data, handlers, submit, isSaveDisabled }) => (
-        <DetailedContent>
+        <DetailPageLayout>
           <TopNav href={collectionListUrl()} title={collection?.name} />
-          <Content>
+          <DetailPageLayout.Content>
             <CollectionDetails
               data={data}
               disabled={disabled}
@@ -117,8 +115,8 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
               titlePlaceholder={collection?.name}
               onChange={change}
             />
-          </Content>
-          <RightSidebar>
+          </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar>
             <div>
               <ChannelsAvailabilityCard
                 managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}
@@ -143,7 +141,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
                 openModal={openChannelsModal}
               />
             </div>
-          </RightSidebar>
+          </DetailPageLayout.RightSidebar>
           <Savebar
             state={saveButtonBarState}
             disabled={isSaveDisabled}
@@ -151,7 +149,7 @@ const CollectionDetailsPage: React.FC<CollectionDetailsPageProps> = ({
             onDelete={onCollectionRemove}
             onSubmit={submit}
           />
-        </DetailedContent>
+        </DetailPageLayout>
       )}
     </CollectionUpdateForm>
   );

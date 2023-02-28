@@ -49,7 +49,7 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
             {customer.lastLogin === null ? (
               "-"
             ) : (
-              <DateTime date={customer.lastLogin} />
+              <DateTime date={customer.lastLogin} plain />
             )}
           </Typography>
         ) : (
@@ -69,6 +69,7 @@ const CustomerStats: React.FC<CustomerStatsProps> = props => {
               ) : (
                 <DateTime
                   date={customer.lastPlacedOrder.edges[0].node.created}
+                  plain
                 />
               )}
             </Typography>

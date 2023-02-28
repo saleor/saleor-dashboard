@@ -1,7 +1,6 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Grid from "@dashboard/components/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import {
   OrderSettingsFragment,
@@ -42,7 +41,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
       disabled={disabled}
     >
       {({ data, submit, change, isSaveDisabled }) => (
-        <DetailedContent>
+        <DetailPageLayout>
           <TopNav
             href={orderListUrl()}
             title={intl.formatMessage({
@@ -51,7 +50,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
               description: "header",
             })}
           />
-          <Content>
+          <DetailPageLayout.Content>
             <Box padding={9} margin="auto" height="100vh">
               <Grid variant="inverted">
                 <div>
@@ -75,14 +74,14 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
                 />
               </Grid>
             </Box>
-          </Content>
+          </DetailPageLayout.Content>
           <Savebar
             onCancel={() => navigate(orderListUrl())}
             onSubmit={submit}
             disabled={isSaveDisabled}
             state={saveButtonBarState}
           />
-        </DetailedContent>
+        </DetailPageLayout>
       )}
     </OrderSettingsForm>
   );

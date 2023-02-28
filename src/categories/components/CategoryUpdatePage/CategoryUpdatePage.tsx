@@ -3,12 +3,11 @@ import {
   categoryListUrl,
   categoryUrl,
 } from "@dashboard/categories/urls";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import SeoForm from "@dashboard/components/SeoForm";
@@ -91,9 +90,9 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
       disabled={disabled}
     >
       {({ data, change, handlers, submit, isSaveDisabled }) => (
-        <DetailedContent useSingleColumn>
+        <DetailPageLayout gridTemplateColumns={1}>
           <TopNav href={backHref} title={category?.name} />
-          <Content>
+          <DetailPageLayout.Content>
             <CategoryDetailsForm
               data={data}
               disabled={disabled}
@@ -209,8 +208,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               state={saveButtonBarState}
               disabled={isSaveDisabled}
             />
-          </Content>
-        </DetailedContent>
+          </DetailPageLayout.Content>
+        </DetailPageLayout>
       )}
     </CategoryUpdateForm>
   );

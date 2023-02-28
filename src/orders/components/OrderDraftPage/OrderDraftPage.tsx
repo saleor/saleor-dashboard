@@ -1,10 +1,8 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { DateTime } from "@dashboard/components/Date";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
@@ -82,7 +80,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
   const intl = useIntl();
 
   return (
-    <DetailedContent>
+    <DetailPageLayout>
       <TopNav
         href={orderDraftListUrl()}
         title={
@@ -113,7 +111,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           ]}
         />
       </TopNav>
-      <Content>
+      <DetailPageLayout.Content>
         <OrderDraftAlert
           order={order}
           channelUsabilityData={channelUsabilityData}
@@ -132,8 +130,8 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           orderCurrency={order?.total?.gross.currency}
           onNoteAdd={onNoteAdd}
         />
-      </Content>
-      <RightSidebar>
+      </DetailPageLayout.Content>
+      <DetailPageLayout.RightSidebar>
         <OrderChannelSectionCard channel={order?.channel} />
         <CardSpacer />
         <OrderCustomer
@@ -151,7 +149,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           onProfileView={onProfileView}
           onShippingAddressEdit={onShippingAddressEdit}
         />
-      </RightSidebar>
+      </DetailPageLayout.RightSidebar>
       <Savebar
         state={saveButtonBarState}
         disabled={disabled}
@@ -165,7 +163,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           }),
         }}
       />
-    </DetailedContent>
+    </DetailPageLayout>
   );
 };
 OrderDraftPage.displayName = "OrderDraftPage";

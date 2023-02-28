@@ -1,10 +1,8 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import Savebar from "@dashboard/components/Savebar";
@@ -164,9 +162,9 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav href={productTypeListUrl()} title={pageTitle} />
-            <Content>
+            <DetailPageLayout.Content>
               <ProductTypeDetails
                 data={data}
                 disabled={disabled}
@@ -239,15 +237,15 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
               )}
               <CardSpacer />
               <Metadata data={data} onChange={changeMetadata} />
-            </Content>
-            <RightSidebar>
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               <ProductTypeShipping
                 disabled={disabled}
                 data={data}
                 weightUnit={productType?.weight?.unit || defaultWeightUnit}
                 onChange={change}
               />
-            </RightSidebar>
+            </DetailPageLayout.RightSidebar>
             <Savebar
               onCancel={() => navigate(productTypeListUrl())}
               onDelete={onDelete}
@@ -255,7 +253,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
               disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>
