@@ -103,8 +103,8 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
           <DetailPageLayout>
             <TopNav
               title={intl.formatMessage({
-                id: "2E1xZ0",
-                defaultMessage: "Create Sale",
+                id: "FWbv/u",
+                defaultMessage: "Create Discount",
                 description: "page header",
               })}
             />
