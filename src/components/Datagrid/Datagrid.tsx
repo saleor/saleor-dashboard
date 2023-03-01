@@ -76,6 +76,7 @@ export interface DatagridProps {
   readonly?: boolean;
   rowMarkers?: DataEditorProps["rowMarkers"];
   verticalBorder?: DataEditorProps["verticalBorder"];
+  freezeColumns?: DataEditorProps["freezeColumns"];
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -95,6 +96,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   onRowClick,
   readonly = false,
   rowMarkers = "checkbox",
+  freezeColumns = 1,
   verticalBorder,
 }): React.ReactElement => {
   const classes = useStyles();
@@ -322,7 +324,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   onCellEdited={onCellEditedEnh}
                   columns={columns}
                   rows={rowsTotal}
-                  freezeColumns={1}
+                  freezeColumns={freezeColumns}
                   smoothScrollX
                   rowMarkers={rowMarkers}
                   rowSelect="multi"
