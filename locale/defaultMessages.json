@@ -31,6 +31,10 @@
     "context": "order shipping method name",
     "string": "Shipping"
   },
+  "+FWlRD": {
+    "context": "button",
+    "string": "Open app"
+  },
   "+HuipK": {
     "context": "variant sku",
     "string": "SKU {sku}"
@@ -2449,10 +2453,6 @@
     "context": "header",
     "string": "Create New App"
   },
-  "Gjb6eq": {
-    "context": "link",
-    "string": "Get Support"
-  },
   "Gkip05": {
     "context": "button",
     "string": "Unassign"
@@ -2612,10 +2612,6 @@
   "HqeqEV": {
     "context": "create gift card product alert message",
     "string": "Create a gift card product"
-  },
-  "HtfL5/": {
-    "context": "button",
-    "string": "Open App"
   },
   "HvJPcU": {
     "string": "Category deleted"
@@ -3375,6 +3371,10 @@
   "NqxvFh": {
     "context": "navigator placeholder",
     "string": "Type Command"
+  },
+  "Nsk5WL": {
+    "context": "link",
+    "string": "Get support"
   },
   "NtFVFS": {
     "context": "weight",

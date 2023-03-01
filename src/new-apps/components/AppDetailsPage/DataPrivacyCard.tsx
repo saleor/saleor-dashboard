@@ -20,7 +20,7 @@ const DataPrivacyCard: React.FC<DataPrivacyCardProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
-  if (!dataPrivacyUrl) {
+  if (!dataPrivacyUrl && !loading) {
     return null;
   }
 
