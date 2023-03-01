@@ -27,17 +27,19 @@ function useColumns(
     },
     [],
   );
-  const onColumnResize = useCallback(
-    (column: GridColumn, newSize: number) =>
-      setColumnState(prevColumns =>
-        prevColumns.map(prevColumn =>
-          prevColumn.id === column.id
-            ? { ...prevColumn, width: newSize }
-            : prevColumn,
-        ),
+  const onColumnResize = useCallback((column: GridColumn, newSize: number) => {
+    if (column.id === "empty") {
+      return;
+    }
+
+    setColumnState(prevColumns =>
+      prevColumns.map(prevColumn =>
+        prevColumn.id === column.id
+          ? { ...prevColumn, width: newSize }
+          : prevColumn,
       ),
-    [],
-  );
+    );
+  }, []);
   const onColumnsChange = useCallback(
     (picked: string[]) =>
       setDisplayedColumns(prevColumns => [

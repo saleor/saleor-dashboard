@@ -3,6 +3,7 @@ import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import { DatagridChangeStateContext } from "@dashboard/components/Datagrid/useDatagridChange";
 import Savebar from "@dashboard/components/Savebar";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@dashboard/config";
 import {
   GridAttributesQuery,
@@ -22,9 +23,10 @@ import {
   RelayToFlat,
   SortPage,
 } from "@dashboard/types";
-import { Item } from "@glideapps/glide-data-grid";
-import { Button, makeStyles } from "@saleor/macaw-ui";
-import React, { useCallback, useMemo } from "react";
+import { HeaderClickedEventArgs, Item } from "@glideapps/glide-data-grid";
+import { Button, makeStyles, Tooltip } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
+import React, { createRef, useCallback, useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { isAttributeColumnValue } from "../ProductListPage/utils";
@@ -92,6 +94,15 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     isAttributeColumnValue,
   );
 
+  const tooltipRef = createRef<HTMLDivElement>();
+  const [tooltip, setTooltip] = useState<
+    | {
+        title: string;
+        bound: { x: number; y: number; width: number; height: number };
+      }
+    | undefined
+  >(undefined);
+
   const columns = useMemo(
     () =>
       getColumns({
@@ -146,16 +157,23 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   );
 
   const onHeaderClicked = useCallback(
-    (col: number) => {
+    (col: number, event: HeaderClickedEventArgs) => {
       const { columnName, columnId } = getColumnMetadata(columns[col].id);
 
       if (
         canBeSorted(columnName as ProductListUrlSortField, !!selectedChannelId)
       ) {
         onSort(columnName as ProductListUrlSortField, columnId);
+      } else {
+        setTooltip({
+          title: intl.formatMessage(commonTooltipMessages.noFilterSelected, {
+            filterName: columnName,
+          }),
+          bound: event.bounds,
+        });
       }
     },
-    [columns, onSort, selectedChannelId],
+    [columns, intl, onSort, selectedChannelId],
   );
 
   const onRowClicked = useCallback(
@@ -208,6 +226,37 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         )}
       />
 
+      {tooltip && (
+        <>
+          <Box
+            position="absolute"
+            as="div"
+            __width={tooltip?.bound?.width ?? 0}
+            __height={tooltip?.bound?.height ?? 0}
+            __top={tooltip?.bound?.y ?? 0}
+            __left={tooltip?.bound?.x ?? 0}
+            zIndex="3"
+            onMouseLeave={() => {
+              setTooltip(undefined);
+            }}
+          />
+
+          <Box
+            position="absolute"
+            as="div"
+            __width={1}
+            __height={1}
+            ref={tooltipRef}
+            __top={tooltip?.bound?.y ?? 0}
+            __left={tooltip?.bound?.x + tooltip?.bound?.width / 2 ?? 0}
+            zIndex="2"
+          >
+            <Tooltip open={true} title={tooltip?.title} placement="top">
+              <span></span>
+            </Tooltip>
+          </Box>
+        </>
+      )}
       <div className={classes.paginationContainer}>
         <TablePaginationWithContext
           component="div"

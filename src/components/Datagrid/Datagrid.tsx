@@ -13,7 +13,6 @@ import DataEditor, {
 } from "@glideapps/glide-data-grid";
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { useTheme } from "@saleor/macaw-ui";
 import { themes, useTheme as useNewTheme } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import range from "lodash/range";
@@ -129,10 +128,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
     getChangeIndex,
     onRowAdded,
   } = useDatagridChange(availableColumns, rows, onChange);
-
-  const theme = useTheme();
-  const { theme: selectedTheme } = useNewTheme();
-  const currentTheme = themes[selectedTheme];
+  const { theme: currentTheme } = useNewTheme();
+  const theme = themes[currentTheme];
 
   const [scrolledToRight, setScrolledToRight] = React.useState(false);
   const scroller: HTMLDivElement = document.querySelector(".dvn-scroller");
@@ -177,21 +174,33 @@ export const Datagrid: React.FC<DatagridProps> = ({
       return {
         ...getCellContent(item, opts),
         ...(changed
-          ? { themeOverride: { bgCell: theme.palette.saleor.active[5] } }
+          ? {
+              themeOverride: {
+                bgCell: theme.colors.background.surfaceBrandHighlight,
+              },
+            }
           : {}),
         ...(getCellError(item, opts)
           ? {
               themeOverride: {
-                bgCell:
-                  theme.palette.saleor.theme === "light"
-                    ? theme.palette.saleor.fail.light
-                    : theme.palette.saleor.errorAction[5],
+                bgCell: theme.colors.background.interactiveCriticalHovering,
               },
             }
           : {}),
       };
     },
-    [getCellContent, availableColumns, displayedColumns, added, removed],
+    [
+      availableColumns,
+      changes,
+      added,
+      removed,
+      getChangeIndex,
+      getCellContent,
+      theme.colors.background.surfaceBrandHighlight,
+      theme.colors.background.interactiveCriticalHovering,
+      getCellError,
+      displayedColumns,
+    ],
   );
 
   const onCellEditedEnh = React.useCallback(
@@ -241,11 +250,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
         return undefined;
       }
       return {
-        bgCell: currentTheme.colors.background.surfaceNeutralHighlight,
-        bgCellMedium: currentTheme.colors.background.surfaceNeutralHighlight,
+        bgCell: theme.colors.background.surfaceNeutralHighlight,
+        bgCellMedium: theme.colors.background.surfaceNeutralHighlight,
       };
     },
-    [currentTheme, hoverRow],
+    [hoverRow, theme],
   );
 
   const props = useCells();
