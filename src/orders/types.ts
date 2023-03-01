@@ -61,13 +61,13 @@ export const OrderEventsEnum = {
 
 /** Type guard for order with transactions */
 export const isOrderWithTransactions = (
-  _order: any,
+  _order: unknown,
   featureFlag: boolean,
 ): _order is OrderDetailsWithTransactionsFragment => featureFlag;
 
 /** Check if order has transactions & feature flag enabled */
 export const orderHasTransactions = (
-  order: any,
+  order: unknown,
   featureFlag: boolean,
 ): order is OrderDetailsWithTransactionsFragment => {
   if (isOrderWithTransactions(order, featureFlag)) {
