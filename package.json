@@ -4,12 +4,12 @@
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mirumee/saleor-dashboard.git"
+    "url": "git://github.com/saleor/saleor-dashboard.git"
   },
-  "author": "Mirumee Software",
+  "author": "Saleor Commerce",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/mirumee/saleor-dashboard/issues"
+    "url": "https://github.com/saleor/saleor-dashboard/issues"
   },
   "homepage": "https://saleor.io/",
   "engines": {
@@ -305,5 +305,5 @@
     "release": "release-it",
     "prepare": "is-ci || husky install"
   },
-  "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/249912/82305745-5c52fd00-99be-11ea-9ac6-cc04a6f28c91.png)"
+  "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }
