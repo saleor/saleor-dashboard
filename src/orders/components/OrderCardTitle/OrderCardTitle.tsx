@@ -3,94 +3,17 @@ import DefaultCardTitle from "@dashboard/components/CardTitle";
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { StatusType } from "@dashboard/types";
 import { Typography } from "@material-ui/core";
-import { CircleIndicator, makeStyles } from "@saleor/macaw-ui";
-import camelCase from "lodash/camelCase";
+import { CircleIndicator } from "@saleor/macaw-ui";
 import React from "react";
-import { defineMessages, FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
-const useStyles = makeStyles(
-  theme => ({
-    title: {
-      width: "100%",
-      display: "flex",
-      justifyContent: "flex-start",
-    },
-    orderNumber: {
-      display: "inline",
-      marginLeft: theme.spacing(1),
-    },
-    warehouseName: {
-      float: "right",
-      alignSelf: "center",
-      color: theme.palette.text.secondary,
-      margin: `auto ${theme.spacing(1)} auto auto`,
-    },
-    cardHeader: {
-      fontSize: "24px",
-      fontWeight: 500,
-      lineHeight: "29px",
-      letterSpacing: "0.02em",
-      textAlign: "left",
-    },
-    indicator: {
-      display: "flex",
-      alignItems: "center",
-    },
-  }),
-  { name: "OrderCardTitle" },
-);
+import { orderTitleMessages } from "./messages";
+import { useStyles } from "./styles";
+import { getFulfillmentTotalQuantity, getOrderTitleMessage } from "./utils";
 
-const messages = defineMessages({
-  canceled: {
-    defaultMessage: "Canceled ({quantity})",
-    id: "mGcw06",
-    description: "canceled fulfillment, section header",
-  },
-  fulfilled: {
-    id: "iJrw63",
-    defaultMessage: "Fulfilled ({quantity})",
-    description: "section header",
-  },
-  refunded: {
-    id: "oQhFlK",
-    defaultMessage: "Refunded ({quantity})",
-    description: "refunded fulfillment, section header",
-  },
-  refundedAndReturned: {
-    id: "jNSOSu",
-    defaultMessage: "Refunded and Returned ({quantity})",
-    description: "cancelled fulfillment, section header",
-  },
-  replaced: {
-    id: "3stu21",
-    defaultMessage: "Replaced ({quantity})",
-    description: "refunded fulfillment, section header",
-  },
-  returned: {
-    id: "eCRaHe",
-    defaultMessage: "Returned ({quantity})",
-    description: "refunded fulfillment, section header",
-  },
-  waitingForApproval: {
-    id: "9ssWj+",
-    defaultMessage: "Waiting for approval ({quantity})",
-    description: "unapproved fulfillment, section header",
-  },
-  unfulfilled: {
-    defaultMessage: "Unfulfilled ({quantity})",
-    id: "Kc2/e7",
-    description: "section header",
-  },
-  fulfilledFrom: {
-    id: "ZPOyI1",
-    defaultMessage: "Fulfilled from {warehouseName}",
-    description: "fulfilled fulfillment, section header",
-  },
-});
+export type CardTitleStatus = FulfillmentStatus | "unfulfilled";
 
-type CardTitleStatus = FulfillmentStatus | "unfulfilled";
-
-type CardTitleLines = Array<{
+export type CardTitleLines = Array<{
   quantity: number;
   quantityToFulfill?: number;
 }>;
@@ -129,9 +52,7 @@ const selectStatus = (status: CardTitleStatus) => {
 
 const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
   lines = [],
-  fulfillmentOrder,
   status,
-  orderNumber = "",
   warehouseName,
   withStatus = false,
   toolbar,
@@ -140,24 +61,9 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
   const intl = useIntl();
   const classes = useStyles({});
 
-  const fulfillmentName =
-    orderNumber && fulfillmentOrder
-      ? `#${orderNumber}-${fulfillmentOrder}`
-      : "";
+  const messageForStatus = getOrderTitleMessage(status);
 
-  const messageForStatus = messages[camelCase(status)] || messages.unfulfilled;
-
-  const totalQuantity =
-    status === "unfulfilled"
-      ? lines.reduce(
-          (resultQuantity, line) =>
-            resultQuantity + (line.quantityToFulfill ?? line.quantity),
-          0,
-        )
-      : lines.reduce(
-          (resultQuantity, { quantity }) => resultQuantity + quantity,
-          0,
-        );
+  const totalQuantity = getFulfillmentTotalQuantity(lines, status);
 
   return (
     <DefaultCardTitle
@@ -172,15 +78,12 @@ const OrderCardTitle: React.FC<OrderCardTitleProps> = ({
           )}
           <HorizontalSpacer spacing={2} />
           <Typography className={classes.cardHeader}>
-            {intl.formatMessage(messageForStatus, {
-              fulfillmentName,
-              quantity: totalQuantity,
-            })}
+            {intl.formatMessage(messageForStatus)} ({totalQuantity})
           </Typography>
           {!!warehouseName && (
             <Typography className={classes.warehouseName} variant="caption">
               <FormattedMessage
-                {...messages.fulfilledFrom}
+                {...orderTitleMessages.fulfilledFrom}
                 values={{
                   warehouseName,
                 }}

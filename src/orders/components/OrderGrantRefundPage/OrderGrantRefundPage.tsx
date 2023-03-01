@@ -12,10 +12,11 @@ import { Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { getOrderTitleMessage } from "../OrderCardTitle/utils";
 import { ProductsCard, RefundCard } from "./components";
 import { GrantRefundContext } from "./context";
 import { OrderGrantRefundFormData, useGrantRefundForm } from "./form";
-import { getTitle, grantRefundPageMessages } from "./messages";
+import { grantRefundPageMessages } from "./messages";
 import {
   getGrantRefundReducerInitialState,
   grantRefundDefaultState,
@@ -120,7 +121,9 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
               />
               {order?.fulfillments?.map?.(fulfillment => (
                 <ProductsCard
-                  title={getTitle(fulfillment.status, intl)}
+                  title={intl.formatMessage(
+                    getOrderTitleMessage(fulfillment.status),
+                  )}
                   subtitle={
                     <Typography
                       variant="body1"
