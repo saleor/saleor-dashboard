@@ -17,17 +17,22 @@ const common = {
   readonly: false,
 };
 
-export function textCell(value: string): GridCell {
+export function textCell(value: string, opts?: Partial<GridCell>): GridCell {
   return {
     ...common,
+    ...opts,
     data: value,
     displayData: value,
     kind: GridCellKind.Text,
   };
 }
 
-export function readonlyTextCell(value: string): GridCell {
+export function readonlyTextCell(
+  value: string,
+  opts?: Partial<GridCell>,
+): GridCell {
   return {
+    ...opts,
     allowOverlay: false,
     readonly: true,
     data: value,
@@ -36,9 +41,13 @@ export function readonlyTextCell(value: string): GridCell {
   };
 }
 
-export function booleanCell(value: boolean): GridCell {
+export function booleanCell(
+  value: boolean,
+  opts?: Partial<GridCell>,
+): GridCell {
   return {
     ...common,
+    ...opts,
     allowOverlay: false,
     kind: GridCellKind.Boolean,
     data: value,
@@ -54,9 +63,11 @@ export function loadingCell(): GridCell {
 
 export function numberCell(
   value: number | typeof numberCellEmptyValue,
+  opts?: Partial<GridCell>,
 ): NumberCell {
   return {
     ...common,
+    ...opts,
     data: {
       kind: "number-cell",
       value,
@@ -66,9 +77,14 @@ export function numberCell(
   };
 }
 
-export function moneyCell(value: number | null, currency: string): MoneyCell {
+export function moneyCell(
+  value: number | null,
+  currency: string,
+  opts?: Partial<GridCell>,
+): MoneyCell {
   return {
     ...common,
+    ...opts,
     kind: GridCellKind.Custom,
     data: {
       kind: "money-cell",
@@ -81,16 +97,18 @@ export function moneyCell(value: number | null, currency: string): MoneyCell {
 
 export function dropdownCell(
   value: DropdownChoice,
-  opts: DropdownCellContentProps &
+  dataOpts: DropdownCellContentProps &
     (
       | { choices: DropdownChoice[] }
       | { update: (text: string) => Promise<DropdownChoice[]> }
     ),
+  opts?: Partial<GridCell>,
 ): DropdownCell {
   return {
     ...common,
+    ...opts,
     data: {
-      ...opts,
+      ...dataOpts,
       kind: "dropdown-cell",
       value,
     },
@@ -102,13 +120,13 @@ export function dropdownCell(
 export function thumbnailCell(
   name: string,
   image: string,
-  readonly?: boolean,
+  opts?: Partial<GridCell>,
 ): ThumbnailCell {
   return {
-    kind: GridCellKind.Custom,
     ...common,
+    ...opts,
+    kind: GridCellKind.Custom,
     copyData: name ?? "",
-    readonly,
     data: {
       kind: "thumbnail-cell",
       image,

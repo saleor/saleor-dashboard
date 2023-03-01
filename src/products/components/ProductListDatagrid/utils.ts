@@ -207,11 +207,18 @@ function getProductTypeCellContent(
 ) {
   const value = change?.value ?? getRowDataValue(rowData, change?.value);
 
-  return dropdownCell(value, {
-    allowCustomValues: false,
-    emptyOption: false,
-    update: (text: string) => getProductTypes(value.label !== text ? text : ""),
-  });
+  return dropdownCell(
+    value,
+    {
+      allowCustomValues: false,
+      emptyOption: false,
+      update: (text: string) =>
+        getProductTypes(value.label !== text ? text : ""),
+    },
+    {
+      cursor: "pointer",
+    },
+  );
 }
 
 function getRowDataValue(
@@ -238,6 +245,10 @@ function getAvailabilityCellContent(
   if (!!selectedChannnel) {
     return readonlyTextCell(
       intl.formatMessage(getChannelAvailabilityLabel(selectedChannnel)),
+      {
+        cursor: "pointer",
+        readonly: true,
+      },
     );
   }
 
@@ -247,6 +258,10 @@ function getAvailabilityCellContent(
           channelCount: rowData?.channelListings?.length,
         })
       : intl.formatMessage(messages.noChannels),
+    {
+      cursor: "pointer",
+      readonly: true,
+    },
   );
 }
 
@@ -258,7 +273,9 @@ function getDescriptionCellContent(
   const value = change ?? rowData?.[columnId] ?? "";
 
   if (!value) {
-    return readonlyTextCell("");
+    return readonlyTextCell("", {
+      cursor: "pointer",
+    });
   }
 
   const parsed = JSON.parse(value);
@@ -268,11 +285,15 @@ function getDescriptionCellContent(
       block => block.type === "paragraph",
     );
     if (descriptionFirstParagraph) {
-      return readonlyTextCell(descriptionFirstParagraph.data.text);
+      return readonlyTextCell(descriptionFirstParagraph.data.text, {
+        cursor: "pointer",
+      });
     }
   }
 
-  return readonlyTextCell(value || "");
+  return readonlyTextCell(value || "", {
+    cursor: "pointer",
+  });
 }
 
 function getNameCellContent(
@@ -280,7 +301,9 @@ function getNameCellContent(
   rowData: RelayToFlat<ProductListQuery["products"]>[number],
 ) {
   const name = change?.name ?? rowData?.name ?? "";
-  return thumbnailCell(name, rowData?.thumbnail?.url ?? "");
+  return thumbnailCell(name, rowData?.thumbnail?.url ?? "", {
+    cursor: "pointer",
+  });
 }
 
 function getPriceCellContent(
@@ -293,7 +316,9 @@ function getPriceCellContent(
   const from = selectedChannnel?.pricing?.priceRange?.start?.net;
   const to = selectedChannnel?.pricing?.priceRange?.stop?.net;
 
-  return readonlyTextCell(getMoneyRange(locale, intl, from, to));
+  return readonlyTextCell(getMoneyRange(locale, intl, from, to), {
+    cursor: "pointer",
+  });
 }
 
 function getUpdatedAtrCellContent(
@@ -301,11 +326,16 @@ function getUpdatedAtrCellContent(
   locale: Locale,
 ) {
   if (!rowData) {
-    return readonlyTextCell("");
+    return readonlyTextCell("", {
+      cursor: "pointer",
+    });
   }
 
   return readonlyTextCell(
     moment(rowData.updatedAt).locale(locale).format("lll"),
+    {
+      cursor: "pointer",
+    },
   );
 }
 
@@ -321,10 +351,14 @@ function getAttributeCellContent(
   if (productAttribute) {
     if (productAttribute.values.length) {
       if (productAttribute.values[0].date) {
-        return readonlyTextCell(productAttribute.values[0].date);
+        return readonlyTextCell(productAttribute.values[0].date, {
+          cursor: "pointer",
+        });
       }
       if (productAttribute.values[0].dateTime) {
-        return readonlyTextCell(productAttribute.values[0].dateTime);
+        return readonlyTextCell(productAttribute.values[0].dateTime, {
+          cursor: "pointer",
+        });
       }
     }
 
@@ -332,7 +366,9 @@ function getAttributeCellContent(
       .map(value => value.name)
       .join(", ");
 
-    return readonlyTextCell(textValue);
+    return readonlyTextCell(textValue, {
+      cursor: "pointer",
+    });
   }
 
   return readonlyTextCell("");
