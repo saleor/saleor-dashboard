@@ -28,6 +28,7 @@ import { useIntl } from "react-intl";
 
 import PermissionAlert from "../PermissionAlert";
 import WebhookHeaders from "../WebhookHeaders";
+import WebhookLogList from "../WebhookLogList/WebhookLogList";
 import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
 import { getHeaderTitle } from "./messages";
 
@@ -141,6 +142,8 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 <PermissionAlert query={query} />
                 <FormSpacer />
                 <WebhookHeaders data={data} onChange={change} />
+                <FormSpacer />
+                <WebhookLogList webhook={webhook} />
               </Box>
             </Content>
             <Savebar
