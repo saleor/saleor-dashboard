@@ -34,6 +34,16 @@ export const appMessages = defineMessages({
     defaultMessage: "Failed to fetch app settings",
     description: "app settings error",
   },
+  appActivated: {
+    id: "D/+84n",
+    defaultMessage: "App activated",
+    description: "snackbar text",
+  },
+  appDeactivated: {
+    id: "USO8PB",
+    defaultMessage: "App deactivated",
+    description: "snackbar text",
+  },
 });
 
 export const appInstallationStatusMessages = defineMessages({

@@ -31,6 +31,10 @@
     "context": "order shipping method name",
     "string": "Shipping"
   },
+  "+FWlRD": {
+    "context": "button",
+    "string": "Open app"
+  },
   "+HuipK": {
     "context": "variant sku",
     "string": "SKU {sku}"
@@ -908,10 +912,6 @@
     "context": "content",
     "string": "Saleor couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your Saleor. Please use the button below to get back to system’s dashboard."
   },
-  "5+Xcrz": {
-    "context": "app deactivated",
-    "string": "Deactivated"
-  },
   "51HE+Q": {
     "string": "No sales found"
   },
@@ -1192,10 +1192,6 @@
     "context": "tax classes name input placeholder",
     "string": "Tax rate name"
   },
-  "73RU3R": {
-    "context": "deactivate app",
-    "string": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app. You will be still billed for the app."
-  },
   "74Cxe8": {
     "context": "table header product label",
     "string": "Product"
@@ -1233,10 +1229,6 @@
   "7NfoiJ": {
     "context": "custom search delete, dialog header",
     "string": "Delete Search"
-  },
-  "7O2EsY": {
-    "context": "deactivate local app",
-    "string": "Are you sure you want to disable this app? Your data will be kept until you reactivate the app."
   },
   "7Oorx5": {
     "context": "navigator section header",
@@ -1922,10 +1914,6 @@
   "D2qihU": {
     "string": "Permission is invalid"
   },
-  "D3E2b5": {
-    "context": "button label",
-    "string": "Activate"
-  },
   "D3WUc/": {
     "context": "order history message",
     "string": "Order was refunded by {refundedBy}"
@@ -2465,10 +2453,6 @@
     "context": "header",
     "string": "Create New App"
   },
-  "Gjb6eq": {
-    "context": "link",
-    "string": "Get Support"
-  },
   "Gkip05": {
     "context": "button",
     "string": "Unassign"
@@ -2631,10 +2615,6 @@
   "HqeqEV": {
     "context": "create gift card product alert message",
     "string": "Create a gift card product"
-  },
-  "HtfL5/": {
-    "context": "button",
-    "string": "Open App"
   },
   "HvJPcU": {
     "string": "Category deleted"
@@ -3143,10 +3123,6 @@
     "context": "button",
     "string": "Create order"
   },
-  "LtqrM8": {
-    "context": "delete custom app",
-    "string": "Deleting {name}, you will delete all the data and webhooks regarding this app. Are you sure you want to do that?"
-  },
   "Lx1ima": {
     "context": "button",
     "string": "Upload image"
@@ -3395,13 +3371,13 @@
     "context": "header field name, header",
     "string": "Name"
   },
-  "Np7J92": {
-    "context": "deactivate local named app",
-    "string": "Are you sure you want to disable {name}? Your data will be kept until you reactivate the app."
-  },
   "NqxvFh": {
     "context": "navigator placeholder",
     "string": "Type Command"
+  },
+  "Nsk5WL": {
+    "context": "link",
+    "string": "Get support"
   },
   "NtFVFS": {
     "context": "weight",
@@ -4499,10 +4475,6 @@
   },
   "VyzsWZ": {
     "string": "Default Billing Address"
-  },
-  "W+AFZY": {
-    "context": "button label",
-    "string": "Deactivate"
   },
   "W/Es0H": {
     "string": "Order successfully cancelled"
@@ -6891,6 +6863,10 @@
     "context": "search label",
     "string": "Search Countries"
   },
+  "pGwvpX": {
+    "context": "status",
+    "string": "Deactivated"
+  },
   "pNrF72": {
     "context": "tab name",
     "string": "All Vouchers"
@@ -7809,10 +7785,6 @@
   "w424P4": {
     "context": "section header",
     "string": "Plugin Information and Status"
-  },
-  "w6Gau0": {
-    "context": "deactivate named app",
-    "string": "Are you sure you want to disable {name}? Your data will be kept until you reactivate the app. You will be still billed for the app."
   },
   "w9xgN9": {
     "context": "see error log label in notification",
