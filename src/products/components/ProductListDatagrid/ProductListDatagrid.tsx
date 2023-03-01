@@ -175,7 +175,8 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
         readonly
-        rowMarkers="none"
+        rowMarkers="checkbox"
+        verticalBorder={col => (col === 1 ? true : false)}
         availableColumns={columns}
         onHeaderClicked={onHeaderClicked}
         emptyText={intl.formatMessage(messages.emptyText)}

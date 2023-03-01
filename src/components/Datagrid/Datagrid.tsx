@@ -75,6 +75,7 @@ export interface DatagridProps {
   onRowClick?: (item: Item) => void;
   readonly?: boolean;
   rowMarkers?: DataEditorProps["rowMarkers"];
+  verticalBorder?: DataEditorProps["verticalBorder"];
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -94,6 +95,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   onRowClick,
   readonly = false,
   rowMarkers = "checkbox",
+  verticalBorder,
 }): React.ReactElement => {
   const classes = useStyles();
   const fullScreenClasses = useFullScreenStyles(classes);
@@ -312,6 +314,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
               <div className={classes.editorContainer}>
                 <DataEditor
                   {...props}
+                  verticalBorder={verticalBorder}
                   headerIcons={headerIcons}
                   theme={datagridTheme}
                   className={classes.datagrid}
