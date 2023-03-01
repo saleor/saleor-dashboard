@@ -22,24 +22,25 @@ export const AppPage: React.FC<AppPageProps> = ({
   const classes = useStyles();
 
   return (
-    <DetailPageLayout gridTemplateColumns={1}>
+    <DetailPageLayout gridTemplateColumns={1} withSavebar={false}>
       <AppPageNav
         name={data?.name}
         supportUrl={data?.supportUrl}
         homepageUrl={data?.homepageUrl}
       />
-
-      <div className={classes.iframeContainer}>
-        {url && data?.id && data?.accessToken && (
-          <AppFrame
-            src={url}
-            appToken={data?.accessToken ?? ""}
-            onError={onError}
-            appId={data?.id ?? ""}
-            refetch={refetch}
-          />
-        )}
-      </div>
+      <DetailPageLayout.Content>
+        <div className={classes.iframeContainer}>
+          {url && data?.id && data?.accessToken && (
+            <AppFrame
+              src={url}
+              appToken={data?.accessToken ?? ""}
+              onError={onError}
+              appId={data?.id ?? ""}
+              refetch={refetch}
+            />
+          )}
+        </div>
+      </DetailPageLayout.Content>
     </DetailPageLayout>
   );
 };
