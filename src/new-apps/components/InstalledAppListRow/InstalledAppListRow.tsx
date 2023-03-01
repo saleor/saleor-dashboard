@@ -19,6 +19,7 @@ import { useLocation } from "react-router";
 
 import { AppAvatar } from "../AppAvatar/AppAvatar";
 import AppPermissions from "../AppPermissions";
+import { AppManifestUrl } from "./AppManifestUrl";
 import { messages } from "./messages";
 
 export const InstalledAppListRow: React.FC<InstalledApp> = props => {
@@ -50,26 +51,38 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
           alignItems="center"
         >
           <AppAvatar logo={logo} />
-          <Text variant="bodyStrong">{app.name}</Text>
-          <Text variant="body" color="textNeutralSubdued">
-            {`v${app.version}`}
-          </Text>
-          {isExternal && (
-            <Chip data-test-id="app-external-label" size="large">
-              <Text variant="caption" size="small">
-                <FormattedMessage {...appsMessages.externalApp} />
+          <Box
+            display="flex"
+            gap={3}
+            flexDirection="column"
+            alignItems="flex-start"
+          >
+            <Box display="flex" gap={5}>
+              <Text variant="bodyStrong">{app.name}</Text>
+              <Text variant="body" color="textNeutralSubdued">
+                {`v${app.version}`}
               </Text>
-            </Chip>
-          )}
-          {app.manifestUrl && isAppInTunnel(app.manifestUrl) ? (
-            <Text
-              variant="caption"
-              color="textNeutralSubdued"
-              data-test-id="app-tunnel-label"
-            >
-              {`(${intl.formatMessage(messages.tunnelDevelopment)})`}
-            </Text>
-          ) : null}
+              {isExternal && (
+                <Chip data-test-id="app-external-label" size="large">
+                  <Text variant="caption" size="small">
+                    <FormattedMessage {...appsMessages.externalApp} />
+                  </Text>
+                </Chip>
+              )}
+              {app.manifestUrl && isAppInTunnel(app.manifestUrl) ? (
+                <Text
+                  variant="caption"
+                  color="textNeutralSubdued"
+                  data-test-id="app-tunnel-label"
+                >
+                  {`(${intl.formatMessage(messages.tunnelDevelopment)})`}
+                </Text>
+              ) : null}
+            </Box>
+            {app.manifestUrl && (
+              <AppManifestUrl manifestUrl={app.manifestUrl} />
+            )}
+          </Box>
         </Box>
         <Box
           display="flex"

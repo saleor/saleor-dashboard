@@ -22,3 +22,17 @@ body {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+@keyframes pulse {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.2);
+  }
+}
+
+.animate-copy {
+  animation: pulse 0.2s;
+  transition: all 0.2s;
+}
