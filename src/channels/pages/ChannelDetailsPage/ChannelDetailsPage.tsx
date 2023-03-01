@@ -23,6 +23,10 @@ import {
   SearchWarehousesQuery,
   StockSettingsInput,
 } from "@dashboard/graphql";
+import {
+  ChannelOrderSettingsFragment,
+  MarkAsPaidStrategyEnum,
+} from "@dashboard/graphql/types.transactions.generated";
 import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -69,6 +73,7 @@ export interface ChannelDetailsPageProps<
   updateChannelStatus?: () => void;
   searchShippingZones: (query: string) => void;
   searchWarehouses: (query: string) => void;
+  orderSettings: ChannelOrderSettingsFragment["orderSettings"];
 }
 
 const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
@@ -92,6 +97,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   channelWarehouses = [],
   allWarehousesCount,
   countries,
+  orderSettings,
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
   const intl = useIntl();
@@ -125,6 +131,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     ...initialStockSettings,
     shippingZonesToDisplay: channelShippingZones,
     warehousesToDisplay: channelWarehouses,
+    markAsPaidStrategy: orderSettings.markAsPaidStrategy,
   };
 
   const getFilteredShippingZonesChoices = (
@@ -194,6 +201,15 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
           triggerChange,
         );
         const reorderWarehouse = createWarehouseReorderHandler(data, set);
+        const handleMarkAsPaidStrategyChange = () => {
+          set({
+            markAsPaidStrategy:
+              // Swap enum values
+              data.markAsPaidStrategy === MarkAsPaidStrategyEnum.PAYMENT_FLOW
+                ? MarkAsPaidStrategyEnum.TRANSACTION_FLOW
+                : MarkAsPaidStrategyEnum.PAYMENT_FLOW,
+          });
+        };
 
         const allErrors = [...errors, ...validationErrors];
 
@@ -213,6 +229,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
             <Content>
               <ChannelForm
                 data={data}
+                orderSettings={orderSettings}
                 disabled={disabled}
                 currencyCodes={currencyCodes}
                 countries={countryChoices}
@@ -221,6 +238,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
                 onChange={change}
                 onCurrencyCodeChange={handleCurrencyCodeSelect}
                 onDefaultCountryChange={handleDefaultCountrySelect}
+                onMarkAsPaidStrategyChange={handleMarkAsPaidStrategyChange}
                 errors={allErrors}
               />
             </Content>
