@@ -10,7 +10,7 @@ interface RowActionsProps {
 }
 
 export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
-  const classes = useStyles();
+  const classes = useStyles({ hasCursorPointer: false });
   const hasSingleMenuItem = menuItems.length === 1;
   const firstMenuItem = menuItems[0];
 

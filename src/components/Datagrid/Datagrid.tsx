@@ -97,7 +97,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   rowMarkers = "checkbox",
   verticalBorder,
 }): React.ReactElement => {
-  const classes = useStyles();
+  const classes = useStyles({ hasCursorPointer: readonly && !!onRowClick });
   const fullScreenClasses = useFullScreenStyles(classes);
   const datagridTheme = useDatagridTheme();
   const editor = React.useRef<DataEditorRef>();

@@ -5,7 +5,7 @@ import { useMemo } from "react";
 
 export const cellHeight = 36;
 
-const useStyles = makeStyles(
+const useStyles = makeStyles<{ hasCursorPointer: boolean }>(
   () => {
     const rowActionSelected = {
       background: vars.colors.background.plain,
@@ -88,6 +88,8 @@ const useStyles = makeStyles(
       datagrid: {
         "& .dvn-scroller": {
           overscrollBehaviorX: "none",
+          cursor: ({ hasCursorPointer }) =>
+            hasCursorPointer ? "pointer !important" : "default",
         },
         borderTop: `1px solid ${vars.colors.border.neutralHighlight}`,
         borderBottom: `1px solid ${vars.colors.border.neutralHighlight}`,
