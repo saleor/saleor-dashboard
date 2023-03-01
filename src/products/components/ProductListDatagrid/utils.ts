@@ -47,6 +47,11 @@ export function getColumns({
 }: GetColumnsProps): AvailableColumn[] {
   return [
     {
+      id: "empty",
+      title: "",
+      width: 20,
+    },
+    {
       id: "name",
       title: intl.formatMessage(commonMessages.product),
       width: 300,
