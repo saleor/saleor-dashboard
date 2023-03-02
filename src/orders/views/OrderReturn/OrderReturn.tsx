@@ -10,6 +10,7 @@ import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import OrderReturnPage from "@dashboard/orders/components/OrderReturnPage";
 import { OrderReturnFormData } from "@dashboard/orders/components/OrderReturnPage/form";
+import { orderHasTransactions } from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -83,7 +84,10 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
           input: new ReturnFormDataParser({
             order: data.order,
             formData,
-            refundsEnabled: !orderTransactions.enabled,
+            refundsEnabled: !orderHasTransactions(
+              data.order,
+              orderTransactions.enabled,
+            ),
           }).getParsedData(),
         },
       }),

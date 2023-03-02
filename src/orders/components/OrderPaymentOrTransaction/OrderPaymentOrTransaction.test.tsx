@@ -46,7 +46,6 @@ describe("OrderPaymentOrTransaction", () => {
         onMarkAsPaid={() => undefined}
         onPaymentRefund={() => undefined}
         onAddManualTransaction={() => undefined}
-        onPaymentPaid={() => undefined}
         onPaymentCapture={() => undefined}
         onTransactionAction={() => undefined}
         onPaymentVoid={() => undefined}
@@ -68,7 +67,6 @@ describe("OrderPaymentOrTransaction", () => {
         onMarkAsPaid={() => undefined}
         onPaymentRefund={() => undefined}
         onAddManualTransaction={() => undefined}
-        onPaymentPaid={() => undefined}
         onPaymentCapture={() => undefined}
         onTransactionAction={() => undefined}
         onPaymentVoid={() => undefined}

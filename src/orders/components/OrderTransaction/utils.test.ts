@@ -52,7 +52,7 @@ describe("mapTransactionEvent", () => {
       } as TransactionEventFragment),
     ).toStrictEqual<TransactionMappingResult>({
       type: "CHARGEBACK",
-      status: null,
+      status: "INFO",
     });
 
     expect(
@@ -62,7 +62,7 @@ describe("mapTransactionEvent", () => {
       } as TransactionEventFragment),
     ).toStrictEqual<TransactionMappingResult>({
       type: "REFUND_REVERSED",
-      status: null,
+      status: "INFO",
     });
 
     expect(
@@ -72,7 +72,7 @@ describe("mapTransactionEvent", () => {
       } as TransactionEventFragment),
     ).toStrictEqual<TransactionMappingResult>({
       type: "AUTHORIZATION_ADJUSTMENT",
-      status: null,
+      status: "INFO",
     });
   });
 

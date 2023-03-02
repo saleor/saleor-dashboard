@@ -8,6 +8,7 @@ import {
   OrderRefundDataQuery,
 } from "@dashboard/graphql";
 import {
+  MarkAsPaidStrategyEnum,
   OrderDetailsWithTransactionsFragment,
   OrderDetailsWithTransactionsQuery,
   OrderErrorCode as OrderErrorCodeWithTransactions,
@@ -58,10 +59,41 @@ export const OrderEventsEnum = {
   ...OrderEventsEnumWithoutTransactions,
 };
 
+/** Type guard for order with transactions */
 export const isOrderWithTransactions = (
-  _order: any,
+  _order: unknown,
   featureFlag: boolean,
 ): _order is OrderDetailsWithTransactionsFragment => featureFlag;
+
+/** Check if order has transactions & feature flag enabled */
+export const orderHasTransactions = (
+  order: unknown,
+  featureFlag: boolean,
+): order is OrderDetailsWithTransactionsFragment => {
+  if (isOrderWithTransactions(order, featureFlag)) {
+    return order?.transactions?.length > 0;
+  }
+
+  return false;
+};
+
+export const orderChannelUseTransactions = (
+  order: any,
+  featureFlag: boolean,
+): order is OrderDetailsWithTransactionsFragment => {
+  if (orderHasTransactions(order, featureFlag)) {
+    return true;
+  }
+
+  if (isOrderWithTransactions(order, featureFlag)) {
+    return (
+      order?.channel?.orderSettings?.markAsPaidStrategy ===
+      MarkAsPaidStrategyEnum.TRANSACTION_FLOW
+    );
+  }
+
+  return false;
+};
 
 export type OrderRefundData = OrderRefundDataQuery["order"];
 export type OrderRefundSharedType = Pick<

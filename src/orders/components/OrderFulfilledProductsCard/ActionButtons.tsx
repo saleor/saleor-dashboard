@@ -1,7 +1,7 @@
 import { Button } from "@dashboard/components/Button";
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
-import { orderRefundUrl } from "@dashboard/orders/urls";
+import { orderPaymentRefundUrl } from "@dashboard/orders/urls";
 import { CardActions, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -15,6 +15,7 @@ interface AcionButtonsProps {
   trackingNumber?: string;
   orderIsPaid?: boolean;
   fulfillmentAllowUnpaid: boolean;
+  hasTransactions: boolean;
   onTrackingCodeAdd();
   onApprove();
 }
@@ -31,6 +32,7 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
   trackingNumber,
   orderIsPaid,
   fulfillmentAllowUnpaid,
+  hasTransactions,
   onTrackingCodeAdd,
   onApprove,
 }) => {
@@ -59,10 +61,10 @@ const ActionButtons: React.FC<AcionButtonsProps> = ({
     );
   }
 
-  if (status === FulfillmentStatus.RETURNED) {
+  if (status === FulfillmentStatus.RETURNED && !hasTransactions) {
     return (
       <CardActions>
-        <Button variant="primary" href={orderRefundUrl(orderId)}>
+        <Button variant="primary" href={orderPaymentRefundUrl(orderId)}>
           <FormattedMessage {...actionButtonsMessages.refund} />
         </Button>
       </CardActions>

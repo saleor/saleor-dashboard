@@ -70,7 +70,7 @@ export interface OrderDetailsPageProps {
   onOrderFulfill();
   onProductClick?(id: string);
   onPaymentCapture();
-  onPaymentPaid();
+  onMarkAsPaid();
   onPaymentRefund();
   onPaymentVoid();
   onShippingAddressEdit();
@@ -101,7 +101,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onOrderCancel,
     onOrderFulfill,
     onPaymentCapture,
-    onPaymentPaid,
     onPaymentRefund,
     onPaymentVoid,
     onShippingAddressEdit,
@@ -116,6 +115,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     onShippingMethodEdit,
     onTransactionAction,
     onAddManualTransaction,
+    onMarkAsPaid,
     onSubmit,
   } = props;
   const navigate = useNavigator();
@@ -273,10 +273,9 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 shop={shop}
                 onTransactionAction={onTransactionAction}
                 onPaymentCapture={onPaymentCapture}
-                onPaymentPaid={onPaymentPaid}
                 onPaymentVoid={onPaymentVoid}
                 onPaymentRefund={onPaymentRefund}
-                onMarkAsPaid={onPaymentPaid}
+                onMarkAsPaid={onMarkAsPaid}
                 onAddManualTransaction={onAddManualTransaction}
               />
               <Metadata data={data} onChange={changeMetadata} />

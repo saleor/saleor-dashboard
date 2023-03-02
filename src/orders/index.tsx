@@ -19,8 +19,9 @@ import {
   OrderListUrlQueryParams,
   OrderListUrlSortField,
   orderPath,
-  orderRefundPath,
+  orderPaymentRefundPath,
   orderReturnPath,
+  orderSendRefundPath,
   orderSettingsPath,
   OrderUrlQueryParams,
 } from "./urls";
@@ -82,17 +83,13 @@ const OrderFulfill: React.FC<RouteComponentProps<any>> = ({
   );
 };
 
-const OrderSendRefund: React.FC<RouteComponentProps<any>> = ({ match }) => {
-  const { orderTransactions } = useFlags(["orderTransactions"]);
+const OrderPaymentRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
+  <OrderRefundComponent orderId={decodeURIComponent(match.params.id)} />
+);
 
-  if (orderTransactions.enabled) {
-    return (
-      <OrderSendRefundComponent orderId={decodeURIComponent(match.params.id)} />
-    );
-  }
-
-  return <OrderRefundComponent orderId={decodeURIComponent(match.params.id)} />;
-};
+const OrderSendRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
+  <OrderSendRefundComponent orderId={decodeURIComponent(match.params.id)} />
+);
 
 const OrderReturn: React.FC<RouteComponentProps<any>> = ({ match }) => (
   <OrderReturnComponent orderId={decodeURIComponent(match.params.id)} />
@@ -124,7 +121,16 @@ const Component = () => {
         <Route exact path={orderListPath} component={OrderList} />
         <Route path={orderFulfillPath(":id")} component={OrderFulfill} />
         <Route path={orderReturnPath(":id")} component={OrderReturn} />
-        <Route path={orderRefundPath(":id")} component={OrderSendRefund} />
+        <Route
+          path={orderPaymentRefundPath(":id")}
+          component={OrderPaymentRefund}
+        />
+        {orderTransactions.enabled && (
+          <Route
+            path={orderSendRefundPath(":id")}
+            component={OrderSendRefund}
+          />
+        )}
         {orderTransactions.enabled && (
           <Route
             path={orderGrantRefundEditPath(":orderId", ":refundId")}

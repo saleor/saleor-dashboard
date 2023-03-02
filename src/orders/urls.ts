@@ -158,10 +158,17 @@ export const orderFulfillUrl = (
 
 export const orderSettingsPath = urlJoin(orderSectionUrl, "settings");
 
-export const orderRefundPath = (id: string) => urlJoin(orderPath(id), "refund");
+export const orderPaymentRefundPath = (id: string) =>
+  urlJoin(orderPath(id), "payment-refund");
 
-export const orderRefundUrl = (id: string) =>
-  orderRefundPath(encodeURIComponent(id));
+export const orderSendRefundPath = (id: string) =>
+  urlJoin(orderPath(id), "send-refund");
+
+export const orderPaymentRefundUrl = (id: string) =>
+  orderPaymentRefundPath(encodeURIComponent(id));
+
+export const orderSendRefundUrl = (id: string) =>
+  orderSendRefundPath(encodeURIComponent(id));
 
 export const orderGrantRefundPath = (id: string) =>
   urlJoin(orderPath(id), "grant-refund");

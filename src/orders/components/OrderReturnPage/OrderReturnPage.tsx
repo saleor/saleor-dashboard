@@ -8,8 +8,8 @@ import { useFlags } from "@dashboard/hooks/useFlags";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
 import {
-  isOrderWithTransactions,
   OrderBothTypes,
+  orderHasTransactions,
   OrderSharedType,
 } from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
@@ -116,7 +116,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
             )}
           </Content>
           <RightSidebar>
-            {isOrderWithTransactions(order, orderTransactions.enabled) ? (
+            {orderHasTransactions(order, orderTransactions.enabled) ? (
               <SubmitCard
                 disabled={isSaveDisabled}
                 onSubmit={submit}
