@@ -29,6 +29,7 @@ const TranslationsProductList: React.FC<TranslationsEntityListProps> = ({
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <TranslationsEntitiesList
+        data-test-id="translation-list-view"
         disabled={loading}
         entities={mapEdgesToItems(data?.translations)?.map(
           node =>

@@ -11,6 +11,8 @@ export const MENU = {
   customers: "[data-test-id='menu-item-label-customers']",
   list: "[data-test-id='menu-list']",
   listItem: "[data-test-id='menu-list-item']",
+  products: "[data-test-id='menu-item-label-products']",
+  menuItem: "[data-test-id*='menu-item-label-']",
 };
 export const DISCOUNTS = {
   sales: "[data-test-id='menu-item-label-sales']",
@@ -24,6 +26,7 @@ export const CATALOG = {
   products: "[data-test-id='menu-item-label-products']",
   categories: "[data-test-id='menu-item-label-categories']",
   collections: "[data-test-id='menu-item-label-collections']",
+  giftCards: "[data-test-id='menu-item-label-giftCards']",
 };
 
 export const APP = {
