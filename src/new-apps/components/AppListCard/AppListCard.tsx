@@ -63,7 +63,7 @@ const AppListCard: React.FC<AppListCardProps> = ({
           retryInstallHandler={details.retryInstallHandler}
           removeInstallHandler={details.removeInstallHandler}
         />
-        {!IS_CLOUD_INSTANCE && (
+        {!IS_CLOUD_INSTANCE && !details.releaseDate && (
           <Box display="flex" justifyContent="flex-end" marginTop={4}>
             <Text color="textNeutralSubdued" variant="body" size="small">
               Use Saleor Cloud to access Saleor Apps
