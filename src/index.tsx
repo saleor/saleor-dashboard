@@ -84,9 +84,12 @@ if (process.env.GTM_ID) {
 
 errorTracker.init();
 
+/*
+  Handle legacy theming toggle. Since we use new and old macaw,
+  we need to handle both theme swticher for a while.
+*/
 const handleLegacyTheming = () => {
   const activeTheme = localStorage.getItem("activeMacawUITheme");
-  // const legacyActiveTheme = localStorage.getItem("macaw-ui-theme")
 
   if (activeTheme === "defaultDark") {
     localStorage.setItem("macaw-ui-theme", "dark");
