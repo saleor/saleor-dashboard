@@ -34,6 +34,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
       state={{ from: location.pathname }}
       className={sprinkles({ display: "contents" })}
       inline={false}
+      disabled={!!app.isActive}
     >
       <List.Item
         padding={7}
@@ -43,6 +44,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         justifyContent="space-between"
         flexDirection="row"
         flexWrap="wrap"
+        backgroundColor={!app.isActive ? "surfaceNeutralSubdued" : undefined}
       >
         <Box
           display="flex"
