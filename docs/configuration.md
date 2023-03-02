@@ -1,6 +1,12 @@
 # Configuration
 
-Create `.env` file in a root directory or set environment variables with the following values:
+## Quick start
+
+Run `cp .env.template .env` to create default configuration that will be connected to [Saleor Demo shop](https://demo.saleor.io/dashboard/)
+
+## All environment variables
+
+Create or edit `.env` file in a root directory or set environment variables with the following values:
 
 - `API_URI` (required) - URI of Saleor GraphQL API instance.
   If you are running Saleor locally with the default settings, set `API_URI` to: "http://localhost:8000/graphql/".
