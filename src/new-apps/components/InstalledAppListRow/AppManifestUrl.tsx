@@ -1,5 +1,5 @@
-import { CopyIcon, Tooltip } from "@saleor/macaw-ui";
-import { Box, sprinkles, Text } from "@saleor/macaw-ui/next";
+import { Tooltip } from "@saleor/macaw-ui";
+import { Box, CopyIcon, Text } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React, { useState } from "react";
 
@@ -33,10 +33,8 @@ export const AppManifestUrl: React.FC<AppManifestUrlProps> = ({
         </Text>
       </Tooltip>
       <CopyIcon
-        className={clsx(
-          sprinkles({ color: "iconNeutralSubdued" }),
-          copied && "animate-copy",
-        )}
+        color="iconNeutralSubdued"
+        className={clsx(copied && "animate-copy")}
       />
     </Box>
   );
