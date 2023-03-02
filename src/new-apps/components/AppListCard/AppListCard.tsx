@@ -1,8 +1,9 @@
+import { IS_CLOUD_INSTANCE } from "@dashboard/config";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { useAppListContext } from "@dashboard/new-apps/context";
 import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 import { getAppDetails } from "@dashboard/new-apps/utils";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -62,6 +63,13 @@ const AppListCard: React.FC<AppListCardProps> = ({
           retryInstallHandler={details.retryInstallHandler}
           removeInstallHandler={details.removeInstallHandler}
         />
+        {!IS_CLOUD_INSTANCE && (
+          <Box display="flex" justifyContent="flex-end" marginTop={4}>
+            <Text color="textNeutralSubdued" variant="body" size="small">
+              Use Saleor Cloud to access Saleor Apps
+            </Text>
+          </Box>
+        )}
       </Box>
     </Box>
   );

@@ -1,3 +1,4 @@
+import { IS_CLOUD_INSTANCE } from "@dashboard/config";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { appInstallationStatusMessages } from "@dashboard/new-apps/messages";
@@ -51,6 +52,7 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
       )}
       {installHandler && (
         <Button
+          disabled={!IS_CLOUD_INSTANCE}
           variant="primary"
           onClick={installHandler}
           data-test-id="app-install-button"
