@@ -84,6 +84,11 @@ if (process.env.GTM_ID) {
 
 errorTracker.init();
 
+/**
+  We don't use this key anymore. Removing for migration purposes. 
+*/
+localStorage.removeItem("macaw-ui-theme");
+
 const App: React.FC = () => (
   <SaleorProvider client={saleorClient}>
     <ApolloProvider client={apolloClient}>
