@@ -80,6 +80,16 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         marginY={8}
       >
         <Box className={classes.appContent} marginY={8}>
+          {sectionsAvailability.nothingInstalled && (
+            <Box paddingY={6}>
+              <Text as="h3" variant="heading" color="textNeutralSubdued">
+                {intl.formatMessage(messages.installedApps)}
+              </Text>
+              <Box marginTop={6}>
+                <Text variant="caption">Nothing installed yet.</Text>
+              </Box>
+            </Box>
+          )}
           {sectionsAvailability.installed && (
             <>
               <Box paddingX={8} paddingY={6}>
