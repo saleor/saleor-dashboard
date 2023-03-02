@@ -22,6 +22,16 @@ jest.mock("@dashboard/new-apps/context", () => ({
   })),
 }));
 
+jest.mock("@dashboard/config", () => {
+  const original = jest.requireActual("@dashboard/config");
+
+  return {
+    __esModule: true,
+    ...original,
+    IS_CLOUD_INSTANCE: true,
+  };
+});
+
 describe("Apps AppListCard", () => {
   it("displays released app details when released app data passed", () => {
     // Arrange
