@@ -1,6 +1,6 @@
+import { ExternalAppProvider } from "@dashboard/apps/components/ExternalAppContext";
 import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
 import { FlagsServiceProvider } from "@dashboard/hooks/useFlags/flagsService";
-import { ExternalAppProvider } from "@dashboard/new-apps/components/ExternalAppContext";
 import { paletteOverrides, themeOverrides } from "@dashboard/themeOverrides";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import React from "react";

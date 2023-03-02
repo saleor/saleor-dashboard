@@ -1,8 +1,8 @@
+import { AppPaths } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { customerPath } from "@dashboard/customers/urls";
 import { GiftCardEventFragment, GiftCardEventsEnum } from "@dashboard/graphql";
-import { AppPaths } from "@dashboard/new-apps/urls";
 import { orderUrl } from "@dashboard/orders/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import React from "react";
