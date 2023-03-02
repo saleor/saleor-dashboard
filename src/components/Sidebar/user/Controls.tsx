@@ -1,5 +1,4 @@
 import { useUser } from "@dashboard/auth";
-import { isDarkTheme } from "@dashboard/misc";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { useTheme } from "@dashboard/theme";
 import { useTheme as useLegacyTheme } from "@saleor/macaw-ui";
@@ -21,11 +20,10 @@ import { ThemeSwitcher } from "./ThemeSwitcher";
 export const UserControls = () => {
   const { user, logout } = useUser();
   const { theme, setTheme } = useTheme();
-  const { themeType: legacyThemeType, setTheme: setLegacyTheme } =
-    useLegacyTheme();
+  const { setTheme: setLegacyTheme } = useLegacyTheme();
 
   const handleClick = () => {
-    setLegacyTheme(isDarkTheme(legacyThemeType) ? "light" : "dark");
+    setLegacyTheme(theme === "defaultLight" ? "dark" : "light");
     setTheme(theme === "defaultLight" ? "defaultDark" : "defaultLight");
   };
 
