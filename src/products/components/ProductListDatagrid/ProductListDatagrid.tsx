@@ -196,6 +196,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
       <Datagrid
         readonly
         rowMarkers="none"
+        columnSelect="single"
         freezeColumns={2}
         verticalBorder={col => (col > 1 ? true : false)}
         getColumnTooltipContent={getColumnTooltipContent}

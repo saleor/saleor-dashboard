@@ -88,6 +88,7 @@ export interface DatagridProps {
   rowMarkers?: DataEditorProps["rowMarkers"];
   verticalBorder?: DataEditorProps["verticalBorder"];
   freezeColumns?: DataEditorProps["freezeColumns"];
+  columnSelect?: DataEditorProps["columnSelect"];
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -110,6 +111,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   freezeColumns = 1,
   verticalBorder,
   getColumnTooltipContent,
+  columnSelect = "none",
 }): ReactElement => {
   const classes = useStyles();
   const fullScreenClasses = useFullScreenStyles(classes);
@@ -254,6 +256,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
   }, []);
 
   const onGridSelectionChange = (gridSelection: GridSelection) => {
+    // In readonly we not allow selecting cells, but we allow selcting column
+    if (readonly && !gridSelection.current) {
+      setSelection(gridSelection);
+    }
     if (!readonly) {
       setSelection(gridSelection);
     }
@@ -282,7 +288,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
         }
       }
 
-      onHeaderClicked(colIndex, event);
+      if (onHeaderClicked) {
+        onHeaderClicked(colIndex, event);
+      }
     },
     [getColumnTooltipContent, onHeaderClicked, setTooltip],
   );
@@ -390,7 +398,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   rowSelect="multi"
                   rowSelectionMode="multi"
                   rangeSelect="multi-rect"
-                  columnSelect="none"
+                  columnSelect={columnSelect}
                   getCellsForSelection
                   onColumnMoved={handleColumnMoved}
                   onColumnResize={handleColumnResize}

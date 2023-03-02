@@ -191,13 +191,13 @@ export function useDatagridTheme() {
 
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: theme.colors.background.interactiveBrandDefault,
+      accentColor: theme.colors.background.interactiveBrandHovering,
       accentLight: theme.colors.background.surfaceBrandHighlight,
       accentFg: "transparent",
       bgCell: theme.colors.background.plain,
       bgHeader: theme.colors.background.plain,
       bgHeaderHasFocus: theme.colors.background.plain,
-      bgHeaderHovered: theme.colors.background.plain,
+      bgHeaderHovered: theme.colors.background.surfaceNeutralHighlight,
       bgBubbleSelected: theme.colors.background.plain,
       textHeader: theme.colors.foreground.iconNeutralPlain,
       borderColor: theme.colors.border.neutralHighlight,
@@ -210,6 +210,7 @@ export function useDatagridTheme() {
       textBubble: theme.colors.background.interactiveNeutralDefault,
       textDark: theme.colors.background.interactiveNeutralDefault,
       textLight: theme.colors.background.interactiveNeutralDefault,
+      textHeaderSelected: theme.colors.foreground.textNeutralContrasted,
       cellHorizontalPadding: 8,
       cellVerticalPadding: 8,
       lineHeight: 20,
