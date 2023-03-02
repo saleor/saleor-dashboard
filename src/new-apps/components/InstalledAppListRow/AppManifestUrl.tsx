@@ -28,9 +28,11 @@ export const AppManifestUrl: React.FC<AppManifestUrlProps> = ({
       }}
     >
       <Tooltip title={manifestUrl} header="App Manifest URL">
-        <Text variant="caption" color="textNeutralSubdued">
-          {new URL(manifestUrl).host}
-        </Text>
+        <Box __maxWidth="300px" className="ellipsis">
+          <Text variant="caption" color="textNeutralSubdued">
+            {new URL(manifestUrl).host}
+          </Text>
+        </Box>
       </Tooltip>
       <CopyIcon
         color="iconNeutralSubdued"
