@@ -1,8 +1,9 @@
+import { useUser } from "@dashboard/auth";
 import { Button } from "@dashboard/components/Button";
-import { Avatar, CardContent, TextField } from "@material-ui/core";
-import deepPurple from "@material-ui/core/colors/deepPurple";
-import PersonIcon from "@material-ui/icons/Person";
+import { getUserInitials } from "@dashboard/misc";
+import { CardContent, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Avatar, vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -48,13 +49,15 @@ const useStyles = makeStyles(
         paddingRight: 0,
       },
       alignItems: "center",
-      display: "flex",
+      display: "grid",
+      gridTemplateColumns: "auto 1fr",
+      gap: vars.space[5],
       paddingLeft: 0,
     },
     root: {
-      marginLeft: 20,
+      marginLeft: vars.space[8],
       paddingTop: theme.spacing(12),
-      paddingLeft: theme.spacing(3.27),
+      paddingLeft: vars.space[8],
       position: "relative",
     },
   }),
@@ -84,6 +87,7 @@ export const Timeline: React.FC<TimelineProps> = props => {
 export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
   const { message, onChange, onSubmit, reset, disabled } = props;
   const classes = useStyles(props);
+  const { user } = useUser();
 
   const intl = useIntl();
 
@@ -95,12 +99,11 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
   return (
     <div className={classes.noteRoot}>
       <CardContent className={classes.noteTitle}>
-        <Avatar
-          style={{ background: deepPurple[500] }}
-          className={classes.avatar}
-        >
-          <PersonIcon />
-        </Avatar>
+        <Avatar.User
+          initials={getUserInitials(user)}
+          scheme="decorative2"
+          src={user?.avatar?.url}
+        />
         <TextField
           disabled={disabled}
           className={classes.input}
