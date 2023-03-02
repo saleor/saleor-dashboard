@@ -8,6 +8,7 @@ import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
+import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
@@ -112,6 +113,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
 
+  const filterDependency = filterStructure.find(getByName("channel"));
+
   const limitReached = isLimitReached(limits, "productVariants");
   const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } =
     useExtensions(extensionMountPoints.PRODUCT_LIST);
@@ -210,6 +213,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         />
         <ProductListDatagrid
           {...listProps}
+          filterDependency={filterDependency}
           activeAttributeSortId={activeAttributeSortId}
           columnQuery={columnQuery}
           defaultSettings={defaultSettings}

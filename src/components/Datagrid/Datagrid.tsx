@@ -6,6 +6,7 @@ import DataEditor, {
   DataEditorRef,
   EditableGridCell,
   GridCell,
+  GridColumn,
   GridMouseEventArgs,
   GridSelection,
   HeaderClickedEventArgs,
@@ -13,11 +14,19 @@ import DataEditor, {
 } from "@glideapps/glide-data-grid";
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { themes, useTheme as useNewTheme } from "@saleor/macaw-ui/next";
+import { themes, useTheme } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import range from "lodash/range";
 import throttle from "lodash/throttle";
-import React, { ReactElement } from "react";
+import React, {
+  MutableRefObject,
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { FormattedMessage } from "react-intl";
 
 import { CardMenuItem } from "../CardMenu";
@@ -31,6 +40,7 @@ import useStyles, {
   useDatagridTheme,
   useFullScreenStyles,
 } from "./styles";
+import { TooltipContainer } from "./TooltipContainer";
 import { AvailableColumn } from "./types";
 import useCells from "./useCells";
 import useColumns from "./useColumns";
@@ -40,9 +50,10 @@ import useDatagridChange, {
 } from "./useDatagridChange";
 import { useFullScreenMode } from "./useFullScreenMode";
 import { usePortalClasses } from "./usePortalClasses";
+import { useTooltipContainer } from "./useTooltipContainer";
 
 export interface GetCellContentOpts {
-  changes: React.MutableRefObject<DatagridChange[]>;
+  changes: MutableRefObject<DatagridChange[]>;
   added: number[];
   removed: number[];
   getChangeIndex: (column: string, row: number) => number;
@@ -58,6 +69,7 @@ export interface DatagridProps {
   emptyText: string;
   getCellError: (item: Item, opts: GetCellContentOpts) => boolean;
   getCellContent: (item: Item, opts: GetCellContentOpts) => GridCell;
+  getColumnTooltipContent?: (colIndex: number) => string;
   menuItems: (index: number) => CardMenuItem[];
   rows: number;
   title: string;
@@ -65,7 +77,7 @@ export interface DatagridProps {
   selectionActions: (
     selection: number[],
     actions: MenuItemsActions,
-  ) => React.ReactNode;
+  ) => ReactNode;
   onChange?: OnDatagridChange;
   onHeaderClicked?: (colIndex: number, event: HeaderClickedEventArgs) => void;
   renderColumnPicker?: (
@@ -97,11 +109,12 @@ export const Datagrid: React.FC<DatagridProps> = ({
   rowMarkers = "checkbox",
   freezeColumns = 1,
   verticalBorder,
-}): React.ReactElement => {
+  getColumnTooltipContent,
+}): ReactElement => {
   const classes = useStyles();
   const fullScreenClasses = useFullScreenStyles(classes);
   const datagridTheme = useDatagridTheme();
-  const editor = React.useRef<DataEditorRef>();
+  const editor = useRef<DataEditorRef>();
 
   const { isOpen, isAnimationOpenFinished, toggle } = useFullScreenMode();
 
@@ -128,10 +141,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
     getChangeIndex,
     onRowAdded,
   } = useDatagridChange(availableColumns, rows, onChange);
-  const { theme: currentTheme } = useNewTheme();
+  const { theme: currentTheme } = useTheme();
   const theme = themes[currentTheme];
 
-  const [scrolledToRight, setScrolledToRight] = React.useState(false);
+  const [scrolledToRight, setScrolledToRight] = useState(false);
   const scroller: HTMLDivElement = document.querySelector(".dvn-scroller");
   const scrollerInner: HTMLDivElement =
     document.querySelector(".dvn-scroll-inner");
@@ -230,6 +243,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [onRowClick],
   );
 
+  const { clearTooltip, tooltip, setTooltip } = useTooltipContainer();
+
   const [selection, setSelection] = React.useState<GridSelection>();
 
   const [hoverRow, setHoverRow] = React.useState<number | undefined>(undefined);
@@ -257,9 +272,45 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [hoverRow, theme],
   );
 
+  const handleHeaderClicked = React.useCallback(
+    (colIndex: number, event: HeaderClickedEventArgs) => {
+      if (getColumnTooltipContent) {
+        const content = getColumnTooltipContent(colIndex);
+
+        if (content) {
+          setTooltip(content, event.bounds);
+        }
+      }
+
+      onHeaderClicked(colIndex, event);
+    },
+    [getColumnTooltipContent, onHeaderClicked, setTooltip],
+  );
+
+  const handleColumnResize = useCallback(
+    (column: GridColumn, newSize: number) => {
+      if (tooltip) {
+        clearTooltip();
+      }
+
+      onColumnResize(column, newSize);
+    },
+    [clearTooltip, onColumnResize, tooltip],
+  );
+
+  const handleColumnMoved = useCallback(
+    (startIndex: number, endIndex: number) => {
+      if (tooltip) {
+        clearTooltip();
+      }
+      onColumnMoved(startIndex, endIndex);
+    },
+    [clearTooltip, onColumnMoved, tooltip],
+  );
+
   const props = useCells();
 
-  const removeRows = React.useCallback(
+  const removeRows = useCallback(
     (rows: number[]) => {
       if (selection?.rows) {
         onRowsRemoved(rows);
@@ -269,7 +320,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [selection, onRowsRemoved],
   );
 
-  const selectionActionsComponent = React.useMemo(
+  const selectionActionsComponent = useMemo(
     () =>
       selection?.rows.length > 0
         ? selectionActions(Array.from(selection.rows), { removeRows })
@@ -341,9 +392,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   rangeSelect="multi-rect"
                   columnSelect="none"
                   getCellsForSelection
-                  onColumnMoved={onColumnMoved}
-                  onColumnResize={onColumnResize}
-                  onHeaderClicked={onHeaderClicked}
+                  onColumnMoved={handleColumnMoved}
+                  onColumnResize={handleColumnResize}
+                  onHeaderClicked={handleHeaderClicked}
                   onCellClicked={onCellClicked}
                   onGridSelectionChange={onGridSelectionChange}
                   onItemHovered={onItemHovered}
@@ -427,6 +478,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
           )}
         </CardContent>
       </Card>
+      <TooltipContainer
+        clearTooltip={clearTooltip}
+        bounds={tooltip?.bounds}
+        title={tooltip?.title}
+      />
     </FullScreenContainer>
   );
 };

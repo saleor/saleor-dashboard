@@ -62,7 +62,7 @@ export enum ProductListUrlSortField {
   attribute = "attribute",
   name = "name",
   productType = "productType",
-  status = "status",
+  availability = "availability",
   price = "price",
   rank = "rank",
   date = "date",

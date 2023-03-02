@@ -23,10 +23,9 @@ import {
   RelayToFlat,
   SortPage,
 } from "@dashboard/types";
-import { HeaderClickedEventArgs, Item } from "@glideapps/glide-data-grid";
-import { Button, makeStyles, Tooltip } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
-import React, { createRef, useCallback, useMemo, useState } from "react";
+import { Item } from "@glideapps/glide-data-grid";
+import { Button, makeStyles } from "@saleor/macaw-ui";
+import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { isAttributeColumnValue } from "../ProductListPage/utils";
@@ -84,6 +83,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   availableInGridAttributes,
   onColumnQueryChange,
   activeAttributeSortId,
+  filterDependency,
 }) => {
   const classes = useStyles();
   const intl = useIntl();
@@ -93,15 +93,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   const gridAttributesFromSettings = settings.columns.filter(
     isAttributeColumnValue,
   );
-
-  const tooltipRef = createRef<HTMLDivElement>();
-  const [tooltip, setTooltip] = useState<
-    | {
-        title: string;
-        bound: { x: number; y: number; width: number; height: number };
-      }
-    | undefined
-  >(undefined);
 
   const columns = useMemo(
     () =>
@@ -157,23 +148,14 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   );
 
   const onHeaderClicked = useCallback(
-    (col: number, event: HeaderClickedEventArgs) => {
+    (col: number) => {
       const { columnName, columnId } = getColumnMetadata(columns[col].id);
 
-      if (
-        canBeSorted(columnName as ProductListUrlSortField, !!selectedChannelId)
-      ) {
-        onSort(columnName as ProductListUrlSortField, columnId);
-      } else {
-        setTooltip({
-          title: intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-            filterName: columnName,
-          }),
-          bound: event.bounds,
-        });
+      if (canBeSorted(columnName, !!selectedChannelId)) {
+        onSort(columnName, columnId);
       }
     },
-    [columns, intl, onSort, selectedChannelId],
+    [columns, onSort, selectedChannelId],
   );
 
   const onRowClicked = useCallback(
@@ -182,6 +164,26 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
       onRowClick(rowData.id);
     },
     [onRowClick, products],
+  );
+
+  const getColumnTooltipContent = useCallback(
+    (colIndex: number): string => {
+      const { columnName } = getColumnMetadata(columns[colIndex].id);
+      // Sortable column
+      if (canBeSorted(columnName, !!selectedChannelId)) {
+        return "";
+      }
+      // No sortable column
+      if (!Object.keys(ProductListUrlSortField).includes(columnName)) {
+        return intl.formatMessage(commonTooltipMessages.noSortable);
+      }
+
+      // Sortableb but required selected channl
+      return intl.formatMessage(commonTooltipMessages.noFilterSelected, {
+        filterName: filterDependency.label,
+      });
+    },
+    [columns, filterDependency.label, intl, selectedChannelId],
   );
 
   const onColumnsChange = useCallback(
@@ -196,6 +198,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         rowMarkers="none"
         freezeColumns={2}
         verticalBorder={col => (col > 1 ? true : false)}
+        getColumnTooltipContent={getColumnTooltipContent}
         availableColumns={columns}
         onHeaderClicked={onHeaderClicked}
         emptyText={intl.formatMessage(messages.emptyText)}
@@ -226,37 +229,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         )}
       />
 
-      {tooltip && (
-        <>
-          <Box
-            position="absolute"
-            as="div"
-            __width={tooltip?.bound?.width ?? 0}
-            __height={tooltip?.bound?.height ?? 0}
-            __top={tooltip?.bound?.y ?? 0}
-            __left={tooltip?.bound?.x ?? 0}
-            zIndex="3"
-            onMouseLeave={() => {
-              setTooltip(undefined);
-            }}
-          />
-
-          <Box
-            position="absolute"
-            as="div"
-            __width={1}
-            __height={1}
-            ref={tooltipRef}
-            __top={tooltip?.bound?.y ?? 0}
-            __left={tooltip?.bound?.x + tooltip?.bound?.width / 2 ?? 0}
-            zIndex="2"
-          >
-            <Tooltip open={true} title={tooltip?.title} placement="top">
-              <span></span>
-            </Tooltip>
-          </Box>
-        </>
-      )}
       <div className={classes.paginationContainer}>
         <TablePaginationWithContext
           component="div"

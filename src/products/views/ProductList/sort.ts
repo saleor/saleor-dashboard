@@ -19,7 +19,7 @@ export function canBeSorted(
     case ProductListUrlSortField.rank:
       return true;
     case ProductListUrlSortField.price:
-    case ProductListUrlSortField.status:
+    case ProductListUrlSortField.availability:
       return isChannelSelected;
     default:
       return false;
@@ -36,7 +36,7 @@ export function getSortQueryField(
       return ProductOrderField.PRICE;
     case ProductListUrlSortField.productType:
       return ProductOrderField.TYPE;
-    case ProductListUrlSortField.status:
+    case ProductListUrlSortField.availability:
       return ProductOrderField.PUBLISHED;
     case ProductListUrlSortField.rank:
       return ProductOrderField.RANK;

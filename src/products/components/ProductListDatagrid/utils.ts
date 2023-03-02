@@ -73,7 +73,7 @@ export function getColumns({
         id: "availability",
         title: intl.formatMessage(columnsMessages.availability),
         width: 250,
-        icon: getColumnSortIconName(sort, ProductListUrlSortField.status),
+        icon: getColumnSortIconName(sort, ProductListUrlSortField.availability),
       },
       ...gridAttributesFromSettings.map(
         toAttributeColumndData(gridAttributes, activeAttributeSortId, sort),
@@ -377,14 +377,15 @@ function getAttributeCellContent(
 export function getColumnMetadata(column: string) {
   if (column.includes(":")) {
     const [columnName, columnId] = column.split(":");
+
     return {
-      columnName,
+      columnName: columnName as ProductListUrlSortField,
       columnId,
     };
   }
 
   return {
-    columnName: column,
+    columnName: column as ProductListUrlSortField,
   };
 }
 
