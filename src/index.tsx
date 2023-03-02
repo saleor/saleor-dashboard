@@ -84,10 +84,19 @@ if (process.env.GTM_ID) {
 
 errorTracker.init();
 
-/**
-  We don't use this key anymore. Removing for migration purposes. 
-*/
-localStorage.removeItem("macaw-ui-theme");
+const handleLegacyTheming = () => {
+  const activeTheme = localStorage.getItem("activeMacawUITheme");
+  // const legacyActiveTheme = localStorage.getItem("macaw-ui-theme")
+
+  if (activeTheme === "defaultDark") {
+    localStorage.setItem("macaw-ui-theme", "dark");
+    return;
+  }
+
+  localStorage.setItem("macaw-ui-theme", "light");
+};
+
+handleLegacyTheming();
 
 const App: React.FC = () => (
   <SaleorProvider client={saleorClient}>
