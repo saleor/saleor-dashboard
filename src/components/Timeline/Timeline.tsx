@@ -1,20 +1,18 @@
+import { useUser } from "@dashboard/auth";
 import { Button } from "@dashboard/components/Button";
-import { Avatar, CardContent, TextField } from "@material-ui/core";
-import deepPurple from "@material-ui/core/colors/deepPurple";
-import PersonIcon from "@material-ui/icons/Person";
+import { getUserInitials } from "@dashboard/misc";
+import { CardContent, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Avatar, vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
   theme => ({
     avatar: {
-      "& span": {
-        height: "100%",
-        width: "100%",
-      },
-      alignSelf: "flex-start",
-      marginRight: theme.spacing(3.5),
+      left: -19,
+      position: "absolute",
+      top: 20,
     },
     button: {
       padding: `7px`,
@@ -33,11 +31,11 @@ const useStyles = makeStyles(
           opacity: [[1], "!important"] as any,
         },
       },
-      background: theme.palette.background.paper,
+      background: vars.colors.background.surfaceNeutralPlain,
     },
     noteRoot: {
       marginBottom: theme.spacing(3),
-      position: "absolute",
+      // position: "absolute",
       top: 0,
       left: -19,
       right: 0,
@@ -47,14 +45,11 @@ const useStyles = makeStyles(
         paddingBottom: 0,
         paddingRight: 0,
       },
-      alignItems: "center",
-      display: "flex",
       paddingLeft: 0,
     },
     root: {
       marginLeft: 20,
-      paddingTop: theme.spacing(12),
-      paddingLeft: theme.spacing(3.27),
+      paddingLeft: 21,
       position: "relative",
     },
   }),
@@ -84,6 +79,7 @@ export const Timeline: React.FC<TimelineProps> = props => {
 export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
   const { message, onChange, onSubmit, reset, disabled } = props;
   const classes = useStyles(props);
+  const { user } = useUser();
 
   const intl = useIntl();
 
@@ -95,12 +91,12 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
   return (
     <div className={classes.noteRoot}>
       <CardContent className={classes.noteTitle}>
-        <Avatar
-          style={{ background: deepPurple[500] }}
+        <Avatar.User
+          initials={getUserInitials(user)}
+          scheme="decorative2"
+          src={user?.avatar?.url}
           className={classes.avatar}
-        >
-          <PersonIcon />
-        </Avatar>
+        />
         <TextField
           disabled={disabled}
           className={classes.input}
