@@ -32,6 +32,10 @@ const useStyles = makeStyles(
   { name: "Link" },
 );
 
+export interface LinkState {
+  from?: string;
+}
+
 interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   href?: string;
   color?: "primary" | "secondary";
@@ -40,6 +44,7 @@ interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
   typographyProps?: TypographyProps;
   onClick?: React.MouseEventHandler;
   disabled?: boolean;
+  state?: LinkState;
 }
 
 const Link: React.FC<LinkProps> = props => {
@@ -86,10 +91,24 @@ const Link: React.FC<LinkProps> = props => {
     ...linkProps,
   };
 
+  const urlObject = new URL(href, window.location.origin);
+
   return (
     <>
       {!!href && !isExternalURL(href) ? (
-        <RouterLink to={disabled ? undefined : href} {...commonLinkProps}>
+        <RouterLink<LinkState>
+          to={
+            disabled
+              ? undefined
+              : {
+                  pathname: urlObject.pathname,
+                  search: urlObject.search,
+                  hash: urlObject.hash,
+                  state: props.state,
+                }
+          }
+          {...commonLinkProps}
+        >
           {children}
         </RouterLink>
       ) : (

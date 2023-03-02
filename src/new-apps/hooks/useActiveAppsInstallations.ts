@@ -1,5 +1,4 @@
 import { useApolloClient } from "@apollo/client";
-import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
 import {
   AppInstallationFragment,
   AppsInstallationsQuery,
@@ -8,6 +7,7 @@ import {
   useAppRetryInstallMutation,
 } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
+import { EXTENSION_LIST_QUERY } from "@dashboard/new-apps/queries";
 import { useEffect, useRef } from "react";
 
 interface UseActiveAppsInstallations {

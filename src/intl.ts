@@ -570,6 +570,11 @@ export const commonStatusMessages = defineMessages({
     id: "tthToS",
     defaultMessage: "Disabled",
   },
+  deactivated: {
+    id: "pGwvpX",
+    defaultMessage: "Deactivated",
+    description: "status",
+  },
 });
 
 export const orderStatusMessages = defineMessages({

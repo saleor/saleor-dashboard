@@ -1,8 +1,3 @@
-import { appsListPath } from "@dashboard/apps/urls";
-import {
-  extensionMountPoints,
-  useExtensions,
-} from "@dashboard/apps/useExtensions";
 import { useUser } from "@dashboard/auth";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
@@ -15,6 +10,11 @@ import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import { commonMessages, sectionNames } from "@dashboard/intl";
 import { marketplaceUrlResolver } from "@dashboard/marketplace/marketplace-url-resolver";
+import {
+  extensionMountPoints,
+  useExtensions,
+} from "@dashboard/new-apps/hooks/useExtensions";
+import { AppPaths } from "@dashboard/new-apps/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { pageListPath } from "@dashboard/pages/urls";
 import { productListUrl } from "@dashboard/products/urls";
@@ -68,7 +68,7 @@ export function useMenuStructure() {
           {
             label: intl.formatMessage(sectionNames.apps),
             id: "apps",
-            url: appsListPath,
+            url: AppPaths.appListPath,
             type: "item",
           },
           {
@@ -92,7 +92,7 @@ export function useMenuStructure() {
       label: intl.formatMessage(sectionNames.apps),
       permissions: [PermissionEnum.MANAGE_APPS],
       id: "apps",
-      url: appsListPath,
+      url: AppPaths.appListPath,
       type: "item",
     };
   };

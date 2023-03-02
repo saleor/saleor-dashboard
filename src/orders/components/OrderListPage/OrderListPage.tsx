@@ -1,8 +1,3 @@
-import {
-  extensionMountPoints,
-  mapToMenuItems,
-  useExtensions,
-} from "@dashboard/apps/useExtensions";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
@@ -11,6 +6,11 @@ import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  useExtensions,
+} from "@dashboard/new-apps/hooks/useExtensions";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import {
   FilterPageProps,

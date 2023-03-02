@@ -1,9 +1,3 @@
-import {
-  extensionMountPoints,
-  mapToMenuItems,
-  mapToMenuItemsForProductOverviewActions,
-  useExtensions,
-} from "@dashboard/apps/useExtensions";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
@@ -21,6 +15,12 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  mapToMenuItemsForProductOverviewActions,
+  useExtensions,
+} from "@dashboard/new-apps/hooks/useExtensions";
 import {
   ChannelProps,
   FetchMoreProps,

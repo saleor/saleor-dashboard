@@ -1,6 +1,6 @@
-import { getDashboardUrFromAppCompleteUrl } from "@dashboard/apps/urls";
-import { Extension } from "@dashboard/apps/useExtensions";
 import { AppExtensionMountEnum } from "@dashboard/graphql";
+import { Extension } from "@dashboard/new-apps/hooks/useExtensions";
+import { AppUrls } from "@dashboard/new-apps/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { matchPath } from "react-router";
 
@@ -14,7 +14,11 @@ export const mapToExtensionsItems = (
     ({ label, id, app, url, permissions, open }) => ({
       id: `extension-${id}`,
       label,
-      url: getDashboardUrFromAppCompleteUrl(url, app.appUrl, app.id),
+      url: AppUrls.resolveDashboardUrlFromAppCompleteUrl(
+        url,
+        app.appUrl,
+        app.id,
+      ),
       permissions,
       onClick: open,
       type: "item",

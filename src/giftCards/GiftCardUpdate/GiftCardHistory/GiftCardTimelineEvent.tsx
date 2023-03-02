@@ -1,8 +1,8 @@
-import { appPath } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { customerPath } from "@dashboard/customers/urls";
 import { GiftCardEventFragment, GiftCardEventsEnum } from "@dashboard/graphql";
+import { AppPaths } from "@dashboard/new-apps/urls";
 import { orderUrl } from "@dashboard/orders/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import React from "react";
@@ -33,7 +33,7 @@ const getUserOrAppUrl = (event: GiftCardEventFragment): string => {
     return staffMemberDetailsUrl(event.user.id);
   }
   if (event.app) {
-    return appPath(event.app.id);
+    return AppPaths.resolveAppPath(event.app.id);
   }
   return null;
 };
@@ -99,7 +99,7 @@ const getEventMessage = (event: GiftCardEventFragment, intl: IntlShape) => {
                   href={
                     event.user
                       ? customerPath(event.user.id)
-                      : appPath(event.app.id)
+                      : AppPaths.resolveAppPath(event.app.id)
                   }
                 >{`${content} ${user}`}</Link>
               ),

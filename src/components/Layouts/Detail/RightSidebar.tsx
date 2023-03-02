@@ -14,6 +14,7 @@ export const RightSidebar: React.FC<DetailPageLayoutRightSidebarProps> = ({
     height="100%"
     overflowY="auto"
     className="hide-scrollbar"
+    borderLeftWidth={1}
     gridColumn={"8"}
     gridRow={{ mobile: "6", tablet: "full", desktop: "full" }}
   >

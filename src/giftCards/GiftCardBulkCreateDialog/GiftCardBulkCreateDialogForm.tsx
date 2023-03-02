@@ -1,6 +1,6 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import GiftCardTagInput from "@dashboard/giftCards/components/GiftCardTagInput";
 import {
   GiftCardSettingsExpiryTypeEnum,
@@ -50,37 +50,33 @@ interface GiftCardBulkCreateDialogFormProps {
   onClose: () => void;
 }
 
-const GiftCardBulkCreateDialogForm: React.FC<GiftCardBulkCreateDialogFormProps> = ({
-  onSubmit,
-  opts,
-  onClose,
-  formErrors = {},
-}) => {
+const GiftCardBulkCreateDialogForm: React.FC<
+  GiftCardBulkCreateDialogFormProps
+> = ({ onSubmit, opts, onClose, formErrors = {} }) => {
   const intl = useIntl();
   const classes = useStyles({});
 
-  const {
-    data: settingsData,
-    loading: loadingSettings,
-  } = useGiftCardSettingsQuery();
+  const { data: settingsData, loading: loadingSettings } =
+    useGiftCardSettingsQuery();
 
-  const getInitialExpirySettingsData = (): Partial<GiftCardBulkCreateFormData> => {
-    if (loadingSettings) {
-      return {};
-    }
+  const getInitialExpirySettingsData =
+    (): Partial<GiftCardBulkCreateFormData> => {
+      if (loadingSettings) {
+        return {};
+      }
 
-    const { expiryType, expiryPeriod } = settingsData?.giftCardSettings;
+      const { expiryType, expiryPeriod } = settingsData?.giftCardSettings;
 
-    if (expiryType === GiftCardSettingsExpiryTypeEnum.NEVER_EXPIRE) {
-      return {};
-    }
+      if (expiryType === GiftCardSettingsExpiryTypeEnum.NEVER_EXPIRE) {
+        return {};
+      }
 
-    return {
-      expiryType,
-      expiryPeriodType: expiryPeriod?.type,
-      expiryPeriodAmount: expiryPeriod?.amount,
+      return {
+        expiryType,
+        expiryPeriodType: expiryPeriod?.type,
+        expiryPeriodAmount: expiryPeriod?.amount,
+      };
     };
-  };
 
   const { submit, toggleValue, change, data, set } = useForm(
     {
