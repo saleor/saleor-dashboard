@@ -45,10 +45,10 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         flexWrap="wrap"
       >
         <Box
-          display="flex"
-          justifyContent={{ mobile: "space-between", desktop: "flex-start" }}
           gap={5}
           alignItems="center"
+          display="grid"
+          __gridTemplateColumns="1fr auto"
         >
           <AppAvatar logo={logo} />
           <Box
