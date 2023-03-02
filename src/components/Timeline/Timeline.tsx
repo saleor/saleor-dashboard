@@ -10,12 +10,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 const useStyles = makeStyles(
   theme => ({
     avatar: {
-      "& span": {
-        height: "100%",
-        width: "100%",
-      },
-      alignSelf: "flex-start",
-      marginRight: theme.spacing(3.5),
+      left: -19,
+      position: "absolute",
+      top: 20,
     },
     button: {
       padding: `7px`,
@@ -34,11 +31,11 @@ const useStyles = makeStyles(
           opacity: [[1], "!important"] as any,
         },
       },
-      background: theme.palette.background.paper,
+      background: vars.colors.background.surfaceNeutralPlain,
     },
     noteRoot: {
       marginBottom: theme.spacing(3),
-      position: "absolute",
+      // position: "absolute",
       top: 0,
       left: -19,
       right: 0,
@@ -48,16 +45,11 @@ const useStyles = makeStyles(
         paddingBottom: 0,
         paddingRight: 0,
       },
-      alignItems: "center",
-      display: "grid",
-      gridTemplateColumns: "auto 1fr",
-      gap: vars.space[5],
       paddingLeft: 0,
     },
     root: {
-      marginLeft: vars.space[8],
-      paddingTop: theme.spacing(12),
-      paddingLeft: vars.space[8],
+      marginLeft: 20,
+      paddingLeft: 21,
       position: "relative",
     },
   }),
@@ -103,6 +95,7 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
           initials={getUserInitials(user)}
           scheme="decorative2"
           src={user?.avatar?.url}
+          className={classes.avatar}
         />
         <TextField
           disabled={disabled}
