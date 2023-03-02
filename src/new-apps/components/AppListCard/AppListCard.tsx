@@ -1,5 +1,6 @@
 import { IS_CLOUD_INSTANCE } from "@dashboard/config";
 import { AppInstallationFragment } from "@dashboard/graphql";
+import { messages } from "@dashboard/new-apps/components/AppListPage/messages";
 import { useAppListContext } from "@dashboard/new-apps/context";
 import { GetV2SaleorAppsResponse } from "@dashboard/new-apps/marketplace.types";
 import { getAppDetails } from "@dashboard/new-apps/utils";
@@ -66,7 +67,7 @@ const AppListCard: React.FC<AppListCardProps> = ({
         {!IS_CLOUD_INSTANCE && !details.releaseDate && (
           <Box display="flex" justifyContent="flex-end" marginTop={4}>
             <Text color="textNeutralSubdued" variant="body" size="small">
-              Use Saleor Cloud to access Saleor Apps
+              {intl.formatMessage(messages.installationCloudOnly)}
             </Text>
           </Box>
         )}

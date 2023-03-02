@@ -89,7 +89,9 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
                 {intl.formatMessage(messages.installedApps)}
               </Text>
               <Box marginTop={6}>
-                <Text variant="caption">Nothing installed yet.</Text>
+                <Text variant="caption">
+                  {intl.formatMessage(messages.nothingInstalledPlaceholder)}
+                </Text>
               </Box>
             </Box>
           )}

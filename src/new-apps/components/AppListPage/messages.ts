@@ -27,4 +27,14 @@ export const messages = defineMessages({
     defaultMessage: "Coming Soon",
     description: "section header",
   },
+  nothingInstalledPlaceholder: {
+    defaultMessage: "Nothing installed yet.",
+    description: "placeholder",
+    id: "9g6Y7a",
+  },
+  installationCloudOnly: {
+    defaultMessage: "Use Saleor Cloud to access Saleor Apps",
+    description: "description",
+    id: "IEpmGQ",
+  },
 });
