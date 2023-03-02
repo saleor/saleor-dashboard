@@ -1,9 +1,9 @@
+import { sectionNames } from "@dashboard/intl";
 import {
   AppDetailsUrlQueryParams,
   AppInstallUrlQueryParams,
-} from "@dashboard/apps/urls";
-import AppInstallView from "@dashboard/apps/views/AppInstall";
-import { sectionNames } from "@dashboard/intl";
+} from "@dashboard/new-apps/urls";
+import AppInstallView from "@dashboard/new-apps/views/AppInstall";
 import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";

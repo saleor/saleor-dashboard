@@ -1,5 +1,4 @@
 import { useApolloClient } from "@apollo/client";
-import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import {
   useAppActivateMutation,
@@ -11,6 +10,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import AppDeleteDialog from "@dashboard/new-apps/components/AppDeleteDialog";
 import { appMessages } from "@dashboard/new-apps/messages";
+import { EXTENSION_LIST_QUERY } from "@dashboard/new-apps/queries";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import React from "react";

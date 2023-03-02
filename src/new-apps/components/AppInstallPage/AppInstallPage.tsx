@@ -19,7 +19,8 @@ import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from "../../styles";
+import messages from "./messages";
+import { useStyles } from "./styles";
 
 export interface AppInstallPageProps {
   data: NonNullable<AppFetchMutation["appFetchManifest"]>["manifest"];
@@ -37,7 +38,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
   onSubmit,
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
+  const classes = useStyles();
 
   const name = data?.name || "";
 
@@ -52,14 +53,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                 loading ? (
                   <Skeleton />
                 ) : (
-                  intl.formatMessage(
-                    {
-                      id: "Id7C0X",
-                      defaultMessage: `You are about to install {name}`,
-                      description: "section header",
-                    },
-                    { name },
-                  )
+                  intl.formatMessage(messages.title, { name })
                 )
               }
             />
@@ -88,11 +82,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
           <Card>
             {!loading && (
               <CardTitle
-                title={intl.formatMessage({
-                  id: "VsGcdP",
-                  defaultMessage: "App permissions",
-                  description: "section header",
-                })}
+                title={intl.formatMessage(messages.permissionsTitle)}
               />
             )}
             <CardContent>
@@ -102,9 +92,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                 <>
                   <Typography className={classes.installPermissionTitle}>
                     <FormattedMessage
-                      id="BL/Lbk"
-                      defaultMessage="Installing this app will give it following permissions:"
-                      description="install app permissions"
+                      {...messages.permissionsInstallDescription}
                     />
                   </Typography>
                   {!!data?.permissions?.length && (
@@ -121,9 +109,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                     className={classes.installPrivacyText}
                   >
                     <FormattedMessage
-                      id="t1UYU6"
-                      defaultMessage="Uninstalling the app will remove all your customer’s personal data stored by {name}. "
-                      description="install app privacy"
+                      {...messages.permissionsUninstallDescription}
                       values={{ name }}
                     />
                     {!!data?.dataPrivacyUrl && (
@@ -132,11 +118,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                         rel="noopener noreferrer"
                         target="_blank"
                       >
-                        <FormattedMessage
-                          id="k5lHFp"
-                          defaultMessage="Learn more about data privacy"
-                          description="app data privacy link"
-                        />
+                        <FormattedMessage {...messages.dataPrivacyLearnMore} />
                       </a>
                     )}
                   </Typography>
@@ -150,11 +132,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
               <FormattedMessage {...buttonMessages.cancel} />
             </Button>
             <Button variant="primary" onClick={onSubmit}>
-              <FormattedMessage
-                id="PkCmGU"
-                defaultMessage="Install App"
-                description="install button"
-              />
+              <FormattedMessage {...messages.installButton} />
             </Button>
           </Box>
         </Box>

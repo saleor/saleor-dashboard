@@ -1,4 +1,3 @@
-import { appMessages } from "@dashboard/apps/messages";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { getApiUrl } from "@dashboard/config";
@@ -26,6 +25,7 @@ import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors, getStringOrPlaceholder } from "@dashboard/misc";
 import AppActivateDialog from "@dashboard/new-apps/components/AppActivateDialog";
 import AppDeactivateDialog from "@dashboard/new-apps/components/AppDeactivateDialog";
+import { appMessages } from "@dashboard/new-apps/messages";
 import getAppErrorMessage from "@dashboard/utils/errors/app";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import React from "react";

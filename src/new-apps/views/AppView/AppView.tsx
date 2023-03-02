@@ -1,9 +1,9 @@
-import { appMessages } from "@dashboard/apps/messages";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { useAppQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import AppPage from "@dashboard/new-apps/components/AppPage";
+import { appMessages } from "@dashboard/new-apps/messages";
 import { AppPaths, AppUrls } from "@dashboard/new-apps/urls";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
