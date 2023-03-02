@@ -1,4 +1,4 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { UseFormResult } from "@dashboard/hooks/useForm";
 import { RequireOnlyOne } from "@dashboard/misc";
 import commonErrorMessages from "@dashboard/utils/errors/common";

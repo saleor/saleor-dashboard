@@ -1,6 +1,6 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import { Button } from "@dashboard/components/Button";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import useClipboard from "@dashboard/hooks/useClipboard";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { buttonMessages } from "@dashboard/intl";
@@ -16,10 +16,9 @@ interface GiftCardCreateDialogCodeContentProps {
   onClose: () => void;
 }
 
-const GiftCardCreateDialogCodeContent: React.FC<GiftCardCreateDialogCodeContentProps> = ({
-  cardCode,
-  onClose,
-}) => {
+const GiftCardCreateDialogCodeContent: React.FC<
+  GiftCardCreateDialogCodeContentProps
+> = ({ cardCode, onClose }) => {
   const classes = useStyles({});
   const intl = useIntl();
   const notify = useNotifier();

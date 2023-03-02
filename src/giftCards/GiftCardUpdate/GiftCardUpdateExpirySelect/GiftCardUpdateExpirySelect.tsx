@@ -1,5 +1,5 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
 import useGiftCardUpdateForm from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardUpdateFormProvider/hooks/useGiftCardUpdateForm";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";

@@ -1,6 +1,6 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { Hr } from "@dashboard/components/Hr";
 import Money from "@dashboard/components/Money";
 import Skeleton from "@dashboard/components/Skeleton";

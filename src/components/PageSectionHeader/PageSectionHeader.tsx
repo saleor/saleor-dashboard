@@ -1,4 +1,4 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { Typography } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";

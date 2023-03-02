@@ -1,5 +1,5 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import DefaultCardTitle from "@dashboard/components/CardTitle";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { StatusType } from "@dashboard/types";
 import { Typography } from "@material-ui/core";

@@ -105,6 +105,21 @@ export const AppUrls = {
     const appCompleteUrl = urlJoin(appUrl, deepSubPath);
     return appCompleteUrl;
   },
+  resolveDashboardUrlFromAppCompleteUrl: (
+    appCompleteUrl: string,
+    appUrl?: string,
+    appId?: string,
+  ) => {
+    if (!appUrl || !appId) {
+      return appUrl;
+    }
+    const deepSubPath = appCompleteUrl.replace(appUrl, "");
+    const dashboardUrl = urlJoin(
+      AppPaths.resolveAppPath(encodeURIComponent(appId)),
+      deepSubPath,
+    );
+    return dashboardUrl;
+  },
   resolveAppIframeUrl: (
     appId: string,
     appUrl: string,

@@ -1,4 +1,3 @@
-import { appsListUrl } from "@dashboard/apps/urls";
 import { attributeListUrl } from "@dashboard/attributes/urls";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
@@ -7,6 +6,7 @@ import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { menuListUrl } from "@dashboard/navigation/urls";
+import { AppUrls } from "@dashboard/new-apps/urls";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { pageListUrl } from "@dashboard/pages/urls";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
@@ -36,7 +36,7 @@ function searchInViews(
   const views: View[] = [
     {
       label: intl.formatMessage(sectionNames.apps),
-      url: appsListUrl(),
+      url: AppUrls.resolveAppListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.attributes),

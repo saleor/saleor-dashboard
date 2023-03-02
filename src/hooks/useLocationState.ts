@@ -1,9 +1,9 @@
-import { appsSection } from "@dashboard/apps/urls";
+import { AppSections } from "@dashboard/new-apps/urls";
 import { matchPath, useLocation } from "react-router";
 
 const isAppPath = (pathname: string) =>
   !!matchPath(pathname, {
-    path: `${appsSection}:id`,
+    path: `${AppSections.appsSection}:id`,
   });
 
 /*

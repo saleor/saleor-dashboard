@@ -7,15 +7,15 @@ import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { AppListItemFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
+import DeactivatedText from "@dashboard/new-apps/components/DeactivatedText";
 import { TableBody, TableCell, Typography } from "@material-ui/core";
 import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
 import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import AppsSkeleton from "../../../apps/components/AppsSkeleton";
-import { useStyles } from "../../../apps/styles";
-import DeactivatedText from "../../../new-apps/components/DeactivatedText";
+import CustomAppsSkeleton from "../CustomAppsSkeleton";
+import { useStyles } from "./styles";
 
 export interface CustomAppListPageProps {
   appsList: AppListItemFragment[];
@@ -29,7 +29,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
   getCustomAppHref,
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
+  const classes = useStyles();
 
   return (
     <ListPageLayout>
@@ -91,7 +91,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
                     </TableCell>
                   </TableRowLink>
                 ) : (
-                  <AppsSkeleton key={index} />
+                  <CustomAppsSkeleton key={index} />
                 ),
               () => (
                 <TableRowLink className={classes.tableRow}>

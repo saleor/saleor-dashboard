@@ -86,10 +86,6 @@
     "context": "button",
     "string": "Activate"
   },
-  "+c/f61": {
-    "context": "retry installation",
-    "string": "Retry"
-  },
   "+do3gl": {
     "context": "input helper text",
     "string": "This number defines quantity of items in checkout line that can be bought. You can override this setting per variant. Leaving this setting empty mean that there is no limits."
@@ -116,9 +112,6 @@
   "+kb2lM": {
     "context": "dialog header",
     "string": "Change Password"
-  },
-  "+niGip": {
-    "string": "Saleor Apps"
   },
   "+pLi+M": {
     "context": "issued by app label",
@@ -509,10 +502,6 @@
   },
   "1n1tOR": {
     "string": "Group is out of your permission scope"
-  },
-  "1qRwgQ": {
-    "context": "app installation",
-    "string": "Installing app..."
   },
   "1rpzrM": {
     "context": "search placeholder",
@@ -1502,10 +1491,6 @@
     "context": "unapproved fulfillment, section header",
     "string": "Waiting for approval ({quantity})"
   },
-  "9tgY4G": {
-    "context": "apps content",
-    "string": "You don’t have any installed apps in your dashboard"
-  },
   "9uNz+T": {
     "context": "button",
     "string": "Cancel"
@@ -1768,10 +1753,6 @@
   "BvRyoX": {
     "context": "alert message",
     "string": "There are no available shipping methods in this channel."
-  },
-  "BvmnJq": {
-    "context": "section header",
-    "string": "Third Party Apps"
   },
   "Bx367s": {
     "context": "product is hidden",
@@ -2209,9 +2190,6 @@
   "FIZvTx": {
     "context": "dialog content",
     "string": "Select method you want to use to change address"
-  },
-  "FLtdaw": {
-    "string": "Saleor apps are hosted and maintained by Saleor Team. They are preinstalled for you and ready to use"
   },
   "FNAZoh": {
     "string": "Last login"
@@ -2772,9 +2750,6 @@
     "context": "currency code select",
     "string": "{code} - {countries}"
   },
-  "J8frvS": {
-    "string": "3rd party apps"
-  },
   "JDz5h8": {
     "context": "number of subcategories in category",
     "string": "Subcategories"
@@ -3195,9 +3170,6 @@
     "context": "remove country from shipping zone and save, button",
     "string": "Remove and save"
   },
-  "MYA6EV": {
-    "string": "Third party apps are installed with App Manifests. They contain UI accessible from dashboard and can extend it."
-  },
   "MaTR88": {
     "context": "header",
     "string": "Integrations"
@@ -3590,10 +3562,6 @@
     "context": "window title",
     "string": "Create Product"
   },
-  "PbQJY5": {
-    "context": "section header",
-    "string": "Saleor Apps"
-  },
   "PbqNhi": {
     "context": "order status",
     "string": "Partially fulfilled"
@@ -3753,9 +3721,6 @@
     "context": "product field",
     "string": "Charge Taxes"
   },
-  "QVraQY": {
-    "string": "App manifest URL"
-  },
   "QZVD+5": {
     "context": "button, unassign attribute from object",
     "string": "Unassign and save"
@@ -3775,9 +3740,6 @@
   "QdGzUf": {
     "context": "number of collections",
     "string": "Collections ({quantity})"
-  },
-  "QdQ9z7": {
-    "string": "(TUNNEL - DEVELOPMENT)"
   },
   "Qe4XHv": {
     "context": "years after label",
@@ -4751,10 +4713,6 @@
   "XkX56I": {
     "context": "filters error messages value required",
     "string": "Choose a value"
-  },
-  "Xl0o2y": {
-    "context": "app installation error",
-    "string": "Problem occured during installation"
   },
   "XlPKAR": {
     "context": "WarehouseSettings private stock description",
@@ -6240,10 +6198,6 @@
   "kFkPWB": {
     "string": "Number"
   },
-  "kIXV5V": {
-    "context": "install with app manifest button",
-    "string": "Install with App Manifest"
-  },
   "kIvvax": {
     "string": "Search Products..."
   },
@@ -6725,9 +6679,6 @@
   "ny4zrH": {
     "context": "dialog title",
     "string": "Delete Warehouse"
-  },
-  "o/q4fc": {
-    "string": "Usually ends with /api/manifest"
   },
   "o5KXAN": {
     "context": "delete webhook",
@@ -7468,9 +7419,6 @@
   "u0V06N": {
     "string": "Max. Order Weight"
   },
-  "u0VQMN": {
-    "string": "Browse Marketplace"
-  },
   "u24Ppd": {
     "string": "This attribute cannot be assigned to this product type"
   },
@@ -7540,9 +7488,6 @@
   "ubasgL": {
     "context": "order history message",
     "string": "Order was confirmed"
-  },
-  "ubmFc8": {
-    "string": "Install"
   },
   "uccjUM": {
     "context": "Dry run objects",

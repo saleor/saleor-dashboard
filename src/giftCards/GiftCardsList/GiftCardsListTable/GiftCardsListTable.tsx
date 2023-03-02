@@ -1,6 +1,6 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import Checkbox from "@dashboard/components/Checkbox";
 import DeleteIconButton from "@dashboard/components/DeleteIconButton";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Link from "@dashboard/components/Link";
 import Money from "@dashboard/components/Money";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
@@ -36,13 +36,8 @@ const GiftCardsListTable: React.FC = () => {
   const classes = useStyles({});
   const navigate = useNavigator();
 
-  const {
-    toggle,
-    isSelected,
-    giftCards,
-    numberOfColumns,
-    params,
-  } = useGiftCardList();
+  const { toggle, isSelected, giftCards, numberOfColumns, params } =
+    useGiftCardList();
   const { openDeleteDialog } = useGiftCardListDialogs();
 
   const isCurrencySelected = !!params.currency;

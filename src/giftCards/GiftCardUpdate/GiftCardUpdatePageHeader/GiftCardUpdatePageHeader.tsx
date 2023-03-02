@@ -1,6 +1,6 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import GiftCardStatusChip from "@dashboard/giftCards/components/GiftCardStatusChip/GiftCardStatusChip";
 import { giftCardsListPath } from "@dashboard/giftCards/urls";
 import { getStringOrPlaceholder } from "@dashboard/misc";

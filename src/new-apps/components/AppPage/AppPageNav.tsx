@@ -1,7 +1,7 @@
-import { appsListUrl } from "@dashboard/apps/urls";
 import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
 import { LinkState } from "@dashboard/components/Link";
 import { AppAvatar } from "@dashboard/new-apps/components/AppAvatar/AppAvatar";
+import { AppUrls } from "@dashboard/new-apps/urls";
 import { Box, Button, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -19,7 +19,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
   homepageUrl,
 }) => {
   const location = useLocation<LinkState>();
-  const goBackLink = location.state?.from ?? appsListUrl();
+  const goBackLink = location.state?.from ?? AppUrls.resolveAppListUrl();
 
   return (
     <TopNavWrapper>

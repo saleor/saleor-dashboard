@@ -1,9 +1,9 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import BasicAttributeRow from "@dashboard/components/Attributes/BasicAttributeRow";
 import {
   getErrorMessage,
   getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import { getBySlug } from "@dashboard/misc";
 import { InputAdornment } from "@material-ui/core";
