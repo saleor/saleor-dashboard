@@ -13,8 +13,6 @@ export const resolveSectionsAvailability = ({
   installableMarketplaceApps,
   comingSoonMarketplaceApps,
 }: AppListPageSections) => ({
-  nothingInstalled:
-    installedApps.length === 0 && appsInstallations.length === 0,
   installed:
     !installedApps ||
     !!installedApps.length ||

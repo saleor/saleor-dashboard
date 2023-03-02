@@ -9,5 +9,4 @@ export interface AppListPageSections {
   installedApps?: AppListItemFragment[];
   installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[];
   comingSoonMarketplaceApps?: GetV2SaleorAppsResponse.ComingSoonSaleorApp[];
-  nothingInstalled: boolean;
 }
