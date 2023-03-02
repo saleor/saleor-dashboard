@@ -200,8 +200,8 @@ export const commonMessages = defineMessages({
     description: "pagination",
   },
   product: {
-    defaultMessage: "Prodcut",
-    id: "hR29z+",
+    defaultMessage: "Product",
+    id: "x/ZVlU",
   },
 });
 

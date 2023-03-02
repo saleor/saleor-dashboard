@@ -1642,6 +1642,9 @@
     "context": "section description",
     "string": "You can set basic checkout rules that will be applied globally to all your channels"
   },
+  "AyQkmp": {
+    "string": "Sorting by this column is not available"
+  },
   "AzMSmb": {
     "context": "caption",
     "string": "If enabled this attribute can be used as a column in product table."
