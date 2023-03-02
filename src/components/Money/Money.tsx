@@ -2,6 +2,8 @@ import useLocale from "@dashboard/hooks/useLocale";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
+import { getMoney } from "./utils";
+
 const useStyles = makeStyles(
   {
     root: {
@@ -33,20 +35,10 @@ export const Money: React.FC<MoneyProps> = props => {
     return null;
   }
 
-  const currencyFractionDigits = new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: money.currency,
-  }).resolvedOptions().maximumFractionDigits;
-
-  const amount = money.amount.toLocaleString(locale, {
-    maximumFractionDigits: currencyFractionDigits,
-    minimumFractionDigits: currencyFractionDigits,
-  });
-
   return (
     <span className={classes.root} {...rest}>
       <span className={classes.currency}>{money.currency}</span>
-      {amount}
+      {getMoney(money, locale)}
     </span>
   );
 };

@@ -5,13 +5,14 @@ import CardMenu from "@dashboard/components/CardMenu";
 import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   extensionMountPoints,
   mapToMenuItems,
   useExtensions,
 } from "@dashboard/new-apps/hooks/useExtensions";
-import { OrderListUrlSortField } from "@dashboard/orders/urls";
+import { OrderListUrlSortField, orderUrl } from "@dashboard/orders/urls";
 import {
   FilterPageProps,
   PageListProps,
@@ -25,7 +26,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderLimitReached from "../OrderLimitReached";
-import OrderList from "../OrderList";
+import { OrderListDatagrid } from "../OrderListDatagrid/OrderListDatagrid";
 import {
   createFilterStructure,
   OrderFilterKeys,
@@ -69,6 +70,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
+  const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
 
@@ -148,7 +150,12 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             defaultMessage: "Search Orders...",
           })}
         />
-        <OrderList {...listProps} />
+        <OrderListDatagrid
+          {...listProps}
+          onRowClick={id => {
+            navigate(orderUrl(id));
+          }}
+        />
       </Card>
     </ListPageLayout>
   );
