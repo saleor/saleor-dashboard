@@ -1,9 +1,11 @@
+import { IS_CLOUD_INSTANCE } from "@dashboard/config";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { appInstallationStatusMessages } from "@dashboard/new-apps/messages";
+import { Tooltip } from "@material-ui/core";
 import { Box, Button, Text } from "@saleor/macaw-ui/next";
 import React from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import InstallErrorAction from "./ErrorInstallAction";
 import { messages } from "./messages";
@@ -27,6 +29,8 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
   retryInstallHandler,
   removeInstallHandler,
 }) => {
+  const intl = useIntl();
+
   if (
     !installHandler &&
     !githubForkHandler &&
@@ -49,7 +53,7 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
           <FormattedMessage {...messages.forkOnGithub} />
         </Button>
       )}
-      {installHandler && (
+      {installHandler && IS_CLOUD_INSTANCE && (
         <Button
           variant="primary"
           onClick={installHandler}
@@ -57,6 +61,23 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
         >
           <FormattedMessage {...buttonMessages.install} />
         </Button>
+      )}
+      {installHandler && !IS_CLOUD_INSTANCE && (
+        <Tooltip
+          placement="top"
+          title={intl.formatMessage(messages.installationCloudOnly)}
+        >
+          <div>
+            <Button
+              variant="primary"
+              onClick={installHandler}
+              data-test-id="app-install-button"
+              disabled
+            >
+              <FormattedMessage {...buttonMessages.install} />
+            </Button>
+          </div>
+        </Tooltip>
       )}
       {installationPending && (
         <Text

@@ -76,7 +76,7 @@ export default defineConfig(({ command, mode }) => {
           MARKETPLACE_URL,
           APPS_MARKETPLACE_API_URI,
           APPS_TUNNEL_URL_KEYWORDS,
-
+          IS_CLOUD_INSTANCE,
           injectOgTags:
             DEMO_MODE &&
             `
