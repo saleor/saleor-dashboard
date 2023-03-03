@@ -99,7 +99,14 @@ export const thumbnailCellRenderer: CustomCellRenderer<ThumbnailCell> = {
   }),
 };
 
-function roundedImage(ctx, x, y, width, height, radius) {
+function roundedImage(
+  ctx: CanvasRenderingContext2D,
+  x: number,
+  y: number,
+  width: number,
+  height: number,
+  radius: number,
+) {
   ctx.beginPath();
   ctx.moveTo(x + radius, y);
   ctx.lineTo(x + width - radius, y);
