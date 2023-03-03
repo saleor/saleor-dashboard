@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
+import { copyFileSync } from "fs";
 import path from "path";
 import nodePolyfills from "rollup-plugin-polyfill-node";
 import { defineConfig, loadEnv } from "vite";
@@ -7,6 +8,14 @@ import { createHtmlPlugin } from "vite-plugin-html";
 import { VitePWA } from "vite-plugin-pwa";
 import viteSentry from "vite-plugin-sentry";
 import { swcReactRefresh } from "vite-plugin-swc-react-refresh";
+
+const copyOgImage = () => ({
+  name: "copy-og-image",
+  apply: "build",
+  writeBundle: () => {
+    copyFileSync("./assets/og.png", "./build/dashboard/og.png");
+  },
+});
 
 export default defineConfig(({ command, mode }) => {
   const isDev = command !== "build";
@@ -42,6 +51,7 @@ export default defineConfig(({ command, mode }) => {
     FLAGSMITH_ID,
   } = env;
 
+  const base = STATIC_URL ?? "/";
   const featureFlagsEnvs = Object.fromEntries(
     Object.entries(env).filter(([flagKey]) => flagKey.startsWith("FF_")),
   );
@@ -66,9 +76,26 @@ export default defineConfig(({ command, mode }) => {
           MARKETPLACE_URL,
           APPS_MARKETPLACE_API_URI,
           APPS_TUNNEL_URL_KEYWORDS,
+
+          injectOgTags:
+            DEMO_MODE &&
+            `
+            <meta property="og:type" content="website">
+            <meta property="og:title" content="Sign in to the Saleor Dashboard">
+            <meta property="og:description" content="Sign in to the Saleor Dashboard to manage your orders, payments, products and more.">
+            <meta property="og:image" content="${base}og.png">
+            <meta name="twitter:card" content="summary_large_image">
+            <meta name="twitter:title" content="Sign in to the Saleor Dashboard">
+            <meta name="twitter:description" content="Sign in to the Saleor Dashboard to manage your orders, payments, products and more.">
+            <meta name="twitter:image" content="${base}og.png">
+            <meta property="og:url" content="https://demo.saleor.io/dashboard/">
+            <meta property="twitter:domain" content="demo.saleor.io">
+            <meta property="twitter:url" content="https://demo.saleor.io/dashboard/">
+          `,
         },
       },
     }),
+    copyOgImage(),
   ];
 
   if (enableSentry) {
@@ -119,7 +146,7 @@ export default defineConfig(({ command, mode }) => {
 
   return {
     root: "src",
-    base: STATIC_URL ?? "/",
+    base,
     envDir: "..",
     server: {
       port: 9000,
