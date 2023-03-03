@@ -70,7 +70,10 @@ export function numberCell(
   };
 }
 
-export function moneyCell(value: number | null, currency: string): MoneyCell {
+export function moneyCell(
+  value: number | string | null,
+  currency: string,
+): MoneyCell {
   return {
     ...common,
     kind: GridCellKind.Custom,

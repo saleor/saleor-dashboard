@@ -11,7 +11,7 @@ import { usePriceField } from "../PriceField/usePriceField";
 interface MoneyCellProps {
   readonly kind: "money-cell";
   readonly currency: string;
-  readonly value: number | null;
+  readonly value: number | string | null;
 }
 
 export type MoneyCell = CustomCell<MoneyCellProps>;

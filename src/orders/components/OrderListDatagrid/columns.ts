@@ -1,5 +1,6 @@
 import {
   loadingCell,
+  moneyCell,
   readonlyTextCell,
   textCell,
 } from "@dashboard/components/Datagrid/cells";
@@ -158,7 +159,10 @@ function getTotalCellContent(
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   if (rowData?.total?.gross) {
-    return readonlyTextCell(getMoney(rowData.total.gross, locale));
+    return moneyCell(
+      getMoney(rowData.total.gross, locale),
+      rowData.total.gross.currency,
+    );
   }
 
   return readonlyTextCell("-");
