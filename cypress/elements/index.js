@@ -1,30 +1,34 @@
-import { SHIPPING_ZONES_LIST } from "./shipping";
-import { LANGUAGES_LIST } from "./translations";
-import { CONFIGURATION_SELECTORS } from "./configuration/configuration-selectors";
-import { CUSTOMER_DETAILS, CUSTOMERS_LIST } from "./customer/";
-import { PAGE_DETAILS, PAGES_LIST } from "./pages/";
-import { PLUGINS_DETAILS, PLUGINS_LIST } from "./plugins";
-import { PRODUCT_TYPE_DETAILS, PRODUCT_TYPES_LIST } from "./productTypes";
-import { PAGE_TYPE_DETAILS, PAGE_TYPES_LIST } from "./pageTypes";
-import { SHARED_ELEMENTS, ADDRESS_SELECTORS } from "./shared";
-import { CHANNELS_SELECTORS } from "./channels";
-import { APPS_LIST } from "./apps";
-import { ORDERS_SELECTORS } from "./orders";
-import { SALES_SELECTORS } from "./discounts";
 import {
-  MENU_SELECTORS,
   LOGIN_SELECTORS,
+  MENU_SELECTORS,
   SET_PASSWORD_SELECTORS,
 } from "./account/";
+import { APPS_LIST } from "./apps";
+import { ATTRIBUTES_DETAILS, ATTRIBUTES_LIST } from "./attribute";
+import { CHANNELS_SELECTORS } from "./channels";
+import { CONFIGURATION_SELECTORS } from "./configuration/configuration-selectors";
+import { CUSTOMER_DETAILS, CUSTOMERS_LIST } from "./customer/";
+import { SALES_SELECTORS, VOUCHERS_SELECTORS } from "./discounts";
+import { ORDERS_SELECTORS } from "./orders";
+import { PAGE_DETAILS, PAGES_LIST } from "./pages/";
+import { PAGE_TYPE_DETAILS, PAGE_TYPES_LIST } from "./pageTypes";
+import { PLUGINS_DETAILS, PLUGINS_LIST } from "./plugins";
+import { PRODUCT_TYPE_DETAILS, PRODUCT_TYPES_LIST } from "./productTypes";
+import { ADDRESS_SELECTORS, SHARED_ELEMENTS } from "./shared";
+import { SHIPPING_ZONES_LIST } from "./shipping";
 import {
-  STAFF_MEMBERS_LIST,
-  STAFF_MEMBER_DETAILS,
   INVITE_STAFF_MEMBER_FORM,
+  STAFF_MEMBER_DETAILS,
+  STAFF_MEMBERS_LIST,
 } from "./staffMembers";
+import { LANGUAGES_LIST } from "./translations";
 
 export {
+  ATTRIBUTES_DETAILS,
+  ATTRIBUTES_LIST,
   APPS_LIST,
   CONFIGURATION_SELECTORS,
+  VOUCHERS_SELECTORS,
   CHANNELS_SELECTORS,
   CUSTOMER_DETAILS,
   CUSTOMERS_LIST,

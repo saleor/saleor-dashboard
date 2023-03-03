@@ -30,6 +30,7 @@ export const urlList = {
   vouchers: "discounts/vouchers/",
   variant: "variant/",
   warehouses: "warehouses/",
+  webhooksAndEvents: "custom-apps/",
 };
 
 export const addVariantUrl = productId =>
