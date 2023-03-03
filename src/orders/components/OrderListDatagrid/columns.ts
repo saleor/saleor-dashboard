@@ -13,6 +13,7 @@ import { OrderListQuery } from "@dashboard/graphql";
 import { transformOrderStatus, transformPaymentStatus } from "@dashboard/misc";
 import { RelayToFlat } from "@dashboard/types";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
+import { themes } from "@saleor/macaw-ui/next";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
@@ -62,6 +63,7 @@ interface GetCellContentProps {
   loading: boolean;
   locale: Locale;
   intl: IntlShape;
+  theme: typeof themes.defaultDark;
 }
 
 export function createGetCellContent({
@@ -70,6 +72,7 @@ export function createGetCellContent({
   loading,
   locale,
   intl,
+  theme,
 }: GetCellContentProps) {
   return (
     [column, row]: Item,
@@ -96,9 +99,9 @@ export function createGetCellContent({
       case "customer":
         return getCustomerCellContent(rowData);
       case "payment":
-        return getPaymentCellContent(intl, rowData);
+        return getPaymentCellContent(intl, theme, rowData);
       case "status":
-        return getStatusCellContent(intl, rowData);
+        return getStatusCellContent(intl, theme, rowData);
       case "total":
         return getTotalCellContent(locale, rowData);
       default:
@@ -132,11 +135,17 @@ function getCustomerCellContent(
 
 function getPaymentCellContent(
   intl: IntlShape,
+  theme: typeof themes.defaultDark,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   const paymentStatus = transformPaymentStatus(rowData.paymentStatus, intl);
   if (paymentStatus?.status) {
-    return tagsCell([{ tag: paymentStatus.localized, color: "#ff4d4d35" }]);
+    return tagsCell([
+      {
+        tag: paymentStatus.localized,
+        color: getStatusColor(paymentStatus.status, theme),
+      },
+    ]);
   }
 
   return readonlyTextCell("-");
@@ -144,15 +153,37 @@ function getPaymentCellContent(
 
 function getStatusCellContent(
   intl: IntlShape,
+  theme: typeof themes.defaultDark,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   const status = transformOrderStatus(rowData.status, intl);
 
   if (status) {
-    return tagsCell([{ tag: status.localized, color: "#ff1eec35" }]);
+    return tagsCell([
+      { tag: status.localized, color: getStatusColor(status.status, theme) },
+    ]);
   }
 
   return readonlyTextCell("-");
+}
+
+function getStatusColor(
+  status: string,
+  theme: typeof themes.defaultDark,
+): string {
+  switch (status) {
+    case "error":
+      return theme.colors.background.surfaceCriticalDepressed;
+    case "warning":
+      // TODO: replace when warning will be added to theme
+      return "#FBE5AC";
+    case "success":
+      return theme.colors.background.decorativeSurfaceSubdued2;
+    case "info":
+      return theme.colors.background.surfaceBrandDepressed;
+    default:
+      return theme.colors.background.surfaceBrandSubdued;
+  }
 }
 
 function getTotalCellContent(

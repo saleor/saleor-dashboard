@@ -13,6 +13,7 @@ import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { makeStyles } from "@material-ui/core";
 import { Button } from "@saleor/macaw-ui";
+import { themes, useTheme } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -47,6 +48,8 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   const intl = useIntl();
   const { locale } = useLocale();
   const datagrid = useDatagridChangeState();
+  const { theme: currentTheme } = useTheme();
+  const theme = themes[currentTheme];
 
   const columns = useMemo(() => getColumns(intl), [intl]);
 
@@ -75,8 +78,9 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
         loading: disabled,
         locale,
         orders,
+        theme,
       }),
-    [columns, disabled, intl, locale, orders],
+    [columns, disabled, intl, locale, orders, theme],
   );
 
   return (
