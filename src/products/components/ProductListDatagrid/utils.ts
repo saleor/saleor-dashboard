@@ -157,8 +157,8 @@ export function createGetCellContent({
     [column, row]: Item,
     { changes, getChangeIndex, added, removed }: GetCellContentOpts,
   ) => {
-    if (column === -1) {
-      return textCell("");
+    if ([-1, 0].includes(column)) {
+      return readonlyTextCell("");
     }
 
     if (loading) {

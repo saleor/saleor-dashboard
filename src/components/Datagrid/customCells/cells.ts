@@ -68,8 +68,12 @@ export function booleanCell(value: boolean): GridCell {
 
 export function loadingCell(): GridCell {
   return {
-    kind: GridCellKind.Loading,
+    kind: GridCellKind.Custom,
     allowOverlay: true,
+    copyData: "4",
+    data: {
+      kind: "spinner-cell",
+    },
   };
 }
 

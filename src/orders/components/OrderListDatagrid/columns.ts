@@ -78,8 +78,8 @@ export function createGetCellContent({
     [column, row]: Item,
     { added, removed }: GetCellContentOpts,
   ): GridCell => {
-    if (column === -1) {
-      return textCell("");
+    if ([-1, 0].includes(column)) {
+      return readonlyTextCell("");
     }
 
     if (loading) {
