@@ -20,7 +20,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { WebhookFormData } from "../WebhookDetailsPage";
 import { messages } from "./messages";
 import useStyles from "./styles";
-import { mapHeaders, stringifyHeaders } from "./utils";
+import { hasEmptyHeader, mapHeaders, stringifyHeaders } from "./utils";
 import WebhookHeadersTableBody from "./WebhookHeadersTableBody";
 
 export interface WebhookHeadersProps {
@@ -143,6 +143,7 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
                   variant="secondary"
                   data-test-id="add-header"
                   onClick={add}
+                  disabled={hasEmptyHeader(headers)}
                 >
                   <FormattedMessage {...messages.add} />
                 </Button>

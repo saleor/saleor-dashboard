@@ -1,3 +1,4 @@
+import CardTitle from "@dashboard/components/CardTitle";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
 import {
@@ -80,7 +81,8 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
   return (
     <>
       <Card>
-        <CardContent className={classes.card}>
+        <CardTitle title={intl.formatMessage(messages.webhookEvents)} />
+        <CardContent className={classes.cardHeader}>
           <PageTabs value={tab} onChange={handleTabChange}>
             <PageTab
               label={intl.formatMessage(messages.asynchronous)}
@@ -179,6 +181,7 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
             </List>
           </div>
         </Grid>
+        <Hr />
       </Card>
     </>
   );
