@@ -1455,6 +1455,10 @@
     "context": "collection",
     "string": "Hidden"
   },
+  "9g6Y7a": {
+    "context": "placeholder",
+    "string": "Nothing installed yet."
+  },
   "9gb9b4": {
     "context": "address type",
     "string": "Add new address"
@@ -2623,6 +2627,10 @@
   "IBw72y": {
     "context": "switch button",
     "string": "Is this product shippable?"
+  },
+  "IEpmGQ": {
+    "context": "description",
+    "string": "Use Saleor Cloud to access Saleor Apps"
   },
   "IFWHn0": {
     "context": "error message",

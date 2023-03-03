@@ -57,6 +57,9 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
   });
   const navigate = useNavigator();
 
+  const nothingInstalled =
+    appsInstallations?.length === 0 && installedApps?.length === 0;
+
   const navigateToAppInstallPage = useCallback(
     (manifestUrl: string) => {
       navigate(AppUrls.resolveAppInstallUrl(manifestUrl));
@@ -80,6 +83,18 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         marginY={8}
       >
         <Box className={classes.appContent} marginY={8}>
+          {nothingInstalled && (
+            <Box paddingY={6}>
+              <Text as="h3" variant="heading" color="textNeutralSubdued">
+                {intl.formatMessage(messages.installedApps)}
+              </Text>
+              <Box marginTop={6}>
+                <Text variant="caption">
+                  {intl.formatMessage(messages.nothingInstalledPlaceholder)}
+                </Text>
+              </Box>
+            </Box>
+          )}
           {sectionsAvailability.installed && (
             <>
               <Box paddingX={8} paddingY={6}>

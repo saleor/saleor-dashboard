@@ -20,5 +20,6 @@ declare interface Window {
     APP_TEMPLATE_GALLERY_PATH: string;
     APPS_MARKETPLACE_API_URI?: string;
     APPS_TUNNEL_URL_KEYWORDS?: string;
+    IS_CLOUD_INSTANCE?: string;
   };
 }
