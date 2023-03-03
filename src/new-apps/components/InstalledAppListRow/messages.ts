@@ -11,4 +11,9 @@ export const messages = defineMessages({
     defaultMessage: "Settings",
     description: "button label",
   },
+  appDisabled: {
+    id: "7u9Ep7",
+    defaultMessage: "Disabled",
+    description: "Label when app is disabled",
+  },
 });
