@@ -42,6 +42,7 @@ export function readonlyTextCell(
 
 export function tagsCell(
   tags: Array<{ tag: string; color: string }>,
+  selectedTags: string[],
 ): GridCell {
   return {
     kind: GridCellKind.Custom,
@@ -51,7 +52,7 @@ export function tagsCell(
       kind: "tags-cell",
       possibleTags: tags,
       readonly: true,
-      tags: tags.map(({ tag }) => tag),
+      tags: selectedTags,
     },
   };
 }

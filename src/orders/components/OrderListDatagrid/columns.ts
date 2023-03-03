@@ -140,12 +140,15 @@ function getPaymentCellContent(
 ) {
   const paymentStatus = transformPaymentStatus(rowData.paymentStatus, intl);
   if (paymentStatus?.status) {
-    return tagsCell([
-      {
-        tag: paymentStatus.localized,
-        color: getStatusColor(paymentStatus.status, theme),
-      },
-    ]);
+    return tagsCell(
+      [
+        {
+          tag: paymentStatus.localized,
+          color: getStatusColor(paymentStatus.status, theme),
+        },
+      ],
+      [paymentStatus.localized],
+    );
   }
 
   return readonlyTextCell("-");
@@ -159,9 +162,10 @@ function getStatusCellContent(
   const status = transformOrderStatus(rowData.status, intl);
 
   if (status) {
-    return tagsCell([
-      { tag: status.localized, color: getStatusColor(status.status, theme) },
-    ]);
+    return tagsCell(
+      [{ tag: status.localized, color: getStatusColor(status.status, theme) }],
+      [status.localized],
+    );
   }
 
   return readonlyTextCell("-");
