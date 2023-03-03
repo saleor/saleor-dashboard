@@ -3,7 +3,7 @@ import { Button, makeStyles, PlusSmallIcon } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React, { FC, PropsWithChildren } from "react";
 
-import CardTitle from "../CardTitle";
+import CardTitle from "../../CardTitle";
 
 const useStyles = makeStyles(
   theme => ({

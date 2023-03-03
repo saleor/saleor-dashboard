@@ -2,7 +2,7 @@ import { ChannelData } from "@dashboard/channels/utils";
 import Datagrid, {
   GetCellContentOpts,
 } from "@dashboard/components/Datagrid/Datagrid";
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/useDatagridChange";
+import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import {
   AttributeInputTypeEnum,

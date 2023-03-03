@@ -1,7 +1,7 @@
 import {
   DatagridChangeOpts,
   useDatagridChangeState,
-} from "@dashboard/components/Datagrid/useDatagridChange";
+} from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { SubmitFn, useExitFormDialog } from "@dashboard/components/Form";
 import { useEffect, useRef, useState } from "react";
 

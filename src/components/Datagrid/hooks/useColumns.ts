@@ -2,7 +2,7 @@ import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
 import { useCallback, useEffect, useMemo, useState } from "react";
 
-import { AvailableColumn } from "./types";
+import { AvailableColumn } from "../types";
 
 function useColumns(
   availableColumns: readonly AvailableColumn[],

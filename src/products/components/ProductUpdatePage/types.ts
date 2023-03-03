@@ -4,7 +4,7 @@ import { ChannelOpts } from "@dashboard/components/ChannelsAvailabilityCard/type
 import {
   DatagridChangeOpts,
   UseDatagridChangeState,
-} from "@dashboard/components/Datagrid/useDatagridChange";
+} from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";

@@ -5,11 +5,11 @@ import {
   moneyCell,
   numberCell,
   textCell,
-} from "@dashboard/components/Datagrid/cells";
-import { emptyDropdownCellValue } from "@dashboard/components/Datagrid/DropdownCell";
-import { numberCellEmptyValue } from "@dashboard/components/Datagrid/NumberCell";
+} from "@dashboard/components/Datagrid/customCells/cells";
+import { emptyDropdownCellValue } from "@dashboard/components/Datagrid/customCells/DropdownCell";
+import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
+import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { DatagridChange } from "@dashboard/components/Datagrid/useDatagridChange";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import {
   ProductDetailsVariantFragment,

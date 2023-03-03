@@ -30,27 +30,27 @@ import { FormattedMessage } from "react-intl";
 
 import { CardMenuItem } from "../CardMenu";
 import ColumnPicker, { ColumnPickerProps } from "../ColumnPicker";
-import { FullScreenContainer } from "./FullScreenContainer";
-import { Header } from "./Header";
+import { FullScreenContainer } from "./components/FullScreenContainer";
+import { Header } from "./components/Header";
+import { RowActions } from "./components/RowActions";
+import { TooltipContainer } from "./components/TooltipContainer";
+import useCells from "./customCells/useCells";
 import { headerIcons } from "./headerIcons";
-import { RowActions } from "./RowActions";
+import useColumns from "./hooks/useColumns";
+import useDatagridChange, {
+  DatagridChange,
+  OnDatagridChange,
+} from "./hooks/useDatagridChange";
+import { useFullScreenMode } from "./hooks/useFullScreenMode";
+import { usePortalClasses } from "./hooks/usePortalClasses";
+import { useScrollRight } from "./hooks/useScrollRight";
+import { useTooltipContainer } from "./hooks/useTooltipContainer";
 import useStyles, {
   cellHeight,
   useDatagridTheme,
   useFullScreenStyles,
 } from "./styles";
-import { TooltipContainer } from "./TooltipContainer";
 import { AvailableColumn } from "./types";
-import useCells from "./useCells";
-import useColumns from "./useColumns";
-import useDatagridChange, {
-  DatagridChange,
-  OnDatagridChange,
-} from "./useDatagridChange";
-import { useFullScreenMode } from "./useFullScreenMode";
-import { usePortalClasses } from "./usePortalClasses";
-import { useScrollRight } from "./useScrollRight";
-import { useTooltipContainer } from "./useTooltipContainer";
 import { getDefulaColumnPickerProps } from "./utils";
 
 export interface GetCellContentOpts {
