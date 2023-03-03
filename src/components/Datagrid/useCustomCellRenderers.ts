@@ -1,5 +1,5 @@
 import useLocale from "@dashboard/hooks/useLocale";
-import { useCustomCells } from "@glideapps/glide-data-grid";
+import { useExtraCells } from "@glideapps/glide-data-grid-cells";
 import { useMemo } from "react";
 
 import { dropdownCellRenderer } from "./DropdownCell";
@@ -7,19 +7,20 @@ import { moneyCellRenderer } from "./MoneyCell";
 import { numberCellRenderer } from "./NumberCell";
 import { thumbnailCellRenderer } from "./ThumbnailCell";
 
-function useCells() {
+export function useCustomCellRenderers() {
   const { locale } = useLocale();
-  const value = useMemo(
+  const { customRenderers } = useExtraCells();
+
+  const renderers = useMemo(
     () => [
+      ...customRenderers,
       moneyCellRenderer(),
       numberCellRenderer(locale),
       dropdownCellRenderer,
       thumbnailCellRenderer,
     ],
-    [locale],
+    [customRenderers, locale],
   );
 
-  return useCustomCells(value);
+  return renderers;
 }
-
-export default useCells;

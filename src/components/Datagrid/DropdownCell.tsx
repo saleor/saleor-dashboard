@@ -1,7 +1,8 @@
 import {
   CustomCell,
-  CustomCellRenderer,
+  CustomRenderer,
   getMiddleCenterBias,
+  GridCellKind,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -93,7 +94,8 @@ const DropdownCellEdit: ReturnType<ProvideEditorCallback<DropdownCell>> = ({
   );
 };
 
-export const dropdownCellRenderer: CustomCellRenderer<DropdownCell> = {
+export const dropdownCellRenderer: CustomRenderer<DropdownCell> = {
+  kind: GridCellKind.Custom,
   isMatch: (c): c is DropdownCell => (c.data as any).kind === "dropdown-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;

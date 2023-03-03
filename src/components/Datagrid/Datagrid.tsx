@@ -41,8 +41,8 @@ import useStyles, {
 } from "./styles";
 import { TooltipContainer } from "./TooltipContainer";
 import { AvailableColumn } from "./types";
-import useCells from "./useCells";
 import useColumns from "./useColumns";
+import { useCustomCellRenderers } from "./useCustomCellRenderers";
 import useDatagridChange, {
   DatagridChange,
   OnDatagridChange,
@@ -117,7 +117,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const datagridTheme = useDatagridTheme();
   const theme = themes[currentTheme];
   const editor = useRef<DataEditorRef>();
-  const cellProps = useCells();
+  const customRenderers = useCustomCellRenderers();
+
   const { scrolledToRight, scroller } = useScrollRight();
 
   const defualtColumnPickerProps = getDefulaColumnPickerProps(
@@ -358,8 +359,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
               )}
               <div className={classes.editorContainer}>
                 <DataEditor
-                  {...cellProps}
                   {...datagridProps}
+                  customRenderers={customRenderers}
                   verticalBorder={verticalBorder}
                   headerIcons={headerIcons}
                   theme={datagridTheme}
