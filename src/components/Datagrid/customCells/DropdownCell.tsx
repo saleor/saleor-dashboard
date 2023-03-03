@@ -11,8 +11,8 @@ import React from "react";
 
 import SingleAutocompleteSelectField, {
   SingleAutocompleteSelectFieldProps,
-} from "../SingleAutocompleteSelectField";
-import { Choice } from "../SingleSelectField";
+} from "../../SingleAutocompleteSelectField";
+import { Choice } from "../../SingleSelectField";
 
 export type DropdownChoice = Choice<string, string>;
 export type DropdownCellContentProps = Pick<

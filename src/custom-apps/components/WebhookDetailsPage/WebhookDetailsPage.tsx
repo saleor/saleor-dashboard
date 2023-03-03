@@ -124,13 +124,16 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                   errors={errors}
                   onChange={change}
                 />
-                <FormSpacer />
+              </Box>
+              <FormSpacer />
+              <Box>
                 <WebhookEvents
                   data={data}
                   setQuery={setQuery}
                   onSyncEventChange={handleSyncEventsSelect}
                   onAsyncEventChange={handleAsyncEventsSelect}
                 />
+
                 <WebhookSubscriptionQuery
                   query={query}
                   setQuery={setQuery}

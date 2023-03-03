@@ -46,6 +46,7 @@ const useStyles = makeStyles(
         "&&": {
           paddingBottom: theme.spacing(2),
           paddingTop: theme.spacing(2),
+          paddingLeft: theme.spacing(4),
         },
       },
       content: {

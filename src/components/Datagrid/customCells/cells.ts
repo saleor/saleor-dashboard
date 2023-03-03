@@ -1,7 +1,7 @@
 import {
   NumberCell,
   numberCellEmptyValue,
-} from "@dashboard/components/Datagrid/NumberCell";
+} from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { GridCell, GridCellKind } from "@glideapps/glide-data-grid";
 
 import {

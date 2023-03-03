@@ -6,13 +6,13 @@ import {
   readonlyTextCell,
   textCell,
   thumbnailCell,
-} from "@dashboard/components/Datagrid/cells";
-import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
+} from "@dashboard/components/Datagrid/customCells/cells";
 import {
   DropdownChoice,
   emptyDropdownCellValue,
-} from "@dashboard/components/Datagrid/DropdownCell";
-import { ThumbnailCellProps } from "@dashboard/components/Datagrid/ThumbnailCell";
+} from "@dashboard/components/Datagrid/customCells/DropdownCell";
+import { ThumbnailCellProps } from "@dashboard/components/Datagrid/customCells/ThumbnailCell";
+import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { getMoneyRange } from "@dashboard/components/MoneyRange";

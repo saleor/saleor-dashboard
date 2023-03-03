@@ -33,4 +33,9 @@ export const messages = defineMessages({
     id: "F6LHyk",
     description: "Webhook details objects",
   },
+  webhookEvents: {
+    id: "QAisk4",
+    defaultMessage: "Webhook events",
+    description: "Webhook events header",
+  },
 });

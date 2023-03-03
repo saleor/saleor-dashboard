@@ -4,7 +4,7 @@ import {
   readonlyTextCell,
   tagsCell,
   textCell,
-} from "@dashboard/components/Datagrid/cells";
+} from "@dashboard/components/Datagrid/customCells/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";

@@ -2,7 +2,7 @@ import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
   useDatagridChangeState,
-} from "@dashboard/components/Datagrid/useDatagridChange";
+} from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { OrderListQuery } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";

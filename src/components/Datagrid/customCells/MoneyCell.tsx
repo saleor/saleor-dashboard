@@ -7,7 +7,7 @@ import {
 } from "@glideapps/glide-data-grid";
 import React from "react";
 
-import { usePriceField } from "../PriceField/usePriceField";
+import { usePriceField } from "../../PriceField/usePriceField";
 
 interface MoneyCellProps {
   readonly kind: "money-cell";

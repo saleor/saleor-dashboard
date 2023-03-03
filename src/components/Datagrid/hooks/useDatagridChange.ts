@@ -11,7 +11,7 @@ import {
   useState,
 } from "react";
 
-import { AvailableColumn } from "./types";
+import { AvailableColumn } from "../types";
 
 export interface DatagridChange {
   data: any;

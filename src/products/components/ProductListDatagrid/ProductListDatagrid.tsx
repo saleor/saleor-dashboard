@@ -1,6 +1,6 @@
 import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
-import { DatagridChangeStateContext } from "@dashboard/components/Datagrid/useDatagridChange";
+import { DatagridChangeStateContext } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import Savebar from "@dashboard/components/Savebar";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";

@@ -1458,6 +1458,10 @@
     "context": "collection",
     "string": "Hidden"
   },
+  "9g6Y7a": {
+    "context": "placeholder",
+    "string": "Nothing installed yet."
+  },
   "9gb9b4": {
     "context": "address type",
     "string": "Add new address"
@@ -2630,6 +2634,10 @@
     "context": "switch button",
     "string": "Is this product shippable?"
   },
+  "IEpmGQ": {
+    "context": "description",
+    "string": "Use Saleor Cloud to access Saleor Apps"
+  },
   "IFWHn0": {
     "context": "error message",
     "string": "Billing address is not set"
@@ -3683,6 +3691,10 @@
   "Q9wTrz": {
     "context": "caption",
     "string": "If enabled, you’ll be able to use this attribute to filter products in product list."
+  },
+  "QAisk4": {
+    "context": "Webhook events header",
+    "string": "Webhook events"
   },
   "QBxN6z": {
     "context": "is filter range or value",
