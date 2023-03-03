@@ -147,7 +147,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     ],
   );
 
-  const onHeaderClicked = useCallback(
+  const handleHeaderClicked = useCallback(
     (col: number) => {
       const { columnName, columnId } = getColumnMetadata(columns[col].id);
 
@@ -158,7 +158,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [columns, onSort, selectedChannelId],
   );
 
-  const onRowClicked = useCallback(
+  const handleRowClick = useCallback(
     ([_, row]: Item) => {
       const rowData = products[row];
       onRowClick(rowData.id);
@@ -166,7 +166,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [onRowClick, products],
   );
 
-  const getColumnTooltipContent = useCallback(
+  const handleGetColumnTooltipContent = useCallback(
     (colIndex: number): string => {
       const { columnName } = getColumnMetadata(columns[colIndex].id);
       // Sortable column
@@ -199,9 +199,9 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         columnSelect="single"
         freezeColumns={2}
         verticalBorder={col => (col > 1 ? true : false)}
-        getColumnTooltipContent={getColumnTooltipContent}
+        getColumnTooltipContent={handleGetColumnTooltipContent}
         availableColumns={columns}
-        onHeaderClicked={onHeaderClicked}
+        onHeaderClicked={handleHeaderClicked}
         emptyText={intl.formatMessage(messages.emptyText)}
         getCellContent={getCellContent}
         getCellError={() => false}
@@ -215,7 +215,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         title=""
         fullScreenTitle={intl.formatMessage(messages.products)}
         onChange={onChange}
-        onRowClick={onRowClicked}
+        onRowClick={handleRowClick}
         renderColumnPicker={defaultProps => (
           <ColumnPicker
             {...defaultProps}

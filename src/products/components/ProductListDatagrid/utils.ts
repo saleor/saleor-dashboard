@@ -245,10 +245,6 @@ function getAvailabilityCellContent(
   if (!!selectedChannnel) {
     return readonlyTextCell(
       intl.formatMessage(getChannelAvailabilityLabel(selectedChannnel)),
-      {
-        cursor: "pointer",
-        readonly: true,
-      },
     );
   }
 
@@ -258,10 +254,6 @@ function getAvailabilityCellContent(
           channelCount: rowData?.channelListings?.length,
         })
       : intl.formatMessage(messages.noChannels),
-    {
-      cursor: "pointer",
-      readonly: true,
-    },
   );
 }
 
@@ -273,9 +265,7 @@ function getDescriptionCellContent(
   const value = change ?? rowData?.[columnId] ?? "";
 
   if (!value) {
-    return readonlyTextCell("", {
-      cursor: "pointer",
-    });
+    return readonlyTextCell("");
   }
 
   const parsed = JSON.parse(value);
@@ -284,16 +274,13 @@ function getDescriptionCellContent(
     const descriptionFirstParagraph = parsed.blocks.find(
       block => block.type === "paragraph",
     );
+
     if (descriptionFirstParagraph) {
-      return readonlyTextCell(descriptionFirstParagraph.data.text, {
-        cursor: "pointer",
-      });
+      return readonlyTextCell(descriptionFirstParagraph.data.text);
     }
   }
 
-  return readonlyTextCell(value || "", {
-    cursor: "pointer",
-  });
+  return readonlyTextCell(value || "");
 }
 
 function getNameCellContent(
@@ -316,9 +303,7 @@ function getPriceCellContent(
   const from = selectedChannnel?.pricing?.priceRange?.start?.net;
   const to = selectedChannnel?.pricing?.priceRange?.stop?.net;
 
-  return readonlyTextCell(getMoneyRange(locale, intl, from, to), {
-    cursor: "pointer",
-  });
+  return readonlyTextCell(getMoneyRange(locale, intl, from, to));
 }
 
 function getUpdatedAtrCellContent(
@@ -326,16 +311,11 @@ function getUpdatedAtrCellContent(
   locale: Locale,
 ) {
   if (!rowData) {
-    return readonlyTextCell("", {
-      cursor: "pointer",
-    });
+    return readonlyTextCell("");
   }
 
   return readonlyTextCell(
     moment(rowData.updatedAt).locale(locale).format("lll"),
-    {
-      cursor: "pointer",
-    },
   );
 }
 
@@ -351,14 +331,10 @@ function getAttributeCellContent(
   if (productAttribute) {
     if (productAttribute.values.length) {
       if (productAttribute.values[0].date) {
-        return readonlyTextCell(productAttribute.values[0].date, {
-          cursor: "pointer",
-        });
+        return readonlyTextCell(productAttribute.values[0].date);
       }
       if (productAttribute.values[0].dateTime) {
-        return readonlyTextCell(productAttribute.values[0].dateTime, {
-          cursor: "pointer",
-        });
+        return readonlyTextCell(productAttribute.values[0].dateTime);
       }
     }
 
@@ -366,9 +342,7 @@ function getAttributeCellContent(
       .map(value => value.name)
       .join(", ");
 
-    return readonlyTextCell(textValue, {
-      cursor: "pointer",
-    });
+    return readonlyTextCell(textValue);
   }
 
   return readonlyTextCell("");

@@ -17,10 +17,9 @@ const common = {
   readonly: false,
 };
 
-export function textCell(value: string, opts?: Partial<GridCell>): GridCell {
+export function textCell(value: string): GridCell {
   return {
     ...common,
-    ...opts,
     data: value,
     displayData: value,
     kind: GridCellKind.Text,
@@ -29,10 +28,10 @@ export function textCell(value: string, opts?: Partial<GridCell>): GridCell {
 
 export function readonlyTextCell(
   value: string,
-  opts?: Partial<GridCell>,
+  hasCursorPointer: boolean = true,
 ): GridCell {
   return {
-    ...opts,
+    cursor: hasCursorPointer ? "pointer" : "default",
     allowOverlay: false,
     readonly: true,
     data: value,
@@ -41,13 +40,9 @@ export function readonlyTextCell(
   };
 }
 
-export function booleanCell(
-  value: boolean,
-  opts?: Partial<GridCell>,
-): GridCell {
+export function booleanCell(value: boolean): GridCell {
   return {
     ...common,
-    ...opts,
     allowOverlay: false,
     kind: GridCellKind.Boolean,
     data: value,
@@ -63,11 +58,9 @@ export function loadingCell(): GridCell {
 
 export function numberCell(
   value: number | typeof numberCellEmptyValue,
-  opts?: Partial<GridCell>,
 ): NumberCell {
   return {
     ...common,
-    ...opts,
     data: {
       kind: "number-cell",
       value,
@@ -77,14 +70,9 @@ export function numberCell(
   };
 }
 
-export function moneyCell(
-  value: number | null,
-  currency: string,
-  opts?: Partial<GridCell>,
-): MoneyCell {
+export function moneyCell(value: number | null, currency: string): MoneyCell {
   return {
     ...common,
-    ...opts,
     kind: GridCellKind.Custom,
     data: {
       kind: "money-cell",
