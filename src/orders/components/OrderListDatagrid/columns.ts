@@ -88,9 +88,7 @@ export function createGetCellContent({
 
     switch (columnId) {
       case "number":
-        return readonlyTextCell(rowData.number, {
-          cursor: "pointer",
-        });
+        return readonlyTextCell(rowData.number);
       case "date":
         return getDateCellContent(locale, rowData);
       case "customer":
@@ -111,12 +109,7 @@ function getDateCellContent(
   locale: Locale,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
-  return readonlyTextCell(
-    moment(rowData.created).locale(locale).format("lll"),
-    {
-      cursor: "pointer",
-    },
-  );
+  return readonlyTextCell(moment(rowData.created).locale(locale).format("lll"));
 }
 
 function getCustomerCellContent(
@@ -125,17 +118,14 @@ function getCustomerCellContent(
   if (rowData.billingAddress) {
     return readonlyTextCell(
       `${rowData.billingAddress.firstName} ${rowData.billingAddress.lastName}`,
-      { cursor: "pointer" },
     );
   }
 
   if (rowData.userEmail) {
-    return readonlyTextCell(rowData.userEmail, { cursor: "pointer" });
+    return readonlyTextCell(rowData.userEmail);
   }
 
-  return readonlyTextCell("-", {
-    cursor: "pointer",
-  });
+  return readonlyTextCell("-");
 }
 
 function getPaymentCellContent(
@@ -144,14 +134,10 @@ function getPaymentCellContent(
 ) {
   const paymentStatus = transformPaymentStatus(rowData.paymentStatus, intl);
   if (paymentStatus?.status) {
-    return readonlyTextCell(paymentStatus.localized, {
-      cursor: "pointer",
-    });
+    return readonlyTextCell(paymentStatus.localized);
   }
 
-  return readonlyTextCell("-", {
-    cursor: "pointer",
-  });
+  return readonlyTextCell("-");
 }
 
 function getStatusCellContent(
@@ -161,14 +147,10 @@ function getStatusCellContent(
   const status = transformOrderStatus(rowData.status, intl);
 
   if (status) {
-    return readonlyTextCell(status.localized, {
-      cursor: "pointer",
-    });
+    return readonlyTextCell(status.localized);
   }
 
-  return readonlyTextCell("-", {
-    cursor: "pointer",
-  });
+  return readonlyTextCell("-");
 }
 
 function getTotalCellContent(
@@ -176,12 +158,8 @@ function getTotalCellContent(
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   if (rowData?.total?.gross) {
-    return readonlyTextCell(getMoney(rowData.total.gross, locale), {
-      cursor: "pointer",
-    });
+    return readonlyTextCell(getMoney(rowData.total.gross, locale));
   }
 
-  return readonlyTextCell("-", {
-    cursor: "pointer",
-  });
+  return readonlyTextCell("-");
 }
