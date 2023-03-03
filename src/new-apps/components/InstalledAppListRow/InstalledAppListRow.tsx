@@ -94,7 +94,12 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
           justifyContent={{ mobile: "flex-end", desktop: "flex-start" }}
           gap={6}
         >
-          <Box marginLeft="auto">
+          <Box marginLeft="auto" display="flex" alignItems="center" gap={8}>
+            {!app.isActive && (
+              <Text variant="caption" color="textNeutralSubdued">
+                <FormattedMessage {...messages.appDisabled} />
+              </Text>
+            )}
             <AppPermissions permissions={app.permissions} />
           </Box>
           <TableButtonWrapper>
