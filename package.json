@@ -148,6 +148,7 @@
     "codecov": "^3.7.1",
     "core-js": "^3.7.0",
     "cross-env": "^6.0.3",
+    "dependency-cruiser": "^12.10.0",
     "dotenv": "^10.0.0",
     "esbuild-loader": "^2.18.0",
     "fork-ts-checker-webpack-plugin": "^3.1.1",
@@ -302,7 +303,8 @@
     "postinstall": "node scripts/patchReactVirtualized.js",
     "predev": "npm run build-types",
     "release": "release-it",
-    "prepare": "is-ci || husky install"
+    "prepare": "is-ci || husky install",
+    "dep-status": "depcruise --config .dependency-cruiser.js src"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }
