@@ -40,6 +40,22 @@ export function readonlyTextCell(
   };
 }
 
+export function tagsCell(
+  tags: Array<{ tag: string; color: string }>,
+): GridCell {
+  return {
+    kind: GridCellKind.Custom,
+    allowOverlay: true,
+    copyData: "4",
+    data: {
+      kind: "tags-cell",
+      possibleTags: tags,
+      readonly: true,
+      tags: tags.map(({ tag }) => tag),
+    },
+  };
+}
+
 export function booleanCell(value: boolean): GridCell {
   return {
     ...common,

@@ -2,6 +2,7 @@ import {
   loadingCell,
   moneyCell,
   readonlyTextCell,
+  tagsCell,
   textCell,
 } from "@dashboard/components/Datagrid/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
@@ -135,7 +136,7 @@ function getPaymentCellContent(
 ) {
   const paymentStatus = transformPaymentStatus(rowData.paymentStatus, intl);
   if (paymentStatus?.status) {
-    return readonlyTextCell(paymentStatus.localized);
+    return tagsCell([{ tag: paymentStatus.localized, color: "#ff4d4d35" }]);
   }
 
   return readonlyTextCell("-");
@@ -148,7 +149,7 @@ function getStatusCellContent(
   const status = transformOrderStatus(rowData.status, intl);
 
   if (status) {
-    return readonlyTextCell(status.localized);
+    return tagsCell([{ tag: status.localized, color: "#ff1eec35" }]);
   }
 
   return readonlyTextCell("-");
