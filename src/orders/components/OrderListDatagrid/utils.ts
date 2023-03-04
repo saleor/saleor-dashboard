@@ -31,3 +31,16 @@ export function getColumnMetadata(column: string) {
     columnName: column as OrderListUrlSortField,
   };
 }
+
+export function canBeSorted(sort: OrderListUrlSortField) {
+  switch (sort) {
+    case OrderListUrlSortField.number:
+    case OrderListUrlSortField.date:
+    case OrderListUrlSortField.customer:
+    case OrderListUrlSortField.payment:
+    case OrderListUrlSortField.fulfillment:
+      return true;
+    default:
+      return false;
+  }
+}

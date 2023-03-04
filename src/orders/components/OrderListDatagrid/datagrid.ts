@@ -11,7 +11,9 @@ import { Locale } from "@dashboard/components/Locale";
 import { getMoney } from "@dashboard/components/Money/utils";
 import { OrderListQuery } from "@dashboard/graphql";
 import { transformOrderStatus, transformPaymentStatus } from "@dashboard/misc";
-import { RelayToFlat } from "@dashboard/types";
+import { OrderListUrlSortField } from "@dashboard/orders/urls";
+import { RelayToFlat, Sort } from "@dashboard/types";
+import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { themes } from "@saleor/macaw-ui/next";
 import moment from "moment-timezone";
@@ -19,7 +21,10 @@ import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
-export const getColumns = (intl: IntlShape): AvailableColumn[] => [
+export const getColumns = (
+  intl: IntlShape,
+  sort: Sort<OrderListUrlSortField>,
+): AvailableColumn[] => [
   {
     id: "empty",
     title: "",
@@ -29,26 +34,31 @@ export const getColumns = (intl: IntlShape): AvailableColumn[] => [
     id: "number",
     title: intl.formatMessage(columnsMessages.number),
     width: 100,
+    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.number),
   },
   {
     id: "date",
     title: intl.formatMessage(columnsMessages.date),
     width: 200,
+    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.date),
   },
   {
     id: "customer",
     title: intl.formatMessage(columnsMessages.customer),
     width: 200,
+    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.customer),
   },
   {
     id: "payment",
     title: intl.formatMessage(columnsMessages.payment),
     width: 200,
+    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.payment),
   },
   {
     id: "status",
     title: intl.formatMessage(columnsMessages.status),
     width: 200,
+    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.fulfillment),
   },
   {
     id: "total",

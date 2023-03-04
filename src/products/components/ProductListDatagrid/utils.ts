@@ -21,6 +21,7 @@ import { GridAttributesQuery, ProductListQuery } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { ListSettings, RelayToFlat, Sort } from "@dashboard/types";
+import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { Item } from "@glideapps/glide-data-grid";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
@@ -55,14 +56,17 @@ export function getColumns({
       id: "name",
       title: intl.formatMessage(commonMessages.product),
       width: 300,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.name),
+      icon: getColumnSortDirectionIcon(sort, ProductListUrlSortField.name),
     },
     ...[
       {
         id: "productType",
         title: intl.formatMessage(columnsMessages.type),
         width: 200,
-        icon: getColumnSortIconName(sort, ProductListUrlSortField.productType),
+        icon: getColumnSortDirectionIcon(
+          sort,
+          ProductListUrlSortField.productType,
+        ),
       },
       {
         id: "description",
@@ -73,7 +77,10 @@ export function getColumns({
         id: "availability",
         title: intl.formatMessage(columnsMessages.availability),
         width: 250,
-        icon: getColumnSortIconName(sort, ProductListUrlSortField.availability),
+        icon: getColumnSortDirectionIcon(
+          sort,
+          ProductListUrlSortField.availability,
+        ),
       },
       ...gridAttributesFromSettings.map(
         toAttributeColumndData(gridAttributes, activeAttributeSortId, sort),
@@ -82,13 +89,13 @@ export function getColumns({
         id: "date",
         title: intl.formatMessage(columnsMessages.updatedAt),
         width: 250,
-        icon: getColumnSortIconName(sort, ProductListUrlSortField.date),
+        icon: getColumnSortDirectionIcon(sort, ProductListUrlSortField.date),
       },
       {
         id: "price",
         title: intl.formatMessage(columnsMessages.price),
         width: 250,
-        icon: getColumnSortIconName(sort, ProductListUrlSortField.price),
+        icon: getColumnSortDirectionIcon(sort, ProductListUrlSortField.price),
       },
     ].filter(col => settings.columns.includes(col.id as ProductListColumns)),
   ];
@@ -112,24 +119,9 @@ function toAttributeColumndData(
       width: 200,
       icon:
         attributeId === activeAttributeSortId &&
-        getColumnSortIconName(sort, ProductListUrlSortField.attribute),
+        getColumnSortDirectionIcon(sort, ProductListUrlSortField.attribute),
     };
   };
-}
-
-function getColumnSortIconName(
-  { sort, asc }: Sort<ProductListUrlSortField>,
-  columnName: ProductListUrlSortField,
-) {
-  if (columnName === sort) {
-    if (asc) {
-      return "arrowUp";
-    } else {
-      return "arrowDown";
-    }
-  }
-
-  return undefined;
 }
 
 interface GetCellContentProps {

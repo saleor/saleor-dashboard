@@ -17,9 +17,9 @@ import { themes, useTheme } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { createGetCellContent, getColumns } from "./columns";
+import { createGetCellContent, getColumns } from "./datagrid";
 import { messages } from "./messages";
-import { getColumnMetadata, getOrdersRowsLength } from "./utils";
+import { canBeSorted, getColumnMetadata, getOrdersRowsLength } from "./utils";
 
 interface OrderListDatagridProps
   extends ListProps,
@@ -42,6 +42,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   settings,
   onUpdateListSettings,
   onSort,
+  sort,
   onRowClick,
 }) => {
   const classes = useStyles();
@@ -51,13 +52,15 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   const { theme: currentTheme } = useTheme();
   const theme = themes[currentTheme];
 
-  const columns = useMemo(() => getColumns(intl), [intl]);
+  const columns = useMemo(() => getColumns(intl, sort), [intl, sort]);
 
   const handleHeaderClick = useCallback(
     (col: number) => {
       const { columnName, columnId } = getColumnMetadata(columns[col].id);
 
-      onSort(columnName, columnId);
+      if (canBeSorted(columnName)) {
+        onSort(columnName, columnId);
+      }
     },
     [columns, onSort],
   );
