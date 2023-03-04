@@ -185,7 +185,7 @@ export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(
   { name: "Datagrid-fullscreen" },
 );
 
-export function useDatagridTheme() {
+export function useDatagridTheme(readonly?: boolean) {
   const { theme: selectedTheme } = useTheme();
   const theme = themes[selectedTheme];
 
@@ -217,7 +217,15 @@ export function useDatagridTheme() {
     }),
     [theme],
   );
-  return datagridTheme;
+
+  const readonylDatagridTheme = useMemo(
+    () => ({
+      ...datagridTheme,
+      accentLight: theme.colors.background.plain,
+    }),
+    [theme, datagridTheme],
+  );
+  return readonly ? readonylDatagridTheme : datagridTheme;
 }
 
 export default useStyles;
