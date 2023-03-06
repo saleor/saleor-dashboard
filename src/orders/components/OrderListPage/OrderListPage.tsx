@@ -130,6 +130,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
       {limitsReached && <OrderLimitReached />}
       <Card>
         <FilterBar
+          withoutBorder
           currentTab={currentTab}
           initialSearch={initialSearch}
           onAll={onAll}
