@@ -32,8 +32,8 @@ import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { isAttributeColumnValue } from "../ProductListPage/utils";
+import { useColumnPickerColumns } from "./hooks/useColumnPickerColumns";
 import { messages } from "./messages";
-import { useColumnPickerColumns } from "./useColumnPickerColumns";
 import {
   createGetCellContent,
   getColumnMetadata,

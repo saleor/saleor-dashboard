@@ -9,8 +9,8 @@ import { ListSettings, RelayToFlat } from "@dashboard/types";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { getAttributeColumnValue } from "../ProductListPage/utils";
-import { columnsMessages } from "./messages";
+import { getAttributeColumnValue } from "../../ProductListPage/utils";
+import { columnsMessages } from "../messages";
 
 export const useColumnPickerColumns = (
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>,
