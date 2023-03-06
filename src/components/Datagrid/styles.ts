@@ -40,6 +40,7 @@ const useStyles = makeStyles(
       },
       ghostIcon: {
         color: vars.colors.foreground.iconNeutralPlain,
+        padding: vars.space["3"],
       },
       portal: {
         "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button":
