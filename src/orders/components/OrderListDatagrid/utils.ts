@@ -5,7 +5,12 @@ import { RelayToFlat } from "@dashboard/types";
 export function getOrdersRowsLength(
   disabled: boolean,
   orders?: RelayToFlat<OrderListQuery["orders"]>,
+  loading?: boolean,
 ) {
+  if (loading) {
+    return 1;
+  }
+
   if (orders?.length) {
     return orders.length;
   }

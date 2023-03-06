@@ -358,7 +358,12 @@ export function getColumnMetadata(column: string) {
 export function getProductRowsLength(
   disabled: boolean,
   product?: RelayToFlat<ProductListQuery["products"]>,
+  loading?: boolean,
 ) {
+  if (loading) {
+    return 1;
+  }
+
   if (product?.length) {
     return product.length;
   }

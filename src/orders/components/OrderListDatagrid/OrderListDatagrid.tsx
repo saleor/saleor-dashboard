@@ -88,7 +88,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
         getCellContent={getCellContent}
         getCellError={() => false}
         menuItems={() => []}
-        rows={getOrdersRowsLength(disabled, orders)}
+        rows={getOrdersRowsLength(disabled, orders, disabled)}
         selectionActions={(indexes, { removeRows }) => (
           <Button variant="tertiary" onClick={() => removeRows(indexes)}>
             <FormattedMessage {...buttonMessages.delete} />

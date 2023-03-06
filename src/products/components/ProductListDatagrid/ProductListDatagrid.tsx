@@ -198,7 +198,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         getCellContent={getCellContent}
         getCellError={() => false}
         menuItems={() => []}
-        rows={getProductRowsLength(disabled, products)}
+        rows={getProductRowsLength(disabled, products, disabled)}
         selectionActions={(indexes, { removeRows }) => (
           <Button variant="tertiary" onClick={() => removeRows(indexes)}>
             <FormattedMessage {...buttonMessages.delete} />
