@@ -1,9 +1,8 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import { MenuDetailsFragment, MenuErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -86,8 +85,8 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ change, data, submit }) => (
-        <DetailedContent useSingleColumn>
-          <Content noTopNav>
+        <DetailPageLayout gridTemplateColumns={1}>
+          <DetailPageLayout.Content>
             <Box padding={9} margin="auto" height="100vh">
               <Backlink href={menuListUrl()}>
                 {intl.formatMessage(sectionNames.navigation)}
@@ -145,8 +144,8 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
                 state={saveButtonState}
               />
             </Box>
-          </Content>
-        </DetailedContent>
+          </DetailPageLayout.Content>
+        </DetailPageLayout>
       )}
     </Form>
   );

@@ -1,4 +1,4 @@
-import { appPath } from "@dashboard/apps/urls";
+import { AppPaths } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { customerPath } from "@dashboard/customers/urls";
@@ -33,7 +33,7 @@ const getUserOrAppUrl = (event: GiftCardEventFragment): string => {
     return staffMemberDetailsUrl(event.user.id);
   }
   if (event.app) {
-    return appPath(event.app.id);
+    return AppPaths.resolveAppPath(event.app.id);
   }
   return null;
 };
@@ -99,7 +99,7 @@ const getEventMessage = (event: GiftCardEventFragment, intl: IntlShape) => {
                   href={
                     event.user
                       ? customerPath(event.user.id)
-                      : appPath(event.app.id)
+                      : AppPaths.resolveAppPath(event.app.id)
                   }
                 >{`${content} ${user}`}</Link>
               ),
@@ -122,7 +122,13 @@ const GiftCardTimelineEvent: React.FC<GiftCardTimelineEventProps> = ({
   event,
 }) => {
   const intl = useIntl();
-  return <TimelineEvent date={date} title={getEventMessage(event, intl)} />;
+  return (
+    <TimelineEvent
+      date={date}
+      title={getEventMessage(event, intl)}
+      hasPlainDate
+    />
+  );
 };
 
 export default GiftCardTimelineEvent;

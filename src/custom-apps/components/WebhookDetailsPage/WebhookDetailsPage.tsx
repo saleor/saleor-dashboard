@@ -1,8 +1,7 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import WebhookEvents from "@dashboard/custom-apps/components/WebhookEvents";
 import WebhookInfo from "@dashboard/custom-apps/components/WebhookInfo";
@@ -96,23 +95,24 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ data, submit, change }) => {
-        const handleSyncEventsSelect = createSyncEventsSelectHandler(
+        const handleSyncEventsSelect = createSyncEventsSelectHandler({
           change,
-          data.syncEvents,
-          setQuery,
-        );
-        const handleAsyncEventsSelect = createAsyncEventsSelectHandler(
-          change,
-          data.asyncEvents,
+          data,
           query,
           setQuery,
-        );
+        });
+        const handleAsyncEventsSelect = createAsyncEventsSelectHandler({
+          change,
+          data,
+          query,
+          setQuery,
+        });
 
         return (
-          <DetailedContent useSingleColumn>
+          <DetailPageLayout gridTemplateColumns={1}>
             <TopNav href={backUrl} title={getHeaderTitle(intl, webhook)} />
-            <Content>
-              <Box paddingX={9}>
+            <DetailPageLayout.Content>
+              <Box padding={9}>
                 <WebhookStatus
                   data={data.isActive}
                   disabled={disabled}
@@ -124,12 +124,16 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                   errors={errors}
                   onChange={change}
                 />
-                <FormSpacer />
+              </Box>
+              <FormSpacer />
+              <Box>
                 <WebhookEvents
                   data={data}
+                  setQuery={setQuery}
                   onSyncEventChange={handleSyncEventsSelect}
                   onAsyncEventChange={handleAsyncEventsSelect}
                 />
+
                 <WebhookSubscriptionQuery
                   query={query}
                   setQuery={setQuery}
@@ -140,14 +144,14 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
                 <FormSpacer />
                 <WebhookHeaders data={data} onChange={change} />
               </Box>
-            </Content>
+            </DetailPageLayout.Content>
             <Savebar
               disabled={disabled}
               state={saveButtonBarState}
               onCancel={() => navigate(backUrl)}
               onSubmit={submit}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

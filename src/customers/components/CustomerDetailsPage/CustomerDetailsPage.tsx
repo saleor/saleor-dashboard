@@ -2,15 +2,13 @@ import {
   extensionMountPoints,
   mapToMenuItemsForCustomerDetails,
   useExtensions,
-} from "@dashboard/apps/useExtensions";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+} from "@dashboard/apps/hooks/useExtensions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardMenu from "@dashboard/components/CardMenu/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
@@ -107,7 +105,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav
               href={customerListUrl()}
               title={getUserName(customer, true)}
@@ -116,7 +114,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CardMenu menuItems={extensionMenuItems} />
               )}
             </TopNav>
-            <Content>
+            <DetailPageLayout.Content>
               <Backlink href={customerListUrl()}>
                 {intl.formatMessage(sectionNames.customers)}
               </Backlink>
@@ -147,8 +145,8 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
                 <CardSpacer />
               </RequirePermissions>
               <Metadata data={data} onChange={changeMetadata} />
-            </Content>
-            <RightSidebar>
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               <CustomerAddresses
                 customer={customer}
                 disabled={disabled}
@@ -162,7 +160,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               >
                 <CustomerGiftCardsCard />
               </RequirePermissions>
-            </RightSidebar>
+            </DetailPageLayout.RightSidebar>
             <Savebar
               disabled={isSaveDisabled}
               state={saveButtonBar}
@@ -170,7 +168,7 @@ const CustomerDetailsPage: React.FC<CustomerDetailsPageProps> = ({
               onCancel={() => navigate(customerListUrl())}
               onDelete={onDelete}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

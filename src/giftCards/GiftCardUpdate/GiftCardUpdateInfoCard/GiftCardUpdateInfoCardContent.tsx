@@ -1,4 +1,4 @@
-import { appUrl } from "@dashboard/apps/urls";
+import { AppUrls } from "@dashboard/apps/urls";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Link from "@dashboard/components/Link";
 import { customerUrl } from "@dashboard/customers/urls";
@@ -51,7 +51,7 @@ const GiftCardUpdateInfoCardContent: React.FC = () => {
         return {
           label: messages.issuedByAppLabel,
           name: app?.name,
-          url: appUrl(app?.id),
+          url: AppUrls.resolveAppUrl(app?.id),
         };
       }
 

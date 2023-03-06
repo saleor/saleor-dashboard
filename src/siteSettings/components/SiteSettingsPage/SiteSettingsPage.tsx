@@ -1,11 +1,10 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import Savebar from "@dashboard/components/Savebar";
 import { configurationMenuUrl } from "@dashboard/configuration";
@@ -139,12 +138,12 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
         return (
-          <DetailedContent useSingleColumn>
+          <DetailPageLayout gridTemplateColumns={1}>
             <TopNav
               href={configurationMenuUrl}
               title={intl.formatMessage(commonMessages.generalInformations)}
             />
-            <Content>
+            <DetailPageLayout.Content>
               <Grid
                 variant="inverted"
                 className={sprinkles({ paddingLeft: 9 })}
@@ -189,8 +188,8 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 onCancel={() => navigate(configurationMenuUrl)}
                 onSubmit={submit}
               />
-            </Content>
-          </DetailedContent>
+            </DetailPageLayout.Content>
+          </DetailPageLayout>
         );
       }}
     </Form>

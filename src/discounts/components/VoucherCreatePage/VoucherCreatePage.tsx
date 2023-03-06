@@ -1,11 +1,9 @@
 import { ChannelVoucherData } from "@dashboard/channels/utils";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import {
@@ -119,7 +117,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav
               href={voucherListUrl()}
               title={intl.formatMessage({
@@ -128,7 +126,7 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 description: "page header",
               })}
             />
-            <Content>
+            <DetailPageLayout.Content>
               <VoucherInfo
                 data={data}
                 errors={errors}
@@ -181,8 +179,9 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 errors={errors}
                 onChange={change}
               />
-            </Content>
-            <RightSidebar>
+              <Metadata data={data} onChange={changeMetadata} />
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               <ChannelsAvailabilityCard
                 managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
                 allChannelsCount={allChannelsCount}
@@ -193,15 +192,14 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 disabled={disabled}
                 openModal={openChannelsModal}
               />
-            </RightSidebar>
-            <Metadata data={data} onChange={changeMetadata} />
+            </DetailPageLayout.RightSidebar>
             <Savebar
               disabled={disabled}
               onCancel={() => navigate(voucherListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

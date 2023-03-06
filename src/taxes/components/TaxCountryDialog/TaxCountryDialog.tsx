@@ -1,4 +1,4 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { CountryFragment } from "@dashboard/graphql";
 import { useLocalSearch } from "@dashboard/hooks/useLocalSearch";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
@@ -36,9 +36,8 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
   const classes = useStyles();
   const intl = useIntl();
 
-  const [selectedCountry, setSelectedCountry] = React.useState<
-    CountryFragment
-  >();
+  const [selectedCountry, setSelectedCountry] =
+    React.useState<CountryFragment>();
 
   useModalDialogOpen(open, {
     onClose: () => {
@@ -47,9 +46,11 @@ export const TaxCountryDialog: React.FC<TaxCountryDialogProps> = ({
     },
   });
 
-  const { query, setQuery, searchResult: filteredCountries } = useLocalSearch<
-    CountryFragment
-  >(countries, country => country.country);
+  const {
+    query,
+    setQuery,
+    searchResult: filteredCountries,
+  } = useLocalSearch<CountryFragment>(countries, country => country.country);
 
   return (
     <Dialog open={open} fullWidth onClose={onClose} className={classes.dialog}>

@@ -1,6 +1,6 @@
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import LanguageSwitch from "@dashboard/components/LanguageSwitch";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import {
   LanguageCodeEnum,
   ShippingMethodTranslationFragment,
@@ -43,7 +43,7 @@ const TranslationsShippingMethodPage: React.FC<
   const intl = useIntl();
 
   return (
-    <DetailedContent useSingleColumn>
+    <DetailPageLayout gridTemplateColumns={1}>
       <TopNav
         href={languageEntitiesUrl(languageCode, {
           tab: TranslatableEntities.shippingMethods,
@@ -73,42 +73,44 @@ const TranslationsShippingMethodPage: React.FC<
           }
         />
       </TopNav>
-      <TranslationFields
-        activeField={activeField}
-        disabled={disabled}
-        initialState={true}
-        title={intl.formatMessage(commonMessages.generalInformations)}
-        fields={[
-          {
-            displayName: intl.formatMessage({
-              id: "aPCrsp",
-              defaultMessage: "Name",
-              description: "shipping method name",
-            }),
-            name: TranslationInputFieldName.name,
-            translation: data?.translation?.name || null,
-            type: "short" as "short",
-            value: data?.name,
-          },
-          {
-            displayName: intl.formatMessage({
-              id: "GpqEl5",
-              defaultMessage: "Description",
-              description: "shipping method description",
-            }),
-            name: TranslationInputFieldName.description,
-            translation: data?.translation?.description || null,
-            type: "rich",
-            value: data?.description,
-          },
-        ]}
-        saveButtonState={saveButtonState}
-        richTextResetKey={languageCode}
-        onEdit={onEdit}
-        onDiscard={onDiscard}
-        onSubmit={onSubmit}
-      />
-    </DetailedContent>
+      <DetailPageLayout.Content>
+        <TranslationFields
+          activeField={activeField}
+          disabled={disabled}
+          initialState={true}
+          title={intl.formatMessage(commonMessages.generalInformations)}
+          fields={[
+            {
+              displayName: intl.formatMessage({
+                id: "aPCrsp",
+                defaultMessage: "Name",
+                description: "shipping method name",
+              }),
+              name: TranslationInputFieldName.name,
+              translation: data?.translation?.name || null,
+              type: "short" as "short",
+              value: data?.name,
+            },
+            {
+              displayName: intl.formatMessage({
+                id: "GpqEl5",
+                defaultMessage: "Description",
+                description: "shipping method description",
+              }),
+              name: TranslationInputFieldName.description,
+              translation: data?.translation?.description || null,
+              type: "rich",
+              value: data?.description,
+            },
+          ]}
+          saveButtonState={saveButtonState}
+          richTextResetKey={languageCode}
+          onEdit={onEdit}
+          onDiscard={onDiscard}
+          onSubmit={onSubmit}
+        />
+      </DetailPageLayout.Content>
+    </DetailPageLayout>
   );
 };
 TranslationsShippingMethodPage.displayName = "TranslationsShippingMethodPage";

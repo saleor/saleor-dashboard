@@ -3,7 +3,7 @@ import {
   mapToMenuItems,
   mapToMenuItemsForCustomerOverviewActions,
   useExtensions,
-} from "@dashboard/apps/useExtensions";
+} from "@dashboard/apps/hooks/useExtensions";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import ButtonWithSelect from "@dashboard/components/ButtonWithSelect";

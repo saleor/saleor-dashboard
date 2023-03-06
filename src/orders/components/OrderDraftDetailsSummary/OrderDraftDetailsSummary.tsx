@@ -1,4 +1,4 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Link from "@dashboard/components/Link";
 import Money from "@dashboard/components/Money";
 import { DiscountValueTypeEnum } from "@dashboard/graphql";

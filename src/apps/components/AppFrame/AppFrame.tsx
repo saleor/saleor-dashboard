@@ -1,16 +1,14 @@
+import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useAppDashboardUpdates";
 import {
   AppDetailsUrlQueryParams,
-  getAppDeepPathFromDashboardUrl,
+  AppUrls,
   prepareFeatureFlagsList,
-  resolveAppIframeUrl,
 } from "@dashboard/apps/urls";
 import { useAllFlags } from "@dashboard/hooks/useFlags";
-import useLocale from "@dashboard/hooks/useLocale";
-import useShop from "@dashboard/hooks/useShop";
+import { CircularProgress } from "@material-ui/core";
 import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React, { useEffect } from "react";
-import { useLocation } from "react-router";
+import React from "react";
 
 import { useStyles } from "./styles";
 import { useAppActions } from "./useAppActions";
@@ -39,46 +37,36 @@ export const AppFrame: React.FC<Props> = ({
   onError,
   refetch,
 }) => {
-  const shop = useShop();
-  const frameRef = React.useRef<HTMLIFrameElement>(null);
+  const frameRef = React.useRef<HTMLIFrameElement | null>(null);
   const { themeType } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const flags = useAllFlags();
-  const { postToExtension } = useAppActions(frameRef, appOrigin, appId);
-  const location = useLocation();
-  const { locale } = useLocale();
 
-  useEffect(() => {
-    postToExtension({
-      type: "localeChanged",
-      payload: {
-        locale,
-      },
-    });
-  }, [locale, postToExtension]);
+  /**
+   * React on messages from App
+   */
+  const { postToExtension, handshakeDone, setHandshakeDone } = useAppActions(
+    frameRef.current,
+    appOrigin,
+    appId,
+    appToken,
+  );
 
-  useEffect(() => {
-    postToExtension({
-      type: "theme",
-      payload: {
-        theme: themeType,
-      },
-    });
-  }, [themeType, postToExtension]);
-
-  useEffect(() => {
-    postToExtension({
-      type: "redirect",
-      payload: {
-        path: getAppDeepPathFromDashboardUrl(location.pathname, appId),
-      },
-    });
-  }, [location.pathname]);
+  /**
+   * Listen to Dashboard context like theme or locale and inform app about it
+   */
+  useAppDashboardUpdates(frameRef.current, appOrigin, handshakeDone, appId);
 
   useTokenRefresh(appToken, refetch);
 
   const handleLoad = () => {
+    /**
+     * @deprecated
+     *
+     * Move handshake to notifyReady, so app is requesting token after it's ready to receive it
+     * Currently handshake it 2 times, for compatibility
+     */
     postToExtension({
       type: "handshake",
       payload: {
@@ -86,34 +74,33 @@ export const AppFrame: React.FC<Props> = ({
         version: 1,
       },
     });
-    postToExtension({
-      type: "theme",
-      payload: {
-        theme: themeType,
-      },
-    });
+
+    setHandshakeDone(true);
 
     if (onLoad) {
       onLoad();
     }
   };
 
-  if (!shop?.domain.host) {
-    return null;
-  }
-
   return (
-    <iframe
-      ref={frameRef}
-      src={resolveAppIframeUrl(appId, src, {
-        ...params,
-        featureFlags: prepareFeatureFlagsList(flags),
-        theme: themeType,
-      })}
-      onError={onError}
-      onLoad={handleLoad}
-      className={clsx(classes.iframe, className)}
-      sandbox="allow-same-origin allow-forms allow-scripts"
-    />
+    <>
+      <div className={classes.loader}>
+        <CircularProgress color="primary" />
+      </div>
+      <iframe
+        ref={frameRef}
+        src={AppUrls.resolveAppIframeUrl(appId, src, {
+          ...params,
+          featureFlags: prepareFeatureFlagsList(flags),
+          theme: themeType,
+        })}
+        onError={onError}
+        onLoad={handleLoad}
+        className={clsx(classes.iframe, className, {
+          [classes.iframeHidden]: !handshakeDone,
+        })}
+        sandbox="allow-same-origin allow-forms allow-scripts"
+      />
+    </>
   );
 };

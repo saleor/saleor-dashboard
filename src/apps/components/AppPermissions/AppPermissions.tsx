@@ -1,49 +1,43 @@
 import { AppPermissionFragment } from "@dashboard/graphql";
-import {
-  IconButton,
-  makeStyles,
-  PermissionsIcon,
-  Tooltip,
-} from "@saleor/macaw-ui";
+import { Tooltip } from "@saleor/macaw-ui";
+import { Box, InfoIcon } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const useStyles = makeStyles(
-  () => ({
-    list: {
-      margin: 0,
-      paddingLeft: "16px",
-    },
-  }),
-  { name: "AppPermissions" },
-);
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 interface AppPermissionsProps {
-  permissions: AppPermissionFragment[];
+  permissions?: AppPermissionFragment[] | null;
 }
 
-export const AppPermissions = ({ permissions }: AppPermissionsProps) => {
+export const AppPermissions: React.FC<AppPermissionsProps> = ({
+  permissions,
+}) => {
   const classes = useStyles();
+
   return (
     <Tooltip
-      header={
-        <FormattedMessage
-          defaultMessage="App permissions"
-          id="xNfh4L"
-          description="app permissions tooltip header"
-        />
-      }
+      header={<FormattedMessage {...messages.appPermissions} />}
       title={
         <ul className={classes.list}>
-          {permissions.map(permission => (
-            <li key={permission.code}>{permission.name}</li>
-          ))}
+          {permissions?.length ? (
+            permissions?.map(permission => (
+              <li key={permission.code}>{permission.name}</li>
+            ))
+          ) : (
+            <li>
+              <FormattedMessage {...messages.noPermissions} />
+            </li>
+          )}
         </ul>
       }
     >
-      <IconButton variant="secondary" color="primary">
-        <PermissionsIcon />
-      </IconButton>
+      <Box display="flex" placeItems="center">
+        <InfoIcon color="iconNeutralSubdued" size="large" />
+      </Box>
     </Tooltip>
   );
 };
+AppPermissions.displayName = "AppPermissions";
+export default AppPermissions;

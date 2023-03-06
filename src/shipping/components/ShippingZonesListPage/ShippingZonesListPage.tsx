@@ -1,7 +1,5 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import {
@@ -40,7 +38,7 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
   const intl = useIntl();
 
   return (
-    <DetailedContent>
+    <DetailPageLayout withSavebar={false}>
       <TopNav
         href={configurationMenuUrl}
         title={intl.formatMessage({
@@ -49,10 +47,10 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
           description: "header",
         })}
       />
-      <Content noSavebar>
+      <DetailPageLayout.Content>
         <ShippingZonesList disabled={disabled} {...listProps} />
-      </Content>
-      <RightSidebar noSavebar>
+      </DetailPageLayout.Content>
+      <DetailPageLayout.RightSidebar>
         <RequirePermissions
           requiredPermissions={[PermissionEnum.MANAGE_SETTINGS]}
         >
@@ -62,8 +60,8 @@ const ShippingZonesListPage: React.FC<ShippingZonesListPageProps> = ({
             onSubmit={onSubmit}
           />
         </RequirePermissions>
-      </RightSidebar>
-    </DetailedContent>
+      </DetailPageLayout.RightSidebar>
+    </DetailPageLayout>
   );
 };
 ShippingZonesListPage.displayName = "ShippingZonesListPage";

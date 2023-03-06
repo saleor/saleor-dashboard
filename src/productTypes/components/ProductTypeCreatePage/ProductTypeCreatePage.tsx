@@ -1,9 +1,7 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import {
@@ -98,9 +96,9 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
         );
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav href={productTypeListUrl()} title={pageTitle} />
-            <Content>
+            <DetailPageLayout.Content>
               <ProductTypeDetails
                 data={data}
                 disabled={disabled}
@@ -126,22 +124,22 @@ const ProductTypeCreatePage: React.FC<ProductTypeCreatePageProps> = ({
               />
               <CardSpacer />
               <Metadata data={data} onChange={changeMetadata} />
-            </Content>
-            <RightSidebar>
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               <ProductTypeShipping
                 disabled={disabled}
                 data={data}
                 weightUnit={defaultWeightUnit}
                 onChange={change}
               />
-            </RightSidebar>
+            </DetailPageLayout.RightSidebar>
             <Savebar
               onCancel={() => navigate(productTypeListUrl())}
               onSubmit={submit}
               disabled={isSaveDisabled}
               state={saveButtonBarState}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

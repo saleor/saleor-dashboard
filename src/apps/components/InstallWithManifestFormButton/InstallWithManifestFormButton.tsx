@@ -1,35 +1,24 @@
-import { Button } from "@dashboard/components/Button";
+import { appsMessages } from "@dashboard/apps/messages";
+import { buttonMessages } from "@dashboard/intl";
 import { TextField } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Box, Button } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-enum AvailableStates {
-  Initial,
-  InputOpen,
-}
-
-const useStyles = makeStyles(
-  theme => ({
-    installButton: {
-      marginLeft: theme.spacing(2),
-      height: 52,
-    },
-  }),
-  {
-    name: "InstallWithManifestFormButton",
-  },
-);
+import { messages } from "./messages";
+import { useStyles } from "./styles";
 
 interface Props {
   onSubmitted(manifestUrl: string): void;
 }
 
-export const InstallWithManifestFormButton = ({ onSubmitted }: Props) => {
+export const InstallWithManifestFormButton: React.FC<Props> = ({
+  onSubmitted,
+}) => {
   const styles = useStyles();
   const intl = useIntl();
 
-  const [state, setState] = useState<AvailableStates>(AvailableStates.Initial);
+  const [inputOpened, setInputOpened] = useState(false);
 
   const handleFormSubmit: React.FormEventHandler<HTMLFormElement> = e => {
     e.preventDefault();
@@ -46,52 +35,44 @@ export const InstallWithManifestFormButton = ({ onSubmitted }: Props) => {
     }
   };
 
-  switch (state) {
-    case AvailableStates.Initial: {
-      return (
-        <Button
-          variant="secondary"
-          data-test-id="add-app-from-manifest"
-          onClick={() => setState(AvailableStates.InputOpen)}
-        >
-          <FormattedMessage
-            id="kIXV5V"
-            defaultMessage="Install with App Manifest"
-            description="install with app manifest button"
-          />
-        </Button>
-      );
-    }
-    case AvailableStates.InputOpen: {
-      return (
-        <form onSubmit={handleFormSubmit}>
+  if (inputOpened) {
+    return (
+      <form onSubmit={handleFormSubmit}>
+        <Box display="flex">
           <TextField
+            data-test-id="manifest-url-input"
             required
             type="url"
             name="manifest-url"
-            label={intl.formatMessage({
-              id: "QVraQY",
-              defaultMessage: "App manifest URL",
-            })}
+            label={intl.formatMessage(appsMessages.appManifestUrl)}
             defaultValue=""
-            helperText={intl.formatMessage({
-              id: "o/q4fc",
-              defaultMessage: "Usually ends with /api/manifest",
-            })}
+            helperText={intl.formatMessage(messages.appManifestUrlHint)}
           />
+          {/* TODO: Needs to be updated after TextInput implementation */}
           <Button
             size="medium"
             type="submit"
             className={styles.installButton}
             variant="primary"
+            data-test-id="install-app-from-manifest"
           >
-            {intl.formatMessage({
-              id: "ubmFc8",
-              defaultMessage: "Install",
-            })}
+            <FormattedMessage {...buttonMessages.install} />
           </Button>
-        </form>
-      );
-    }
+        </Box>
+      </form>
+    );
   }
+
+  return (
+    <Button
+      variant="primary"
+      size="medium"
+      data-test-id="add-app-from-manifest"
+      onClick={() => setInputOpened(true)}
+    >
+      <FormattedMessage {...messages.installExternalApp} />
+    </Button>
+  );
 };
+InstallWithManifestFormButton.displayName = "InstallWithManifestFormButton";
+export default InstallWithManifestFormButton;

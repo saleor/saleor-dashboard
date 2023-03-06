@@ -1,7 +1,7 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import CardMenu, { CardMenuItem } from "@dashboard/components/CardMenu";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import React from "react";

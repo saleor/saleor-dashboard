@@ -1,4 +1,4 @@
-import { appsListUrl } from "@dashboard/apps/urls";
+import { AppUrls } from "@dashboard/apps/urls";
 import { attributeListUrl } from "@dashboard/attributes/urls";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
@@ -36,7 +36,7 @@ function searchInViews(
   const views: View[] = [
     {
       label: intl.formatMessage(sectionNames.apps),
-      url: appsListUrl(),
+      url: AppUrls.resolveAppListUrl(),
     },
     {
       label: intl.formatMessage(sectionNames.attributes),
@@ -71,7 +71,7 @@ function searchInViews(
       url: orderListUrl(),
     },
     {
-      label: intl.formatMessage(sectionNames.pages),
+      label: intl.formatMessage(sectionNames.content),
       url: pageListUrl(),
     },
     {

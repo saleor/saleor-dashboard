@@ -1,8 +1,8 @@
-import { appsListPath } from "@dashboard/apps/urls";
 import {
   extensionMountPoints,
   useExtensions,
-} from "@dashboard/apps/useExtensions";
+} from "@dashboard/apps/hooks/useExtensions";
+import { AppPaths } from "@dashboard/apps/urls";
 import { useUser } from "@dashboard/auth";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
@@ -68,7 +68,7 @@ export function useMenuStructure() {
           {
             label: intl.formatMessage(sectionNames.apps),
             id: "apps",
-            url: appsListPath,
+            url: AppPaths.appListPath,
             type: "item",
           },
           {
@@ -92,7 +92,7 @@ export function useMenuStructure() {
       label: intl.formatMessage(sectionNames.apps),
       permissions: [PermissionEnum.MANAGE_APPS],
       id: "apps",
-      url: appsListPath,
+      url: AppPaths.appListPath,
       type: "item",
     };
   };
@@ -107,13 +107,6 @@ export function useMenuStructure() {
     },
     {
       children: [
-        {
-          label: intl.formatMessage(sectionNames.products),
-          id: "products",
-          url: productListUrl(),
-          permissions: [PermissionEnum.MANAGE_PRODUCTS],
-          type: "item",
-        },
         {
           label: intl.formatMessage(sectionNames.categories),
           id: "categories",
@@ -141,6 +134,7 @@ export function useMenuStructure() {
         ),
       ],
       icon: <ProductsIcons {...iconSettings} />,
+      url: productListUrl(),
       label: intl.formatMessage(commonMessages.products),
       permissions: [
         PermissionEnum.MANAGE_GIFT_CARD,
@@ -150,18 +144,7 @@ export function useMenuStructure() {
       type: "itemGroup",
     },
     {
-      id: "divider-1",
-      type: "divider",
-    },
-    {
       children: [
-        {
-          label: intl.formatMessage(sectionNames.orders),
-          permissions: [PermissionEnum.MANAGE_ORDERS],
-          id: "orders",
-          url: orderListUrl(),
-          type: "item",
-        },
         {
           label: intl.formatMessage(commonMessages.drafts),
           permissions: [PermissionEnum.MANAGE_ORDERS],
@@ -178,6 +161,7 @@ export function useMenuStructure() {
       label: intl.formatMessage(sectionNames.orders),
       permissions: [PermissionEnum.MANAGE_ORDERS],
       id: "orders",
+      url: orderListUrl(),
       type: "itemGroup",
     },
     {
@@ -201,15 +185,8 @@ export function useMenuStructure() {
       url: customerListUrl(),
       type: !isEmpty(extensions.NAVIGATION_CUSTOMERS) ? "itemGroup" : "item",
     },
-
     {
       children: [
-        {
-          label: intl.formatMessage(sectionNames.sales),
-          id: "sales",
-          url: saleListUrl(),
-          type: "item",
-        },
         {
           label: intl.formatMessage(sectionNames.vouchers),
           id: "vouchers",
@@ -224,44 +201,26 @@ export function useMenuStructure() {
       icon: <VouchersIcon {...iconSettings} />,
       label: intl.formatMessage(commonMessages.discounts),
       permissions: [PermissionEnum.MANAGE_DISCOUNTS],
+      url: saleListUrl(),
       id: "discounts",
       type: "itemGroup",
     },
     {
-      id: "divider-2",
-      type: "divider",
-    },
-    {
       children: !isEmpty(extensions.NAVIGATION_PAGES) && [
-        {
-          label: intl.formatMessage(sectionNames.pages),
-          permissions: [PermissionEnum.MANAGE_PAGES],
-          id: "pages",
-          url: pageListPath,
-          type: "item",
-        },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_PAGES,
           appExtensionsHeaderItem,
         ),
       ],
       icon: <StorefrontIcon {...iconSettings} />,
-      label: intl.formatMessage(sectionNames.pages),
+      label: intl.formatMessage(sectionNames.content),
       permissions: [PermissionEnum.MANAGE_PAGES],
       id: "pages",
       url: pageListPath,
       type: !isEmpty(extensions.NAVIGATION_PAGES) ? "itemGroup" : "item",
     },
-    getAppSection(),
     {
       children: !isEmpty(extensions.NAVIGATION_TRANSLATIONS) && [
-        {
-          label: intl.formatMessage(sectionNames.translations),
-          permissions: [PermissionEnum.MANAGE_TRANSLATIONS],
-          id: "translations",
-          url: languageListUrl,
-          type: "item",
-        },
         ...mapToExtensionsItems(
           extensions.NAVIGATION_TRANSLATIONS,
           appExtensionsHeaderItem,
@@ -274,10 +233,7 @@ export function useMenuStructure() {
       url: languageListUrl,
       type: !isEmpty(extensions.NAVIGATION_TRANSLATIONS) ? "itemGroup" : "item",
     },
-    {
-      id: "divider-3",
-      type: "divider",
-    },
+    getAppSection(),
     {
       icon: <ConfigurationIcon {...iconSettings} />,
       label: intl.formatMessage(sectionNames.configuration),

@@ -12,7 +12,11 @@ export const stringifyHeaders = (headers: Header[]): string =>
 
 const validateName = (name: string) => {
   if (
-    name.toLowerCase().match("(^x$)|(^x-)|(^authorization$)|(^authorization-)")
+    name
+      .toLowerCase()
+      .match(
+        "(^x$)|(^x-)|^(a|$)(u|$)(t|$)(h|$)(o|$)(r|$)(i|$)(z|$)(a|$)(t|$)(i|$)(o|$)(n|$)(-|$)",
+      )
   ) {
     return false;
   }
@@ -33,3 +37,6 @@ export const mapHeaders = (customHeaders: string): Header[] => {
     error: validateName(key),
   }));
 };
+
+export const hasEmptyHeader = (customHeaders: Header[]): boolean =>
+  customHeaders.filter(header => header.name.length === 0).length > 0;

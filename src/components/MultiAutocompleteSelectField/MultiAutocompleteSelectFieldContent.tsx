@@ -1,6 +1,6 @@
 import chevronDown from "@assets/images/ChevronDown.svg";
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import Checkbox from "@dashboard/components/Checkbox";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import useElementScroll, {
   isScrolledToBottom,
 } from "@dashboard/hooks/useElementScroll";
@@ -165,7 +165,9 @@ function getChoiceIndex(
   return choiceIndex;
 }
 
-const MultiAutocompleteSelectFieldContent: React.FC<MultiAutocompleteSelectFieldContentProps> = props => {
+const MultiAutocompleteSelectFieldContent: React.FC<
+  MultiAutocompleteSelectFieldContentProps
+> = props => {
   const {
     add,
     choices = [],

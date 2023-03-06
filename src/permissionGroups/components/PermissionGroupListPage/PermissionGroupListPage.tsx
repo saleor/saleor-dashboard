@@ -1,5 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { PermissionGroupFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -27,7 +28,7 @@ const PermissionGroupListPage: React.FC<
   const intl = useIntl();
 
   return (
-    <>
+    <ListPageLayout>
       <TopNav
         href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.permissionGroups)}
@@ -47,7 +48,7 @@ const PermissionGroupListPage: React.FC<
       <Card>
         <PermissionGroupList {...listProps} />
       </Card>
-    </>
+    </ListPageLayout>
   );
 };
 PermissionGroupListPage.displayName = "PermissionGroupListPage";

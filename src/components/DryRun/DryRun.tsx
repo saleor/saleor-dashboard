@@ -2,7 +2,7 @@ import Grid from "@dashboard/components/Grid";
 import { useStyles } from "@dashboard/custom-apps/components/WebhookEvents/styles";
 import {
   useTriggerWebhookDryRunMutation,
-  WebhookEventTypeAsyncEnum,
+  WebhookEventTypeSyncEnum,
 } from "@dashboard/graphql";
 import {
   capitalize,
@@ -26,30 +26,33 @@ import React, { Dispatch, SetStateAction, useState } from "react";
 import { useIntl } from "react-intl";
 
 import DryRunItemsList from "../DryRunItemsList/DryRunItemsList";
+import { DocumentMap } from "../DryRunItemsList/utils";
 import { messages } from "./messages";
-import { getObjects } from "./utils";
+import { getUnavailableObjects } from "./utils";
 
 interface DryRunProps {
   query: string;
   showDialog: boolean;
   setShowDialog: Dispatch<SetStateAction<boolean>>;
-  asyncEvents: WebhookEventTypeAsyncEnum[];
   setResult: Dispatch<SetStateAction<string>>;
+  syncEvents: WebhookEventTypeSyncEnum[];
 }
 
-export const DryRun: React.FC<DryRunProps> = ({
+const DryRun: React.FC<DryRunProps> = ({
   setResult,
   showDialog,
   setShowDialog,
   query,
+  syncEvents,
 }: DryRunProps) => {
   const intl = useIntl();
   const classes = useStyles();
   const [objectId, setObjectId] = useState<string | null>(null);
   const [triggerWebhookDryRun] = useTriggerWebhookDryRunMutation();
-  const availableObjects = getObjects(query);
-  const unavailableObjects = getObjects(query, false);
-
+  const availableObjects = Object.keys(DocumentMap).map(object =>
+    capitalize(object.split("_").join(" ").toLowerCase()),
+  );
+  const unavailableObjects = getUnavailableObjects(query);
   const [object, setObject] = useState<string | null>(null);
 
   const dryRun = async () => {
@@ -71,6 +74,23 @@ export const DryRun: React.FC<DryRunProps> = ({
     return <></>;
   }
 
+  if (syncEvents.length > 0) {
+    return (
+      <Dialog open={showDialog} fullWidth maxWidth="md" data-test-id="dry-run">
+        <DialogHeader onClose={closeDialog}>
+          {intl.formatMessage(messages.header)}
+        </DialogHeader>
+        <DialogContent style={{ overflow: "scroll" }}>
+          <Alert variant="error" close={false}>
+            <Typography>
+              {intl.formatMessage(messages.unavailableSyncEvents)}
+            </Typography>
+          </Alert>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
     <Dialog open={showDialog} fullWidth maxWidth="md" data-test-id="dry-run">
       <DialogHeader onClose={closeDialog}>
@@ -84,8 +104,8 @@ export const DryRun: React.FC<DryRunProps> = ({
         {!!unavailableObjects.length && (
           <Alert variant="warning" close={false}>
             <Typography>
-              {intl.formatMessage(messages.unavailableObjects)}
-              &nbsp;
+              {intl.formatMessage(messages.unavailableEvents)}
+              <br />
               <strong>{unavailableObjects.join(", ")}</strong>
             </Typography>
           </Alert>
@@ -158,7 +178,7 @@ export const DryRun: React.FC<DryRunProps> = ({
           color="primary"
           variant="primary"
           onClick={dryRun}
-          disabled={!availableObjects.length}
+          disabled={!object}
         >
           {intl.formatMessage(messages.run)}
         </Button>

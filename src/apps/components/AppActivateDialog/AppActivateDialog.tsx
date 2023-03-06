@@ -1,14 +1,17 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { buttonMessages } from "@dashboard/intl";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { DialogContentText } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
+
+import msgs from "./messages";
 
 export interface AppActivateDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  name: string;
+  name?: string | null;
   onClose: () => void;
   onConfirm: () => void;
 }
@@ -22,41 +25,29 @@ const AppActivateDialog: React.FC<AppActivateDialogProps> = ({
 }) => {
   const intl = useIntl();
 
+  const isNameMissing = name === null || name === "";
+
+  const getMainText = () => {
+    if (isNameMissing) {
+      return intl.formatMessage(msgs.activateApp);
+    }
+    return intl.formatMessage(msgs.activateNamedApp, {
+      name: <strong>{getStringOrPlaceholder(name)}</strong>,
+    });
+  };
+
   return (
     <ActionDialog
-      confirmButtonLabel={intl.formatMessage({
-        id: "D3E2b5",
-        defaultMessage: "Activate",
-        description: "button label",
-      })}
+      confirmButtonLabel={intl.formatMessage(buttonMessages.activate)}
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
       onConfirm={onConfirm}
-      title={intl.formatMessage({
-        id: "YHNozE",
-        defaultMessage: "Activate App",
-        description: "dialog header",
-      })}
+      title={intl.formatMessage(msgs.activateAppTitle)}
       variant="default"
     >
-      <DialogContentText>
-        {["", null].includes(name) ? (
-          <FormattedMessage
-            id="Q47ovw"
-            defaultMessage="Are you sure you want to activate this app? Activating will start gathering events."
-            description="activate app"
-          />
-        ) : (
-          <FormattedMessage
-            id="JbUg2b"
-            defaultMessage="Are you sure you want to activate {name}? Activating will start gathering events."
-            description="activate app"
-            values={{
-              name: <strong>{getStringOrPlaceholder(name)}</strong>,
-            }}
-          />
-        )}
+      <DialogContentText data-test-id="dialog-content">
+        {getMainText()}
       </DialogContentText>
     </ActionDialog>
   );

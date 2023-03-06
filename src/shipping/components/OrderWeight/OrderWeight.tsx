@@ -1,6 +1,6 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { ShippingErrorFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import useShop from "@dashboard/hooks/useShop";

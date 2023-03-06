@@ -1,6 +1,6 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import TimePeriodField from "@dashboard/giftCards/components/TimePeriodField";
 import {
   GiftCardBulkCreateFormErrors,

@@ -20,11 +20,10 @@ import AppActivateDialog from "../../components/AppActivateDialog";
 import AppDeactivateDialog from "../../components/AppDeactivateDialog";
 import AppDetailsPage from "../../components/AppDetailsPage";
 import {
-  appDetailsUrl,
   AppDetailsUrlDialog,
   AppDetailsUrlQueryParams,
-  appsListPath,
-  appUrl,
+  AppPaths,
+  AppUrls,
 } from "../../urls";
 import { messages } from "./messages";
 
@@ -110,7 +109,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
         refetch();
         refetchExtensionList();
         removeAppNotify();
-        navigate(appsListPath);
+        navigate(AppPaths.appListPath);
       }
     },
   });
@@ -118,14 +117,14 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
   const [openModal, closeModal] = createDialogActionHandlers<
     AppDetailsUrlDialog,
     AppDetailsUrlQueryParams
-  >(navigate, params => appDetailsUrl(id, params), params);
+  >(navigate, params => AppUrls.resolveAppDetailsUrl(id, params), params);
 
   const handleActivateConfirm = () => activateApp(mutationOpts);
   const handleDeactivateConfirm = () => deactivateApp(mutationOpts);
   const handleRemoveConfirm = () => deleteApp(mutationOpts);
 
   if (!appExists) {
-    return <NotFoundPage backHref={appsListPath} />;
+    return <NotFoundPage backHref={AppPaths.appListPath} />;
   }
 
   return (
@@ -155,7 +154,7 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
       <AppDetailsPage
         data={data?.app || null}
         loading={loading}
-        navigateToApp={() => navigate(appUrl(id))}
+        navigateToApp={() => navigate(AppUrls.resolveAppUrl(id))}
         onAppActivateOpen={() => openModal("app-activate")}
         onAppDeactivateOpen={() => openModal("app-deactivate")}
         onAppDeleteOpen={() => openModal("app-delete")}

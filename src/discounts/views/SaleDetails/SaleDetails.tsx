@@ -42,7 +42,7 @@ import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
-import { commonMessages, sectionNames } from "@dashboard/intl";
+import { commonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
@@ -136,10 +136,8 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     SaleUrlQueryParams
   >(navigate, params => saleUrl(id, params), params);
 
-  const allChannels: ChannelSaleData[] = createChannelsDataWithSaleDiscountPrice(
-    data?.sale,
-    availableChannels,
-  );
+  const allChannels: ChannelSaleData[] =
+    createChannelsDataWithSaleDiscountPrice(data?.sale, availableChannels);
   const saleChannelsChoices = createSortedChannelsDataFromSale(data?.sale);
 
   const {
@@ -188,30 +186,26 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
     },
   });
 
-  const [
-    saleCataloguesAdd,
-    saleCataloguesAddOpts,
-  ] = useSaleCataloguesAddMutation({
-    onCompleted: data => {
-      if (data.saleCataloguesAdd.errors.length === 0) {
-        notifySaved();
-        closeModal();
-      }
-    },
-  });
+  const [saleCataloguesAdd, saleCataloguesAddOpts] =
+    useSaleCataloguesAddMutation({
+      onCompleted: data => {
+        if (data.saleCataloguesAdd.errors.length === 0) {
+          notifySaved();
+          closeModal();
+        }
+      },
+    });
 
-  const [
-    saleCataloguesRemove,
-    saleCataloguesRemoveOpts,
-  ] = useSaleCataloguesRemoveMutation({
-    onCompleted: data => {
-      if (data.saleCataloguesRemove.errors.length === 0) {
-        notifySaved();
-        closeModal();
-        reset();
-      }
-    },
-  });
+  const [saleCataloguesRemove, saleCataloguesRemoveOpts] =
+    useSaleCataloguesRemoveMutation({
+      onCompleted: data => {
+        if (data.saleCataloguesRemove.errors.length === 0) {
+          notifySaved();
+          closeModal();
+          reset();
+        }
+      },
+    });
 
   const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
 
@@ -298,7 +292,7 @@ export const SaleDetails: React.FC<SaleDetailsProps> = ({ id, params }) => {
 
   return (
     <PaginatorContext.Provider value={{ ...pageInfo, ...paginationValues }}>
-      <WindowTitle title={intl.formatMessage(sectionNames.sales)} />
+      <WindowTitle title={intl.formatMessage(commonMessages.discounts)} />
       {!!allChannels?.length && (
         <ChannelsAvailabilityDialog
           isSelected={isChannelSelected}

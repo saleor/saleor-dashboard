@@ -1,15 +1,15 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.11.0-dev",
+  "version": "3.12.0-dev",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mirumee/saleor-dashboard.git"
+    "url": "git://github.com/saleor/saleor-dashboard.git"
   },
-  "author": "Mirumee Software",
+  "author": "Saleor Commerce",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/mirumee/saleor-dashboard/issues"
+    "url": "https://github.com/saleor/saleor-dashboard/issues"
   },
   "homepage": "https://saleor.io/",
   "engines": {
@@ -33,7 +33,7 @@
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
-    "@saleor/macaw-ui": "^0.8.0-pre.31",
+    "@saleor/macaw-ui": "^0.8.0-pre.34",
     "@saleor/sdk": "^0.4.4",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
@@ -91,8 +91,7 @@
     "slugify": "^1.4.6",
     "tslib": "^2.4.1",
     "url-join": "^4.0.1",
-    "use-react-router": "^1.0.7",
-    "usehooks-ts": "^2.9.1"
+    "use-react-router": "^1.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -309,5 +308,5 @@
     "release": "release-it",
     "prepare": "is-ci || husky install"
   },
-  "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/249912/82305745-5c52fd00-99be-11ea-9ac6-cc04a6f28c91.png)"
+  "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }

@@ -1,6 +1,6 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import { customerUrl } from "@dashboard/customers/urls";
 import { AddressTypeEnum, CustomerAddressesFragment } from "@dashboard/graphql";
 import { getStringOrPlaceholder, renderCollection } from "@dashboard/misc";
@@ -96,7 +96,7 @@ const CustomerAddressListPage: React.FC<
   );
 
   return (
-    <>
+    <ListPageLayout>
       <TopNav
         href={customerUrl(customer?.id)}
         title={
@@ -111,52 +111,50 @@ const CustomerAddressListPage: React.FC<
           </Button>
         )}
       </TopNav>
-      <Content>
-        {isEmpty ? (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            padding={9}
-            flexDirection="column"
+      {isEmpty ? (
+        <Box
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+          padding={9}
+          flexDirection="column"
+        >
+          <Typography variant="h5">
+            {intl.formatMessage(messages.noAddressToShow)}
+          </Typography>
+          <Typography className={classes.description}>
+            {intl.formatMessage(messages.doesntHaveAddresses)}
+          </Typography>
+          <Button
+            className={classes.addButton}
+            variant="primary"
+            onClick={onAdd}
           >
-            <Typography variant="h5">
-              {intl.formatMessage(messages.noAddressToShow)}
-            </Typography>
-            <Typography className={classes.description}>
-              {intl.formatMessage(messages.doesntHaveAddresses)}
-            </Typography>
-            <Button
-              className={classes.addButton}
-              variant="primary"
-              onClick={onAdd}
-            >
-              {intl.formatMessage(messages.addAddress)}
-            </Button>
-          </Box>
-        ) : (
-          <div className={classes.root}>
-            {renderCollection(customer?.addresses, (address, addressNumber) => (
-              <CustomerAddress
-                address={address}
-                addressNumber={addressNumber + 1}
-                disabled={disabled}
-                isDefaultBillingAddress={
-                  customer?.defaultBillingAddress?.id === address?.id
-                }
-                isDefaultShippingAddress={
-                  customer?.defaultShippingAddress?.id === address?.id
-                }
-                onEdit={() => onEdit(address.id)}
-                onRemove={() => onRemove(address.id)}
-                onSetAsDefault={type => onSetAsDefault(address.id, type)}
-                key={address?.id || "skeleton"}
-              />
-            ))}
-          </div>
-        )}
-      </Content>
-    </>
+            {intl.formatMessage(messages.addAddress)}
+          </Button>
+        </Box>
+      ) : (
+        <div className={classes.root}>
+          {renderCollection(customer?.addresses, (address, addressNumber) => (
+            <CustomerAddress
+              address={address}
+              addressNumber={addressNumber + 1}
+              disabled={disabled}
+              isDefaultBillingAddress={
+                customer?.defaultBillingAddress?.id === address?.id
+              }
+              isDefaultShippingAddress={
+                customer?.defaultShippingAddress?.id === address?.id
+              }
+              onEdit={() => onEdit(address.id)}
+              onRemove={() => onRemove(address.id)}
+              onSetAsDefault={type => onSetAsDefault(address.id, type)}
+              key={address?.id || "skeleton"}
+            />
+          ))}
+        </div>
+      )}
+    </ListPageLayout>
   );
 };
 CustomerAddressListPage.displayName = "CustomerAddressListPage";

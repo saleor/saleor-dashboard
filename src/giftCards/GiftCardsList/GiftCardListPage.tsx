@@ -1,4 +1,4 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import React from "react";
 
 import GiftCardsListHeader from "./GiftCardsListHeader";

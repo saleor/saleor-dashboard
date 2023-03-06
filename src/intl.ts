@@ -468,6 +468,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Pages",
     description: "pages section name",
   },
+  content: {
+    id: "NelCIl",
+    defaultMessage: "Content",
+    description: "content section name",
+  },
   permissionGroups: {
     id: "DNTxWr",
     defaultMessage: "Permission Groups",
@@ -569,6 +574,11 @@ export const commonStatusMessages = defineMessages({
   disabled: {
     id: "tthToS",
     defaultMessage: "Disabled",
+  },
+  deactivated: {
+    id: "pGwvpX",
+    defaultMessage: "Deactivated",
+    description: "status",
   },
 });
 

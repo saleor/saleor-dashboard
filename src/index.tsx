@@ -15,8 +15,9 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import AppsSection from "./apps";
 import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
-import { useLocationState } from "./apps/hooks/useLocationState";
+import { AppSections } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
 import Auth, { useUser } from "./auth";
@@ -53,13 +54,12 @@ import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
 import HomePage from "./home";
 import { FlagsServiceProvider } from "./hooks/useFlags/flagsService";
+import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import MarketplaceSection from "./marketplace";
 import { marketplaceUrl } from "./marketplace/urls";
 import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
-import AppsSection from "./new-apps";
-import { AppSections } from "./new-apps/urls";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PageSection from "./pages";
@@ -83,6 +83,23 @@ if (process.env.GTM_ID) {
 }
 
 errorTracker.init();
+
+/*
+  Handle legacy theming toggle. Since we use new and old macaw,
+  we need to handle both theme swticher for a while.
+*/
+const handleLegacyTheming = () => {
+  const activeTheme = localStorage.getItem("activeMacawUITheme");
+
+  if (activeTheme === "defaultDark") {
+    localStorage.setItem("macaw-ui-theme", "dark");
+    return;
+  }
+
+  localStorage.setItem("macaw-ui-theme", "light");
+};
+
+handleLegacyTheming();
 
 const App: React.FC = () => (
   <SaleorProvider client={saleorClient}>

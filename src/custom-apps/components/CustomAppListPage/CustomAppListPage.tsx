@@ -1,9 +1,7 @@
-import {
-  borderHeight,
-  topBarHeight,
-} from "@dashboard/components/AppLayout/consts";
+import DeactivatedText from "@dashboard/apps/components/DeactivatedText";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
@@ -16,9 +14,8 @@ import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import AppsSkeleton from "../../../apps/components/AppsSkeleton";
-import DeactivatedText from "../../../apps/components/DeactivatedText";
-import { useStyles } from "../../../apps/styles";
+import CustomAppsSkeleton from "../CustomAppsSkeleton";
+import { useStyles } from "./styles";
 
 export interface CustomAppListPageProps {
   appsList: AppListItemFragment[];
@@ -32,10 +29,10 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
   getCustomAppHref,
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
+  const classes = useStyles();
 
   return (
-    <>
+    <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.webhooksAndEvents)}>
         <Button
           variant="secondary"
@@ -49,10 +46,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
           />
         </Button>
       </TopNav>
-      <Box
-        padding={9}
-        __height={`calc(100vh - ${topBarHeight} - ${borderHeight})`}
-      >
+      <Box padding={9}>
         <Box marginBottom={4}>
           <Text as="p">
             <FormattedMessage
@@ -97,7 +91,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
                     </TableCell>
                   </TableRowLink>
                 ) : (
-                  <AppsSkeleton key={index} />
+                  <CustomAppsSkeleton key={index} />
                 ),
               () => (
                 <TableRowLink className={classes.tableRow}>
@@ -116,7 +110,7 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
           </TableBody>
         </ResponsiveTable>
       </Box>
-    </>
+    </ListPageLayout>
   );
 };
 

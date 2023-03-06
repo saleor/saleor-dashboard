@@ -2,8 +2,6 @@ import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, {
@@ -12,6 +10,7 @@ import Attributes, {
 } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Grid from "@dashboard/components/Grid";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import {
@@ -180,9 +179,9 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
         const errors = [...apiErrors, ...validationErrors];
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav href={productUrl(productId)} title={header} />
-            <Content>
+            <DetailPageLayout.Content>
               <Grid variant="inverted">
                 <div>
                   <ProductVariantNavigation
@@ -343,8 +342,8 @@ const ProductVariantCreatePage: React.FC<ProductVariantCreatePageProps> = ({
                   onConfirm={handlers.updateChannels}
                 />
               )}
-            </Content>
-          </DetailedContent>
+            </DetailPageLayout.Content>
+          </DetailPageLayout>
         );
       }}
     </ProductVariantCreateForm>

@@ -1,8 +1,6 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { OrderErrorFragment } from "@dashboard/graphql";
 import { useFlags } from "@dashboard/hooks/useFlags";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -47,14 +45,14 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
   return (
     <OrderRefundForm order={order} onSubmit={onSubmit}>
       {({ data, handlers, change, submit, isSaveDisabled }) => (
-        <DetailedContent>
+        <DetailPageLayout>
           <TopNav
             href={orderUrl(order?.id)}
             title={intl.formatMessage(orderReturnMessages.pageTitle, {
               orderNumber: order?.number,
             })}
           />
-          <Content>
+          <DetailPageLayout.Content>
             {!!data.unfulfilledItemsQuantities.length && (
               <>
                 <ItemsCard
@@ -114,8 +112,8 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 </React.Fragment>
               ),
             )}
-          </Content>
-          <RightSidebar>
+          </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar>
             {orderHasTransactions(order, orderTransactions.enabled) ? (
               <SubmitCard
                 disabled={isSaveDisabled}
@@ -136,8 +134,8 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 onRefund={submit}
               />
             )}
-          </RightSidebar>
-        </DetailedContent>
+          </DetailPageLayout.RightSidebar>
+        </DetailPageLayout>
       )}
     </OrderRefundForm>
   );

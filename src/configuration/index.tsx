@@ -34,7 +34,7 @@ import { warehouseSection } from "@dashboard/warehouses/urls";
 import React from "react";
 import { IntlShape, useIntl } from "react-intl";
 
-import ConfigurationPage from "./ConfigurationPage";
+import { ConfigurationPage } from "./ConfigurationPage";
 import { MenuSection } from "./types";
 
 export function createConfigurationMenu(intl: IntlShape): MenuSection[] {

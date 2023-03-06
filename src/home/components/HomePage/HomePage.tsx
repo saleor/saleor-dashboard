@@ -1,8 +1,6 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Money from "@dashboard/components/Money";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -78,9 +76,9 @@ const HomePage: React.FC<HomePageProps> = props => {
   const classes = useStyles(props);
 
   return (
-    <DetailedContent>
+    <DetailPageLayout withSavebar={false}>
       <TopNav title={<HomeHeader userName={userName} />} />
-      <Content noSavebar>
+      <DetailPageLayout.Content>
         <Box paddingLeft={9} paddingRight={11}>
           <CardSpacer />
           <RequirePermissions
@@ -153,17 +151,17 @@ const HomePage: React.FC<HomePageProps> = props => {
             </RequirePermissions>
           )}
         </Box>
-      </Content>
+      </DetailPageLayout.Content>
       {activities && (
-        <RightSidebar noSavebar>
+        <DetailPageLayout.RightSidebar>
           <RequirePermissions
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
           >
             <HomeActivityCard activities={activities} testId="activity-card" />
           </RequirePermissions>
-        </RightSidebar>
+        </DetailPageLayout.RightSidebar>
       )}
-    </DetailedContent>
+    </DetailPageLayout>
   );
 };
 HomePage.displayName = "HomePage";

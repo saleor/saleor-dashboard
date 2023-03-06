@@ -1,4 +1,3 @@
-import VerticalSpacer from "@dashboard/apps/components/VerticalSpacer";
 import { ChannelShippingData } from "@dashboard/channels/utils";
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
@@ -6,6 +5,7 @@ import PriceField from "@dashboard/components/PriceField";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { ShippingChannelsErrorFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import {

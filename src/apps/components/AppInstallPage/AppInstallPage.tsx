@@ -1,10 +1,9 @@
 import saleorDarkLogoSmall from "@assets/images/logo-dark-small.svg";
 import plusIcon from "@assets/images/plus-icon.svg";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import Hr from "@dashboard/components/Hr";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Skeleton from "@dashboard/components/Skeleton";
 import { AppFetchMutation, AppInstallMutation } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -20,7 +19,8 @@ import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from "../../styles";
+import messages from "./messages";
+import { useStyles } from "./styles";
 
 export interface AppInstallPageProps {
   data: NonNullable<AppFetchMutation["appFetchManifest"]>["manifest"];
@@ -38,127 +38,106 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
   onSubmit,
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
+  const classes = useStyles();
 
   const name = data?.name || "";
 
   return (
-    <DetailedContent useSingleColumn constHeight>
-      <Content>
-        <CardSpacer />
-        <Card>
-          <CardTitle
-            title={
-              loading ? (
+    <DetailPageLayout gridTemplateColumns={1} withSavebar={false}>
+      <DetailPageLayout.Content>
+        <Box paddingY={9}>
+          <CardSpacer />
+          <Card>
+            <CardTitle
+              title={
+                loading ? (
+                  <Skeleton />
+                ) : (
+                  intl.formatMessage(messages.title, { name })
+                )
+              }
+            />
+            <CardContent className={classes.installCard}>
+              {loading ? (
+                <CircularProgress />
+              ) : (
+                <div className={classes.installAppContainer}>
+                  <div
+                    className={clsx(
+                      classes.installIcon,
+                      classes.installSaleorIcon,
+                    )}
+                  >
+                    <img src={saleorDarkLogoSmall} alt="" />
+                  </div>
+                  <img src={plusIcon} alt="" />
+                  <div className={classes.installIcon}>
+                    <GenericAppIcon />
+                  </div>
+                </div>
+              )}
+            </CardContent>
+          </Card>
+          <CardSpacer />
+          <Card>
+            {!loading && (
+              <CardTitle
+                title={intl.formatMessage(messages.permissionsTitle)}
+              />
+            )}
+            <CardContent>
+              {loading ? (
                 <Skeleton />
               ) : (
-                intl.formatMessage(
-                  {
-                    id: "Id7C0X",
-                    defaultMessage: `You are about to install {name}`,
-                    description: "section header",
-                  },
-                  { name },
-                )
-              )
-            }
-          />
-          <CardContent className={classes.installCard}>
-            {loading ? (
-              <CircularProgress />
-            ) : (
-              <div className={classes.installAppContainer}>
-                <div
-                  className={clsx(
-                    classes.installIcon,
-                    classes.installSaleorIcon,
+                <>
+                  <Typography className={classes.installPermissionTitle}>
+                    <FormattedMessage
+                      {...messages.permissionsInstallDescription}
+                    />
+                  </Typography>
+                  {!!data?.permissions?.length && (
+                    <ul className={classes.permissionsContainer}>
+                      {data?.permissions?.map(perm => (
+                        <li key={perm.code}>{perm.name}</li>
+                      ))}
+                    </ul>
                   )}
-                >
-                  <img src={saleorDarkLogoSmall} alt="" />
-                </div>
-                <img src={plusIcon} alt="" />
-                <div className={classes.installIcon}>
-                  <GenericAppIcon />
-                </div>
-              </div>
-            )}
-          </CardContent>
-        </Card>
-        <CardSpacer />
-        <Card>
-          {!loading && (
-            <CardTitle
-              title={intl.formatMessage({
-                id: "VsGcdP",
-                defaultMessage: "App permissions",
-                description: "section header",
-              })}
-            />
-          )}
-          <CardContent>
-            {loading ? (
-              <Skeleton />
-            ) : (
-              <>
-                <Typography className={classes.installPermissionTitle}>
-                  <FormattedMessage
-                    id="BL/Lbk"
-                    defaultMessage="Installing this app will give it following permissions:"
-                    description="install app permissions"
-                  />
-                </Typography>
-                {!!data?.permissions?.length && (
-                  <ul className={classes.permissionsContainer}>
-                    {data?.permissions?.map(perm => (
-                      <li key={perm.code}>{perm.name}</li>
-                    ))}
-                  </ul>
-                )}
-                <Hr className={classes.installSpacer} />
+                  <Hr className={classes.installSpacer} />
 
-                <Typography
-                  variant="body2"
-                  className={classes.installPrivacyText}
-                >
-                  <FormattedMessage
-                    id="t1UYU6"
-                    defaultMessage="Uninstalling the app will remove all your customer’s personal data stored by {name}. "
-                    description="install app privacy"
-                    values={{ name }}
-                  />
-                  {!!data?.dataPrivacyUrl && (
-                    <a
-                      href={data?.dataPrivacyUrl}
-                      rel="noopener noreferrer"
-                      target="_blank"
-                    >
-                      <FormattedMessage
-                        id="k5lHFp"
-                        defaultMessage="Learn more about data privacy"
-                        description="app data privacy link"
-                      />
-                    </a>
-                  )}
-                </Typography>
-              </>
-            )}
-          </CardContent>
-        </Card>
-        <CardSpacer />
-        <Box display="flex" justifyContent="space-between" paddingX={9}>
-          <Button variant="secondary" onClick={navigateToAppsList}>
-            <FormattedMessage {...buttonMessages.cancel} />
-          </Button>
-          <Button variant="primary" onClick={onSubmit}>
-            <FormattedMessage
-              id="PkCmGU"
-              defaultMessage="Install App"
-              description="install button"
-            />
-          </Button>
+                  <Typography
+                    variant="body2"
+                    className={classes.installPrivacyText}
+                  >
+                    <FormattedMessage
+                      {...messages.permissionsUninstallDescription}
+                      values={{ name }}
+                    />
+                    {!!data?.dataPrivacyUrl && (
+                      <a
+                        href={data?.dataPrivacyUrl}
+                        rel="noopener noreferrer"
+                        target="_blank"
+                      >
+                        <FormattedMessage {...messages.dataPrivacyLearnMore} />
+                      </a>
+                    )}
+                  </Typography>
+                </>
+              )}
+            </CardContent>
+          </Card>
+          <CardSpacer />
+          <Box display="flex" justifyContent="space-between" padding={9}>
+            <Button variant="secondary" onClick={navigateToAppsList}>
+              <FormattedMessage {...buttonMessages.cancel} />
+            </Button>
+            <Button variant="primary" onClick={onSubmit}>
+              <FormattedMessage {...messages.installButton} />
+            </Button>
+          </Box>
         </Box>
-      </Content>
-    </DetailedContent>
+      </DetailPageLayout.Content>
+    </DetailPageLayout>
   );
 };
 

@@ -1,10 +1,8 @@
 import AccountPermissions from "@dashboard/components/AccountPermissions";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import WebhooksList from "@dashboard/custom-apps/components/WebhooksList";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
@@ -104,7 +102,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
       disabled={disabled}
     >
       {({ data, change, submit, isSaveDisabled }) => (
-        <DetailedContent>
+        <DetailPageLayout>
           <TopNav href={CustomAppUrls.resolveAppListUrl()} title={app?.name}>
             <Button
               variant="secondary"
@@ -128,7 +126,7 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
               )}
             </Button>
           </TopNav>
-          <Content>
+          <DetailPageLayout.Content>
             {token && (
               <>
                 <CustomAppDefaultToken
@@ -158,8 +156,8 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
               onRemove={onWebhookRemove}
               createHref={app?.isActive && webhookCreateHref}
             />
-          </Content>
-          <RightSidebar>
+          </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar>
             <AccountPermissions
               data={data}
               errorMessage={permissionsError}
@@ -179,14 +177,14 @@ const CustomAppDetailsPage: React.FC<CustomAppDetailsPageProps> = props => {
                 description: "card description",
               })}
             />
-          </RightSidebar>
+          </DetailPageLayout.RightSidebar>
           <Savebar
             disabled={isSaveDisabled}
             state={saveButtonBarState}
             onCancel={() => navigate(CustomAppUrls.resolveAppListUrl())}
             onSubmit={submit}
           />
-        </DetailedContent>
+        </DetailPageLayout>
       )}
     </Form>
   );

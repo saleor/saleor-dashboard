@@ -5,10 +5,12 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import msgs from "./messages";
+
 export interface AppDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
-  name: string;
+  name?: string | null;
   onClose: () => void;
   onConfirm: () => void;
   type: "CUSTOM" | "EXTERNAL";
@@ -24,45 +26,37 @@ const AppDeleteDialog: React.FC<AppDeleteDialogProps> = ({
 }) => {
   const intl = useIntl();
 
+  const isNameMissing = name === null || name === "";
+  const isExternal = type === "EXTERNAL";
+
+  const getMainText = () => {
+    if (isNameMissing && isExternal) {
+      return intl.formatMessage(msgs.deleteApp);
+    }
+    if (isNameMissing) {
+      return intl.formatMessage(msgs.deleteLocalApp);
+    }
+    if (isExternal) {
+      return intl.formatMessage(msgs.deleteNamedApp, {
+        name: <strong>{getStringOrPlaceholder(name)}</strong>,
+      });
+    }
+    return intl.formatMessage(msgs.deleteLocalNamedApp, {
+      name: <strong>{getStringOrPlaceholder(name)}</strong>,
+    });
+  };
+
   return (
     <ActionDialog
       confirmButtonState={confirmButtonState}
       open={open}
       onClose={onClose}
       onConfirm={onConfirm}
-      title={intl.formatMessage({
-        id: "zQX6xO",
-        defaultMessage: "Delete App",
-        description: "dialog header",
-      })}
+      title={intl.formatMessage(msgs.deleteAppTitle)}
       variant="delete"
     >
-      <DialogContentText>
-        {["", null].includes(name) ? (
-          <FormattedMessage
-            id="6hLZNA"
-            defaultMessage="Are you sure you want to delete this app?"
-            description="delete app"
-          />
-        ) : type === "EXTERNAL" ? (
-          <FormattedMessage
-            id="EWD/wU"
-            defaultMessage="Deleting {name}, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace. Are you sure you want to delete the app?"
-            description="delete app"
-            values={{
-              name: <strong>{getStringOrPlaceholder(name)}</strong>,
-            }}
-          />
-        ) : (
-          <FormattedMessage
-            id="LtqrM8"
-            defaultMessage="Deleting {name}, you will delete all the data and webhooks regarding this app. Are you sure you want to do that?"
-            description="delete custom app"
-            values={{
-              name: <strong>{getStringOrPlaceholder(name)}</strong>,
-            }}
-          />
-        )}
+      <DialogContentText data-test-id="dialog-content">
+        {getMainText()} <FormattedMessage {...msgs.deleteAppQuestion} />
       </DialogContentText>
     </ActionDialog>
   );

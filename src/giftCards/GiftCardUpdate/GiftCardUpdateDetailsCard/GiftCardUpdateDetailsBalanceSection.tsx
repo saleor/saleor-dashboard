@@ -1,5 +1,5 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Money from "@dashboard/components/Money";
 import { Typography } from "@material-ui/core";
 import clsx from "clsx";

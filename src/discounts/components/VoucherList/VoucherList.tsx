@@ -281,14 +281,14 @@ const VoucherList: React.FC<VoucherListProps> = props => {
                 </TableCell>
                 <TableCell className={classes.colStart}>
                   {voucher?.startDate ? (
-                    <Date date={voucher.startDate} />
+                    <Date date={voucher.startDate} plain />
                   ) : (
                     <Skeleton />
                   )}
                 </TableCell>
                 <TableCell className={classes.colEnd}>
                   {voucher?.endDate ? (
-                    <Date date={voucher.endDate} />
+                    <Date date={voucher.endDate} plain />
                   ) : voucher && voucher.endDate === null ? (
                     "-"
                   ) : (

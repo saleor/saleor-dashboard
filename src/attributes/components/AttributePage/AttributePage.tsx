@@ -1,11 +1,9 @@
 import { attributeListUrl } from "@dashboard/attributes/urls";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@dashboard/attributes/utils/data";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import Savebar from "@dashboard/components/Savebar";
@@ -173,7 +171,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
 
         return (
           <>
-            <DetailedContent>
+            <DetailPageLayout>
               <TopNav
                 href={attributeListUrl()}
                 title={
@@ -185,8 +183,8 @@ const AttributePage: React.FC<AttributePageProps> = ({
                       })
                     : maybe(() => attribute.name)
                 }
-              ></TopNav>
-              <Content>
+              />
+              <DetailPageLayout.Content>
                 <AttributeDetails
                   canChangeType={attribute === null}
                   data={data}
@@ -221,8 +219,8 @@ const AttributePage: React.FC<AttributePageProps> = ({
                 )}
                 <CardSpacer />
                 <Metadata data={data} onChange={changeMetadata} />
-              </Content>
-              <RightSidebar>
+              </DetailPageLayout.Content>
+              <DetailPageLayout.RightSidebar>
                 <AttributeOrganization
                   canChangeType={attribute === null}
                   data={data}
@@ -236,7 +234,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   disabled={disabled}
                   onChange={change}
                 />
-              </RightSidebar>
+              </DetailPageLayout.RightSidebar>
               <Savebar
                 disabled={!!isSaveDisabled}
                 state={saveButtonBarState}
@@ -244,7 +242,7 @@ const AttributePage: React.FC<AttributePageProps> = ({
                 onSubmit={submit}
                 onDelete={attribute === null ? undefined : onDelete}
               />
-            </DetailedContent>
+            </DetailPageLayout>
             {children(data)}
           </>
         );

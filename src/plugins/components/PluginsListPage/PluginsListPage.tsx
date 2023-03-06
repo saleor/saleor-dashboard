@@ -1,5 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import FilterBar from "@dashboard/components/FilterBar";
+import { ListPageLayout } from "@dashboard/components/Layouts";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
@@ -48,7 +49,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
   const filterStructure = createFilterStructure(intl, filterOpts);
 
   return (
-    <>
+    <ListPageLayout>
       <TopNav
         href={configurationMenuUrl}
         title={intl.formatMessage(sectionNames.plugins)}
@@ -78,7 +79,7 @@ const PluginsListPage: React.FC<PluginsListPageProps> = ({
         />
         <PluginsList {...listProps} />
       </Card>
-    </>
+    </ListPageLayout>
   );
 };
 PluginsListPage.displayName = "PluginsListPage";

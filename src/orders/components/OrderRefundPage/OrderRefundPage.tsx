@@ -1,8 +1,6 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { FulfillmentStatus, OrderErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
@@ -69,7 +67,7 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
         const isProductRefund = data.type === OrderRefundType.PRODUCTS;
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav
               href={orderUrl(order?.id)}
               title={intl.formatMessage(
@@ -82,8 +80,8 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                   orderNumber: order?.number,
                 },
               )}
-            ></TopNav>
-            <Content>
+            />
+            <DetailPageLayout.Content>
               <OrderRefund data={data} disabled={disabled} onChange={change} />
               {isProductRefund && (
                 <>
@@ -124,8 +122,8 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                   ))}
                 </>
               )}
-            </Content>
-            <RightSidebar>
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               <OrderRefundAmount
                 amountData={
                   isProductRefund
@@ -139,8 +137,8 @@ const OrderRefundPage: React.FC<OrderRefundPageProps> = props => {
                 onChange={change}
                 onRefund={submit}
               />
-            </RightSidebar>
-          </DetailedContent>
+            </DetailPageLayout.RightSidebar>
+          </DetailPageLayout>
         );
       }}
     </OrderRefundForm>

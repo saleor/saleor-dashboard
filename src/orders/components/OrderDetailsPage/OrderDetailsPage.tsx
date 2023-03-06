@@ -2,14 +2,12 @@ import {
   extensionMountPoints,
   mapToMenuItemsForOrderDetails,
   useExtensions,
-} from "@dashboard/apps/useExtensions";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
+} from "@dashboard/apps/hooks/useExtensions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import { OrderDetailsFragment, OrderDetailsQuery } from "@dashboard/graphql";
@@ -211,7 +209,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
         const changeMetadata = makeMetadataChangeHandler(change);
 
         return (
-          <DetailedContent>
+          <DetailPageLayout>
             <TopNav
               href={orderListUrl()}
               title={<Title order={order as OrderSharedType} />}
@@ -229,7 +227,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               />
             </TopNav>
 
-            <Content data-test-id="order-fulfillment">
+            <DetailPageLayout.Content data-test-id="order-fulfillment">
               {!isOrderUnconfirmed ? (
                 <OrderUnfulfilledProductsCard
                   showFulfillmentAction={canFulfill}
@@ -284,8 +282,8 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 orderCurrency={order?.total?.gross.currency}
                 onNoteAdd={onNoteAdd}
               />
-            </Content>
-            <RightSidebar>
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
               <OrderCustomer
                 canEditAddresses={canEditAddresses}
                 canEditCustomer={false}
@@ -310,7 +308,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 </>
               )}
               <OrderCustomerNote note={maybe(() => order.customerNote)} />
-            </RightSidebar>
+            </DetailPageLayout.RightSidebar>
             <Savebar
               labels={saveLabel}
               onCancel={() => navigate(orderListUrl())}
@@ -318,7 +316,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               state={saveButtonBarState}
               disabled={allowSave()}
             />
-          </DetailedContent>
+          </DetailPageLayout>
         );
       }}
     </Form>

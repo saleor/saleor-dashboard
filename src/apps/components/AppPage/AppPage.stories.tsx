@@ -3,7 +3,7 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { appDetails } from "../../fixtures";
-import AppPage, { AppPageProps } from "./AppPage";
+import { AppPage, AppPageProps } from "./AppPage";
 
 const props: AppPageProps = {
   data: appDetails,

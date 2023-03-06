@@ -1,11 +1,9 @@
 import { ChannelShippingData } from "@dashboard/channels/utils";
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { WithFormId } from "@dashboard/components/Form";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import {
   PermissionEnum,
@@ -150,7 +148,7 @@ export const ShippingZoneRatesCreatePage: React.FC<
   return (
     <RichTextContext.Provider value={richText}>
       <form onSubmit={handleFormElementSubmit}>
-        <DetailedContent>
+        <DetailPageLayout>
           <TopNav
             href={backUrl}
             title={
@@ -167,7 +165,7 @@ export const ShippingZoneRatesCreatePage: React.FC<
                   })
             }
           />
-          <Content>
+          <DetailPageLayout.Content>
             <ShippingRateInfo
               data={data}
               disabled={disabled}
@@ -209,8 +207,8 @@ export const ShippingZoneRatesCreatePage: React.FC<
               onPostalCodeRangeAdd={onPostalCodeAssign}
               postalCodes={postalCodes}
             />
-          </Content>
-          <RightSidebar>
+          </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar>
             <ChannelsAvailabilityCard
               managePermissions={[PermissionEnum.MANAGE_SHIPPING]}
               allChannelsCount={allChannelsCount}
@@ -233,7 +231,7 @@ export const ShippingZoneRatesCreatePage: React.FC<
               }
               onFetchMore={fetchMoreTaxClasses}
             />
-          </RightSidebar>
+          </DetailPageLayout.RightSidebar>
           <Savebar
             disabled={isSaveDisabled}
             onCancel={() => navigate(backUrl)}
@@ -241,7 +239,7 @@ export const ShippingZoneRatesCreatePage: React.FC<
             onSubmit={handleSubmit}
             state={saveButtonBarState}
           />
-        </DetailedContent>
+        </DetailPageLayout>
       </form>
     </RichTextContext.Provider>
   );

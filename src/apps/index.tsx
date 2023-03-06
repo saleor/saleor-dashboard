@@ -1,4 +1,8 @@
-import WebhooksRoutes from "@dashboard/custom-apps";
+import {
+  AppDetailsUrlQueryParams,
+  AppInstallUrlQueryParams,
+} from "@dashboard/apps/urls";
+import AppInstallView from "@dashboard/apps/views/AppInstall";
 import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";
 import React from "react";
@@ -6,19 +10,10 @@ import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
 
 import { WindowTitle } from "../components/WindowTitle";
-import {
-  appDetailsPath,
-  AppDetailsUrlQueryParams,
-  appInstallPath,
-  AppInstallUrlQueryParams,
-  AppListUrlQueryParams,
-  appPath,
-  appsListPath,
-} from "./urls";
-import AppView from "./views/App";
+import { AppListUrlQueryParams, AppPaths } from "./urls";
 import AppDetailsView from "./views/AppDetails";
-import AppInstallView from "./views/AppInstall";
-import AppsListView from "./views/AppsList";
+import AppListView from "./views/AppList";
+import AppView from "./views/AppView";
 
 const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   match,
@@ -31,9 +26,9 @@ const AppDetails: React.FC<RouteComponentProps<{ id: string }>> = ({
   );
 };
 
-const App: React.FC<RouteComponentProps<{ id: string }>> = ({ match }) => (
-  <AppView id={decodeURIComponent(match.params.id)} />
-);
+const AppViewRoute: React.FC<RouteComponentProps<{ id: string }>> = ({
+  match,
+}) => <AppView id={decodeURIComponent(match.params.id)} />;
 
 const AppInstall: React.FC<RouteComponentProps> = props => {
   const qs = parseQs(location.search.substr(1));
@@ -42,27 +37,31 @@ const AppInstall: React.FC<RouteComponentProps> = props => {
   return <AppInstallView params={params} {...props} />;
 };
 
-const AppsList: React.FC<RouteComponentProps> = () => {
+const AppList: React.FC<RouteComponentProps> = () => {
   const qs = parseQs(location.search.substr(1));
   const params: AppListUrlQueryParams = qs;
 
-  return <AppsListView params={params} />;
+  return <AppListView params={params} />;
 };
-const Component = () => {
+
+const Apps = () => {
   const intl = useIntl();
 
   return (
     <>
       <WindowTitle title={intl.formatMessage(sectionNames.apps)} />
       <Switch>
-        <Route exact path={appsListPath} component={AppsList} />
-        <Route exact path={appInstallPath} component={AppInstall} />
-        <Route exact path={appDetailsPath(":id")} component={AppDetails} />
-        <Route path={appPath(":id")} component={App} />
-        <WebhooksRoutes />
+        <Route exact path={AppPaths.appListPath} component={AppList} />
+        <Route exact path={AppPaths.appInstallPath} component={AppInstall} />
+        <Route
+          exact
+          path={AppPaths.resolveAppDetailsPath(":id")}
+          component={AppDetails}
+        />
+        <Route path={AppPaths.resolveAppPath(":id")} component={AppViewRoute} />
       </Switch>
     </>
   );
 };
 
-export default Component;
+export default Apps;

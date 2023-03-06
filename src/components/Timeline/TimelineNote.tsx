@@ -1,32 +1,11 @@
 import { useUser } from "@dashboard/auth";
-import { UserFragment } from "@dashboard/graphql";
-import { Avatar, Card, CardContent, Typography } from "@material-ui/core";
-import * as colors from "@material-ui/core/colors";
-import PersonIcon from "@material-ui/icons/Person";
+import { getUserInitials } from "@dashboard/misc";
+import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import CRC from "crc-32";
+import { Avatar, vars } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { DateTime } from "../Date";
-
-const palette = [
-  colors.amber,
-  colors.blue,
-  colors.cyan,
-  colors.deepOrange,
-  colors.deepPurple,
-  colors.green,
-  colors.indigo,
-  colors.lightBlue,
-  colors.lightGreen,
-  colors.lime,
-  colors.orange,
-  colors.pink,
-  colors.purple,
-  colors.red,
-  colors.teal,
-  colors.yellow,
-].map(color => color[500]);
 
 const useStyles = makeStyles(
   theme => ({
@@ -37,11 +16,13 @@ const useStyles = makeStyles(
     },
     card: {
       marginBottom: theme.spacing(3),
-      marginLeft: theme.spacing(3),
       position: "relative",
       boxShadow: "none",
+      background: vars.colors.background.surfaceNeutralPlain,
     },
     cardContent: {
+      borderRadius: "4px",
+      border: `1px solid ${vars.colors.border.neutralDefault}`,
       "&:last-child": {
         padding: 16,
       },
@@ -57,7 +38,6 @@ const useStyles = makeStyles(
       display: "flex",
       justifyContent: "space-between",
       marginBottom: theme.spacing(),
-      paddingLeft: theme.spacing(3),
     },
   }),
   { name: "TimelineNote" },
@@ -71,6 +51,7 @@ interface TimelineNoteProps {
     firstName?: string;
     lastName?: string;
   };
+  hasPlainDate?: boolean;
 }
 
 interface NoteMessageProps {
@@ -90,7 +71,7 @@ const NoteMessage: React.FC<NoteMessageProps> = ({ message }) => (
 );
 
 export const TimelineNote: React.FC<TimelineNoteProps> = props => {
-  const { date, user, message } = props;
+  const { date, user, message, hasPlainDate } = props;
   const { user: currentUser } = useUser();
 
   const classes = useStyles(props);
@@ -103,31 +84,20 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
     return user?.email;
   };
 
-  const getBackgroundColor = (
-    user: TimelineNoteProps["user"],
-    currentUser: UserFragment,
-  ) => {
-    if (user.email === currentUser.email) {
-      return colors.deepPurple[500];
-    }
-
-    return palette[CRC.str(user.email) % palette.length];
-  };
-
   return (
     <div className={classes.root}>
       {user && (
-        <Avatar
+        <Avatar.User
+          initials={getUserInitials(currentUser)}
+          scheme="decorative2"
+          src={currentUser?.avatar?.url}
           className={classes.avatar}
-          style={{ background: getBackgroundColor(user, currentUser) }}
-        >
-          <PersonIcon />
-        </Avatar>
+        />
       )}
       <div className={classes.title}>
         <Typography>{getUserTitleOrEmail()}</Typography>
         <Typography>
-          <DateTime date={date} />
+          <DateTime date={date} plain={hasPlainDate} />
         </Typography>
       </div>
       <Card className={classes.card} elevation={16}>

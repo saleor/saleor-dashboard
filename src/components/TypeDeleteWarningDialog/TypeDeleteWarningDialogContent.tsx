@@ -1,6 +1,6 @@
-import HorizontalSpacer from "@dashboard/apps/components/HorizontalSpacer";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ConfirmButton from "@dashboard/components/ConfirmButton";
+import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { CardContent } from "@material-ui/core";
 import React, { useState } from "react";
@@ -23,7 +23,9 @@ interface TypeDeleteWarningDialogContentProps {
   showViewAssignedItemsButton?: boolean;
 }
 
-const TypeDeleteWarningDialogContent: React.FC<TypeDeleteWarningDialogContentProps> = ({
+const TypeDeleteWarningDialogContent: React.FC<
+  TypeDeleteWarningDialogContentProps
+> = ({
   description,
   consentLabel,
   viewAssignedItemsUrl,
