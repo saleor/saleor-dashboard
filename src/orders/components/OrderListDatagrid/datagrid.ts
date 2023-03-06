@@ -200,7 +200,7 @@ function getStatusColor(
       return theme.colors.background.surfaceCriticalDepressed;
     case "warning":
       // TODO: replace when warning will be added to theme
-      return currentTheme === "defaultDark" ? "#FBE5AC" : "#FBE5AC";
+      return currentTheme === "defaultDark" ? "#3E2F0A" : "#FBE5AC";
     case "success":
       return theme.colors.background.decorativeSurfaceSubdued2;
     case "info":
