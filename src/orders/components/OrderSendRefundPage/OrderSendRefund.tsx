@@ -1,10 +1,8 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import Hr from "@dashboard/components/Hr";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
   CreateManualTransactionRefundMutationVariables,
@@ -47,12 +45,12 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
   const transactions = order?.transactions ?? [];
 
   return (
-    <DetailedContent>
+    <DetailPageLayout>
       <TopNav
         href={orderUrl(order?.id)}
         title={<FormattedMessage {...refundPageMessages.pageSubtitle} />}
       />
-      <Content>
+      <DetailPageLayout.Content>
         {loading && transactions.length === 0 && (
           <>
             <Card>
@@ -83,8 +81,8 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
             });
           }}
         />
-      </Content>
-      <RightSidebar>
+      </DetailPageLayout.Content>
+      <DetailPageLayout.RightSidebar>
         <Card>
           <CardTitle
             title={<FormattedMessage {...refundPageMessages.refundBalance} />}
@@ -136,8 +134,8 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
             </ul>
           </CardContent>
         </Card>
-      </RightSidebar>
-    </DetailedContent>
+      </DetailPageLayout.RightSidebar>
+    </DetailPageLayout>
   );
 };
 

@@ -1,4 +1,4 @@
-import { appUrl } from "@dashboard/apps/urls";
+import { AppUrls } from "@dashboard/apps/urls";
 import {
   AppAvatarFragment,
   StaffMemberAvatarFragment,
@@ -36,7 +36,9 @@ export const EventCreatedBy: React.FC<EventCreatedByProps> = ({
   }
 
   if (createdBy.__typename === "App") {
-    return <Link to={appUrl(createdBy.id)}>{createdBy.name}</Link>;
+    return (
+      <Link to={AppUrls.resolveAppUrl(createdBy.id)}>{createdBy.name}</Link>
+    );
   }
 
   return (

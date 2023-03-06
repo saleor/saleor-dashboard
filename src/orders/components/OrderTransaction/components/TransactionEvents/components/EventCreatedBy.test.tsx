@@ -1,5 +1,5 @@
 import { appAvatar } from "@dashboard/apps/fixtures";
-import { appPath } from "@dashboard/apps/urls";
+import { AppPaths } from "@dashboard/apps/urls";
 import { staffMemberAvatar } from "@dashboard/staff/fixtures";
 import { staffMemberDetailsPath } from "@dashboard/staff/urls";
 import { render, screen } from "@testing-library/react";
@@ -25,7 +25,8 @@ describe("EventCreatedBy", () => {
     expect(link).toHaveTextContent(appAvatar.name);
     expect(link).toHaveProperty(
       "href",
-      "http://localhost" + appPath(encodeURIComponent(appAvatar.id)),
+      "http://localhost" +
+        AppPaths.resolveAppPath(encodeURIComponent(appAvatar.id)),
     );
   });
 

@@ -1,8 +1,6 @@
-import { Content } from "@dashboard/components/AppLayout/Content";
-import { DetailedContent } from "@dashboard/components/AppLayout/DetailedContent";
-import { RightSidebar } from "@dashboard/components/AppLayout/RightSidebar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Skeleton from "@dashboard/components/Skeleton";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql/transactions";
 import { orderUrl } from "@dashboard/orders/urls";
@@ -80,7 +78,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
   };
 
   return (
-    <DetailedContent>
+    <DetailPageLayout>
       <TopNav
         href={orderUrl(order?.id)}
         title={
@@ -100,7 +98,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
             totalSelectedPrice,
           }}
         >
-          <Content>
+          <DetailPageLayout.Content>
             <Card>
               <CardContent>
                 <Text variant="bodyEmp" as="p">
@@ -158,8 +156,8 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                 </CardContent>
               </Card>
             </div>
-          </Content>
-          <RightSidebar>
+          </DetailPageLayout.Content>
+          <DetailPageLayout.RightSidebar>
             <RefundCard
               order={order}
               loading={loading}
@@ -167,10 +165,10 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
               isEdit={isEdit}
               submitDisabled={submitDisabled}
             />
-          </RightSidebar>
+          </DetailPageLayout.RightSidebar>
         </GrantRefundContext.Provider>
       </form>
-    </DetailedContent>
+    </DetailPageLayout>
   );
 };
 
