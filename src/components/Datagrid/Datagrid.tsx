@@ -51,7 +51,7 @@ import useStyles, {
   useFullScreenStyles,
 } from "./styles";
 import { AvailableColumn } from "./types";
-import { getDefulaColumnPickerProps } from "./utils";
+import { getDefultColumnPickerProps } from "./utils";
 
 export interface GetCellContentOpts {
   changes: MutableRefObject<DatagridChange[]>;
@@ -74,7 +74,7 @@ export interface DatagridProps
   getColumnTooltipContent?: (colIndex: number) => string;
   menuItems: (index: number) => CardMenuItem[];
   rows: number;
-  title: string;
+  title?: string;
   fullScreenTitle?: string;
   selectionActions: (
     selection: number[],
@@ -114,14 +114,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
 }): ReactElement => {
   const classes = useStyles();
   const { theme: currentTheme } = useTheme();
-  const datagridTheme = useDatagridTheme();
+  const datagridTheme = useDatagridTheme(readonly);
   const theme = themes[currentTheme];
   const editor = useRef<DataEditorRef>();
   const customRenderers = useCustomCellRenderers();
 
   const { scrolledToRight, scroller } = useScrollRight();
 
-  const defualtColumnPickerProps = getDefulaColumnPickerProps(
+  const defualtColumnPickerProps = getDefultColumnPickerProps(
     classes.ghostIcon,
   );
 
@@ -253,12 +253,20 @@ export const Datagrid: React.FC<DatagridProps> = ({
         return undefined;
       }
 
-      return {
+      const overrideTheme = {
         bgCell: theme.colors.background.surfaceNeutralHighlight,
         bgCellMedium: theme.colors.background.surfaceNeutralHighlight,
+        accentLight: undefined,
       };
+
+      if (readonly) {
+        overrideTheme.accentLight =
+          theme.colors.background.surfaceNeutralHighlight;
+      }
+
+      return overrideTheme;
     },
-    [hoverRow, theme],
+    [hoverRow, readonly, theme],
   );
 
   const handleHeaderClicked = useCallback(
@@ -325,7 +333,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       className={fullScreenClasses.fullScreenContainer}
     >
       <Card className={classes.root}>
-        {!readonly && (
+        {headerTitle && (
           <Header title={headerTitle}>
             <Header.ButtonFullScreen isOpen={isOpen} onToggle={toggle}>
               {isOpen ? (

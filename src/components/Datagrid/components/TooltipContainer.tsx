@@ -48,6 +48,7 @@ export const TooltipContainer: React.FC<TooltipContainerProps> = ({
         __left={x + width / 2}
         zIndex="2"
       >
+        {/* TODO: use tooltip from new macaw when it will be ready */}
         <Tooltip open={true} title={title} placement="top">
           <span></span>
         </Tooltip>

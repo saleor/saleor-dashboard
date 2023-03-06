@@ -1,6 +1,6 @@
 import { ColumnPickerProps } from "../ColumnPicker";
 
-export const getDefulaColumnPickerProps = (
+export const getDefultColumnPickerProps = (
   className: string,
 ): Partial<ColumnPickerProps> => ({
   IconButtonProps: {
