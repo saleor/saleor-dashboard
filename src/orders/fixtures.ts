@@ -823,6 +823,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     OrderAction.REFUND,
     OrderAction.VOID,
   ],
+  transactions: [{ id: "1234", __typename: "TransactionItem" }],
   shippingMethods: [
     {
       __typename: "ShippingMethod",
@@ -1800,6 +1801,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   shippingMethods: [],
   billingAddress: null,
   canFinalize: true,
+  transactions: [{ id: "1234", __typename: "TransactionItem" }],
   channel: {
     __typename: "Channel",
     slug: "channel-default",

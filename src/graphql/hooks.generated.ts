@@ -1454,6 +1454,9 @@ export const OrderDetailsFragmentDoc = gql`
   billingAddress {
     ...Address
   }
+  transactions {
+    id
+  }
   giftCards {
     events {
       id
