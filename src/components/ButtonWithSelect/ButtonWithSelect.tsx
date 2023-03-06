@@ -29,7 +29,7 @@ export interface ButtonWithSelectProps
 }
 
 /**
- * @deprecated use `ButtonWithDropdown` instead
+ * @deprecated use [`ButtonWithDropdown`](https://github.com/saleor/saleor-dashboard/blob/main/src/components/ButtonWithDropdown/ButtonWithDropdown.tsx) instead
  */
 export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
   options,

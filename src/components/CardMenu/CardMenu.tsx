@@ -67,7 +67,7 @@ const useStyles = makeStyles(
 );
 
 /**
- * @deprecated use [`TopNavMenu`](/components/TopNavMenu/TopNavMenu.tsx) instead
+ * @deprecated use [`TopNavMenu`](https://github.com/saleor/saleor-dashboard/blob/main/src/components/TopNavMenu/TopNavMenu.tsx) instead
  */
 const CardMenu: React.FC<CardMenuProps> = props => {
   const {
