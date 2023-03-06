@@ -22,7 +22,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
     <List.ItemGroup defaultExpanded={isExpanded}>
       <List.ItemGroup.Trigger
         paddingX={5}
-        paddingY={4}
+        // paddingY={4}
         borderRadius={3}
         size="small"
         active={isActive}
@@ -33,9 +33,17 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
           to={menuItem?.url ?? ""}
           className={sprinkles({
             width: "100%",
+            display: "block",
           })}
         >
-          <Box display="flex" alignItems="center" gap={6}>
+          <Box
+            display="flex"
+            alignItems="center"
+            gap={6}
+            // paddingX={5}
+            paddingY={4}
+            borderRadius={3}
+          >
             {menuItem.icon}
             <Text size="small" variant="bodyEmp">
               {menuItem.label}
