@@ -5,7 +5,6 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { OrderListQuery } from "@dashboard/graphql";
-import useLocale from "@dashboard/hooks/useLocale";
 import { buttonMessages } from "@dashboard/intl";
 import { order } from "@dashboard/orders/fixtures";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
@@ -13,11 +12,10 @@ import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { makeStyles } from "@material-ui/core";
 import { Button } from "@saleor/macaw-ui";
-import { themes, useTheme } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { createGetCellContent, getColumns } from "./datagrid";
+import { getColumns, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
 import { canBeSorted, getColumnMetadata, getOrdersRowsLength } from "./utils";
 
@@ -47,10 +45,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
 }) => {
   const classes = useStyles();
   const intl = useIntl();
-  const { locale } = useLocale();
   const datagrid = useDatagridChangeState();
-  const { theme: currentTheme } = useTheme();
-  const theme = themes[currentTheme];
 
   const columns = useMemo(() => getColumns(intl, sort), [intl, sort]);
 
@@ -73,18 +68,11 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
     [onRowClick, orders],
   );
 
-  const getCellContent = useMemo(
-    () =>
-      createGetCellContent({
-        columns,
-        intl,
-        loading: disabled,
-        locale,
-        orders,
-        theme,
-      }),
-    [columns, disabled, intl, locale, orders, theme],
-  );
+  const getCellContent = useGetCellContent({
+    columns,
+    orders,
+    loading: disabled,
+  });
 
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>

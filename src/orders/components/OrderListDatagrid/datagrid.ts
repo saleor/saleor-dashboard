@@ -10,14 +10,15 @@ import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { getMoney } from "@dashboard/components/Money/utils";
 import { OrderListQuery } from "@dashboard/graphql";
+import useLocale from "@dashboard/hooks/useLocale";
 import { transformOrderStatus, transformPaymentStatus } from "@dashboard/misc";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { themes } from "@saleor/macaw-ui/next";
+import { DefaultTheme, themes, useTheme } from "@saleor/macaw-ui/next";
 import moment from "moment-timezone";
-import { IntlShape } from "react-intl";
+import { IntlShape, useIntl } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
@@ -71,19 +72,18 @@ interface GetCellContentProps {
   columns: AvailableColumn[];
   orders: RelayToFlat<OrderListQuery["orders"]>;
   loading: boolean;
-  locale: Locale;
-  intl: IntlShape;
-  theme: typeof themes.defaultDark;
 }
 
-export function createGetCellContent({
+export const useGetCellContent = ({
   columns,
   orders,
   loading,
-  locale,
-  intl,
-  theme,
-}: GetCellContentProps) {
+}: GetCellContentProps) => {
+  const intl = useIntl();
+  const { locale } = useLocale();
+  const { theme: currentTheme } = useTheme();
+  const theme = themes[currentTheme];
+
   return (
     [column, row]: Item,
     { added, removed }: GetCellContentOpts,
@@ -109,25 +109,25 @@ export function createGetCellContent({
       case "customer":
         return getCustomerCellContent(rowData);
       case "payment":
-        return getPaymentCellContent(intl, theme, rowData);
+        return getPaymentCellContent(intl, theme, currentTheme, rowData);
       case "status":
-        return getStatusCellContent(intl, theme, rowData);
+        return getStatusCellContent(intl, theme, currentTheme, rowData);
       case "total":
         return getTotalCellContent(locale, rowData);
       default:
         return textCell("");
     }
   };
-}
+};
 
-function getDateCellContent(
+export function getDateCellContent(
   locale: Locale,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   return readonlyTextCell(moment(rowData.created).locale(locale).format("lll"));
 }
 
-function getCustomerCellContent(
+export function getCustomerCellContent(
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   if (rowData.billingAddress) {
@@ -143,9 +143,10 @@ function getCustomerCellContent(
   return readonlyTextCell("-");
 }
 
-function getPaymentCellContent(
+export function getPaymentCellContent(
   intl: IntlShape,
   theme: typeof themes.defaultDark,
+  currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   const paymentStatus = transformPaymentStatus(rowData.paymentStatus, intl);
@@ -154,7 +155,7 @@ function getPaymentCellContent(
       [
         {
           tag: paymentStatus.localized,
-          color: getStatusColor(paymentStatus.status, theme),
+          color: getStatusColor(paymentStatus.status, theme, currentTheme),
         },
       ],
       [paymentStatus.localized],
@@ -165,16 +166,22 @@ function getPaymentCellContent(
   return readonlyTextCell("-");
 }
 
-function getStatusCellContent(
+export function getStatusCellContent(
   intl: IntlShape,
   theme: typeof themes.defaultDark,
+  currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   const status = transformOrderStatus(rowData.status, intl);
 
   if (status) {
     return tagsCell(
-      [{ tag: status.localized, color: getStatusColor(status.status, theme) }],
+      [
+        {
+          tag: status.localized,
+          color: getStatusColor(status.status, theme, currentTheme),
+        },
+      ],
       [status.localized],
       { cursor: "pointer" },
     );
@@ -186,13 +193,14 @@ function getStatusCellContent(
 function getStatusColor(
   status: string,
   theme: typeof themes.defaultDark,
+  currentTheme: DefaultTheme,
 ): string {
   switch (status) {
     case "error":
       return theme.colors.background.surfaceCriticalDepressed;
     case "warning":
       // TODO: replace when warning will be added to theme
-      return "#FBE5AC";
+      return currentTheme === "defaultDark" ? "#FBE5AC" : "#FBE5AC";
     case "success":
       return theme.colors.background.decorativeSurfaceSubdued2;
     case "info":
@@ -202,7 +210,7 @@ function getStatusColor(
   }
 }
 
-function getTotalCellContent(
+export function getTotalCellContent(
   locale: Locale,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
