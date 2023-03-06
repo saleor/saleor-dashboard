@@ -252,12 +252,20 @@ export const Datagrid: React.FC<DatagridProps> = ({
         return undefined;
       }
 
-      return {
+      const overrideTheme = {
         bgCell: theme.colors.background.surfaceNeutralHighlight,
         bgCellMedium: theme.colors.background.surfaceNeutralHighlight,
+        accentLight: undefined,
       };
+
+      if (readonly) {
+        overrideTheme.accentLight =
+          theme.colors.background.surfaceNeutralHighlight;
+      }
+
+      return overrideTheme;
     },
-    [hoverRow, theme],
+    [hoverRow, readonly, theme],
   );
 
   const handleHeaderClicked = useCallback(
