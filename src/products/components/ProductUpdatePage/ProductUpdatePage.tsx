@@ -1,4 +1,9 @@
 import {
+  extensionMountPoints,
+  mapToMenuItemsForProductDetails,
+  useExtensions,
+} from "@dashboard/apps/hooks/useExtensions";
+import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
@@ -35,11 +40,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { maybe } from "@dashboard/misc";
-import {
-  extensionMountPoints,
-  mapToMenuItemsForProductDetails,
-  useExtensions,
-} from "@dashboard/new-apps/hooks/useExtensions";
 import ProductExternalMediaDialog from "@dashboard/products/components/ProductExternalMediaDialog";
 import { defaultGraphiQLQuery } from "@dashboard/products/queries";
 import { productImageUrl, productListUrl } from "@dashboard/products/urls";
