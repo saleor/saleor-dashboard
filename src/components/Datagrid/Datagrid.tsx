@@ -51,7 +51,7 @@ import useStyles, {
   useFullScreenStyles,
 } from "./styles";
 import { AvailableColumn } from "./types";
-import { getDefulaColumnPickerProps } from "./utils";
+import { getDefultColumnPickerProps } from "./utils";
 
 export interface GetCellContentOpts {
   changes: MutableRefObject<DatagridChange[]>;
@@ -74,7 +74,7 @@ export interface DatagridProps
   getColumnTooltipContent?: (colIndex: number) => string;
   menuItems: (index: number) => CardMenuItem[];
   rows: number;
-  title: string;
+  title?: string;
   fullScreenTitle?: string;
   selectionActions: (
     selection: number[],
@@ -120,7 +120,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const cellProps = useCells();
   const { scrolledToRight, scroller } = useScrollRight();
 
-  const defualtColumnPickerProps = getDefulaColumnPickerProps(
+  const defualtColumnPickerProps = getDefultColumnPickerProps(
     classes.ghostIcon,
   );
 
@@ -324,7 +324,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       className={fullScreenClasses.fullScreenContainer}
     >
       <Card className={classes.root}>
-        {!readonly && (
+        {headerTitle && (
           <Header title={headerTitle}>
             <Header.ButtonFullScreen isOpen={isOpen} onToggle={toggle}>
               {isOpen ? (

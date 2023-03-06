@@ -76,7 +76,7 @@ export function getColumns({
         icon: getColumnSortIconName(sort, ProductListUrlSortField.availability),
       },
       ...gridAttributesFromSettings.map(
-        toAttributeColumndData(gridAttributes, activeAttributeSortId, sort),
+        toAttributeColumnData(gridAttributes, activeAttributeSortId, sort),
       ),
       {
         id: "date",
@@ -94,7 +94,7 @@ export function getColumns({
   ];
 }
 
-function toAttributeColumndData(
+function toAttributeColumnData(
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>,
   activeAttributeSortId: string,
   sort: Sort<ProductListUrlSortField>,

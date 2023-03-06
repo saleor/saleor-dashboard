@@ -34,12 +34,10 @@ export const formatMoneyRange = (
   locale: string,
 ) => {
   try {
-    const formattedMoneyRange = (
-      Intl.NumberFormat(locale, {
-        style: "currency",
-        currency: moneyFrom.currency,
-      }) as any
-    ).formatRange(moneyFrom.amount, moneyTo.amount);
+    const formattedMoneyRange = Intl.NumberFormat(locale, {
+      style: "currency",
+      currency: moneyFrom.currency,
+    }).formatRange(moneyFrom.amount, moneyTo.amount);
     // TODO: remove casting from formatRange when typescript
     // is updated to 4.7 or higher
     return formattedMoneyRange;

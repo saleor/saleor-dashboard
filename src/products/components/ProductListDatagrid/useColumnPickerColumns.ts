@@ -22,28 +22,31 @@ export const useColumnPickerColumns = (
 ) => {
   const intl = useIntl();
 
-  const staticColumns = [
-    {
-      label: intl.formatMessage(columnsMessages.availability),
-      value: "availability" as ProductListColumns,
-    },
-    {
-      label: intl.formatMessage(columnsMessages.price),
-      value: "price" as ProductListColumns,
-    },
-    {
-      label: intl.formatMessage(commonMessages.description),
-      value: "description" as ProductListColumns,
-    },
-    {
-      label: intl.formatMessage(columnsMessages.type),
-      value: "productType" as ProductListColumns,
-    },
-    {
-      label: intl.formatMessage(columnsMessages.updatedAt),
-      value: "date" as ProductListColumns,
-    },
-  ];
+  const staticColumns = useMemo(
+    () => [
+      {
+        label: intl.formatMessage(columnsMessages.availability),
+        value: "availability" as ProductListColumns,
+      },
+      {
+        label: intl.formatMessage(columnsMessages.price),
+        value: "price" as ProductListColumns,
+      },
+      {
+        label: intl.formatMessage(commonMessages.description),
+        value: "description" as ProductListColumns,
+      },
+      {
+        label: intl.formatMessage(columnsMessages.type),
+        value: "productType" as ProductListColumns,
+      },
+      {
+        label: intl.formatMessage(columnsMessages.updatedAt),
+        value: "date" as ProductListColumns,
+      },
+    ],
+    [intl],
+  );
 
   const initialColumns = useMemo(() => {
     const selectedStaticColumns = staticColumns.filter(column =>
@@ -55,7 +58,7 @@ export const useColumnPickerColumns = (
     }));
 
     return [...selectedStaticColumns, ...selectedAttributeColumns];
-  }, [gridAttributes, settings.columns]);
+  }, [gridAttributes, settings.columns, staticColumns]);
 
   const availableColumns: MultiAutocompleteChoiceType[] = [
     ...staticColumns,

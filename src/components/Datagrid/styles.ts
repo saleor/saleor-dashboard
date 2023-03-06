@@ -71,7 +71,7 @@ const useStyles = makeStyles(
           border: "none",
           fontSize: vars.fontSize.bodySmall,
           letterSpacing: vars.letterSpacing.bodyStrongSmall,
-          lineHeight: vars.lineHeight.bodyEmpSmall,
+          lineHeight: vars.lineHeight.bodyEmpMedium,
           fontWeight: vars.fontWeight.bodySmall,
           padding: vars.space[3],
           outline: 0,

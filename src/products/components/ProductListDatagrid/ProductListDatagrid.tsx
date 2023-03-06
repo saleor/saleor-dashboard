@@ -1,7 +1,9 @@
 import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
-import { DatagridChangeStateContext } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import Savebar from "@dashboard/components/Savebar";
+import {
+  DatagridChangeStateContext,
+  useDatagridChangeState,
+} from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@dashboard/config";
@@ -24,14 +26,14 @@ import {
   SortPage,
 } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Button, makeStyles } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui";
+import { sprinkles } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { isAttributeColumnValue } from "../ProductListPage/utils";
 import { messages } from "./messages";
 import { useColumnPickerColumns } from "./useColumnPickerColumns";
-import { useProductForm } from "./useProductForm";
 import {
   createGetCellContent,
   getColumnMetadata,
@@ -56,15 +58,6 @@ interface ProductListDatagridProps
   onColumnQueryChange: (query: string) => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    paginationContainer: {
-      padding: theme.spacing(0, 4),
-    },
-  }),
-  { name: "ProductListPage" },
-);
-
 export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   products,
   onRowClick,
@@ -85,10 +78,9 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   activeAttributeSortId,
   filterDependency,
 }) => {
-  const classes = useStyles();
   const intl = useIntl();
   const searchProductType = useSearchProductTypes();
-  const { onChange, isDirty, onSubmit, datagrid, clear } = useProductForm();
+  const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
   const gridAttributesFromSettings = settings.columns.filter(
     isAttributeColumnValue,
@@ -178,7 +170,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         return intl.formatMessage(commonTooltipMessages.noSortable);
       }
 
-      // Sortableb but required selected channl
+      // Sortable but requrie selected channel
       return intl.formatMessage(commonTooltipMessages.noFilterSelected, {
         filterName: filterDependency.label,
       });
@@ -212,9 +204,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
             <FormattedMessage {...buttonMessages.delete} />
           </Button>
         )}
-        title=""
         fullScreenTitle={intl.formatMessage(messages.products)}
-        onChange={onChange}
         onRowClick={handleRowClick}
         renderColumnPicker={defaultProps => (
           <ColumnPicker
@@ -230,7 +220,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         )}
       />
 
-      <div className={classes.paginationContainer}>
+      <div className={sprinkles({ paddingX: 9 })}>
         <TablePaginationWithContext
           component="div"
           colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}
@@ -239,17 +229,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           onUpdateListSettings={onUpdateListSettings}
         />
       </div>
-      {isDirty && (
-        <Savebar
-          onCancel={clear}
-          onSubmit={onSubmit}
-          state="default"
-          disabled={disabled}
-          labels={{
-            cancel: intl.formatMessage(buttonMessages.clear),
-          }}
-        />
-      )}
     </DatagridChangeStateContext.Provider>
   );
 };
