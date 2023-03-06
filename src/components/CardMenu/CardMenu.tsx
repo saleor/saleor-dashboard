@@ -66,6 +66,9 @@ const useStyles = makeStyles(
   { name: "CardMenu" },
 );
 
+/**
+ * @deprecated use [`TopNavMenu`](/components/TopNavMenu/TopNavMenu.tsx) instead
+ */
 const CardMenu: React.FC<CardMenuProps> = props => {
   const {
     className,

@@ -4,16 +4,13 @@ import {
   mapToMenuItemsForProductOverviewActions,
   useExtensions,
 } from "@dashboard/apps/hooks/useExtensions";
-import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
-import CardMenu from "@dashboard/components/CardMenu";
-import ColumnPicker from "@dashboard/components/ColumnPicker";
+import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { TopNavMenu } from "@dashboard/components/TopNavMenu";
 import { ProductListColumns } from "@dashboard/config";
 import {
   GridAttributesQuery,
@@ -33,19 +30,17 @@ import {
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Box, Button, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField } from "../../urls";
 import ProductList from "../ProductList";
-import { columnsMessages } from "../ProductList/messages";
 import {
   createFilterStructure,
   ProductFilterKeys,
   ProductListFilterOpts,
 } from "./filters";
-import { getAttributeColumnValue } from "./utils";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
@@ -69,45 +64,19 @@ export interface ProductListPageProps
   onColumnQueryChange: (query: string) => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    columnPicker: {
-      marginRight: theme.spacing(3),
-      [theme.breakpoints.down("xs")]: {
-        "& > button": {
-          width: "100%",
-        },
-      },
-    },
-    settings: {
-      [theme.breakpoints.up("sm")]: {
-        marginRight: theme.spacing(2),
-      },
-    },
-  }),
-  { name: "ProductListPage" },
-);
-
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
-    columnQuery,
     currencySymbol,
     currentTab,
-    defaultSettings,
     gridAttributes,
     limits,
-    availableInGridAttributes,
     filterOpts,
-    hasMore,
     initialSearch,
-    loading,
     settings,
     tabs,
     onAdd,
     onAll,
-    onColumnQueryChange,
     onExport,
-    onFetchMore,
     onFilterChange,
     onFilterAttributeFocus,
     onSearchChange,
@@ -120,56 +89,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     ...listProps
   } = props;
   const intl = useIntl();
-  const classes = useStyles(props);
-
-  const staticColumns = [
-    {
-      label: intl.formatMessage(columnsMessages.availability),
-      value: "availability" as ProductListColumns,
-    },
-    {
-      label: intl.formatMessage(columnsMessages.price),
-      value: "price" as ProductListColumns,
-    },
-    {
-      label: intl.formatMessage(columnsMessages.type),
-      value: "productType" as ProductListColumns,
-    },
-    {
-      label: intl.formatMessage(columnsMessages.updatedAt),
-      value: "date" as ProductListColumns,
-    },
-  ];
-
-  const initialColumnsChoices = React.useMemo(() => {
-    const selectedStaticColumns = staticColumns.filter(column =>
-      (settings.columns || []).includes(column.value),
-    );
-    const selectedAttributeColumns = gridAttributes.map(attribute => ({
-      label: attribute.name,
-      value: getAttributeColumnValue(attribute.id),
-    }));
-
-    return [...selectedStaticColumns, ...selectedAttributeColumns];
-  }, [gridAttributes, settings.columns]);
-
-  const handleSave = (columns: ProductListColumns[]) =>
-    onUpdateListSettings("columns", columns);
 
   const filterStructure = createFilterStructure(intl, filterOpts);
 
   const filterDependency = filterStructure.find(getByName("channel"));
-
-  const availableColumns: MultiAutocompleteChoiceType[] = [
-    ...staticColumns,
-    ...availableInGridAttributes.map(
-      attribute =>
-        ({
-          label: attribute.name,
-          value: getAttributeColumnValue(attribute.id),
-        } as MultiAutocompleteChoiceType),
-    ),
-  ];
 
   const limitReached = isLimitReached(limits, "productVariants");
   const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } =
@@ -184,62 +107,59 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   return (
     <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.products)}>
-        <CardMenu
-          className={classes.settings}
-          menuItems={[
-            {
-              label: intl.formatMessage({
-                id: "7FL+WZ",
-                defaultMessage: "Export Products",
-                description: "export products to csv file, button",
-              }),
-              onSelect: onExport,
-              testId: "export",
-            },
-            ...extensionMenuItems,
-          ]}
-          data-test-id="menu"
-        />
-        <ColumnPicker
-          className={classes.columnPicker}
-          availableColumns={availableColumns}
-          initialColumns={initialColumnsChoices}
-          defaultColumns={defaultSettings.columns}
-          hasMore={hasMore}
-          loading={loading}
-          query={columnQuery}
-          onQueryChange={onColumnQueryChange}
-          onFetchMore={onFetchMore}
-          onSave={handleSave}
-          IconButtonProps={{ variant: "secondary" }}
-        />
-        <ButtonWithSelect
-          options={extensionCreateButtonItems}
-          data-test-id="add-product"
-          disabled={limitReached}
-          onClick={onAdd}
-        >
-          <FormattedMessage
-            id="JFmOfi"
-            defaultMessage="Create Product"
-            description="button"
-          />
-        </ButtonWithSelect>
-        {hasLimits(limits, "productVariants") && (
-          <LimitsInfo
-            text={intl.formatMessage(
+        <Box display="flex" alignItems="center" gap={5}>
+          {hasLimits(limits, "productVariants") && (
+            <Text variant="caption">
+              {intl.formatMessage(
+                {
+                  id: "Kw0jHS",
+                  defaultMessage: "{count}/{max} SKUs used",
+                  description: "created products counter",
+                },
+                {
+                  count: limits.currentUsage.productVariants,
+                  max: limits.allowedUsage.productVariants,
+                },
+              )}
+            </Text>
+          )}
+          <TopNavMenu
+            dataTestId="menu"
+            items={[
               {
-                id: "Kw0jHS",
-                defaultMessage: "{count}/{max} SKUs used",
-                description: "created products counter",
+                label: intl.formatMessage({
+                  id: "7FL+WZ",
+                  defaultMessage: "Export Products",
+                  description: "export products to csv file, button",
+                }),
+                onSelect: onExport,
+                testId: "export",
               },
-              {
-                count: limits.currentUsage.productVariants,
-                max: limits.allowedUsage.productVariants,
-              },
-            )}
+              ...extensionMenuItems,
+            ]}
           />
-        )}
+          {extensionCreateButtonItems.length > 0 ? (
+            <ButtonWithDropdown
+              onClick={onAdd}
+              testId={"add-product"}
+              options={extensionCreateButtonItems}
+            >
+              <FormattedMessage
+                id="JFmOfi"
+                defaultMessage="Create Product"
+                description="button"
+              />
+            </ButtonWithDropdown>
+          ) : (
+            <Button data-test-id="add-product" onClick={onAdd}>
+              <FormattedMessage
+                id="JFmOfi"
+                defaultMessage="Create Product"
+                description="button"
+              />
+            </Button>
+          )}
+        </Box>
       </TopNav>
       {limitReached && (
         <LimitReachedAlert

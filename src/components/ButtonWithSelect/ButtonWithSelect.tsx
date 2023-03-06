@@ -28,6 +28,9 @@ export interface ButtonWithSelectProps
   href?: string;
 }
 
+/**
+ * @deprecated use `ButtonWithDropdown` instead
+ */
 export const ButtonWithSelect: React.FC<ButtonWithSelectProps> = ({
   options,
   children,
