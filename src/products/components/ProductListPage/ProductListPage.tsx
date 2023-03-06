@@ -43,6 +43,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField, productUrl } from "../../urls";
 import { ProductListDatagrid } from "../ProductListDatagrid";
+import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import {
   createFilterStructure,
   ProductFilterKeys,
@@ -229,7 +230,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             variant="tertiary"
             onClick={() => setDatagridView(state => !state)}
           >
-            {isDatagridView ? (
+            {!isDatagridView ? (
               <>
                 <TableEditIcon />
                 <FormattedMessage
@@ -250,26 +251,39 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             )}
           </Button>
         </Box>
-        <ProductListDatagrid
-          {...listProps}
-          filterDependency={filterDependency}
-          activeAttributeSortId={activeAttributeSortId}
-          columnQuery={columnQuery}
-          defaultSettings={defaultSettings}
-          availableInGridAttributes={availableInGridAttributes}
-          loading={loading}
-          hasMore={hasMore}
-          gridAttributes={gridAttributes}
-          onColumnQueryChange={onColumnQueryChange}
-          onFetchMore={onFetchMore}
-          products={listProps.products}
-          settings={settings}
-          selectedChannelId={selectedChannelId}
-          onUpdateListSettings={onUpdateListSettings}
-          onRowClick={id => {
-            navigate(productUrl(id));
-          }}
-        />
+        {isDatagridView ? (
+          <ProductListDatagrid
+            {...listProps}
+            filterDependency={filterDependency}
+            activeAttributeSortId={activeAttributeSortId}
+            columnQuery={columnQuery}
+            defaultSettings={defaultSettings}
+            availableInGridAttributes={availableInGridAttributes}
+            loading={loading}
+            hasMore={hasMore}
+            gridAttributes={gridAttributes}
+            onColumnQueryChange={onColumnQueryChange}
+            onFetchMore={onFetchMore}
+            products={listProps.products}
+            settings={settings}
+            selectedChannelId={selectedChannelId}
+            onUpdateListSettings={onUpdateListSettings}
+            onRowClick={id => {
+              navigate(productUrl(id));
+            }}
+          />
+        ) : (
+          <ProductListTiles
+            loading={loading}
+            hasMore={hasMore}
+            onFetchMore={onFetchMore}
+            products={listProps.products}
+            // selectedChannelId={selectedChannelId}
+            onTileClick={id => {
+              navigate(productUrl(id));
+            }}
+          />
+        )}
       </Card>
     </ListPageLayout>
   );
