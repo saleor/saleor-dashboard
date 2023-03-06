@@ -158,6 +158,7 @@ function getPaymentCellContent(
         },
       ],
       [paymentStatus.localized],
+      { cursor: "pointer" },
     );
   }
 
@@ -175,6 +176,7 @@ function getStatusCellContent(
     return tagsCell(
       [{ tag: status.localized, color: getStatusColor(status.status, theme) }],
       [status.localized],
+      { cursor: "pointer" },
     );
   }
 
@@ -208,6 +210,7 @@ function getTotalCellContent(
     return moneyCell(
       getMoney(rowData.total.gross, locale),
       rowData.total.gross.currency,
+      { cursor: "pointer" },
     );
   }
 

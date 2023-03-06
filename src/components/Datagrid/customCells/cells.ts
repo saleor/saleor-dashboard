@@ -43,15 +43,16 @@ export function readonlyTextCell(
 export function tagsCell(
   tags: Array<{ tag: string; color: string }>,
   selectedTags: string[],
+  opts?: Partial<GridCell>,
 ): GridCell {
   return {
+    ...opts,
     kind: GridCellKind.Custom,
     allowOverlay: true,
     copyData: "4",
     data: {
       kind: "tags-cell",
       possibleTags: tags,
-      readonly: true,
       tags: selectedTags,
     },
   };
@@ -94,9 +95,11 @@ export function numberCell(
 export function moneyCell(
   value: number | string | null,
   currency: string,
+  opts?: Partial<GridCell>,
 ): MoneyCell {
   return {
     ...common,
+    ...opts,
     kind: GridCellKind.Custom,
     data: {
       kind: "money-cell",
