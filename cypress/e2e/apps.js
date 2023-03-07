@@ -4,7 +4,7 @@
 import faker from "faker";
 
 import { APP_DETAILS } from "../elements/apps/appDetails";
-import { APPS_LIST } from "../elements/apps/appsList";
+import { APPS_LIST_SELECTORS } from "../elements/apps/appsList";
 import { WEBHOOK_DETAILS } from "../elements/apps/webhookDetails";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { appDetailsUrl, urlList } from "../fixtures/urlList";
@@ -109,7 +109,7 @@ describe("As a staff user I want to manage apps", () => {
       const randomAppName = `${startsWith}${faker.datatype.number()}`;
 
       cy.visit(urlList.apps)
-        .get(APPS_LIST.createLocalAppButton)
+        .get(APPS_LIST_SELECTORS.createLocalAppButton)
         .click()
         .get(APP_DETAILS.nameInput)
         .type(randomAppName)

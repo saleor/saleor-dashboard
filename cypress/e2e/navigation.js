@@ -3,24 +3,24 @@
 
 import {
   ADDRESS_SELECTORS,
-  APPS_LIST,
-  CATEGORIES_LIST,
+  APPS_LIST_SELECTORS,
+  CATEGORIES_LIST_SELECTORS,
   CHANNELS_SELECTORS,
   COLLECTION_SELECTORS,
   CONFIGURATION_SELECTORS,
-  CUSTOMERS_LIST,
+  CUSTOMERS_LIST_SELECTORS,
   DRAFT_ORDERS_LIST_SELECTORS,
-  LANGUAGES_LIST,
+  LANGUAGES_LIST_SELECTORS,
   MENU_SELECTORS,
   ORDERS_SELECTORS,
-  PAGE_TYPES_LIST,
-  PAGES_LIST,
-  PERMISSION_GROUP_LIST,
-  PLUGINS_LIST,
-  PRODUCT_TYPES_LIST,
+  PAGE_TYPES_LIST_SELECTORS,
+  PAGES_LIST_SELECTORS,
+  PERMISSION_GROUP_LIST_SELECTORS,
+  PLUGINS_LIST_SELECTORS,
+  PRODUCT_TYPES_LIST_SELECTORS,
   SALES_SELECTORS,
-  SHIPPING_ZONES_LIST,
-  STAFF_MEMBERS_LIST,
+  SHIPPING_ZONES_LIST_SELECTORS,
+  STAFF_MEMBERS_LIST_SELECTORS,
   VOUCHERS_SELECTORS,
 } from "../elements/";
 import { PERMISSIONS_OPTIONS } from "../fixtures/permissionsUsers";
@@ -118,7 +118,9 @@ describe("As a staff user I want to navigate through shop using different permis
         .clickOnElement(MENU_SELECTORS.MENU.app)
         .waitForRequestAndCheckIfNoErrors("@AppsList")
         .then(() => {
-          cy.checkIfElementIsVisible(APPS_LIST.createExternalAppButton);
+          cy.checkIfElementIsVisible(
+            APPS_LIST_SELECTORS.createExternalAppButton,
+          );
         });
     },
   );
@@ -154,7 +156,7 @@ describe("As a staff user I want to navigate through shop using different permis
         .visit(urlList.webhooksAndEvents)
         .waitForRequestAndCheckIfNoErrors("@AppsList");
       expectMainMenuAvailableSections(2);
-      cy.checkIfElementIsVisible(APPS_LIST.createLocalAppButton);
+      cy.checkIfElementIsVisible(APPS_LIST_SELECTORS.createLocalAppButton);
     },
   );
 
@@ -168,7 +170,9 @@ describe("As a staff user I want to navigate through shop using different permis
         .clickOnElement(MENU_SELECTORS.MENU.customers)
         .waitForRequestAndCheckIfNoErrors("@ListCustomers")
         .then(() => {
-          cy.checkIfElementIsVisible(CUSTOMERS_LIST.createCustomerButton);
+          cy.checkIfElementIsVisible(
+            CUSTOMERS_LIST_SELECTORS.createCustomerButton,
+          );
         });
     },
   );
@@ -203,7 +207,7 @@ describe("As a staff user I want to navigate through shop using different permis
         .clickOnElement(MENU_SELECTORS.MENU.pages)
         .waitForRequestAndCheckIfNoErrors("@SearchPageTypes")
         .then(() => {
-          cy.checkIfElementIsVisible(PAGES_LIST.createPageButton);
+          cy.checkIfElementIsVisible(PAGES_LIST_SELECTORS.createPageButton);
           cy.clickOnElement(MENU_SELECTORS.MENU.configuration).then(() => {
             expectConfigurationAvailableSectionsNumber(3);
             expectConfigurationSectionsToBeVisible(
@@ -225,7 +229,9 @@ describe("As a staff user I want to navigate through shop using different permis
         .visit(urlList.pageTypes)
         .waitForRequestAndCheckIfNoErrors("@PageTypeList");
       expectMainMenuAvailableSections(3);
-      cy.checkIfElementIsVisible(PAGE_TYPES_LIST.createPageTypeButton);
+      cy.checkIfElementIsVisible(
+        PAGE_TYPES_LIST_SELECTORS.createPageTypeButton,
+      );
     },
   );
 
@@ -245,7 +251,7 @@ describe("As a staff user I want to navigate through shop using different permis
         cy.addAliasToGraphRequest("Plugins")
           .clickOnElement(CONFIGURATION_SELECTORS.plugin)
           .waitForRequestAndCheckIfNoErrors("@Plugins");
-        cy.checkIfElementIsVisible(PLUGINS_LIST.pluginRow);
+        cy.checkIfElementIsVisible(PLUGINS_LIST_SELECTORS.pluginRow);
       });
     },
   );
@@ -269,7 +275,9 @@ describe("As a staff user I want to navigate through shop using different permis
         cy.addAliasToGraphRequest("ProductTypeList")
           .clickOnElement(CONFIGURATION_SELECTORS.productTypes)
           .waitForRequestAndCheckIfNoErrors("@ProductTypeList");
-        cy.checkIfElementIsVisible(PRODUCT_TYPES_LIST.addProductTypeButton);
+        cy.checkIfElementIsVisible(
+          PRODUCT_TYPES_LIST_SELECTORS.addProductTypeButton,
+        );
       });
     },
   );
@@ -310,7 +318,9 @@ describe("As a staff user I want to navigate through shop using different permis
         cy.addAliasToGraphRequest("PageTypeList")
           .clickOnElement(CONFIGURATION_SELECTORS.pageTypes)
           .waitForRequestAndCheckIfNoErrors("@PageTypeList");
-        cy.checkIfElementIsVisible(PAGE_TYPES_LIST.createPageTypeButton);
+        cy.checkIfElementIsVisible(
+          PAGE_TYPES_LIST_SELECTORS.createPageTypeButton,
+        );
       });
     },
   );
@@ -355,7 +365,9 @@ describe("As a staff user I want to navigate through shop using different permis
         cy.addAliasToGraphRequest("StaffList")
           .clickOnElement(CONFIGURATION_SELECTORS.staffMembers)
           .waitForRequestAndCheckIfNoErrors("@StaffList");
-        cy.checkIfElementIsVisible(STAFF_MEMBERS_LIST.inviteStaffMemberButton);
+        cy.checkIfElementIsVisible(
+          STAFF_MEMBERS_LIST_SELECTORS.inviteStaffMemberButton,
+        );
       });
     },
   );
@@ -369,7 +381,9 @@ describe("As a staff user I want to navigate through shop using different permis
         .visit(urlList.permissionsGroups)
         .waitForRequestAndCheckIfNoErrors("@PermissionGroupList");
       expectMainMenuAvailableSections(2);
-      cy.checkIfElementIsVisible(PERMISSION_GROUP_LIST.createPermissionButton);
+      cy.checkIfElementIsVisible(
+        PERMISSION_GROUP_LIST_SELECTORS.createPermissionButton,
+      );
     },
   );
 
@@ -389,7 +403,9 @@ describe("As a staff user I want to navigate through shop using different permis
         cy.addAliasToGraphRequest("ShippingZones")
           .clickOnElement(CONFIGURATION_SELECTORS.shipping)
           .waitForRequestAndCheckIfNoErrors("@ShippingZones");
-        cy.checkIfElementIsVisible(SHIPPING_ZONES_LIST.addShippingZone);
+        cy.checkIfElementIsVisible(
+          SHIPPING_ZONES_LIST_SELECTORS.addShippingZone,
+        );
       });
     },
   );
@@ -401,7 +417,9 @@ describe("As a staff user I want to navigate through shop using different permis
       cy.visitHomePageLoggedViaApi(PERMISSIONS_OPTIONS.translations.user);
       expectMainMenuAvailableSections(2);
       cy.clickOnElement(MENU_SELECTORS.MENU.translations).then(() => {
-        cy.checkIfElementIsVisible(LANGUAGES_LIST.translationListView);
+        cy.checkIfElementIsVisible(
+          LANGUAGES_LIST_SELECTORS.translationListView,
+        );
       });
     },
   );
@@ -432,7 +450,7 @@ describe("As a staff user I want to navigate through shop using different permis
         .visit(urlList.categories)
         .waitForRequestAndCheckIfNoErrors("@RootCategories");
       expectMainMenuAvailableSections(5);
-      cy.checkIfElementIsVisible(CATEGORIES_LIST.addCategoryButton);
+      cy.checkIfElementIsVisible(CATEGORIES_LIST_SELECTORS.addCategoryButton);
     },
   );
 

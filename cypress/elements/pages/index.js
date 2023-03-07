@@ -1,4 +1,4 @@
-import { PAGE_DETAILS } from "./page-details";
-import { PAGES_LIST } from "./pages-list";
+import { PAGE_DETAILS_SELECTORS } from "./page-details";
+import { PAGES_LIST_SELECTORS } from "./pages-list";
 
-export { PAGE_DETAILS, PAGES_LIST };
+export { PAGE_DETAILS_SELECTORS, PAGES_LIST_SELECTORS };

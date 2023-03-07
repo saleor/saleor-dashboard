@@ -1,2 +1,3 @@
-import { APPS_LIST } from "./appsList";
-export { APPS_LIST };
+import { APPS_LIST_SELECTORS } from "./appsList";
+
+export { APPS_LIST_SELECTORS };

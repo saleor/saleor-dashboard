@@ -38,7 +38,7 @@ module.exports = defineConfig({
       });
       return config;
     },
-    baseUrl: "http://localhost:9000/",
+    baseUrl: "http://localhost:4137/",
     specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
   },
 });

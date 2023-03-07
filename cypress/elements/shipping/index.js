@@ -1,3 +1,3 @@
-import { SHIPPING_ZONES_LIST } from "./shipping-zones-list";
+import { SHIPPING_ZONES_LIST_SELECTORS } from "./shipping-zones-list";
 
-export { SHIPPING_ZONES_LIST };
+export { SHIPPING_ZONES_LIST_SELECTORS };

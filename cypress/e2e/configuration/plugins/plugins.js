@@ -3,8 +3,8 @@
 
 import faker from "faker";
 
-import { PLUGINS_DETAILS } from "../../../elements/plugins/pluginDetails";
-import { PLUGINS_LIST } from "../../../elements/plugins/pluginsList";
+import { PLUGINS_DETAILS_SELECTORS } from "../../../elements/plugins/pluginDetails";
+import { PLUGINS_LIST_SELECTORS } from "../../../elements/plugins/pluginsList";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { urlList } from "../../../fixtures/urlList";
 import {
@@ -55,12 +55,12 @@ describe("As an admin I want to manage plugins", () => {
     () => {
       const customerEmail = `${randomName}@example.com`;
 
-      cy.contains(PLUGINS_LIST.pluginRow, "User emails")
+      cy.contains(PLUGINS_LIST_SELECTORS.pluginRow, "User emails")
         .click()
         .waitForProgressBarToNotBeVisible();
-      cy.contains(PLUGINS_DETAILS.channel, defaultChannel.name)
+      cy.contains(PLUGINS_DETAILS_SELECTORS.channel, defaultChannel.name)
         .click()
-        .get(PLUGINS_DETAILS.accountConfirmationSubjectInput)
+        .get(PLUGINS_DETAILS_SELECTORS.accountConfirmationSubjectInput)
         .clearAndType(randomName)
         .get(BUTTON_SELECTORS.confirm)
         .click()
@@ -81,9 +81,9 @@ describe("As an admin I want to manage plugins", () => {
     () => {
       const adminName = `Admin${randomName}`;
 
-      cy.contains(PLUGINS_LIST.pluginRow, "Admin emails")
+      cy.contains(PLUGINS_LIST_SELECTORS.pluginRow, "Admin emails")
         .click()
-        .get(PLUGINS_DETAILS.staffPasswordResetInput)
+        .get(PLUGINS_DETAILS_SELECTORS.staffPasswordResetInput)
         .click()
         .clear()
         .clearAndType(adminName)

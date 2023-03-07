@@ -1,5 +1,9 @@
-import { STAFF_MEMBERS_LIST } from "./staffMembersList";
-import { STAFF_MEMBER_DETAILS } from "./staffMemberDetails";
-import { INVITE_STAFF_MEMBER_FORM } from "./inviteStaffMemberForm";
+import { INVITE_STAFF_MEMBER_FORM_SELECTORS } from "./inviteStaffMemberForm";
+import { STAFF_MEMBER_DETAILS_SELECTORS } from "./staffMemberDetails";
+import { STAFF_MEMBERS_LIST_SELECTORS } from "./staffMembersList";
 
-export { STAFF_MEMBERS_LIST, STAFF_MEMBER_DETAILS, INVITE_STAFF_MEMBER_FORM };
+export {
+  INVITE_STAFF_MEMBER_FORM_SELECTORS,
+  STAFF_MEMBER_DETAILS_SELECTORS,
+  STAFF_MEMBERS_LIST_SELECTORS,
+};

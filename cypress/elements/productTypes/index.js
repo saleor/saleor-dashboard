@@ -1,4 +1,4 @@
-import { PRODUCT_TYPE_DETAILS } from "./productTypeDetails";
-import { PRODUCT_TYPES_LIST } from "./productTypesList";
+import { PRODUCT_TYPE_DETAILS_SELECTORS } from "./productTypeDetails";
+import { PRODUCT_TYPES_LIST_SELECTORS } from "./productTypesList";
 
-export { PRODUCT_TYPE_DETAILS, PRODUCT_TYPES_LIST };
+export { PRODUCT_TYPE_DETAILS_SELECTORS, PRODUCT_TYPES_LIST_SELECTORS };
