@@ -29,14 +29,13 @@ import React, {
 import { FormattedMessage } from "react-intl";
 
 import { CardMenuItem } from "../CardMenu";
-import ColumnPicker, { ColumnPickerProps } from "../ColumnPicker";
+import { ColumnPickerProps } from "../ColumnPicker";
 import { FullScreenContainer } from "./components/FullScreenContainer";
 import { Header } from "./components/Header";
 import { RowActions } from "./components/RowActions";
 import { TooltipContainer } from "./components/TooltipContainer";
 import useCells from "./customCells/useCells";
 import { headerIcons } from "./headerIcons";
-import useColumns from "./hooks/useColumns";
 import useDatagridChange, {
   DatagridChange,
   OnDatagridChange,
@@ -110,6 +109,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
   freezeColumns = 1,
   verticalBorder,
   columnSelect = "none",
+  onColumnMoved,
+  onColumnResize,
   ...datagridProps
 }): ReactElement => {
   const classes = useStyles();
@@ -136,18 +137,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
   usePreventHistoryBack(scroller);
 
   const {
-    availableColumnsChoices,
-    columns,
-    columnChoices,
-    defaultColumns,
-    displayedColumns,
-    onColumnMoved,
-    onColumnResize,
-    onColumnsChange,
-    picker,
-  } = useColumns(availableColumns, !!renderColumnPicker);
-
-  const {
     added,
     onCellEdited,
     onRowsRemoved,
@@ -159,17 +148,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const rowsTotal = rows - removed.length + added.length;
   const hasMenuItem = !!menuItems(0).length;
-  const hasColumnGroups = columns.some(col => col.group);
+  const hasColumnGroups = availableColumns.some(col => col.group);
   const headerTitle = isAnimationOpenFinished
     ? fullScreenTitle ?? title
     : title;
 
   const handleGetCellContent = useCallback(
     ([column, row]: Item): GridCell => {
-      const item = [
-        availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
-        row,
-      ] as const;
+      const item = [column, row] as const;
       const opts = { changes, added, removed, getChangeIndex };
       const columnId = availableColumns[column].id;
       const changed = !!changes.current[getChangeIndex(columnId, row)]?.data;
@@ -201,26 +187,19 @@ export const Datagrid: React.FC<DatagridProps> = ({
       getCellContent,
       theme,
       getCellError,
-      displayedColumns,
     ],
   );
 
   const handleOnCellEdited = useCallback(
     ([column, row]: Item, newValue: EditableGridCell): void => {
-      onCellEdited(
-        [
-          availableColumns.findIndex(ac => ac.id === displayedColumns[column]),
-          row,
-        ],
-        newValue,
-      );
+      onCellEdited([column, row], newValue);
       editor.current.updateCells(
-        range(displayedColumns.length).map(offset => ({
+        range(availableColumns.length).map(offset => ({
           cell: [column + offset, row],
         })),
       );
     },
-    [onCellEdited, availableColumns, displayedColumns],
+    [onCellEdited, availableColumns],
   );
 
   const handleCellClick = useCallback(
@@ -232,9 +211,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [onRowClick],
   );
 
-  const handleRowHover = useCallback((args: GridMouseEventArgs) => {
-    setHoverRow(args.kind !== "cell" ? undefined : args.location[1]);
-  }, []);
+  const handleRowHover = useCallback(
+    (args: GridMouseEventArgs) => {
+      if (readonly) {
+        setHoverRow(args.kind !== "cell" ? undefined : args.location[1]);
+      }
+    },
+    [readonly],
+  );
 
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
     // In readonly we not allow selecting cells, but we allow selcting column
@@ -285,13 +269,28 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [getColumnTooltipContent, onHeaderClicked, setTooltip],
   );
 
+  const handleRemoveRows = useCallback(
+    (rows: number[]) => {
+      if (selection?.rows) {
+        onRowsRemoved(rows);
+        setSelection(undefined);
+      }
+    },
+    [selection, onRowsRemoved],
+  );
+
   const handleColumnResize = useCallback(
-    (column: GridColumn, newSize: number) => {
+    (
+      column: GridColumn,
+      newSize: number,
+      colIndex: number,
+      newSizeWithGrow: number,
+    ) => {
       if (tooltip) {
         clearTooltip();
       }
 
-      onColumnResize(column, newSize);
+      onColumnResize(column, newSize, colIndex, newSizeWithGrow);
     },
     [clearTooltip, onColumnResize, tooltip],
   );
@@ -304,16 +303,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
       onColumnMoved(startIndex, endIndex);
     },
     [clearTooltip, onColumnMoved, tooltip],
-  );
-
-  const handleRemoveRows = useCallback(
-    (rows: number[]) => {
-      if (selection?.rows) {
-        onRowsRemoved(rows);
-        setSelection(undefined);
-      }
-    },
-    [selection, onRowsRemoved],
   );
 
   const selectionActionsComponent = useMemo(
@@ -374,7 +363,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   className={classes.datagrid}
                   getCellContent={handleGetCellContent}
                   onCellEdited={handleOnCellEdited}
-                  columns={columns}
+                  columns={availableColumns}
                   rows={rowsTotal}
                   freezeColumns={freezeColumns}
                   smoothScrollX
@@ -417,22 +406,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
                           [classes.columnPickerBackground]: !hasMenuItem,
                         })}
                       >
-                        {renderColumnPicker ? (
-                          renderColumnPicker(defualtColumnPickerProps)
-                        ) : (
-                          <ColumnPicker
-                            {...defualtColumnPickerProps}
-                            availableColumns={availableColumnsChoices}
-                            initialColumns={columnChoices}
-                            defaultColumns={defaultColumns}
-                            onSave={onColumnsChange}
-                            hasMore={false}
-                            loading={false}
-                            onFetchMore={() => undefined}
-                            onQueryChange={picker.setQuery}
-                            query={picker.query}
-                          />
-                        )}
+                        {renderColumnPicker
+                          ? renderColumnPicker(defualtColumnPickerProps)
+                          : null}
                       </div>
                       {hasColumnGroups && (
                         <div

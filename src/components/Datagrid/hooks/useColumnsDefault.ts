@@ -1,23 +1,18 @@
+import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 
 import { AvailableColumn } from "../types";
 
-function useColumns(
+export function useColumnsDefault(
   availableColumns: readonly AvailableColumn[],
-  hasCustomColumnPicker?: boolean,
 ) {
   const [query, setQuery] = useState("");
-  const [displayedColumns, setDisplayedColumns] = useState(
+  const [displayedColumns, setDisplayedColumns] = useStateFromProps(
     availableColumns.map(({ id }) => id),
   );
-  const [columnState, setColumnState] = useState(availableColumns);
-
-  useEffect(() => {
-    setColumnState(availableColumns);
-    setDisplayedColumns(availableColumns.map(({ id }) => id));
-  }, [availableColumns]);
+  const [columnState, setColumnState] = useStateFromProps(availableColumns);
 
   const onColumnMoved = useCallback(
     (startIndex: number, endIndex: number): void => {
@@ -25,21 +20,19 @@ function useColumns(
         addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
       );
     },
-    [],
+    [setDisplayedColumns],
   );
-  const onColumnResize = useCallback((column: GridColumn, newSize: number) => {
-    if (column.id === "empty") {
-      return;
-    }
-
-    setColumnState(prevColumns =>
-      prevColumns.map(prevColumn =>
-        prevColumn.id === column.id
-          ? { ...prevColumn, width: newSize }
-          : prevColumn,
+  const onColumnResize = useCallback(
+    (column: GridColumn, newSize: number) =>
+      setColumnState(prevColumns =>
+        prevColumns.map(prevColumn =>
+          prevColumn.id === column.id
+            ? { ...prevColumn, width: newSize }
+            : prevColumn,
+        ),
       ),
-    );
-  }, []);
+    [setColumnState],
+  );
   const onColumnsChange = useCallback(
     (picked: string[]) =>
       setDisplayedColumns(prevColumns => [
@@ -51,18 +44,10 @@ function useColumns(
     [availableColumns, setDisplayedColumns],
   );
 
-  const columns = useMemo(() => {
-    // Prevent errors when availableColumns change
-    // but displayedColumns stay old because useEffect fire setState after component render
-    if (
-      displayedColumns.length !== availableColumns.length &&
-      hasCustomColumnPicker
-    ) {
-      return availableColumns;
-    }
-    return displayedColumns.map(id => columnState.find(ac => ac.id === id));
-  }, [displayedColumns, availableColumns, hasCustomColumnPicker, columnState]);
-
+  const columns = useMemo(
+    () => displayedColumns.map(id => columnState.find(ac => ac.id === id)),
+    [displayedColumns, columnState],
+  );
   const columnChoices = useMemo(
     () =>
       columns.map(({ id, title }) => ({
@@ -71,7 +56,6 @@ function useColumns(
       })),
     [columns],
   );
-
   const availableColumnsChoices = useMemo(
     () =>
       availableColumns.map(({ id, title }) => ({
@@ -80,7 +64,6 @@ function useColumns(
       })),
     [availableColumns],
   );
-
   const defaultColumns = useMemo(
     () => availableColumns.map(({ id }) => id),
     [availableColumns],
@@ -101,5 +84,3 @@ function useColumns(
     },
   };
 }
-
-export default useColumns;

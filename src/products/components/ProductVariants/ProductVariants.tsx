@@ -1,7 +1,9 @@
 import { ChannelData } from "@dashboard/channels/utils";
+import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid, {
   GetCellContentOpts,
 } from "@dashboard/components/Datagrid/Datagrid";
+import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
 import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import {
@@ -53,7 +55,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   const intl = useIntl();
   // const limitReached = isLimitReached(limits, "productVariants");
 
-  const columns = React.useMemo(
+  const variantDefaultColumns = React.useMemo(
     () =>
       variantAttributes && warehouses && channels
         ? [
@@ -78,6 +80,17 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         : [],
     [variantAttributes, warehouses, channels],
   );
+
+  const {
+    availableColumnsChoices,
+    columnChoices,
+    columns,
+    defaultColumns,
+    onColumnMoved,
+    onColumnResize,
+    onColumnsChange,
+    picker,
+  } = useColumnsDefault(variantDefaultColumns);
 
   const getCellContent = React.useCallback(
     ([column, row]: Item, opts: GetCellContentOpts) =>
@@ -130,6 +143,22 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         <Button variant="tertiary" onClick={() => removeRows(indexes)}>
           <FormattedMessage {...buttonMessages.delete} />
         </Button>
+      )}
+      onColumnResize={onColumnResize}
+      onColumnMoved={onColumnMoved}
+      renderColumnPicker={defaultProps => (
+        <ColumnPicker
+          {...defaultProps}
+          availableColumns={availableColumnsChoices}
+          initialColumns={columnChoices}
+          defaultColumns={defaultColumns}
+          onSave={onColumnsChange}
+          hasMore={false}
+          loading={false}
+          onFetchMore={() => undefined}
+          onQueryChange={picker.setQuery}
+          query={picker.query}
+        />
       )}
       title={intl.formatMessage(messages.title)}
       fullScreenTitle={intl.formatMessage(messages.fullScreenTitle, {
