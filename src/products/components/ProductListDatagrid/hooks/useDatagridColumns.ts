@@ -51,22 +51,14 @@ export const useDatagridColumns = ({
 
     setColumns(prevColumns => [
       ...prevColumns
-        .filter(
-          column =>
-            settings.columns.includes(column.id as any) ||
-            ["empty", "name"].includes(column.id),
-        )
-        .map(column => {
-          if (!column.title && column.id !== "empty") {
-            return attributeColumns.find(ac => ac.id === column.id);
-          }
-          return column;
-        }),
+        .filter(byColumnsInSettingsOrStaticColumns(settings))
+        .map(toCurrentColumnData(sort, attributeColumns)),
       ...settings.columns
-        .filter(column => !prevColumns.find(c => c.id === column))
-        .map(column =>
-          [...initialColumns.current, ...attributeColumns].find(
-            ac => ac.id === column,
+        .filter(byNewAddedColumns(prevColumns))
+        .map(
+          toNewAddedColumData(
+            [...initialColumns.current, ...attributeColumns],
+            sort,
           ),
         ),
     ]);
@@ -78,14 +70,45 @@ export const useDatagridColumns = ({
     sort,
   ]);
 
-  useEffect(() => {
-    setColumns(columns =>
-      columns.map(col => ({
-        ...col,
-        icon: getColumnSortDirectionIcon(sort, col.id),
-      })),
-    );
-  }, [sort]);
-
   return { columns, setColumns };
 };
+
+function byNewAddedColumns(currentColumns: AvailableColumn[]) {
+  return (column: ProductListColumns) =>
+    !currentColumns.find(c => c.id === column);
+}
+
+function byColumnsInSettingsOrStaticColumns(
+  settings: ListSettings<ProductListColumns>,
+) {
+  return (column: AvailableColumn) =>
+    settings.columns.includes(column.id as ProductListColumns) ||
+    ["empty", "name"].includes(column.id);
+}
+
+function toCurrentColumnData(
+  sort: Sort<ProductListUrlSortField>,
+  attributeColumns: AvailableColumn[],
+) {
+  return (column: AvailableColumn) => {
+    // Take newest attibutes data from attributeColumns
+    if (column.id.startsWith("attribute")) {
+      return attributeColumns.find(ac => ac.id === column.id);
+    }
+
+    return {
+      ...column,
+      icon: getColumnSortDirectionIcon(sort, column.id),
+    };
+  };
+}
+
+function toNewAddedColumData(
+  columnSource: AvailableColumn[],
+  sort: Sort<ProductListUrlSortField>,
+) {
+  return (column: ProductListColumns) => ({
+    ...columnSource.find(ac => ac.id === column),
+    icon: getColumnSortDirectionIcon(sort, column as ProductListUrlSortField),
+  });
+}
