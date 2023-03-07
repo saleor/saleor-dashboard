@@ -51,7 +51,7 @@ const useStyles = makeStyles(
     addFilterText: {
       color: theme.palette.primary.main,
       fontSize: 14,
-      fontWeight: 590,
+      fontWeight: 580,
     },
     filterButton: {
       padding: theme.spacing(1, 2),

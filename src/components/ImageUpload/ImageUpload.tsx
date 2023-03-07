@@ -52,7 +52,7 @@ const useStyles = makeStyles(
     uploadText: {
       color: theme.typography.body1.color,
       fontSize: 12,
-      fontWeight: 590,
+      fontWeight: 580,
       textTransform: "uppercase",
     },
   }),

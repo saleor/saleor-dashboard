@@ -24,6 +24,9 @@ export const themeOverrides: Partial<Theme> = {
         fontSize: "13px",
         fontWeight: 500,
       },
+      h3: {
+        fontWeight: 580,
+      },
     },
     MuiTextField: {
       root: {

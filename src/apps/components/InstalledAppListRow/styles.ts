@@ -16,7 +16,7 @@ export const useStyles = makeStyles<InstalledApp>(
       borderWidth: 0,
     }),
     name: {
-      fontWeight: 590,
+      fontWeight: 580,
     },
     version: {
       color: theme.palette.saleor.main[3],

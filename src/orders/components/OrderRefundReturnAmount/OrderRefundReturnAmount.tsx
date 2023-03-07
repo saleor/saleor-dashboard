@@ -40,7 +40,7 @@ const useStyles = makeStyles(
       margin: theme.spacing(1, 0),
     },
     maxRefundRow: {
-      fontWeight: 590,
+      fontWeight: 580,
     },
     priceField: {
       marginTop: theme.spacing(2),

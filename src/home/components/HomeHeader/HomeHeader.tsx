@@ -13,7 +13,7 @@ const useStyles = makeStyles(
       marginBottom: theme.spacing(6),
     },
     pageHeader: {
-      fontWeight: 590,
+      fontWeight: 580,
     },
     subtitle: {
       color: theme.typography.caption.color,

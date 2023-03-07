@@ -14,7 +14,7 @@ const useStyles = makeStyles(
       width: "100%",
     },
     highlightedRow: {
-      fontWeight: 590,
+      fontWeight: 580,
     },
     row: {
       display: "flex",

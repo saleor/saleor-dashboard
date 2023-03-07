@@ -23,7 +23,7 @@ export const useStyles = makeStyles(
       marginRight: "auto",
     },
     totalRow: {
-      fontWeight: 590,
+      fontWeight: 580,
     },
     titleContainer: {
       display: "flex",

@@ -24,7 +24,7 @@ const useStyles = makeStyles(
       width: 830,
     },
     header: {
-      fontWeight: 590,
+      fontWeight: 580,
     },
     innerContainer: {
       [theme.breakpoints.down("sm")]: {

@@ -48,7 +48,7 @@ const useStyles = makeStyles(
       marginBottom: 0,
     },
     sectionTitle: {
-      fontWeight: 590,
+      fontWeight: 580,
       marginBottom: theme.spacing(),
       marginTop: theme.spacing(2),
     },

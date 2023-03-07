@@ -11,7 +11,7 @@ export const useStyles = makeStyles(
         minHeight: "80vh",
       },
       "& h3": {
-        fontWeight: 590,
+        fontWeight: 580,
         marginBottom: theme.spacing(3),
         maxWidth: theme.spacing(60),
       },
