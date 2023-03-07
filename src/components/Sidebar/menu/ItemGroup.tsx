@@ -22,7 +22,6 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
     <List.ItemGroup defaultExpanded={isExpanded}>
       <List.ItemGroup.Trigger
         paddingX={5}
-        // paddingY={4}
         borderRadius={3}
         size="small"
         active={isActive}
@@ -40,7 +39,6 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
             display="flex"
             alignItems="center"
             gap={6}
-            // paddingX={5}
             paddingY={4}
             borderRadius={3}
           >
