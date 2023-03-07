@@ -4,7 +4,6 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@dashboard/config";
@@ -26,29 +25,21 @@ import {
   RelayToFlat,
   SortPage,
 } from "@dashboard/types";
-import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn, Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
 import { sprinkles } from "@saleor/macaw-ui/next";
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { isAttributeColumnValue } from "../ProductListPage/utils";
 import { useColumnPickerColumns } from "./hooks/useColumnPickerColumns";
+import { useDatagridColumns } from "./hooks/useDatagridColumns";
 import { messages } from "./messages";
 import {
   createGetCellContent,
   getColumnMetadata,
-  getColumns,
   getProductRowsLength,
-  toAttributeColumnData,
 } from "./utils";
 
 interface ProductListDatagridProps
@@ -97,63 +88,13 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [settings.columns],
   );
 
-  const initialColumns = useRef(
-    getColumns({
-      intl,
-      sort,
-      gridAttributes,
-      gridAttributesFromSettings,
-      activeAttributeSortId,
-    }),
-  );
-  const [columns, setColumns] = useState<AvailableColumn[]>(
-    initialColumns.current.filter(col =>
-      settings.columns.includes(col.id as ProductListColumns),
-    ),
-  );
-
-  useEffect(() => {
-    const attributeColumns = gridAttributesFromSettings.map(
-      toAttributeColumnData(gridAttributes, activeAttributeSortId, sort),
-    );
-
-    setColumns(prevColumns => [
-      initialColumns.current[0],
-      initialColumns.current[1],
-      ...prevColumns
-        .filter(column => settings.columns.includes(column.id as any))
-        .map(column => {
-          if (!column.title) {
-            return [...initialColumns.current, ...attributeColumns].find(
-              ac => ac.id === column.id,
-            );
-          }
-          return column;
-        }),
-      ...settings.columns
-        .filter(column => !prevColumns.find(c => c.id === column))
-        .map(column =>
-          [...initialColumns.current, ...attributeColumns].find(
-            ac => ac.id === column,
-          ),
-        ),
-    ]);
-  }, [
+  const { columns, setColumns } = useDatagridColumns({
     activeAttributeSortId,
     gridAttributes,
     gridAttributesFromSettings,
     settings,
     sort,
-  ]);
-
-  useEffect(() => {
-    setColumns(columns =>
-      columns.map(col => ({
-        ...col,
-        icon: getColumnSortDirectionIcon(sort, col.id),
-      })),
-    );
-  }, [sort]);
+  });
 
   const handleColumnMoved = useCallback(
     (startIndex: number, endIndex: number): void => {
@@ -161,7 +102,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
       );
     },
-    [],
+    [setColumns],
   );
 
   const handleColumnResize = useCallback(
@@ -178,7 +119,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         ),
       );
     },
-    [],
+    [setColumns],
   );
 
   const columnPickerColumns = useColumnPickerColumns(
