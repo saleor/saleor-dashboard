@@ -26,7 +26,7 @@ const useStyles = makeStyles(
       userSelect: "none",
     },
     tabActive: {
-      fontWeight: 600,
+      fontWeight: 590,
     },
     tabVisited: {
       borderBottom: `3px solid ${theme.palette.primary.main}`,

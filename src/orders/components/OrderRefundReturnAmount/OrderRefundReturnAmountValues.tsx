@@ -14,7 +14,7 @@ const useStyles = makeStyles(
       width: "100%",
     },
     highlightedRow: {
-      fontWeight: 600,
+      fontWeight: 590,
     },
     row: {
       display: "flex",
@@ -81,7 +81,9 @@ const messages = defineMessages({
   },
 });
 
-const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = props => {
+const OrderRefundAmountValues: React.FC<
+  OrderRefundAmountValuesProps
+> = props => {
   const intl = useIntl();
   const classes = useStyles({});
 

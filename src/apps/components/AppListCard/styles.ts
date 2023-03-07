@@ -17,7 +17,7 @@ export const useStyles = makeStyles(
 export const useDescriptionStyles = makeStyles(
   theme => ({
     cardHeader: {
-      fontWeight: 600,
+      fontWeight: 590,
       fontSize: 20,
       fontFamily: "sans-serif",
     },
@@ -67,7 +67,7 @@ export const useIntegrationsStyles = makeStyles(
   theme => ({
     listHeader: {
       fontSize: 14,
-      fontWeight: 700,
+      fontWeight: 590,
       color: theme.palette.saleor.main[3],
       margin: theme.spacing(2, 0),
       textTransform: "uppercase",

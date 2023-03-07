@@ -38,7 +38,7 @@ const useStyles = makeStyles(
     textEmphasis: {
       color: emphasisedTextBlue,
       textTransform: "uppercase",
-      fontWeight: 600,
+      fontWeight: 590,
       fontStyle: "normal",
       paddingLeft: "5px",
     },

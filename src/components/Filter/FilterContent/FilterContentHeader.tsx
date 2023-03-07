@@ -23,7 +23,7 @@ const useStyles = makeStyles(
       marginRight: theme.spacing(1),
     },
     label: {
-      fontWeight: 600,
+      fontWeight: 590,
     },
   }),
   { name: "FilterContentHeader" },

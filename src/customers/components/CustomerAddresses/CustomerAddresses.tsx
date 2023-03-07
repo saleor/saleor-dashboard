@@ -14,7 +14,7 @@ import { maybe } from "../../../misc";
 const useStyles = makeStyles(
   theme => ({
     label: {
-      fontWeight: 600,
+      fontWeight: 590,
       marginBottom: theme.spacing(1),
     },
   }),

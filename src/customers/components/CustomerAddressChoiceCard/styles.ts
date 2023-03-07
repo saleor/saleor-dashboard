@@ -27,7 +27,7 @@ export const useStyles = makeStyles(
     selectedLabel: {
       fontSize: "1.4rem",
       lineHeight: "1.75",
-      fontWeight: 600,
+      fontWeight: 590,
       textTransform: "uppercase",
     },
     editIcon: {

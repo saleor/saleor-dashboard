@@ -16,7 +16,7 @@ export const useStyles = makeStyles<AppInstallation>(
       borderWidth: 0,
     }),
     name: {
-      fontWeight: 600,
+      fontWeight: 590,
     },
     tunnel: {
       color: theme.palette.saleor.main[3],

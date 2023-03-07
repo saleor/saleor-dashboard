@@ -9,11 +9,11 @@ export const useStyles = makeStyles(
     },
     sectionHeaderTitle: {
       flex: 1,
-      fontWeight: 600 as 600,
+      fontWeight: 590,
       lineHeight: 1,
     },
     userEmail: {
-      fontWeight: 600 as 600,
+      fontWeight: 590,
       marginBottom: theme.spacing(1),
     },
   }),

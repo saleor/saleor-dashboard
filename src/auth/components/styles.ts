@@ -13,7 +13,7 @@ const useStyles = makeStyles(
       justifyContent: "flex-end",
     },
     header: {
-      fontWeight: 700,
+      fontWeight: 570,
       marginBottom: theme.spacing(2),
     },
     link: {

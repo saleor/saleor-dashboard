@@ -41,7 +41,7 @@ const useStyles = makeStyles(
     },
     symbol: {
       display: "inline-block",
-      fontWeight: 600,
+      fontWeight: 590,
       width: theme.spacing(4),
     },
   }),
