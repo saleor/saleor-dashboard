@@ -1272,6 +1272,10 @@
     "context": "select title",
     "string": "Select channels you want for {contentType} to be available on"
   },
+  "7u9Ep7": {
+    "context": "Label when app is disabled",
+    "string": "Disabled"
+  },
   "7v2oBd": {
     "context": "header",
     "string": "Error"

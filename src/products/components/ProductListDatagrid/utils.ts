@@ -20,7 +20,7 @@ import { ProductListColumns } from "@dashboard/config";
 import { GridAttributesQuery, ProductListQuery } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
-import { ListSettings, RelayToFlat, Sort } from "@dashboard/types";
+import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { Item } from "@glideapps/glide-data-grid";
 import moment from "moment-timezone";
@@ -34,7 +34,6 @@ interface GetColumnsProps {
   sort: Sort<ProductListUrlSortField>;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   gridAttributesFromSettings: ProductListColumns[];
-  settings: ListSettings<ProductListColumns>;
   activeAttributeSortId: string;
 }
 
@@ -43,7 +42,6 @@ export function getColumns({
   sort,
   gridAttributes,
   gridAttributesFromSettings,
-  settings,
   activeAttributeSortId,
 }: GetColumnsProps): AvailableColumn[] {
   return [
@@ -58,50 +56,42 @@ export function getColumns({
       width: 300,
       icon: getColumnSortDirectionIcon(sort, ProductListUrlSortField.name),
     },
-    ...[
-      {
-        id: "productType",
-        title: intl.formatMessage(columnsMessages.type),
-        width: 200,
-        icon: getColumnSortDirectionIcon(
-          sort,
-          ProductListUrlSortField.productType,
-        ),
-      },
-      {
-        id: "description",
-        title: intl.formatMessage(commonMessages.description),
-        width: 400,
-      },
-      {
-        id: "availability",
-        title: intl.formatMessage(columnsMessages.availability),
-        width: 250,
-        icon: getColumnSortDirectionIcon(
-          sort,
-          ProductListUrlSortField.availability,
-        ),
-      },
-      ...gridAttributesFromSettings.map(
-        toAttributeColumnData(gridAttributes, activeAttributeSortId, sort),
-      ),
-      {
-        id: "date",
-        title: intl.formatMessage(columnsMessages.updatedAt),
-        width: 250,
-        icon: getColumnSortDirectionIcon(sort, ProductListUrlSortField.date),
-      },
-      {
-        id: "price",
-        title: intl.formatMessage(columnsMessages.price),
-        width: 250,
-        icon: getColumnSortDirectionIcon(sort, ProductListUrlSortField.price),
-      },
-    ].filter(col => settings.columns.includes(col.id as ProductListColumns)),
+    {
+      id: "productType",
+      title: intl.formatMessage(columnsMessages.type),
+      width: 200,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.productType),
+    },
+    {
+      id: "description",
+      title: intl.formatMessage(commonMessages.description),
+      width: 400,
+    },
+    {
+      id: "availability",
+      title: intl.formatMessage(columnsMessages.availability),
+      width: 250,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.availability),
+    },
+    ...gridAttributesFromSettings.map(
+      toAttributeColumnData(gridAttributes, activeAttributeSortId, sort),
+    ),
+    {
+      id: "date",
+      title: intl.formatMessage(columnsMessages.updatedAt),
+      width: 250,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.date),
+    },
+    {
+      id: "price",
+      title: intl.formatMessage(columnsMessages.price),
+      width: 250,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.price),
+    },
   ];
 }
 
-function toAttributeColumnData(
+export function toAttributeColumnData(
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>,
   activeAttributeSortId: string,
   sort: Sort<ProductListUrlSortField>,
@@ -122,6 +112,31 @@ function toAttributeColumnData(
         getColumnSortDirectionIcon(sort, ProductListUrlSortField.attribute),
     };
   };
+}
+
+export function toGridAttibuteColumData(
+  gridAttribute: RelayToFlat<GridAttributesQuery["grid"]>[number],
+) {
+  return {
+    id: gridAttribute.id,
+    title: gridAttribute.name,
+    width: 200,
+  };
+}
+
+function getColumnSortIconName(
+  { sort, asc }: Sort<ProductListUrlSortField>,
+  columnName: ProductListUrlSortField,
+) {
+  if (columnName === sort) {
+    if (asc) {
+      return "arrowUp";
+    } else {
+      return "arrowDown";
+    }
+  }
+
+  return undefined;
 }
 
 interface GetCellContentProps {
