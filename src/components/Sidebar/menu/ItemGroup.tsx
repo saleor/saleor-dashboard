@@ -30,6 +30,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
         data-test-id={`menu-item-label-${menuItem.id}`}
       >
         <Link
+          replace={isActive}
           to={menuItem?.url ?? ""}
           className={sprinkles({
             width: "100%",
