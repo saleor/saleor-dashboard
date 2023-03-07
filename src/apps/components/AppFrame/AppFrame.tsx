@@ -84,9 +84,11 @@ export const AppFrame: React.FC<Props> = ({
 
   return (
     <>
-      <div className={classes.loader}>
-        <CircularProgress color="primary" />
-      </div>
+      {!handshakeDone && (
+        <div className={classes.loader}>
+          <CircularProgress color="primary" />
+        </div>
+      )}
       <iframe
         ref={frameRef}
         src={AppUrls.resolveAppIframeUrl(appId, src, {
