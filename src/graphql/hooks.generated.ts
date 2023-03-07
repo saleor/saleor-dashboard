@@ -2844,6 +2844,629 @@ export const WebhookDetailsFragmentDoc = gql`
   customHeaders
 }
     ${WebhookFragmentDoc}`;
+export const AppCreateDocument = gql`
+    mutation AppCreate($input: AppInput!) {
+  appCreate(input: $input) {
+    authToken
+    app {
+      ...App
+    }
+    errors {
+      ...AppError
+    }
+  }
+}
+    ${AppFragmentDoc}
+${AppErrorFragmentDoc}`;
+export type AppCreateMutationFn = Apollo.MutationFunction<Types.AppCreateMutation, Types.AppCreateMutationVariables>;
+
+/**
+ * __useAppCreateMutation__
+ *
+ * To run a mutation, you first call `useAppCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appCreateMutation, { data, loading, error }] = useAppCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAppCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppCreateMutation, Types.AppCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppCreateMutation, Types.AppCreateMutationVariables>(AppCreateDocument, options);
+      }
+export type AppCreateMutationHookResult = ReturnType<typeof useAppCreateMutation>;
+export type AppCreateMutationResult = Apollo.MutationResult<Types.AppCreateMutation>;
+export type AppCreateMutationOptions = Apollo.BaseMutationOptions<Types.AppCreateMutation, Types.AppCreateMutationVariables>;
+export const AppDeleteDocument = gql`
+    mutation AppDelete($id: ID!) {
+  appDelete(id: $id) {
+    app {
+      ...App
+    }
+    errors {
+      ...AppError
+    }
+  }
+}
+    ${AppFragmentDoc}
+${AppErrorFragmentDoc}`;
+export type AppDeleteMutationFn = Apollo.MutationFunction<Types.AppDeleteMutation, Types.AppDeleteMutationVariables>;
+
+/**
+ * __useAppDeleteMutation__
+ *
+ * To run a mutation, you first call `useAppDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appDeleteMutation, { data, loading, error }] = useAppDeleteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAppDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppDeleteMutation, Types.AppDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppDeleteMutation, Types.AppDeleteMutationVariables>(AppDeleteDocument, options);
+      }
+export type AppDeleteMutationHookResult = ReturnType<typeof useAppDeleteMutation>;
+export type AppDeleteMutationResult = Apollo.MutationResult<Types.AppDeleteMutation>;
+export type AppDeleteMutationOptions = Apollo.BaseMutationOptions<Types.AppDeleteMutation, Types.AppDeleteMutationVariables>;
+export const AppDeleteFailedInstallationDocument = gql`
+    mutation AppDeleteFailedInstallation($id: ID!) {
+  appDeleteFailedInstallation(id: $id) {
+    appInstallation {
+      id
+      status
+      appName
+      message
+    }
+    errors {
+      ...AppError
+    }
+  }
+}
+    ${AppErrorFragmentDoc}`;
+export type AppDeleteFailedInstallationMutationFn = Apollo.MutationFunction<Types.AppDeleteFailedInstallationMutation, Types.AppDeleteFailedInstallationMutationVariables>;
+
+/**
+ * __useAppDeleteFailedInstallationMutation__
+ *
+ * To run a mutation, you first call `useAppDeleteFailedInstallationMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppDeleteFailedInstallationMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appDeleteFailedInstallationMutation, { data, loading, error }] = useAppDeleteFailedInstallationMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAppDeleteFailedInstallationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppDeleteFailedInstallationMutation, Types.AppDeleteFailedInstallationMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppDeleteFailedInstallationMutation, Types.AppDeleteFailedInstallationMutationVariables>(AppDeleteFailedInstallationDocument, options);
+      }
+export type AppDeleteFailedInstallationMutationHookResult = ReturnType<typeof useAppDeleteFailedInstallationMutation>;
+export type AppDeleteFailedInstallationMutationResult = Apollo.MutationResult<Types.AppDeleteFailedInstallationMutation>;
+export type AppDeleteFailedInstallationMutationOptions = Apollo.BaseMutationOptions<Types.AppDeleteFailedInstallationMutation, Types.AppDeleteFailedInstallationMutationVariables>;
+export const AppFetchDocument = gql`
+    mutation AppFetch($manifestUrl: String!) {
+  appFetchManifest(manifestUrl: $manifestUrl) {
+    manifest {
+      ...AppManifest
+    }
+    errors {
+      ...AppError
+    }
+  }
+}
+    ${AppManifestFragmentDoc}
+${AppErrorFragmentDoc}`;
+export type AppFetchMutationFn = Apollo.MutationFunction<Types.AppFetchMutation, Types.AppFetchMutationVariables>;
+
+/**
+ * __useAppFetchMutation__
+ *
+ * To run a mutation, you first call `useAppFetchMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppFetchMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appFetchMutation, { data, loading, error }] = useAppFetchMutation({
+ *   variables: {
+ *      manifestUrl: // value for 'manifestUrl'
+ *   },
+ * });
+ */
+export function useAppFetchMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppFetchMutation, Types.AppFetchMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppFetchMutation, Types.AppFetchMutationVariables>(AppFetchDocument, options);
+      }
+export type AppFetchMutationHookResult = ReturnType<typeof useAppFetchMutation>;
+export type AppFetchMutationResult = Apollo.MutationResult<Types.AppFetchMutation>;
+export type AppFetchMutationOptions = Apollo.BaseMutationOptions<Types.AppFetchMutation, Types.AppFetchMutationVariables>;
+export const AppInstallDocument = gql`
+    mutation AppInstall($input: AppInstallInput!) {
+  appInstall(input: $input) {
+    appInstallation {
+      id
+      status
+      appName
+      manifestUrl
+    }
+    errors {
+      ...AppError
+    }
+  }
+}
+    ${AppErrorFragmentDoc}`;
+export type AppInstallMutationFn = Apollo.MutationFunction<Types.AppInstallMutation, Types.AppInstallMutationVariables>;
+
+/**
+ * __useAppInstallMutation__
+ *
+ * To run a mutation, you first call `useAppInstallMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppInstallMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appInstallMutation, { data, loading, error }] = useAppInstallMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAppInstallMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppInstallMutation, Types.AppInstallMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppInstallMutation, Types.AppInstallMutationVariables>(AppInstallDocument, options);
+      }
+export type AppInstallMutationHookResult = ReturnType<typeof useAppInstallMutation>;
+export type AppInstallMutationResult = Apollo.MutationResult<Types.AppInstallMutation>;
+export type AppInstallMutationOptions = Apollo.BaseMutationOptions<Types.AppInstallMutation, Types.AppInstallMutationVariables>;
+export const AppRetryInstallDocument = gql`
+    mutation AppRetryInstall($id: ID!) {
+  appRetryInstall(id: $id) {
+    appInstallation {
+      id
+      status
+      appName
+      manifestUrl
+    }
+    errors {
+      ...AppError
+    }
+  }
+}
+    ${AppErrorFragmentDoc}`;
+export type AppRetryInstallMutationFn = Apollo.MutationFunction<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>;
+
+/**
+ * __useAppRetryInstallMutation__
+ *
+ * To run a mutation, you first call `useAppRetryInstallMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppRetryInstallMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appRetryInstallMutation, { data, loading, error }] = useAppRetryInstallMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAppRetryInstallMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>(AppRetryInstallDocument, options);
+      }
+export type AppRetryInstallMutationHookResult = ReturnType<typeof useAppRetryInstallMutation>;
+export type AppRetryInstallMutationResult = Apollo.MutationResult<Types.AppRetryInstallMutation>;
+export type AppRetryInstallMutationOptions = Apollo.BaseMutationOptions<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>;
+export const AppUpdateDocument = gql`
+    mutation AppUpdate($id: ID!, $input: AppInput!) {
+  appUpdate(id: $id, input: $input) {
+    app {
+      ...App
+      permissions {
+        code
+        name
+      }
+    }
+    errors {
+      ...AppError
+      message
+      permissions
+    }
+  }
+}
+    ${AppFragmentDoc}
+${AppErrorFragmentDoc}`;
+export type AppUpdateMutationFn = Apollo.MutationFunction<Types.AppUpdateMutation, Types.AppUpdateMutationVariables>;
+
+/**
+ * __useAppUpdateMutation__
+ *
+ * To run a mutation, you first call `useAppUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appUpdateMutation, { data, loading, error }] = useAppUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAppUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppUpdateMutation, Types.AppUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppUpdateMutation, Types.AppUpdateMutationVariables>(AppUpdateDocument, options);
+      }
+export type AppUpdateMutationHookResult = ReturnType<typeof useAppUpdateMutation>;
+export type AppUpdateMutationResult = Apollo.MutationResult<Types.AppUpdateMutation>;
+export type AppUpdateMutationOptions = Apollo.BaseMutationOptions<Types.AppUpdateMutation, Types.AppUpdateMutationVariables>;
+export const AppTokenCreateDocument = gql`
+    mutation AppTokenCreate($input: AppTokenInput!) {
+  appTokenCreate(input: $input) {
+    appToken {
+      name
+      authToken
+      id
+    }
+    authToken
+    errors {
+      ...AppError
+    }
+  }
+}
+    ${AppErrorFragmentDoc}`;
+export type AppTokenCreateMutationFn = Apollo.MutationFunction<Types.AppTokenCreateMutation, Types.AppTokenCreateMutationVariables>;
+
+/**
+ * __useAppTokenCreateMutation__
+ *
+ * To run a mutation, you first call `useAppTokenCreateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppTokenCreateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appTokenCreateMutation, { data, loading, error }] = useAppTokenCreateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useAppTokenCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppTokenCreateMutation, Types.AppTokenCreateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppTokenCreateMutation, Types.AppTokenCreateMutationVariables>(AppTokenCreateDocument, options);
+      }
+export type AppTokenCreateMutationHookResult = ReturnType<typeof useAppTokenCreateMutation>;
+export type AppTokenCreateMutationResult = Apollo.MutationResult<Types.AppTokenCreateMutation>;
+export type AppTokenCreateMutationOptions = Apollo.BaseMutationOptions<Types.AppTokenCreateMutation, Types.AppTokenCreateMutationVariables>;
+export const AppTokenDeleteDocument = gql`
+    mutation AppTokenDelete($id: ID!) {
+  appTokenDelete(id: $id) {
+    appToken {
+      name
+      authToken
+      id
+    }
+    errors {
+      ...AppError
+    }
+  }
+}
+    ${AppErrorFragmentDoc}`;
+export type AppTokenDeleteMutationFn = Apollo.MutationFunction<Types.AppTokenDeleteMutation, Types.AppTokenDeleteMutationVariables>;
+
+/**
+ * __useAppTokenDeleteMutation__
+ *
+ * To run a mutation, you first call `useAppTokenDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppTokenDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appTokenDeleteMutation, { data, loading, error }] = useAppTokenDeleteMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAppTokenDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppTokenDeleteMutation, Types.AppTokenDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppTokenDeleteMutation, Types.AppTokenDeleteMutationVariables>(AppTokenDeleteDocument, options);
+      }
+export type AppTokenDeleteMutationHookResult = ReturnType<typeof useAppTokenDeleteMutation>;
+export type AppTokenDeleteMutationResult = Apollo.MutationResult<Types.AppTokenDeleteMutation>;
+export type AppTokenDeleteMutationOptions = Apollo.BaseMutationOptions<Types.AppTokenDeleteMutation, Types.AppTokenDeleteMutationVariables>;
+export const AppActivateDocument = gql`
+    mutation AppActivate($id: ID!) {
+  appActivate(id: $id) {
+    errors {
+      ...AppError
+    }
+  }
+}
+    ${AppErrorFragmentDoc}`;
+export type AppActivateMutationFn = Apollo.MutationFunction<Types.AppActivateMutation, Types.AppActivateMutationVariables>;
+
+/**
+ * __useAppActivateMutation__
+ *
+ * To run a mutation, you first call `useAppActivateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppActivateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appActivateMutation, { data, loading, error }] = useAppActivateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAppActivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppActivateMutation, Types.AppActivateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppActivateMutation, Types.AppActivateMutationVariables>(AppActivateDocument, options);
+      }
+export type AppActivateMutationHookResult = ReturnType<typeof useAppActivateMutation>;
+export type AppActivateMutationResult = Apollo.MutationResult<Types.AppActivateMutation>;
+export type AppActivateMutationOptions = Apollo.BaseMutationOptions<Types.AppActivateMutation, Types.AppActivateMutationVariables>;
+export const AppDeactivateDocument = gql`
+    mutation AppDeactivate($id: ID!) {
+  appDeactivate(id: $id) {
+    errors {
+      ...AppError
+    }
+  }
+}
+    ${AppErrorFragmentDoc}`;
+export type AppDeactivateMutationFn = Apollo.MutationFunction<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>;
+
+/**
+ * __useAppDeactivateMutation__
+ *
+ * To run a mutation, you first call `useAppDeactivateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useAppDeactivateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [appDeactivateMutation, { data, loading, error }] = useAppDeactivateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAppDeactivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>(AppDeactivateDocument, options);
+      }
+export type AppDeactivateMutationHookResult = ReturnType<typeof useAppDeactivateMutation>;
+export type AppDeactivateMutationResult = Apollo.MutationResult<Types.AppDeactivateMutation>;
+export type AppDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>;
+export const AppsListDocument = gql`
+    query AppsList($before: String, $after: String, $first: Int, $last: Int, $sort: AppSortingInput, $filter: AppFilterInput) {
+  apps(
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+    sortBy: $sort
+    filter: $filter
+  ) {
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+    totalCount
+    edges {
+      node {
+        ...AppListItem
+      }
+    }
+  }
+}
+    ${AppListItemFragmentDoc}`;
+
+/**
+ * __useAppsListQuery__
+ *
+ * To run a query within a React component, call `useAppsListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAppsListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAppsListQuery({
+ *   variables: {
+ *      before: // value for 'before'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *      sort: // value for 'sort'
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useAppsListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.AppsListQuery, Types.AppsListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AppsListQuery, Types.AppsListQueryVariables>(AppsListDocument, options);
+      }
+export function useAppsListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppsListQuery, Types.AppsListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AppsListQuery, Types.AppsListQueryVariables>(AppsListDocument, options);
+        }
+export type AppsListQueryHookResult = ReturnType<typeof useAppsListQuery>;
+export type AppsListLazyQueryHookResult = ReturnType<typeof useAppsListLazyQuery>;
+export type AppsListQueryResult = Apollo.QueryResult<Types.AppsListQuery, Types.AppsListQueryVariables>;
+export const AppsInstallationsDocument = gql`
+    query AppsInstallations {
+  appsInstallations {
+    ...AppInstallation
+  }
+}
+    ${AppInstallationFragmentDoc}`;
+
+/**
+ * __useAppsInstallationsQuery__
+ *
+ * To run a query within a React component, call `useAppsInstallationsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAppsInstallationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAppsInstallationsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useAppsInstallationsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>(AppsInstallationsDocument, options);
+      }
+export function useAppsInstallationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>(AppsInstallationsDocument, options);
+        }
+export type AppsInstallationsQueryHookResult = ReturnType<typeof useAppsInstallationsQuery>;
+export type AppsInstallationsLazyQueryHookResult = ReturnType<typeof useAppsInstallationsLazyQuery>;
+export type AppsInstallationsQueryResult = Apollo.QueryResult<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>;
+export const AppDocument = gql`
+    query App($id: ID!) {
+  app(id: $id) {
+    ...App
+    aboutApp
+    permissions {
+      code
+      name
+    }
+    dataPrivacy
+    dataPrivacyUrl
+  }
+}
+    ${AppFragmentDoc}`;
+
+/**
+ * __useAppQuery__
+ *
+ * To run a query within a React component, call `useAppQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAppQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAppQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useAppQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppQuery, Types.AppQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AppQuery, Types.AppQueryVariables>(AppDocument, options);
+      }
+export function useAppLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppQuery, Types.AppQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AppQuery, Types.AppQueryVariables>(AppDocument, options);
+        }
+export type AppQueryHookResult = ReturnType<typeof useAppQuery>;
+export type AppLazyQueryHookResult = ReturnType<typeof useAppLazyQuery>;
+export type AppQueryResult = Apollo.QueryResult<Types.AppQuery, Types.AppQueryVariables>;
+export const ExtensionListDocument = gql`
+    query ExtensionList($filter: AppExtensionFilterInput!) {
+  appExtensions(filter: $filter, first: 100) {
+    edges {
+      node {
+        id
+        label
+        url
+        mount
+        target
+        accessToken
+        permissions {
+          code
+        }
+        app {
+          id
+          appUrl
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useExtensionListQuery__
+ *
+ * To run a query within a React component, call `useExtensionListQuery` and pass it any options that fit your needs.
+ * When your component renders, `useExtensionListQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useExtensionListQuery({
+ *   variables: {
+ *      filter: // value for 'filter'
+ *   },
+ * });
+ */
+export function useExtensionListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>(ExtensionListDocument, options);
+      }
+export function useExtensionListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>(ExtensionListDocument, options);
+        }
+export type ExtensionListQueryHookResult = ReturnType<typeof useExtensionListQuery>;
+export type ExtensionListLazyQueryHookResult = ReturnType<typeof useExtensionListLazyQuery>;
+export type ExtensionListQueryResult = Apollo.QueryResult<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>;
 export const AttributeBulkDeleteDocument = gql`
     mutation AttributeBulkDelete($ids: [ID!]!) {
   attributeBulkDelete(ids: $ids) {
@@ -7628,629 +8251,6 @@ export function useMenuDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuery
 export type MenuDetailsQueryHookResult = ReturnType<typeof useMenuDetailsQuery>;
 export type MenuDetailsLazyQueryHookResult = ReturnType<typeof useMenuDetailsLazyQuery>;
 export type MenuDetailsQueryResult = Apollo.QueryResult<Types.MenuDetailsQuery, Types.MenuDetailsQueryVariables>;
-export const AppCreateDocument = gql`
-    mutation AppCreate($input: AppInput!) {
-  appCreate(input: $input) {
-    authToken
-    app {
-      ...App
-    }
-    errors {
-      ...AppError
-    }
-  }
-}
-    ${AppFragmentDoc}
-${AppErrorFragmentDoc}`;
-export type AppCreateMutationFn = Apollo.MutationFunction<Types.AppCreateMutation, Types.AppCreateMutationVariables>;
-
-/**
- * __useAppCreateMutation__
- *
- * To run a mutation, you first call `useAppCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAppCreateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [appCreateMutation, { data, loading, error }] = useAppCreateMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useAppCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppCreateMutation, Types.AppCreateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppCreateMutation, Types.AppCreateMutationVariables>(AppCreateDocument, options);
-      }
-export type AppCreateMutationHookResult = ReturnType<typeof useAppCreateMutation>;
-export type AppCreateMutationResult = Apollo.MutationResult<Types.AppCreateMutation>;
-export type AppCreateMutationOptions = Apollo.BaseMutationOptions<Types.AppCreateMutation, Types.AppCreateMutationVariables>;
-export const AppDeleteDocument = gql`
-    mutation AppDelete($id: ID!) {
-  appDelete(id: $id) {
-    app {
-      ...App
-    }
-    errors {
-      ...AppError
-    }
-  }
-}
-    ${AppFragmentDoc}
-${AppErrorFragmentDoc}`;
-export type AppDeleteMutationFn = Apollo.MutationFunction<Types.AppDeleteMutation, Types.AppDeleteMutationVariables>;
-
-/**
- * __useAppDeleteMutation__
- *
- * To run a mutation, you first call `useAppDeleteMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAppDeleteMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [appDeleteMutation, { data, loading, error }] = useAppDeleteMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useAppDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppDeleteMutation, Types.AppDeleteMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppDeleteMutation, Types.AppDeleteMutationVariables>(AppDeleteDocument, options);
-      }
-export type AppDeleteMutationHookResult = ReturnType<typeof useAppDeleteMutation>;
-export type AppDeleteMutationResult = Apollo.MutationResult<Types.AppDeleteMutation>;
-export type AppDeleteMutationOptions = Apollo.BaseMutationOptions<Types.AppDeleteMutation, Types.AppDeleteMutationVariables>;
-export const AppDeleteFailedInstallationDocument = gql`
-    mutation AppDeleteFailedInstallation($id: ID!) {
-  appDeleteFailedInstallation(id: $id) {
-    appInstallation {
-      id
-      status
-      appName
-      message
-    }
-    errors {
-      ...AppError
-    }
-  }
-}
-    ${AppErrorFragmentDoc}`;
-export type AppDeleteFailedInstallationMutationFn = Apollo.MutationFunction<Types.AppDeleteFailedInstallationMutation, Types.AppDeleteFailedInstallationMutationVariables>;
-
-/**
- * __useAppDeleteFailedInstallationMutation__
- *
- * To run a mutation, you first call `useAppDeleteFailedInstallationMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAppDeleteFailedInstallationMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [appDeleteFailedInstallationMutation, { data, loading, error }] = useAppDeleteFailedInstallationMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useAppDeleteFailedInstallationMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppDeleteFailedInstallationMutation, Types.AppDeleteFailedInstallationMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppDeleteFailedInstallationMutation, Types.AppDeleteFailedInstallationMutationVariables>(AppDeleteFailedInstallationDocument, options);
-      }
-export type AppDeleteFailedInstallationMutationHookResult = ReturnType<typeof useAppDeleteFailedInstallationMutation>;
-export type AppDeleteFailedInstallationMutationResult = Apollo.MutationResult<Types.AppDeleteFailedInstallationMutation>;
-export type AppDeleteFailedInstallationMutationOptions = Apollo.BaseMutationOptions<Types.AppDeleteFailedInstallationMutation, Types.AppDeleteFailedInstallationMutationVariables>;
-export const AppFetchDocument = gql`
-    mutation AppFetch($manifestUrl: String!) {
-  appFetchManifest(manifestUrl: $manifestUrl) {
-    manifest {
-      ...AppManifest
-    }
-    errors {
-      ...AppError
-    }
-  }
-}
-    ${AppManifestFragmentDoc}
-${AppErrorFragmentDoc}`;
-export type AppFetchMutationFn = Apollo.MutationFunction<Types.AppFetchMutation, Types.AppFetchMutationVariables>;
-
-/**
- * __useAppFetchMutation__
- *
- * To run a mutation, you first call `useAppFetchMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAppFetchMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [appFetchMutation, { data, loading, error }] = useAppFetchMutation({
- *   variables: {
- *      manifestUrl: // value for 'manifestUrl'
- *   },
- * });
- */
-export function useAppFetchMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppFetchMutation, Types.AppFetchMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppFetchMutation, Types.AppFetchMutationVariables>(AppFetchDocument, options);
-      }
-export type AppFetchMutationHookResult = ReturnType<typeof useAppFetchMutation>;
-export type AppFetchMutationResult = Apollo.MutationResult<Types.AppFetchMutation>;
-export type AppFetchMutationOptions = Apollo.BaseMutationOptions<Types.AppFetchMutation, Types.AppFetchMutationVariables>;
-export const AppInstallDocument = gql`
-    mutation AppInstall($input: AppInstallInput!) {
-  appInstall(input: $input) {
-    appInstallation {
-      id
-      status
-      appName
-      manifestUrl
-    }
-    errors {
-      ...AppError
-    }
-  }
-}
-    ${AppErrorFragmentDoc}`;
-export type AppInstallMutationFn = Apollo.MutationFunction<Types.AppInstallMutation, Types.AppInstallMutationVariables>;
-
-/**
- * __useAppInstallMutation__
- *
- * To run a mutation, you first call `useAppInstallMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAppInstallMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [appInstallMutation, { data, loading, error }] = useAppInstallMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useAppInstallMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppInstallMutation, Types.AppInstallMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppInstallMutation, Types.AppInstallMutationVariables>(AppInstallDocument, options);
-      }
-export type AppInstallMutationHookResult = ReturnType<typeof useAppInstallMutation>;
-export type AppInstallMutationResult = Apollo.MutationResult<Types.AppInstallMutation>;
-export type AppInstallMutationOptions = Apollo.BaseMutationOptions<Types.AppInstallMutation, Types.AppInstallMutationVariables>;
-export const AppRetryInstallDocument = gql`
-    mutation AppRetryInstall($id: ID!) {
-  appRetryInstall(id: $id) {
-    appInstallation {
-      id
-      status
-      appName
-      manifestUrl
-    }
-    errors {
-      ...AppError
-    }
-  }
-}
-    ${AppErrorFragmentDoc}`;
-export type AppRetryInstallMutationFn = Apollo.MutationFunction<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>;
-
-/**
- * __useAppRetryInstallMutation__
- *
- * To run a mutation, you first call `useAppRetryInstallMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAppRetryInstallMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [appRetryInstallMutation, { data, loading, error }] = useAppRetryInstallMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useAppRetryInstallMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>(AppRetryInstallDocument, options);
-      }
-export type AppRetryInstallMutationHookResult = ReturnType<typeof useAppRetryInstallMutation>;
-export type AppRetryInstallMutationResult = Apollo.MutationResult<Types.AppRetryInstallMutation>;
-export type AppRetryInstallMutationOptions = Apollo.BaseMutationOptions<Types.AppRetryInstallMutation, Types.AppRetryInstallMutationVariables>;
-export const AppUpdateDocument = gql`
-    mutation AppUpdate($id: ID!, $input: AppInput!) {
-  appUpdate(id: $id, input: $input) {
-    app {
-      ...App
-      permissions {
-        code
-        name
-      }
-    }
-    errors {
-      ...AppError
-      message
-      permissions
-    }
-  }
-}
-    ${AppFragmentDoc}
-${AppErrorFragmentDoc}`;
-export type AppUpdateMutationFn = Apollo.MutationFunction<Types.AppUpdateMutation, Types.AppUpdateMutationVariables>;
-
-/**
- * __useAppUpdateMutation__
- *
- * To run a mutation, you first call `useAppUpdateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAppUpdateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [appUpdateMutation, { data, loading, error }] = useAppUpdateMutation({
- *   variables: {
- *      id: // value for 'id'
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useAppUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppUpdateMutation, Types.AppUpdateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppUpdateMutation, Types.AppUpdateMutationVariables>(AppUpdateDocument, options);
-      }
-export type AppUpdateMutationHookResult = ReturnType<typeof useAppUpdateMutation>;
-export type AppUpdateMutationResult = Apollo.MutationResult<Types.AppUpdateMutation>;
-export type AppUpdateMutationOptions = Apollo.BaseMutationOptions<Types.AppUpdateMutation, Types.AppUpdateMutationVariables>;
-export const AppTokenCreateDocument = gql`
-    mutation AppTokenCreate($input: AppTokenInput!) {
-  appTokenCreate(input: $input) {
-    appToken {
-      name
-      authToken
-      id
-    }
-    authToken
-    errors {
-      ...AppError
-    }
-  }
-}
-    ${AppErrorFragmentDoc}`;
-export type AppTokenCreateMutationFn = Apollo.MutationFunction<Types.AppTokenCreateMutation, Types.AppTokenCreateMutationVariables>;
-
-/**
- * __useAppTokenCreateMutation__
- *
- * To run a mutation, you first call `useAppTokenCreateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAppTokenCreateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [appTokenCreateMutation, { data, loading, error }] = useAppTokenCreateMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useAppTokenCreateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppTokenCreateMutation, Types.AppTokenCreateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppTokenCreateMutation, Types.AppTokenCreateMutationVariables>(AppTokenCreateDocument, options);
-      }
-export type AppTokenCreateMutationHookResult = ReturnType<typeof useAppTokenCreateMutation>;
-export type AppTokenCreateMutationResult = Apollo.MutationResult<Types.AppTokenCreateMutation>;
-export type AppTokenCreateMutationOptions = Apollo.BaseMutationOptions<Types.AppTokenCreateMutation, Types.AppTokenCreateMutationVariables>;
-export const AppTokenDeleteDocument = gql`
-    mutation AppTokenDelete($id: ID!) {
-  appTokenDelete(id: $id) {
-    appToken {
-      name
-      authToken
-      id
-    }
-    errors {
-      ...AppError
-    }
-  }
-}
-    ${AppErrorFragmentDoc}`;
-export type AppTokenDeleteMutationFn = Apollo.MutationFunction<Types.AppTokenDeleteMutation, Types.AppTokenDeleteMutationVariables>;
-
-/**
- * __useAppTokenDeleteMutation__
- *
- * To run a mutation, you first call `useAppTokenDeleteMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAppTokenDeleteMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [appTokenDeleteMutation, { data, loading, error }] = useAppTokenDeleteMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useAppTokenDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppTokenDeleteMutation, Types.AppTokenDeleteMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppTokenDeleteMutation, Types.AppTokenDeleteMutationVariables>(AppTokenDeleteDocument, options);
-      }
-export type AppTokenDeleteMutationHookResult = ReturnType<typeof useAppTokenDeleteMutation>;
-export type AppTokenDeleteMutationResult = Apollo.MutationResult<Types.AppTokenDeleteMutation>;
-export type AppTokenDeleteMutationOptions = Apollo.BaseMutationOptions<Types.AppTokenDeleteMutation, Types.AppTokenDeleteMutationVariables>;
-export const AppActivateDocument = gql`
-    mutation AppActivate($id: ID!) {
-  appActivate(id: $id) {
-    errors {
-      ...AppError
-    }
-  }
-}
-    ${AppErrorFragmentDoc}`;
-export type AppActivateMutationFn = Apollo.MutationFunction<Types.AppActivateMutation, Types.AppActivateMutationVariables>;
-
-/**
- * __useAppActivateMutation__
- *
- * To run a mutation, you first call `useAppActivateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAppActivateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [appActivateMutation, { data, loading, error }] = useAppActivateMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useAppActivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppActivateMutation, Types.AppActivateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppActivateMutation, Types.AppActivateMutationVariables>(AppActivateDocument, options);
-      }
-export type AppActivateMutationHookResult = ReturnType<typeof useAppActivateMutation>;
-export type AppActivateMutationResult = Apollo.MutationResult<Types.AppActivateMutation>;
-export type AppActivateMutationOptions = Apollo.BaseMutationOptions<Types.AppActivateMutation, Types.AppActivateMutationVariables>;
-export const AppDeactivateDocument = gql`
-    mutation AppDeactivate($id: ID!) {
-  appDeactivate(id: $id) {
-    errors {
-      ...AppError
-    }
-  }
-}
-    ${AppErrorFragmentDoc}`;
-export type AppDeactivateMutationFn = Apollo.MutationFunction<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>;
-
-/**
- * __useAppDeactivateMutation__
- *
- * To run a mutation, you first call `useAppDeactivateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useAppDeactivateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [appDeactivateMutation, { data, loading, error }] = useAppDeactivateMutation({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useAppDeactivateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>(AppDeactivateDocument, options);
-      }
-export type AppDeactivateMutationHookResult = ReturnType<typeof useAppDeactivateMutation>;
-export type AppDeactivateMutationResult = Apollo.MutationResult<Types.AppDeactivateMutation>;
-export type AppDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.AppDeactivateMutation, Types.AppDeactivateMutationVariables>;
-export const AppsListDocument = gql`
-    query AppsList($before: String, $after: String, $first: Int, $last: Int, $sort: AppSortingInput, $filter: AppFilterInput) {
-  apps(
-    before: $before
-    after: $after
-    first: $first
-    last: $last
-    sortBy: $sort
-    filter: $filter
-  ) {
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-      startCursor
-      endCursor
-    }
-    totalCount
-    edges {
-      node {
-        ...AppListItem
-      }
-    }
-  }
-}
-    ${AppListItemFragmentDoc}`;
-
-/**
- * __useAppsListQuery__
- *
- * To run a query within a React component, call `useAppsListQuery` and pass it any options that fit your needs.
- * When your component renders, `useAppsListQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAppsListQuery({
- *   variables: {
- *      before: // value for 'before'
- *      after: // value for 'after'
- *      first: // value for 'first'
- *      last: // value for 'last'
- *      sort: // value for 'sort'
- *      filter: // value for 'filter'
- *   },
- * });
- */
-export function useAppsListQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.AppsListQuery, Types.AppsListQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AppsListQuery, Types.AppsListQueryVariables>(AppsListDocument, options);
-      }
-export function useAppsListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppsListQuery, Types.AppsListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AppsListQuery, Types.AppsListQueryVariables>(AppsListDocument, options);
-        }
-export type AppsListQueryHookResult = ReturnType<typeof useAppsListQuery>;
-export type AppsListLazyQueryHookResult = ReturnType<typeof useAppsListLazyQuery>;
-export type AppsListQueryResult = Apollo.QueryResult<Types.AppsListQuery, Types.AppsListQueryVariables>;
-export const AppsInstallationsDocument = gql`
-    query AppsInstallations {
-  appsInstallations {
-    ...AppInstallation
-  }
-}
-    ${AppInstallationFragmentDoc}`;
-
-/**
- * __useAppsInstallationsQuery__
- *
- * To run a query within a React component, call `useAppsInstallationsQuery` and pass it any options that fit your needs.
- * When your component renders, `useAppsInstallationsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAppsInstallationsQuery({
- *   variables: {
- *   },
- * });
- */
-export function useAppsInstallationsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>(AppsInstallationsDocument, options);
-      }
-export function useAppsInstallationsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>(AppsInstallationsDocument, options);
-        }
-export type AppsInstallationsQueryHookResult = ReturnType<typeof useAppsInstallationsQuery>;
-export type AppsInstallationsLazyQueryHookResult = ReturnType<typeof useAppsInstallationsLazyQuery>;
-export type AppsInstallationsQueryResult = Apollo.QueryResult<Types.AppsInstallationsQuery, Types.AppsInstallationsQueryVariables>;
-export const AppDocument = gql`
-    query App($id: ID!) {
-  app(id: $id) {
-    ...App
-    aboutApp
-    permissions {
-      code
-      name
-    }
-    dataPrivacy
-    dataPrivacyUrl
-  }
-}
-    ${AppFragmentDoc}`;
-
-/**
- * __useAppQuery__
- *
- * To run a query within a React component, call `useAppQuery` and pass it any options that fit your needs.
- * When your component renders, `useAppQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useAppQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useAppQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AppQuery, Types.AppQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.AppQuery, Types.AppQueryVariables>(AppDocument, options);
-      }
-export function useAppLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AppQuery, Types.AppQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.AppQuery, Types.AppQueryVariables>(AppDocument, options);
-        }
-export type AppQueryHookResult = ReturnType<typeof useAppQuery>;
-export type AppLazyQueryHookResult = ReturnType<typeof useAppLazyQuery>;
-export type AppQueryResult = Apollo.QueryResult<Types.AppQuery, Types.AppQueryVariables>;
-export const ExtensionListDocument = gql`
-    query ExtensionList($filter: AppExtensionFilterInput!) {
-  appExtensions(filter: $filter, first: 100) {
-    edges {
-      node {
-        id
-        label
-        url
-        mount
-        target
-        accessToken
-        permissions {
-          code
-        }
-        app {
-          id
-          appUrl
-        }
-      }
-    }
-  }
-}
-    `;
-
-/**
- * __useExtensionListQuery__
- *
- * To run a query within a React component, call `useExtensionListQuery` and pass it any options that fit your needs.
- * When your component renders, `useExtensionListQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useExtensionListQuery({
- *   variables: {
- *      filter: // value for 'filter'
- *   },
- * });
- */
-export function useExtensionListQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>(ExtensionListDocument, options);
-      }
-export function useExtensionListLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>(ExtensionListDocument, options);
-        }
-export type ExtensionListQueryHookResult = ReturnType<typeof useExtensionListQuery>;
-export type ExtensionListLazyQueryHookResult = ReturnType<typeof useExtensionListLazyQuery>;
-export type ExtensionListQueryResult = Apollo.QueryResult<Types.ExtensionListQuery, Types.ExtensionListQueryVariables>;
 export const OrderCancelDocument = gql`
     mutation OrderCancel($id: ID!) {
   orderCancel(id: $id) {

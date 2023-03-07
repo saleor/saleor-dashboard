@@ -1,3 +1,8 @@
+import {
+  extensionMountPoints,
+  mapToMenuItemsForOrderDetails,
+  useExtensions,
+} from "@dashboard/apps/hooks/useExtensions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
@@ -13,11 +18,6 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import {
-  extensionMountPoints,
-  mapToMenuItemsForOrderDetails,
-  useExtensions,
-} from "@dashboard/new-apps/hooks/useExtensions";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { playgroundOpenHandler } from "@dashboard/utils/graphql";

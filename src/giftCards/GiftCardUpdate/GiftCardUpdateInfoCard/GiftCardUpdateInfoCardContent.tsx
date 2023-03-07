@@ -1,10 +1,10 @@
+import { AppUrls } from "@dashboard/apps/urls";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Link from "@dashboard/components/Link";
 import { customerUrl } from "@dashboard/customers/urls";
 import { GiftCardEventsEnum } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFullName, getStringOrPlaceholder } from "@dashboard/misc";
-import { AppUrls } from "@dashboard/new-apps/urls";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { getOrderNumberLinkObject } from "@dashboard/orders/components/OrderHistory/utils";
 import { getByType } from "@dashboard/orders/components/OrderReturnPage/utils";
