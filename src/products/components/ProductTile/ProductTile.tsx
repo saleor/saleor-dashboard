@@ -31,11 +31,11 @@ export const ProductTile: React.FC<ProductTileProps> = ({
       borderRadius={3}
       src={product.thumbnail ? product.thumbnail.url : thumbnailPlaceholder}
     />
-    <Text color="textNeutralSubdued" variant="caption" size="small">
+    <Text ellipsis color="textNeutralSubdued" variant="caption" size="small">
       {product.productType.name}
     </Text>
     <Box display="flex" justifyContent="space-between">
-      <Text color="textNeutralDefault" variant="bodyEmp" size="small">
+      <Text ellipsis color="textNeutralDefault" variant="bodyEmp" size="small">
         {product.name}
       </Text>
     </Box>
