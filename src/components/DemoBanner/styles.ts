@@ -1,54 +1,46 @@
 import { makeStyles } from "@saleor/macaw-ui";
 
-import { emphasisedTextBlue, greyDark, textColor } from "./constants";
-
 const useStyles = makeStyles(
   theme => ({
     wrapper: {
-      width: "100%",
-      backgroundColor: "inherit",
       padding: `0 13px`,
       fontSize: theme.spacing(1.5),
+      position: "fixed",
+      zIndex: 100,
+      width: "240px",
+      bottom: theme.spacing(2),
+      backgroundColor: `#111111`,
+      color: `rgba(255,255,255,.8)`,
+      borderRadius: `9px`,
+      boxShadow: `0 2px 8px 1px rgba(0,0,0,.3)`,
+      right: theme.spacing(2),
+      transition: "right 0.3s cubic-bezier(.4,0,.2,1)",
     },
-    borderedWrapper: {
+    hidden: {
+      right: "-220px",
+    },
+    header: {
       display: "flex",
-      flexDirection: "row",
+      alignItems: "center",
       justifyContent: "space-between",
-      alignItems: "center",
-      maxHeight: theme.spacing(7.5),
-      flex: "0 0 auto",
-      padding: theme.spacing(3, 0),
-      backgroundImage: `linear-gradient(to right,  ${greyDark} 13%, rgba(255, 255, 255, 0) 0%)`,
-      backgroundPosition: "bottom",
-      backgroundSize: theme.spacing(1.5, 0.125),
-      backgroundRepeat: "repeat-x",
     },
-    logoWrapper: {
-      lineHeight: 0,
-    },
-    linkList: {
-      display: "flex",
-      alignItems: "center",
+    close: {
+      cursor: "pointer",
     },
     link: {
+      backgroundColor: `rgba(255,255,255,.08)`,
+      borderRadius: `4px`,
       display: "flex",
       padding: theme.spacing(2),
-      color: textColor,
+      marginBottom: theme.spacing(2),
+      fontWeight: 700,
+      color: `white`,
+      boxShadow: `0 1px 1px 1px rgba(0,0,0, 100%), 0 1px 0px rgba(255,255,255,.1) inset`,
     },
-    textEmphasis: {
-      color: emphasisedTextBlue,
-      textTransform: "uppercase",
-      fontWeight: 600,
-      fontStyle: "normal",
-      paddingLeft: "5px",
-    },
-    divider: {
-      borderRight: `1px solid  ${greyDark}`,
-      height: theme.spacing(2),
-    },
-    githubStarButton: {
-      lineHeight: 0,
-      marginLeft: "15px",
+    icon: {
+      width: `20px`,
+      height: `20px`,
+      marginRight: theme.spacing(1),
     },
   }),
   {
