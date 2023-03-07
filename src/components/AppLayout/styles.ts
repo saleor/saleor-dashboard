@@ -19,6 +19,7 @@ export const useStyles = makeStyles(
       zIndex: 1201,
       position: "fixed",
       width: "100%",
+      top: 0,
     },
     content: {
       flex: 1,
