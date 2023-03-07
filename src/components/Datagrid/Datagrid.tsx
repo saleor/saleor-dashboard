@@ -282,12 +282,17 @@ export const Datagrid: React.FC<DatagridProps> = ({
   );
 
   const handleColumnResize = useCallback(
-    (column: GridColumn, newSize: number, colIndex: number) => {
+    (
+      column: GridColumn,
+      newSize: number,
+      colIndex: number,
+      newSizeWithGrow: number,
+    ) => {
       if (tooltip) {
         clearTooltip();
       }
 
-      onColumnResize(column, newSize, colIndex);
+      onColumnResize(column, newSize, colIndex, newSizeWithGrow);
     },
     [clearTooltip, onColumnResize, tooltip],
   );

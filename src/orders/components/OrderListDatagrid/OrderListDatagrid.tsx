@@ -1,4 +1,6 @@
+import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
+import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
 import {
   DatagridChangeStateContext,
   useDatagridChangeState,
@@ -47,7 +49,18 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
 
-  const columns = useMemo(() => getColumns(intl, sort), [intl, sort]);
+  const availableColumns = useMemo(() => getColumns(intl, sort), [intl, sort]);
+
+  const {
+    availableColumnsChoices,
+    columnChoices,
+    columns,
+    defaultColumns,
+    onColumnMoved,
+    onColumnResize,
+    onColumnsChange,
+    picker,
+  } = useColumnsDefault(availableColumns);
 
   const handleHeaderClick = useCallback(
     (col: number) => {
@@ -94,7 +107,22 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
             <FormattedMessage {...buttonMessages.delete} />
           </Button>
         )}
-        title=""
+        onColumnResize={onColumnResize}
+        onColumnMoved={onColumnMoved}
+        renderColumnPicker={defaultProps => (
+          <ColumnPicker
+            {...defaultProps}
+            availableColumns={availableColumnsChoices}
+            initialColumns={columnChoices}
+            defaultColumns={defaultColumns}
+            onSave={onColumnsChange}
+            hasMore={false}
+            loading={false}
+            onFetchMore={() => undefined}
+            onQueryChange={picker.setQuery}
+            query={picker.query}
+          />
+        )}
         fullScreenTitle={intl.formatMessage(messages.orders)}
         onRowClick={handleRowClick}
       />
