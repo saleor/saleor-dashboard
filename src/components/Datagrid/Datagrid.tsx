@@ -63,8 +63,7 @@ export interface MenuItemsActions {
   removeRows: (indexes: number[]) => void;
 }
 
-export interface DatagridProps
-  extends Partial<Omit<DataEditorProps, "getCellContent">> {
+export interface DatagridProps {
   addButtonLabel?: string;
   availableColumns: readonly AvailableColumn[];
   emptyText: string;
@@ -85,7 +84,13 @@ export interface DatagridProps
     defaultProps: Partial<ColumnPickerProps>,
   ) => ReactElement;
   onRowClick?: (item: Item) => void;
+  onColumnMoved?: (startIndex: number, endIndex: number) => void;
+  onColumnResize?: (column: GridColumn, newSize: number) => void;
   readonly?: boolean;
+  rowMarkers?: DataEditorProps["rowMarkers"];
+  freezeColumns?: DataEditorProps["freezeColumns"];
+  verticalBorder?: DataEditorProps["verticalBorder"];
+  columnSelect?: DataEditorProps["columnSelect"];
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -159,7 +164,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       const item = [column, row] as const;
       const opts = { changes, added, removed, getChangeIndex };
 
-      const columnId = availableColumns[column].id;
+      const columnId = availableColumns[column]?.id;
       const changed = !!changes.current[getChangeIndex(columnId, row)]?.data;
 
       return {
@@ -282,17 +287,12 @@ export const Datagrid: React.FC<DatagridProps> = ({
   );
 
   const handleColumnResize = useCallback(
-    (
-      column: GridColumn,
-      newSize: number,
-      colIndex: number,
-      newSizeWithGrow: number,
-    ) => {
+    (column: GridColumn, newSize: number) => {
       if (tooltip) {
         clearTooltip();
       }
 
-      onColumnResize(column, newSize, colIndex, newSizeWithGrow);
+      onColumnResize(column, newSize);
     },
     [clearTooltip, onColumnResize, tooltip],
   );

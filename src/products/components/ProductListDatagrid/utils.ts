@@ -4,7 +4,6 @@ import {
   dropdownCell,
   loadingCell,
   readonlyTextCell,
-  textCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import {
@@ -73,9 +72,6 @@ export function getColumns({
       width: 250,
       icon: getColumnSortIconName(sort, ProductListUrlSortField.availability),
     },
-    ...gridAttributesFromSettings.map(
-      toAttributeColumnData(gridAttributes, activeAttributeSortId, sort),
-    ),
     {
       id: "date",
       title: intl.formatMessage(columnsMessages.updatedAt),
@@ -88,6 +84,9 @@ export function getColumns({
       width: 250,
       icon: getColumnSortIconName(sort, ProductListUrlSortField.price),
     },
+    ...gridAttributesFromSettings.map(
+      toAttributeColumnData(gridAttributes, activeAttributeSortId, sort),
+    ),
   ];
 }
 
@@ -111,16 +110,6 @@ export function toAttributeColumnData(
         attributeId === activeAttributeSortId &&
         getColumnSortDirectionIcon(sort, ProductListUrlSortField.attribute),
     };
-  };
-}
-
-export function toGridAttibuteColumData(
-  gridAttribute: RelayToFlat<GridAttributesQuery["grid"]>[number],
-) {
-  return {
-    id: gridAttribute.id,
-    title: gridAttribute.name,
-    width: 200,
   };
 }
 
@@ -172,7 +161,12 @@ export function createGetCellContent({
       return loadingCell();
     }
 
-    const columnId = columns[column].id;
+    const columnId = columns[column]?.id;
+
+    if (!columnId) {
+      return readonlyTextCell("");
+    }
+
     const change = changes.current[getChangeIndex(columnId, row)]?.data;
     const rowData = added.includes(row)
       ? undefined
@@ -203,7 +197,7 @@ export function createGetCellContent({
     }
 
     const value = change ?? rowData?.[columnId] ?? "";
-    return textCell(value || "");
+    return readonlyTextCell(value || "");
   };
 }
 
