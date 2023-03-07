@@ -157,6 +157,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
     ([column, row]: Item): GridCell => {
       const item = [column, row] as const;
       const opts = { changes, added, removed, getChangeIndex };
+
       const columnId = availableColumns[column].id;
       const changed = !!changes.current[getChangeIndex(columnId, row)]?.data;
 

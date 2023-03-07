@@ -24,20 +24,23 @@ import {
   ListProps,
   PageListProps,
   RelayToFlat,
-  Sort,
   SortPage,
 } from "@dashboard/types";
+import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn, Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
 import { sprinkles } from "@saleor/macaw-ui/next";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import {
-  getAttributeIdFromColumnValue,
-  isAttributeColumnValue,
-} from "../ProductListPage/utils";
+import { isAttributeColumnValue } from "../ProductListPage/utils";
 import { useColumnPickerColumns } from "./hooks/useColumnPickerColumns";
 import { messages } from "./messages";
 import {
@@ -45,6 +48,7 @@ import {
   getColumnMetadata,
   getColumns,
   getProductRowsLength,
+  toAttributeColumnData,
 } from "./utils";
 
 interface ProductListDatagridProps
@@ -93,68 +97,63 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [settings.columns],
   );
 
-  const [columns, setColumns] = useState<AvailableColumn[]>(
+  const initialColumns = useRef(
     getColumns({
       intl,
       sort,
       gridAttributes,
       gridAttributesFromSettings,
-      settings,
       activeAttributeSortId,
     }),
   );
-
-  useEffect(() => {
-    setColumns(columns =>
-      columns.map(col => ({
-        ...col,
-        icon: getColumnSortIconName(sort, col.id as any),
-      })),
-    );
-  }, [sort]);
+  const [columns, setColumns] = useState<AvailableColumn[]>(
+    initialColumns.current.filter(col =>
+      settings.columns.includes(col.id as ProductListColumns),
+    ),
+  );
 
   useEffect(() => {
     const attributeColumns = gridAttributesFromSettings.map(
       toAttributeColumnData(gridAttributes, activeAttributeSortId, sort),
     );
 
-    if (attributeColumns.length) {
-      setColumns(prevColumns =>
-        prevColumns.reduce<AvailableColumn[]>(
-          (acc, currentCol, currentIndex, array) => {
-            const attributeColIndex = attributeColumns.findIndex(
-              col => col.id === currentCol.id,
+    setColumns(prevColumns => [
+      initialColumns.current[0],
+      initialColumns.current[1],
+      ...prevColumns
+        .filter(column => settings.columns.includes(column.id as any))
+        .map(column => {
+          if (!column.title) {
+            return [...initialColumns.current, ...attributeColumns].find(
+              ac => ac.id === column.id,
             );
-            if (attributeColIndex !== -1) {
-              acc.push(attributeColumns[attributeColIndex]);
-              attributeColumns.splice(attributeColIndex, 1);
-              return acc;
-            }
-
-            if (currentIndex === array.length - 1) {
-              acc = [...acc, currentCol, ...attributeColumns];
-              return acc;
-            }
-
-            acc.push(currentCol);
-            return acc;
-          },
-          [],
+          }
+          return column;
+        }),
+      ...settings.columns
+        .filter(column => !prevColumns.find(c => c.id === column))
+        .map(column =>
+          [...initialColumns.current, ...attributeColumns].find(
+            ac => ac.id === column,
+          ),
         ),
-      );
-    }
-  }, [gridAttributes, gridAttributesFromSettings, activeAttributeSortId, sort]);
+    ]);
+  }, [
+    activeAttributeSortId,
+    gridAttributes,
+    gridAttributesFromSettings,
+    settings,
+    sort,
+  ]);
 
   useEffect(() => {
-    setColumns(prevColumns =>
-      prevColumns.filter(col => {
-        if (["empty", "name"].includes(col.id)) {
-          return true;
-        }
-        return settings.columns.includes(col.id as ProductListColumns);
-      }),
+    setColumns(columns =>
+      columns.map(col => ({
+        ...col,
+        icon: getColumnSortDirectionIcon(sort, col.id),
+      })),
     );
-  }, [settings]);
+  }, [sort]);
 
   const handleColumnMoved = useCallback(
     (startIndex: number, endIndex: number): void => {
@@ -254,8 +253,10 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [columns, filterDependency.label, intl, selectedChannelId],
   );
 
-  const onColumnsChange = useCallback(
-    (columns: ProductListColumns[]) => onUpdateListSettings("columns", columns),
+  const handleColumnChange = useCallback(
+    (picked: ProductListColumns[]) => {
+      onUpdateListSettings("columns", picked);
+    },
     [onUpdateListSettings],
   );
 
@@ -293,7 +294,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
             onFetchMore={onFetchMore}
             query={columnQuery}
             onQueryChange={onColumnQueryChange}
-            onSave={onColumnsChange}
+            onSave={handleColumnChange}
           />
         )}
       />
@@ -310,41 +311,3 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     </DatagridChangeStateContext.Provider>
   );
 };
-
-function getColumnSortIconName(
-  { sort, asc }: Sort<ProductListUrlSortField>,
-  columnName: ProductListUrlSortField,
-) {
-  if (columnName === sort) {
-    if (asc) {
-      return "arrowUp";
-    } else {
-      return "arrowDown";
-    }
-  }
-
-  return undefined;
-}
-
-function toAttributeColumnData(
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>,
-  activeAttributeSortId: string,
-  sort: Sort<ProductListUrlSortField>,
-) {
-  return (attribute: ProductListColumns) => {
-    const attributeId = getAttributeIdFromColumnValue(attribute);
-
-    const title =
-      gridAttributes.find(gridAttribute => attributeId === gridAttribute.id)
-        ?.name ?? "";
-
-    return {
-      id: attribute,
-      title,
-      width: 200,
-      icon:
-        attributeId === activeAttributeSortId &&
-        getColumnSortIconName(sort, ProductListUrlSortField.attribute),
-    };
-  };
-}
