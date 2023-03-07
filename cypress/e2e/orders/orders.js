@@ -123,7 +123,7 @@ describe("Orders", () => {
     );
   });
 
-  it.only(
+  it(
     "should create order with selected channel. TC: SALEOR_2104",
     { tags: ["@orders", "@allEnv", "@stable", "@oldRelease"] },
     () => {
