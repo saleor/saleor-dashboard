@@ -23,7 +23,7 @@ export const UserInfo = () => {
       <Box display="flex" gap={6} alignItems="center">
         <Avatar.User
           initials={getUserInitials(user)}
-          scheme="decorative2"
+          scheme="decorative3"
           src={user?.avatar?.url}
         />
         <Box __width={128} className="ellipsis">

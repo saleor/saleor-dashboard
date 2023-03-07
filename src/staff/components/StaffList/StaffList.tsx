@@ -24,6 +24,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Avatar, sprinkles } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -148,8 +149,14 @@ const StaffList: React.FC<StaffListProps> = props => {
               href={staffMember && staffMemberDetailsUrl(staffMember.id)}
               key={staffMember ? staffMember.id : "skeleton"}
             >
-              <TableCell>
-                <div className={classes.avatar} data-test-id="staffAvatar">
+              <TableCell
+                className={sprinkles({
+                  display: "flex",
+                  gap: 5,
+                  alignItems: "center",
+                })}
+              >
+                {/* <div className={classes.avatar} data-test-id="staffAvatar">
                   {maybe(() => staffMember.avatar.url) ? (
                     <img
                       className={classes.avatarImage}
@@ -160,7 +167,12 @@ const StaffList: React.FC<StaffListProps> = props => {
                       <Typography>{getUserInitials(staffMember)}</Typography>
                     </div>
                   )}
-                </div>
+                </div> */}
+                <Avatar.User
+                  initials={getUserInitials(staffMember)}
+                  scheme="decorative3"
+                  src={staffMember?.avatar?.url}
+                />
                 <Typography>
                   {getUserName(staffMember) || <Skeleton />}
                 </Typography>
