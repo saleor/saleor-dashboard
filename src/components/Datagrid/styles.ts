@@ -211,7 +211,7 @@ export function useDatagridTheme(readonly?: boolean) {
       textBubble: theme.colors.background.interactiveNeutralDefault,
       textDark: theme.colors.background.interactiveNeutralDefault,
       textLight: theme.colors.background.interactiveNeutralDefault,
-      textHeaderSelected: theme.colors.foreground.textBrandSubdued,
+      textHeaderSelected: theme.colors.foreground.textBrandDefault,
       cellHorizontalPadding: 8,
       cellVerticalPadding: 8,
       lineHeight: 20,
