@@ -34,7 +34,7 @@ const useStyles = makeStyles(
         fontSize: 20,
         padding: 0,
       },
-      fontWeight: 570,
+      fontWeight: 580,
       flex: 1,
       whiteSpace: "nowrap",
       overflow: "hidden",

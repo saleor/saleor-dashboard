@@ -113,7 +113,7 @@ const useStyles = makeStyles(
           "!important",
         ] as any,
         color: theme.palette.primary.main,
-        fontWeight: 570,
+        fontWeight: 580,
       },
       paddingLeft: theme.spacing(1.5),
       borderRadius: 4,

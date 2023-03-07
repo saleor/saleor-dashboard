@@ -4,7 +4,7 @@ export const useStyles = makeStyles(
   theme => ({
     sectionHeader: {
       fontSize: 14,
-      fontWeight: 570,
+      fontWeight: 580,
       color: theme.palette.saleor.main[3],
       margin: theme.spacing(8, 0, 3, 0),
       textTransform: "uppercase",
