@@ -21,11 +21,11 @@ export const UserInfo = () => {
       justifyContent="space-between"
     >
       <Box display="flex" gap={6} alignItems="center">
-        <Avatar.User
-          initials={getUserInitials(user)}
-          scheme="decorative3"
-          src={user?.avatar?.url}
-        />
+        {user?.avatar?.url ? (
+          <Avatar.User scheme="decorative3" src={user?.avatar?.url} />
+        ) : (
+          <Avatar.User initials={getUserInitials(user)} scheme="decorative3" />
+        )}
         <Box __width={128} className="ellipsis">
           <Text variant="bodyStrong" size="small">
             {getUserName(user, true)}

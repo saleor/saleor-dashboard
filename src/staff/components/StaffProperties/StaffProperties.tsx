@@ -6,15 +6,15 @@ import {
   UserFragment,
 } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
+import { getUserInitials } from "@dashboard/misc";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getStaffErrorMessage from "@dashboard/utils/errors/staff";
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import SVG from "react-inlinesvg";
 import { FormattedMessage, useIntl } from "react-intl";
-
-import { getUserInitials } from "../../../misc";
 
 const useStyles = makeStyles(
   theme => ({
@@ -44,12 +44,12 @@ const useStyles = makeStyles(
     },
     avatarDefault: {
       "& div": {
-        color: theme.palette.primary.contrastText,
+        color: vars.colors.foreground.textNeutralContrasted,
         fontSize: 35,
-        fontWeight: "bold",
+        fontWeight: 580,
         lineHeight: "120px",
       },
-      background: theme.palette.primary.main,
+      background: vars.colors.background.decorativeSurfacePlain3,
       height: 120,
       textAlign: "center",
       width: 120,

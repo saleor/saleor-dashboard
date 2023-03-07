@@ -7,7 +7,6 @@ import { StaffListQuery } from "@dashboard/graphql";
 import {
   getUserInitials,
   getUserName,
-  maybe,
   renderCollection,
 } from "@dashboard/misc";
 import {
@@ -21,54 +20,26 @@ import {
   TableCell,
   TableFooter,
   TableHead,
-  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Avatar, sprinkles } from "@saleor/macaw-ui/next";
+import { Avatar, Box, Text } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
-  theme => ({
-    avatar: {
-      alignItems: "center",
-      borderRadius: "100%",
-      display: "grid",
-      float: "left",
-      height: 47,
-      justifyContent: "center",
-      marginRight: theme.spacing(1),
-      overflow: "hidden",
-      width: 47,
-    },
-    avatarDefault: {
-      "& div": {
-        color: theme.palette.primary.contrastText,
-        lineHeight: "47px",
-      },
-      background: theme.palette.primary.main,
-      height: 47,
-      textAlign: "center",
-      width: 47,
-    },
-    avatarImage: {
-      pointerEvents: "none",
-      width: "100%",
-    },
+  {
     colEmail: {
       width: 400,
     },
-    statusText: {
-      color: "#9E9D9D",
-    },
+
     tableRow: {
       cursor: "pointer",
     },
     wideColumn: {
       width: "80%",
     },
-  }),
+  },
   { name: "StaffList" },
 );
 
@@ -149,41 +120,29 @@ const StaffList: React.FC<StaffListProps> = props => {
               href={staffMember && staffMemberDetailsUrl(staffMember.id)}
               key={staffMember ? staffMember.id : "skeleton"}
             >
-              <TableCell
-                className={sprinkles({
-                  display: "flex",
-                  gap: 5,
-                  alignItems: "center",
-                })}
-              >
-                {/* <div className={classes.avatar} data-test-id="staffAvatar">
-                  {maybe(() => staffMember.avatar.url) ? (
-                    <img
-                      className={classes.avatarImage}
-                      src={maybe(() => staffMember.avatar.url)}
+              <TableCell>
+                <Box display="flex" alignItems="center" gap={5}>
+                  {staffMember?.avatar?.url ? (
+                    <Avatar.User
+                      scheme="decorative3"
+                      src={staffMember?.avatar?.url}
+                      size="large"
                     />
                   ) : (
-                    <div className={classes.avatarDefault}>
-                      <Typography>{getUserInitials(staffMember)}</Typography>
-                    </div>
+                    <Avatar.User
+                      initials={getUserInitials(staffMember)}
+                      scheme="decorative3"
+                      size="large"
+                    />
                   )}
-                </div> */}
-                <Avatar.User
-                  initials={getUserInitials(staffMember)}
-                  scheme="decorative3"
-                  src={staffMember?.avatar?.url}
-                />
-                <Typography>
-                  {getUserName(staffMember) || <Skeleton />}
-                </Typography>
-                <Typography
-                  variant={"caption"}
-                  className={classes.statusText}
-                  data-test-id="staffStatusText"
-                >
-                  {maybe<React.ReactNode>(
-                    () =>
-                      staffMember.isActive
+                  <Box display="flex" flexDirection="column">
+                    <Text>{getUserName(staffMember) || <Skeleton />}</Text>
+                    <Text
+                      variant="caption"
+                      data-test-id="staffStatusText"
+                      color="textNeutralSubdued"
+                    >
+                      {staffMember?.isActive
                         ? intl.formatMessage({
                             id: "9Zlogd",
                             defaultMessage: "Active",
@@ -193,13 +152,13 @@ const StaffList: React.FC<StaffListProps> = props => {
                             id: "7WzUxn",
                             defaultMessage: "Inactive",
                             description: "staff member status",
-                          }),
-                    <Skeleton />,
-                  )}
-                </Typography>
+                          })}
+                    </Text>
+                  </Box>
+                </Box>
               </TableCell>
               <TableCell>
-                {maybe<React.ReactNode>(() => staffMember.email, <Skeleton />)}
+                <Text size="small">{staffMember?.email}</Text>
               </TableCell>
             </TableRowLink>
           ),
