@@ -228,9 +228,6 @@
     "context": "collection name",
     "string": "Name"
   },
-  "/X8Mjx": {
-    "string": "Play with <emphasis>GraphQL API</emphasis>"
-  },
   "/Xwjww": {
     "context": "button",
     "string": "Fulfill"
@@ -340,6 +337,9 @@
   "0VDwAP": {
     "context": "checkbox label",
     "string": "Send shipment details to customer"
+  },
+  "0VkxrS": {
+    "string": "GraphQL Playground"
   },
   "0Vyr8h": {
     "context": "menu item name",
@@ -870,9 +870,6 @@
   "4gT3eD": {
     "context": "navigator section header",
     "string": "Search in Customers"
-  },
-  "4gZl/n": {
-    "string": "See <emphasis>DEMO STOREFRONT</emphasis>"
   },
   "4hl9rS": {
     "context": "variant price in channel",
@@ -7632,6 +7629,9 @@
     "context": "gift card history message",
     "string": "Gift card expiry date was updated by {expiryUpdatedBy}"
   },
+  "vSy+II": {
+    "string": "Star on Github"
+  },
   "vTN5DZ": {
     "context": "button",
     "string": "Discard"
@@ -7935,9 +7935,6 @@
   "xtUXnK": {
     "context": "export all items to csv file",
     "string": "All products ({number})"
-  },
-  "xwEc8K": {
-    "string": "API"
   },
   "xxQxLE": {
     "string": "Email Address"
