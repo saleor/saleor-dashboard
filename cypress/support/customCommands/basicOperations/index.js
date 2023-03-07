@@ -38,3 +38,6 @@ Cypress.Commands.add("checkIfDataAreNotNull", data => {
     });
   }
 });
+Cypress.Commands.add("checkIfElementIsVisible", element => {
+  cy.get(element).should("be.visible");
+});

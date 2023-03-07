@@ -36,7 +36,6 @@
     "@saleor/macaw-ui": "^0.8.0-pre.34",
     "@saleor/sdk": "^0.4.4",
     "@sentry/react": "^6.0.0",
-    "@swc/core-darwin-x64": "^1.3.37",
     "@types/faker": "^5.1.6",
     "@uiw/react-color-hue": "0.0.34",
     "@uiw/react-color-material": "^0.1.0",
