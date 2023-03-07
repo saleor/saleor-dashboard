@@ -55,7 +55,6 @@ export function getColumns({
       width: 300,
       icon: getColumnSortIconName(sort, ProductListUrlSortField.name),
     },
-
     {
       id: "productType",
       title: intl.formatMessage(columnsMessages.type),

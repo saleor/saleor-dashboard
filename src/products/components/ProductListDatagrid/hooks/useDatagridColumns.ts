@@ -35,11 +35,14 @@ export const useDatagridColumns = ({
       activeAttributeSortId,
     }),
   );
-  const [columns, setColumns] = useState<AvailableColumn[]>(
-    initialColumns.current.filter(col =>
+
+  const [columns, setColumns] = useState<AvailableColumn[]>([
+    initialColumns.current[0],
+    initialColumns.current[1],
+    ...initialColumns.current.filter(col =>
       settings.columns.includes(col.id as ProductListColumns),
     ),
-  );
+  ]);
 
   useEffect(() => {
     const attributeColumns = gridAttributesFromSettings.map(
@@ -47,12 +50,14 @@ export const useDatagridColumns = ({
     );
 
     setColumns(prevColumns => [
-      initialColumns.current[0],
-      initialColumns.current[1],
       ...prevColumns
-        .filter(column => settings.columns.includes(column.id as any))
+        .filter(
+          column =>
+            settings.columns.includes(column.id as any) ||
+            ["empty", "name"].includes(column.id),
+        )
         .map(column => {
-          if (!column.title) {
+          if (!column.title && column.id !== "empty") {
             return attributeColumns.find(ac => ac.id === column.id);
           }
           return column;
