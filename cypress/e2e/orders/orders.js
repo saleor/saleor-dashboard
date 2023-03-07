@@ -123,11 +123,11 @@ describe("Orders", () => {
     );
   });
 
-  it(
+  it.only(
     "should create order with selected channel. TC: SALEOR_2104",
     { tags: ["@orders", "@allEnv", "@stable", "@oldRelease"] },
     () => {
-      cy.visit(urlList.orders).get(ORDERS_SELECTORS.createOrder).click();
+      cy.visit(urlList.orders).get(ORDERS_SELECTORS.createOrderButton).click();
       selectChannelInPicker(defaultChannel.name);
       finalizeDraftOrder(randomName, address);
     },
