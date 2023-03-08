@@ -27,7 +27,7 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
     <div
       className={sprinkles({
         paddingX: 11,
-        paddingBottom: 9,
+        paddingY: 7,
         borderColor: "neutralHighlight",
         borderBottomStyle: "solid",
         borderBottomWidth: 1,
