@@ -18,6 +18,7 @@ import {
   RefreshLimitsQuery,
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   ChannelProps,
@@ -34,8 +35,8 @@ import { Box, Button, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ProductListUrlSortField } from "../../urls";
-import ProductList from "../ProductList";
+import { ProductListUrlSortField, productUrl } from "../../urls";
+import { ProductListDatagrid } from "../ProductListDatagrid";
 import {
   createFilterStructure,
   ProductFilterKeys,
@@ -66,17 +67,24 @@ export interface ProductListPageProps
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
+    columnQuery,
     currencySymbol,
     currentTab,
+    defaultSettings,
     gridAttributes,
     limits,
+    availableInGridAttributes,
     filterOpts,
+    hasMore,
     initialSearch,
+    loading,
     settings,
     tabs,
     onAdd,
     onAll,
+    onColumnQueryChange,
     onExport,
+    onFetchMore,
     onFilterChange,
     onFilterAttributeFocus,
     onSearchChange,
@@ -86,10 +94,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onUpdateListSettings,
     selectedChannelId,
     selectedProductIds,
+    activeAttributeSortId,
     ...listProps
   } = props;
   const intl = useIntl();
-
+  const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
 
   const filterDependency = filterStructure.find(getByName("channel"));
@@ -177,6 +186,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       )}
       <Card>
         <FilterBar
+          withoutBorder
           currencySymbol={currencySymbol}
           currentTab={currentTab}
           initialSearch={initialSearch}
@@ -199,13 +209,25 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             defaultMessage: "Search Products...",
           })}
         />
-        <ProductList
+        <ProductListDatagrid
           {...listProps}
+          filterDependency={filterDependency}
+          activeAttributeSortId={activeAttributeSortId}
+          columnQuery={columnQuery}
+          defaultSettings={defaultSettings}
+          availableInGridAttributes={availableInGridAttributes}
+          loading={loading}
+          hasMore={hasMore}
           gridAttributes={gridAttributes}
+          onColumnQueryChange={onColumnQueryChange}
+          onFetchMore={onFetchMore}
+          products={listProps.products}
           settings={settings}
           selectedChannelId={selectedChannelId}
           onUpdateListSettings={onUpdateListSettings}
-          filterDependency={filterDependency}
+          onRowClick={id => {
+            navigate(productUrl(id));
+          }}
         />
       </Card>
     </ListPageLayout>

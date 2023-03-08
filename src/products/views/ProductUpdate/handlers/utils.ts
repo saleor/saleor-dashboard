@@ -1,7 +1,7 @@
 import { FetchResult } from "@apollo/client";
 import { getAttributesAfterFileAttributesUpdate } from "@dashboard/attributes/utils/data";
 import { prepareAttributesInput } from "@dashboard/attributes/utils/handlers";
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/useDatagridChange";
+import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { VALUES_PAGINATE_BY } from "@dashboard/config";
 import {
   FileUploadMutation,

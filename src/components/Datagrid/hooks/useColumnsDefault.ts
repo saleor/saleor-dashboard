@@ -3,9 +3,11 @@ import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
 import { useCallback, useMemo, useState } from "react";
 
-import { AvailableColumn } from "./types";
+import { AvailableColumn } from "../types";
 
-function useColumns(availableColumns: readonly AvailableColumn[]) {
+export function useColumnsDefault(
+  availableColumns: readonly AvailableColumn[],
+) {
   const [query, setQuery] = useState("");
   const [displayedColumns, setDisplayedColumns] = useStateFromProps(
     availableColumns.map(({ id }) => id),
@@ -18,7 +20,7 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
         addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
       );
     },
-    [],
+    [setDisplayedColumns],
   );
   const onColumnResize = useCallback(
     (column: GridColumn, newSize: number) =>
@@ -29,7 +31,7 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
             : prevColumn,
         ),
       ),
-    [],
+    [setColumnState],
   );
   const onColumnsChange = useCallback(
     (picked: string[]) =>
@@ -39,7 +41,7 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
           .filter(column => !prevColumns.find(c => c === column))
           .map(column => availableColumns.find(ac => ac.id === column).id),
       ]),
-    [availableColumns],
+    [availableColumns, setDisplayedColumns],
   );
 
   const columns = useMemo(
@@ -62,9 +64,10 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
       })),
     [availableColumns],
   );
-  const defaultColumns = useMemo(() => availableColumns.map(({ id }) => id), [
-    availableColumns,
-  ]);
+  const defaultColumns = useMemo(
+    () => availableColumns.map(({ id }) => id),
+    [availableColumns],
+  );
 
   return {
     availableColumnsChoices,
@@ -81,5 +84,3 @@ function useColumns(availableColumns: readonly AvailableColumn[]) {
     },
   };
 }
-
-export default useColumns;

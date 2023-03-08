@@ -6741,6 +6741,115 @@ export enum WeightUnitsEnum {
   TONNE = 'TONNE'
 }
 
+export type AppCreateMutationVariables = Exact<{
+  input: AppInput;
+}>;
+
+
+export type AppCreateMutation = { __typename: 'Mutation', appCreate: { __typename: 'AppCreate', authToken: string | null, app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+
+export type AppDeleteMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type AppDeleteMutation = { __typename: 'Mutation', appDelete: { __typename: 'AppDelete', app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+
+export type AppDeleteFailedInstallationMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type AppDeleteFailedInstallationMutation = { __typename: 'Mutation', appDeleteFailedInstallation: { __typename: 'AppDeleteFailedInstallation', appInstallation: { __typename: 'AppInstallation', id: string, status: JobStatusEnum, appName: string, message: string | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+
+export type AppFetchMutationVariables = Exact<{
+  manifestUrl: Scalars['String'];
+}>;
+
+
+export type AppFetchMutation = { __typename: 'Mutation', appFetchManifest: { __typename: 'AppFetchManifest', manifest: { __typename: 'Manifest', identifier: string, version: string, about: string | null, name: string, appUrl: string | null, configurationUrl: string | null, tokenTargetUrl: string | null, dataPrivacy: string | null, dataPrivacyUrl: string | null, homepageUrl: string | null, supportUrl: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+
+export type AppInstallMutationVariables = Exact<{
+  input: AppInstallInput;
+}>;
+
+
+export type AppInstallMutation = { __typename: 'Mutation', appInstall: { __typename: 'AppInstall', appInstallation: { __typename: 'AppInstallation', id: string, status: JobStatusEnum, appName: string, manifestUrl: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+
+export type AppRetryInstallMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type AppRetryInstallMutation = { __typename: 'Mutation', appRetryInstall: { __typename: 'AppRetryInstall', appInstallation: { __typename: 'AppInstallation', id: string, status: JobStatusEnum, appName: string, manifestUrl: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+
+export type AppUpdateMutationVariables = Exact<{
+  id: Scalars['ID'];
+  input: AppInput;
+}>;
+
+
+export type AppUpdateMutation = { __typename: 'Mutation', appUpdate: { __typename: 'AppUpdate', app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', message: string | null, permissions: Array<PermissionEnum> | null, field: string | null, code: AppErrorCode }> } | null };
+
+export type AppTokenCreateMutationVariables = Exact<{
+  input: AppTokenInput;
+}>;
+
+
+export type AppTokenCreateMutation = { __typename: 'Mutation', appTokenCreate: { __typename: 'AppTokenCreate', authToken: string | null, appToken: { __typename: 'AppToken', name: string | null, authToken: string | null, id: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+
+export type AppTokenDeleteMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type AppTokenDeleteMutation = { __typename: 'Mutation', appTokenDelete: { __typename: 'AppTokenDelete', appToken: { __typename: 'AppToken', name: string | null, authToken: string | null, id: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+
+export type AppActivateMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type AppActivateMutation = { __typename: 'Mutation', appActivate: { __typename: 'AppActivate', errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+
+export type AppDeactivateMutationVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type AppDeactivateMutation = { __typename: 'Mutation', appDeactivate: { __typename: 'AppDeactivate', errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
+
+export type AppsListQueryVariables = Exact<{
+  before?: InputMaybe<Scalars['String']>;
+  after?: InputMaybe<Scalars['String']>;
+  first?: InputMaybe<Scalars['Int']>;
+  last?: InputMaybe<Scalars['Int']>;
+  sort?: InputMaybe<AppSortingInput>;
+  filter?: InputMaybe<AppFilterInput>;
+}>;
+
+
+export type AppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, name: string | null, isActive: boolean | null, type: AppTypeEnum | null, appUrl: string | null, manifestUrl: string | null, version: string | null, permissions: Array<{ __typename: 'Permission', name: string, code: PermissionEnum }> | null } }> } | null };
+
+export type AppsInstallationsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type AppsInstallationsQuery = { __typename: 'Query', appsInstallations: Array<{ __typename: 'AppInstallation', status: JobStatusEnum, message: string | null, appName: string, manifestUrl: string, id: string }> };
+
+export type AppQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type AppQuery = { __typename: 'Query', app: { __typename: 'App', aboutApp: string | null, dataPrivacy: string | null, dataPrivacyUrl: string | null, id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null };
+
+export type ExtensionListQueryVariables = Exact<{
+  filter: AppExtensionFilterInput;
+}>;
+
+
+export type ExtensionListQuery = { __typename: 'Query', appExtensions: { __typename: 'AppExtensionCountableConnection', edges: Array<{ __typename: 'AppExtensionCountableEdge', node: { __typename: 'AppExtension', id: string, label: string, url: string, mount: AppExtensionMountEnum, target: AppExtensionTargetEnum, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum }>, app: { __typename: 'App', id: string, appUrl: string | null } } }> } | null };
+
 export type AttributeBulkDeleteMutationVariables = Exact<{
   ids: Array<Scalars['ID']> | Scalars['ID'];
 }>;
@@ -8131,115 +8240,6 @@ export type MenuDetailsQueryVariables = Exact<{
 
 export type MenuDetailsQuery = { __typename: 'Query', menu: { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null } | null };
 
-export type AppCreateMutationVariables = Exact<{
-  input: AppInput;
-}>;
-
-
-export type AppCreateMutation = { __typename: 'Mutation', appCreate: { __typename: 'AppCreate', authToken: string | null, app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
-
-export type AppDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type AppDeleteMutation = { __typename: 'Mutation', appDelete: { __typename: 'AppDelete', app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
-
-export type AppDeleteFailedInstallationMutationVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type AppDeleteFailedInstallationMutation = { __typename: 'Mutation', appDeleteFailedInstallation: { __typename: 'AppDeleteFailedInstallation', appInstallation: { __typename: 'AppInstallation', id: string, status: JobStatusEnum, appName: string, message: string | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
-
-export type AppFetchMutationVariables = Exact<{
-  manifestUrl: Scalars['String'];
-}>;
-
-
-export type AppFetchMutation = { __typename: 'Mutation', appFetchManifest: { __typename: 'AppFetchManifest', manifest: { __typename: 'Manifest', identifier: string, version: string, about: string | null, name: string, appUrl: string | null, configurationUrl: string | null, tokenTargetUrl: string | null, dataPrivacy: string | null, dataPrivacyUrl: string | null, homepageUrl: string | null, supportUrl: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
-
-export type AppInstallMutationVariables = Exact<{
-  input: AppInstallInput;
-}>;
-
-
-export type AppInstallMutation = { __typename: 'Mutation', appInstall: { __typename: 'AppInstall', appInstallation: { __typename: 'AppInstallation', id: string, status: JobStatusEnum, appName: string, manifestUrl: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
-
-export type AppRetryInstallMutationVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type AppRetryInstallMutation = { __typename: 'Mutation', appRetryInstall: { __typename: 'AppRetryInstall', appInstallation: { __typename: 'AppInstallation', id: string, status: JobStatusEnum, appName: string, manifestUrl: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
-
-export type AppUpdateMutationVariables = Exact<{
-  id: Scalars['ID'];
-  input: AppInput;
-}>;
-
-
-export type AppUpdateMutation = { __typename: 'Mutation', appUpdate: { __typename: 'AppUpdate', app: { __typename: 'App', id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null, errors: Array<{ __typename: 'AppError', message: string | null, permissions: Array<PermissionEnum> | null, field: string | null, code: AppErrorCode }> } | null };
-
-export type AppTokenCreateMutationVariables = Exact<{
-  input: AppTokenInput;
-}>;
-
-
-export type AppTokenCreateMutation = { __typename: 'Mutation', appTokenCreate: { __typename: 'AppTokenCreate', authToken: string | null, appToken: { __typename: 'AppToken', name: string | null, authToken: string | null, id: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
-
-export type AppTokenDeleteMutationVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type AppTokenDeleteMutation = { __typename: 'Mutation', appTokenDelete: { __typename: 'AppTokenDelete', appToken: { __typename: 'AppToken', name: string | null, authToken: string | null, id: string } | null, errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
-
-export type AppActivateMutationVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type AppActivateMutation = { __typename: 'Mutation', appActivate: { __typename: 'AppActivate', errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
-
-export type AppDeactivateMutationVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type AppDeactivateMutation = { __typename: 'Mutation', appDeactivate: { __typename: 'AppDeactivate', errors: Array<{ __typename: 'AppError', field: string | null, message: string | null, code: AppErrorCode, permissions: Array<PermissionEnum> | null }> } | null };
-
-export type AppsListQueryVariables = Exact<{
-  before?: InputMaybe<Scalars['String']>;
-  after?: InputMaybe<Scalars['String']>;
-  first?: InputMaybe<Scalars['Int']>;
-  last?: InputMaybe<Scalars['Int']>;
-  sort?: InputMaybe<AppSortingInput>;
-  filter?: InputMaybe<AppFilterInput>;
-}>;
-
-
-export type AppsListQuery = { __typename: 'Query', apps: { __typename: 'AppCountableConnection', totalCount: number | null, pageInfo: { __typename: 'PageInfo', hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null, endCursor: string | null }, edges: Array<{ __typename: 'AppCountableEdge', node: { __typename: 'App', id: string, name: string | null, isActive: boolean | null, type: AppTypeEnum | null, appUrl: string | null, manifestUrl: string | null, version: string | null, permissions: Array<{ __typename: 'Permission', name: string, code: PermissionEnum }> | null } }> } | null };
-
-export type AppsInstallationsQueryVariables = Exact<{ [key: string]: never; }>;
-
-
-export type AppsInstallationsQuery = { __typename: 'Query', appsInstallations: Array<{ __typename: 'AppInstallation', status: JobStatusEnum, message: string | null, appName: string, manifestUrl: string, id: string }> };
-
-export type AppQueryVariables = Exact<{
-  id: Scalars['ID'];
-}>;
-
-
-export type AppQuery = { __typename: 'Query', app: { __typename: 'App', aboutApp: string | null, dataPrivacy: string | null, dataPrivacyUrl: string | null, id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null };
-
-export type ExtensionListQueryVariables = Exact<{
-  filter: AppExtensionFilterInput;
-}>;
-
-
-export type ExtensionListQuery = { __typename: 'Query', appExtensions: { __typename: 'AppExtensionCountableConnection', edges: Array<{ __typename: 'AppExtensionCountableEdge', node: { __typename: 'AppExtension', id: string, label: string, url: string, mount: AppExtensionMountEnum, target: AppExtensionTargetEnum, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum }>, app: { __typename: 'App', id: string, appUrl: string | null } } }> } | null };
-
 export type OrderCancelMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
@@ -9075,7 +9075,7 @@ export type ProductListQueryVariables = Exact<{
 }>;
 
 
-export type ProductListQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', updatedAt: any, id: string, name: string, attributes?: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string }, values: Array<{ __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, pricing?: { __typename: 'ProductPricingInfo', priceRange: { __typename: 'TaxedMoneyRange', start: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null, stop: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null } | null } | null, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
+export type ProductListQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', totalCount: number | null, edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', updatedAt: any, description: any | null, id: string, name: string, attributes?: Array<{ __typename: 'SelectedAttribute', attribute: { __typename: 'Attribute', id: string }, values: Array<{ __typename: 'AttributeValue', id: string, name: string | null, slug: string | null, reference: string | null, boolean: boolean | null, date: any | null, dateTime: any | null, value: string | null, file: { __typename: 'File', url: string, contentType: string | null } | null }> }>, thumbnail: { __typename: 'Image', url: string } | null, productType: { __typename: 'ProductType', id: string, name: string, hasVariants: boolean }, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, pricing?: { __typename: 'ProductPricingInfo', priceRange: { __typename: 'TaxedMoneyRange', start: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null, stop: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string } } | null } | null } | null, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', hasPreviousPage: boolean, hasNextPage: boolean, startCursor: string | null, endCursor: string | null } } | null };
 
 export type ProductCountQueryVariables = Exact<{
   filter?: InputMaybe<ProductFilterInput>;

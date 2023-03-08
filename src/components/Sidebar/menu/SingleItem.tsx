@@ -27,20 +27,27 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
   return (
     <List.Item
       borderRadius={3}
+      paddingX={5}
       active={active}
       onClick={handleMenuItemClick}
       data-test-id={`menu-item-label-${menuItem.id}`}
     >
       <Link
         to={menuItem.url}
+        replace={active}
         className={sprinkles({
-          paddingY: 4,
-          paddingX: 5,
           display: "block",
           width: "100%",
         })}
       >
-        <Box display="flex" alignItems="center" gap={6}>
+        <Box
+          className={sprinkles({
+            paddingY: 4,
+            gap: 6,
+            display: "flex",
+            alignItems: "center",
+          })}
+        >
           {menuItem.icon}
           <Text size="small" variant="bodyEmp">
             {menuItem.label}

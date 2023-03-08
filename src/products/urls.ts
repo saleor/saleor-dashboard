@@ -49,21 +49,20 @@ export const ProductListUrlFiltersAsDictWithMultipleValues = {
   numericAttributes: "numeric-attributes",
   stringAttributes: "string-attributes",
 } as const;
-export type ProductListUrlFiltersAsDictWithMultipleValues = typeof ProductListUrlFiltersAsDictWithMultipleValues[keyof typeof ProductListUrlFiltersAsDictWithMultipleValues];
+export type ProductListUrlFiltersAsDictWithMultipleValues =
+  (typeof ProductListUrlFiltersAsDictWithMultipleValues)[keyof typeof ProductListUrlFiltersAsDictWithMultipleValues];
 export enum ProductListUrlFiltersWithKeyValueValues {
   metadata = "metadata",
 }
 export type ProductListUrlFilters = Filters<ProductListUrlFiltersEnum> &
   FiltersWithMultipleValues<ProductListUrlFiltersWithMultipleValues> &
   FiltersWithKeyValueValues<ProductListUrlFiltersWithKeyValueValues> &
-  FiltersAsDictWithMultipleValues<
-    ProductListUrlFiltersAsDictWithMultipleValues
-  >;
+  FiltersAsDictWithMultipleValues<ProductListUrlFiltersAsDictWithMultipleValues>;
 export enum ProductListUrlSortField {
   attribute = "attribute",
   name = "name",
   productType = "productType",
-  status = "status",
+  availability = "availability",
   price = "price",
   rank = "rank",
   date = "date",
@@ -102,10 +101,8 @@ export const productUrl = (id: string, params?: ProductUrlQueryParams) =>
 export const productVariantEditPath = (productId: string, variantId: string) =>
   urlJoin(productSection, productId, "variant", variantId);
 export type ProductVariantEditUrlDialog = "remove" | "assign-attribute-value";
-export type ProductVariantEditUrlQueryParams = Dialog<
-  ProductVariantEditUrlDialog
-> &
-  SingleAction;
+export type ProductVariantEditUrlQueryParams =
+  Dialog<ProductVariantEditUrlDialog> & SingleAction;
 export const productVariantEditUrl = (
   productId: string,
   variantId: string,
@@ -119,10 +116,8 @@ export const productVariantEditUrl = (
   stringifyQs(params);
 
 export type ProductVariantAddUrlDialog = "assign-attribute-value";
-export type ProductVariantAddUrlQueryParams = Dialog<
-  ProductVariantAddUrlDialog
-> &
-  SingleAction;
+export type ProductVariantAddUrlQueryParams =
+  Dialog<ProductVariantAddUrlDialog> & SingleAction;
 export const productVariantAddPath = (productId: string) =>
   urlJoin(productSection, productId, "variant/add");
 export const productVariantAddUrl = (

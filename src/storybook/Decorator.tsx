@@ -3,6 +3,7 @@ import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
 import { FlagsServiceProvider } from "@dashboard/hooks/useFlags/flagsService";
 import { paletteOverrides, themeOverrides } from "@dashboard/themeOverrides";
 import { ThemeProvider } from "@saleor/macaw-ui";
+import { ThemeProvider as NewThemeProvider } from "@saleor/macaw-ui/next";
 import React from "react";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
@@ -28,21 +29,23 @@ export const Decorator = storyFn => (
               overrides={themeOverrides}
               palettes={paletteOverrides}
             >
-              <BrowserRouter basename={getAppMountUri()}>
-                <ExternalAppProvider>
-                  <FlagsServiceProvider>
-                    <MessageManagerProvider>
-                      <div
-                        style={{
-                          padding: 24,
-                        }}
-                      >
-                        {storyFn()}
-                      </div>
-                    </MessageManagerProvider>
-                  </FlagsServiceProvider>
-                </ExternalAppProvider>
-              </BrowserRouter>
+              <NewThemeProvider>
+                <BrowserRouter basename={getAppMountUri()}>
+                  <ExternalAppProvider>
+                    <FlagsServiceProvider>
+                      <MessageManagerProvider>
+                        <div
+                          style={{
+                            padding: 24,
+                          }}
+                        >
+                          {storyFn()}
+                        </div>
+                      </MessageManagerProvider>
+                    </FlagsServiceProvider>
+                  </ExternalAppProvider>
+                </BrowserRouter>
+              </NewThemeProvider>
             </ThemeProvider>
           </TimezoneProvider>
         </DateProvider>

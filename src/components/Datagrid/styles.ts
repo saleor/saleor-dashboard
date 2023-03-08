@@ -1,25 +1,24 @@
 import { Theme } from "@glideapps/glide-data-grid";
-import { makeStyles, useTheme } from "@saleor/macaw-ui";
-import { themes } from "@saleor/macaw-ui/next";
+import { makeStyles } from "@saleor/macaw-ui";
+import { themes, useTheme, vars } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
 
 export const cellHeight = 36;
 
 const useStyles = makeStyles(
-  theme => {
+  () => {
     const rowActionSelected = {
-      background: theme.palette.background.paper,
-      color: theme.palette.saleor.main[1],
+      background: vars.colors.background.plain,
+      color: vars.colors.border.neutralHighlight,
     };
-    const activeBorderColor =
-      theme.palette.saleor.theme === "light" ? "#D4D4D4" : "#232323";
+    const activeBorderColor = vars.colors.border.neutralDefault;
 
     return {
       actionBtnBar: {
         position: "absolute",
         zIndex: 1,
-        background: theme.palette.background.paper,
-        borderRadius: 8,
+        background: vars.colors.background.plain,
+        borderRadius: vars.borderRadius[4],
         // Right and left toolbars
         width: `calc(100% - 64px - ${cellHeight} - 1px)`,
         marginTop: 1,
@@ -28,16 +27,20 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
-        padding: theme.spacing(1),
+        padding: vars.space[4],
       },
       columnPicker: {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: cellHeight,
+        height: cellHeight + 16,
+      },
+      columnPickerBackground: {
+        background: vars.colors.background.plain,
       },
       ghostIcon: {
-        color: theme.palette.saleor.main[3],
+        color: vars.colors.foreground.iconNeutralPlain,
+        padding: vars.space["3"],
       },
       portal: {
         "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button":
@@ -49,14 +52,14 @@ const useStyles = makeStyles(
           appearance: "textfield",
         },
         "& .clip-region": {
-          border: `1px solid ${theme.palette.saleor.main[1]}`,
+          border: `1px solid ${vars.colors.border.brandSubdued}`,
         },
         "& .gdg-growing-entry": {
           flex: 1,
           marginTop: 0,
         },
         "& .gdg-style": {
-          background: theme.palette.background.paper,
+          background: vars.colors.background.plain,
           border: "none",
           // Setting these with !important because we never intend to style
           // this particular element, like, never ever
@@ -67,11 +70,11 @@ const useStyles = makeStyles(
           appearance: "none",
           background: "none",
           border: "none",
-          fontSize: themes.defaultLight.fontSize.bodySmall,
-          letterSpacing: "0.015em",
-          lineHeight: themes.defaultLight.lineHeight.bodySmall,
-          fontWeight: themes.defaultLight.fontWeight.bodySmall,
-          padding: themes.defaultLight.space[3],
+          fontSize: vars.fontSize.bodySmall,
+          letterSpacing: vars.letterSpacing.bodyStrongSmall,
+          lineHeight: vars.lineHeight.bodyEmpMedium,
+          fontWeight: vars.fontWeight.bodySmall,
+          padding: vars.space[3],
           outline: 0,
         },
         '& input[type="number"]': {
@@ -87,8 +90,8 @@ const useStyles = makeStyles(
         "& .dvn-scroller": {
           overscrollBehaviorX: "none",
         },
-        borderTop: `1px solid ${theme.palette.divider}`,
-        borderBottom: `1px solid ${theme.palette.divider}`,
+        borderTop: `1px solid ${vars.colors.border.neutralHighlight}`,
+        borderBottom: `1px solid ${vars.colors.border.neutralHighlight}`,
         borderRadius: 0,
         boxSizing: "content-box",
         width: "100%",
@@ -100,12 +103,14 @@ const useStyles = makeStyles(
       },
       rowActionBar: {
         height: "100%",
-        background: theme.palette.background.paper,
-        borderLeft: `1px solid ${activeBorderColor}`,
         width: 36,
       },
+      rowActionvBarWithItems: {
+        borderLeft: `1px solid ${activeBorderColor}`,
+        background: vars.colors.background.plain,
+      },
       rowActionBarScrolledToRight: {
-        borderLeftColor: theme.palette.divider,
+        borderLeftColor: vars.colors.border.neutralHighlight,
       },
       rowAction: {
         "&:hover, $rowActionSelected": {
@@ -114,19 +119,22 @@ const useStyles = makeStyles(
         "&:not(:last-child)": {
           marginBottom: -1,
         },
-        border: `1px solid ${theme.palette.divider}`,
-        borderLeftColor: activeBorderColor,
+        border: `1px solid ${vars.colors.border.neutralHighlight}`,
+        borderLeft: "none",
         borderRight: "none",
         cursor: "pointer",
-        color: theme.palette.saleor.main[5],
+        color: vars.colors.foreground.iconNeutralPlain,
         marginLeft: -1,
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         height: `calc(${cellHeight}px - 1px)`,
       },
+      rowColumnGroup: {
+        height: cellHeight + 15,
+      },
       rowActionScrolledToRight: {
-        borderLeftColor: theme.palette.divider,
+        borderLeftColor: vars.colors.border.neutralHighlight,
       },
       columnGroupFixer: {
         position: "absolute",
@@ -135,7 +143,7 @@ const useStyles = makeStyles(
         height: cellHeight,
         width: 10,
         borderLeft: 0,
-        background: theme.palette.background.paper,
+        background: vars.colors.background.plain,
       },
       editorContainer: {
         position: "relative",
@@ -146,9 +154,7 @@ const useStyles = makeStyles(
         width: 1,
         position: "absolute",
         zIndex: -1,
-        transition: theme.transitions.create("box-shadow", {
-          duration: theme.transitions.duration.short,
-        }),
+        transition: "box-shadow .2s ease-in-out",
         boxShadow: "-1px 0px 12px transparent",
       },
       rowActionBarShadowActive: {
@@ -180,30 +186,32 @@ export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(
   { name: "Datagrid-fullscreen" },
 );
 
-export function useDatagridTheme() {
-  const theme = useTheme();
+export function useDatagridTheme(readonly?: boolean) {
+  const { theme: selectedTheme } = useTheme();
+  const theme = themes[selectedTheme];
 
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: theme.palette.secondary.main,
-      accentLight: theme.palette.background.default,
+      accentColor: theme.colors.background.interactiveBrandDefault,
+      accentLight: theme.colors.background.interactiveBrandSecondaryPressing,
       accentFg: "transparent",
-      bgCell: theme.palette.background.paper,
-      bgHeader: theme.palette.background.paper,
-      bgHeaderHasFocus: theme.palette.background.paper,
-      bgHeaderHovered: theme.palette.background.paper,
-      bgBubbleSelected: theme.palette.background.paper,
-      textHeader: theme.palette.text.secondary,
-      borderColor: theme.palette.divider,
-      fontFamily: themes.defaultLight.fontFamily.body,
-      baseFontStyle: themes.defaultLight.fontSize.bodySmall,
-      headerFontStyle: themes.defaultLight.fontSize.bodySmall,
-      editorFontSize: themes.defaultLight.fontSize.bodySmall,
-      textMedium: theme.palette.text.primary,
-      textGroupHeader: theme.palette.text.secondary,
-      textBubble: theme.palette.text.primary,
-      textDark: theme.palette.text.primary,
-      textLight: theme.palette.text.primary,
+      bgCell: theme.colors.background.plain,
+      bgHeader: theme.colors.background.plain,
+      bgHeaderHasFocus: theme.colors.background.plain,
+      bgHeaderHovered: theme.colors.background.surfaceNeutralHighlight,
+      bgBubbleSelected: theme.colors.background.plain,
+      textHeader: theme.colors.foreground.iconNeutralPlain,
+      borderColor: theme.colors.border.neutralHighlight,
+      fontFamily: theme.fontFamily.body,
+      baseFontStyle: theme.fontSize.bodySmall,
+      headerFontStyle: theme.fontSize.captionSmall,
+      editorFontSize: theme.fontSize.bodySmall,
+      textMedium: theme.colors.background.interactiveNeutralDefault,
+      textGroupHeader: theme.colors.foreground.iconNeutralPlain,
+      textBubble: theme.colors.background.interactiveNeutralDefault,
+      textDark: theme.colors.background.interactiveNeutralDefault,
+      textLight: theme.colors.background.interactiveNeutralDefault,
+      textHeaderSelected: theme.colors.foreground.textBrandDefault,
       cellHorizontalPadding: 8,
       cellVerticalPadding: 8,
       lineHeight: 20,
@@ -211,7 +219,15 @@ export function useDatagridTheme() {
     [theme],
   );
 
-  return datagridTheme;
+  const readonylDatagridTheme = useMemo(
+    () => ({
+      ...datagridTheme,
+      accentColor: theme.colors.background.surfaceBrandDepressed,
+      accentLight: theme.colors.background.plain,
+    }),
+    [theme, datagridTheme],
+  );
+  return readonly ? readonylDatagridTheme : datagridTheme;
 }
 
 export default useStyles;
