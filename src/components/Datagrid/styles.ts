@@ -162,8 +162,12 @@ const useStyles = makeStyles(
       },
       rowActionSelected,
       cardContentRoot: {
-        padding: "0 0 2.4rem 0",
+        padding: "0",
         flex: 1,
+
+        "&:last-child": {
+          padding: "0",
+        },
       },
     };
   },
