@@ -91,6 +91,7 @@ export interface DatagridProps {
   freezeColumns?: DataEditorProps["freezeColumns"];
   verticalBorder?: DataEditorProps["verticalBorder"];
   columnSelect?: DataEditorProps["columnSelect"];
+  showEmptyDatagrid?: boolean;
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -116,6 +117,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   columnSelect = "none",
   onColumnMoved,
   onColumnResize,
+  showEmptyDatagrid = false,
   ...datagridProps
 }): ReactElement => {
   const classes = useStyles();
@@ -348,7 +350,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           </Header>
         )}
         <CardContent classes={{ root: classes.cardContentRoot }}>
-          {rowsTotal > 0 ? (
+          {rowsTotal > 0 || showEmptyDatagrid ? (
             <>
               {selection?.rows.length > 0 && (
                 <div className={classes.actionBtnBar}>

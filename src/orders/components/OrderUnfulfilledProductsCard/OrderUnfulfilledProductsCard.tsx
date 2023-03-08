@@ -1,22 +1,13 @@
 import { Button } from "@dashboard/components/Button";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { renderCollection } from "@dashboard/misc";
-import {
-  Card,
-  CardActions,
-  CardContent,
-  TableBody,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardActions, CardContent, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import OrderCardTitle from "../OrderCardTitle";
-import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
-import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
+import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid";
 import { useStyles } from "./styles";
 
 interface OrderUnfulfilledProductsCardProps {
@@ -47,14 +38,7 @@ const OrderUnfulfilledProductsCard: React.FC<
           className={classes.cardTitle}
         />
         <CardContent>
-          <ResponsiveTable className={classes.table}>
-            <TableHeader />
-            <TableBody>
-              {renderCollection(lines, line => (
-                <TableLine key={line.id} isOrderLine line={line} />
-              ))}
-            </TableBody>
-          </ResponsiveTable>
+          <OrderDetailsDatagrid lines={lines} loading={false} />
           {showFulfillmentAction && (
             <CardActions className={classes.actions}>
               <Button

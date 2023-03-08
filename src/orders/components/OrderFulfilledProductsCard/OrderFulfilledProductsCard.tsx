@@ -1,16 +1,13 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
-import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import TrashIcon from "@dashboard/icons/Trash";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import { Card, CardContent, TableBody } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
 import React from "react";
 
-import { renderCollection } from "../../../misc";
 import OrderCardTitle from "../OrderCardTitle";
-import TableHeader from "../OrderProductsCardElements/OrderProductsCardHeader";
-import TableLine from "../OrderProductsCardElements/OrderProductsTableRow";
+import { OrderDetailsDatagrid } from "../OrderDetailsDatagrid";
 import ActionButtons from "./ActionButtons";
 import ExtraInfoLines from "./ExtraInfoLines";
 import useStyles from "./styles";
@@ -56,10 +53,12 @@ const OrderFulfilledProductsCard: React.FC<
 
   const getLines = () => {
     if (statusesToMergeLines.includes(fulfillment?.status)) {
-      return mergeRepeatedOrderLines(fulfillment.lines);
+      return mergeRepeatedOrderLines(fulfillment.lines).map(
+        order => order.orderLine,
+      );
     }
 
-    return fulfillment?.lines || [];
+    return fulfillment?.lines.map(order => order.orderLine) || [];
   };
 
   return (
@@ -86,15 +85,8 @@ const OrderFulfilledProductsCard: React.FC<
           }
         />
         <CardContent>
-          <ResponsiveTable className={classes.table}>
-            <TableHeader />
-            <TableBody>
-              {renderCollection(getLines(), line => (
-                <TableLine key={line.id} line={line} />
-              ))}
-            </TableBody>
-            <ExtraInfoLines fulfillment={fulfillment} />
-          </ResponsiveTable>
+          <OrderDetailsDatagrid lines={getLines()} loading={false} />
+          <ExtraInfoLines fulfillment={fulfillment} />
           <ActionButtons
             status={fulfillment?.status}
             trackingNumber={fulfillment?.trackingNumber}
