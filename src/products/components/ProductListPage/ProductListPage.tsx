@@ -4,14 +4,13 @@ import {
   mapToMenuItemsForProductOverviewActions,
   useExtensions,
 } from "@dashboard/apps/hooks/useExtensions";
-import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
-import CardMenu from "@dashboard/components/CardMenu";
+import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
+import { TopNavMenu } from "@dashboard/components/TopNavMenu";
 import { ProductListColumns } from "@dashboard/config";
 import {
   GridAttributesQuery,
@@ -32,7 +31,7 @@ import {
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Box, Button, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -65,16 +64,6 @@ export interface ProductListPageProps
   onExport: () => void;
   onColumnQueryChange: (query: string) => void;
 }
-const useStyles = makeStyles(
-  theme => ({
-    settings: {
-      [theme.breakpoints.up("sm")]: {
-        marginRight: theme.spacing(2),
-      },
-    },
-  }),
-  { name: "ProductListPage" },
-);
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
@@ -109,7 +98,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     ...listProps
   } = props;
   const intl = useIntl();
-  const classes = useStyles(props);
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
 
@@ -128,49 +116,59 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   return (
     <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.products)}>
-        <CardMenu
-          className={classes.settings}
-          menuItems={[
-            {
-              label: intl.formatMessage({
-                id: "7FL+WZ",
-                defaultMessage: "Export Products",
-                description: "export products to csv file, button",
-              }),
-              onSelect: onExport,
-              testId: "export",
-            },
-            ...extensionMenuItems,
-          ]}
-          data-test-id="menu"
-        />
-        <ButtonWithSelect
-          options={extensionCreateButtonItems}
-          data-test-id="add-product"
-          disabled={limitReached}
-          onClick={onAdd}
-        >
-          <FormattedMessage
-            id="JFmOfi"
-            defaultMessage="Create Product"
-            description="button"
-          />
-        </ButtonWithSelect>
-        {hasLimits(limits, "productVariants") && (
-          <LimitsInfo
-            text={intl.formatMessage(
+        <Box display="flex" alignItems="center" gap={5}>
+          {hasLimits(limits, "productVariants") && (
+            <Text variant="caption">
+              {intl.formatMessage(
+                {
+                  id: "Kw0jHS",
+                  defaultMessage: "{count}/{max} SKUs used",
+                  description: "created products counter",
+                },
+                {
+                  count: limits.currentUsage.productVariants,
+                  max: limits.allowedUsage.productVariants,
+                },
+              )}
+            </Text>
+          )}
+          <TopNavMenu
+            dataTestId="menu"
+            items={[
               {
-                id: "Kw0jHS",
-                defaultMessage: "{count}/{max} SKUs used",
-                description: "created products counter",
+                label: intl.formatMessage({
+                  id: "7FL+WZ",
+                  defaultMessage: "Export Products",
+                  description: "export products to csv file, button",
+                }),
+                onSelect: onExport,
+                testId: "export",
               },
-              {
-                count: limits.currentUsage.productVariants,
-                max: limits.allowedUsage.productVariants,
-              },
-            )}
+              ...extensionMenuItems,
+            ]}
           />
-        )}
+          {extensionCreateButtonItems.length > 0 ? (
+            <ButtonWithDropdown
+              onClick={onAdd}
+              testId={"add-product"}
+              options={extensionCreateButtonItems}
+            >
+              <FormattedMessage
+                id="JFmOfi"
+                defaultMessage="Create Product"
+                description="button"
+              />
+            </ButtonWithDropdown>
+          ) : (
+            <Button data-test-id="add-product" onClick={onAdd}>
+              <FormattedMessage
+                id="JFmOfi"
+                defaultMessage="Create Product"
+                description="button"
+              />
+            </Button>
+          )}
+        </Box>
       </TopNav>
       {limitReached && (
         <LimitReachedAlert
