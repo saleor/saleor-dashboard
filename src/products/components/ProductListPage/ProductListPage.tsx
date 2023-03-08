@@ -278,7 +278,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             hasMore={hasMore}
             onFetchMore={onFetchMore}
             products={listProps.products}
-            // selectedChannelId={selectedChannelId}
             onTileClick={id => {
               navigate(productUrl(id));
             }}

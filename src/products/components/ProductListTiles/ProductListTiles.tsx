@@ -30,6 +30,8 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = props => {
       ))}
     </Box>
   ) : (
-    <CircularProgress />
+    <Box display="flex" justifyContent="center" height="100%" marginY={12}>
+      <CircularProgress />
+    </Box>
   );
 };
