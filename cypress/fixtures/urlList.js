@@ -36,7 +36,7 @@ export const urlList = {
 export const addVariantUrl = productId =>
   `${urlList.products}${productId}/${urlList.variants}add`;
 
-export const appDetailsUrl = appId => `${urlList.apps}${appId}`;
+export const appDetailsUrl = appId => `${urlList.webhooksAndEvents}${appId}`;
 
 export const attributeDetailsUrl = attributeId =>
   `${urlList.attributes}${attributeId}`;

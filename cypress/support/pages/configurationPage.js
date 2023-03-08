@@ -6,7 +6,6 @@ export function expectConfigurationAvailableSectionsNumber(sectionsNumber) {
     .should("have.length", sectionsNumber);
 }
 export function expectConfigurationSectionsToBeVisible(...sections) {
-  cy.log(sections);
   sections.forEach(selector => {
     cy.get(selector).scrollIntoView().should("be.visible");
   });

@@ -6,7 +6,6 @@ export function expectMainMenuAvailableSections(sectionsNumber) {
     .should("have.length", sectionsNumber);
 }
 export function expectMainMenuSectionsToBeVisible(...sections) {
-  cy.log(sections);
   sections.forEach(selector => {
     cy.get(selector).should("be.visible");
   });

@@ -2,11 +2,6 @@ import { PERMISSIONS } from "./permissions";
 import { ONE_PERMISSION_USERS } from "./users";
 
 export const PERMISSIONS_OPTIONS = {
-  // all: {
-  //   user: TEST_ADMIN_USER,
-  //   permissions: Object.values(PERMISSIONS),
-  //   testCase: "TC: SALEOR_3401",
-  // },
   app: {
     user: ONE_PERMISSION_USERS.app,
     permissions: [],
