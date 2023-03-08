@@ -1,6 +1,6 @@
 export const SHIPPING_ZONE_DETAILS = {
   assignCountryButton: "[data-test-id='assign-country']",
-  descriptionInput: "[name='description']",
+  descriptionInput: "textarea[name='description']",
   submitAssignCountry: "[type='submit']",
   searchInput: "[name='query']",
   tableRow: "[class*='MuiTableRow']",
@@ -13,5 +13,5 @@ export const SHIPPING_ZONE_DETAILS = {
   option: "[data-test-id='multi-autocomplete-select-option']",
   warehouseSelector: "[testId='warehouses']",
   channelSelector: "[testId='channels']",
-  removeWarehouseButton: "[data-test-id='warehouses-remove']"
+  removeWarehouseButton: "[data-test-id='warehouses-remove']",
 };
