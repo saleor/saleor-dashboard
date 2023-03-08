@@ -46,7 +46,9 @@ export const ProductTile: React.FC<ProductTileProps> = ({
         justifyContent="center"
         backgroundColor="surfaceNeutralSubdued"
       >
-        <ProductsIcons color="iconNeutralDisabled" />
+        <Box __width="40%" __height="40%">
+          <ProductsIcons size="fill" color="iconNeutralDisabled" />
+        </Box>
       </Box>
     )}
     <Text
