@@ -30,11 +30,13 @@ export const ProductTile: React.FC<ProductTileProps> = ({
     backgroundColor={{ hover: "interactiveNeutralHighlightHovering" }}
     borderRadius={4}
     padding={5}
+    data-test-id={`product-tile-${product.id}`}
   >
     {product.thumbnail ? (
       <Box
         {...commonThumbnailProps}
         as="img"
+        alt={product.name}
         objectFit="scale-down"
         src={product.thumbnail.url}
       />
@@ -47,7 +49,11 @@ export const ProductTile: React.FC<ProductTileProps> = ({
         backgroundColor="surfaceNeutralSubdued"
       >
         <Box __width="40%" __height="40%">
-          <ProductsIcons size="fill" color="iconNeutralDisabled" />
+          <ProductsIcons
+            size="fill"
+            color="iconNeutralDisabled"
+            data-test-id={`placeholder-svg-${product.id}`}
+          />
         </Box>
       </Box>
     )}
