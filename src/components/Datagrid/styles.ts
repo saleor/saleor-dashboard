@@ -52,7 +52,7 @@ const useStyles = makeStyles(
           appearance: "textfield",
         },
         "& .clip-region": {
-          border: `1px solid ${vars.colors.border.neutralHighlight}`,
+          border: `1px solid ${vars.colors.border.brandSubdued}`,
         },
         "& .gdg-growing-entry": {
           flex: 1,
@@ -192,8 +192,8 @@ export function useDatagridTheme(readonly?: boolean) {
 
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: theme.colors.background.surfaceBrandDepressed,
-      accentLight: theme.colors.background.interactiveBrandSecondaryHovering,
+      accentColor: theme.colors.background.interactiveBrandDefault,
+      accentLight: theme.colors.background.interactiveBrandSecondaryPressing,
       accentFg: "transparent",
       bgCell: theme.colors.background.plain,
       bgHeader: theme.colors.background.plain,
@@ -222,6 +222,7 @@ export function useDatagridTheme(readonly?: boolean) {
   const readonylDatagridTheme = useMemo(
     () => ({
       ...datagridTheme,
+      accentColor: theme.colors.background.surfaceBrandDepressed,
       accentLight: theme.colors.background.plain,
     }),
     [theme, datagridTheme],
