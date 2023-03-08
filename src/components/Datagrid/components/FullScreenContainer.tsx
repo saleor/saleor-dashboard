@@ -2,7 +2,7 @@ import { useTheme } from "@saleor/macaw-ui";
 import React, { CSSProperties, FC, PropsWithChildren } from "react";
 import ReactDOM from "react-dom";
 
-import { useDelayedState } from "./useDelayedState";
+import { useDelayedState } from "../hooks/useDelayedState";
 
 const modalRoot =
   document.getElementById("modal-root") || document.createElement("div");

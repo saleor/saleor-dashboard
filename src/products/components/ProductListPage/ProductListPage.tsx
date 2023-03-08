@@ -8,12 +8,10 @@ import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
-import ColumnPicker from "@dashboard/components/ColumnPicker";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { ProductListColumns } from "@dashboard/config";
 import {
   GridAttributesQuery,
@@ -21,6 +19,7 @@ import {
   RefreshLimitsQuery,
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   ChannelProps,
@@ -37,15 +36,13 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ProductListUrlSortField } from "../../urls";
-import ProductList from "../ProductList";
-import { columnsMessages } from "../ProductList/messages";
+import { ProductListUrlSortField, productUrl } from "../../urls";
+import { ProductListDatagrid } from "../ProductListDatagrid";
 import {
   createFilterStructure,
   ProductFilterKeys,
   ProductListFilterOpts,
 } from "./filters";
-import { getAttributeColumnValue } from "./utils";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
@@ -68,17 +65,8 @@ export interface ProductListPageProps
   onExport: () => void;
   onColumnQueryChange: (query: string) => void;
 }
-
 const useStyles = makeStyles(
   theme => ({
-    columnPicker: {
-      marginRight: theme.spacing(3),
-      [theme.breakpoints.down("xs")]: {
-        "& > button": {
-          width: "100%",
-        },
-      },
-    },
     settings: {
       [theme.breakpoints.up("sm")]: {
         marginRight: theme.spacing(2),
@@ -117,59 +105,15 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onUpdateListSettings,
     selectedChannelId,
     selectedProductIds,
+    activeAttributeSortId,
     ...listProps
   } = props;
   const intl = useIntl();
   const classes = useStyles(props);
-
-  const staticColumns = [
-    {
-      label: intl.formatMessage(columnsMessages.availability),
-      value: "availability" as ProductListColumns,
-    },
-    {
-      label: intl.formatMessage(columnsMessages.price),
-      value: "price" as ProductListColumns,
-    },
-    {
-      label: intl.formatMessage(columnsMessages.type),
-      value: "productType" as ProductListColumns,
-    },
-    {
-      label: intl.formatMessage(columnsMessages.updatedAt),
-      value: "date" as ProductListColumns,
-    },
-  ];
-
-  const initialColumnsChoices = React.useMemo(() => {
-    const selectedStaticColumns = staticColumns.filter(column =>
-      (settings.columns || []).includes(column.value),
-    );
-    const selectedAttributeColumns = gridAttributes.map(attribute => ({
-      label: attribute.name,
-      value: getAttributeColumnValue(attribute.id),
-    }));
-
-    return [...selectedStaticColumns, ...selectedAttributeColumns];
-  }, [gridAttributes, settings.columns]);
-
-  const handleSave = (columns: ProductListColumns[]) =>
-    onUpdateListSettings("columns", columns);
-
+  const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
 
   const filterDependency = filterStructure.find(getByName("channel"));
-
-  const availableColumns: MultiAutocompleteChoiceType[] = [
-    ...staticColumns,
-    ...availableInGridAttributes.map(
-      attribute =>
-        ({
-          label: attribute.name,
-          value: getAttributeColumnValue(attribute.id),
-        } as MultiAutocompleteChoiceType),
-    ),
-  ];
 
   const limitReached = isLimitReached(limits, "productVariants");
   const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } =
@@ -199,19 +143,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             ...extensionMenuItems,
           ]}
           data-test-id="menu"
-        />
-        <ColumnPicker
-          className={classes.columnPicker}
-          availableColumns={availableColumns}
-          initialColumns={initialColumnsChoices}
-          defaultColumns={defaultSettings.columns}
-          hasMore={hasMore}
-          loading={loading}
-          query={columnQuery}
-          onQueryChange={onColumnQueryChange}
-          onFetchMore={onFetchMore}
-          onSave={handleSave}
-          IconButtonProps={{ variant: "secondary" }}
         />
         <ButtonWithSelect
           options={extensionCreateButtonItems}
@@ -257,6 +188,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       )}
       <Card>
         <FilterBar
+          withoutBorder
           currencySymbol={currencySymbol}
           currentTab={currentTab}
           initialSearch={initialSearch}
@@ -279,13 +211,25 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             defaultMessage: "Search Products...",
           })}
         />
-        <ProductList
+        <ProductListDatagrid
           {...listProps}
+          filterDependency={filterDependency}
+          activeAttributeSortId={activeAttributeSortId}
+          columnQuery={columnQuery}
+          defaultSettings={defaultSettings}
+          availableInGridAttributes={availableInGridAttributes}
+          loading={loading}
+          hasMore={hasMore}
           gridAttributes={gridAttributes}
+          onColumnQueryChange={onColumnQueryChange}
+          onFetchMore={onFetchMore}
+          products={listProps.products}
           settings={settings}
           selectedChannelId={selectedChannelId}
           onUpdateListSettings={onUpdateListSettings}
-          filterDependency={filterDependency}
+          onRowClick={id => {
+            navigate(productUrl(id));
+          }}
         />
       </Card>
     </ListPageLayout>

@@ -1,7 +1,7 @@
 import {
   DatagridChange,
   DatagridChangeOpts,
-} from "@dashboard/components/Datagrid/useDatagridChange";
+} from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
   ProductFragment,
   ProductVariantChannelListingAddInput,

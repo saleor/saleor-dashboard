@@ -100,33 +100,29 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
-  const {
-    data: initialFilterAttributes,
-  } = useInitialProductFilterAttributesQuery();
-  const {
-    data: initialFilterCategories,
-  } = useInitialProductFilterCategoriesQuery({
-    variables: {
-      categories: params.categories,
-    },
-    skip: !params.categories?.length,
-  });
-  const {
-    data: initialFilterCollections,
-  } = useInitialProductFilterCollectionsQuery({
-    variables: {
-      collections: params.collections,
-    },
-    skip: !params.collections?.length,
-  });
-  const {
-    data: initialFilterProductTypes,
-  } = useInitialProductFilterProductTypesQuery({
-    variables: {
-      productTypes: params.productTypes,
-    },
-    skip: !params.productTypes?.length,
-  });
+  const { data: initialFilterAttributes } =
+    useInitialProductFilterAttributesQuery();
+  const { data: initialFilterCategories } =
+    useInitialProductFilterCategoriesQuery({
+      variables: {
+        categories: params.categories,
+      },
+      skip: !params.categories?.length,
+    });
+  const { data: initialFilterCollections } =
+    useInitialProductFilterCollectionsQuery({
+      variables: {
+        collections: params.collections,
+      },
+      skip: !params.collections?.length,
+    });
+  const { data: initialFilterProductTypes } =
+    useInitialProductFilterProductTypesQuery({
+      variables: {
+        productTypes: params.productTypes,
+      },
+      skip: !params.productTypes?.length,
+    });
   const searchCategories = useCategorySearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
@@ -222,17 +218,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
   });
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    cleanupFn: reset,
-    createUrl: productListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      cleanupFn: reset,
+      createUrl: productListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+    });
 
   const handleTabChange = (tab: number) => {
     reset();
@@ -308,23 +301,21 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     skip: filteredColumnIds.length === 0,
   });
 
-  const [
-    productBulkDelete,
-    productBulkDeleteOpts,
-  ] = useProductBulkDeleteMutation({
-    onCompleted: data => {
-      if (data.productBulkDelete.errors.length === 0) {
-        closeModal();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        reset();
-        refetch();
-        limitOpts.refetch();
-      }
-    },
-  });
+  const [productBulkDelete, productBulkDeleteOpts] =
+    useProductBulkDeleteMutation({
+      onCompleted: data => {
+        if (data.productBulkDelete.errors.length === 0) {
+          closeModal();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          reset();
+          refetch();
+          limitOpts.refetch();
+        }
+      },
+    });
 
   const {
     loadMore: loadMoreDialogProductTypes,

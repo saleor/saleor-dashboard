@@ -1010,6 +1010,8 @@ export const products = (
 ): RelayToFlat<ProductListQuery["products"]> => [
   {
     __typename: "Product",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [],
     channelListings: [
@@ -1103,6 +1105,8 @@ export const products = (
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [],
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -1194,6 +1198,8 @@ export const products = (
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [],
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     channelListings: [
       {
         __typename: "ProductChannelListing",
@@ -1284,6 +1290,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1397,6 +1405,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1510,6 +1520,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1624,6 +1636,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1737,6 +1751,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1850,6 +1866,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -1962,6 +1980,8 @@ export const products = (
   },
   {
     __typename: "Product",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
     attributes: [
       {
@@ -2076,6 +2096,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2189,6 +2211,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2302,6 +2326,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2415,6 +2441,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2528,6 +2556,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2641,6 +2671,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2754,6 +2786,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2867,6 +2901,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -2980,6 +3016,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",
@@ -3093,6 +3131,8 @@ export const products = (
   {
     __typename: "Product",
     updatedAt: "2020-06-22T13:52:05.094636+00:00",
+    description:
+      "Fell straight from the tree, on to Newton's head, then into the bottle. The autumn taste of English apples. Brought to you by gravity.",
     attributes: [
       {
         __typename: "SelectedAttribute",

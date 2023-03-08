@@ -79,6 +79,7 @@ export const productListQuery = gql`
         node {
           ...ProductWithChannelListings
           updatedAt
+          description
           attributes @include(if: $hasSelectedAttributes) {
             ...ProductListAttribute
           }

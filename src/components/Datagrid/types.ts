@@ -3,4 +3,6 @@ export interface AvailableColumn {
   title: string;
   width: number;
   group?: string;
+  hasMenu?: boolean;
+  icon?: string;
 }
