@@ -274,9 +274,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           />
         ) : (
           <ProductListTiles
-            loading={loading}
-            hasMore={hasMore}
-            onFetchMore={onFetchMore}
+            {...listProps}
+            settings={settings}
+            onUpdateListSettings={onUpdateListSettings}
             products={listProps.products}
             onTileClick={id => {
               navigate(productUrl(id));
