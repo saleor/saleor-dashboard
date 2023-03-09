@@ -18,6 +18,7 @@ import {
   RefreshLimitsQuery,
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
@@ -72,6 +73,9 @@ export interface ProductListPageProps
   onColumnQueryChange: (query: string) => void;
 }
 
+export type ProductListViewType = "datagrid" | "tile";
+const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
+
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
     columnQuery,
@@ -120,7 +124,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   );
   const extensionCreateButtonItems = mapToMenuItems(PRODUCT_OVERVIEW_CREATE);
 
-  const [isDatagridView, setDatagridView] = React.useState(true);
+  const [storedProductListViewType, setProductListViewType] =
+    useLocalStorage<ProductListViewType>(
+      "productListViewType",
+      DEFAULT_PRODUCT_LIST_VIEW_TYPE,
+    );
+  const isDatagridView = storedProductListViewType === "datagrid";
 
   return (
     <ListPageLayout>
@@ -228,7 +237,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           {/* Temporary solution until header is reworked */}
           <Button
             variant="tertiary"
-            onClick={() => setDatagridView(state => !state)}
+            onClick={() =>
+              setProductListViewType(isDatagridView ? "tile" : "datagrid")
+            }
           >
             {!isDatagridView ? (
               <>
