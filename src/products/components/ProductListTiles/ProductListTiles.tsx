@@ -3,22 +3,26 @@ import { ProductListColumns } from "@dashboard/config";
 import { ProductListQuery } from "@dashboard/graphql";
 import { ListProps, RelayToFlat } from "@dashboard/types";
 import { CircularProgress } from "@material-ui/core";
-import { Box, sprinkles } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { ProductTile } from "../ProductTile/ProductTile";
 
 export interface ProductListTilesProps extends ListProps<ProductListColumns> {
-  products: RelayToFlat<ProductListQuery["products"]>;
+  products: RelayToFlat<ProductListQuery["products"]> | undefined;
   onTileClick: (id: string) => void;
 }
 
-export const ProductListTiles: React.FC<ProductListTilesProps> = props => {
-  const { products, onTileClick, settings, disabled, onUpdateListSettings } =
-    props;
-
+export const ProductListTiles: React.FC<ProductListTilesProps> = ({
+  products,
+  onTileClick,
+  settings,
+  disabled,
+  onUpdateListSettings,
+}) => {
   const intl = useIntl();
+
   return (
     <>
       {products ? (
@@ -41,7 +45,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = props => {
           <CircularProgress />
         </Box>
       )}
-      <div className={sprinkles({ paddingX: 9 })}>
+      <Box paddingX={9}>
         <TablePaginationWithContext
           component="div"
           settings={settings}
@@ -55,7 +59,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = props => {
           }}
           onUpdateListSettings={onUpdateListSettings}
         />
-      </div>
+      </Box>
     </>
   );
 };
