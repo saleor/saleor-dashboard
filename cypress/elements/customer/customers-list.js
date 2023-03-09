@@ -1,3 +1,3 @@
-export const CUSTOMERS_LIST = {
-  createCustomerButton: '[data-test-id="create-customer"]'
+export const CUSTOMERS_LIST_SELECTORS = {
+  createCustomerButton: '[data-test-id="create-customer"]',
 };

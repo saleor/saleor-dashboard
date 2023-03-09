@@ -2,7 +2,7 @@ import * as menuSelectors from "../elements/account/left-menu/left-menu-selector
 import { CONFIGURATION_SELECTORS } from "../elements/configuration/configuration-selectors";
 
 const configurationAsParent = {
-  parentMenuSelector: menuSelectors.LEFT_MENU_SELECTORS.configuration,
+  parentMenuSelector: menuSelectors.MENU.configuration,
   parentSelectors: CONFIGURATION_SELECTORS,
 };
 
@@ -12,21 +12,21 @@ export const PERMISSIONS = {
     permissionSelectors: [CONFIGURATION_SELECTORS.channels],
   },
   customer: {
-    permissionSelectors: [menuSelectors.LEFT_MENU_SELECTORS.customers],
+    permissionSelectors: [menuSelectors.MENU.customers],
   },
   discounts: {
     parent: {
-      parentMenuSelector: menuSelectors.LEFT_MENU_SELECTORS.discounts,
-      parentSelectors: [menuSelectors.DISCOUNTS_MENU_SELECTORS],
+      parentMenuSelector: menuSelectors.MENU.discounts,
+      parentSelectors: [menuSelectors.DISCOUNTS],
     },
     permissionSelectors: [
-      menuSelectors.DISCOUNTS_MENU_SELECTORS.sales,
-      menuSelectors.DISCOUNTS_MENU_SELECTORS.vouchers,
+      menuSelectors.DISCOUNTS.sales,
+      menuSelectors.DISCOUNTS.vouchers,
     ],
   },
   order: {
     parent: {
-      parentMenuSelector: menuSelectors.LEFT_MENU_SELECTORS.orders,
+      parentMenuSelector: menuSelectors.MENU.orders,
       parentSelectors: menuSelectors.ORDERS,
     },
     permissionSelectors: [
@@ -38,7 +38,7 @@ export const PERMISSIONS = {
     parent: configurationAsParent,
     permissionSelectors: [
       CONFIGURATION_SELECTORS.pageTypes,
-      menuSelectors.LEFT_MENU_SELECTORS.pages,
+      menuSelectors.MENU.pages,
     ],
   },
   plugin: {
@@ -47,7 +47,7 @@ export const PERMISSIONS = {
   },
   product: {
     parent: {
-      parentMenuSelector: menuSelectors.LEFT_MENU_SELECTORS.catalog,
+      parentMenuSelector: menuSelectors.MENU.catalog,
       parentSelectors: menuSelectors.CATALOG,
     },
     permissionSelectors: [
@@ -89,7 +89,7 @@ export const PERMISSIONS = {
     ],
   },
   translations: {
-    permissionSelectors: [menuSelectors.LEFT_MENU_SELECTORS.translations],
+    permissionSelectors: [menuSelectors.MENU.translations],
   },
   warehouse: {
     parent: configurationAsParent,

@@ -3,8 +3,8 @@
 
 import faker from "faker";
 
-import { PAGE_TYPE_DETAILS } from "../../elements/pageTypes/pageTypeDetails";
-import { PAGE_TYPES_LIST } from "../../elements/pageTypes/pageTypesList";
+import { PAGE_TYPE_DETAILS_SELECTORS } from "../../elements/pageTypes/pageTypeDetails";
+import { PAGE_TYPES_LIST_SELECTORS } from "../../elements/pageTypes/pageTypesList";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { pageTypeDetailsUrl, urlList } from "../../fixtures/urlList";
@@ -28,9 +28,9 @@ describe("Tests for page types", () => {
       const randomName = startsWith + faker.datatype.number();
 
       cy.visit(urlList.pageTypes)
-        .get(PAGE_TYPES_LIST.createPageTypeButton)
+        .get(PAGE_TYPES_LIST_SELECTORS.createPageTypeButton)
         .click()
-        .get(PAGE_TYPE_DETAILS.nameInput)
+        .get(PAGE_TYPE_DETAILS_SELECTORS.nameInput)
         .type(randomName)
         .addAliasToGraphRequest("PageTypeCreate")
         .get(BUTTON_SELECTORS.confirm)
@@ -59,7 +59,7 @@ describe("Tests for page types", () => {
           cy.visit(pageTypeDetailsUrl(pageType.id))
             .get(SHARED_ELEMENTS.progressBar)
             .should("be.not.visible")
-            .get(PAGE_TYPE_DETAILS.assignAttributesButton)
+            .get(PAGE_TYPE_DETAILS_SELECTORS.assignAttributesButton)
             .click()
             .assignElements(randomName)
             .confirmationMessageShouldDisappear();

@@ -1,5 +1,6 @@
-import Money, { IMoney } from "@dashboard/components/Money";
+import Money from "@dashboard/components/Money";
 import Skeleton from "@dashboard/components/Skeleton";
+import { IMoney } from "@dashboard/utils/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import reduce from "lodash/reduce";
@@ -81,7 +82,9 @@ const messages = defineMessages({
   },
 });
 
-const OrderRefundAmountValues: React.FC<OrderRefundAmountValuesProps> = props => {
+const OrderRefundAmountValues: React.FC<
+  OrderRefundAmountValuesProps
+> = props => {
   const intl = useIntl();
   const classes = useStyles({});
 

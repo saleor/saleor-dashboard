@@ -1,9 +1,10 @@
-import { IMoney, subtractMoney } from "@dashboard/components/Money";
+import { subtractMoney } from "@dashboard/components/Money";
 import {
   GiftCardEventsEnum,
   OrderDetailsFragment,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
+import { IMoney } from "@dashboard/utils/intl";
 import compact from "lodash/compact";
 
 export const extractOrderGiftCardUsedAmount = (

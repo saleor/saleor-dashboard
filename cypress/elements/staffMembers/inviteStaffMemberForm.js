@@ -1,4 +1,4 @@
-export const INVITE_STAFF_MEMBER_FORM = {
+export const INVITE_STAFF_MEMBER_FORM_SELECTORS = {
   firstNameInput: '[name="firstName"]',
   lastNameInput: '[name="lastName"]',
   emailInput: '[name="email"]',

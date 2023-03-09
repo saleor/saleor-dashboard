@@ -7,14 +7,17 @@ import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
   ChannelUsabilityDataQuery,
-  OrderDetailsFragment,
-  OrderErrorFragment,
   OrderLineInput,
   SearchCustomersQuery,
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
+import {
+  OrderBothTypes,
+  OrderErrorFragment,
+  OrderSharedType,
+} from "@dashboard/orders/types";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Typography } from "@material-ui/core";
@@ -30,7 +33,7 @@ import OrderDraftAlert from "./OrderDraftAlert";
 
 export interface OrderDraftPageProps extends FetchMoreProps {
   disabled: boolean;
-  order?: OrderDetailsFragment;
+  order?: OrderBothTypes;
   channelUsabilityData?: ChannelUsabilityDataQuery;
   users: RelayToFlat<SearchCustomersQuery["search"]>;
   usersLoading: boolean;
@@ -113,11 +116,11 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       </TopNav>
       <DetailPageLayout.Content>
         <OrderDraftAlert
-          order={order}
+          order={order as OrderSharedType}
           channelUsabilityData={channelUsabilityData}
         />
         <OrderDraftDetails
-          order={order}
+          order={order as OrderSharedType}
           channelUsabilityData={channelUsabilityData}
           errors={errors}
           onOrderLineAdd={onOrderLineAdd}
@@ -141,7 +144,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           hasMore={hasMore}
           loading={usersLoading}
           errors={errors}
-          order={order}
+          order={order as OrderSharedType}
           users={users}
           onBillingAddressEdit={onBillingAddressEdit}
           onCustomerEdit={onCustomerEdit}

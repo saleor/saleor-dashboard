@@ -1,16 +1,6 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
-  headerOrder: {
-    id: "6u4K7e",
-    defaultMessage: "Order",
-    description: "page header",
-  },
-  headerOrderNumber: {
-    id: "kPIZ65",
-    defaultMessage: "Order #{orderNumber}",
-    description: "page header",
-  },
   headerOrderNumberAddFulfillment: {
     id: "CJpx4E",
     defaultMessage: "Order no. {orderNumber} - Add Fulfillment",

@@ -64,6 +64,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
           variant="primary"
           disabled={disabled || limitsReached}
           onClick={onAdd}
+          data-test-id="create-draft-order-button"
         >
           <FormattedMessage
             id="LshEVn"
