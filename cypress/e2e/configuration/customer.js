@@ -3,8 +3,8 @@
 
 import faker from "faker";
 
-import { CUSTOMER_DETAILS } from "../../elements/customer/customer-details";
-import { CUSTOMERS_LIST } from "../../elements/customer/customers-list";
+import { CUSTOMER_DETAILS_SELECTORS } from "../../elements/customer/customer-details";
+import { CUSTOMERS_LIST_SELECTORS } from "../../elements/customer/customers-list";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { customerDetailsUrl, urlList } from "../../fixtures/urlList";
@@ -43,18 +43,18 @@ describe("Tests for customer", () => {
       const note = faker.lorem.paragraph();
 
       cy.visit(urlList.customers)
-        .get(CUSTOMERS_LIST.createCustomerButton)
+        .get(CUSTOMERS_LIST_SELECTORS.createCustomerButton)
         .click()
         .get(SHARED_ELEMENTS.progressBar)
         .should("not.be.visible")
-        .get(CUSTOMER_DETAILS.customerAddressNameInput)
+        .get(CUSTOMER_DETAILS_SELECTORS.customerAddressNameInput)
         .type(randomName)
-        .get(CUSTOMER_DETAILS.customerAddressLastNameInput)
+        .get(CUSTOMER_DETAILS_SELECTORS.customerAddressLastNameInput)
         .type(randomName)
-        .get(CUSTOMER_DETAILS.emailInput)
+        .get(CUSTOMER_DETAILS_SELECTORS.emailInput)
         .type(email)
         .fillUpAddressForm(address)
-        .get(CUSTOMER_DETAILS.noteInput)
+        .get(CUSTOMER_DETAILS_SELECTORS.noteInput)
         .type(note)
         .addAliasToGraphRequest("CreateCustomer")
         .get(BUTTON_SELECTORS.confirm)
@@ -90,9 +90,9 @@ describe("Tests for customer", () => {
 
       createCustomer(email, randomName).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
-          .get(CUSTOMER_DETAILS.manageAddressesButton)
+          .get(CUSTOMER_DETAILS_SELECTORS.manageAddressesButton)
           .click()
-          .get(CUSTOMER_DETAILS.addAddressButton)
+          .get(CUSTOMER_DETAILS_SELECTORS.addAddressButton)
           .click()
           .addAliasToGraphRequest("CreateCustomerAddress")
           .fillUpAddressFormAndSubmit(secondAddress)
@@ -114,14 +114,14 @@ describe("Tests for customer", () => {
 
       createCustomer(email, randomName, address).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
-          .get(CUSTOMER_DETAILS.manageAddressesButton)
+          .get(CUSTOMER_DETAILS_SELECTORS.manageAddressesButton)
           .click()
           .waitForProgressBarToNotExist()
           .get(BUTTON_SELECTORS.showMoreButton)
           .should("be.enabled")
           .first()
           .click()
-          .get(CUSTOMER_DETAILS.deleteAddressMenuItem)
+          .get(CUSTOMER_DETAILS_SELECTORS.deleteAddressMenuItem)
           .click()
           .addAliasToGraphRequest("RemoveCustomerAddress")
           .get(BUTTON_SELECTORS.submit)
@@ -149,14 +149,14 @@ describe("Tests for customer", () => {
         })
         .then(() => {
           cy.visit(customerDetailsUrl(user.id))
-            .get(CUSTOMER_DETAILS.manageAddressesButton)
+            .get(CUSTOMER_DETAILS_SELECTORS.manageAddressesButton)
             .click()
             .waitForProgressBarToNotExist()
             .get(BUTTON_SELECTORS.showMoreButton)
             .should("be.enabled")
             .click()
             .addAliasToGraphRequest("SetCustomerDefaultAddress")
-            .get(CUSTOMER_DETAILS.setAddressAsDefaultShipping)
+            .get(CUSTOMER_DETAILS_SELECTORS.setAddressAsDefaultShipping)
             .click()
             .wait("@SetCustomerDefaultAddress");
           getCustomer(user.id);
@@ -167,7 +167,7 @@ describe("Tests for customer", () => {
             .should("be.enabled")
             .click()
             .addAliasToGraphRequest("SetCustomerDefaultAddress")
-            .get(CUSTOMER_DETAILS.setAddressAsDefaultBilling)
+            .get(CUSTOMER_DETAILS_SELECTORS.setAddressAsDefaultBilling)
             .click()
             .wait("@SetCustomerDefaultAddress");
           getCustomer(user.id);
@@ -187,13 +187,13 @@ describe("Tests for customer", () => {
 
       createCustomer(email, randomName, address).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
-          .get(CUSTOMER_DETAILS.manageAddressesButton)
+          .get(CUSTOMER_DETAILS_SELECTORS.manageAddressesButton)
           .click()
           .get(BUTTON_SELECTORS.showMoreButton)
           .should("be.enabled")
           .first()
           .click()
-          .get(CUSTOMER_DETAILS.editAddressMenuitem)
+          .get(CUSTOMER_DETAILS_SELECTORS.editAddressMenuitem)
           .click()
           .addAliasToGraphRequest("UpdateCustomerAddress")
           .fillUpAddressFormAndSubmit(secondAddress)
@@ -239,7 +239,7 @@ describe("Tests for customer", () => {
 
       createCustomer(email, randomName, address, true).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
-          .get(CUSTOMER_DETAILS.activeCheckbox)
+          .get(CUSTOMER_DETAILS_SELECTORS.activeCheckbox)
           .click()
           .addAliasToGraphRequest("UpdateCustomer")
           .get(BUTTON_SELECTORS.confirm)
@@ -262,13 +262,13 @@ describe("Tests for customer", () => {
 
       createCustomer(email, randomName, address, true).then(({ user }) => {
         cy.visit(customerDetailsUrl(user.id))
-          .get(CUSTOMER_DETAILS.nameInput)
+          .get(CUSTOMER_DETAILS_SELECTORS.nameInput)
           .clearAndType(updatedName)
-          .get(CUSTOMER_DETAILS.lastNameInput)
+          .get(CUSTOMER_DETAILS_SELECTORS.lastNameInput)
           .clearAndType(updatedName)
-          .get(CUSTOMER_DETAILS.noteInput)
+          .get(CUSTOMER_DETAILS_SELECTORS.noteInput)
           .clearAndType(updatedName)
-          .get(CUSTOMER_DETAILS.emailInput)
+          .get(CUSTOMER_DETAILS_SELECTORS.emailInput)
           .clearAndType(`${updatedName}@example.com`)
           .addAliasToGraphRequest("UpdateCustomer")
           .get(BUTTON_SELECTORS.confirm)

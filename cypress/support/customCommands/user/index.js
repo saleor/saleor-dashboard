@@ -1,6 +1,7 @@
 import "../../api/requests/utils/index";
 
 import { LOGIN_SELECTORS } from "../../../elements/account/login-selectors";
+import { urlList } from "../../../fixtures/urlList";
 import { TEST_ADMIN_USER } from "../../../fixtures/users";
 
 Cypress.Commands.add("loginUser", () =>
@@ -15,6 +16,13 @@ Cypress.Commands.add("loginUser", () =>
 
 Cypress.Commands.add("loginInShop", () => {
   cy.loginUserViaRequest("token");
+});
+
+Cypress.Commands.add("visitHomePageLoggedViaApi", user => {
+  cy.addAliasToGraphRequest("Home")
+    .loginUserViaRequest("auth", user)
+    .visit(urlList.homePage)
+    .waitForRequestAndCheckIfNoErrors("@Home");
 });
 
 Cypress.Commands.add(

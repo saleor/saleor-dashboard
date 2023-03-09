@@ -3,8 +3,8 @@
 
 import faker from "faker";
 
-import { PERMISSION_GROUP_DETAILS } from "../../elements/permissionGroup/permissionGroupDetails";
-import { PERMISSION_GROUP_LIST } from "../../elements/permissionGroup/permissionGroupsList";
+import { PERMISSION_GROUP_DETAILS_SELECTORS } from "../../elements/permissionGroup/permissionGroupDetails";
+import { PERMISSION_GROUP_LIST_SELECTORS } from "../../elements/permissionGroup/permissionGroupsList";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import {
@@ -40,25 +40,25 @@ describe("Permissions groups", () => {
       const permissionName = `${startsWith}${faker.datatype.number()}`;
 
       cy.visit(urlList.permissionsGroups)
-        .get(PERMISSION_GROUP_LIST.createPermissionButton)
+        .get(PERMISSION_GROUP_LIST_SELECTORS.createPermissionButton)
         .click()
-        .get(PERMISSION_GROUP_DETAILS.nameInput)
+        .get(PERMISSION_GROUP_DETAILS_SELECTORS.nameInput)
         .type(permissionName)
-        .get(PERMISSION_GROUP_DETAILS.productsPermissionCheckbox)
+        .get(PERMISSION_GROUP_DETAILS_SELECTORS.productsPermissionCheckbox)
         .check()
         .get(
-          PERMISSION_GROUP_DETAILS.productsTypesAndAttributesPermissionCheckbox,
+          PERMISSION_GROUP_DETAILS_SELECTORS.productsTypesAndAttributesPermissionCheckbox,
         )
         .check()
         .get(BUTTON_SELECTORS.confirm)
         .click()
-        .get(PERMISSION_GROUP_DETAILS.assignMemberButton)
+        .get(PERMISSION_GROUP_DETAILS_SELECTORS.assignMemberButton)
         .should("be.visible")
         .get(BUTTON_SELECTORS.back)
         .click()
         .waitForProgressBarToNotExist();
       cy.contains(
-        PERMISSION_GROUP_LIST.permissionGroupRow,
+        PERMISSION_GROUP_LIST_SELECTORS.permissionGroupRow,
         permissionName,
       ).should("be.visible");
     },
@@ -82,13 +82,19 @@ describe("Permissions groups", () => {
             permissionsArray: permissionManageProducts,
           });
           cy.visit(urlList.permissionsGroups);
-          cy.contains(PERMISSION_GROUP_LIST.permissionGroupRow, permissionName)
+          cy.contains(
+            PERMISSION_GROUP_LIST_SELECTORS.permissionGroupRow,
+            permissionName,
+          )
             .should("be.visible")
             .find(BUTTON_SELECTORS.deleteIcon)
             .click()
             .get(BUTTON_SELECTORS.submit)
             .click();
-          cy.contains(PERMISSION_GROUP_LIST.permissionGroupRow, permissionName)
+          cy.contains(
+            PERMISSION_GROUP_LIST_SELECTORS.permissionGroupRow,
+            permissionName,
+          )
             .should("not.exist")
             .visit(staffMemberDetailsUrl(staffMember.id))
             .get(SHARED_ELEMENTS.header)
@@ -110,12 +116,12 @@ describe("Permissions groups", () => {
         permissionsArray: permissionManageProducts,
       }).then(({ group }) => {
         cy.visit(permissionGroupDetails(group.id))
-          .get(PERMISSION_GROUP_DETAILS.assignMemberButton)
+          .get(PERMISSION_GROUP_DETAILS_SELECTORS.assignMemberButton)
           .click()
-          .get(PERMISSION_GROUP_DETAILS.searchField)
+          .get(PERMISSION_GROUP_DETAILS_SELECTORS.searchField)
           .type(TEST_ADMIN_USER.email);
         cy.contains(
-          PERMISSION_GROUP_DETAILS.userRow,
+          PERMISSION_GROUP_DETAILS_SELECTORS.userRow,
           `${TEST_ADMIN_USER.name} ${TEST_ADMIN_USER.lastName}`,
         )
           .should("have.length", 1)
@@ -156,7 +162,7 @@ describe("Permissions groups", () => {
         })
         .then(({ group }) => {
           cy.visit(permissionGroupDetails(group.id))
-            .get(PERMISSION_GROUP_DETAILS.removeUserButton)
+            .get(PERMISSION_GROUP_DETAILS_SELECTORS.removeUserButton)
             .click()
             .get(BUTTON_SELECTORS.submit)
             .click()

@@ -47,7 +47,7 @@ const TranslationsLanguageList: React.FC<
     <Card>
       <CardContent className={classes.cardContent}>
         <ResponsiveTable>
-          <TableBody>
+          <TableBody data-test-id="translation-list-view">
             {renderCollection(
               languages,
               language => (

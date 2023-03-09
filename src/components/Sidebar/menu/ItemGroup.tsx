@@ -19,7 +19,10 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
   const isExpanded = isActive || hasSubmenuActive;
 
   return (
-    <List.ItemGroup defaultExpanded={isExpanded}>
+    <List.ItemGroup
+      defaultExpanded={isExpanded}
+      data-test-id={`menu-list-item`}
+    >
       <List.ItemGroup.Trigger
         paddingX={5}
         borderRadius={3}
