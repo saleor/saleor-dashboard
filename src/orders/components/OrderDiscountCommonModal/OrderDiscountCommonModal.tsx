@@ -9,19 +9,12 @@ import { buttonMessages } from "@dashboard/intl";
 import {
   Card,
   CardContent,
-  Popper,
+  Dialog,
   TextField,
   Typography,
 } from "@material-ui/core";
-import { PopperPlacementType } from "@material-ui/core/Popper";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import React, {
-  ChangeEvent,
-  MutableRefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import ModalTitle from "./ModalTitle";
@@ -37,10 +30,6 @@ const PERMIL = 0.01;
 
 const useStyles = makeStyles(
   theme => ({
-    container: {
-      zIndex: 1000,
-      marginTop: theme.spacing(1),
-    },
     removeButton: {
       "&:hover": {
         backgroundColor: theme.palette.error.main,
@@ -116,9 +105,7 @@ export interface OrderDiscountCommonModalProps {
   onClose: () => void;
   onRemove: () => void;
   modalType: OrderDiscountType;
-  anchorRef: MutableRefObject<any>;
   existingDiscount: OrderDiscountCommonInput;
-  dialogPlacement: PopperPlacementType;
   isOpen: boolean;
   confirmStatus: ConfirmButtonTransitionState;
   removeStatus: ConfirmButtonTransitionState;
@@ -128,11 +115,9 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   maxPrice = { amount: null, currency: "" },
   onConfirm,
   modalType,
-  anchorRef,
   onClose,
   onRemove,
   existingDiscount,
-  dialogPlacement,
   isOpen,
   confirmStatus,
   removeStatus,
@@ -277,12 +262,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     !getParsedDiscountValue() || isValueError || isAmountTooLarge();
 
   return (
-    <Popper
-      open={isOpen}
-      anchorEl={anchorRef.current}
-      className={classes.container}
-      placement={dialogPlacement}
-    >
+    <Dialog open={isOpen}>
       <Card>
         <ModalTitle title={intl.formatMessage(dialogTitle)} onClose={onClose} />
         <CardContent>
@@ -337,7 +317,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
           )}
         </DialogButtons>
       </Card>
-    </Popper>
+    </Dialog>
   );
 };
 

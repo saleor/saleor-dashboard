@@ -13,6 +13,9 @@ const useStyles = makeStyles(
       alignItems: "center",
       padding: theme.spacing(3, 3, 0, 3),
     },
+    closeIcon: {
+      cursor: "pointer",
+    },
   }),
   { name: "ModalTitle" },
 );
@@ -34,7 +37,7 @@ const ModalTitle: React.FC<ModalTitleProps> = ({
     <>
       <div className={classes.container}>
         <Typography variant="h5">{title}</Typography>
-        <CloseIcon onClick={onClose} />
+        <CloseIcon className={classes.closeIcon} onClick={onClose} />
       </div>
       {withBorder && (
         <>
