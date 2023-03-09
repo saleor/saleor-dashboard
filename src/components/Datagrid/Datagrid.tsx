@@ -222,11 +222,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const handleRowHover = useCallback(
     (args: GridMouseEventArgs) => {
-      if (readonly) {
+      if (readonly && onRowClick) {
         setHoverRow(args.kind !== "cell" ? undefined : args.location[1]);
       }
     },
-    [readonly],
+    [onRowClick, readonly],
   );
 
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
