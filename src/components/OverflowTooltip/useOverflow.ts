@@ -1,12 +1,7 @@
 import React from "react";
 
 interface OverflowConfig {
-  /** <---> */
   horizontal?: boolean;
-  /**  /\
-       |
-      \/
-  */
   vertical?: boolean;
 }
 
