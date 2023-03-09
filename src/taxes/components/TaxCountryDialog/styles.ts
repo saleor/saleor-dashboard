@@ -19,7 +19,7 @@ export const useStyles = makeStyles(
     },
     dialog: {
       maxHeight: "unset",
-    }
+    },
   }),
   { name: "TaxCountryDialog" },
 );

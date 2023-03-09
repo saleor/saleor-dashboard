@@ -190,6 +190,14 @@ export const commonMessages = defineMessages({
     id: "z9c6/C",
     defaultMessage: "Deprecated",
   },
+  pspReference: {
+    defaultMessage: "PSP Reference",
+    id: "kMziE/",
+  },
+  pspReferenceOptional: {
+    defaultMessage: "PSP Reference (optional)",
+    id: "GJwcSd",
+  },
   settings: {
     id: "D3idYv",
     defaultMessage: "Settings",
@@ -243,6 +251,11 @@ export const buttonMessages = defineMessages({
   approve: {
     id: "59XppT",
     defaultMessage: "Approve",
+    description: "button",
+  },
+  apply: {
+    defaultMessage: "Apply",
+    id: "iBW3rG",
     description: "button",
   },
   assign: {

@@ -30,3 +30,16 @@ export const fragmentUserBase = gql`
     lastName
   }
 `;
+
+export const fragmentUserBaseAvatar = gql`
+  fragment UserBaseAvatar on User {
+    id
+    firstName
+    lastName
+    email
+    avatar {
+      url
+      alt
+    }
+  }
+`;

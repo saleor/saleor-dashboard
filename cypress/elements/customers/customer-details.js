@@ -1,3 +1,3 @@
-export const CUSTOMER_DETAILS = {
-  isActiveCheckbox: '[name="isActive"]'
+export const CUSTOMER_DETAILS_SELECTORS = {
+  isActiveCheckbox: '[name="isActive"]',
 };

@@ -1,7 +1,8 @@
+import { IMoney } from "@dashboard/utils/intl";
 import { Typography } from "@material-ui/core";
 import React from "react";
 
-import Money, { IMoney } from "../Money";
+import Money from "../Money";
 import { useStyles } from "./styles";
 
 interface DiscountedPriceProps {

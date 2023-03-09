@@ -76,7 +76,9 @@ interface OrderRefundFulfilledProductsProps {
   onSetMaximalQuantities: () => void;
 }
 
-const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> = props => {
+const OrderRefundFulfilledProducts: React.FC<
+  OrderRefundFulfilledProductsProps
+> = props => {
   const {
     fulfillment,
     data,
@@ -154,9 +156,10 @@ const OrderRefundFulfilledProducts: React.FC<OrderRefundFulfilledProductsProps> 
           {renderCollection(
             fulfillment?.lines,
             line => {
-              const selectedLineQuantity = data.refundedFulfilledProductQuantities.find(
-                refundedLine => refundedLine.id === line.id,
-              );
+              const selectedLineQuantity =
+                data.refundedFulfilledProductQuantities.find(
+                  refundedLine => refundedLine.id === line.id,
+                );
               const isError =
                 Number(selectedLineQuantity?.value) > line?.quantity ||
                 Number(selectedLineQuantity?.value) < 0;

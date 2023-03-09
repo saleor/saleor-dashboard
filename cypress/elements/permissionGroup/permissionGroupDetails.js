@@ -1,4 +1,4 @@
-export const PERMISSION_GROUP_DETAILS = {
+export const PERMISSION_GROUP_DETAILS_SELECTORS = {
   nameInput: '[name="name"]',
   productsPermissionCheckbox: '[name="MANAGE_PRODUCTS"]',
   productsTypesAndAttributesPermissionCheckbox:

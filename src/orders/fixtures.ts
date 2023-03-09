@@ -1,4 +1,5 @@
 import {
+  AppAvatarFragment,
   ChannelUsabilityDataQuery,
   CountryWithCodeFragment,
   FulfillmentStatus,
@@ -18,8 +19,20 @@ import {
   SearchOrderVariantQuery,
   SearchWarehousesQuery,
   ShopOrderSettingsFragment,
+  TransactionActionEnum,
+  TransactionKind,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
+import {
+  OrderDetailsWithTransactionsFragment,
+  OrderDetailsWithTransactionsQuery,
+  OrderGrantedRefundFragment,
+  OrderPaymentFragment,
+  TransactionEventFragment,
+  TransactionEventTypeEnum,
+  TransactionItemFragment,
+} from "@dashboard/graphql/transactions";
+import { staffMember } from "@dashboard/staff/fixtures";
 import { RelayToFlat } from "@dashboard/types";
 import {
   warehouseForPickup,
@@ -28,6 +41,16 @@ import {
 import { MessageDescriptor } from "react-intl";
 
 import { transformOrderStatus, transformPaymentStatus } from "../misc";
+
+export const MOCK_PAYMENT_GATEWAY_ID = "saleor.dummy.payment";
+
+export const prepareMoney = (
+  amount?: number,
+): OrderDetailsQuery["order"]["totalAuthorized"] => ({
+  __typename: "Money",
+  amount: amount ?? ORDER_AMOUNT,
+  currency: "USD",
+});
 
 export const countries: CountryWithCodeFragment[] = [
   { __typename: "CountryDisplay", code: "AF", country: "Afghanistan" },
@@ -42,6 +65,17 @@ export const shop: OrderDetailsQuery["shop"] = {
   defaultWeightUnit: WeightUnitsEnum.KG,
   fulfillmentAllowUnpaid: true,
   fulfillmentAutoApprove: true,
+};
+
+export const shopWithTransactions: OrderDetailsWithTransactionsQuery["shop"] = {
+  ...shop,
+  availablePaymentGateways: [
+    {
+      id: MOCK_PAYMENT_GATEWAY_ID,
+      name: "Mock Payment Gateway",
+      __typename: "PaymentGateway",
+    },
+  ],
 };
 
 export const clients: RelayToFlat<SearchCustomersQuery["search"]> = [
@@ -778,6 +812,8 @@ export const orders: RelayToFlat<OrderListQuery["orders"]> = [
     userEmail: "curtis.bailey@example.com",
   },
 ];
+
+export const ORDER_AMOUNT = 234.93;
 export const order = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order",
   giftCards: [],
@@ -787,6 +823,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
     OrderAction.REFUND,
     OrderAction.VOID,
   ],
+  transactions: [{ id: "1234", __typename: "TransactionItem" }],
   shippingMethods: [
     {
       __typename: "ShippingMethod",
@@ -1084,8 +1121,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                 id: "allocation_test_id",
                 warehouse: {
                   name: "US Warehouse",
-                  id:
-                    "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                  id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
                 },
                 quantity: 1,
@@ -1159,8 +1195,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                   id: "stock_test_id1",
                   warehouse: {
                     name: "stock_warehouse1",
-                    id:
-                      "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                     __typename: "Warehouse",
                   },
                   quantity: 166,
@@ -1171,8 +1206,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                   id: "stock_test_id2",
                   warehouse: {
                     name: "stock_warehouse2",
-                    id:
-                      "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                     __typename: "Warehouse",
                   },
                   quantity: 166,
@@ -1211,8 +1245,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                 id: "allocation_test_id",
                 warehouse: {
                   name: "US Warehouse",
-                  id:
-                    "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                  id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                   __typename: "Warehouse",
                 },
                 quantity: 1,
@@ -1286,8 +1319,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                   id: "stock_test_id1",
                   warehouse: {
                     name: "stock_warehouse1",
-                    id:
-                      "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                    id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                     __typename: "Warehouse",
                   },
                   quantity: 166,
@@ -1298,8 +1330,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
                   id: "stock_test_id2",
                   warehouse: {
                     name: "stock_warehouse2",
-                    id:
-                      "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                    id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                     __typename: "Warehouse",
                   },
                   quantity: 166,
@@ -1346,8 +1377,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
           id: "allocation_test_id",
           warehouse: {
             name: "US Warehouse",
-            id:
-              "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+            id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse",
           },
           quantity: 1,
@@ -1421,8 +1451,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
             id: "stock_test_id1",
             warehouse: {
               name: "stock_warehouse1",
-              id:
-                "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+              id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
               __typename: "Warehouse",
             },
             quantity: 166,
@@ -1433,8 +1462,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
             id: "stock_test_id2",
             warehouse: {
               name: "stock_warehouse2",
-              id:
-                "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+              id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
               __typename: "Warehouse",
             },
             quantity: 166,
@@ -1458,8 +1486,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
           id: "allocation_test_id",
           warehouse: {
             name: "US Warehouse",
-            id:
-              "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+            id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse",
           },
           quantity: 1,
@@ -1533,8 +1560,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
             id: "stock_test_id1",
             warehouse: {
               name: "stock_warehouse1",
-              id:
-                "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+              id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
               __typename: "Warehouse",
             },
             quantity: 166,
@@ -1545,8 +1571,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
             id: "stock_test_id2",
             warehouse: {
               name: "stock_warehouse2",
-              id:
-                "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+              id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
               __typename: "Warehouse",
             },
             quantity: 166,
@@ -1630,16 +1655,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       currency: "USD",
     },
   },
-  totalAuthorized: {
-    __typename: "Money",
-    amount: 234.93,
-    currency: "USD",
-  },
-  totalCaptured: {
-    __typename: "Money",
-    amount: 0,
-    currency: "USD",
-  },
+  totalAuthorized: prepareMoney(234.93),
+  totalCaptured: prepareMoney(0),
   totalBalance: {
     __typename: "Money",
     amount: 0,
@@ -1661,6 +1678,122 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
   user: null,
   userEmail: "melissa.simon@example.com",
 });
+
+export const orderWithTransactions: OrderDetailsWithTransactionsFragment = {
+  ...(order(undefined) as unknown as OrderDetailsWithTransactionsFragment),
+  payments: [],
+  grantedRefunds: [],
+  totalGrantedRefund: prepareMoney(0),
+  totalAuthorizePending: prepareMoney(0),
+  totalCharged: prepareMoney(0),
+  totalChargePending: prepareMoney(0),
+  totalRefunded: prepareMoney(0),
+  totalRefundPending: prepareMoney(0),
+  totalCanceled: prepareMoney(0),
+  totalCancelPending: prepareMoney(0),
+  totalRemainingGrant: prepareMoney(0),
+  transactions: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "mollie-creditcard",
+      pspReference: "ord_3d41ih",
+      actions: [],
+      status: "Paid",
+      externalUrl: null,
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+          createdBy: null,
+          externalUrl: null,
+          message: null,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: prepareMoney(0),
+      authorizePendingAmount: prepareMoney(0),
+      chargedAmount: prepareMoney(58.98),
+      chargePendingAmount: prepareMoney(0),
+      refundedAmount: prepareMoney(0),
+      refundPendingAmount: prepareMoney(0),
+      canceledAmount: prepareMoney(0),
+      cancelPendingAmount: prepareMoney(0),
+      __typename: "TransactionItem",
+    },
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjI=",
+      type: "test",
+      pspReference: "123",
+      externalUrl: null,
+      status: "Partially refunded",
+      actions: [],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDoy",
+          pspReference: "SDFDS34543SDDFS",
+          createdAt: "2022-08-12T14:14:27.119138+00:00",
+          type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+          createdBy: null,
+          externalUrl: null,
+          message: null,
+          amount: {
+            amount: 35.42,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDoy",
+          pspReference: "SDFDS34543SS",
+          createdAt: "2022-08-12T16:14:27.119138+00:00",
+          type: TransactionEventTypeEnum.REFUND_REQUEST,
+          createdBy: null,
+          externalUrl: null,
+          message: null,
+          amount: {
+            amount: 33.21,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDoy",
+          pspReference: "SDFDS34543SS",
+          createdAt: "2022-08-12T16:14:29.119138+00:00",
+          type: TransactionEventTypeEnum.REFUND_SUCCESS,
+          createdBy: null,
+          externalUrl: null,
+          message: null,
+          amount: {
+            amount: 33.21,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: prepareMoney(1.21),
+      authorizePendingAmount: prepareMoney(0),
+      chargedAmount: prepareMoney(0),
+      chargePendingAmount: prepareMoney(0),
+      refundedAmount: prepareMoney(34.21),
+      refundPendingAmount: prepareMoney(0),
+      canceledAmount: prepareMoney(0),
+      cancelPendingAmount: prepareMoney(0),
+      __typename: "TransactionItem",
+    },
+  ],
+};
+
 export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   __typename: "Order" as "Order",
   giftCards: [],
@@ -1668,6 +1801,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   shippingMethods: [],
   billingAddress: null,
   canFinalize: true,
+  transactions: [{ id: "1234", __typename: "TransactionItem" }],
   channel: {
     __typename: "Channel",
     slug: "channel-default",
@@ -1714,8 +1848,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
           id: "allocation_test_id",
           warehouse: {
             name: "US Warehouse",
-            id:
-              "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+            id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse",
           },
           quantity: 1,
@@ -1789,8 +1922,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
             id: "stock_test_id1",
             warehouse: {
               name: "stock_warehouse1",
-              id:
-                "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+              id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
               __typename: "Warehouse",
             },
             quantity: 166,
@@ -1801,8 +1933,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
             id: "stock_test_id2",
             warehouse: {
               name: "stock_warehouse2",
-              id:
-                "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+              id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
               __typename: "Warehouse",
             },
             quantity: 166,
@@ -1826,8 +1957,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
           id: "allocation_test_id",
           warehouse: {
             name: "US Warehouse",
-            id:
-              "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+            id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
             __typename: "Warehouse",
           },
           quantity: 1,
@@ -1901,8 +2031,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
             id: "stock_test_id1",
             warehouse: {
               name: "stock_warehouse1",
-              id:
-                "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+              id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
               __typename: "Warehouse",
             },
             quantity: 166,
@@ -1913,8 +2042,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
             id: "stock_test_id2",
             warehouse: {
               name: "stock_warehouse2",
-              id:
-                "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+              id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
               __typename: "Warehouse",
             },
             quantity: 166,
@@ -1974,8 +2102,8 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
       currency: "USD",
     },
   },
-  totalAuthorized: null,
-  totalCaptured: null,
+  totalAuthorized: prepareMoney(234.93),
+  totalCaptured: prepareMoney(0),
   totalBalance: {
     __typename: "Money" as "Money",
     amount: 168.3,
@@ -1997,6 +2125,25 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   user: null,
   userEmail: null,
 });
+
+export const draftOrderWithTransactions: OrderDetailsWithTransactionsFragment =
+  {
+    ...(draftOrder(
+      undefined,
+    ) as unknown as OrderDetailsWithTransactionsFragment),
+    payments: [],
+    transactions: [],
+    grantedRefunds: [],
+    totalRemainingGrant: prepareMoney(0),
+    totalGrantedRefund: prepareMoney(0),
+    totalAuthorizePending: prepareMoney(0),
+    totalCharged: prepareMoney(0),
+    totalChargePending: prepareMoney(0),
+    totalRefunded: prepareMoney(0),
+    totalRefundPending: prepareMoney(0),
+    totalCanceled: prepareMoney(0),
+    totalCancelPending: prepareMoney(0),
+  };
 
 export const flatOrders = orders.map(order => ({
   ...order,
@@ -2047,8 +2194,7 @@ export const fulfillOrderLine = (
         id: "stock_test_id1",
         warehouse: {
           name: "stock_warehouse1",
-          id:
-            "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+          id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
           __typename: "Warehouse",
         },
         quantity: 166,
@@ -2059,8 +2205,7 @@ export const fulfillOrderLine = (
         id: "stock_test_id2",
         warehouse: {
           name: "stock_warehouse2",
-          id:
-            "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+          id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
           __typename: "Warehouse",
         },
         quantity: 166,
@@ -2275,8 +2420,7 @@ export const invoices: InvoiceFragment[] = [
     id: "SW52b2ljZTo0",
     number: "1/07/2020",
     status: JobStatusEnum.PENDING,
-    url:
-      "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-1fef611b-7514-4dc6-aee3-09a8232b1d6a.pdf",
+    url: "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-1fef611b-7514-4dc6-aee3-09a8232b1d6a.pdf",
   },
   {
     __typename: "Invoice",
@@ -2284,8 +2428,7 @@ export const invoices: InvoiceFragment[] = [
     id: "SW52b2ljZToz",
     number: "1/07/2020",
     status: JobStatusEnum.SUCCESS,
-    url:
-      "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-8df26967-ad21-4075-a446-cef44ae05197.pdf",
+    url: "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-8df26967-ad21-4075-a446-cef44ae05197.pdf",
   },
   {
     __typename: "Invoice",
@@ -2293,8 +2436,7 @@ export const invoices: InvoiceFragment[] = [
     id: "SW52b2ljZToy",
     number: "1/07/2020",
     status: JobStatusEnum.SUCCESS,
-    url:
-      "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-5ebc85e0-e587-4386-8292-9b85839281e6.pdf",
+    url: "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-5ebc85e0-e587-4386-8292-9b85839281e6.pdf",
   },
   {
     __typename: "Invoice",
@@ -2302,8 +2444,7 @@ export const invoices: InvoiceFragment[] = [
     id: "SW52b2ljZTox",
     number: "1/07/2020",
     status: JobStatusEnum.SUCCESS,
-    url:
-      "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-0e449e10-ef4b-4066-bebe-361f670b6820.pdf",
+    url: "http://localhost:8000/media/invoices/invoice-1/07/2020-order-20-0e449e10-ef4b-4066-bebe-361f670b6820.pdf",
   },
 ];
 
@@ -2429,3 +2570,767 @@ export const channelUsabilityData: ChannelUsabilityDataQuery = {
     totalCount: 50,
   },
 };
+
+export const transactionApp: AppAvatarFragment = {
+  name: "Checkout App",
+  id: "1234",
+  __typename: "App",
+};
+
+export const transactionEvent: Omit<TransactionEventFragment, "createdBy"> & {
+  createdBy: AppAvatarFragment;
+} = {
+  id: "VHJhbnNhY3Rpb25FdmVudDox",
+  pspReference: "XCFDROVCDF232332DFGS",
+  createdAt: "2022-08-12T14:40:22.226875+00:00",
+  type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+  message: null,
+  externalUrl: null,
+  createdBy: transactionApp,
+  amount: {
+    amount: 58.98,
+    currency: "USD",
+    __typename: "Money",
+  },
+  __typename: "TransactionEvent",
+};
+
+export const transactions: Record<
+  | "preauthorized"
+  | "pendingCharge"
+  | "chargeSuccess"
+  | "chargePartial"
+  | "chargeFail"
+  | "refundRequested"
+  | "refundCompleted"
+  | "refundPartial",
+  TransactionItemFragment[]
+> = {
+  preauthorized: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      pspReference: "ord_3d41ih",
+      actions: [TransactionActionEnum.VOID, TransactionActionEnum.CHARGE],
+      status: "Authorized",
+      externalUrl: null,
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: prepareMoney(58.98),
+      authorizePendingAmount: prepareMoney(0),
+      chargedAmount: prepareMoney(0),
+      chargePendingAmount: prepareMoney(0),
+      refundedAmount: prepareMoney(0),
+      refundPendingAmount: prepareMoney(0),
+      canceledAmount: prepareMoney(0),
+      cancelPendingAmount: prepareMoney(0),
+      __typename: "TransactionItem",
+    },
+  ],
+  pendingCharge: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      pspReference: "ord_3d41ih",
+      status: "Pending charge",
+      externalUrl: null,
+      actions: [],
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_REQUEST,
+          message: null,
+          externalUrl: null,
+          createdBy: staffMember,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: prepareMoney(58.98),
+      authorizePendingAmount: prepareMoney(0),
+      chargedAmount: prepareMoney(0),
+      chargePendingAmount: prepareMoney(58.98),
+      refundedAmount: prepareMoney(0),
+      refundPendingAmount: prepareMoney(0),
+      canceledAmount: prepareMoney(0),
+      cancelPendingAmount: prepareMoney(0),
+      __typename: "TransactionItem",
+    },
+  ],
+  chargeSuccess: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      pspReference: "ord_3d41ih",
+      actions: [TransactionActionEnum.REFUND],
+      status: "Fully paid",
+      externalUrl: null,
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_REQUEST,
+          message: null,
+          externalUrl: null,
+          createdBy: staffMember,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: prepareMoney(0),
+      authorizePendingAmount: prepareMoney(0),
+      chargedAmount: prepareMoney(58.98),
+      chargePendingAmount: prepareMoney(0),
+      refundedAmount: prepareMoney(0),
+      refundPendingAmount: prepareMoney(0),
+      canceledAmount: prepareMoney(0),
+      cancelPendingAmount: prepareMoney(0),
+      __typename: "TransactionItem",
+    },
+  ],
+  chargePartial: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      pspReference: "ord_3d41ih",
+      actions: [TransactionActionEnum.REFUND],
+      status: "Partially charged",
+      externalUrl: null,
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 10,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_REQUEST,
+          message: null,
+          externalUrl: null,
+          createdBy: staffMember,
+          amount: {
+            amount: 10,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 10,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: prepareMoney(ORDER_AMOUNT - 10),
+      authorizePendingAmount: prepareMoney(0),
+      chargedAmount: prepareMoney(10),
+      chargePendingAmount: prepareMoney(0),
+      refundedAmount: prepareMoney(0),
+      refundPendingAmount: prepareMoney(0),
+      canceledAmount: prepareMoney(0),
+      cancelPendingAmount: prepareMoney(0),
+      __typename: "TransactionItem",
+    },
+  ],
+  chargeFail: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      pspReference: "ord_3d41ih",
+      actions: [TransactionActionEnum.CHARGE],
+      status: "Failed",
+      externalUrl: null,
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_FAILURE,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 10,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_REQUEST,
+          message: null,
+          externalUrl: null,
+          createdBy: staffMember,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: prepareMoney(58.98),
+      authorizePendingAmount: prepareMoney(0),
+      chargedAmount: prepareMoney(0),
+      chargePendingAmount: prepareMoney(0),
+      refundedAmount: prepareMoney(0),
+      refundPendingAmount: prepareMoney(0),
+      canceledAmount: prepareMoney(0),
+      cancelPendingAmount: prepareMoney(0),
+      __typename: "TransactionItem",
+    },
+  ],
+  refundRequested: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      pspReference: "ord_3d41ih",
+      actions: [],
+      status: "Pending refund",
+      externalUrl: null,
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "FGSDW3E5343DSFGSD",
+          createdAt: "2022-08-14T10:40:22.226875+00:00",
+          type: TransactionEventTypeEnum.REFUND_REQUEST,
+          message: null,
+          externalUrl: null,
+          createdBy: staffMember,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_REQUEST,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: prepareMoney(0),
+      authorizePendingAmount: prepareMoney(0),
+      chargedAmount: prepareMoney(58.98),
+      chargePendingAmount: prepareMoney(0),
+      refundedAmount: prepareMoney(0),
+      refundPendingAmount: prepareMoney(58.98),
+      canceledAmount: prepareMoney(0),
+      cancelPendingAmount: prepareMoney(0),
+      __typename: "TransactionItem",
+    },
+  ],
+  refundCompleted: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      pspReference: "ord_3d41ih",
+      actions: [],
+      status: "Refund completed",
+      externalUrl: null,
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "FGSDW3E5343DSFGSD",
+          createdAt: "2022-08-14T10:40:22.226875+00:00",
+          type: TransactionEventTypeEnum.REFUND_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "FGSDW3E5343DSFGSD",
+          createdAt: "2022-08-14T10:40:22.226875+00:00",
+          type: TransactionEventTypeEnum.REFUND_REQUEST,
+          message: null,
+          externalUrl: null,
+          createdBy: staffMember,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_REQUEST,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: prepareMoney(0),
+      authorizePendingAmount: prepareMoney(0),
+      chargedAmount: prepareMoney(0),
+      chargePendingAmount: prepareMoney(0),
+      refundedAmount: prepareMoney(58.98),
+      refundPendingAmount: prepareMoney(0),
+      canceledAmount: prepareMoney(0),
+      cancelPendingAmount: prepareMoney(0),
+      __typename: "TransactionItem",
+    },
+  ],
+  refundPartial: [
+    {
+      id: "VHJhbnNhY3Rpb25JdGVtOjE=",
+      type: "Mollie",
+      pspReference: "ord_3d41ih",
+      actions: [],
+      status: "Partially charged",
+      externalUrl: null,
+      events: [
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "FGSDW3E5343DSFGSD",
+          createdAt: "2022-08-14T10:40:22.226875+00:00",
+          type: TransactionEventTypeEnum.REFUND_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 10,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "FGSDW3E5343DSFGSD",
+          createdAt: "2022-08-14T10:40:22.226875+00:00",
+          type: TransactionEventTypeEnum.REFUND_REQUEST,
+          message: null,
+          externalUrl: null,
+          createdBy: staffMember,
+          amount: {
+            amount: 10,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:40:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDROVCDF232332DFGS",
+          createdAt: "2022-08-12T14:22:22.226875+00:00",
+          type: TransactionEventTypeEnum.CHARGE_REQUEST,
+          message: null,
+          externalUrl: null,
+          createdBy: staffMember,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+        {
+          id: "VHJhbnNhY3Rpb25FdmVudDox",
+          pspReference: "XCFDSDXCDF232332DFGS",
+          createdAt: "2022-08-12T14:10:22.226875+00:00",
+          type: TransactionEventTypeEnum.AUTHORIZATION_SUCCESS,
+          message: null,
+          externalUrl: null,
+          createdBy: transactionApp,
+          amount: {
+            amount: 58.98,
+            currency: "USD",
+            __typename: "Money",
+          },
+          __typename: "TransactionEvent",
+        },
+      ],
+      authorizedAmount: prepareMoney(0),
+      authorizePendingAmount: prepareMoney(0),
+      chargedAmount: prepareMoney(ORDER_AMOUNT - 10),
+      chargePendingAmount: prepareMoney(0),
+      refundedAmount: prepareMoney(10),
+      refundPendingAmount: prepareMoney(0),
+      canceledAmount: prepareMoney(0),
+      cancelPendingAmount: prepareMoney(0),
+      __typename: "TransactionItem",
+    },
+  ],
+};
+
+const paymentCommon = {
+  gateway: MOCK_PAYMENT_GATEWAY_ID,
+  id: "sdfgdfwe4sdSDFDS==",
+  isActive: true,
+  availableRefundAmount: prepareMoney(0),
+  __typename: "Payment",
+} as const;
+
+export const payments: Record<string, OrderPaymentFragment> = {
+  pending: {
+    ...paymentCommon,
+    actions: [OrderAction.VOID],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: prepareMoney(),
+    capturedAmount: prepareMoney(0),
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.PENDING,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+  authorized: {
+    ...paymentCommon,
+    actions: [OrderAction.CAPTURE],
+    paymentMethodType: "",
+    total: prepareMoney(),
+    capturedAmount: prepareMoney(0),
+    availableCaptureAmount: prepareMoney(),
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.AUTH,
+        token: "pending",
+        __typename: "Transaction",
+      },
+    ],
+    modified: "2022-08-22T10:40:22.226875+00:00",
+  },
+  completed: {
+    ...paymentCommon,
+    actions: [OrderAction.REFUND],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: null,
+    capturedAmount: prepareMoney(),
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.CAPTURE,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+  refunded: {
+    ...paymentCommon,
+    actions: [],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: null,
+    capturedAmount: prepareMoney(0), // refund = full
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.CAPTURE,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+      {
+        created: "2022-09-22T13:39:54.955111+00:00",
+        id: "VHJhbnNhY3Rpb246NTU=",
+        isSuccess: true,
+        kind: TransactionKind.REFUND,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+  partialRefund: {
+    ...paymentCommon,
+    actions: [OrderAction.REFUND],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: null,
+    capturedAmount: prepareMoney(ORDER_AMOUNT - 1), // refunded = 1 USD
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.CAPTURE,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+      {
+        created: "2022-09-22T13:39:54.955111+00:00",
+        id: "VHJhbnNhY3Rpb246NTU=",
+        isSuccess: true,
+        kind: TransactionKind.REFUND,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+  rejected: {
+    ...paymentCommon,
+    actions: [OrderAction.CAPTURE, OrderAction.VOID],
+    paymentMethodType: "card",
+    total: prepareMoney(),
+    availableCaptureAmount: prepareMoney(),
+    capturedAmount: prepareMoney(0),
+    modified: "2022-08-22T10:40:22.226875+00:00",
+    transactions: [
+      {
+        created: "2022-08-22T10:40:22.226875+00:00",
+        id: "VHJhbnNhY3Rpb246NTQ=",
+        isSuccess: true,
+        kind: TransactionKind.AUTH,
+        token: "4000000000001112",
+        __typename: "Transaction",
+      },
+    ],
+  },
+};
+
+export const grantedRefunds: OrderGrantedRefundFragment[] = [
+  {
+    id: "1234",
+    amount: prepareMoney(),
+    reason: "Products returned",
+    app: { id: "123", name: "Saleor Checkout", __typename: "App" },
+    user: null,
+    createdAt: "2022-08-22T10:40:22.226875+00:00",
+    __typename: "OrderGrantedRefund",
+  },
+  {
+    id: "12344",
+    amount: prepareMoney(),
+    reason: "Products arrived damaged",
+    app: null,
+    user: {
+      id: "123",
+      email: "john.doe@example.com",
+      avatar: null,
+      lastName: "John",
+      firstName: "Doe",
+      __typename: "User",
+    },
+    createdAt: "2022-08-22T10:40:22.226875+00:00",
+    __typename: "OrderGrantedRefund",
+  },
+];

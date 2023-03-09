@@ -4,10 +4,10 @@
 import faker from "faker";
 
 import {
-  CATEGORIES_LIST,
+  CATEGORIES_LIST_SELECTORS,
   categoryRow,
 } from "../../elements/catalog/categories/categories-list";
-import { CATEGORY_DETAILS } from "../../elements/catalog/categories/category-details";
+import { CATEGORY_DETAILS_SELECTORS } from "../../elements/catalog/categories/category-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { categoryDetailsUrl, urlList } from "../../fixtures/urlList";
@@ -89,7 +89,7 @@ describe("As an admin I want to manage categories", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
 
       cy.visit(urlList.categories)
-        .get(CATEGORIES_LIST.addCategoryButton)
+        .get(CATEGORIES_LIST_SELECTORS.addCategoryButton)
         .click();
       createCategory({ name: categoryName, description: categoryName })
         .its("response.body.data.categoryCreate.category")
@@ -111,11 +111,11 @@ describe("As an admin I want to manage categories", () => {
       const categoryName = `${startsWith}${faker.datatype.number()}`;
 
       cy.visit(categoryDetailsUrl(category.id))
-        .get(CATEGORY_DETAILS.createSubcategoryButton)
+        .get(CATEGORY_DETAILS_SELECTORS.createSubcategoryButton)
         .click();
       createCategory({ name: categoryName, description: categoryName })
         .visit(categoryDetailsUrl(category.id))
-        .contains(CATEGORY_DETAILS.categoryChildrenRow, categoryName)
+        .contains(CATEGORY_DETAILS_SELECTORS.categoryChildrenRow, categoryName)
         .scrollIntoView()
         .should("be.visible");
       getCategory(category.id).then(categoryResp => {
@@ -129,9 +129,9 @@ describe("As an admin I want to manage categories", () => {
     { tags: ["@category", "@allEnv", "@stable"] },
     () => {
       cy.visit(categoryDetailsUrl(category.id))
-        .get(CATEGORY_DETAILS.productsTab)
+        .get(CATEGORY_DETAILS_SELECTORS.productsTab)
         .click()
-        .get(CATEGORY_DETAILS.addProducts)
+        .get(CATEGORY_DETAILS_SELECTORS.addProducts)
         .click()
         .url()
         .should("include", urlList.addProduct);
@@ -143,9 +143,9 @@ describe("As an admin I want to manage categories", () => {
     { tags: ["@category", "@allEnv", "@stable"] },
     () => {
       cy.visit(categoryDetailsUrl(category.id))
-        .get(CATEGORY_DETAILS.productsTab)
+        .get(CATEGORY_DETAILS_SELECTORS.productsTab)
         .click();
-      cy.contains(CATEGORY_DETAILS.productRow, product.name)
+      cy.contains(CATEGORY_DETAILS_SELECTORS.productRow, product.name)
         .find(BUTTON_SELECTORS.checkbox)
         .click()
         .get(BUTTON_SELECTORS.deleteIcon)
@@ -154,7 +154,7 @@ describe("As an admin I want to manage categories", () => {
         .get(BUTTON_SELECTORS.submit)
         .click()
         .confirmationMessageShouldDisappear();
-      cy.contains(CATEGORY_DETAILS.productRow, product.name)
+      cy.contains(CATEGORY_DETAILS_SELECTORS.productRow, product.name)
         .should("not.exist")
         .waitForRequestAndCheckIfNoErrors("@productBulkDelete");
       getCategory(category.id).then(categoryResp => {

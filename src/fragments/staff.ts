@@ -26,3 +26,12 @@ export const staffMemberDetailsFragment = gql`
     }
   }
 `;
+
+export const staffMemberAvatarFragment = gql`
+  fragment StaffMemberAvatar on User {
+    ...StaffMember
+    avatar(size: 120) {
+      url
+    }
+  }
+`;

@@ -1,11 +1,8 @@
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import Link from "@dashboard/components/Link";
 import Money from "@dashboard/components/Money";
-import {
-  DiscountValueTypeEnum,
-  OrderDetailsFragment,
-  OrderErrorFragment,
-} from "@dashboard/graphql";
+import { DiscountValueTypeEnum } from "@dashboard/graphql";
+import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import { OrderDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderDiscountData } from "@dashboard/products/components/OrderDiscountProviders/types";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -61,7 +58,7 @@ const PRICE_PLACEHOLDER = "---";
 interface OrderDraftDetailsSummaryProps
   extends OrderDiscountContextConsumerProps {
   disabled?: boolean;
-  order: OrderDetailsFragment;
+  order: OrderSharedType;
   errors: OrderErrorFragment[];
   onShippingMethodEdit: () => void;
 }
