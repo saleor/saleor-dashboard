@@ -74,6 +74,10 @@ export const OrderDetailsDatagrid = ({
         renderColumnPicker={defaultProps => (
           <ColumnPicker
             {...defaultProps}
+            IconButtonProps={{
+              ...defaultProps.IconButtonProps,
+              disabled: lines.length === 0,
+            }}
             availableColumns={availableColumnsChoices}
             initialColumns={columnChoices}
             defaultColumns={defaultColumns}
