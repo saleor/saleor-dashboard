@@ -52,9 +52,7 @@ xdescribe("Channels in draft orders", () => {
           channelName = channelInHeader;
         },
       );
-      cy.visit(urlList.orders)
-        .get(ORDERS_SELECTORS.createOrder)
-        .click();
+      cy.visit(urlList.orders).get(ORDERS_SELECTORS.createOrderButton).click();
       cy.getTextFromElement(CHANNEL_FORM_SELECTORS.channelSelect).then(
         selectedChannelName => {
           expect(channelName).to.contains(selectedChannelName);
@@ -76,7 +74,7 @@ xdescribe("Channels in draft orders", () => {
       cy.visit(urlList.homePage);
       selectChannelInHeader(otherChannel.name);
       cy.visit(urlList.orders);
-      cy.get(ORDERS_SELECTORS.createOrder).click();
+      cy.get(ORDERS_SELECTORS.createOrderButton).click();
       cy.getTextFromElement(CHANNEL_FORM_SELECTORS.channelSelect).then(
         channelInSelect => {
           expect(channelInSelect).to.be.eq(otherChannel.name);
@@ -98,7 +96,7 @@ xdescribe("Channels in draft orders", () => {
       cy.visit(urlList.homePage);
       selectChannelInHeader(defaultChannel.name);
       cy.visit(urlList.orders);
-      cy.get(ORDERS_SELECTORS.createOrder).click();
+      cy.get(ORDERS_SELECTORS.createOrderButton).click();
       cy.getTextFromElement(CHANNEL_FORM_SELECTORS.channelSelect).then(
         channelInSelect => {
           expect(channelInSelect).to.be.eq(defaultChannel.name);

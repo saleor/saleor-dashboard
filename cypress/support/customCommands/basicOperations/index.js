@@ -11,6 +11,9 @@ Cypress.Commands.add("clearAndType", { prevSubject: true }, (subject, text) => {
     }
   });
 });
+Cypress.Commands.add("clickOnElement", selector => {
+  cy.get(selector).click();
+});
 
 Cypress.Commands.add("waitForRequestAndCheckIfNoErrors", alias => {
   cy.wait(alias).then(resp => {
@@ -34,4 +37,7 @@ Cypress.Commands.add("checkIfDataAreNotNull", data => {
       cy.checkIfDataAreNotNull(singleData);
     });
   }
+});
+Cypress.Commands.add("checkIfElementIsVisible", element => {
+  cy.get(element).should("be.visible");
 });

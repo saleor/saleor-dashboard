@@ -1,6 +1,6 @@
 export const SHIPPING_ZONE_DETAILS = {
   assignCountryButton: "[data-test-id='assign-country']",
-  descriptionInput: "textarea[name='description']",
+  descriptionInput: "[data-test-id='shipping-zone-description']",
   submitAssignCountry: "[type='submit']",
   searchInput: "[name='query']",
   tableRow: "[class*='MuiTableRow']",

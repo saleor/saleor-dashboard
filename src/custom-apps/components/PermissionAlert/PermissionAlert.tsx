@@ -1,6 +1,6 @@
 import { useQuery } from "@apollo/client";
-import { Typography } from "@material-ui/core";
-import { Alert, Pill } from "@saleor/macaw-ui";
+import { Alert } from "@saleor/macaw-ui";
+import { Box, Chip, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -36,19 +36,17 @@ const PermissionAlert: React.FC<PermissionAlertProps> = ({ query }) => {
           })}
           variant="warning"
           close={false}
+          className="remove-icon-background"
         >
-          <Typography>
-            <div style={{ display: "flex", gap: "12px" }}>
-              {permissions.map(permission => (
-                <Pill
-                  size="small"
-                  color="generic"
-                  outlined
-                  label={permission}
-                />
-              ))}
-            </div>
-          </Typography>
+          <Box display="flex" gap={5}>
+            {permissions.map(permission => (
+              <Chip size="small" key={permission}>
+                <Text variant="caption" size="small">
+                  {permission}
+                </Text>
+              </Chip>
+            ))}
+          </Box>
         </Alert>
       )}
     </div>

@@ -7,9 +7,9 @@ import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-sel
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
-import { INVITE_STAFF_MEMBER_FORM } from "../elements/staffMembers/inviteStaffMemberForm";
-import { STAFF_MEMBER_DETAILS } from "../elements/staffMembers/staffMemberDetails";
-import { STAFF_MEMBERS_LIST } from "../elements/staffMembers/staffMembersList";
+import { INVITE_STAFF_MEMBER_FORM_SELECTORS } from "../elements/staffMembers/inviteStaffMemberForm";
+import { STAFF_MEMBER_DETAILS_SELECTORS } from "../elements/staffMembers/staffMemberDetails";
+import { STAFF_MEMBERS_LIST_SELECTORS } from "../elements/staffMembers/staffMembersList";
 import { urlList, userDetailsUrl } from "../fixtures/urlList";
 import { TEST_ADMIN_USER } from "../fixtures/users";
 import { activatePlugin, updatePlugin } from "../support/api/requests/Plugins";
@@ -70,7 +70,7 @@ describe("Staff members", () => {
 
       cy.visit(urlList.staffMembers)
         .expectSkeletonIsVisible()
-        .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
+        .get(STAFF_MEMBERS_LIST_SELECTORS.inviteStaffMemberButton)
         .click({ force: true });
       fillUpUserDetailsAndAddFirstPermission(firstName, lastName, emailInvite);
       getMailActivationLinkForUser(emailInvite).then(urlLink => {
@@ -122,7 +122,7 @@ describe("Staff members", () => {
       const serverStoredEmail = email.toLowerCase();
 
       cy.visit(userDetailsUrl(user.id))
-        .get(STAFF_MEMBER_DETAILS.removePermissionButton)
+        .get(STAFF_MEMBER_DETAILS_SELECTORS.removePermissionButton)
         .click()
         .addAliasToGraphRequest("StaffMemberUpdate")
         .get(BUTTON_SELECTORS.confirm)
@@ -186,10 +186,10 @@ describe("Staff members", () => {
       const emailInvite = TEST_ADMIN_USER.email;
       cy.visit(urlList.staffMembers)
         .expectSkeletonIsVisible()
-        .get(STAFF_MEMBERS_LIST.inviteStaffMemberButton)
+        .get(STAFF_MEMBERS_LIST_SELECTORS.inviteStaffMemberButton)
         .click({ force: true });
       fillUpOnlyUserDetails(firstName, lastName, emailInvite);
-      cy.get(INVITE_STAFF_MEMBER_FORM.emailValidationMessage).should(
+      cy.get(INVITE_STAFF_MEMBER_FORM_SELECTORS.emailValidationMessage).should(
         "be.visible",
       );
       cy.get(BUTTON_SELECTORS.dialogBackButton).click();
@@ -206,13 +206,15 @@ describe("Staff members", () => {
         .get(SHARED_ELEMENTS.searchInput)
         .type(`${email} {enter}`);
       cy.waitForProgressBarToNotExist();
-      cy.get(STAFF_MEMBERS_LIST.staffAvatar).first().should("be.visible");
+      cy.get(STAFF_MEMBERS_LIST_SELECTORS.staffAvatar)
+        .first()
+        .should("be.visible");
       cy.waitForProgressBarToNotExist()
-        .get(STAFF_MEMBERS_LIST.staffStatusText)
+        .get(STAFF_MEMBERS_LIST_SELECTORS.staffStatusText)
         .first()
         .should("be.visible")
         .click();
-      cy.get(STAFF_MEMBER_DETAILS.staffEmail)
+      cy.get(STAFF_MEMBER_DETAILS_SELECTORS.staffEmail)
         .click()
         .clear()
         .type(`${TEST_ADMIN_USER.email} {enter}`)
@@ -250,9 +252,15 @@ describe("Staff members", () => {
 
       cy.visit(urlList.staffMembers).get(LOGIN_SELECTORS.userMenu).click();
       cy.get(LOGIN_SELECTORS.accountSettings).click();
-      cy.get(STAFF_MEMBER_DETAILS.staffFirstName).clear().type("สมชาย");
-      cy.get(STAFF_MEMBER_DETAILS.staffLastName).clear().type(newLastName);
-      cy.get(STAFF_MEMBER_DETAILS.staffEmail).clear().type(changedEmail);
+      cy.get(STAFF_MEMBER_DETAILS_SELECTORS.staffFirstName)
+        .clear()
+        .type("สมชาย");
+      cy.get(STAFF_MEMBER_DETAILS_SELECTORS.staffLastName)
+        .clear()
+        .type(newLastName);
+      cy.get(STAFF_MEMBER_DETAILS_SELECTORS.staffEmail)
+        .clear()
+        .type(changedEmail);
 
       // Test blocked from this point by https://github.com/saleor/saleor-dashboard/issues/2847
       cy.get(BUTTON_SELECTORS.confirm).confirmationMessageShouldAppear();
@@ -292,13 +300,13 @@ describe("Staff members", () => {
 
       cy.visit(urlList.staffMembers).get(LOGIN_SELECTORS.userMenu).click();
       cy.get(LOGIN_SELECTORS.accountSettings).click();
-      cy.get(STAFF_MEMBER_DETAILS.changePasswordBtn).click();
-      cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.oldPassword).type(
-        Cypress.env("USER_PASSWORD"),
-      );
-      cy.get(STAFF_MEMBER_DETAILS.changePasswordModal.newPassword).type(
-        newPass,
-      );
+      cy.get(STAFF_MEMBER_DETAILS_SELECTORS.changePasswordBtn).click();
+      cy.get(
+        STAFF_MEMBER_DETAILS_SELECTORS.changePasswordModal.oldPassword,
+      ).type(Cypress.env("USER_PASSWORD"));
+      cy.get(
+        STAFF_MEMBER_DETAILS_SELECTORS.changePasswordModal.newPassword,
+      ).type(newPass);
       cy.get(BUTTON_SELECTORS.submit).click().confirmationMessageShouldAppear();
 
       cy.clearSessionData().loginUserViaRequest("auth", {

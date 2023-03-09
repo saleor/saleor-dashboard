@@ -61,7 +61,7 @@ describe("Tests on inactive channel", () => {
     { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
       cy.visit(urlList.orders)
-        .get(ORDERS_SELECTORS.createOrder)
+        .get(ORDERS_SELECTORS.createOrderButton)
         .click()
         .get(CHANNEL_FORM_SELECTORS.channelSelect)
         .click()

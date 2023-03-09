@@ -1,4 +1,4 @@
-export const CUSTOMER_DETAILS = {
+export const CUSTOMER_DETAILS_SELECTORS = {
   nameInput: '[name="firstName"]',
   customerAddressNameInput: '[name="customerFirstName"]',
   lastNameInput: '[name="lastName"]',

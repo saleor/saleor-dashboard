@@ -3,7 +3,7 @@
 
 import faker from "faker";
 
-import { PRODUCT_TYPE_DETAILS } from "../../../elements/productTypes/productTypeDetails";
+import { PRODUCT_TYPE_DETAILS_SELECTORS } from "../../../elements/productTypes/productTypeDetails";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { productTypeDetailsUrl } from "../../../fixtures/urlList";
 import { createAttribute } from "../../../support/api/requests/Attribute";
@@ -40,7 +40,7 @@ describe("As an admin I want to manage attributes in product types", () => {
           cy.visitAndWaitForProgressBarToDisappear(
             productTypeDetailsUrl(productType.id),
           )
-            .get(PRODUCT_TYPE_DETAILS.assignProductAttributeButton)
+            .get(PRODUCT_TYPE_DETAILS_SELECTORS.assignProductAttributeButton)
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
             .assignElements(startsWith)
@@ -65,10 +65,10 @@ describe("As an admin I want to manage attributes in product types", () => {
           cy.visitAndWaitForProgressBarToDisappear(
             productTypeDetailsUrl(productType.id),
           )
-            .get(PRODUCT_TYPE_DETAILS.hasVariantsButton)
+            .get(PRODUCT_TYPE_DETAILS_SELECTORS.hasVariantsButton)
             .should("be.enabled")
             .click({ force: true })
-            .get(PRODUCT_TYPE_DETAILS.assignVariantAttributeButton)
+            .get(PRODUCT_TYPE_DETAILS_SELECTORS.assignVariantAttributeButton)
             .click()
             .addAliasToGraphRequest("AssignProductAttribute")
             .assignElements(startsWith)
@@ -100,7 +100,7 @@ describe("As an admin I want to manage attributes in product types", () => {
           cy.visitAndWaitForProgressBarToDisappear(
             productTypeDetailsUrl(productType.id),
           )
-            .get(PRODUCT_TYPE_DETAILS.nameInput)
+            .get(PRODUCT_TYPE_DETAILS_SELECTORS.nameInput)
             .should("be.enabled")
             .get(BUTTON_SELECTORS.deleteIcon)
             .should("be.enabled")
@@ -133,7 +133,7 @@ describe("As an admin I want to manage attributes in product types", () => {
           cy.visitAndWaitForProgressBarToDisappear(
             productTypeDetailsUrl(productType.id),
           )
-            .get(PRODUCT_TYPE_DETAILS.nameInput)
+            .get(PRODUCT_TYPE_DETAILS_SELECTORS.nameInput)
             .should("be.enabled")
             .get(BUTTON_SELECTORS.deleteIcon)
             .should("be.enabled")
@@ -166,7 +166,7 @@ describe("As an admin I want to manage attributes in product types", () => {
           cy.visitAndWaitForProgressBarToDisappear(
             productTypeDetailsUrl(productType.id),
           )
-            .get(PRODUCT_TYPE_DETAILS.variantSelectionCheckbox)
+            .get(PRODUCT_TYPE_DETAILS_SELECTORS.variantSelectionCheckbox)
             .click()
             .addAliasToGraphRequest("ProductAttributeAssignmentUpdate")
             .get(BUTTON_SELECTORS.confirm)

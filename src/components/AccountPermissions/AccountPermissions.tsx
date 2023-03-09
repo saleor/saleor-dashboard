@@ -16,6 +16,11 @@ import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
+const byAlphabeticalOrder =
+  <T extends {}>(field: string) =>
+  (a: T, b: T) =>
+    a[field].localeCompare(b[field]);
+
 const useStyles = makeStyles(
   theme => ({
     checkboxContainer: {
@@ -50,13 +55,16 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
   const {
     data,
     disabled,
-    permissions,
     permissionsExceeded,
     onChange,
     description,
     fullAccessLabel,
     errorMessage,
   } = props;
+
+  const permissions = Object.values(props.permissions).sort(
+    byAlphabeticalOrder("name"),
+  );
 
   const classes = useStyles(props);
   const intl = useIntl();
@@ -192,13 +200,14 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                         id={perm.code}
                         primary={perm.name.replace(/\./, "")}
                         secondary={
-                          perm.lastSource &&
-                          intl.formatMessage({
-                            id: "VmMDLN",
-                            defaultMessage:
-                              "This group is last source of that permission",
-                            description: "permission list item description",
-                          })
+                          perm.lastSource
+                            ? intl.formatMessage({
+                                id: "VmMDLN",
+                                defaultMessage:
+                                  "This group is last source of that permission",
+                                description: "permission list item description",
+                              })
+                            : perm.code
                         }
                       />
                     </ListItem>

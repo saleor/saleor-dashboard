@@ -2,6 +2,7 @@ export const CONFIGURATION_SELECTORS = {
   channels: "[data-test-id*='channels']",
   shipping: '[data-test-id*="shipping methods"]',
   taxes: '[data-test-id*="configuration-menu-taxes"]',
+  webhooks: '[data-test-id*="configuration-menu-webhooks"]',
   settings: '[data-test-id*="configuration-menu-site-settings"]',
   pageTypes: '[data-test-id*="configuration-menu-page-types"]',
   navigation: '[data-test-id*="configuration-menu-navigation"]',
@@ -10,5 +11,7 @@ export const CONFIGURATION_SELECTORS = {
   attributes: '[data-test-id*="configuration-menu-attributes"]',
   productTypes: '[data-test-id*="configuration-menu-product-types"]',
   plugin: '[data-test-id*="configuration-plugins-pages"]',
-  warehouse: '[data-test-id*="configuration-menu-warehouses"]'
+  warehouse: '[data-test-id*="configuration-menu-warehouses"]',
+  configurationMenu: "[data-test-id='configuration-menu']",
+  configurationMenuItem: "[data-test-id='configuration-menu-item']",
 };
