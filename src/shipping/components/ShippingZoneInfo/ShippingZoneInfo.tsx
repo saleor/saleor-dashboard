@@ -85,6 +85,7 @@ const ShippingZoneInfo: React.FC<ShippingZoneInfoProps> = ({
         <TextField
           error={data.description.length > MAX_DESCRIPTION_LENGTH}
           name={"description"}
+          data-test-id="shipping-zone-description"
           label={
             <div className={classes.labelContainer}>
               <div className={classes.label}>
