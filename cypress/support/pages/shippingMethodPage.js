@@ -57,11 +57,11 @@ export function fillUpShippingZoneData({
     .click()
     .get(SHIPPING_ZONE_DETAILS.submitAssignCountry)
     .click()
+    .addAliasToGraphRequest("UpdateShippingZone")
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldDisappear()
-    .addAliasToGraphRequest("UpdateShippingZone")
-    .reload();
+    .waitForRequestAndCheckIfNoErrors("@UpdateShippingZone");
 }
 
 export function changeWeightUnit(weightUnit) {
