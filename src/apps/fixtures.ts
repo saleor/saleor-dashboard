@@ -1,4 +1,5 @@
 import {
+  AppAvatarFragment,
   AppInstallationFragment,
   AppListItemFragment,
   AppManifestFragment,
@@ -149,6 +150,12 @@ export const installApp: AppManifestFragment = {
   supportUrl: null,
   tokenTargetUrl: null,
   version: "1.0",
+};
+
+export const appAvatar: AppAvatarFragment = {
+  id: "QXBwOjE3Ng==",
+  name: "app",
+  __typename: "App",
 };
 
 export const releasedApp: GetV2SaleorAppsResponse.ReleasedSaleorApp = {

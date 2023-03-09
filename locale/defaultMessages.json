@@ -1,4 +1,8 @@
 {
+  "++8ZWj": {
+    "context": "Transaction event status - requested",
+    "string": "Requested"
+  },
   "+2VydL": {
     "context": "card title",
     "string": "Country exceptions"
@@ -67,6 +71,10 @@
     "context": "return button",
     "string": "Return / Replace order"
   },
+  "+SYLEL": {
+    "context": "refunded fulfillment, section header",
+    "string": "Refunded"
+  },
   "+T0oJ7": {
     "context": "input label",
     "string": "Stock reservation for anonymous user (in minutes)"
@@ -113,12 +121,20 @@
     "context": "dialog header",
     "string": "Change Password"
   },
+  "+mmPxn": {
+    "context": "page header",
+    "string": "Grant refund"
+  },
   "+pLi+M": {
     "context": "issued by app label",
     "string": "Issued by app"
   },
   "+sX7yS": {
     "string": "Fulfillment successfully approved"
+  },
+  "+sXiWx": {
+    "context": "window title",
+    "string": "Edit grant refund"
   },
   "+svQBN": {
     "context": "alert",
@@ -250,6 +266,9 @@
     "context": "app support",
     "string": "Support"
   },
+  "/eWPsp": {
+    "string": "Invalid currency used to create transaction"
+  },
   "/glQgs": {
     "string": "No channels found"
   },
@@ -264,6 +283,10 @@
     "context": "channels alphabetically title",
     "string": "Channels from A to Z"
   },
+  "/nZy6A": {
+    "context": "page subtitle",
+    "string": "Issue refund"
+  },
   "/oaqFS": {
     "context": "section header",
     "string": "Value"
@@ -272,12 +295,20 @@
     "context": "no variants",
     "string": "No variants found"
   },
+  "/qk66u": {
+    "context": "window title",
+    "string": "Grant refund #{orderNumber}"
+  },
   "/vCXIP": {
     "string": "Translation"
   },
   "/w919H": {
     "context": "OrderCustomer Fulfillment from Local Warehouse",
     "string": "Fulfill from Local Stock"
+  },
+  "/xXvjF": {
+    "context": "section header",
+    "string": "Unfulfilled"
   },
   "/yJJvI": {
     "context": "dialog header",
@@ -286,6 +317,9 @@
   "/z9uo1": {
     "context": "order returned success message",
     "string": "Successfully returned products!"
+  },
+  "01+5kQ": {
+    "string": "Mark as paid"
   },
   "05hqq6": {
     "context": "checkbox label",
@@ -407,9 +441,17 @@
     "context": "delete custom app",
     "string": "Deleting this app, you will delete all the data and webhooks regarding this app."
   },
+  "0whAeC": {
+    "context": "sum of all pending refunds inside an order",
+    "string": "Pending refunds"
+  },
   "1/oG76": {
     "context": "dialog header",
     "string": "Delete Sale"
+  },
+  "1/oauz": {
+    "context": "grant refund table, column header",
+    "string": "Qty to refund"
   },
   "11lR5V": {
     "context": "avatar delete button",
@@ -438,6 +480,13 @@
   "16PGt9": {
     "context": "WarehouseSettings all warehouses label",
     "string": "All warehouses"
+  },
+  "16iwCI": {
+    "context": "section header",
+    "string": "Fulfilled"
+  },
+  "16sza6": {
+    "string": "Refund grants reserve a money which later can be sent to customers via original payment methods or a manual transaction."
   },
   "18wvf7": {
     "context": "section header",
@@ -502,6 +551,10 @@
   },
   "1n1tOR": {
     "string": "Group is out of your permission scope"
+  },
+  "1oYjZc": {
+    "context": "sum of all granted refunds for an order",
+    "string": "Granted refund"
   },
   "1rpzrM": {
     "context": "search placeholder",
@@ -602,6 +655,9 @@
     "context": "button",
     "string": "Set maximal quantities"
   },
+  "2WenNh": {
+    "string": "Send refund"
+  },
   "2Xt+sw": {
     "context": "dialog header",
     "string": "Add postal codes"
@@ -649,6 +705,10 @@
   "2rJcFa": {
     "context": "delete app",
     "string": "Deleting this app, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace."
+  },
+  "2x9ZgK": {
+    "context": "card title",
+    "string": "Refund balance"
   },
   "2yU+q9": {
     "context": "tab name",
@@ -751,10 +811,6 @@
     "context": "product shipping",
     "string": "Shipping"
   },
-  "3stu21": {
-    "context": "refunded fulfillment, section header",
-    "string": "Replaced ({quantity})"
-  },
   "3tbL7x": {
     "context": "description",
     "string": "Forgot password?"
@@ -769,6 +825,10 @@
   "3y4r+z": {
     "context": "channel settings",
     "string": "Channel Settings"
+  },
+  "3zdm8A": {
+    "context": "Dialog title",
+    "string": "Transaction {actionType}"
   },
   "408KSO": {
     "context": "gift card history message",
@@ -789,6 +849,10 @@
   "43Nlay": {
     "context": "warehouse",
     "string": "Address Information"
+  },
+  "43QkTW": {
+    "context": "Transaction capture button - charge preauthorized transaction amount",
+    "string": "Capture"
   },
   "450Fty": {
     "string": "None"
@@ -866,6 +930,10 @@
   "4Z6BtA": {
     "context": "order history message",
     "string": "Payment confirmation was sent to customer"
+  },
+  "4fJ17F": {
+    "context": "Charge in progress transaction amount, data display header",
+    "string": "Pending charge"
   },
   "4gT3eD": {
     "context": "navigator section header",
@@ -951,6 +1019,10 @@
   "5JT4v2": {
     "context": "dialog header",
     "string": "Send Invoice"
+  },
+  "5JUEIh": {
+    "context": "field label, refund amount",
+    "string": "Refund amount"
   },
   "5Jo3C5": {
     "context": "vat not included in order price",
@@ -1159,10 +1231,6 @@
     "context": "input placeholder",
     "string": "Search by name, email, etc..."
   },
-  "6u4K7e": {
-    "context": "page header",
-    "string": "Order"
-  },
   "6udlH+": {
     "string": "Order draft successfully created"
   },
@@ -1246,6 +1314,10 @@
     "context": "bulk issue gift cards dialog title",
     "string": "Bulk Issue Gift Cards"
   },
+  "7ejEbB": {
+    "context": "Authorized (amount locked on card, not transfered to store owner) transaction amount, data display header",
+    "string": "Authorized"
+  },
   "7hNjaI": {
     "context": "button",
     "string": "Delete Variant"
@@ -1268,6 +1340,10 @@
   "7scATx": {
     "context": "select title",
     "string": "Select channels you want for {contentType} to be available on"
+  },
+  "7t+oJp": {
+    "context": "orde, granted refunds card, unsettled amount",
+    "string": "Unsettled {money}"
   },
   "7u9Ep7": {
     "context": "Label when app is disabled",
@@ -1407,6 +1483,10 @@
     "context": "button",
     "string": "SETUP END DATE"
   },
+  "9Mro3c": {
+    "context": "Transaction event status - pending",
+    "string": "Pending"
+  },
   "9OtpHt": {
     "string": "Order line deleted"
   },
@@ -1435,6 +1515,10 @@
   },
   "9UHfux": {
     "string": "Voucher Specific Information"
+  },
+  "9WhNiN": {
+    "context": "Pending authorization transaction amount, data display header",
+    "string": "Pending auth"
   },
   "9Y5i/8": {
     "context": "number of webhook headers in model",
@@ -1483,6 +1567,10 @@
     "context": "no products placeholder",
     "string": "No products are available matching query in the channel assigned to this order."
   },
+  "9pLPLn": {
+    "context": "refund amounts were unsettled",
+    "string": "Unsettled"
+  },
   "9piUVz": {
     "context": "order history message",
     "string": "Order refund information was sent to customer"
@@ -1494,10 +1582,6 @@
   "9scTQ0": {
     "context": "section header",
     "string": "Product Attributes"
-  },
-  "9ssWj+": {
-    "context": "unapproved fulfillment, section header",
-    "string": "Waiting for approval ({quantity})"
   },
   "9uNz+T": {
     "context": "button",
@@ -1534,6 +1618,10 @@
   "AKv2BI": {
     "context": "order refund subtitle",
     "string": "Refunded items can't be fulfilled"
+  },
+  "AMlXrQ": {
+    "context": "submit button",
+    "string": "Create manual transaction"
   },
   "AOI4LW": {
     "context": "navigator placeholder",
@@ -1636,6 +1724,9 @@
     "context": "section header",
     "string": "Unfulfilled Products"
   },
+  "B06DG8": {
+    "string": "Transaction wasn't found"
+  },
   "B0PaVS": {
     "context": "pint unit",
     "string": "pint"
@@ -1653,10 +1744,6 @@
   },
   "B9yrkK": {
     "string": "No Channels found"
-  },
-  "BBIQxQ": {
-    "context": "page header",
-    "string": "Order no. {orderNumber} - Replace/Return"
   },
   "BCPrmK": {
     "context": "order history message",
@@ -1773,6 +1860,10 @@
   "ByYtFB": {
     "string": "Invalid or expired token. Please check your token in URL"
   },
+  "C035fF": {
+    "context": "grant refund, refund card explanation next to submit button",
+    "string": "Funds will be returned in a separate step"
+  },
   "C0JLNW": {
     "string": "Provided email address does not exist in our database."
   },
@@ -1886,8 +1977,16 @@
     "context": "channel publication status",
     "string": "Not published"
   },
+  "CmxKIg": {
+    "context": "window title",
+    "string": "Grant refund"
+  },
   "Co2U4u": {
     "string": "No plugins found"
+  },
+  "CrY98m": {
+    "context": "button, marks order as paid (legacy payments)",
+    "string": "Mark order as paid"
   },
   "CxfKLC": {
     "string": "Pages"
@@ -2007,6 +2106,10 @@
     "context": "dialog content",
     "string": "Are you sure you want to delete {warehouseName}?"
   },
+  "DVgMit": {
+    "context": "transaction event type, transaction was chargeback by payment provider",
+    "string": "Chargeback"
+  },
   "DWs4ba": {
     "string": "No menus found"
   },
@@ -2025,9 +2128,17 @@
   "DovGIa": {
     "string": "Permission Group Deleted"
   },
+  "DyGpz4": {
+    "context": "unapproved fulfillment, section header",
+    "string": "Waiting for approval"
+  },
   "DzPVnj": {
     "context": "date time attribute type",
     "string": "Date Time"
+  },
+  "E1C9pp": {
+    "context": "transaction event type, authorization amount was changed",
+    "string": "Authorization amount adjusted"
   },
   "E22x4H": {
     "context": "no card defuned alert message",
@@ -2041,6 +2152,10 @@
   },
   "E8VDeH": {
     "string": "No. of Orders"
+  },
+  "E9Dz18": {
+    "context": "Order summary refunds header",
+    "string": "Refunds"
   },
   "E9Jssl": {
     "string": "No orders ready to fulfill"
@@ -2172,6 +2287,9 @@
     "context": "sale name",
     "string": "Name"
   },
+  "F5OqYa": {
+    "string": "Creates a single payment when unchecked"
+  },
   "F69lwk": {
     "context": "settings menu item",
     "string": "Settings"
@@ -2292,6 +2410,10 @@
   "FpIcp9": {
     "string": "No customers found"
   },
+  "Ftz7VI": {
+    "context": "input label, transaction amount",
+    "string": "Transaction amount"
+  },
   "FuAV5G": {
     "string": "This name is already taken. Please provide another."
   },
@@ -2368,6 +2490,9 @@
     "context": "order history message",
     "string": "Order was placed"
   },
+  "GJwcSd": {
+    "string": "PSP Reference (optional)"
+  },
   "GKQGKG": {
     "context": "app data privacy",
     "string": "Data privacy"
@@ -2407,6 +2532,10 @@
   "GbhZJ4": {
     "context": "button",
     "string": "Create voucher"
+  },
+  "GcbFa9": {
+    "context": "aria-label, negative money amount",
+    "string": "minus"
   },
   "Gfbp36": {
     "context": "dialog header",
@@ -2489,6 +2618,10 @@
     "context": "create new menu item, header",
     "string": "Add Item"
   },
+  "H52OCA": {
+    "context": "Order summary payment header",
+    "string": "Payment"
+  },
   "H5NKfr": {
     "context": "button",
     "string": "Create"
@@ -2557,6 +2690,10 @@
   "HaQ8cg": {
     "context": "button",
     "string": "Refund"
+  },
+  "Hc58JL": {
+    "context": "card title",
+    "string": "Balance after requests"
   },
   "HcQEUk": {
     "context": "table column header, sold units preorder quantity",
@@ -2663,6 +2800,10 @@
     "context": "value input helper text",
     "string": "Invalid value"
   },
+  "INKsSL": {
+    "context": "Transaction event status - success",
+    "string": "Success"
+  },
   "INNPVX": {
     "context": "payment status",
     "string": "Partially paid"
@@ -2703,6 +2844,10 @@
     "context": "variant created success message",
     "string": "Variant created"
   },
+  "IfiR4M": {
+    "context": "heading, sum of all pending refunds from transactions in order",
+    "string": "Pending"
+  },
   "IhK1F3": {
     "string": "No shipping zones found"
   },
@@ -2739,6 +2884,10 @@
   "IyHQr0": {
     "context": "navigator action",
     "string": "Go to order #{orderNumber}"
+  },
+  "IyV8CY": {
+    "context": "all authorized amount from transactions in order",
+    "string": "Authorized"
   },
   "IzEVek": {
     "context": "bulk disable label",
@@ -2980,10 +3129,6 @@
     "context": "order discount removed title",
     "string": "Order discount was removed by"
   },
-  "Kc2/e7": {
-    "context": "section header",
-    "string": "Unfulfilled ({quantity})"
-  },
   "KcsJKm": {
     "context": "error with activatation alert message",
     "string": "Error activating gift {count,plural,one{card} other{cards}}"
@@ -3067,12 +3212,20 @@
     "context": "weight",
     "string": "from {value} {unit}"
   },
+  "LJPHdt": {
+    "context": "cancelled fulfillment, section header",
+    "string": "Refunded and Returned"
+  },
   "LKoIB1": {
     "string": "Add search engine title and description to make this product easier to find"
   },
   "LKpQYh": {
     "context": "refund type",
     "string": "Miscellaneous Refund"
+  },
+  "LLrOK3": {
+    "context": "paragraph, description in manual refund card",
+    "string": "Create a manual refund for non-integrated payments"
   },
   "LOSNq0": {
     "context": "dialog header",
@@ -3086,6 +3239,14 @@
   },
   "LWmYSU": {
     "string": "Completed Translations"
+  },
+  "LY5dS9": {
+    "context": "Charged transaction amount, data display header",
+    "string": "Charged"
+  },
+  "Ljtqmt": {
+    "context": "page header, order id unknown",
+    "string": "Order"
   },
   "LkuDEb": {
     "context": "metadata field value, header",
@@ -3301,6 +3462,10 @@
     "context": "collections section name",
     "string": "Collections"
   },
+  "NPIBGp": {
+    "context": "heading, sum of all granted refunds from transactions in order",
+    "string": "Granted"
+  },
   "NPfmdK": {
     "context": "webhook input label",
     "string": "Secret Key"
@@ -3343,6 +3508,9 @@
     "context": "table header column",
     "string": "Tax rate"
   },
+  "NkLZBG": {
+    "string": "Mark as paid uses Transactions API"
+  },
   "NlEVVT": {
     "context": "label for button",
     "string": "Create class"
@@ -3350,6 +3518,10 @@
   "NlSJMM": {
     "context": "channels section name",
     "string": "Channels"
+  },
+  "NnhrxZ": {
+    "context": "amount of sent refund for transaction",
+    "string": "{transactionType} refund"
   },
   "No4lyL": {
     "context": "header field name, header",
@@ -3416,6 +3588,10 @@
   "OA+fw+": {
     "context": "conjunction, choice between going to dashboard or refreshing page",
     "string": "or"
+  },
+  "OAcl78": {
+    "context": "order, granted refunds card, title",
+    "string": "Granted refunds"
   },
   "OBQ+th": {
     "context": "WarehouseSettings disabled warehouse label",
@@ -3550,6 +3726,10 @@
   "PLCwT/": {
     "context": "search results",
     "string": "Show more"
+  },
+  "PLX6FH": {
+    "context": "sum of all manual refunds for transaction",
+    "string": "Manual refund"
   },
   "PRXpBm": {
     "context": "dialog header",
@@ -3939,6 +4119,10 @@
     "context": "search placeholder",
     "string": "Search by product name, attribute, product type etc..."
   },
+  "S5/nSq": {
+    "context": "grant refund table, column header",
+    "string": "Quantity"
+  },
   "S52JMl": {
     "context": "default gift card delete description",
     "string": "{selectedItemsCount,plural,one{Are you sure you want to delete this gift card?} other{Are you sure you want to delete {selectedItemsCount} giftCards?}}"
@@ -3954,6 +4138,10 @@
   "SBb6Ej": {
     "context": "select a warehouse to fulfill product from",
     "string": "Select warehouse..."
+  },
+  "SC/eNC": {
+    "context": "Payment card title",
+    "string": "Payment status"
   },
   "SHm7ee": {
     "string": "Search by product name, attribute, product type etc..."
@@ -4051,6 +4239,10 @@
   "T1f2Yl": {
     "string": "Variant Name"
   },
+  "T34dJq": {
+    "context": "Displayed when order has no payment",
+    "string": "This order has no payment yet."
+  },
   "T4GOiX": {
     "string": "End Date"
   },
@@ -4069,6 +4261,10 @@
   "T8rvXs": {
     "context": "order subtotal price",
     "string": "Subtotal"
+  },
+  "TBftMD": {
+    "context": "button. form submit, grant refund edit",
+    "string": "Edit granted refund"
   },
   "TC/EOG": {
     "context": "status section title",
@@ -4098,6 +4294,10 @@
   "TKmub+": {
     "string": "This field is required"
   },
+  "TLDkvR": {
+    "context": "transaction event type, transaction was cancelled / voided",
+    "string": "Cancel"
+  },
   "TLNf6K": {
     "context": "window title",
     "string": "Draft Order #{orderNumber}"
@@ -4117,6 +4317,10 @@
     "context": "channel status title",
     "string": "Channel Status"
   },
+  "TTVPyd": {
+    "context": "dialog subheading",
+    "string": "Create a manual transaction for non-integrated payments"
+  },
   "TWVx7O": {
     "context": "delete product dialog title",
     "string": "Delete Product"
@@ -4128,6 +4332,10 @@
   "Ta9j04": {
     "context": "orders section name",
     "string": "Orders"
+  },
+  "Tenl9A": {
+    "context": "grant refund, refund card toggle",
+    "string": "Refund shipment: {currency} {amount}"
   },
   "TfzIXS": {
     "context": "tax classes card header",
@@ -4156,6 +4364,10 @@
   "TpPx7V": {
     "context": "navigator placeholder",
     "string": "Search Customer"
+  },
+  "TxYWkD": {
+    "context": "page header, edit view",
+    "string": "Edit grant refund"
   },
   "U1eJIw": {
     "context": "order history message",
@@ -4294,6 +4506,10 @@
   "UvD+xp": {
     "context": "attribute values",
     "string": "Value {number}"
+  },
+  "UxOcKE": {
+    "context": "order history message",
+    "string": "Transaction charge requested"
   },
   "UxdBmI": {
     "context": "collection availability",
@@ -4439,6 +4655,9 @@
     "context": "section header",
     "string": "App permissions"
   },
+  "Vtjlpw": {
+    "string": "Transaction is not unique"
+  },
   "Vu9nol": {
     "context": "header",
     "string": "Order settings"
@@ -4450,6 +4669,10 @@
   "VvFJ/T": {
     "context": "PageTypeDeleteWarningDialog single no assigned items description",
     "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created pages."
+  },
+  "VyKl39": {
+    "context": "Dialog warning text",
+    "string": "Are you sure you want to {actionType} this transaction?"
   },
   "VyzsWZ": {
     "string": "Default Billing Address"
@@ -4499,6 +4722,9 @@
   "WIxSDm": {
     "context": "card header",
     "string": "{country} class rates"
+  },
+  "WK62MN": {
+    "string": "Fulfillment"
   },
   "WMGoqz": {
     "context": "used by filter label",
@@ -4687,6 +4913,10 @@
     "context": "section header",
     "string": "Eligible Collections"
   },
+  "XPiJex": {
+    "context": "Transaction void button - return preauthorized amount to client",
+    "string": "Void"
+  },
   "XQBVEJ": {
     "context": "order return error description when cannot refund",
     "string": "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again."
@@ -4837,6 +5067,10 @@
     "context": "product types section name",
     "string": "Product Types"
   },
+  "YUaalK": {
+    "context": "Cancel in progress transaction amount, data display header",
+    "string": "Pending cancel"
+  },
   "YVIajc": {
     "context": "product field",
     "string": "Description"
@@ -4886,6 +5120,9 @@
     "context": "label",
     "string": "Shipping zone name"
   },
+  "Ys86kI": {
+    "string": "Refunded amount will not be automatically returned to the customer. You’ll need to decide on a method and refund via balance sheet section of the order."
+  },
   "Yw+9F7": {
     "string": "No collections found"
   },
@@ -4900,12 +5137,24 @@
     "context": "card balance label",
     "string": "Card Balance"
   },
+  "Z3T6zR": {
+    "context": "card title",
+    "string": "Return & Replace"
+  },
   "Z6QAbw": {
     "string": "This variant does not have any digital content"
   },
   "Z7Tf8e": {
     "context": "stock exceeded dialog description",
     "string": "Stock for items shown below are not enough to prepare fulfillment:"
+  },
+  "Z7lX6t": {
+    "context": "canceled fulfillment, section header",
+    "string": "Canceled"
+  },
+  "Z8TzWt": {
+    "context": "refunded fulfillment, section header",
+    "string": "Returned"
   },
   "ZAaXfz": {
     "context": "Taxes section title",
@@ -4939,6 +5188,9 @@
   },
   "ZRz3hM": {
     "string": "Export Product Stock Quantity to CSV"
+  },
+  "ZTG+Dv": {
+    "string": "Draft order will be automatically created for replaced products"
   },
   "ZWIjvr": {
     "context": "dialog header",
@@ -5063,6 +5315,9 @@
   "aJm/by": {
     "context": "Taxes section title",
     "string": "Tax classes"
+  },
+  "aKSUWR": {
+    "string": "Cannot create transaction to non-existing order"
   },
   "aMwxYb": {
     "string": "Countries"
@@ -5205,6 +5460,10 @@
     "context": "add tracking button",
     "string": "Add tracking"
   },
+  "bT71VU": {
+    "context": "total of all sent refunds",
+    "string": "Result"
+  },
   "bVY7j0": {
     "context": "Translated Name",
     "string": "Translation"
@@ -5227,6 +5486,10 @@
   "bcf60I": {
     "context": "voucher",
     "string": "Applies to"
+  },
+  "bfuxy3": {
+    "context": "button, create new transaction with refund amount",
+    "string": "Refund"
   },
   "bgO+7G": {
     "context": "order return amount button",
@@ -5322,6 +5585,10 @@
     "context": "button",
     "string": "Assign Warehouse"
   },
+  "cBVHN5": {
+    "context": "grant refund, reason input field placeholder",
+    "string": "Reason for refund"
+  },
   "cFVgOo": {
     "context": "Channel label",
     "string": "Channel"
@@ -5414,6 +5681,10 @@
     "context": "dialog header",
     "string": "Delete Shipping Zones"
   },
+  "cpnYcM": {
+    "context": "Order summary card title",
+    "string": "Order summary"
+  },
   "cqZ5UH": {
     "context": "order history message",
     "string": "Order confirmation was sent to customer"
@@ -5437,6 +5708,10 @@
   "cy8sV7": {
     "context": "volume units types",
     "string": "Volume"
+  },
+  "d7dT8o": {
+    "context": "button, sets granted refund amount in input",
+    "string": "Set max"
   },
   "d9UqaJ": {
     "context": "error message",
@@ -5498,6 +5773,9 @@
     "context": "product status",
     "string": "Available"
   },
+  "dnbJKr": {
+    "string": "This transaction doesn't have any events"
+  },
   "dpY94C": {
     "context": "collection publication date",
     "string": "Published on {date}"
@@ -5525,6 +5803,14 @@
     "context": "attribute is filterable in storefront",
     "string": "Use as filter"
   },
+  "e4UtKH": {
+    "context": "Transaction event status - failure",
+    "string": "Failure"
+  },
+  "e5Mlfh": {
+    "context": "Transaction title",
+    "string": "Gift card (**** {code})"
+  },
   "e7Nyu7": {
     "context": "section header",
     "string": "Customer History"
@@ -5544,10 +5830,6 @@
     "context": "product inventory, checkbox",
     "string": "Variant currently in preorder"
   },
-  "eCRaHe": {
-    "context": "refunded fulfillment, section header",
-    "string": "Returned ({quantity})"
-  },
   "eLJQSh": {
     "context": "column title gift card",
     "string": "Gift Card"
@@ -5565,6 +5847,10 @@
   "eWcvOc": {
     "context": "button",
     "string": "Choose file"
+  },
+  "egBBQ/": {
+    "context": "all captured amount from transactions in order",
+    "string": "Captured"
   },
   "erC44f": {
     "context": "filters error messages dependencies missing",
@@ -5587,6 +5873,10 @@
     "context": "dialog header",
     "string": "Delete Customer"
   },
+  "f/Drvo": {
+    "context": "order history message",
+    "string": "Transaction cancel requested"
+  },
   "f/R1Ln": {
     "context": "restocked group",
     "string": "Restocked from:"
@@ -5598,6 +5888,10 @@
   "f2F1NJ": {
     "context": "section title",
     "string": "Quick Pick"
+  },
+  "f2WJW7": {
+    "context": "transaction event type, amount was captured from client",
+    "string": "Capture"
   },
   "f3B4tc": {
     "context": "attributes, section header",
@@ -5657,6 +5951,10 @@
     "context": "header",
     "string": "Customer Overview"
   },
+  "fkgack": {
+    "context": "button, sends refund for transaction",
+    "string": "Request refund"
+  },
   "fkplbE": {
     "context": "order history message",
     "string": "Order was marked as paid"
@@ -5664,6 +5962,10 @@
   "flP8Hj": {
     "context": "card description",
     "string": "Expand or restrict app permissions to access certain part of Saleor system."
+  },
+  "flnL3R": {
+    "context": "sum of pending amount (any status) in order's transactions",
+    "string": "Pending"
   },
   "fo7nfa": {
     "context": "fixed amount",
@@ -5680,6 +5982,10 @@
   "fqJXzO": {
     "context": "order history message",
     "string": "Transaction refund requested"
+  },
+  "fsBsMy": {
+    "context": "button, form submit, grant refund create",
+    "string": "Grant refund"
   },
   "ftcHpD": {
     "string": "Customer created"
@@ -5742,6 +6048,10 @@
     "context": "page content",
     "string": "Content"
   },
+  "gNm1li": {
+    "context": "Refunded transaction amount, data display header",
+    "string": "Refunded"
+  },
   "gQGUsN": {
     "context": "dialog title",
     "string": "Edit Address"
@@ -5763,6 +6073,10 @@
   "gZHmaV": {
     "context": "plugin filters error messages channels",
     "string": "No channels selected"
+  },
+  "gaOXvo": {
+    "context": "notification, form submitted",
+    "string": "Refund grant for order #{orderNumber} was updated"
   },
   "ghGLbJ": {
     "context": "OrderPayment click&collect shipping method",
@@ -5790,6 +6104,9 @@
   "gr+oXW": {
     "context": "page title",
     "string": "Title"
+  },
+  "gr1BBC": {
+    "string": "Transaction action requested successfully"
   },
   "gr53VQ": {
     "context": "page header",
@@ -5889,9 +6206,17 @@
     "context": "docs link label",
     "string": "Learn more..."
   },
+  "hnaOnB": {
+    "context": "button, opens modal to create transaction in order",
+    "string": "Capture manual transaction"
+  },
   "ho75Lr": {
     "context": "status label deactivated",
     "string": "Deactivated"
+  },
+  "hoii+4": {
+    "context": "heading, sum of all completed refunds from transactions in order",
+    "string": "Refunded"
   },
   "hpMcW8": {
     "string": "Define how users can navigate through your store"
@@ -5950,6 +6275,10 @@
     "context": "sale start date",
     "string": "Starts"
   },
+  "iBW3rG": {
+    "context": "button",
+    "string": "Apply"
+  },
   "iERn5G": {
     "context": "header name input",
     "string": "Should start with `x-` or `authorization`"
@@ -5958,9 +6287,13 @@
     "context": "draft order",
     "string": "Customer"
   },
-  "iJrw63": {
-    "context": "section header",
-    "string": "Fulfilled ({quantity})"
+  "iFM716": {
+    "context": "grant refund, refund card subtitle",
+    "string": "How much money do you want to return to the customer for the order?"
+  },
+  "iIfq2+": {
+    "context": "Transaction cancel button - return preauthorized amount to client",
+    "string": "Cancel"
   },
   "iMJka8": {
     "string": "No pages found"
@@ -6000,6 +6333,10 @@
   "idr+JK": {
     "context": "assign reference to a page, button",
     "string": "Assign and save"
+  },
+  "if9gAZ": {
+    "context": "Transaction event status - unknown status, info without event data",
+    "string": "Info"
   },
   "ij7olm": {
     "context": "error message",
@@ -6084,10 +6421,6 @@
     "context": "tax classes card header",
     "string": "Tax classes"
   },
-  "jNSOSu": {
-    "context": "cancelled fulfillment, section header",
-    "string": "Refunded and Returned ({quantity})"
-  },
   "jTifz+": {
     "string": "Successfully created attribute"
   },
@@ -6152,6 +6485,10 @@
   "jyaAlB": {
     "context": "button",
     "string": "Create collection"
+  },
+  "jz2SlO": {
+    "context": "refunded fulfillment, section header",
+    "string": "Replaced"
   },
   "k+HcTv": {
     "context": "product type",
@@ -6221,6 +6558,13 @@
     "context": "sales section name",
     "string": "Sales"
   },
+  "kJYa8Y": {
+    "context": "grant refund, refund card calculated refund value",
+    "string": "Selected refund value:"
+  },
+  "kMziE/": {
+    "string": "PSP Reference"
+  },
   "kN6SLs": {
     "string": "Min Value"
   },
@@ -6246,6 +6590,9 @@
   "kVTWtR": {
     "context": "product updated at",
     "string": "Last updated"
+  },
+  "kWw0fr": {
+    "string": "Grant refund"
   },
   "kXqn6A": {
     "context": "table header column",
@@ -6290,6 +6637,10 @@
     "context": "option",
     "string": "Gift card product type"
   },
+  "kuo4fW": {
+    "context": "dialog title",
+    "string": "Capture manual transaction"
+  },
   "kvSYZh": {
     "context": "replacement created order history message description",
     "string": "was created for replaced products"
@@ -6301,6 +6652,10 @@
   "l2oVCF": {
     "context": "attributes section name",
     "string": "Attributes"
+  },
+  "l3iOju": {
+    "context": "transaction event type, transaction was refunded to client",
+    "string": "Refund"
   },
   "l5V0QT": {
     "context": "boolean attribute type",
@@ -6420,6 +6775,10 @@
   "lqIzC8": {
     "string": "This field needs to be unique"
   },
+  "lrdAIY": {
+    "context": "amount of all cancelled transactions in order",
+    "string": "Cancelled"
+  },
   "lrq8O6": {
     "context": "order refund amount, input label",
     "string": "Amount"
@@ -6457,10 +6816,6 @@
   "mE+fru": {
     "context": "tag filter label",
     "string": "Tags"
-  },
-  "mGcw06": {
-    "context": "canceled fulfillment, section header",
-    "string": "Canceled ({quantity})"
   },
   "mGiA6q": {
     "context": "modal button upload",
@@ -6629,6 +6984,10 @@
   "nRiOg+": {
     "string": "Sorry, the page was not found"
   },
+  "nSMe3f": {
+    "context": "Refund in progress transaction amount, data display header",
+    "string": "Pending refund"
+  },
   "nTF6tG": {
     "context": "number of order",
     "string": "No. of Order"
@@ -6644,6 +7003,10 @@
   "nf3XSt": {
     "context": "attribute internal name",
     "string": "Slug"
+  },
+  "ng0ZDW": {
+    "context": "label, input for amount to refund in transaction",
+    "string": "Refund amount"
   },
   "ngAgBy": {
     "context": "tax class rates list label when no countries are assigned",
@@ -6746,10 +7109,6 @@
   "oQY0a2": {
     "string": "Address line 2"
   },
-  "oQhFlK": {
-    "context": "refunded fulfillment, section header",
-    "string": "Refunded ({quantity})"
-  },
   "oUWADl": {
     "string": "No"
   },
@@ -6763,6 +7122,10 @@
   },
   "oYGfnY": {
     "string": "ZIP / Postal code"
+  },
+  "of/+iV": {
+    "context": "transaction event type, refund was reversed, funds are back to store account",
+    "string": "Refund reversed"
   },
   "oiuwOl": {
     "context": "button",
@@ -6791,6 +7154,10 @@
   "p/Fd7s": {
     "context": "unassign products from shipping rate and save, button",
     "string": "Unassign and save"
+  },
+  "p1D4Ok": {
+    "context": "order send refund, manual transaction refund was created",
+    "string": "Manual refund was created successfully"
   },
   "p3eRUm": {
     "context": "indicator that feature is in preview mode",
@@ -6871,6 +7238,10 @@
   "phAZoj": {
     "string": "Collection"
   },
+  "phIGQ1": {
+    "context": "Canceled transaction amount, data display header",
+    "string": "Canceled"
+  },
   "pkUbrL": {
     "string": "General Information"
   },
@@ -6937,6 +7308,9 @@
     "context": "header",
     "string": "Add Value to Authorization Field"
   },
+  "qDfaDI": {
+    "string": "No app or plugin is configured to handle requested transaction action"
+  },
   "qDwvZ4": {
     "string": "Unknown error"
   },
@@ -6978,6 +7352,10 @@
     "context": "stock exceeded dialog title",
     "string": "Not enough stock"
   },
+  "qbFKVI": {
+    "context": "notification, form submitted",
+    "string": "Refund for order #{orderNumber} was granted"
+  },
   "qbcNjQ": {
     "context": "table header column",
     "string": "Tax name"
@@ -7014,6 +7392,10 @@
   },
   "qrWOxx": {
     "string": "No members found"
+  },
+  "qtF0Ft": {
+    "context": "transaction event type, amount was authorized, but not captured",
+    "string": "Authorization"
   },
   "qu/hXD": {
     "string": "Selected {number} items"
@@ -7056,6 +7438,10 @@
   "rCy3Fe": {
     "context": "invalid date in expirydate field content",
     "string": "Gift Card with past expiration date cannot be created"
+  },
+  "rH4pi3": {
+    "context": "page header",
+    "string": "Return & replace products"
   },
   "rHoRbE": {
     "context": "Status label when object is unpublished in a channel",
@@ -7151,6 +7537,10 @@
   "rxNddi": {
     "string": "Homepage"
   },
+  "rxlJJ/": {
+    "context": "grant refund table, column header",
+    "string": "Product"
+  },
   "ryAyPr": {
     "string": "Requested Invoice was generated. It was added to the top of the invoice list on this view. Enjoy!"
   },
@@ -7210,6 +7600,10 @@
   "sEjRyz": {
     "context": "voucher type order discount",
     "string": "Voucher"
+  },
+  "sFynTT": {
+    "context": "grant refund, refund card title",
+    "string": "Refund"
   },
   "sG0w22": {
     "context": "dialog title",
@@ -7390,6 +7784,9 @@
     "context": "input description",
     "string": "Unlimited"
   },
+  "tmrBDK": {
+    "string": "Manual transaction ({amount}) was created"
+  },
   "toDL5R": {
     "context": "order status",
     "string": "Draft"
@@ -7472,6 +7869,10 @@
   },
   "uMpv1v": {
     "string": "Fulfillment successfully cancelled"
+  },
+  "uN88fb": {
+    "context": "button, submit form",
+    "string": "Return and Replace products"
   },
   "uQNm59": {
     "context": "add header,button",
@@ -7763,6 +8164,10 @@
     "context": "sale value, header",
     "string": "Value"
   },
+  "wJep/X": {
+    "context": "refund amounts were settled",
+    "string": "Settled"
+  },
   "wL7VAE": {
     "string": "Actions"
   },
@@ -7832,6 +8237,10 @@
     "context": "button",
     "string": "Add product"
   },
+  "x2mg39": {
+    "context": "Transaction event description",
+    "string": "Used in order"
+  },
   "x3g4Ry": {
     "context": "sale discount",
     "string": "Discount Value"
@@ -7847,6 +8256,10 @@
   "xAHOGV": {
     "context": "dialog header",
     "string": "Assign Variant"
+  },
+  "xGC2Ge": {
+    "context": "grant refund, button",
+    "string": "Set max. quantities"
   },
   "xHj9Qe": {
     "context": "gift card settings header",
@@ -8153,6 +8566,14 @@
   "zbJHl7": {
     "context": "attribute type",
     "string": "Content Attribute"
+  },
+  "zf48rQ": {
+    "context": "sum of captured amount of all transactions",
+    "string": "Total captured"
+  },
+  "zfjAc7": {
+    "context": "grant refund, card header",
+    "string": "Unfulfilled products"
   },
   "zgqPGF": {
     "context": "attribute list",

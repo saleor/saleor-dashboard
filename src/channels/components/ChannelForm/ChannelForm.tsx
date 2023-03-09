@@ -4,6 +4,7 @@ import {
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
+import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
@@ -13,7 +14,12 @@ import {
   CountryCode,
   StockSettingsInput,
 } from "@dashboard/graphql";
+import {
+  ChannelOrderSettingsFragment,
+  MarkAsPaidStrategyEnum,
+} from "@dashboard/graphql/types.transactions.generated";
 import useClipboard from "@dashboard/hooks/useClipboard";
+import { useFlags } from "@dashboard/hooks/useFlags";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -42,6 +48,7 @@ export interface FormData extends StockSettingsInput {
   shippingZonesToDisplay: ChannelShippingZones;
   warehousesToDisplay: ChannelWarehouses;
   defaultCountry: CountryCode;
+  markAsPaidStrategy: MarkAsPaidStrategyEnum;
 }
 
 export interface ChannelFormProps {
@@ -55,6 +62,8 @@ export interface ChannelFormProps {
   onChange: FormChange;
   onCurrencyCodeChange?: (event: ChangeEvent) => void;
   onDefaultCountryChange: (event: ChangeEvent) => void;
+  onMarkAsPaidStrategyChange: () => void;
+  orderSettings: ChannelOrderSettingsFragment["orderSettings"];
 }
 
 export const ChannelForm: React.FC<ChannelFormProps> = ({
@@ -68,6 +77,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   onChange,
   onCurrencyCodeChange,
   onDefaultCountryChange,
+  onMarkAsPaidStrategyChange,
 }) => {
   const intl = useIntl();
   const [copied, copy] = useClipboard();
@@ -76,6 +86,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
     errors,
   );
   const classes = useStyles();
+  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   return (
     <>
@@ -216,6 +227,25 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             displayValue={selectedCountryDisplayName}
             value={data.defaultCountry}
             onChange={onDefaultCountryChange}
+          />
+          <FormSpacer />
+          <ControlledSwitch
+            data-test-id="order-settings-mark-as-paid"
+            disabled={disabled || !orderTransactions.enabled}
+            checked={
+              data.markAsPaidStrategy ===
+              MarkAsPaidStrategyEnum.TRANSACTION_FLOW
+            }
+            onChange={onMarkAsPaidStrategyChange}
+            name="markAsPaidStrategy"
+            label={intl.formatMessage({
+              defaultMessage: "Mark as paid uses Transactions API",
+              id: "NkLZBG",
+            })}
+            secondLabel={intl.formatMessage({
+              defaultMessage: "Creates a single payment when unchecked",
+              id: "F5OqYa",
+            })}
           />
         </CardContent>
       </Card>

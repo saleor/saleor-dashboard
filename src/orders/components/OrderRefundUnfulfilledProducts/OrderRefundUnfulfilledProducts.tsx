@@ -70,7 +70,9 @@ interface OrderRefundUnfulfilledProductsProps {
   onSetMaximalQuantities: () => void;
 }
 
-const OrderRefundUnfulfilledProducts: React.FC<OrderRefundUnfulfilledProductsProps> = props => {
+const OrderRefundUnfulfilledProducts: React.FC<
+  OrderRefundUnfulfilledProductsProps
+> = props => {
   const {
     unfulfilledLines,
     data,

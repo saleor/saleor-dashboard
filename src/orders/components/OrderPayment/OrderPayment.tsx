@@ -67,7 +67,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
   };
 
   return (
-    <Card>
+    <Card data-test-id="OrderPayment">
       <CardTitle
         className={classes.payments}
         title={

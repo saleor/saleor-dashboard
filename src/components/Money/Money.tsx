@@ -1,6 +1,9 @@
 import useLocale from "@dashboard/hooks/useLocale";
+import { IMoney } from "@dashboard/utils/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
+
+import { formatMoneyAmount } from ".";
 
 const useStyles = makeStyles(
   {
@@ -15,11 +18,6 @@ const useStyles = makeStyles(
   { name: "Money" },
 );
 
-export interface IMoney {
-  amount: number;
-  currency: string;
-}
-
 export interface MoneyProps {
   money: IMoney | null;
 }
@@ -33,15 +31,7 @@ export const Money: React.FC<MoneyProps> = props => {
     return null;
   }
 
-  const currencyFractionDigits = new Intl.NumberFormat(locale, {
-    style: "currency",
-    currency: money.currency,
-  }).resolvedOptions().maximumFractionDigits;
-
-  const amount = money.amount.toLocaleString(locale, {
-    maximumFractionDigits: currencyFractionDigits,
-    minimumFractionDigits: currencyFractionDigits,
-  });
+  const amount = formatMoneyAmount(money, locale);
 
   return (
     <span className={classes.root} {...rest}>

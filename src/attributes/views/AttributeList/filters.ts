@@ -98,16 +98,10 @@ export function getFilterQueryParam(
   }
 }
 
-export const {
-  deleteFilterTab,
-  getFilterTabs,
-  saveFilterTab,
-} = createFilterTabUtils<AttributeListUrlFilters>(ATTRIBUTE_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<AttributeListUrlFilters>(ATTRIBUTE_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<AttributeListUrlQueryParams, AttributeListUrlFilters>(
-  AttributeListUrlFiltersEnum,
-);
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
+  createFilterUtils<AttributeListUrlQueryParams, AttributeListUrlFilters>(
+    AttributeListUrlFiltersEnum,
+  );

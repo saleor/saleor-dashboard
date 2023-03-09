@@ -1,6 +1,5 @@
 import {
   MoneyFragment,
-  OrderDetailsFragment,
   useOrderDiscountAddMutation,
   useOrderDiscountDeleteMutation,
   useOrderDiscountUpdateMutation,
@@ -8,6 +7,7 @@ import {
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
+import { OrderBothTypes } from "@dashboard/orders/types";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React, { createContext } from "react";
 import { useIntl } from "react-intl";
@@ -32,7 +32,7 @@ export interface OrderDiscountContextConsumerProps
 
 interface OrderDiscountProviderProps {
   children: React.ReactNode;
-  order?: OrderDetailsFragment;
+  order?: OrderBothTypes;
 }
 
 export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
@@ -53,21 +53,17 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
       handleDiscountDataSubmission(errors),
   });
 
-  const [
-    orderDiscountUpdate,
-    orderDiscountUpdateOpts,
-  ] = useOrderDiscountUpdateMutation({
-    onCompleted: ({ orderDiscountUpdate: { errors } }) =>
-      handleDiscountDataSubmission(errors),
-  });
+  const [orderDiscountUpdate, orderDiscountUpdateOpts] =
+    useOrderDiscountUpdateMutation({
+      onCompleted: ({ orderDiscountUpdate: { errors } }) =>
+        handleDiscountDataSubmission(errors),
+    });
 
-  const [
-    orderDiscountRemove,
-    orderDiscountRemoveOpts,
-  ] = useOrderDiscountDeleteMutation({
-    onCompleted: ({ orderDiscountDelete: { errors } }) =>
-      handleDiscountDataSubmission(errors),
-  });
+  const [orderDiscountRemove, orderDiscountRemoveOpts] =
+    useOrderDiscountDeleteMutation({
+      onCompleted: ({ orderDiscountDelete: { errors } }) =>
+        handleDiscountDataSubmission(errors),
+    });
 
   const handleDiscountDataSubmission = (errors: any[]) => {
     closeDialog();
@@ -123,6 +119,5 @@ export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({
   );
 };
 
-export const OrderDiscountContext = createContext<
-  OrderDiscountContextConsumerProps
->(null);
+export const OrderDiscountContext =
+  createContext<OrderDiscountContextConsumerProps>(null);
