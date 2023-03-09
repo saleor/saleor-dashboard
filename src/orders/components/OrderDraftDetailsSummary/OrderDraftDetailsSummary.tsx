@@ -185,9 +185,7 @@ const OrderDraftDetailsSummary: React.FC<
               {intl.formatMessage(discountTitle)}
             </Link>
             <OrderDiscountCommonModal
-              dialogPlacement="bottom-start"
               modalType={ORDER_DISCOUNT}
-              anchorRef={popperAnchorRef}
               existingDiscount={orderDiscount}
               maxPrice={undiscountedPrice}
               isOpen={isDialogOpen}
