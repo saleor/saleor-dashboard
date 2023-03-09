@@ -4,6 +4,8 @@ import { RelayToFlat } from "@dashboard/types";
 import { Box, ProductsIcons, sprinkles, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
+import { getTileStatus } from "./utils";
+
 export interface ProductTileProps {
   product: RelayToFlat<ProductListQuery["products"]>[0];
   onClick: () => void;
@@ -71,13 +73,7 @@ export const ProductTile: React.FC<ProductTileProps> = ({
         {product.name}
       </Text>
       <Box padding={5}>
-        <StatusDot
-          status={
-            product.channelListings.some(channel => channel.isPublished)
-              ? "default"
-              : "error"
-          }
-        />
+        <StatusDot status={getTileStatus(product.channelListings)} />
       </Box>
     </Box>
   </Box>
