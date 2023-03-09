@@ -125,7 +125,7 @@ const StaffList: React.FC<StaffListProps> = props => {
                   {staffMember?.avatar?.url ? (
                     <Avatar.User
                       scheme="decorative3"
-                      src={staffMember?.avatar?.url}
+                      src={staffMember.avatar.url}
                       size="large"
                     />
                   ) : (
