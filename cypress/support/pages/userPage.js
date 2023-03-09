@@ -1,7 +1,7 @@
 import { SET_PASSWORD } from "../../elements/account/setPassword";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { INVITE_STAFF_MEMBER_FORM } from "../../elements/staffMembers/inviteStaffMemberForm";
-import { STAFF_MEMBER_DETAILS } from "../../elements/staffMembers/staffMemberDetails";
+import { INVITE_STAFF_MEMBER_FORM_SELECTORS } from "../../elements/staffMembers/inviteStaffMemberForm";
+import { STAFF_MEMBER_DETAILS_SELECTORS } from "../../elements/staffMembers/staffMemberDetails";
 import { userDetailsUrl } from "../../fixtures/urlList";
 
 export function fillUpSetPassword(password) {
@@ -22,8 +22,8 @@ export function fillUpUserDetailsAndAddFirstPermission(
 ) {
   fillUpOnlyUserDetails(firstName, lastName, email);
   cy.confirmationMessageShouldDisappear()
-    .fillAutocompleteSelect(STAFF_MEMBER_DETAILS.permissionsSelect)
-    .get(STAFF_MEMBER_DETAILS.permissionsSelect)
+    .fillAutocompleteSelect(STAFF_MEMBER_DETAILS_SELECTORS.permissionsSelect)
+    .get(STAFF_MEMBER_DETAILS_SELECTORS.permissionsSelect)
     .find("input")
     .first()
     .type("{esc}", { force: true })
@@ -34,11 +34,11 @@ export function fillUpUserDetailsAndAddFirstPermission(
 }
 
 export function fillUpOnlyUserDetails(firstName, lastName, email) {
-  cy.get(INVITE_STAFF_MEMBER_FORM.firstNameInput)
+  cy.get(INVITE_STAFF_MEMBER_FORM_SELECTORS.firstNameInput)
     .type(firstName)
-    .get(INVITE_STAFF_MEMBER_FORM.lastNameInput)
+    .get(INVITE_STAFF_MEMBER_FORM_SELECTORS.lastNameInput)
     .type(lastName)
-    .get(INVITE_STAFF_MEMBER_FORM.emailInput)
+    .get(INVITE_STAFF_MEMBER_FORM_SELECTORS.emailInput)
     .type(email)
     .get(BUTTON_SELECTORS.submit)
     .click();
@@ -46,7 +46,7 @@ export function fillUpOnlyUserDetails(firstName, lastName, email) {
 
 export function updateUserActiveFlag(userId) {
   cy.visitAndWaitForProgressBarToDisappear(userDetailsUrl(userId))
-    .get(STAFF_MEMBER_DETAILS.isActiveCheckBox)
+    .get(STAFF_MEMBER_DETAILS_SELECTORS.isActiveCheckBox)
     .click()
     .addAliasToGraphRequest("StaffMemberUpdate")
     .get(BUTTON_SELECTORS.confirm)

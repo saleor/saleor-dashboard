@@ -10,4 +10,5 @@ export const ADDRESS_SELECTORS = {
   country: '[data-test-id="address-edit-country-select-field"]',
   countryArea: '[data-test-id="address-edit-country-area-field"]',
   saveButton: '[data-test-id="order-address-edit-dialog-confirm-button"]',
+  companyInfoSection: '[data-test-id="company-info"]',
 };

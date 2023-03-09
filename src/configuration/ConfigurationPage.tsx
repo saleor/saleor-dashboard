@@ -98,7 +98,7 @@ export const ConfigurationPage: React.FC<ConfigurationPageProps> = props => {
       <TopNav title={intl.formatMessage(sectionNames.configuration)}>
         {isSmUp && renderVersionInfo}
       </TopNav>
-      <DetailPageLayout.Content>
+      <DetailPageLayout.Content data-test-id="configuration-menu">
         <Box paddingX={9} __maxWidth={"1024px"} margin="auto">
           {menus
             .filter(menu =>

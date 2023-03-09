@@ -84,7 +84,7 @@ const CompanyAddressForm: React.FC<CompanyAddressFormProps> = props => {
   const formErrors = getFormErrors(formFields, errors);
 
   return (
-    <div className={classes.root}>
+    <div className={classes.root} data-test-id="company-info">
       <TextField
         disabled={disabled}
         error={!!formErrors.companyName}

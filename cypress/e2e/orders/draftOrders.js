@@ -91,7 +91,7 @@ xdescribe("Draft orders", () => {
     () => {
       cy.visit(urlList.orders);
       cy.expectSkeletonIsVisible();
-      cy.get(ORDERS_SELECTORS.createOrder).click();
+      cy.get(ORDERS_SELECTORS.createOrderButton).click();
       selectChannelInPicker(defaultChannel.name);
       finalizeDraftOrder(randomName, address).then(draftOrderNumber => {
         cy.visit(urlList.orders);

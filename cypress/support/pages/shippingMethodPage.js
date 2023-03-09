@@ -2,7 +2,7 @@ import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { SHIPPING_RATE_DETAILS } from "../../elements/shipping/shipping-rate-details";
 import { SHIPPING_ZONE_DETAILS } from "../../elements/shipping/shipping-zone-details";
-import { SHIPPING_ZONES_LIST } from "../../elements/shipping/shipping-zones-list";
+import { SHIPPING_ZONES_LIST_SELECTORS } from "../../elements/shipping/shipping-zones-list";
 
 export function createShippingZone(
   shippingName,
@@ -10,7 +10,7 @@ export function createShippingZone(
   country,
   channelName,
 ) {
-  cy.get(SHIPPING_ZONES_LIST.addShippingZone).click();
+  cy.get(SHIPPING_ZONES_LIST_SELECTORS.addShippingZone).click();
   fillUpShippingZoneData({
     shippingName,
     warehouseName,
@@ -65,9 +65,9 @@ export function fillUpShippingZoneData({
 }
 
 export function changeWeightUnit(weightUnit) {
-  cy.fillBaseSelect(SHIPPING_ZONES_LIST.unitSelect, weightUnit)
+  cy.fillBaseSelect(SHIPPING_ZONES_LIST_SELECTORS.unitSelect, weightUnit)
     .addAliasToGraphRequest("UpdateDefaultWeightUnit")
-    .get(SHIPPING_ZONES_LIST.saveUnit)
+    .get(SHIPPING_ZONES_LIST_SELECTORS.saveUnit)
     .click()
     .confirmationMessageShouldAppear()
     .waitForRequestAndCheckIfNoErrors("@UpdateDefaultWeightUnit")
