@@ -40,7 +40,7 @@ export const TopNavMenu: React.FC<TopNavMenuProps> = ({
           backgroundColor="surfaceNeutralPlain"
         >
           {items.map(item => (
-            <Dropdown.Item>
+            <Dropdown.Item key={item.label}>
               <List.Item
                 borderRadius={4}
                 paddingX={4}

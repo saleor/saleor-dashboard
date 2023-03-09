@@ -3,6 +3,7 @@ import { TableCell } from "@material-ui/core";
 import {
   Pagination,
   PaginationProps as MacawPaginationProps,
+  PaginationRowNumberSelectLabels,
 } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -27,6 +28,7 @@ export interface PaginationProps
   prevHref?: string;
   nextHref?: string;
   disabled?: boolean;
+  labels?: PaginationRowNumberSelectLabels;
 }
 export const TablePagination: React.FC<PaginationProps> = ({
   component,
@@ -38,6 +40,7 @@ export const TablePagination: React.FC<PaginationProps> = ({
   hasNextPage,
   hasPreviousPage,
   disabled,
+  labels,
   ...rest
 }) => {
   const intl = useIntl();
@@ -50,7 +53,8 @@ export const TablePagination: React.FC<PaginationProps> = ({
         hasNextPage={hasNextPage && !disabled}
         hasPreviousPage={hasPreviousPage && !disabled}
         labels={{
-          noOfRows: intl.formatMessage(commonMessages.noOfRows),
+          noOfRows:
+            labels?.noOfRows ?? intl.formatMessage(commonMessages.noOfRows),
         }}
         rowNumber={settings?.rowNumber}
         onRowNumberUpdate={

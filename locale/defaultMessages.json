@@ -1398,6 +1398,10 @@
     "context": "header",
     "string": "Translation Product Variant \"{productName}\" - {languageCode}"
   },
+  "9B2mOB": {
+    "context": "tile view pagination label",
+    "string": "No. of products"
+  },
   "9C7PZE": {
     "context": "navigation section name",
     "string": "Navigation"
@@ -1850,6 +1854,10 @@
   "CT5PAn": {
     "context": "CannotDefineChannelsAvailabilityCard title",
     "string": "Availability"
+  },
+  "CU+aFW": {
+    "context": "switch",
+    "string": "Switch to tile view"
   },
   "CWqmRU": {
     "context": "customer's address book when no customer name is available, header",
@@ -4480,6 +4488,10 @@
   "W8i2Ez": {
     "context": "product field",
     "string": "Name"
+  },
+  "WACLJx": {
+    "context": "switch",
+    "string": "Switch to datagrid view"
   },
   "WCg2GZ": {
     "context": "change warehouse dialog search placeholder",

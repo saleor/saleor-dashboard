@@ -31,12 +31,19 @@ import {
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
-import { Box, Button, Text } from "@saleor/macaw-ui/next";
+import {
+  Box,
+  Button,
+  ProductsIcons,
+  TableEditIcon,
+  Text,
+} from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField, productUrl } from "../../urls";
 import { ProductListDatagrid } from "../ProductListDatagrid";
+import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import {
   createFilterStructure,
   ProductFilterKeys,
@@ -113,6 +120,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   );
   const extensionCreateButtonItems = mapToMenuItems(PRODUCT_OVERVIEW_CREATE);
 
+  const [isDatagridView, setDatagridView] = React.useState(true);
+
   return (
     <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.products)}>
@@ -185,50 +194,95 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         </LimitReachedAlert>
       )}
       <Card>
-        <FilterBar
-          withoutBorder
-          currencySymbol={currencySymbol}
-          currentTab={currentTab}
-          initialSearch={initialSearch}
-          onAll={onAll}
-          onFilterChange={onFilterChange}
-          onFilterAttributeFocus={onFilterAttributeFocus}
-          onSearchChange={onSearchChange}
-          onTabChange={onTabChange}
-          onTabDelete={onTabDelete}
-          onTabSave={onTabSave}
-          tabs={tabs}
-          allTabLabel={intl.formatMessage({
-            id: "aFLtLk",
-            defaultMessage: "All Products",
-            description: "tab name",
-          })}
-          filterStructure={filterStructure}
-          searchPlaceholder={intl.formatMessage({
-            id: "kIvvax",
-            defaultMessage: "Search Products...",
-          })}
-        />
-        <ProductListDatagrid
-          {...listProps}
-          filterDependency={filterDependency}
-          activeAttributeSortId={activeAttributeSortId}
-          columnQuery={columnQuery}
-          defaultSettings={defaultSettings}
-          availableInGridAttributes={availableInGridAttributes}
-          loading={loading}
-          hasMore={hasMore}
-          gridAttributes={gridAttributes}
-          onColumnQueryChange={onColumnQueryChange}
-          onFetchMore={onFetchMore}
-          products={listProps.products}
-          settings={settings}
-          selectedChannelId={selectedChannelId}
-          onUpdateListSettings={onUpdateListSettings}
-          onRowClick={id => {
-            navigate(productUrl(id));
-          }}
-        />
+        <Box
+          display="flex"
+          flexDirection="column"
+          width="100%"
+          alignItems="stretch"
+          justifyContent="space-between"
+        >
+          <FilterBar
+            withoutBorder
+            currencySymbol={currencySymbol}
+            currentTab={currentTab}
+            initialSearch={initialSearch}
+            onAll={onAll}
+            onFilterChange={onFilterChange}
+            onFilterAttributeFocus={onFilterAttributeFocus}
+            onSearchChange={onSearchChange}
+            onTabChange={onTabChange}
+            onTabDelete={onTabDelete}
+            onTabSave={onTabSave}
+            tabs={tabs}
+            allTabLabel={intl.formatMessage({
+              id: "aFLtLk",
+              defaultMessage: "All Products",
+              description: "tab name",
+            })}
+            filterStructure={filterStructure}
+            searchPlaceholder={intl.formatMessage({
+              id: "kIvvax",
+              defaultMessage: "Search Products...",
+            })}
+          />
+          {/* Temporary solution until header is reworked */}
+          <Button
+            variant="tertiary"
+            onClick={() => setDatagridView(state => !state)}
+          >
+            {!isDatagridView ? (
+              <>
+                <TableEditIcon />
+                <FormattedMessage
+                  id="WACLJx"
+                  defaultMessage="Switch to datagrid view"
+                  description="switch"
+                />
+              </>
+            ) : (
+              <>
+                <ProductsIcons />
+                <FormattedMessage
+                  id="CU+aFW"
+                  defaultMessage="Switch to tile view"
+                  description="switch"
+                />
+              </>
+            )}
+          </Button>
+        </Box>
+        {isDatagridView ? (
+          <ProductListDatagrid
+            {...listProps}
+            filterDependency={filterDependency}
+            activeAttributeSortId={activeAttributeSortId}
+            columnQuery={columnQuery}
+            defaultSettings={defaultSettings}
+            availableInGridAttributes={availableInGridAttributes}
+            loading={loading}
+            hasMore={hasMore}
+            gridAttributes={gridAttributes}
+            onColumnQueryChange={onColumnQueryChange}
+            onFetchMore={onFetchMore}
+            products={listProps.products}
+            settings={settings}
+            selectedChannelId={selectedChannelId}
+            onUpdateListSettings={onUpdateListSettings}
+            onRowClick={id => {
+              navigate(productUrl(id));
+            }}
+          />
+        ) : (
+          <ProductListTiles
+            {...listProps}
+            settings={settings}
+            onUpdateListSettings={onUpdateListSettings}
+            products={listProps.products}
+            onTileClick={id => {
+              navigate(productUrl(id));
+            }}
+          />
+        )}
       </Card>
     </ListPageLayout>
   );
