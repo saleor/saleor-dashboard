@@ -1,5 +1,5 @@
 import FormSpacer from "@dashboard/components/FormSpacer";
-import { OrderErrorFragment } from "@dashboard/graphql";
+import { OrderErrorFragment } from "@dashboard/orders/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Typography } from "@material-ui/core";
 import React from "react";

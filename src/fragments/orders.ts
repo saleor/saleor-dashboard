@@ -192,6 +192,9 @@ export const fragmentOrderDetails = gql`
     billingAddress {
       ...Address
     }
+    transactions {
+      id
+    }
     giftCards {
       events {
         id

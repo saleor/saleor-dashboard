@@ -14,10 +14,16 @@ import {
 class ReturnFormDataParser {
   private order: OrderDetailsFragment;
   private formData: OrderReturnFormData;
+  private refundsEnabled: boolean;
 
-  constructor(order: OrderDetailsFragment, formData: OrderReturnFormData) {
-    this.order = order;
-    this.formData = formData;
+  constructor(data: {
+    order: OrderDetailsFragment;
+    formData: OrderReturnFormData;
+    refundsEnabled: boolean;
+  }) {
+    this.order = data.order;
+    this.formData = data.formData;
+    this.refundsEnabled = data.refundsEnabled;
   }
 
   public getParsedData = (): OrderReturnProductsInput => {
@@ -28,25 +34,39 @@ class ReturnFormDataParser {
       refundShipmentCosts,
     } = this.formData;
 
-    const fulfillmentLines = this.getParsedLineData<
-      OrderReturnFulfillmentLineInput
-    >(fulfilledItemsQuantities, "fulfillmentLineId");
+    const fulfillmentLines =
+      this.getParsedLineData<OrderReturnFulfillmentLineInput>(
+        fulfilledItemsQuantities,
+        "fulfillmentLineId",
+      );
 
-    const waitingLines = this.getParsedLineData<
-      OrderReturnFulfillmentLineInput
-    >(waitingItemsQuantities, "fulfillmentLineId");
+    const waitingLines =
+      this.getParsedLineData<OrderReturnFulfillmentLineInput>(
+        waitingItemsQuantities,
+        "fulfillmentLineId",
+      );
 
     const orderLines = this.getParsedLineData<OrderReturnLineInput>(
       unfulfilledItemsQuantities,
       "orderLineId",
     );
 
+    if (this.refundsEnabled) {
+      return {
+        amountToRefund: this.getAmountToRefund(),
+        fulfillmentLines: fulfillmentLines.concat(waitingLines),
+        includeShippingCosts: refundShipmentCosts,
+        orderLines,
+        refund: this.getShouldRefund(orderLines, fulfillmentLines),
+      };
+    }
+
     return {
-      amountToRefund: this.getAmountToRefund(),
       fulfillmentLines: fulfillmentLines.concat(waitingLines),
-      includeShippingCosts: refundShipmentCosts,
       orderLines,
-      refund: this.getShouldRefund(orderLines, fulfillmentLines),
+      amountToRefund: 0,
+      includeShippingCosts: refundShipmentCosts, // tood: remove once removed in API
+      refund: false, // todo: remove once removed in API
     };
   };
 
@@ -57,7 +77,7 @@ class ReturnFormDataParser {
       : undefined;
 
   private getParsedLineData = <
-    T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput
+    T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput,
   >(
     itemsQuantities: FormsetQuantityData,
     idKey: "fulfillmentLineId" | "orderLineId",
@@ -73,7 +93,7 @@ class ReturnFormDataParser {
 
       return [
         ...result,
-        ({ [idKey]: id, quantity, replace: shouldReplace } as unknown) as T,
+        { [idKey]: id, quantity, replace: shouldReplace } as unknown as T,
       ];
     }, []);
   };
@@ -101,8 +121,8 @@ class ReturnFormDataParser {
   };
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  private static isLineRefundable = function<
-    T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput
+  private static isLineRefundable = function <
+    T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput,
   >({ replace }: T) {
     return !replace;
   };

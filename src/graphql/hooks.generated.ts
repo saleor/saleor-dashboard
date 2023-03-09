@@ -96,6 +96,12 @@ export const AppListItemFragmentDoc = gql`
   }
 }
     ${AppPermissionFragmentDoc}`;
+export const AppAvatarFragmentDoc = gql`
+    fragment AppAvatar on App {
+  id
+  name
+}
+    `;
 export const AttributeFragmentDoc = gql`
     fragment Attribute on Attribute {
   id
@@ -166,6 +172,18 @@ export const UserFragmentDoc = gql`
   }
 }
     ${UserPermissionFragmentDoc}`;
+export const UserBaseAvatarFragmentDoc = gql`
+    fragment UserBaseAvatar on User {
+  id
+  firstName
+  lastName
+  email
+  avatar {
+    url
+    alt
+  }
+}
+    `;
 export const CategoryFragmentDoc = gql`
     fragment Category on Category {
   id
@@ -1436,6 +1454,9 @@ export const OrderDetailsFragmentDoc = gql`
   billingAddress {
     ...Address
   }
+  transactions {
+    id
+  }
   giftCards {
     events {
       id
@@ -1885,6 +1906,12 @@ export const PluginsDetailsFragmentDoc = gql`
   }
 }
     ${PluginConfigurationExtendedFragmentDoc}`;
+export const PaymentGatewayFragmentDoc = gql`
+    fragment PaymentGateway on PaymentGateway {
+  name
+  id
+}
+    `;
 export const ProductTypeFragmentDoc = gql`
     fragment ProductType on ProductType {
   id
@@ -2434,6 +2461,14 @@ export const StaffMemberDetailsFragmentDoc = gql`
     code
     name
   }
+  avatar(size: 120) {
+    url
+  }
+}
+    ${StaffMemberFragmentDoc}`;
+export const StaffMemberAvatarFragmentDoc = gql`
+    fragment StaffMemberAvatar on User {
+  ...StaffMember
   avatar(size: 120) {
     url
   }
