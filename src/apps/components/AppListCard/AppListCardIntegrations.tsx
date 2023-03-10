@@ -17,7 +17,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
   }
 
   return (
-    <Box as="ul" display="flex" flexDirection="row" gap={8}>
+    <Box as="ul" display="flex" flexDirection="row" flexWrap="wrap" gap={8}>
       {app.integrations.map(integration => (
         <Box
           as="li"

@@ -51,9 +51,9 @@ const AppListCard: React.FC<AppListCardProps> = ({
       <Box>
         <AppListCardDescription app={app} />
         <AppListCardLinks links={details.links} />
+        <AppListCardIntegrations app={app} />
       </Box>
       <Box>
-        <AppListCardIntegrations app={app} />
         <AppListCardActions
           releaseDate={details.releaseDate}
           installationPending={details.installationPending}
