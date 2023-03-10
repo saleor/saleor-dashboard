@@ -1,3 +1,4 @@
+import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { ProductListColumns } from "@dashboard/config";
 import { GridAttributesQuery } from "@dashboard/graphql";
@@ -25,6 +26,7 @@ export const useDatagridColumns = ({
   settings,
 }: UseDatagridColumnsProps) => {
   const intl = useIntl();
+  const emptyColumn = useEmptyColumn();
 
   const initialColumns = useRef(
     getColumns({
@@ -33,6 +35,7 @@ export const useDatagridColumns = ({
       gridAttributes,
       gridAttributesFromSettings,
       activeAttributeSortId,
+      emptyColumn,
     }),
   );
 

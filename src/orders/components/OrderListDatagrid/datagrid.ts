@@ -25,12 +25,9 @@ import { columnsMessages } from "./messages";
 export const getColumns = (
   intl: IntlShape,
   sort: Sort<OrderListUrlSortField>,
+  emptyColumn: AvailableColumn,
 ): AvailableColumn[] => [
-  {
-    id: "empty",
-    title: "",
-    width: 20,
-  },
+  emptyColumn,
   {
     id: "number",
     title: intl.formatMessage(columnsMessages.number),
@@ -81,8 +78,7 @@ export const useGetCellContent = ({
 }: GetCellContentProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
-  const { theme: currentTheme } = useTheme();
-  const theme = themes[currentTheme];
+  const { theme: currentTheme, themeValues } = useTheme();
 
   return (
     [column, row]: Item,
@@ -109,9 +105,9 @@ export const useGetCellContent = ({
       case "customer":
         return getCustomerCellContent(rowData);
       case "payment":
-        return getPaymentCellContent(intl, theme, currentTheme, rowData);
+        return getPaymentCellContent(intl, themeValues, currentTheme, rowData);
       case "status":
-        return getStatusCellContent(intl, theme, currentTheme, rowData);
+        return getStatusCellContent(intl, themeValues, currentTheme, rowData);
       case "total":
         return getTotalCellContent(locale, rowData);
       default:
@@ -145,7 +141,7 @@ export function getCustomerCellContent(
 
 export function getPaymentCellContent(
   intl: IntlShape,
-  theme: typeof themes.defaultDark,
+  theme: (typeof themes)["defaultDark"],
   currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
@@ -168,7 +164,7 @@ export function getPaymentCellContent(
 
 export function getStatusCellContent(
   intl: IntlShape,
-  theme: typeof themes.defaultDark,
+  theme: (typeof themes)["defaultDark"],
   currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
@@ -192,7 +188,7 @@ export function getStatusCellContent(
 
 function getStatusColor(
   status: string,
-  theme: typeof themes.defaultDark,
+  theme: (typeof themes)["defaultDark"],
   currentTheme: DefaultTheme,
 ): string {
   switch (status) {
