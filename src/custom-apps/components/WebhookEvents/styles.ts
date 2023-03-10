@@ -40,6 +40,22 @@ export const useStyles = makeStyles(
     cardHeader: {
       padding: "2.4rem 3.2rem",
     },
+    eventListItem: {
+      padding: 0,
+      gridTemplateColumns: "unset",
+      minHeight: 0,
+      gap: 0,
+      cursor: "pointer",
+    },
+    eventListItemCell: {
+      padding: "0 !important",
+      wordBreak: "break-all",
+    },
+    eventListLabel: {
+      padding: "1.8rem 0.8rem",
+      display: "grid",
+      cursor: "pointer",
+    },
   }),
   { name: "WebhookEvents" },
 );

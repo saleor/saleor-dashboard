@@ -158,22 +158,31 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
                 {object &&
                   EventTypes[tab][object] &&
                   EventTypes[tab][object].map((event, idx) => (
-                    <ListItem className={classes.listItem} key={idx}>
-                      <ListItemCell className={classes.listItemCell}>
-                        <strong>
-                          {capitalize(event.toLowerCase().replaceAll("_", " "))}
-                        </strong>
-                      </ListItemCell>
-                      <ListItemCell>
-                        <Checkbox
-                          name={`${tab}Events`}
-                          checked={data[`${tab}Events`].includes(
-                            getEventName(object, event),
-                          )}
-                          value={getEventName(object, event)}
-                          onChange={handleEventChange}
-                          className={classes.checkbox}
-                        />
+                    <ListItem className={classes.eventListItem} key={idx}>
+                      <ListItemCell className={classes.eventListItemCell}>
+                        <label
+                          htmlFor={`event-checkbox-${idx}`}
+                          className={classes.eventListLabel}
+                          style={{
+                            gridTemplateColumns: `1fr ${checkbox}`,
+                          }}
+                        >
+                          <strong>
+                            {capitalize(
+                              event.toLowerCase().replaceAll("_", " "),
+                            )}
+                          </strong>
+                          <Checkbox
+                            name={`${tab}Events`}
+                            checked={data[`${tab}Events`].includes(
+                              getEventName(object, event),
+                            )}
+                            value={getEventName(object, event)}
+                            onChange={handleEventChange}
+                            className={classes.checkbox}
+                            id={`event-checkbox-${idx}`}
+                          />
+                        </label>
                       </ListItemCell>
                     </ListItem>
                   ))}
