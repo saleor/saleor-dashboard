@@ -16,11 +16,7 @@ import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import {
-  DefaultTheme,
-  ThemeTokensValues,
-  useTheme,
-} from "@saleor/macaw-ui/next";
+import { DefaultTheme, themes, useTheme } from "@saleor/macaw-ui/next";
 import moment from "moment-timezone";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -145,7 +141,7 @@ export function getCustomerCellContent(
 
 export function getPaymentCellContent(
   intl: IntlShape,
-  theme: ThemeTokensValues,
+  theme: (typeof themes)["defaultDark"],
   currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
@@ -168,7 +164,7 @@ export function getPaymentCellContent(
 
 export function getStatusCellContent(
   intl: IntlShape,
-  theme: ThemeTokensValues,
+  theme: (typeof themes)["defaultDark"],
   currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
@@ -192,7 +188,7 @@ export function getStatusCellContent(
 
 function getStatusColor(
   status: string,
-  theme: ThemeTokensValues,
+  theme: (typeof themes)["defaultDark"],
   currentTheme: DefaultTheme,
 ): string {
   switch (status) {
