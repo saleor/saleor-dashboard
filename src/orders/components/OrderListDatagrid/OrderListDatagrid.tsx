@@ -5,6 +5,7 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { OrderListQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -48,8 +49,12 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   const classes = useStyles();
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
+  const emptyColumn = useEmptyColumn();
 
-  const availableColumns = useMemo(() => getColumns(intl, sort), [intl, sort]);
+  const availableColumns = useMemo(
+    () => getColumns(intl, sort, emptyColumn),
+    [intl, sort, emptyColumn],
+  );
 
   const {
     availableColumnsChoices,

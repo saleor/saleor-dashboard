@@ -16,11 +16,29 @@ export function useColumnsDefault(
 
   const onColumnMoved = useCallback(
     (startIndex: number, endIndex: number): void => {
+      // When empty column prevent to rearange it order
+      if (availableColumns[0]?.id === "empty") {
+        if (startIndex === 0) {
+          return setDisplayedColumns(prevColumns => [...prevColumns]);
+        }
+
+        // Keep empty column always at beginning
+        if (endIndex === 0) {
+          return setDisplayedColumns(old =>
+            addAtIndex(
+              old[startIndex],
+              removeAtIndex(old, startIndex),
+              endIndex + 1,
+            ),
+          );
+        }
+      }
+
       setDisplayedColumns(old =>
         addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
       );
     },
-    [setDisplayedColumns],
+    [availableColumns, setDisplayedColumns],
   );
   const onColumnResize = useCallback(
     (column: GridColumn, newSize: number) =>
