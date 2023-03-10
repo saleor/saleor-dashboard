@@ -14,7 +14,7 @@ import DataEditor, {
 } from "@glideapps/glide-data-grid";
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { themes, useTheme } from "@saleor/macaw-ui/next";
+import { useTheme } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import range from "lodash/range";
 import React, {
@@ -119,9 +119,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
   ...datagridProps
 }): ReactElement => {
   const classes = useStyles();
-  const { theme: currentTheme } = useTheme();
-  const datagridTheme = useDatagridTheme(readonly, !!onHeaderClicked);
-  const theme = themes[currentTheme];
+  const { themeValues } = useTheme();
+  const datagridTheme = useDatagridTheme(readonly);
   const editor = useRef<DataEditorRef>();
   const cellProps = useCells();
   const { scrolledToRight, scroller } = useScrollRight();
@@ -171,14 +170,15 @@ export const Datagrid: React.FC<DatagridProps> = ({
         ...(changed
           ? {
               themeOverride: {
-                bgCell: theme.colors.background.surfaceBrandHighlight,
+                bgCell: themeValues.colors.background.surfaceBrandHighlight,
               },
             }
           : {}),
         ...(getCellError(item, opts)
           ? {
               themeOverride: {
-                bgCell: theme.colors.background.interactiveCriticalHovering,
+                bgCell:
+                  themeValues.colors.background.interactiveCriticalHovering,
               },
             }
           : {}),
@@ -191,7 +191,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       removed,
       getChangeIndex,
       getCellContent,
-      theme,
+      themeValues,
       getCellError,
     ],
   );
@@ -243,19 +243,19 @@ export const Datagrid: React.FC<DatagridProps> = ({
       }
 
       const overrideTheme = {
-        bgCell: theme.colors.background.surfaceNeutralHighlight,
-        bgCellMedium: theme.colors.background.surfaceNeutralHighlight,
+        bgCell: themeValues.colors.background.surfaceNeutralHighlight,
+        bgCellMedium: themeValues.colors.background.surfaceNeutralHighlight,
         accentLight: undefined,
       };
 
       if (readonly) {
         overrideTheme.accentLight =
-          theme.colors.background.surfaceNeutralHighlight;
+          themeValues.colors.background.surfaceNeutralHighlight;
       }
 
       return overrideTheme;
     },
-    [hoverRow, readonly, theme],
+    [hoverRow, readonly, themeValues],
   );
 
   const handleHeaderClicked = useCallback(
