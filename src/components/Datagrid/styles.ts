@@ -195,7 +195,7 @@ export function useDatagridTheme() {
       bgBubbleSelected: theme.palette.background.paper,
       textHeader: theme.palette.text.secondary,
       borderColor: theme.palette.divider,
-      fontFamily: themes.defaultLight.fontFamily.body,
+      fontFamily: "'Inter var', sans-serif",
       baseFontStyle: themes.defaultLight.fontSize.bodySmall,
       headerFontStyle: themes.defaultLight.fontSize.bodySmall,
       editorFontSize: themes.defaultLight.fontSize.bodySmall,
