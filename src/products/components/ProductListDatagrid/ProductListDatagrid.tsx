@@ -98,6 +98,22 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 
   const handleColumnMoved = useCallback(
     (startIndex: number, endIndex: number): void => {
+      // Keep empty column always at beginning
+      if (startIndex === 0) {
+        return setColumns(prevColumns => [...prevColumns]);
+      }
+
+      // Keep empty column always at beginning
+      if (endIndex === 0) {
+        return setColumns(old =>
+          addAtIndex(
+            old[startIndex],
+            removeAtIndex(old, startIndex),
+            endIndex + 1,
+          ),
+        );
+      }
+
       setColumns(old =>
         addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
       );
@@ -177,8 +193,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   const handleGetColumnTooltipContent = useCallback(
     (colIndex: number): string => {
       const { columnName } = getColumnMetadata(columns[colIndex].id);
-      // Sortable column
-      if (canBeSorted(columnName, !!selectedChannelId)) {
+      // Sortable column or empty
+      if (
+        canBeSorted(columnName, !!selectedChannelId) ||
+        columns[colIndex].id === "empty"
+      ) {
         return "";
       }
       // No sortable column
