@@ -28,6 +28,12 @@ const useStyles = makeStyles(
       cursor: "pointer",
     },
     link: {
+      "&:hover": {
+        backgroundColor: `rgba(255,255,255,.1)`,
+      },
+      "&:active": {
+        backgroundColor: `rgba(255,255,255,.2)`,
+      },
       backgroundColor: `rgba(255,255,255,.08)`,
       borderRadius: `4px`,
       display: "flex",
