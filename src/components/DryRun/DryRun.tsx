@@ -46,7 +46,7 @@ const DryRun: React.FC<DryRunProps> = ({
   syncEvents,
 }: DryRunProps) => {
   const intl = useIntl();
-  const classes = useStyles();
+  const classes = useStyles({});
   const [objectId, setObjectId] = useState<string | null>(null);
   const [triggerWebhookDryRun] = useTriggerWebhookDryRunMutation();
   const availableObjects = Object.keys(DocumentMap).map(object =>

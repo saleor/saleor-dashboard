@@ -1,7 +1,7 @@
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui/next";
 
-export const useStyles = makeStyles<{ checkbox: string }>(
+export const useStyles = makeStyles<{ checkbox?: string }>(
   theme => ({
     eventsWrapper: {
       padding: theme.spacing(4),
