@@ -1920,10 +1920,6 @@
     "context": "refund type",
     "string": "Refund Products"
   },
-  "CLYlsu": {
-    "context": "section header",
-    "string": "Settings"
-  },
   "CLeDae": {
     "context": "section header",
     "string": "Preferences"
@@ -2225,6 +2221,10 @@
   "Ediw6/": {
     "context": "button label",
     "string": "Assign references"
+  },
+  "EewziG": {
+    "context": "checkbox gift cards label description",
+    "string": "When activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
   },
   "Egyh2T": {
     "context": "section header",
@@ -3487,10 +3487,6 @@
   "NelCIl": {
     "context": "content section name",
     "string": "Content"
-  },
-  "Nfh9QM": {
-    "context": "checkbox gift cards label description",
-    "string": "when activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
   },
   "NgCb99": {
     "context": "order line discount updated title",
@@ -6633,6 +6629,10 @@
     "context": "replacement created order history message draft number",
     "string": "Draft #{orderNumber}"
   },
+  "kn7jjd": {
+    "context": "section header",
+    "string": "General settings"
+  },
   "kp2IYP": {
     "context": "option",
     "string": "Gift card product type"
@@ -8471,9 +8471,6 @@
   "ys0jH2": {
     "context": "channel publication status",
     "string": "Published"
-  },
-  "yuiyES": {
-    "string": "General Settings"
   },
   "yzYXW/": {
     "context": "header, dialog",

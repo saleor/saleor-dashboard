@@ -1,5 +1,4 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import {
@@ -9,11 +8,10 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { orderListUrl } from "@dashboard/orders/urls";
-import { Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import OrderFulfillmentSettings from "../OrderFulfillmentSettings";
 import OrderSettings from "../OrderSettings/OrderSettings";
@@ -41,7 +39,7 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
       disabled={disabled}
     >
       {({ data, submit, change, isSaveDisabled }) => (
-        <DetailPageLayout>
+        <DetailPageLayout gridTemplateColumns={1}>
           <TopNav
             href={orderListUrl()}
             title={intl.formatMessage({
@@ -51,28 +49,17 @@ const OrderSettingsPage: React.FC<OrderSettingsPageProps> = props => {
             })}
           />
           <DetailPageLayout.Content>
-            <Box padding={9} margin="auto" height="100vh">
-              <Grid variant="inverted">
-                <div>
-                  <Typography>
-                    <FormattedMessage
-                      id="yuiyES"
-                      defaultMessage="General Settings"
-                    />
-                  </Typography>
-                </div>
-                <OrderSettings
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
-                />
-                <div />
-                <OrderFulfillmentSettings
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
-                />
-              </Grid>
+            <Box margin="auto" height="100vh">
+              <OrderSettings
+                data={data}
+                disabled={disabled}
+                onChange={change}
+              />
+              <OrderFulfillmentSettings
+                data={data}
+                disabled={disabled}
+                onChange={change}
+              />
             </Box>
           </DetailPageLayout.Content>
           <Savebar
