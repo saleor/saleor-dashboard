@@ -919,6 +919,10 @@
     "context": "modal button",
     "string": "Upload URL"
   },
+  "4XhJY+": {
+    "context": "dialog header",
+    "string": "Add product from {channelName}"
+  },
   "4Z0O2B": {
     "context": "section header title",
     "string": "Gift Card Timeline"
@@ -1523,10 +1527,6 @@
   "9Y5i/8": {
     "context": "number of webhook headers in model",
     "string": "{number,plural,one{{number} header} other{{number} custom request headers}}"
-  },
-  "9Y6vg+": {
-    "context": "dialog header",
-    "string": "Add product"
   },
   "9YazHG": {
     "string": "Company"
@@ -4328,6 +4328,10 @@
   "Ta9j04": {
     "context": "orders section name",
     "string": "Orders"
+  },
+  "Taa5V7": {
+    "context": "dialog subtitle",
+    "string": "You can only add products available for the order's channel"
   },
   "Tenl9A": {
     "context": "grant refund, refund card toggle",

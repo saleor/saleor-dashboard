@@ -20,6 +20,9 @@ export const useStyles = makeStyles(
       paddingTop: 0,
       marginBottom: theme.spacing(3),
     },
+    subtitle: {
+      padding: 0,
+    },
     grayText: {
       color: theme.palette.text.disabled,
     },
