@@ -33,6 +33,7 @@ interface GetColumnsProps {
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   gridAttributesFromSettings: ProductListColumns[];
   activeAttributeSortId: string;
+  emptyColumn: AvailableColumn;
 }
 
 export function getColumns({
@@ -41,13 +42,10 @@ export function getColumns({
   gridAttributes,
   gridAttributesFromSettings,
   activeAttributeSortId,
+  emptyColumn,
 }: GetColumnsProps): AvailableColumn[] {
   return [
-    {
-      id: "empty",
-      title: "",
-      width: 20,
-    },
+    emptyColumn,
     {
       id: "name",
       title: intl.formatMessage(commonMessages.product),

@@ -190,7 +190,10 @@ export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(
   { name: "Datagrid-fullscreen" },
 );
 
-export function useDatagridTheme(readonly?: boolean) {
+export function useDatagridTheme(
+  readonly?: boolean,
+  hasHeaderClickable?: boolean,
+) {
   const { themeValues } = useTheme();
 
   const datagridTheme = useMemo(
@@ -202,7 +205,9 @@ export function useDatagridTheme(readonly?: boolean) {
       bgCell: themeValues.colors.background.plain,
       bgHeader: themeValues.colors.background.plain,
       bgHeaderHasFocus: themeValues.colors.background.plain,
-      bgHeaderHovered: themeValues.colors.background.surfaceNeutralHighlight,
+      bgHeaderHovered: hasHeaderClickable
+        ? themeValues.colors.background.surfaceNeutralHighlight
+        : themeValues.colors.background.plain,
       bgBubbleSelected: themeValues.colors.background.plain,
       textHeader: themeValues.colors.foreground.iconNeutralPlain,
       borderColor: themeValues.colors.border.neutralHighlight,
@@ -220,7 +225,7 @@ export function useDatagridTheme(readonly?: boolean) {
       cellVerticalPadding: 8,
       lineHeight: 20,
     }),
-    [themeValues],
+    [themeValues, hasHeaderClickable],
   );
 
   const readonylDatagridTheme = useMemo(
