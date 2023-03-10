@@ -106,7 +106,12 @@ const WebhookHeaders: React.FC<WebhookHeadersProps> = ({
                 <>
                   <CardContent>
                     <Typography variant="body2">
-                      <FormattedMessage {...messages.acceptedFormat} />
+                      <FormattedMessage
+                        {...messages.acceptedFormat}
+                        values={{
+                          code: (...chunks) => <code>${chunks}</code>,
+                        }}
+                      />
                     </Typography>
                   </CardContent>
 
