@@ -44,8 +44,8 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
   onAsyncEventChange,
 }) => {
   const intl = useIntl();
-  const classes = useStyles();
   const { checkbox } = useListWidths();
+  const classes = useStyles({ checkbox });
 
   const [tab, setTab] = useState("async");
   const [object, setObject] = useState<string | null>(null);
@@ -163,9 +163,6 @@ const WebhookEvents: React.FC<WebhookEventsProps> = ({
                         <label
                           htmlFor={`event-checkbox-${idx}`}
                           className={classes.eventListLabel}
-                          style={{
-                            gridTemplateColumns: `1fr ${checkbox}`,
-                          }}
                         >
                           <strong>
                             {capitalize(

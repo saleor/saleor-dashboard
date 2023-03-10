@@ -1,7 +1,7 @@
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui/next";
 
-export const useStyles = makeStyles(
+export const useStyles = makeStyles<{ checkbox: string }>(
   theme => ({
     eventsWrapper: {
       padding: theme.spacing(4),
@@ -51,11 +51,12 @@ export const useStyles = makeStyles(
       padding: "0 !important",
       wordBreak: "break-all",
     },
-    eventListLabel: {
+    eventListLabel: props => ({
       padding: "1.8rem 0.8rem",
       display: "grid",
       cursor: "pointer",
-    },
+      gridTemplateColumns: `1fr ${props.checkbox}`,
+    }),
   }),
   { name: "WebhookEvents" },
 );
