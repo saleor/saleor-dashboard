@@ -241,7 +241,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
         </div>
         <div className="graphiql-sidebar-section"></div>
       </div>
-      <div className="graphiql-main">
+      <div className={clsx("graphiql-main", classes.main)}>
         <div
           ref={pluginResize.firstRef}
           style={{
