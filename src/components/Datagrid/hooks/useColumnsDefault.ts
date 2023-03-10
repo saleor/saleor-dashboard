@@ -68,22 +68,27 @@ export function useColumnsDefault(
   );
   const columnChoices = useMemo(
     () =>
-      columns.map(({ id, title }) => ({
-        label: title,
-        value: id,
-      })),
+      columns
+        .filter(col => col.id !== "empty")
+        .map(({ id, title }) => ({
+          label: title,
+          value: id,
+        })),
     [columns],
   );
   const availableColumnsChoices = useMemo(
     () =>
-      availableColumns.map(({ id, title }) => ({
-        label: title,
-        value: id,
-      })),
+      availableColumns
+        .filter(col => col.id !== "empty")
+        .map(({ id, title }) => ({
+          label: title,
+          value: id,
+        })),
     [availableColumns],
   );
   const defaultColumns = useMemo(
-    () => availableColumns.map(({ id }) => id),
+    () =>
+      availableColumns.filter(col => col.id !== "empty").map(({ id }) => id),
     [availableColumns],
   );
 
