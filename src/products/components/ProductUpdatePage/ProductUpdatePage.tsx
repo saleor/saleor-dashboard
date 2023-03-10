@@ -14,6 +14,7 @@ import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
 import CardMenu from "@dashboard/components/CardMenu";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import { DevModeContext } from "@dashboard/components/DevModePanel/DevModePanel";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import Savebar from "@dashboard/components/Savebar";
@@ -46,9 +47,8 @@ import { productImageUrl, productListUrl } from "@dashboard/products/urls";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { playgroundOpenHandler } from "@dashboard/utils/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React from "react";
+import React, { useContext } from "react";
 import { useIntl } from "react-intl";
 
 import { getChoices } from "../../utils/data";
@@ -242,12 +242,20 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     productId,
   );
 
-  const openPlaygroundURL = playgroundOpenHandler({
-    query: defaultGraphiQLQuery,
-    headers: "",
-    operationName: "",
-    variables: `{ "id": "${product?.id}" }`,
-  });
+  const context = useContext(DevModeContext);
+
+  const openPlaygroundURL = () => {
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${product?.id}" }`);
+    context.setDevModeVisibility(true);
+  };
+
+  // const openPlaygroundURL = playgroundOpenHandler({
+  //   query: defaultGraphiQLQuery,
+  //   headers: "",
+  //   operationName: "",
+  //   variables: `{ "id": "${product?.id}" }`,
+  // });
 
   return (
     <ProductUpdateForm

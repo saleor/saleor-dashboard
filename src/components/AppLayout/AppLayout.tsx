@@ -2,8 +2,10 @@ import useAppState from "@dashboard/hooks/useAppState";
 import { LinearProgress } from "@material-ui/core";
 import { useActionBar } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { useContext, useState } from "react";
 
+import { DevModeContext, DevModePanel } from "../DevModePanel/DevModePanel";
+import { useDevModeKeyTrigger } from "../DevModePanel/useDevModeKeyTrigger";
 import Navigator from "../Navigator";
 import { Sidebar } from "../Sidebar";
 import { contentMaxWidth } from "./consts";
@@ -18,10 +20,18 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
   const classes = useStyles();
   const { anchor: appActionAnchor } = useActionBar();
   const [appState] = useAppState();
-  const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
+  const [isNavigatorVisible, setNavigatorVisibility] = useState(false);
+
+  const { isDevModeVisible, setDevModeVisibility } = useContext(DevModeContext);
+
+  useDevModeKeyTrigger(() => setDevModeVisibility(!isDevModeVisible));
 
   return (
     <>
+      <DevModePanel
+        isDevModeVisible={isDevModeVisible}
+        setDevModeVisibility={setDevModeVisibility}
+      />
       <Navigator
         visible={isNavigatorVisible}
         setVisibility={setNavigatorVisibility}
