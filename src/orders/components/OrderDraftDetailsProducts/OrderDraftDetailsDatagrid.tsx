@@ -14,13 +14,14 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { OrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
-import { themes, useTheme } from "@saleor/macaw-ui/next";
+import { useTheme } from "@saleor/macaw-ui/next";
 import React, { useContext, useMemo, useState } from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -77,19 +78,15 @@ export const OrderDraftDetailsDatagrid = ({
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editedLineId, setEditedLineId] = useState<string | null>(null);
   const getDiscountProviderValues = useContext(OrderLineDiscountContext);
-  const { theme: currentTheme } = useTheme();
-  const theme = themes[currentTheme];
+  const emptyColumn = useEmptyColumn();
+  const { themeValues } = useTheme();
   const discountProviderValues = editedLineId
     ? getDiscountProviderValues(editedLineId)
     : null;
 
   const availableColumns = useMemo(
     () => [
-      {
-        id: "empty",
-        title: "",
-        width: 20,
-      },
+      emptyColumn,
       {
         id: "product",
         title: intl.formatMessage(columnsMessages.product),
@@ -116,7 +113,7 @@ export const OrderDraftDetailsDatagrid = ({
         width: 150,
       },
     ],
-    [intl],
+    [intl, emptyColumn],
   );
 
   const getOrderLineStatus = (
@@ -202,7 +199,7 @@ export const OrderDraftDetailsDatagrid = ({
             color:
               type === "warning"
                 ? "#FBE5AC"
-                : theme.colors.background.surfaceCriticalDepressed,
+                : themeValues.colors.background.surfaceCriticalDepressed,
             tag: status,
           })),
           status.map(status => status.status),
