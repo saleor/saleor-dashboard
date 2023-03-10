@@ -1,6 +1,6 @@
 import { Theme } from "@glideapps/glide-data-grid";
 import { makeStyles } from "@saleor/macaw-ui";
-import { themes, useTheme, vars } from "@saleor/macaw-ui/next";
+import { useTheme, vars } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
 
 export const cellHeight = 36;
@@ -191,45 +191,45 @@ export const useFullScreenStyles = makeStyles<ReturnType<typeof useStyles>>(
 );
 
 export function useDatagridTheme(readonly?: boolean) {
-  const { theme: selectedTheme } = useTheme();
-  const theme = themes[selectedTheme];
+  const { themeValues } = useTheme();
 
   const datagridTheme = useMemo(
     (): Partial<Theme> => ({
-      accentColor: theme.colors.background.interactiveBrandDefault,
-      accentLight: theme.colors.background.interactiveBrandSecondaryPressing,
+      accentColor: themeValues.colors.background.interactiveBrandDefault,
+      accentLight:
+        themeValues.colors.background.interactiveBrandSecondaryPressing,
       accentFg: "transparent",
-      bgCell: theme.colors.background.plain,
-      bgHeader: theme.colors.background.plain,
-      bgHeaderHasFocus: theme.colors.background.plain,
-      bgHeaderHovered: theme.colors.background.surfaceNeutralHighlight,
-      bgBubbleSelected: theme.colors.background.plain,
-      textHeader: theme.colors.foreground.iconNeutralPlain,
-      borderColor: theme.colors.border.neutralHighlight,
-      fontFamily: theme.fontFamily.body,
-      baseFontStyle: theme.fontSize.bodySmall,
-      headerFontStyle: theme.fontSize.captionSmall,
-      editorFontSize: theme.fontSize.bodySmall,
-      textMedium: theme.colors.background.interactiveNeutralDefault,
-      textGroupHeader: theme.colors.foreground.iconNeutralPlain,
-      textBubble: theme.colors.background.interactiveNeutralDefault,
-      textDark: theme.colors.background.interactiveNeutralDefault,
-      textLight: theme.colors.background.interactiveNeutralDefault,
-      textHeaderSelected: theme.colors.foreground.textBrandDefault,
+      bgCell: themeValues.colors.background.plain,
+      bgHeader: themeValues.colors.background.plain,
+      bgHeaderHasFocus: themeValues.colors.background.plain,
+      bgHeaderHovered: themeValues.colors.background.surfaceNeutralHighlight,
+      bgBubbleSelected: themeValues.colors.background.plain,
+      textHeader: themeValues.colors.foreground.iconNeutralPlain,
+      borderColor: themeValues.colors.border.neutralHighlight,
+      fontFamily: "'Inter var', sans-serif",
+      baseFontStyle: themeValues.fontSize.bodySmall,
+      headerFontStyle: themeValues.fontSize.captionSmall,
+      editorFontSize: themeValues.fontSize.bodySmall,
+      textMedium: themeValues.colors.background.interactiveNeutralDefault,
+      textGroupHeader: themeValues.colors.foreground.iconNeutralPlain,
+      textBubble: themeValues.colors.background.interactiveNeutralDefault,
+      textDark: themeValues.colors.background.interactiveNeutralDefault,
+      textLight: themeValues.colors.background.interactiveNeutralDefault,
+      textHeaderSelected: themeValues.colors.foreground.textBrandDefault,
       cellHorizontalPadding: 8,
       cellVerticalPadding: 8,
       lineHeight: 20,
     }),
-    [theme],
+    [themeValues],
   );
 
   const readonylDatagridTheme = useMemo(
     () => ({
       ...datagridTheme,
-      accentColor: theme.colors.background.surfaceBrandDepressed,
-      accentLight: theme.colors.background.plain,
+      accentColor: themeValues.colors.background.surfaceBrandDepressed,
+      accentLight: themeValues.colors.background.plain,
     }),
-    [theme, datagridTheme],
+    [themeValues, datagridTheme],
   );
   return readonly ? readonylDatagridTheme : datagridTheme;
 }
