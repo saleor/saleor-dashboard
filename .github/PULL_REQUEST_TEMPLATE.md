@@ -26,7 +26,6 @@ Modify API_URI if you want test instance to use custom backend. CYPRESS_API_URI 
 
 API_URI=https://automation-dashboard.staging.saleor.cloud/graphql/
 APPS_MARKETPLACE_API_URI=https://apps.staging.saleor.io/api/v2/saleor-apps
-SALEOR_APPS_ENDPOINT=https://apps.saleor.io/api/saleor-apps
 
 ### Do you want to run more stable tests?
 

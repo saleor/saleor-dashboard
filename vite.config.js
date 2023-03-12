@@ -28,11 +28,6 @@ export default defineConfig(({ command, mode }) => {
     API_URI,
     SW_INTERVAL,
     IS_CLOUD_INSTANCE,
-    /**
-     * @deprecated
-     */
-    MARKETPLACE_URL, // To be removed
-    SALEOR_APPS_ENDPOINT,
     APP_MOUNT_URI,
     SENTRY_ORG,
     SENTRY_PROJECT,
@@ -40,9 +35,6 @@ export default defineConfig(({ command, mode }) => {
     SENTRY_DSN,
     ENVIRONMENT,
     STATIC_URL,
-    SALEOR_APPS_PAGE_PATH,
-    SALEOR_APPS_JSON_PATH,
-    APP_TEMPLATE_GALLERY_PATH,
     APPS_MARKETPLACE_API_URI,
     APPS_TUNNEL_URL_KEYWORDS,
     SKIP_SOURCEMAPS,
@@ -70,10 +62,6 @@ export default defineConfig(({ command, mode }) => {
         data: {
           API_URL: API_URI,
           APP_MOUNT_URI,
-          SALEOR_APPS_PAGE_PATH,
-          SALEOR_APPS_JSON_PATH,
-          APP_TEMPLATE_GALLERY_PATH,
-          MARKETPLACE_URL,
           APPS_MARKETPLACE_API_URI,
           APPS_TUNNEL_URL_KEYWORDS,
           IS_CLOUD_INSTANCE,
@@ -162,8 +150,6 @@ export default defineConfig(({ command, mode }) => {
         API_URI,
         SW_INTERVAL,
         IS_CLOUD_INSTANCE,
-        MARKETPLACE_URL,
-        SALEOR_APPS_ENDPOINT,
         APP_MOUNT_URI,
         SENTRY_DSN,
         ENVIRONMENT,

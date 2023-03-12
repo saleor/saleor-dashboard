@@ -56,8 +56,6 @@ import HomePage from "./home";
 import { FlagsServiceProvider } from "./hooks/useFlags/flagsService";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
-import MarketplaceSection from "./marketplace";
-import { marketplaceUrl } from "./marketplace/urls";
 import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
 import { NotFound } from "./NotFound";
@@ -284,11 +282,6 @@ const Routes: React.FC = () => {
                 permissions={[PermissionEnum.MANAGE_APPS]}
                 path={AppSections.appsSection}
                 component={AppsSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_APPS]}
-                path={marketplaceUrl}
-                component={MarketplaceSection}
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_PRODUCTS]}
