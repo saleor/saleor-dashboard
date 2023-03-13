@@ -11,6 +11,9 @@ export const useStyles = makeStyles(
     pre: {
       whiteSpace: "break-spaces",
     },
+    main: {
+      position: "relative",
+    },
     scrollable: {
       // Overrides inline styling which breaks scroll
       // on doc explorer plugin
