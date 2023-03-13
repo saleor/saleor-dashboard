@@ -241,7 +241,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             columnQuery={columnQuery}
             defaultSettings={defaultSettings}
             availableInGridAttributes={availableInGridAttributes}
-            loading={loading}
+            isAttributeLoading={loading}
+            loading={listProps.disabled}
             hasMore={hasMore}
             gridAttributes={gridAttributes}
             onColumnQueryChange={onColumnQueryChange}
@@ -258,7 +259,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           <ProductListTiles
             {...listProps}
             settings={settings}
-            loading={loading}
+            loading={listProps.disabled}
             onUpdateListSettings={onUpdateListSettings}
             products={listProps.products}
             onTileClick={id => {

@@ -57,6 +57,7 @@ interface ProductListDatagridProps
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
   onColumnQueryChange: (query: string) => void;
+  isAttributeLoading?: boolean;
 }
 
 export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
@@ -68,9 +69,10 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   selectedChannelId,
   onSort,
   sort,
+  loading,
   gridAttributes,
   hasMore,
-  loading,
+  isAttributeLoading,
   onFetchMore,
   columnQuery,
   defaultSettings,
@@ -156,14 +158,14 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         gridAttributes,
         gridAttributesFromSettings,
         selectedChannelId,
-        loading: disabled,
+        loading,
       }),
     [
       columns,
-      disabled,
       gridAttributes,
       gridAttributesFromSettings,
       intl,
+      loading,
       locale,
       products,
       searchProductType,
@@ -251,7 +253,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
               {...defaultProps}
               {...columnPickerColumns}
               hasMore={hasMore}
-              loading={loading}
+              loading={isAttributeLoading}
               onFetchMore={onFetchMore}
               query={columnQuery}
               onQueryChange={onColumnQueryChange}

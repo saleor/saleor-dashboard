@@ -14,7 +14,7 @@ import DataEditor, {
 } from "@glideapps/glide-data-grid";
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { useTheme } from "@saleor/macaw-ui/next";
+import { Box, useTheme } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import range from "lodash/range";
 import React, {
@@ -443,7 +443,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
               </div>
             </>
           ) : (
-            <Typography align="center">{emptyText}</Typography>
+            <Box
+              borderTopStyle="solid"
+              borderTopWidth={1}
+              borderColor="neutralHighlight"
+              paddingY={9}
+            >
+              <Typography align="center">{emptyText}</Typography>
+            </Box>
           )}
         </CardContent>
       </Card>
