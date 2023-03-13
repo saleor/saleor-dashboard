@@ -33,6 +33,10 @@ export const useStyles = makeStyles<{ checkbox?: string }>(
     },
     checkbox: {
       padding: 0,
+      // disables shadow blinking next to the checkbox
+      "& span::before": {
+        display: "none",
+      },
     },
     card: {
       paddingLeft: 0,
