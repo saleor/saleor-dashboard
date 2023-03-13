@@ -31,8 +31,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       display="grid"
       __gridTemplateColumns="1fr 1fr"
       gap={7}
-      marginBottom={5}
+      paddingBottom={5}
       paddingX={9}
+      borderColor="neutralPlain"
+      borderBottomStyle="solid"
+      borderBottomWidth={1}
     >
       <Box display="flex" alignItems="center" gap={7}>
         <Filter
