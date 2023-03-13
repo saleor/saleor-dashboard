@@ -191,9 +191,7 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
                 errors={errors}
                 onChange={change}
               />
-              <CardSpacer />
               <SaleType data={data} disabled={disabled} onChange={change} />
-              <CardSpacer />
               <SaleValue
                 data={data}
                 disabled={disabled}
