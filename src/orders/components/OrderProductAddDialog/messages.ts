@@ -2,9 +2,15 @@ import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
   title: {
-    defaultMessage: "Add product",
+    defaultMessage: "Add product from {channelName}",
     description: "dialog header",
-    id: "9Y6vg+",
+    id: "4XhJY+",
+  },
+  subtitle: {
+    defaultMessage:
+      "You can only add products available for the order's channel",
+    id: "Taa5V7",
+    description: "dialog subtitle",
   },
   search: {
     defaultMessage: "Search products",
