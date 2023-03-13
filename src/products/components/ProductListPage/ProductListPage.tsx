@@ -35,9 +35,10 @@ import { Card } from "@material-ui/core";
 import {
   Box,
   Button,
-  ProductsIcons,
-  TableEditIcon,
+  Switch,
   Text,
+  ViewTableIcon,
+  ViewWideTilesIcon,
 } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -216,32 +217,19 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               defaultMessage: "Search Products...",
             })}
             actions={
-              <Button
-                variant="tertiary"
-                onClick={() =>
-                  setProductListViewType(isDatagridView ? "tile" : "datagrid")
-                }
+              <Switch
+                defaultValue="datagrid"
+                onValueChange={value => {
+                  setProductListViewType(value as ProductListViewType);
+                }}
               >
-                {!isDatagridView ? (
-                  <>
-                    <TableEditIcon />
-                    <FormattedMessage
-                      id="WACLJx"
-                      defaultMessage="Switch to datagrid view"
-                      description="switch"
-                    />
-                  </>
-                ) : (
-                  <>
-                    <ProductsIcons />
-                    <FormattedMessage
-                      id="CU+aFW"
-                      defaultMessage="Switch to tile view"
-                      description="switch"
-                    />
-                  </>
-                )}
-              </Button>
+                <Switch.Item id="datagrid" value="datagrid">
+                  <ViewWideTilesIcon size="medium" />
+                </Switch.Item>
+                <Switch.Item id="tile" value="tile">
+                  <ViewTableIcon size="medium" />
+                </Switch.Item>
+              </Switch>
             }
           />
         </Box>
@@ -270,6 +258,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           <ProductListTiles
             {...listProps}
             settings={settings}
+            loading={loading}
             onUpdateListSettings={onUpdateListSettings}
             products={listProps.products}
             onTileClick={id => {
