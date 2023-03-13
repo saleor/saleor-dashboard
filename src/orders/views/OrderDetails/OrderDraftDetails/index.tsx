@@ -293,6 +293,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         onClose={closeModal}
         onFetch={variantSearch}
         onFetchMore={loadMore}
+        channelName={order.channel.name}
         onSubmit={variants =>
           extractMutationErrors(
             orderLinesAdd.mutate({
