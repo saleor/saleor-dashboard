@@ -7772,10 +7772,6 @@
     "context": "order total amount",
     "string": "Total"
   },
-  "ti4Hqw": {
-    "context": "saleor marketplace section name",
-    "string": "Saleor Apps Marketplace"
-  },
   "tlGXkh": {
     "context": "input description",
     "string": "Unlimited"
