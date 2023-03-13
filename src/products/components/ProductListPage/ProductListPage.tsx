@@ -32,7 +32,13 @@ import {
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
-import { Box, Button, Text } from "@saleor/macaw-ui/next";
+import {
+  Box,
+  Button,
+  ProductsIcons,
+  TableEditIcon,
+  Text,
+} from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -112,10 +118,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   );
   const extensionCreateButtonItems = mapToMenuItems(PRODUCT_OVERVIEW_CREATE);
 
-  const [storedProductListViewType] = useLocalStorage<ProductListViewType>(
-    "productListViewType",
-    DEFAULT_PRODUCT_LIST_VIEW_TYPE,
-  );
+  const [storedProductListViewType, setProductListViewType] =
+    useLocalStorage<ProductListViewType>(
+      "productListViewType",
+      DEFAULT_PRODUCT_LIST_VIEW_TYPE,
+    );
   const isDatagridView = storedProductListViewType === "datagrid";
 
   return (
@@ -208,6 +215,34 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               id: "kIvvax",
               defaultMessage: "Search Products...",
             })}
+            actions={
+              <Button
+                variant="tertiary"
+                onClick={() =>
+                  setProductListViewType(isDatagridView ? "tile" : "datagrid")
+                }
+              >
+                {!isDatagridView ? (
+                  <>
+                    <TableEditIcon />
+                    <FormattedMessage
+                      id="WACLJx"
+                      defaultMessage="Switch to datagrid view"
+                      description="switch"
+                    />
+                  </>
+                ) : (
+                  <>
+                    <ProductsIcons />
+                    <FormattedMessage
+                      id="CU+aFW"
+                      defaultMessage="Switch to tile view"
+                      description="switch"
+                    />
+                  </>
+                )}
+              </Button>
+            }
           />
         </Box>
         {isDatagridView ? (
