@@ -11,7 +11,7 @@ interface TopNavProps {
   href?: string;
 }
 
-export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
+export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
   title,
   href,
   children,

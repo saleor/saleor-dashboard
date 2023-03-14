@@ -41,7 +41,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { FetchMoreProps, RelayToFlat } from "../../../types";
-import ProductDetailsForm from "../ProductDetailsForm";
+import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductOrganization from "../ProductOrganization";
 import ProductShipping from "../ProductShipping/ProductShipping";
 import ProductStocks from "../ProductStocks";
