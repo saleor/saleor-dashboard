@@ -1942,10 +1942,6 @@
     "context": "CannotDefineChannelsAvailabilityCard title",
     "string": "Availability"
   },
-  "CU+aFW": {
-    "context": "switch",
-    "string": "Switch to tile view"
-  },
   "CWqmRU": {
     "context": "customer's address book when no customer name is available, header",
     "string": "Address Book"
@@ -4712,10 +4708,6 @@
     "context": "product field",
     "string": "Name"
   },
-  "WACLJx": {
-    "context": "switch",
-    "string": "Switch to datagrid view"
-  },
   "WCg2GZ": {
     "context": "change warehouse dialog search placeholder",
     "string": "Search warehouses"
@@ -5317,10 +5309,6 @@
   "aEc9Ar": {
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
-  },
-  "aFLtLk": {
-    "context": "tab name",
-    "string": "All Products"
   },
   "aHc89n": {
     "context": "select warehouse to restock items",
