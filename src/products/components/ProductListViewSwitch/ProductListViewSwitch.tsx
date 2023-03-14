@@ -21,7 +21,7 @@ export const ProductListViewSwitch = ({
     defaultValue={defaultValue}
     className={sprinkles({
       display: "flex",
-      gap: 2,
+      gap: 3,
     })}
     onValueChange={value => {
       setProductListViewType(value as ProductListViewType);
