@@ -1,4 +1,9 @@
-import { Switch, ViewListIcon, ViewTilesIcon } from "@saleor/macaw-ui/next";
+import {
+  sprinkles,
+  Switch,
+  ViewListIcon,
+  ViewTilesIcon,
+} from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { ProductListViewType } from "../ProductListPage";
@@ -14,6 +19,10 @@ export const ProductListViewSwitch = ({
 }: ProductListViewSwitchProps) => (
   <Switch
     defaultValue={defaultValue}
+    className={sprinkles({
+      display: "flex",
+      gap: 2,
+    })}
     onValueChange={value => {
       setProductListViewType(value as ProductListViewType);
     }}
