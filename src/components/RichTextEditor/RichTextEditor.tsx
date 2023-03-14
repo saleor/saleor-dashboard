@@ -32,7 +32,7 @@ const ReactEditorJS = createReactEditorJS();
 const RichTextEditor: React.FC<RichTextEditorProps> = ({
   id: defaultId,
   disabled,
-  error,
+  // error,
   label,
   name,
   helperText,
@@ -43,6 +43,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   const classes = useStyles({});
   const id = useId(defaultId);
   const [isFocused, setIsFocused] = React.useState(false);
+
+  const error = true;
 
   const handleInitialize = React.useCallback((editor: EditorCore) => {
     if (onInitialize) {
@@ -69,9 +71,13 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       variant="outlined"
     >
       <InputLabel
-        focused={isFocused}
+        focused={true}
         shrink={true}
-        style={{ marginLeft: "-6px" }}
+        classes={{
+          error: classes.labelError,
+          root: classes.labelRoot,
+        }}
+        error={error}
       >
         {label}
       </InputLabel>
@@ -88,6 +94,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           <div
             id={id}
             className={clsx(classes.editor, classes.root, {
+              [classes.rootErrorFocus]: isFocused && error,
               [classes.rootActive]: isFocused,
               [classes.rootDisabled]: disabled,
               [classes.rootError]: error,

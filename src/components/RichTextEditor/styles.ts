@@ -100,13 +100,9 @@ const useStyles = makeStyles(
         "& a": {
           color: theme.palette.primary.light,
         },
-        "&:not($rootDisabled):hover": {
-          borderColor: isDarkMode
-            ? theme.palette.saleor.main[2]
-            : theme.palette.saleor.main[4],
-        },
       },
       root: {
+        border: "1px solid transparent",
         borderRadius: vars.borderRadius[3],
         fontSize: vars.fontSize.bodyMedium,
         backgroundColor: vars.colors.background.surfaceNeutralHighlight,
@@ -119,8 +115,7 @@ const useStyles = makeStyles(
       },
       rootActive: {
         border: `1px solid ${vars.colors.border.brandSubdued}`,
-        backgroundColor:
-          vars.colors.background.interactiveNeutralHighlightDefault,
+        backgroundColor: `${vars.colors.background.interactiveNeutralHighlightDefault} !important`,
       },
       rootDisabled: {
         ...theme.overrides.MuiOutlinedInput.root["&$disabled"]["& fieldset"],
@@ -128,10 +123,20 @@ const useStyles = makeStyles(
         color: theme.palette.saleor.main[4],
       },
       rootError: {
-        borderColor: theme.palette.error.main,
+        backgroundColor: vars.colors.background.surfaceCriticalSubdued,
       },
       rootStatic: {
         fontSize: theme.typography.body1.fontSize,
+      },
+      labelRoot: {
+        marginLeft: "-6px",
+        color: `${vars.colors.foreground.textNeutralSubdued} !important`,
+      },
+      labelError: {
+        color: `${vars.colors.foreground.textCriticalSubdued} !important`,
+      },
+      rootErrorFocus: {
+        border: "1px solid transparent !important",
       },
     };
   },
