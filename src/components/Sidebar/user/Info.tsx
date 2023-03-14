@@ -22,7 +22,7 @@ export const UserInfo = () => {
       justifyContent="space-between"
     >
       <Box display="flex" gap={6} alignItems="center">
-        <UserAvatar initials={getUserInitials(user)} url={user.avatar.url} />
+        <UserAvatar initials={getUserInitials(user)} url={user?.avatar?.url} />
         <Box __width={128} className="ellipsis">
           <Text variant="bodyStrong" size="small">
             {getUserName(user, true)}
