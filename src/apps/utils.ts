@@ -145,3 +145,17 @@ export const getAppInProgressName = (
   id: string,
   collection?: AppInstallationFragment[],
 ) => collection?.find(app => app.id === id)?.appName || id;
+
+export const groupIntoPairs = <T>(list: T[]): T[][] => {
+  if (list.length === 0) {
+    return [];
+  }
+  return list.reduce<T[][]>((acc, curr, index) => {
+    if (index % 2 === 0) {
+      acc.push([curr]);
+    } else {
+      acc[acc.length - 1].push(curr);
+    }
+    return acc;
+  }, []);
+};
