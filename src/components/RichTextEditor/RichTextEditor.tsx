@@ -68,7 +68,11 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       fullWidth
       variant="outlined"
     >
-      <InputLabel focused={true} shrink={true}>
+      <InputLabel
+        focused={isFocused}
+        shrink={true}
+        style={{ marginLeft: "-6px" }}
+      >
         {label}
       </InputLabel>
       {hasRendered && (

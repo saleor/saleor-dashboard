@@ -1,5 +1,6 @@
 import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 
 const useStyles = makeStyles(
   theme => {
@@ -106,18 +107,20 @@ const useStyles = makeStyles(
         },
       },
       root: {
-        border: `1px solid ${theme.palette.saleor.main[4]}`,
-        borderRadius: 4,
-        fontSize: theme.typography.body1.fontSize,
+        borderRadius: vars.borderRadius[3],
+        fontSize: vars.fontSize.bodyMedium,
+        backgroundColor: vars.colors.background.surfaceNeutralHighlight,
         minHeight: 56,
-        padding: theme.spacing(3, 2),
-        paddingBottom: theme.spacing(),
-        paddingLeft: 10,
         position: "relative",
         transition: theme.transitions.duration.short + "ms",
+        padding: theme.spacing(3, 2),
+        paddingBottom: theme.spacing(),
+        paddingLeft: vars.space[4],
       },
       rootActive: {
-        borderColor: theme.palette.saleor.main[1],
+        border: `1px solid ${vars.colors.border.brandSubdued}`,
+        backgroundColor:
+          vars.colors.background.interactiveNeutralHighlightDefault,
       },
       rootDisabled: {
         ...theme.overrides.MuiOutlinedInput.root["&$disabled"]["& fieldset"],

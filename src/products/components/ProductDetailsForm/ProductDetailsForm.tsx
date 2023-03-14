@@ -125,12 +125,12 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
             onChange={onChange}
             error={!!formErrors.name}
             name="name"
+            disabled={disabled}
           />
           <Text variant="caption" color="textCriticalDefault">
             {getProductErrorMessage(formErrors.name, intl)}
           </Text>
         </Box>
-
         {isReadyForMount ? (
           <RichTextEditor
             editorRef={editorRef}
@@ -148,6 +148,25 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
             name="description"
           />
         )}
+        <Box>
+          <Input
+            label={intl.formatMessage({
+              id: "L7N+0y",
+              defaultMessage: "Product Rating",
+              description: "product rating",
+            })}
+            size="medium"
+            value={data.rating || ""}
+            onChange={onChange}
+            error={!!formErrors.rating}
+            name="rating"
+            type="number"
+            disabled={disabled}
+          />
+          <Text variant="caption" color="textCriticalDefault">
+            {getProductErrorMessage(formErrors.rating, intl)}
+          </Text>
+        </Box>
       </DashboardCard.Content>
     </DashboardCard>
   );
