@@ -32,20 +32,14 @@ import {
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
-import {
-  Box,
-  Button,
-  Switch,
-  Text,
-  ViewTableIcon,
-  ViewWideTilesIcon,
-} from "@saleor/macaw-ui/next";
+import { Box, Button, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField, productUrl } from "../../urls";
 import { ProductListDatagrid } from "../ProductListDatagrid";
 import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
+import { ProductListViewSwitch } from "../ProductListViewSwitch";
 import {
   createFilterStructure,
   ProductFilterKeys,
@@ -217,19 +211,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               defaultMessage: "Search Products...",
             })}
             actions={
-              <Switch
+              <ProductListViewSwitch
                 defaultValue={storedProductListViewType}
-                onValueChange={value => {
-                  setProductListViewType(value as ProductListViewType);
-                }}
-              >
-                <Switch.Item id="datagrid" value="datagrid">
-                  <ViewWideTilesIcon size="medium" />
-                </Switch.Item>
-                <Switch.Item id="tile" value="tile">
-                  <ViewTableIcon size="medium" />
-                </Switch.Item>
-              </Switch>
+                setProductListViewType={setProductListViewType}
+              />
             }
           />
         </Box>
