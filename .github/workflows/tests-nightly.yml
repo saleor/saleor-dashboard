@@ -75,7 +75,7 @@ jobs:
         env:
           CI: true
           SALEOR_CLI_ENV: staging
-        run: npx saleor backup restore 9S4PckyI --skip-webhooks-update
+        run: npx saleor backup restore W5yhqHkw --skip-webhooks-update
 
       - name: Notify Slack
         if: ${{ failure() }}
