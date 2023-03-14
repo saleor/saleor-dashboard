@@ -14,7 +14,7 @@ const useStyles = makeStyles(
     return {
       tableCell: {
         paddingTop: theme.spacing(3),
-        paddingLeft: theme.spacing(1),
+        paddingLeft: "3.2rem !important",
         paddingRight: theme.spacing(1),
 
         "& .MuiFormHelperText-root": {
@@ -29,7 +29,7 @@ const useStyles = makeStyles(
       colAction: {
         "&:last-child": {
           ...colAction,
-          paddingRight: theme.spacing(3),
+          paddingRight: "3.2rem",
         },
       },
       colActionHeader: {
