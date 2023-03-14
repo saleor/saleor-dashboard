@@ -5171,6 +5171,10 @@
   "ZIc5lM": {
     "string": "Product Name"
   },
+  "ZJPYFl": {
+    "context": "accepted header names",
+    "string": "Headers with in following format are accepted: <code>authorization*</code>, <code>x-*</code>"
+  },
   "ZKuzRy": {
     "context": "order history message",
     "string": "Transaction void requested"
@@ -8147,10 +8151,6 @@
   "w9xgN9": {
     "context": "see error log label in notification",
     "string": "See error log"
-  },
-  "wChjN/": {
-    "context": "accepted header names",
-    "string": "Headers with in following format are accepted: `authorization*`, `x-*`"
   },
   "wDUBLR": {
     "context": "order refund amount",
