@@ -3279,10 +3279,6 @@
     "context": "collection",
     "string": "Not Published"
   },
-  "M2dPzK": {
-    "context": "app template gallery section name",
-    "string": "App Templates Gallery"
-  },
   "M6s/9e": {
     "context": "unassign country, dialog header",
     "string": "Remove from Shipping Zone"
@@ -7779,10 +7775,6 @@
   "taX/V3": {
     "context": "order total amount",
     "string": "Total"
-  },
-  "ti4Hqw": {
-    "context": "saleor marketplace section name",
-    "string": "Saleor Apps Marketplace"
   },
   "tlGXkh": {
     "context": "input description",
