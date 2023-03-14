@@ -15,11 +15,6 @@ export const useStyles = makeStyles(
     noContentText: {
       marginBottom: theme.spacing(3),
     },
-    content: {
-      overflowY: "scroll",
-      paddingTop: 0,
-      marginBottom: theme.spacing(3),
-    },
     subtitle: {
       padding: 0,
     },
