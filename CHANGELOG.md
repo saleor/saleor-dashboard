@@ -22,6 +22,7 @@ All notable, unreleased changes to this project will be documented in this file.
 - Extract permissions for subscription query - #3155 by @zaiste
 - Add custom request headers to webhook form - #3107 by @2can
 - Allow subscription query for sync events - #3099 by @2can
+- Simplify codegen configuration to generate the graphql schema - #2538 by @abumalick
 
 ## 3.4
 

@@ -3,3 +3,6 @@ generates:
   ./introspection.json:
     plugins:
       - introspection
+  ./schema.graphql:
+    plugins:
+      - schema-ast
