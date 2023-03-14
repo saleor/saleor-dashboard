@@ -11,14 +11,14 @@ import AppListCardDescription from "./AppListCardDescription";
 import AppListCardIntegrations from "./AppListCardIntegrations";
 import AppListCardLinks from "./AppListCardLinks";
 
-interface AppListCardProps {
+interface AppListRowProps {
   appPair: GetV2SaleorAppsResponse.SaleorApp[];
   appInstallation?: AppInstallationFragment;
   navigateToAppInstallPage?: (manifestUrl: string) => void;
   navigateToGithubForkPage?: (githubForkUrl: string) => void;
 }
 
-const AppListCard: React.FC<AppListCardProps> = ({
+const AppListRow: React.FC<AppListRowProps> = ({
   appPair,
   appInstallation,
   navigateToAppInstallPage,
@@ -94,5 +94,5 @@ const AppListCard: React.FC<AppListCardProps> = ({
     </Box>
   );
 };
-AppListCard.displayName = "AppListCard";
-export default AppListCard;
+AppListRow.displayName = "AppListRow";
+export default AppListRow;
