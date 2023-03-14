@@ -332,6 +332,7 @@ export const OrderUnconfirmedDetails: React.FC<
         onClose={closeModal}
         onFetch={variantSearch}
         onFetchMore={loadMore}
+        channelName={order.channel?.name}
         onSubmit={variants =>
           orderLinesAdd.mutate({
             id,

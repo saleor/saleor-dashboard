@@ -11,10 +11,15 @@ html {
 body {
   color: var(--mu-colors-foreground-text-neutral-plain) !important;
   overscroll-behavior-y: none;
+  -webkit-font-smoothing: subpixel-antialiased;
 }
 
 .hide-scrollbar::-webkit-scrollbar {
   display: none;
+}
+
+.hide-scrollbar {
+  scrollbar-width: none;
 }
 
 .ellipsis {
