@@ -28,7 +28,7 @@ import {
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn, Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
-import { Box, sprinkles } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -262,7 +262,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           )}
         />
 
-        <div className={sprinkles({ paddingX: 9 })}>
+        <Box paddingX={9}>
           <TablePaginationWithContext
             component="div"
             colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}
@@ -270,7 +270,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
             disabled={disabled}
             onUpdateListSettings={onUpdateListSettings}
           />
-        </div>
+        </Box>
       </DatagridChangeStateContext.Provider>
     </Box>
   );

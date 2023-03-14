@@ -2,8 +2,8 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import { ProductListColumns } from "@dashboard/config";
 import { ProductListQuery } from "@dashboard/graphql";
 import { ListProps, RelayToFlat } from "@dashboard/types";
-import { CircularProgress, Typography } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui/next";
+import { CircularProgress } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
@@ -55,10 +55,8 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
     }
 
     return (
-      <Box padding={9}>
-        <Typography align="center">
-          {intl.formatMessage(messages.emptyText)}
-        </Typography>
+      <Box padding={9} textAlign="center">
+        <Text size="small">{intl.formatMessage(messages.emptyText)}</Text>
       </Box>
     );
   }, [intl, loading, onTileClick, products]);

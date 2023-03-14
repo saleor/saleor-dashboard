@@ -8,10 +8,11 @@ import {
 import useFilter from "@dashboard/components/Filter/useFilter";
 import { extractInvalidFilters } from "@dashboard/components/Filter/utils";
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
+import { sprinkles } from "@saleor/macaw-ui/next";
 import React, { useMemo, useState } from "react";
 
 import { FilterButton } from "./FilterButton";
-import { useStyles } from "./styles";
+import { getSelectedFilterAmount } from "./utils";
 
 export interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol?: string;
@@ -27,9 +28,7 @@ const Filter = ({
   onFilterAdd,
   onFilterAttributeFocus,
   errorMessages,
-}) => {
-  const classes = useStyles();
-
+}: FilterProps) => {
   const anchor = React.useRef<HTMLDivElement>();
   const [isFilterMenuOpened, setFilterMenuOpened] = useState(false);
   const [filterErrors, setFilterErrors] = useState<InvalidFilters<string>>({});
@@ -37,18 +36,7 @@ const Filter = ({
 
   const isFilterActive = menu.some(filterElement => filterElement.active);
   const selectedFilterAmount = useMemo(
-    () =>
-      menu.reduce((acc, filterElement) => {
-        const dataFilterElement = data.find(
-          ({ name }) => name === filterElement.name,
-        );
-
-        if (!dataFilterElement) {
-          return acc;
-        }
-
-        return acc + (dataFilterElement.active ? 1 : 0);
-      }, 0),
+    () => getSelectedFilterAmount(menu, data),
     [data, menu],
   );
 
@@ -86,7 +74,16 @@ const Filter = ({
           selectedFilterAmount={selectedFilterAmount}
         />
         <Popper
-          className={classes.popover}
+          className={sprinkles({
+            backgroundColor: "surfaceNeutralPlain",
+            overflowY: "scroll",
+            boxShadow: "modal",
+            zIndex: "3",
+          })}
+          style={{
+            width: "376px",
+            height: "450px",
+          }}
           open={isFilterMenuOpened}
           anchorEl={anchor.current}
           transition
