@@ -249,7 +249,6 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                         <UserAvatar
                           url={member?.avatar?.url}
                           initials={getUserInitials(member)}
-                          size="large"
                         />
                       </TableCell>
                       <TableCell className={classes.colName}>

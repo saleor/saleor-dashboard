@@ -8,6 +8,7 @@ import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { PermissionGroupMemberFragment } from "@dashboard/graphql";
+import { commonStatusMessages } from "@dashboard/intl";
 import {
   getUserInitials,
   getUserName,
@@ -210,7 +211,6 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                       <UserAvatar
                         initials={getUserInitials(user)}
                         url={user?.avatar?.url}
-                        size="large"
                       />
                       <Box display="flex" flexDirection="column">
                         <Text>{getUserName(user) || <Skeleton />}</Text>
@@ -218,17 +218,9 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                           {!user ? (
                             <Skeleton />
                           ) : user.isActive ? (
-                            intl.formatMessage({
-                              id: "9Zlogd",
-                              defaultMessage: "Active",
-                              description: "staff member status",
-                            })
+                            intl.formatMessage(commonStatusMessages.active)
                           ) : (
-                            intl.formatMessage({
-                              id: "7WzUxn",
-                              defaultMessage: "Inactive",
-                              description: "staff member status",
-                            })
+                            intl.formatMessage(commonStatusMessages.notActive)
                           )}
                         </Text>
                       </Box>

@@ -5,6 +5,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { StaffListQuery } from "@dashboard/graphql";
+import { commonStatusMessages } from "@dashboard/intl";
 import {
   getUserInitials,
   getUserName,
@@ -126,7 +127,6 @@ const StaffList: React.FC<StaffListProps> = props => {
                   <UserAvatar
                     url={staffMember?.avatar?.url}
                     initials={getUserInitials(staffMember)}
-                    size="large"
                   />
                   <Box display="flex" flexDirection="column">
                     <Text>{getUserName(staffMember) || <Skeleton />}</Text>
@@ -136,16 +136,8 @@ const StaffList: React.FC<StaffListProps> = props => {
                       color="textNeutralSubdued"
                     >
                       {staffMember?.isActive
-                        ? intl.formatMessage({
-                            id: "9Zlogd",
-                            defaultMessage: "Active",
-                            description: "staff member status",
-                          })
-                        : intl.formatMessage({
-                            id: "7WzUxn",
-                            defaultMessage: "Inactive",
-                            description: "staff member status",
-                          })}
+                        ? intl.formatMessage(commonStatusMessages.active)
+                        : intl.formatMessage(commonStatusMessages.notActive)}
                     </Text>
                   </Box>
                 </Box>
