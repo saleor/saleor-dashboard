@@ -4,10 +4,10 @@ import {
   mapToMenuItemsForProductOverviewActions,
   useExtensions,
 } from "@dashboard/apps/hooks/useExtensions";
+import { FilterBar } from "@dashboard/components/AppLayout/FilterBar";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { getByName } from "@dashboard/components/Filter/utils";
-import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { TopNavMenu } from "@dashboard/components/TopNavMenu";
@@ -35,9 +35,10 @@ import { Card } from "@material-ui/core";
 import {
   Box,
   Button,
-  ProductsIcons,
-  TableEditIcon,
+  Switch,
   Text,
+  ViewTableIcon,
+  ViewWideTilesIcon,
 } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -80,7 +81,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
     columnQuery,
     currencySymbol,
-    currentTab,
     defaultSettings,
     gridAttributes,
     limits,
@@ -90,18 +90,13 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     initialSearch,
     loading,
     settings,
-    tabs,
     onAdd,
-    onAll,
     onColumnQueryChange,
     onExport,
     onFetchMore,
     onFilterChange,
     onFilterAttributeFocus,
     onSearchChange,
-    onTabChange,
-    onTabDelete,
-    onTabSave,
     onUpdateListSettings,
     selectedChannelId,
     selectedProductIds,
@@ -133,7 +128,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
 
   return (
     <ListPageLayout>
-      <TopNav title={intl.formatMessage(sectionNames.products)}>
+      <TopNav withoutBorder title={intl.formatMessage(sectionNames.products)}>
         <Box display="flex" alignItems="center" gap={5}>
           {hasLimits(limits, "productVariants") && (
             <Text variant="caption">
@@ -211,56 +206,32 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           justifyContent="space-between"
         >
           <FilterBar
-            withoutBorder
             currencySymbol={currencySymbol}
-            currentTab={currentTab}
             initialSearch={initialSearch}
-            onAll={onAll}
             onFilterChange={onFilterChange}
             onFilterAttributeFocus={onFilterAttributeFocus}
             onSearchChange={onSearchChange}
-            onTabChange={onTabChange}
-            onTabDelete={onTabDelete}
-            onTabSave={onTabSave}
-            tabs={tabs}
-            allTabLabel={intl.formatMessage({
-              id: "aFLtLk",
-              defaultMessage: "All Products",
-              description: "tab name",
-            })}
             filterStructure={filterStructure}
             searchPlaceholder={intl.formatMessage({
               id: "kIvvax",
               defaultMessage: "Search Products...",
             })}
-          />
-          {/* Temporary solution until header is reworked */}
-          <Button
-            variant="tertiary"
-            onClick={() =>
-              setProductListViewType(isDatagridView ? "tile" : "datagrid")
+            actions={
+              <Switch
+                defaultValue="datagrid"
+                onValueChange={value => {
+                  setProductListViewType(value as ProductListViewType);
+                }}
+              >
+                <Switch.Item id="datagrid" value="datagrid">
+                  <ViewWideTilesIcon size="medium" />
+                </Switch.Item>
+                <Switch.Item id="tile" value="tile">
+                  <ViewTableIcon size="medium" />
+                </Switch.Item>
+              </Switch>
             }
-          >
-            {!isDatagridView ? (
-              <>
-                <TableEditIcon />
-                <FormattedMessage
-                  id="WACLJx"
-                  defaultMessage="Switch to datagrid view"
-                  description="switch"
-                />
-              </>
-            ) : (
-              <>
-                <ProductsIcons />
-                <FormattedMessage
-                  id="CU+aFW"
-                  defaultMessage="Switch to tile view"
-                  description="switch"
-                />
-              </>
-            )}
-          </Button>
+          />
         </Box>
         {isDatagridView ? (
           <ProductListDatagrid
@@ -270,7 +241,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             columnQuery={columnQuery}
             defaultSettings={defaultSettings}
             availableInGridAttributes={availableInGridAttributes}
-            loading={loading}
+            isAttributeLoading={loading}
+            loading={listProps.disabled}
             hasMore={hasMore}
             gridAttributes={gridAttributes}
             onColumnQueryChange={onColumnQueryChange}
@@ -287,6 +259,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           <ProductListTiles
             {...listProps}
             settings={settings}
+            loading={listProps.disabled}
             onUpdateListSettings={onUpdateListSettings}
             products={listProps.products}
             onTileClick={id => {

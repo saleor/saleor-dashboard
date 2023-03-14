@@ -3,14 +3,16 @@ import { ProductListColumns } from "@dashboard/config";
 import { ProductListQuery } from "@dashboard/graphql";
 import { ListProps, RelayToFlat } from "@dashboard/types";
 import { CircularProgress } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui/next";
-import React from "react";
+import { Box, Text } from "@saleor/macaw-ui/next";
+import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
+import { messages } from "../ProductListDatagrid/messages";
 import { ProductTile } from "../ProductTile/ProductTile";
 
 export interface ProductListTilesProps extends ListProps<ProductListColumns> {
   products: RelayToFlat<ProductListQuery["products"]> | undefined;
+  loading?: boolean;
   onTileClick: (id: string) => void;
 }
 
@@ -19,13 +21,22 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
   onTileClick,
   settings,
   disabled,
+  loading,
   onUpdateListSettings,
 }) => {
   const intl = useIntl();
 
-  return (
-    <>
-      {products ? (
+  const renderContent = useCallback(() => {
+    if (loading) {
+      return (
+        <Box display="flex" justifyContent="center" height="100%" marginY={12}>
+          <CircularProgress />
+        </Box>
+      );
+    }
+
+    if (products?.length > 1) {
+      return (
         <Box
           display="grid"
           gridTemplateColumns={{ mobile: 3, tablet: 5, desktop: 6 }}
@@ -40,11 +51,19 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
             />
           ))}
         </Box>
-      ) : (
-        <Box display="flex" justifyContent="center" height="100%" marginY={12}>
-          <CircularProgress />
-        </Box>
-      )}
+      );
+    }
+
+    return (
+      <Box padding={9} textAlign="center">
+        <Text size="small">{intl.formatMessage(messages.emptyText)}</Text>
+      </Box>
+    );
+  }, [intl, loading, onTileClick, products]);
+
+  return (
+    <>
+      {renderContent()}
       <Box paddingX={9}>
         <TablePaginationWithContext
           component="div"

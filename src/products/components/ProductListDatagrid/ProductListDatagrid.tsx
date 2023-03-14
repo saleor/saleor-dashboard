@@ -28,7 +28,7 @@ import {
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn, Item } from "@glideapps/glide-data-grid";
 import { Button } from "@saleor/macaw-ui";
-import { sprinkles } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -57,6 +57,7 @@ interface ProductListDatagridProps
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
   onColumnQueryChange: (query: string) => void;
+  isAttributeLoading?: boolean;
 }
 
 export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
@@ -68,9 +69,10 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   selectedChannelId,
   onSort,
   sort,
+  loading,
   gridAttributes,
   hasMore,
-  loading,
+  isAttributeLoading,
   onFetchMore,
   columnQuery,
   defaultSettings,
@@ -156,14 +158,14 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         gridAttributes,
         gridAttributesFromSettings,
         selectedChannelId,
-        loading: disabled,
+        loading,
       }),
     [
       columns,
-      disabled,
       gridAttributes,
       gridAttributesFromSettings,
       intl,
+      loading,
       locale,
       products,
       searchProductType,
@@ -221,53 +223,55 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   );
 
   return (
-    <DatagridChangeStateContext.Provider value={datagrid}>
-      <Datagrid
-        readonly
-        rowMarkers="none"
-        columnSelect="single"
-        freezeColumns={2}
-        onColumnMoved={handleColumnMoved}
-        onColumnResize={handleColumnResize}
-        verticalBorder={col => (col > 1 ? true : false)}
-        getColumnTooltipContent={handleGetColumnTooltipContent}
-        availableColumns={columns}
-        onHeaderClicked={handleHeaderClicked}
-        emptyText={intl.formatMessage(messages.emptyText)}
-        getCellContent={getCellContent}
-        getCellError={() => false}
-        menuItems={() => []}
-        rows={getProductRowsLength(disabled, products)}
-        selectionActions={(indexes, { removeRows }) => (
-          <Button variant="tertiary" onClick={() => removeRows(indexes)}>
-            <FormattedMessage {...buttonMessages.delete} />
-          </Button>
-        )}
-        fullScreenTitle={intl.formatMessage(messages.products)}
-        onRowClick={handleRowClick}
-        renderColumnPicker={defaultProps => (
-          <ColumnPicker
-            {...defaultProps}
-            {...columnPickerColumns}
-            hasMore={hasMore}
-            loading={loading}
-            onFetchMore={onFetchMore}
-            query={columnQuery}
-            onQueryChange={onColumnQueryChange}
-            onSave={handleColumnChange}
-          />
-        )}
-      />
-
-      <div className={sprinkles({ paddingX: 9 })}>
-        <TablePaginationWithContext
-          component="div"
-          colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}
-          settings={settings}
-          disabled={disabled}
-          onUpdateListSettings={onUpdateListSettings}
+    <Box __marginTop={-1}>
+      <DatagridChangeStateContext.Provider value={datagrid}>
+        <Datagrid
+          readonly
+          rowMarkers="none"
+          columnSelect="single"
+          freezeColumns={2}
+          onColumnMoved={handleColumnMoved}
+          onColumnResize={handleColumnResize}
+          verticalBorder={col => (col > 1 ? true : false)}
+          getColumnTooltipContent={handleGetColumnTooltipContent}
+          availableColumns={columns}
+          onHeaderClicked={handleHeaderClicked}
+          emptyText={intl.formatMessage(messages.emptyText)}
+          getCellContent={getCellContent}
+          getCellError={() => false}
+          menuItems={() => []}
+          rows={getProductRowsLength(disabled, products)}
+          selectionActions={(indexes, { removeRows }) => (
+            <Button variant="tertiary" onClick={() => removeRows(indexes)}>
+              <FormattedMessage {...buttonMessages.delete} />
+            </Button>
+          )}
+          fullScreenTitle={intl.formatMessage(messages.products)}
+          onRowClick={handleRowClick}
+          renderColumnPicker={defaultProps => (
+            <ColumnPicker
+              {...defaultProps}
+              {...columnPickerColumns}
+              hasMore={hasMore}
+              loading={isAttributeLoading}
+              onFetchMore={onFetchMore}
+              query={columnQuery}
+              onQueryChange={onColumnQueryChange}
+              onSave={handleColumnChange}
+            />
+          )}
         />
-      </div>
-    </DatagridChangeStateContext.Provider>
+
+        <Box paddingX={9}>
+          <TablePaginationWithContext
+            component="div"
+            colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}
+            settings={settings}
+            disabled={disabled}
+            onUpdateListSettings={onUpdateListSettings}
+          />
+        </Box>
+      </DatagridChangeStateContext.Provider>
+    </Box>
   );
 };
