@@ -218,7 +218,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             })}
             actions={
               <Switch
-                defaultValue="datagrid"
+                defaultValue={storedProductListViewType}
                 onValueChange={value => {
                   setProductListViewType(value as ProductListViewType);
                 }}
