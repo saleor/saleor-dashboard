@@ -1,3 +1,4 @@
+import { useQuery } from "@apollo/client";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
@@ -29,6 +30,7 @@ import PermissionAlert from "../PermissionAlert";
 import WebhookHeaders from "../WebhookHeaders";
 import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
 import { getHeaderTitle } from "./messages";
+import { buildEventsMap, IntrospectionQuery } from "./utils";
 
 export interface WebhookFormData {
   syncEvents: WebhookEventTypeSyncEnum[];
@@ -92,6 +94,13 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
     onSubmit({ ...data, ...{ subscriptionQuery: query } });
   };
 
+  const { data: introspectionData } = useQuery(IntrospectionQuery, {
+    fetchPolicy: "network-only",
+  });
+
+  const elements = introspectionData?.__schema?.types || [];
+  const availableEvents = buildEventsMap(elements);
+
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
       {({ data, submit, change }) => {
@@ -100,12 +109,14 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
           data,
           query,
           setQuery,
+          availableEvents,
         });
         const handleAsyncEventsSelect = createAsyncEventsSelectHandler({
           change,
           data,
           query,
           setQuery,
+          availableEvents,
         });
 
         return (
