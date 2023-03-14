@@ -60,7 +60,7 @@ describe("RowActions", () => {
     expect(screen.getByTestId("show-more-button")).toBeInTheDocument();
   });
 
-  it("should render card meu with multiple items", async () => {
+  it("should render card menu with multiple items", async () => {
     // Arrange
     render(
       <ThemeProvider>
