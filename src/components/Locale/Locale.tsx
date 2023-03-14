@@ -111,20 +111,6 @@ function getKeyValueJson(messages: LocaleMessages): Record<string, string> {
   }
 }
 
-export function getMatchingLocale(languages: readonly string[]): Locale {
-  const localeEntries = Object.entries(Locale);
-
-  for (const preferredLocale of languages) {
-    for (const localeEntry of localeEntries) {
-      if (localeEntry[1].toLowerCase() === preferredLocale.toLowerCase()) {
-        return Locale[localeEntry[0]];
-      }
-    }
-  }
-
-  return undefined;
-}
-
 const defaultLocale = Locale.EN;
 
 export interface LocaleContextType {
@@ -139,10 +125,7 @@ export const LocaleContext = React.createContext<LocaleContextType>({
 const { Consumer: LocaleConsumer, Provider: RawLocaleProvider } = LocaleContext;
 
 const LocaleProvider: React.FC = ({ children }) => {
-  const [locale, setLocale] = useLocalStorage(
-    "locale",
-    getMatchingLocale(navigator.languages) || defaultLocale,
-  );
+  const [locale, setLocale] = useLocalStorage("locale", defaultLocale);
   const [messages, setMessages] = React.useState(undefined);
 
   React.useEffect(() => {
