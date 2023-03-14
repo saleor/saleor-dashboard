@@ -1,5 +1,8 @@
 import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
-import { resolveInstallationOfMarketplaceApp } from "@dashboard/apps/utils";
+import {
+  groupIntoPairs,
+  resolveInstallationOfMarketplaceApp,
+} from "@dashboard/apps/utils";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { Skeleton } from "@material-ui/lab";
 import { Box } from "@saleor/macaw-ui/next";
@@ -24,22 +27,16 @@ const AllAppList: React.FC<AllAppListProps> = ({
     return <Skeleton />;
   }
 
+  const appsPairs = groupIntoPairs(appList);
+
   return (
-    <Box
-      display="grid"
-      gridTemplateColumns={{
-        mobile: 1,
-        desktop: 2,
-      }}
-      gap={8}
-      marginTop={8}
-    >
-      {appList.map(app => (
+    <Box display="flex" flexDirection="column" gap={8} marginTop={8}>
+      {appsPairs.map(appPair => (
         <AppListCard
-          key={app.name.en}
-          app={app}
+          key={appPair[0].name.en}
+          appPair={appPair}
           appInstallation={resolveInstallationOfMarketplaceApp(
-            app,
+            appPair[0],
             appInstallationList,
           )}
           navigateToAppInstallPage={navigateToAppInstallPage}

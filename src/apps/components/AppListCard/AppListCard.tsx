@@ -12,14 +12,14 @@ import AppListCardIntegrations from "./AppListCardIntegrations";
 import AppListCardLinks from "./AppListCardLinks";
 
 interface AppListCardProps {
-  app: GetV2SaleorAppsResponse.SaleorApp;
+  appPair: GetV2SaleorAppsResponse.SaleorApp[];
   appInstallation?: AppInstallationFragment;
   navigateToAppInstallPage?: (manifestUrl: string) => void;
   navigateToGithubForkPage?: (githubForkUrl: string) => void;
 }
 
 const AppListCard: React.FC<AppListCardProps> = ({
-  app,
+  appPair,
   appInstallation,
   navigateToAppInstallPage,
   navigateToGithubForkPage,
@@ -27,42 +27,70 @@ const AppListCard: React.FC<AppListCardProps> = ({
   const intl = useIntl();
   const { retryAppInstallation, removeAppInstallation } = useAppListContext();
 
-  const details = getAppDetails({
-    intl,
-    app,
-    appInstallation,
-    navigateToAppInstallPage,
-    navigateToGithubForkPage,
-    retryAppInstallation,
-    removeAppInstallation,
-  });
+  const isSingleApp = appPair.length === 1;
+
+  const appDetails = React.useCallback(
+    (app: GetV2SaleorAppsResponse.SaleorApp) =>
+      getAppDetails({
+        intl,
+        app,
+        appInstallation,
+        navigateToAppInstallPage,
+        navigateToGithubForkPage,
+        retryAppInstallation,
+        removeAppInstallation,
+      }),
+    [
+      appInstallation,
+      intl,
+      navigateToAppInstallPage,
+      navigateToGithubForkPage,
+      removeAppInstallation,
+      retryAppInstallation,
+    ],
+  );
 
   return (
     <Box
-      display="flex"
-      flexDirection="column"
-      justifyContent="space-between"
-      borderStyle="solid"
-      borderWidth={1}
+      display="grid"
+      gridTemplateColumns={2}
+      __gridTemplateRows="auto auto auto auto"
+      __gridAutoFlow={isSingleApp ? "column" : "row"}
+      __gap="0 20px"
       padding={8}
-      borderRadius={3}
-      borderColor="neutralPlain"
     >
-      <Box>
+      {appPair.map(app => (
         <AppListCardDescription app={app} />
-        <AppListCardLinks links={details.links} />
-        <AppListCardIntegrations app={app} />
-      </Box>
-      <Box>
-        <AppListCardActions
-          releaseDate={details.releaseDate}
-          installationPending={details.installationPending}
-          installHandler={details.installHandler}
-          githubForkHandler={details.githubForkHandler}
-          retryInstallHandler={details.retryInstallHandler}
-          removeInstallHandler={details.removeInstallHandler}
-        />
-      </Box>
+      ))}
+      {appPair.map(app => (
+        <AppListCardLinks links={appDetails(app).links} />
+      ))}
+      {appPair.map(app => {
+        if (appPair.every(app => !app.integrations?.length)) {
+          return null;
+        }
+        return <AppListCardIntegrations integrations={app.integrations} />;
+      })}
+      {appPair.map(app => {
+        const {
+          releaseDate,
+          installationPending,
+          installHandler,
+          githubForkHandler,
+          retryInstallHandler,
+          removeInstallHandler,
+        } = appDetails(app);
+        return (
+          <AppListCardActions
+            releaseDate={releaseDate}
+            installationPending={installationPending}
+            installHandler={installHandler}
+            githubForkHandler={githubForkHandler}
+            retryInstallHandler={retryInstallHandler}
+            removeInstallHandler={removeInstallHandler}
+          />
+        );
+      })}
     </Box>
   );
 };
