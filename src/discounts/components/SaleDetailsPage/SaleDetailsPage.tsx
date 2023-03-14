@@ -298,7 +298,6 @@ const SaleDetailsPage: React.FC<SaleDetailsPageProps> = ({
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
               <SaleSummary selectedChannelId={selectedChannelId} sale={sale} />
-              <CardSpacer />
               <ChannelsAvailabilityCard
                 managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
                 allChannelsCount={allChannelsCount}
