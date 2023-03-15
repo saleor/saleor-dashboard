@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
-import swcReactRefresh from "@vitejs/plugin-react-swc";
+import react from "@vitejs/plugin-react-swc";
 import { copyFileSync } from "fs";
 import path from "path";
 import nodePolyfills from "rollup-plugin-polyfill-node";
@@ -54,7 +54,7 @@ export default defineConfig(({ command, mode }) => {
     SENTRY_ORG && SENTRY_PROJECT && SENTRY_DSN && SENTRY_AUTH_TOKEN;
 
   const plugins = [
-    swcReactRefresh(),
+    react(),
     createHtmlPlugin({
       entry: "/index.tsx",
       template: "index.html",
