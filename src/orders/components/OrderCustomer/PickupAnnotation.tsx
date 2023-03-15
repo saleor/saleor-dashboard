@@ -1,8 +1,6 @@
 import FormSpacer from "@dashboard/components/FormSpacer";
-import {
-  OrderDetailsFragment,
-  WarehouseClickAndCollectOptionEnum,
-} from "@dashboard/graphql";
+import { WarehouseClickAndCollectOptionEnum } from "@dashboard/graphql";
+import { OrderSharedType } from "@dashboard/orders/types";
 import { Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -10,7 +8,7 @@ import { FormattedMessage } from "react-intl";
 import messages from "./messages";
 
 interface PickupAnnotationProps {
-  order?: OrderDetailsFragment;
+  order?: OrderSharedType;
 }
 
 export const PickupAnnotation: React.FC<PickupAnnotationProps> = ({

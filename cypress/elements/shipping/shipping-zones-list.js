@@ -1,7 +1,7 @@
-export const SHIPPING_ZONES_LIST = {
+export const SHIPPING_ZONES_LIST_SELECTORS = {
   addShippingZone: "[data-test-id='add-shipping-zone']",
   unitSelect: "[id='mui-component-select-unit']",
-  saveUnit: '[data-test-id="save-unit"]'
+  saveUnit: '[data-test-id="save-unit"]',
 };
 
 export const SHIPPING_ZONE_CHECKBOX = shippingId =>

@@ -1,4 +1,4 @@
-export const CATEGORY_DETAILS = {
+export const CATEGORY_DETAILS_SELECTORS = {
   nameInput: '[name="name"]',
   descriptionInput: '[data-test-id="rich-text-editor-description"]',
   createSubcategoryButton: '[data-test-id="create-subcategory"]',

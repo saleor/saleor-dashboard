@@ -1,13 +1,10 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import {
-  FulfillmentStatus,
-  OrderErrorFragment,
-  OrderRefundDataQuery,
-} from "@dashboard/graphql";
+import { FulfillmentStatus, OrderErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
+import { OrderRefundData } from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -32,7 +29,7 @@ export const refundFulfilledStatuses = [
 ];
 
 export interface OrderRefundPageProps {
-  order: OrderRefundDataQuery["order"];
+  order: OrderRefundData;
   defaultType?: OrderRefundType;
   disabled: boolean;
   errors: OrderErrorFragment[];

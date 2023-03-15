@@ -9,6 +9,7 @@ import {
 import { FormsetData } from "@dashboard/hooks/useFormset";
 
 import { LineItemData } from "../components/OrderReturnPage/form";
+import { OrderRefundSharedType, OrderSharedType } from "../types";
 import {
   getAllFulfillmentLinesPriceSum,
   getPreviouslyRefundedPrice,
@@ -151,7 +152,9 @@ describe("Get previously refunded price", () => {
       },
     };
 
-    const refundedPrice = getPreviouslyRefundedPrice(order);
+    const refundedPrice = getPreviouslyRefundedPrice(
+      order as unknown as OrderRefundSharedType,
+    );
 
     expect(refundedPrice.amount).toBe(-60);
   });
@@ -526,8 +529,7 @@ describe("Get the total value of all replaced products", () => {
             id: "allocation_test_id",
             warehouse: {
               name: "US Warehouse",
-              id:
-                "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+              id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
               __typename: "Warehouse",
             },
             quantity: 1,
@@ -549,8 +551,7 @@ describe("Get the total value of all replaced products", () => {
               id: "stock_test_id1",
               warehouse: {
                 name: "warehouse_stock1",
-                id:
-                  "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                 __typename: "Warehouse",
               },
               quantity: 166,
@@ -561,8 +562,7 @@ describe("Get the total value of all replaced products", () => {
               id: "stock_test_id2",
               warehouse: {
                 name: "warehouse_stock2",
-                id:
-                  "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                 __typename: "Warehouse",
               },
               quantity: 166,
@@ -625,8 +625,7 @@ describe("Get the total value of all replaced products", () => {
           __typename: "TaxedMoney",
         },
         thumbnail: {
-          url:
-            "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+          url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
           __typename: "Image",
         },
         __typename: "OrderLine",
@@ -639,8 +638,7 @@ describe("Get the total value of all replaced products", () => {
             id: "allocation_test_id",
             warehouse: {
               name: "US Warehouse",
-              id:
-                "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+              id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
               __typename: "Warehouse",
             },
             quantity: 1,
@@ -656,8 +654,7 @@ describe("Get the total value of all replaced products", () => {
               id: "stock_test_id1",
               warehouse: {
                 name: "warehouse_stock1",
-                id:
-                  "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                 __typename: "Warehouse",
               },
               quantity: 166,
@@ -668,8 +665,7 @@ describe("Get the total value of all replaced products", () => {
               id: "stock_test_id2",
               warehouse: {
                 name: "warehouse_stock2",
-                id:
-                  "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                 __typename: "Warehouse",
               },
               quantity: 166,
@@ -738,8 +734,7 @@ describe("Get the total value of all replaced products", () => {
           __typename: "TaxedMoney",
         },
         thumbnail: {
-          url:
-            "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+          url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
           __typename: "Image",
         },
         __typename: "OrderLine",
@@ -752,8 +747,7 @@ describe("Get the total value of all replaced products", () => {
             id: "allocation_test_id",
             warehouse: {
               name: "US Warehouse",
-              id:
-                "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+              id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
               __typename: "Warehouse",
             },
             quantity: 1,
@@ -769,8 +763,7 @@ describe("Get the total value of all replaced products", () => {
               id: "stock_test_id1",
               warehouse: {
                 name: "warehouse_stock1",
-                id:
-                  "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                 __typename: "Warehouse",
               },
               quantity: 166,
@@ -781,8 +774,7 @@ describe("Get the total value of all replaced products", () => {
               id: "stock_test_id2",
               warehouse: {
                 name: "warehouse_stock2",
-                id:
-                  "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                 __typename: "Warehouse",
               },
               quantity: 166,
@@ -851,8 +843,7 @@ describe("Get the total value of all replaced products", () => {
           __typename: "TaxedMoney",
         },
         thumbnail: {
-          url:
-            "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+          url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
           __typename: "Image",
         },
         __typename: "OrderLine",
@@ -871,8 +862,7 @@ describe("Get the total value of all replaced products", () => {
               id: "allocation_test_id",
               warehouse: {
                 name: "US Warehouse",
-                id:
-                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse",
               },
               quantity: 1,
@@ -888,8 +878,7 @@ describe("Get the total value of all replaced products", () => {
                 id: "stock_test_id1",
                 warehouse: {
                   name: "warehouse_stock1",
-                  id:
-                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -900,8 +889,7 @@ describe("Get the total value of all replaced products", () => {
                 id: "stock_test_id2",
                 warehouse: {
                   name: "warehouse_stock2",
-                  id:
-                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -970,8 +958,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url:
-              "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -989,8 +976,7 @@ describe("Get the total value of all replaced products", () => {
               id: "allocation_test_id",
               warehouse: {
                 name: "US Warehouse",
-                id:
-                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse",
               },
               quantity: 1,
@@ -1006,8 +992,7 @@ describe("Get the total value of all replaced products", () => {
                 id: "stock_test_id1",
                 warehouse: {
                   name: "warehouse_stock1",
-                  id:
-                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -1018,8 +1003,7 @@ describe("Get the total value of all replaced products", () => {
                 id: "stock_test_id2",
                 warehouse: {
                   name: "warehouse_stock2",
-                  id:
-                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -1088,8 +1072,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url:
-              "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -1107,8 +1090,7 @@ describe("Get the total value of all replaced products", () => {
               id: "allocation_test_id",
               warehouse: {
                 name: "US Warehouse",
-                id:
-                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse",
               },
               quantity: 1,
@@ -1124,8 +1106,7 @@ describe("Get the total value of all replaced products", () => {
                 id: "stock_test_id1",
                 warehouse: {
                   name: "warehouse_stock1",
-                  id:
-                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -1136,8 +1117,7 @@ describe("Get the total value of all replaced products", () => {
                 id: "stock_test_id2",
                 warehouse: {
                   name: "warehouse_stock2",
-                  id:
-                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -1206,8 +1186,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url:
-              "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -1225,8 +1204,7 @@ describe("Get the total value of all replaced products", () => {
               id: "allocation_test_id",
               warehouse: {
                 name: "US Warehouse",
-                id:
-                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse",
               },
               quantity: 1,
@@ -1242,8 +1220,7 @@ describe("Get the total value of all replaced products", () => {
                 id: "stock_test_id1",
                 warehouse: {
                   name: "warehouse_stock1",
-                  id:
-                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -1254,8 +1231,7 @@ describe("Get the total value of all replaced products", () => {
                 id: "stock_test_id2",
                 warehouse: {
                   name: "warehouse_stock2",
-                  id:
-                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -1324,8 +1300,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url:
-              "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -1343,8 +1318,7 @@ describe("Get the total value of all replaced products", () => {
               id: "allocation_test_id",
               warehouse: {
                 name: "US Warehouse",
-                id:
-                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse",
               },
               quantity: 1,
@@ -1360,8 +1334,7 @@ describe("Get the total value of all replaced products", () => {
                 id: "stock_test_id1",
                 warehouse: {
                   name: "warehouse_stock1",
-                  id:
-                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -1372,8 +1345,7 @@ describe("Get the total value of all replaced products", () => {
                 id: "stock_test_id2",
                 warehouse: {
                   name: "warehouse_stock2",
-                  id:
-                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -1442,8 +1414,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url:
-              "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -1572,7 +1543,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "Fulfillment",
           },
         ],
-      },
+      } as unknown as OrderSharedType,
       {
         itemsToBeReplaced,
         unfulfilledItemsQuantities,
@@ -1595,8 +1566,7 @@ describe("Get the total value of all selected products", () => {
             id: "allocation_test_id",
             warehouse: {
               name: "US Warehouse",
-              id:
-                "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+              id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
               __typename: "Warehouse",
             },
             quantity: 1,
@@ -1612,8 +1582,7 @@ describe("Get the total value of all selected products", () => {
               id: "stock_test_id1",
               warehouse: {
                 name: "warehouse_stock1",
-                id:
-                  "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                 __typename: "Warehouse",
               },
               quantity: 166,
@@ -1624,8 +1593,7 @@ describe("Get the total value of all selected products", () => {
               id: "stock_test_id2",
               warehouse: {
                 name: "warehouse_stock2",
-                id:
-                  "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                 __typename: "Warehouse",
               },
               quantity: 166,
@@ -1694,8 +1662,7 @@ describe("Get the total value of all selected products", () => {
           __typename: "TaxedMoney",
         },
         thumbnail: {
-          url:
-            "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+          url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
           __typename: "Image",
         },
         __typename: "OrderLine",
@@ -1708,8 +1675,7 @@ describe("Get the total value of all selected products", () => {
             id: "allocation_test_id",
             warehouse: {
               name: "US Warehouse",
-              id:
-                "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+              id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
               __typename: "Warehouse",
             },
             quantity: 1,
@@ -1725,8 +1691,7 @@ describe("Get the total value of all selected products", () => {
               id: "stock_test_id1",
               warehouse: {
                 name: "warehouse_stock1",
-                id:
-                  "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                 __typename: "Warehouse",
               },
               quantity: 166,
@@ -1737,8 +1702,7 @@ describe("Get the total value of all selected products", () => {
               id: "stock_test_id2",
               warehouse: {
                 name: "warehouse_stock2",
-                id:
-                  "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                 __typename: "Warehouse",
               },
               quantity: 166,
@@ -1807,8 +1771,7 @@ describe("Get the total value of all selected products", () => {
           __typename: "TaxedMoney",
         },
         thumbnail: {
-          url:
-            "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+          url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
           __typename: "Image",
         },
         __typename: "OrderLine",
@@ -1821,8 +1784,7 @@ describe("Get the total value of all selected products", () => {
             id: "allocation_test_id",
             warehouse: {
               name: "US Warehouse",
-              id:
-                "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+              id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
               __typename: "Warehouse",
             },
             quantity: 1,
@@ -1838,8 +1800,7 @@ describe("Get the total value of all selected products", () => {
               id: "stock_test_id1",
               warehouse: {
                 name: "warehouse_stock1",
-                id:
-                  "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                 __typename: "Warehouse",
               },
               quantity: 166,
@@ -1850,8 +1811,7 @@ describe("Get the total value of all selected products", () => {
               id: "stock_test_id2",
               warehouse: {
                 name: "warehouse_stock2",
-                id:
-                  "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                 __typename: "Warehouse",
               },
               quantity: 166,
@@ -1920,8 +1880,7 @@ describe("Get the total value of all selected products", () => {
           __typename: "TaxedMoney",
         },
         thumbnail: {
-          url:
-            "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+          url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
           __typename: "Image",
         },
         __typename: "OrderLine",
@@ -1940,8 +1899,7 @@ describe("Get the total value of all selected products", () => {
               id: "allocation_test_id",
               warehouse: {
                 name: "US Warehouse",
-                id:
-                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse",
               },
               quantity: 1,
@@ -1957,8 +1915,7 @@ describe("Get the total value of all selected products", () => {
                 id: "stock_test_id1",
                 warehouse: {
                   name: "warehouse_stock1",
-                  id:
-                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -1969,8 +1926,7 @@ describe("Get the total value of all selected products", () => {
                 id: "stock_test_id2",
                 warehouse: {
                   name: "warehouse_stock2",
-                  id:
-                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -2039,8 +1995,7 @@ describe("Get the total value of all selected products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url:
-              "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -2058,8 +2013,7 @@ describe("Get the total value of all selected products", () => {
               id: "allocation_test_id",
               warehouse: {
                 name: "US Warehouse",
-                id:
-                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse",
               },
               quantity: 1,
@@ -2075,8 +2029,7 @@ describe("Get the total value of all selected products", () => {
                 id: "stock_test_id1",
                 warehouse: {
                   name: "warehouse_stock1",
-                  id:
-                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -2087,8 +2040,7 @@ describe("Get the total value of all selected products", () => {
                 id: "stock_test_id2",
                 warehouse: {
                   name: "warehouse_stock2",
-                  id:
-                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -2157,8 +2109,7 @@ describe("Get the total value of all selected products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url:
-              "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -2176,8 +2127,7 @@ describe("Get the total value of all selected products", () => {
               id: "allocation_test_id",
               warehouse: {
                 name: "US Warehouse",
-                id:
-                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse",
               },
               quantity: 1,
@@ -2193,8 +2143,7 @@ describe("Get the total value of all selected products", () => {
                 id: "stock_test_id1",
                 warehouse: {
                   name: "warehouse_stock1",
-                  id:
-                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -2205,8 +2154,7 @@ describe("Get the total value of all selected products", () => {
                 id: "stock_test_id2",
                 warehouse: {
                   name: "warehouse_stock2",
-                  id:
-                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -2275,8 +2223,7 @@ describe("Get the total value of all selected products", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url:
-              "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -2395,7 +2342,7 @@ describe("Get the total value of all selected products", () => {
             __typename: "Fulfillment",
           },
         ],
-      },
+      } as unknown as OrderSharedType,
       {
         itemsToBeReplaced,
         waitingItemsQuantities,
@@ -2422,8 +2369,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               id: "allocation_test_id",
               warehouse: {
                 name: "US Warehouse",
-                id:
-                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse",
               },
               quantity: 1,
@@ -2439,8 +2385,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
                 id: "stock_test_id1",
                 warehouse: {
                   name: "warehouse_stock1",
-                  id:
-                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -2451,8 +2396,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
                 id: "stock_test_id2",
                 warehouse: {
                   name: "warehouse_stock2",
-                  id:
-                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -2521,8 +2465,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url:
-              "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -2540,8 +2483,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               id: "allocation_test_id",
               warehouse: {
                 name: "US Warehouse",
-                id:
-                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse",
               },
               quantity: 1,
@@ -2557,8 +2499,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
                 id: "stock_test_id1",
                 warehouse: {
                   name: "warehouse_stock1",
-                  id:
-                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -2569,8 +2510,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
                 id: "stock_test_id2",
                 warehouse: {
                   name: "warehouse_stock2",
-                  id:
-                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -2639,8 +2579,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url:
-              "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/saleor-digital-03_2-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",
@@ -2658,8 +2597,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
               id: "allocation_test_id",
               warehouse: {
                 name: "US Warehouse",
-                id:
-                  "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
+                id: "V2FyZWhvdXNlOjk1NWY0ZDk2LWRmNTAtNGY0Zi1hOTM4LWM5MTYzYTA4YTViNg==",
                 __typename: "Warehouse",
               },
               quantity: 1,
@@ -2675,8 +2613,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
                 id: "stock_test_id1",
                 warehouse: {
                   name: "warehouse_stock1",
-                  id:
-                    "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
+                  id: "V2FyZWhvdXNlOjc4OGUyMGRlLTlmYTAtNDI5My1iZDk2LWUwM2RjY2RhMzc0ZQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -2687,8 +2624,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
                 id: "stock_test_id2",
                 warehouse: {
                   name: "warehouse_stock2",
-                  id:
-                    "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
+                  id: "V2FyZWhvdXNlOjczYzI0OGNmLTliNzAtNDlmMi1hMDRlLTM4ZTYxMmQ5MDYwMQ==",
                   __typename: "Warehouse",
                 },
                 quantity: 166,
@@ -2757,8 +2693,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             __typename: "TaxedMoney",
           },
           thumbnail: {
-            url:
-              "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
+            url: "http://localhost:8000/media/__sized__/products/saleordemoproduct_cl_boot06_1-thumbnail-255x255.png",
             __typename: "Image",
           },
           __typename: "OrderLine",

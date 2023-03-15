@@ -1,22 +1,25 @@
-import { Alert, AlertProps, makeStyles } from "@saleor/macaw-ui";
+import { Alert, AlertProps } from "@saleor/macaw-ui";
+import { sprinkles } from "@saleor/macaw-ui/next";
+import clsx from "clsx";
 import React from "react";
-
-const useStyles = makeStyles(
-  theme => ({
-    root: {
-      marginBottom: theme.spacing(3),
-    },
-  }),
-  { name: "LimitReachedAlert" },
-);
 
 export type LimitReachedAlertProps = Omit<AlertProps, "variant" | "close">;
 
-const LimitReachedAlert: React.FC<LimitReachedAlertProps> = props => {
-  const classes = useStyles();
-
-  return <Alert variant="warning" close className={classes.root} {...props} />;
-};
+const LimitReachedAlert: React.FC<LimitReachedAlertProps> = props => (
+  // TODO: migrate to new macaw-ui alert
+  <Alert
+    variant="warning"
+    close
+    className={clsx(
+      sprinkles({
+        gridColumn: "8",
+        marginBottom: 5,
+      }),
+      "remove-icon-background",
+    )}
+    {...props}
+  />
+);
 
 LimitReachedAlert.displayName = "LimitReachedAlert";
 export default LimitReachedAlert;

@@ -85,6 +85,10 @@ const useStyles = makeStyles(
         "& .ce-popover__item-icon": {
           color: theme.palette.saleor.generic.verydark,
         },
+
+        "& .codex-editor__loader": {
+          height: "30px",
+        },
         "& .ce-toolbox.ce-toolbox--opened": {
           left: 16,
         },

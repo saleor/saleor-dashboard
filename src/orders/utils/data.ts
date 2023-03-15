@@ -1,4 +1,4 @@
-import { IMoney, subtractMoney } from "@dashboard/components/Money";
+import { subtractMoney } from "@dashboard/components/Money";
 import {
   AddressFragment,
   AddressInput,
@@ -6,6 +6,7 @@ import {
   FulfillmentFragment,
   FulfillmentStatus,
   OrderDetailsFragment,
+  OrderDetailsQuery,
   OrderFulfillLineFragment,
   OrderLineFragment,
   OrderLineStockDataFragment,
@@ -13,8 +14,10 @@ import {
   StockFragment,
   WarehouseFragment,
 } from "@dashboard/graphql";
+import { OrderDetailsWithTransactionsFragment } from "@dashboard/graphql/types.transactions.generated";
 import { FormsetData } from "@dashboard/hooks/useFormset";
 import { findInEnum, getById } from "@dashboard/misc";
+import { IMoney } from "@dashboard/utils/intl";
 
 import {
   LineItemData,
@@ -24,6 +27,7 @@ import {
   getAllOrderFulfilledLines,
   getAllOrderWaitingLines,
 } from "../components/OrderReturnPage/utils";
+import { OrderRefundSharedType, OrderSharedType } from "../types";
 
 export type OrderWithTotalAndTotalCaptured = Pick<
   OrderRefundDataQuery["order"],
@@ -36,12 +40,19 @@ export interface OrderLineWithStockWarehouses {
   };
 }
 
+export function getOrderCharged(order: any) {
+  if ((order as OrderDetailsWithTransactionsFragment)?.totalCharged) {
+    return (order as OrderDetailsWithTransactionsFragment).totalCharged;
+  }
+  return (order as OrderDetailsFragment)?.totalCaptured;
+}
+
 export function getToFulfillOrderLines(lines?: OrderLineStockDataFragment[]) {
   return lines?.filter(line => line.quantityToFulfill > 0) || [];
 }
 
 export function getWarehousesFromOrderLines<
-  T extends OrderLineWithStockWarehouses
+  T extends OrderLineWithStockWarehouses,
 >(lines?: T[]) {
   return lines?.reduce(
     (warehouses, line) =>
@@ -57,12 +68,12 @@ export function getWarehousesFromOrderLines<
 }
 
 export function getPreviouslyRefundedPrice(
-  order: OrderWithTotalAndTotalCaptured,
+  order: OrderRefundSharedType,
 ): IMoney {
   return (
-    order?.totalCaptured &&
+    getOrderCharged(order) &&
     order?.total?.gross &&
-    subtractMoney(order?.totalCaptured, order?.total?.gross)
+    subtractMoney(getOrderCharged(order), order?.total?.gross)
   );
 }
 
@@ -90,7 +101,7 @@ const getFulfillmentByFulfillmentLineId = (order, fulfillmentLineId) => {
 };
 
 const selectItemPriceAndQuantity = (
-  order: OrderDetailsFragment,
+  order: OrderSharedType,
   {
     fulfilledItemsQuantities,
     waitingItemsQuantities,
@@ -121,7 +132,7 @@ const selectItemPriceAndQuantity = (
 };
 
 export const getReplacedProductsAmount = (
-  order: OrderDetailsFragment,
+  order: OrderSharedType,
   {
     itemsToBeReplaced,
     unfulfilledItemsQuantities,
@@ -160,7 +171,7 @@ export const getReplacedProductsAmount = (
 };
 
 export const getReturnSelectedProductsAmount = (
-  order: OrderDetailsFragment,
+  order: OrderSharedType,
   {
     itemsToBeReplaced,
     waitingItemsQuantities,
@@ -286,7 +297,7 @@ export function addressToAddressInput<T>(
 }
 
 export const getVariantSearchAddress = (
-  order: OrderDetailsFragment,
+  order: OrderSharedType,
 ): AddressInput => {
   if (order.shippingAddress) {
     return addressToAddressInput(order.shippingAddress);
@@ -425,3 +436,12 @@ export const getAttributesCaption = (
       attribute.values.map(attributeValue => attributeValue.name).join(", "),
     )
     .join(" / ");
+
+export const prepareMoney = (
+  amount: number,
+  currency: string,
+): OrderDetailsQuery["order"]["totalCaptured"] => ({
+  __typename: "Money",
+  amount,
+  currency: currency ?? "USD",
+});

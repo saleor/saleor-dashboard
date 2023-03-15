@@ -1,4 +1,4 @@
-export const PAGE_DETAILS = {
+export const PAGE_DETAILS_SELECTORS = {
   nameInput: '[name="title"]',
   pageTypesAutocompleteSelect:
     '[data-test-id="page-types-autocomplete-select"]',

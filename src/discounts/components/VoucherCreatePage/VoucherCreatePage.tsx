@@ -1,6 +1,5 @@
 import { ChannelVoucherData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -134,7 +133,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 onChange={event => handleDiscountTypeChange(data, event)}
                 variant="create"
               />
-              <CardSpacer />
               <VoucherTypes
                 data={data}
                 disabled={disabled}
@@ -143,7 +141,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
               />
               {data.discountType.toString() !== "SHIPPING" ? (
                 <>
-                  <CardSpacer />
                   <VoucherValue
                     data={data}
                     disabled={disabled}
@@ -154,7 +151,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                   />
                 </>
               ) : null}
-              <CardSpacer />
               <VoucherRequirements
                 data={data}
                 disabled={disabled}
@@ -162,7 +158,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 onChannelChange={handleChannelChange}
                 onChange={change}
               />
-              <CardSpacer />
               <VoucherLimits
                 data={data}
                 initialUsageLimit={initialForm.usageLimit}
@@ -172,7 +167,6 @@ const VoucherCreatePage: React.FC<VoucherCreatePageProps> = ({
                 setData={set}
                 isNewVoucher
               />
-              <CardSpacer />
               <VoucherDates
                 data={data}
                 disabled={disabled}

@@ -1,3 +1,3 @@
-export const PLUGINS_LIST = {
-  pluginRow: '[data-test-id="plugin"]'
+export const PLUGINS_LIST_SELECTORS = {
+  pluginRow: '[data-test-id="plugin"]',
 };

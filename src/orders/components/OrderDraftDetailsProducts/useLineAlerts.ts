@@ -1,4 +1,5 @@
-import { OrderErrorFragment, OrderLineFragment } from "@dashboard/graphql";
+import { OrderLineFragment } from "@dashboard/graphql";
+import { OrderErrorFragment } from "@dashboard/orders/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { useMemo } from "react";
 import { useIntl } from "react-intl";

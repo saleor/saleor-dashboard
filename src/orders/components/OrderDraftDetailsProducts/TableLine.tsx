@@ -3,11 +3,8 @@ import Money from "@dashboard/components/Money";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import { AVATAR_MARGIN } from "@dashboard/components/TableCellAvatar/Avatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  OrderErrorFragment,
-  OrderLineFragment,
-  OrderLineInput,
-} from "@dashboard/graphql";
+import { OrderLineFragment, OrderLineInput } from "@dashboard/graphql";
+import { OrderErrorFragment } from "@dashboard/orders/types";
 import { OrderLineDiscountContextConsumerProps } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { TableCell, Typography } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";

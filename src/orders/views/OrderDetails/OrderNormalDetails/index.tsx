@@ -10,6 +10,13 @@ import {
   useCustomerAddressesQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
+import {
+  CreateManualTransactionCaptureMutation,
+  CreateManualTransactionCaptureMutationVariables,
+  OrderDetailsWithTransactionsQueryResult,
+  OrderTransactionRequestActionMutation,
+  OrderTransactionRequestActionMutationVariables,
+} from "@dashboard/graphql/transactions";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {
   extractMutationErrors,
@@ -22,8 +29,14 @@ import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/compon
 import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFulfillmentApproveDialog";
 import OrderFulfillStockExceededDialog from "@dashboard/orders/components/OrderFulfillStockExceededDialog";
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
+import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
+import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
 import { transformFuflillmentLinesToStockFormsetData } from "@dashboard/orders/utils/data";
 import { PartialMutationProviderOutput } from "@dashboard/types";
+import {
+  CloseModalFunction,
+  OpenModalFunction,
+} from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -40,9 +53,10 @@ import OrderPaymentDialog from "../../../components/OrderPaymentDialog";
 import OrderPaymentVoidDialog from "../../../components/OrderPaymentVoidDialog";
 import {
   orderFulfillUrl,
-  orderRefundUrl,
+  orderPaymentRefundUrl,
   orderReturnUrl,
   orderUrl,
+  OrderUrlDialog,
   OrderUrlQueryParams,
 } from "../../../urls";
 import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
@@ -50,7 +64,9 @@ import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
 interface OrderNormalDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
-  data: OrderDetailsQueryResult["data"];
+  data:
+    | OrderDetailsQueryResult["data"]
+    | OrderDetailsWithTransactionsQueryResult["data"];
   orderAddNote: any;
   orderInvoiceRequest: any;
   handleSubmit: any;
@@ -69,10 +85,18 @@ interface OrderNormalDetailsProps {
   orderFulfillmentCancel: any;
   orderFulfillmentUpdateTracking: any;
   orderInvoiceSend: any;
+  orderTransactionAction: PartialMutationProviderOutput<
+    OrderTransactionRequestActionMutation,
+    OrderTransactionRequestActionMutationVariables
+  >;
+  orderAddManualTransaction: PartialMutationProviderOutput<
+    CreateManualTransactionCaptureMutation,
+    CreateManualTransactionCaptureMutationVariables
+  >;
   updateMetadataOpts: any;
   updatePrivateMetadataOpts: any;
-  openModal: any;
-  closeModal: any;
+  openModal: OpenModalFunction<OrderUrlDialog, OrderUrlQueryParams>;
+  closeModal: CloseModalFunction;
 }
 interface ApprovalState {
   fulfillment: FulfillmentFragment;
@@ -95,6 +119,8 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   orderFulfillmentCancel,
   orderFulfillmentUpdateTracking,
   orderInvoiceSend,
+  orderTransactionAction,
+  orderAddManualTransaction,
   updateMetadataOpts,
   updatePrivateMetadataOpts,
   openModal,
@@ -113,15 +139,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
 
   const warehouses = mapEdgesToItems(warehousesData?.warehouses);
 
-  const {
-    data: customerAddresses,
-    loading: customerAddressesLoading,
-  } = useCustomerAddressesQuery({
-    variables: {
-      id: order?.user?.id,
-    },
-    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
-  });
+  const { data: customerAddresses, loading: customerAddressesLoading } =
+    useCustomerAddressesQuery({
+      variables: {
+        id: order?.user?.id,
+      },
+      skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
+    });
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>,
   ): Promise<any> =>
@@ -133,10 +157,8 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   const intl = useIntl();
   const [transactionReference, setTransactionReference] = React.useState("");
 
-  const [
-    currentApproval,
-    setCurrentApproval,
-  ] = React.useState<ApprovalState | null>(null);
+  const [currentApproval, setCurrentApproval] =
+    React.useState<ApprovalState | null>(null);
   const [stockExceeded, setStockExceeded] = React.useState(false);
   const approvalErrors =
     orderFulfillmentApprove.opts.data?.orderFulfillmentApprove.errors || [];
@@ -195,6 +217,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         )}
         shippingMethods={data?.order?.shippingMethods || []}
         onOrderCancel={() => openModal("cancel")}
+        onTransactionAction={(id, action) =>
+          openModal("transaction-action", {
+            type: action,
+            id,
+            action: "transaction-action",
+          })
+        }
         onOrderFulfill={() => navigate(orderFulfillUrl(id))}
         onFulfillmentApprove={fulfillmentId =>
           navigate(
@@ -222,12 +251,13 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         }
         onPaymentCapture={() => openModal("capture")}
         onPaymentVoid={() => openModal("void")}
-        onPaymentRefund={() => navigate(orderRefundUrl(id))}
+        onPaymentRefund={() => navigate(orderPaymentRefundUrl(id))}
         onProductClick={id => () => navigate(productUrl(id))}
         onBillingAddressEdit={() => openModal("edit-billing-address")}
         onShippingAddressEdit={() => openModal("edit-shipping-address")}
-        onPaymentPaid={() => openModal("mark-paid")}
+        onMarkAsPaid={() => openModal("mark-paid")}
         onProfileView={() => navigate(customerUrl(order.user.id))}
+        onAddManualTransaction={() => openModal("add-manual-transaction")}
         onInvoiceClick={id =>
           window.open(
             order.invoices.find(invoice => invoice.id === id)?.url,
@@ -261,6 +291,18 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         onSubmit={() =>
           orderCancel.mutate({
             id,
+          })
+        }
+      />
+      <OrderTransactionActionDialog
+        confirmButtonState={orderTransactionAction.opts.status}
+        onClose={closeModal}
+        open={params.action === "transaction-action"}
+        action={params.type}
+        onSubmit={() =>
+          orderTransactionAction.mutate({
+            action: params.type,
+            transactionId: params.id,
           })
         }
       />
@@ -382,6 +424,28 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
         invoice={order?.invoices?.find(invoice => invoice.id === params.id)}
         onClose={closeModal}
         onSend={() => orderInvoiceSend.mutate({ id: params.id })}
+      />
+      <OrderManualTransactionDialog
+        dialogProps={{
+          open: params.action === "add-manual-transaction",
+          onClose: closeModal,
+        }}
+        submitState={orderAddManualTransaction.opts.status}
+        error={
+          orderAddManualTransaction.opts?.error?.message ||
+          orderAddManualTransaction.opts?.data?.transactionCreate?.errors?.[0]
+            ?.message
+        }
+        currency={data?.order?.totalBalance?.currency}
+        onAddTransaction={({ amount, description, pspReference }) =>
+          orderAddManualTransaction.mutate({
+            currency: data?.order?.totalBalance?.currency,
+            orderId: id,
+            amount,
+            description,
+            pspReference,
+          })
+        }
       />
       <OrderAddressFields
         action={params?.action}

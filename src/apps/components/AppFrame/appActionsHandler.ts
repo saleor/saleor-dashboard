@@ -1,3 +1,4 @@
+import { createAppsDebug } from "@dashboard/apps/apps-debug";
 import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostToExtension";
 import { useExternalApp } from "@dashboard/apps/components/ExternalAppContext/ExternalAppContext";
 import { AppUrls } from "@dashboard/apps/urls";
@@ -13,6 +14,8 @@ import {
 } from "@saleor/app-sdk/app-bridge";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
+
+const debug = createAppsDebug("appActionsHandler");
 
 const createResponseStatus = (
   actionId: string,
@@ -37,7 +40,7 @@ const useHandleNotificationAction = () => {
     handle: (action: NotificationAction) => {
       const { actionId, ...notification } = action.payload;
 
-      console.debug(`Handling Notification action with ID: ${actionId}`);
+      debug(`Handling Notification action with ID: %s`, actionId);
 
       notify({
         ...notification,
@@ -54,9 +57,11 @@ const useHandleRedirectAction = (appId: string) => {
   const intl = useIntl();
 
   const handleAppDeepChange = (action: RedirectAction) => {
-    console.debug("Handling deep app URL change");
+    debug("Handling deep app URL change");
+
     const exactLocation = urlJoin(getAppMountUri(), action.payload.to);
-    console.debug(`Exact location to redirect: ${exactLocation}`);
+
+    debug(`Exact location to redirect: %s`, exactLocation);
 
     if (action.payload.newContext) {
       // Open new dashboard in new tab
@@ -70,10 +75,11 @@ const useHandleRedirectAction = (appId: string) => {
   };
 
   const handleExternalHostChange = (action: RedirectAction) => {
-    console.debug(
-      `Handling external host change action with ID: ${action.payload.actionId}`,
+    debug(
+      `Handling external host change action with ID: %s`,
+      action.payload.actionId,
     );
-    console.debug(`Action payload is `, action.payload);
+    debug(`Action payload is %O`, action.payload);
 
     if (action.payload.newContext) {
       window.open(action.payload.to);
@@ -114,8 +120,8 @@ const useHandleRedirectAction = (appId: string) => {
   return {
     handle: (action: RedirectAction) => {
       const { actionId } = action.payload;
-      console.debug(`Handling Redirect action with ID ${actionId}`);
-      console.debug(`Action payload`, action.payload);
+      debug(`Handling Redirect action with ID: %s`, actionId);
+      debug(`Action payload: %O`, action.payload);
 
       const onlyAppDeepChange = AppUrls.isAppDeepUrlChange(
         appId,
@@ -123,7 +129,7 @@ const useHandleRedirectAction = (appId: string) => {
         action.payload.to,
       );
 
-      console.debug(`Is app deep URL change: ${onlyAppDeepChange}`);
+      debug(`Is app deep URL change: %s`, onlyAppDeepChange);
 
       try {
         if (onlyAppDeepChange) {
@@ -152,8 +158,10 @@ const useHandleUpdateRoutingAction = (appId: string) => ({
   handle: (action: UpdateRouting) => {
     const { newRoute, actionId } = action.payload;
 
-    console.debug(
-      `Handling UpdateRouting action with ID: ${actionId} and new route: ${newRoute}`,
+    debug(
+      `Handling UpdateRouting action with ID: %s and new route: %s`,
+      actionId,
+      newRoute,
     );
 
     const exactLocation = urlJoin(
@@ -162,7 +170,7 @@ const useHandleUpdateRoutingAction = (appId: string) => ({
       action.payload.newRoute,
     );
 
-    console.debug(`Update to new nested route ${exactLocation}`);
+    debug(`Update to new nested route:  %s`, exactLocation);
 
     window.history.pushState(null, "", exactLocation);
 
@@ -179,6 +187,8 @@ const useNotifyReadyAction = (
   appToken: string,
 ) => {
   const postToExtension = usePostToExtension(frameEl, appOrigin);
+
+  debug("Received notifyReady action");
 
   return {
     handle(action: NotifyReady) {

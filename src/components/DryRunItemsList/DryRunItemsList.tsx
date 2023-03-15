@@ -31,7 +31,7 @@ const DryRunItemsList: React.FC<DryRunItemsListProps> = ({
   setObjectId,
 }: DryRunItemsListProps) => {
   const intl = useIntl();
-  const classes = useStyles();
+  const classes = useStyles({});
   const { checkbox } = useListWidths();
   const objectDocument = DocumentMap[object];
   const objectCollection =
