@@ -55,8 +55,8 @@ const AppListRow: React.FC<AppListRowProps> = ({
       display="grid"
       gridTemplateColumns={2}
       __gridTemplateRows="auto auto auto auto"
-      __gridAutoFlow={isSingleApp ? "column" : "row"}
-      __gap="0 20px"
+      gridAutoFlow={isSingleApp ? "column" : "row"}
+      columnGap={8}
       padding={8}
     >
       {appPair.map(app => (

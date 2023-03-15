@@ -29,7 +29,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
       borderRightStyle="solid"
       paddingY={5}
       paddingX={8}
-      __alignItems="start"
+      alignItems="start"
     >
       {integrations.map(integration => (
         <Box
