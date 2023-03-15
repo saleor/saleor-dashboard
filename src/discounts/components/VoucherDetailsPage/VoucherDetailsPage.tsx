@@ -218,14 +218,12 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 onChange={change}
                 variant="update"
               />
-              <CardSpacer />
               <VoucherTypes
                 data={data}
                 disabled={disabled}
                 errors={errors}
                 onChange={event => handleDiscountTypeChange(data, event)}
               />
-              <CardSpacer />
               {data.discountType.toString() !== "SHIPPING" ? (
                 <VoucherValue
                   data={data}
@@ -236,7 +234,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                   variant="update"
                 />
               ) : null}
-              <CardSpacer />
               {data.type === VoucherTypeEnum.SPECIFIC_PRODUCT &&
               data.discountType.toString() !== "SHIPPING" ? (
                 <>
@@ -306,7 +303,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                   )}
                 </>
               ) : null}
-              <CardSpacer />
               {data.discountType.toString() === "SHIPPING" ? (
                 <CountryList
                   countries={voucher?.countries}
@@ -334,7 +330,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                   onCountryUnassign={onCountryUnassign}
                 />
               ) : null}
-              <CardSpacer />
               <VoucherRequirements
                 data={data}
                 disabled={disabled}
@@ -342,7 +337,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 onChange={change}
                 onChannelChange={handleChannelChange}
               />
-              <CardSpacer />
               <VoucherLimits
                 data={data}
                 initialUsageLimit={initialForm.usageLimit}
@@ -352,7 +346,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 setData={set}
                 isNewVoucher={false}
               />
-              <CardSpacer />
               <DiscountDates
                 data={data}
                 disabled={disabled}
@@ -366,7 +359,6 @@ const VoucherDetailsPage: React.FC<VoucherDetailsPageProps> = ({
                 voucher={voucher}
                 selectedChannelId={selectedChannelId}
               />
-              <CardSpacer />
               <ChannelsAvailabilityCard
                 managePermissions={[PermissionEnum.MANAGE_DISCOUNTS]}
                 allChannelsCount={allChannelsCount}
