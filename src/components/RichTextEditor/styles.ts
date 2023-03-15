@@ -1,4 +1,3 @@
-import { alpha } from "@material-ui/core/styles";
 import { makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui/next";
 
@@ -6,7 +5,7 @@ const useStyles = makeStyles(
   theme => {
     const hover = {
       "&:hover": {
-        background: alpha(theme.palette.primary.main, 0.1),
+        background: vars.colors.background.interactiveNeutralHighlightHovering,
       },
     };
 
@@ -19,7 +18,7 @@ const useStyles = makeStyles(
           minHeight: 24,
         },
         "& .ce-block--selected .ce-block__content": {
-          background: `${alpha(theme.palette.primary.main, 0.2)} !important`,
+          background: `${vars.colors.background.interactiveNeutralHighlightPressing} !important`,
         },
         "& .ce-block__content": {
           margin: 0,
@@ -29,7 +28,7 @@ const useStyles = makeStyles(
           ...hover,
         },
         "& .ce-conversion-tool--focused": {
-          background: `${alpha(theme.palette.primary.main, 0.1)} !important`,
+          background: `${vars.colors.background.interactiveNeutralHighlightHovering} !important`,
         },
         "& .ce-conversion-tool__icon": {
           background: "none",
@@ -76,13 +75,21 @@ const useStyles = makeStyles(
           ...hover,
         },
         "& .ce-popover": {
-          backgroundColor: theme.palette.background.paper,
+          backgroundColor: vars.colors.background.surfaceNeutralPlain,
+          position: "absolute",
+          top: 0,
+          left: "-186px",
+        },
+        "& .ce-settings": {
+          position: "absolute",
+          left: "-56px",
         },
         "& .ce-popover__item": {
           ...hover,
         },
         "& .ce-popover__item-icon": {
-          color: theme.palette.saleor.generic.verydark,
+          color: vars.colors.foreground.iconNeutralDefault,
+          backgroundColor: vars.colors.background.surfaceNeutralPlain,
         },
 
         "& .codex-editor__loader": {
@@ -96,7 +103,13 @@ const useStyles = makeStyles(
           paddingBottom: "0 !important",
         },
         "& a": {
-          color: theme.palette.primary.light,
+          color: vars.colors.foreground.textBrandDefault,
+        },
+        "& .ce-popover__item--focused": {
+          background: `${vars.colors.background.interactiveNeutralHighlightHovering} !important`,
+        },
+        "& .cdx-search-field": {
+          backgroundColor: vars.colors.background.surfaceNeutralPlain,
         },
       },
       root: {
@@ -139,6 +152,9 @@ const useStyles = makeStyles(
       },
       labelDisabled: {
         color: `${vars.colors.foreground.textNeutralDisabled} !important`,
+      },
+      rootTyped: {
+        backgroundColor: vars.colors.background.surfaceNeutralPlain,
       },
     };
   },

@@ -104,7 +104,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
 }) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name", "description", "rating"], errors);
-  const { editorRef, defaultValue, isReadyForMount, handleChange } =
+  const { editorRef, defaultValue, isReadyForMount, handleChange, getValue } =
     useRichTextContext();
 
   return (
@@ -141,6 +141,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
             helperText={getProductErrorMessage(formErrors.description, intl)}
             label={intl.formatMessage(commonMessages.description)}
             name="description"
+            getValue={getValue}
           />
         ) : (
           <RichTextEditorLoading
