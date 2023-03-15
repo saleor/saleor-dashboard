@@ -3,7 +3,6 @@ import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat } from "@dashboard/types";
 
 export function getOrdersRowsLength(
-  disabled: boolean,
   orders?: RelayToFlat<OrderListQuery["orders"]>,
   loading?: boolean,
 ) {
@@ -13,10 +12,6 @@ export function getOrdersRowsLength(
 
   if (orders?.length) {
     return orders.length;
-  }
-
-  if (disabled) {
-    return 1;
   }
 
   return 0;
