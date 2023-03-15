@@ -1,57 +1,29 @@
-import { makeStyles } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 
-const useStyles = makeStyles(
-  theme => ({
-    "@keyframes skeleton-animation": {
-      "0%": {
-        opacity: 0.6,
-      },
-      "100%": {
-        opacity: 1,
-      },
-    },
-    primary: {
-      "&$skeleton": {
-        background: theme.palette.primary.main,
-      },
-    },
-    skeleton: {
-      animation: "skeleton-animation .75s linear infinite forwards alternate",
-      background: theme.palette.background.default,
-      borderRadius: 4,
-      display: "block",
-      height: "0.8em",
-      margin: "0.2em 0",
-    },
-  }),
-  { name: "Skeleton" },
-);
-
 interface SkeletonProps {
   className?: string;
-  primary?: boolean;
   style?: React.CSSProperties;
+  height?: string;
 }
 
-const Skeleton: React.FC<SkeletonProps> = props => {
-  const { className, primary, style } = props;
-
-  const classes = useStyles(props);
-
-  return (
-    <span
-      data-test-id="skeleton"
-      className={clsx(classes.skeleton, className, {
-        [classes.primary]: primary,
-      })}
-      style={style}
-    >
-      &zwnj;
-    </span>
-  );
-};
+const Skeleton: React.FC<SkeletonProps> = ({
+  className,
+  style,
+  height = "100%",
+}) => (
+  <Box
+    className={clsx("skeleton-animation", className)}
+    style={style}
+    data-test-id="skeleton"
+    borderRadius={3}
+    backgroundColor="surfaceNeutralSubdued"
+    __height={height}
+  >
+    &zwnj;
+  </Box>
+);
 
 Skeleton.displayName = "Skeleton";
 export default Skeleton;

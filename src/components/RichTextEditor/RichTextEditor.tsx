@@ -25,7 +25,6 @@ export interface RichTextEditorProps extends Omit<EditorJsProps, "onChange"> {
     | null;
   // onChange with value shouldn't be used due to issues with React and EditorJS integration
   onChange?: () => void;
-  getValue?: () => Promise<any>;
 }
 
 const ReactEditorJS = createReactEditorJS();
@@ -107,7 +106,8 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               [classes.rootActive]: isFocused,
               [classes.rootDisabled]: disabled,
               [classes.rootError]: error,
-              [classes.rootTyped]: isTyped,
+              [classes.rootTyped]:
+                isTyped || props.defaultValue.blocks.length > 0,
             })}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}

@@ -1,6 +1,7 @@
 import { DashboardCard } from "@dashboard/components/Card";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
+import Skeleton from "@dashboard/components/Skeleton";
 import { ProductErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
@@ -104,7 +105,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
 }) => {
   const intl = useIntl();
   const formErrors = getFormErrors(["name", "description", "rating"], errors);
-  const { editorRef, defaultValue, isReadyForMount, handleChange, getValue } =
+  const { editorRef, defaultValue, isReadyForMount, handleChange } =
     useRichTextContext();
 
   return (
@@ -112,25 +113,29 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
       <DashboardCard.Title>
         {intl.formatMessage(commonMessages.generalInformations)}
       </DashboardCard.Title>
-      <DashboardCard.Content display="grid" gap={5}>
-        <Box>
-          <Input
-            label={intl.formatMessage({
-              id: "6AMFki",
-              defaultMessage: "Name",
-              description: "product name",
-            })}
-            size="medium"
-            value={data.name}
-            onChange={onChange}
-            error={!!formErrors.name}
-            name="name"
-            disabled={disabled}
-          />
-          <Text variant="caption" color="textCriticalDefault">
-            {getProductErrorMessage(formErrors.name, intl)}
-          </Text>
-        </Box>
+      <DashboardCard.Content display="grid" gap={5} paddingX={8}>
+        {data.name ? (
+          <Box>
+            <Input
+              label={intl.formatMessage({
+                id: "6AMFki",
+                defaultMessage: "Name",
+                description: "product name",
+              })}
+              size="medium"
+              value={data.name}
+              onChange={onChange}
+              error={!!formErrors.name}
+              name="name"
+              disabled={disabled}
+            />
+            <Text variant="caption" color="textCriticalDefault">
+              {getProductErrorMessage(formErrors.name, intl)}
+            </Text>
+          </Box>
+        ) : (
+          <Skeleton height="58px" />
+        )}
         {isReadyForMount ? (
           <RichTextEditor
             editorRef={editorRef}
@@ -141,7 +146,6 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
             helperText={getProductErrorMessage(formErrors.description, intl)}
             label={intl.formatMessage(commonMessages.description)}
             name="description"
-            getValue={getValue}
           />
         ) : (
           <RichTextEditorLoading
@@ -149,25 +153,29 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
             name="description"
           />
         )}
-        <Box>
-          <Input
-            label={intl.formatMessage({
-              id: "L7N+0y",
-              defaultMessage: "Product Rating",
-              description: "product rating",
-            })}
-            size="medium"
-            value={data.rating || ""}
-            onChange={onChange}
-            error={!!formErrors.rating}
-            name="rating"
-            type="number"
-            disabled={disabled}
-          />
-          <Text variant="caption" color="textCriticalDefault">
-            {getProductErrorMessage(formErrors.rating, intl)}
-          </Text>
-        </Box>
+        {data.rating ? (
+          <Box>
+            <Input
+              label={intl.formatMessage({
+                id: "L7N+0y",
+                defaultMessage: "Product Rating",
+                description: "product rating",
+              })}
+              size="medium"
+              value={data.rating}
+              onChange={onChange}
+              error={!!formErrors.rating}
+              name="rating"
+              type="number"
+              disabled={disabled}
+            />
+            <Text variant="caption" color="textCriticalDefault">
+              {getProductErrorMessage(formErrors.rating, intl)}
+            </Text>
+          </Box>
+        ) : (
+          <Skeleton height="58px" />
+        )}
       </DashboardCard.Content>
     </DashboardCard>
   );
