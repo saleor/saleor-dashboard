@@ -183,7 +183,7 @@ describe("Apps AppListRow", () => {
       <Wrapper>
         <AppListRow
           appPair={releasedAppPair}
-          appInstallation={failedAppInProgress}
+          appInstallationList={[failedAppInProgress]}
         />
       </Wrapper>,
     );
@@ -202,7 +202,7 @@ describe("Apps AppListRow", () => {
       <Wrapper>
         <AppListRow
           appPair={releasedAppPair}
-          appInstallation={pendingAppInProgress}
+          appInstallationList={[pendingAppInProgress]}
         />
       </Wrapper>,
     );
@@ -229,7 +229,7 @@ describe("Apps AppListRow", () => {
       <Wrapper>
         <AppListRow
           appPair={releasedAppPair}
-          appInstallation={failedAppInProgress}
+          appInstallationList={[failedAppInProgress]}
         />
       </Wrapper>,
     );

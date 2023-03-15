@@ -1,6 +1,9 @@
 import { useAppListContext } from "@dashboard/apps/context";
 import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
-import { getAppDetails } from "@dashboard/apps/utils";
+import {
+  getAppDetails,
+  resolveInstallationOfMarketplaceApp,
+} from "@dashboard/apps/utils";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
@@ -13,14 +16,14 @@ import AppListCardLinks from "./AppListCardLinks";
 
 interface AppListRowProps {
   appPair: GetV2SaleorAppsResponse.SaleorApp[];
-  appInstallation?: AppInstallationFragment;
+  appInstallationList?: AppInstallationFragment[];
   navigateToAppInstallPage?: (manifestUrl: string) => void;
   navigateToGithubForkPage?: (githubForkUrl: string) => void;
 }
 
 const AppListRow: React.FC<AppListRowProps> = ({
   appPair,
-  appInstallation,
+  appInstallationList,
   navigateToAppInstallPage,
   navigateToGithubForkPage,
 }) => {
@@ -34,14 +37,17 @@ const AppListRow: React.FC<AppListRowProps> = ({
       getAppDetails({
         intl,
         app,
-        appInstallation,
+        appInstallation: resolveInstallationOfMarketplaceApp(
+          app,
+          appInstallationList,
+        ),
         navigateToAppInstallPage,
         navigateToGithubForkPage,
         retryAppInstallation,
         removeAppInstallation,
       }),
     [
-      appInstallation,
+      appInstallationList,
       intl,
       navigateToAppInstallPage,
       navigateToGithubForkPage,
