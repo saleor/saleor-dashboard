@@ -2,48 +2,19 @@ import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import { Dialog, DialogContent } from "@material-ui/core";
 import { DialogHeader } from "@saleor/macaw-ui";
 import { createFetch } from "@saleor/sdk";
-import React, { createContext, useContext, useState } from "react";
+import React from "react";
 
 import GraphiQL from "../GraphiQLPlain";
+import { useDevModeContext } from "./hooks";
 
 const authorizedFetch = createFetch();
 
-export const DevModeContext = createContext({
-  variables: "",
-  setVariables: (_value: string) => undefined,
-  isDevModeVisible: false,
-  setDevModeVisibility: (_value: boolean) => undefined,
-  devModeContent: "",
-  setDevModeContent: (_value: string) => undefined,
-});
-
-export function DevModeProvider({ children }) {
-  const [variables, setVariables] = useState("");
-  const [devModeContent, setDevModeContent] = useState("");
-  const [isDevModeVisible, setDevModeVisibility] = useState(false);
-
-  return (
-    <DevModeContext.Provider
-      value={{
-        variables,
-        setVariables,
-        devModeContent,
-        setDevModeContent,
-        isDevModeVisible,
-        setDevModeVisibility,
-      }}
-    >
-      {children}
-    </DevModeContext.Provider>
-  );
-}
-
-interface Props {
+interface DevModePanelProps {
   isDevModeVisible: boolean;
   setDevModeVisibility: (value: boolean) => void;
 }
 
-export const DevModePanel: React.FC<Props> = ({
+export const DevModePanel: React.FC<DevModePanelProps> = ({
   isDevModeVisible,
   setDevModeVisibility,
 }) => {
@@ -52,21 +23,19 @@ export const DevModePanel: React.FC<Props> = ({
     fetch: authorizedFetch,
   });
 
-  const context = useContext(DevModeContext);
+  const context = useDevModeContext();
 
   return (
     <Dialog
       maxWidth="xl"
       fullWidth
       open={isDevModeVisible}
-      PaperProps={{ style: { height: "100%", zIndex: 100 } }}
+      style={{ zIndex: 5 }}
+      PaperProps={{ style: { height: "100%" } }}
     >
       <DialogHeader onClose={() => setDevModeVisibility(false)}>
         Dev Mode
       </DialogHeader>
-      {/* <div style={{ "margin":"20px" }}>
-        <Pill color="generic" label="customerCreate" onClick={() => {} }/>
-      </div> */}
       <DialogContent style={{ padding: 0, margin: 1 }}>
         <GraphiQL
           query={context.devModeContent}

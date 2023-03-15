@@ -14,7 +14,7 @@ import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
 import CardMenu from "@dashboard/components/CardMenu";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
-import { DevModeContext } from "@dashboard/components/DevModePanel/DevModePanel";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import Savebar from "@dashboard/components/Savebar";
@@ -48,7 +48,7 @@ import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React, { useContext } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { getChoices } from "../../utils/data";
@@ -242,7 +242,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     productId,
   );
 
-  const context = useContext(DevModeContext);
+  const context = useDevModeContext();
 
   const openPlaygroundURL = () => {
     context.setDevModeContent(defaultGraphiQLQuery);

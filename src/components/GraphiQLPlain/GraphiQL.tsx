@@ -623,6 +623,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       <Dialog
         isOpen={showDialog === "short-keys"}
         onDismiss={() => setShowDialog(null)}
+        style={rootStyle}
       >
         <div className="graphiql-dialog-header">
           <div className="graphiql-dialog-title">Short Keys</div>

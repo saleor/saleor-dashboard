@@ -6,7 +6,7 @@ import {
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
-import { DevModeContext } from "@dashboard/components/DevModePanel/DevModePanel";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
@@ -26,7 +26,7 @@ import { orderListUrl } from "@dashboard/orders/urls";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React, { useContext } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { getMutationErrors, maybe } from "../../../misc";
@@ -196,7 +196,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order?.id,
   );
 
-  const context = useContext(DevModeContext);
+  const context = useDevModeContext();
 
   const openPlaygroundURL = () => {
     context.setDevModeContent(defaultGraphiQLQuery);
