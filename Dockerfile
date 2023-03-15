@@ -16,6 +16,8 @@ COPY sw.js ./
 COPY *.d.ts ./
 COPY schema.graphql ./
 COPY introspection.json ./
+COPY introspection*.json ./
+
 COPY src/ src/
 
 ARG API_URI
