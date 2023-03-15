@@ -66,16 +66,24 @@ const AppListRow: React.FC<AppListRowProps> = ({
       padding={8}
     >
       {appPair.map(app => (
-        <AppListCardDescription app={app} />
+        <AppListCardDescription key={app.name.en + "description"} app={app} />
       ))}
       {appPair.map(app => (
-        <AppListCardLinks links={appDetails(app).links} />
+        <AppListCardLinks
+          key={app.name.en + "links"}
+          links={appDetails(app).links}
+        />
       ))}
       {appPair.map(app => {
         if (appPair.every(app => !app.integrations?.length)) {
           return null;
         }
-        return <AppListCardIntegrations integrations={app.integrations} />;
+        return (
+          <AppListCardIntegrations
+            key={app.name.en + "integrations"}
+            integrations={app.integrations}
+          />
+        );
       })}
       {appPair.map(app => {
         const {
@@ -88,6 +96,7 @@ const AppListRow: React.FC<AppListRowProps> = ({
         } = appDetails(app);
         return (
           <AppListCardActions
+            key={app.name.en + "actions"}
             releaseDate={releaseDate}
             installationPending={installationPending}
             installHandler={installHandler}
