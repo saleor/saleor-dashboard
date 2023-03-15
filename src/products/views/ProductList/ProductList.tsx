@@ -90,9 +90,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
+
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
+    [],
   );
+
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
   );
@@ -401,11 +403,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           <IconButton
             variant="secondary"
             color="primary"
-            onClick={() =>
-              openModal("delete", {
-                ids: listElements,
-              })
-            }
+            onClick={() => openModal("delete")}
           >
             <DeleteIcon />
           </IconButton>
@@ -430,11 +428,11 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         open={params.action === "delete"}
         confirmButtonState={productBulkDeleteOpts.status}
         onClose={closeModal}
-        onConfirm={() =>
+        onConfirm={() => {
           productBulkDelete({
-            variables: { ids: params.ids },
-          })
-        }
+            variables: { ids: listElements },
+          });
+        }}
         title={intl.formatMessage({
           id: "F4WdSO",
           defaultMessage: "Delete Products",

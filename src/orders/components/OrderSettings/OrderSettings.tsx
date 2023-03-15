@@ -1,7 +1,8 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Card, CardContent } from "@material-ui/core";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,8 +25,8 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
     <Card data-test-id="order-settings">
       <CardTitle
         title={intl.formatMessage({
-          id: "CLYlsu",
-          defaultMessage: "Settings",
+          id: "kn7jjd",
+          defaultMessage: "General settings",
           description: "section header",
         })}
       />
@@ -33,20 +34,22 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
         <ControlledCheckbox
           name="automaticallyConfirmAllNewOrders"
           label={
-            <>
-              <FormattedMessage
-                id="RLYfMF"
-                defaultMessage="Automatically confirm all orders"
-                description="checkbox label"
-              />
-              <Typography variant="caption">
+            <Box display="flex" flexDirection="column">
+              <Text>
+                <FormattedMessage
+                  id="RLYfMF"
+                  defaultMessage="Automatically confirm all orders"
+                  description="checkbox label"
+                />
+              </Text>
+              <Text variant="caption" color="textNeutralSubdued">
                 <FormattedMessage
                   id="wpAXKX"
                   defaultMessage="All orders will be automatically confirmed and all payments will be captured."
                   description="checkbox label description"
                 />
-              </Typography>
-            </>
+              </Text>
+            </Box>
           }
           checked={data.automaticallyConfirmAllNewOrders}
           onChange={onChange}
@@ -57,20 +60,22 @@ const OrderSettings: React.FC<OrderSettingsProps> = ({
         <ControlledCheckbox
           name="automaticallyFulfillNonShippableGiftCard"
           label={
-            <>
-              <FormattedMessage
-                id="7UG1Lx"
-                defaultMessage="Automatically fulfill non shippable gift cards"
-                description="checkbox gift cards label"
-              />
-              <Typography variant="caption">
+            <Box display="flex" flexDirection="column">
+              <Text>
                 <FormattedMessage
-                  id="Nfh9QM"
-                  defaultMessage="when activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
+                  id="7UG1Lx"
+                  defaultMessage="Automatically fulfill non shippable gift cards"
+                  description="checkbox gift cards label"
+                />
+              </Text>
+              <Text variant="caption" color="textNeutralSubdued">
+                <FormattedMessage
+                  id="EewziG"
+                  defaultMessage="When activated non-shippable gift cards will be automatically set as fulfilled and sent to customer"
                   description="checkbox gift cards label description"
                 />
-              </Typography>
-            </>
+              </Text>
+            </Box>
           }
           checked={data.automaticallyFulfillNonShippableGiftCard}
           onChange={onChange}

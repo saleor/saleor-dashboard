@@ -1,5 +1,5 @@
 import Skeleton from "@dashboard/components/Skeleton";
-import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
@@ -18,7 +18,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderDraftDetailsProductsProps {
-  order?: OrderDetailsFragment;
+  order?: OrderSharedType;
   errors: OrderErrorFragment[];
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;

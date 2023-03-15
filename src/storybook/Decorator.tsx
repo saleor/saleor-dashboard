@@ -1,9 +1,11 @@
+import "@saleor/macaw-ui/next/style";
+
 import { ExternalAppProvider } from "@dashboard/apps/components/ExternalAppContext";
 import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
 import { FlagsServiceProvider } from "@dashboard/hooks/useFlags/flagsService";
 import { paletteOverrides, themeOverrides } from "@dashboard/themeOverrides";
-import { ThemeProvider } from "@saleor/macaw-ui";
-import { ThemeProvider as NewThemeProvider } from "@saleor/macaw-ui/next";
+import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
+import { ThemeProvider } from "@saleor/macaw-ui/next";
 import React from "react";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
@@ -25,11 +27,11 @@ export const Decorator = storyFn => (
       >
         <DateProvider value={+new Date("2018-08-07T14:30:44+00:00")}>
           <TimezoneProvider value="America/New_York">
-            <ThemeProvider
+            <LegacyThemeProvider
               overrides={themeOverrides}
               palettes={paletteOverrides}
             >
-              <NewThemeProvider>
+              <ThemeProvider>
                 <BrowserRouter basename={getAppMountUri()}>
                   <ExternalAppProvider>
                     <FlagsServiceProvider>
@@ -45,8 +47,8 @@ export const Decorator = storyFn => (
                     </FlagsServiceProvider>
                   </ExternalAppProvider>
                 </BrowserRouter>
-              </NewThemeProvider>
-            </ThemeProvider>
+              </ThemeProvider>
+            </LegacyThemeProvider>
           </TimezoneProvider>
         </DateProvider>
       </RawLocaleProvider>

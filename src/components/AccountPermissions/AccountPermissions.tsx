@@ -62,7 +62,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     errorMessage,
   } = props;
 
-  const permissions = Object.values(props.permissions).sort(
+  const permissions = Object.values(props?.permissions ?? {}).sort(
     byAlphabeticalOrder("name"),
   );
 

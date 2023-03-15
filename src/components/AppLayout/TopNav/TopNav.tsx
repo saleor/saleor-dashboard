@@ -9,20 +9,22 @@ import { TopNavWrapper } from "./TopNavWrapper";
 interface TopNavProps {
   title: string | React.ReactNode;
   href?: string;
+  withoutBorder?: boolean;
 }
 
 export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
   title,
   href,
+  withoutBorder = false,
   children,
 }) => {
   const { availableChannels, channel, isPickerActive, setChannel } =
     useAppChannel(false);
 
   return (
-    <TopNavWrapper>
+    <TopNavWrapper withoutBorder={withoutBorder}>
       {href && <TopNavLink to={href} />}
-      <Box __flex={1} marginLeft={5}>
+      <Box __flex={1}>
         <Text variant="title">{title}</Text>
       </Box>
       <Box display="flex" flexWrap="nowrap">

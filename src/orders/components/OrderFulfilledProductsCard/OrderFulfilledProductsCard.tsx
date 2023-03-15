@@ -1,6 +1,8 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
+import { useFlags } from "@dashboard/hooks/useFlags";
 import TrashIcon from "@dashboard/icons/Trash";
+import { orderHasTransactions, OrderSharedType } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
 import { Card, CardContent } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
@@ -15,11 +17,10 @@ import useStyles from "./styles";
 interface OrderFulfilledProductsCardProps {
   fulfillment: OrderDetailsFragment["fulfillments"][0];
   fulfillmentAllowUnpaid: boolean;
-  order?: OrderDetailsFragment;
+  order?: OrderSharedType;
   onOrderFulfillmentApprove: () => void;
   onOrderFulfillmentCancel: () => void;
   onTrackingCodeAdd: () => void;
-  onRefund: () => void;
 }
 
 const statusesToMergeLines = [
@@ -43,9 +44,11 @@ const OrderFulfilledProductsCard: React.FC<
     onOrderFulfillmentApprove,
     onOrderFulfillmentCancel,
     onTrackingCodeAdd,
-    onRefund,
   } = props;
   const classes = useStyles(props);
+  const { orderTransactions: transactionsFeatureFlag } = useFlags([
+    "orderTransactions",
+  ]);
 
   if (!fulfillment) {
     return null;
@@ -88,13 +91,17 @@ const OrderFulfilledProductsCard: React.FC<
           <OrderDetailsDatagrid lines={getLines()} loading={false} />
           <ExtraInfoLines fulfillment={fulfillment} />
           <ActionButtons
+            orderId={order?.id}
             status={fulfillment?.status}
             trackingNumber={fulfillment?.trackingNumber}
             orderIsPaid={order?.isPaid}
             fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
             onTrackingCodeAdd={onTrackingCodeAdd}
-            onRefund={onRefund}
             onApprove={onOrderFulfillmentApprove}
+            hasTransactions={orderHasTransactions(
+              order,
+              transactionsFeatureFlag.enabled,
+            )}
           />
         </CardContent>
       </Card>

@@ -3,11 +3,11 @@ import {
   mapToMenuItems,
   useExtensions,
 } from "@dashboard/apps/hooks/useExtensions";
+import { FilterBar } from "@dashboard/components/AppLayout/FilterBar";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
-import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -53,19 +53,13 @@ const useStyles = makeStyles(
 );
 
 const OrderListPage: React.FC<OrderListPageProps> = ({
-  currentTab,
   initialSearch,
   filterOpts,
   limits,
-  tabs,
   onAdd,
-  onAll,
   onSearchChange,
   onSettingsOpen,
   onFilterChange,
-  onTabChange,
-  onTabDelete,
-  onTabSave,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -82,7 +76,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 
   return (
     <ListPageLayout>
-      <TopNav title={intl.formatMessage(sectionNames.orders)}>
+      <TopNav title={intl.formatMessage(sectionNames.orders)} withoutBorder>
         {!!onSettingsOpen && (
           <CardMenu
             className={classes.settings}
@@ -130,21 +124,9 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
       {limitsReached && <OrderLimitReached />}
       <Card>
         <FilterBar
-          withoutBorder
-          currentTab={currentTab}
           initialSearch={initialSearch}
-          onAll={onAll}
           onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
-          onTabChange={onTabChange}
-          onTabDelete={onTabDelete}
-          onTabSave={onTabSave}
-          tabs={tabs}
-          allTabLabel={intl.formatMessage({
-            id: "WRkCFt",
-            defaultMessage: "All Orders",
-            description: "tab name",
-          })}
           filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
             id: "wTHjt3",

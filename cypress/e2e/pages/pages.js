@@ -3,7 +3,7 @@
 
 import faker from "faker";
 
-import { PAGE_DETAILS } from "../../elements/pages/page-details";
+import { PAGE_DETAILS_SELECTORS } from "../../elements/pages/page-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { pageDetailsUrl } from "../../fixtures/urlList";
 import { createAttribute } from "../../support/api/requests/Attribute";
@@ -161,9 +161,9 @@ describe("Tests for pages", () => {
     })
       .then(({ page }) => {
         cy.visit(pageDetailsUrl(page.id))
-          .get(PAGE_DETAILS.nameInput)
+          .get(PAGE_DETAILS_SELECTORS.nameInput)
           .clearAndType(updatedName)
-          .get(PAGE_DETAILS.isNotPublishedCheckbox)
+          .get(PAGE_DETAILS_SELECTORS.isNotPublishedCheckbox)
           .click()
           .addAliasToGraphRequest("PageUpdate")
           .get(BUTTON_SELECTORS.confirm)

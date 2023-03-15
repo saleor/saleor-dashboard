@@ -15,6 +15,7 @@ import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { makeStyles } from "@material-ui/core";
 import { Button } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -93,54 +94,56 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   });
 
   return (
-    <DatagridChangeStateContext.Provider value={datagrid}>
-      <Datagrid
-        readonly
-        rowMarkers="none"
-        columnSelect="single"
-        freezeColumns={2}
-        verticalBorder={col => (col > 1 ? true : false)}
-        availableColumns={columns}
-        onHeaderClicked={handleHeaderClick}
-        emptyText={intl.formatMessage(messages.emptyText)}
-        getCellContent={getCellContent}
-        getCellError={() => false}
-        menuItems={() => []}
-        rows={getOrdersRowsLength(disabled, orders, disabled)}
-        selectionActions={(indexes, { removeRows }) => (
-          <Button variant="tertiary" onClick={() => removeRows(indexes)}>
-            <FormattedMessage {...buttonMessages.delete} />
-          </Button>
-        )}
-        onColumnResize={onColumnResize}
-        onColumnMoved={onColumnMoved}
-        renderColumnPicker={defaultProps => (
-          <ColumnPicker
-            {...defaultProps}
-            availableColumns={availableColumnsChoices}
-            initialColumns={columnChoices}
-            defaultColumns={defaultColumns}
-            onSave={onColumnsChange}
-            hasMore={false}
-            loading={false}
-            onFetchMore={() => undefined}
-            onQueryChange={picker.setQuery}
-            query={picker.query}
-          />
-        )}
-        fullScreenTitle={intl.formatMessage(messages.orders)}
-        onRowClick={handleRowClick}
-      />
-
-      <div className={classes.paginationContainer}>
-        <TablePaginationWithContext
-          component="div"
-          colSpan={(order?.length === 0 ? 1 : 2) + settings.columns?.length}
-          settings={settings}
-          disabled={disabled}
-          onUpdateListSettings={onUpdateListSettings}
+    <Box __marginTop={-1}>
+      <DatagridChangeStateContext.Provider value={datagrid}>
+        <Datagrid
+          readonly
+          rowMarkers="none"
+          columnSelect="single"
+          freezeColumns={2}
+          verticalBorder={col => (col > 1 ? true : false)}
+          availableColumns={columns}
+          onHeaderClicked={handleHeaderClick}
+          emptyText={intl.formatMessage(messages.emptyText)}
+          getCellContent={getCellContent}
+          getCellError={() => false}
+          menuItems={() => []}
+          rows={getOrdersRowsLength(disabled, orders, disabled)}
+          selectionActions={(indexes, { removeRows }) => (
+            <Button variant="tertiary" onClick={() => removeRows(indexes)}>
+              <FormattedMessage {...buttonMessages.delete} />
+            </Button>
+          )}
+          onColumnResize={onColumnResize}
+          onColumnMoved={onColumnMoved}
+          renderColumnPicker={defaultProps => (
+            <ColumnPicker
+              {...defaultProps}
+              availableColumns={availableColumnsChoices}
+              initialColumns={columnChoices}
+              defaultColumns={defaultColumns}
+              onSave={onColumnsChange}
+              hasMore={false}
+              loading={false}
+              onFetchMore={() => undefined}
+              onQueryChange={picker.setQuery}
+              query={picker.query}
+            />
+          )}
+          fullScreenTitle={intl.formatMessage(messages.orders)}
+          onRowClick={handleRowClick}
         />
-      </div>
-    </DatagridChangeStateContext.Provider>
+
+        <div className={classes.paginationContainer}>
+          <TablePaginationWithContext
+            component="div"
+            colSpan={(order?.length === 0 ? 1 : 2) + settings.columns?.length}
+            settings={settings}
+            disabled={disabled}
+            onUpdateListSettings={onUpdateListSettings}
+          />
+        </div>
+      </DatagridChangeStateContext.Provider>
+    </Box>
   );
 };

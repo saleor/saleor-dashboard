@@ -9,7 +9,7 @@ import { setupPolly } from "setup-polly-jest";
 const POLLY_MODES = ["replay", "record", "passthrough", "stopped"] as const;
 
 function getPollyMode() {
-  const env = process.env.POLLY_MODE as typeof POLLY_MODES[number];
+  const env = process.env.POLLY_MODE as (typeof POLLY_MODES)[number];
   if (!env) {
     return POLLY_MODES[0]; // replay
   }

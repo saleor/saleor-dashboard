@@ -15,8 +15,8 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
-import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
+import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import { OrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
@@ -61,7 +61,7 @@ const messages = defineMessages({
 
 interface OrderDraftDetailsDatagridProps {
   loading: boolean;
-  lines: OrderDetailsFragment["lines"];
+  lines: OrderSharedType["lines"];
   errors: OrderErrorFragment[];
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
@@ -117,7 +117,7 @@ export const OrderDraftDetailsDatagrid = ({
   );
 
   const getOrderLineStatus = (
-    line: OrderDetailsFragment["lines"][number],
+    line: OrderSharedType["lines"][number],
     error?: OrderErrorFragment,
   ) => {
     const statuses = [];

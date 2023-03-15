@@ -2,13 +2,10 @@ import Money from "@dashboard/components/Money";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import {
-  OrderDetailsFragment,
-  OrderErrorFragment,
-  OrderLineFragment,
-} from "@dashboard/graphql";
+import { OrderErrorFragment, OrderLineFragment } from "@dashboard/graphql";
 import { FormsetChange } from "@dashboard/hooks/useFormset";
 import { getById, renderCollection } from "@dashboard/misc";
+import { OrderBothTypes } from "@dashboard/orders/types";
 import {
   Card,
   CardContent,
@@ -98,7 +95,7 @@ interface OrderReturnRefundLinesCardProps {
   canReplace?: boolean;
   errors: OrderErrorFragment[];
   lines: OrderLineFragment[];
-  order: OrderDetailsFragment;
+  order: OrderBothTypes;
   itemsSelections: FormsetReplacementData;
   itemsQuantities: FormsetQuantityData;
   onChangeSelected: FormsetChange<boolean>;
@@ -118,9 +115,9 @@ const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({
   const classes = useStyles({});
   const intl = useIntl();
 
-  const handleChangeQuantity = (id: string) => (
-    event: React.ChangeEvent<HTMLInputElement>,
-  ) => onChangeQuantity(id, parseInt(event.target.value, 10));
+  const handleChangeQuantity =
+    (id: string) => (event: React.ChangeEvent<HTMLInputElement>) =>
+      onChangeQuantity(id, parseInt(event.target.value, 10));
 
   const fulfillment = order?.fulfillments.find(getById(fulfilmentId));
 

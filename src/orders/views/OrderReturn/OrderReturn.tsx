@@ -3,36 +3,20 @@ import {
   useFulfillmentReturnProductsMutation,
   useOrderDetailsQuery,
 } from "@dashboard/graphql";
+import { useFlags } from "@dashboard/hooks/useFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import OrderReturnPage from "@dashboard/orders/components/OrderReturnPage";
 import { OrderReturnFormData } from "@dashboard/orders/components/OrderReturnPage/form";
+import { orderHasTransactions } from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
+import { messages } from "./messages";
 import ReturnFormDataParser from "./utils";
-
-export const messages = defineMessages({
-  cannotRefundDescription: {
-    id: "XQBVEJ",
-    defaultMessage:
-      "We’ve encountered a problem while refunding the products. Product’s were not refunded. Please try again.",
-    description: "order return error description when cannot refund",
-  },
-  cannotRefundTitle: {
-    id: "l9Lwjh",
-    defaultMessage: "Couldn't refund products",
-    description: "order return error title when cannot refund",
-  },
-  successAlert: {
-    id: "/z9uo1",
-    defaultMessage: "Successfully returned products!",
-    description: "order returned success message",
-  },
-});
 
 interface OrderReturnProps {
   orderId: string;
@@ -42,6 +26,8 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+
+  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
@@ -95,7 +81,14 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       returnCreate({
         variables: {
           id: data.order.id,
-          input: new ReturnFormDataParser(data.order, formData).getParsedData(),
+          input: new ReturnFormDataParser({
+            order: data.order,
+            formData,
+            refundsEnabled: !orderHasTransactions(
+              data.order,
+              orderTransactions.enabled,
+            ),
+          }).getParsedData(),
         },
       }),
     );
@@ -107,6 +100,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
       order={data?.order}
       loading={loading || returnCreateOpts.loading}
       onSubmit={handleSubmit}
+      submitStatus={returnCreateOpts.status}
     />
   );
 };

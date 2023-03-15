@@ -1,7 +1,7 @@
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { ELEMENT_TRANSLATION } from "../../elements/translations/element-translation";
-import { LANGUAGES_LIST } from "../../elements/translations/languages-list";
+import { LANGUAGES_LIST_SELECTORS } from "../../elements/translations/languages-list";
 import { urlList } from "../../fixtures/urlList";
 
 export function updateTranslationToCategory({
@@ -12,7 +12,10 @@ export function updateTranslationToCategory({
   translatedSeoDescription,
 }) {
   cy.visit(urlList.translations);
-  enterCategoryTranslation(LANGUAGES_LIST.polishLanguageButton, categoryName);
+  enterCategoryTranslation(
+    LANGUAGES_LIST_SELECTORS.polishLanguageButton,
+    categoryName,
+  );
   cy.get(ELEMENT_TRANSLATION.editNameButton)
     .click()
     .get(SHARED_ELEMENTS.skeleton)
@@ -49,9 +52,7 @@ export function updateTranslationToCategory({
 
 export function enterCategoryTranslation(language, categoryName) {
   cy.addAliasToGraphRequest("CategoryTranslations");
-  cy.get(language)
-    .click()
-    .waitForProgressBarToNotExist();
+  cy.get(language).click().waitForProgressBarToNotExist();
   getCategoryFromTable(categoryName);
 }
 
