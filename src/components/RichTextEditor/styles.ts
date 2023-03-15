@@ -10,8 +10,6 @@ const useStyles = makeStyles(
       },
     };
 
-    const isDarkMode = theme.palette.type === "dark";
-
     return {
       editor: {
         "& .codex-editor": {
@@ -118,9 +116,10 @@ const useStyles = makeStyles(
         backgroundColor: `${vars.colors.background.interactiveNeutralHighlightDefault} !important`,
       },
       rootDisabled: {
-        ...theme.overrides.MuiOutlinedInput.root["&$disabled"]["& fieldset"],
-        background: theme.palette.background.default,
-        color: theme.palette.saleor.main[4],
+        pointerEvents: "none",
+        backgroundColor: vars.colors.background.surfaceNeutralPlain,
+        border: `1px solid ${vars.colors.border.neutralHighlight}`,
+        color: vars.colors.foreground.textNeutralDisabled,
       },
       rootError: {
         backgroundColor: vars.colors.background.surfaceCriticalSubdued,
@@ -137,6 +136,9 @@ const useStyles = makeStyles(
       },
       rootErrorFocus: {
         border: "1px solid transparent !important",
+      },
+      labelDisabled: {
+        color: `${vars.colors.foreground.textNeutralDisabled} !important`,
       },
     };
   },
