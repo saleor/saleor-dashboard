@@ -1,5 +1,5 @@
 name: Execute nightly tests
-run-name: Run tests on ${{ inputs.environment }}${{github.event.client_payload.environment}}
+run-name: Run tests on ${{ inputs.environment }} ${{ if inputs.environment=="Other" ; then  inputs.environment.otherEnvironment }}${{github.event.client_payload.environment}}
 
 on:
   workflow_dispatch:
