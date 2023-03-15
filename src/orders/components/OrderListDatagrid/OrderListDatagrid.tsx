@@ -9,11 +9,9 @@ import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyCol
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { OrderListQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { order } from "@dashboard/orders/fixtures";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { makeStyles } from "@material-ui/core";
 import { Button } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
@@ -29,14 +27,6 @@ interface OrderListDatagridProps
   orders: RelayToFlat<OrderListQuery["orders"]>;
   onRowClick: (id: string) => void;
 }
-const useStyles = makeStyles(
-  theme => ({
-    paginationContainer: {
-      padding: theme.spacing(0, 4),
-    },
-  }),
-  { name: "OrderListDatagrid" },
-);
 
 export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   orders,
@@ -47,7 +37,6 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   sort,
   onRowClick,
 }) => {
-  const classes = useStyles();
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
   const emptyColumn = useEmptyColumn();
@@ -108,7 +97,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           getCellContent={getCellContent}
           getCellError={() => false}
           menuItems={() => []}
-          rows={getOrdersRowsLength(disabled, orders, disabled)}
+          rows={getOrdersRowsLength(orders, disabled)}
           selectionActions={(indexes, { removeRows }) => (
             <Button variant="tertiary" onClick={() => removeRows(indexes)}>
               <FormattedMessage {...buttonMessages.delete} />
@@ -134,15 +123,14 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           onRowClick={handleRowClick}
         />
 
-        <div className={classes.paginationContainer}>
+        <Box paddingX={9}>
           <TablePaginationWithContext
             component="div"
-            colSpan={(order?.length === 0 ? 1 : 2) + settings.columns?.length}
             settings={settings}
             disabled={disabled}
             onUpdateListSettings={onUpdateListSettings}
           />
-        </div>
+        </Box>
       </DatagridChangeStateContext.Provider>
     </Box>
   );
