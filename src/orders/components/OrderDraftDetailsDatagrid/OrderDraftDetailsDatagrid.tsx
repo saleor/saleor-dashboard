@@ -75,13 +75,13 @@ export const OrderDraftDetailsDatagrid = ({
         getCellError={() => false}
         menuItems={index => [
           {
-            label: "Delete order",
+            label: intl.formatMessage(messages.deleteOrder),
             onSelect: () => {
               onOrderLineRemove(lines[index].id);
             },
           },
           {
-            label: "Edit price",
+            label: intl.formatMessage(messages.editDiscount),
             onSelect: () => {
               setEditedLineId(lines[index].id);
               setIsDialogOpen(true);

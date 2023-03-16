@@ -11,7 +11,7 @@ import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { useTheme } from "@saleor/macaw-ui/next";
+import { ThemeTokensValues, useTheme } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -110,19 +110,11 @@ export const useGetCellContent = ({
           rowData.unitPrice.gross.currency,
         );
       case "status":
-        const orderErrors = errors.find(error =>
-          error.orderLines?.some(id => id === rowData.id),
-        );
+        const orderErrors = getOrderErrors(errors, rowData.id);
         const status = getOrderLineStatus(intl, rowData, orderErrors);
 
         return tagsCell(
-          status.map(({ status, type }) => ({
-            color:
-              type === "warning"
-                ? "#FBE5AC"
-                : themeValues.colors.background.surfaceCriticalDepressed,
-            tag: status,
-          })),
+          status.map(toTagValue(themeValues)),
           status.map(status => status.status),
         );
       case "total":
@@ -137,11 +129,27 @@ export const useGetCellContent = ({
   };
 };
 
+function toTagValue(themeValues: ThemeTokensValues) {
+  return ({ status, type }: OrderStatus) => ({
+    color:
+      type === "warning"
+        ? // TODO: replace when we will have warning defined in new macaw
+          "#FBE5AC"
+        : themeValues.colors.background.surfaceCriticalDepressed,
+    tag: status,
+  });
+}
+
+interface OrderStatus {
+  type: "warning" | "error";
+  status: string;
+}
+
 const getOrderLineStatus = (
   intl: IntlShape,
   line: OrderSharedType["lines"][number],
   error?: OrderErrorFragment,
-) => {
+): OrderStatus[] => {
   const statuses = [];
 
   if (error) {
@@ -154,10 +162,6 @@ const getOrderLineStatus = (
   const product = line.variant?.product;
 
   if (!product) {
-    statuses.push({
-      type: "error",
-      status: "Error 1234",
-    });
     statuses.push({
       type: "warning",
       status: intl.formatMessage(lineAlertMessages.notExists),
@@ -175,3 +179,7 @@ const getOrderLineStatus = (
 
   return statuses;
 };
+
+function getOrderErrors(errors: OrderErrorFragment[], id: string) {
+  return errors.find(error => error.orderLines?.some(lineId => lineId === id));
+}
