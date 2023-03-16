@@ -3313,6 +3313,9 @@
     "context": "WarehouseSettings pickup title",
     "string": "Pickup"
   },
+  "MJ2jZQ": {
+    "string": "Total"
+  },
   "MJBAqv": {
     "context": "column title used by/customer",
     "string": "Used by"
@@ -3520,6 +3523,9 @@
   "NlSJMM": {
     "context": "channels section name",
     "string": "Channels"
+  },
+  "NmK6zy": {
+    "string": "Payment"
   },
   "NnhrxZ": {
     "context": "amount of sent refund for transaction",
@@ -4747,10 +4753,6 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}"
   },
-  "WRkCFt": {
-    "context": "tab name",
-    "string": "All Orders"
-  },
   "WS4ov0": {
     "context": "notifier message",
     "string": "Note was added sucessfully"
@@ -4921,6 +4923,9 @@
   "XPiJex": {
     "context": "Transaction void button - return preauthorized amount to client",
     "string": "Void"
+  },
+  "XPruqs": {
+    "string": "Order"
   },
   "XQBVEJ": {
     "context": "order return error description when cannot refund",
@@ -6369,6 +6374,9 @@
   },
   "ivJ1qt": {
     "string": "Manage your permission groups and their permissions"
+  },
+  "ixiJlg": {
+    "string": "Edit Order"
   },
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
@@ -7948,6 +7956,9 @@
   },
   "un+VWt": {
     "string": "Search products"
+  },
+  "uoKAmI": {
+    "string": "Add new order"
   },
   "usSkzP": {
     "context": "navigator order mode description",
