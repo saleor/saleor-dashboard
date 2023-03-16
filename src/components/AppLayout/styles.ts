@@ -1,18 +1,28 @@
 import { makeStyles } from "@saleor/macaw-ui";
+import { DefaultTheme, vars } from "@saleor/macaw-ui/next";
 
 import { appLoaderHeight } from "./consts";
 
-export const useStyles = makeStyles(
-  theme => ({
-    appAction: {
-      [theme.breakpoints.down("sm")]: {
-        left: 0,
-        width: "100%",
+export const useStyles = makeStyles<{ currentTheme: DefaultTheme }>(
+  () => ({
+    root: {
+      '& div[class*="Pill-root"]': {
+        borderRadius: "32px",
+        border: "none",
       },
-      bottom: 0,
-      gridColumn: 2,
-      position: "sticky",
-      zIndex: 10,
+      '& div[class*="Pill-error"]': {
+        background: vars.colors.background.surfaceCriticalDepressed,
+      },
+      '& div[class*="Pill-warning"]': {
+        background: ({ currentTheme }) =>
+          currentTheme === "defaultDark" ? "#3E2F0A" : "#FBE5AC",
+      },
+      '& div[class*="Pill-success"]': {
+        background: vars.colors.background.decorativeSurfaceSubdued2,
+      },
+      '& div[class*="Pill-info"]': {
+        background: vars.colors.background.surfaceBrandDepressed,
+      },
     },
     appLoader: {
       height: appLoaderHeight,
@@ -20,67 +30,6 @@ export const useStyles = makeStyles(
       position: "fixed",
       width: "100%",
       top: 0,
-    },
-    content: {
-      flex: 1,
-      [theme.breakpoints.up("md")]: {
-        width: 0, // workaround for flex children width expansion affected by their contents
-      },
-    },
-    darkThemeSwitch: {
-      [theme.breakpoints.down("sm")]: {
-        marginRight: theme.spacing(1),
-      },
-      marginRight: theme.spacing(2),
-    },
-    header: {
-      display: "grid",
-      gridTemplateAreas: `"headerAnchor headerToolbar"`,
-      [theme.breakpoints.down("sm")]: {
-        gridTemplateAreas: `"headerToolbar" 
-        "headerAnchor"`,
-      },
-      marginBottom: theme.spacing(6),
-    },
-    headerAnchor: {
-      gridArea: "headerAnchor",
-    },
-    headerToolbar: {
-      display: "flex",
-      gridArea: "headerToolbar",
-      height: 40,
-      [theme.breakpoints.down("sm")]: {
-        height: "auto",
-      },
-    },
-    root: {
-      isolation: "isolate",
-      [theme.breakpoints.up("md")]: {
-        display: "flex",
-      },
-      width: `100%`,
-    },
-    spacer: {
-      flex: 1,
-    },
-    userBar: {
-      alignItems: "center",
-      display: "flex",
-    },
-
-    view: {
-      marginLeft: 0,
-    },
-    viewMargins: {
-      paddingBottom: theme.spacing(),
-      [theme.breakpoints.up("sm")]: {
-        paddingBottom: theme.spacing(3),
-      },
-    },
-    viewContainer: {
-      minHeight: `calc(100vh - ${appLoaderHeight + 72}px - ${theme.spacing(
-        4,
-      )})`,
     },
   }),
   { name: "AppLayout" },
