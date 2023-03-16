@@ -1,5 +1,6 @@
+import { getStatusColor } from "@dashboard/misc";
 import { makeStyles } from "@saleor/macaw-ui";
-import { DefaultTheme, vars } from "@saleor/macaw-ui/next";
+import { DefaultTheme } from "@saleor/macaw-ui/next";
 
 import { appLoaderHeight } from "./consts";
 
@@ -11,17 +12,17 @@ export const useStyles = makeStyles<{ currentTheme: DefaultTheme }>(
         border: "none",
       },
       '& div[class*="Pill-error"]': {
-        background: vars.colors.background.surfaceCriticalDepressed,
+        background: getStatusColor("error"),
       },
       '& div[class*="Pill-warning"]': {
         background: ({ currentTheme }) =>
-          currentTheme === "defaultDark" ? "#3E2F0A" : "#FBE5AC",
+          getStatusColor("warning", currentTheme),
       },
       '& div[class*="Pill-success"]': {
-        background: vars.colors.background.decorativeSurfaceSubdued2,
+        background: getStatusColor("success"),
       },
       '& div[class*="Pill-info"]': {
-        background: vars.colors.background.surfaceBrandDepressed,
+        background: getStatusColor("info"),
       },
     },
     appLoader: {
