@@ -34,6 +34,12 @@ jest.mock("@saleor/macaw-ui/next", () => ({
       border: {
         naturalPlain: "",
       },
+      background: {
+        surfaceCriticalDepressed: "",
+        surfaceBrandDepressed: "",
+        decorativeSurfaceSubdued2: "",
+        surfaceBrandSubdued: "",
+      },
     },
   },
 }));
