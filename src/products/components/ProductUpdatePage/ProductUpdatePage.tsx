@@ -250,13 +250,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     context.setDevModeVisibility(true);
   };
 
-  // const openPlaygroundURL = playgroundOpenHandler({
-  //   query: defaultGraphiQLQuery,
-  //   headers: "",
-  //   operationName: "",
-  //   variables: `{ "id": "${product?.id}" }`,
-  // });
-
   return (
     <ProductUpdateForm
       isSimpleProduct={isSimpleProduct}

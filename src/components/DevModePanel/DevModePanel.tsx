@@ -23,7 +23,7 @@ export const DevModePanel: React.FC<DevModePanelProps> = ({
     fetch: authorizedFetch,
   });
 
-  const context = useDevModeContext();
+  const { devModeContent, variables } = useDevModeContext();
 
   return (
     <Dialog
@@ -38,8 +38,8 @@ export const DevModePanel: React.FC<DevModePanelProps> = ({
       </DialogHeader>
       <DialogContent style={{ padding: 0, margin: 1, overflowY: "auto" }}>
         <GraphiQL
-          query={context.devModeContent}
-          variables={context.variables}
+          query={devModeContent}
+          variables={variables}
           fetcher={fetcher}
         />
       </DialogContent>

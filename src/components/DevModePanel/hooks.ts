@@ -1,13 +1,15 @@
-import { createContext, useContext } from "react";
+import { createContext, Dispatch, SetStateAction, useContext } from "react";
 
-export const DevModeContext = createContext({
-  variables: "",
-  setVariables: (_value: string) => undefined,
-  isDevModeVisible: false,
-  setDevModeVisibility: (_value: boolean) => undefined,
-  devModeContent: "",
-  setDevModeContent: (_value: string) => undefined,
-});
+interface DevModeContextShape {
+  variables: string;
+  setVariables: Dispatch<SetStateAction<string>>;
+  isDevModeVisible: boolean;
+  setDevModeVisibility: Dispatch<SetStateAction<boolean>>;
+  devModeContent: string;
+  setDevModeContent: Dispatch<SetStateAction<string>>;
+}
+
+export const DevModeContext = createContext<null | DevModeContextShape>(null);
 
 export const useDevModeContext = () => {
   const context = useContext(DevModeContext);

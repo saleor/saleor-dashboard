@@ -57,12 +57,15 @@ export const useDashboardTheme = () => {
   const theme = useTheme();
 
   const rootStyle = {
-    "--font-size-body": theme.typography?.h3.fontSize,
+    "--font-size-body": theme.typography?.body1.fontSize,
     "--font-size-h2": theme.typography?.h3.fontSize,
     "--font-size-h3": theme.typography?.h3.fontSize,
     "--font-size-h4": theme.typography?.h4.fontSize,
     "--font-size-hint": theme.typography?.caption.fontSize,
     "--font-size-inline-code": theme.typography?.caption.fontSize,
+    "reach-portal": {
+      "font-size": "inherit",
+    },
   } as React.CSSProperties;
 
   return { rootStyle };

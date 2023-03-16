@@ -204,13 +204,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     context.setDevModeVisibility(true);
   };
 
-  // const _openPlaygroundURL2 = playgroundOpenHandler({
-  //   query: defaultGraphiQLQuery,
-  //   headers: "",
-  //   operationName: "",
-  //   variables: `{ "id": "${order?.id}" }`,
-  // });
-
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit}>
       {({ change, data, submit }) => {

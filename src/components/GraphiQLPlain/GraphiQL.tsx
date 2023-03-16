@@ -310,7 +310,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
     <div
       data-testid="graphiql-container"
       className="graphiql-container"
-      style={rootStyle}
+      style={{ ...rootStyle }}
     >
       <div className="graphiql-sidebar">
         <div className="graphiql-sidebar-section">
