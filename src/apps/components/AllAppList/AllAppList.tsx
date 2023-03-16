@@ -1,8 +1,8 @@
 import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
-import { groupIntoPairs } from "@dashboard/apps/utils";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { Skeleton } from "@material-ui/lab";
 import { Box } from "@saleor/macaw-ui/next";
+import chunk from "lodash/chunk";
 import React from "react";
 
 import AppListRow from "../AppListRow";
@@ -20,11 +20,11 @@ const AllAppList: React.FC<AllAppListProps> = ({
   navigateToAppInstallPage,
   navigateToGithubForkPage,
 }) => {
+  const appsPairs = React.useMemo(() => chunk(appList, 2), [appList]);
+
   if (!appList) {
     return <Skeleton />;
   }
-
-  const appsPairs = groupIntoPairs(appList);
 
   return (
     <Box display="flex" flexDirection="column" gap={8} marginTop={8}>

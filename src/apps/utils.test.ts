@@ -3,11 +3,7 @@ import { intlMock } from "@test/intl";
 
 import { appsInProgress, releasedApp } from "./fixtures";
 import { GetV2SaleorAppsResponse } from "./marketplace.types";
-import {
-  getAppDetails,
-  groupIntoPairs,
-  resolveInstallationOfMarketplaceApp,
-} from "./utils";
+import { getAppDetails, resolveInstallationOfMarketplaceApp } from "./utils";
 
 type AppDetails = ReturnType<typeof getAppDetails>;
 
@@ -268,44 +264,5 @@ describe("App utils app details", () => {
       // Assert
       expect(installation).toEqual(releasedAppInstallation);
     });
-  });
-});
-
-describe("Groups array into pairs", () => {
-  test("should group elements into pairs", () => {
-    // Arrange
-    const list = [1, 2, 3, 4, 5];
-
-    // Act
-    const result = groupIntoPairs(list);
-
-    // Assert
-    expect(result).toEqual([[1, 2], [3, 4], [5]]);
-  });
-
-  test("should handle empty list", () => {
-    // Arrange
-    const list: number[] = [];
-
-    // Act
-    const result = groupIntoPairs(list);
-
-    // Assert
-    expect(result).toEqual([]);
-  });
-
-  test("should handle odd number of elements", () => {
-    // Arrange
-    const list = [1, 2, 3, 4, 5, 6];
-
-    // Act
-    const result = groupIntoPairs(list);
-
-    // Assert
-    expect(result).toEqual([
-      [1, 2],
-      [3, 4],
-      [5, 6],
-    ]);
   });
 });
