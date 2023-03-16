@@ -28,8 +28,8 @@ export const messages = defineMessages({
     defaultMessage: "No orders found",
   },
   deleteOrder: {
-    id: "SAXcPJ",
-    defaultMessage: "Delete order",
+    id: "LKD6fB",
+    defaultMessage: "Remove product",
   },
   editDiscount: {
     id: "DhFqJF",

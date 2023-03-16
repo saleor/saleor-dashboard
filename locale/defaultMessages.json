@@ -2123,6 +2123,9 @@
     "context": "checkbox label",
     "string": "Restrict order value"
   },
+  "DhFqJF": {
+    "string": "Edit discount"
+  },
   "Dhherd": {
     "context": "dialog header, title",
     "string": "Invoice Generation"
@@ -3226,6 +3229,9 @@
     "context": "cancelled fulfillment, section header",
     "string": "Refunded and Returned"
   },
+  "LKD6fB": {
+    "string": "Remove product"
+  },
   "LKoIB1": {
     "string": "Add search engine title and description to make this product easier to find"
   },
@@ -3312,6 +3318,9 @@
   "MIC9W7": {
     "context": "WarehouseSettings pickup title",
     "string": "Pickup"
+  },
+  "MJ2jZQ": {
+    "string": "Total"
   },
   "MJBAqv": {
     "context": "column title used by/customer",
@@ -3521,6 +3530,9 @@
     "context": "channels section name",
     "string": "Channels"
   },
+  "NmK6zy": {
+    "string": "Payment"
+  },
   "NnhrxZ": {
     "context": "amount of sent refund for transaction",
     "string": "{transactionType} refund"
@@ -3629,10 +3641,6 @@
   "OaKyz4": {
     "context": "input label",
     "string": "Stock reservation for authenticated user (in minutes)"
-  },
-  "Oad+ES": {
-    "context": "alert message",
-    "string": "This product is not published in this channel."
   },
   "ObRk1O": {
     "string": "If this option is disabled, discount will be counted for every eligible product"
@@ -3902,6 +3910,10 @@
   "QJG+d/": {
     "context": "staff added type order discount",
     "string": "Staff added"
+  },
+  "QL4a0Z": {
+    "context": "alert message",
+    "string": "Not published in this channel"
   },
   "QLVddq": {
     "context": "button",
@@ -4408,9 +4420,6 @@
     "context": "searchbar placeholder",
     "string": "Country"
   },
-  "UD7/q8": {
-    "string": "No Products added to Order"
-  },
   "UJnqdm": {
     "context": "dialog header",
     "string": "Unassign Attribute From Product Type"
@@ -4747,10 +4756,6 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}"
   },
-  "WRkCFt": {
-    "context": "tab name",
-    "string": "All Orders"
-  },
   "WS4ov0": {
     "context": "notifier message",
     "string": "Note was added sucessfully"
@@ -4921,6 +4926,9 @@
   "XPiJex": {
     "context": "Transaction void button - return preauthorized amount to client",
     "string": "Void"
+  },
+  "XPruqs": {
+    "string": "Order"
   },
   "XQBVEJ": {
     "context": "order return error description when cannot refund",
@@ -5179,6 +5187,10 @@
   },
   "ZIc5lM": {
     "string": "Product Name"
+  },
+  "ZJOX8n": {
+    "context": "alert message",
+    "string": "Product no longer exists"
   },
   "ZJPYFl": {
     "context": "accepted header names",
@@ -5721,6 +5733,10 @@
   "d9UqaJ": {
     "context": "error message",
     "string": "Cannot change the quantity because of insufficient stock"
+  },
+  "dDCLFW": {
+    "context": "alert message",
+    "string": "Not available for sale this channel"
   },
   "dEUZg2": {
     "context": "header",
@@ -6369,6 +6385,9 @@
   },
   "ivJ1qt": {
     "string": "Manage your permission groups and their permissions"
+  },
+  "ixiJlg": {
+    "string": "Edit Order"
   },
   "ixjvkM": {
     "string": "We’ve created your default token. Make sure to copy your new personal access token now. You won’t be able to see it again."
@@ -7195,10 +7214,6 @@
     "context": "gift card history message",
     "string": "Gift card was activated"
   },
-  "pEMxyy": {
-    "context": "alert message",
-    "string": "This product does no longer exist."
-  },
   "pFVX6g": {
     "string": "Variant with these attributes already exists"
   },
@@ -7949,6 +7964,9 @@
   "un+VWt": {
     "string": "Search products"
   },
+  "uoKAmI": {
+    "string": "Add new order"
+  },
   "usSkzP": {
     "context": "navigator order mode description",
     "string": "Search Orders"
@@ -8517,10 +8535,6 @@
   "zLtb4N": {
     "context": "gift card removed success alert message",
     "string": "{selectedItemsCount,plural,one{Successfully deleted gift card} other{Successfully deleted gift cards}}"
-  },
-  "zO+l0L": {
-    "context": "alert message",
-    "string": "This product is not available for sale in this channel."
   },
   "zQX6xO": {
     "context": "dialog header",
