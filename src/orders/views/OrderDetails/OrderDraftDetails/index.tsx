@@ -24,7 +24,10 @@ import {
 } from "@dashboard/orders/components/OrderCustomerChangeDialog/form";
 import OrderCustomerChangeDialog from "@dashboard/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
 import { OrderBothTypes, OrderSharedType } from "@dashboard/orders/types";
-import { getVariantSearchAddress } from "@dashboard/orders/utils/data";
+import {
+  getVariantSearchAddress,
+  isAnyAddressEditModalOpen,
+} from "@dashboard/orders/utils/data";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
@@ -81,13 +84,6 @@ interface OrderDraftDetailsProps {
   openModal: (action: OrderUrlDialog, newParams?: OrderUrlQueryParams) => void;
   closeModal: any;
 }
-
-export const isAnyAddressEditModalOpen = (uri: string | undefined): boolean =>
-  [
-    "edit-customer-addresses",
-    "edit-shipping-address",
-    "edit-billing-address",
-  ].includes(uri);
 
 export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   id,
