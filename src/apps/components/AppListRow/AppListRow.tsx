@@ -60,7 +60,7 @@ const AppListRow: React.FC<AppListRowProps> = ({
     <Box
       display="grid"
       gridTemplateColumns={2}
-      __gridTemplateRows="auto auto auto auto"
+      __gridTemplateRows="repeat(4, auto)"
       gridAutoFlow={isSingleApp ? "column" : "row"}
       columnGap={8}
       padding={8}
