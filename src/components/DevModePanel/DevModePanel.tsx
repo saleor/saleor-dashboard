@@ -36,7 +36,7 @@ export const DevModePanel: React.FC<DevModePanelProps> = ({
       <DialogHeader onClose={() => setDevModeVisibility(false)}>
         Dev Mode
       </DialogHeader>
-      <DialogContent style={{ padding: 0, margin: 1 }}>
+      <DialogContent style={{ padding: 0, margin: 1, overflowY: "auto" }}>
         <GraphiQL
           query={context.devModeContent}
           variables={context.variables}
