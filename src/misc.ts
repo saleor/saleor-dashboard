@@ -562,7 +562,7 @@ export const findById = <T extends Node>(id: string, list?: T[]) =>
   list?.find(getById(id));
 
 export const getStatusColor = (
-  status: "error" | "warning" | "info" | "success",
+  status: "error" | "warning" | "info" | "success" | "generic",
   currentTheme?: DefaultTheme,
   source: ThemeTokensValues = vars,
 ) => {
@@ -576,6 +576,8 @@ export const getStatusColor = (
     case "warning":
       // TODO: use color from new macaw theme when will be ready
       return currentTheme === "defaultDark" ? "#3E2F0A" : "#FBE5AC";
+    case "generic":
+      return source.colors.background.surfaceBrandSubdued;
     default:
       return source.colors.background.surfaceBrandSubdued;
   }

@@ -1,29 +1,26 @@
 import { getStatusColor } from "@dashboard/misc";
 import { makeStyles, Pill as MacawuiPill, PillProps } from "@saleor/macaw-ui";
-import { DefaultTheme, useTheme } from "@saleor/macaw-ui/next";
+import { useTheme } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 
 const useStyles = makeStyles<{
-  status: "error" | "warning" | "info" | "success";
-  currentTheme: DefaultTheme;
+  color: PillProps["color"];
 }>(
   {
     pill: {
-      borderRadius: "32px !important",
-      border: "none !important",
-      background: ({ currentTheme, status }) =>
-        `${getStatusColor(status, currentTheme)} !important`,
+      borderRadius: "32px",
+      border: "none",
+      backgroundColor: ({ color }) => `${color} !important`,
     },
   },
   { name: "Pill" },
 );
 
-export const Pill = (props: PillProps) => {
+export const Pill = ({ color, ...props }: PillProps) => {
   const { theme: currentTheme } = useTheme();
   const classes = useStyles({
-    currentTheme,
-    status: props.color as any,
+    color: getStatusColor(color, currentTheme) as PillProps["color"],
   });
 
   return (
