@@ -44,16 +44,3 @@ body {
 .remove-icon-background svg {
   background: none !important;
 }
-
-@keyframes skeleton-animation {
-  0% {
-    opacity: 0.6;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-.skeleton-animation {
-  animation: skeleton-animation 0.75s linear infinite forwards alternate;
-}

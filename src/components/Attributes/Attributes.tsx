@@ -1,5 +1,6 @@
 import { AttributeReference } from "@dashboard/attributes/utils/data";
-import { Hr } from "@dashboard/components/Hr";
+import CardTitle from "@dashboard/components/CardTitle";
+import Hr from "@dashboard/components/Hr";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
@@ -12,18 +13,12 @@ import {
 import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { FetchMoreProps } from "@dashboard/types";
 import { RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
-import { makeStyles } from "@saleor/macaw-ui";
-import {
-  Box,
-  Button,
-  ChervonDownIcon,
-  ChervonUpIcon,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { Card, CardContent, Typography } from "@material-ui/core";
+import { ChevronIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import clsx from "clsx";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
-import { DashboardCard } from "../Card";
 import AttributeRow from "./AttributeRow";
 import { AttributeRowHandlers, VariantAttributeScope } from "./types";
 
@@ -137,60 +132,60 @@ const Attributes: React.FC<AttributesProps> = ({
   const toggleExpansion = () => setExpansionStatus(!expanded);
 
   return (
-    <DashboardCard>
-      <DashboardCard.Title>
-        {title || intl.formatMessage(messages.header)}
-      </DashboardCard.Title>
-      <DashboardCard.Content>
-        <Box display="flex" flexDirection="column" gap={5}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Text variant="caption" color="textNeutralSubdued">
+    <Card className={classes.card}>
+      <CardTitle title={title || intl.formatMessage(messages.header)} />
+      <CardContent className={classes.cardContent}>
+        <div className={classes.expansionBar}>
+          <div className={classes.expansionBarLabelContainer}>
+            <Typography className={classes.expansionBarLabel} variant="caption">
               <FormattedMessage
                 {...messages.attributesNumber}
                 values={{
                   number: attributes.length,
                 }}
               />
-            </Text>
-            <Button
-              variant="secondary"
-              type="button"
-              onClick={toggleExpansion}
-              data-test-id="attributes-expand"
-              icon={expanded ? <ChervonDownIcon /> : <ChervonUpIcon />}
-            />
-          </Box>
-          {expanded && attributes.length > 0 && (
-            <>
-              <Hr />
-              {attributes.map((attribute, attributeIndex) => {
-                const error = errors.find(err =>
-                  err.attributes?.includes(attribute.id),
-                );
-
-                return (
-                  <React.Fragment key={attribute.id}>
-                    {attributeIndex > 0 && <Hr />}
-                    <AttributeRow
-                      attribute={attribute}
-                      attributeValues={attributeValues}
-                      error={error}
-                      onAttributeSelectBlur={onAttributeSelectBlur}
-                      richTextGetters={richTextGetters}
-                      {...props}
-                    />
-                  </React.Fragment>
-                );
+            </Typography>
+          </div>
+          <IconButton
+            variant="secondary"
+            hoverOutline={false}
+            className={classes.expansionBarButton}
+            onClick={toggleExpansion}
+            data-test-id="attributes-expand"
+          >
+            <ChevronIcon
+              className={clsx(classes.expansionBarButtonIcon, {
+                [classes.rotate]: expanded,
               })}
-            </>
-          )}
-        </Box>
-      </DashboardCard.Content>
-    </DashboardCard>
+            />
+          </IconButton>
+        </div>
+        {expanded && attributes.length > 0 && (
+          <>
+            <Hr />
+            {attributes.map((attribute, attributeIndex) => {
+              const error = errors.find(err =>
+                err.attributes?.includes(attribute.id),
+              );
+
+              return (
+                <React.Fragment key={attribute.id}>
+                  {attributeIndex > 0 && <Hr />}
+                  <AttributeRow
+                    attribute={attribute}
+                    attributeValues={attributeValues}
+                    error={error}
+                    onAttributeSelectBlur={onAttributeSelectBlur}
+                    richTextGetters={richTextGetters}
+                    {...props}
+                  />
+                </React.Fragment>
+              );
+            })}
+          </>
+        )}
+      </CardContent>
+    </Card>
   );
 };
 Attributes.displayName = "Attributes";
