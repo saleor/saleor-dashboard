@@ -123,9 +123,12 @@ const useStyles = makeStyles(
         padding: theme.spacing(3, 2),
         paddingBottom: theme.spacing(),
         paddingLeft: vars.space[4],
+        "&:hover": {
+          border: `1px solid ${vars.colors.border.neutralHighlight}`,
+        },
       },
       rootActive: {
-        border: `1px solid ${vars.colors.border.brandSubdued}`,
+        border: `1px solid ${vars.colors.border.brandSubdued} !important`,
         backgroundColor: `${vars.colors.background.interactiveNeutralHighlightDefault} !important`,
       },
       rootDisabled: {

@@ -1,6 +1,6 @@
 import { Button } from "@dashboard/components/Button";
 import Grid from "@dashboard/components/Grid";
-import { Typography } from "@material-ui/core";
+import { Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { useExtendedAttributeStyles } from "./styles";
@@ -23,7 +23,7 @@ const ExtendedAttributeRow: React.FC<ExtendedAttributeRowProps> = props => {
           className={classes.attributeSectionLabel}
           data-test-id="attribute-label"
         >
-          <Typography>{label}</Typography>
+          <Text>{label}</Text>
         </div>
         <div data-test-id="attribute-selector">
           <Button

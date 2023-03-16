@@ -107,7 +107,7 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
               [classes.rootDisabled]: disabled,
               [classes.rootError]: error,
               [classes.rootTyped]:
-                isTyped || props.defaultValue.blocks.length > 0,
+                isTyped || props.defaultValue?.blocks?.length > 0,
             })}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}
