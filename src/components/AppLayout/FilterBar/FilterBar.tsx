@@ -3,7 +3,7 @@ import { FilterProps, SearchPageProps } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { ReactNode } from "react";
 
-import Filter from "./Filter";
+import { Filter } from "./Filter";
 import SearchInput from "./SearchInput";
 
 export interface FilterBarProps<TKeys extends string = string>
