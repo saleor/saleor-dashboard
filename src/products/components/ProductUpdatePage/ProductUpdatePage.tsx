@@ -11,7 +11,6 @@ import { ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
 import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
-import CardMenu from "@dashboard/components/CardMenu";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
@@ -52,7 +51,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { getChoices } from "../../utils/data";
-import ProductDetailsForm from "../ProductDetailsForm";
+import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
 import ProductOrganization from "../ProductOrganization";
 import ProductTaxes from "../ProductTaxes";
@@ -326,8 +325,8 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
         return (
           <DetailPageLayout>
             <TopNav href={productListUrl()} title={header}>
-              <CardMenu
-                menuItems={[
+              <TopNav.Menu
+                items={[
                   ...extensionMenuItems,
                   {
                     label: intl.formatMessage(messages.openGraphiQL),
@@ -335,7 +334,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
                     testId: "graphiql-redirect",
                   },
                 ]}
-                data-test-id="menu"
+                dataTestId="menu"
               />
             </TopNav>
 
