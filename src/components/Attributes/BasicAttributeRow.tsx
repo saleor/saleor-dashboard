@@ -1,7 +1,7 @@
-import Grid from "@dashboard/components/Grid";
 import { Typography } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
 import { Tooltip } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 
@@ -22,7 +22,7 @@ const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
   const classes = useBasicAttributeStyles();
 
   return (
-    <Grid className={classes.attributeSection} variant="uniform">
+    <Box as="li">
       <div
         className={classes.attributeSectionLabel}
         data-test-id="attribute-label"
@@ -44,7 +44,7 @@ const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
       >
         {children}
       </div>
-    </Grid>
+    </Box>
   );
 };
 
