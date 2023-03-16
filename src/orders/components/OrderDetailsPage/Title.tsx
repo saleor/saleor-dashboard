@@ -1,5 +1,5 @@
 import { DateTime } from "@dashboard/components/Date";
-import { Pill } from "@dashboard/components/Pill/Pill";
+import { Pill } from "@dashboard/components/Pill";
 import { transformOrderStatus } from "@dashboard/misc";
 import { OrderSharedType } from "@dashboard/orders/types";
 import { Typography } from "@material-ui/core";

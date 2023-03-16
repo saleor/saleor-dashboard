@@ -2,7 +2,7 @@ import CardTitle from "@dashboard/components/CardTitle";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
 import Link from "@dashboard/components/Link";
-import { Pill } from "@dashboard/components/Pill/Pill";
+import { Pill } from "@dashboard/components/Pill";
 import { WebhookErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";

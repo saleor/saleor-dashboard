@@ -7,7 +7,7 @@ import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
 import { messages } from "../ChannelsAvailabilityDropdown/messages";
-import { Pill } from "../Pill/Pill";
+import { Pill } from "../Pill";
 import { useStyles } from "./styles";
 
 export interface ChannelsAvailabilityMenuContentProps {

@@ -3,7 +3,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import ChannelsAvailabilityMenuContent from "../ChannelsAvailabilityMenuContent";
-import { Pill } from "../Pill/Pill";
+import { Pill } from "../Pill";
 import { messages } from "./messages";
 import {
   CollectionChannels,

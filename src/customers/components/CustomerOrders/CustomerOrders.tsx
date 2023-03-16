@@ -2,7 +2,7 @@ import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import { DateTime } from "@dashboard/components/Date";
 import Money from "@dashboard/components/Money";
-import { Pill } from "@dashboard/components/Pill/Pill";
+import { Pill } from "@dashboard/components/Pill";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";

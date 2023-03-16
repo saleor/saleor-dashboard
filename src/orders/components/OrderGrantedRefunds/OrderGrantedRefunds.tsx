@@ -3,7 +3,7 @@ import CardTitle from "@dashboard/components/CardTitle";
 import EventTime from "@dashboard/components/EventTime";
 import Money, { formatMoney } from "@dashboard/components/Money";
 import OverflowTooltip from "@dashboard/components/OverflowTooltip";
-import { Pill } from "@dashboard/components/Pill/Pill";
+import { Pill } from "@dashboard/components/Pill";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { OrderDetailsFragment } from "@dashboard/graphql/transactions";
 import useLocale from "@dashboard/hooks/useLocale";

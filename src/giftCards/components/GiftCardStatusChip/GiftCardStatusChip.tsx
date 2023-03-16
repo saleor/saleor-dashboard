@@ -1,4 +1,4 @@
-import { Pill } from "@dashboard/components/Pill/Pill";
+import { Pill } from "@dashboard/components/Pill";
 import {
   ExtendedGiftCard,
   GiftCardBase,

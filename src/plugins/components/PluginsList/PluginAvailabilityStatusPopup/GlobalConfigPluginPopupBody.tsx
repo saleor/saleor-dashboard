@@ -1,5 +1,5 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { Pill } from "@dashboard/components/Pill/Pill";
+import { Pill } from "@dashboard/components/Pill";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { CardContent, Typography } from "@material-ui/core";
 import React from "react";

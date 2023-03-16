@@ -2,7 +2,7 @@ import { Grow, Paper, Popper, Typography } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { Pill } from "../Pill/Pill";
+import { Pill } from "../Pill";
 import messages from "./messages";
 import useStyles from "./styles";
 
