@@ -63,22 +63,3 @@ export const useBasicAttributeStyles = makeStyles(
   }),
   { name: "BasicAttributeRow" },
 );
-
-export const useExtendedAttributeStyles = makeStyles(
-  theme => ({
-    attributeSection: {
-      "&:last-of-type": {
-        paddingBottom: 0,
-      },
-      padding: theme.spacing(2, 0),
-    },
-    attributeSectionButton: {
-      float: "right",
-    },
-    attributeSectionLabel: {
-      alignItems: "center",
-      display: "flex",
-    },
-  }),
-  { name: "ExtendedAttributeRow" },
-);

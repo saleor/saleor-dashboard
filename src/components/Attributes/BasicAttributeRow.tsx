@@ -1,52 +1,52 @@
-import { Typography } from "@material-ui/core";
-import HelpOutline from "@material-ui/icons/HelpOutline";
 import { Tooltip } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
-import clsx from "clsx";
+import { Box, InfoIcon, sprinkles, Text } from "@saleor/macaw-ui/next";
 import React from "react";
-
-import { useBasicAttributeStyles } from "./styles";
 
 interface BasicAttributeRowProps {
   label: string | React.ReactNode;
   description?: string | React.ReactNode;
-  flexValueContainer?: boolean;
+  id?: string;
+  clickableLabel?: boolean;
 }
 
-const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
+export const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
   label,
   description,
   children,
-  flexValueContainer,
-}) => {
-  const classes = useBasicAttributeStyles();
-
-  return (
-    <Box as="li">
-      <div
-        className={classes.attributeSectionLabel}
-        data-test-id="attribute-label"
-      >
-        <Typography>
-          {label}
-          {description && (
-            <Tooltip title={description}>
-              <HelpOutline className={classes.tooltipIcon} />
-            </Tooltip>
-          )}
-        </Typography>
-      </div>
-      <div
-        data-test-id="attribute-value"
-        className={clsx(classes.value, {
-          [classes.flex]: flexValueContainer,
-        })}
-      >
-        {children}
-      </div>
+  id,
+  clickableLabel = false,
+}) => (
+  <Box
+    as="li"
+    justifyContent="space-between"
+    alignItems="center"
+    paddingY={3}
+    display="grid"
+    gridTemplateColumns={2}
+    gap={8}
+  >
+    <Box
+      data-test-id="attribute-label"
+      as="label"
+      htmlFor={id}
+      display="flex"
+      gap={3}
+      cursor={clickableLabel ? "pointer" : "auto"}
+    >
+      <Text>{label}</Text>
+      {description && (
+        <Tooltip title={description} placement="top">
+          <Box>
+            <InfoIcon
+              size="small"
+              className={sprinkles({
+                display: "block",
+              })}
+            />
+          </Box>
+        </Tooltip>
+      )}
     </Box>
-  );
-};
-
-BasicAttributeRow.displayName = "BasicAttributeRow";
-export default BasicAttributeRow;
+    <Box data-test-id="attribute-value">{children}</Box>
+  </Box>
+);

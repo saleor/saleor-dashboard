@@ -1,4 +1,4 @@
-import BasicAttributeRow from "@dashboard/components/Attributes/BasicAttributeRow";
+import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
 import {
   getErrorMessage,
   getSingleDisplayValue,
@@ -38,7 +38,10 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
   const value = attribute.data.values.find(getBySlug(attribute.value[0]));
 
   return (
-    <BasicAttributeRow label={attribute.label}>
+    <BasicAttributeRow
+      label={attribute.label}
+      rowId={`attribute:${attribute.label}`}
+    >
       <SingleAutocompleteSelectField
         fetchOnFocus
         allowCustomValues={false}
@@ -65,6 +68,7 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
         error={!!error}
         helperText={getErrorMessage(error, intl)}
         name={`attribute:${attribute.label}`}
+        id={`attribute:${attribute.label}`}
         value={attribute.value[0]}
         onChange={event => onChange(attribute.id, event.target.value)}
         fetchChoices={value => fetchAttributeValues(value, attribute.id)}
