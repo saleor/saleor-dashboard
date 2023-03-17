@@ -16,14 +16,12 @@ import {
   GraphiQLProvider,
   GraphiQLProviderProps,
   HeaderEditor,
-  KeyboardShortcutIcon,
   MergeIcon,
   PlusIcon,
   PrettifyIcon,
   QueryEditor,
   ReloadIcon,
   ResponseEditor,
-  SettingsIcon,
   Spinner,
   Tab,
   Tabs,
@@ -157,8 +155,6 @@ export function GraphiQL({
     </GraphiQLProvider>
   );
 }
-// Export main windows/panes to be used separately if desired.
-GraphiQL.Logo = GraphiQLLogo;
 GraphiQL.Toolbar = GraphiQLToolbar;
 GraphiQL.Footer = GraphiQLFooter;
 
@@ -262,10 +258,6 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
 
   const children = React.Children.toArray(props.children);
 
-  const logo = children.find(child =>
-    isChildComponentType(child, GraphiQL.Logo),
-  ) || <GraphiQL.Logo />;
-
   const toolbar = children.find(child =>
     isChildComponentType(child, GraphiQL.Toolbar),
   ) || (
@@ -354,24 +346,6 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
               />
             </UnStyledButton>
           </Tooltip>
-          <Tooltip label="Open short keys dialog">
-            <UnStyledButton
-              type="button"
-              onClick={() => setShowDialog("short-keys")}
-              aria-label="Open short keys dialog"
-            >
-              <KeyboardShortcutIcon aria-hidden="true" />
-            </UnStyledButton>
-          </Tooltip>
-          <Tooltip label="Open settings dialog">
-            <UnStyledButton
-              type="button"
-              onClick={() => setShowDialog("settings")}
-              aria-label="Open settings dialog"
-            >
-              <SettingsIcon aria-hidden="true" />
-            </UnStyledButton>
-          </Tooltip>
         </div>
       </div>
       <div className="graphiql-main">
@@ -453,7 +427,6 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                     </Tooltip>
                   </div>
                 ) : null}
-                {logo}
               </div>
             </div>
             <div
@@ -623,7 +596,6 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
       <Dialog
         isOpen={showDialog === "short-keys"}
         onDismiss={() => setShowDialog(null)}
-        style={rootStyle}
       >
         <div className="graphiql-dialog-header">
           <div className="graphiql-dialog-title">Short Keys</div>
@@ -803,28 +775,6 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
     </div>
   );
 }
-
-// Configure the UI by providing this Component as a child of GraphiQL.
-function GraphiQLLogo<TProps>(props: PropsWithChildren<TProps>) {
-  return (
-    <div className="graphiql-logo">
-      {props.children || (
-        <a
-          className="graphiql-logo-link"
-          href="https://github.com/graphql/graphiql"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Graph
-          <em>i</em>
-          QL
-        </a>
-      )}
-    </div>
-  );
-}
-
-GraphiQLLogo.displayName = "GraphiQLLogo";
 
 // Configure the UI by providing this Component as a child of GraphiQL.
 function GraphiQLToolbar<TProps>(props: PropsWithChildren<TProps>) {
