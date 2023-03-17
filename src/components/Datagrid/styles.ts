@@ -94,7 +94,6 @@ const useStyles = makeStyles(
         "& .dvn-scroller::-webkit-scrollbar": {
           display: "none",
         },
-        borderTop: `1px solid ${vars.colors.border.neutralHighlight}`,
         borderRadius: 0,
         boxSizing: "content-box",
         width: "100%",
