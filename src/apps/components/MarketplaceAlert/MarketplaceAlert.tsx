@@ -1,5 +1,6 @@
 import { Typography } from "@material-ui/core";
 import { Alert } from "@saleor/macaw-ui";
+import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -23,7 +24,7 @@ export const MarketplaceAlert: React.FC<MarketplaceAlertProps> = ({
   return (
     <Alert
       variant="warning"
-      className={classes.alert}
+      className={clsx(classes.alert, "remove-icon-background")}
       close={true}
       title={intl.formatMessage(msgs.marketplaceError)}
     >
