@@ -43,7 +43,18 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
   }
 
   return (
-    <Box display="flex" justifyContent="flex-end" gap={6}>
+    <Box
+      display="flex"
+      justifyContent="flex-end"
+      gap={6}
+      borderStyle="solid"
+      borderWidth={1}
+      borderBottomLeftRadius={3}
+      borderBottomRightRadius={3}
+      borderColor="neutralPlain"
+      borderTopStyle="none"
+      padding={8}
+    >
       {githubForkHandler && (
         <Button
           variant="secondary"
