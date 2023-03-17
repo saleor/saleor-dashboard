@@ -279,10 +279,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                       aria-label="Query Editor"
                       style={{ borderBottom: 0 }}
                     >
-                      <div
-                        className="graphiql-query-editor-wrapper"
-                        style={{ fontSize: "1.6rem" }}
-                      >
+                      <div className="graphiql-query-editor-wrapper">
                         <QueryEditor
                           editorTheme={props.editorTheme}
                           keyMap={props.keyMap}

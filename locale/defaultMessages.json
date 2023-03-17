@@ -7345,6 +7345,10 @@
     "context": "stock exceeded dialog title",
     "string": "Not enough stock"
   },
+  "qa/dDe": {
+    "context": "GraphiQL Playground in the dev mode panel",
+    "string": "Playground"
+  },
   "qbFKVI": {
     "context": "notification, form submitted",
     "string": "Refund for order #{orderNumber} was granted"
