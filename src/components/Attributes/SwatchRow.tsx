@@ -40,7 +40,7 @@ export const SwatchRow: React.FC<SwatchRowProps> = ({
   return (
     <BasicAttributeRow
       label={attribute.label}
-      rowId={`attribute:${attribute.label}`}
+      id={`attribute:${attribute.label}`}
     >
       <SingleAutocompleteSelectField
         fetchOnFocus
