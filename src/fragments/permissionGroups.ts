@@ -23,7 +23,7 @@ export const permissionFragment = gql`
 export const permissionGroupMember = gql`
   fragment PermissionGroupMember on User {
     ...StaffMember
-    avatar(size: 48) {
+    avatar(size: 128) {
       url
     }
   }

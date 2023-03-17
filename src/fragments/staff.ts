@@ -21,7 +21,7 @@ export const staffMemberDetailsFragment = gql`
       code
       name
     }
-    avatar(size: 120) {
+    avatar(size: 512) {
       url
     }
   }
@@ -30,7 +30,7 @@ export const staffMemberDetailsFragment = gql`
 export const staffMemberAvatarFragment = gql`
   fragment StaffMemberAvatar on User {
     ...StaffMember
-    avatar(size: 120) {
+    avatar(size: 512) {
       url
     }
   }
