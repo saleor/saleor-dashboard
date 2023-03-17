@@ -7,6 +7,7 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { useGiftCardCurrenciesQuery } from "@dashboard/graphql";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
+import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { maybe } from "@dashboard/misc";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
@@ -39,14 +40,12 @@ import {
 const GiftCardListSearchAndFilters: React.FC = () => {
   const navigate = useNavigator();
   const intl = useIntl();
+  const [selectedChannel] = useLocalStorage("channel", "");
 
   const { reset, params } = useGiftCardList();
 
-  const {
-    onClose,
-    openSearchDeleteDialog,
-    openSearchSaveDialog,
-  } = useGiftCardListDialogs();
+  const { onClose, openSearchDeleteDialog, openSearchSaveDialog } =
+    useGiftCardListDialogs();
 
   const defaultSearchVariables = {
     variables: { ...DEFAULT_INITIAL_SEARCH_DATA, first: 5 },
@@ -62,7 +61,13 @@ const GiftCardListSearchAndFilters: React.FC = () => {
     loadMore: fetchMoreProducts,
     search: searchProducts,
     result: searchProductsResult,
-  } = useProductSearch(defaultSearchVariables);
+  } = useProductSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 5,
+      channel: selectedChannel,
+    },
+  });
 
   const {
     loadMore: fetchMoreGiftCardTags,
@@ -70,10 +75,8 @@ const GiftCardListSearchAndFilters: React.FC = () => {
     result: searchGiftCardTagsResult,
   } = useGiftCardTagsSearch(defaultSearchVariables);
 
-  const {
-    data: giftCardCurrenciesData,
-    loading: loadingGiftCardCurrencies,
-  } = useGiftCardCurrenciesQuery();
+  const { data: giftCardCurrenciesData, loading: loadingGiftCardCurrencies } =
+    useGiftCardCurrenciesQuery();
 
   const filterOpts = getFilterOpts({
     params,
@@ -108,17 +111,14 @@ const GiftCardListSearchAndFilters: React.FC = () => {
   const tabs = getFilterTabs();
   const currentTab = getFiltersCurrentTab(params, tabs);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    createUrl: giftCardListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-    cleanupFn: reset,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      createUrl: giftCardListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+      cleanupFn: reset,
+    });
 
   const handleTabChange = (tab: number) => {
     reset();
