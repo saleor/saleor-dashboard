@@ -18,6 +18,7 @@ import { getMoneyRange } from "@dashboard/components/MoneyRange";
 import { ProductListColumns } from "@dashboard/config";
 import { GridAttributesQuery, ProductListQuery } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
+import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
@@ -151,7 +152,7 @@ export function createGetCellContent({
     [column, row]: Item,
     { changes, getChangeIndex, added, removed }: GetCellContentOpts,
   ) => {
-    if ([-1, 0].includes(column)) {
+    if (isFirstColumn(column)) {
       return readonlyTextCell("");
     }
 
@@ -168,7 +169,7 @@ export function createGetCellContent({
     const change = changes.current[getChangeIndex(columnId, row)]?.data;
     const rowData = added.includes(row)
       ? undefined
-      : products[row + removed.filter(r => r <= row).length];
+      : products[getDatagridRowDataIndex(row, removed)];
 
     const channel = rowData?.channelListings?.find(
       listing => listing.channel.id === selectedChannelId,
