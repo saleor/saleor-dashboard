@@ -363,7 +363,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   borderColor="neutralPlain"
                   __maxWidth={contentMaxWidth}
                   margin="auto"
-                  zIndex="3"
                 />
                 <DataEditor
                   {...cellProps}
@@ -447,6 +446,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   rowMarkerWidth={48}
                 />
                 <Box
+                  position="relative"
                   __marginTop="-1px"
                   backgroundColor="plain"
                   borderTopWidth={1}
