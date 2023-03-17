@@ -4,21 +4,35 @@ import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
 interface AppListCardIntegrationsProps {
-  app: GetV2SaleorAppsResponse.SaleorApp;
+  integrations: GetV2SaleorAppsResponse.SaleorApp["integrations"];
 }
 
 const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
-  app,
+  integrations,
 }) => {
   const { themeType } = useTheme();
 
-  if (!app.integrations.length) {
+  if (!integrations) {
     return null;
   }
 
   return (
-    <Box as="ul" display="flex" flexDirection="row" flexWrap="wrap" gap={8}>
-      {app.integrations.map(integration => (
+    <Box
+      as="ul"
+      display="flex"
+      flexDirection="row"
+      flexWrap="wrap"
+      gap={8}
+      margin={0}
+      borderColor="neutralPlain"
+      borderLeftStyle="solid"
+      borderRightStyle="solid"
+      borderWidth={1}
+      paddingY={5}
+      paddingX={8}
+      alignItems="start"
+    >
+      {integrations.map(integration => (
         <Box
           as="li"
           display="flex"
@@ -32,6 +46,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
             borderRadius={3}
             borderStyle="solid"
             borderColor="neutralPlain"
+            borderWidth={1}
             padding={3}
             display="flex"
             placeItems="center"
