@@ -1834,7 +1834,7 @@ export const StaffMemberFragmentDoc = gql`
 export const PermissionGroupMemberFragmentDoc = gql`
     fragment PermissionGroupMember on User {
   ...StaffMember
-  avatar(size: 48) {
+  avatar(size: 128) {
     url
   }
 }
@@ -2461,7 +2461,7 @@ export const StaffMemberDetailsFragmentDoc = gql`
     code
     name
   }
-  avatar(size: 120) {
+  avatar(size: 512) {
     url
   }
 }
@@ -2469,7 +2469,7 @@ export const StaffMemberDetailsFragmentDoc = gql`
 export const StaffMemberAvatarFragmentDoc = gql`
     fragment StaffMemberAvatar on User {
   ...StaffMember
-  avatar(size: 120) {
+  avatar(size: 512) {
     url
   }
 }
@@ -15088,7 +15088,7 @@ export const StaffListDocument = gql`
       cursor
       node {
         ...StaffMember
-        avatar(size: 48) {
+        avatar(size: 128) {
           url
         }
       }

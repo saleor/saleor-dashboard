@@ -6,7 +6,9 @@ import Skeleton from "@dashboard/components/Skeleton";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { PermissionGroupMemberFragment } from "@dashboard/graphql";
+import { commonStatusMessages } from "@dashboard/intl";
 import {
   getUserInitials,
   getUserName,
@@ -25,6 +27,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Box, Text, vars } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -38,20 +41,11 @@ const useStyles = makeStyles(
       colEmail: {
         width: 300,
       },
-      colName: {
-        width: "auto",
-      },
     },
-    avatar: {
+    colName: {
+      display: "flex",
       alignItems: "center",
-      borderRadius: "100%",
-      display: "grid",
-      float: "left",
-      height: 47,
-      justifyContent: "center",
-      marginRight: theme.spacing(1),
-      overflow: "hidden",
-      width: 47,
+      gap: vars.space[5],
     },
     avatarDefault: {
       "& div": {
@@ -68,14 +62,10 @@ const useStyles = makeStyles(
       width: "100%",
     },
     colActions: {
-      paddingRight: theme.spacing(),
       textAlign: "right",
     },
     helperText: {
       textAlign: "center",
-    },
-    statusText: {
-      color: "#9E9D9D",
     },
     tableRow: {},
   }),
@@ -218,41 +208,22 @@ const PermissionGroupMemberList: React.FC<PermissionGroupProps> = props => {
                       />
                     </TableCell>
                     <TableCell className={classes.colName}>
-                      <div className={classes.avatar}>
-                        {user?.avatar?.url ? (
-                          <img
-                            className={classes.avatarImage}
-                            src={user?.avatar?.url}
-                          />
-                        ) : (
-                          <div className={classes.avatarDefault}>
-                            <Typography>{getUserInitials(user)}</Typography>
-                          </div>
-                        )}
-                      </div>
-                      <Typography>
-                        {getUserName(user) || <Skeleton />}
-                      </Typography>
-                      <Typography
-                        variant={"caption"}
-                        className={classes.statusText}
-                      >
-                        {!user ? (
-                          <Skeleton />
-                        ) : user.isActive ? (
-                          intl.formatMessage({
-                            id: "9Zlogd",
-                            defaultMessage: "Active",
-                            description: "staff member status",
-                          })
-                        ) : (
-                          intl.formatMessage({
-                            id: "7WzUxn",
-                            defaultMessage: "Inactive",
-                            description: "staff member status",
-                          })
-                        )}
-                      </Typography>
+                      <UserAvatar
+                        initials={getUserInitials(user)}
+                        url={user?.avatar?.url}
+                      />
+                      <Box display="flex" flexDirection="column">
+                        <Text>{getUserName(user) || <Skeleton />}</Text>
+                        <Text variant="caption" color="textNeutralSubdued">
+                          {!user ? (
+                            <Skeleton />
+                          ) : user.isActive ? (
+                            intl.formatMessage(commonStatusMessages.active)
+                          ) : (
+                            intl.formatMessage(commonStatusMessages.notActive)
+                          )}
+                        </Text>
+                      </Box>
                     </TableCell>
                     <TableCell className={classes.colEmail}>
                       {user?.email || <Skeleton />}

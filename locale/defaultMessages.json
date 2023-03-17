@@ -698,10 +698,6 @@
     "context": "payment status",
     "string": "Fully paid"
   },
-  "2r4cTE": {
-    "context": "button",
-    "string": "Enable Dark Mode"
-  },
   "2rJcFa": {
     "context": "delete app",
     "string": "Deleting this app, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace."
@@ -4841,10 +4837,6 @@
   "X7fqfM": {
     "context": "title",
     "string": "Reserved stock"
-  },
-  "X8+Lpa": {
-    "context": "button",
-    "string": "Account Settings"
   },
   "X8qjg3": {
     "context": "inactive",
