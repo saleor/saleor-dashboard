@@ -445,3 +445,10 @@ export const prepareMoney = (
   amount,
   currency: currency ?? "USD",
 });
+
+export const isAnyAddressEditModalOpen = (uri: string | undefined): boolean =>
+  [
+    "edit-customer-addresses",
+    "edit-shipping-address",
+    "edit-billing-address",
+  ].includes(uri);
