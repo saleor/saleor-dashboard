@@ -8,7 +8,7 @@ import {
 } from "@dashboard/graphql";
 import { Node, SlugNode } from "@dashboard/types";
 import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
-import { DefaultTheme, ThemeTokensValues, vars } from "@saleor/macaw-ui/next";
+import { DefaultTheme } from "@saleor/macaw-ui/next";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
@@ -564,21 +564,20 @@ export const findById = <T extends Node>(id: string, list?: T[]) =>
 export const getStatusColor = (
   status: "error" | "warning" | "info" | "success" | "generic",
   currentTheme?: DefaultTheme,
-  source: ThemeTokensValues = vars,
 ) => {
   switch (status) {
     case "error":
-      return source.colors.background.surfaceCriticalDepressed;
+      return "surfaceCriticalDepressed";
     case "info":
-      return source.colors.background.surfaceBrandDepressed;
+      return "surfaceBrandDepressed";
     case "success":
-      return source.colors.background.decorativeSurfaceSubdued2;
+      return "decorativeSurfaceSubdued2";
     case "warning":
       // TODO: use color from new macaw theme when will be ready
       return currentTheme === "defaultDark" ? "#3E2F0A" : "#FBE5AC";
     case "generic":
-      return source.colors.background.surfaceBrandSubdued;
+      return "surfaceBrandSubdued";
     default:
-      return source.colors.background.surfaceBrandSubdued;
+      return "surfaceBrandSubdued";
   }
 };

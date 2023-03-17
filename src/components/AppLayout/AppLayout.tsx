@@ -1,7 +1,7 @@
 import useAppState from "@dashboard/hooks/useAppState";
 import { LinearProgress } from "@material-ui/core";
 import { useActionBar } from "@saleor/macaw-ui";
-import { Box, useTheme } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import Navigator from "../Navigator";
@@ -15,14 +15,13 @@ interface AppLayoutProps {
 }
 
 const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
-  const { theme: currentTheme } = useTheme();
-  const classes = useStyles({ currentTheme });
+  const classes = useStyles();
   const { anchor: appActionAnchor } = useActionBar();
   const [appState] = useAppState();
   const [isNavigatorVisible, setNavigatorVisibility] = React.useState(false);
 
   return (
-    <div className={classes.root}>
+    <>
       <Navigator
         visible={isNavigatorVisible}
         setVisibility={setNavigatorVisibility}
@@ -65,7 +64,7 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
           />
         </Box>
       </Box>
-    </div>
+    </>
   );
 };
 

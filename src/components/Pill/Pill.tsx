@@ -1,6 +1,6 @@
 import { getStatusColor } from "@dashboard/misc";
 import { makeStyles, Pill as MacawuiPill, PillProps } from "@saleor/macaw-ui";
-import { useTheme } from "@saleor/macaw-ui/next";
+import { useTheme, vars } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 
@@ -19,8 +19,11 @@ const useStyles = makeStyles<{
 
 export const Pill = ({ color, ...props }: PillProps) => {
   const { theme: currentTheme } = useTheme();
+  const backgroundColor = getStatusColor(color, currentTheme);
   const classes = useStyles({
-    color: getStatusColor(color, currentTheme) as PillProps["color"],
+    color: backgroundColor.startsWith("#")
+      ? backgroundColor
+      : vars.colors.background[backgroundColor],
   });
 
   return (

@@ -155,11 +155,15 @@ export function getPaymentCellContent(
 ) {
   const paymentStatus = transformPaymentStatus(rowData.paymentStatus, intl);
   if (paymentStatus?.status) {
+    const statusColor = getStatusColor(paymentStatus.status, currentTheme);
+
     return tagsCell(
       [
         {
           tag: paymentStatus.localized,
-          color: getStatusColor(paymentStatus.status, currentTheme, theme),
+          color: statusColor.startsWith("#")
+            ? statusColor
+            : theme.colors.background[statusColor],
         },
       ],
       [paymentStatus.localized],
@@ -177,13 +181,16 @@ export function getStatusCellContent(
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   const status = transformOrderStatus(rowData.status, intl);
+  const statusColor = getStatusColor(status.status, currentTheme);
 
   if (status) {
     return tagsCell(
       [
         {
           tag: status.localized,
-          color: getStatusColor(status.status, currentTheme, theme),
+          color: statusColor.startsWith("#")
+            ? statusColor
+            : theme.colors.background[statusColor],
         },
       ],
       [status.localized],
