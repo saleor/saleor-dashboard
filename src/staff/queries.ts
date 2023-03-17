@@ -21,7 +21,7 @@ export const staffList = gql`
         cursor
         node {
           ...StaffMember
-          avatar(size: 48) {
+          avatar(size: 128) {
             url
           }
         }

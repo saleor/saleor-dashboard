@@ -2,10 +2,11 @@ import { useUser } from "@dashboard/auth";
 import { getUserInitials } from "@dashboard/misc";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Avatar, vars } from "@saleor/macaw-ui/next";
+import { vars } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { DateTime } from "../Date";
+import { UserAvatar } from "../UserAvatar";
 
 const useStyles = makeStyles(
   theme => ({
@@ -87,10 +88,9 @@ export const TimelineNote: React.FC<TimelineNoteProps> = props => {
   return (
     <div className={classes.root}>
       {user && (
-        <Avatar.User
+        <UserAvatar
           initials={getUserInitials(currentUser)}
-          scheme="decorative2"
-          src={currentUser?.avatar?.url}
+          url={currentUser?.avatar?.url}
           className={classes.avatar}
         />
       )}

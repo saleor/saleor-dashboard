@@ -33,6 +33,7 @@ import useAppChannel, {
   AppChannelProvider,
 } from "./components/AppLayout/AppChannelContext";
 import { DateProvider } from "./components/Date";
+import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
 import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { LocaleProvider } from "./components/Locale";
@@ -120,7 +121,9 @@ const App: React.FC = () => (
                             <AppChannelProvider>
                               <ExternalAppProvider>
                                 <ExitFormDialogProvider>
-                                  <Routes />
+                                  <DevModeProvider>
+                                    <Routes />
+                                  </DevModeProvider>
                                 </ExitFormDialogProvider>
                               </ExternalAppProvider>
                             </AppChannelProvider>
