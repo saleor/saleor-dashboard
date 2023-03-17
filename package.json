@@ -172,7 +172,7 @@
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-pwa": "^0.13.3",
     "vite-plugin-sentry": "^1.1.6",
-    "vite-plugin-swc-react-refresh": "^2.2.1",
+    "@vitejs/plugin-react-swc": "^3.2.0",
     "workbox-cacheable-response": "^6.1.2",
     "workbox-expiration": "^6.1.2",
     "workbox-precaching": "^6.1.2",
