@@ -26,7 +26,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderLimitReached from "../OrderLimitReached";
-import { OrderListDatagrid } from "../OrderListDatagrid/OrderListDatagrid";
+import { OrderListDatagrid } from "../OrderListDatagrid";
 import {
   createFilterStructure,
   OrderFilterKeys,

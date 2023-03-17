@@ -22,7 +22,7 @@ export interface FilterProps<TFilterKeys extends string = string> {
   onFilterAttributeFocus?: (id?: string) => void;
 }
 
-const Filter = ({
+export const Filter = ({
   currencySymbol,
   menu,
   onFilterAdd,
@@ -122,5 +122,5 @@ const Filter = ({
     </ClickAwayListener>
   );
 };
+
 Filter.displayName = "Filter";
-export default Filter;

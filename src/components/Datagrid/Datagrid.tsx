@@ -28,6 +28,7 @@ import React, {
 } from "react";
 import { FormattedMessage } from "react-intl";
 
+import { contentMaxWidth } from "../AppLayout/consts";
 import { CardMenuItem } from "../CardMenu";
 import { ColumnPickerProps } from "../ColumnPicker";
 import { FullScreenContainer } from "./components/FullScreenContainer";
@@ -358,6 +359,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
                 </div>
               )}
               <div className={classes.editorContainer}>
+                <Box
+                  backgroundColor="plain"
+                  borderTopWidth={1}
+                  borderTopStyle="solid"
+                  borderColor="neutralPlain"
+                  __maxWidth={contentMaxWidth}
+                  margin="auto"
+                />
                 <DataEditor
                   {...datagridProps}
                   customRenderers={customRenderers}
@@ -438,6 +447,17 @@ export const Datagrid: React.FC<DatagridProps> = ({
                     </div>
                   }
                   rowMarkerWidth={48}
+                />
+                <Box
+                  position="relative"
+                  __marginTop="-1px"
+                  backgroundColor="plain"
+                  borderTopWidth={1}
+                  borderTopStyle="solid"
+                  borderColor="neutralPlain"
+                  __maxWidth={contentMaxWidth}
+                  margin="auto"
+                  zIndex="3"
                 />
                 {/* FIXME: https://github.com/glideapps/glide-data-grid/issues/505 */}
                 {hasColumnGroups && (

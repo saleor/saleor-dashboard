@@ -3,6 +3,7 @@ import CardTitle from "@dashboard/components/CardTitle";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { Hr } from "@dashboard/components/Hr";
 import Money from "@dashboard/components/Money";
+import { Pill } from "@dashboard/components/Pill";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderAction,
@@ -11,7 +12,6 @@ import {
   OrderStatus,
 } from "@dashboard/graphql";
 import { Card, CardContent } from "@material-ui/core";
-import { Pill } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

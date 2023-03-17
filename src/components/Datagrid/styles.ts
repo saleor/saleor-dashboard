@@ -89,14 +89,15 @@ const useStyles = makeStyles(
       datagrid: {
         "& .dvn-scroller": {
           overscrollBehaviorX: "none",
+          "scrollbar-width:": "none",
         },
-        borderTop: `1px solid ${vars.colors.border.neutralHighlight}`,
-        borderBottom: `1px solid ${vars.colors.border.neutralHighlight}`,
+        "& .dvn-scroller::-webkit-scrollbar": {
+          display: "none",
+        },
         borderRadius: 0,
         boxSizing: "content-box",
         width: "100%",
         paddingBottom: "1px",
-        color: "red",
       },
       root: {
         position: "relative",

@@ -102,7 +102,11 @@ const DryRun: React.FC<DryRunProps> = ({
         </DialogContentText>
 
         {!!unavailableObjects.length && (
-          <Alert variant="warning" close={false}>
+          <Alert
+            variant="warning"
+            close={false}
+            className="remove-icon-background"
+          >
             <Typography>
               {intl.formatMessage(messages.unavailableEvents)}
               <br />

@@ -11,12 +11,20 @@ import { Locale } from "@dashboard/components/Locale";
 import { getMoney } from "@dashboard/components/Money/utils";
 import { OrderListQuery } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
-import { transformOrderStatus, transformPaymentStatus } from "@dashboard/misc";
+import {
+  getStatusColor,
+  transformOrderStatus,
+  transformPaymentStatus,
+} from "@dashboard/misc";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { DefaultTheme, themes, useTheme } from "@saleor/macaw-ui/next";
+import {
+  DefaultTheme,
+  ThemeTokensValues,
+  useTheme,
+} from "@saleor/macaw-ui/next";
 import moment from "moment-timezone";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -141,17 +149,21 @@ export function getCustomerCellContent(
 
 export function getPaymentCellContent(
   intl: IntlShape,
-  theme: (typeof themes)["defaultDark"],
+  theme: ThemeTokensValues,
   currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   const paymentStatus = transformPaymentStatus(rowData.paymentStatus, intl);
   if (paymentStatus?.status) {
+    const statusColor = getStatusColor(paymentStatus.status, currentTheme);
+
     return tagsCell(
       [
         {
           tag: paymentStatus.localized,
-          color: getStatusColor(paymentStatus.status, theme, currentTheme),
+          color: statusColor.startsWith("#")
+            ? statusColor
+            : theme.colors.background[statusColor],
         },
       ],
       [paymentStatus.localized],
@@ -164,18 +176,21 @@ export function getPaymentCellContent(
 
 export function getStatusCellContent(
   intl: IntlShape,
-  theme: (typeof themes)["defaultDark"],
+  theme: ThemeTokensValues,
   currentTheme: DefaultTheme,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   const status = transformOrderStatus(rowData.status, intl);
+  const statusColor = getStatusColor(status.status, currentTheme);
 
   if (status) {
     return tagsCell(
       [
         {
           tag: status.localized,
-          color: getStatusColor(status.status, theme, currentTheme),
+          color: statusColor.startsWith("#")
+            ? statusColor
+            : theme.colors.background[statusColor],
         },
       ],
       [status.localized],
@@ -184,26 +199,6 @@ export function getStatusCellContent(
   }
 
   return readonlyTextCell("-");
-}
-
-function getStatusColor(
-  status: string,
-  theme: (typeof themes)["defaultDark"],
-  currentTheme: DefaultTheme,
-): string {
-  switch (status) {
-    case "error":
-      return theme.colors.background.surfaceCriticalDepressed;
-    case "warning":
-      // TODO: replace when warning will be added to theme
-      return currentTheme === "defaultDark" ? "#3E2F0A" : "#FBE5AC";
-    case "success":
-      return theme.colors.background.decorativeSurfaceSubdued2;
-    case "info":
-      return theme.colors.background.surfaceBrandDepressed;
-    default:
-      return theme.colors.background.surfaceBrandSubdued;
-  }
 }
 
 export function getTotalCellContent(

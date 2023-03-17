@@ -8,6 +8,7 @@ import {
 } from "@dashboard/graphql";
 import { Node, SlugNode } from "@dashboard/types";
 import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
+import { DefaultTheme } from "@saleor/macaw-ui/next";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
@@ -559,3 +560,24 @@ export const getByUnmatchingId =
 
 export const findById = <T extends Node>(id: string, list?: T[]) =>
   list?.find(getById(id));
+
+export const getStatusColor = (
+  status: "error" | "warning" | "info" | "success" | "generic",
+  currentTheme?: DefaultTheme,
+) => {
+  switch (status) {
+    case "error":
+      return "surfaceCriticalDepressed";
+    case "info":
+      return "surfaceBrandDepressed";
+    case "success":
+      return "decorativeSurfaceSubdued2";
+    case "warning":
+      // TODO: use color from new macaw theme when will be ready
+      return currentTheme === "defaultDark" ? "#3E2F0A" : "#FBE5AC";
+    case "generic":
+      return "surfaceBrandSubdued";
+    default:
+      return "surfaceBrandSubdued";
+  }
+};

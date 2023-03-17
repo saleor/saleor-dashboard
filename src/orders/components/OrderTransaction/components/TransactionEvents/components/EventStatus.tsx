@@ -1,5 +1,5 @@
+import { Pill } from "@dashboard/components/Pill";
 import { TransactionEventStatus } from "@dashboard/orders/types";
-import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

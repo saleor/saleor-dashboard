@@ -61,7 +61,7 @@ export const failedAppInProgress: AppInstallationFragment = {
   __typename: "AppInstallation",
   appName: "app",
   id: "QXBwSW5zdGFsbGF0aW9uOjk2",
-  manifestUrl: "http://localhost:3000/manifest",
+  manifestUrl: "https://www.released-example.com/manifest",
   message: "Failed to connect to app. Try later or contact with app support.",
   status: JobStatusEnum.FAILED,
 };
@@ -70,7 +70,7 @@ export const pendingAppInProgress: AppInstallationFragment = {
   __typename: "AppInstallation",
   appName: "app pending",
   id: "QXBwSW5zdGFsbGF0aW9uOjk2",
-  manifestUrl: "http://localhost:3000/manifest",
+  manifestUrl: "https://www.released-example.com/manifest",
   message: "Pending.",
   status: JobStatusEnum.PENDING,
 };
@@ -79,7 +79,7 @@ export const successAppInProgress: AppInstallationFragment = {
   __typename: "AppInstallation",
   appName: "app success",
   id: "QXBwSW5zdGFsbGF0aW9uOjk2",
-  manifestUrl: "http://localhost:3000/manifest",
+  manifestUrl: "https://www.released-example.com/manifest",
   message: "Success.",
   status: JobStatusEnum.SUCCESS,
 };
