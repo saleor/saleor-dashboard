@@ -1,7 +1,7 @@
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { Typography } from "@material-ui/core";
-import { sprinkles } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -24,14 +24,12 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
   const { warehouse, trackingNumber, status } = fulfillment;
 
   return (
-    <div
-      className={sprinkles({
-        paddingX: 11,
-        paddingY: 7,
-        borderColor: "neutralHighlight",
-        borderBottomStyle: "solid",
-        borderBottomWidth: 1,
-      })}
+    <Box
+      paddingX={11}
+      paddingY={7}
+      borderColor="neutralHighlight"
+      borderBottomStyle={"solid"}
+      borderBottomWidth={1}
     >
       <Typography color="textSecondary" variant="body2">
         {warehouse && (
@@ -71,7 +69,7 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
           />
         )}
       </Typography>
-    </div>
+    </Box>
   );
 };
 

@@ -8,6 +8,7 @@ import {
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
 import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
@@ -79,7 +80,7 @@ export const useGetCellContent = ({
     [column, row]: Item,
     { added, removed }: GetCellContentOpts,
   ): GridCell => {
-    if ([-1, 0].includes(column)) {
+    if (isFirstColumn(column)) {
       return readonlyTextCell("", false);
     }
 
@@ -90,7 +91,7 @@ export const useGetCellContent = ({
     const columnId = columns[column].id;
     const rowData = added.includes(row)
       ? undefined
-      : lines[row + removed.filter(r => r <= row).length];
+      : lines[getDatagridRowDataIndex(row, removed)];
 
     if (!rowData) {
       return readonlyTextCell("", false);

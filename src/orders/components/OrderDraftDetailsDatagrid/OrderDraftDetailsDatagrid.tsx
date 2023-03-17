@@ -5,12 +5,10 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { buttonMessages } from "@dashboard/intl";
 import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import { OrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import { Button } from "@saleor/macaw-ui";
 import React, { useContext, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
 import { ORDER_LINE_DISCOUNT } from "../OrderDiscountCommonModal/types";
@@ -89,11 +87,7 @@ export const OrderDraftDetailsDatagrid = ({
           },
         ]}
         rows={loading ? 1 : lines.length}
-        selectionActions={(indexes, { removeRows }) => (
-          <Button variant="tertiary" onClick={() => removeRows(indexes)}>
-            <FormattedMessage {...buttonMessages.delete} />
-          </Button>
-        )}
+        selectionActions={() => null}
         onColumnResize={onColumnResize}
         onColumnMoved={onColumnMoved}
         renderColumnPicker={defaultProps => (

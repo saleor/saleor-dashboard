@@ -6,10 +6,8 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderLineFragment } from "@dashboard/graphql";
-import { buttonMessages } from "@dashboard/intl";
-import { Button } from "@saleor/macaw-ui";
 import React, { useCallback, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { messages } from "../OrderListDatagrid/messages";
 import { getCellContentCreator, getColumns } from "./datagrid";
@@ -64,11 +62,7 @@ export const OrderDetailsDatagrid = ({
         getCellError={() => false}
         menuItems={() => []}
         rows={loading ? 1 : lines.length}
-        selectionActions={(indexes, { removeRows }) => (
-          <Button variant="tertiary" onClick={() => removeRows(indexes)}>
-            <FormattedMessage {...buttonMessages.delete} />
-          </Button>
-        )}
+        selectionActions={() => null}
         onColumnResize={onColumnResize}
         onColumnMoved={onColumnMoved}
         renderColumnPicker={defaultProps => (

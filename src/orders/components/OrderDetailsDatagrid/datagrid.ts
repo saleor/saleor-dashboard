@@ -7,6 +7,7 @@ import {
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderLineFragment } from "@dashboard/graphql";
+import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { IntlShape } from "react-intl";
 
@@ -54,7 +55,7 @@ interface GetCellContentProps {
 export const getCellContentCreator =
   ({ columns, data, loading }: GetCellContentProps) =>
   ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
-    if ([-1, 0].includes(column)) {
+    if (isFirstColumn(column)) {
       return readonlyTextCell("", false);
     }
 
@@ -65,7 +66,7 @@ export const getCellContentCreator =
     const columnId = columns[column].id;
     const rowData = added.includes(row)
       ? undefined
-      : data[row + removed.filter(r => r <= row).length];
+      : data[getDatagridRowDataIndex(row, removed)];
 
     if (!rowData) {
       return readonlyTextCell("", false);
