@@ -33,33 +33,47 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
           <TopNavLink to={goBackLink} variant="tertiary" />
           <Box display="flex" gap={5} alignItems="center">
             <AppAvatar />
-            <Text variant="heading">{name}</Text>
+            <Box display="flex" flexDirection="column">
+              <Text variant="heading">{name}</Text>
+              <Text
+                variant="caption"
+                color="textNeutralSubdued"
+                textTransform="uppercase"
+              >
+                {/* TODO: pass author here when cache expires */}
+                <FormattedMessage
+                  defaultMessage="by {author}"
+                  id="6SL46U"
+                  values={{ author: "saleor commerce" }}
+                />
+              </Text>
+            </Box>
           </Box>
         </Box>
-        <Box display="flex" gap={4}>
-          {supportUrl && (
-            <Button
-              variant="secondary"
-              size="medium"
-              onClick={() => {
-                window.open(supportUrl, "_blank");
-              }}
-            >
-              <FormattedMessage defaultMessage="Support" id="HqRNN8" />
-            </Button>
-          )}
-          {homepageUrl && (
-            <Button
-              variant="secondary"
-              size="medium"
-              onClick={() => {
-                window.open(homepageUrl, "_blank");
-              }}
-            >
-              <FormattedMessage defaultMessage="Homepage" id="rxNddi" />
-            </Button>
-          )}
-        </Box>
+      </Box>
+      <Box display="flex" gap={4}>
+        {supportUrl && (
+          <Button
+            variant="secondary"
+            size="medium"
+            onClick={() => {
+              window.open(supportUrl, "_blank");
+            }}
+          >
+            <FormattedMessage defaultMessage="Support" id="HqRNN8" />
+          </Button>
+        )}
+        {homepageUrl && (
+          <Button
+            variant="secondary"
+            size="medium"
+            onClick={() => {
+              window.open(homepageUrl, "_blank");
+            }}
+          >
+            <FormattedMessage defaultMessage="Homepage" id="rxNddi" />
+          </Button>
+        )}
       </Box>
     </TopNavWrapper>
   );
