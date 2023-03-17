@@ -12,7 +12,7 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
-import AppListCard from "./AppListCard";
+import AppListRow from "./AppListRow";
 
 jest.mock("@dashboard/apps/context", () => ({
   useAppListContext: jest.fn(() => ({
@@ -32,7 +32,10 @@ jest.mock("@dashboard/config", () => {
   };
 });
 
-describe("Apps AppListCard", () => {
+const releasedAppPair = [releasedApp, releasedApp];
+const comingSoonAppPair = [comingSoonApp, comingSoonApp];
+
+describe("Apps AppListRow", () => {
   it("displays released app details when released app data passed", () => {
     // Arrange
     const integrationImages = releasedApp.integrations.map(
@@ -40,17 +43,17 @@ describe("Apps AppListCard", () => {
     );
     render(
       <Wrapper>
-        <AppListCard app={releasedApp} />
+        <AppListRow appPair={releasedAppPair} />
       </Wrapper>,
     );
-    const name = screen.queryByText(releasedApp.name.en);
-    const description = screen.queryByText(releasedApp.description.en);
+    const name = screen.queryAllByText(releasedApp.name.en);
+    const description = screen.queryAllByText(releasedApp.description.en);
     const images = screen.getAllByRole("img");
     const links = screen.getAllByRole("link");
 
     // Assert
-    expect(name).toBeTruthy();
-    expect(description).toBeTruthy();
+    expect(name[0]).toBeTruthy();
+    expect(description[0]).toBeTruthy();
     const expectedImages = [releasedApp.logo.source, ...integrationImages];
     images.forEach(image =>
       expect(expectedImages).toContain(image.getAttribute("src")),
@@ -71,22 +74,22 @@ describe("Apps AppListCard", () => {
     const navigateToVercelDeploymentPage = jest.fn();
     render(
       <Wrapper>
-        <AppListCard
-          app={releasedApp}
+        <AppListRow
+          appPair={releasedAppPair}
           navigateToAppInstallPage={navigateToAppInstallPage}
           navigateToGithubForkPage={navigateToVercelDeploymentPage}
         />
       </Wrapper>,
     );
     const user = userEvent.setup();
-    const installButton = screen.getByTestId("app-install-button");
-    const deployToVercelButton = screen.getByTestId(
+    const installButton = screen.getAllByTestId("app-install-button");
+    const deployToVercelButton = screen.getAllByTestId(
       "app-fork-on-github-button",
     );
 
     // Act
-    await user.click(installButton);
-    await user.click(deployToVercelButton);
+    await user.click(installButton[0]);
+    await user.click(deployToVercelButton[0]);
 
     // Assert
     expect(navigateToAppInstallPage).toBeCalledTimes(1);
@@ -100,26 +103,26 @@ describe("Apps AppListCard", () => {
     );
     render(
       <Wrapper>
-        <AppListCard app={comingSoonApp} />
+        <AppListRow appPair={comingSoonAppPair} />
       </Wrapper>,
     );
-    const name = screen.queryByText(comingSoonApp.name.en);
-    const description = screen.queryByText(comingSoonApp.description.en);
+    const name = screen.queryAllByText(comingSoonApp.name.en);
+    const description = screen.queryAllByText(comingSoonApp.description.en);
     const images = screen.getAllByRole("img");
     const links = screen.queryAllByRole("link");
-    const releaseDate = screen.queryByText(comingSoonApp.releaseDate, {
+    const releaseDate = screen.queryAllByText(comingSoonApp.releaseDate, {
       exact: false,
     });
 
     // Assert
-    expect(name).toBeTruthy();
-    expect(description).toBeTruthy();
+    expect(name[0]).toBeTruthy();
+    expect(description[0]).toBeTruthy();
     const expectedImages = [comingSoonApp.logo.source, ...integrationImages];
     images.forEach(image =>
       expect(expectedImages).toContain(image.getAttribute("src")),
     );
     expect(links).toHaveLength(0);
-    expect(releaseDate).toBeTruthy();
+    expect(releaseDate[0]).toBeTruthy();
   });
 
   it("displays placeholder initial when no released app logo passed", () => {
@@ -133,12 +136,14 @@ describe("Apps AppListCard", () => {
     };
     render(
       <Wrapper>
-        <AppListCard app={app} />
+        <AppListRow appPair={[app, app]} />
       </Wrapper>,
     );
-    const logo = screen.getByTestId("app-logo");
-    const logoPlaceholder = within(logo).queryByTestId("app-logo-placeholder");
-    const logoImage = within(logo).queryByRole("img");
+    const logo = screen.getAllByTestId("app-logo");
+    const logoPlaceholder = within(logo[0]).queryByTestId(
+      "app-logo-placeholder",
+    );
+    const logoImage = within(logo[0]).queryByRole("img");
 
     // Assert
     expect(logoPlaceholder).toBeTruthy();
@@ -157,12 +162,14 @@ describe("Apps AppListCard", () => {
     };
     render(
       <Wrapper>
-        <AppListCard app={app} />
+        <AppListRow appPair={[app, app]} />
       </Wrapper>,
     );
-    const logo = screen.getByTestId("app-logo");
-    const logoPlaceholder = within(logo).queryByTestId("app-logo-placeholder");
-    const logoImage = within(logo).queryByRole("img");
+    const logo = screen.getAllByTestId("app-logo");
+    const logoPlaceholder = within(logo[0]).queryByTestId(
+      "app-logo-placeholder",
+    );
+    const logoImage = within(logo[0]).queryByRole("img");
 
     // Assert
     expect(logoPlaceholder).toBeTruthy();
@@ -174,11 +181,14 @@ describe("Apps AppListCard", () => {
     // Arrange
     render(
       <Wrapper>
-        <AppListCard app={releasedApp} appInstallation={failedAppInProgress} />
+        <AppListRow
+          appPair={releasedAppPair}
+          appInstallationList={[failedAppInProgress]}
+        />
       </Wrapper>,
     );
-    const status = screen.getByTestId("app-installation-failed");
-    const statusDetails = within(status).queryByText(
+    const status = screen.getAllByTestId("app-installation-failed");
+    const statusDetails = within(status[0]).queryByText(
       appInstallationStatusMessages.failed.defaultMessage,
     );
 
@@ -190,11 +200,14 @@ describe("Apps AppListCard", () => {
     // Arrange
     render(
       <Wrapper>
-        <AppListCard app={releasedApp} appInstallation={pendingAppInProgress} />
+        <AppListRow
+          appPair={releasedAppPair}
+          appInstallationList={[pendingAppInProgress]}
+        />
       </Wrapper>,
     );
-    const status = screen.getByTestId("app-installation-pending");
-    const statusText = within(status).queryByText(
+    const status = screen.getAllByTestId("app-installation-pending");
+    const statusText = within(status[0]).queryByText(
       appInstallationStatusMessages.pending.defaultMessage,
     );
 
@@ -214,16 +227,19 @@ describe("Apps AppListCard", () => {
     }));
     render(
       <Wrapper>
-        <AppListCard app={releasedApp} appInstallation={failedAppInProgress} />
+        <AppListRow
+          appPair={releasedAppPair}
+          appInstallationList={[failedAppInProgress]}
+        />
       </Wrapper>,
     );
     const user = userEvent.setup();
-    const retryButton = screen.getByTestId("app-retry-install-button");
-    const removeButton = screen.getByTestId("app-remove-install-button");
+    const retryButton = screen.getAllByTestId("app-retry-install-button");
+    const removeButton = screen.getAllByTestId("app-remove-install-button");
 
     // Act
-    await user.click(retryButton);
-    await user.click(removeButton);
+    await user.click(retryButton[0]);
+    await user.click(removeButton[0]);
 
     // Assert
     expect(retryAppInstallation).toHaveBeenCalledWith(failedAppInProgress.id);

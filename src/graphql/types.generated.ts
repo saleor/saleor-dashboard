@@ -8161,7 +8161,9 @@ export type GiftCardTotalCountQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GiftCardTotalCountQuery = { __typename: 'Query', giftCards: { __typename: 'GiftCardCountableConnection', totalCount: number | null } | null };
 
-export type GiftCardProductsCountQueryVariables = Exact<{ [key: string]: never; }>;
+export type GiftCardProductsCountQueryVariables = Exact<{
+  channel: Scalars['String'];
+}>;
 
 
 export type GiftCardProductsCountQuery = { __typename: 'Query', giftCardProductTypes: { __typename: 'ProductTypeCountableConnection', totalCount: number | null } | null, giftCardProducts: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
@@ -9283,6 +9285,7 @@ export type SearchProductsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
   first: Scalars['Int'];
   query: Scalars['String'];
+  channel?: InputMaybe<Scalars['String']>;
 }>;
 
 

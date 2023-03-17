@@ -3,7 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { ListProps } from "@dashboard/types";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, sprinkles, Text } from "@saleor/macaw-ui/next";
 import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -114,7 +114,12 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
           <MarketplaceAlert error={marketplaceError} />
           {sectionsAvailability.all && !marketplaceError && (
             <Box marginTop={10}>
-              <Text as="h3" variant="heading" color="textNeutralSubdued">
+              <Text
+                as="h3"
+                variant="heading"
+                color="textNeutralSubdued"
+                className={sprinkles({ paddingX: 8 })}
+              >
                 <FormattedMessage {...messages.allApps} />
               </Text>
               <AllAppList
@@ -127,7 +132,12 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
           )}
           {sectionsAvailability.comingSoon && !marketplaceError && (
             <Box marginTop={10}>
-              <Text as="h3" variant="heading" color="textNeutralSubdued">
+              <Text
+                as="h3"
+                variant="heading"
+                color="textNeutralSubdued"
+                className={sprinkles({ paddingX: 8 })}
+              >
                 {intl.formatMessage(messages.comingSoonApps)}
               </Text>
               <AllAppList
