@@ -35,7 +35,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
       );
     }
 
-    if (products?.length > 1) {
+    if (products?.length > 0) {
       return (
         <Box
           display="grid"

@@ -89,7 +89,7 @@ const useStyles = makeStyles(
       datagrid: {
         "& .dvn-scroller": {
           overscrollBehaviorX: "none",
-          "scrollbar-width:": "none",
+          scrollbarWidth: "none",
         },
         "& .dvn-scroller::-webkit-scrollbar": {
           display: "none",

@@ -277,6 +277,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           transitionState={confirmButtonState}
           type="submit"
           onClick={handleSubmit}
+          disabled={variants.length === 0}
         >
           <FormattedMessage {...buttonMessages.confirm} />
         </ConfirmButton>

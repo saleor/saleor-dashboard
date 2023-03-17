@@ -4,6 +4,7 @@ import {
   useTheme as useGraphiQLTheme,
 } from "@graphiql/react";
 import { makeStyles, useTheme } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import { useEffect } from "react";
 
 export const useStyles = makeStyles(
@@ -54,15 +55,15 @@ export const useEditorStyles = () => {
 };
 
 export const useDashboardTheme = () => {
-  const theme = useTheme();
-
   const rootStyle = {
-    "--font-size-body": theme.typography?.body2.fontSize,
-    "--font-size-h2": theme.typography?.h3.fontSize,
-    "--font-size-h3": theme.typography?.h3.fontSize,
-    "--font-size-h4": theme.typography?.h4.fontSize,
-    "--font-size-hint": theme.typography?.caption.fontSize,
-    "--font-size-inline-code": theme.typography?.caption.fontSize,
+    "--font-size-body": vars.fontSize.bodyMedium,
+    "--font-size-h2": vars.fontSize.headingLarge,
+    "--font-size-h3": vars.fontSize.headingMedium,
+    "--font-size-h4": vars.fontSize.headingSmall,
+    "--font-weight-regular": vars.fontWeight.bodyLarge,
+    "--font-size-hint": vars.fontSize.bodyEmpLarge,
+    "--font-size-inline-code": vars.fontSize.bodySmall,
+    "--color-base": vars.colors.background.plain,
   } as React.CSSProperties;
 
   return { rootStyle };

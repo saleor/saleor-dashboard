@@ -457,7 +457,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   borderColor="neutralPlain"
                   __maxWidth={contentMaxWidth}
                   margin="auto"
-                  zIndex="3"
+                  zIndex="2"
                 />
                 {/* FIXME: https://github.com/glideapps/glide-data-grid/issues/505 */}
                 {hasColumnGroups && (

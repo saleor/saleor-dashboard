@@ -6,6 +6,7 @@ import {
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
@@ -22,7 +23,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import { orderListUrl } from "@dashboard/orders/urls";
-import { playgroundOpenHandler } from "@dashboard/utils/graphql";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -196,12 +196,13 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     order?.id,
   );
 
-  const openPlaygroundURL = playgroundOpenHandler({
-    query: defaultGraphiQLQuery,
-    headers: "",
-    operationName: "",
-    variables: `{ "id": "${order?.id}" }`,
-  });
+  const context = useDevModeContext();
+
+  const openPlaygroundURL = () => {
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${order?.id}" }`);
+    context.setDevModeVisibility(true);
+  };
 
   return (
     <Form confirmLeave initial={initial} onSubmit={handleSubmit}>

@@ -13,6 +13,7 @@ import { OrderListQuery } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import {
   getStatusColor,
+  isFirstColumn,
   transformOrderStatus,
   transformPaymentStatus,
 } from "@dashboard/misc";
@@ -79,6 +80,10 @@ interface GetCellContentProps {
   loading: boolean;
 }
 
+function getDatagridRowDataIndex(row, removeArray) {
+  return row + removeArray.filter(r => r <= row).length;
+}
+
 export const useGetCellContent = ({
   columns,
   orders,
@@ -92,7 +97,7 @@ export const useGetCellContent = ({
     [column, row]: Item,
     { added, removed }: GetCellContentOpts,
   ): GridCell => {
-    if ([-1, 0].includes(column)) {
+    if (isFirstColumn(column)) {
       return readonlyTextCell("");
     }
 
@@ -103,7 +108,7 @@ export const useGetCellContent = ({
     const columnId = columns[column].id;
     const rowData = added.includes(row)
       ? undefined
-      : orders[row + removed.filter(r => r <= row).length];
+      : orders[getDatagridRowDataIndex(row, removed)];
 
     switch (columnId) {
       case "number":

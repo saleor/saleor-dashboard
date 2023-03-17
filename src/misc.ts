@@ -8,7 +8,7 @@ import {
 } from "@dashboard/graphql";
 import { Node, SlugNode } from "@dashboard/types";
 import { ConfirmButtonTransitionState, ThemeType } from "@saleor/macaw-ui";
-import { DefaultTheme } from "@saleor/macaw-ui/next";
+import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui/next";
 import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
@@ -561,10 +561,14 @@ export const getByUnmatchingId =
 export const findById = <T extends Node>(id: string, list?: T[]) =>
   list?.find(getById(id));
 
+const colorWarning = "#FBE5AC";
+const colorWarningDark = "#3E2F0A";
+type CustomWarningColor = typeof colorWarning | typeof colorWarningDark;
+
 export const getStatusColor = (
   status: "error" | "warning" | "info" | "success" | "generic",
   currentTheme?: DefaultTheme,
-) => {
+): keyof ThemeTokensValues["colors"]["background"] | CustomWarningColor => {
   switch (status) {
     case "error":
       return "surfaceCriticalDepressed";
@@ -574,10 +578,24 @@ export const getStatusColor = (
       return "decorativeSurfaceSubdued2";
     case "warning":
       // TODO: use color from new macaw theme when will be ready
-      return currentTheme === "defaultDark" ? "#3E2F0A" : "#FBE5AC";
+      return currentTheme === "defaultDark" ? colorWarningDark : colorWarning;
     case "generic":
       return "surfaceBrandSubdued";
     default:
       return "surfaceBrandSubdued";
   }
 };
+
+export const isFirstColumn = (column: number) => [-1, 0].includes(column);
+
+const getAllRemovedRowsBeforeRowIndex = (
+  rowIndex: number,
+  removedRowsIndexs: number[],
+) => removedRowsIndexs.filter(r => r <= rowIndex);
+
+export const getDatagridRowDataIndex = (
+  rowIndex: number,
+  removedRowsIndexs: number[],
+) =>
+  rowIndex +
+  getAllRemovedRowsBeforeRowIndex(rowIndex, removedRowsIndexs).length;

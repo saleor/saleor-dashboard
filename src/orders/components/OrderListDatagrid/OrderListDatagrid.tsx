@@ -8,14 +8,12 @@ import {
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { OrderListQuery } from "@dashboard/graphql";
-import { buttonMessages } from "@dashboard/intl";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Button } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { getColumns, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
@@ -98,11 +96,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           getCellError={() => false}
           menuItems={() => []}
           rows={getOrdersRowsLength(orders, disabled)}
-          selectionActions={(indexes, { removeRows }) => (
-            <Button variant="tertiary" onClick={() => removeRows(indexes)}>
-              <FormattedMessage {...buttonMessages.delete} />
-            </Button>
-          )}
+          selectionActions={() => null}
           onColumnResize={onColumnResize}
           onColumnMoved={onColumnMoved}
           renderColumnPicker={defaultProps => (

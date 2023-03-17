@@ -23,6 +23,7 @@ import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFul
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
 import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
+import { isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
@@ -55,7 +56,6 @@ import {
   orderUrl,
   OrderUrlQueryParams,
 } from "../../../urls";
-import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
 
 interface OrderUnconfirmedDetailsProps {
   id: string;
