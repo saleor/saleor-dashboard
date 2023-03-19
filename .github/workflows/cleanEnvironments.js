@@ -11,24 +11,10 @@ program
   .action(async options => {
     const token = options.token;
     const snapshot = options.snapshot;
-    const tasksArray = [];
     const environmentsToClean = await getEnvironmentsForReleaseTesting(token);
     environmentsToClean.forEach(environment => {
-      tasksArray.push(cleanEnvironment(environment, snapshot, token));
+      cleanEnvironment(environment, snapshot, token);
     });
-    const throwErrorAfterTimeout = setTimeout(function () {
-      throw new Error("Environment didn't upgraded after 30 minutes");
-    }, 1800000);
-    Promise.all(tasksArray).then(tasksList => {
-      tasksList.forEach(task => {
-        if (task.error) {
-          console.warn(`${task.environment}: ${task.error}`);
-        } else {
-          waitUntilTaskInProgress(task.taskId, task.environment, token);
-        }
-      });
-    });
-    clearTimeout(throwErrorAfterTimeout);
   })
   .parse();
 
@@ -63,9 +49,7 @@ async function cleanEnvironment(environment, snapshot, token) {
     `https://staging-cloud.saleor.io/api/organizations/saleor/environments/${environment.key}/restore/`,
     {
       method: "PUT",
-      body: `{
-        "restore_from": "${snapshot}"
-      }`,
+      body: JSON.stringify({ restore_from: snapshot }),
       headers: {
         Authorization: `Token ${token}`,
         Accept: "application/json",
@@ -74,40 +58,56 @@ async function cleanEnvironment(environment, snapshot, token) {
     },
   );
   const responseInJson = await response.json();
-  return {
-    taskId: responseInJson.task_id,
-    environment: environment.name,
-    error: responseInJson.non_field_errors,
-  };
+  if (
+    responseInJson.non_field_errors
+      ? responseInJson.non_field_errors
+      : responseInJson.__all__
+  ) {
+    console.warn(
+      `${environment.name}: ${
+        responseInJson.non_field_errors
+          ? responseInJson.non_field_errors
+          : responseInJson.__all__
+      }`,
+    );
+  } else {
+    await waitUntilTaskInProgress(responseInJson.task_id, environment.name);
+  }
 }
 
-async function waitUntilTaskInProgress(taskId, environment, token) {
-  const response = await fetch(
-    `https://staging-cloud.saleor.io/api/service/task-status/${taskId}/`,
-    {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json;charset=UTF-8",
+async function waitUntilTaskInProgress(taskId, environment) {
+  const throwErrorAfterTimeout = setTimeout(function () {
+    throw new Error("Environment didn't upgraded after 30 minutes");
+  }, 120000);
+
+  while (true) {
+    const response = await fetch(
+      `https://staging-cloud.saleor.io/api/service/task-status/${taskId}/`,
+      {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json;charset=UTF-8",
+        },
       },
-    },
-  );
-  const responseInJson = await response.json();
-  console.log(`${environment} - Job status - ${responseInJson.status}`);
-  if (
-    responseInJson.status == "PENDING" ||
-    responseInJson.status == "IN_PROGRESS"
-  ) {
-    await new Promise(resolve =>
-      setTimeout(function () {
-        resolve(waitUntilTaskInProgress(taskId, environment, token));
-      }, 10000),
     );
-  } else if (responseInJson.status == "SUCCEEDED") {
-    return responseInJson.status;
-  } else if (responseInJson.status !== "SUCCEEDED") {
-    console.warn(
-      `${environment}: Job ended with status - ${responseInJson.status} - ${responseInJson.job_name}`,
-    );
+    const responseInJson = await response.json();
+    switch (responseInJson.status) {
+      case "PENDING":
+      case "IN_PROGRESS":
+        await new Promise(resolve => setTimeout(resolve, 10000));
+        break;
+      case "SUCCEEDED":
+        console.log(
+          `${environment}: Job ended with status - ${responseInJson.status} - ${responseInJson.job_name}`,
+        );
+        clearTimeout(throwErrorAfterTimeout);
+        return responseInJson.status;
+      default:
+        clearTimeout(throwErrorAfterTimeout);
+        throw console.warn(
+          `${environment}: Job ended with status - ${responseInJson.status} - ${responseInJson.job_name}`,
+        );
+    }
   }
 }
