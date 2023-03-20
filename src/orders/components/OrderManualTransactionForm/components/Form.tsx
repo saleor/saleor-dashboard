@@ -6,12 +6,8 @@ export const Form: React.FC<React.HTMLProps<HTMLFormElement>> = ({
   children,
   ...props
 }) => {
-  const {
-    amount,
-    description,
-    pspReference,
-    onAddTransaction,
-  } = useManualTransactionContext();
+  const { amount, description, pspReference, onAddTransaction } =
+    useManualTransactionContext();
 
   return (
     <form

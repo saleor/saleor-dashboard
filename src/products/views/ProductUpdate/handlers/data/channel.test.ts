@@ -1,4 +1,4 @@
-import { DatagridChangeOpts } from "@dashboard/components/Datagrid/useDatagridChange";
+import { DatagridChangeOpts } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { ProductFragment } from "@dashboard/graphql";
 
 import {

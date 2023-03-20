@@ -1,5 +1,6 @@
 export const PRODUCTS_LIST = {
   productsList: "[data-test-id^='id-']",
+  dataGridTable: "[data-testid='data-grid-canvas']",
   productsNames: "[data-test-id='name']",
   dialogProductTypeInput: "[data-test-id='dialog-product-type']",
   createProductBtn: "[data-test-id='add-product']",

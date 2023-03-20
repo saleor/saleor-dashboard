@@ -37,18 +37,18 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
     return null;
   }
 
-  const getHandleAmountChange = (line: OrderLineGrantRefundFragment) => (
-    e: React.ChangeEvent<HTMLInputElement>,
-  ) => {
-    const parsedValue = parseInt(e.target.value, 10);
-    const value = Number.isNaN(parsedValue) ? 0 : parsedValue;
+  const getHandleAmountChange =
+    (line: OrderLineGrantRefundFragment) =>
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const parsedValue = parseInt(e.target.value, 10);
+      const value = Number.isNaN(parsedValue) ? 0 : parsedValue;
 
-    dispatch({
-      type: "setQuantity",
-      lineId: line.id,
-      amount: value,
-    });
-  };
+      dispatch({
+        type: "setQuantity",
+        lineId: line.id,
+        amount: value,
+      });
+    };
 
   const handleSetMaxQuanity = () => {
     dispatch({

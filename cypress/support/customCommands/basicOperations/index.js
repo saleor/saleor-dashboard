@@ -44,3 +44,6 @@ Cypress.Commands.add("checkIfDataAreNotNull", data => {
 Cypress.Commands.add("checkIfElementIsVisible", element => {
   cy.get(element).should("be.visible");
 });
+Cypress.Commands.add("assertCanvasRowsNumber", (canvas, rowNumber) => {
+  cy.get(canvas).find("tr").should("have.length", rowNumber);
+});

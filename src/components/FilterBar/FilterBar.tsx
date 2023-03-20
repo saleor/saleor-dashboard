@@ -15,12 +15,14 @@ export interface FilterBarProps<TKeys extends string = string>
     SearchBarProps {
   errorMessages?: FilterErrorMessages<TKeys>;
   filterStructure: IFilter<TKeys>;
+  withoutBorder?: boolean;
 }
 
-const useStyles = makeStyles(
+const useStyles = makeStyles<{ withoutBorder?: boolean }>(
   theme => ({
     root: {
-      borderBottom: `1px solid ${theme.palette.divider}`,
+      borderBottom: props =>
+        props.withoutBorder ? "none" : `1px solid ${theme.palette.divider}`,
       display: "flex",
       flexWrap: "wrap",
       padding: theme.spacing(1, 4),
