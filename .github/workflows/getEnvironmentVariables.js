@@ -283,8 +283,8 @@ async function getBranch(token, version) {
       "X-GitHub-Api-Version": "2022-11-28",
     },
   });
-  const branch = response.data.filter(element => {
+  const branch = response.data.find(element => {
     return element.name == formattedVersion;
   });
-  return branch[0] ? branch[0].name : "main";
+  return branch ? formattedVersion : "main";
 }

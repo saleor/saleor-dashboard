@@ -162,6 +162,7 @@ jobs:
       REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
       VERSION: ${{github.event.client_payload.version}}
+      PROJECT: ${{github.event.client_payload.project}}
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -182,7 +183,8 @@ jobs:
               node .github/workflows/getEnvironmentVariables.js \
               --version $VERSION \
               --token "$TOKEN" \
-              --repo_token "$REPO_TOKEN"
+              --repo_token "$REPO_TOKEN" \
+              --project "$PROJECT"
 
   run-tests-on-release:
     if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}
