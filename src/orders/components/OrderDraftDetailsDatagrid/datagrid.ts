@@ -8,11 +8,15 @@ import {
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
+import {
+  getDatagridRowDataIndex,
+  getStatusColor,
+  isFirstColumn,
+} from "@dashboard/misc";
 import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { ThemeTokensValues, useTheme } from "@saleor/macaw-ui/next";
+import { DefaultTheme, useTheme } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
@@ -74,7 +78,7 @@ export const useGetCellContent = ({
   errors,
 }: GetCellContentProps) => {
   const intl = useIntl();
-  const { themeValues } = useTheme();
+  const { theme } = useTheme();
 
   return (
     [column, row]: Item,
@@ -115,7 +119,7 @@ export const useGetCellContent = ({
         const status = getOrderLineStatus(intl, rowData, orderErrors);
 
         return tagsCell(
-          status.map(toTagValue(themeValues)),
+          status.map(toTagValue(theme)),
           status.map(status => status.status),
         );
       case "total":
@@ -130,13 +134,9 @@ export const useGetCellContent = ({
   };
 };
 
-function toTagValue(themeValues: ThemeTokensValues) {
+function toTagValue(currentTheme: DefaultTheme) {
   return ({ status, type }: OrderStatus) => ({
-    color:
-      type === "warning"
-        ? // TODO: replace when we will have warning defined in new macaw
-          "#FBE5AC"
-        : themeValues.colors.background.surfaceCriticalDepressed,
+    color: getStatusColor(type, currentTheme),
     tag: status,
   });
 }
