@@ -170,7 +170,7 @@
     "rollup-plugin-polyfill-node": "^0.11.0",
     "start-server-and-test": "^1.11.0",
     "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "typescript": "~4.8.4",
+    "typescript": "^5.0.2",
     "vite": "^3.2.4",
     "vite-plugin-html": "^3.2.0",
     "vite-plugin-pwa": "^0.13.3",
