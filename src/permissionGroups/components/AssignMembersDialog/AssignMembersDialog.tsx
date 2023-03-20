@@ -4,6 +4,7 @@ import ConfirmButton from "@dashboard/components/ConfirmButton";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { SearchStaffMembersQuery } from "@dashboard/graphql";
 import useElementScroll, {
   isScrolledToBottom,
@@ -31,9 +32,9 @@ import {
   TableBody,
   TableCell,
   TextField,
-  Typography,
 } from "@material-ui/core";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -43,16 +44,6 @@ import { messages } from "./messages";
 
 const useStyles = makeStyles(
   theme => ({
-    avatar: {
-      alignItems: "center",
-      borderRadius: "100%",
-      display: "grid",
-      float: "left",
-      height: 32,
-      justifyContent: "center",
-      overflow: "hidden",
-      width: 32,
-    },
     avatarCell: {
       padding: 0,
       width: 32,
@@ -112,9 +103,6 @@ const useStyles = makeStyles(
     },
     table: {
       marginBottom: theme.spacing(3),
-    },
-    statusText: {
-      color: "#9E9D9D",
     },
     wideCell: {
       width: "80%",
@@ -258,37 +246,30 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
                         />
                       </TableCell>
                       <TableCell className={classes.avatarCell}>
-                        <div className={classes.avatar}>
-                          {!!member?.avatar?.url ? (
-                            <img
-                              className={classes.avatarImage}
-                              src={member.avatar.url}
-                            />
-                          ) : (
-                            <div className={classes.avatarDefault}>
-                              <Typography>{getUserInitials(member)}</Typography>
-                            </div>
-                          )}
-                        </div>
+                        <UserAvatar
+                          url={member?.avatar?.url}
+                          initials={getUserInitials(member)}
+                        />
                       </TableCell>
                       <TableCell className={classes.colName}>
-                        <Typography>
-                          {getUserName(member) || <Skeleton />}
-                        </Typography>
-                        <Typography
-                          variant={"caption"}
-                          className={classes.statusText}
+                        <Box
+                          display="flex"
+                          flexDirection="column"
+                          justifyContent="center"
                         >
-                          {!!member ? (
-                            member.isActive ? (
-                              intl.formatMessage(messages.staffActive)
+                          <Text>{getUserName(member) || <Skeleton />}</Text>
+                          <Text variant="caption" color="textNeutralSubdued">
+                            {!!member ? (
+                              member.isActive ? (
+                                intl.formatMessage(messages.staffActive)
+                              ) : (
+                                intl.formatMessage(messages.staffInactive)
+                              )
                             ) : (
-                              intl.formatMessage(messages.staffInactive)
-                            )
-                          ) : (
-                            <Skeleton />
-                          )}
-                        </Typography>
+                              <Skeleton />
+                            )}
+                          </Text>
+                        </Box>
                       </TableCell>
                     </TableRowLink>
                   );

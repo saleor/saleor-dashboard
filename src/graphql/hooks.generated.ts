@@ -1834,7 +1834,7 @@ export const StaffMemberFragmentDoc = gql`
 export const PermissionGroupMemberFragmentDoc = gql`
     fragment PermissionGroupMember on User {
   ...StaffMember
-  avatar(size: 48) {
+  avatar(size: 128) {
     url
   }
 }
@@ -2461,7 +2461,7 @@ export const StaffMemberDetailsFragmentDoc = gql`
     code
     name
   }
-  avatar(size: 120) {
+  avatar(size: 512) {
     url
   }
 }
@@ -2469,7 +2469,7 @@ export const StaffMemberDetailsFragmentDoc = gql`
 export const StaffMemberAvatarFragmentDoc = gql`
     fragment StaffMemberAvatar on User {
   ...StaffMember
-  avatar(size: 120) {
+  avatar(size: 512) {
     url
   }
 }
@@ -7784,11 +7784,11 @@ export type GiftCardTotalCountQueryHookResult = ReturnType<typeof useGiftCardTot
 export type GiftCardTotalCountLazyQueryHookResult = ReturnType<typeof useGiftCardTotalCountLazyQuery>;
 export type GiftCardTotalCountQueryResult = Apollo.QueryResult<Types.GiftCardTotalCountQuery, Types.GiftCardTotalCountQueryVariables>;
 export const GiftCardProductsCountDocument = gql`
-    query GiftCardProductsCount {
+    query GiftCardProductsCount($channel: String!) {
   giftCardProductTypes: productTypes(filter: {kind: GIFT_CARD}) {
     totalCount
   }
-  giftCardProducts: products(filter: {giftCard: true}) {
+  giftCardProducts: products(filter: {giftCard: true}, channel: $channel) {
     totalCount
   }
 }
@@ -7806,10 +7806,11 @@ export const GiftCardProductsCountDocument = gql`
  * @example
  * const { data, loading, error } = useGiftCardProductsCountQuery({
  *   variables: {
+ *      channel: // value for 'channel'
  *   },
  * });
  */
-export function useGiftCardProductsCountQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>) {
+export function useGiftCardProductsCountQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
         return ApolloReactHooks.useQuery<Types.GiftCardProductsCountQuery, Types.GiftCardProductsCountQueryVariables>(GiftCardProductsCountDocument, options);
       }
@@ -13734,8 +13735,13 @@ export type SearchPermissionGroupsQueryHookResult = ReturnType<typeof useSearchP
 export type SearchPermissionGroupsLazyQueryHookResult = ReturnType<typeof useSearchPermissionGroupsLazyQuery>;
 export type SearchPermissionGroupsQueryResult = Apollo.QueryResult<Types.SearchPermissionGroupsQuery, Types.SearchPermissionGroupsQueryVariables>;
 export const SearchProductsDocument = gql`
-    query SearchProducts($after: String, $first: Int!, $query: String!) {
-  search: products(after: $after, first: $first, filter: {search: $query}) {
+    query SearchProducts($after: String, $first: Int!, $query: String!, $channel: String) {
+  search: products(
+    after: $after
+    first: $first
+    filter: {search: $query}
+    channel: $channel
+  ) {
     edges {
       node {
         id
@@ -13787,6 +13793,7 @@ export const SearchProductsDocument = gql`
  *      after: // value for 'after'
  *      first: // value for 'first'
  *      query: // value for 'query'
+ *      channel: // value for 'channel'
  *   },
  * });
  */
@@ -15081,7 +15088,7 @@ export const StaffListDocument = gql`
       cursor
       node {
         ...StaffMember
-        avatar(size: 48) {
+        avatar(size: 128) {
           url
         }
       }

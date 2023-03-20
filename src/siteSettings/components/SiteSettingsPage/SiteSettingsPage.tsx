@@ -2,7 +2,6 @@ import { createCountryHandler } from "@dashboard/components/AddressEdit/createCo
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import Form from "@dashboard/components/Form";
-import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
@@ -17,7 +16,7 @@ import { commonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { sprinkles } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -144,44 +143,48 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               title={intl.formatMessage(commonMessages.generalInformations)}
             />
             <DetailPageLayout.Content>
-              <Grid
-                variant="inverted"
-                className={sprinkles({ paddingLeft: 9 })}
-              >
-                <PageSectionHeader
-                  title={intl.formatMessage(messages.sectionCheckoutTitle)}
-                  description={intl.formatMessage(
-                    messages.sectionCheckoutDescription,
-                  )}
-                />
-                <SiteCheckoutSettingsCard
-                  data={data}
-                  errors={errors}
-                  disabled={disabled}
-                  onChange={change}
-                />
+              <Box gap={5} paddingLeft={9}>
+                <Box display="grid" __gridTemplateColumns="1fr 3fr">
+                  <PageSectionHeader
+                    title={intl.formatMessage(messages.sectionCheckoutTitle)}
+                    description={intl.formatMessage(
+                      messages.sectionCheckoutDescription,
+                    )}
+                  />
+                  <SiteCheckoutSettingsCard
+                    data={data}
+                    errors={errors}
+                    disabled={disabled}
+                    onChange={change}
+                  />
+                </Box>
+
                 <Hr className={classes.hr} />
-                <PageSectionHeader
-                  title={intl.formatMessage(messages.sectionCompanyTitle)}
-                  description={intl.formatMessage(
-                    messages.sectionCompanyDescription,
-                  )}
-                />
-                <CompanyAddressInput
-                  data={data}
-                  displayCountry={displayCountry}
-                  countries={countryChoices}
-                  errors={[...errors, ...validationErrors]}
-                  disabled={disabled}
-                  header={intl.formatMessage({
-                    id: "+jCDvp",
-                    defaultMessage: "Store Information",
-                    description: "section header",
-                  })}
-                  onChange={change}
-                  onCountryChange={handleCountrySelect}
-                />
-              </Grid>
+
+                <Box display="grid" __gridTemplateColumns="1fr 3fr">
+                  <PageSectionHeader
+                    title={intl.formatMessage(messages.sectionCompanyTitle)}
+                    description={intl.formatMessage(
+                      messages.sectionCompanyDescription,
+                    )}
+                  />
+                  <CompanyAddressInput
+                    data={data}
+                    displayCountry={displayCountry}
+                    countries={countryChoices}
+                    errors={[...errors, ...validationErrors]}
+                    disabled={disabled}
+                    header={intl.formatMessage({
+                      id: "+jCDvp",
+                      defaultMessage: "Store Information",
+                      description: "section header",
+                    })}
+                    onChange={change}
+                    onCountryChange={handleCountrySelect}
+                  />
+                </Box>
+              </Box>
+
               <Savebar
                 state={saveButtonBarState}
                 disabled={!!isSaveDisabled}

@@ -19,9 +19,14 @@ const AppListCardLinks: React.FC<AppListCardLinksProps> = ({ links }) => {
       flexDirection="row"
       flexWrap="wrap"
       gap={7}
-      marginBottom={6}
+      borderLeftStyle="solid"
+      borderRightStyle="solid"
+      borderWidth={1}
+      borderColor="neutralPlain"
+      paddingY={6}
+      paddingX={8}
     >
-      {links.map(link => (
+      {links?.map(link => (
         <Box as="span" key={link.name}>
           <Text variant="body" size="small" color="textBrandDefault">
             <Link href={link.url} target="_blank">
@@ -33,5 +38,6 @@ const AppListCardLinks: React.FC<AppListCardLinksProps> = ({ links }) => {
     </Box>
   );
 };
+
 AppListCardLinks.displayName = "AppListCardLinks";
 export default AppListCardLinks;

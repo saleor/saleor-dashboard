@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
+import react from "@vitejs/plugin-react-swc";
 import { copyFileSync } from "fs";
 import path from "path";
 import nodePolyfills from "rollup-plugin-polyfill-node";
@@ -7,7 +8,6 @@ import { defineConfig, loadEnv } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 import { VitePWA } from "vite-plugin-pwa";
 import viteSentry from "vite-plugin-sentry";
-import { swcReactRefresh } from "vite-plugin-swc-react-refresh";
 
 const copyOgImage = () => ({
   name: "copy-og-image",
@@ -54,7 +54,7 @@ export default defineConfig(({ command, mode }) => {
     SENTRY_ORG && SENTRY_PROJECT && SENTRY_DSN && SENTRY_AUTH_TOKEN;
 
   const plugins = [
-    swcReactRefresh(),
+    react(),
     createHtmlPlugin({
       entry: "/index.tsx",
       template: "index.html",
@@ -171,6 +171,16 @@ export default defineConfig(({ command, mode }) => {
       },
       rollupOptions: {
         plugins: [nodePolyfills()],
+        maxParallelFileOps: 2,
+        cache: false,
+        output: {
+          sourcemap,
+          manualChunks: id => {
+            if (id.includes("node_modules")) {
+              return "vendor";
+            }
+          },
+        },
       },
     },
     optimizeDeps: {

@@ -244,9 +244,6 @@
     "context": "collection name",
     "string": "Name"
   },
-  "/X8Mjx": {
-    "string": "Play with <emphasis>GraphQL API</emphasis>"
-  },
   "/Xwjww": {
     "context": "button",
     "string": "Fulfill"
@@ -374,6 +371,9 @@
   "0VDwAP": {
     "context": "checkbox label",
     "string": "Send shipment details to customer"
+  },
+  "0VkxrS": {
+    "string": "GraphQL Playground"
   },
   "0Vyr8h": {
     "context": "menu item name",
@@ -698,10 +698,6 @@
     "context": "payment status",
     "string": "Fully paid"
   },
-  "2r4cTE": {
-    "context": "button",
-    "string": "Enable Dark Mode"
-  },
   "2rJcFa": {
     "context": "delete app",
     "string": "Deleting this app, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace."
@@ -942,9 +938,6 @@
   "4gT3eD": {
     "context": "navigator section header",
     "string": "Search in Customers"
-  },
-  "4gZl/n": {
-    "string": "See <emphasis>DEMO STOREFRONT</emphasis>"
   },
   "4hl9rS": {
     "context": "variant price in channel",
@@ -4842,10 +4835,6 @@
     "context": "title",
     "string": "Reserved stock"
   },
-  "X8+Lpa": {
-    "context": "button",
-    "string": "Account Settings"
-  },
   "X8qjg3": {
     "context": "inactive",
     "string": "Inactive"
@@ -7356,6 +7345,10 @@
     "context": "stock exceeded dialog title",
     "string": "Not enough stock"
   },
+  "qa/dDe": {
+    "context": "GraphiQL Playground in the dev mode panel",
+    "string": "Playground"
+  },
   "qbFKVI": {
     "context": "notification, form submitted",
     "string": "Refund for order #{orderNumber} was granted"
@@ -8033,6 +8026,9 @@
     "context": "gift card history message",
     "string": "Gift card expiry date was updated by {expiryUpdatedBy}"
   },
+  "vSy+II": {
+    "string": "Star on Github"
+  },
   "vTN5DZ": {
     "context": "button",
     "string": "Discard"
@@ -8344,9 +8340,6 @@
   "xtUXnK": {
     "context": "export all items to csv file",
     "string": "All products ({number})"
-  },
-  "xwEc8K": {
-    "string": "API"
   },
   "xxQxLE": {
     "string": "Email Address"
