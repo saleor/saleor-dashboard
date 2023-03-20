@@ -5,6 +5,7 @@ import {
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
+import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
@@ -16,14 +17,11 @@ import { columnsMessages } from "./messages";
 
 export const useColumns = (): AvailableColumn[] => {
   const intl = useIntl();
+  const emptyColumn = useEmptyColumn();
 
   const columns = useMemo(
     () => [
-      {
-        id: "empty",
-        title: "",
-        width: 20,
-      },
+      emptyColumn,
       {
         id: "product",
         title: intl.formatMessage(columnsMessages.product),
@@ -50,7 +48,7 @@ export const useColumns = (): AvailableColumn[] => {
         width: 100,
       },
     ],
-    [intl],
+    [emptyColumn, intl],
   );
 
   return columns;
