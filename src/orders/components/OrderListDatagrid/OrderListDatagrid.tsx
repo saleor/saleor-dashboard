@@ -5,17 +5,16 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { OrderListQuery } from "@dashboard/graphql";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui/next";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
-import { getColumns, useGetCellContent } from "./datagrid";
+import { useColumns, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
 import { canBeSorted, getColumnMetadata, getOrdersRowsLength } from "./utils";
 
@@ -37,12 +36,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
 }) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
-  const emptyColumn = useEmptyColumn();
-
-  const availableColumns = useMemo(
-    () => getColumns(intl, sort, emptyColumn),
-    [intl, sort, emptyColumn],
-  );
+  const availableColumns = useColumns(sort);
 
   const {
     availableColumnsChoices,

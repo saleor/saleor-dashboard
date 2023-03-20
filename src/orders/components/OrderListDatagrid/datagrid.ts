@@ -6,6 +6,7 @@ import {
   textCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
+import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { getMoney } from "@dashboard/components/Money/utils";
@@ -27,52 +28,62 @@ import {
   useTheme,
 } from "@saleor/macaw-ui/next";
 import moment from "moment-timezone";
+import { useMemo } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
-export const getColumns = (
-  intl: IntlShape,
-  sort: Sort<OrderListUrlSortField>,
-  emptyColumn: AvailableColumn,
-): AvailableColumn[] => [
-  emptyColumn,
-  {
-    id: "number",
-    title: intl.formatMessage(columnsMessages.number),
-    width: 100,
-    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.number),
-  },
-  {
-    id: "date",
-    title: intl.formatMessage(columnsMessages.date),
-    width: 200,
-    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.date),
-  },
-  {
-    id: "customer",
-    title: intl.formatMessage(columnsMessages.customer),
-    width: 200,
-    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.customer),
-  },
-  {
-    id: "payment",
-    title: intl.formatMessage(columnsMessages.payment),
-    width: 200,
-    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.payment),
-  },
-  {
-    id: "status",
-    title: intl.formatMessage(columnsMessages.status),
-    width: 200,
-    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.fulfillment),
-  },
-  {
-    id: "total",
-    title: intl.formatMessage(columnsMessages.total),
-    width: 150,
-  },
-];
+export const useColumns = (sort: Sort<OrderListUrlSortField>) => {
+  const intl = useIntl();
+  const emptyColumn = useEmptyColumn();
+
+  const columns = useMemo(
+    () => [
+      emptyColumn,
+      {
+        id: "number",
+        title: intl.formatMessage(columnsMessages.number),
+        width: 100,
+        icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.number),
+      },
+      {
+        id: "date",
+        title: intl.formatMessage(columnsMessages.date),
+        width: 200,
+        icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.date),
+      },
+      {
+        id: "customer",
+        title: intl.formatMessage(columnsMessages.customer),
+        width: 200,
+        icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.customer),
+      },
+      {
+        id: "payment",
+        title: intl.formatMessage(columnsMessages.payment),
+        width: 200,
+        icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.payment),
+      },
+      {
+        id: "status",
+        title: intl.formatMessage(columnsMessages.status),
+        width: 200,
+        icon: getColumnSortDirectionIcon(
+          sort,
+          OrderListUrlSortField.fulfillment,
+        ),
+      },
+      {
+        id: "total",
+        title: intl.formatMessage(columnsMessages.total),
+        width: 150,
+      },
+    ],
+    [emptyColumn, intl, sort],
+  );
+
+  return columns;
+};
 
 interface GetCellContentProps {
   columns: AvailableColumn[];

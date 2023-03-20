@@ -6,11 +6,11 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderLineFragment } from "@dashboard/graphql";
-import React, { useCallback, useMemo } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { messages } from "../OrderListDatagrid/messages";
-import { getCellContentCreator, getColumns } from "./datagrid";
+import { useColumns, useGetCellContent } from "./datagrid";
 
 interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
@@ -24,7 +24,7 @@ export const OrderDetailsDatagrid = ({
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
 
-  const availableColumns = useMemo(() => getColumns(intl), [intl]);
+  const availableColumns = useColumns();
 
   const {
     availableColumnsChoices,
@@ -37,15 +37,11 @@ export const OrderDetailsDatagrid = ({
     picker,
   } = useColumnsDefault(availableColumns);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getCellContent = useCallback(
-    getCellContentCreator({
-      columns,
-      data: lines,
-      loading,
-    }),
-    [columns, lines, loading],
-  );
+  const getCellContent = useGetCellContent({
+    columns,
+    data: lines,
+    loading,
+  });
 
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
