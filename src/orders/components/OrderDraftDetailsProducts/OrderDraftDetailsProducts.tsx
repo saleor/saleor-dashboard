@@ -20,6 +20,7 @@ const useStyles = makeStyles(
 interface OrderDraftDetailsProductsProps {
   order?: OrderSharedType;
   errors: OrderErrorFragment[];
+  loading: boolean;
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
 }
@@ -27,6 +28,7 @@ interface OrderDraftDetailsProductsProps {
 const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = ({
   order,
   errors,
+  loading,
   onOrderLineChange,
   onOrderLineRemove,
 }) => {
@@ -42,7 +44,7 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = ({
   return (
     <OrderDraftDetailsDatagrid
       lines={lines}
-      loading={false}
+      loading={loading}
       onOrderLineRemove={onOrderLineRemove}
       onOrderLineChange={onOrderLineChange}
       errors={formErrors}

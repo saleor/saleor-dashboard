@@ -15,13 +15,18 @@ interface OrderUnfulfilledProductsCardProps {
   notAllowedToFulfillUnpaid: boolean;
   lines: OrderLineFragment[];
   onFulfill: () => void;
+  loading: boolean;
 }
 
 const OrderUnfulfilledProductsCard: React.FC<
   OrderUnfulfilledProductsCardProps
-> = props => {
-  const { showFulfillmentAction, notAllowedToFulfillUnpaid, lines, onFulfill } =
-    props;
+> = ({
+  showFulfillmentAction,
+  notAllowedToFulfillUnpaid,
+  lines,
+  onFulfill,
+  loading,
+}) => {
   const classes = useStyles();
 
   if (!lines.length) {
@@ -38,7 +43,7 @@ const OrderUnfulfilledProductsCard: React.FC<
           className={classes.cardTitle}
         />
         <CardContent>
-          <OrderDetailsDatagrid lines={lines} loading={false} />
+          <OrderDetailsDatagrid lines={lines} loading={loading} />
           {showFulfillmentAction && (
             <CardActions className={classes.actions}>
               <Button

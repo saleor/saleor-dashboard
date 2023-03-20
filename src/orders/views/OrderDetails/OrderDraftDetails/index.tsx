@@ -214,7 +214,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       <OrderDiscountProvider order={order}>
         <OrderLineDiscountProvider order={order}>
           <OrderDraftPage
-            disabled={loading}
+            loading={loading}
             errors={errors}
             onNoteAdd={variables =>
               extractMutationErrors(
@@ -228,7 +228,6 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
             hasMore={users?.data?.search?.pageInfo?.hasNextPage || false}
             onFetchMore={loadMoreCustomers}
             fetchUsers={searchUsers}
-            loading={users.loading}
             usersLoading={users.loading}
             onCustomerEdit={handleCustomerChange}
             onDraftFinalize={() => orderDraftFinalize.mutate({ id })}
