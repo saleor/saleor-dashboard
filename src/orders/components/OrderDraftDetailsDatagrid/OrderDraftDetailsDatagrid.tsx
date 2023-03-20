@@ -7,7 +7,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import { OrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import React, { useContext, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { useIntl } from "react-intl";
 
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
@@ -58,6 +58,25 @@ export const OrderDraftDetailsDatagrid = ({
     picker,
   } = useColumnsDefault(availableColumns);
 
+  const getMenuItems = useCallback(
+    index => [
+      {
+        label: intl.formatMessage(messages.deleteOrder),
+        onSelect: () => {
+          onOrderLineRemove(lines[index].id);
+        },
+      },
+      {
+        label: intl.formatMessage(messages.editDiscount),
+        onSelect: () => {
+          setEditedLineId(lines[index].id);
+          setIsDialogOpen(true);
+        },
+      },
+    ],
+    [intl, lines, onOrderLineRemove],
+  );
+
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
@@ -71,21 +90,7 @@ export const OrderDraftDetailsDatagrid = ({
         emptyText={intl.formatMessage(messages.emptyText)}
         getCellContent={getCellContent}
         getCellError={() => false}
-        menuItems={index => [
-          {
-            label: intl.formatMessage(messages.deleteOrder),
-            onSelect: () => {
-              onOrderLineRemove(lines[index].id);
-            },
-          },
-          {
-            label: intl.formatMessage(messages.editDiscount),
-            onSelect: () => {
-              setEditedLineId(lines[index].id);
-              setIsDialogOpen(true);
-            },
-          },
-        ]}
+        menuItems={getMenuItems}
         rows={loading ? 1 : lines.length}
         selectionActions={() => null}
         onColumnResize={onColumnResize}
