@@ -52,13 +52,22 @@ export function useColumnsDefault(
     [setColumnState],
   );
   const onColumnsChange = useCallback(
-    (picked: string[]) =>
+    (picked: string[]) => {
+      // Keep empty column at first place
+      const isEmptyColumn = availableColumns[0]?.id === "empty";
+      const emptyColumn = isEmptyColumn ? [availableColumns[0].id] : [];
+
       setDisplayedColumns(prevColumns => [
+        ...emptyColumn,
+        ...(availableColumns[0]?.id === "empty"
+          ? [availableColumns[0].id]
+          : []),
         ...prevColumns.filter(column => picked.includes(column)),
         ...picked
           .filter(column => !prevColumns.find(c => c === column))
           .map(column => availableColumns.find(ac => ac.id === column).id),
-      ]),
+      ]);
+    },
     [availableColumns, setDisplayedColumns],
   );
 
