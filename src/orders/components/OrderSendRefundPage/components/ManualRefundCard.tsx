@@ -11,7 +11,9 @@ import {
 import { manualRefundMessages, refundPageMessages } from "../messages";
 import { useManualRefundCardStyles } from "../styles";
 
-export const ManualRefundCard: React.FC<OrderManualTransactionFormProps> = props => {
+export const ManualRefundCard: React.FC<
+  OrderManualTransactionFormProps
+> = props => {
   const classes = useManualRefundCardStyles();
   const intl = useIntl();
 

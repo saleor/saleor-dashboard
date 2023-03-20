@@ -3,13 +3,16 @@ import React from "react";
 
 import { topBarHeight } from "../consts";
 
-export const TopNavWrapper: React.FC = ({ children }) => (
+export const TopNavWrapper: React.FC<{ withoutBorder?: boolean }> = ({
+  children,
+  withoutBorder,
+}) => (
   <Box
     display="flex"
     alignItems="center"
     paddingX={9}
     paddingY={8}
-    borderBottomWidth={1}
+    borderBottomWidth={withoutBorder ? 0 : 1}
     borderBottomStyle="solid"
     borderColor="neutralPlain"
     position="relative"

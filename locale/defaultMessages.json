@@ -79,6 +79,9 @@
     "context": "input label",
     "string": "Stock reservation for anonymous user (in minutes)"
   },
+  "+U6ozc": {
+    "string": "Type"
+  },
   "+VEhV8": {
     "context": "product channels",
     "string": "Availability"
@@ -1468,6 +1471,10 @@
     "context": "header",
     "string": "Translation Product Variant \"{productName}\" - {languageCode}"
   },
+  "9B2mOB": {
+    "context": "tile view pagination label",
+    "string": "No. of products"
+  },
   "9C7PZE": {
     "context": "navigation section name",
     "string": "Navigation"
@@ -1704,6 +1711,9 @@
   "Av74Fa": {
     "context": "section description",
     "string": "You can set basic checkout rules that will be applied globally to all your channels"
+  },
+  "AyQkmp": {
+    "string": "Sorting by this column is not available"
   },
   "AzMSmb": {
     "context": "caption",
@@ -3824,6 +3834,9 @@
     "context": "activate app",
     "string": "Are you sure you want to activate this app? Activating will start gathering events."
   },
+  "Q4m1CG": {
+    "string": "Edit Product"
+  },
   "Q55cTG": {
     "context": "order refund amount",
     "string": "Previously refunded"
@@ -4181,10 +4194,6 @@
   "SZt9kC": {
     "context": "export filtered items to csv file",
     "string": "Current search ({number})"
-  },
-  "Sd0Ppm": {
-    "context": "product publication date",
-    "string": "Published on {date}"
   },
   "Sjd7wm": {
     "context": "product filter label",
@@ -5289,10 +5298,6 @@
   "aEc9Ar": {
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
-  },
-  "aFLtLk": {
-    "context": "tab name",
-    "string": "All Products"
   },
   "aHc89n": {
     "context": "select warehouse to restock items",
@@ -7383,10 +7388,6 @@
     "context": "dialog content",
     "string": "Select one of customer addresses or add a new address:"
   },
-  "qpQ0uB": {
-    "context": "product publication date",
-    "string": "Unpublished"
-  },
   "qrWOxx": {
     "string": "No members found"
   },
@@ -7411,10 +7412,6 @@
   },
   "r+dgiv": {
     "string": "Taxes"
-  },
-  "r0hgpM": {
-    "context": "product publication date",
-    "string": "Becomes published on {date}"
   },
   "r1aQ2f": {
     "context": "dialog header",
@@ -7772,6 +7769,9 @@
   "taX/V3": {
     "context": "order total amount",
     "string": "Total"
+  },
+  "tiY7bx": {
+    "string": "Add new product"
   },
   "tlGXkh": {
     "context": "input description",

@@ -3,9 +3,12 @@ import {
   CATEGORY_DETAILS_SELECTORS,
 } from "./categories";
 import { COLLECTION_SELECTORS } from "./collection-selectors";
+import { PRODUCT_DETAILS, PRODUCTS_LIST } from "./products";
 
 export {
   CATEGORIES_LIST_SELECTORS,
   CATEGORY_DETAILS_SELECTORS,
   COLLECTION_SELECTORS,
+  PRODUCT_DETAILS,
+  PRODUCTS_LIST,
 };

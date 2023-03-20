@@ -64,17 +64,15 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
     __typename: "FakeTransaction",
   };
 
-  const handleTransactionAction: OrderTransactionProps["onTransactionAction"] = (
-    _,
-    action,
-  ) => {
-    if (action === TransactionActionEnum.CHARGE) {
-      onCapture();
-    }
-    if (action === TransactionActionEnum.VOID) {
-      onVoid();
-    }
-  };
+  const handleTransactionAction: OrderTransactionProps["onTransactionAction"] =
+    (_, action) => {
+      if (action === TransactionActionEnum.CHARGE) {
+        onCapture();
+      }
+      if (action === TransactionActionEnum.VOID) {
+        onVoid();
+      }
+    };
 
   return (
     <OrderTransaction

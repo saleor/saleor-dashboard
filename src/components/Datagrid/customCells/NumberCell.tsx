@@ -6,7 +6,7 @@ import {
 } from "@glideapps/glide-data-grid";
 import React from "react";
 
-import { Locale } from "../Locale";
+import { Locale } from "../../Locale";
 
 export const numberCellEmptyValue = Symbol();
 interface NumberCellProps {
