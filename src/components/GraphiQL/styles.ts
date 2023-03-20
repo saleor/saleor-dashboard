@@ -64,6 +64,7 @@ export const useDashboardTheme = () => {
     "--font-size-hint": vars.fontSize.bodyEmpLarge,
     "--font-size-inline-code": vars.fontSize.bodySmall,
     "--color-base": vars.colors.background.plain,
+    "--alpha-background-light": 0,
   } as React.CSSProperties;
 
   return { rootStyle };
