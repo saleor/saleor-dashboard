@@ -17,7 +17,6 @@ export interface FileUploadFieldProps {
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   >;
-  className?: string;
   disabled: boolean;
   loading: boolean;
   file: FileChoiceType;
@@ -32,7 +31,6 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
     loading,
     disabled,
     file,
-    className,
     error,
     helperText,
     onFileUpload,
@@ -57,7 +55,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
 
   return (
     <>
-      <div className={className}>
+      <Box display="flex" justifyContent="flex-end">
         {file.label ? (
           <Box display="flex" gap={5} alignItems="center">
             <Text variant="caption">
@@ -94,7 +92,7 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
             {helperText}
           </Text>
         )}
-      </div>
+      </Box>
       <input
         style={{ display: "none" }}
         id="fileUpload"

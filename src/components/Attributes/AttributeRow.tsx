@@ -25,7 +25,6 @@ import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { useStyles } from "./styles";
 import { AttributeRowProps } from "./types";
 
 const AttributeRow: React.FC<AttributeRowProps> = ({
@@ -46,7 +45,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
   richTextGetters,
 }) => {
   const intl = useIntl();
-  const classes = useStyles();
 
   switch (attribute.data.inputType) {
     case AttributeInputTypeEnum.REFERENCE:
@@ -76,7 +74,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       return (
         <BasicAttributeRow label={attribute.label}>
           <FileUploadField
-            className={classes.fileField}
             disabled={disabled}
             loading={loading}
             file={getFileChoice(attribute)}
