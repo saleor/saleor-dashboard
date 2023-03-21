@@ -3,6 +3,7 @@ import {
   moneyCell,
   readonlyTextCell,
   tagsCell,
+  textCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
@@ -86,7 +87,7 @@ export const useGetCellContent = ({
 
   return (
     [column, row]: Item,
-    { added, removed }: GetCellContentOpts,
+    { added, removed, changes, getChangeIndex }: GetCellContentOpts,
   ): GridCell => {
     if (isFirstColumn(column)) {
       return readonlyTextCell("", false);
@@ -97,6 +98,7 @@ export const useGetCellContent = ({
     }
 
     const columnId = columns[column].id;
+    const change = changes.current[getChangeIndex(columnId, row)]?.data;
     const rowData = added.includes(row)
       ? undefined
       : lines[getDatagridRowDataIndex(row, removed)];
@@ -116,7 +118,7 @@ export const useGetCellContent = ({
           rowData.thumbnail?.url ?? "",
         );
       case "quantity":
-        return readonlyTextCell(rowData.quantity.toString(), false);
+        return textCell(change || rowData.quantity.toString());
       case "price":
         return moneyCell({
           value: unitDiscountedPrice.amount,

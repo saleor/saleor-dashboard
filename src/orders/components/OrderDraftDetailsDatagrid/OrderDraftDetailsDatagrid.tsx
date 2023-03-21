@@ -2,6 +2,7 @@ import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
 import {
+  DatagridChangeOpts,
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
@@ -31,6 +32,7 @@ export const OrderDraftDetailsDatagrid = ({
   loading,
   lines,
   errors,
+  onOrderLineChange,
   onOrderLineRemove,
 }: OrderDraftDetailsDatagridProps) => {
   const intl = useIntl();
@@ -93,11 +95,19 @@ export const OrderDraftDetailsDatagrid = ({
     setIsDialogOpen(false);
   }, [discountProviderValues]);
 
+  const handleDatagridChange = useCallback(
+    ({ updates }: DatagridChangeOpts) => {
+      updates.forEach(({ data, row }) => {
+        const orderId = lines[row].id;
+        onOrderLineChange(orderId, { quantity: data });
+      });
+    },
+    [lines, onOrderLineChange],
+  );
+
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
-        readonly
-        showEmptyDatagrid
         rowMarkers="none"
         columnSelect="none"
         freezeColumns={2}
@@ -129,6 +139,7 @@ export const OrderDraftDetailsDatagrid = ({
             query={picker.query}
           />
         )}
+        onChange={handleDatagridChange}
       />
 
       {discountProviderValues !== null && (
