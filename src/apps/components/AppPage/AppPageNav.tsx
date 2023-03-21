@@ -11,12 +11,14 @@ interface AppPageNavProps {
   name: string | undefined | null;
   supportUrl: string | undefined | null;
   homepageUrl: string | undefined | null;
+  author: string | undefined | null;
 }
 
 export const AppPageNav: React.FC<AppPageNavProps> = ({
   name,
   supportUrl,
   homepageUrl,
+  author,
 }) => {
   const location = useLocation<LinkState>();
   const goBackLink = location.state?.from ?? AppUrls.resolveAppListUrl();
@@ -40,12 +42,13 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
                 color="textNeutralSubdued"
                 textTransform="uppercase"
               >
-                {/* TODO: pass author here when cache expires */}
-                <FormattedMessage
-                  defaultMessage="by {author}"
-                  id="6SL46U"
-                  values={{ author: "saleor commerce" }}
-                />
+                {author && (
+                  <FormattedMessage
+                    defaultMessage="by {author}"
+                    id="6SL46U"
+                    values={{ author }}
+                  />
+                )}
               </Text>
             </Box>
           </Box>
