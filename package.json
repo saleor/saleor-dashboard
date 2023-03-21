@@ -14,7 +14,7 @@
   "homepage": "https://saleor.io/",
   "engines": {
     "node": ">=18 <19",
-    "npm": ">=8 <9"
+    "npm": ">=7"
   },
   "dependencies": {
     "@apollo/client": "3.4.15",
