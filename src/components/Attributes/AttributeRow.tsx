@@ -208,7 +208,12 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           id={`attribute:${attribute.label}`}
           clickableLabel
         >
-          <Box display="flex" gap={2} flexDirection="column" alignItems="end">
+          <Box
+            display="flex"
+            gap={2}
+            flexDirection="column"
+            alignItems="flex-end"
+          >
             <Checkbox
               name={`attribute:${attribute.label}`}
               onCheckedChange={checked => onChange(attribute.id, checked)}
