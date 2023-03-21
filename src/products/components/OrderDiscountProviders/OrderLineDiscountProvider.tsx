@@ -9,7 +9,7 @@ import { getById } from "@dashboard/misc";
 import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
 import { OrderBothTypes } from "@dashboard/orders/types";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
-import React, { createContext, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -43,6 +43,16 @@ interface DiscountProviderProps {
 
 export const OrderLineDiscountContext =
   createContext<GetOrderLineDiscountContextConsumerProps>(null);
+
+export const useOrderLineDiscountContext = () => {
+  const context = useContext(OrderLineDiscountContext);
+
+  if (context === null) {
+    throw new Error("You are outside order line discount context");
+  }
+
+  return context;
+};
 
 export const OrderLineDiscountProvider: React.FC<DiscountProviderProps> = ({
   children,

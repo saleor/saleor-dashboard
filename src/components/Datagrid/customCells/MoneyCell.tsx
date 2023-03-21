@@ -1,3 +1,5 @@
+import { Locale } from "@dashboard/components/Locale";
+import { getMoney } from "@dashboard/components/Money/utils";
 import {
   CustomCell,
   CustomRenderer,
@@ -12,7 +14,9 @@ import { usePriceField } from "../../PriceField/usePriceField";
 interface MoneyCellProps {
   readonly kind: "money-cell";
   readonly currency: string;
+  readonly undiscounted?: string | number;
   readonly value: number | string | null;
+  readonly locale: Locale;
 }
 
 export type MoneyCell = CustomCell<MoneyCellProps>;
@@ -51,17 +55,41 @@ export const moneyCellRenderer = (): CustomRenderer<MoneyCell> => ({
   isMatch: (c): c is MoneyCell => (c.data as any).kind === "money-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
-    const { currency, value } = cell.data;
+    const { currency, value, undiscounted, locale } = cell.data;
     const hasValue = value === 0 ? true : !!value;
-    const formatted = value?.toString() ?? "-";
+    const formattedValue = value
+      ? getMoney({ amount: Number(value), currency }, locale)
+      : "-";
+
+    const formattedUndiscounted =
+      undiscounted && undiscounted !== value
+        ? getMoney({ amount: Number(undiscounted), currency }, locale)
+        : "";
+
+    const formattedWithDiscount = formattedUndiscounted + " " + formattedValue;
 
     ctx.fillStyle = theme.textDark;
     ctx.textAlign = "right";
     ctx.fillText(
-      formatted,
+      formattedWithDiscount,
       rect.x + rect.width - 8,
       rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );
+
+    // Draw crossed line above price without discount
+    if (undiscounted && undiscounted !== value) {
+      const { width: totalTextWidth } = ctx.measureText(formattedWithDiscount);
+      const { width: undiscountedTextWidth } = ctx.measureText(
+        formattedUndiscounted,
+      );
+
+      ctx.fillRect(
+        rect.x + rect.width - 8 - totalTextWidth,
+        rect.y + rect.height / 2,
+        undiscountedTextWidth,
+        1,
+      );
+    }
 
     ctx.save();
     ctx.fillStyle = theme.textMedium;
@@ -76,7 +104,6 @@ export const moneyCellRenderer = (): CustomRenderer<MoneyCell> => ({
       rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
     );
     ctx.restore();
-
     return true;
   },
   provideEditor: () => ({

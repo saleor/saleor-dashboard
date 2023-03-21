@@ -2,6 +2,7 @@ import {
   NumberCell,
   numberCellEmptyValue,
 } from "@dashboard/components/Datagrid/customCells/NumberCell";
+import { Locale } from "@dashboard/components/Locale";
 import { GridCell, GridCellKind } from "@glideapps/glide-data-grid";
 
 import {
@@ -92,9 +93,16 @@ export function numberCell(
   };
 }
 
+interface MoneyCellData {
+  value: number | string | null;
+  discount?: string | number;
+  readonly undiscounted?: string | number;
+  currency: string;
+  locale: Locale;
+}
+
 export function moneyCell(
-  value: number | string | null,
-  currency: string,
+  { value, undiscounted, currency, locale }: MoneyCellData,
   opts?: Partial<GridCell>,
 ): MoneyCell {
   return {
@@ -105,6 +113,8 @@ export function moneyCell(
       kind: "money-cell",
       value,
       currency,
+      undiscounted,
+      locale,
     },
     copyData: value?.toString() ?? "",
   };

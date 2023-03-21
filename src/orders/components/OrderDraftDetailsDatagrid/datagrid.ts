@@ -8,12 +8,14 @@ import {
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import useLocale from "@dashboard/hooks/useLocale";
 import {
   getDatagridRowDataIndex,
   getStatusColor,
   isFirstColumn,
 } from "@dashboard/misc";
 import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
+import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { DefaultTheme, useTheme } from "@saleor/macaw-ui/next";
@@ -79,6 +81,8 @@ export const useGetCellContent = ({
 }: GetCellContentProps) => {
   const intl = useIntl();
   const { theme } = useTheme();
+  const { locale } = useLocale();
+  const getValues = useOrderLineDiscountContext();
 
   return (
     [column, row]: Item,
@@ -101,6 +105,10 @@ export const useGetCellContent = ({
       return readonlyTextCell("", false);
     }
 
+    const { unitUndiscountedPrice, unitDiscountedPrice } = getValues(
+      rowData.id,
+    );
+
     switch (columnId) {
       case "product":
         return thumbnailCell(
@@ -110,10 +118,12 @@ export const useGetCellContent = ({
       case "quantity":
         return readonlyTextCell(rowData.quantity.toString(), false);
       case "price":
-        return moneyCell(
-          rowData.unitPrice.gross.amount,
-          rowData.unitPrice.gross.currency,
-        );
+        return moneyCell({
+          value: unitDiscountedPrice.amount,
+          currency: unitDiscountedPrice.currency,
+          undiscounted: unitUndiscountedPrice.amount,
+          locale,
+        });
       case "status":
         const orderErrors = getOrderErrors(errors, rowData.id);
         const status = getOrderLineStatus(intl, rowData, orderErrors);
@@ -123,10 +133,11 @@ export const useGetCellContent = ({
           status.map(status => status.status),
         );
       case "total":
-        return moneyCell(
-          rowData.totalPrice.gross.amount,
-          rowData.totalPrice.gross.currency,
-        );
+        return moneyCell({
+          value: rowData.totalPrice.gross.amount,
+          currency: rowData.totalPrice.gross.currency,
+          locale,
+        });
 
       default:
         return readonlyTextCell("", false);

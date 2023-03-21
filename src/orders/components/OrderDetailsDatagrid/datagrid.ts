@@ -8,6 +8,7 @@ import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderLineFragment } from "@dashboard/graphql";
+import useLocale from "@dashboard/hooks/useLocale";
 import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { useCallback, useMemo } from "react";
@@ -65,6 +66,7 @@ export const useGetCellContent = ({
   data,
   loading,
 }: GetCellContentProps) => {
+  const { locale } = useLocale();
   const getCellContent = useCallback(
     ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
       if (isFirstColumn(column)) {
@@ -95,22 +97,24 @@ export const useGetCellContent = ({
         case "quantity":
           return readonlyTextCell(rowData.quantity.toString(), false);
         case "price":
-          return moneyCell(
-            rowData.unitPrice.gross.amount,
-            rowData.unitPrice.gross.currency,
-          );
+          return moneyCell({
+            value: rowData.unitPrice.gross.amount,
+            currency: rowData.unitPrice.gross.currency,
+            locale,
+          });
 
         case "total":
-          return moneyCell(
-            rowData.totalPrice.gross.amount,
-            rowData.totalPrice.gross.currency,
-          );
+          return moneyCell({
+            value: rowData.totalPrice.gross.amount,
+            currency: rowData.totalPrice.gross.currency,
+            locale,
+          });
 
         default:
           return readonlyTextCell("", false);
       }
     },
-    [columns, data, loading],
+    [columns, data, loading, locale],
   );
 
   return getCellContent;
