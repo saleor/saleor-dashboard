@@ -71,7 +71,6 @@ export interface ProductUpdatePageProps {
   channelsErrors: ProductChannelListingErrorFragment[];
   variantListErrors: ProductVariantListError[];
   errors: UseProductUpdateHandlerError[];
-  placeholderImage: string;
   collections: RelayToFlat<SearchCollectionsQuery["search"]>;
   categories: RelayToFlat<SearchCategoriesQuery["search"]>;
   attributeValues: RelayToFlat<
@@ -138,7 +137,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   media,
   header,
   limits,
-  placeholderImage,
   product,
   saveButtonBarState,
   variants,
@@ -348,7 +346,6 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
               <CardSpacer />
               <ProductMedia
                 media={media}
-                placeholderImage={placeholderImage}
                 onImageDelete={onImageDelete}
                 onImageReorder={onImageReorder}
                 onImageUpload={onImageUpload}
