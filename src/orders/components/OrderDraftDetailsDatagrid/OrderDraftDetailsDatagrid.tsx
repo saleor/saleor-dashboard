@@ -97,9 +97,12 @@ export const OrderDraftDetailsDatagrid = ({
 
   const handleDatagridChange = useCallback(
     ({ updates }: DatagridChangeOpts) => {
-      updates.forEach(({ data, row }) => {
+      updates.forEach(({ data, column, row }) => {
         const orderId = lines[row].id;
-        onOrderLineChange(orderId, { quantity: data });
+
+        if (column === "quantity") {
+          onOrderLineChange(orderId, { quantity: data });
+        }
       });
     },
     [lines, onOrderLineChange],
