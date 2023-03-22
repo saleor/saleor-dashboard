@@ -24,8 +24,8 @@ export const columnsMessages = defineMessages({
 
 export const messages = defineMessages({
   emptyText: {
-    id: "RlfqSV",
-    defaultMessage: "No orders found",
+    id: "Q1Uzbb",
+    defaultMessage: "No products found",
   },
   deleteOrder: {
     id: "LKD6fB",
