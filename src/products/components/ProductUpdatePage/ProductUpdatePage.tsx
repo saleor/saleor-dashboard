@@ -10,7 +10,7 @@ import {
 import { ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
-import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
+import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
