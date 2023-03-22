@@ -105,6 +105,7 @@ export const appDetails: NonNullable<AppQuery["app"]> = {
   isActive: true,
   metadata: [],
   name: "app1",
+  author: "Saleor Commerce",
   permissions: [
     {
       __typename: "Permission",
