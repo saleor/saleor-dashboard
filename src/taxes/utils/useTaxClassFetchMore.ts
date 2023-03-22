@@ -20,7 +20,7 @@ interface UseTaxClassFetchMoreHookResult {
 export function useTaxClassFetchMore(): UseTaxClassFetchMoreHookResult {
   const { data, loading, loadMore, variables } = useTaxClassAssignQuery({
     variables: {
-      first: 10,
+      first: 20,
     },
   });
 
