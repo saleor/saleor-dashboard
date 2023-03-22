@@ -116,16 +116,26 @@ export const useGetCellContent = ({
         return thumbnailCell(
           rowData?.productName ?? "",
           rowData.thumbnail?.url ?? "",
+          {
+            readonly: true,
+            allowOverlay: false,
+          },
         );
       case "quantity":
         return textCell(change || rowData.quantity.toString());
       case "price":
-        return moneyCell({
-          value: unitDiscountedPrice.amount,
-          currency: unitDiscountedPrice.currency,
-          undiscounted: unitUndiscountedPrice.amount,
-          locale,
-        });
+        return moneyCell(
+          {
+            value: unitDiscountedPrice.amount,
+            currency: unitDiscountedPrice.currency,
+            undiscounted: unitUndiscountedPrice.amount,
+            locale,
+          },
+          {
+            readonly: true,
+            allowOverlay: false,
+          },
+        );
       case "status":
         const orderErrors = getOrderErrors(errors, rowData.id);
         const status = getOrderLineStatus(intl, rowData, orderErrors);
@@ -133,13 +143,23 @@ export const useGetCellContent = ({
         return tagsCell(
           status.map(toTagValue(theme)),
           status.map(status => status.status),
+          {
+            readonly: true,
+            allowOverlay: false,
+          },
         );
       case "total":
-        return moneyCell({
-          value: rowData.totalPrice.gross.amount,
-          currency: rowData.totalPrice.gross.currency,
-          locale,
-        });
+        return moneyCell(
+          {
+            value: rowData.totalPrice.gross.amount,
+            currency: rowData.totalPrice.gross.currency,
+            locale,
+          },
+          {
+            readonly: true,
+            allowOverlay: false,
+          },
+        );
 
       default:
         return readonlyTextCell("", false);
