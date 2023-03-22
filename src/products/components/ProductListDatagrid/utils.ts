@@ -2,7 +2,6 @@ import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/mes
 import { getChannelAvailabilityLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import {
   dropdownCell,
-  loadingCell,
   readonlyTextCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
@@ -136,7 +135,6 @@ interface GetCellContentProps {
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   gridAttributesFromSettings: ProductListColumns[];
   selectedChannelId?: string;
-  loading?: boolean;
 }
 
 export function createGetCellContent({
@@ -146,7 +144,6 @@ export function createGetCellContent({
   locale,
   products,
   selectedChannelId,
-  loading,
 }: GetCellContentProps) {
   return (
     [column, row]: Item,
@@ -154,10 +151,6 @@ export function createGetCellContent({
   ) => {
     if (isFirstColumn(column)) {
       return readonlyTextCell("");
-    }
-
-    if (loading) {
-      return loadingCell();
     }
 
     const columnId = columns[column]?.id;

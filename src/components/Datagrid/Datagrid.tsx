@@ -13,8 +13,8 @@ import DataEditor, {
   Item,
 } from "@glideapps/glide-data-grid";
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { Box, useTheme } from "@saleor/macaw-ui/next";
+import { Card, CardContent, CircularProgress } from "@material-ui/core";
+import { Box, Text, useTheme } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import range from "lodash/range";
 import React, {
@@ -75,6 +75,7 @@ export interface DatagridProps {
   rows: number;
   title?: string;
   fullScreenTitle?: string;
+  loading?: boolean;
   selectionActions: (
     selection: number[],
     actions: MenuItemsActions,
@@ -117,6 +118,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   columnSelect = "none",
   onColumnMoved,
   onColumnResize,
+  loading,
   ...datagridProps
 }): ReactElement => {
   const classes = useStyles();
@@ -318,6 +320,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [selection, selectionActions, handleRemoveRows],
   );
 
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" marginY={12}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <FullScreenContainer
       open={isOpen}
@@ -464,13 +474,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
               </div>
             </>
           ) : (
-            <Box
-              borderTopStyle="solid"
-              borderTopWidth={1}
-              borderColor="neutralHighlight"
-              paddingY={9}
-            >
-              <Typography align="center">{emptyText}</Typography>
+            <Box padding={9} textAlign="center">
+              <Text size="small">{emptyText}</Text>
             </Box>
           )}
         </CardContent>
