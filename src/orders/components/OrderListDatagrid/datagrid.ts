@@ -116,7 +116,12 @@ export const useGetCellContent = ({
       return loadingCell();
     }
 
-    const columnId = columns[column].id;
+    const columnId = columns[column]?.id;
+
+    if (!columnId) {
+      return readonlyTextCell("");
+    }
+
     const rowData = added.includes(row)
       ? undefined
       : orders[getDatagridRowDataIndex(row, removed)];

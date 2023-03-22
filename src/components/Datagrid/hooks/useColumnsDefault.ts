@@ -127,7 +127,7 @@ function byNoEmptyColumn(column: AvailableColumn) {
 }
 
 function byNotFirstColumn(
-  column: AvailableColumn,
+  _: AvailableColumn,
   index: number,
   array: AvailableColumn[],
 ) {
