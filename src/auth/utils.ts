@@ -18,15 +18,19 @@ export const displayDemoMessage = (
 
 const getNetworkErrors = (error: ApolloError): string[] => {
   const networkErrors = error.networkError as ServerError;
-
   if (networkErrors) {
     // Apparently network errors can be an object or an array
+
     if (Array.isArray(networkErrors.result)) {
       networkErrors.result.forEach(result => {
         if (result.errors) {
           return result.errors.map(({ message }) => message);
         }
       });
+    }
+
+    if (networkErrors.result?.errors) {
+      return networkErrors.result.errors.map(({ message }) => message);
     }
 
     return [networkErrors.message];
