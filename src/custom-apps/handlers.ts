@@ -20,8 +20,7 @@ import isEmpty from "lodash/isEmpty";
 import React, { Dispatch, SetStateAction } from "react";
 
 import { WebhookFormData } from "./components/WebhookDetailsPage";
-import { IntrospectionNode } from "./components/WebhookDetailsPage/utils";
-import { filterSelectedAsyncEvents } from "./utils";
+import { filterSelectedAsyncEvents, IntrospectionNode } from "./utils";
 
 interface CreateSyncEventsSelectHandler {
   change: (event: ChangeEvent, cb?: () => void) => void;
@@ -130,7 +129,7 @@ const handleQuery = ({
 }: HandleQuery) => {
   const availableEventNames = availableEvents.map(({ name }) => name);
   const eventsNames: string[] = events
-    .map(event => enumToEventName(event))
+    .map(enumToEventName)
     .filter(eventName => availableEventNames.includes(eventName));
 
   if (eventsNames.length > 0 && query.length === 0) {

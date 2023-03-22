@@ -1,4 +1,3 @@
-import { useQuery } from "@apollo/client";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
@@ -12,6 +11,7 @@ import {
   createSyncEventsSelectHandler,
 } from "@dashboard/custom-apps/handlers";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+import { IntrospectionNode } from "@dashboard/custom-apps/utils";
 import {
   WebhookDetailsFragment,
   WebhookErrorFragment,
@@ -30,7 +30,6 @@ import PermissionAlert from "../PermissionAlert";
 import WebhookHeaders from "../WebhookHeaders";
 import WebhookSubscriptionQuery from "../WebhookSubscriptionQuery";
 import { getHeaderTitle } from "./messages";
-import { buildEventsMap, IntrospectionQuery } from "./utils";
 
 export interface WebhookFormData {
   syncEvents: WebhookEventTypeSyncEnum[];
@@ -51,6 +50,7 @@ export interface WebhookDetailsPageProps {
   webhook?: WebhookDetailsFragment | null;
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: WebhookFormData) => SubmitPromise<any[]>;
+  availableEvents: IntrospectionNode[];
 }
 
 const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
@@ -60,6 +60,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   webhook,
   saveButtonBarState,
   onSubmit,
+  availableEvents,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -93,13 +94,6 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   const handleSubmit = (data: WebhookFormData) => {
     onSubmit({ ...data, ...{ subscriptionQuery: query } });
   };
-
-  const { data: introspectionData } = useQuery(IntrospectionQuery, {
-    fetchPolicy: "network-only",
-  });
-
-  const elements = introspectionData?.__schema?.types || [];
-  const availableEvents = buildEventsMap(elements);
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={handleSubmit}>
