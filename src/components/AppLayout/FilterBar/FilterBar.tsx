@@ -5,6 +5,7 @@ import React, { ReactNode } from "react";
 
 import { Filter } from "./Filter";
 import SearchInput from "./SearchInput";
+import { SelectSavedFilters } from "./SelectSavedFilters";
 
 export interface FilterBarProps<TKeys extends string = string>
   extends FilterProps<TKeys>,
@@ -45,6 +46,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           onFilterAdd={onFilterChange}
           onFilterAttributeFocus={onFilterAttributeFocus}
         />
+        <SelectSavedFilters />
         <Box __width="320px">
           <SearchInput
             initialSearch={initialSearch}
