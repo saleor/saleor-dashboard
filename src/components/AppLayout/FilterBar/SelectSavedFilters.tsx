@@ -50,10 +50,6 @@ export const SelectSavedFilters = ({
     return "";
   };
 
-  if (savedFilters?.length === 0) {
-    return null;
-  }
-
   return (
     <Box display="flex" alignItems="center">
       <Text
