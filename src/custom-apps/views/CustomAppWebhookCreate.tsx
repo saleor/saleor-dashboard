@@ -14,6 +14,7 @@ import { useIntl } from "react-intl";
 import WebhookDetailsPage, {
   WebhookFormData,
 } from "../components/WebhookDetailsPage";
+import { useAvailableEvents } from "../hooks";
 import { CustomAppUrls } from "../urls";
 
 export interface CustomAppWebhookCreateProps {
@@ -28,6 +29,8 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
   const intl = useIntl();
 
   const { data } = useAppQuery({ variables: { id: appId } });
+
+  const availableEvents = useAvailableEvents();
 
   const [webhookCreate, webhookCreateOpts] = useWebhookCreateMutation({
     onCompleted: data => {
@@ -80,6 +83,7 @@ export const CustomAppWebhookCreate: React.FC<CustomAppWebhookCreateProps> = ({
         errors={webhookCreateOpts.data?.webhookCreate?.errors ?? []}
         onSubmit={handleSubmit}
         saveButtonBarState={webhookCreateOpts.status}
+        availableEvents={availableEvents}
       />
     </>
   );
