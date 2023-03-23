@@ -7,11 +7,17 @@ import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
-import { OrderListUrlSortField } from "@dashboard/orders/urls";
+import { DevModeQuery } from "@dashboard/orders/queries";
+import {
+  OrderListUrlQueryParams,
+  OrderListUrlSortField,
+} from "@dashboard/orders/urls";
+import { getFilterVariables } from "@dashboard/orders/views/OrderList/filters";
 import {
   FilterPageProps,
   PageListProps,
@@ -40,6 +46,7 @@ export interface OrderListPageProps
   orders: RelayToFlat<OrderListQuery["orders"]>;
   onSettingsOpen: () => void;
   onAdd: () => void;
+  params: OrderListUrlQueryParams;
 }
 
 const useStyles = makeStyles(
@@ -65,6 +72,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   onTabChange,
   onTabDelete,
   onTabSave,
+  params,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -78,6 +86,24 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const extensionMenuItems = mapToMenuItems(ORDER_OVERVIEW_MORE_ACTIONS);
   const extensionCreateButtonItems = mapToMenuItems(ORDER_OVERVIEW_CREATE);
 
+  const context = useDevModeContext();
+
+  const openPlaygroundURL = () => {
+    context.setDevModeContent(DevModeQuery);
+    const variables = JSON.stringify(
+      {
+        filter: getFilterVariables(params),
+        // TODO add sorting: Issue #3409
+        // strange error when uncommenting this line
+        // sortBy: getSortQueryVariables(params)
+      },
+      null,
+      2,
+    );
+    context.setVariables(variables);
+    context.setDevModeVisibility(true);
+  };
+
   return (
     <ListPageLayout>
       <TopNav title={intl.formatMessage(sectionNames.orders)}>
@@ -85,6 +111,14 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           <CardMenu
             className={classes.settings}
             menuItems={[
+              {
+                label: intl.formatMessage({
+                  id: "vEwjub",
+                  defaultMessage: "Open in GraphiQL",
+                  description: "button",
+                }),
+                onSelect: openPlaygroundURL,
+              },
               {
                 label: intl.formatMessage({
                   id: "WbV1Xm",

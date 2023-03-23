@@ -8640,6 +8640,21 @@ export type ChannelUsabilityDataQueryVariables = Exact<{
 
 export type ChannelUsabilityDataQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
 
+export type OrderDetailsGraphiQlQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type OrderDetailsGraphiQlQuery = { __typename: 'Query', order: { __typename: 'Order', id: string, number: string, status: OrderStatus, isShippingRequired: boolean, canFinalize: boolean, created: any, customerNote: string, paymentStatus: PaymentChargeStatusEnum, userEmail: string | null, isPaid: boolean } | null };
+
+export type DevModeRunQueryVariables = Exact<{
+  filter?: InputMaybe<OrderFilterInput>;
+  sortBy?: InputMaybe<OrderSortingInput>;
+}>;
+
+
+export type DevModeRunQuery = { __typename: 'Query', orders: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, number: string, status: OrderStatus, isShippingRequired: boolean, canFinalize: boolean, created: any, customerNote: string, paymentStatus: PaymentChargeStatusEnum, userEmail: string | null, isPaid: boolean } }> } | null };
+
 export type PageTypeUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
   input: PageTypeUpdateInput;
