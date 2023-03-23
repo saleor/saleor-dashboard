@@ -95,6 +95,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     selectedChannelId,
     selectedProductIds,
     activeAttributeSortId,
+    tabs,
+    currentTab,
+    onTabChange,
+    onAll,
+    onTabDelete,
+    onTabSave,
     ...listProps
   } = props;
   const intl = useIntl();
@@ -200,12 +206,23 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           justifyContent="space-between"
         >
           <FilterBar
+            currentTab={currentTab}
+            onAll={onAll}
+            onTabChange={onTabChange}
+            onTabDelete={onTabDelete}
+            onTabSave={onTabSave}
+            tabs={tabs}
             currencySymbol={currencySymbol}
             initialSearch={initialSearch}
             onFilterChange={onFilterChange}
             onFilterAttributeFocus={onFilterAttributeFocus}
             onSearchChange={onSearchChange}
             filterStructure={filterStructure}
+            selectAllLabel={intl.formatMessage({
+              id: "aFLtLk",
+              defaultMessage: "All Products",
+              description: "tab name",
+            })}
             searchPlaceholder={intl.formatMessage({
               id: "kIvvax",
               defaultMessage: "Search Products...",

@@ -231,6 +231,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const handleTabChange = (tab: number) => {
     reset();
+
     navigate(
       productListUrl({
         activeTab: tab.toString(),

@@ -1,5 +1,5 @@
 import { FilterErrorMessages, IFilter } from "@dashboard/components/Filter";
-import { FilterProps, SearchPageProps } from "@dashboard/types";
+import { FilterProps, SearchPageProps, TabPageProps } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { ReactNode } from "react";
 
@@ -9,11 +9,13 @@ import { SelectSavedFilters } from "./SelectSavedFilters";
 
 export interface FilterBarProps<TKeys extends string = string>
   extends FilterProps<TKeys>,
+    TabPageProps,
     SearchPageProps {
   searchPlaceholder: string;
   errorMessages?: FilterErrorMessages<TKeys>;
   filterStructure: IFilter<TKeys>;
   actions?: ReactNode;
+  selectAllLabel: string;
 }
 
 export const FilterBar: React.FC<FilterBarProps> = ({
@@ -26,11 +28,16 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   onFilterAttributeFocus,
   errorMessages,
   actions,
+  tabs,
+  currentTab,
+  selectAllLabel,
+  onAll,
+  onTabChange,
 }: FilterBarProps) => (
   <>
     <Box
       display="grid"
-      __gridTemplateColumns="1fr 1fr"
+      __gridTemplateColumns="2fr 1fr"
       gap={7}
       paddingBottom={5}
       paddingX={9}
@@ -46,7 +53,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
           onFilterAdd={onFilterChange}
           onFilterAttributeFocus={onFilterAttributeFocus}
         />
-        <SelectSavedFilters />
+        <SelectSavedFilters
+          onSelectSavedFilter={onTabChange}
+          savedFilters={tabs}
+          selectedSavedFilter={currentTab}
+          selectAllSavedFilters={onAll}
+          selectAllLabel={selectAllLabel}
+        />
         <Box __width="320px">
           <SearchInput
             initialSearch={initialSearch}

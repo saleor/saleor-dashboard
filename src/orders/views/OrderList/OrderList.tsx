@@ -93,16 +93,13 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   const currentTab = getFiltersCurrentTab(params, tabs);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    createUrl: orderListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      createUrl: orderListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+    });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderListUrlDialog,
