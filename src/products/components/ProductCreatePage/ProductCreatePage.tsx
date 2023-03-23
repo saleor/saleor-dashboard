@@ -263,7 +263,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   richTextGetters={attributeRichTextGetters}
                 />
               )}
-              <CardSpacer />
               {isSimpleProduct && (
                 <>
                   <ProductShipping
@@ -273,14 +272,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     weightUnit={weightUnit}
                     onChange={change}
                   />
-                  <CardSpacer />
                   <ProductVariantPrice
                     ProductVariantChannelListings={data.channelListings}
                     errors={channelsErrors}
                     loading={loading}
                     onChange={handlers.changeChannelPrice}
                   />
-                  <CardSpacer />
                   <ProductStocks
                     data={data}
                     disabled={loading}

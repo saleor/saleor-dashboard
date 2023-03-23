@@ -2,8 +2,7 @@ import {
   ChannelData,
   ChannelPriceAndPreorderArgs,
 } from "@dashboard/channels/utils";
-import CardTitle from "@dashboard/components/CardTitle";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
+import { DashboardCard } from "@dashboard/components/Card";
 import { DateTimeTimezoneField } from "@dashboard/components/DateTimeTimezoneField";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
@@ -18,8 +17,6 @@ import { renderCollection } from "@dashboard/misc";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import {
-  Card,
-  CardContent,
   ClickAwayListener,
   Grow,
   MenuItem,
@@ -33,6 +30,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { Button, DeleteIcon, IconButton, PlusIcon } from "@saleor/macaw-ui";
+import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -141,62 +139,67 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
   };
 
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(messages.title)} />
-      <CardContent>
-        <div className={classes.skuInputContainer}>
-          <TextField
-            disabled={disabled}
-            error={!!formErrors.sku}
-            fullWidth
-            helperText={getProductErrorMessage(formErrors.sku, intl)}
-            label={intl.formatMessage(messages.sku)}
-            name="sku"
-            onChange={handleChange}
-            value={data.sku}
-            data-test-id="sku"
-          />
-        </div>
-        <ControlledCheckbox
+    <DashboardCard>
+      <DashboardCard.Title>
+        {intl.formatMessage(messages.title)}
+      </DashboardCard.Title>
+      <DashboardCard.Content>
+        <Input
+          disabled={disabled}
+          error={!!formErrors.sku}
+          label={intl.formatMessage(messages.sku)}
+          name="sku"
+          onChange={handleChange}
+          value={data.sku}
+          data-test-id="sku"
+          size="medium"
+        />
+        <Text variant="caption" color="textCriticalDefault">
+          {getProductErrorMessage(formErrors.sku, intl)}
+        </Text>
+        <Checkbox
           checked={data.isPreorder}
           name="isPreorder"
-          onChange={
-            onEndPreorderTrigger && data.isPreorder
-              ? onEndPreorderTrigger
-              : onFormDataChange
-          }
+          onCheckedChange={value => {
+            if (onEndPreorderTrigger && data.isPreorder) {
+              onEndPreorderTrigger();
+            } else {
+              onFormDataChange({ target: { name: "isPreorder", value } });
+            }
+          }}
           disabled={disabled}
-          label={
-            <>
+        >
+          <Box display="flex" gap={3} paddingY={4}>
+            <Text>
               <FormattedMessage {...messages.variantInPreorder} />
-              <PreviewPill className={classes.preview} />
-            </>
-          }
-        />
+            </Text>
+            <PreviewPill className={classes.preview} />
+          </Box>
+        </Checkbox>
 
         {!data.isPreorder && (
-          <>
-            <FormSpacer />
-            <ControlledCheckbox
-              checked={data.trackInventory}
-              name="trackInventory"
-              onChange={onFormDataChange}
-              disabled={disabled}
-              label={
-                <>
-                  <FormattedMessage {...messages.trackInventory} />
-                  <Typography variant="caption">
-                    <FormattedMessage {...messages.trackInventoryDescription} />
-                  </Typography>
-                </>
-              }
-            />
-          </>
+          <Checkbox
+            checked={data.trackInventory}
+            name="trackInventory"
+            disabled={disabled}
+            onCheckedChange={value =>
+              onFormDataChange({ target: { name: "trackInventory", value } })
+            }
+          >
+            <Box display="flex" flexDirection="column">
+              <Text>
+                <FormattedMessage {...messages.trackInventory} />
+              </Text>
+              <Text variant="caption" color="textNeutralSubdued">
+                <FormattedMessage {...messages.trackInventoryDescription} />
+              </Text>
+            </Box>
+          </Checkbox>
         )}
-      </CardContent>
+      </DashboardCard.Content>
       <Hr />
       {!data.isPreorder && (
-        <CardContent className={classes.quantityContainer}>
+        <DashboardCard.Content>
           <Typography>
             <div className={classes.quantityHeader}>
               <span>
@@ -243,7 +246,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               )}
             </Typography>
           )}
-        </CardContent>
+        </DashboardCard.Content>
       )}
       {productVariantChannelListings?.length > 0 &&
         warehouses?.length > 0 &&
@@ -372,7 +375,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           </Table>
         )}
       {data.isPreorder && (
-        <CardContent>
+        <DashboardCard.Content>
           <Typography variant="caption" className={classes.caption}>
             <FormattedMessage {...messages.preorderEndDateSetup} />
           </Typography>
@@ -446,7 +449,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
               </Typography>
             )}
           </div>
-        </CardContent>
+        </DashboardCard.Content>
       )}
 
       {productVariantChannelListings?.length > 0 && data.isPreorder && (
@@ -515,7 +518,7 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
           </TableBody>
         </Table>
       )}
-    </Card>
+    </DashboardCard>
   );
 };
 
