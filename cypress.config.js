@@ -21,6 +21,7 @@ module.exports = defineConfig({
   e2e: {
     env: {
       grepFilterSpecs: true,
+      demoTests: false,
     },
     setupNodeEvents(on, config) {
       config = require("./cypress/support/cypress-grep/plugin")(config);
@@ -38,7 +39,5 @@ module.exports = defineConfig({
       });
       return config;
     },
-    baseUrl: "http://localhost:4137/",
-    specPattern: "cypress/e2e/**/*.{js,jsx,ts,tsx}",
   },
 });

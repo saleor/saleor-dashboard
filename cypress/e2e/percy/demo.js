@@ -2,7 +2,6 @@
 /// <reference types="../../support"/>
 
 import { BUTTON_SELECTORS } from "../../elements";
-import { bodyMockHomePage } from "../../fixtures";
 import { urlList } from "../../fixtures/urlList";
 
 describe("Demo staging", () => {
@@ -14,9 +13,14 @@ describe("Demo staging", () => {
   });
   it("should log in via UI and visual check home demo page", () => {
     //   { tags: ["@login", "@allEnv", "@stable", "@oldRelease"] },
-    cy.addAliasToGraphRequestAndUseMockedResponseBody("Home", bodyMockHomePage);
-    cy.visit(urlList.dashboard).get(BUTTON_SELECTORS.submit).click();
-    cy.waitForRequestAndCheckIfNoErrors("@Home");
-    cy.percySnapshot("Demo home page");
+    cy.fixture("bodyMocks/demo").then(bodyMockHomePage => {
+      cy.addAliasToGraphRequestAndUseMockedResponseBody(
+        "Home",
+        bodyMockHomePage,
+      );
+      cy.visit(urlList.dashboard).get(BUTTON_SELECTORS.submit).click();
+      cy.waitForRequestAndCheckIfNoErrors("@Home");
+      cy.percySnapshot("Demo home page");
+    });
   });
 });
