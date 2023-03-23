@@ -1,7 +1,9 @@
 import { FilterErrorMessages, IFilter } from "@dashboard/components/Filter";
 import { FilterProps, SearchPageProps, TabPageProps } from "@dashboard/types";
-import { Box } from "@saleor/macaw-ui/next";
+import { Tooltip } from "@saleor/macaw-ui";
+import { Box, Button, FileExportIcon, sprinkles } from "@saleor/macaw-ui/next";
 import React, { ReactNode } from "react";
+import { useIntl } from "react-intl";
 
 import { Filter } from "./Filter";
 import SearchInput from "./SearchInput";
@@ -33,45 +35,74 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   selectAllLabel,
   onAll,
   onTabChange,
-}: FilterBarProps) => (
-  <>
-    <Box
-      display="grid"
-      __gridTemplateColumns="2fr 1fr"
-      gap={7}
-      paddingBottom={5}
-      paddingX={9}
-      borderColor="neutralPlain"
-      borderBottomStyle="solid"
-      borderBottomWidth={1}
-    >
-      <Box display="flex" alignItems="center" gap={7}>
-        <Filter
-          errorMessages={errorMessages}
-          menu={filterStructure}
-          currencySymbol={currencySymbol}
-          onFilterAdd={onFilterChange}
-          onFilterAttributeFocus={onFilterAttributeFocus}
-        />
-        <SelectSavedFilters
-          onSelectSavedFilter={onTabChange}
-          savedFilters={tabs}
-          selectedSavedFilter={currentTab}
-          selectAllSavedFilters={onAll}
-          selectAllLabel={selectAllLabel}
-        />
-        <Box __width="320px">
-          <SearchInput
-            initialSearch={initialSearch}
-            placeholder={searchPlaceholder}
-            onSearchChange={onSearchChange}
+  onTabDelete,
+  onTabSave,
+}: FilterBarProps) => {
+  const intl = useIntl();
+  const isCustom = currentTab === tabs.length + 1;
+
+  return (
+    <>
+      <Box
+        display="grid"
+        __gridTemplateColumns="1fr 1fr"
+        gap={7}
+        paddingBottom={5}
+        paddingX={9}
+        borderColor="neutralPlain"
+        borderBottomStyle="solid"
+        borderBottomWidth={1}
+      >
+        <Box display="flex" alignItems="center" gap={7}>
+          <Filter
+            errorMessages={errorMessages}
+            menu={filterStructure}
+            currencySymbol={currencySymbol}
+            onFilterAdd={onFilterChange}
+            onFilterAttributeFocus={onFilterAttributeFocus}
           />
+
+          <Box __width="320px">
+            <SearchInput
+              initialSearch={initialSearch}
+              placeholder={searchPlaceholder}
+              onSearchChange={onSearchChange}
+            />
+          </Box>
+        </Box>
+        <Box display="flex" justifyContent="flex-end">
+          <Box marginRight={11} display="flex" alignItems="center">
+            <SelectSavedFilters
+              isCustom={isCustom}
+              onSelectSavedFilter={onTabChange}
+              onRemoveSavedFilter={onTabDelete}
+              savedFilters={tabs}
+              selectedSavedFilter={currentTab}
+              selectAllSavedFilters={onAll}
+              selectAllLabel={selectAllLabel}
+            />
+            {isCustom && (
+              <Tooltip
+                title={intl.formatMessage({
+                  defaultMessage: "Save preset",
+                  id: "iLQJv1",
+                })}
+              >
+                <Button
+                  onClick={onTabSave}
+                  className={sprinkles({ marginLeft: 5 })}
+                  icon={<FileExportIcon />}
+                  variant="tertiary"
+                  size="medium"
+                />
+              </Tooltip>
+            )}
+          </Box>
+
+          {actions}
         </Box>
       </Box>
-      <Box display="flex" justifyContent="flex-end">
-        {actions}
-      </Box>
-    </Box>
-  </>
-);
+    </>
+  );
+};
 FilterBar.displayName = "FilterBar";

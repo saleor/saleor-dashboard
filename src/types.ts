@@ -83,10 +83,9 @@ export interface ListActionsWithoutToolbar {
   isChecked: (id: string) => boolean;
   selected: number;
 }
-export type TabListActions<
-  TToolbars extends string
-> = ListActionsWithoutToolbar &
-  Record<TToolbars, React.ReactNode | React.ReactNodeArray>;
+export type TabListActions<TToolbars extends string> =
+  ListActionsWithoutToolbar &
+    Record<TToolbars, React.ReactNode | React.ReactNodeArray>;
 export interface ListActions extends ListActionsWithoutToolbar {
   toolbar: React.ReactNode | React.ReactNodeArray;
 }
@@ -119,7 +118,7 @@ export interface TabPageProps {
   tabs: string[];
   onAll: () => void;
   onTabChange: (tab: number) => void;
-  onTabDelete: () => void;
+  onTabDelete: (tabIndex?: number) => void;
   onTabSave: () => void;
 }
 
@@ -129,7 +128,7 @@ export interface ChannelProps {
 
 export interface PartialMutationProviderOutput<
   TData extends {} = {},
-  TVariables extends {} = {}
+  TVariables extends {} = {},
 > {
   opts: MutationResult<TData> & MutationResultAdditionalProps;
   mutate: (variables: TVariables) => Promise<FetchResult<TData>>;

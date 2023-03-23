@@ -91,6 +91,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
 
+  const [tabIndexToDelete, setTabIndexToDelete] = useState<number | null>(null);
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     [],
   );
@@ -417,7 +418,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onFilterChange={changeFilters}
         onFilterAttributeFocus={setFocusedAttribute}
         onTabSave={() => openModal("save-search")}
-        onTabDelete={() => openModal("delete-search")}
+        onTabDelete={(tabIndex: number) => {
+          setTabIndexToDelete(tabIndex);
+          openModal("delete-search");
+        }}
         onTabChange={handleTabChange}
         initialSearch={params.query || ""}
         tabs={getFilterTabs().map(tab => tab.name)}
@@ -499,7 +503,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleFilterTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+        tabName={tabs[tabIndexToDelete]?.name ?? "..."}
       />
       <ProductTypePickerDialog
         confirmButtonState="success"
