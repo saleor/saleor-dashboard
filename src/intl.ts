@@ -151,6 +151,10 @@ export const commonMessages = defineMessages({
     id: "RrCui3",
     defaultMessage: "Summary",
   },
+  type: {
+    defaultMessage: "Type",
+    id: "+U6ozc",
+  },
   translationAttributes: {
     id: "+xTpT1",
     defaultMessage: "Attributes",
@@ -202,6 +206,10 @@ export const commonMessages = defineMessages({
     id: "2HfSiT",
     defaultMessage: "No. of rows",
     description: "pagination",
+  },
+  product: {
+    defaultMessage: "Product",
+    id: "x/ZVlU",
   },
 });
 

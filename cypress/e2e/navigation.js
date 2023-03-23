@@ -18,6 +18,7 @@ import {
   PERMISSION_GROUP_LIST_SELECTORS,
   PLUGINS_LIST_SELECTORS,
   PRODUCT_TYPES_LIST_SELECTORS,
+  PRODUCTS_LIST,
   SALES_SELECTORS,
   SHIPPING_ZONES_LIST_SELECTORS,
   STAFF_MEMBERS_LIST_SELECTORS,
@@ -25,6 +26,7 @@ import {
 } from "../elements/";
 import { PERMISSIONS_OPTIONS } from "../fixtures/permissionsUsers";
 import { urlList } from "../fixtures/urlList";
+import { ensureCanvasStatic } from "../support/customCommands/sharedElementsOperations/canvas";
 import {
   expectConfigurationAvailableSectionsNumber,
   expectConfigurationSectionsToBeVisible,
@@ -430,6 +432,9 @@ describe("As a staff user I want to navigate through shop using different permis
           cy.get(MENU_SELECTORS.CATALOG.collections).should("be.visible");
           expectMainMenuAvailableSections(5);
         });
+      ensureCanvasStatic(PRODUCTS_LIST.dataGridTable).then(() => {
+        cy.assertCanvasRowsNumber(PRODUCTS_LIST.dataGridTable, 21);
+      });
     },
   );
 

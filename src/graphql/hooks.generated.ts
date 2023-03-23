@@ -3414,6 +3414,7 @@ export const AppDocument = gql`
   app(id: $id) {
     ...App
     aboutApp
+    author
     permissions {
       code
       name
@@ -12684,6 +12685,7 @@ export const ProductListDocument = gql`
       node {
         ...ProductWithChannelListings
         updatedAt
+        description
         attributes @include(if: $hasSelectedAttributes) {
           ...ProductListAttribute
         }

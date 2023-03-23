@@ -1,4 +1,4 @@
-import { DatagridChange } from "@dashboard/components/Datagrid/useDatagridChange";
+import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 
 import { getAttributeData } from "./attributes";
 

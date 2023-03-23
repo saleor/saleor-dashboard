@@ -255,8 +255,8 @@ describe("As an admin I want to manage categories", () => {
           .get(BUTTON_SELECTORS.submit)
           .click()
           .waitForRequestAndCheckIfNoErrors("@CategoryBulkDelete");
-        getCategory(firstCategory.id).should("be.null");
-        getCategory(secondCategory.id).should("be.null");
+        cy.get(categoryRow(firstCategory.id)).should("not.exist");
+        cy.get(categoryRow(secondCategory.id)).should("not.exist");
       });
     },
   );

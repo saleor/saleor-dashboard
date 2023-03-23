@@ -17,7 +17,7 @@ import {
   DatagridChangeOpts,
   DatagridChangeStateContext,
   useDatagridChangeState,
-} from "@dashboard/components/Datagrid/useDatagridChange";
+} from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { ProductFragment } from "@dashboard/graphql";
 import useForm from "@dashboard/hooks/useForm";

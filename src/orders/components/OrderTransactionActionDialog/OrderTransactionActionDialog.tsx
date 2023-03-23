@@ -22,13 +22,9 @@ export interface OrderTransactionActionDialogProps extends DialogProps {
   action: TransactionActionEnum;
 }
 
-export const OrderTransactionActionDialog: React.FC<OrderTransactionActionDialogProps> = ({
-  confirmButtonState,
-  open,
-  onClose,
-  onSubmit,
-  action,
-}) => {
+export const OrderTransactionActionDialog: React.FC<
+  OrderTransactionActionDialogProps
+> = ({ confirmButtonState, open, onClose, onSubmit, action }) => {
   const intl = useIntl();
 
   const actionIntl = action

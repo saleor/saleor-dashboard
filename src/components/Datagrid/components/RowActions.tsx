@@ -1,8 +1,8 @@
 import { IconButton, MoreHorizontalIcon } from "@saleor/macaw-ui";
 import React from "react";
 
-import CardMenu, { CardMenuItem } from "../CardMenu";
-import useStyles from "./styles";
+import CardMenu, { CardMenuItem } from "../../CardMenu";
+import useStyles from "../styles";
 
 interface RowActionsProps {
   menuItems: CardMenuItem[];

@@ -1,4 +1,4 @@
-import { DatagridChange } from "@dashboard/components/Datagrid/useDatagridChange";
+import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { isCurrentRow } from "@dashboard/products/utils/datagrid";
 
 export function getNameData(

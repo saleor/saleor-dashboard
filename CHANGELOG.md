@@ -24,6 +24,8 @@ All notable, unreleased changes to this project will be documented in this file.
 - Allow subscription query for sync events - #3099 by @2can
 - Simplify codegen configuration to generate the graphql schema - #2538 by @abumalick
 - Add DevMode panel (trigger: CMD+') - #3333 by @zaiste 
+- Migrate to `es2020` for TypeScript - #3386 by @zaiste 
+- Fix styling for GraphiQL on the webhook page - #3389 by @zaiste
 
 ## 3.4
 

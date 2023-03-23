@@ -1,20 +1,21 @@
 import { defineMessages } from "react-intl";
 
 export const messages = defineMessages({
-  published: {
-    id: "Sd0Ppm",
-    defaultMessage: "Published on {date}",
-    description: "product publication date",
+  emptyText: {
+    id: "Q1Uzbb",
+    defaultMessage: "No products found",
   },
-  unpublished: {
-    id: "qpQ0uB",
-    defaultMessage: "Unpublished",
-    description: "product publication date",
+  addProduct: {
+    id: "tiY7bx",
+    defaultMessage: "Add new product",
   },
-  willBePublished: {
-    id: "r0hgpM",
-    defaultMessage: "Becomes published on {date}",
-    description: "product publication date",
+  editProduct: {
+    defaultMessage: "Edit Product",
+    id: "Q4m1CG",
+  },
+  products: {
+    defaultMessage: "Products",
+    id: "7NFfmz",
   },
 });
 
