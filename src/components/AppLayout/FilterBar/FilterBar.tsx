@@ -1,4 +1,5 @@
 import { FilterErrorMessages, IFilter } from "@dashboard/components/Filter";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { FilterProps, SearchPageProps, TabPageProps } from "@dashboard/types";
 import { Tooltip } from "@saleor/macaw-ui";
 import { Box, Button, FloppyDiscIcon, sprinkles } from "@saleor/macaw-ui/next";
@@ -7,7 +8,6 @@ import { useIntl } from "react-intl";
 
 import { Filter } from "./Filter";
 import SearchInput from "./SearchInput";
-import { SelectSavedFilters } from "./SelectSavedFilters";
 
 export interface FilterBarProps<TKeys extends string = string>
   extends FilterProps<TKeys>,
@@ -72,13 +72,13 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         </Box>
         <Box display="flex" justifyContent="flex-end">
           <Box marginRight={11} display="flex" alignItems="center">
-            <SelectSavedFilters
-              isCustom={isCustom}
-              onSelectSavedFilter={onTabChange}
-              onRemoveSavedFilter={onTabDelete}
-              savedFilters={tabs}
-              selectedSavedFilter={currentTab}
-              selectAllSavedFilters={onAll}
+            <FilterPresetsSelect
+              isCustomPreset={isCustom}
+              onSelect={onTabChange}
+              onRemove={onTabDelete}
+              savedPresets={tabs}
+              activePreset={currentTab}
+              onSelectAll={onAll}
               selectAllLabel={selectAllLabel}
             />
             {isCustom && (

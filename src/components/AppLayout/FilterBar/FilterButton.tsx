@@ -19,6 +19,8 @@ export const FilterButton = ({
       defaultMessage="Filters"
       description="button"
     />
-    {isFilterActive && <>({selectedFilterAmount})</>}
+    {isFilterActive && selectedFilterAmount > 0 && (
+      <>({selectedFilterAmount})</>
+    )}
   </DropdownButton>
 );
