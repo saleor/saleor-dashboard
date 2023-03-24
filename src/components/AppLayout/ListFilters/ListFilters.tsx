@@ -6,10 +6,10 @@ import { Box, Button, FloppyDiscIcon, sprinkles } from "@saleor/macaw-ui/next";
 import React, { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
-import { Filters } from "./Filters";
-import SearchInput from "./SearchInput";
+import { Filters } from "./components/FiltersSelect";
+import SearchInput from "./components/SearchInput";
 
-export interface FilterBarProps<TKeys extends string = string>
+export interface ListFiltersProps<TKeys extends string = string>
   extends FilterProps<TKeys>,
     TabPageProps,
     SearchPageProps {
@@ -20,7 +20,7 @@ export interface FilterBarProps<TKeys extends string = string>
   selectAllLabel: string;
 }
 
-export const FilterBar: React.FC<FilterBarProps> = ({
+export const ListFilters = ({
   currencySymbol,
   filterStructure,
   initialSearch,
@@ -37,7 +37,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   onTabChange,
   onTabDelete,
   onTabSave,
-}: FilterBarProps) => {
+}: ListFiltersProps) => {
   const intl = useIntl();
   const isCustom = currentTab === tabs.length + 1;
 
@@ -105,4 +105,4 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     </>
   );
 };
-FilterBar.displayName = "FilterBar";
+ListFilters.displayName = "FilterBar";

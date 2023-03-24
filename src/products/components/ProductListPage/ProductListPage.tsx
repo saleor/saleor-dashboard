@@ -4,7 +4,7 @@ import {
   mapToMenuItemsForProductOverviewActions,
   useExtensions,
 } from "@dashboard/apps/hooks/useExtensions";
-import { FilterBar } from "@dashboard/components/AppLayout/FilterBar";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { getByName } from "@dashboard/components/Filter/utils";
@@ -205,7 +205,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           alignItems="stretch"
           justifyContent="space-between"
         >
-          <FilterBar
+          <ListFilters
             currentTab={currentTab}
             onAll={onAll}
             onTabChange={onTabChange}

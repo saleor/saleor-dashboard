@@ -12,7 +12,7 @@ import { DropdownButton, sprinkles } from "@saleor/macaw-ui/next";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { getSelectedFilterAmount } from "./utils";
+import { getSelectedFilterAmount } from "../utils";
 
 export interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol?: string;
