@@ -62,7 +62,7 @@ describe("Get attribute values from URL params", () => {
   it("should return attribute values when attribute exists in params", () => {
     // Arrange
     const params: GetAttributeValuesFromParams[0] = {
-      "string-attributes": {
+      stringAttributes: {
         test: ["value-1", "value-2"],
       },
     };
@@ -143,7 +143,7 @@ describe("Map attribute params to filter opts", () => {
       },
     ];
     const params: MapAttributeParamsToFilterOpts[1] = {
-      "string-attributes": {
+      stringAttributes: {
         "test-1": ["value-1", "value-2"],
         "test-2": ["value-3"],
       },
@@ -212,7 +212,7 @@ describe("Parsing filter value", () => {
   it("should return boolean values when boolean attributes values passed", () => {
     // Arrange
     const params: ProductListUrlFilters = {
-      "boolean-attributes": {
+      booleanAttributes: {
         "test-1": ["true"],
         "test-2": ["false"],
       },
@@ -240,7 +240,7 @@ describe("Parsing filter value", () => {
   it("should return numeric values when numeric attributes values passed", () => {
     // Arrange
     const params: ProductListUrlFilters = {
-      "numeric-attributes": {
+      numericAttributes: {
         "test-1": ["1"],
         "test-2": ["1", "2"],
       },
@@ -274,7 +274,7 @@ describe("Parsing filter value", () => {
   it("should return string values when string attributes values passed", () => {
     // Arrange
     const params: ProductListUrlFilters = {
-      "string-attributes": {
+      stringAttributes: {
         "test-1": ["value-1"],
         "test-2": ["value-2", "value-3"],
       },
@@ -301,7 +301,7 @@ describe("Parsing filter value", () => {
   it("should return date values when date attributes values passed", () => {
     // Arrange
     const params: ProductListUrlFilters = {
-      "date-attributes": {
+      dateAttributes: {
         "test-1": ["2020-01-01"],
         "test-2": ["2020-01-01", "2020-02-02"],
       },
@@ -334,7 +334,7 @@ describe("Parsing filter value", () => {
   it("should return datetime values when datetime attributes values passed", () => {
     // Arrange
     const params: ProductListUrlFilters = {
-      "datetime-attributes": {
+      datetimeAttributes: {
         "test-1": ["2020-01-01T00:00:00"],
         "test-2": ["2020-01-01T00:00:00", "2020-02-02T00:00:00"],
       },
