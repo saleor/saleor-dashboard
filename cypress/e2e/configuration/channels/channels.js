@@ -2,16 +2,16 @@
 /// <reference types="../../../support"/>
 import faker from "faker";
 
-import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
 import { ADD_CHANNEL_FORM_SELECTORS } from "../../../elements/channels/add-channel-form-selectors";
 import { AVAILABLE_CHANNELS_FORM } from "../../../elements/channels/available-channels-form";
 import { CHANNELS_SELECTORS } from "../../../elements/channels/channels-selectors";
 import { SELECT_CHANNELS_TO_ASSIGN } from "../../../elements/channels/select-channels-to-assign";
 import { HEADER_SELECTORS } from "../../../elements/header/header-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { urlList } from "../../../fixtures/urlList";
+import { productDetailsUrl, urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createChannel } from "../../../support/api/requests/Channels";
+import { getFirstProducts } from "../../../support/api/requests/Product";
 import {
   createShippingZoneWithoutWarehouse,
   getShippingZone,
@@ -87,19 +87,14 @@ describe("Channels", () => {
 
       // new channel should be visible at product availability form
       cy.clearSessionData().loginUserViaRequest();
-      cy.addAliasToGraphRequest("InitialProductFilterAttributes");
-      cy.visit(urlList.products)
-        .waitForRequestAndCheckIfNoErrors("@InitialProductFilterAttributes")
-        .waitForProgressBarToNotExist()
-        .get(PRODUCTS_LIST.emptyProductRow)
-        .should("not.exist")
-        .get(PRODUCTS_LIST.productsNames)
-        .first()
-        .click()
-        .get(AVAILABLE_CHANNELS_FORM.manageChannelsButton)
-        .click()
-        .get(SELECT_CHANNELS_TO_ASSIGN.listOfChannels)
-        .contains(randomChannel);
+      getFirstProducts(1).then(resp => {
+        const product = resp[0].node;
+        cy.visit(productDetailsUrl(product.id))
+          .get(AVAILABLE_CHANNELS_FORM.manageChannelsButton)
+          .click()
+          .get(SELECT_CHANNELS_TO_ASSIGN.listOfChannels)
+          .contains(randomChannel);
+      });
     },
   );
   it(

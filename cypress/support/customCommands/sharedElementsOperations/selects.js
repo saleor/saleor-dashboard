@@ -1,8 +1,22 @@
+import { PAGINATION } from "../../../elements";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import {
   selectorWithDataValue,
   SHARED_ELEMENTS,
 } from "../../../elements/shared/sharedElements";
+
+Cypress.Commands.add("clickRowNumberButton", () =>
+  cy.get(PAGINATION.rowNumberButton).click(),
+);
+Cypress.Commands.add("getRowNumberButton", () =>
+  cy.get(PAGINATION.rowNumberButton),
+);
+Cypress.Commands.add("clickNextPagePaginationButton", () =>
+  cy.get(PAGINATION.rowNumberButton),
+);
+Cypress.Commands.add("clickPrevPagePaginationButton", () =>
+  cy.get(PAGINATION.previousPagePaginationButton),
+);
 
 Cypress.Commands.add("createNewOption", (selectSelector, newOption) => {
   cy.get(selectSelector).type(newOption);

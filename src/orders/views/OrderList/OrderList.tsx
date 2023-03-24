@@ -175,6 +175,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         tabs={getFilterTabs().map(tab => tab.name)}
         onAll={resetFilters}
         onSettingsOpen={() => navigate(orderSettingsPath)}
+        params={params}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}

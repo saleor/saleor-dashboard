@@ -80,9 +80,7 @@ export function selectProductsOutOfStock() {
 }
 
 export function selectFilterBy(filter) {
-  return showFilters()
-    .get(PRODUCTS_LIST.filters.filterBy[filter])
-    .click();
+  return showFilters().get(PRODUCTS_LIST.filters.filterBy[filter]).click();
 }
 
 export function selectFilterByAttribute(attributeSlug) {
@@ -106,9 +104,10 @@ export function selectChannel(channelSlug) {
 }
 
 export function submitFilters() {
-  cy.get(BUTTON_SELECTORS.submit)
+  cy.addAliasToGraphRequest("ProductList")
+    .get(BUTTON_SELECTORS.submit)
     .click()
-    .waitForProgressBarToNotExist()
+    .waitForRequestAndCheckIfNoErrors("@ProductList")
     .get(PRODUCTS_LIST.emptyProductRow)
     .should("not.exist");
 }

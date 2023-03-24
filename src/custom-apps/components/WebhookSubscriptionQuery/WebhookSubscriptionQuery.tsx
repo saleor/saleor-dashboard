@@ -39,6 +39,7 @@ const WebhookSubscriptionQuery: React.FC<WebhookSubscriptionQueryProps> = ({
   const explorerPlugin = useExplorerPlugin({
     query,
     onEdit: setQuery,
+    showAttribution: false,
   });
 
   const classes = useStyles();

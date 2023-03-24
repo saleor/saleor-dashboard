@@ -14,6 +14,7 @@ import { extractMutationErrors, getStringOrPlaceholder } from "../../misc";
 import WebhookDetailsPage, {
   WebhookFormData,
 } from "../components/WebhookDetailsPage";
+import { useAvailableEvents } from "../hooks";
 import { CustomAppUrls } from "../urls";
 
 export interface CustomAppWebhookDetailsProps {
@@ -25,6 +26,8 @@ export const CustomAppWebhookDetails: React.FC<
 > = ({ id }) => {
   const notify = useNotifier();
   const intl = useIntl();
+
+  const availableEvents = useAvailableEvents();
 
   const { data: webhookDetails, loading } = useWebhookDetailsQuery({
     variables: { id },
@@ -86,6 +89,7 @@ export const CustomAppWebhookDetails: React.FC<
         saveButtonBarState={webhookUpdateOpts.status}
         webhook={webhook}
         onSubmit={handleSubmit}
+        availableEvents={availableEvents}
       />
     </>
   );
