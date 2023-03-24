@@ -3,7 +3,7 @@
 
 import faker from "faker";
 
-import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
+import { SHARED_ELEMENTS } from "../../../elements";
 import { urlList } from "../../../fixtures/urlList";
 import { createCollection } from "../../../support/api/requests/Collections";
 import { updateProduct } from "../../../support/api/requests/Product";
@@ -24,7 +24,7 @@ import {
 } from "../../../support/pages/catalog/products/productsListPage";
 
 describe("As an admin I should be able to filter products", () => {
-  const startsWith = "CyFilterProducts-";
+  const startsWith = "ACyFilterProducts-";
   const name = `${startsWith}${faker.datatype.number()}`;
   const stockQuantity = 747;
   const price = 342;
@@ -106,9 +106,7 @@ describe("As an admin I should be able to filter products", () => {
       { tags: ["@productsList", "@allEnv", "@stable"] },
       () => {
         selectFilterOption(filterBy.type, name);
-        cy.getTextFromElement(PRODUCTS_LIST.productsNames).then(product => {
-          expect(product).to.includes(name);
-        });
+        cy.get(SHARED_ELEMENTS.dataGridTable).contains(name).should("exist");
       },
     );
   });
@@ -130,13 +128,9 @@ describe("As an admin I should be able to filter products", () => {
       });
       selectChannel(channel.slug);
       selectProductsOutOfStock();
-      cy.searchInTable(productOutOfStock)
-        .get(PRODUCTS_LIST.productsNames)
-        .should("have.length", 1)
-        .getTextFromElement(PRODUCTS_LIST.productsNames)
-        .then(product => {
-          expect(product).to.includes(productOutOfStock);
-        });
+      cy.get(SHARED_ELEMENTS.dataGridTable)
+        .contains(productOutOfStock)
+        .should("exist");
     },
   );
 });
