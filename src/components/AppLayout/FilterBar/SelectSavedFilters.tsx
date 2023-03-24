@@ -31,6 +31,7 @@ export const SelectSavedFilters = ({
   isCustom,
 }: SelectSavedFiltersProps) => {
   const intl = useIntl();
+
   const getSelectedSavedFilterLabel = () => {
     if (isCustom) {
       return `(${intl.formatMessage({
@@ -81,19 +82,23 @@ export const SelectSavedFilters = ({
             >
               <Dropdown.Item>
                 <List.Item
-                  paddingX={5}
-                  paddingY={5}
+                  paddingX={4}
+                  paddingY={3}
                   gap={6}
                   borderRadius={3}
                   onClick={selectAllSavedFilters}
                 >
-                  <Text variant="bodyStrong">{selectAllLabel}</Text>
+                  <Text
+                    variant={selectedSavedFilter === 0 ? "bodyStrong" : "body"}
+                  >
+                    {selectAllLabel}
+                  </Text>
                 </List.Item>
               </Dropdown.Item>
               {savedFilters.length > 0 && (
                 <Box
                   height={1}
-                  marginY={2}
+                  marginY={3}
                   __backgroundColor={vars.colors.border.brandHighlight}
                   __marginLeft={-4}
                   __width="calc(100% + 8px)"
@@ -101,6 +106,7 @@ export const SelectSavedFilters = ({
               )}
               {savedFilters.map((preset, index) => (
                 <FilterPresetItem
+                  isActive={selectedSavedFilter === index + 1}
                   onSelect={() => onSelectSavedFilter(index + 1)}
                   onRemove={() => {
                     onRemoveSavedFilter(index + 1);
@@ -120,12 +126,14 @@ export const SelectSavedFilters = ({
 interface FilterPresetItemProps {
   onSelect: () => void;
   onRemove: () => void;
+  isActive?: boolean;
   children: React.ReactNode;
 }
 
 const FilterPresetItem = ({
   children,
   onSelect,
+  isActive,
   onRemove,
 }: FilterPresetItemProps) => {
   const [hasHover, setHasHover] = React.useState(false);
@@ -137,15 +145,16 @@ const FilterPresetItem = ({
     >
       <Dropdown.Item>
         <List.Item
-          paddingX={5}
-          paddingY={5}
+          paddingX={4}
+          paddingY={3}
+          marginBottom={2}
           gap={6}
-          borderRadius={3}
+          borderRadius={2}
           display="flex"
           justifyContent="space-between"
           onClick={onSelect}
         >
-          <Text>{children}</Text>
+          <Text variant={isActive ? "bodyStrong" : "body"}>{children}</Text>
           {hasHover && (
             <Box
               onClick={e => {
