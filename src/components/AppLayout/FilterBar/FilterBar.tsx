@@ -6,7 +6,7 @@ import { Box, Button, FloppyDiscIcon, sprinkles } from "@saleor/macaw-ui/next";
 import React, { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
-import { Filter } from "./Filter";
+import { Filters } from "./Filters";
 import SearchInput from "./SearchInput";
 
 export interface FilterBarProps<TKeys extends string = string>
@@ -54,7 +54,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
         borderBottomWidth={1}
       >
         <Box display="flex" alignItems="center" gap={7}>
-          <Filter
+          <Filters
             errorMessages={errorMessages}
             menu={filterStructure}
             currencySymbol={currencySymbol}

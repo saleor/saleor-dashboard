@@ -8,10 +8,10 @@ import {
 import useFilter from "@dashboard/components/Filter/useFilter";
 import { extractInvalidFilters } from "@dashboard/components/Filter/utils";
 import { ClickAwayListener, Grow, Popper } from "@material-ui/core";
-import { sprinkles } from "@saleor/macaw-ui/next";
+import { DropdownButton, sprinkles } from "@saleor/macaw-ui/next";
 import React, { useMemo, useState } from "react";
+import { FormattedMessage } from "react-intl";
 
-import { FilterButton } from "./FilterButton";
 import { getSelectedFilterAmount } from "./utils";
 
 export interface FilterProps<TFilterKeys extends string = string> {
@@ -22,7 +22,7 @@ export interface FilterProps<TFilterKeys extends string = string> {
   onFilterAttributeFocus?: (id?: string) => void;
 }
 
-export const Filter = ({
+export const Filters = ({
   currencySymbol,
   menu,
   onFilterAdd,
@@ -68,11 +68,19 @@ export const Filter = ({
       mouseEvent="onMouseUp"
     >
       <div ref={anchor}>
-        <FilterButton
-          isFilterActive={isFilterActive}
+        <DropdownButton
+          data-test-id="show-filters-button"
           onClick={() => setFilterMenuOpened(!isFilterMenuOpened)}
-          selectedFilterAmount={selectedFilterAmount}
-        />
+        >
+          <FormattedMessage
+            id="FNpv6K"
+            defaultMessage="Filters"
+            description="button"
+          />
+          {isFilterActive && selectedFilterAmount > 0 && (
+            <>({selectedFilterAmount})</>
+          )}
+        </DropdownButton>
         <Popper
           className={sprinkles({
             backgroundColor: "surfaceNeutralPlain",
@@ -123,4 +131,4 @@ export const Filter = ({
   );
 };
 
-Filter.displayName = "Filter";
+Filters.displayName = "Filter";
