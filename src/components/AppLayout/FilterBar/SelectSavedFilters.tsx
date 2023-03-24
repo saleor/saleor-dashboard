@@ -33,10 +33,10 @@ export const SelectSavedFilters = ({
   const intl = useIntl();
   const getSelectedSavedFilterLabel = () => {
     if (isCustom) {
-      return intl.formatMessage({
+      return `(${intl.formatMessage({
         defaultMessage: "Unsaved preset",
         id: "A+g/VP",
-      });
+      })})`;
     }
 
     if (selectedSavedFilter === 0) {
@@ -90,13 +90,15 @@ export const SelectSavedFilters = ({
                   <Text variant="bodyStrong">{selectAllLabel}</Text>
                 </List.Item>
               </Dropdown.Item>
-              <Box
-                height={1}
-                marginY={2}
-                __backgroundColor={vars.colors.border.brandHighlight}
-                __marginLeft={-4}
-                __width="calc(100% + 8px)"
-              />
+              {savedFilters.length > 0 && (
+                <Box
+                  height={1}
+                  marginY={2}
+                  __backgroundColor={vars.colors.border.brandHighlight}
+                  __marginLeft={-4}
+                  __width="calc(100% + 8px)"
+                />
+              )}
               {savedFilters.map((preset, index) => (
                 <FilterPresetItem
                   onSelect={() => onSelectSavedFilter(index + 1)}

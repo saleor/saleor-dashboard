@@ -1,7 +1,7 @@
 import { FilterErrorMessages, IFilter } from "@dashboard/components/Filter";
 import { FilterProps, SearchPageProps, TabPageProps } from "@dashboard/types";
 import { Tooltip } from "@saleor/macaw-ui";
-import { Box, Button, FileExportIcon, sprinkles } from "@saleor/macaw-ui/next";
+import { Box, Button, FloppyDiscIcon, sprinkles } from "@saleor/macaw-ui/next";
 import React, { ReactNode } from "react";
 import { useIntl } from "react-intl";
 
@@ -91,7 +91,7 @@ export const FilterBar: React.FC<FilterBarProps> = ({
                 <Button
                   onClick={onTabSave}
                   className={sprinkles({ marginLeft: 5 })}
-                  icon={<FileExportIcon />}
+                  icon={<FloppyDiscIcon />}
                   variant="tertiary"
                   size="medium"
                 />
