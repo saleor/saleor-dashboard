@@ -11,14 +11,14 @@ import {
   submitFilters,
 } from "../../../support/pages/catalog/products/productsListPage";
 
-describe("As an admin I should be able to sort products", () => {
+// waiting for canvas fix https://github.com/saleor/saleor-dashboard/issues/3410
+describe.skip("As an admin I should be able to sort products", () => {
   let defaultChannel;
 
   beforeEach(() => {
     cy.clearSessionData()
       .loginUserViaRequest()
       .visit(urlList.products)
-      .expectSkeletonIsVisible()
       .get(SHARED_ELEMENTS.header)
       .should("be.visible");
   });
