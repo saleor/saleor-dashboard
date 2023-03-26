@@ -24,27 +24,34 @@ export const FilterPresetItem = ({
   const [hasHover, setHasHover] = React.useState(false);
 
   return (
-    <Box
-      onMouseOver={() => setHasHover(true)}
-      onMouseLeave={() => setHasHover(false)}
-    >
-      <Dropdown.Item>
-        <List.Item
-          paddingX={4}
-          paddingY={3}
-          gap={6}
-          borderRadius={2}
-          display="flex"
-          justifyContent="space-between"
-          onClick={onSelect}
-        >
-          <Text variant={isActive ? "bodyStrong" : "body"}>{children}</Text>
+    <Dropdown.Item>
+      <Box
+        position="relative"
+        onMouseOver={() => setHasHover(true)}
+        onMouseLeave={() => setHasHover(false)}
+      >
+        <>
+          <List.Item
+            paddingLeft={4}
+            paddingRight={11}
+            paddingY={3}
+            gap={6}
+            borderRadius={2}
+            display="flex"
+            justifyContent="space-between"
+            onClick={onSelect}
+          >
+            <Text variant={isActive ? "bodyStrong" : "body"}>{children}</Text>
+          </List.Item>
           {hasHover && (
             <Box
-              onClick={e => {
-                e.stopPropagation();
-                onRemove();
-              }}
+              cursor="pointer"
+              zIndex="2"
+              position="absolute"
+              __top="50%"
+              __right="6px"
+              __transform="translateY(-50%)"
+              onClick={onRemove}
               display="flex"
               alignItems="center"
             >
@@ -58,8 +65,8 @@ export const FilterPresetItem = ({
               />
             </Box>
           )}
-        </List.Item>
-      </Dropdown.Item>
-    </Box>
+        </>
+      </Box>
+    </Dropdown.Item>
   );
 };
