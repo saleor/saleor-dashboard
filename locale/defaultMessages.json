@@ -1188,6 +1188,9 @@
     "context": "unassign collection from sale and save, button",
     "string": "Unassign and save"
   },
+  "6SL46U": {
+    "string": "by {author}"
+  },
   "6WRFp2": {
     "context": "order history message",
     "string": "Note was added to the order"
@@ -8006,6 +8009,10 @@
   },
   "vEYtiq": {
     "string": "Category Name"
+  },
+  "vEwjub": {
+    "context": "button",
+    "string": "Open in GraphiQL"
   },
   "vM9quW": {
     "context": "order payment",

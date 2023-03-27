@@ -3,6 +3,7 @@ export const SHARED_ELEMENTS = {
   progressBar: '[role="progressbar"]',
   circularProgress: '[class*="CircularProgress-circle"]',
   autocompleteCircle: '[class*="arrowInnerContainer"]',
+  dataGridTable: "[data-testid='data-grid-canvas']",
   skeleton: '[data-test-id="skeleton"]',
   table: 'table[class*="Table"]',
   tableRow: '[data-test-id*="id"], [class*="MuiTableRow"]',
