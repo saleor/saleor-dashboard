@@ -22,7 +22,7 @@ export interface FilterProps<TFilterKeys extends string = string> {
   onFilterAttributeFocus?: (id?: string) => void;
 }
 
-export const Filters = ({
+export const FiltersSelect = ({
   currencySymbol,
   menu,
   onFilterAdd,
@@ -131,4 +131,4 @@ export const Filters = ({
   );
 };
 
-Filters.displayName = "Filter";
+FiltersSelect.displayName = "Filter";

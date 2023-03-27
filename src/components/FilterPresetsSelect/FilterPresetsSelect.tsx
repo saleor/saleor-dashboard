@@ -7,7 +7,7 @@ import {
   Text,
   vars,
 } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { MouseEvent } from "react";
 import { useIntl } from "react-intl";
 
 import { FilterPresetItem } from "./FilterPresetItem";
@@ -48,6 +48,16 @@ export const FilterPresetsSelect = ({
     }
 
     return "";
+  };
+
+  const handleSelectPreset = (e: MouseEvent<HTMLElement>, index: number) => {
+    const target = e.target as HTMLElement;
+    // Only allow selecting the preset if the user clicks on the list item or the span
+    if (!["LI", "SPAN"].includes(target.tagName)) {
+      return;
+    }
+
+    onSelect(index);
   };
 
   return (
@@ -105,7 +115,7 @@ export const FilterPresetsSelect = ({
                 {savedPresets.map((preset, index) => (
                   <FilterPresetItem
                     isActive={activePreset === index + 1}
-                    onSelect={() => onSelect(index + 1)}
+                    onSelect={e => handleSelectPreset(e, index + 1)}
                     onRemove={() => {
                       onRemove(index + 1);
                     }}

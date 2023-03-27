@@ -6,10 +6,10 @@ import {
   sprinkles,
   Text,
 } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { MouseEvent } from "react";
 
 interface FilterPresetItemProps {
-  onSelect: () => void;
+  onSelect: (e: MouseEvent<HTMLLIElement>) => void;
   onRemove: () => void;
   isActive?: boolean;
   children: React.ReactNode;
@@ -42,29 +42,29 @@ export const FilterPresetItem = ({
             onClick={onSelect}
           >
             <Text variant={isActive ? "bodyStrong" : "body"}>{children}</Text>
+            {hasHover && (
+              <Box
+                cursor="pointer"
+                zIndex="2"
+                position="absolute"
+                __top="50%"
+                __right="6px"
+                __transform="translateY(-50%)"
+                onClick={onRemove}
+                display="flex"
+                alignItems="center"
+              >
+                <RemoveIcon
+                  className={sprinkles({
+                    color: {
+                      default: "iconNeutralSubdued",
+                      hover: "iconNeutralPlain",
+                    },
+                  })}
+                />
+              </Box>
+            )}
           </List.Item>
-          {hasHover && (
-            <Box
-              cursor="pointer"
-              zIndex="2"
-              position="absolute"
-              __top="50%"
-              __right="6px"
-              __transform="translateY(-50%)"
-              onClick={onRemove}
-              display="flex"
-              alignItems="center"
-            >
-              <RemoveIcon
-                className={sprinkles({
-                  color: {
-                    default: "iconNeutralSubdued",
-                    hover: "iconNeutralPlain",
-                  },
-                })}
-              />
-            </Box>
-          )}
         </>
       </Box>
     </Dropdown.Item>
