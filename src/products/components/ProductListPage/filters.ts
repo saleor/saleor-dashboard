@@ -32,7 +32,8 @@ export const ProductFilterKeys = {
   channel: "channel",
   productKind: "productKind",
 } as const;
-export type ProductFilterKeys = typeof ProductFilterKeys[keyof typeof ProductFilterKeys];
+export type ProductFilterKeys =
+  (typeof ProductFilterKeys)[keyof typeof ProductFilterKeys];
 
 export type AttributeFilterOpts = FilterOpts<string[]> & {
   id: string;
@@ -105,9 +106,9 @@ const messages = defineMessages({
   },
 });
 
-const filterByType = (type: AttributeInputTypeEnum) => (
-  attribute: AttributeFilterOpts,
-) => attribute.inputType === type;
+const filterByType =
+  (type: AttributeInputTypeEnum) => (attribute: AttributeFilterOpts) =>
+    attribute.inputType === type;
 
 export function createFilterStructure(
   intl: IntlShape,
@@ -254,7 +255,9 @@ export function createFilterStructure(
         attr.slug,
         attr.name,
         Array.isArray(attr.value)
-          ? undefined
+          ? ["true", "false"].includes(attr.value[0])
+            ? Boolean(attr.value[0])
+            : undefined
           : (attr.value as unknown) === "true",
         {
           positive: intl.formatMessage(commonMessages.yes),
