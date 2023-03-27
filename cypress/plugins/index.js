@@ -37,7 +37,6 @@ module.exports = async (on, config) => {
     process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD;
   config.env.mailHogUrl = process.env.CYPRESS_mailHogUrl;
   config.env.grepTags = process.env.CYPRESS_grepTags;
-  config.specPattern = specPattern(process.env.CYPRESS_demoTests);
   config.baseUrl = baseUrl(process.env.CYPRESS_demoTests);
 
   on("before:browser:launch", (_browser = {}, launchOptions) => {
@@ -47,11 +46,6 @@ module.exports = async (on, config) => {
 
   return config;
 };
-
-const specPattern = isDemoTesting =>
-  isDemoTesting
-    ? "cypress/e2e/percy/**/*.{js,jsx,ts,tsx}"
-    : "cypress/e2e/**/*.{js,jsx,ts,tsx}";
 
 const baseUrl = isDemoTesting =>
   isDemoTesting ? process.env.CYPRESS_DEMO_URI : process.env.CYPRESS_baseUrl;
