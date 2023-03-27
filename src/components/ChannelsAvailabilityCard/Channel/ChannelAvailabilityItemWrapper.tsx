@@ -1,7 +1,7 @@
 import { ChannelData } from "@dashboard/channels/utils";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
-import { Typography } from "@material-ui/core";
 import { Accordion, AccordionSummary, makeStyles } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { Messages } from "../types";
@@ -71,7 +71,6 @@ const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({
 }) => {
   const expanderClasses = useExpanderStyles();
   const summaryClasses = useSummaryStyles();
-  const classes = useStyles();
 
   const { name } = data;
 
@@ -81,10 +80,8 @@ const ChannelContentWrapper: React.FC<ChannelContentWrapperProps> = ({
       data-test-id="channel-availability-item"
     >
       <AccordionSummary className={summaryClasses.root}>
-        <div className={classes.container}>
-          <Typography>{name}</Typography>
-          <Label text={messages.availableDateText} />
-        </div>
+        <Text>{name}</Text>
+        <Label text={messages.availableDateText} />
       </AccordionSummary>
       {children}
     </Accordion>

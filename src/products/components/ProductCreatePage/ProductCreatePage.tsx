@@ -42,7 +42,7 @@ import { useIntl } from "react-intl";
 
 import { FetchMoreProps, RelayToFlat } from "../../../types";
 import { ProductDetailsForm } from "../ProductDetailsForm";
-import ProductOrganization from "../ProductOrganization";
+import { ProductOrganization } from "../ProductOrganization";
 import { ProductShipping } from "../ProductShipping";
 import { ProductStocks } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
@@ -337,7 +337,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 onProductTypeChange={handlers.selectProductType}
                 collectionsInputDisplayValue={selectedCollections}
               />
-              <CardSpacer />
               {isSimpleProduct ? (
                 <ChannelsAvailabilityCard
                   managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}

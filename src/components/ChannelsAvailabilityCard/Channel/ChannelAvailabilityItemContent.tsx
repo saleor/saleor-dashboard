@@ -1,11 +1,11 @@
 import { ChannelData } from "@dashboard/channels/utils";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
-import RadioSwitchField from "@dashboard/components/RadioSwitchField";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { TextField, Typography } from "@material-ui/core";
+import { Box, Divider, RadioGroup, Text } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
@@ -70,57 +70,52 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   );
 
   return (
-    <div className={classes.container}>
-      <RadioSwitchField
-        classes={{
-          radioLabel: classes.radioLabel,
-        }}
-        className={classes.radioField}
+    <Box display="flex" gap={5} flexDirection="column">
+      <RadioGroup
+        defaultValue={`${isPublished}`}
+        onValueChange={value =>
+          onChange(id, {
+            ...formData,
+            isPublished: Boolean(value),
+            publicationDate:
+              !isPublished && !publicationDate ? todayDateUTC : publicationDate,
+          })
+        }
         disabled={disabled}
-        firstOptionLabel={
-          <>
-            <p className={classes.label}>{messages.visibleLabel}</p>
+      >
+        <RadioGroup.Item id={`${id}-isPublished-true`} value="true">
+          <Box display="flex" __alignItems="baseline" gap={5}>
+            <Text>{messages.visibleLabel}</Text>
             {isPublished &&
               publicationDate &&
               Date.parse(publicationDate) < dateNow && (
-                <span className={classes.secondLabel}>
+                <Text variant="caption" color="textNeutralSubdued">
                   {messages.visibleSecondLabel ||
                     visibleMessage(publicationDate)}
-                </span>
+                </Text>
               )}
-          </>
-        }
-        name="isPublished"
-        secondOptionLabel={
-          <>
-            <p className={classes.label}>{messages.hiddenLabel}</p>
+          </Box>
+        </RadioGroup.Item>
+        <RadioGroup.Item id={`${id}-isPublished-false`} value="false">
+          <Box display="flex" __alignItems="baseline" gap={5}>
+            <Text>{messages.hiddenLabel}</Text>
             {publicationDate &&
               !isPublished &&
               Date.parse(publicationDate) >= dateNow && (
-                <span className={classes.secondLabel}>
+                <Text variant="caption" color="textNeutralSubdued">
                   {messages.hiddenSecondLabel}
-                </span>
+                </Text>
               )}
-          </>
-        }
-        value={isPublished}
-        onChange={() => {
-          onChange(id, {
-            ...formData,
-            isPublished: !isPublished,
-            publicationDate:
-              !isPublished && !publicationDate ? todayDateUTC : publicationDate,
-          });
-        }}
-      />
+          </Box>
+        </RadioGroup.Item>
+      </RadioGroup>
       {!isPublished && (
-        <>
-          <Typography
-            className={classes.setPublicationDate}
-            onClick={() => setPublicationDate(!isPublicationDate)}
-          >
-            {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
-          </Typography>
+        <Box>
+          <Box onClick={() => setPublicationDate(!isPublicationDate)}>
+            <Text>
+              {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
+            </Text>
+          </Box>
           {isPublicationDate && (
             <TextField
               error={!!formErrors.publicationDate}
@@ -147,50 +142,45 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
               }}
             />
           )}
-        </>
+        </Box>
       )}
       {hasAvailableProps && (
         <>
-          <Hr />
-          <RadioSwitchField
-            classes={{
-              radioLabel: classes.radioLabel,
-            }}
-            className={classes.radioField}
+          <Divider />
+          <RadioGroup
             disabled={disabled}
-            firstOptionLabel={
-              <>
-                <p className={classes.label}>{messages.availableLabel}</p>
+            name={`channel:isAvailableForPurchase:${id}`}
+            defaultValue={String(isAvailable)}
+          >
+            <RadioGroup.Item
+              id={`channel:isAvailableForPurchase:${id}-true`}
+              value="true"
+            >
+              <Box display="flex" __alignItems="baseline" gap={5}>
+                <Text>{messages.availableLabel}</Text>
                 {isAvailable &&
                   availableForPurchase &&
                   Date.parse(availableForPurchase) < dateNow && (
-                    <span className={classes.secondLabel}>
+                    <Text variant="caption" color="textNeutralSubdued">
                       {visibleMessage(availableForPurchase)}
-                    </span>
+                    </Text>
                   )}
-              </>
-            }
-            name={`channel:isAvailableForPurchase:${id}`}
-            secondOptionLabel={
-              <>
-                <p className={classes.label}>{messages.unavailableLabel}</p>
+              </Box>
+            </RadioGroup.Item>
+            <RadioGroup.Item
+              id={`channel:isAvailableForPurchase:${id}-false`}
+              value="false"
+            >
+              <Box display="flex" __alignItems="baseline" gap={5}>
+                <Text>{messages.unavailableLabel}</Text>
                 {availableForPurchase && !isAvailable && (
-                  <span className={classes.secondLabel}>
+                  <Text variant="caption" color="textNeutralSubdued">
                     {messages.availableSecondLabel}
-                  </span>
+                  </Text>
                 )}
-              </>
-            }
-            value={isAvailable}
-            onChange={e => {
-              const { value } = e.target;
-              return onChange(id, {
-                ...formData,
-                availableForPurchase: !value ? null : availableForPurchase,
-                isAvailableForPurchase: value,
-              });
-            }}
-          />
+              </Box>
+            </RadioGroup.Item>
+          </RadioGroup>
           {!isAvailable && (
             <>
               <Typography
@@ -263,7 +253,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
           />
         </>
       )}
-    </div>
+    </Box>
   );
 };
 export default ChannelContent;
