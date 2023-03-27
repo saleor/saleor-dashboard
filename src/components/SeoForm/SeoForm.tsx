@@ -57,7 +57,7 @@ interface SeoFormProps {
   onClick?();
 }
 
-const SeoForm: React.FC<SeoFormProps> = props => {
+export const SeoForm: React.FC<SeoFormProps> = props => {
   const {
     description,
     descriptionPlaceholder,
@@ -255,5 +255,3 @@ const SeoForm: React.FC<SeoFormProps> = props => {
     </DashboardCard>
   );
 };
-SeoForm.displayName = "SeoForm";
-export default SeoForm;

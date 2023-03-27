@@ -16,7 +16,7 @@ interface ProductShippingProps {
   onChange: (event: React.ChangeEvent<any>) => void;
 }
 
-const ProductShipping: React.FC<ProductShippingProps> = props => {
+export const ProductShipping: React.FC<ProductShippingProps> = props => {
   const { data, disabled, errors, weightUnit, onChange } = props;
 
   const intl = useIntl();
@@ -60,5 +60,3 @@ const ProductShipping: React.FC<ProductShippingProps> = props => {
     </DashboardCard>
   );
 };
-ProductShipping.displayName = "ProductShipping";
-export default ProductShipping;

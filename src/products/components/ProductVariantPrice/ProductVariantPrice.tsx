@@ -34,7 +34,9 @@ interface ProductVariantPriceProps {
 
 const numberOfColumns = 2;
 
-const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
+export const ProductVariantPrice: React.FC<
+  ProductVariantPriceProps
+> = props => {
   const {
     disabled = false,
     errors = [],
@@ -220,5 +222,3 @@ const ProductVariantPrice: React.FC<ProductVariantPriceProps> = props => {
     </DashboardCard>
   );
 };
-ProductVariantPrice.displayName = "ProductVariantPrice";
-export default ProductVariantPrice;

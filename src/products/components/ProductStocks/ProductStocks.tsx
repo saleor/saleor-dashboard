@@ -78,7 +78,7 @@ export interface ProductStocksProps {
   onWarehouseConfigure: () => void;
 }
 
-const ProductStocks: React.FC<ProductStocksProps> = ({
+export const ProductStocks: React.FC<ProductStocksProps> = ({
   data,
   disabled,
   hasVariants,
@@ -501,6 +501,3 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
     </DashboardCard>
   );
 };
-
-ProductStocks.displayName = "ProductStocks";
-export default ProductStocks;
