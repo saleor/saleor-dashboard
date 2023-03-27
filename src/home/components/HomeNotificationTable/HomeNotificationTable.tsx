@@ -12,6 +12,7 @@ import {
 } from "@material-ui/core";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -25,13 +26,14 @@ const useStyles = makeStyles(
     },
     tableCard: {
       overflow: "hidden",
+      borderRadius: 0,
     },
     tableRow: {
       cursor: "pointer",
       /* Table to be replaced with Box */
       "& .MuiTableCell-root": {
-        paddingLeft: "0 !important",
-        paddingRight: "0 !important",
+        paddingLeft: `${vars.space[8]} !important`,
+        paddingRight: `${vars.space[8]} !important`,
       },
     },
     cardContent: {

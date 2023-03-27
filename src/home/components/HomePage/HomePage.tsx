@@ -6,7 +6,6 @@ import RequirePermissions from "@dashboard/components/RequirePermissions";
 import Skeleton from "@dashboard/components/Skeleton";
 import { HomeQuery, PermissionEnum } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
-import { makeStyles } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 
@@ -15,28 +14,6 @@ import HomeAnalyticsCard from "../HomeAnalyticsCard";
 import HomeHeader from "../HomeHeader";
 import HomeNotificationTable from "../HomeNotificationTable/HomeNotificationTable";
 import HomeProductListCard from "../HomeProductListCard";
-
-const useStyles = makeStyles(
-  theme => ({
-    cardContainer: {
-      display: "grid",
-      gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: "1fr 1fr",
-      [theme.breakpoints.down("sm")]: {
-        gridColumnGap: theme.spacing(1),
-      },
-      [theme.breakpoints.down("xs")]: {
-        gridTemplateColumns: "1fr",
-      },
-    },
-    icon: {
-      "& path": {
-        fill: theme.palette.primary.main,
-      },
-    },
-  }),
-  { name: "HomePage" },
-);
 
 export interface HomePageProps {
   activities: RelayToFlat<HomeQuery["activities"]>;
@@ -71,8 +48,6 @@ const HomePage: React.FC<HomePageProps> = props => {
     noChannel,
   } = props;
 
-  const classes = useStyles(props);
-
   return (
     <DetailPageLayout withSavebar={false}>
       <TopNav title={<HomeHeader userName={userName} />} />
@@ -82,7 +57,12 @@ const HomePage: React.FC<HomePageProps> = props => {
           <RequirePermissions
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
           >
-            <div className={classes.cardContainer}>
+            <Box
+              display="grid"
+              __gridTemplateColumns="1fr 1fr"
+              gap={8}
+              marginBottom={8}
+            >
               <HomeAnalyticsCard title={"Sales"} testId="sales-analytics">
                 {noChannel ? (
                   0
@@ -101,7 +81,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                   <Skeleton style={{ width: "5em" }} />
                 )}
               </HomeAnalyticsCard>
-            </div>
+            </Box>
           </RequirePermissions>
           <HomeNotificationTable
             createNewChannelHref={createNewChannelHref}
