@@ -1,10 +1,10 @@
 import { MetadataInput } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { removeAtIndex, updateAtIndex } from "@dashboard/utils/lists";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 
-import CardSpacer from "../CardSpacer";
-import MetadataCard, { MetadataCardProps } from "./MetadataCard";
+import { MetadataCard, MetadataCardProps } from "./MetadataCard";
 import { EventDataAction, EventDataField } from "./types";
 import { getDataKey, parseEventData } from "./utils";
 
@@ -53,19 +53,18 @@ const Metadata: React.FC<MetadataProps> = ({ data, onChange }) => {
   };
 
   return (
-    <>
+    <Box display="grid" gap={5} paddingBottom={9}>
       <MetadataCard
         data={data?.metadata}
         isPrivate={false}
         onChange={event => change(event, false)}
       />
-      <CardSpacer />
       <MetadataCard
         data={data?.privateMetadata}
         isPrivate={true}
         onChange={event => change(event, true)}
       />
-    </>
+    </Box>
   );
 };
 

@@ -315,7 +315,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 loading={loading}
                 onChange={change}
               />
-              <CardSpacer />
               <Metadata data={data} onChange={handlers.changeMetadata} />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
