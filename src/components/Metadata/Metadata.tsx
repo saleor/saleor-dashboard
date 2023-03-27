@@ -13,7 +13,7 @@ export interface MetadataProps
   data: Record<"metadata" | "privateMetadata", MetadataInput[]>;
 }
 
-const Metadata: React.FC<MetadataProps> = ({ data, onChange }) => {
+export const Metadata: React.FC<MetadataProps> = ({ data, onChange }) => {
   const change = (event: ChangeEvent, isPrivate: boolean) => {
     const { action, field, fieldIndex, value } = parseEventData(event);
     const key = getDataKey(isPrivate);
@@ -67,6 +67,3 @@ const Metadata: React.FC<MetadataProps> = ({ data, onChange }) => {
     </Box>
   );
 };
-
-Metadata.displayName = "Metadata";
-export default Metadata;
