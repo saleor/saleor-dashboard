@@ -1,7 +1,7 @@
 /// <reference types="cypress"/>
 /// <reference types="../../support"/>
 
-import { BUTTON_SELECTORS } from "../../elements";
+import { BUTTON_SELECTORS, HOMEPAGE_SELECTORS } from "../../elements";
 import { urlList } from "../../fixtures/urlList";
 
 describe("Demo staging", () => {
@@ -13,12 +13,16 @@ describe("Demo staging", () => {
   });
   it("should log in via UI and visual check home demo page", () => {
     //   { tags: ["@login", "@allEnv", "@stable", "@oldRelease"] },
-    cy.fixture("bodyMocks/demo").then(bodyMockHomePage => {
+    cy.loginUserViaRequest();
+    cy.fixture("bodyMocks/demo/home").then(bodyMockHomePage => {
       cy.addAliasToGraphRequestAndUseMockedResponseBody(
         "Home",
         bodyMockHomePage,
       );
-      cy.visit(urlList.dashboard).get(BUTTON_SELECTORS.submit).click();
+      cy.visit(urlList.dashboard)
+        .get(HOMEPAGE_SELECTORS.activity)
+        .should("be.visible");
+      cy.get(HOMEPAGE_SELECTORS.topProducts).should("be.visible");
       cy.waitForRequestAndCheckIfNoErrors("@Home");
       cy.percySnapshot("Demo home page");
     });

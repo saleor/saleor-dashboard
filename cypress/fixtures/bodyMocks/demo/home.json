@@ -2,14 +2,14 @@
   "data": {
     "salesToday": {
       "gross": {
-        "amount": 0.0,
+        "amount": 190.0,
         "currency": "PLN",
         "__typename": "Money"
       },
       "__typename": "TaxedMoney"
     },
     "ordersToday": {
-      "totalCount": 0,
+      "totalCount": 310,
       "__typename": "OrderCountableConnection"
     },
     "ordersToFulfill": {
