@@ -147,10 +147,8 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
             value={data.sku}
             data-test-id="sku"
             size="medium"
+            helperText={getProductErrorMessage(formErrors.sku, intl)}
           />
-          <Text variant="caption" color="textCriticalDefault">
-            {getProductErrorMessage(formErrors.sku, intl)}
-          </Text>
         </Box>
 
         <Box paddingY={5} display="grid" gap={5}>
@@ -416,10 +414,10 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
                   onChange={onThresholdChange}
                   value={data.globalThreshold ?? ""}
                   size="medium"
+                  helperText={intl.formatMessage(
+                    messages.preorderTresholdDescription,
+                  )}
                 />
-                <Text variant="caption" color="textNeutralSubdued">
-                  {intl.formatMessage(messages.preorderTresholdDescription)}
-                </Text>
               </Box>
 
               {productVariantChannelListings?.length > 0 && (

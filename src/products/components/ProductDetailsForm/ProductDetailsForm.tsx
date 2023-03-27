@@ -6,7 +6,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { OutputData } from "@editorjs/editorjs";
-import { Box, Input, Text } from "@saleor/macaw-ui/next";
+import { Input } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -39,24 +39,20 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
         {intl.formatMessage(commonMessages.generalInformations)}
       </DashboardCard.Title>
       <DashboardCard.Content display="grid" gap={5} paddingX={8}>
-        <Box>
-          <Input
-            label={intl.formatMessage({
-              id: "6AMFki",
-              defaultMessage: "Name",
-              description: "product name",
-            })}
-            size="medium"
-            value={data.name || ""}
-            onChange={onChange}
-            error={!!formErrors.name}
-            name="name"
-            disabled={disabled}
-          />
-          <Text variant="caption" color="textCriticalDefault">
-            {getProductErrorMessage(formErrors.name, intl)}
-          </Text>
-        </Box>
+        <Input
+          label={intl.formatMessage({
+            id: "6AMFki",
+            defaultMessage: "Name",
+            description: "product name",
+          })}
+          size="medium"
+          value={data.name || ""}
+          onChange={onChange}
+          error={!!formErrors.name}
+          name="name"
+          disabled={disabled}
+          helperText={getProductErrorMessage(formErrors.name, intl)}
+        />
 
         {isReadyForMount ? (
           <RichTextEditor
@@ -75,25 +71,21 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
             name="description"
           />
         )}
-        <Box>
-          <Input
-            label={intl.formatMessage({
-              id: "L7N+0y",
-              defaultMessage: "Product Rating",
-              description: "product rating",
-            })}
-            size="medium"
-            value={data.rating || ""}
-            onChange={onChange}
-            error={!!formErrors.rating}
-            name="rating"
-            type="number"
-            disabled={disabled}
-          />
-          <Text variant="caption" color="textCriticalDefault">
-            {getProductErrorMessage(formErrors.rating, intl)}
-          </Text>
-        </Box>
+        <Input
+          label={intl.formatMessage({
+            id: "L7N+0y",
+            defaultMessage: "Product Rating",
+            description: "product rating",
+          })}
+          size="medium"
+          value={data.rating || ""}
+          onChange={onChange}
+          error={!!formErrors.rating}
+          name="rating"
+          type="number"
+          disabled={disabled}
+          helperText={getProductErrorMessage(formErrors.rating, intl)}
+        />
       </DashboardCard.Content>
     </DashboardCard>
   );

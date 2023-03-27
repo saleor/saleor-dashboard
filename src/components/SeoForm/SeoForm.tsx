@@ -148,7 +148,6 @@ const SeoForm: React.FC<SeoFormProps> = props => {
               <Input
                 error={!!getError(SeoField.slug) || slug.length > maxSlugLength}
                 name={SeoField.slug}
-                // @ts-ignore
                 label={
                   <Box display="flex" gap={3}>
                     <Box as="span">
@@ -168,6 +167,7 @@ const SeoForm: React.FC<SeoFormProps> = props => {
                     )}
                   </Box>
                 }
+                helperText={getSlugHelperMessage()}
                 size="medium"
                 value={slug}
                 onChange={handleSlugChange}
@@ -175,48 +175,40 @@ const SeoForm: React.FC<SeoFormProps> = props => {
                 maxLength={maxSlugLength}
                 placeholder={slugPlaceholder}
               />
-              <Text variant="caption" color="textNeutralSubdued">
-                {getSlugHelperMessage()}
-              </Text>
             </Box>
-            <Box>
-              <Input
-                size="medium"
-                error={title?.length > maxTitleLength}
-                name={SeoField.title}
-                value={title ?? ""}
-                disabled={loading || disabled}
-                onChange={onChange}
-                maxLength={maxTitleLength}
-                placeholder={titlePlaceholder}
-                // @ts-ignore
-                label={
-                  <Box display="flex" gap={3}>
+            <Input
+              size="medium"
+              error={title?.length > maxTitleLength}
+              name={SeoField.title}
+              value={title ?? ""}
+              disabled={loading || disabled}
+              onChange={onChange}
+              maxLength={maxTitleLength}
+              placeholder={titlePlaceholder}
+              helperText={intl.formatMessage(seoFieldMessage)}
+              label={
+                <Box display="flex" gap={3}>
+                  <Box as="span">
+                    <FormattedMessage
+                      defaultMessage="Search engine title"
+                      id="w2Cewo"
+                    />
+                  </Box>
+                  {title?.length > 0 && (
                     <Box as="span">
                       <FormattedMessage
-                        defaultMessage="Search engine title"
-                        id="w2Cewo"
+                        defaultMessage="({numberOfCharacters} of {maxCharacters} characters)"
+                        id="yi1HSj"
+                        values={{
+                          maxCharacters: maxSlugLength,
+                          numberOfCharacters: title?.length,
+                        }}
                       />
                     </Box>
-                    {title?.length > 0 && (
-                      <Box as="span">
-                        <FormattedMessage
-                          defaultMessage="({numberOfCharacters} of {maxCharacters} characters)"
-                          id="yi1HSj"
-                          values={{
-                            maxCharacters: maxSlugLength,
-                            numberOfCharacters: title?.length,
-                          }}
-                        />
-                      </Box>
-                    )}
-                  </Box>
-                }
-              />
-              <Text variant="caption" color="textNeutralSubdued">
-                {intl.formatMessage(seoFieldMessage)}
-              </Text>
-            </Box>
+                  )}
+                </Box>
+              }
+            />
             <TextField
               error={description?.length > maxDescriptionLength}
               name={SeoField.description}
