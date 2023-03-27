@@ -256,7 +256,9 @@ export function createFilterStructure(
         attr.name,
         Array.isArray(attr.value)
           ? ["true", "false"].includes(attr.value[0])
-            ? Boolean(attr.value[0])
+            ? attr.value[0] === "true"
+              ? true
+              : false
             : undefined
           : (attr.value as unknown) === "true",
         {
