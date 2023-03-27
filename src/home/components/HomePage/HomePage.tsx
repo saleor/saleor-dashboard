@@ -10,8 +10,6 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 
-import Orders from "../../../icons/Orders";
-import Sales from "../../../icons/Sales";
 import HomeActivityCard from "../HomeActivityCard";
 import HomeAnalyticsCard from "../HomeAnalyticsCard";
 import HomeHeader from "../HomeHeader";
@@ -85,17 +83,7 @@ const HomePage: React.FC<HomePageProps> = props => {
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
           >
             <div className={classes.cardContainer}>
-              <HomeAnalyticsCard
-                title={"Sales"}
-                testId="sales-analytics"
-                icon={
-                  <Sales
-                    className={classes.icon}
-                    fontSize={"inherit"}
-                    viewBox="0 0 64 64"
-                  />
-                }
-              >
+              <HomeAnalyticsCard title={"Sales"} testId="sales-analytics">
                 {noChannel ? (
                   0
                 ) : sales ? (
@@ -104,17 +92,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                   <Skeleton style={{ width: "5em" }} />
                 )}
               </HomeAnalyticsCard>
-              <HomeAnalyticsCard
-                title={"Orders"}
-                testId="orders-analytics"
-                icon={
-                  <Orders
-                    className={classes.icon}
-                    fontSize={"inherit"}
-                    viewBox="0 0 64 64"
-                  />
-                }
-              >
+              <HomeAnalyticsCard title={"Orders"} testId="orders-analytics">
                 {noChannel ? (
                   0
                 ) : orders !== undefined ? (

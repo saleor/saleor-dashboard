@@ -46,6 +46,11 @@ const useStyles = makeStyles(
     },
     tableRow: {
       cursor: "pointer",
+      /* Table to be replaced with Box */
+      "& .MuiTableCell-root": {
+        paddingLeft: "0 !important",
+        paddingRight: "0 !important",
+      },
     },
     cardContent: {
       padding: 0,
