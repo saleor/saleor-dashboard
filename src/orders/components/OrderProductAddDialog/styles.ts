@@ -18,6 +18,7 @@ export const useStyles = makeStyles(
     content: {
       overflowY: "auto",
       paddingTop: 0,
+      maxHeight: "75vh",
       marginBottom: theme.spacing(3),
     },
     subtitle: {
