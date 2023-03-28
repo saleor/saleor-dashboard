@@ -33,7 +33,7 @@ import {
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
 import { Box, Button, Text } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField, productUrl } from "../../urls";
@@ -106,6 +106,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const intl = useIntl();
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   const filterDependency = filterStructure.find(getByName("channel"));
 
@@ -218,6 +219,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             onFilterAttributeFocus={onFilterAttributeFocus}
             onSearchChange={onSearchChange}
             filterStructure={filterStructure}
+            isFilterPresetsOpen={isFilterPresetOpen}
+            onFilterPresetsOpenChange={setFilterPresetOpen}
             selectAllLabel={intl.formatMessage({
               id: "aFLtLk",
               defaultMessage: "All Products",
@@ -238,6 +241,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         {isDatagridView ? (
           <ProductListDatagrid
             {...listProps}
+            hasRowHover={!isFilterPresetOpen}
             filterDependency={filterDependency}
             activeAttributeSortId={activeAttributeSortId}
             columnQuery={columnQuery}

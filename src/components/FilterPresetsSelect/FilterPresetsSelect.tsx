@@ -18,9 +18,11 @@ interface FilterPresetsSelectProps {
   savedPresets: string[];
   selectAllLabel: string;
   isCustomPreset: boolean;
+  isOpen?: boolean;
   onSelectAll: () => void;
   onRemove: (filterIndex: number) => void;
   onSelect: (filterIndex: number) => void;
+  onOpenChange?: (open: boolean) => void;
 }
 
 export const FilterPresetsSelect = ({
@@ -31,6 +33,8 @@ export const FilterPresetsSelect = ({
   onSelectAll,
   selectAllLabel,
   isCustomPreset,
+  isOpen,
+  onOpenChange,
 }: FilterPresetsSelectProps) => {
   const intl = useIntl();
 
@@ -70,7 +74,14 @@ export const FilterPresetsSelect = ({
       >
         {intl.formatMessage(messages.filterPreset)}
       </Text>
-      <Dropdown>
+      <Dropdown
+        open={isOpen}
+        onOpenChange={open => {
+          if (onOpenChange) {
+            onOpenChange(open);
+          }
+        }}
+      >
         <Dropdown.Trigger>
           <DropdownButton data-test-id="show-saved-filters-button">
             {getLabel()}

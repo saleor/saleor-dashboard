@@ -18,6 +18,8 @@ export interface ListFiltersProps<TKeys extends string = string>
   filterStructure: IFilter<TKeys>;
   actions?: ReactNode;
   selectAllLabel: string;
+  onFilterPresetsOpenChange?: (isOpen: boolean) => void;
+  isFilterPresetsOpen?: boolean;
 }
 
 export const ListFilters = ({
@@ -37,6 +39,8 @@ export const ListFilters = ({
   onTabChange,
   onTabDelete,
   onTabSave,
+  isFilterPresetsOpen,
+  onFilterPresetsOpenChange,
 }: ListFiltersProps) => {
   const intl = useIntl();
   const isCustom = currentTab === tabs.length + 1;
@@ -80,6 +84,8 @@ export const ListFilters = ({
               activePreset={currentTab}
               onSelectAll={onAll}
               selectAllLabel={selectAllLabel}
+              isOpen={isFilterPresetsOpen}
+              onOpenChange={onFilterPresetsOpenChange}
             />
             {isCustom && (
               <Tooltip
