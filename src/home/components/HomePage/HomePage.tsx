@@ -8,12 +8,14 @@ import { HomeQuery, PermissionEnum } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
+import { useIntl } from "react-intl";
 
 import HomeActivityCard from "../HomeActivityCard";
 import HomeAnalyticsCard from "../HomeAnalyticsCard";
 import HomeHeader from "../HomeHeader";
 import HomeNotificationTable from "../HomeNotificationTable/HomeNotificationTable";
 import HomeProductListCard from "../HomeProductListCard";
+import { homePageMessages } from "./messages";
 
 export interface HomePageProps {
   activities: RelayToFlat<HomeQuery["activities"]>;
@@ -47,6 +49,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     productsOutOfStock = 0,
     noChannel,
   } = props;
+  const intl = useIntl();
 
   return (
     <DetailPageLayout withSavebar={false}>
@@ -59,11 +62,14 @@ const HomePage: React.FC<HomePageProps> = props => {
           >
             <Box
               display="grid"
-              __gridTemplateColumns="1fr 1fr"
+              __gridTemplateColumns="repeat(2, 1fr)"
               gap={8}
               marginBottom={8}
             >
-              <HomeAnalyticsCard title={"Sales"} testId="sales-analytics">
+              <HomeAnalyticsCard
+                title={intl.formatMessage(homePageMessages.salesCardTitle)}
+                testId="sales-analytics"
+              >
                 {noChannel ? (
                   0
                 ) : sales ? (
@@ -72,7 +78,10 @@ const HomePage: React.FC<HomePageProps> = props => {
                   <Skeleton style={{ width: "5em" }} />
                 )}
               </HomeAnalyticsCard>
-              <HomeAnalyticsCard title={"Orders"} testId="orders-analytics">
+              <HomeAnalyticsCard
+                title={intl.formatMessage(homePageMessages.ordersCardTitle)}
+                testId="orders-analytics"
+              >
                 {noChannel ? (
                   0
                 ) : orders !== undefined ? (
