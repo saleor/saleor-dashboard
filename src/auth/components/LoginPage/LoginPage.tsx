@@ -43,7 +43,9 @@ const LoginCard: React.FC<LoginCardProps> = props => {
   const intl = useIntl();
   const [showPassword, setShowPassword] = React.useState(false);
 
-  if (loading) {
+  // show progress when there is externalLoginError - we will redirect and
+  // logout user in meantime
+  if (loading || errors.some(item => item === "externalLoginError")) {
     return (
       <div className={classes.loading}>
         <CircularProgress size={128} />
@@ -179,5 +181,4 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     </LoginForm>
   );
 };
-LoginCard.displayName = "LoginCard";
 export default LoginCard;
