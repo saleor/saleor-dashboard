@@ -242,7 +242,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   };
 
   const handleFilterTabDelete = () => {
-    deleteFilterTab(currentTab);
+    deleteFilterTab(tabIndexToDelete);
     reset();
     navigate(productListUrl());
   };
@@ -503,7 +503,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleFilterTabDelete}
-        tabName={tabs[tabIndexToDelete]?.name ?? "..."}
+        tabName={tabs[tabIndexToDelete - 1]?.name ?? "..."}
       />
       <ProductTypePickerDialog
         confirmButtonState="success"
