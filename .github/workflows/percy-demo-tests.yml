@@ -16,7 +16,7 @@ on:
     - cron: '00 2 * * 1-5'
 
   pull_request:
-    types: [opened, edited]
+    types: [opened, reopened, synchronize, labeled]
 
   repository_dispatch:
     types: [demo-tests]
@@ -27,6 +27,15 @@ jobs:
     container: cypress/browsers:node18.12.0-chrome106-ff106
 
     steps:
+      - name: Get environments urls
+        id: get-env-urls
+        env:
+          DEFAULT_DASHBOARD_URL: 'https://staging-demo.saleor.io/dashboard/'
+          DEFAULT_API_URL: 'https://staging-demo.saleor.io/graphql/'
+        run: |
+          echo "DASHBOARD_URL=${{ github.event.inputs.dashboardUrl || env.DEFAULT_DASHBOARD_URL }}" >> $GITHUB_OUTPUT
+          echo "API_URL=${{ github.event.inputs.apiUrl || env.DEFAULT_API_URL }}" >> $GITHUB_OUTPUT
+
       - name: Checkout
         uses: actions/checkout@v1
 
@@ -36,9 +45,9 @@ jobs:
       - name: Cypress run test percy
         uses: cypress-io/github-action@v4
         env:
-          API_URI: ${{github.event.inputs.apiUrl}}
+          API_URI: ${{ steps.get-env-urls.outputs.API_URL }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
-          CYPRESS_DEMO_URI: ${{github.event.inputs.dashboardUrl}}
+          CYPRESS_DEMO_URI: ${{ steps.get-env-urls.outputs.DASHBOARD_URL }}
           CYPRESS_USER_NAME: admin@example.com
           CYPRESS_USER_PASSWORD: admin
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
