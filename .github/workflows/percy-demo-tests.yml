@@ -53,7 +53,8 @@ jobs:
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           COMMIT_INFO_MESSAGE: Percy - Demo dashboard tests - ${GITHUB_REF##*/} - ${{github.event.inputs.dashboardUrl}}
           PERCY_TOKEN: ${{ secrets.PERCY_TOKEN }}
+          CYPRESS_demoTests: true 
         with:
           group: "UI - Chrome"
           record: true
-          command: npm run cy:percy
+          command: percy exec -- npx cypress run --record
