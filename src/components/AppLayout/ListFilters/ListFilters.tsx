@@ -45,7 +45,7 @@ export const ListFilters = ({
     <>
       <Box
         display="grid"
-        __gridTemplateColumns="1fr 1fr"
+        __gridTemplateColumns="repeat(2, 1fr)"
         gap={7}
         paddingBottom={5}
         paddingX={9}

@@ -19,6 +19,7 @@ import {
   createOptionsField,
   createPriceField,
 } from "@dashboard/utils/filters/fields";
+import { getBooleanFromString } from "@dashboard/utils/strings";
 import { defineMessages, IntlShape } from "react-intl";
 
 export const ProductFilterKeys = {
@@ -255,11 +256,7 @@ export function createFilterStructure(
         attr.slug,
         attr.name,
         Array.isArray(attr.value)
-          ? ["true", "false"].includes(attr.value[0])
-            ? attr.value[0] === "true"
-              ? true
-              : false
-            : undefined
+          ? getBooleanFromString(attr.value[0])
           : (attr.value as unknown) === "true",
         {
           positive: intl.formatMessage(commonMessages.yes),

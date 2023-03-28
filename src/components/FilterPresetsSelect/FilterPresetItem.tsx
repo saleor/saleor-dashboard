@@ -1,11 +1,4 @@
-import {
-  Box,
-  Dropdown,
-  List,
-  RemoveIcon,
-  sprinkles,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { Box, Dropdown, List, RemoveIcon, Text } from "@saleor/macaw-ui/next";
 import React, { MouseEvent } from "react";
 
 interface FilterPresetItemProps {
@@ -55,12 +48,10 @@ export const FilterPresetItem = ({
                 alignItems="center"
               >
                 <RemoveIcon
-                  className={sprinkles({
-                    color: {
-                      default: "iconNeutralSubdued",
-                      hover: "iconNeutralPlain",
-                    },
-                  })}
+                  color={{
+                    default: "iconNeutralSubdued",
+                    hover: "iconNeutralPlain",
+                  }}
                 />
               </Box>
             )}
