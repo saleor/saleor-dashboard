@@ -95,18 +95,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     selectedChannelId,
     selectedProductIds,
     activeAttributeSortId,
-    tabs,
-    currentTab,
-    onTabChange,
-    onAll,
-    onTabDelete,
-    onTabSave,
     ...listProps
   } = props;
   const intl = useIntl();
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
-  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
+  const [isFilterPresetOpen] = useState(false);
 
   const filterDependency = filterStructure.find(getByName("channel"));
 
@@ -207,20 +201,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           justifyContent="space-between"
         >
           <ListFilters
-            currentTab={currentTab}
-            onAll={onAll}
-            onTabChange={onTabChange}
-            onTabDelete={onTabDelete}
-            onTabSave={onTabSave}
-            tabs={tabs}
             currencySymbol={currencySymbol}
             initialSearch={initialSearch}
             onFilterChange={onFilterChange}
             onFilterAttributeFocus={onFilterAttributeFocus}
             onSearchChange={onSearchChange}
             filterStructure={filterStructure}
-            isFilterPresetsOpen={isFilterPresetOpen}
-            onFilterPresetsOpenChange={setFilterPresetOpen}
             selectAllLabel={intl.formatMessage({
               id: "aFLtLk",
               defaultMessage: "All Products",
