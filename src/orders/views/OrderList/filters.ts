@@ -108,7 +108,7 @@ export function getFilterVariables(
   params: OrderListUrlFilters,
 ): OrderFilterInput {
   return {
-    channels: (params.channel as unknown) as string[],
+    channels: params.channel as unknown as string[],
     created: getGteLteVariables({
       gte: params.createdFrom,
       lte: params.createdTo,
@@ -198,18 +198,12 @@ export function getFilterQueryParam(
   }
 }
 
-export const {
-  deleteFilterTab,
-  getFilterTabs,
-  saveFilterTab,
-} = createFilterTabUtils<OrderListUrlFilters>(ORDER_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<OrderListUrlFilters>(ORDER_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<OrderListUrlQueryParams, OrderListUrlFilters>({
-  ...OrderListUrlFiltersEnum,
-  ...OrderListUrlFiltersWithMultipleValues,
-  ...OrderListFitersWithKeyValueValues,
-});
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
+  createFilterUtils<OrderListUrlQueryParams, OrderListUrlFilters>({
+    ...OrderListUrlFiltersEnum,
+    ...OrderListUrlFiltersWithMultipleValues,
+    ...OrderListFitersWithKeyValueValues,
+  });

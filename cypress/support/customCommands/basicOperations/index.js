@@ -1,6 +1,9 @@
 Cypress.Commands.add("getTextFromElement", element =>
   cy.get(element).invoke("text"),
 );
+Cypress.Commands.add("getRowSelectorWithNumber", rowNumber =>
+  cy.get(`[data-value=${rowNumber}]`),
+);
 
 Cypress.Commands.add("clearAndType", { prevSubject: true }, (subject, text) => {
   cy.wrap(subject).then(subject => {

@@ -8010,6 +8010,10 @@
   "vEYtiq": {
     "string": "Category Name"
   },
+  "vEwjub": {
+    "context": "button",
+    "string": "Open in GraphiQL"
+  },
   "vM9quW": {
     "context": "order payment",
     "string": "Paid with Gift Card"
