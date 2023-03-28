@@ -4,7 +4,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { WithFormId } from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Metadata from "@dashboard/components/Metadata/Metadata";
+import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import {
   PermissionEnum,

@@ -14,7 +14,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { MetadataFormData } from "@dashboard/components/Metadata";
-import Metadata from "@dashboard/components/Metadata/Metadata";
+import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import {
   ProductChannelListingErrorFragment,
