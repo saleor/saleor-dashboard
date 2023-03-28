@@ -5,6 +5,7 @@ import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
+import { Button } from "@saleor/macaw-ui";
 import { Box, Divider, RadioGroup, Text } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React, { useState } from "react";
@@ -69,16 +70,14 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
     errors,
   );
 
-  console.log(isPublished);
-
   return (
     <Box display="flex" gap={5} flexDirection="column">
       <RadioGroup
-        defaultValue={`${isPublished}`}
+        value={isPublished}
         onValueChange={value => {
           onChange(id, {
             ...formData,
-            isPublished: Boolean(value),
+            isPublished: value === "true",
             publicationDate:
               !isPublished && !publicationDate ? todayDateUTC : publicationDate,
           });
@@ -113,11 +112,12 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
       </RadioGroup>
       {!isPublished && (
         <Box>
-          <Box onClick={() => setPublicationDate(!isPublicationDate)}>
-            <Text>
-              {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
-            </Text>
-          </Box>
+          <Button
+            onClick={() => setPublicationDate(!isPublicationDate)}
+            type="button"
+          >
+            {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
+          </Button>
           {isPublicationDate && (
             <TextField
               error={!!formErrors.publicationDate}
@@ -152,7 +152,14 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
           <RadioGroup
             disabled={disabled}
             name={`channel:isAvailableForPurchase:${id}`}
-            defaultValue={String(isAvailable)}
+            value={isAvailable}
+            onValueChange={value =>
+              onChange(id, {
+                ...formData,
+                availableForPurchase: !value ? null : availableForPurchase,
+                isAvailableForPurchase: value === "true",
+              })
+            }
           >
             <RadioGroup.Item
               id={`channel:isAvailableForPurchase:${id}-true`}
@@ -185,9 +192,9 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
           </RadioGroup>
           {!isAvailable && (
             <Box>
-              <Box onClick={() => setAvailableDate(!isAvailableDate)}>
-                <Text>{messages.setAvailabilityDateLabel}</Text>
-              </Box>
+              <Button onClick={() => setAvailableDate(!isAvailableDate)}>
+                {messages.setAvailabilityDateLabel}
+              </Button>
 
               {isAvailableDate && (
                 <TextField

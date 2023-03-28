@@ -135,7 +135,7 @@ export const ProductOrganization: React.FC<
               <FormattedMessage id="Be+J13" defaultMessage="Configurable" />
             </Text>
             <Text variant="caption">
-              {productType.hasVariants
+              {productType?.hasVariants
                 ? intl.formatMessage(commonMessages.yes)
                 : intl.formatMessage(commonMessages.no)}
             </Text>

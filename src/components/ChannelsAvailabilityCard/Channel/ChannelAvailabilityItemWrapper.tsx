@@ -48,16 +48,6 @@ const useSummaryStyles = makeStyles(
   { name: "ChannelContentWrapperExpanderSummary" },
 );
 
-const useStyles = makeStyles(
-  () => ({
-    container: {
-      display: "flex",
-      flexDirection: "column",
-    },
-  }),
-  { name: "ChannelWithVariantAvailabilityItemWrapper" },
-);
-
 export interface ChannelContentWrapperProps {
   data: ChannelData;
   children: React.ReactNode;
