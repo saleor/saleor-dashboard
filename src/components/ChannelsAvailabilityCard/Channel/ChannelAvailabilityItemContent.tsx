@@ -4,7 +4,7 @@ import Hr from "@dashboard/components/Hr";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { Box, Divider, RadioGroup, Text } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React, { useState } from "react";
@@ -69,18 +69,20 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
     errors,
   );
 
+  console.log(isPublished);
+
   return (
     <Box display="flex" gap={5} flexDirection="column">
       <RadioGroup
         defaultValue={`${isPublished}`}
-        onValueChange={value =>
+        onValueChange={value => {
           onChange(id, {
             ...formData,
             isPublished: Boolean(value),
             publicationDate:
               !isPublished && !publicationDate ? todayDateUTC : publicationDate,
-          })
-        }
+          });
+        }}
         disabled={disabled}
       >
         <RadioGroup.Item id={`${id}-isPublished-true`} value="true">
@@ -182,13 +184,11 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
             </RadioGroup.Item>
           </RadioGroup>
           {!isAvailable && (
-            <>
-              <Typography
-                className={classes.setPublicationDate}
-                onClick={() => setAvailableDate(!isAvailableDate)}
-              >
-                {messages.setAvailabilityDateLabel}
-              </Typography>
+            <Box>
+              <Box onClick={() => setAvailableDate(!isAvailableDate)}>
+                <Text>{messages.setAvailabilityDateLabel}</Text>
+              </Box>
+
               {isAvailableDate && (
                 <TextField
                   error={!!formErrors.availableForPurchaseDate}
@@ -220,7 +220,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                   }}
                 />
               )}
-            </>
+            </Box>
           )}
         </>
       )}
