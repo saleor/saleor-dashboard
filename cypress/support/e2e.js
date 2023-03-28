@@ -13,6 +13,7 @@ import "./customCommands/sharedElementsOperations/progressBar.js";
 import "./customCommands/sharedElementsOperations/selects.js";
 import "./customCommands/sharedElementsOperations/tables";
 import "./customCommands/softAssertions";
+import "./customCommands/ordersOperations";
 import "./customCommands/user";
 import "@percy/cypress";
 
@@ -48,6 +49,7 @@ Cypress.Commands.add("addAliasToGraphRequest", operationName => {
     }
   });
 });
+
 Cypress.Commands.add(
   "addAliasToGraphRequestAndUseMockedResponseBody",
   (operationName, bodyMock) => {
