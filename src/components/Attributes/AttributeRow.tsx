@@ -142,10 +142,8 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             value={attribute.value[0]}
             size="medium"
             id={`attribute:${attribute.label}`}
+            helperText={getErrorMessage(error, intl)}
           />
-          <Text variant="caption" color="textCriticalDefault">
-            {getErrorMessage(error, intl)}
-          </Text>
         </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.RICH_TEXT:
@@ -195,10 +193,8 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             type="number"
             value={attribute.value[0]}
             size="medium"
+            helperText={getErrorMessage(error, intl)}
           />
-          <Text variant="caption" color="textCriticalDefault">
-            {getErrorMessage(error, intl)}
-          </Text>
         </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.BOOLEAN:
