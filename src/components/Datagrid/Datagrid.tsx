@@ -171,15 +171,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
         ...(changed
           ? {
               themeOverride: {
-                bgCell: themeValues.colors.background.surfaceBrandHighlight,
+                bgCell: themeValues.colors.background.surfaceBrandSubdued,
               },
             }
           : {}),
         ...(getCellError(item, opts)
           ? {
               themeOverride: {
-                bgCell:
-                  themeValues.colors.background.interactiveCriticalHovering,
+                bgCell: themeValues.colors.background.surfaceCriticalDepressed,
               },
             }
           : {}),
@@ -447,7 +446,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
                 />
                 <Box
                   position="relative"
-                  __marginTop="-1px"
                   backgroundColor="plain"
                   borderTopWidth={1}
                   borderTopStyle="solid"
