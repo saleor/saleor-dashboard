@@ -155,12 +155,11 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           }}
         />
       </DialogContent>
-      <DialogContent>
+      <DialogContent className={classes.content} id={scrollableTargetId}>
         <InfiniteScroll
           dataLength={productChoicesWithValidVariants?.length}
           next={onFetchMore}
           hasMore={hasMore}
-          height={600}
           scrollThreshold="100px"
           loader={
             <div className={classes.loadMoreLoaderContainer}>
