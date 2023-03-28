@@ -34,7 +34,9 @@ export const FilterPresetItem = ({
             justifyContent="space-between"
             onClick={onSelect}
           >
-            <Text variant={isActive ? "bodyStrong" : "body"}>{children}</Text>
+            <Text ellipsis variant={isActive ? "bodyStrong" : "body"}>
+              {children}
+            </Text>
             {hasHover && (
               <Box
                 cursor="pointer"
