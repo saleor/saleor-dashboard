@@ -56,5 +56,4 @@ jobs:
           CYPRESS_demoTests: true 
         with:
           group: "UI - Chrome"
-          record: true
-          command: percy exec -- npx cypress run --record
+          command: npx percy exec -- npx cypress run --record
