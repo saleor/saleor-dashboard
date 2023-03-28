@@ -31,14 +31,14 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 
-import ProductShipping from "../ProductShipping/ProductShipping";
-import ProductStocks from "../ProductStocks";
+import { ProductShipping } from "../ProductShipping";
+import { ProductStocks } from "../ProductStocks";
 import { useManageChannels } from "../ProductVariantChannels/useManageChannels";
 import { VariantChannelsDialog } from "../ProductVariantChannels/VariantChannelsDialog";
 import ProductVariantCheckoutSettings from "../ProductVariantCheckoutSettings/ProductVariantCheckoutSettings";
 import ProductVariantName from "../ProductVariantName";
 import ProductVariantNavigation from "../ProductVariantNavigation";
-import ProductVariantPrice from "../ProductVariantPrice";
+import { ProductVariantPrice } from "../ProductVariantPrice";
 import ProductVariantCreateForm, {
   ProductVariantCreateData,
   ProductVariantCreateHandlers,

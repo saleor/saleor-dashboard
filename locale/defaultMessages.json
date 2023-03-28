@@ -8456,6 +8456,9 @@
     "context": "voucher requirements, header",
     "string": "Minimum Requirements"
   },
+  "yi1HSj": {
+    "string": "({numberOfCharacters} of {maxCharacters} characters)"
+  },
   "ymo+cm": {
     "context": "voucher discount",
     "string": "All products"
