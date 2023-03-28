@@ -5,7 +5,7 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 
 import { props } from "./fixtures";
-import Metadata from "./Metadata";
+import { Metadata } from "./Metadata";
 
 const Component = () => {
   const { change, data } = useForm(props.data, jest.fn());

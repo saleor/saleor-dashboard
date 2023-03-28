@@ -7,7 +7,7 @@ import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeVal
 import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Metadata from "@dashboard/components/Metadata";
+import { Metadata } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import { SeoForm } from "@dashboard/components/SeoForm";
 import VisibilityCard from "@dashboard/components/VisibilityCard";
