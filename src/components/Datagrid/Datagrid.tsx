@@ -457,7 +457,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
                 />
                 <Box
                   position="relative"
-                  __marginTop="-1px"
                   backgroundColor="plain"
                   borderTopWidth={1}
                   borderTopStyle="solid"
