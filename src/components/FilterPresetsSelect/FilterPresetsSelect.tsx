@@ -128,7 +128,7 @@ export const FilterPresetsSelect = ({
                     isActive={activePreset === index + 1}
                     onSelect={e => handleSelectPreset(e, index + 1)}
                     onRemove={() => {
-                      onRemove(index + 1);
+                      onRemove(index);
                     }}
                   >
                     {preset}
