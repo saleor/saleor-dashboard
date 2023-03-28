@@ -1,13 +1,10 @@
 /// <reference types="cypress"/>
 /// <reference types="../../../support"/>
 
+import { PAGINATION } from "../../../elements";
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
-import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { urlList } from "../../../fixtures/urlList";
-import {
-  getDisplayedColumnArray,
-  isNumberOfProductsSameAsInSelectResultsOnPage,
-} from "../../../support/pages/catalog/products/productsListPage";
+import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
 
 describe("As an admin I should be able to manage products table", () => {
   beforeEach(() => {
@@ -16,37 +13,33 @@ describe("As an admin I should be able to manage products table", () => {
   });
 
   it(
-    "should be able go to the next page on product list. TC: SALEOR_2605",
+    "should be able go to the next page and back on product list. TC: SALEOR_2605",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
-      cy.expectSkeletonIsVisible()
-        .get(PRODUCTS_LIST.emptyProductRow)
-        .should("not.exist")
-        .get(PRODUCTS_LIST.previousPagePagination)
-        .should("be.disabled");
-      let firstPageProducts;
-      getDisplayedColumnArray("name").then(
-        productsList => (firstPageProducts = productsList),
-      );
-      cy.addAliasToGraphRequest("ProductList")
-        .get(PRODUCTS_LIST.nextPageButton)
-        .click()
-        .waitForSkeletonToDisappear()
-        .get(PRODUCTS_LIST.emptyProductRow)
-        .should("not.exist")
-        .wait("@ProductList");
-      getDisplayedColumnArray("name").then(productList => {
-        expect(productList).to.not.equal(firstPageProducts);
+      ensureCanvasStatic(PRODUCTS_LIST.dataGridTable).then(() => {
+        cy.assertCanvasRowsNumber(PRODUCTS_LIST.dataGridTable, 21);
       });
-      cy.get(PRODUCTS_LIST.previousPagePagination)
+      cy.get(PAGINATION.previousPagePaginationButton).should("be.disabled");
+
+      cy.addAliasToGraphRequest("ProductList")
+        .get(PAGINATION.nextPagePaginationButton)
+        .should("not.be.disabled")
         .click()
-        .waitForSkeletonToDisappear()
-        .get(PRODUCTS_LIST.emptyProductRow)
-        .should("not.exist");
-      getDisplayedColumnArray("name").then(productsList => {
-        expect(
-          JSON.stringify(productsList) === JSON.stringify(firstPageProducts),
-        ).to.be.true;
+        .wait("@ProductList");
+
+      ensureCanvasStatic(PRODUCTS_LIST.dataGridTable).then(() => {
+        cy.assertCanvasRowsNumber(PRODUCTS_LIST.dataGridTable, 21);
+      });
+      cy.get(PAGINATION.previousPagePaginationButton)
+        .should("not.be.disabled")
+        .click()
+        .wait("@ProductList")
+        .get(PAGINATION.previousPagePaginationButton)
+        .should("be.disabled")
+        .get(PAGINATION.nextPagePaginationButton)
+        .should("not.be.disabled");
+      ensureCanvasStatic(PRODUCTS_LIST.dataGridTable).then(() => {
+        cy.assertCanvasRowsNumber(PRODUCTS_LIST.dataGridTable, 21);
       });
     },
   );
@@ -55,27 +48,17 @@ describe("As an admin I should be able to manage products table", () => {
     "should see correct amount of products per page. TC: SALEOR_2606",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
-      cy.expectSkeletonIsVisible();
-      isNumberOfProductsSameAsInSelectResultsOnPage().then(
-        isTheSame =>
-          expect(isTheSame, "check if number of displayed products is correct")
-            .to.be.true,
-      );
-      cy.get(PRODUCTS_LIST.resultsOnPageSelect)
-        .click()
-        .get(
-          `${PRODUCTS_LIST.rowNumberOption}${BUTTON_SELECTORS.notSelectedOption}`,
-        )
-        .first()
-        .click()
-        .waitForProgressBarToNotExist();
-      isNumberOfProductsSameAsInSelectResultsOnPage().then(
-        isTheSame =>
-          expect(
-            isTheSame,
-            "check if number of displayed products is correct, after changing results number in table footer",
-          ).to.be.true,
-      );
+      cy.addAliasToGraphRequest("ProductList");
+      ensureCanvasStatic(PRODUCTS_LIST.dataGridTable).then(() => {
+        cy.getRowNumberButton().should("contain.text", 20);
+        cy.assertCanvasRowsNumber(PRODUCTS_LIST.dataGridTable, 21);
+      });
+      cy.clickRowNumberButton();
+      cy.getRowSelectorWithNumber(30).click().wait("@ProductList");
+      ensureCanvasStatic(PRODUCTS_LIST.dataGridTable).then(() => {
+        cy.get(PRODUCTS_LIST.resultsOnPageSelect).should("contain.text", 30);
+        cy.assertCanvasRowsNumber(PRODUCTS_LIST.dataGridTable, 31);
+      });
     },
   );
 });

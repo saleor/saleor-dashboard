@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
+import react from "@vitejs/plugin-react-swc";
 import { copyFileSync } from "fs";
 import path from "path";
 import nodePolyfills from "rollup-plugin-polyfill-node";
@@ -7,7 +8,6 @@ import { defineConfig, loadEnv } from "vite";
 import { createHtmlPlugin } from "vite-plugin-html";
 import { VitePWA } from "vite-plugin-pwa";
 import viteSentry from "vite-plugin-sentry";
-import { swcReactRefresh } from "vite-plugin-swc-react-refresh";
 
 const copyOgImage = () => ({
   name: "copy-og-image",
@@ -28,11 +28,6 @@ export default defineConfig(({ command, mode }) => {
     API_URI,
     SW_INTERVAL,
     IS_CLOUD_INSTANCE,
-    /**
-     * @deprecated
-     */
-    MARKETPLACE_URL, // To be removed
-    SALEOR_APPS_ENDPOINT,
     APP_MOUNT_URI,
     SENTRY_ORG,
     SENTRY_PROJECT,
@@ -40,9 +35,6 @@ export default defineConfig(({ command, mode }) => {
     SENTRY_DSN,
     ENVIRONMENT,
     STATIC_URL,
-    SALEOR_APPS_PAGE_PATH,
-    SALEOR_APPS_JSON_PATH,
-    APP_TEMPLATE_GALLERY_PATH,
     APPS_MARKETPLACE_API_URI,
     APPS_TUNNEL_URL_KEYWORDS,
     SKIP_SOURCEMAPS,
@@ -62,7 +54,7 @@ export default defineConfig(({ command, mode }) => {
     SENTRY_ORG && SENTRY_PROJECT && SENTRY_DSN && SENTRY_AUTH_TOKEN;
 
   const plugins = [
-    swcReactRefresh(),
+    react(),
     createHtmlPlugin({
       entry: "/index.tsx",
       template: "index.html",
@@ -70,10 +62,6 @@ export default defineConfig(({ command, mode }) => {
         data: {
           API_URL: API_URI,
           APP_MOUNT_URI,
-          SALEOR_APPS_PAGE_PATH,
-          SALEOR_APPS_JSON_PATH,
-          APP_TEMPLATE_GALLERY_PATH,
-          MARKETPLACE_URL,
           APPS_MARKETPLACE_API_URI,
           APPS_TUNNEL_URL_KEYWORDS,
           IS_CLOUD_INSTANCE,
@@ -162,8 +150,6 @@ export default defineConfig(({ command, mode }) => {
         API_URI,
         SW_INTERVAL,
         IS_CLOUD_INSTANCE,
-        MARKETPLACE_URL,
-        SALEOR_APPS_ENDPOINT,
         APP_MOUNT_URI,
         SENTRY_DSN,
         ENVIRONMENT,
@@ -185,6 +171,16 @@ export default defineConfig(({ command, mode }) => {
       },
       rollupOptions: {
         plugins: [nodePolyfills()],
+        maxParallelFileOps: 2,
+        cache: false,
+        output: {
+          sourcemap,
+          manualChunks: id => {
+            if (id.includes("node_modules")) {
+              return "vendor";
+            }
+          },
+        },
       },
     },
     optimizeDeps: {

@@ -26,7 +26,7 @@ const offset = 24;
 export type ChoiceValue = string;
 export interface SingleAutocompleteChoiceType<
   V extends ChoiceValue = ChoiceValue,
-  L = string
+  L = string,
 > {
   label: L;
   value: V;
@@ -137,7 +137,9 @@ function getChoiceIndex(
 
 const sliceSize = 20;
 
-const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFieldContentProps> = props => {
+const SingleAutocompleteSelectFieldContent: React.FC<
+  SingleAutocompleteSelectFieldContentProps
+> = props => {
   const {
     add,
     choices,
@@ -179,13 +181,16 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
     if (!onFetchMore) {
       setSlice(sliceSize);
     }
+  }, [choices?.length]);
+
+  React.useEffect(() => {
     if (anchor.current?.scrollTo && !initialized) {
       anchor.current.scrollTo({
         top: 0,
       });
       setInitialized(true);
     }
-  }, [choices?.length]);
+  }, [initialized]);
 
   React.useEffect(() => {
     setInitialized(false);
@@ -280,7 +285,7 @@ const SingleAutocompleteSelectFieldContent: React.FC<SingleAutocompleteSelectFie
               );
               const key = React.isValidElement(suggestion.label)
                 ? `${index}${suggestion.value}${
-                    ((suggestion as unknown) as ReactElement).props
+                    (suggestion as unknown as ReactElement).props
                   }`
                 : JSON.stringify(suggestion);
 

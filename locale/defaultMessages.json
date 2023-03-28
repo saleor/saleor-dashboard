@@ -79,6 +79,9 @@
     "context": "input label",
     "string": "Stock reservation for anonymous user (in minutes)"
   },
+  "+U6ozc": {
+    "string": "Type"
+  },
   "+VEhV8": {
     "context": "product channels",
     "string": "Availability"
@@ -244,9 +247,6 @@
     "context": "collection name",
     "string": "Name"
   },
-  "/X8Mjx": {
-    "string": "Play with <emphasis>GraphQL API</emphasis>"
-  },
   "/Xwjww": {
     "context": "button",
     "string": "Fulfill"
@@ -374,6 +374,9 @@
   "0VDwAP": {
     "context": "checkbox label",
     "string": "Send shipment details to customer"
+  },
+  "0VkxrS": {
+    "string": "GraphQL Playground"
   },
   "0Vyr8h": {
     "context": "menu item name",
@@ -698,10 +701,6 @@
     "context": "payment status",
     "string": "Fully paid"
   },
-  "2r4cTE": {
-    "context": "button",
-    "string": "Enable Dark Mode"
-  },
   "2rJcFa": {
     "context": "delete app",
     "string": "Deleting this app, you will remove installation of the app. If you are paying for app subscription, remember to unsubscribe from the app in Saleor Marketplace."
@@ -942,9 +941,6 @@
   "4gT3eD": {
     "context": "navigator section header",
     "string": "Search in Customers"
-  },
-  "4gZl/n": {
-    "string": "See <emphasis>DEMO STOREFRONT</emphasis>"
   },
   "4hl9rS": {
     "context": "variant price in channel",
@@ -1191,6 +1187,9 @@
   "6RtE2D": {
     "context": "unassign collection from sale and save, button",
     "string": "Unassign and save"
+  },
+  "6SL46U": {
+    "string": "by {author}"
   },
   "6WRFp2": {
     "context": "order history message",
@@ -1475,6 +1474,10 @@
     "context": "header",
     "string": "Translation Product Variant \"{productName}\" - {languageCode}"
   },
+  "9B2mOB": {
+    "context": "tile view pagination label",
+    "string": "No. of products"
+  },
   "9C7PZE": {
     "context": "navigation section name",
     "string": "Navigation"
@@ -1711,6 +1714,9 @@
   "Av74Fa": {
     "context": "section description",
     "string": "You can set basic checkout rules that will be applied globally to all your channels"
+  },
+  "AyQkmp": {
+    "string": "Sorting by this column is not available"
   },
   "AzMSmb": {
     "context": "caption",
@@ -3279,10 +3285,6 @@
     "context": "collection",
     "string": "Not Published"
   },
-  "M2dPzK": {
-    "context": "app template gallery section name",
-    "string": "App Templates Gallery"
-  },
   "M6s/9e": {
     "context": "unassign country, dialog header",
     "string": "Remove from Shipping Zone"
@@ -3835,6 +3837,9 @@
     "context": "activate app",
     "string": "Are you sure you want to activate this app? Activating will start gathering events."
   },
+  "Q4m1CG": {
+    "string": "Edit Product"
+  },
   "Q55cTG": {
     "context": "order refund amount",
     "string": "Previously refunded"
@@ -4192,10 +4197,6 @@
   "SZt9kC": {
     "context": "export filtered items to csv file",
     "string": "Current search ({number})"
-  },
-  "Sd0Ppm": {
-    "context": "product publication date",
-    "string": "Published on {date}"
   },
   "Sjd7wm": {
     "context": "product filter label",
@@ -4846,10 +4847,6 @@
     "context": "title",
     "string": "Reserved stock"
   },
-  "X8+Lpa": {
-    "context": "button",
-    "string": "Account Settings"
-  },
   "X8qjg3": {
     "context": "inactive",
     "string": "Inactive"
@@ -5175,6 +5172,10 @@
   "ZIc5lM": {
     "string": "Product Name"
   },
+  "ZJPYFl": {
+    "context": "accepted header names",
+    "string": "Headers with in following format are accepted: <code>authorization*</code>, <code>x-*</code>"
+  },
   "ZKuzRy": {
     "context": "order history message",
     "string": "Transaction void requested"
@@ -5300,10 +5301,6 @@
   "aEc9Ar": {
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
-  },
-  "aFLtLk": {
-    "context": "tab name",
-    "string": "All Products"
   },
   "aHc89n": {
     "context": "select warehouse to restock items",
@@ -7356,6 +7353,10 @@
     "context": "stock exceeded dialog title",
     "string": "Not enough stock"
   },
+  "qa/dDe": {
+    "context": "GraphiQL Playground in the dev mode panel",
+    "string": "Playground"
+  },
   "qbFKVI": {
     "context": "notification, form submitted",
     "string": "Refund for order #{orderNumber} was granted"
@@ -7390,10 +7391,6 @@
     "context": "dialog content",
     "string": "Select one of customer addresses or add a new address:"
   },
-  "qpQ0uB": {
-    "context": "product publication date",
-    "string": "Unpublished"
-  },
   "qrWOxx": {
     "string": "No members found"
   },
@@ -7418,10 +7415,6 @@
   },
   "r+dgiv": {
     "string": "Taxes"
-  },
-  "r0hgpM": {
-    "context": "product publication date",
-    "string": "Becomes published on {date}"
   },
   "r1aQ2f": {
     "context": "dialog header",
@@ -7780,9 +7773,8 @@
     "context": "order total amount",
     "string": "Total"
   },
-  "ti4Hqw": {
-    "context": "saleor marketplace section name",
-    "string": "Saleor Apps Marketplace"
+  "tiY7bx": {
+    "string": "Add new product"
   },
   "tlGXkh": {
     "context": "input description",
@@ -8018,6 +8010,10 @@
   "vEYtiq": {
     "string": "Category Name"
   },
+  "vEwjub": {
+    "context": "button",
+    "string": "Open in GraphiQL"
+  },
   "vM9quW": {
     "context": "order payment",
     "string": "Paid with Gift Card"
@@ -8036,6 +8032,9 @@
   "vQunFc": {
     "context": "gift card history message",
     "string": "Gift card expiry date was updated by {expiryUpdatedBy}"
+  },
+  "vSy+II": {
+    "string": "Star on Github"
   },
   "vTN5DZ": {
     "context": "button",
@@ -8155,10 +8154,6 @@
   "w9xgN9": {
     "context": "see error log label in notification",
     "string": "See error log"
-  },
-  "wChjN/": {
-    "context": "accepted header names",
-    "string": "Headers with in following format are accepted: `authorization*`, `x-*`"
   },
   "wDUBLR": {
     "context": "order refund amount",
@@ -8352,9 +8347,6 @@
   "xtUXnK": {
     "context": "export all items to csv file",
     "string": "All products ({number})"
-  },
-  "xwEc8K": {
-    "string": "API"
   },
   "xxQxLE": {
     "string": "Email Address"

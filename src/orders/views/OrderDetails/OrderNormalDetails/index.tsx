@@ -31,7 +31,10 @@ import OrderFulfillStockExceededDialog from "@dashboard/orders/components/OrderF
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
 import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
 import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
-import { transformFuflillmentLinesToStockFormsetData } from "@dashboard/orders/utils/data";
+import {
+  isAnyAddressEditModalOpen,
+  transformFuflillmentLinesToStockFormsetData,
+} from "@dashboard/orders/utils/data";
 import { PartialMutationProviderOutput } from "@dashboard/types";
 import {
   CloseModalFunction,
@@ -59,7 +62,6 @@ import {
   OrderUrlDialog,
   OrderUrlQueryParams,
 } from "../../../urls";
-import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
 
 interface OrderNormalDetailsProps {
   id: string;

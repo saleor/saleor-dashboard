@@ -36,10 +36,9 @@ type OrderManualTransactionDialogProps = {
   dialogProps: DialogProps;
 } & OrderManualTransactionFormProps;
 
-export const OrderManualTransactionDialog: React.FC<OrderManualTransactionDialogProps> = ({
-  dialogProps,
-  ...props
-}) => {
+export const OrderManualTransactionDialog: React.FC<
+  OrderManualTransactionDialogProps
+> = ({ dialogProps, ...props }) => {
   const intl = useIntl();
   const classes = useStyles();
 

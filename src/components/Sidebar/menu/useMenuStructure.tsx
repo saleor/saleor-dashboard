@@ -6,7 +6,6 @@ import { AppPaths } from "@dashboard/apps/urls";
 import { useUser } from "@dashboard/auth";
 import { categoryListUrl } from "@dashboard/categories/urls";
 import { collectionListUrl } from "@dashboard/collections/urls";
-import { MARKETPLACE_URL } from "@dashboard/config";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { getConfigMenuItemsPermissions } from "@dashboard/configuration/utils";
 import { customerListUrl } from "@dashboard/customers/urls";
@@ -14,7 +13,6 @@ import { saleListUrl, voucherListUrl } from "@dashboard/discounts/urls";
 import { giftCardListUrl } from "@dashboard/giftCards/urls";
 import { PermissionEnum } from "@dashboard/graphql";
 import { commonMessages, sectionNames } from "@dashboard/intl";
-import { marketplaceUrlResolver } from "@dashboard/marketplace/marketplace-url-resolver";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { pageListPath } from "@dashboard/pages/urls";
 import { productListUrl } from "@dashboard/products/urls";
@@ -54,48 +52,14 @@ export function useMenuStructure() {
     paddingY: 4,
   };
 
-  // This will be deleted when Marketplace is released
-  // Consider this solution as temporary
-  const getAppSection = (): SidebarMenuItem => {
-    if (MARKETPLACE_URL) {
-      return {
-        icon: <MarketplaceIcon {...iconSettings} />,
-        label: intl.formatMessage(sectionNames.apps),
-        permissions: [PermissionEnum.MANAGE_APPS],
-        id: "apps_section",
-        type: "itemGroup",
-        children: [
-          {
-            label: intl.formatMessage(sectionNames.apps),
-            id: "apps",
-            url: AppPaths.appListPath,
-            type: "item",
-          },
-          {
-            label: intl.formatMessage(sectionNames.marketplace),
-            id: "marketplace-saleor-apps",
-            url: marketplaceUrlResolver.getSaleorAppsDashboardPath(),
-            type: "item",
-          },
-          {
-            label: intl.formatMessage(sectionNames.appTemplateGallery),
-            id: "marketplace-template-gallery",
-            url: marketplaceUrlResolver.getTemplateGalleryDashboardPath(),
-            type: "item",
-          },
-        ],
-      };
-    }
-
-    return {
-      icon: <MarketplaceIcon {...iconSettings} />,
-      label: intl.formatMessage(sectionNames.apps),
-      permissions: [PermissionEnum.MANAGE_APPS],
-      id: "apps",
-      url: AppPaths.appListPath,
-      type: "item",
-    };
-  };
+  const getAppSection = (): SidebarMenuItem => ({
+    icon: <MarketplaceIcon {...iconSettings} />,
+    label: intl.formatMessage(sectionNames.apps),
+    permissions: [PermissionEnum.MANAGE_APPS],
+    id: "apps",
+    url: AppPaths.appListPath,
+    type: "item",
+  });
 
   const menuItems: SidebarMenuItem[] = [
     {

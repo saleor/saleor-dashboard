@@ -35,7 +35,9 @@ export const useManualRefund = ({
     }
   }, [submitState]);
 
-  const handleChangeDescription: React.ChangeEventHandler<HTMLInputElement> = e => {
+  const handleChangeDescription: React.ChangeEventHandler<
+    HTMLInputElement
+  > = e => {
     setDescription(e.target.value);
   };
 
@@ -48,7 +50,9 @@ export const useManualRefund = ({
     }
   };
 
-  const handleChangePspReference: React.ChangeEventHandler<HTMLInputElement> = e => {
+  const handleChangePspReference: React.ChangeEventHandler<
+    HTMLInputElement
+  > = e => {
     setPspReference(e.target.value);
   };
 

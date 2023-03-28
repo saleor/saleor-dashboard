@@ -136,7 +136,7 @@ const OrderRefundAmount: React.FC<OrderRefundAmountProps> = props => {
 
   const selectedRefundAmount = isRefundAutomatic
     ? refundTotalAmount?.amount
-    : data.amount;
+    : Number(data.amount);
 
   const isAmountTooSmall = selectedRefundAmount && selectedRefundAmount <= 0;
   const isAmountTooBig = selectedRefundAmount > maxRefund?.amount;

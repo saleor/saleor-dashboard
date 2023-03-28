@@ -13,9 +13,9 @@ export const messages = defineMessages({
     description: "empty headers text",
   },
   acceptedFormat: {
-    id: "wChjN/",
+    id: "ZJPYFl",
     defaultMessage:
-      "Headers with in following format are accepted: `authorization*`, `x-*`",
+      "Headers with in following format are accepted: <code>authorization*</code>, <code>x-*</code>",
     description: "accepted header names",
   },
   headerName: {

@@ -1,6 +1,9 @@
 Cypress.Commands.add("getTextFromElement", element =>
   cy.get(element).invoke("text"),
 );
+Cypress.Commands.add("getRowSelectorWithNumber", rowNumber =>
+  cy.get(`[data-value=${rowNumber}]`),
+);
 
 Cypress.Commands.add("clearAndType", { prevSubject: true }, (subject, text) => {
   cy.wrap(subject).then(subject => {
@@ -40,4 +43,7 @@ Cypress.Commands.add("checkIfDataAreNotNull", data => {
 });
 Cypress.Commands.add("checkIfElementIsVisible", element => {
   cy.get(element).should("be.visible");
+});
+Cypress.Commands.add("assertCanvasRowsNumber", (canvas, rowNumber) => {
+  cy.get(canvas).find("tr").should("have.length", rowNumber);
 });

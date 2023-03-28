@@ -3,9 +3,11 @@ import { Button } from "@dashboard/components/Button";
 import { getUserInitials } from "@dashboard/misc";
 import { CardContent, TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Avatar, vars } from "@saleor/macaw-ui/next";
+import { vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
+
+import { UserAvatar } from "../UserAvatar";
 
 const useStyles = makeStyles(
   theme => ({
@@ -91,10 +93,9 @@ export const TimelineAddNote: React.FC<TimelineAddNoteProps> = props => {
   return (
     <div className={classes.noteRoot}>
       <CardContent className={classes.noteTitle}>
-        <Avatar.User
+        <UserAvatar
+          url={user?.avatar?.url}
           initials={getUserInitials(user)}
-          scheme="decorative2"
-          src={user?.avatar?.url}
           className={classes.avatar}
         />
         <TextField

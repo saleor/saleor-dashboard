@@ -16,6 +16,7 @@ const props: WebhookDetailsPageProps = {
   onSubmit: () => undefined,
   saveButtonBarState: "default",
   webhook,
+  availableEvents: [],
 };
 storiesOf("Apps / Webhooks / Webhook details", module)
   .addDecorator(Decorator)

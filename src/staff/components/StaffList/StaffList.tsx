@@ -3,7 +3,9 @@ import Skeleton from "@dashboard/components/Skeleton";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { StaffListQuery } from "@dashboard/graphql";
+import { commonStatusMessages } from "@dashboard/intl";
 import {
   getUserInitials,
   getUserName,
@@ -22,7 +24,7 @@ import {
   TableHead,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Avatar, Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -122,19 +124,10 @@ const StaffList: React.FC<StaffListProps> = props => {
             >
               <TableCell>
                 <Box display="flex" alignItems="center" gap={5}>
-                  {staffMember?.avatar?.url ? (
-                    <Avatar.User
-                      scheme="decorative3"
-                      src={staffMember.avatar.url}
-                      size="large"
-                    />
-                  ) : (
-                    <Avatar.User
-                      initials={getUserInitials(staffMember)}
-                      scheme="decorative3"
-                      size="large"
-                    />
-                  )}
+                  <UserAvatar
+                    url={staffMember?.avatar?.url}
+                    initials={getUserInitials(staffMember)}
+                  />
                   <Box display="flex" flexDirection="column">
                     <Text>{getUserName(staffMember) || <Skeleton />}</Text>
                     <Text
@@ -143,16 +136,8 @@ const StaffList: React.FC<StaffListProps> = props => {
                       color="textNeutralSubdued"
                     >
                       {staffMember?.isActive
-                        ? intl.formatMessage({
-                            id: "9Zlogd",
-                            defaultMessage: "Active",
-                            description: "staff member status",
-                          })
-                        : intl.formatMessage({
-                            id: "7WzUxn",
-                            defaultMessage: "Inactive",
-                            description: "staff member status",
-                          })}
+                        ? intl.formatMessage(commonStatusMessages.active)
+                        : intl.formatMessage(commonStatusMessages.notActive)}
                     </Text>
                   </Box>
                 </Box>

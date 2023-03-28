@@ -9,25 +9,6 @@ export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
 export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 10) || 300;
 export const IS_CLOUD_INSTANCE =
   window.__SALEOR_CONFIG__.IS_CLOUD_INSTANCE === "true";
-/**
- * @deprecated
- */
-export const MARKETPLACE_URL = window.__SALEOR_CONFIG__.MARKETPLACE_URL;
-/**
- * @deprecated
- */
-export const MARKETPLACE_SALEOR_APPS_PAGE_PATH =
-  window.__SALEOR_CONFIG__.SALEOR_APPS_PAGE_PATH;
-/**
- * @deprecated
- */
-export const MARKETPLACE_SALEOR_APPS_JSON_PATH =
-  window.__SALEOR_CONFIG__.SALEOR_APPS_JSON_PATH;
-/**
- * @deprecated
- */
-export const MARKETPLACE_APP_TEMPLATE_GALLERY_PATH =
-  window.__SALEOR_CONFIG__.APP_TEMPLATE_GALLERY_PATH;
 
 export const getAppsConfig = () => ({
   marketplaceApiUri: window.__SALEOR_CONFIG__.APPS_MARKETPLACE_API_URI,
@@ -52,6 +33,7 @@ export const VALUES_PAGINATE_BY = 10;
 
 export type ProductListColumns =
   | "productType"
+  | "description"
   | "availability"
   | "price"
   | "date";
@@ -111,7 +93,7 @@ export const defaultListSettings: AppListViewSettings = {
     rowNumber: PAGINATE_BY,
   },
   [ListViews.PRODUCT_LIST]: {
-    columns: ["availability", "price", "productType", "date"],
+    columns: ["availability", "description", "price", "productType", "date"],
     rowNumber: PAGINATE_BY,
   },
   [ListViews.SALES_LIST]: {

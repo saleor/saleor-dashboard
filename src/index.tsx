@@ -33,6 +33,7 @@ import useAppChannel, {
   AppChannelProvider,
 } from "./components/AppLayout/AppChannelContext";
 import { DateProvider } from "./components/Date";
+import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
 import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { LocaleProvider } from "./components/Locale";
@@ -56,8 +57,6 @@ import HomePage from "./home";
 import { FlagsServiceProvider } from "./hooks/useFlags/flagsService";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
-import MarketplaceSection from "./marketplace";
-import { marketplaceUrl } from "./marketplace/urls";
 import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
 import { NotFound } from "./NotFound";
@@ -122,7 +121,9 @@ const App: React.FC = () => (
                             <AppChannelProvider>
                               <ExternalAppProvider>
                                 <ExitFormDialogProvider>
-                                  <Routes />
+                                  <DevModeProvider>
+                                    <Routes />
+                                  </DevModeProvider>
                                 </ExitFormDialogProvider>
                               </ExternalAppProvider>
                             </AppChannelProvider>
@@ -284,11 +285,6 @@ const Routes: React.FC = () => {
                 permissions={[PermissionEnum.MANAGE_APPS]}
                 path={AppSections.appsSection}
                 component={AppsSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_APPS]}
-                path={marketplaceUrl}
-                component={MarketplaceSection}
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_PRODUCTS]}

@@ -18,21 +18,40 @@ interface UseTaxClassFetchMoreHookResult {
  * @returns fetchMore - props for paginated components, e.g. dropdowns
  */
 export function useTaxClassFetchMore(): UseTaxClassFetchMoreHookResult {
-  const { data, loading, fetchMore } = useTaxClassAssignQuery({
+  const { data, loading, loadMore, variables } = useTaxClassAssignQuery({
     variables: {
       first: 20,
     },
   });
+
   const taxClasses = mapEdgesToItems(data?.taxClasses);
   const fetchMoreTaxClasses = {
     hasMore: data?.taxClasses?.pageInfo?.hasNextPage,
     loading,
     onFetchMore: () => {
-      fetchMore({
-        variables: {
+      loadMore(
+        (prev, next) => {
+          if (
+            prev.taxClasses.pageInfo.endCursor ===
+            next.taxClasses.pageInfo.endCursor
+          ) {
+            return prev;
+          }
+
+          return {
+            ...prev,
+            taxClasses: {
+              ...prev.taxClasses,
+              edges: [...prev.taxClasses.edges, ...next.taxClasses.edges],
+              pageInfo: next.taxClasses.pageInfo,
+            },
+          };
+        },
+        {
+          ...variables,
           after: data?.taxClasses?.pageInfo?.endCursor,
         },
-      });
+      );
     },
   };
 
