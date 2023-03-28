@@ -59,9 +59,9 @@ export function useColumnsDefault(
 
       setDisplayedColumns(prevColumns => [
         ...emptyColumn,
-        ...(availableColumns[0]?.id === "empty"
-          ? [availableColumns[0].id]
-          : []),
+        ...(isEmptyColumn
+          ? [availableColumns[1].id]
+          : [availableColumns[0].id]),
         ...prevColumns.filter(column => picked.includes(column)),
         ...picked
           .filter(column => !prevColumns.find(c => c === column))
@@ -77,22 +77,32 @@ export function useColumnsDefault(
   );
   const columnChoices = useMemo(
     () =>
-      columns.filter(byNoEmptyColumn).map(({ id, title }) => ({
-        label: title,
-        value: id,
-      })),
+      columns
+        .filter(byNoEmptyColumn)
+        .filter(byNotFirstColumn)
+        .map(({ id, title }) => ({
+          label: title,
+          value: id,
+        })),
     [columns],
   );
   const availableColumnsChoices = useMemo(
     () =>
-      availableColumns.filter(byNoEmptyColumn).map(({ id, title }) => ({
-        label: title,
-        value: id,
-      })),
+      availableColumns
+        .filter(byNoEmptyColumn)
+        .filter(byNotFirstColumn)
+        .map(({ id, title }) => ({
+          label: title,
+          value: id,
+        })),
     [availableColumns],
   );
   const defaultColumns = useMemo(
-    () => availableColumns.filter(byNoEmptyColumn).map(({ id }) => id),
+    () =>
+      availableColumns
+        .filter(byNoEmptyColumn)
+        .filter(byNotFirstColumn)
+        .map(({ id }) => id),
     [availableColumns],
   );
 
@@ -114,4 +124,16 @@ export function useColumnsDefault(
 
 function byNoEmptyColumn(column: AvailableColumn) {
   return column.id !== "empty";
+}
+
+function byNotFirstColumn(
+  _: AvailableColumn,
+  index: number,
+  array: AvailableColumn[],
+) {
+  if (array.some(col => col.id === "empty")) {
+    return index > 1;
+  }
+
+  return index > 0;
 }

@@ -23,7 +23,11 @@ All notable, unreleased changes to this project will be documented in this file.
 - Add custom request headers to webhook form - #3107 by @2can
 - Allow subscription query for sync events - #3099 by @2can
 - Simplify codegen configuration to generate the graphql schema - #2538 by @abumalick
-- Add DevMode panel (trigger: CMD+') - #3333 by @zaiste 
+- Add DevMode panel (trigger: CMD+') - #3333 by @zaiste
+- Migrate to `es2020` for TypeScript - #3386 by @zaiste
+- Fix styling for GraphiQL on the webhook page - #3389 by @zaiste
+- Copy filters automatically to GraphiQL playground - #3385 by @zaiste
+- Update subscription query with Event types only and improve Event picking - #3357 by @2can
 
 ## 3.4
 

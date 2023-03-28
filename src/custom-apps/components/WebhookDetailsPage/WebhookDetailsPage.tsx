@@ -11,6 +11,7 @@ import {
   createSyncEventsSelectHandler,
 } from "@dashboard/custom-apps/handlers";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
+import { IntrospectionNode } from "@dashboard/custom-apps/utils";
 import {
   WebhookDetailsFragment,
   WebhookErrorFragment,
@@ -49,6 +50,7 @@ export interface WebhookDetailsPageProps {
   webhook?: WebhookDetailsFragment | null;
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: WebhookFormData) => SubmitPromise<any[]>;
+  availableEvents: IntrospectionNode[];
 }
 
 const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
@@ -58,6 +60,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
   webhook,
   saveButtonBarState,
   onSubmit,
+  availableEvents,
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -100,12 +103,14 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
           data,
           query,
           setQuery,
+          availableEvents,
         });
         const handleAsyncEventsSelect = createAsyncEventsSelectHandler({
           change,
           data,
           query,
           setQuery,
+          availableEvents,
         });
 
         return (

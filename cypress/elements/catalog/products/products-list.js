@@ -48,8 +48,6 @@ export const PRODUCTS_LIST = {
     },
     filterBySearchInput: '[data-test-id="filter-field-autocomplete-input"]',
   },
-  nextPageButton: "[data-test-id='button-pagination-next']",
-  previousPagePagination: "[data-test-id='button-pagination-back']",
   resultsOnPageSelect: "[data-test-id='PaginationRowNumberSelect']",
   rowNumberOption: "[data-test-id='rowNumberOption']",
 };

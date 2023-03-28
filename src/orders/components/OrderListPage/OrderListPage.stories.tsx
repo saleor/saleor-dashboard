@@ -78,6 +78,7 @@ const props: OrderListPageProps = {
     ...sortPageProps.sort,
     sort: OrderListUrlSortField.number,
   },
+  params: {},
 };
 
 storiesOf("Orders / Order list", module)

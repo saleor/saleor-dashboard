@@ -201,17 +201,40 @@ export const channelUsabilityData = gql`
   }
 `;
 
-export const defaultGraphiQLQuery = `query OrderDetails($id: ID!) { 
-  order(id: $id) { 
-    id
-    number
-    status
-    isShippingRequired
-    canFinalize
-    created
-    customerNote
-    paymentStatus
-    userEmail
-    isPaid
-  } 
-}`;
+export const defaultGraphiQLQuery = /* GraphQL */ `
+  query OrderDetailsGraphiQL($id: ID!) {
+    order(id: $id) {
+      id
+      number
+      status
+      isShippingRequired
+      canFinalize
+      created
+      customerNote
+      paymentStatus
+      userEmail
+      isPaid
+    }
+  }
+`;
+
+export const DevModeQuery = /* GraphQL */ `
+  query DevModeRun($filter: OrderFilterInput, $sortBy: OrderSortingInput) {
+    orders(first: 10, filter: $filter, sortBy: $sortBy) {
+      edges {
+        node {
+          id
+          number
+          status
+          isShippingRequired
+          canFinalize
+          created
+          customerNote
+          paymentStatus
+          userEmail
+          isPaid
+        }
+      }
+    }
+  }
+`;

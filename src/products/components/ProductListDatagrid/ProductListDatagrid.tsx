@@ -83,6 +83,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   const searchProductType = useSearchProductTypes();
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
+  const productsLength = getProductRowsLength(disabled, products, disabled);
   const gridAttributesFromSettings = useMemo(
     () => settings.columns.filter(isAttributeColumnValue),
     [settings.columns],
@@ -156,14 +157,12 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         gridAttributes,
         gridAttributesFromSettings,
         selectedChannelId,
-        loading,
       }),
     [
       columns,
       gridAttributes,
       gridAttributesFromSettings,
       intl,
-      loading,
       locale,
       products,
       searchProductType,
@@ -221,10 +220,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   );
 
   return (
-    <Box __marginTop={-1}>
+    <Box __marginTop={productsLength > 0 ? -1 : 0}>
       <DatagridChangeStateContext.Provider value={datagrid}>
         <Datagrid
           readonly
+          loading={loading}
           rowMarkers="none"
           columnSelect="single"
           freezeColumns={2}
@@ -238,7 +238,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           getCellContent={getCellContent}
           getCellError={() => false}
           menuItems={() => []}
-          rows={getProductRowsLength(disabled, products, disabled)}
+          rows={productsLength}
           selectionActions={() => null}
           fullScreenTitle={intl.formatMessage(messages.products)}
           onRowClick={handleRowClick}

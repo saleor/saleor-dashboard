@@ -37,6 +37,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
   const availableColumns = useColumns(sort);
+  const ordersLength = getOrdersRowsLength(orders, disabled);
 
   const {
     availableColumnsChoices,
@@ -71,15 +72,15 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   const getCellContent = useGetCellContent({
     columns,
     orders,
-    loading: disabled,
   });
 
   return (
-    <Box __marginTop={-1}>
+    <Box __marginTop={ordersLength > 0 ? -1 : 0}>
       <DatagridChangeStateContext.Provider value={datagrid}>
         <Datagrid
           readonly
           rowMarkers="none"
+          loading={disabled}
           columnSelect="single"
           freezeColumns={2}
           verticalBorder={col => (col > 1 ? true : false)}

@@ -1,5 +1,4 @@
 import {
-  loadingCell,
   moneyCell,
   readonlyTextCell,
   tagsCell,
@@ -87,18 +86,13 @@ export const useColumns = (sort: Sort<OrderListUrlSortField>) => {
 interface GetCellContentProps {
   columns: AvailableColumn[];
   orders: RelayToFlat<OrderListQuery["orders"]>;
-  loading: boolean;
 }
 
 function getDatagridRowDataIndex(row, removeArray) {
   return row + removeArray.filter(r => r <= row).length;
 }
 
-export const useGetCellContent = ({
-  columns,
-  orders,
-  loading,
-}: GetCellContentProps) => {
+export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
   const { theme: currentTheme, themeValues } = useTheme();
@@ -111,11 +105,12 @@ export const useGetCellContent = ({
       return readonlyTextCell("");
     }
 
-    if (loading) {
-      return loadingCell();
+    const columnId = columns[column]?.id;
+
+    if (!columnId) {
+      return readonlyTextCell("");
     }
 
-    const columnId = columns[column].id;
     const rowData = added.includes(row)
       ? undefined
       : orders[getDatagridRowDataIndex(row, removed)];

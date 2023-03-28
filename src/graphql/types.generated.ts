@@ -81,6 +81,7 @@ export enum AccountErrorCode {
   PASSWORD_TOO_COMMON = 'PASSWORD_TOO_COMMON',
   PASSWORD_TOO_SHORT = 'PASSWORD_TOO_SHORT',
   PASSWORD_TOO_SIMILAR = 'PASSWORD_TOO_SIMILAR',
+  PASSWORD_RESET_ALREADY_REQUESTED = 'PASSWORD_RESET_ALREADY_REQUESTED',
   REQUIRED = 'REQUIRED',
   UNIQUE = 'UNIQUE',
   JWT_SIGNATURE_EXPIRED = 'JWT_SIGNATURE_EXPIRED',
@@ -185,7 +186,8 @@ export enum AppErrorCode {
   REQUIRED = 'REQUIRED',
   UNIQUE = 'UNIQUE',
   OUT_OF_SCOPE_APP = 'OUT_OF_SCOPE_APP',
-  OUT_OF_SCOPE_PERMISSION = 'OUT_OF_SCOPE_PERMISSION'
+  OUT_OF_SCOPE_PERMISSION = 'OUT_OF_SCOPE_PERMISSION',
+  UNSUPPORTED_SALEOR_VERSION = 'UNSUPPORTED_SALEOR_VERSION'
 }
 
 export type AppExtensionFilterInput = {
@@ -688,10 +690,76 @@ export type AttributeWhereInput = {
 export type BulkAttributeValueInput = {
   /** ID of the selected attribute. */
   id?: InputMaybe<Scalars['ID']>;
-  /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. */
+  /** The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.This field will be removed in Saleor 4.0. */
   values?: InputMaybe<Array<Scalars['String']>>;
+  /**
+   * Attribute value ID.
+   *
+   * Added in Saleor 3.12.
+   */
+  dropdown?: InputMaybe<AttributeValueSelectableTypeInput>;
+  /**
+   * Attribute value ID.
+   *
+   * Added in Saleor 3.12.
+   */
+  swatch?: InputMaybe<AttributeValueSelectableTypeInput>;
+  /**
+   * List of attribute value IDs.
+   *
+   * Added in Saleor 3.12.
+   */
+  multiselect?: InputMaybe<Array<AttributeValueSelectableTypeInput>>;
+  /**
+   * Numeric value of an attribute.
+   *
+   * Added in Saleor 3.12.
+   */
+  numeric?: InputMaybe<Scalars['String']>;
+  /**
+   * URL of the file attribute. Every time, a new value is created.
+   *
+   * Added in Saleor 3.12.
+   */
+  file?: InputMaybe<Scalars['String']>;
+  /**
+   * File content type.
+   *
+   * Added in Saleor 3.12.
+   */
+  contentType?: InputMaybe<Scalars['String']>;
+  /**
+   * List of entity IDs that will be used as references.
+   *
+   * Added in Saleor 3.12.
+   */
+  references?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * Text content in JSON format.
+   *
+   * Added in Saleor 3.12.
+   */
+  richText?: InputMaybe<Scalars['JSONString']>;
+  /**
+   * Plain text content.
+   *
+   * Added in Saleor 3.12.
+   */
+  plainText?: InputMaybe<Scalars['String']>;
   /** The boolean value of an attribute to resolve. If the passed value is non-existent, it will be created. */
   boolean?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Represents the date value of the attribute value.
+   *
+   * Added in Saleor 3.12.
+   */
+  date?: InputMaybe<Scalars['Date']>;
+  /**
+   * Represents the date/time value of the attribute value.
+   *
+   * Added in Saleor 3.12.
+   */
+  dateTime?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type CardInput = {
@@ -4079,7 +4147,7 @@ export type ProductCreateInput = {
   /**
    * Tax rate for enabled tax gateway.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product.
+   * DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Search engine optimization fields. */
@@ -4231,7 +4299,7 @@ export type ProductInput = {
   /**
    * Tax rate for enabled tax gateway.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product.
+   * DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode?: InputMaybe<Scalars['String']>;
   /** Search engine optimization fields. */
@@ -4406,7 +4474,7 @@ export type ProductTypeInput = {
   /**
    * Tax rate for enabled tax gateway.
    *
-   * DEPRECATED: this field will be removed in Saleor 4.0.. Use tax classes to control the tax calculation for a product type.
+   * DEPRECATED: this field will be removed in Saleor 4.0.. Use tax classes to control the tax calculation for a product type. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
    */
   taxCode?: InputMaybe<Scalars['String']>;
   /** ID of a tax class to assign to this product type. All products of this product type would use this tax class, unless it's overridden in the `Product` type. */
@@ -5127,6 +5195,27 @@ export enum StockAvailability {
 }
 
 /** An enumeration. */
+export enum StockBulkUpdateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED'
+}
+
+export type StockBulkUpdateInput = {
+  /** Variant ID. */
+  variantId?: InputMaybe<Scalars['ID']>;
+  /** Variant external reference. */
+  variantExternalReference?: InputMaybe<Scalars['String']>;
+  /** Warehouse ID. */
+  warehouseId?: InputMaybe<Scalars['ID']>;
+  /** Warehouse external reference. */
+  warehouseExternalReference?: InputMaybe<Scalars['String']>;
+  /** Quantity of items available for sell. */
+  quantity: Scalars['Int'];
+};
+
+/** An enumeration. */
 export enum StockErrorCode {
   ALREADY_EXISTS = 'ALREADY_EXISTS',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -5317,6 +5406,8 @@ export enum TaxExemptionManageErrorCode {
 
 /** An enumeration. */
 export enum ThumbnailFormatEnum {
+  ORIGINAL = 'ORIGINAL',
+  AVIF = 'AVIF',
   WEBP = 'WEBP'
 }
 
@@ -6841,7 +6932,7 @@ export type AppQueryVariables = Exact<{
 }>;
 
 
-export type AppQuery = { __typename: 'Query', app: { __typename: 'App', aboutApp: string | null, dataPrivacy: string | null, dataPrivacyUrl: string | null, id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null };
+export type AppQuery = { __typename: 'Query', app: { __typename: 'App', aboutApp: string | null, author: string | null, dataPrivacy: string | null, dataPrivacyUrl: string | null, id: string, name: string | null, created: any | null, isActive: boolean | null, type: AppTypeEnum | null, homepageUrl: string | null, appUrl: string | null, manifestUrl: string | null, configurationUrl: string | null, supportUrl: string | null, version: string | null, accessToken: string | null, permissions: Array<{ __typename: 'Permission', code: PermissionEnum, name: string }> | null, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, tokens: Array<{ __typename: 'AppToken', authToken: string | null, id: string, name: string | null }> | null, webhooks: Array<{ __typename: 'Webhook', id: string, name: string, isActive: boolean, app: { __typename: 'App', id: string, name: string | null } }> | null } | null };
 
 export type ExtensionListQueryVariables = Exact<{
   filter: AppExtensionFilterInput;
@@ -8548,6 +8639,21 @@ export type ChannelUsabilityDataQueryVariables = Exact<{
 
 
 export type ChannelUsabilityDataQuery = { __typename: 'Query', products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null };
+
+export type OrderDetailsGraphiQlQueryVariables = Exact<{
+  id: Scalars['ID'];
+}>;
+
+
+export type OrderDetailsGraphiQlQuery = { __typename: 'Query', order: { __typename: 'Order', id: string, number: string, status: OrderStatus, isShippingRequired: boolean, canFinalize: boolean, created: any, customerNote: string, paymentStatus: PaymentChargeStatusEnum, userEmail: string | null, isPaid: boolean } | null };
+
+export type DevModeRunQueryVariables = Exact<{
+  filter?: InputMaybe<OrderFilterInput>;
+  sortBy?: InputMaybe<OrderSortingInput>;
+}>;
+
+
+export type DevModeRunQuery = { __typename: 'Query', orders: { __typename: 'OrderCountableConnection', edges: Array<{ __typename: 'OrderCountableEdge', node: { __typename: 'Order', id: string, number: string, status: OrderStatus, isShippingRequired: boolean, canFinalize: boolean, created: any, customerNote: string, paymentStatus: PaymentChargeStatusEnum, userEmail: string | null, isPaid: boolean } }> } | null };
 
 export type PageTypeUpdateMutationVariables = Exact<{
   id: Scalars['ID'];
