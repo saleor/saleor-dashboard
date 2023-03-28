@@ -48,6 +48,7 @@ export function useSortRedirects<SortField extends string>({
           ...params,
           sort: defaultSortField,
         }),
+        { replace: true },
       );
     }
   }, [params]);
