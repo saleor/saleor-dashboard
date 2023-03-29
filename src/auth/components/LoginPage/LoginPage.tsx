@@ -179,4 +179,5 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     </LoginForm>
   );
 };
+LoginCard.displayName = "LoginCard";
 export default LoginCard;
