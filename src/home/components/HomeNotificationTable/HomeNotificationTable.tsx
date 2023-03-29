@@ -12,7 +12,7 @@ import {
 } from "@material-ui/core";
 import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
 import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { Box, vars } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -22,7 +22,10 @@ const useStyles = makeStyles(
   () => ({
     arrowIcon: {
       textAlign: "right",
-      width: 100,
+      width: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "flex-end",
     },
     tableCard: {
       overflow: "hidden",
@@ -85,9 +88,12 @@ const HomeNotificationTable: React.FC<HomeNotificationTableProps> = props => {
                       {intl.formatMessage(messages.createNewChannel)}
                     </Typography>
                   </TableCell>
-                  <TableCell className={classes.arrowIcon}>
+                  <Box>
                     <KeyboardArrowRight />
-                  </TableCell>
+                  </Box>
+                  <Box className={classes.arrowIcon}>
+                    <KeyboardArrowRight />
+                  </Box>
                 </TableRowLink>
               </RequirePermissions>
             )}
