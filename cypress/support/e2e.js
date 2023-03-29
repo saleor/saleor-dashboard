@@ -23,9 +23,6 @@ import { urlList } from "../fixtures/urlList";
 import cypressGrep from "../support/cypress-grep/support";
 
 commandTimings();
-
-commandTimings();
-
 cypressGrep();
 
 Cypress.Commands.add("clearSessionData", () => {
