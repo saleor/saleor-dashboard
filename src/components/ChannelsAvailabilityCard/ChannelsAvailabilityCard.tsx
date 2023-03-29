@@ -6,8 +6,10 @@ import { Box, Divider, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ChannelAvailabilityItemContent from "./Channel/ChannelAvailabilityItemContent";
-import ChannelAvailabilityItemWrapper from "./Channel/ChannelAvailabilityItemWrapper";
+import {
+  ChannelAvailabilityItemContent,
+  ChannelAvailabilityItemWrapper,
+} from "./Channel";
 import {
   ChannelsAvailabilityCardWrapper,
   ChannelsAvailabilityWrapperProps,

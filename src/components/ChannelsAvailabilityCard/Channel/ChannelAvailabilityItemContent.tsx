@@ -1,17 +1,19 @@
 import { ChannelData } from "@dashboard/channels/utils";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import Hr from "@dashboard/components/Hr";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
 import { Button } from "@saleor/macaw-ui";
-import { Box, Divider, RadioGroup, Text } from "@saleor/macaw-ui/next";
-import clsx from "clsx";
+import {
+  Box,
+  Checkbox,
+  Divider,
+  RadioGroup,
+  Text,
+} from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { useStyles } from "../styles";
 import { ChannelOpts, ChannelsAvailabilityError, Messages } from "../types";
 import { availabilityItemMessages } from "./messages";
 
@@ -23,7 +25,7 @@ export interface ChannelContentProps {
   onChange: (id: string, data: ChannelOpts) => void;
 }
 
-const ChannelContent: React.FC<ChannelContentProps> = ({
+export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
   data,
   disabled,
   errors,
@@ -56,7 +58,6 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   );
   const [isAvailableDate, setAvailableDate] = useState(false);
   const intl = useIntl();
-  const classes = useStyles({});
 
   const parsedDate = new Date(dateNow);
   const todayDateUTC = parsedDate.toISOString().slice(0, 10);
@@ -73,7 +74,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   return (
     <Box display="flex" gap={5} flexDirection="column">
       <RadioGroup
-        value={isPublished}
+        value={String(isPublished)}
         onValueChange={value => {
           onChange(id, {
             ...formData,
@@ -85,7 +86,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
         disabled={disabled}
       >
         <RadioGroup.Item id={`${id}-isPublished-true`} value="true">
-          <Box display="flex" __alignItems="baseline" gap={5}>
+          <Box display="flex" alignItems="baseline" gap={5}>
             <Text>{messages.visibleLabel}</Text>
             {isPublished &&
               publicationDate &&
@@ -98,7 +99,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
           </Box>
         </RadioGroup.Item>
         <RadioGroup.Item id={`${id}-isPublished-false`} value="false">
-          <Box display="flex" __alignItems="baseline" gap={5}>
+          <Box display="flex" alignItems="baseline" gap={5}>
             <Text>{messages.hiddenLabel}</Text>
             {publicationDate &&
               !isPublished &&
@@ -111,7 +112,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
         </RadioGroup.Item>
       </RadioGroup>
       {!isPublished && (
-        <Box>
+        <Box display="flex" gap={3} flexDirection="column" alignItems="start">
           <Button
             onClick={() => setPublicationDate(!isPublicationDate)}
             type="button"
@@ -138,7 +139,6 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                   publicationDate: e.target.value || null,
                 })
               }
-              className={classes.date}
               InputLabelProps={{
                 shrink: true,
               }}
@@ -152,7 +152,7 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
           <RadioGroup
             disabled={disabled}
             name={`channel:isAvailableForPurchase:${id}`}
-            value={isAvailable}
+            value={String(isAvailable)}
             onValueChange={value =>
               onChange(id, {
                 ...formData,
@@ -191,11 +191,15 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
             </RadioGroup.Item>
           </RadioGroup>
           {!isAvailable && (
-            <Box>
+            <Box
+              display="flex"
+              gap={3}
+              flexDirection="column"
+              alignItems="start"
+            >
               <Button onClick={() => setAvailableDate(!isAvailableDate)}>
                 {messages.setAvailabilityDateLabel}
               </Button>
-
               {isAvailableDate && (
                 <TextField
                   error={!!formErrors.availableForPurchaseDate}
@@ -221,7 +225,6 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                       availableForPurchase: e.target.value,
                     })
                   }
-                  className={classes.date}
                   InputLabelProps={{
                     shrink: true,
                   }}
@@ -233,34 +236,30 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
       )}
       {visibleInListings !== undefined && (
         <>
-          <Hr />
-          <ControlledCheckbox
-            className={classes.checkbox}
+          <Divider />
+          <Checkbox
             name={`channel:visibleInListings:${id}`}
+            id={`channel:visibleInListings:${id}`}
             checked={!visibleInListings}
             disabled={disabled}
-            label={
-              <>
-                <p className={clsx(classes.label, classes.listingLabel)}>
-                  {intl.formatMessage(availabilityItemMessages.hideInListings)}
-                </p>
-                <span className={classes.secondLabel}>
-                  {intl.formatMessage(
-                    availabilityItemMessages.hideInListingsDescription,
-                  )}
-                </span>
-              </>
-            }
-            onChange={e =>
+            onCheckedChange={checked => {
               onChange(id, {
                 ...formData,
-                visibleInListings: !e.target.value,
-              })
-            }
-          />
+                visibleInListings: !checked,
+              });
+            }}
+          >
+            <Text>
+              {intl.formatMessage(availabilityItemMessages.hideInListings)}
+            </Text>
+          </Checkbox>
+          <Text variant="caption" color="textNeutralSubdued">
+            {intl.formatMessage(
+              availabilityItemMessages.hideInListingsDescription,
+            )}
+          </Text>
         </>
       )}
     </Box>
   );
 };
-export default ChannelContent;

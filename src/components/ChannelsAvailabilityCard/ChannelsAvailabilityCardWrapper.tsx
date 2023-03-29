@@ -70,7 +70,9 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
             <Divider />
           </>
         )}
-        {children}
+        <Box display="flex" flexDirection="column" gap={8}>
+          {children}
+        </Box>
       </DashboardCard.Content>
     </DashboardCard>
   );
