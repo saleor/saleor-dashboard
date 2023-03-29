@@ -81,9 +81,18 @@ Cypress.Commands.add("getGridCellInfo", (col, row) =>
     }),
 );
 
-Cypress.Commands.add("clickCell", (col, row) => {
+Cypress.Commands.add("clickGridCell", (col, row) => {
   cy.getGridCellInfo(col, row).then(bounds => {
     cy.get("body").click(bounds.center.x, bounds.center.y);
+  });
+});
+
+Cypress.Commands.add("clickGridHeader", col => {
+  cy.getGridCellInfo(col, 0).then(bounds => {
+    const headerXCenter = bounds.x + bounds.width / 2;
+    const headerYCenter = bounds.y - bounds.height / 2;
+
+    cy.get("body").click(headerXCenter, headerYCenter);
   });
 });
 
