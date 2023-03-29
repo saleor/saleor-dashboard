@@ -1,26 +1,28 @@
 import {
   Box,
+  Button,
   Dropdown,
   DropdownButton,
   List,
+  PlusIcon,
   sprinkles,
   Text,
   vars,
 } from "@saleor/macaw-ui/next";
 import React, { MouseEvent } from "react";
-import { useIntl } from "react-intl";
 
 import { FilterPresetItem } from "./FilterPresetItem";
-import { messages } from "./messages";
 
 interface FilterPresetsSelectProps {
-  activePreset: number;
+  activePreset?: number;
   savedPresets: string[];
   selectAllLabel: string;
-  isCustomPreset: boolean;
   isOpen?: boolean;
+  presetsChanged?: boolean;
+  onSave: () => void;
   onSelectAll: () => void;
   onRemove: (filterIndex: number) => void;
+  onUpdate: (tabName: string) => void;
   onSelect: (filterIndex: number) => void;
   onOpenChange?: (open: boolean) => void;
 }
@@ -28,22 +30,18 @@ interface FilterPresetsSelectProps {
 export const FilterPresetsSelect = ({
   onSelect,
   onRemove,
+  onSave,
   savedPresets,
   activePreset,
   onSelectAll,
   selectAllLabel,
-  isCustomPreset,
   isOpen,
+  onUpdate,
   onOpenChange,
+  presetsChanged,
 }: FilterPresetsSelectProps) => {
-  const intl = useIntl();
-
   const getLabel = () => {
-    if (isCustomPreset) {
-      return `(${intl.formatMessage(messages.unsavedPreset)})`;
-    }
-
-    if (activePreset === 0) {
+    if (!activePreset) {
       return selectAllLabel;
     }
 
@@ -66,14 +64,6 @@ export const FilterPresetsSelect = ({
 
   return (
     <Box display="flex" alignItems="center">
-      <Text
-        variant="caption"
-        className={sprinkles({
-          marginRight: 4,
-        })}
-      >
-        {intl.formatMessage(messages.filterPreset)}
-      </Text>
       <Dropdown
         open={isOpen}
         onOpenChange={open => {
@@ -83,7 +73,11 @@ export const FilterPresetsSelect = ({
         }}
       >
         <Dropdown.Trigger>
-          <DropdownButton data-test-id="show-saved-filters-button">
+          <DropdownButton
+            variant="text"
+            size="small"
+            data-test-id="show-saved-filters-button"
+          >
             {getLabel()}
           </DropdownButton>
         </Dropdown.Trigger>
@@ -139,6 +133,29 @@ export const FilterPresetsSelect = ({
           </Box>
         </Dropdown.Content>
       </Dropdown>
+      {presetsChanged && activePreset && (
+        <Button
+          className={sprinkles({
+            marginLeft: 6,
+          })}
+          onClick={() => onUpdate(savedPresets[activePreset - 1])}
+          variant="secondary"
+          size="small"
+        >
+          Update
+        </Button>
+      )}
+      {presetsChanged && (
+        <Button
+          className={sprinkles({
+            marginLeft: 6,
+          })}
+          icon={<PlusIcon />}
+          onClick={onSave}
+          variant="secondary"
+          size="small"
+        ></Button>
+      )}
     </Box>
   );
 };

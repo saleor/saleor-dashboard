@@ -464,8 +464,12 @@ export function getFilterQueryParam(
   }
 }
 
-export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
-  createFilterTabUtils<ProductListUrlFilters>(PRODUCT_FILTERS_KEY);
+export const {
+  deleteFilterTab,
+  getFilterTabs,
+  saveFilterTab,
+  updateFilterTab,
+} = createFilterTabUtils<ProductListUrlFilters>(PRODUCT_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
   createFilterUtils<ProductListUrlQueryParams, ProductListUrlFilters>({

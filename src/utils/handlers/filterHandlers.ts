@@ -4,7 +4,10 @@ import { ActiveTab, Pagination, Search, Sort } from "@dashboard/types";
 
 import { GetFilterQueryParam, getFilterQueryParams } from "../filters";
 
-type RequiredParams = ActiveTab & Search & Sort<any> & Pagination;
+type RequiredParams = ActiveTab &
+  Search &
+  Sort<any> &
+  Pagination & { presestesChanged?: string };
 type CreateUrl = (params: RequiredParams) => string;
 type CreateFilterHandlers<TFilterKeys extends string> = [
   (filter: IFilter<TFilterKeys>) => void,
@@ -21,8 +24,16 @@ function createFilterHandlers<
   createUrl: CreateUrl;
   params: RequiredParams;
   cleanupFn?: () => void;
+  keepActiveTab?: boolean;
 }): CreateFilterHandlers<TFilterKeys> {
-  const { getFilterQueryParam, navigate, createUrl, params, cleanupFn } = opts;
+  const {
+    getFilterQueryParam,
+    navigate,
+    createUrl,
+    params,
+    cleanupFn,
+    keepActiveTab,
+  } = opts;
 
   const changeFilters = (filters: IFilter<TFilterKeys>) => {
     if (!!cleanupFn) {
@@ -33,7 +44,8 @@ function createFilterHandlers<
       createUrl({
         ...params,
         ...getFilterQueryParams(filters, getFilterQueryParam),
-        activeTab: undefined,
+        ...(!keepActiveTab && { activeTab: undefined }),
+        presestesChanged: "true",
       }),
     );
   };
@@ -61,8 +73,9 @@ function createFilterHandlers<
         ...params,
         after: undefined,
         before: undefined,
-        activeTab: undefined,
+        ...(!keepActiveTab && { activeTab: undefined }),
         query: query?.trim(),
+        presestesChanged: "true",
       }),
     );
   };

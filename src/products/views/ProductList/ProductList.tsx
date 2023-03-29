@@ -74,10 +74,10 @@ import {
   getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
-  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
+  updateFilterTab,
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import { getAvailableProductKinds, getProductKindOpts } from "./utils";
@@ -191,7 +191,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const tabs = getFilterTabs();
 
-  const currentTab = getFiltersCurrentTab(params, tabs);
+  const currentTab =
+    params.activeTab !== undefined ? parseInt(params.activeTab, 10) : undefined;
 
   const countAllProducts = useProductCountQuery({
     skip: params.action !== "export",
@@ -228,6 +229,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       getFilterQueryParam,
       navigate,
       params,
+      keepActiveTab: true,
     });
 
   const handleTabChange = (tab: number) => {
@@ -237,6 +239,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       productListUrl({
         activeTab: tab.toString(),
         ...getFilterTabs()[tab - 1].data,
+        presestesChanged: undefined,
       }),
     );
   };
@@ -250,6 +253,17 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const handleFilterTabSave = (data: SaveFilterTabDialogFormData) => {
     saveFilterTab(data.name, getActiveFilters(params));
     handleTabChange(tabs.length + 1);
+  };
+
+  const hanleFilterTabUpdate = (tabName: string) => {
+    updateFilterTab(tabName, getActiveFilters(params));
+    navigate(
+      productListUrl({
+        ...params,
+        presestesChanged: undefined,
+      }),
+      { replace: true },
+    );
   };
 
   const handleSort = (field: ProductListUrlSortField, attributeId?: string) =>
@@ -418,11 +432,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onFilterChange={changeFilters}
         onFilterAttributeFocus={setFocusedAttribute}
         onTabSave={() => openModal("save-search")}
+        onTabUpdate={hanleFilterTabUpdate}
         onTabDelete={(tabIndex: number) => {
           setTabIndexToDelete(tabIndex);
           openModal("delete-search");
         }}
         onTabChange={handleTabChange}
+        hasPresetsChanged={params.presestesChanged === "true"}
         initialSearch={params.query || ""}
         tabs={getFilterTabs().map(tab => tab.name)}
         onExport={() => openModal("export")}

@@ -24,10 +24,8 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
   return (
     <TopNavWrapper withoutBorder={withoutBorder}>
       {href && <TopNavLink to={href} />}
-      <Box __flex={1}>
-        <Text variant="title">{title}</Text>
-      </Box>
-      <Box display="flex" flexWrap="nowrap">
+      <Text variant="title">{title}</Text>
+      <Box __flex={1} display="flex" flexWrap="nowrap">
         {isPickerActive && (
           <AppChannelSelect
             channels={availableChannels}
