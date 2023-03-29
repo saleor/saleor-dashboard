@@ -10,12 +10,14 @@ interface TopNavProps {
   title: string | React.ReactNode;
   href?: string;
   withoutBorder?: boolean;
+  isLineToRight?: boolean;
 }
 
 export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
   title,
   href,
   withoutBorder = false,
+  isLineToRight = true,
   children,
 }) => {
   const { availableChannels, channel, isPickerActive, setChannel } =
@@ -24,8 +26,10 @@ export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
   return (
     <TopNavWrapper withoutBorder={withoutBorder}>
       {href && <TopNavLink to={href} />}
-      <Text variant="title">{title}</Text>
-      <Box __flex={1} display="flex" flexWrap="nowrap">
+      <Box __flex={isLineToRight ? 1 : 0}>
+        <Text variant="title">{title}</Text>
+      </Box>
+      <Box display="flex" flexWrap="nowrap" __flex={isLineToRight ? 0 : 1}>
         {isPickerActive && (
           <AppChannelSelect
             channels={availableChannels}

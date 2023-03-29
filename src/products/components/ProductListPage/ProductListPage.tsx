@@ -134,7 +134,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
 
   return (
     <ListPageLayout>
-      <TopNav withoutBorder title={intl.formatMessage(sectionNames.products)}>
+      <TopNav
+        withoutBorder
+        isLineToRight={false}
+        title={intl.formatMessage(sectionNames.products)}
+      >
         <Box
           __flex={1}
           display="flex"
