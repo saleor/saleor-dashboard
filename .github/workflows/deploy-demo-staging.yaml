@@ -35,7 +35,7 @@ jobs:
           )
           version=${{ github.event.inputs.git_ref || github.ref_name }}
           latest_version=$(gh api -H "Accept: application/vnd.github+json" --jq .name /repos/saleor/saleor-dashboard/releases/latest)
-          if ! [[ $version != $latest_version ]]; then
+          if [[ $version != $latest_version ]]; then
               echo "Unsupported version: $version"
               echo "NOTIFY=false" >> $GITHUB_ENV
               exit 1

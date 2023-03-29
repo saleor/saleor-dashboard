@@ -14,15 +14,17 @@ import "./customCommands/sharedElementsOperations/selects.js";
 import "./customCommands/sharedElementsOperations/tables";
 import "./customCommands/softAssertions";
 import "./customCommands/user";
+import "@percy/cypress";
 
 import { commandTimings } from "cypress-timings";
 
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
+import { urlList } from "../fixtures/urlList";
 import cypressGrep from "../support/cypress-grep/support";
 
 commandTimings();
 
-import { urlList } from "../fixtures/urlList";
+commandTimings();
 
 cypressGrep();
 
@@ -49,6 +51,32 @@ Cypress.Commands.add("addAliasToGraphRequest", operationName => {
     }
   });
 });
+Cypress.Commands.add(
+  "addAliasToGraphRequestAndUseMockedResponseBody",
+  (operationName, bodyMock) => {
+    cy.intercept("POST", urlList.apiUri, req => {
+      req.statusCode = 200;
+      const requestBody = req.body;
+      if (Array.isArray(requestBody)) {
+        requestBody.forEach(element => {
+          if (element.operationName === operationName) {
+            req.alias = operationName;
+            req.reply({
+              body: bodyMock,
+            });
+          }
+        });
+      } else {
+        if (requestBody.operationName === operationName) {
+          req.alias = operationName;
+          req.reply({
+            body: bodyMock,
+          });
+        }
+      }
+    });
+  },
+);
 
 Cypress.Commands.add("getGridCellInfo", (col, row) =>
   /*
