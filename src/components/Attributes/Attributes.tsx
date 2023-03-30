@@ -1,5 +1,4 @@
 import { AttributeReference } from "@dashboard/attributes/utils/data";
-import { Hr } from "@dashboard/components/Hr";
 import {
   AttributeEntityTypeEnum,
   AttributeInputTypeEnum,
@@ -12,18 +11,12 @@ import {
 import { FormsetAtomicData } from "@dashboard/hooks/useFormset";
 import { FetchMoreProps } from "@dashboard/types";
 import { RichTextGetters } from "@dashboard/utils/richText/useMultipleRichText";
-import {
-  Box,
-  Button,
-  ChervonDownIcon,
-  ChervonUpIcon,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { Accordion, Box, Divider, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
-import AttributeRow from "./AttributeRow";
+import { AttributeListItem } from "./AttributeListItem";
 import { AttributeRowHandlers, VariantAttributeScope } from "./types";
 
 export interface AttributeInputData {
@@ -76,8 +69,6 @@ export const Attributes: React.FC<AttributesProps> = ({
   ...props
 }) => {
   const intl = useIntl();
-  const [expanded, setExpansionStatus] = React.useState(true);
-  const toggleExpansion = () => setExpansionStatus(!expanded);
 
   return (
     <DashboardCard>
@@ -86,51 +77,40 @@ export const Attributes: React.FC<AttributesProps> = ({
       </DashboardCard.Title>
       <DashboardCard.Content>
         <Box display="flex" flexDirection="column" gap={5}>
-          <Box
-            display="flex"
-            justifyContent="space-between"
-            alignItems="center"
-          >
-            <Text variant="caption" color="textNeutralSubdued">
-              <FormattedMessage
-                {...messages.attributesNumber}
-                values={{
-                  number: attributes.length,
-                }}
-              />
-            </Text>
-            <Button
-              variant="secondary"
-              type="button"
-              onClick={toggleExpansion}
-              data-test-id="attributes-expand"
-              icon={expanded ? <ChervonDownIcon /> : <ChervonUpIcon />}
-            />
-          </Box>
-          {expanded && attributes.length > 0 && (
-            <ul>
-              <Hr />
-              {attributes.map((attribute, attributeIndex) => {
-                const error = errors.find(err =>
-                  err.attributes?.includes(attribute.id),
-                );
-
-                return (
-                  <React.Fragment key={attribute.id}>
-                    {attributeIndex > 0 && <Hr />}
-                    <AttributeRow
-                      attribute={attribute}
-                      attributeValues={attributeValues}
-                      error={error}
-                      onAttributeSelectBlur={onAttributeSelectBlur}
-                      richTextGetters={richTextGetters}
-                      {...props}
-                    />
-                  </React.Fragment>
-                );
-              })}
-            </ul>
-          )}
+          <Accordion defaultValue="attributes-accordion">
+            <Accordion.Item value="attributes-accordion">
+              <Accordion.Item.Trigger buttonDataTestId="attributes-expand">
+                <Text variant="caption" color="textNeutralSubdued">
+                  <FormattedMessage
+                    {...messages.attributesNumber}
+                    values={{
+                      number: attributes.length,
+                    }}
+                  />
+                </Text>
+              </Accordion.Item.Trigger>
+              <Accordion.Item.Content>
+                {attributes.length > 0 && (
+                  <ul>
+                    <Divider />
+                    {attributes.map((attribute, attributeIndex) => (
+                      <React.Fragment key={attribute.id}>
+                        {attributeIndex > 0 && <Divider />}
+                        <AttributeListItem
+                          attribute={attribute}
+                          errors={errors}
+                          attributeValues={attributeValues}
+                          onAttributeSelectBlur={onAttributeSelectBlur}
+                          richTextGetters={richTextGetters}
+                          {...props}
+                        />
+                      </React.Fragment>
+                    ))}
+                  </ul>
+                )}
+              </Accordion.Item.Content>
+            </Accordion.Item>
+          </Accordion>
         </Box>
       </DashboardCard.Content>
     </DashboardCard>

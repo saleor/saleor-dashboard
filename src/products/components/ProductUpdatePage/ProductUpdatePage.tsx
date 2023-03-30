@@ -53,7 +53,7 @@ import { useIntl } from "react-intl";
 import { getChoices } from "../../utils/data";
 import { ProductDetailsForm } from "../ProductDetailsForm";
 import ProductMedia from "../ProductMedia";
-import ProductOrganization from "../ProductOrganization";
+import { ProductOrganization } from "../ProductOrganization";
 import ProductTaxes from "../ProductTaxes";
 import ProductVariants from "../ProductVariants";
 import ProductUpdateForm from "./form";

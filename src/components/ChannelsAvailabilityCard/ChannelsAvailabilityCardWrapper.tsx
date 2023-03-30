@@ -1,13 +1,10 @@
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
-import Hr from "@dashboard/components/Hr";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Box, Button, Divider, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { useStyles } from "./styles";
+import { DashboardCard } from "../Card";
 
 export interface ChannelsAvailabilityWrapperProps {
   selectedChannelsCount: number;
@@ -17,7 +14,9 @@ export interface ChannelsAvailabilityWrapperProps {
   openModal: () => void;
 }
 
-export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperProps> = props => {
+export const ChannelsAvailabilityCardWrapper: React.FC<
+  ChannelsAvailabilityWrapperProps
+> = props => {
   const {
     selectedChannelsCount,
     allChannelsCount,
@@ -26,7 +25,6 @@ export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperPr
     openModal,
   } = props;
   const intl = useIntl();
-  const classes = useStyles({});
   const channelsAvailabilityText = intl.formatMessage(
     {
       id: "vY2lpx",
@@ -41,43 +39,41 @@ export const ChannelsAvailabilityWrapper: React.FC<ChannelsAvailabilityWrapperPr
   );
 
   return (
-    <>
-      <Card>
-        <CardTitle
-          title={intl.formatMessage({
+    <DashboardCard>
+      <DashboardCard.Title>
+        <Box display="flex" justifyContent="space-between">
+          {intl.formatMessage({
             id: "5A6/2C",
             defaultMessage: "Availability",
             description: "section header",
           })}
-          toolbar={
-            <RequirePermissions requiredPermissions={managePermissions}>
-              <Button
-                onClick={openModal}
-                data-test-id="channels-availability-manage-button"
-              >
-                {intl.formatMessage({
-                  id: "2i81/P",
-                  defaultMessage: "Manage",
-                  description: "section header button",
-                })}
-              </Button>
-            </RequirePermissions>
-          }
-        />
-        <CardContent className={classes.card}>
-          {!!channelsAvailabilityText && (
-            <>
-              <Typography className={classes.channelInfo}>
-                {channelsAvailabilityText}
-              </Typography>
-              <Hr className={classes.hr} />
-            </>
-          )}
+          <RequirePermissions requiredPermissions={managePermissions}>
+            <Button
+              onClick={openModal}
+              data-test-id="channels-availability-manage-button"
+              type="button"
+              variant="secondary"
+            >
+              {intl.formatMessage({
+                id: "2i81/P",
+                defaultMessage: "Manage",
+                description: "section header button",
+              })}
+            </Button>
+          </RequirePermissions>
+        </Box>
+      </DashboardCard.Title>
+      <DashboardCard.Content>
+        {!!channelsAvailabilityText && (
+          <>
+            <Text>{channelsAvailabilityText}</Text>
+            <Divider />
+          </>
+        )}
+        <Box display="flex" flexDirection="column" gap={8}>
           {children}
-        </CardContent>
-      </Card>
-    </>
+        </Box>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
-
-export default ChannelsAvailabilityWrapper;
