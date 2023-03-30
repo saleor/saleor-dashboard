@@ -111,7 +111,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const intl = useIntl();
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
-  const [isFilterPresetOpen] = useState(false);
+  const [isFilterPresetOpen, seFilterPresetOpen] = useState(false);
 
   const filterDependency = filterStructure.find(getByName("channel"));
 
@@ -159,6 +159,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               activePreset={currentTab}
               onSelectAll={onAll}
               onSave={onTabSave}
+              isOpen={isFilterPresetOpen}
+              onOpenChange={seFilterPresetOpen}
               selectAllLabel={intl.formatMessage({
                 id: "aFLtLk",
                 defaultMessage: "All Products",
