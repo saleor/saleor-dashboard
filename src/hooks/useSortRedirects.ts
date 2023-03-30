@@ -37,6 +37,7 @@ export function useSortRedirects<SortField extends string>({
         asc: hasQuery ? false : params.asc,
         sort: hasQuery ? sortWithQuery : sortWithoutQuery,
       }),
+      { replace: true },
     );
   }, [params.query]);
 
@@ -47,6 +48,7 @@ export function useSortRedirects<SortField extends string>({
           ...params,
           sort: defaultSortField,
         }),
+        { replace: true },
       );
     }
   }, [params]);
