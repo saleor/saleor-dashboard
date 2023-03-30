@@ -189,6 +189,7 @@ export function useAuthProvider({
         }
       } else {
         setErrors(["externalLoginError"]);
+        await handleLogout();
       }
 
       await logoutNonStaffUser(result.data.externalObtainAccessTokens);
