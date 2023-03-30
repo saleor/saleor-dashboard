@@ -50,9 +50,9 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
       <DialogTitle disableTypography>
         <FormattedMessage
-          id="liLrVs"
-          defaultMessage="Save Custom Search"
-          description="save filter tab, header"
+          id="xYgF+U"
+          defaultMessage="Save View Preset"
+          description="save preset, header"
         />
       </DialogTitle>
       <Form initial={initialForm} onSubmit={handleErrors}>
@@ -63,9 +63,9 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
                 autoFocus
                 fullWidth
                 label={intl.formatMessage({
-                  id: "QcIFCs",
-                  defaultMessage: "Search Name",
-                  description: "save search tab",
+                  id: "YMaha8",
+                  defaultMessage: "Preset Name",
+                  description: "save preset name",
                 })}
                 name={"name" as keyof SaveFilterTabDialogFormData}
                 value={data.name}
@@ -75,7 +75,9 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
               />
             </DialogContent>
             <DialogActions>
-              <BackButton onClick={onClose} />
+              <BackButton onClick={onClose}>
+                <FormattedMessage {...buttonMessages.cancel} />
+              </BackButton>
               <ConfirmButton
                 transitionState={confirmButtonState}
                 onClick={submit}

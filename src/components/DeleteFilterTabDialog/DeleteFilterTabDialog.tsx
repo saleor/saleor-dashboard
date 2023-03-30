@@ -26,19 +26,20 @@ const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
     <ActionDialog
       open={open}
       confirmButtonState={confirmButtonState}
+      showCancelButton
       onClose={onClose}
       onConfirm={onSubmit}
       title={intl.formatMessage({
-        id: "7NfoiJ",
-        defaultMessage: "Delete Search",
-        description: "custom search delete, dialog header",
+        id: "co/w8e",
+        defaultMessage: "Delete Preset",
+        description: "custom preset delete, dialog header",
       })}
       variant="delete"
     >
       <DialogContentText>
         <FormattedMessage
-          id="UaYJJ8"
-          defaultMessage="Are you sure you want to delete {name} search tab?"
+          id="U5CH0u"
+          defaultMessage="Are you sure you want to delete {name} preset?"
           values={{
             name: <strong>{tabName}</strong>,
           }}
