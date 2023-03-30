@@ -1,4 +1,5 @@
 import { commonMessages } from "@dashboard/intl";
+import { Tooltip } from "@saleor/macaw-ui";
 import {
   Box,
   Button,
@@ -11,7 +12,7 @@ import {
   vars,
 } from "@saleor/macaw-ui/next";
 import React, { MouseEvent } from "react";
-import { FormattedMessage } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { FilterPresetItem } from "./FilterPresetItem";
 
@@ -42,6 +43,8 @@ export const FilterPresetsSelect = ({
   onOpenChange,
   presetsChanged,
 }: FilterPresetsSelectProps) => {
+  const intl = useIntl();
+
   const getLabel = () => {
     if (!activePreset) {
       return selectAllLabel;
@@ -172,15 +175,22 @@ export const FilterPresetsSelect = ({
         </Button>
       )}
       {presetsChanged && (
-        <Button
-          className={sprinkles({
-            marginLeft: 6,
+        <Tooltip
+          title={intl.formatMessage({
+            defaultMessage: "Save preset",
+            id: "iLQJv1",
           })}
-          icon={<PlusIcon />}
-          onClick={onSave}
-          variant="secondary"
-          size="small"
-        ></Button>
+        >
+          <Button
+            className={sprinkles({
+              marginLeft: 6,
+            })}
+            icon={<PlusIcon />}
+            onClick={onSave}
+            variant="secondary"
+            size="small"
+          ></Button>
+        </Tooltip>
       )}
     </Box>
   );
