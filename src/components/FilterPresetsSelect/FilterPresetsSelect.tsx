@@ -60,8 +60,18 @@ export const FilterPresetsSelect = ({
     onSelect(index);
   };
 
-  return (
-    <Box display="flex" alignItems="center">
+  const renderDropdown = () => {
+    if (!savedPresets?.length) {
+      return (
+        <Box display="flex" alignItems="center">
+          <Text variant="title" size="small">
+            {selectAllLabel}
+          </Text>
+        </Box>
+      );
+    }
+
+    return (
       <Dropdown
         open={isOpen}
         onOpenChange={open => {
@@ -73,8 +83,11 @@ export const FilterPresetsSelect = ({
         <Dropdown.Trigger>
           <DropdownButton
             variant="text"
-            size="small"
+            size="medium"
             data-test-id="show-saved-filters-button"
+            style={{
+              borderColor: isOpen ? vars.colors.border.brandDefault : undefined,
+            }}
           >
             <Box
               __maxWidth="200px"
@@ -82,7 +95,9 @@ export const FilterPresetsSelect = ({
               textOverflow="ellipsis"
               whiteSpace="nowrap"
             >
-              {getLabel()}
+              <Text variant="title" size="small">
+                {getLabel()}
+              </Text>
             </Box>
           </DropdownButton>
         </Dropdown.Trigger>
@@ -138,6 +153,12 @@ export const FilterPresetsSelect = ({
           </Box>
         </Dropdown.Content>
       </Dropdown>
+    );
+  };
+
+  return (
+    <Box display="flex" alignItems="center">
+      {renderDropdown()}
       {presetsChanged && activePreset && (
         <Button
           className={sprinkles({

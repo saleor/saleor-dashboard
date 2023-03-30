@@ -146,7 +146,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           alignItems="center"
         >
           <Box display="flex">
-            <Box marginX={7} display="flex" alignItems="center">
+            <Box marginX={6} display="flex" alignItems="center">
               <ChevronRightIcon />
             </Box>
 
