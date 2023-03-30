@@ -136,7 +136,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     <ListPageLayout>
       <TopNav
         withoutBorder
-        isLineToRight={false}
+        isAlignToRight={false}
         title={intl.formatMessage(sectionNames.products)}
       >
         <Box
@@ -252,11 +252,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             onFilterAttributeFocus={onFilterAttributeFocus}
             onSearchChange={onSearchChange}
             filterStructure={filterStructure}
-            selectAllLabel={intl.formatMessage({
-              id: "aFLtLk",
-              defaultMessage: "All Products",
-              description: "tab name",
-            })}
             searchPlaceholder={intl.formatMessage({
               id: "kIvvax",
               defaultMessage: "Search Products...",

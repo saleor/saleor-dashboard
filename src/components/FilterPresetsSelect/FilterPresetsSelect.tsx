@@ -1,3 +1,4 @@
+import { commonMessages } from "@dashboard/intl";
 import {
   Box,
   Button,
@@ -10,6 +11,7 @@ import {
   vars,
 } from "@saleor/macaw-ui/next";
 import React, { MouseEvent } from "react";
+import { FormattedMessage } from "react-intl";
 
 import { FilterPresetItem } from "./FilterPresetItem";
 
@@ -145,7 +147,7 @@ export const FilterPresetsSelect = ({
           variant="secondary"
           size="small"
         >
-          Update
+          <FormattedMessage {...commonMessages.update} />
         </Button>
       )}
       {presetsChanged && (

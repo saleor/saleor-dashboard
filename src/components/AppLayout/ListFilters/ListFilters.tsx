@@ -13,7 +13,6 @@ export interface ListFiltersProps<TKeys extends string = string>
   errorMessages?: FilterErrorMessages<TKeys>;
   filterStructure: IFilter<TKeys>;
   actions?: ReactNode;
-  selectAllLabel: string;
 }
 
 export const ListFilters = ({
