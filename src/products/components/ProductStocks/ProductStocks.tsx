@@ -19,10 +19,10 @@ import {
   Box,
   Button,
   Checkbox,
-  CloseIcon,
   Dropdown,
   Input,
   List,
+  PlusIcon,
   sprinkles,
   Text,
   TrashBinIcon,
@@ -313,7 +313,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                       <TableCell style={{ paddingRight: vars.space[9] }}>
                         <Button
                           type="button"
-                          icon={<CloseIcon />}
+                          icon={<PlusIcon />}
                           variant="secondary"
                         />
                       </TableCell>

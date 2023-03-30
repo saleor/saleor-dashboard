@@ -16,7 +16,7 @@ import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
 import { DashboardCard } from "../Card";
-import AttributeRow from "./AttributeRow";
+import { AttributeListItem } from "./AttributeListItem";
 import { AttributeRowHandlers, VariantAttributeScope } from "./types";
 
 export interface AttributeInputData {
@@ -93,25 +93,19 @@ export const Attributes: React.FC<AttributesProps> = ({
                 {attributes.length > 0 && (
                   <ul>
                     <Divider />
-                    {attributes.map((attribute, attributeIndex) => {
-                      const error = errors.find(err =>
-                        err.attributes?.includes(attribute.id),
-                      );
-
-                      return (
-                        <React.Fragment key={attribute.id}>
-                          {attributeIndex > 0 && <Divider />}
-                          <AttributeRow
-                            attribute={attribute}
-                            attributeValues={attributeValues}
-                            error={error}
-                            onAttributeSelectBlur={onAttributeSelectBlur}
-                            richTextGetters={richTextGetters}
-                            {...props}
-                          />
-                        </React.Fragment>
-                      );
-                    })}
+                    {attributes.map((attribute, attributeIndex) => (
+                      <React.Fragment key={attribute.id}>
+                        {attributeIndex > 0 && <Divider />}
+                        <AttributeListItem
+                          attribute={attribute}
+                          errors={errors}
+                          attributeValues={attributeValues}
+                          onAttributeSelectBlur={onAttributeSelectBlur}
+                          richTextGetters={richTextGetters}
+                          {...props}
+                        />
+                      </React.Fragment>
+                    ))}
                   </ul>
                 )}
               </Accordion.Item.Content>
