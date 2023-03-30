@@ -13,7 +13,6 @@ import "./customCommands/sharedElementsOperations/progressBar.js";
 import "./customCommands/sharedElementsOperations/selects.js";
 import "./customCommands/sharedElementsOperations/tables";
 import "./customCommands/softAssertions";
-import "./customCommands/ordersOperations";
 import "./customCommands/user";
 import "@percy/cypress";
 
