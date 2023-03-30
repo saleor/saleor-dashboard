@@ -24,7 +24,7 @@ interface FilterPresetsSelectProps {
   onRemove: (filterIndex: number) => void;
   onUpdate: (tabName: string) => void;
   onSelect: (filterIndex: number) => void;
-  onOpenChange?: (open: boolean) => void;
+  onOpenChange?: (isOpen: boolean) => void;
 }
 
 export const FilterPresetsSelect = ({
@@ -45,11 +45,7 @@ export const FilterPresetsSelect = ({
       return selectAllLabel;
     }
 
-    if (activePreset) {
-      return savedPresets[activePreset - 1];
-    }
-
-    return "";
+    return savedPresets[activePreset - 1] ?? "";
   };
 
   const handleSelectPreset = (e: MouseEvent<HTMLElement>, index: number) => {
@@ -78,11 +74,18 @@ export const FilterPresetsSelect = ({
             size="small"
             data-test-id="show-saved-filters-button"
           >
-            {getLabel()}
+            <Box
+              __maxWidth="200px"
+              overflow="hidden"
+              textOverflow="ellipsis"
+              whiteSpace="nowrap"
+            >
+              {getLabel()}
+            </Box>
           </DropdownButton>
         </Dropdown.Trigger>
         <Dropdown.Content align="start">
-          <Box __width="195px">
+          <Box __maxWidth="250px" __minWidth="175px">
             <List
               padding={3}
               borderRadius={3}
