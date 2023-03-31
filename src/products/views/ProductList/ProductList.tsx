@@ -71,7 +71,6 @@ import { useSortRedirects } from "../../../hooks/useSortRedirects";
 import ProductListPage from "../../components/ProductListPage";
 import {
   deleteFilterTab,
-  getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
   getFilterTabs,
@@ -234,14 +233,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const handleTabChange = (tab: number) => {
     reset();
+    const qs = new URLSearchParams(getFilterTabs()[tab - 1]?.data ?? "");
+    qs.append("activeTab", tab.toString());
 
-    navigate(
-      productListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data,
-        presestesChanged: undefined,
-      }),
-    );
+    navigate(productListUrl() + qs.toString());
   };
 
   const handleFilterTabDelete = () => {
@@ -251,19 +246,25 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   };
 
   const handleFilterTabSave = (data: SaveFilterTabDialogFormData) => {
-    saveFilterTab(data.name, getActiveFilters(params));
+    const qs = new URLSearchParams(location.search);
+    qs.delete("action");
+    qs.delete("activeTab");
+
+    saveFilterTab(data.name, qs.toString());
     handleTabChange(tabs.length + 1);
   };
 
   const hanleFilterTabUpdate = (tabName: string) => {
-    updateFilterTab(tabName, getActiveFilters(params));
-    navigate(
-      productListUrl({
-        ...params,
-        presestesChanged: undefined,
-      }),
-      { replace: true },
-    );
+    const qs = new URLSearchParams(location.search);
+    const activeTab = qs.get("activeTab");
+
+    qs.delete("action");
+    qs.delete("activeTab");
+
+    updateFilterTab(tabName, qs.toString());
+
+    qs.append("activeTab", activeTab);
+    navigate(productListUrl() + qs.toString());
   };
 
   const handleSort = (field: ProductListUrlSortField, attributeId?: string) =>
@@ -371,6 +372,19 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     channelOpts,
   );
 
+  const DEFAULT_SEARCH = ["?asc=false&sort=name", "?asc=true&sort=name"];
+  const hasPresetsChanged = () => {
+    const activeTab = tabs[currentTab - 1];
+    const qs = new URLSearchParams(location.search);
+    qs.delete("activeTab");
+
+    return (
+      activeTab?.data !== qs.toString() &&
+      !DEFAULT_SEARCH.includes(location.search) &&
+      location.search !== ""
+    );
+  };
+
   const paginationValues = usePaginator({
     pageInfo: data?.products?.pageInfo,
     paginationState,
@@ -438,9 +452,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           openModal("delete-search");
         }}
         onTabChange={handleTabChange}
-        hasPresetsChanged={params.presestesChanged === "true"}
+        hasPresetsChanged={hasPresetsChanged()}
         initialSearch={params.query || ""}
-        tabs={getFilterTabs().map(tab => tab.name)}
+        tabs={tabs.map(tab => tab.name)}
         onExport={() => openModal("export")}
         selectedChannelId={selectedChannel?.id}
         columnQuery={availableInGridAttributesOpts.query}

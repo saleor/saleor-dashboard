@@ -162,7 +162,7 @@ export const FilterPresetsSelect = ({
   return (
     <Box display="flex" alignItems="center">
       {renderDropdown()}
-      {presetsChanged && activePreset && (
+      {presetsChanged && savedPresets.length > 0 && activePreset && (
         <Button
           className={sprinkles({
             marginLeft: 6,

@@ -39,13 +39,16 @@ function createFilterHandlers<
     if (!!cleanupFn) {
       cleanupFn();
     }
+    const filtersQueryParams = getFilterQueryParams(
+      filters,
+      getFilterQueryParam,
+    );
 
     navigate(
       createUrl({
         ...params,
-        ...getFilterQueryParams(filters, getFilterQueryParam),
+        ...filtersQueryParams,
         ...(!keepActiveTab && { activeTab: undefined }),
-        presestesChanged: "true",
       }),
     );
   };
@@ -75,7 +78,6 @@ function createFilterHandlers<
         before: undefined,
         ...(!keepActiveTab && { activeTab: undefined }),
         query: query?.trim(),
-        presestesChanged: "true",
       }),
     );
   };
