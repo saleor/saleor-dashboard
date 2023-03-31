@@ -67,9 +67,16 @@ export const FilterPresetsSelect = ({
     if (!savedPresets?.length) {
       return (
         <Box display="flex" alignItems="center">
-          <Text variant="title" size="small">
-            {selectAllLabel}
-          </Text>
+          <Tooltip
+            title={intl.formatMessage({
+              defaultMessage: "No saved presets",
+              id: "n4P6xi",
+            })}
+          >
+            <Text variant="title" size="small">
+              {selectAllLabel}
+            </Text>
+          </Tooltip>
         </Box>
       );
     }

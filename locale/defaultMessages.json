@@ -1289,10 +1289,6 @@
   "7NFfmz": {
     "string": "Products"
   },
-  "7NfoiJ": {
-    "context": "custom search delete, dialog header",
-    "string": "Delete Search"
-  },
   "7Oorx5": {
     "context": "navigator section header",
     "string": "Search in Catalog"
@@ -3935,10 +3931,6 @@
     "context": "dialog header",
     "string": "Delete Channel"
   },
-  "QcIFCs": {
-    "context": "save search tab",
-    "string": "Search Name"
-  },
   "QclvqG": {
     "context": "input label",
     "string": "Checkout line limit"
@@ -4390,6 +4382,9 @@
   "U2mOqA": {
     "string": "No vouchers found"
   },
+  "U5CH0u": {
+    "string": "Are you sure you want to delete {name} preset?"
+  },
   "U5Da30": {
     "string": "Warehouses"
   },
@@ -4453,9 +4448,6 @@
   "USS3Q7": {
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
-  },
-  "UaYJJ8": {
-    "string": "Are you sure you want to delete {name} search tab?"
   },
   "Uf3oHA": {
     "context": "add new menu item",
@@ -5071,6 +5063,10 @@
   "YMBn8d": {
     "context": "draft orders section name",
     "string": "Draft Orders"
+  },
+  "YMaha8": {
+    "context": "save preset name",
+    "string": "Preset Name"
   },
   "YQ3EXR": {
     "context": "product types section name",
@@ -5690,6 +5686,10 @@
     "context": "ChannelsSection select field placeholder",
     "string": "Add Channel"
   },
+  "co/w8e": {
+    "context": "custom preset delete, dialog header",
+    "string": "Delete Preset"
+  },
   "cpZLRH": {
     "context": "dialog header",
     "string": "Delete Shipping Zones"
@@ -6308,6 +6308,9 @@
     "context": "Transaction cancel button - return preauthorized amount to client",
     "string": "Cancel"
   },
+  "iLQJv1": {
+    "string": "Save preset"
+  },
   "iMJka8": {
     "string": "No pages found"
   },
@@ -6767,10 +6770,6 @@
     "context": "export items as csv file",
     "string": "Plain CSV file"
   },
-  "liLrVs": {
-    "context": "save filter tab, header",
-    "string": "Save Custom Search"
-  },
   "lit2zF": {
     "string": "Search Discounts"
   },
@@ -6931,6 +6930,9 @@
   "n3+6w5": {
     "context": "input helper text",
     "string": "Your customer won't be allowed to buy bigger quantity per checkout than shown here."
+  },
+  "n4P6xi": {
+    "string": "No saved presets"
   },
   "n5vskv": {
     "context": "customer's address book, header",
@@ -8321,6 +8323,10 @@
   "xWEFrR": {
     "context": "dialog content",
     "string": "This customer doesn't have any addresses in the address book. Provide address for order:"
+  },
+  "xYgF+U": {
+    "context": "save preset, header",
+    "string": "Save View Preset"
   },
   "xZhxBJ": {
     "context": "dialog header",
