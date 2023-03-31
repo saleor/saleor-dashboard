@@ -64,7 +64,7 @@ import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useSortRedirects } from "../../../hooks/useSortRedirects";
@@ -372,7 +372,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     channelOpts,
   );
 
-  const DEFAULT_SEARCH = ["?asc=false&sort=name", "?asc=true&sort=name"];
+  const DEFAULT_SEARCH = useMemo(
+    () => ["?asc=false&sort=name", "?asc=true&sort=name"],
+    [],
+  );
   const hasPresetsChanged = () => {
     const activeTab = tabs[currentTab - 1];
     const qs = new URLSearchParams(location.search);
@@ -383,6 +386,17 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       !DEFAULT_SEARCH.includes(location.search) &&
       location.search !== ""
     );
+  };
+
+  const getCurrenTab = (): number | undefined => {
+    const qs = new URLSearchParams(location.search);
+    qs.delete("activeTab");
+
+    if (DEFAULT_SEARCH.includes(location.search)) {
+      return undefined;
+    }
+
+    return currentTab;
   };
 
   const paginationValues = usePaginator({
@@ -406,7 +420,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           ) || []
         }
         currencySymbol={selectedChannel?.currencyCode || ""}
-        currentTab={currentTab}
+        currentTab={getCurrenTab()}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
         gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}

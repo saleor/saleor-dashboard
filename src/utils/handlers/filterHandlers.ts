@@ -48,7 +48,9 @@ function createFilterHandlers<
       createUrl({
         ...params,
         ...filtersQueryParams,
-        ...(!keepActiveTab && { activeTab: undefined }),
+        ...(!keepActiveTab && {
+          activeTab: undefined,
+        }),
       }),
     );
   };
@@ -70,14 +72,15 @@ function createFilterHandlers<
     if (!!cleanupFn) {
       cleanupFn();
     }
+    const trimmedQuery = query?.trim() ?? "";
 
     navigate(
       createUrl({
         ...params,
         after: undefined,
         before: undefined,
-        ...(!keepActiveTab && { activeTab: undefined }),
-        query: query?.trim(),
+        ...((!keepActiveTab || query === "") && { activeTab: undefined }),
+        query: trimmedQuery !== "" ? trimmedQuery : undefined,
       }),
     );
   };
