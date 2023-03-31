@@ -380,6 +380,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     const activeTab = tabs[currentTab - 1];
     const qs = new URLSearchParams(location.search);
     qs.delete("activeTab");
+    qs.delete("action");
 
     return (
       activeTab?.data !== qs.toString() &&
