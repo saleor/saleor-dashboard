@@ -45,7 +45,6 @@ import {
 } from "@dashboard/products/components/ProductListPage/utils";
 import ProductTypePickerDialog from "@dashboard/products/components/ProductTypePickerDialog";
 import {
-  defaultProductListSearchParams,
   productAddUrl,
   productListUrl,
   ProductListUrlDialog,
@@ -250,6 +249,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     const qs = new URLSearchParams(location.search);
     qs.delete("action");
     qs.delete("activeTab");
+    qs.delete("sort");
+    qs.delete("asc");
 
     saveFilterTab(data.name, qs.toString());
     handleTabChange(tabs.length + 1);
@@ -261,6 +262,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
     qs.delete("action");
     qs.delete("activeTab");
+    qs.delete("sort");
+    qs.delete("asc");
 
     updateFilterTab(tabName, qs.toString());
 
@@ -378,11 +381,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     const qs = new URLSearchParams(location.search);
     qs.delete("activeTab");
     qs.delete("action");
+    qs.delete("sort");
+    qs.delete("asc");
 
     return (
       activeTab?.data !== qs.toString() &&
-      defaultProductListSearchParams !== qs.toString() &&
-      location.search !== ""
+      location.search !== "" &&
+      qs.toString() !== ""
     );
   };
 
@@ -390,8 +395,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     const qs = new URLSearchParams(location.search);
     qs.delete("activeTab");
     qs.delete("action");
+    qs.delete("sort");
+    qs.delete("asc");
 
-    if (defaultProductListSearchParams === qs.toString()) {
+    if (qs.toString() === "") {
       return undefined;
     }
 

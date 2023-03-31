@@ -141,5 +141,3 @@ export const productImageUrl = (
   productImagePath(encodeURIComponent(productId), encodeURIComponent(imageId)) +
   "?" +
   stringifyQs(params);
-
-export const defaultProductListSearchParams = "asc=true&sort=name";
