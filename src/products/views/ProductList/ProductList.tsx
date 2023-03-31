@@ -45,6 +45,7 @@ import {
 } from "@dashboard/products/components/ProductListPage/utils";
 import ProductTypePickerDialog from "@dashboard/products/components/ProductTypePickerDialog";
 import {
+  defaultProductListSearchParams,
   productAddUrl,
   productListUrl,
   ProductListUrlDialog,
@@ -64,7 +65,7 @@ import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React, { useMemo, useState } from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useSortRedirects } from "../../../hooks/useSortRedirects";
@@ -372,10 +373,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     channelOpts,
   );
 
-  const DEFAULT_SEARCH = useMemo(
-    () => ["?asc=false&sort=name", "?asc=true&sort=name"],
-    [],
-  );
   const hasPresetsChanged = () => {
     const activeTab = tabs[currentTab - 1];
     const qs = new URLSearchParams(location.search);
@@ -384,7 +381,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
     return (
       activeTab?.data !== qs.toString() &&
-      !DEFAULT_SEARCH.includes(location.search) &&
+      defaultProductListSearchParams !== qs.toString() &&
       location.search !== ""
     );
   };
@@ -392,8 +389,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const getCurrenTab = (): number | undefined => {
     const qs = new URLSearchParams(location.search);
     qs.delete("activeTab");
+    qs.delete("action");
 
-    if (DEFAULT_SEARCH.includes(location.search)) {
+    if (defaultProductListSearchParams === qs.toString()) {
       return undefined;
     }
 
