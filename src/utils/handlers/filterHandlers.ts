@@ -79,7 +79,7 @@ function createFilterHandlers<
         ...params,
         after: undefined,
         before: undefined,
-        ...((!keepActiveTab || query === "") && { activeTab: undefined }),
+        ...(!keepActiveTab && { activeTab: undefined }),
         query: trimmedQuery !== "" ? trimmedQuery : undefined,
       }),
     );
