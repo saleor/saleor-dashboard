@@ -150,7 +150,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           <div>
             <FormattedMessage {...orderPaymentMessages.subtotal} />
             <div className={classes.leftmostRightAlignedElement}>
-              {<Money money={order?.subtotal.gross} /> ?? <Skeleton />}
+              {<Money money={order?.subtotal.net} /> ?? <Skeleton />}
             </div>
           </div>
           <div>

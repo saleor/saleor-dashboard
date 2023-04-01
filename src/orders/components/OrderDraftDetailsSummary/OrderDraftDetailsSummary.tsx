@@ -202,7 +202,7 @@ const OrderDraftDetailsSummary: React.FC<
         <tr>
           <td>{intl.formatMessage(messages.subtotal)}</td>
           <td className={classes.textRight}>
-            <Money money={subtotal.gross} />
+            <Money money={subtotal.net} />
           </td>
         </tr>
         <tr>

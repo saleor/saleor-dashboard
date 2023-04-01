@@ -53,7 +53,7 @@ const OrderSummaryCard: React.FC<OrderPaymentProps> = ({ order }) => {
         <SummaryList className={classes.list}>
           <SummaryLine
             text={<FormattedMessage {...orderSummaryMessages.subtotal} />}
-            money={order?.subtotal?.gross}
+            money={order?.subtotal?.net}
           />
           <SummaryLine
             text={<FormattedMessage {...orderSummaryMessages.shipping} />}
