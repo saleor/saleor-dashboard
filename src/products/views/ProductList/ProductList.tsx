@@ -58,6 +58,7 @@ import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { ListViews } from "@dashboard/types";
+import { prepareQs } from "@dashboard/utils/filters/qs";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
@@ -246,24 +247,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   };
 
   const handleFilterTabSave = (data: SaveFilterTabDialogFormData) => {
-    const qs = new URLSearchParams(location.search);
-    qs.delete("action");
-    qs.delete("activeTab");
-    qs.delete("sort");
-    qs.delete("asc");
+    const qs = prepareQs(location.search);
 
     saveFilterTab(data.name, qs.toString());
     handleTabChange(tabs.length + 1);
   };
 
   const hanleFilterTabUpdate = (tabName: string) => {
-    const qs = new URLSearchParams(location.search);
+    const qs = prepareQs(location.search);
     const activeTab = qs.get("activeTab");
-
-    qs.delete("action");
-    qs.delete("activeTab");
-    qs.delete("sort");
-    qs.delete("asc");
 
     updateFilterTab(tabName, qs.toString());
 
@@ -378,11 +370,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const hasPresetsChanged = () => {
     const activeTab = tabs[currentTab - 1];
-    const qs = new URLSearchParams(location.search);
-    qs.delete("activeTab");
-    qs.delete("action");
-    qs.delete("sort");
-    qs.delete("asc");
+    const qs = prepareQs(location.search);
 
     return (
       activeTab?.data !== qs.toString() &&
@@ -392,11 +380,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   };
 
   const getCurrenTab = (): number | undefined => {
-    const qs = new URLSearchParams(location.search);
-    qs.delete("activeTab");
-    qs.delete("action");
-    qs.delete("sort");
-    qs.delete("asc");
+    const qs = prepareQs(location.search);
 
     if (qs.toString() === "") {
       return undefined;
