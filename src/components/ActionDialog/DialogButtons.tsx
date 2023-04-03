@@ -30,7 +30,7 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
     onClose,
     children,
     showBackButton = true,
-    backButtonText = "",
+    backButtonText,
   } = props;
 
   const intl = useIntl();

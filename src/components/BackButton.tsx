@@ -10,7 +10,7 @@ interface BackButtonProps extends ButtonProps {
 
 const BackButton: React.FC<BackButtonProps> = ({ children, ...props }) => (
   <Button data-test-id="back" variant="secondary" color="text" {...props}>
-    {children ? children : <FormattedMessage {...buttonMessages.back} />}
+    {children ?? <FormattedMessage {...buttonMessages.back} />}
   </Button>
 );
 

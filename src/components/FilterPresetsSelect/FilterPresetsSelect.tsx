@@ -16,6 +16,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { FilterPresetItem } from "./FilterPresetItem";
 import { messages } from "./messages";
+import { getSeparatorWidth } from "./utils";
 
 interface FilterPresetsSelectProps {
   activePreset?: number;
@@ -142,7 +143,7 @@ export const FilterPresetsSelect = ({
                   marginY={3}
                   __backgroundColor={vars.colors.border.neutralHighlight}
                   __marginLeft={-4}
-                  __width="calc(100% + 8px)"
+                  __width={getSeparatorWidth("8px")}
                 />
               )}
               <Box display="flex" flexDirection="column" gap={2}>
