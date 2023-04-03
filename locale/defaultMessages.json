@@ -6311,9 +6311,6 @@
     "context": "Transaction cancel button - return preauthorized amount to client",
     "string": "Cancel"
   },
-  "iLQJv1": {
-    "string": "Save preset"
-  },
   "iMJka8": {
     "string": "No pages found"
   },
@@ -7655,6 +7652,9 @@
   "scHVdW": {
     "context": "button",
     "string": "Assign product"
+  },
+  "scTuDZ": {
+    "string": "Save search as preset"
   },
   "sdA14A": {
     "context": "Status label when object is published in a channel",
