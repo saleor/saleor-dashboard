@@ -14,7 +14,7 @@ export const messages = defineMessages({
     id: "iLQJv1",
   },
   noPresets: {
-    defaultMessage: "No saved presets",
-    id: "n4P6xi",
+    defaultMessage: "Saved search queries will appear here",
+    id: "eW36Jx",
   },
 });

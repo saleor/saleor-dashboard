@@ -5854,6 +5854,9 @@
   "eUjFjW": {
     "string": "Permission group created"
   },
+  "eW36Jx": {
+    "string": "Saved search queries will appear here"
+  },
   "eWV760": {
     "string": "Attribute with this slug already exists"
   },
@@ -6930,9 +6933,6 @@
   "n3+6w5": {
     "context": "input helper text",
     "string": "Your customer won't be allowed to buy bigger quantity per checkout than shown here."
-  },
-  "n4P6xi": {
-    "string": "No saved presets"
   },
   "n5vskv": {
     "context": "customer's address book, header",
