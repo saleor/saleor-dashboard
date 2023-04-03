@@ -1,11 +1,19 @@
+import { parse } from "qs";
+
 const paramsToRemove = ["activeTab", "action", "sort", "asc"];
 
-export const prepareQs = (searchQueary: string): URLSearchParams => {
-  const qs = new URLSearchParams(searchQueary);
+export const prepareQs = (searchQueary: string) => {
+  const paresedQs = parse(
+    searchQueary.startsWith("?") ? searchQueary.slice(1) : searchQueary,
+  );
+  const activeTab = paresedQs.activeTab;
 
   paramsToRemove.forEach(param => {
-    qs.delete(param);
+    delete paresedQs[param];
   });
 
-  return qs;
+  return {
+    activeTab,
+    paresedQs,
+  };
 };

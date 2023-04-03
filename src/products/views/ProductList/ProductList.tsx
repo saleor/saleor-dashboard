@@ -65,6 +65,7 @@ import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { stringify } from "qs";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -247,20 +248,19 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   };
 
   const handleFilterTabSave = (data: SaveFilterTabDialogFormData) => {
-    const qs = prepareQs(location.search);
+    const { paresedQs } = prepareQs(location.search);
 
-    saveFilterTab(data.name, qs.toString());
+    saveFilterTab(data.name, stringify(paresedQs));
     handleTabChange(tabs.length + 1);
   };
 
   const hanleFilterTabUpdate = (tabName: string) => {
-    const qs = prepareQs(location.search);
-    const activeTab = qs.get("activeTab");
+    const { paresedQs, activeTab } = prepareQs(location.search);
 
-    updateFilterTab(tabName, qs.toString());
+    updateFilterTab(tabName, stringify(paresedQs));
+    paresedQs.activeTab = activeTab;
 
-    qs.append("activeTab", activeTab);
-    navigate(productListUrl() + qs.toString());
+    navigate(productListUrl() + stringify(paresedQs));
   };
 
   const handleSort = (field: ProductListUrlSortField, attributeId?: string) =>
@@ -370,20 +370,20 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const hasPresetsChanged = () => {
     const activeTab = tabs[currentTab - 1];
-    const qs = prepareQs(location.search);
+    const { paresedQs } = prepareQs(location.search);
 
     return (
-      activeTab?.data !== qs.toString() &&
+      activeTab?.data !== stringify(paresedQs) &&
       location.search !== "" &&
-      qs.toString() !== ""
+      stringify(paresedQs) !== ""
     );
   };
 
   const getCurrenTab = (): number | undefined => {
-    const qs = prepareQs(location.search);
+    const { paresedQs } = prepareQs(location.search);
 
     // When there are no filters, we want to show All Products tab
-    if (qs.toString() === "") {
+    if (stringify(paresedQs) === "") {
       return undefined;
     }
 

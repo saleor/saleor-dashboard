@@ -5,6 +5,12 @@ describe("Filters: preapreQS", () => {
     const qs = prepareQs(
       "?category=1&activeTab=1&channel=usa&action=save-search&sort=name&asc=4",
     );
-    expect(qs.toString()).toEqual("category=1&channel=usa");
+    expect(qs).toEqual({
+      activeTab: "1",
+      paresedQs: {
+        category: "1",
+        channel: "usa",
+      },
+    });
   });
 });
