@@ -1,3 +1,4 @@
+import { buttonMessages } from "@dashboard/intl";
 import { DialogContentText } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
@@ -26,7 +27,7 @@ const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
     <ActionDialog
       open={open}
       confirmButtonState={confirmButtonState}
-      showCancelButton
+      backButtonText={intl.formatMessage(buttonMessages.cancel)}
       onClose={onClose}
       onConfirm={onSubmit}
       title={intl.formatMessage({

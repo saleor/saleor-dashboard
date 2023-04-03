@@ -14,7 +14,7 @@ export interface ActionDialogProps extends DialogProps {
   maxWidth?: Size | false;
   title: string;
   variant?: ActionDialogVariant;
-  showCancelButton?: boolean;
+  backButtonText?: string;
   onConfirm();
 }
 
@@ -25,12 +25,7 @@ const ActionDialog: React.FC<ActionDialogProps> = props => {
     <Dialog fullWidth onClose={onClose} open={open} maxWidth={maxWidth}>
       <DialogTitle disableTypography>{title}</DialogTitle>
       <DialogContent>{children}</DialogContent>
-      <DialogButtons
-        {...rest}
-        showBackButton={!rest.showCancelButton}
-        onClose={onClose}
-        variant={variant}
-      />
+      <DialogButtons {...rest} onClose={onClose} variant={variant} />
     </Dialog>
   );
 };
