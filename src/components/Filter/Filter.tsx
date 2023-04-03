@@ -14,7 +14,7 @@ import {
   InvalidFilters,
 } from "./types";
 import useFilter from "./useFilter";
-import { extractInvalidFilters } from "./utils";
+import { extractInvalidFilters, getSelectedFiltersAmount } from "./utils";
 
 export interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol?: string;
@@ -104,18 +104,7 @@ const Filter: React.FC<FilterProps> = props => {
   const isFilterActive = menu.some(filterElement => filterElement.active);
 
   const selectedFilterAmount = useMemo(
-    () =>
-      menu.reduce((acc, filterElement) => {
-        const dataFilterElement = data.find(
-          ({ name }) => name === filterElement.name,
-        );
-
-        if (!dataFilterElement) {
-          return acc;
-        }
-
-        return acc + (dataFilterElement.active ? 1 : 0);
-      }, 0),
+    () => getSelectedFiltersAmount(menu, data),
     [data, menu],
   );
 
