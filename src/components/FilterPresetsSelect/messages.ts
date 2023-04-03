@@ -9,4 +9,12 @@ export const messages = defineMessages({
     defaultMessage: "Filter preset",
     id: "3PVGWj",
   },
+  savePreset: {
+    defaultMessage: "Save preset",
+    id: "iLQJv1",
+  },
+  noPresets: {
+    defaultMessage: "No saved presets",
+    id: "n4P6xi",
+  },
 });

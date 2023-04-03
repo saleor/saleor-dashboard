@@ -15,6 +15,7 @@ import React, { MouseEvent } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { FilterPresetItem } from "./FilterPresetItem";
+import { messages } from "./messages";
 
 interface FilterPresetsSelectProps {
   activePreset?: number;
@@ -44,6 +45,9 @@ export const FilterPresetsSelect = ({
   presetsChanged,
 }: FilterPresetsSelectProps) => {
   const intl = useIntl();
+  const showUpdateButton =
+    presetsChanged && savedPresets.length > 0 && activePreset;
+  const showSaveButton = presetsChanged;
 
   const getLabel = () => {
     if (!activePreset) {
@@ -55,7 +59,7 @@ export const FilterPresetsSelect = ({
 
   const handleSelectPreset = (e: MouseEvent<HTMLElement>, index: number) => {
     const target = e.target as HTMLElement;
-    // Only allow selecting the preset if the user clicks on the list item or the span
+    // Prevent run onSelect when click on remove button
     if (!["LI", "SPAN"].includes(target.tagName)) {
       return;
     }
@@ -67,12 +71,7 @@ export const FilterPresetsSelect = ({
     if (!savedPresets?.length) {
       return (
         <Box display="flex" alignItems="center">
-          <Tooltip
-            title={intl.formatMessage({
-              defaultMessage: "No saved presets",
-              id: "n4P6xi",
-            })}
-          >
+          <Tooltip title={intl.formatMessage(messages.noPresets)}>
             <Text variant="title" size="small">
               {selectAllLabel}
             </Text>
@@ -169,7 +168,7 @@ export const FilterPresetsSelect = ({
   return (
     <Box display="flex" alignItems="center">
       {renderDropdown()}
-      {presetsChanged && savedPresets.length > 0 && activePreset && (
+      {showUpdateButton && (
         <Button
           className={sprinkles({
             marginLeft: 6,
@@ -181,13 +180,8 @@ export const FilterPresetsSelect = ({
           <FormattedMessage {...commonMessages.update} />
         </Button>
       )}
-      {presetsChanged && (
-        <Tooltip
-          title={intl.formatMessage({
-            defaultMessage: "Save preset",
-            id: "iLQJv1",
-          })}
-        >
+      {showSaveButton && (
+        <Tooltip title={intl.formatMessage(messages.savePreset)}>
           <Button
             className={sprinkles({
               marginLeft: 6,

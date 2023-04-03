@@ -382,6 +382,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const getCurrenTab = (): number | undefined => {
     const qs = prepareQs(location.search);
 
+    // When there are no filters, we want to show All Products tab
     if (qs.toString() === "") {
       return undefined;
     }
