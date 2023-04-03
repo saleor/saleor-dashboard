@@ -1,92 +1,39 @@
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { IconProps } from "@material-ui/core/Icon";
-import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-const useStyles = makeStyles(
-  theme => ({
-    cardContent: {
-      display: "grid",
-      gridColumnGap: theme.spacing(3),
-      gridTemplateColumns: "1fr 64px",
-      border: `1px solid ${vars.colors.border.neutralPlain}`,
-      borderRadius: vars.borderRadius[3],
-    },
-    cardSpacing: {
-      [theme.breakpoints.down("sm")]: {
-        marginBottom: theme.spacing(1),
-      },
-      marginBottom: theme.spacing(3),
-    },
-    cardSubtitle: {
-      fontSize: 12,
-      height: "20px",
-      lineHeight: 0.9,
-    },
-    cardTitle: {
-      fontSize: 20,
-      fontWeight: 500 as 500,
-    },
-    icon: {
-      color: theme.palette.primary.contrastText,
-      fontSize: 54,
-      margin: ".5rem .3rem",
-    },
-    iconBackground: {
-      backgroundColor: theme.palette.background.default,
-      borderRadius: "8px",
-      color: "white",
-      fontSize: "54px",
-      height: "100%",
-      padding: "10px 5px 0px 5px",
-      width: "100%",
-    },
-    value: {
-      textAlign: "right",
-    },
-  }),
-  { name: "HomeAnalyticsCard" },
-);
-
 interface HomeAnalyticsCardProps {
   testId?: string;
-  icon: React.ReactElement<IconProps>;
   title: string;
   children?: React.ReactNode;
 }
 
 const HomeAnalyticsCard: React.FC<HomeAnalyticsCardProps> = props => {
-  const { children, title, icon, testId } = props;
-
-  const classes = useStyles(props);
+  const { children, title, testId } = props;
 
   return (
-    <Card className={classes.cardSpacing}>
-      <CardContent className={classes.cardContent} data-test-id={testId}>
-        <div>
-          <Typography className={classes.cardTitle} variant="subtitle1">
-            {title}
-          </Typography>
-          <Typography
-            className={classes.cardSubtitle}
-            variant="caption"
-            color="textSecondary"
-          >
-            <FormattedMessage id="zWgbGg" defaultMessage="Today" />
-          </Typography>
-          <Typography
-            className={classes.value}
-            color="textPrimary"
-            variant="h4"
-          >
-            {children}
-          </Typography>
-        </div>
-        <div className={classes.iconBackground}>{icon}</div>
-      </CardContent>
-    </Card>
+    <Box
+      borderWidth={1}
+      borderStyle="solid"
+      borderColor="neutralPlain"
+      borderRadius={3}
+      padding={8}
+      display="flex"
+      justifyContent="space-between"
+      data-test-id={testId}
+    >
+      <Box display="flex" flexDirection="column" gap={2}>
+        <Text size="large" variant="body">
+          {title}
+        </Text>
+        <Text size="medium" variant="caption" color="iconNeutralPlain">
+          <FormattedMessage id="zWgbGg" defaultMessage="Today" />
+        </Text>
+      </Box>
+      <Text as="h4" variant="heading">
+        {children}
+      </Text>
+    </Box>
   );
 };
 HomeAnalyticsCard.displayName = "HomeAnalyticsCard";
