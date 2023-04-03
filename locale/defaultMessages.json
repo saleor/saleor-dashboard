@@ -1188,9 +1188,6 @@
     "context": "unassign collection from sale and save, button",
     "string": "Unassign and save"
   },
-  "6SL46U": {
-    "string": "by {author}"
-  },
   "6WRFp2": {
     "context": "order history message",
     "string": "Note was added to the order"
