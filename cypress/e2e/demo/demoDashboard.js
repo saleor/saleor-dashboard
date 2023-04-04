@@ -9,9 +9,9 @@ import { orderDraftCreateDemoResponse, urlList } from "../../fixtures";
 import { ordersOperationsHelpers } from "../../support/pages";
 
 describe("Dashboard demo site tests", () => {
-  it("should be able to log in via UI", () => {
+  it("should be able to log in via UI", { tags: ["@demo-dashboard"] }, () => {
     cy.addAliasToGraphRequest("Home")
-      .visit(urlList.dashboard)
+      .visit("/")
       .get(BUTTON_SELECTORS.submit)
       .should("be.visible")
       .click()
@@ -20,20 +20,24 @@ describe("Dashboard demo site tests", () => {
     cy.get(HOMEPAGE_SELECTORS.welcomeMessage).should("be.visible");
     cy.get(SHARED_ELEMENTS.notificationMessage).should("not.exist");
   });
-  it("should not be able to create new order", () => {
-    cy.addAliasToGraphRequest("OrderList");
-    cy.loginUserViaRequest().then(() => {
-      cy.visit(`${urlList.dashboard}/orders`).waitForRequestAndCheckIfNoErrors(
-        "@OrderList",
-      );
-      ordersOperationsHelpers.pickAndSelectChannelOnCreateOrderFormByIndex(1);
-      cy.addAliasToGraphRequest("OrderDraftCreate")
-        .clickSubmitButton()
-        .waitForRequestAndErrorMessage(
-          "@OrderDraftCreate",
-          orderDraftCreateDemoResponse,
+  it(
+    "should not be able to create new order",
+    { tags: ["@demo-dashboard"] },
+    () => {
+      cy.addAliasToGraphRequest("OrderList");
+      cy.loginUserViaRequest().then(() => {
+        cy.visit(`${urlList.orders}`).waitForRequestAndCheckIfNoErrors(
+          "@OrderList",
         );
-      cy.get(SHARED_ELEMENTS.notificationMessage).should("exist");
-    });
-  });
+        ordersOperationsHelpers.pickAndSelectChannelOnCreateOrderFormByIndex(1);
+        cy.addAliasToGraphRequest("OrderDraftCreate")
+          .clickSubmitButton()
+          .waitForRequestAndErrorMessage(
+            "@OrderDraftCreate",
+            orderDraftCreateDemoResponse,
+          );
+        cy.get(SHARED_ELEMENTS.notificationMessage).should("exist");
+      });
+    },
+  );
 });

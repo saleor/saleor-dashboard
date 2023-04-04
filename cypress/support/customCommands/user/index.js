@@ -31,7 +31,6 @@ Cypress.Commands.add(
     const mutation = `mutation TokenAuth{
     tokenCreate(email: "${user.email}", password: "${user.password}") {
       token
-      csrfToken
       refreshToken
       errors: errors {
         code
@@ -45,8 +44,8 @@ Cypress.Commands.add(
   }`;
     return cy.sendRequestWithQuery(mutation, null).then(resp => {
       window.localStorage.setItem(
-        "_saleorCSRFToken",
-        resp.body.data.tokenCreate.csrfToken,
+        "_saleorRefreshToken",
+        resp.body.data.tokenCreate.refreshToken,
       );
       window.sessionStorage.setItem(
         authorization,
