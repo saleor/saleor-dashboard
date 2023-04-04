@@ -50,7 +50,10 @@ import {
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     ListActions,
-    FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
+    Omit<
+      FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
+      "onTabDelete"
+    >,
     FetchMoreProps,
     SortPage<ProductListUrlSortField>,
     ChannelProps {
@@ -69,6 +72,7 @@ export interface ProductListPageProps
   onExport: () => void;
   onColumnQueryChange: (query: string) => void;
   onTabUpdate: (tabName: string) => void;
+  onTabDelete: (tabIndex: number) => void;
 }
 
 export type ProductListViewType = "datagrid" | "tile";
@@ -111,7 +115,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const intl = useIntl();
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
-  const [isFilterPresetOpen, seFilterPresetOpen] = useState(false);
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   const filterDependency = filterStructure.find(getByName("channel"));
 
@@ -160,10 +164,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               onSelectAll={onAll}
               onSave={onTabSave}
               isOpen={isFilterPresetOpen}
-              onOpenChange={seFilterPresetOpen}
+              onOpenChange={setFilterPresetOpen}
               selectAllLabel={intl.formatMessage({
-                id: "aFLtLk",
-                defaultMessage: "All Products",
+                id: "tCLTCb",
+                defaultMessage: "All products",
                 description: "tab name",
               })}
             />

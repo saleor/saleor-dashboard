@@ -50,8 +50,8 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
     <Dialog onClose={onClose} open={open} fullWidth maxWidth="sm">
       <DialogTitle disableTypography>
         <FormattedMessage
-          id="xYgF+U"
-          defaultMessage="Save View Preset"
+          id="P9YktI"
+          defaultMessage="Save view preset"
           description="save preset, header"
         />
       </DialogTitle>
@@ -63,8 +63,8 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
                 autoFocus
                 fullWidth
                 label={intl.formatMessage({
-                  id: "YMaha8",
-                  defaultMessage: "Preset Name",
+                  id: "zhnwl6",
+                  defaultMessage: "Preset name",
                   description: "save preset name",
                 })}
                 name={"name" as keyof SaveFilterTabDialogFormData}

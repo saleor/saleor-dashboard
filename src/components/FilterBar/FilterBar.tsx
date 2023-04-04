@@ -112,10 +112,7 @@ const FilterBar: React.FC<FilterBarProps> = props => {
             </Button>
           ) : (
             displayTabAction === "delete" && (
-              <Button
-                className={classes.tabActionButton}
-                onClick={() => onTabDelete()}
-              >
+              <Button className={classes.tabActionButton} onClick={onTabDelete}>
                 <FormattedMessage
                   id="QCwBUI"
                   defaultMessage="Delete Search"

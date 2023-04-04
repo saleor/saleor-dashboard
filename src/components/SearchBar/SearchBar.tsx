@@ -93,10 +93,7 @@ const SearchBar: React.FC<SearchBarProps> = props => {
             </Button>
           ) : (
             displayTabAction === "delete" && (
-              <Button
-                className={classes.tabActionButton}
-                onClick={() => onTabDelete()}
-              >
+              <Button className={classes.tabActionButton} onClick={onTabDelete}>
                 <FormattedMessage
                   id="QCwBUI"
                   defaultMessage="Delete Search"

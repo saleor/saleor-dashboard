@@ -55,7 +55,7 @@ export const FilterPresetsSelect = ({
       return selectAllLabel;
     }
 
-    return savedPresets[activePreset - 1] ?? "";
+    return savedPresets[activePreset - 1];
   };
 
   const handleSelectPreset = (e: MouseEvent<HTMLElement>, index: number) => {
@@ -99,13 +99,8 @@ export const FilterPresetsSelect = ({
               borderColor: isOpen ? vars.colors.border.brandDefault : undefined,
             }}
           >
-            <Box
-              __maxWidth="200px"
-              overflow="hidden"
-              textOverflow="ellipsis"
-              whiteSpace="nowrap"
-            >
-              <Text variant="title" size="small">
+            <Box __maxWidth="200px">
+              <Text ellipsis variant="title" size="small" display="block">
                 {getLabel()}
               </Text>
             </Box>
@@ -191,7 +186,7 @@ export const FilterPresetsSelect = ({
             onClick={onSave}
             variant="secondary"
             size="small"
-          ></Button>
+          />
         </Tooltip>
       )}
     </Box>

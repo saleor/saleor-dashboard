@@ -31,8 +31,8 @@ const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
       onClose={onClose}
       onConfirm={onSubmit}
       title={intl.formatMessage({
-        id: "co/w8e",
-        defaultMessage: "Delete Preset",
+        id: "xy66ru",
+        defaultMessage: "Delete preset",
         description: "custom preset delete, dialog header",
       })}
       variant="delete"

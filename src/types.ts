@@ -118,7 +118,7 @@ export interface TabPageProps {
   tabs: string[];
   onAll: () => void;
   onTabChange: (tab: number) => void;
-  onTabDelete: (tabIndex?: number) => void;
+  onTabDelete: () => void;
   onTabSave: () => void;
 }
 

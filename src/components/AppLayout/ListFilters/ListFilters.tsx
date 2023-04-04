@@ -29,7 +29,7 @@ export const ListFilters = ({
   <>
     <Box
       display="grid"
-      __gridTemplateColumns="repeat(2, 1fr)"
+      gridTemplateColumns={2}
       gap={7}
       paddingBottom={5}
       paddingX={9}

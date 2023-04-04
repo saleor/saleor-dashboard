@@ -2,6 +2,7 @@ import { IFilter } from "@dashboard/components/Filter";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
 import { commonMessages, sectionNames } from "@dashboard/intl";
+import { parseBoolean } from "@dashboard/misc";
 import { ProductListUrlFiltersAsDictWithMultipleValues } from "@dashboard/products/urls";
 import {
   AutocompleteFilterOpts,
@@ -19,7 +20,6 @@ import {
   createOptionsField,
   createPriceField,
 } from "@dashboard/utils/filters/fields";
-import { getBooleanFromString } from "@dashboard/utils/strings";
 import { defineMessages, IntlShape } from "react-intl";
 
 export const ProductFilterKeys = {
@@ -256,7 +256,7 @@ export function createFilterStructure(
         attr.slug,
         attr.name,
         Array.isArray(attr.value)
-          ? getBooleanFromString(attr.value[0])
+          ? parseBoolean(attr.value[0], undefined)
           : (attr.value as unknown) === "true",
         {
           positive: intl.formatMessage(commonMessages.yes),

@@ -3693,6 +3693,10 @@
   "P7PLVj": {
     "string": "Date"
   },
+  "P9YktI": {
+    "context": "save preset, header",
+    "string": "Save view preset"
+  },
   "PAqicb": {
     "context": "button",
     "string": "Cancel order"
@@ -5061,10 +5065,6 @@
     "context": "draft orders section name",
     "string": "Draft Orders"
   },
-  "YMaha8": {
-    "context": "save preset name",
-    "string": "Preset Name"
-  },
   "YQ3EXR": {
     "context": "product types section name",
     "string": "Product Types"
@@ -5306,10 +5306,6 @@
   "aEc9Ar": {
     "context": "gift card history message",
     "string": "Gift card balance was reset by {resetBy}"
-  },
-  "aFLtLk": {
-    "context": "tab name",
-    "string": "All Products"
   },
   "aHc89n": {
     "context": "select warehouse to restock items",
@@ -5682,10 +5678,6 @@
   "cnvyqW": {
     "context": "ChannelsSection select field placeholder",
     "string": "Add Channel"
-  },
-  "co/w8e": {
-    "context": "custom preset delete, dialog header",
-    "string": "Delete Preset"
   },
   "cpZLRH": {
     "context": "dialog header",
@@ -7733,6 +7725,10 @@
     "context": "webhook input help text",
     "string": "secret key is used to create a hash signature with each payload. *optional field"
   },
+  "tCLTCb": {
+    "context": "tab name",
+    "string": "All products"
+  },
   "tEdFmZ": {
     "context": "notification title",
     "string": "System update required"
@@ -8321,10 +8317,6 @@
     "context": "dialog content",
     "string": "This customer doesn't have any addresses in the address book. Provide address for order:"
   },
-  "xYgF+U": {
-    "context": "save preset, header",
-    "string": "Save View Preset"
-  },
   "xZhxBJ": {
     "context": "dialog header",
     "string": "Assign Products"
@@ -8369,6 +8361,10 @@
   },
   "xxQxLE": {
     "string": "Email Address"
+  },
+  "xy66ru": {
+    "context": "custom preset delete, dialog header",
+    "string": "Delete preset"
   },
   "y/UWBR": {
     "string": "There is no address to show for this customer"
@@ -8590,6 +8586,10 @@
   "zgqPGF": {
     "context": "attribute list",
     "string": "Attribute {name}"
+  },
+  "zhnwl6": {
+    "context": "save preset name",
+    "string": "Preset name"
   },
   "zjHH6b": {
     "context": "sale start date",

@@ -2,9 +2,9 @@ import { parse } from "qs";
 
 const paramsToRemove = ["activeTab", "action", "sort", "asc"];
 
-export const prepareQs = (searchQueary: string) => {
+export const prepareQs = (searchQuery: string) => {
   const paresedQs = parse(
-    searchQueary.startsWith("?") ? searchQueary.slice(1) : searchQueary,
+    searchQuery.startsWith("?") ? searchQuery.slice(1) : searchQuery,
   );
   const activeTab = paresedQs.activeTab;
 
