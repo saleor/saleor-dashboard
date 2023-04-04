@@ -15,6 +15,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -46,6 +47,11 @@ const useStyles = makeStyles(
     },
     tableRow: {
       cursor: "pointer",
+      /* Table to be replaced with Box */
+      "& .MuiTableCell-root": {
+        paddingLeft: `${vars.space[8]} !important`,
+        paddingRight: `${vars.space[8]} !important`,
+      },
     },
     cardContent: {
       padding: 0,
