@@ -1,4 +1,9 @@
 import {
+  extensionMountPoints,
+  mapToMenuItemsForProductDetails,
+  useExtensions,
+} from "@dashboard/apps/hooks/useExtensions";
+import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
 } from "@dashboard/attributes/utils/data";
@@ -9,6 +14,7 @@ import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
 import CardMenu from "@dashboard/components/CardMenu";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata from "@dashboard/components/Metadata/Metadata";
 import Savebar from "@dashboard/components/Savebar";
@@ -35,18 +41,12 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { maybe } from "@dashboard/misc";
-import {
-  extensionMountPoints,
-  mapToMenuItemsForProductDetails,
-  useExtensions,
-} from "@dashboard/new-apps/hooks/useExtensions";
 import ProductExternalMediaDialog from "@dashboard/products/components/ProductExternalMediaDialog";
 import { defaultGraphiQLQuery } from "@dashboard/products/queries";
 import { productImageUrl, productListUrl } from "@dashboard/products/urls";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
 import { UseProductUpdateHandlerError } from "@dashboard/products/views/ProductUpdate/handlers/useProductUpdateHandler";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
-import { playgroundOpenHandler } from "@dashboard/utils/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -242,12 +242,13 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
     productId,
   );
 
-  const openPlaygroundURL = playgroundOpenHandler({
-    query: defaultGraphiQLQuery,
-    headers: "",
-    operationName: "",
-    variables: `{ "id": "${product?.id}" }`,
-  });
+  const context = useDevModeContext();
+
+  const openPlaygroundURL = () => {
+    context.setDevModeContent(defaultGraphiQLQuery);
+    context.setVariables(`{ "id": "${product?.id}" }`);
+    context.setDevModeVisibility(true);
+  };
 
   return (
     <ProductUpdateForm

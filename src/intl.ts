@@ -151,6 +151,10 @@ export const commonMessages = defineMessages({
     id: "RrCui3",
     defaultMessage: "Summary",
   },
+  type: {
+    defaultMessage: "Type",
+    id: "+U6ozc",
+  },
   translationAttributes: {
     id: "+xTpT1",
     defaultMessage: "Attributes",
@@ -186,6 +190,14 @@ export const commonMessages = defineMessages({
     id: "z9c6/C",
     defaultMessage: "Deprecated",
   },
+  pspReference: {
+    defaultMessage: "PSP Reference",
+    id: "kMziE/",
+  },
+  pspReferenceOptional: {
+    defaultMessage: "PSP Reference (optional)",
+    id: "GJwcSd",
+  },
   settings: {
     id: "D3idYv",
     defaultMessage: "Settings",
@@ -194,6 +206,10 @@ export const commonMessages = defineMessages({
     id: "2HfSiT",
     defaultMessage: "No. of rows",
     description: "pagination",
+  },
+  product: {
+    defaultMessage: "Product",
+    id: "x/ZVlU",
   },
 });
 
@@ -235,6 +251,11 @@ export const buttonMessages = defineMessages({
   approve: {
     id: "59XppT",
     defaultMessage: "Approve",
+    description: "button",
+  },
+  apply: {
+    defaultMessage: "Apply",
+    id: "iBW3rG",
     description: "button",
   },
   assign: {
@@ -424,16 +445,6 @@ export const sectionNames = defineMessages({
     id: "4JW9iJ",
     defaultMessage: "Home",
     description: "home section name",
-  },
-  marketplace: {
-    id: "ti4Hqw",
-    defaultMessage: "Saleor Apps Marketplace",
-    description: "saleor marketplace section name",
-  },
-  appTemplateGallery: {
-    id: "M2dPzK",
-    defaultMessage: "App Templates Gallery",
-    description: "app template gallery section name",
   },
   navigation: {
     id: "9C7PZE",

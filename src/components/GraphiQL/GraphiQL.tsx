@@ -241,7 +241,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
         </div>
         <div className="graphiql-sidebar-section"></div>
       </div>
-      <div className="graphiql-main">
+      <div className={clsx("graphiql-main", classes.main)}>
         <div
           ref={pluginResize.firstRef}
           style={{
@@ -279,10 +279,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
                       aria-label="Query Editor"
                       style={{ borderBottom: 0 }}
                     >
-                      <div
-                        className="graphiql-query-editor-wrapper"
-                        style={{ fontSize: "1.6rem" }}
-                      >
+                      <div className="graphiql-query-editor-wrapper">
                         <QueryEditor
                           editorTheme={props.editorTheme}
                           keyMap={props.keyMap}

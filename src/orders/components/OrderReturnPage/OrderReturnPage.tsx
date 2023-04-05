@@ -1,16 +1,25 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { OrderErrorFragment } from "@dashboard/graphql";
+import { useFlags } from "@dashboard/hooks/useFlags";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
+import {
+  OrderBothTypes,
+  orderHasTransactions,
+  OrderSharedType,
+} from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import OrderAmount from "../OrderRefundReturnAmount";
 import { getReturnProductsAmountValues } from "../OrderRefundReturnAmount/utils";
+import { SubmitCard } from "./components";
 import OrderRefundForm, { OrderRefundSubmitData } from "./form";
+import { orderReturnMessages } from "./messages";
 import ItemsCard from "./OrderReturnRefundItemsCard/ReturnItemsCard";
 import {
   getFulfilledFulfillemnts,
@@ -19,28 +28,18 @@ import {
   getWaitingFulfillments,
 } from "./utils";
 
-const messages = defineMessages({
-  appTitle: {
-    id: "rVIlBs",
-    defaultMessage: "Order #{orderNumber}",
-    description: "page header with order number",
-  },
-  pageTitle: {
-    id: "BBIQxQ",
-    defaultMessage: "Order no. {orderNumber} - Replace/Return",
-    description: "page header",
-  },
-});
-
 export interface OrderReturnPageProps {
-  order: OrderDetailsFragment;
+  order: OrderBothTypes;
   loading: boolean;
   errors?: OrderErrorFragment[];
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
+  submitStatus: ConfirmButtonTransitionState;
 }
 
 const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
-  const { order, loading, errors = [], onSubmit } = props;
+  const { order, loading, errors = [], onSubmit, submitStatus } = props;
+
+  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   const intl = useIntl();
   return (
@@ -49,7 +48,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
         <DetailPageLayout>
           <TopNav
             href={orderUrl(order?.id)}
-            title={intl.formatMessage(messages.pageTitle, {
+            title={intl.formatMessage(orderReturnMessages.pageTitle, {
               orderNumber: order?.number,
             })}
           />
@@ -59,7 +58,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 <ItemsCard
                   errors={errors}
                   order={order}
-                  lines={getUnfulfilledLines(order)}
+                  lines={getUnfulfilledLines(order as OrderSharedType)}
                   itemsQuantities={data.unfulfilledItemsQuantities}
                   itemsSelections={data.itemsToBeReplaced}
                   onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
@@ -72,7 +71,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
               </>
             )}
             {renderCollection(
-              getWaitingFulfillments(order),
+              getWaitingFulfillments(order as OrderSharedType),
               ({ id, lines }) => (
                 <React.Fragment key={id}>
                   <ItemsCard
@@ -93,7 +92,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
               ),
             )}
             {renderCollection(
-              getFulfilledFulfillemnts(order),
+              getFulfilledFulfillemnts(order as OrderSharedType),
               ({ id, lines }) => (
                 <React.Fragment key={id}>
                   <ItemsCard
@@ -115,18 +114,26 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
             )}
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
-            <OrderAmount
-              allowNoRefund
-              isReturn
-              amountData={getReturnProductsAmountValues(order, data)}
-              data={data}
-              order={order}
-              disableSubmitButton={isSaveDisabled}
-              disabled={loading}
-              errors={errors}
-              onChange={change}
-              onRefund={submit}
-            />
+            {orderHasTransactions(order, orderTransactions.enabled) ? (
+              <SubmitCard
+                disabled={isSaveDisabled}
+                onSubmit={submit}
+                submitStatus={submitStatus}
+              />
+            ) : (
+              <OrderAmount
+                allowNoRefund
+                isReturn
+                amountData={getReturnProductsAmountValues(order, data)}
+                data={data}
+                order={order}
+                disableSubmitButton={isSaveDisabled}
+                disabled={loading}
+                errors={errors}
+                onChange={change}
+                onRefund={submit}
+              />
+            )}
           </DetailPageLayout.RightSidebar>
         </DetailPageLayout>
       )}

@@ -1,5 +1,6 @@
 export const PRODUCTS_LIST = {
   productsList: "[data-test-id^='id-']",
+  dataGridTable: "[data-testid='data-grid-canvas']",
   productsNames: "[data-test-id='name']",
   dialogProductTypeInput: "[data-test-id='dialog-product-type']",
   createProductBtn: "[data-test-id='add-product']",
@@ -47,8 +48,6 @@ export const PRODUCTS_LIST = {
     },
     filterBySearchInput: '[data-test-id="filter-field-autocomplete-input"]',
   },
-  nextPageButton: "[data-test-id='button-pagination-next']",
-  previousPagePagination: "[data-test-id='button-pagination-back']",
   resultsOnPageSelect: "[data-test-id='PaginationRowNumberSelect']",
   rowNumberOption: "[data-test-id='rowNumberOption']",
 };

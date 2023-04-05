@@ -15,6 +15,9 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
+import AppsSection from "./apps";
+import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
+import { AppSections } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
 import Auth, { useUser } from "./auth";
@@ -30,6 +33,7 @@ import useAppChannel, {
   AppChannelProvider,
 } from "./components/AppLayout/AppChannelContext";
 import { DateProvider } from "./components/Date";
+import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
 import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { LocaleProvider } from "./components/Locale";
@@ -53,13 +57,8 @@ import HomePage from "./home";
 import { FlagsServiceProvider } from "./hooks/useFlags/flagsService";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
-import MarketplaceSection from "./marketplace";
-import { marketplaceUrl } from "./marketplace/urls";
 import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
-import AppsSection from "./new-apps";
-import { ExternalAppProvider } from "./new-apps/components/ExternalAppContext";
-import { AppSections } from "./new-apps/urls";
 import { NotFound } from "./NotFound";
 import OrdersSection from "./orders";
 import PageSection from "./pages";
@@ -122,7 +121,9 @@ const App: React.FC = () => (
                             <AppChannelProvider>
                               <ExternalAppProvider>
                                 <ExitFormDialogProvider>
-                                  <Routes />
+                                  <DevModeProvider>
+                                    <Routes />
+                                  </DevModeProvider>
                                 </ExitFormDialogProvider>
                               </ExternalAppProvider>
                             </AppChannelProvider>
@@ -284,11 +285,6 @@ const Routes: React.FC = () => {
                 permissions={[PermissionEnum.MANAGE_APPS]}
                 path={AppSections.appsSection}
                 component={AppsSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_APPS]}
-                path={marketplaceUrl}
-                component={MarketplaceSection}
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_PRODUCTS]}

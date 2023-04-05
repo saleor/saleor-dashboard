@@ -3,7 +3,7 @@
 
 import faker from "faker";
 
-import { CUSTOMER_DETAILS } from "../elements/customers/customer-details";
+import { CUSTOMER_DETAILS_SELECTORS } from "../elements/customers/customer-details";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { customerDetailsUrl } from "../fixtures/urlList";
 import {
@@ -76,7 +76,7 @@ describe("Tests for customer registration", () => {
           cy.clearSessionData()
             .loginUserViaRequest()
             .visit(customerDetailsUrl(user.id))
-            .get(CUSTOMER_DETAILS.isActiveCheckbox)
+            .get(CUSTOMER_DETAILS_SELECTORS.isActiveCheckbox)
             .click()
             .get(BUTTON_SELECTORS.confirm)
             .click()

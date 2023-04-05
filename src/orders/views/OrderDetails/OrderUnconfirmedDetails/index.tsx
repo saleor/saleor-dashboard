@@ -9,11 +9,21 @@ import {
   useCustomerAddressesQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
+import {
+  CreateManualTransactionCaptureMutation,
+  CreateManualTransactionCaptureMutationVariables,
+  OrderTransactionRequestActionMutation,
+  OrderTransactionRequestActionMutationVariables,
+} from "@dashboard/graphql/transactions";
+// TODO: Add feature flags
 import useNavigator from "@dashboard/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@dashboard/orders/components/OrderCannotCancelOrderDialog";
 import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
 import OrderFulfillmentApproveDialog from "@dashboard/orders/components/OrderFulfillmentApproveDialog";
 import OrderInvoiceEmailSendDialog from "@dashboard/orders/components/OrderInvoiceEmailSendDialog";
+import { OrderManualTransactionDialog } from "@dashboard/orders/components/OrderManualTransactionDialog";
+import { OrderTransactionActionDialog } from "@dashboard/orders/components/OrderTransactionActionDialog/OrderTransactionActionDialog";
+import { isAnyAddressEditModalOpen } from "@dashboard/orders/utils/data";
 import { OrderDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
@@ -41,12 +51,11 @@ import OrderProductAddDialog from "../../../components/OrderProductAddDialog";
 import OrderShippingMethodEditDialog from "../../../components/OrderShippingMethodEditDialog";
 import {
   orderFulfillUrl,
-  orderRefundUrl,
+  orderPaymentRefundUrl,
   orderReturnUrl,
   orderUrl,
   OrderUrlQueryParams,
 } from "../../../urls";
-import { isAnyAddressEditModalOpen } from "../OrderDraftDetails";
 
 interface OrderUnconfirmedDetailsProps {
   id: string;
@@ -73,6 +82,14 @@ interface OrderUnconfirmedDetailsProps {
   >;
   orderFulfillmentCancel: any;
   orderFulfillmentUpdateTracking: any;
+  orderTransactionAction: PartialMutationProviderOutput<
+    OrderTransactionRequestActionMutation,
+    OrderTransactionRequestActionMutationVariables
+  >;
+  orderAddManualTransaction: PartialMutationProviderOutput<
+    CreateManualTransactionCaptureMutation,
+    CreateManualTransactionCaptureMutationVariables
+  >;
   orderInvoiceSend: any;
   updateMetadataOpts: any;
   updatePrivateMetadataOpts: any;
@@ -80,7 +97,9 @@ interface OrderUnconfirmedDetailsProps {
   closeModal: any;
 }
 
-export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = ({
+export const OrderUnconfirmedDetails: React.FC<
+  OrderUnconfirmedDetailsProps
+> = ({
   id,
   params,
   data,
@@ -102,6 +121,8 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
   orderInvoiceSend,
   updateMetadataOpts,
   updatePrivateMetadataOpts,
+  orderTransactionAction,
+  orderAddManualTransaction,
   openModal,
   closeModal,
 }) => {
@@ -126,15 +147,13 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
     },
   });
 
-  const {
-    data: customerAddresses,
-    loading: customerAddressesLoading,
-  } = useCustomerAddressesQuery({
-    variables: {
-      id: order?.user?.id,
-    },
-    skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
-  });
+  const { data: customerAddresses, loading: customerAddressesLoading } =
+    useCustomerAddressesQuery({
+      variables: {
+        id: order?.user?.id,
+      },
+      skip: !order?.user?.id || !isAnyAddressEditModalOpen(params.action),
+    });
 
   const handleCustomerChangeAddresses = async (
     data: Partial<OrderCustomerAddressesEditDialogOutput>,
@@ -181,6 +200,13 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
             }
             order={order}
             shop={shop}
+            onTransactionAction={(id, action) =>
+              openModal("transaction-action", {
+                type: action,
+                id,
+                action: "transaction-action",
+              })
+            }
             onOrderLineAdd={() => openModal("add-order-line")}
             onOrderLineChange={(id, data) =>
               orderLineUpdate.mutate({
@@ -231,12 +257,13 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
             }
             onPaymentCapture={() => openModal("capture")}
             onPaymentVoid={() => openModal("void")}
-            onPaymentRefund={() => navigate(orderRefundUrl(id))}
+            onPaymentRefund={() => navigate(orderPaymentRefundUrl(id))}
             onProductClick={id => () => navigate(productUrl(id))}
             onBillingAddressEdit={() => openModal("edit-billing-address")}
             onShippingAddressEdit={() => openModal("edit-shipping-address")}
-            onPaymentPaid={() => openModal("mark-paid")}
+            onMarkAsPaid={() => openModal("mark-paid")}
             onProfileView={() => navigate(customerUrl(order.user.id))}
+            onAddManualTransaction={() => openModal("add-manual-transaction")}
             onInvoiceClick={id =>
               window.open(
                 order.invoices.find(invoice => invoice.id === id)?.url,
@@ -305,6 +332,7 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         onClose={closeModal}
         onFetch={variantSearch}
         onFetchMore={loadMore}
+        channelName={order.channel?.name}
         onSubmit={variants =>
           orderLinesAdd.mutate({
             id,
@@ -329,6 +357,18 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         transactionReference={transactionReference}
         handleTransactionReference={({ target }) =>
           setTransactionReference(target.value)
+        }
+      />
+      <OrderTransactionActionDialog
+        confirmButtonState={orderTransactionAction.opts.status}
+        onClose={closeModal}
+        open={params.action === "transaction-action"}
+        action={params.type}
+        onSubmit={() =>
+          orderTransactionAction.mutate({
+            action: params.type,
+            transactionId: params.id,
+          })
         }
       />
       <OrderPaymentVoidDialog
@@ -411,6 +451,27 @@ export const OrderUnconfirmedDetails: React.FC<OrderUnconfirmedDetailsProps> = (
         invoice={order?.invoices?.find(invoice => invoice.id === params.id)}
         onClose={closeModal}
         onSend={() => orderInvoiceSend.mutate({ id: params.id })}
+      />
+      <OrderManualTransactionDialog
+        dialogProps={{
+          open: params.action === "add-manual-transaction",
+          onClose: closeModal,
+        }}
+        submitState={orderAddManualTransaction.opts.status}
+        error={
+          orderAddManualTransaction.opts?.error?.message ||
+          orderAddManualTransaction.opts?.data?.transactionCreate?.errors?.[0]
+            ?.message
+        }
+        currency={data?.order?.totalBalance?.currency}
+        onAddTransaction={({ amount, description }) =>
+          orderAddManualTransaction.mutate({
+            currency: data?.order?.totalBalance?.currency,
+            orderId: id,
+            amount,
+            description,
+          })
+        }
       />
       <OrderAddressFields
         action={params?.action}

@@ -1,3 +1,8 @@
+import {
+  extensionMountPoints,
+  mapToMenuItemsForCustomerDetails,
+  useExtensions,
+} from "@dashboard/apps/hooks/useExtensions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import CardMenu from "@dashboard/components/CardMenu/CardMenu";
@@ -21,11 +26,6 @@ import {
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import {
-  extensionMountPoints,
-  mapToMenuItemsForCustomerDetails,
-  useExtensions,
-} from "@dashboard/new-apps/hooks/useExtensions";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";

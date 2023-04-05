@@ -1,8 +1,7 @@
-import {
-  ChannelUsabilityDataQuery,
-  OrderDetailsFragment,
-} from "@dashboard/graphql";
+import { ChannelUsabilityDataQuery } from "@dashboard/graphql";
+import { OrderSharedType } from "@dashboard/orders/types";
 import { Alert, AlertProps } from "@saleor/macaw-ui";
+import clsx from "clsx";
 import React from "react";
 import { MessageDescriptor, useIntl } from "react-intl";
 
@@ -11,7 +10,7 @@ import { alertMessages } from "./messages";
 import { useAlertStyles } from "./styles";
 
 const getAlerts = (
-  order?: OrderDetailsFragment,
+  order?: OrderSharedType,
   channelUsabilityData?: ChannelUsabilityDataQuery,
 ) => {
   const canDetermineShippingMethods =
@@ -38,7 +37,7 @@ const getAlerts = (
 };
 
 export type OrderDraftAlertProps = Omit<AlertProps, "variant" | "close"> & {
-  order?: OrderDetailsFragment;
+  order?: OrderSharedType;
   channelUsabilityData?: ChannelUsabilityDataQuery;
 };
 
@@ -54,7 +53,12 @@ const OrderDraftAlert: React.FC<OrderDraftAlertProps> = props => {
   }
 
   return (
-    <Alert variant="warning" close className={classes.root} {...alertProps}>
+    <Alert
+      variant="warning"
+      close
+      className={clsx(classes.root, "remove-icon-background")}
+      {...alertProps}
+    >
       <OrderAlerts
         alerts={alerts}
         alertsHeader={intl.formatMessage(alertMessages.manyAlerts)}

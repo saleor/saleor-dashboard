@@ -1,4 +1,5 @@
 import { handleNestedMutationErrors } from "@dashboard/auth";
+import { formatMoney } from "@dashboard/components/Money";
 import messages from "@dashboard/containers/BackgroundTasks/messages";
 import {
   InvoiceEmailSendMutation,
@@ -21,9 +22,20 @@ import {
   OrderUpdateMutation,
   OrderVoidMutation,
 } from "@dashboard/graphql";
+import {
+  CreateManualTransactionCaptureMutation,
+  OrderTransactionRequestActionMutation,
+} from "@dashboard/graphql/transactions";
+import useLocale from "@dashboard/hooks/useLocale";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
+import {
+  getOrderTransactionErrorMessage,
+  getTransactionCreateErrorMessage,
+  transactionCreateMessages,
+  transactionRequestMessages as transactionMessages,
+} from "@dashboard/utils/errors/transaction";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -59,6 +71,12 @@ interface OrderDetailsMessages {
     handleInvoiceGeneratePending: (data: InvoiceRequestMutation) => void;
     handleInvoiceGenerateFinished: (data: InvoiceRequestMutation) => void;
     handleInvoiceSend: (data: InvoiceEmailSendMutation) => void;
+    handleTransactionAction: (
+      data: OrderTransactionRequestActionMutation,
+    ) => void;
+    handleAddManualTransaction: (
+      data: CreateManualTransactionCaptureMutation,
+    ) => void;
   }) => React.ReactElement;
   id: string;
   params: OrderUrlQueryParams;
@@ -72,6 +90,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const { locale } = useLocale();
 
   const [, closeModal] = createDialogActionHandlers(
     navigate,
@@ -342,6 +361,50 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
       closeModal();
     }
   };
+  const handleTransactionAction = (
+    data: OrderTransactionRequestActionMutation,
+  ) => {
+    const {
+      transactionRequestAction: { errors },
+    } = data;
+    const isError = !!errors.length;
+
+    if (isError) {
+      notify({
+        status: "error",
+        text: getOrderTransactionErrorMessage(errors[0], intl),
+      });
+    } else {
+      notify({
+        status: "success",
+        text: intl.formatMessage(transactionMessages.success),
+      });
+      closeModal();
+    }
+  };
+  const handleAddManualTransaction = (
+    data: CreateManualTransactionCaptureMutation,
+  ) => {
+    const {
+      transactionCreate: { errors, transaction },
+    } = data;
+    const isError = !!errors.length;
+
+    if (!isError) {
+      notify({
+        status: "success",
+        text: intl.formatMessage(transactionCreateMessages.success, {
+          amount: formatMoney(transaction.chargedAmount, locale),
+        }),
+      });
+      closeModal();
+    } else {
+      notify({
+        status: "error",
+        text: getTransactionCreateErrorMessage(errors[0], intl),
+      });
+    }
+  };
 
   return children({
     handleDraftCancel,
@@ -363,5 +426,7 @@ export const OrderDetailsMessages: React.FC<OrderDetailsMessages> = ({
     handlePaymentCapture,
     handleShippingMethodUpdate,
     handleUpdate,
+    handleTransactionAction,
+    handleAddManualTransaction,
   });
 };

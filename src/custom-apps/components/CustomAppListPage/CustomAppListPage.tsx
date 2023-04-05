@@ -1,3 +1,4 @@
+import DeactivatedText from "@dashboard/apps/components/DeactivatedText";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -7,7 +8,6 @@ import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { AppListItemFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { renderCollection } from "@dashboard/misc";
-import DeactivatedText from "@dashboard/new-apps/components/DeactivatedText";
 import { TableBody, TableCell, Typography } from "@material-ui/core";
 import { DeleteIcon, IconButton, ResponsiveTable } from "@saleor/macaw-ui";
 import { Box, Text } from "@saleor/macaw-ui/next";

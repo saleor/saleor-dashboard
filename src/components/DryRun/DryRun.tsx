@@ -46,7 +46,7 @@ const DryRun: React.FC<DryRunProps> = ({
   syncEvents,
 }: DryRunProps) => {
   const intl = useIntl();
-  const classes = useStyles();
+  const classes = useStyles({});
   const [objectId, setObjectId] = useState<string | null>(null);
   const [triggerWebhookDryRun] = useTriggerWebhookDryRunMutation();
   const availableObjects = Object.keys(DocumentMap).map(object =>
@@ -102,7 +102,11 @@ const DryRun: React.FC<DryRunProps> = ({
         </DialogContentText>
 
         {!!unavailableObjects.length && (
-          <Alert variant="warning" close={false}>
+          <Alert
+            variant="warning"
+            close={false}
+            className="remove-icon-background"
+          >
             <Typography>
               {intl.formatMessage(messages.unavailableEvents)}
               <br />

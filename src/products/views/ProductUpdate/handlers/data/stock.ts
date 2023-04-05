@@ -1,5 +1,5 @@
-import { numberCellEmptyValue } from "@dashboard/components/Datagrid/NumberCell";
-import { DatagridChange } from "@dashboard/components/Datagrid/useDatagridChange";
+import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
+import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {
   ProductFragment,
   ProductVariantStocksUpdateInput,

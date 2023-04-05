@@ -19,10 +19,12 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
   const isExpanded = isActive || hasSubmenuActive;
 
   return (
-    <List.ItemGroup defaultExpanded={isExpanded}>
+    <List.ItemGroup
+      defaultExpanded={isExpanded}
+      data-test-id={`menu-list-item`}
+    >
       <List.ItemGroup.Trigger
         paddingX={5}
-        paddingY={4}
         borderRadius={3}
         size="small"
         active={isActive}
@@ -30,12 +32,20 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
         data-test-id={`menu-item-label-${menuItem.id}`}
       >
         <Link
+          replace={isActive}
           to={menuItem?.url ?? ""}
           className={sprinkles({
             width: "100%",
+            display: "block",
           })}
         >
-          <Box display="flex" alignItems="center" gap={6}>
+          <Box
+            display="flex"
+            alignItems="center"
+            gap={6}
+            paddingY={4}
+            borderRadius={3}
+          >
             {menuItem.icon}
             <Text size="small" variant="bodyEmp">
               {menuItem.label}

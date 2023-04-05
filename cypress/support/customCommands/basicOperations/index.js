@@ -1,6 +1,9 @@
 Cypress.Commands.add("getTextFromElement", element =>
   cy.get(element).invoke("text"),
 );
+Cypress.Commands.add("getRowSelectorWithNumber", rowNumber =>
+  cy.get(`[data-value=${rowNumber}]`),
+);
 
 Cypress.Commands.add("clearAndType", { prevSubject: true }, (subject, text) => {
   cy.wrap(subject).then(subject => {
@@ -11,6 +14,9 @@ Cypress.Commands.add("clearAndType", { prevSubject: true }, (subject, text) => {
     }
   });
 });
+Cypress.Commands.add("clickOnElement", selector => {
+  cy.get(selector).click();
+});
 
 Cypress.Commands.add("waitForRequestAndCheckIfNoErrors", alias => {
   cy.wait(alias).then(resp => {
@@ -18,6 +24,12 @@ Cypress.Commands.add("waitForRequestAndCheckIfNoErrors", alias => {
       resp.response.body.errors,
       `No errors in ${alias} operation in graphql response`,
     ).to.be.undefined;
+    return resp;
+  });
+});
+Cypress.Commands.add("waitForRequestAndErrorMessage", (alias, error) => {
+  cy.wait(alias).then(resp => {
+    expect(resp.response.body.errors[0].message).to.contains(error);
     return resp;
   });
 });
@@ -34,4 +46,10 @@ Cypress.Commands.add("checkIfDataAreNotNull", data => {
       cy.checkIfDataAreNotNull(singleData);
     });
   }
+});
+Cypress.Commands.add("checkIfElementIsVisible", element => {
+  cy.get(element).should("be.visible");
+});
+Cypress.Commands.add("assertCanvasRowsNumber", (canvas, rowNumber) => {
+  cy.get(canvas).find("tr").should("have.length", rowNumber);
 });

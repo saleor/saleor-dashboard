@@ -82,24 +82,22 @@ const OrderRefund: React.FC<OrderRefundProps> = ({ orderId }) => {
       }
     },
   });
-  const [
-    refundOrderFulfillmentProducts,
-    refundOrderFulfillmentProductsOpts,
-  ] = useOrderFulfillmentRefundProductsMutation({
-    onCompleted: data => {
-      if (data.orderFulfillmentRefundProducts.errors.length === 0) {
-        navigate(orderUrl(orderId), { replace: true });
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "XRf1Bi",
-            defaultMessage: "Refunded Items",
-            description: "order refunded success message",
-          }),
-        });
-      }
-    },
-  });
+  const [refundOrderFulfillmentProducts, refundOrderFulfillmentProductsOpts] =
+    useOrderFulfillmentRefundProductsMutation({
+      onCompleted: data => {
+        if (data.orderFulfillmentRefundProducts.errors.length === 0) {
+          navigate(orderUrl(orderId), { replace: true });
+          notify({
+            status: "success",
+            text: intl.formatMessage({
+              id: "XRf1Bi",
+              defaultMessage: "Refunded Items",
+              description: "order refunded success message",
+            }),
+          });
+        }
+      },
+    });
 
   const handleSubmitMiscellaneousRefund = async (
     formData: OrderRefundSubmitData,

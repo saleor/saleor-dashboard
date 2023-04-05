@@ -1,3 +1,4 @@
+import { useFlags } from "@dashboard/hooks/useFlags";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -12,21 +13,27 @@ import {
   OrderDraftListUrlSortField,
   orderFulfillPath,
   OrderFulfillUrlQueryParams,
+  orderGrantRefundEditPath,
+  orderGrantRefundPath,
   orderListPath,
   OrderListUrlQueryParams,
   OrderListUrlSortField,
   orderPath,
-  orderRefundPath,
+  orderPaymentRefundPath,
   orderReturnPath,
+  orderSendRefundPath,
   orderSettingsPath,
   OrderUrlQueryParams,
 } from "./urls";
 import OrderDetailsComponent from "./views/OrderDetails";
 import OrderDraftListComponent from "./views/OrderDraftList";
+import OrderGrantRefundEditComponent from "./views/OrderEditGrantRefund";
 import OrderFulfillComponent from "./views/OrderFulfill";
+import OrderGrantRefundComponent from "./views/OrderGrantRefund";
 import OrderListComponent from "./views/OrderList";
 import OrderRefundComponent from "./views/OrderRefund";
 import OrderReturnComponent from "./views/OrderReturn";
+import OrderSendRefundComponent from "./views/OrderSendRefund";
 import OrderSettings from "./views/OrderSettings";
 
 const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
@@ -76,16 +83,34 @@ const OrderFulfill: React.FC<RouteComponentProps<any>> = ({
   );
 };
 
-const OrderRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
+const OrderPaymentRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
   <OrderRefundComponent orderId={decodeURIComponent(match.params.id)} />
+);
+
+const OrderSendRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
+  <OrderSendRefundComponent orderId={decodeURIComponent(match.params.id)} />
 );
 
 const OrderReturn: React.FC<RouteComponentProps<any>> = ({ match }) => (
   <OrderReturnComponent orderId={decodeURIComponent(match.params.id)} />
 );
 
+const OrderGrantRefund: React.FC<RouteComponentProps<any>> = ({ match }) => (
+  <OrderGrantRefundComponent orderId={decodeURIComponent(match.params.id)} />
+);
+
+const OrderGrantRefundEdit: React.FC<RouteComponentProps<any>> = ({
+  match,
+}) => (
+  <OrderGrantRefundEditComponent
+    orderId={decodeURIComponent(match.params.orderId)}
+    grantRefundId={decodeURIComponent(match.params.refundId)}
+  />
+);
+
 const Component = () => {
   const intl = useIntl();
+  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   return (
     <>
@@ -96,7 +121,28 @@ const Component = () => {
         <Route exact path={orderListPath} component={OrderList} />
         <Route path={orderFulfillPath(":id")} component={OrderFulfill} />
         <Route path={orderReturnPath(":id")} component={OrderReturn} />
-        <Route path={orderRefundPath(":id")} component={OrderRefund} />
+        <Route
+          path={orderPaymentRefundPath(":id")}
+          component={OrderPaymentRefund}
+        />
+        {orderTransactions.enabled && (
+          <Route
+            path={orderSendRefundPath(":id")}
+            component={OrderSendRefund}
+          />
+        )}
+        {orderTransactions.enabled && (
+          <Route
+            path={orderGrantRefundEditPath(":orderId", ":refundId")}
+            component={OrderGrantRefundEdit}
+          />
+        )}
+        {orderTransactions.enabled && (
+          <Route
+            path={orderGrantRefundPath(":id")}
+            component={OrderGrantRefund}
+          />
+        )}
         <Route path={orderPath(":id")} component={OrderDetails} />
       </Switch>
     </>

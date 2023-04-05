@@ -93,16 +93,13 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   const currentTab = getFiltersCurrentTab(params, tabs);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    createUrl: orderListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      createUrl: orderListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+    });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderListUrlDialog,
@@ -178,6 +175,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         tabs={getFilterTabs().map(tab => tab.name)}
         onAll={resetFilters}
         onSettingsOpen={() => navigate(orderSettingsPath)}
+        params={params}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}

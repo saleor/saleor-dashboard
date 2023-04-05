@@ -1,6 +1,9 @@
 import { TimelineEvent } from "@dashboard/components/Timeline";
 import { TitleElement } from "@dashboard/components/Timeline/TimelineEventHeader";
-import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
+import {
+  OrderEventFragment,
+  OrderEventsEnum,
+} from "@dashboard/graphql/transactions";
 import { orderUrl } from "@dashboard/orders/urls";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";

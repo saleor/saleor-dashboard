@@ -30,7 +30,8 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
   valueRequired: true,
   unit: null,
   choices: {
-    __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+    __typename:
+      "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
     pageInfo: {
       __typename: "PageInfo" as "PageInfo",
       endCursor: "",
@@ -40,7 +41,8 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
     },
     edges: [
       {
-        __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+        __typename:
+          "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
         cursor: "1",
         node: {
           __typename: "AttributeValue" as "AttributeValue",
@@ -58,7 +60,8 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
         },
       },
       {
-        __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+        __typename:
+          "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
         cursor: "2",
         node: {
           __typename: "AttributeValue" as "AttributeValue",
@@ -80,10 +83,10 @@ export const attribute: AttributeDetailsQuery["attribute"] = {
   visibleInStorefront: true,
 };
 
-export const attributes: Array<NonNullable<
-  AttributeListQuery["attributes"]
->["edges"][0]["node"] &
-  NonNullable<ProductDetailsQuery["product"]>["attributes"][0]["attribute"]> = [
+export const attributes: Array<
+  NonNullable<AttributeListQuery["attributes"]>["edges"][0]["node"] &
+    NonNullable<ProductDetailsQuery["product"]>["attributes"][0]["attribute"]
+> = [
   {
     __typename: "Attribute" as "Attribute",
     entityType: AttributeEntityTypeEnum.PRODUCT,
@@ -97,7 +100,8 @@ export const attributes: Array<NonNullable<
     valueRequired: false,
     unit: null,
     choices: {
-      __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+      __typename:
+        "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
       pageInfo: {
         endCursor: "WyI4IiwgIjMiXQ==",
         hasNextPage: false,
@@ -107,7 +111,8 @@ export const attributes: Array<NonNullable<
       },
       edges: [
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -126,7 +131,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -161,7 +167,8 @@ export const attributes: Array<NonNullable<
     valueRequired: false,
     unit: null,
     choices: {
-      __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+      __typename:
+        "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
       pageInfo: {
         endCursor: "WyI4IiwgIjMiXQ==",
         hasNextPage: false,
@@ -171,7 +178,8 @@ export const attributes: Array<NonNullable<
       },
       edges: [
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -190,7 +198,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -209,7 +218,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -228,7 +238,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -263,7 +274,8 @@ export const attributes: Array<NonNullable<
     valueRequired: false,
     unit: null,
     choices: {
-      __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+      __typename:
+        "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
       pageInfo: {
         endCursor: "WyI4IiwgIjMiXQ==",
         hasNextPage: false,
@@ -273,7 +285,8 @@ export const attributes: Array<NonNullable<
       },
       edges: [
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -308,7 +321,8 @@ export const attributes: Array<NonNullable<
     valueRequired: false,
     unit: null,
     choices: {
-      __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+      __typename:
+        "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
       pageInfo: {
         endCursor: "WyI4IiwgIjMiXQ==",
         hasNextPage: false,
@@ -318,7 +332,8 @@ export const attributes: Array<NonNullable<
       },
       edges: [
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -337,7 +352,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -356,7 +372,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -391,7 +408,8 @@ export const attributes: Array<NonNullable<
     valueRequired: false,
     unit: null,
     choices: {
-      __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+      __typename:
+        "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
       pageInfo: {
         endCursor: "WyI4IiwgIjMiXQ==",
         hasNextPage: false,
@@ -401,7 +419,8 @@ export const attributes: Array<NonNullable<
       },
       edges: [
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -420,7 +439,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -455,7 +475,8 @@ export const attributes: Array<NonNullable<
     valueRequired: false,
     unit: null,
     choices: {
-      __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+      __typename:
+        "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
       pageInfo: {
         endCursor: "WyI4IiwgIjMiXQ==",
         hasNextPage: false,
@@ -465,7 +486,8 @@ export const attributes: Array<NonNullable<
       },
       edges: [
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -484,7 +506,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -503,7 +526,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -538,7 +562,8 @@ export const attributes: Array<NonNullable<
     valueRequired: false,
     unit: null,
     choices: {
-      __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+      __typename:
+        "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
       pageInfo: {
         endCursor: "WyI4IiwgIjMiXQ==",
         hasNextPage: false,
@@ -548,7 +573,8 @@ export const attributes: Array<NonNullable<
       },
       edges: [
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -567,7 +593,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -602,7 +629,8 @@ export const attributes: Array<NonNullable<
     valueRequired: false,
     unit: null,
     choices: {
-      __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+      __typename:
+        "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
       pageInfo: {
         endCursor: "WyI4IiwgIjMiXQ==",
         hasNextPage: false,
@@ -612,7 +640,8 @@ export const attributes: Array<NonNullable<
       },
       edges: [
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -631,7 +660,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -650,7 +680,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -669,7 +700,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -688,7 +720,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -707,7 +740,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -742,7 +776,8 @@ export const attributes: Array<NonNullable<
     valueRequired: false,
     unit: null,
     choices: {
-      __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+      __typename:
+        "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
       pageInfo: {
         endCursor: "WyI4IiwgIjMiXQ==",
         hasNextPage: false,
@@ -752,7 +787,8 @@ export const attributes: Array<NonNullable<
       },
       edges: [
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -771,7 +807,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -806,7 +843,8 @@ export const attributes: Array<NonNullable<
     valueRequired: false,
     unit: null,
     choices: {
-      __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+      __typename:
+        "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
       pageInfo: {
         endCursor: "WyI4IiwgIjMiXQ==",
         hasNextPage: false,
@@ -816,7 +854,8 @@ export const attributes: Array<NonNullable<
       },
       edges: [
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -835,7 +874,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -870,7 +910,8 @@ export const attributes: Array<NonNullable<
     valueRequired: false,
     unit: null,
     choices: {
-      __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+      __typename:
+        "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
       pageInfo: {
         endCursor: "WyI4IiwgIjMiXQ==",
         hasNextPage: false,
@@ -880,7 +921,8 @@ export const attributes: Array<NonNullable<
       },
       edges: [
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -899,7 +941,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -934,7 +977,8 @@ export const attributes: Array<NonNullable<
     inputType: AttributeInputTypeEnum.DROPDOWN,
     valueRequired: false,
     choices: {
-      __typename: "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
+      __typename:
+        "AttributeValueCountableConnection" as "AttributeValueCountableConnection",
       pageInfo: {
         endCursor: "WyI4IiwgIjMiXQ==",
         hasNextPage: false,
@@ -944,7 +988,8 @@ export const attributes: Array<NonNullable<
       },
       edges: [
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -963,7 +1008,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -982,7 +1028,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -1001,7 +1048,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -1020,7 +1068,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",
@@ -1039,7 +1088,8 @@ export const attributes: Array<NonNullable<
           },
         },
         {
-          __typename: "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
+          __typename:
+            "AttributeValueCountableEdge" as "AttributeValueCountableEdge",
           cursor: "",
           node: {
             __typename: "AttributeValue" as "AttributeValue",

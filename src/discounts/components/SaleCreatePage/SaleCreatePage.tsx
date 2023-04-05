@@ -1,12 +1,12 @@
 import { validateSalePrice } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import { createSaleChannelsChangeHandler } from "@dashboard/discounts/handlers";
+import { saleListUrl } from "@dashboard/discounts/urls";
 import { SALE_CREATE_FORM_ID } from "@dashboard/discounts/views/SaleCreate/consts";
 import {
   DiscountErrorFragment,
@@ -102,6 +102,7 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
         return (
           <DetailPageLayout>
             <TopNav
+              href={saleListUrl()}
               title={intl.formatMessage({
                 id: "FWbv/u",
                 defaultMessage: "Create Discount",
@@ -115,16 +116,13 @@ const SaleCreatePage: React.FC<SaleCreatePageProps> = ({
                 errors={errors}
                 onChange={change}
               />
-              <CardSpacer />
               <SaleType data={data} disabled={disabled} onChange={change} />
-              <CardSpacer />
               <SaleValue
                 data={data}
                 disabled={disabled}
                 errors={errors}
                 onChange={handleChannelChange}
               />
-              <CardSpacer />
               <DiscountDates
                 data={data}
                 disabled={disabled}

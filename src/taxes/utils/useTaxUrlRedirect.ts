@@ -36,10 +36,10 @@ export function useTaxUrlRedirect({
     if (id === "undefined" && data?.length) {
       const defaultTaxEntity = data[0];
       if ("id" in defaultTaxEntity) {
-        navigate(urlFunction(defaultTaxEntity.id));
+        navigate(urlFunction(defaultTaxEntity.id), { replace: true });
       }
       if ("country" in defaultTaxEntity) {
-        navigate(urlFunction(defaultTaxEntity.country.code));
+        navigate(urlFunction(defaultTaxEntity.country.code), { replace: true });
       }
     }
   }, [id, data]);

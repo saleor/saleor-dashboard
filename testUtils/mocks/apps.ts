@@ -1,5 +1,5 @@
 import { MockedResponse } from "@apollo/client/testing";
-import { extensionList } from "@dashboard/new-apps/queries";
+import { extensionList } from "@dashboard/apps/queries";
 
 export const appsMocks: MockedResponse[] = [
   {

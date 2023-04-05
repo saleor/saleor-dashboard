@@ -29,6 +29,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -53,6 +54,7 @@ export interface OrderProductAddDialogProps extends FetchMoreProps {
   onSubmit: (
     data: SearchOrderVariantQuery["search"]["edges"][0]["node"]["variants"],
   ) => void;
+  channelName?: string;
 }
 
 const scrollableTargetId = "orderProductAddScrollableDialog";
@@ -69,6 +71,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
     onFetchMore,
     onClose,
     onSubmit,
+    channelName,
   } = props;
 
   const classes = useStyles(props);
@@ -126,8 +129,18 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
       maxWidth="sm"
     >
       <DialogTitle disableTypography>
-        <FormattedMessage {...messages.title} />
+        <FormattedMessage
+          {...messages.title}
+          values={{
+            channelName,
+          }}
+        />
       </DialogTitle>
+      <DialogContent className={classes.subtitle}>
+        <Text variant="caption" color="textNeutralSubdued">
+          <FormattedMessage {...messages.subtitle} />
+        </Text>
+      </DialogContent>
       <DialogContent data-test-id="search-query">
         <TextField
           name="query"
@@ -264,6 +277,7 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           transitionState={confirmButtonState}
           type="submit"
           onClick={handleSubmit}
+          disabled={variants.length === 0}
         >
           <FormattedMessage {...buttonMessages.confirm} />
         </ConfirmButton>

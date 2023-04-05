@@ -1,3 +1,4 @@
+import { TransactionActionEnum } from "@dashboard/graphql/transactions";
 import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 
@@ -122,9 +123,19 @@ export type OrderUrlDialog =
   | "finalize"
   | "mark-paid"
   | "void"
-  | "invoice-send";
+  | "transaction-action"
+  | "invoice-send"
+  | "add-manual-transaction";
 
-export type OrderUrlQueryParams = Dialog<OrderUrlDialog> & SingleAction;
+export interface TransactionAction {
+  action: "transaction-action";
+  id: string;
+  type: TransactionActionEnum;
+}
+
+export type OrderUrlQueryParams =
+  | (Dialog<OrderUrlDialog> & SingleAction & { type?: never })
+  | TransactionAction;
 
 export type OrderFulfillUrlFiltersType = "warehouseId" | "lineId";
 export type OrderFulfillUrlFilters = Filters<OrderFulfillUrlFiltersType>;
@@ -147,10 +158,32 @@ export const orderFulfillUrl = (
 
 export const orderSettingsPath = urlJoin(orderSectionUrl, "settings");
 
-export const orderRefundPath = (id: string) => urlJoin(orderPath(id), "refund");
+export const orderPaymentRefundPath = (id: string) =>
+  urlJoin(orderPath(id), "payment-refund");
 
-export const orderRefundUrl = (id: string) =>
-  orderRefundPath(encodeURIComponent(id));
+export const orderSendRefundPath = (id: string) =>
+  urlJoin(orderPath(id), "send-refund");
+
+export const orderPaymentRefundUrl = (id: string) =>
+  orderPaymentRefundPath(encodeURIComponent(id));
+
+export const orderSendRefundUrl = (id: string) =>
+  orderSendRefundPath(encodeURIComponent(id));
+
+export const orderGrantRefundPath = (id: string) =>
+  urlJoin(orderPath(id), "grant-refund");
+
+export const orderGrantRefundUrl = (id: string) =>
+  orderGrantRefundPath(encodeURIComponent(id));
+
+export const orderGrantRefundEditPath = (orderId: string, refundId: string) =>
+  urlJoin(orderGrantRefundPath(orderId), refundId);
+
+export const orderGrantRefundEditUrl = (orderId: string, refundId: string) =>
+  orderGrantRefundEditPath(
+    encodeURIComponent(orderId),
+    encodeURIComponent(refundId),
+  );
 
 export const orderReturnUrl = (id: string) =>
   orderReturnPath(encodeURIComponent(id));

@@ -1,7 +1,7 @@
+import { ExternalAppProvider } from "@dashboard/apps/components/ExternalAppContext";
 import { Provider as DateProvider } from "@dashboard/components/Date/DateContext";
 import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
 import { TimezoneProvider } from "@dashboard/components/Timezone";
-import { ExternalAppProvider } from "@dashboard/new-apps/components/ExternalAppContext";
 import { ThemeProvider } from "@saleor/macaw-ui";
 import React from "react";
 import { IntlProvider } from "react-intl";

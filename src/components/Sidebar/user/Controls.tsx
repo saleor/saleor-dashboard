@@ -11,21 +11,43 @@ import {
   sprinkles,
   Text,
 } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
-export const UserControls = () => {
-  const { user, logout } = useUser();
+const useLegacyThemeHandler = () => {
   const { theme, setTheme } = useTheme();
   const { setTheme: setLegacyTheme } = useLegacyTheme();
 
-  const handleClick = () => {
+  const changeTheme = () => {
     setLegacyTheme(theme === "defaultLight" ? "dark" : "light");
     setTheme(theme === "defaultLight" ? "defaultDark" : "defaultLight");
   };
+
+  const handleStorage = (event: StorageEvent) => {
+    if (!["macaw-ui-theme", "activeMacawUITheme"].includes(event.key)) {
+      return;
+    }
+
+    const isDark = event.newValue.toLowerCase().includes("dark");
+    setLegacyTheme(isDark ? "dark" : "light");
+    setTheme(isDark ? "defaultDark" : "defaultLight");
+  };
+
+  useEffect(() => {
+    window.addEventListener("storage", handleStorage);
+
+    return () => window.removeEventListener("storage", handleStorage);
+  }, []);
+
+  return { changeTheme, theme };
+};
+
+export const UserControls = () => {
+  const { user, logout } = useUser();
+  const { changeTheme, theme } = useLegacyThemeHandler();
 
   return (
     <Dropdown>
@@ -88,7 +110,7 @@ export const UserControls = () => {
                 alignItems="center"
                 gap={5}
                 marginTop={3}
-                onClick={handleClick}
+                onClick={changeTheme}
                 {...listItemStyles}
                 data-test-id="theme-switch"
               >

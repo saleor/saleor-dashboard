@@ -1,6 +1,7 @@
 import { useUser } from "@dashboard/auth";
+import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { getUserInitials, getUserName } from "@dashboard/misc";
-import { Avatar, Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { UserControls } from "./Controls";
@@ -21,11 +22,7 @@ export const UserInfo = () => {
       justifyContent="space-between"
     >
       <Box display="flex" gap={6} alignItems="center">
-        <Avatar.User
-          initials={getUserInitials(user)}
-          scheme="decorative2"
-          src={user?.avatar?.url}
-        />
+        <UserAvatar initials={getUserInitials(user)} url={user?.avatar?.url} />
         <Box __width={128} className="ellipsis">
           <Text variant="bodyStrong" size="small">
             {getUserName(user, true)}

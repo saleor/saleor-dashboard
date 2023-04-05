@@ -1,3 +1,9 @@
+import {
+  extensionMountPoints,
+  mapToMenuItems,
+  mapToMenuItemsForCustomerOverviewActions,
+  useExtensions,
+} from "@dashboard/apps/hooks/useExtensions";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import ButtonWithSelect from "@dashboard/components/ButtonWithSelect";
@@ -10,12 +16,6 @@ import {
 import { ListCustomersQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import {
-  extensionMountPoints,
-  mapToMenuItems,
-  mapToMenuItemsForCustomerOverviewActions,
-  useExtensions,
-} from "@dashboard/new-apps/hooks/useExtensions";
 import {
   FilterPageProps,
   ListActions,

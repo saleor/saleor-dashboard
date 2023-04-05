@@ -23,7 +23,7 @@ export const link = attachVariablesLink.concat(
     credentials: "include",
     uri: getApiUrl(),
     fetch: createFetch(),
-  }),
+  }) as unknown as ApolloLink, // type mismatch between apollo-upload-client and @apollo/cient
 );
 
 export const apolloClient = new ApolloClient({

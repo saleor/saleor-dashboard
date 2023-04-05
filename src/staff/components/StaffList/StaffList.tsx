@@ -3,11 +3,12 @@ import Skeleton from "@dashboard/components/Skeleton";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import TableRowLink from "@dashboard/components/TableRowLink";
+import { UserAvatar } from "@dashboard/components/UserAvatar";
 import { StaffListQuery } from "@dashboard/graphql";
+import { commonStatusMessages } from "@dashboard/intl";
 import {
   getUserInitials,
   getUserName,
-  maybe,
   renderCollection,
 } from "@dashboard/misc";
 import {
@@ -21,53 +22,26 @@ import {
   TableCell,
   TableFooter,
   TableHead,
-  Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 const useStyles = makeStyles(
-  theme => ({
-    avatar: {
-      alignItems: "center",
-      borderRadius: "100%",
-      display: "grid",
-      float: "left",
-      height: 47,
-      justifyContent: "center",
-      marginRight: theme.spacing(1),
-      overflow: "hidden",
-      width: 47,
-    },
-    avatarDefault: {
-      "& div": {
-        color: theme.palette.primary.contrastText,
-        lineHeight: "47px",
-      },
-      background: theme.palette.primary.main,
-      height: 47,
-      textAlign: "center",
-      width: 47,
-    },
-    avatarImage: {
-      pointerEvents: "none",
-      width: "100%",
-    },
+  {
     colEmail: {
       width: 400,
     },
-    statusText: {
-      color: "#9E9D9D",
-    },
+
     tableRow: {
       cursor: "pointer",
     },
     wideColumn: {
       width: "80%",
     },
-  }),
+  },
   { name: "StaffList" },
 );
 
@@ -149,45 +123,27 @@ const StaffList: React.FC<StaffListProps> = props => {
               key={staffMember ? staffMember.id : "skeleton"}
             >
               <TableCell>
-                <div className={classes.avatar} data-test-id="staffAvatar">
-                  {maybe(() => staffMember.avatar.url) ? (
-                    <img
-                      className={classes.avatarImage}
-                      src={maybe(() => staffMember.avatar.url)}
-                    />
-                  ) : (
-                    <div className={classes.avatarDefault}>
-                      <Typography>{getUserInitials(staffMember)}</Typography>
-                    </div>
-                  )}
-                </div>
-                <Typography>
-                  {getUserName(staffMember) || <Skeleton />}
-                </Typography>
-                <Typography
-                  variant={"caption"}
-                  className={classes.statusText}
-                  data-test-id="staffStatusText"
-                >
-                  {maybe<React.ReactNode>(
-                    () =>
-                      staffMember.isActive
-                        ? intl.formatMessage({
-                            id: "9Zlogd",
-                            defaultMessage: "Active",
-                            description: "staff member status",
-                          })
-                        : intl.formatMessage({
-                            id: "7WzUxn",
-                            defaultMessage: "Inactive",
-                            description: "staff member status",
-                          }),
-                    <Skeleton />,
-                  )}
-                </Typography>
+                <Box display="flex" alignItems="center" gap={5}>
+                  <UserAvatar
+                    url={staffMember?.avatar?.url}
+                    initials={getUserInitials(staffMember)}
+                  />
+                  <Box display="flex" flexDirection="column">
+                    <Text>{getUserName(staffMember) || <Skeleton />}</Text>
+                    <Text
+                      variant="caption"
+                      data-test-id="staffStatusText"
+                      color="textNeutralSubdued"
+                    >
+                      {staffMember?.isActive
+                        ? intl.formatMessage(commonStatusMessages.active)
+                        : intl.formatMessage(commonStatusMessages.notActive)}
+                    </Text>
+                  </Box>
+                </Box>
               </TableCell>
               <TableCell>
-                {maybe<React.ReactNode>(() => staffMember.email, <Skeleton />)}
+                <Text size="small">{staffMember?.email}</Text>
               </TableCell>
             </TableRowLink>
           ),
