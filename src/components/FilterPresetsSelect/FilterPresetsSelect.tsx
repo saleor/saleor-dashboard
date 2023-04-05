@@ -107,7 +107,7 @@ export const FilterPresetsSelect = ({
           </DropdownButton>
         </Dropdown.Trigger>
         <Dropdown.Content align="start">
-          <Box __maxWidth="250px" __minWidth="175px">
+          <Box __maxWidth={250} __minWidth={175}>
             <List
               padding={3}
               borderRadius={3}
@@ -119,40 +119,42 @@ export const FilterPresetsSelect = ({
               marginTop={2}
               backgroundColor="surfaceNeutralPlain"
             >
-              <Dropdown.Item>
-                <List.Item
-                  paddingX={4}
-                  paddingY={3}
-                  gap={6}
-                  borderRadius={3}
-                  onClick={onSelectAll}
-                >
-                  <Text variant={activePreset === 0 ? "bodyStrong" : "body"}>
-                    {selectAllLabel}
-                  </Text>
-                </List.Item>
-              </Dropdown.Item>
-              {savedPresets.length > 0 && (
-                <Box
-                  height={1}
-                  marginY={3}
-                  __backgroundColor={vars.colors.border.neutralHighlight}
-                  __marginLeft={-4}
-                  __width={getSeparatorWidth("8px")}
-                />
-              )}
-              <Box display="flex" flexDirection="column" gap={2}>
-                {savedPresets.map((preset, index) => (
-                  <FilterPresetItem
-                    isActive={activePreset === index + 1}
-                    onSelect={e => handleSelectPreset(e, index + 1)}
-                    onRemove={() => {
-                      onRemove(index + 1);
-                    }}
+              <Box __maxHeight={400} overflow="scroll">
+                <Dropdown.Item>
+                  <List.Item
+                    paddingX={4}
+                    paddingY={3}
+                    gap={6}
+                    borderRadius={3}
+                    onClick={onSelectAll}
                   >
-                    {preset}
-                  </FilterPresetItem>
-                ))}
+                    <Text variant={activePreset === 0 ? "bodyStrong" : "body"}>
+                      {selectAllLabel}
+                    </Text>
+                  </List.Item>
+                </Dropdown.Item>
+                {savedPresets.length > 0 && (
+                  <Box
+                    height={1}
+                    marginY={3}
+                    __backgroundColor={vars.colors.border.neutralHighlight}
+                    __marginLeft={-4}
+                    __width={getSeparatorWidth("8px")}
+                  />
+                )}
+                <Box display="flex" flexDirection="column" gap={2}>
+                  {savedPresets.map((preset, index) => (
+                    <FilterPresetItem
+                      isActive={activePreset === index + 1}
+                      onSelect={e => handleSelectPreset(e, index + 1)}
+                      onRemove={() => {
+                        onRemove(index + 1);
+                      }}
+                    >
+                      {preset}
+                    </FilterPresetItem>
+                  ))}
+                </Box>
               </Box>
             </List>
           </Box>
