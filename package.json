@@ -304,6 +304,7 @@
     "cy:run:allEnv:parallel": "cypress run --record --env grepTags=@allEnv --parallel",
     "cy:run:stable:parallel": "cypress run --record --env grepTags=@critical  --parallel --tag Stable",
     "cy:percy": "CYPRESS_demoTests=true percy exec -- npm run cy:run",
+    "cy:run:demo": "CYPRESS_demoTests=true npm run cy:run",
     "test": "jest src/",
     "test:watch": "jest --watch src/",
     "lint": "eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix",
