@@ -35,6 +35,14 @@ function createFilterHandlers<
     keepActiveTab,
   } = opts;
 
+  const getActiveTabValue = (removeActiveTab: boolean) => {
+    if (!keepActiveTab || removeActiveTab) {
+      return undefined;
+    }
+
+    return params.activeTab;
+  };
+
   const changeFilters = (filters: IFilter<TFilterKeys>) => {
     if (!!cleanupFn) {
       cleanupFn();
@@ -43,14 +51,13 @@ function createFilterHandlers<
       filters,
       getFilterQueryParam,
     );
-
     navigate(
       createUrl({
         ...params,
         ...filtersQueryParams,
-        ...(!keepActiveTab && {
-          activeTab: undefined,
-        }),
+        activeTab: getActiveTabValue(
+          checkIfParamsEmpty(filtersQueryParams) && !params.query?.length,
+        ),
       }),
     );
   };
@@ -79,13 +86,23 @@ function createFilterHandlers<
         ...params,
         after: undefined,
         before: undefined,
-        ...(!keepActiveTab && { activeTab: undefined }),
+        activeTab: getActiveTabValue(
+          checkIfParamsEmpty(params) && trimmedQuery === "",
+        ),
         query: trimmedQuery !== "" ? trimmedQuery : undefined,
       }),
     );
   };
 
   return [changeFilters, resetFilters, handleSearchChange];
+}
+
+function checkIfParamsEmpty(params: RequiredParams): boolean {
+  const paramsToOmit = ["activeTab", "sort", "asc", "query"];
+
+  return Object.entries(params)
+    .filter(([name]) => !paramsToOmit.includes(name))
+    .every(([_, value]) => value === undefined);
 }
 
 export default createFilterHandlers;
