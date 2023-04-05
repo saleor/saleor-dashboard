@@ -81,7 +81,11 @@ import {
   updateFilterTab,
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
-import { getAvailableProductKinds, getProductKindOpts } from "./utils";
+import {
+  getAvailableProductKinds,
+  getProductKindOpts,
+  getUniqueTabName,
+} from "./utils";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -250,7 +254,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const handleFilterTabSave = (data: SaveFilterTabDialogFormData) => {
     const { paresedQs } = prepareQs(location.search);
 
-    saveFilterTab(data.name, stringify(paresedQs));
+    saveFilterTab(
+      getUniqueTabName(
+        data.name,
+        tabs.map(tab => tab.name),
+      ),
+      stringify(paresedQs),
+    );
     handleTabChange(tabs.length + 1);
   };
 
