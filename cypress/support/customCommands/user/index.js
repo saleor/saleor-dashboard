@@ -31,7 +31,6 @@ Cypress.Commands.add(
     const mutation = `mutation TokenAuth{
     tokenCreate(email: "${user.email}", password: "${user.password}") {
       token
-      csrfToken
       refreshToken
       errors: errors {
         code

@@ -27,6 +27,12 @@ Cypress.Commands.add("waitForRequestAndCheckIfNoErrors", alias => {
     return resp;
   });
 });
+Cypress.Commands.add("waitForRequestAndErrorMessage", (alias, error) => {
+  cy.wait(alias).then(resp => {
+    expect(resp.response.body.errors[0].message).to.contains(error);
+    return resp;
+  });
+});
 
 Cypress.Commands.add("checkIfDataAreNotNull", data => {
   expect(data, "Created data should not be null").to.be.not.null;

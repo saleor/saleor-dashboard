@@ -10,6 +10,7 @@ export const SHARED_ELEMENTS = {
   notificationSuccess:
     '[data-test-id="notification"][data-test-type="success"]',
   notificationFailure: '[data-test-id="notification"][data-test-type="error"]',
+  notificationMessage: '[data-test-id="notification-message"]',
   dialog: '[role="dialog"]',
   searchInput: '[data-test-id="search-input"]',
   selectOption: '[data-test-id*="select-field-option"]',
