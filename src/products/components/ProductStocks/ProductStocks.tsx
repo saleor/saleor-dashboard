@@ -132,12 +132,6 @@ const ProductStocks: React.FC<ProductStocksProps> = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     onFormDataChange(e);
-    onFormDataChange({
-      target: {
-        name: "variantName",
-        value: e.target.value,
-      },
-    });
   };
 
   return (
