@@ -48,6 +48,7 @@ Cypress.Commands.add("addAliasToGraphRequest", operationName => {
     }
   });
 });
+
 Cypress.Commands.add(
   "addAliasToGraphRequestAndUseMockedResponseBody",
   (operationName, bodyMock) => {
