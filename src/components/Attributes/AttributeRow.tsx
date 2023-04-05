@@ -140,7 +140,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             onChange={event => onChange(attribute.id, event.target.value)}
             type="text"
             value={attribute.value[0]}
-            size="medium"
+            size="small"
             id={`attribute:${attribute.label}`}
             helperText={getErrorMessage(error, intl)}
           />
@@ -192,7 +192,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             onChange={event => onChange(attribute.id, event.target.value)}
             type="number"
             value={attribute.value[0]}
-            size="medium"
+            size="small"
             helperText={getErrorMessage(error, intl)}
           />
         </BasicAttributeRow>

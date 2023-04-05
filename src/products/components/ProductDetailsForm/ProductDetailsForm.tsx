@@ -6,7 +6,7 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { useRichTextContext } from "@dashboard/utils/richText/context";
 import { OutputData } from "@editorjs/editorjs";
-import { Input } from "@saleor/macaw-ui/next";
+import { Box, Input } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -45,7 +45,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
             defaultMessage: "Name",
             description: "product name",
           })}
-          size="medium"
+          size="small"
           value={data.name || ""}
           onChange={onChange}
           error={!!formErrors.name}
@@ -71,21 +71,23 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
             name="description"
           />
         )}
-        <Input
-          label={intl.formatMessage({
-            id: "L7N+0y",
-            defaultMessage: "Product Rating",
-            description: "product rating",
-          })}
-          size="medium"
-          value={data.rating || ""}
-          onChange={onChange}
-          error={!!formErrors.rating}
-          name="rating"
-          type="number"
-          disabled={disabled}
-          helperText={getProductErrorMessage(formErrors.rating, intl)}
-        />
+        <Box __width="25%">
+          <Input
+            label={intl.formatMessage({
+              id: "L7N+0y",
+              defaultMessage: "Product Rating",
+              description: "product rating",
+            })}
+            size="small"
+            value={data.rating || ""}
+            onChange={onChange}
+            error={!!formErrors.rating}
+            name="rating"
+            type="number"
+            disabled={disabled}
+            helperText={getProductErrorMessage(formErrors.rating, intl)}
+          />
+        </Box>
       </DashboardCard.Content>
     </DashboardCard>
   );

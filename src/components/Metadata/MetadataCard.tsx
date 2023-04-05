@@ -145,7 +145,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                             name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
                             onChange={onChange}
                             value={field.key}
-                            size="medium"
+                            size="small"
                             aria-label={`${nameInputPrefix}${nameSeparator}{fieldIndex}`}
                           />
                         </TableCell>
@@ -154,7 +154,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                             name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
                             onChange={onChange}
                             value={field.value}
-                            size="medium"
+                            size="small"
                             aria-label={`${valueInputPrefix}${nameSeparator}{fieldIndex}`}
                           />
                         </TableCell>

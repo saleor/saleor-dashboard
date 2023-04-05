@@ -168,7 +168,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
                   </Box>
                 }
                 helperText={getSlugHelperMessage()}
-                size="medium"
+                size="small"
                 value={slug}
                 onChange={handleSlugChange}
                 disabled={loading || disabled}
@@ -177,7 +177,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
               />
             </Box>
             <Input
-              size="medium"
+              size="small"
               error={title?.length > maxTitleLength}
               name={SeoField.title}
               value={title ?? ""}

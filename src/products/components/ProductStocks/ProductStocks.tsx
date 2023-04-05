@@ -146,7 +146,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
             onChange={handleChange}
             value={data.sku}
             data-test-id="sku"
-            size="medium"
+            size="small"
             helperText={getProductErrorMessage(formErrors.sku, intl)}
           />
         </Box>
@@ -278,7 +278,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                         disabled={disabled}
                         onChange={handleQuantityChange}
                         value={stock.value}
-                        size="medium"
+                        size="small"
                         type="number"
                         min={0}
                         ref={input =>
@@ -413,7 +413,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                   name="globalThreshold"
                   onChange={onThresholdChange}
                   value={data.globalThreshold ?? ""}
-                  size="medium"
+                  size="small"
                   helperText={intl.formatMessage(
                     messages.preorderTresholdDescription,
                   )}
@@ -486,7 +486,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                         });
                       }}
                       value={listing?.preorderThreshold ?? ""}
-                      size="medium"
+                      size="small"
                       placeholder={intl.formatMessage(
                         messages.preorderTresholdUnlimited,
                       )}
