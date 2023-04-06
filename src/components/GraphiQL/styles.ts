@@ -26,6 +26,8 @@ export const useStyles = makeStyles(
   { name: "GraphiQL" },
 );
 
+const ComputedStyle = getComputedStyle(document.documentElement);
+
 export const useEditorStyles = () => {
   const pluginContext = usePluginContext();
 
@@ -55,6 +57,9 @@ export const useEditorStyles = () => {
 };
 
 export const useDashboardTheme = () => {
+  const color = ComputedStyle.getPropertyValue("--mu-colors-background-plain");
+  const match = color.match(/hsla\(([^)]+)\)/);
+
   const rootStyle = {
     "--font-size-body": vars.fontSize.bodyMedium,
     "--font-size-h2": vars.fontSize.headingLarge,
@@ -63,6 +68,7 @@ export const useDashboardTheme = () => {
     "--font-weight-regular": vars.fontWeight.bodyLarge,
     "--font-size-hint": vars.fontSize.bodyEmpLarge,
     "--font-size-inline-code": vars.fontSize.bodySmall,
+    "--color-base": match ? match[1] : color,
   } as React.CSSProperties;
 
   return { rootStyle };
