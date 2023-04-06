@@ -34,7 +34,7 @@
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
     "@saleor/sdk": "^0.4.6",
-    "@saleor/macaw-ui": "^0.8.0-pre.67",
+    "@saleor/macaw-ui": "^0.8.0-pre.50",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
     "@uiw/react-color-hue": "0.0.34",
