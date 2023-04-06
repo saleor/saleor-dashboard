@@ -3,7 +3,6 @@ import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
 import { TextField } from "@material-ui/core";
-import { Button } from "@saleor/macaw-ui";
 import {
   Box,
   Checkbox,
@@ -116,12 +115,12 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
       </RadioGroup>
       {!isPublished && (
         <Box display="flex" flexDirection="column" alignItems="start">
-          <Button
+          <Checkbox
             onClick={() => setPublicationDate(!isPublicationDate)}
             type="button"
           >
             {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
-          </Button>
+          </Checkbox>
           {isPublicationDate && (
             <TextField
               error={!!formErrors.publicationDate}
@@ -203,9 +202,9 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
               flexDirection="column"
               alignItems="start"
             >
-              <Button onClick={() => setAvailableDate(!isAvailableDate)}>
+              <Checkbox onClick={() => setAvailableDate(!isAvailableDate)}>
                 {messages.setAvailabilityDateLabel}
-              </Button>
+              </Checkbox>
               {isAvailableDate && (
                 <TextField
                   error={!!formErrors.availableForPurchaseDate}
