@@ -12,7 +12,6 @@ import {
   getSingleChoices,
   getSingleDisplayValue,
 } from "@dashboard/components/Attributes/utils";
-import { DateTimeField } from "@dashboard/components/DateTimeField";
 import FileUploadField from "@dashboard/components/FileUploadField";
 import MultiAutocompleteSelectField from "@dashboard/components/MultiAutocompleteSelectField";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
@@ -133,7 +132,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           id={`attribute:${attribute.label}`}
         >
           <Input
-            nonce=""
             disabled={disabled}
             error={!!error}
             label={intl.formatMessage(attributeRowMessages.valueLabel)}
@@ -185,7 +183,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           id={`attribute:${attribute.label}`}
         >
           <Input
-            nonce=""
             disabled={disabled}
             error={!!error}
             label={intl.formatMessage(attributeRowMessages.valueLabel)}
@@ -201,29 +198,37 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.BOOLEAN:
       return (
-        <BasicAttributeRow
-          label={attribute.label}
-          id={`attribute:${attribute.label}`}
-          clickableLabel
-        >
-          <Box
-            display="flex"
-            gap={2}
-            flexDirection="column"
-            alignItems="flex-start"
-          >
-            <Checkbox
-              name={`attribute:${attribute.label}`}
-              onCheckedChange={checked => onChange(attribute.id, checked)}
-              checked={JSON.parse(attribute.value[0] ?? "false")}
-              error={!!error}
-              id={`attribute:${attribute.label}`}
-            />
-            <Text variant="caption" color="textCriticalDefault">
-              {getErrorMessage(error, intl)}
-            </Text>
+        <Box as="li" display="flex" gap={5} alignItems="center" padding={3}>
+          <Box data-test-id="attribute-value">
+            <Box
+              display="flex"
+              gap={2}
+              flexDirection="column"
+              alignItems="flex-end"
+            >
+              <Checkbox
+                name={`attribute:${attribute.label}`}
+                onCheckedChange={checked => onChange(attribute.id, checked)}
+                checked={JSON.parse(attribute.value[0] ?? "false")}
+                error={!!error}
+                id={`attribute:${attribute.label}`}
+              />
+              <Text variant="caption" color="textCriticalDefault">
+                {getErrorMessage(error, intl)}
+              </Text>
+            </Box>
           </Box>
-        </BasicAttributeRow>
+          <Box
+            data-test-id="attribute-label"
+            as="label"
+            htmlFor={`attribute:${attribute.label}`}
+            display="flex"
+            gap={3}
+            cursor="pointer"
+          >
+            <Text>{attribute.label}</Text>
+          </Box>
+        </Box>
       );
     case AttributeInputTypeEnum.DATE:
       return (
@@ -247,19 +252,6 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.DATE_TIME:
-      return (
-        <BasicAttributeRow label={attribute.label}>
-          <DateTimeField
-            fullWidth
-            name={`attribute:${attribute.label}`}
-            disabled={disabled}
-            error={error}
-            value={attribute.value[0]}
-            helperText={getErrorMessage(error, intl)}
-            onChange={value => onChange(attribute.id, value)}
-          />
-        </BasicAttributeRow>
-      );
     default:
       return (
         <BasicAttributeRow label={attribute.label}>

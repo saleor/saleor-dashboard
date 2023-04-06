@@ -84,6 +84,9 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
           });
         }}
         disabled={disabled}
+        display="flex"
+        flexDirection="column"
+        gap={5}
       >
         <RadioGroup.Item id={`${id}-isPublished-true`} value="true">
           <Box display="flex" alignItems="baseline" gap={5}>

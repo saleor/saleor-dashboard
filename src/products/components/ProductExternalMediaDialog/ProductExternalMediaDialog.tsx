@@ -1,17 +1,15 @@
-import BackButton from "@dashboard/components/BackButton";
-import { Button } from "@dashboard/components/Button";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { ProductFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { buttonMessages } from "@dashboard/intl";
 import {
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
-  TextField,
-  Typography,
 } from "@material-ui/core";
+import { Button, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
 
@@ -52,33 +50,37 @@ const ProductExternalMediaDialog: React.FC<ProductExternalMediaDialogProps> = ({
   return (
     <Dialog onClose={onClose} open={open}>
       <DialogTitle disableTypography>
-        {intl.formatMessage(messages.buttonMessage)}
+        <Text variant="heading">
+          {intl.formatMessage(messages.buttonMessage)}
+        </Text>
       </DialogTitle>
       <Form initial={initialValues} onSubmit={handleOnSubmit}>
         {({ change, data, submit }) => (
           <>
             <DialogContent>
-              <Typography>
+              <Text variant="caption">
                 <FormattedMessage
                   id="zDvDnG"
                   defaultMessage="Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."
                   description="modal header"
                 />
-              </Typography>
+              </Text>
               <FormSpacer />
-              <TextField
+              <Input
                 label="URL"
                 value={data.mediaUrl}
                 name="mediaUrl"
-                type="url"
+                type="text"
                 onChange={change}
                 autoFocus
-                fullWidth
+                size="medium"
               />
             </DialogContent>
 
             <DialogActions>
-              <BackButton onClick={onClose} />
+              <Button variant="secondary" onClick={onClose}>
+                <FormattedMessage {...buttonMessages.back} />
+              </Button>
               <Button onClick={submit}>
                 {intl.formatMessage(messages.buttonMessage)}
               </Button>

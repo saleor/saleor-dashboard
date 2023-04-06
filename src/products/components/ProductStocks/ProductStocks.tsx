@@ -139,7 +139,6 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
       <DashboardCard.Content>
         <Box __width="50%">
           <Input
-            nonce=""
             disabled={disabled}
             error={!!formErrors.sku}
             label={intl.formatMessage(messages.sku)}
@@ -275,7 +274,6 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                     </TableCell>
                     <TableCell>
                       <Input
-                        nonce=""
                         data-test-id="stock-input"
                         disabled={disabled}
                         onChange={handleQuantityChange}
@@ -408,7 +406,6 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
             <Box display="grid" gap={4}>
               <Box __width="50%">
                 <Input
-                  nonce=""
                   min={0}
                   type="text"
                   disabled={disabled}
@@ -493,7 +490,6 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                       placeholder={intl.formatMessage(
                         messages.preorderTresholdUnlimited,
                       )}
-                      nonce=""
                     />
                   </TableCell>
                 </TableRowLink>

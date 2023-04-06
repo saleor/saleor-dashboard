@@ -21,6 +21,7 @@ export const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
     justifyContent="space-between"
     alignItems="center"
     paddingY={3}
+    paddingX={2}
     display="grid"
     gridTemplateColumns={2}
     gap={8}

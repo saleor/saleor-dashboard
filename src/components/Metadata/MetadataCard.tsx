@@ -142,7 +142,6 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                       <TableRowLink data-test-id="field" key={fieldIndex}>
                         <TableCell>
                           <Input
-                            nonce=""
                             name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
                             onChange={onChange}
                             value={field.key}
@@ -152,7 +151,6 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                         </TableCell>
                         <TableCell>
                           <Input
-                            nonce=""
                             name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
                             onChange={onChange}
                             value={field.value}
