@@ -63,12 +63,12 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
           </RequirePermissions>
         </Box>
       </DashboardCard.Title>
-      <DashboardCard.Content>
+      <DashboardCard.Content gap={3} display="flex" flexDirection="column">
         {!!channelsAvailabilityText && (
-          <>
+          <Box>
             <Text>{channelsAvailabilityText}</Text>
             <Divider />
-          </>
+          </Box>
         )}
         <Box display="flex" flexDirection="column" gap={8}>
           {children}

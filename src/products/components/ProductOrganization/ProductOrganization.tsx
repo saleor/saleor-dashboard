@@ -99,7 +99,7 @@ export const ProductOrganization: React.FC<
           description: "section header",
         })}
       </DashboardCard.Title>
-      <DashboardCard.Content gap={5} display="flex" flexDirection="column">
+      <DashboardCard.Content gap={6} display="flex" flexDirection="column">
         {canChangeType ? (
           <SingleAutocompleteSelectField
             displayValue={productTypeInputDisplayValue}
@@ -120,25 +120,30 @@ export const ProductOrganization: React.FC<
           />
         ) : (
           <Box display="flex" flexDirection="column" gap={3}>
-            <Text variant="bodyEmp">
-              <FormattedMessage id="anK7jD" defaultMessage="Product Type" />
-            </Text>
-            <Text variant="caption">
-              <Link
-                href={productTypeUrl(productType?.id) ?? ""}
-                disabled={!productType?.id}
-              >
-                {productType?.name ?? "..."}
-              </Link>
-            </Text>
-            <Text variant="bodyEmp">
-              <FormattedMessage id="Be+J13" defaultMessage="Configurable" />
-            </Text>
-            <Text variant="caption">
-              {productType?.hasVariants
-                ? intl.formatMessage(commonMessages.yes)
-                : intl.formatMessage(commonMessages.no)}
-            </Text>
+            <Box display="flex" flexDirection="column">
+              <Text variant="bodyEmp">
+                <FormattedMessage id="anK7jD" defaultMessage="Product Type" />
+              </Text>
+              <Text variant="caption">
+                <Link
+                  href={productTypeUrl(productType?.id) ?? ""}
+                  disabled={!productType?.id}
+                >
+                  {productType?.name ?? "..."}
+                </Link>
+              </Text>
+            </Box>
+
+            <Box display="flex" flexDirection="column">
+              <Text variant="bodyEmp">
+                <FormattedMessage id="Be+J13" defaultMessage="Configurable" />
+              </Text>
+              <Text variant="caption">
+                {productType?.hasVariants
+                  ? intl.formatMessage(commonMessages.yes)
+                  : intl.formatMessage(commonMessages.no)}
+              </Text>
+            </Box>
           </Box>
         )}
         <SingleAutocompleteSelectField
