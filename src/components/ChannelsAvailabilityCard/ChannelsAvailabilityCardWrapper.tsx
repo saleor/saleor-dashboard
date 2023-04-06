@@ -1,6 +1,6 @@
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import { PermissionEnum } from "@dashboard/graphql";
-import { Box, Button, Divider, Text } from "@saleor/macaw-ui/next";
+import { Box, Button, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -27,9 +27,9 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
   const intl = useIntl();
   const channelsAvailabilityText = intl.formatMessage(
     {
-      id: "vY2lpx",
+      id: "AD1PlC",
       defaultMessage:
-        "Available at {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}",
+        "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}",
       description: "channels availability text",
     },
     {
@@ -42,11 +42,18 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
     <DashboardCard>
       <DashboardCard.Title>
         <Box display="flex" justifyContent="space-between">
-          {intl.formatMessage({
-            id: "5A6/2C",
-            defaultMessage: "Availability",
-            description: "section header",
-          })}
+          <Box display={"flex"} flexDirection={"column"} gap={3}>
+            <div>
+              {intl.formatMessage({
+                id: "5A6/2C",
+                defaultMessage: "Availability",
+                description: "section header",
+              })}
+            </div>
+            {!!channelsAvailabilityText && (
+              <Text variant={"caption"}>{channelsAvailabilityText}</Text>
+            )}
+          </Box>
           <RequirePermissions requiredPermissions={managePermissions}>
             <Button
               onClick={openModal}
@@ -64,12 +71,6 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
         </Box>
       </DashboardCard.Title>
       <DashboardCard.Content gap={3} display="flex" flexDirection="column">
-        {!!channelsAvailabilityText && (
-          <Box>
-            <Text>{channelsAvailabilityText}</Text>
-            <Divider />
-          </Box>
-        )}
         <Box display="flex" flexDirection="column" gap={8}>
           {children}
         </Box>

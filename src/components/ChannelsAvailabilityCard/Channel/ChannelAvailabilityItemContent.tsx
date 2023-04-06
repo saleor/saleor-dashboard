@@ -72,7 +72,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
   );
 
   return (
-    <Box display="flex" gap={5} flexDirection="column">
+    <Box display="flex" gap={6} paddingTop={6} flexDirection="column">
       <RadioGroup
         value={String(isPublished)}
         onValueChange={value => {
@@ -86,7 +86,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
         disabled={disabled}
         display="flex"
         flexDirection="column"
-        gap={2}
+        gap={6}
       >
         <RadioGroup.Item id={`${id}-isPublished-true`} value="true">
           <Box display="flex" alignItems="baseline" gap={5}>
@@ -115,7 +115,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
         </RadioGroup.Item>
       </RadioGroup>
       {!isPublished && (
-        <Box display="flex" gap={3} flexDirection="column" alignItems="start">
+        <Box display="flex" flexDirection="column" alignItems="start">
           <Button
             onClick={() => setPublicationDate(!isPublicationDate)}
             type="button"
@@ -165,7 +165,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
             }
             display="flex"
             flexDirection="column"
-            gap={2}
+            gap={6}
           >
             <RadioGroup.Item
               id={`channel:isAvailableForPurchase:${id}-true`}
