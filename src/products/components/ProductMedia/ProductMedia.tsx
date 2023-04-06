@@ -1,11 +1,18 @@
+import { DashboardCard } from "@dashboard/components/Card";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
+import Skeleton from "@dashboard/components/Skeleton";
 import { ProductMediaFragment, ProductMediaType } from "@dashboard/graphql";
-import { ProductMediaPopper } from "@dashboard/products/components/ProductMediaPopper/ProductMediaPopper";
 import { ReorderAction } from "@dashboard/types";
 import createMultiFileUploadHandler from "@dashboard/utils/handlers/multiFileUploadHandler";
-import { Skeleton } from "@material-ui/lab";
-import { Box, Button, sprinkles, Text } from "@saleor/macaw-ui/next";
+import {
+  Box,
+  Button,
+  Dropdown,
+  List,
+  sprinkles,
+  Text,
+} from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
@@ -83,7 +90,6 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
   const [imagesToUpload, setImagesToUpload] = React.useState<
     ProductMediaFragment[]
   >([]);
-  const [popperOpenStatus, setPopperOpenStatus] = React.useState(false);
 
   const handleImageUpload = createMultiFileUploadHandler(onImageUpload, {
     onAfterUpload: () =>
@@ -111,30 +117,57 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
   });
 
   return (
-    <Box>
-      <Box padding={9} display="flex" justifyContent="space-between">
-        <Text variant="heading">
+    <DashboardCard>
+      <DashboardCard.Title>
+        <Box display="flex" justifyContent="space-between" cursor="pointer">
           <FormattedMessage {...messages.media} />
-        </Text>
+          <Dropdown>
+            <Dropdown.Trigger>
+              <Button
+                variant="secondary"
+                type="button"
+                data-test-id="button-upload-image"
+                ref={anchor}
+              >
+                {intl.formatMessage(messages.upload)}
+              </Button>
+            </Dropdown.Trigger>
+            <Dropdown.Content align="end">
+              <List
+                padding={5}
+                borderRadius={4}
+                boxShadow="overlay"
+                backgroundColor="surfaceNeutralPlain"
+              >
+                <Dropdown.Item>
+                  <List.Item
+                    borderRadius={4}
+                    paddingX={4}
+                    paddingY={5}
+                    onClick={() => imagesUpload.current.click()}
+                    data-test-id="upload-images"
+                  >
+                    <Text>{intl.formatMessage(messages.uploadImages)}</Text>
+                  </List.Item>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <List.Item
+                    borderRadius={4}
+                    paddingX={4}
+                    paddingY={5}
+                    onClick={openMediaUrlModal}
+                    data-test-id="upload-media-url"
+                  >
+                    <Text>{intl.formatMessage(messages.uploadUrl)}</Text>
+                  </List.Item>
+                </Dropdown.Item>
+              </List>
+            </Dropdown.Content>
+          </Dropdown>
+        </Box>
+      </DashboardCard.Title>
+      <DashboardCard.Content>
         <Box>
-          <Button
-            onClick={() => setPopperOpenStatus(true)}
-            variant="secondary"
-            type="button"
-            data-test-id="button-upload-image"
-            ref={anchor}
-          >
-            {intl.formatMessage(messages.upload)}
-          </Button>
-
-          <ProductMediaPopper
-            anchorRef={anchor.current}
-            imagesUploadRef={imagesUpload.current}
-            setPopperStatus={setPopperOpenStatus}
-            popperStatus={popperOpenStatus}
-            openMediaUrlModal={openMediaUrlModal}
-          />
-
           <Box
             as="input"
             display="none"
@@ -148,53 +181,53 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
             accept="image/*"
           />
         </Box>
-      </Box>
-      <Box position="relative">
-        {media === undefined ? (
-          <Box padding={8}>
-            <Skeleton />
-          </Box>
-        ) : media.length > 0 ? (
-          <>
-            <ImageUpload
-              className={sprinkles({
-                height: "100%",
-                width: "100%",
-                position: "absolute",
-                top: 0,
-                left: 0,
-              })}
-              isActiveClassName={sprinkles({ zIndex: "1" })}
-              disableClick={true}
-              hideUploadIcon={true}
-              iconContainerActiveClassName={sprinkles({ display: "block" })}
-              onImageUpload={handleImageUpload}
-            >
-              {({ isDragActive }) => (
-                <MediaListContainer
-                  distance={20}
-                  helperClass="dragged"
-                  axis="xy"
-                  media={media}
-                  preview={imagesToUpload}
-                  onSortEnd={onImageReorder}
-                  className={sprinkles({
-                    display: "grid",
-                    gap: 8,
-                    gridTemplateColumns: { mobile: 2, tablet: 3, desktop: 4 },
-                    opacity: isDragActive ? "0.2" : "1",
-                  })}
-                  onDelete={onImageDelete}
-                  getEditHref={getImageEditUrl}
-                />
-              )}
-            </ImageUpload>
-          </>
-        ) : (
-          <ImageUpload onImageUpload={handleImageUpload} />
-        )}
-      </Box>
-    </Box>
+        <Box position="relative">
+          {media === undefined ? (
+            <Box padding={8}>
+              <Skeleton />
+            </Box>
+          ) : media.length > 0 ? (
+            <>
+              <ImageUpload
+                className={sprinkles({
+                  height: "100%",
+                  width: "100%",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                })}
+                isActiveClassName={sprinkles({ zIndex: "1" })}
+                disableClick={true}
+                hideUploadIcon={true}
+                iconContainerActiveClassName={sprinkles({ display: "block" })}
+                onImageUpload={handleImageUpload}
+              >
+                {({ isDragActive }) => (
+                  <MediaListContainer
+                    distance={20}
+                    helperClass="dragged"
+                    axis="xy"
+                    media={media}
+                    preview={imagesToUpload}
+                    onSortEnd={onImageReorder}
+                    className={sprinkles({
+                      display: "grid",
+                      gap: 8,
+                      gridTemplateColumns: { mobile: 2, tablet: 3, desktop: 4 },
+                      opacity: isDragActive ? "0.2" : "1",
+                    })}
+                    onDelete={onImageDelete}
+                    getEditHref={getImageEditUrl}
+                  />
+                )}
+              </ImageUpload>
+            </>
+          ) : (
+            <ImageUpload onImageUpload={handleImageUpload} />
+          )}
+        </Box>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 ProductMedia.displayName = "ProductMedia";

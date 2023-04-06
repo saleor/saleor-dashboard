@@ -208,7 +208,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             display="flex"
             gap={2}
             flexDirection="column"
-            alignItems="flex-end"
+            alignItems="flex-start"
           >
             <Checkbox
               name={`attribute:${attribute.label}`}

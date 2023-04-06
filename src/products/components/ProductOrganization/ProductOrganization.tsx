@@ -16,7 +16,7 @@ import { commonMessages } from "@dashboard/intl";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Box, Divider, Text } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -99,7 +99,7 @@ export const ProductOrganization: React.FC<
           description: "section header",
         })}
       </DashboardCard.Title>
-      <DashboardCard.Content>
+      <DashboardCard.Content gap={5} display="flex" flexDirection="column">
         {canChangeType ? (
           <SingleAutocompleteSelectField
             displayValue={productTypeInputDisplayValue}
@@ -141,7 +141,6 @@ export const ProductOrganization: React.FC<
             </Text>
           </Box>
         )}
-        <Divider />
         <SingleAutocompleteSelectField
           displayValue={categoryInputDisplayValue}
           error={!!(formErrors.category || noCategoryError)}
@@ -162,7 +161,6 @@ export const ProductOrganization: React.FC<
           data-test-id="category"
           {...fetchMoreCategories}
         />
-        <Divider />
         <MultiAutocompleteSelectField
           displayValues={collectionsInputDisplayValue}
           error={!!formErrors.collections}

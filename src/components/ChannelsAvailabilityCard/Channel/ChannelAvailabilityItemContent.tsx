@@ -249,7 +249,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
               });
             }}
           >
-            <Text>
+            <Text cursor="pointer">
               {intl.formatMessage(availabilityItemMessages.hideInListings)}
             </Text>
           </Checkbox>
