@@ -146,6 +146,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
           <Box display="grid" gap={5}>
             <Box>
               <Input
+                nonce=""
                 error={!!getError(SeoField.slug) || slug.length > maxSlugLength}
                 name={SeoField.slug}
                 label={
@@ -177,6 +178,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
               />
             </Box>
             <Input
+              nonce=""
               size="small"
               error={title?.length > maxTitleLength}
               name={SeoField.title}

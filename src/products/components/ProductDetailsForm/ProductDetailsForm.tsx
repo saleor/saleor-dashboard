@@ -40,6 +40,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
       </DashboardCard.Title>
       <DashboardCard.Content display="grid" gap={5} paddingX={8}>
         <Input
+          nonce=""
           label={intl.formatMessage({
             id: "6AMFki",
             defaultMessage: "Name",
@@ -73,6 +74,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
         )}
         <Box __width="25%">
           <Input
+            nonce=""
             label={intl.formatMessage({
               id: "L7N+0y",
               defaultMessage: "Product Rating",

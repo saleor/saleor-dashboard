@@ -133,6 +133,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           id={`attribute:${attribute.label}`}
         >
           <Input
+            nonce=""
             disabled={disabled}
             error={!!error}
             label={intl.formatMessage(attributeRowMessages.valueLabel)}
@@ -184,6 +185,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
           id={`attribute:${attribute.label}`}
         >
           <Input
+            nonce=""
             disabled={disabled}
             error={!!error}
             label={intl.formatMessage(attributeRowMessages.valueLabel)}
