@@ -24,6 +24,7 @@ import { Box, Checkbox, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { DateTimeField } from "../DateTimeField";
 import { AttributeRowProps } from "./types";
 
 const AttributeRow: React.FC<AttributeRowProps> = ({
@@ -252,6 +253,19 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
         </BasicAttributeRow>
       );
     case AttributeInputTypeEnum.DATE_TIME:
+      return (
+        <BasicAttributeRow label={attribute.label}>
+          <DateTimeField
+            fullWidth
+            name={`attribute:${attribute.label}`}
+            disabled={disabled}
+            error={error}
+            value={attribute.value[0]}
+            helperText={getErrorMessage(error, intl)}
+            onChange={value => onChange(attribute.id, value)}
+          />
+        </BasicAttributeRow>
+      );
     default:
       return (
         <BasicAttributeRow label={attribute.label}>
