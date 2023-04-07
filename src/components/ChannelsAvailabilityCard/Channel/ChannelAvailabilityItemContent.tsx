@@ -114,10 +114,10 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
         </RadioGroup.Item>
       </RadioGroup>
       {!isPublished && (
-        <Box display="flex" flexDirection="column" alignItems="start">
+        <Box display="flex" flexDirection="column" alignItems="start" gap={3}>
           <Checkbox
-            onClick={() => setPublicationDate(!isPublicationDate)}
-            type="button"
+            onCheckedChange={(checked: boolean) => setPublicationDate(checked)}
+            checked={isPublicationDate}
           >
             {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
           </Checkbox>
@@ -202,7 +202,12 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
               flexDirection="column"
               alignItems="start"
             >
-              <Checkbox onClick={() => setAvailableDate(!isAvailableDate)}>
+              <Checkbox
+                onCheckedChange={(checked: boolean) =>
+                  setAvailableDate(checked)
+                }
+                checked={isAvailableDate}
+              >
                 {messages.setAvailabilityDateLabel}
               </Checkbox>
               {isAvailableDate && (
