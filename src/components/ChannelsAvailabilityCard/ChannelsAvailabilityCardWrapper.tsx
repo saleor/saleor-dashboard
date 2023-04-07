@@ -41,7 +41,7 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
   return (
     <DashboardCard>
       <DashboardCard.Title>
-        <Box display="flex" justifyContent="space-between">
+        <Box display="flex" justifyContent="space-between" alignItems="center">
           <Box display={"flex"} flexDirection={"column"} gap={3}>
             <div>
               {intl.formatMessage({
