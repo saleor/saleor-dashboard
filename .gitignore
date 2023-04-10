@@ -50,3 +50,4 @@ cypress/reports
 django-queries-results.html
 
 !.env.template
+!.dependency-cruiser.js
