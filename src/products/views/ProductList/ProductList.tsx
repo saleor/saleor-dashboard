@@ -251,7 +251,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const handleFilterTabDelete = () => {
     deleteFilterTab(tabIndexToDelete);
     reset();
-    navigate(productListUrl());
+
+    // When deleting the current tab, navigate to the All products
+    if (tabIndexToDelete === currentTab) {
+      navigate(productListUrl());
+    } else {
+      // When deleting a tab that is not the current one, only remove the action param from the query
+      delete params.action;
+      navigate(productListUrl() + stringify(params));
+    }
   };
 
   const handleFilterTabSave = (data: SaveFilterTabDialogFormData) => {
