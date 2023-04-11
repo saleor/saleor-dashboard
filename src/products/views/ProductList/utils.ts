@@ -56,3 +56,9 @@ export const getNextUniqueTabName = (name: string, avialabeNames: string[]) => {
 
   return uniqueName;
 };
+
+export const getActiveTabIndexAfterTabDelete = (
+  currentTab: number,
+  tabIndexToDelete: number,
+): string =>
+  tabIndexToDelete < currentTab ? `${currentTab - 1}` : `${currentTab}`;

@@ -82,6 +82,7 @@ import {
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import {
+  getActiveTabIndexAfterTabDelete,
   getAvailableProductKinds,
   getNextUniqueTabName,
   getProductKindOpts,
@@ -253,12 +254,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     if (tabIndexToDelete === currentTab) {
       navigate(productListUrl());
     } else {
+      const currentParams = { ...params };
       // When deleting a tab that is not the current one, only remove the action param from the query
-      delete params.action;
+      delete currentParams.action;
       // When deleting a tab that is before the current one, decrease the activeTab param by 1
-      params.activeTab =
-        tabIndexToDelete < currentTab ? `${currentTab - 1}` : `${currentTab}`;
-      navigate(productListUrl() + stringify(params));
+      currentParams.activeTab = getActiveTabIndexAfterTabDelete(
+        currentTab,
+        tabIndexToDelete,
+      );
+      navigate(productListUrl() + stringify(currentParams));
     }
   };
 
