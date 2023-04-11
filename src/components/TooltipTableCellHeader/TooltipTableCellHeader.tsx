@@ -12,6 +12,21 @@ export const TooltipTableCellHeader: React.FC<
 > = props => {
   const { children, tooltip, disabled, ...rest } = props;
 
+  const tooltipDisabled = () => {
+    if (!tooltip) {
+      return true;
+    }
+    return !disabled;
+  };
+
+  if (tooltipDisabled()) {
+    return (
+      <TableCellHeader disabled={disabled} {...rest}>
+        {children}
+      </TableCellHeader>
+    );
+  }
+
   return (
     <Tooltip>
       <Tooltip.Trigger>

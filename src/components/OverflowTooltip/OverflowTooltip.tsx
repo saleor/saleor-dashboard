@@ -41,6 +41,14 @@ const OverflowTooltip: React.FC<OverflowTooltipProps> = ({
     vertical: checkVertical,
   });
 
+  if (!isOverflow) {
+    return (
+      <div ref={ref} className={clsx(classes.wrapper, className)}>
+        {children}
+      </div>
+    );
+  }
+
   return (
     <Tooltip>
       <Tooltip.Trigger>
@@ -48,13 +56,11 @@ const OverflowTooltip: React.FC<OverflowTooltipProps> = ({
           {children}
         </div>
       </Tooltip.Trigger>
-      {isOverflow && (
-        <Tooltip.Content side="top">
-          <Tooltip.Arrow />
-          <Tooltip.ContentHeading>{header}</Tooltip.ContentHeading>
-          {title ?? children}
-        </Tooltip.Content>
-      )}
+      <Tooltip.Content side="top">
+        <Tooltip.Arrow />
+        <Tooltip.ContentHeading>{header}</Tooltip.ContentHeading>
+        {title ?? children}
+      </Tooltip.Content>
     </Tooltip>
   );
 };
