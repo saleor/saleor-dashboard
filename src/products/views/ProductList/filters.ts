@@ -36,6 +36,7 @@ import {
   FilterElementRegular,
 } from "../../../components/Filter";
 import {
+  createFilterTabUtils,
   createFilterUtils,
   dedupeFilter,
   getGteLteVariables,
@@ -463,8 +464,12 @@ export function getFilterQueryParam(
   }
 }
 
-export const createFilterPresetsKey = (userId: string) =>
-  `${PRODUCT_FILTERS_KEY}-${userId}`;
+export const {
+  deleteFilterTab,
+  getFilterTabs,
+  saveFilterTab,
+  updateFilterTab,
+} = createFilterTabUtils<string>(PRODUCT_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
   createFilterUtils<ProductListUrlQueryParams, ProductListUrlFilters>({

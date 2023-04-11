@@ -1,5 +1,4 @@
 import { filterable } from "@dashboard/attributes/utils/data";
-import { useUser } from "@dashboard/auth";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
@@ -59,7 +58,6 @@ import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { ListViews } from "@dashboard/types";
-import { createFilterTabUtils } from "@dashboard/utils/filters";
 import { prepareQs } from "@dashboard/utils/filters/qs";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
@@ -74,10 +72,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { useSortRedirects } from "../../../hooks/useSortRedirects";
 import ProductListPage from "../../components/ProductListPage";
 import {
-  createFilterPresetsKey,
+  deleteFilterTab,
   getFilterOpts,
   getFilterQueryParam,
+  getFilterTabs,
   getFilterVariables,
+  saveFilterTab,
+  updateFilterTab,
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import {
@@ -93,7 +94,6 @@ interface ProductListProps {
 export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { user } = useUser();
   const { queue } = useBackgroundTask();
 
   const [tabIndexToDelete, setTabIndexToDelete] = useState<number | null>(null);
@@ -104,9 +104,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
   );
-
-  const { deleteFilterTab, getFilterTabs, saveFilterTab, updateFilterTab } =
-    createFilterTabUtils<string>(createFilterPresetsKey(user?.id ?? ""));
 
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
