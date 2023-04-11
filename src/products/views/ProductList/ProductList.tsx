@@ -255,6 +255,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     } else {
       // When deleting a tab that is not the current one, only remove the action param from the query
       delete params.action;
+      // When deleting a tab that is before the current one, decrease the activeTab param by 1
+      params.activeTab =
+        tabIndexToDelete < currentTab ? `${currentTab - 1}` : `${currentTab}`;
       navigate(productListUrl() + stringify(params));
     }
   };
