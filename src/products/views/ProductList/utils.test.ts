@@ -1,14 +1,14 @@
-import { getUniqueTabName } from "./utils";
+import { getNextUniqueTabName } from "./utils";
 
 describe("ProductList utils", () => {
-  describe("getUniqueTabName", () => {
+  describe("getNextUniqueTabName", () => {
     it("should return unique name", () => {
       // Arrange
       const name = "test";
       const availableNames = ["test", "test 1", "test 2"];
 
       // Act
-      const result = getUniqueTabName(name, availableNames);
+      const result = getNextUniqueTabName(name, availableNames);
 
       // Assert
       expect(result).toEqual("test 3");

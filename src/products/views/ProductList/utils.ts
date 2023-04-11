@@ -45,7 +45,7 @@ export const getProductGiftCardFilterParam = (productKind?: string) => {
   return productKind === ProductTypeKindEnum.GIFT_CARD;
 };
 
-export const getUniqueTabName = (name: string, avialabeNames: string[]) => {
+export const getNextUniqueTabName = (name: string, avialabeNames: string[]) => {
   let uniqueName = name;
   let i = 1;
 

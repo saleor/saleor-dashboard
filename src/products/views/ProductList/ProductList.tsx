@@ -83,8 +83,8 @@ import {
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import {
   getAvailableProductKinds,
+  getNextUniqueTabName,
   getProductKindOpts,
-  getUniqueTabName,
 } from "./utils";
 
 interface ProductListProps {
@@ -263,7 +263,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     const { paresedQs } = prepareQs(location.search);
 
     saveFilterTab(
-      getUniqueTabName(
+      getNextUniqueTabName(
         data.name,
         tabs.map(tab => tab.name),
       ),
