@@ -6,14 +6,9 @@ import {
 } from "@dashboard/graphql";
 import { UserError } from "@dashboard/types";
 import { getFieldError } from "@dashboard/utils/errors";
-import {
-  Card,
-  CardContent,
-  TextField,
-  Tooltip,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardContent, TextField } from "@material-ui/core";
 import InfoIcon from "@material-ui/icons/Info";
+import { Box, Tooltip } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -69,14 +64,14 @@ const PluginSettings: React.FC<PluginSettingsProps> = ({
                     disabled={disabled}
                   />
                   {fieldData.helpText && (
-                    <Tooltip
-                      title={
-                        <Typography variant="body2" className={classes.tooltip}>
-                          {fieldData.helpText}
-                        </Typography>
-                      }
-                    >
-                      <InfoIcon />
+                    <Tooltip>
+                      <Tooltip.Trigger>
+                        <InfoIcon />
+                      </Tooltip.Trigger>
+                      <Tooltip.Content>
+                        <Tooltip.Arrow />
+                        <Box __maxWidth={350}>{fieldData.helpText}</Box>
+                      </Tooltip.Content>
                     </Tooltip>
                   )}
                 </>
