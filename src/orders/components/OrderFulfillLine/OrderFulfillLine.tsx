@@ -10,12 +10,8 @@ import {
   OrderFulfillLineFormData,
 } from "@dashboard/orders/utils/data";
 import { TableCell, TextField, Typography } from "@material-ui/core";
-import {
-  ChevronIcon,
-  IconButton,
-  Tooltip,
-  WarningIcon,
-} from "@saleor/macaw-ui";
+import { ChevronIcon, IconButton, WarningIcon } from "@saleor/macaw-ui";
+import { Box, Tooltip } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -32,13 +28,8 @@ interface OrderFulfillLineProps {
 }
 
 export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
-  const {
-    line,
-    lineIndex,
-    formsetData,
-    formsetChange,
-    onWarehouseChange,
-  } = props;
+  const { line, lineIndex, formsetData, formsetChange, onWarehouseChange } =
+    props;
   const classes = useStyles();
   const intl = useIntl();
 
@@ -88,21 +79,24 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
         thumbnail={line?.thumbnail?.url}
         badge={
           isPreorder || !line?.variant ? (
-            <Tooltip
-              variant="warning"
-              title={intl.formatMessage(
-                isPreorder
-                  ? messages.preorderWarning
-                  : messages.deletedVariantWarning,
-              )}
-            >
-              <div className={classes.warningIcon}>
-                <WarningIcon />
-              </div>
+            <Tooltip>
+              <Tooltip.Trigger>
+                <div className={classes.warningIcon}>
+                  <WarningIcon />
+                </div>
+              </Tooltip.Trigger>
+              <Tooltip.Content side="bottom">
+                <Tooltip.Arrow />
+                <Box __maxWidth={350}>
+                  {intl.formatMessage(
+                    isPreorder
+                      ? messages.preorderWarning
+                      : messages.deletedVariantWarning,
+                  )}
+                </Box>
+              </Tooltip.Content>
             </Tooltip>
-          ) : (
-            undefined
-          )
+          ) : undefined
         }
       >
         {line.productName}
@@ -122,8 +116,8 @@ export const OrderFulfillLine: React.FC<OrderFulfillLineProps> = props => {
             type="number"
             inputProps={{
               className: clsx(classes.quantityInnerInput, {
-                [classes.quantityInnerInputNoRemaining]: !line.variant
-                  ?.trackInventory,
+                [classes.quantityInnerInputNoRemaining]:
+                  !line.variant?.trackInventory,
               }),
               min: 0,
               style: { textAlign: "right" },

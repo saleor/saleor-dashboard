@@ -2,8 +2,7 @@ import { appInstallationStatusMessages } from "@dashboard/apps/messages";
 import { IS_CLOUD_INSTANCE } from "@dashboard/config";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
-import { Tooltip } from "@material-ui/core";
-import { Box, Button, Text } from "@saleor/macaw-ui/next";
+import { Box, Button, Text, Tooltip } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -74,20 +73,24 @@ const AppListCardActions: React.FC<AppListCardActionsProps> = ({
         </Button>
       )}
       {installHandler && !IS_CLOUD_INSTANCE && (
-        <Tooltip
-          placement="top"
-          title={intl.formatMessage(messages.installationCloudOnly)}
-        >
-          <div>
-            <Button
-              variant="primary"
-              onClick={installHandler}
-              data-test-id="app-install-button"
-              disabled
-            >
-              <FormattedMessage {...buttonMessages.install} />
-            </Button>
-          </div>
+        <Tooltip>
+          <Tooltip.Trigger>
+            <span tabIndex={0}>
+              <Button
+                variant="primary"
+                onClick={installHandler}
+                data-test-id="app-install-button"
+                style={{ pointerEvents: "none" }}
+                disabled
+              >
+                <FormattedMessage {...buttonMessages.install} />
+              </Button>
+            </span>
+          </Tooltip.Trigger>
+          <Tooltip.Content>
+            <Tooltip.Arrow />
+            {intl.formatMessage(messages.installationCloudOnly)}
+          </Tooltip.Content>
         </Tooltip>
       )}
       {installationPending && (

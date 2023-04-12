@@ -8,13 +8,13 @@ import TableButtonWrapper from "@dashboard/components/TableButtonWrapper/TableBu
 import { JobStatusEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import { CircularProgress } from "@material-ui/core";
-import { Tooltip } from "@saleor/macaw-ui";
 import {
   Box,
   Button,
   Chip,
   List,
   Text,
+  Tooltip,
   TrashBinIcon,
   WarningIcon,
 } from "@saleor/macaw-ui/next";
@@ -73,18 +73,26 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
         )}
         {appInstallation?.status === JobStatusEnum.FAILED && (
           <>
-            <Tooltip title={appInstallation.message} variant="error">
-              <Box display="flex" placeItems="center" gap={3} marginX={3}>
-                <WarningIcon size="small" color="iconCriticalSubdued" />
-                <Text
-                  variant="caption"
-                  size="small"
-                  color="textCriticalSubdued"
-                  data-test-id="app-failed-label"
-                >
-                  <FormattedMessage {...appInstallationStatusMessages.failed} />
-                </Text>
-              </Box>
+            <Tooltip>
+              <Tooltip.Trigger>
+                <Box display="flex" placeItems="center" gap={3} marginX={3}>
+                  <WarningIcon size="small" color="iconCriticalSubdued" />
+                  <Text
+                    variant="caption"
+                    size="small"
+                    color="textCriticalSubdued"
+                    data-test-id="app-failed-label"
+                  >
+                    <FormattedMessage
+                      {...appInstallationStatusMessages.failed}
+                    />
+                  </Text>
+                </Box>
+              </Tooltip.Trigger>
+              <Tooltip.Content>
+                <Tooltip.Arrow />
+                {appInstallation.message}
+              </Tooltip.Content>
             </Tooltip>
             <Button
               variant="secondary"
