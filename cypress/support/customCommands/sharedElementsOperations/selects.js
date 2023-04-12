@@ -17,6 +17,9 @@ Cypress.Commands.add("clickNextPagePaginationButton", () =>
 Cypress.Commands.add("clickPrevPagePaginationButton", () =>
   cy.get(PAGINATION.previousPagePaginationButton),
 );
+Cypress.Commands.add("clickSubmitButton", () =>
+  cy.get(BUTTON_SELECTORS.submit).click(),
+);
 
 Cypress.Commands.add("createNewOption", (selectSelector, newOption) => {
   cy.get(selectSelector).type(newOption);

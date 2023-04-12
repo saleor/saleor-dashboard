@@ -1,5 +1,5 @@
 import { IFilter } from "@dashboard/components/Filter";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import {
   commonMessages,
@@ -39,7 +39,7 @@ export interface OrderListFilterOpts {
   customer: FilterOpts<string>;
   status: FilterOpts<OrderStatusFilter[]>;
   paymentStatus: FilterOpts<PaymentChargeStatusEnum[]>;
-  channel?: FilterOpts<MultiAutocompleteChoiceType[]>;
+  channel: FilterOpts<string[]> & { choices: SingleAutocompleteChoiceType[] };
   clickAndCollect: FilterOpts<boolean>;
   preorder: FilterOpts<boolean>;
   giftCard: FilterOpts<OrderFilterGiftCard[]>;
@@ -247,15 +247,15 @@ export function createFilterStructure(
       ),
       active: opts.metadata.active,
     },
-    ...(opts?.channel?.value.length
+    ...(opts?.channel?.choices?.length
       ? [
           {
             ...createOptionsField(
               OrderFilterKeys.channel,
               intl.formatMessage(messages.channel),
-              [],
-              true,
               opts.channel.value,
+              true,
+              opts.channel.choices,
             ),
             active: opts.channel.active,
           },

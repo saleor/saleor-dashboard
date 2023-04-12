@@ -58,6 +58,7 @@ interface ProductListDatagridProps
   >;
   onColumnQueryChange: (query: string) => void;
   isAttributeLoading?: boolean;
+  hasRowHover?: boolean;
 }
 
 export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
@@ -80,6 +81,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   onColumnQueryChange,
   activeAttributeSortId,
   filterDependency,
+  hasRowHover,
 }) => {
   const intl = useIntl();
   const searchProductType = useSearchProductTypes();
@@ -230,6 +232,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           rowMarkers="none"
           columnSelect="single"
           freezeColumns={2}
+          hasRowHover={hasRowHover}
           onColumnMoved={handleColumnMoved}
           onColumnResize={handleColumnResize}
           verticalBorder={col => (col > 1 ? true : false)}

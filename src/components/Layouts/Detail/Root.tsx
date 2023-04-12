@@ -12,7 +12,7 @@ interface DetailPageLayoutProps {
   withSavebar?: boolean;
 }
 
-const contentWithSidebarHeight = `calc(100vh - ${savebarHeight} - ${borderHeight})`;
+const contentWithSidebarHeight = `calc(100vh - ${savebarHeight} - ${borderHeight} * 2)`;
 const contentWithoutSidebarHeight = `calc(100vh - ${borderHeight}`;
 
 export const RootLayout: React.FC<DetailPageLayoutProps> = ({
