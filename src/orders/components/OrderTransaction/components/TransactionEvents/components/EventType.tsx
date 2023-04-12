@@ -1,7 +1,7 @@
 import { transactionEventTypeMap } from "@dashboard/orders/messages";
 import { TransactionEventType } from "@dashboard/orders/types";
-import { makeStyles, Tooltip } from "@saleor/macaw-ui";
-import { Box, InfoIcon } from "@saleor/macaw-ui/next";
+import { makeStyles } from "@saleor/macaw-ui";
+import { Box, InfoIcon, Tooltip } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -34,10 +34,16 @@ export const EventType = ({ type, message }: EventTypeProps) => {
     <Box display="flex" alignItems="center">
       {displayType}
       {type !== null && message && (
-        <Tooltip title={message}>
-          <div className={classes.tooltipWrapper}>
-            <InfoIcon />
-          </div>
+        <Tooltip>
+          <Tooltip.Trigger>
+            <div className={classes.tooltipWrapper}>
+              <InfoIcon />
+            </div>
+          </Tooltip.Trigger>
+          <Tooltip.Content side="bottom">
+            <Tooltip.Arrow />
+            {message}
+          </Tooltip.Content>
         </Tooltip>
       )}
     </Box>

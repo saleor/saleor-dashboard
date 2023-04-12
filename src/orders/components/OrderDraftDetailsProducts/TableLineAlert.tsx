@@ -1,8 +1,5 @@
-import {
-  IndicatorOutlined,
-  Tooltip,
-  TooltipMountWrapper,
-} from "@saleor/macaw-ui";
+import { IndicatorOutlined, TooltipMountWrapper } from "@saleor/macaw-ui";
+import { Tooltip } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import OrderAlerts from "../OrderAlerts";
@@ -20,10 +17,16 @@ const TableLineAlert: React.FC<TableLineAlertProps> = ({ alerts, variant }) => {
   const title = <OrderAlerts alerts={alerts} />;
 
   return (
-    <Tooltip title={title} variant={variant}>
-      <TooltipMountWrapper>
-        <IndicatorOutlined icon={variant} />
-      </TooltipMountWrapper>
+    <Tooltip>
+      <Tooltip.Trigger>
+        <TooltipMountWrapper>
+          <IndicatorOutlined icon={variant} />
+        </TooltipMountWrapper>
+      </Tooltip.Trigger>
+      <Tooltip.Content side="bottom">
+        <Tooltip.Arrow />
+        {title}
+      </Tooltip.Content>
     </Tooltip>
   );
 };
