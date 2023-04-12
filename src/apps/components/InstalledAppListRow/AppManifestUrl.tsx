@@ -1,6 +1,9 @@
 import { Box, CopyIcon, Text, Tooltip } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React, { useState } from "react";
+import { FormattedMessage } from "react-intl";
+
+import { appsMessages } from "../../messages";
 
 interface AppManifestUrlProps {
   manifestUrl: string;
@@ -36,7 +39,9 @@ export const AppManifestUrl: React.FC<AppManifestUrlProps> = ({
         </Tooltip.Trigger>
         <Tooltip.Content side="bottom">
           <Tooltip.Arrow />
-          <Tooltip.ContentHeading>App Manifest URL</Tooltip.ContentHeading>
+          <Tooltip.ContentHeading>
+            <FormattedMessage {...appsMessages.appManifestUrl} />
+          </Tooltip.ContentHeading>
           {manifestUrl}
         </Tooltip.Content>
       </Tooltip>
