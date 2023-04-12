@@ -76,6 +76,7 @@ export interface ProductListUrlQueryParams
     Pagination,
     ActiveTab {
   attributeId?: string;
+  presestesChanged?: string;
 }
 export const productListUrl = (params?: ProductListUrlQueryParams): string =>
   productListPath + "?" + stringifyQs(params);

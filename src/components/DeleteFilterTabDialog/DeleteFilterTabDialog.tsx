@@ -1,3 +1,4 @@
+import { buttonMessages } from "@dashboard/intl";
 import { DialogContentText } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
@@ -26,19 +27,20 @@ const DeleteFilterTabDialog: React.FC<DeleteFilterTabDialogProps> = ({
     <ActionDialog
       open={open}
       confirmButtonState={confirmButtonState}
+      backButtonText={intl.formatMessage(buttonMessages.cancel)}
       onClose={onClose}
       onConfirm={onSubmit}
       title={intl.formatMessage({
-        id: "7NfoiJ",
-        defaultMessage: "Delete Search",
-        description: "custom search delete, dialog header",
+        id: "xy66ru",
+        defaultMessage: "Delete preset",
+        description: "custom preset delete, dialog header",
       })}
       variant="delete"
     >
       <DialogContentText>
         <FormattedMessage
-          id="UaYJJ8"
-          defaultMessage="Are you sure you want to delete {name} search tab?"
+          id="U5CH0u"
+          defaultMessage="Are you sure you want to delete {name} preset?"
           values={{
             name: <strong>{tabName}</strong>,
           }}

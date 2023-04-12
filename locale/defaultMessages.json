@@ -764,6 +764,9 @@
   "3DGvA/": {
     "string": "Remember this will also unpin all products assigned to this category, making them unavailable in storefront."
   },
+  "3PVGWj": {
+    "string": "Filter preset"
+  },
   "3Sz1/t": {
     "context": "dialog header",
     "string": "Delete Pages"
@@ -1283,10 +1286,6 @@
   "7NFfmz": {
     "string": "Products"
   },
-  "7NfoiJ": {
-    "context": "custom search delete, dialog header",
-    "string": "Delete Search"
-  },
   "7Oorx5": {
     "context": "navigator section header",
     "string": "Search in Catalog"
@@ -1595,6 +1594,9 @@
     "context": "used staff users counter",
     "string": "{count}/{max} members"
   },
+  "A+g/VP": {
+    "string": "Unsaved preset"
+  },
   "A0Wlg7": {
     "context": "product discount removed title",
     "string": "{productName} discount was removed by"
@@ -1785,6 +1787,9 @@
   },
   "BUKMzM": {
     "string": "Variant removed"
+  },
+  "BWpuKl": {
+    "string": "Update"
   },
   "BXMSl4": {
     "context": "currency channel",
@@ -3688,6 +3693,10 @@
   "P7PLVj": {
     "string": "Date"
   },
+  "P9YktI": {
+    "context": "save preset, header",
+    "string": "Save view preset"
+  },
   "PAqicb": {
     "context": "button",
     "string": "Cancel order"
@@ -3922,10 +3931,6 @@
   "QZoU0r": {
     "context": "dialog header",
     "string": "Delete Channel"
-  },
-  "QcIFCs": {
-    "context": "save search tab",
-    "string": "Search Name"
   },
   "QclvqG": {
     "context": "input label",
@@ -4378,6 +4383,9 @@
   "U2mOqA": {
     "string": "No vouchers found"
   },
+  "U5CH0u": {
+    "string": "Are you sure you want to delete {name} preset?"
+  },
   "U5Da30": {
     "string": "Warehouses"
   },
@@ -4441,9 +4449,6 @@
   "USS3Q7": {
     "context": "filters error messages unknown error",
     "string": "Unknown error occurred"
-  },
-  "UaYJJ8": {
-    "string": "Are you sure you want to delete {name} search tab?"
   },
   "Uf3oHA": {
     "context": "add new menu item",
@@ -5838,6 +5843,9 @@
   "eUjFjW": {
     "string": "Permission group created"
   },
+  "eW36Jx": {
+    "string": "Saved search queries will appear here"
+  },
   "eWV760": {
     "string": "Attribute with this slug already exists"
   },
@@ -6751,10 +6759,6 @@
     "context": "export items as csv file",
     "string": "Plain CSV file"
   },
-  "liLrVs": {
-    "context": "save filter tab, header",
-    "string": "Save Custom Search"
-  },
   "lit2zF": {
     "string": "Search Discounts"
   },
@@ -7638,6 +7642,9 @@
     "context": "button",
     "string": "Assign product"
   },
+  "scTuDZ": {
+    "string": "Save search as preset"
+  },
   "sdA14A": {
     "context": "Status label when object is published in a channel",
     "string": "Published"
@@ -7717,6 +7724,10 @@
   "tA5HJx": {
     "context": "webhook input help text",
     "string": "secret key is used to create a hash signature with each payload. *optional field"
+  },
+  "tCLTCb": {
+    "context": "tab name",
+    "string": "All products"
   },
   "tEdFmZ": {
     "context": "notification title",
@@ -8351,6 +8362,10 @@
   "xxQxLE": {
     "string": "Email Address"
   },
+  "xy66ru": {
+    "context": "custom preset delete, dialog header",
+    "string": "Delete preset"
+  },
   "y/UWBR": {
     "string": "There is no address to show for this customer"
   },
@@ -8571,6 +8586,10 @@
   "zgqPGF": {
     "context": "attribute list",
     "string": "Attribute {name}"
+  },
+  "zhnwl6": {
+    "context": "save preset name",
+    "string": "Preset name"
   },
   "zjHH6b": {
     "context": "sale start date",
