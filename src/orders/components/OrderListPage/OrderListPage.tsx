@@ -3,8 +3,8 @@ import {
   mapToMenuItems,
   useExtensions,
 } from "@dashboard/apps/hooks/useExtensions";
-import { FilterBar } from "@dashboard/components/AppLayout/FilterBar";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
@@ -158,7 +158,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
       </TopNav>
       {limitsReached && <OrderLimitReached />}
       <Card>
-        <FilterBar
+        <ListFilters
           initialSearch={initialSearch}
           onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}

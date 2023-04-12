@@ -89,6 +89,7 @@ export interface DatagridProps {
   onColumnMoved?: (startIndex: number, endIndex: number) => void;
   onColumnResize?: (column: GridColumn, newSize: number) => void;
   readonly?: boolean;
+  hasRowHover?: boolean;
   rowMarkers?: DataEditorProps["rowMarkers"];
   freezeColumns?: DataEditorProps["freezeColumns"];
   verticalBorder?: DataEditorProps["verticalBorder"];
@@ -121,6 +122,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   onColumnResize,
   showEmptyDatagrid = false,
   loading,
+  hasRowHover = false,
   ...datagridProps
 }): ReactElement => {
   const classes = useStyles();
@@ -224,11 +226,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const handleRowHover = useCallback(
     (args: GridMouseEventArgs) => {
-      if (readonly && onRowClick) {
+      if (hasRowHover) {
         setHoverRow(args.kind !== "cell" ? undefined : args.location[1]);
       }
     },
-    [onRowClick, readonly],
+    [hasRowHover],
   );
 
   const handleGridSelectionChange = (gridSelection: GridSelection) => {

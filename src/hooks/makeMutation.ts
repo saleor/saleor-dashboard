@@ -66,7 +66,7 @@ export function useMutation<TData, TVariables>(
     },
     onError: (err: ApolloError) => {
       if (!disableErrorHandling) {
-        if (err.graphQLErrors) {
+        if (err?.graphQLErrors.length > 0) {
           if (hasError(err, GqlErrors.ReadOnlyException)) {
             notify({
               status: "error",

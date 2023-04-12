@@ -4,10 +4,11 @@ import {
   mapToMenuItemsForProductOverviewActions,
   useExtensions,
 } from "@dashboard/apps/hooks/useExtensions";
-import { FilterBar } from "@dashboard/components/AppLayout/FilterBar";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { getByName } from "@dashboard/components/Filter/utils";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { TopNavMenu } from "@dashboard/components/TopNavMenu";
@@ -32,8 +33,8 @@ import {
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
-import { Box, Button, Text } from "@saleor/macaw-ui/next";
-import React from "react";
+import { Box, Button, ChevronRightIcon, Text } from "@saleor/macaw-ui/next";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField, productUrl } from "../../urls";
@@ -49,7 +50,10 @@ import {
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     ListActions,
-    FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
+    Omit<
+      FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
+      "onTabDelete"
+    >,
     FetchMoreProps,
     SortPage<ProductListUrlSortField>,
     ChannelProps {
@@ -63,9 +67,12 @@ export interface ProductListPageProps
   limits: RefreshLimitsQuery["shop"]["limits"];
   products: RelayToFlat<ProductListQuery["products"]>;
   selectedProductIds: string[];
+  hasPresetsChanged: boolean;
   onAdd: () => void;
   onExport: () => void;
   onColumnQueryChange: (query: string) => void;
+  onTabUpdate: (tabName: string) => void;
+  onTabDelete: (tabIndex: number) => void;
 }
 
 export type ProductListViewType = "datagrid" | "tile";
@@ -95,11 +102,20 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     selectedChannelId,
     selectedProductIds,
     activeAttributeSortId,
+    onTabChange,
+    onTabDelete,
+    onTabSave,
+    onAll,
+    currentTab,
+    tabs,
+    onTabUpdate,
+    hasPresetsChanged,
     ...listProps
   } = props;
   const intl = useIntl();
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   const filterDependency = filterStructure.find(getByName("channel"));
 
@@ -122,59 +138,93 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
 
   return (
     <ListPageLayout>
-      <TopNav withoutBorder title={intl.formatMessage(sectionNames.products)}>
-        <Box display="flex" alignItems="center" gap={5}>
-          {hasLimits(limits, "productVariants") && (
-            <Text variant="caption">
-              {intl.formatMessage(
+      <TopNav
+        withoutBorder
+        isAlignToRight={false}
+        title={intl.formatMessage(sectionNames.products)}
+      >
+        <Box
+          __flex={1}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Box display="flex">
+            <Box marginX={6} display="flex" alignItems="center">
+              <ChevronRightIcon />
+            </Box>
+
+            <FilterPresetsSelect
+              presetsChanged={hasPresetsChanged}
+              onSelect={onTabChange}
+              onRemove={onTabDelete}
+              onUpdate={onTabUpdate}
+              savedPresets={tabs}
+              activePreset={currentTab}
+              onSelectAll={onAll}
+              onSave={onTabSave}
+              isOpen={isFilterPresetOpen}
+              onOpenChange={setFilterPresetOpen}
+              selectAllLabel={intl.formatMessage({
+                id: "tCLTCb",
+                defaultMessage: "All products",
+                description: "tab name",
+              })}
+            />
+          </Box>
+          <Box display="flex" alignItems="center" gap={5}>
+            {hasLimits(limits, "productVariants") && (
+              <Text variant="caption">
+                {intl.formatMessage(
+                  {
+                    id: "Kw0jHS",
+                    defaultMessage: "{count}/{max} SKUs used",
+                    description: "created products counter",
+                  },
+                  {
+                    count: limits.currentUsage.productVariants,
+                    max: limits.allowedUsage.productVariants,
+                  },
+                )}
+              </Text>
+            )}
+            <TopNavMenu
+              dataTestId="menu"
+              items={[
                 {
-                  id: "Kw0jHS",
-                  defaultMessage: "{count}/{max} SKUs used",
-                  description: "created products counter",
+                  label: intl.formatMessage({
+                    id: "7FL+WZ",
+                    defaultMessage: "Export Products",
+                    description: "export products to csv file, button",
+                  }),
+                  onSelect: onExport,
+                  testId: "export",
                 },
-                {
-                  count: limits.currentUsage.productVariants,
-                  max: limits.allowedUsage.productVariants,
-                },
-              )}
-            </Text>
-          )}
-          <TopNavMenu
-            dataTestId="menu"
-            items={[
-              {
-                label: intl.formatMessage({
-                  id: "7FL+WZ",
-                  defaultMessage: "Export Products",
-                  description: "export products to csv file, button",
-                }),
-                onSelect: onExport,
-                testId: "export",
-              },
-              ...extensionMenuItems,
-            ]}
-          />
-          {extensionCreateButtonItems.length > 0 ? (
-            <ButtonWithDropdown
-              onClick={onAdd}
-              testId={"add-product"}
-              options={extensionCreateButtonItems}
-            >
-              <FormattedMessage
-                id="JFmOfi"
-                defaultMessage="Create Product"
-                description="button"
-              />
-            </ButtonWithDropdown>
-          ) : (
-            <Button data-test-id="add-product" onClick={onAdd}>
-              <FormattedMessage
-                id="JFmOfi"
-                defaultMessage="Create Product"
-                description="button"
-              />
-            </Button>
-          )}
+                ...extensionMenuItems,
+              ]}
+            />
+            {extensionCreateButtonItems.length > 0 ? (
+              <ButtonWithDropdown
+                onClick={onAdd}
+                testId={"add-product"}
+                options={extensionCreateButtonItems}
+              >
+                <FormattedMessage
+                  id="JFmOfi"
+                  defaultMessage="Create Product"
+                  description="button"
+                />
+              </ButtonWithDropdown>
+            ) : (
+              <Button data-test-id="add-product" onClick={onAdd}>
+                <FormattedMessage
+                  id="JFmOfi"
+                  defaultMessage="Create Product"
+                  description="button"
+                />
+              </Button>
+            )}
+          </Box>
         </Box>
       </TopNav>
       {limitReached && (
@@ -199,7 +249,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           alignItems="stretch"
           justifyContent="space-between"
         >
-          <FilterBar
+          <ListFilters
             currencySymbol={currencySymbol}
             initialSearch={initialSearch}
             onFilterChange={onFilterChange}
@@ -221,6 +271,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
         {isDatagridView ? (
           <ProductListDatagrid
             {...listProps}
+            hasRowHover={!isFilterPresetOpen}
             filterDependency={filterDependency}
             activeAttributeSortId={activeAttributeSortId}
             columnQuery={columnQuery}
