@@ -56,7 +56,7 @@ import {
   ProductListUrlQueryParams,
 } from "../../urls";
 import { getProductGiftCardFilterParam } from "./utils";
-export const PRODUCT_FILTERS_KEY = "productFilters";
+export const PRODUCT_FILTERS_KEY = "productPresets";
 
 function getAttributeFilterParamType(inputType: AttributeInputTypeEnum) {
   switch (inputType) {
@@ -468,14 +468,12 @@ export const {
   deleteFilterTab,
   getFilterTabs,
   saveFilterTab,
-} = createFilterTabUtils<ProductListUrlFilters>(PRODUCT_FILTERS_KEY);
+  updateFilterTab,
+} = createFilterTabUtils<string>(PRODUCT_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<ProductListUrlQueryParams, ProductListUrlFilters>({
-  ...ProductListUrlFiltersEnum,
-  ...ProductListUrlFiltersWithMultipleValues,
-  ...ProductListUrlFiltersAsDictWithMultipleValues,
-});
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
+  createFilterUtils<ProductListUrlQueryParams, ProductListUrlFilters>({
+    ...ProductListUrlFiltersEnum,
+    ...ProductListUrlFiltersWithMultipleValues,
+    ...ProductListUrlFiltersAsDictWithMultipleValues,
+  });

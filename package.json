@@ -34,8 +34,8 @@
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
-    "@saleor/macaw-ui": "^0.8.0-pre.52",
-    "@saleor/sdk": "^0.4.4",
+    "@saleor/macaw-ui": "^0.8.0-pre.64",
+    "@saleor/sdk": "^0.4.6",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
     "@uiw/react-color-hue": "0.0.34",
@@ -69,7 +69,7 @@
     "marked": "^4.0.17",
     "moment-timezone": "^0.5.32",
     "pixelmatch": "^5.3.0",
-    "qs": "^6.10.1",
+    "qs": "^6.10.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-draggable": "^4.4.5",
@@ -156,6 +156,7 @@
     "codecov": "^3.7.1",
     "core-js": "^3.7.0",
     "cross-env": "^6.0.3",
+    "dependency-cruiser": "^12.10.0",
     "cypress-recurse": "^1.27.0",
     "dotenv": "^10.0.0",
     "env-var": "^7.3.0",
@@ -305,6 +306,7 @@
     "cy:run:allEnv:parallel": "cypress run --record --env grepTags=@allEnv --parallel",
     "cy:run:stable:parallel": "cypress run --record --env grepTags=@critical  --parallel --tag Stable",
     "cy:percy": "CYPRESS_demoTests=true percy exec -- npm run cy:run",
+    "cy:run:demo": "CYPRESS_demoTests=true npm run cy:run",
     "test": "jest src/",
     "test:watch": "jest --watch src/",
     "lint": "eslint \"src/**/*.@(tsx|ts|jsx|js)\" --fix",
@@ -312,7 +314,8 @@
     "postinstall": "node scripts/patchReactVirtualized.js",
     "predev": "npm run build-types",
     "release": "release-it",
-    "prepare": "is-ci || husky install"
+    "prepare": "is-ci || husky install",
+    "dep-status": "depcruise --config .dependency-cruiser.js src"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }
