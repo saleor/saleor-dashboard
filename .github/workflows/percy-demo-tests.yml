@@ -29,9 +29,12 @@ on:
 jobs:
   cypress-run-tests:
     runs-on: ubuntu-latest
+    env:
+      TEST_KIND: ${{ github.event.inputs.testsKind || github.event.client_payload.testsKind }}
     container: cypress/browsers:node18.12.0-chrome106-ff106
 
     steps:
+
       - name: Get environments urls
         id: get-env-urls
         env:
@@ -40,7 +43,7 @@ jobs:
         run: |
           echo "DASHBOARD_URL=${{ github.event.inputs.dashboardUrl || env.DEFAULT_DASHBOARD_URL }}" >> $GITHUB_OUTPUT
           echo "API_URL=${{ github.event.inputs.apiUrl || env.DEFAULT_API_URL }}" >> $GITHUB_OUTPUT
-
+          
       - name: Checkout
         uses: actions/checkout@v1
 
@@ -60,7 +63,7 @@ jobs:
         run: NODE_OPTIONS=--max_old_space_size=4096 npm install 
 
       - name: Cypress run test percy
-        if: github.event.inputs.testsKind != "functional"
+        if: contains(fromJSON('["percy", "all"]'), env.testsKind)
         continue-on-error: true
         uses: cypress-io/github-action@v4
         env:
@@ -78,7 +81,7 @@ jobs:
           command: npx percy exec -- npx cypress run --record
 
       - name: Cypress run test functional
-        if: github.event.inputs.testsKind != "percy"
+        if: contains(fromJSON('["functional", "all"]'), env.testsKind)
         continue-on-error: true
         uses: cypress-io/github-action@v4
         env:
