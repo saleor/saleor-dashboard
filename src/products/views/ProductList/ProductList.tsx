@@ -404,17 +404,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     );
   };
 
-  const getCurrenTab = (): number | undefined => {
-    const { paresedQs } = prepareQs(location.search);
-
-    // When there are no filters, we want to show All Products tab
-    if (stringify(paresedQs) === "") {
-      return undefined;
-    }
-
-    return currentTab;
-  };
-
   const paginationValues = usePaginator({
     pageInfo: data?.products?.pageInfo,
     paginationState,
@@ -436,7 +425,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           ) || []
         }
         currencySymbol={selectedChannel?.currencyCode || ""}
-        currentTab={getCurrenTab()}
+        currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
         gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
