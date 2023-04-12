@@ -81,7 +81,12 @@ import {
   updateFilterTab,
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
-import { getAvailableProductKinds, getProductKindOpts } from "./utils";
+import {
+  getActiveTabIndexAfterTabDelete,
+  getAvailableProductKinds,
+  getNextUniqueTabName,
+  getProductKindOpts,
+} from "./utils";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -244,13 +249,33 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const handleFilterTabDelete = () => {
     deleteFilterTab(tabIndexToDelete);
     reset();
-    navigate(productListUrl());
+
+    // When deleting the current tab, navigate to the All products
+    if (tabIndexToDelete === currentTab) {
+      navigate(productListUrl());
+    } else {
+      const currentParams = { ...params };
+      // When deleting a tab that is not the current one, only remove the action param from the query
+      delete currentParams.action;
+      // When deleting a tab that is before the current one, decrease the activeTab param by 1
+      currentParams.activeTab = getActiveTabIndexAfterTabDelete(
+        currentTab,
+        tabIndexToDelete,
+      );
+      navigate(productListUrl() + stringify(currentParams));
+    }
   };
 
   const handleFilterTabSave = (data: SaveFilterTabDialogFormData) => {
     const { paresedQs } = prepareQs(location.search);
 
-    saveFilterTab(data.name, stringify(paresedQs));
+    saveFilterTab(
+      getNextUniqueTabName(
+        data.name,
+        tabs.map(tab => tab.name),
+      ),
+      stringify(paresedQs),
+    );
     handleTabChange(tabs.length + 1);
   };
 
