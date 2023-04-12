@@ -33,7 +33,8 @@ const props: OrderListPageProps = {
     },
     channel: {
       active: false,
-      value: [
+      value: [],
+      choices: [
         {
           label: "Channel PLN",
           value: "channelId",

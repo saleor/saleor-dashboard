@@ -13,7 +13,7 @@ function createFilterUtils<
 >(filters: {}) {
   function getActiveFilters(params: TQueryParams): TFilters {
     return Object.keys(params)
-      .filter(key => Object.keys(filters).includes(key))
+      .filter(key => Object.values(filters).includes(key))
       .reduce((acc, key) => {
         acc[key] = params[key];
         return acc;

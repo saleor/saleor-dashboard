@@ -3,7 +3,7 @@ import { alpha } from "@material-ui/core/styles";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import { vars } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { FilterContent } from ".";
@@ -14,7 +14,7 @@ import {
   InvalidFilters,
 } from "./types";
 import useFilter from "./useFilter";
-import { extractInvalidFilters } from "./utils";
+import { extractInvalidFilters, getSelectedFiltersAmount } from "./utils";
 
 export interface FilterProps<TFilterKeys extends string = string> {
   currencySymbol?: string;
@@ -103,6 +103,11 @@ const Filter: React.FC<FilterProps> = props => {
 
   const isFilterActive = menu.some(filterElement => filterElement.active);
 
+  const selectedFilterAmount = useMemo(
+    () => getSelectedFiltersAmount(menu, data),
+    [data, menu],
+  );
+
   const handleSubmit = () => {
     const invalidFilters = extractInvalidFilters(data, menu);
 
@@ -147,23 +152,8 @@ const Filter: React.FC<FilterProps> = props => {
               description="button"
             />
           </Typography>
-          {isFilterActive && (
-            <>
-              <span className={classes.separator} />
-              <Typography className={classes.addFilterText}>
-                {menu.reduce((acc, filterElement) => {
-                  const dataFilterElement = data.find(
-                    ({ name }) => name === filterElement.name,
-                  );
-
-                  if (!dataFilterElement) {
-                    return acc;
-                  }
-
-                  return acc + (dataFilterElement.active ? 1 : 0);
-                }, 0)}
-              </Typography>
-            </>
+          {isFilterActive && selectedFilterAmount > 0 && (
+            <>({selectedFilterAmount})</>
           )}
         </Button>
         <Popper

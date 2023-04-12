@@ -3,10 +3,10 @@ import { FilterProps, SearchPageProps } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { ReactNode } from "react";
 
-import { Filter } from "./Filter";
-import SearchInput from "./SearchInput";
+import { FiltersSelect } from "./components/FiltersSelect";
+import SearchInput from "./components/SearchInput";
 
-export interface FilterBarProps<TKeys extends string = string>
+export interface ListFiltersProps<TKeys extends string = string>
   extends FilterProps<TKeys>,
     SearchPageProps {
   searchPlaceholder: string;
@@ -15,7 +15,7 @@ export interface FilterBarProps<TKeys extends string = string>
   actions?: ReactNode;
 }
 
-export const FilterBar: React.FC<FilterBarProps> = ({
+export const ListFilters = ({
   currencySymbol,
   filterStructure,
   initialSearch,
@@ -25,11 +25,11 @@ export const FilterBar: React.FC<FilterBarProps> = ({
   onFilterAttributeFocus,
   errorMessages,
   actions,
-}: FilterBarProps) => (
+}: ListFiltersProps) => (
   <>
     <Box
       display="grid"
-      __gridTemplateColumns="1fr 1fr"
+      gridTemplateColumns={2}
       gap={7}
       paddingBottom={5}
       paddingX={9}
@@ -38,13 +38,14 @@ export const FilterBar: React.FC<FilterBarProps> = ({
       borderBottomWidth={1}
     >
       <Box display="flex" alignItems="center" gap={7}>
-        <Filter
+        <FiltersSelect
           errorMessages={errorMessages}
           menu={filterStructure}
           currencySymbol={currencySymbol}
           onFilterAdd={onFilterChange}
           onFilterAttributeFocus={onFilterAttributeFocus}
         />
+
         <Box __width="320px">
           <SearchInput
             initialSearch={initialSearch}
@@ -59,4 +60,4 @@ export const FilterBar: React.FC<FilterBarProps> = ({
     </Box>
   </>
 );
-FilterBar.displayName = "FilterBar";
+ListFilters.displayName = "FilterBar";
