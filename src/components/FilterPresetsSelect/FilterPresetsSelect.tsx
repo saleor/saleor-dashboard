@@ -1,5 +1,4 @@
 import { commonMessages } from "@dashboard/intl";
-import { Tooltip } from "@saleor/macaw-ui";
 import {
   Box,
   Button,
@@ -9,6 +8,7 @@ import {
   PlusIcon,
   sprinkles,
   Text,
+  Tooltip,
   vars,
 } from "@saleor/macaw-ui/next";
 import React, { MouseEvent } from "react";
@@ -72,10 +72,16 @@ export const FilterPresetsSelect = ({
     if (!savedPresets?.length) {
       return (
         <Box display="flex" alignItems="center">
-          <Tooltip title={intl.formatMessage(messages.noPresets)}>
-            <Text variant="title" size="small">
-              {selectAllLabel}
-            </Text>
+          <Tooltip>
+            <Tooltip.Trigger>
+              <Text variant="title" size="small">
+                {selectAllLabel}
+              </Text>
+            </Tooltip.Trigger>
+            <Tooltip.Content>
+              <Tooltip.Arrow />
+              {intl.formatMessage(messages.noPresets)}
+            </Tooltip.Content>
           </Tooltip>
         </Box>
       );
@@ -179,16 +185,22 @@ export const FilterPresetsSelect = ({
         </Button>
       )}
       {showSaveButton && (
-        <Tooltip title={intl.formatMessage(messages.savePreset)}>
-          <Button
-            className={sprinkles({
-              marginLeft: 6,
-            })}
-            icon={<PlusIcon />}
-            onClick={onSave}
-            variant="secondary"
-            size="small"
-          />
+        <Tooltip>
+          <Tooltip.Trigger>
+            <Button
+              className={sprinkles({
+                marginLeft: 6,
+              })}
+              icon={<PlusIcon />}
+              onClick={onSave}
+              variant="secondary"
+              size="small"
+            />
+          </Tooltip.Trigger>
+          <Tooltip.Content>
+            <Tooltip.Arrow />
+            {intl.formatMessage(messages.savePreset)}
+          </Tooltip.Content>
         </Tooltip>
       )}
     </Box>
