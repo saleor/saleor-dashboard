@@ -4,7 +4,10 @@ import { ActiveTab, Pagination, Search, Sort } from "@dashboard/types";
 
 import { GetFilterQueryParam, getFilterQueryParams } from "../filters";
 
-type RequiredParams = ActiveTab & Search & Sort<any> & Pagination;
+type RequiredParams = ActiveTab &
+  Search &
+  Sort<any> &
+  Pagination & { presestesChanged?: string };
 type CreateUrl = (params: RequiredParams) => string;
 type CreateFilterHandlers<TFilterKeys extends string> = [
   (filter: IFilter<TFilterKeys>) => void,
@@ -21,19 +24,40 @@ function createFilterHandlers<
   createUrl: CreateUrl;
   params: RequiredParams;
   cleanupFn?: () => void;
+  keepActiveTab?: boolean;
 }): CreateFilterHandlers<TFilterKeys> {
-  const { getFilterQueryParam, navigate, createUrl, params, cleanupFn } = opts;
+  const {
+    getFilterQueryParam,
+    navigate,
+    createUrl,
+    params,
+    cleanupFn,
+    keepActiveTab,
+  } = opts;
+
+  const getActiveTabValue = (removeActiveTab: boolean) => {
+    if (!keepActiveTab || removeActiveTab) {
+      return undefined;
+    }
+
+    return params.activeTab;
+  };
 
   const changeFilters = (filters: IFilter<TFilterKeys>) => {
     if (!!cleanupFn) {
       cleanupFn();
     }
-
+    const filtersQueryParams = getFilterQueryParams(
+      filters,
+      getFilterQueryParam,
+    );
     navigate(
       createUrl({
         ...params,
-        ...getFilterQueryParams(filters, getFilterQueryParam),
-        activeTab: undefined,
+        ...filtersQueryParams,
+        activeTab: getActiveTabValue(
+          checkIfParamsEmpty(filtersQueryParams) && !params.query?.length,
+        ),
       }),
     );
   };
@@ -55,19 +79,30 @@ function createFilterHandlers<
     if (!!cleanupFn) {
       cleanupFn();
     }
+    const trimmedQuery = query?.trim() ?? "";
 
     navigate(
       createUrl({
         ...params,
         after: undefined,
         before: undefined,
-        activeTab: undefined,
-        query: query?.trim(),
+        activeTab: getActiveTabValue(
+          checkIfParamsEmpty(params) && trimmedQuery === "",
+        ),
+        query: trimmedQuery !== "" ? trimmedQuery : undefined,
       }),
     );
   };
 
   return [changeFilters, resetFilters, handleSearchChange];
+}
+
+function checkIfParamsEmpty(params: RequiredParams): boolean {
+  const paramsToOmit = ["activeTab", "sort", "asc", "query"];
+
+  return Object.entries(params)
+    .filter(([name]) => !paramsToOmit.includes(name))
+    .every(([_, value]) => value === undefined);
 }
 
 export default createFilterHandlers;

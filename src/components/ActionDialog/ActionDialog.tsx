@@ -14,6 +14,7 @@ export interface ActionDialogProps extends DialogProps {
   maxWidth?: Size | false;
   title: string;
   variant?: ActionDialogVariant;
+  backButtonText?: string;
   onConfirm();
 }
 

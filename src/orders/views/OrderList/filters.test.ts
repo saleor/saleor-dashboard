@@ -51,7 +51,8 @@ describe("Filtering URL params", () => {
     },
     channel: {
       active: false,
-      value: [
+      value: [],
+      choices: [
         {
           label: "Channel PLN",
           value: "channelId",

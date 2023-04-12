@@ -4,7 +4,7 @@ import reduceFilter, { FilterReducerAction } from "./reducer";
 import { FieldType, FilterElement, IFilter } from "./types";
 
 export type FilterDispatchFunction<K extends string = string> = <
-  T extends FieldType
+  T extends FieldType,
 >(
   value: FilterReducerAction<K, T>,
 ) => void;
@@ -53,7 +53,7 @@ function useFilter<K extends string>(initialFilter: IFilter<K>): UseFilter<K> {
       payload: {
         new: parsedInitialFilter,
       },
-      type: "merge",
+      type: "reset",
     });
 
   useEffect(refresh, [initialFilter]);

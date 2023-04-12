@@ -53,7 +53,8 @@ export function getFilterOpts(
     channel: channels
       ? {
           active: params?.channel !== undefined,
-          value: channels,
+          choices: channels,
+          value: params?.channel ?? [],
         }
       : null,
     created: {
