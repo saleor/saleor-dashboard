@@ -1,10 +1,9 @@
-import "@testing-library/jest-dom";
-
 import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
 } from "@dashboard/graphql";
 import { Fetcher } from "@graphiql/toolkit";
+import { ThemeProvider } from "@saleor/macaw-ui/next";
 import { ApolloMockedProvider } from "@test/ApolloMockedProvider";
 import { render, screen } from "@testing-library/react";
 import React from "react";
@@ -21,13 +20,6 @@ jest.mock("react-intl", () => ({
     formatMessage: jest.fn(x => x.defaultMessage),
   })),
   defineMessages: jest.fn(x => x),
-}));
-
-jest.mock("@saleor/macaw-ui", () => ({
-  useTheme: jest.fn(() => () => ({})),
-  useStyles: jest.fn(() => () => ({})),
-  makeStyles: jest.fn(() => () => ({})),
-  DialogHeader: jest.fn(() => () => <></>),
 }));
 
 beforeEach(() => {
@@ -54,7 +46,9 @@ describe("WebhookSubscriptionQuery", () => {
     // Act
     render(
       <ApolloMockedProvider>
-        <WebhookSubscriptionQuery {...props} />
+        <ThemeProvider>
+          <WebhookSubscriptionQuery {...props} />
+        </ThemeProvider>
       </ApolloMockedProvider>,
     );
 
