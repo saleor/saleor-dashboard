@@ -59,6 +59,7 @@ import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { ListViews } from "@dashboard/types";
 import { prepareQs } from "@dashboard/utils/filters/qs";
+import { shouldSkipFirstListFetchWithQuery } from "@dashboard/utils/graphql/graphql";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
@@ -328,6 +329,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       hasChannel: !!selectedChannel,
       hasSelectedAttributes: filteredColumnIds.length > 0,
     },
+    skip: shouldSkipFirstListFetchWithQuery(params.query, params.sort),
   });
 
   const availableInGridAttributesOpts = useAvailableInGridAttributesSearch({
