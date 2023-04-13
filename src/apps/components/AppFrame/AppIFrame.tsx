@@ -45,12 +45,6 @@ const _AppIFrame = forwardRef<HTMLIFrameElement, AppIFrameProps>(
   },
 );
 
-export const AppIFrame = memo(_AppIFrame, (prev, next) => {
-  const res = isEqualWith(prev, next, (prevVal, nextVal) => {
-    // don't compare functions
-    if (typeof prevVal === "function" && typeof nextVal === "function") {
-      return true;
-    }
-  });
-  return res;
-});
+export const AppIFrame = memo(_AppIFrame, (prev, next) =>
+  isEqualWith(prev, next),
+);
