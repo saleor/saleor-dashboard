@@ -64,7 +64,7 @@ jobs:
         run: NODE_OPTIONS=--max_old_space_size=4096 npm install 
 
       - name: Cypress run test percy
-        if: contains(fromJSON('["percy", "all"]'), env.testsKind)
+        if: contains(fromJSON('["percy", "all"]'), env.TEST_KIND)
         continue-on-error: true
         uses: cypress-io/github-action@v4
         env:
@@ -82,7 +82,7 @@ jobs:
           command: npx percy exec -- npx cypress run --record
 
       - name: Cypress run test functional
-        if: contains(fromJSON('["functional", "all"]'), env.testsKind)
+        if: contains(fromJSON('["functional", "all"]'), env.TEST_KIND)
         continue-on-error: true
         uses: cypress-io/github-action@v4
         env:
