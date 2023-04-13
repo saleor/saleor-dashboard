@@ -35,7 +35,7 @@ import {
   OrderListUrlQueryParams,
 } from "../../urls";
 
-export const ORDER_FILTERS_KEY = "orderFilters";
+export const ORDER_FILTERS_KEY = "orderFiltersPresets";
 
 export function getFilterOpts(
   params: OrderListUrlFilters,

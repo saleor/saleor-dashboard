@@ -18,7 +18,6 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { useSortRedirects } from "@dashboard/hooks/useSortRedirects";
-import { getStringOrPlaceholder } from "@dashboard/misc";
 import {
   getActiveTabIndexAfterTabDelete,
   getNextUniqueTabName,
@@ -242,7 +241,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleFilterTabDelete}
-        tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
+        tabName={tabs[tabIndexToDelete - 1]?.name ?? "..."}
       />
       {!noChannel && (
         <ChannelPickerDialog
