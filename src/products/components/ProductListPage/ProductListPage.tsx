@@ -187,7 +187,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                 )}
               </Text>
             )}
-            <TopNavMenu
+            <TopNav.Menu
               dataTestId="menu"
               items={[
                 {
