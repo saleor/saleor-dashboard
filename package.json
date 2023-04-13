@@ -1,6 +1,6 @@
 {
   "name": "saleor-dashboard",
-  "version": "3.9.11",
+  "version": "3.9.12-1",
   "main": "src/index.tsx",
   "repository": {
     "type": "git",
@@ -31,7 +31,7 @@
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
     "@saleor/macaw-ui": "0.7.2",
-    "@saleor/sdk": "^0.4.4",
+    "@saleor/sdk": "0.4.5",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
     "@uiw/react-color-hue": "0.0.34",
