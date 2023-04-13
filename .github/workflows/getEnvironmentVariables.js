@@ -276,15 +276,19 @@ async function getBranch(token, version) {
     auth: token,
   });
 
-  const response = await octokit.request("GET /repos/{owner}/{repo}/branches", {
-    owner: "saleor",
-    repo: "saleor-dashboard",
-    headers: {
-      "X-GitHub-Api-Version": "2022-11-28",
-    },
-  });
-  const branch = response.data.find(element => {
-    return element.name == formattedVersion;
-  });
-  return branch ? formattedVersion : "main";
+  try {
+    const response = await octokit.request(
+      `GET /repos/{owner}/{repo}/branches/${formattedVersion}`,
+      {
+        owner: "saleor",
+        repo: "saleor-dashboard",
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      },
+    );
+    return response.status == 200 ? response.data.name : "main";
+  } catch (error) {
+    return "main";
+  }
 }
