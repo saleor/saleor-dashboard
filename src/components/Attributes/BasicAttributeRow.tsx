@@ -1,5 +1,4 @@
-import { Tooltip } from "@saleor/macaw-ui";
-import { Box, InfoIcon, sprinkles, Text } from "@saleor/macaw-ui/next";
+import { Box, InfoIcon, sprinkles, Text, Tooltip } from "@saleor/macaw-ui/next";
 import React from "react";
 
 interface BasicAttributeRowProps {
@@ -36,15 +35,21 @@ export const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
     >
       <Text>{label}</Text>
       {description && (
-        <Tooltip title={description} placement="top">
-          <Box>
-            <InfoIcon
-              size="small"
-              className={sprinkles({
-                display: "block",
-              })}
-            />
-          </Box>
+        <Tooltip>
+          <Tooltip.Trigger>
+            <Box>
+              <InfoIcon
+                size="small"
+                className={sprinkles({
+                  display: "block",
+                })}
+              />
+            </Box>
+          </Tooltip.Trigger>
+          <Tooltip.Content side="top">
+            <Tooltip.Arrow />
+            {description}
+          </Tooltip.Content>
         </Tooltip>
       )}
     </Box>

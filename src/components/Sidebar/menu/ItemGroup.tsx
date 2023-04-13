@@ -26,7 +26,6 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
       <List.ItemGroup.Trigger
         paddingX={5}
         borderRadius={3}
-        // @ts-ignore
         size="small"
         active={isActive}
         justifyContent="space-between"
