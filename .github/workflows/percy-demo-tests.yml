@@ -14,6 +14,7 @@ on:
       testsKind:
         required: true 
         description: 'What kind of tests'
+        type: choice
         default: "all"
         options:
           - "percy"
@@ -43,9 +44,9 @@ jobs:
         run: |
           echo "DASHBOARD_URL=${{ github.event.inputs.dashboardUrl || env.DEFAULT_DASHBOARD_URL }}" >> $GITHUB_OUTPUT
           echo "API_URL=${{ github.event.inputs.apiUrl || env.DEFAULT_API_URL }}" >> $GITHUB_OUTPUT
-          
+
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
 
       - name: Cache node modules
         uses: actions/cache@v2
