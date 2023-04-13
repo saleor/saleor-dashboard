@@ -1,15 +1,14 @@
 import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useAppDashboardUpdates";
 import {
   AppDetailsUrlQueryParams,
-  AppUrls,
   prepareFeatureFlagsList,
 } from "@dashboard/apps/urls";
 import { useAllFlags } from "@dashboard/hooks/useFlags";
 import { CircularProgress } from "@material-ui/core";
-import { useTheme } from "@saleor/macaw-ui";
 import clsx from "clsx";
-import React from "react";
+import React, { useCallback, useMemo } from "react";
 
+import { AppIFrame } from "./AppIFrame";
 import { useStyles } from "./styles";
 import { useAppActions } from "./useAppActions";
 import useTokenRefresh from "./useTokenRefresh";
@@ -21,7 +20,6 @@ interface Props {
   className?: string;
   params?: AppDetailsUrlQueryParams;
   refetch?: () => void;
-  onLoad?(): void;
   onError?(): void;
 }
 
@@ -32,13 +30,11 @@ export const AppFrame: React.FC<Props> = ({
   appToken,
   appId,
   className,
-  params = {},
-  onLoad,
+  params,
   onError,
   refetch,
 }) => {
   const frameRef = React.useRef<HTMLIFrameElement | null>(null);
-  const { themeType } = useTheme();
   const classes = useStyles();
   const appOrigin = getOrigin(src);
   const flags = useAllFlags();
@@ -60,7 +56,7 @@ export const AppFrame: React.FC<Props> = ({
 
   useTokenRefresh(appToken, refetch);
 
-  const handleLoad = () => {
+  const handleLoad = useCallback(() => {
     /**
      * @deprecated
      *
@@ -76,11 +72,9 @@ export const AppFrame: React.FC<Props> = ({
     });
 
     setHandshakeDone(true);
+  }, [appToken, postToExtension, setHandshakeDone]);
 
-    if (onLoad) {
-      onLoad();
-    }
-  };
+  const featureFlags = useMemo(() => prepareFeatureFlagsList(flags), [flags]);
 
   return (
     <>
@@ -89,19 +83,17 @@ export const AppFrame: React.FC<Props> = ({
           <CircularProgress color="primary" />
         </div>
       )}
-      <iframe
+      <AppIFrame
         ref={frameRef}
-        src={AppUrls.resolveAppIframeUrl(appId, src, {
-          ...params,
-          featureFlags: prepareFeatureFlagsList(flags),
-          theme: themeType,
-        })}
-        onError={onError}
+        src={src}
+        appId={appId}
+        featureFlags={featureFlags}
+        params={params}
         onLoad={handleLoad}
+        onError={onError}
         className={clsx(classes.iframe, className, {
           [classes.iframeHidden]: !handshakeDone,
         })}
-        sandbox="allow-same-origin allow-forms allow-scripts"
       />
     </>
   );
