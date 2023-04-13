@@ -106,6 +106,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
       getFilterQueryParam,
       navigate,
       params,
+      keepActiveTab: true,
     });
 
   const [openModal, closeModal] = createDialogActionHandlers<
