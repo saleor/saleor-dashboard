@@ -19,7 +19,8 @@ import { maybe, renderCollection } from "@dashboard/misc";
 import { ListActions, ReorderAction } from "@dashboard/types";
 import { Card, CardContent, TableCell } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
-import { DeleteIcon, IconButton, makeStyles, Tooltip } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Tooltip } from "@saleor/macaw-ui/next";
 import capitalize from "lodash/capitalize";
 import React, { useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -261,8 +262,14 @@ const ProductTypeVariantAttributes: React.FC<
                           }
                         />
                         {!!variantSelectionDisabled && (
-                          <Tooltip
-                            title={
+                          <Tooltip>
+                            <Tooltip.Trigger>
+                              <HelpOutline
+                                className={classes.colVariantDisabled}
+                              />
+                            </Tooltip.Trigger>
+                            <Tooltip.Content side="bottom">
+                              <Tooltip.Arrow />
                               <FormattedMessage
                                 id="vlLyvk"
                                 defaultMessage="{inputType} attributes cannot be used as variant selection attributes."
@@ -270,11 +277,7 @@ const ProductTypeVariantAttributes: React.FC<
                                   inputType: readableAttributeInputType,
                                 }}
                               />
-                            }
-                          >
-                            <HelpOutline
-                              className={classes.colVariantDisabled}
-                            />
+                            </Tooltip.Content>
                           </Tooltip>
                         )}
                       </div>

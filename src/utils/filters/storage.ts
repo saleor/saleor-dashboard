@@ -31,6 +31,26 @@ function saveFilterTab<TUrlFilters>(
   );
 }
 
+function updateFilterTab<TUrlFilters>(
+  tabName: string,
+  data: TUrlFilters,
+  key: string,
+) {
+  const userFilters = getFilterTabs<TUrlFilters>(key);
+  const updatedFilters = userFilters.map(tab => {
+    if (tab.name === tabName) {
+      return {
+        data,
+        name: tabName,
+      };
+    }
+
+    return tab;
+  });
+
+  localStorage.setItem(key, JSON.stringify([...updatedFilters]));
+}
+
 function deleteFilterTab(id: number, key: string) {
   const userFilters = getFilterTabs(key);
 
@@ -46,6 +66,8 @@ function createFilterTabUtils<TUrlFilters>(key: string) {
     getFilterTabs: () => getFilterTabs<TUrlFilters>(key),
     saveFilterTab: (name: string, data: TUrlFilters) =>
       saveFilterTab<TUrlFilters>(name, data, key),
+    updateFilterTab: (tabName: string, data: TUrlFilters) =>
+      updateFilterTab<TUrlFilters>(tabName, data, key),
   };
 }
 

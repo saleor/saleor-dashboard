@@ -1,6 +1,7 @@
 import { appsMessages } from "@dashboard/apps/messages";
 import { Typography } from "@material-ui/core";
-import { CopyIcon, Tooltip } from "@saleor/macaw-ui";
+import { CopyIcon } from "@saleor/macaw-ui";
+import { Tooltip } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
@@ -21,35 +22,40 @@ export const AppManifestTableDisplay = ({
   const [copied, setCopied] = useState(false);
 
   return (
-    <Tooltip
-      placement="top"
-      title={manifestUrl}
-      header={intl.formatMessage(appsMessages.appManifestUrl)}
-    >
-      <Typography
-        onMouseOut={() => setCopied(false)}
-        className={styles.manifestText}
-        onClick={e => {
-          try {
-            e.stopPropagation();
-            e.preventDefault();
+    <Tooltip>
+      <Tooltip.Trigger>
+        <Typography
+          onMouseOut={() => setCopied(false)}
+          className={styles.manifestText}
+          onClick={e => {
+            try {
+              e.stopPropagation();
+              e.preventDefault();
 
-            navigator.clipboard.writeText(manifestUrl);
-            setCopied(true);
-          } catch (e) {
-            // Copy not supported, ignore
-          }
-        }}
-      >
-        {getAppDomainFromManifest(manifestUrl)}
-        {!!navigator.clipboard && (
-          <CopyIcon
-            className={clsx(styles.copyIcon, {
-              [styles.copyIconColorful]: copied,
-            })}
-          />
-        )}
-      </Typography>
+              navigator.clipboard.writeText(manifestUrl);
+              setCopied(true);
+            } catch (e) {
+              // Copy not supported, ignore
+            }
+          }}
+        >
+          {getAppDomainFromManifest(manifestUrl)}
+          {!!navigator.clipboard && (
+            <CopyIcon
+              className={clsx(styles.copyIcon, {
+                [styles.copyIconColorful]: copied,
+              })}
+            />
+          )}
+        </Typography>
+      </Tooltip.Trigger>
+      <Tooltip.Content side="top">
+        <Tooltip.Arrow />
+        <Tooltip.ContentHeading>
+          {intl.formatMessage(appsMessages.appManifestUrl)}
+        </Tooltip.ContentHeading>
+        {manifestUrl}
+      </Tooltip.Content>
     </Tooltip>
   );
 };

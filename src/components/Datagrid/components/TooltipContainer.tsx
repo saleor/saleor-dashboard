@@ -1,5 +1,4 @@
-import { Tooltip } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, Tooltip } from "@saleor/macaw-ui/next";
 import React from "react";
 
 interface TooltipContainerProps {
@@ -48,9 +47,14 @@ export const TooltipContainer: React.FC<TooltipContainerProps> = ({
         __left={x + width / 2}
         zIndex="2"
       >
-        {/* TODO: use tooltip from new macaw when it will be ready */}
-        <Tooltip open={true} title={title} placement="top">
-          <span></span>
+        <Tooltip open={true}>
+          <Tooltip.Trigger>
+            <span></span>
+          </Tooltip.Trigger>
+          <Tooltip.Content side="top">
+            <Tooltip.Arrow />
+            {title}
+          </Tooltip.Content>
         </Tooltip>
       </Box>
     </>

@@ -21,9 +21,6 @@ export const useStyles = makeStyles(
     spacer: {
       flex: 1,
     },
-    tooltip: {
-      color: theme.palette.saleor.active[5],
-    },
   }),
   { name: "PluginSettings" },
 );

@@ -131,6 +131,10 @@ export const commonMessages = defineMessages({
     id: "JqiqNj",
     defaultMessage: "Something went wrong",
   },
+  update: {
+    defaultMessage: "Update",
+    id: "BWpuKl",
+  },
   startDate: {
     id: "QirE3M",
     defaultMessage: "Start Date",
