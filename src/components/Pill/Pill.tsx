@@ -17,6 +17,9 @@ const useStyles = makeStyles<{
   { name: "Pill" },
 );
 
+// Main purpose of this component is to override default Pill component
+// from macaw-ui to add custom styles
+// TODO: migrate to Pill component from new macaw-ui when it will be ready
 export const Pill = ({ color, ...props }: PillProps) => {
   const { theme: currentTheme } = useTheme();
   const backgroundColor = getStatusColor(color, currentTheme);

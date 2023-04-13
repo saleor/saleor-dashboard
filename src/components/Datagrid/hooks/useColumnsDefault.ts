@@ -16,7 +16,7 @@ export function useColumnsDefault(
 
   const onColumnMoved = useCallback(
     (startIndex: number, endIndex: number): void => {
-      // When empty column prevent to rearange it order
+      // When empty column prevent to rearrange it order
       if (availableColumns[0]?.id === "empty") {
         if (startIndex === 0) {
           return setDisplayedColumns(prevColumns => [...prevColumns]);

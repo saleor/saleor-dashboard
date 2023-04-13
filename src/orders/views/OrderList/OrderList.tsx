@@ -134,7 +134,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const handleFilterTabDelete = () => {
     deleteFilterTab(tabIndexToDelete);
 
-    // When deleting the current tab, navigate to the All products
+    // When deleting the current tab, navigate to the All orders tab
     if (tabIndexToDelete === currentTab) {
       navigate(orderListUrl());
     } else {

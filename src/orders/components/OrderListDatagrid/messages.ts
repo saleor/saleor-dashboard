@@ -10,8 +10,8 @@ export const messages = defineMessages({
     defaultMessage: "Add new order",
   },
   editOrder: {
-    defaultMessage: "Edit Order",
-    id: "ixiJlg",
+    defaultMessage: "Edit order",
+    id: "lwjzVj",
   },
   orders: {
     defaultMessage: "Order",

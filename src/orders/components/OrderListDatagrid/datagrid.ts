@@ -8,7 +8,7 @@ import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
-import { getMoney } from "@dashboard/components/Money/utils";
+import { formatMoneyAmount } from "@dashboard/components/Money";
 import { OrderListQuery } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import {
@@ -218,7 +218,7 @@ export function getTotalCellContent(
 ) {
   if (rowData?.total?.gross) {
     return moneyCell(
-      getMoney(rowData.total.gross, locale),
+      formatMoneyAmount(rowData.total.gross, locale),
       rowData.total.gross.currency,
       { cursor: "pointer" },
     );

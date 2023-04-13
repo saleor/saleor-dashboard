@@ -3,7 +3,7 @@ import { IMoney } from "@dashboard/utils/intl";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
-import { getMoney } from "./utils";
+import { formatMoneyAmount } from ".";
 
 const useStyles = makeStyles(
   {
@@ -34,7 +34,7 @@ export const Money: React.FC<MoneyProps> = props => {
   return (
     <span className={classes.root} {...rest}>
       <span className={classes.currency}>{money.currency}</span>
-      {getMoney(money, locale)}
+      {formatMoneyAmount(money, locale)}
     </span>
   );
 };

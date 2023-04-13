@@ -14,6 +14,7 @@ import { ListPageLayout } from "@dashboard/components/Layouts";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import { orderMessages } from "@dashboard/orders/messages";
 import { DevModeQuery } from "@dashboard/orders/queries";
 import {
   OrderListUrlQueryParams,
@@ -144,11 +145,9 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
               onSave={onTabSave}
               isOpen={isFilterPresetOpen}
               onOpenChange={setFilterPresetOpen}
-              selectAllLabel={intl.formatMessage({
-                id: "OSSvcl",
-                defaultMessage: "All orders",
-                description: "tab name",
-              })}
+              selectAllLabel={intl.formatMessage(
+                orderMessages.filterPresetsAll,
+              )}
             />
           </Box>
 
@@ -221,6 +220,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
         />
         <OrderListDatagrid
           {...listProps}
+          hasRowHover={!isFilterPresetOpen}
           onRowClick={id => {
             navigate(orderUrl(id));
           }}

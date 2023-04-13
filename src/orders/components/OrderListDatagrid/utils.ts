@@ -17,7 +17,10 @@ export function getOrdersRowsLength(
   return 0;
 }
 
-export function getColumnMetadata(column: string) {
+export function getColumnNameAndId(column: string): {
+  columnName: OrderListUrlSortField;
+  columnId?: string;
+} {
   if (column.includes(":")) {
     const [columnName, columnId] = column.split(":");
 
