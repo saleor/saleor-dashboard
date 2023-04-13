@@ -61,3 +61,12 @@ export const playgroundOpenHandler =
     });
     window.open(playgroundURL, "_blank").focus();
   };
+
+// We use useSortRedirects in list pages to change sort to rank when query is present
+// and we want o skip first graphql query
+export function shouldSkipFirstListFetchWithQuery(
+  query?: string,
+  sort?: string,
+) {
+  return !!query?.trim() && sort !== "rank";
+}
