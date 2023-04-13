@@ -77,7 +77,7 @@ async function cleanEnvironment(environment, snapshot, token) {
 
 async function waitUntilTaskInProgress(taskId, environment) {
   const throwErrorAfterTimeout = setTimeout(function () {
-    throw new Error("Environment didn't upgraded after 30 minutes");
+    throw new Error("Environment didn't upgrade after 30 minutes");
   }, 120000);
 
   while (true) {
