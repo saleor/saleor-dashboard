@@ -17,7 +17,7 @@ import { Link } from "react-router-dom";
 
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
-const useLegacyThemeHandler = () => {
+export const useLegacyThemeHandler = () => {
   const { theme, setTheme } = useTheme();
   const { setTheme: setLegacyTheme } = useLegacyTheme();
 
