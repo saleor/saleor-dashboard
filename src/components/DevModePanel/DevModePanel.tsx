@@ -1,3 +1,4 @@
+import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import { Dialog, DialogContent } from "@material-ui/core";
 import { DialogHeader } from "@saleor/macaw-ui";
@@ -26,8 +27,21 @@ export const DevModePanel: React.FC<DevModePanelProps> = ({
   });
 
   const intl = useIntl();
+  const { rootStyle } = useDashboardTheme();
 
   const { devModeContent, variables } = useDevModeContext();
+
+  const overwriteCodeMirrorCSSVariables = {
+    __html: `
+      .graphiql-container, .CodeMirror-info, .CodeMirror-lint-tooltip, reach-portal{
+        --font-size-hint: ${rootStyle["--font-size-hint"]} !important;
+        --font-size-inline-code: ${rootStyle["--font-size-inline-code"]} !important;
+        --font-size-body: ${rootStyle["--font-size-body"]} !important;
+        --font-size-h4: ${rootStyle["--font-size-h4"]} !important;
+        --font-size-h3: ${rootStyle["--font-size-h3"]} !important;
+        --font-size-h2: ${rootStyle["--font-size-h2"]} !important;
+    `,
+  };
 
   return (
     <Dialog
@@ -37,6 +51,7 @@ export const DevModePanel: React.FC<DevModePanelProps> = ({
       style={{ zIndex: 5 }}
       PaperProps={{ style: { height: "100%" } }}
     >
+      <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
       <DialogHeader onClose={() => setDevModeVisibility(false)}>
         {intl.formatMessage(messages.title)}
       </DialogHeader>
