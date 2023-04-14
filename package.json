@@ -126,7 +126,7 @@
     "@pollyjs/core": "~5.0.0",
     "@pollyjs/persister-fs": "~5.0.0",
     "@release-it/bumper": "^2.0.0",
-    "@saleor/app-sdk": "^0.34.1",
+    "@saleor/app-sdk": "0.37.3",
     "@types/apollo-upload-client": "^17.0.2",
     "@types/color-convert": "^2.0.0",
     "@types/debug": "^4.1.7",
