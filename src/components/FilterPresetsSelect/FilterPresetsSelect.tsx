@@ -174,6 +174,7 @@ export const FilterPresetsSelect = ({
       {renderDropdown()}
       {showUpdateButton && (
         <Button
+          data-test-id="update-preset-button"
           className={sprinkles({
             marginLeft: 6,
           })}
@@ -188,6 +189,7 @@ export const FilterPresetsSelect = ({
         <Tooltip>
           <Tooltip.Trigger>
             <Button
+              data-test-id="add-preset-button"
               className={sprinkles({
                 marginLeft: 6,
               })}
