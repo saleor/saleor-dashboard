@@ -75,34 +75,25 @@ export function useColumnsDefault(
     () => displayedColumns.map(id => columnState.find(ac => ac.id === id)),
     [displayedColumns, columnState],
   );
+
   const columnChoices = useMemo(
     () =>
-      columns
-        .filter(byNoEmptyColumn)
-        .filter(byNotFirstColumn)
-        .map(({ id, title }) => ({
-          label: title,
-          value: id,
-        })),
+      applyFilters(columns).map(({ id, title }) => ({
+        label: title,
+        value: id,
+      })),
     [columns],
   );
   const availableColumnsChoices = useMemo(
     () =>
-      availableColumns
-        .filter(byNoEmptyColumn)
-        .filter(byNotFirstColumn)
-        .map(({ id, title }) => ({
-          label: title,
-          value: id,
-        })),
+      applyFilters(availableColumns).map(({ id, title }) => ({
+        label: title,
+        value: id,
+      })),
     [availableColumns],
   );
   const defaultColumns = useMemo(
-    () =>
-      availableColumns
-        .filter(byNoEmptyColumn)
-        .filter(byNotFirstColumn)
-        .map(({ id }) => id),
+    () => applyFilters(availableColumns).map(({ id }) => id),
     [availableColumns],
   );
 
@@ -120,6 +111,10 @@ export function useColumnsDefault(
       setQuery,
     },
   };
+}
+
+function applyFilters(columns: readonly AvailableColumn[]) {
+  return columns.filter(byNoEmptyColumn).filter(byNotFirstColumn);
 }
 
 function byNoEmptyColumn(column: AvailableColumn) {
