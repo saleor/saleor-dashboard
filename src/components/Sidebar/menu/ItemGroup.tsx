@@ -25,6 +25,7 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
     >
       <List.ItemGroup.Trigger
         paddingX={5}
+        paddingRight={3}
         borderRadius={3}
         size="small"
         active={isActive}
