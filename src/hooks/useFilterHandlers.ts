@@ -1,8 +1,12 @@
 import { IFilter } from "@dashboard/components/Filter";
-import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
 import { ActiveTab, Pagination, Search, Sort } from "@dashboard/types";
+import {
+  GetFilterQueryParam,
+  getFilterQueryParams,
+} from "@dashboard/utils/filters";
+import { useEffect, useRef } from "react";
 
-import { GetFilterQueryParam, getFilterQueryParams } from "../filters";
+import useNavigator from "./useNavigator";
 
 type RequiredParams = ActiveTab &
   Search &
@@ -15,30 +19,38 @@ type CreateFilterHandlers<TFilterKeys extends string> = [
   (query: string) => void,
 ];
 
-function createFilterHandlers<
+export const useFilterHandlers = <
   TFilterKeys extends string,
   TFilters extends {},
   SortField extends string,
 >(opts: {
   getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TFilters>;
-  navigate: UseNavigatorResult;
   createUrl: CreateUrl;
   params: RequiredParams;
   cleanupFn?: () => void;
   keepActiveTab?: boolean;
-  prevAsc?: boolean | null;
-  defaultSortField?: SortField;
-}): CreateFilterHandlers<TFilterKeys> {
+  defaultSortField: SortField;
+  hasSortWithRank?: boolean;
+}): CreateFilterHandlers<TFilterKeys> => {
   const {
     getFilterQueryParam,
-    navigate,
     createUrl,
     params,
     cleanupFn,
     keepActiveTab,
-    prevAsc,
     defaultSortField,
+    hasSortWithRank,
   } = opts;
+
+  const navigate = useNavigator();
+  const prevAsc = useRef<boolean | null>(null);
+
+  useEffect(() => {
+    const hasQuery = !!params.query?.trim();
+    if (hasQuery || params.sort === "rank") {
+      prevAsc.current = params.asc;
+    }
+  }, [params.asc, params.query, params.sort]);
 
   const getActiveTabValue = (removeActiveTab: boolean) => {
     if (!keepActiveTab || removeActiveTab) {
@@ -87,7 +99,8 @@ function createFilterHandlers<
     const trimmedQuery = query?.trim() ?? "";
     const hasQuery = !!trimmedQuery;
     const sortWithoutQuery =
-      params.sort === "rank" ? defaultSortField || "name" : params.sort;
+      params.sort === "rank" ? defaultSortField : params.sort;
+    const sortWithQuery = "rank" as SortField;
 
     const getAscParam = () => {
       if (hasQuery) {
@@ -108,14 +121,16 @@ function createFilterHandlers<
         before: undefined,
         activeTab: getActiveTabValue(checkIfParamsEmpty(params) && hasQuery),
         query: hasQuery ? trimmedQuery : undefined,
-        sort: hasQuery ? "rank" : sortWithoutQuery,
-        asc: getAscParam(),
+        ...(hasSortWithRank && {
+          sort: hasQuery ? sortWithQuery : sortWithoutQuery,
+          asc: getAscParam(),
+        }),
       }),
     );
   };
 
   return [changeFilters, resetFilters, handleSearchChange];
-}
+};
 
 function checkIfParamsEmpty(params: RequiredParams): boolean {
   const paramsToOmit = ["activeTab", "sort", "asc", "query"];
@@ -124,5 +139,3 @@ function checkIfParamsEmpty(params: RequiredParams): boolean {
     .filter(([name]) => !paramsToOmit.includes(name))
     .every(([_, value]) => value === undefined);
 }
-
-export default createFilterHandlers;

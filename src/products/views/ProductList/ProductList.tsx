@@ -28,6 +28,7 @@ import {
 } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
+import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -60,7 +61,6 @@ import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { ListViews } from "@dashboard/types";
 import { prepareQs } from "@dashboard/utils/filters/qs";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
@@ -69,7 +69,6 @@ import { stringify } from "qs";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useSortRedirects } from "../../../hooks/useSortRedirects";
 import ProductListPage from "../../components/ProductListPage";
 import {
   deleteFilterTab,
@@ -80,7 +79,7 @@ import {
   saveFilterTab,
   updateFilterTab,
 } from "./filters";
-import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
+import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import {
   getActiveTabIndexAfterTabDelete,
   getAvailableProductKinds,
@@ -183,13 +182,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     channel => channel.slug === params.channel,
   );
 
-  useSortRedirects<ProductListUrlSortField>({
-    params,
-    defaultSortField: DEFAULT_SORT_KEY,
-    urlFunc: productListUrl,
-    resetToDefault: !canBeSorted(params.sort, !!selectedChannel),
-  });
-
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductListUrlDialog,
     ProductListUrlQueryParams
@@ -228,15 +220,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
   });
 
-  const [changeFilters, resetFilters, handleSearchChange] =
-    createFilterHandlers({
-      cleanupFn: reset,
-      createUrl: productListUrl,
-      getFilterQueryParam,
-      navigate,
-      params,
-      keepActiveTab: true,
-    });
+  const [changeFilters, resetFilters, handleSearchChange] = useFilterHandlers({
+    cleanupFn: reset,
+    createUrl: productListUrl,
+    getFilterQueryParam,
+    params,
+    keepActiveTab: true,
+    defaultSortField: DEFAULT_SORT_KEY,
+    hasSortWithRank: true,
+  });
 
   const handleTabChange = (tab: number) => {
     reset();
