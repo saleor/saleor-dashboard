@@ -222,7 +222,7 @@ export function useDatagridTheme(
       textDark: themeValues.colors.foreground.iconNeutralDefault,
       textLight: themeValues.colors.foreground.iconNeutralDefault,
       textHeader: themeValues.colors.foreground.iconNeutralDefault,
-      textHeaderSelected: themeValues.colors.foreground.textBrandDefault,
+      textHeaderSelected: themeValues.colors.background.plain,
       cellHorizontalPadding: 8,
       cellVerticalPadding: 8,
       lineHeight: 20,
@@ -233,8 +233,9 @@ export function useDatagridTheme(
   const readonylDatagridTheme = useMemo(
     () => ({
       ...datagridTheme,
-      accentColor: themeValues.colors.background.surfaceBrandDepressed,
-      accentLight: themeValues.colors.background.plain,
+      accentColor: themeValues.colors.background.decorativeSurfacePlain3,
+      accentLight:
+        themeValues.colors.background.interactiveNeutralSecondaryHovering,
     }),
     [themeValues, datagridTheme],
   );
