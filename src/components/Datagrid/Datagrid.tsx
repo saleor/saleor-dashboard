@@ -245,8 +245,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
       }
 
       const overrideTheme = {
-        bgCell: themeValues.colors.background.surfaceNeutralHighlight,
-        bgCellMedium: themeValues.colors.background.surfaceNeutralHighlight,
+        bgCell:
+          themeValues.colors.background.interactiveNeutralSecondaryHovering,
+        bgCellMedium:
+          themeValues.colors.background.interactiveNeutralSecondaryHovering,
         accentLight: undefined,
       };
 
