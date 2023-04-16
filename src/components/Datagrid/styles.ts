@@ -208,7 +208,7 @@ export function useDatagridTheme(
       bgHeaderHasFocus:
         themeValues.colors.background.interactiveNeutralSecondaryHovering,
       bgHeaderHovered: hasHeaderClickable
-        ? themeValues.colors.background.surfaceNeutralHighlight
+        ? themeValues.colors.background.interactiveNeutralSecondaryHovering
         : themeValues.colors.background.plain,
       bgBubbleSelected: themeValues.colors.background.plain,
       borderColor: themeValues.colors.border.neutralHighlight,
