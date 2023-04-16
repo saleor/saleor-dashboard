@@ -18,7 +18,6 @@ type CreateFilterHandlers<TFilterKeys extends string> = [
 function createFilterHandlers<
   TFilterKeys extends string,
   TFilters extends {},
-  SortField extends string,
 >(opts: {
   getFilterQueryParam: GetFilterQueryParam<TFilterKeys, TFilters>;
   navigate: UseNavigatorResult;
@@ -26,8 +25,6 @@ function createFilterHandlers<
   params: RequiredParams;
   cleanupFn?: () => void;
   keepActiveTab?: boolean;
-  prevAsc?: boolean | null;
-  defaultSortField?: SortField;
 }): CreateFilterHandlers<TFilterKeys> {
   const {
     getFilterQueryParam,
@@ -36,8 +33,6 @@ function createFilterHandlers<
     params,
     cleanupFn,
     keepActiveTab,
-    prevAsc,
-    defaultSortField,
   } = opts;
 
   const getActiveTabValue = (removeActiveTab: boolean) => {
@@ -85,31 +80,16 @@ function createFilterHandlers<
       cleanupFn();
     }
     const trimmedQuery = query?.trim() ?? "";
-    const hasQuery = !!trimmedQuery;
-    const sortWithoutQuery =
-      params.sort === "rank" ? defaultSortField || "name" : params.sort;
-
-    const getAscParam = () => {
-      if (hasQuery) {
-        return false;
-      }
-
-      if (!hasQuery && prevAsc !== null) {
-        return true;
-      }
-
-      return params.asc;
-    };
 
     navigate(
       createUrl({
         ...params,
         after: undefined,
         before: undefined,
-        activeTab: getActiveTabValue(checkIfParamsEmpty(params) && hasQuery),
-        query: hasQuery ? trimmedQuery : undefined,
-        sort: hasQuery ? "rank" : sortWithoutQuery,
-        asc: getAscParam(),
+        activeTab: getActiveTabValue(
+          checkIfParamsEmpty(params) && trimmedQuery === "",
+        ),
+        query: trimmedQuery !== "" ? trimmedQuery : undefined,
       }),
     );
   };

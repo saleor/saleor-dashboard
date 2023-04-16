@@ -39,7 +39,7 @@ export const useFilterHandlers = <
     cleanupFn,
     keepActiveTab,
     defaultSortField,
-    hasSortWithRank,
+    hasSortWithRank = false,
   } = opts;
 
   const navigate = useNavigator();
