@@ -3,7 +3,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { useTheme, vars } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
 
-export const cellHeight = 36;
+export const cellHeight = 40;
 
 const useStyles = makeStyles(
   () => {
