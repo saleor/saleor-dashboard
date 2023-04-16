@@ -214,7 +214,7 @@ export function useDatagridTheme(
       borderColor: themeValues.colors.border.neutralHighlight,
       fontFamily: "'Inter var', sans-serif",
       baseFontStyle: themeValues.fontSize.bodySmall,
-      headerFontStyle: themeValues.fontSize.captionSmall,
+      headerFontStyle: themeValues.fontSize.bodySmall,
       editorFontSize: themeValues.fontSize.bodySmall,
       textMedium: themeValues.colors.background.interactiveNeutralDefault,
       textGroupHeader: themeValues.colors.foreground.iconNeutralPlain,
