@@ -205,7 +205,8 @@ export function useDatagridTheme(
       accentFg: "transparent",
       bgCell: themeValues.colors.background.plain,
       bgHeader: themeValues.colors.background.plain,
-      bgHeaderHasFocus: themeValues.colors.background.plain,
+      bgHeaderHasFocus:
+        themeValues.colors.background.interactiveNeutralSecondaryHovering,
       bgHeaderHovered: hasHeaderClickable
         ? themeValues.colors.background.surfaceNeutralHighlight
         : themeValues.colors.background.plain,
