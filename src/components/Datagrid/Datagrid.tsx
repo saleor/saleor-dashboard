@@ -393,7 +393,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   getRowThemeOverride={handleGetThemeOverride}
                   gridSelection={selection}
                   rowHeight={cellHeight}
-                  headerHeight={cellHeight + 16}
+                  headerHeight={cellHeight}
                   ref={editor}
                   onPaste
                   rightElementProps={{

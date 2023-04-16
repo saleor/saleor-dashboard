@@ -33,7 +33,7 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: cellHeight + 16,
+        height: cellHeight,
       },
       columnPickerBackground: {
         background: vars.colors.background.plain,
