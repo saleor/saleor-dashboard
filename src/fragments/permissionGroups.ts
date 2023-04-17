@@ -4,11 +4,14 @@ export const permissionGroupFragment = gql`
   fragment PermissionGroup on Group {
     id
     name
-    userCanManage
     users {
       id
       firstName
       lastName
+    }
+    restrictedAccessToChannels
+    accessibleChannels {
+      ...Channel
     }
   }
 `;
