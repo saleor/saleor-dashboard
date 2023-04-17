@@ -111,7 +111,7 @@ export function toAttributeColumnData(
   };
 }
 
-function getColumnSortIconName(
+export function getColumnSortIconName(
   { sort, asc }: Sort<ProductListUrlSortField>,
   columnName: ProductListUrlSortField,
 ) {

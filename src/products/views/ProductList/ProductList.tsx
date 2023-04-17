@@ -1,6 +1,7 @@
 import { filterable } from "@dashboard/attributes/utils/data";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useCustomColumnSettings } from "@dashboard/components/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
@@ -105,6 +106,9 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
   );
+
+  const { customColumnsSettings, setCustomColumnsSettings } =
+    useCustomColumnSettings("PRODUCT_VIEW");
 
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
@@ -317,7 +321,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     [params, settings.rowNumber],
   );
 
-  const filteredColumnIds = settings.columns
+  const filteredColumnIds = customColumnsSettings
     .filter(isAttributeColumnValue)
     .map(getAttributeIdFromColumnValue);
 
@@ -336,6 +340,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       first: 5,
     },
   });
+
   const gridAttributes = useGridAttributesQuery({
     variables: { ids: filteredColumnIds },
     skip: filteredColumnIds.length === 0,
@@ -477,6 +482,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onExport={() => openModal("export")}
         selectedChannelId={selectedChannel?.id}
         columnQuery={availableInGridAttributesOpts.query}
+        customColumnSettings={customColumnsSettings}
+        setCustomColumnSettings={setCustomColumnsSettings}
       />
       <ActionDialog
         open={params.action === "delete"}

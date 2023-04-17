@@ -16,6 +16,16 @@ const messages = defineMessages({
     id: "IHtOda",
     description: "input label",
   },
+  column: {
+    defaultMessage: "Columns",
+    id: "uqxjSR",
+    description: "column picker section header",
+  },
+  custom: {
+    id: "rHQmCt",
+    defaultMessage: "Custom",
+    description: "column picker section header",
+  },
 });
 
 export default messages;
