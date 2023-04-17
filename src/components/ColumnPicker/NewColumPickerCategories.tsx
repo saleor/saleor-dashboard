@@ -11,7 +11,7 @@ import {
 } from "@saleor/macaw-ui/next";
 import React from "react";
 
-import { ColumnCategory, isColumnValueChecked } from "./utils";
+import { ColumnCategory } from "./utils";
 
 export interface NewColumnPickerCategoriesProps {
   columnCategories: ColumnCategory[];
@@ -81,14 +81,8 @@ export const NewColumnPickerCategories: React.FC<
                     key={node.id}
                   >
                     <Checkbox
-                      onCheckedChange={() =>
-                        changeHandler(`${currentCategory.prefix}:${node.id}`)
-                      }
-                      checked={isColumnValueChecked({
-                        customColumnSettings,
-                        prefix: currentCategory.prefix,
-                        nodeId: node.id,
-                      })}
+                      onCheckedChange={() => changeHandler(node.id)}
+                      checked={customColumnSettings.includes(node.id)}
                     >
                       <Text size="small" color="textNeutralSubdued">
                         {node.title}

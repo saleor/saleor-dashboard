@@ -41,13 +41,7 @@ export const useColumns = ({
     () =>
       columnCategories.reduce((columns: AvailableColumn[], category) => {
         category.selectedNodes.forEach(column => {
-          if (
-            isColumnValueChecked({
-              customColumnSettings,
-              prefix: category.prefix,
-              nodeId: column.id,
-            })
-          ) {
+          if (customColumnSettings.includes(column.id)) {
             columns.push(column);
           }
         });
@@ -197,7 +191,7 @@ export const parseAttributesColumns = (
   sort: Sort<ProductListUrlSortField>,
 ) =>
   attributes.map(attribute => ({
-    id: attribute.id,
+    id: `attribute:${attribute.id}`,
     title: attribute.name,
     metaGroup: "Attribute",
     width: 200,
@@ -205,13 +199,3 @@ export const parseAttributesColumns = (
       attribute.id === activeAttributeSortId &&
       getColumnSortIconName(sort, ProductListUrlSortField.attribute),
   }));
-
-export const isColumnValueChecked = ({
-  customColumnSettings,
-  prefix,
-  nodeId,
-}: {
-  customColumnSettings: string[];
-  prefix: string;
-  nodeId: string;
-}) => customColumnSettings.includes(`${prefix}:${nodeId}`);
