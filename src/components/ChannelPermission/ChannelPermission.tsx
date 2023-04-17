@@ -108,37 +108,41 @@ export const ChannelPermission = ({
           <ListItemText primary={fullAccessLabel} />
         </ListItem>
       </CardContent>
-      <hr />
-      <Box __maxHeight="calc(100% - 180px)" overflowY="scroll">
-        <CardContent>
-          {channels.map(channel => (
-            <ListItem
-              key={channel.id}
-              disabled={!channel.isActive}
-              role={undefined}
-              dense
-              button
-              onClick={handleChannelChange(channel)}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  color="secondary"
-                  edge="start"
-                  checked={isChannelChecked(channel)}
-                  tabIndex={-1}
-                  disableRipple
-                  name={channel.name}
-                  inputProps={{ "aria-labelledby": channel.id }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                id={channel.id}
-                primary={channel.name.replace(/\./, "")}
-              />
-            </ListItem>
-          ))}
-        </CardContent>
-      </Box>
+      {!data.hasAllChannels && (
+        <>
+          <hr />
+          <Box __maxHeight="calc(100% - 180px)" overflowY="scroll">
+            <CardContent>
+              {channels.map(channel => (
+                <ListItem
+                  key={channel.id}
+                  disabled={!channel.isActive}
+                  role={undefined}
+                  dense
+                  button
+                  onClick={handleChannelChange(channel)}
+                >
+                  <ListItemIcon>
+                    <Checkbox
+                      color="secondary"
+                      edge="start"
+                      checked={isChannelChecked(channel)}
+                      tabIndex={-1}
+                      disableRipple
+                      name={channel.name}
+                      inputProps={{ "aria-labelledby": channel.id }}
+                    />
+                  </ListItemIcon>
+                  <ListItemText
+                    id={channel.id}
+                    primary={channel.name.replace(/\./, "")}
+                  />
+                </ListItem>
+              ))}
+            </CardContent>
+          </Box>
+        </>
+      )}
     </Card>
   );
 };
