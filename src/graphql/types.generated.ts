@@ -4084,7 +4084,7 @@ export type PermissionGroupCreateInput = {
   /**
    * List of channels to assign to this group.
    *
-   * Added in Saleor 3.13.
+   * Added in Saleor 3.14.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -4094,7 +4094,7 @@ export type PermissionGroupCreateInput = {
   /**
    * Determine if the group has restricted access to channels.  DEFAULT: False
    *
-   * Added in Saleor 3.13.
+   * Added in Saleor 3.14.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -4103,14 +4103,15 @@ export type PermissionGroupCreateInput = {
 
 /** An enumeration. */
 export enum PermissionGroupErrorCode {
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE',
   ASSIGN_NON_STAFF_MEMBER = 'ASSIGN_NON_STAFF_MEMBER',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   CANNOT_REMOVE_FROM_LAST_GROUP = 'CANNOT_REMOVE_FROM_LAST_GROUP',
   LEFT_NOT_MANAGEABLE_PERMISSION = 'LEFT_NOT_MANAGEABLE_PERMISSION',
   OUT_OF_SCOPE_PERMISSION = 'OUT_OF_SCOPE_PERMISSION',
   OUT_OF_SCOPE_USER = 'OUT_OF_SCOPE_USER',
-  REQUIRED = 'REQUIRED',
-  UNIQUE = 'UNIQUE'
+  OUT_OF_SCOPE_CHANNEL = 'OUT_OF_SCOPE_CHANNEL'
 }
 
 export type PermissionGroupFilterInput = {
@@ -4139,7 +4140,7 @@ export type PermissionGroupUpdateInput = {
   /**
    * List of channels to assign to this group.
    *
-   * Added in Saleor 3.13.
+   * Added in Saleor 3.14.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -4153,7 +4154,7 @@ export type PermissionGroupUpdateInput = {
   /**
    * List of channels to unassign from this group.
    *
-   * Added in Saleor 3.13.
+   * Added in Saleor 3.14.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
@@ -4161,7 +4162,7 @@ export type PermissionGroupUpdateInput = {
   /**
    * Determine if the group has restricted access to channels.
    *
-   * Added in Saleor 3.13.
+   * Added in Saleor 3.14.
    *
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */

@@ -4108,11 +4108,12 @@ export type ProductVariantBulkDeleteFieldPolicy = {
 	productErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductVariantBulkErrorKeySpecifier = ('field' | 'message' | 'code' | 'attributes' | 'values' | 'warehouses' | 'stocks' | 'channels' | 'channelListings' | ProductVariantBulkErrorKeySpecifier)[];
+export type ProductVariantBulkErrorKeySpecifier = ('field' | 'message' | 'code' | 'path' | 'attributes' | 'values' | 'warehouses' | 'stocks' | 'channels' | 'channelListings' | ProductVariantBulkErrorKeySpecifier)[];
 export type ProductVariantBulkErrorFieldPolicy = {
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	path?: FieldPolicy<any> | FieldReadFunction<any>,
 	attributes?: FieldPolicy<any> | FieldReadFunction<any>,
 	values?: FieldPolicy<any> | FieldReadFunction<any>,
 	warehouses?: FieldPolicy<any> | FieldReadFunction<any>,

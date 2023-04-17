@@ -35528,7 +35528,7 @@
           },
           {
             "name": "accessibleChannels",
-            "description": "List of channels the group has access to.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "description": "List of channels the group has access to.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -35548,7 +35548,7 @@
           },
           {
             "name": "restrictedAccessToChannels",
-            "description": "Determine if the group have restricted access to channels.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "description": "Determine if the group have restricted access to channels.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -74623,7 +74623,7 @@
           },
           {
             "name": "addChannels",
-            "description": "List of channels to assign to this group.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "description": "List of channels to assign to this group.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "type": {
               "kind": "LIST",
               "name": null,
@@ -74659,7 +74659,7 @@
           },
           {
             "name": "restrictedAccessToChannels",
-            "description": "Determine if the group has restricted access to channels.  DEFAULT: False\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "description": "Determine if the group has restricted access to channels.  DEFAULT: False\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -75019,6 +75019,18 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "REQUIRED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UNIQUE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ASSIGN_NON_STAFF_MEMBER",
             "description": null,
             "isDeprecated": false,
@@ -75055,13 +75067,7 @@
             "deprecationReason": null
           },
           {
-            "name": "REQUIRED",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "UNIQUE",
+            "name": "OUT_OF_SCOPE_CHANNEL",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -75291,7 +75297,7 @@
           },
           {
             "name": "addChannels",
-            "description": "List of channels to assign to this group.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "description": "List of channels to assign to this group.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "type": {
               "kind": "LIST",
               "name": null,
@@ -75363,7 +75369,7 @@
           },
           {
             "name": "removeChannels",
-            "description": "List of channels to unassign from this group.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "description": "List of channels to unassign from this group.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "type": {
               "kind": "LIST",
               "name": null,
@@ -75383,7 +75389,7 @@
           },
           {
             "name": "restrictedAccessToChannels",
-            "description": "Determine if the group has restricted access to channels.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "description": "Determine if the group has restricted access to channels.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -85350,6 +85356,18 @@
                 "name": "ProductVariantBulkErrorCode",
                 "ofType": null
               }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "path",
+            "description": "Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.\n\nAdded in Saleor 3.14.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -112099,7 +112117,7 @@
           },
           {
             "name": "accessibleChannels",
-            "description": "List of channels the user has access to. The sum of channels from all user groups. If at least one group has `restrictedAccessToChannels` set to False - all channels are returned.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "description": "List of channels the user has access to. The sum of channels from all user groups. If at least one group has `restrictedAccessToChannels` set to False - all channels are returned.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -112119,7 +112137,7 @@
           },
           {
             "name": "restrictedAccessToChannels",
-            "description": "Determine if user have restricted access to channels. False if at least one user group has `restrictedAccessToChannels` set to False.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "description": "Determine if user have restricted access to channels. False if at least one user group has `restrictedAccessToChannels` set to False.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
