@@ -1,10 +1,12 @@
 import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { ChannelPermission } from "@dashboard/components/ChannelPermission";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import {
+  ChannelFragment,
   PermissionEnum,
   PermissionGroupDetailsFragment,
   PermissionGroupErrorFragment,
@@ -47,6 +49,7 @@ export interface PermissionData
 export interface PermissionGroupDetailsPageProps
   extends ListActions,
     SortPage<MembersListUrlSortField> {
+  channels: ChannelFragment[];
   disabled: boolean;
   errors: PermissionGroupErrorFragment[];
   members: PermissionGroupDetailsFragment["users"];
@@ -68,6 +71,7 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   permissions,
   permissionsExceeded,
   saveButtonBarState,
+  channels,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -128,6 +132,11 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
                   "Expand or restrict group's permissions to access certain part of saleor system.",
                 description: "card description",
               })}
+            />
+            <ChannelPermission
+              description="Expand or restrict channels permissions"
+              fullAccessLabel="Group has full access to all channels"
+              channels={channels}
             />
           </DetailPageLayout.RightSidebar>
           <div>
