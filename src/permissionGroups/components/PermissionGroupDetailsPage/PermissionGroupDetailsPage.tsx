@@ -35,9 +35,11 @@ import PermissionGroupMemberList from "../PermissionGroupMemberList";
 export interface PermissionGroupDetailsPageFormData {
   name: string;
   hasFullAccess: boolean;
+  hasAllChannels: boolean;
   isActive: boolean;
   permissions: PermissionEnum[];
   users: PermissionGroupDetailsFragment["users"];
+  channels: ChannelFragment[];
 }
 
 export interface PermissionData
@@ -79,6 +81,8 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
 
   const initialForm: PermissionGroupDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
+    hasAllChannels: !permissionGroup?.restrictedAccessToChannels ?? false,
+    channels: permissionGroup?.accessibleChannels ?? [],
     isActive: false,
     name: permissionGroup?.name || "",
     permissions: extractPermissionCodes(permissionGroup),
@@ -137,6 +141,9 @@ const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
               description="Expand or restrict channels permissions"
               fullAccessLabel="Group has full access to all channels"
               channels={channels}
+              onChange={change}
+              disabled={disabled}
+              data={data}
             />
           </DetailPageLayout.RightSidebar>
           <div>

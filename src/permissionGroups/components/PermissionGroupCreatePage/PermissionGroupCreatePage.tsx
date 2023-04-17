@@ -1,10 +1,12 @@
 import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
+import { ChannelPermission } from "@dashboard/components/ChannelPermission";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import {
+  ChannelFragment,
   PermissionEnum,
   PermissionGroupErrorFragment,
 } from "@dashboard/graphql";
@@ -24,21 +26,26 @@ import PermissionGroupInfo from "../PermissionGroupInfo";
 export interface PermissionGroupCreateFormData {
   name: string;
   hasFullAccess: boolean;
+  hasAllChannels: boolean;
   isActive: boolean;
   permissions: PermissionEnum[];
+  channels: ChannelFragment[];
 }
 
 const initialForm: PermissionGroupCreateFormData = {
   hasFullAccess: false,
+  hasAllChannels: false,
   isActive: false,
   name: "",
   permissions: [],
+  channels: [],
 };
 
 export interface PermissionGroupCreatePageProps {
   disabled: boolean;
   errors: PermissionGroupErrorFragment[];
   permissions: PermissionData[];
+  channels: ChannelFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
   onSubmit: (data: PermissionGroupCreateFormData) => SubmitPromise;
 }
@@ -46,6 +53,7 @@ export interface PermissionGroupCreatePageProps {
 const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
   disabled,
   permissions,
+  channels,
   onSubmit,
   saveButtonBarState,
   errors,
@@ -99,6 +107,14 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
                   "Expand or restrict group's permissions to access certain part of saleor system.",
                 description: "card description",
               })}
+            />
+            <ChannelPermission
+              description="Expand or restrict channels permissions"
+              fullAccessLabel="Group has full access to all channels"
+              channels={channels}
+              onChange={change}
+              disabled={disabled}
+              data={data}
             />
           </DetailPageLayout.RightSidebar>
           <Savebar

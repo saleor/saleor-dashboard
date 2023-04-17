@@ -1,6 +1,9 @@
 import { useUser } from "@dashboard/auth";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { usePermissionGroupCreateMutation } from "@dashboard/graphql";
+import {
+  useBaseChannelsQuery,
+  usePermissionGroupCreateMutation,
+} from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
@@ -21,28 +24,28 @@ const PermissionGroupCreateView: React.FC = () => {
   const shop = useShop();
   const user = useUser();
 
-  const [
-    createPermissionGroup,
-    createPermissionGroupResult,
-  ] = usePermissionGroupCreateMutation({
-    onCompleted: data => {
-      if (data?.permissionGroupCreate?.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "eUjFjW",
-            defaultMessage: "Permission group created",
-          }),
-        });
-        navigate(
-          permissionGroupDetailsUrl(data.permissionGroupCreate.group.id),
-        );
-      }
-    },
-  });
+  const [createPermissionGroup, createPermissionGroupResult] =
+    usePermissionGroupCreateMutation({
+      onCompleted: data => {
+        if (data?.permissionGroupCreate?.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage({
+              id: "eUjFjW",
+              defaultMessage: "Permission group created",
+            }),
+          });
+          navigate(
+            permissionGroupDetailsUrl(data.permissionGroupCreate.group.id),
+          );
+        }
+      },
+    });
 
   const errors =
     createPermissionGroupResult?.data?.permissionGroupCreate?.errors || [];
+
+  const { data: channelData } = useBaseChannelsQuery();
 
   const onSubmit = (formData: PermissionGroupCreateFormData) =>
     extractMutationErrors(
@@ -54,6 +57,8 @@ const PermissionGroupCreateView: React.FC = () => {
               : formData.permissions,
             addUsers: [],
             name: formData.name,
+            addChannels: formData.channels.map(channel => channel.id),
+            restrictedAccessToChannels: !formData.hasAllChannels,
           },
         },
       }),
@@ -84,6 +89,7 @@ const PermissionGroupCreateView: React.FC = () => {
         errors={errors}
         disabled={createPermissionGroupResult.loading}
         permissions={permissions}
+        channels={channelData?.channels}
         saveButtonBarState={createPermissionGroupResult.status}
         onSubmit={onSubmit}
       />
