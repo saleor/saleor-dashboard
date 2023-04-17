@@ -17,6 +17,7 @@ import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -89,33 +90,35 @@ const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
             />
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
-            <AccountPermissions
-              permissionsExceeded={false}
-              data={data}
-              errorMessage={permissionsError}
-              disabled={disabled}
-              permissions={permissions}
-              onChange={change}
-              fullAccessLabel={intl.formatMessage({
-                id: "mAabef",
-                defaultMessage: "Group has full access to the store",
-                description: "checkbox label",
-              })}
-              description={intl.formatMessage({
-                id: "CYZse9",
-                defaultMessage:
-                  "Expand or restrict group's permissions to access certain part of saleor system.",
-                description: "card description",
-              })}
-            />
-            <ChannelPermission
-              description="Expand or restrict channels permissions"
-              fullAccessLabel="Group has full access to all channels"
-              channels={channels}
-              onChange={change}
-              disabled={disabled}
-              data={data}
-            />
+            <Box display="grid" __gridTemplateRows="50%  50%" height="100vh">
+              <AccountPermissions
+                permissionsExceeded={false}
+                data={data}
+                errorMessage={permissionsError}
+                disabled={disabled}
+                permissions={permissions}
+                onChange={change}
+                fullAccessLabel={intl.formatMessage({
+                  id: "mAabef",
+                  defaultMessage: "Group has full access to the store",
+                  description: "checkbox label",
+                })}
+                description={intl.formatMessage({
+                  id: "CYZse9",
+                  defaultMessage:
+                    "Expand or restrict group's permissions to access certain part of saleor system.",
+                  description: "card description",
+                })}
+              />
+              <ChannelPermission
+                description="Expand or restrict channels permissions"
+                fullAccessLabel="Group has full access to all channels"
+                channels={channels}
+                onChange={change}
+                disabled={disabled}
+                data={data}
+              />
+            </Box>
           </DetailPageLayout.RightSidebar>
           <Savebar
             onCancel={() => navigate(permissionGroupListUrl())}

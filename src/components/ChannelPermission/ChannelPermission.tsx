@@ -8,6 +8,7 @@ import {
   ListItemText,
   Typography,
 } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui/next";
 import React, { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
@@ -108,34 +109,36 @@ export const ChannelPermission = ({
         </ListItem>
       </CardContent>
       <hr />
-      <CardContent>
-        {channels.map(channel => (
-          <ListItem
-            key={channel.id}
-            disabled={!channel.isActive}
-            role={undefined}
-            dense
-            button
-            onClick={handleChannelChange(channel)}
-          >
-            <ListItemIcon>
-              <Checkbox
-                color="secondary"
-                edge="start"
-                checked={isChannelChecked(channel)}
-                tabIndex={-1}
-                disableRipple
-                name={channel.name}
-                inputProps={{ "aria-labelledby": channel.id }}
+      <Box __maxHeight="calc(100% - 180px)" overflowY="scroll">
+        <CardContent>
+          {channels.map(channel => (
+            <ListItem
+              key={channel.id}
+              disabled={!channel.isActive}
+              role={undefined}
+              dense
+              button
+              onClick={handleChannelChange(channel)}
+            >
+              <ListItemIcon>
+                <Checkbox
+                  color="secondary"
+                  edge="start"
+                  checked={isChannelChecked(channel)}
+                  tabIndex={-1}
+                  disableRipple
+                  name={channel.name}
+                  inputProps={{ "aria-labelledby": channel.id }}
+                />
+              </ListItemIcon>
+              <ListItemText
+                id={channel.id}
+                primary={channel.name.replace(/\./, "")}
               />
-            </ListItemIcon>
-            <ListItemText
-              id={channel.id}
-              primary={channel.name.replace(/\./, "")}
-            />
-          </ListItem>
-        ))}
-      </CardContent>
+            </ListItem>
+          ))}
+        </CardContent>
+      </Box>
     </Card>
   );
 };

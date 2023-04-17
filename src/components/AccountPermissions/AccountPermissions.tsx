@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -163,57 +164,60 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
           {!data.hasFullAccess && (
             <>
               <hr className={classes.hr} />
-              <CardContent>
-                {permissions === undefined ? (
-                  <Skeleton />
-                ) : (
-                  permissions.map(perm => (
-                    <ListItem
-                      key={perm.code}
-                      disabled={perm.disabled}
-                      role={undefined}
-                      dense
-                      button
-                      onClick={handlePermissionChange(
-                        perm.code,
-                        data.permissions.filter(
-                          userPerm => userPerm === perm.code,
-                        ).length === 1,
-                      )}
-                    >
-                      <ListItemIcon>
-                        <Checkbox
-                          color="secondary"
-                          edge="start"
-                          checked={
-                            data.permissions.filter(
-                              userPerm => userPerm === perm.code,
-                            ).length === 1
+              <Box __maxHeight="calc(100% - 180px)" overflowY="scroll">
+                <CardContent>
+                  {permissions === undefined ? (
+                    <Skeleton />
+                  ) : (
+                    permissions.map(perm => (
+                      <ListItem
+                        key={perm.code}
+                        disabled={perm.disabled}
+                        role={undefined}
+                        dense
+                        button
+                        onClick={handlePermissionChange(
+                          perm.code,
+                          data.permissions.filter(
+                            userPerm => userPerm === perm.code,
+                          ).length === 1,
+                        )}
+                      >
+                        <ListItemIcon>
+                          <Checkbox
+                            color="secondary"
+                            edge="start"
+                            checked={
+                              data.permissions.filter(
+                                userPerm => userPerm === perm.code,
+                              ).length === 1
+                            }
+                            tabIndex={-1}
+                            disableRipple
+                            name={perm.code}
+                            inputProps={{ "aria-labelledby": perm.code }}
+                          />
+                        </ListItemIcon>
+                        <ListItemText
+                          id={perm.code}
+                          primary={perm.name.replace(/\./, "")}
+                          secondary={
+                            perm.lastSource
+                              ? intl.formatMessage({
+                                  id: "VmMDLN",
+                                  defaultMessage:
+                                    "This group is last source of that permission",
+                                  description:
+                                    "permission list item description",
+                                })
+                              : perm.code
                           }
-                          tabIndex={-1}
-                          disableRipple
-                          name={perm.code}
-                          inputProps={{ "aria-labelledby": perm.code }}
                         />
-                      </ListItemIcon>
-                      <ListItemText
-                        id={perm.code}
-                        primary={perm.name.replace(/\./, "")}
-                        secondary={
-                          perm.lastSource
-                            ? intl.formatMessage({
-                                id: "VmMDLN",
-                                defaultMessage:
-                                  "This group is last source of that permission",
-                                description: "permission list item description",
-                              })
-                            : perm.code
-                        }
-                      />
-                    </ListItem>
-                  ))
-                )}
-              </CardContent>
+                      </ListItem>
+                    ))
+                  )}
+                </CardContent>
+              </Box>
             </>
           )}
           {!!errorMessage && (
