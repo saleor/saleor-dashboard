@@ -1,10 +1,12 @@
 import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
+import { ChannelPermission } from "@dashboard/components/ChannelPermission";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import {
+  ChannelFragment,
   PermissionEnum,
   PermissionGroupErrorFragment,
 } from "@dashboard/graphql";
@@ -15,37 +17,50 @@ import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { OldPermissionData } from "../PermissionGroupDetailsPage";
+import { NewPermissionData } from "../PermissionGroupDetailsPage";
 import PermissionGroupInfo from "../PermissionGroupInfo";
 
-export interface OldPermissionGroupCreateFormData {
+export interface NewPermissionGroupCreateFormData {
   name: string;
   hasFullAccess: boolean;
+  hasAllChannels: boolean;
   isActive: boolean;
   permissions: PermissionEnum[];
+  channels: ChannelFragment[];
 }
 
-const initialForm: OldPermissionGroupCreateFormData = {
+const initialForm: NewPermissionGroupCreateFormData = {
   hasFullAccess: false,
+  hasAllChannels: false,
   isActive: false,
   name: "",
   permissions: [],
+  channels: [],
 };
 
-export interface OldPermissionGroupCreatePageProps {
+export interface NewPermissionGroupCreatePageProps {
   disabled: boolean;
   errors: PermissionGroupErrorFragment[];
-  permissions: OldPermissionData[];
+  permissions: NewPermissionData[];
+  channels: ChannelFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onSubmit: (data: OldPermissionGroupCreateFormData) => SubmitPromise;
+  onSubmit: (data: NewPermissionGroupCreateFormData) => SubmitPromise;
 }
 
-export const OldPermissionGroupCreatePage: React.FC<
-  OldPermissionGroupCreatePageProps
-> = ({ disabled, permissions, onSubmit, saveButtonBarState, errors }) => {
+export const NewPermissionGroupCreatePage: React.FC<
+  NewPermissionGroupCreatePageProps
+> = ({
+  disabled,
+  permissions,
+  channels,
+  onSubmit,
+  saveButtonBarState,
+  errors,
+}) => {
   const intl = useIntl();
   const navigate = useNavigator();
 
@@ -77,25 +92,35 @@ export const OldPermissionGroupCreatePage: React.FC<
             />
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
-            <AccountPermissions
-              permissionsExceeded={false}
-              data={data}
-              errorMessage={permissionsError}
-              disabled={disabled}
-              permissions={permissions}
-              onChange={change}
-              fullAccessLabel={intl.formatMessage({
-                id: "mAabef",
-                defaultMessage: "Group has full access to the store",
-                description: "checkbox label",
-              })}
-              description={intl.formatMessage({
-                id: "CYZse9",
-                defaultMessage:
-                  "Expand or restrict group's permissions to access certain part of saleor system.",
-                description: "card description",
-              })}
-            />
+            <Box display="grid" __gridTemplateRows="50%  50%" height="100vh">
+              <AccountPermissions
+                permissionsExceeded={false}
+                data={data}
+                errorMessage={permissionsError}
+                disabled={disabled}
+                permissions={permissions}
+                onChange={change}
+                fullAccessLabel={intl.formatMessage({
+                  id: "mAabef",
+                  defaultMessage: "Group has full access to the store",
+                  description: "checkbox label",
+                })}
+                description={intl.formatMessage({
+                  id: "CYZse9",
+                  defaultMessage:
+                    "Expand or restrict group's permissions to access certain part of saleor system.",
+                  description: "card description",
+                })}
+              />
+              <ChannelPermission
+                description="Expand or restrict channels permissions"
+                fullAccessLabel="Group has full access to all channels"
+                channels={channels}
+                onChange={change}
+                disabled={disabled}
+                data={data}
+              />
+            </Box>
           </DetailPageLayout.RightSidebar>
           <Savebar
             onCancel={() => navigate(permissionGroupListUrl())}

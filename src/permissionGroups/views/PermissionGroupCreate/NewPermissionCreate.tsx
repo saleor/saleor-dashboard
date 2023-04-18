@@ -2,22 +2,23 @@ import { useUser } from "@dashboard/auth";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
   useBaseChannelsQuery,
-  usePermissionGroupCreateMutation,
+  useNewPermissionGroupCreateMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
-import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
+import { NewPermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import PermissionGroupCreatePage, {
-  PermissionGroupCreateFormData,
+import {
+  NewPermissionGroupCreateFormData,
+  NewPermissionGroupCreatePage,
 } from "../../components/PermissionGroupCreatePage";
 import { permissionGroupDetailsUrl } from "../../urls";
 
-const PermissionGroupCreateView: React.FC = () => {
+export const NewPermissionGroupCreateView: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -25,7 +26,7 @@ const PermissionGroupCreateView: React.FC = () => {
   const user = useUser();
 
   const [createPermissionGroup, createPermissionGroupResult] =
-    usePermissionGroupCreateMutation({
+    useNewPermissionGroupCreateMutation({
       onCompleted: data => {
         if (data?.permissionGroupCreate?.errors.length === 0) {
           notify({
@@ -47,7 +48,7 @@ const PermissionGroupCreateView: React.FC = () => {
 
   const { data: channelData } = useBaseChannelsQuery();
 
-  const onSubmit = (formData: PermissionGroupCreateFormData) =>
+  const onSubmit = (formData: NewPermissionGroupCreateFormData) =>
     extractMutationErrors(
       createPermissionGroup({
         variables: {
@@ -66,14 +67,14 @@ const PermissionGroupCreateView: React.FC = () => {
 
   const userPermissions = user?.user.userPermissions.map(p => p.code) || [];
 
-  const permissions: PermissionData[] =
+  const permissions: NewPermissionData[] =
     shop?.permissions.map(
       p =>
         ({
           ...p,
           disabled: !userPermissions.includes(p.code),
           lastSource: false,
-        } as PermissionData),
+        } as NewPermissionData),
     ) || [];
 
   return (
@@ -85,8 +86,8 @@ const PermissionGroupCreateView: React.FC = () => {
           description: "window title",
         })}
       />
-      <PermissionGroupCreatePage
-        errors={errors}
+      <NewPermissionGroupCreatePage
+        errors={errors as any}
         disabled={createPermissionGroupResult.loading}
         permissions={permissions}
         channels={channelData?.channels}
@@ -96,6 +97,3 @@ const PermissionGroupCreateView: React.FC = () => {
     </>
   );
 };
-PermissionGroupCreateView.displayName = "PermissionGroupCreateView";
-
-export default PermissionGroupCreateView;

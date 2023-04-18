@@ -3,7 +3,7 @@ import { Button } from "@dashboard/components/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   useBaseChannelsQuery,
-  usePermissionGroupDetailsQuery,
+  useNewPermissionGroupDetailsQuery,
   usePermissionGroupUpdateMutation,
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
@@ -28,8 +28,9 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import AssignMembersDialog from "../../components/AssignMembersDialog";
-import PermissionGroupDetailsPage, {
-  PermissionGroupDetailsPageFormData,
+import {
+  NewPermissionGroupDetailsPage,
+  NewPermissionGroupDetailsPageFormData,
 } from "../../components/PermissionGroupDetailsPage";
 import UnassignMembersDialog from "../../components/UnassignMembersDialog";
 import {
@@ -43,17 +44,16 @@ interface PermissionGroupDetailsProps {
   params: PermissionGroupDetailsUrlQueryParams;
 }
 
-export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
-  id,
-  params,
-}) => {
+export const NewPermissionGroupDetails: React.FC<
+  PermissionGroupDetailsProps
+> = ({ id, params }) => {
   const navigate = useNavigator();
   const shop = useShop();
   const notify = useNotifier();
   const intl = useIntl();
   const user = useUser();
 
-  const { data, loading, refetch } = usePermissionGroupDetailsQuery({
+  const { data, loading, refetch } = useNewPermissionGroupDetailsQuery({
     displayLoader: true,
     variables: { id, userId: user?.user.id },
   });
@@ -135,7 +135,9 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   );
   const disabled = loading || !isGroupEditable || permissionsExceeded;
 
-  const handleSubmit = async (formData: PermissionGroupDetailsPageFormData) =>
+  const handleSubmit = async (
+    formData: NewPermissionGroupDetailsPageFormData,
+  ) =>
     extractMutationErrors(
       permissionGroupUpdate({
         variables: {
@@ -151,7 +153,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
 
   return (
     <>
-      <PermissionGroupDetailsPage
+      <NewPermissionGroupDetailsPage
         permissionGroup={data?.permissionGroup}
         permissionsExceeded={permissionsExceeded}
         channels={channelData?.channels}
@@ -219,5 +221,3 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     </>
   );
 };
-
-export default PermissionGroupDetails;
