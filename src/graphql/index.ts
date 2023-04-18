@@ -3,3 +3,9 @@ export * from "./hooks.generated";
 export * from "./types.generated";
 export * from "./typePolicies.generated";
 export { default as introspectionQueryResultData } from "./fragmentTypes.generated";
+export {} from "./hooks.channelPermissions.generated";
+export {
+  useNewPermissionGroupDetailsQuery,
+  useNewPermissionGroupCreateMutation,
+  useNewPermissionGroupUpdateMutation,
+} from "./hooks.channelPermissions.generated";

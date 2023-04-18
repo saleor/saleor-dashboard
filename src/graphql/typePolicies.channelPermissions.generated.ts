@@ -1995,13 +1995,15 @@ export type GiftCardUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	giftCard?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type GroupKeySpecifier = ('id' | 'name' | 'users' | 'permissions' | 'userCanManage' | GroupKeySpecifier)[];
+export type GroupKeySpecifier = ('id' | 'name' | 'users' | 'permissions' | 'userCanManage' | 'accessibleChannels' | 'restrictedAccessToChannels' | GroupKeySpecifier)[];
 export type GroupFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	name?: FieldPolicy<any> | FieldReadFunction<any>,
 	users?: FieldPolicy<any> | FieldReadFunction<any>,
 	permissions?: FieldPolicy<any> | FieldReadFunction<any>,
-	userCanManage?: FieldPolicy<any> | FieldReadFunction<any>
+	userCanManage?: FieldPolicy<any> | FieldReadFunction<any>,
+	accessibleChannels?: FieldPolicy<any> | FieldReadFunction<any>,
+	restrictedAccessToChannels?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type GroupCountableConnectionKeySpecifier = ('pageInfo' | 'edges' | 'totalCount' | GroupCountableConnectionKeySpecifier)[];
 export type GroupCountableConnectionFieldPolicy = {
@@ -3594,13 +3596,14 @@ export type PermissionGroupDeletedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	permissionGroup?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type PermissionGroupErrorKeySpecifier = ('field' | 'message' | 'code' | 'permissions' | 'users' | PermissionGroupErrorKeySpecifier)[];
+export type PermissionGroupErrorKeySpecifier = ('field' | 'message' | 'code' | 'permissions' | 'users' | 'channels' | PermissionGroupErrorKeySpecifier)[];
 export type PermissionGroupErrorFieldPolicy = {
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
 	permissions?: FieldPolicy<any> | FieldReadFunction<any>,
-	users?: FieldPolicy<any> | FieldReadFunction<any>
+	users?: FieldPolicy<any> | FieldReadFunction<any>,
+	channels?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type PermissionGroupUpdateKeySpecifier = ('permissionGroupErrors' | 'errors' | 'group' | PermissionGroupUpdateKeySpecifier)[];
 export type PermissionGroupUpdateFieldPolicy = {
@@ -4105,11 +4108,12 @@ export type ProductVariantBulkDeleteFieldPolicy = {
 	productErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type ProductVariantBulkErrorKeySpecifier = ('field' | 'message' | 'code' | 'attributes' | 'values' | 'warehouses' | 'stocks' | 'channels' | 'channelListings' | ProductVariantBulkErrorKeySpecifier)[];
+export type ProductVariantBulkErrorKeySpecifier = ('field' | 'message' | 'code' | 'path' | 'attributes' | 'values' | 'warehouses' | 'stocks' | 'channels' | 'channelListings' | ProductVariantBulkErrorKeySpecifier)[];
 export type ProductVariantBulkErrorFieldPolicy = {
 	field?: FieldPolicy<any> | FieldReadFunction<any>,
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	code?: FieldPolicy<any> | FieldReadFunction<any>,
+	path?: FieldPolicy<any> | FieldReadFunction<any>,
 	attributes?: FieldPolicy<any> | FieldReadFunction<any>,
 	values?: FieldPolicy<any> | FieldReadFunction<any>,
 	warehouses?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -5489,7 +5493,7 @@ export type UploadErrorFieldPolicy = {
 	message?: FieldPolicy<any> | FieldReadFunction<any>,
 	code?: FieldPolicy<any> | FieldReadFunction<any>
 };
-export type UserKeySpecifier = ('id' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'metadata' | 'metafield' | 'metafields' | 'email' | 'firstName' | 'lastName' | 'isStaff' | 'isActive' | 'addresses' | 'checkout' | 'checkoutTokens' | 'checkoutIds' | 'checkouts' | 'giftCards' | 'note' | 'orders' | 'userPermissions' | 'permissionGroups' | 'editableGroups' | 'avatar' | 'events' | 'storedPaymentSources' | 'languageCode' | 'defaultShippingAddress' | 'defaultBillingAddress' | 'externalReference' | 'lastLogin' | 'dateJoined' | 'updatedAt' | UserKeySpecifier)[];
+export type UserKeySpecifier = ('id' | 'privateMetadata' | 'privateMetafield' | 'privateMetafields' | 'metadata' | 'metafield' | 'metafields' | 'email' | 'firstName' | 'lastName' | 'isStaff' | 'isActive' | 'addresses' | 'checkout' | 'checkoutTokens' | 'checkoutIds' | 'checkouts' | 'giftCards' | 'note' | 'orders' | 'userPermissions' | 'permissionGroups' | 'editableGroups' | 'accessibleChannels' | 'restrictedAccessToChannels' | 'avatar' | 'events' | 'storedPaymentSources' | 'languageCode' | 'defaultShippingAddress' | 'defaultBillingAddress' | 'externalReference' | 'lastLogin' | 'dateJoined' | 'updatedAt' | UserKeySpecifier)[];
 export type UserFieldPolicy = {
 	id?: FieldPolicy<any> | FieldReadFunction<any>,
 	privateMetadata?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -5514,6 +5518,8 @@ export type UserFieldPolicy = {
 	userPermissions?: FieldPolicy<any> | FieldReadFunction<any>,
 	permissionGroups?: FieldPolicy<any> | FieldReadFunction<any>,
 	editableGroups?: FieldPolicy<any> | FieldReadFunction<any>,
+	accessibleChannels?: FieldPolicy<any> | FieldReadFunction<any>,
+	restrictedAccessToChannels?: FieldPolicy<any> | FieldReadFunction<any>,
 	avatar?: FieldPolicy<any> | FieldReadFunction<any>,
 	events?: FieldPolicy<any> | FieldReadFunction<any>,
 	storedPaymentSources?: FieldPolicy<any> | FieldReadFunction<any>,

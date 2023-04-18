@@ -9,10 +9,6 @@ export const permissionGroupFragment = gql`
       firstName
       lastName
     }
-    restrictedAccessToChannels
-    accessibleChannels {
-      ...Channel
-    }
   }
 `;
 
