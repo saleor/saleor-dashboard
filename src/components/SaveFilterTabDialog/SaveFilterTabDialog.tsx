@@ -71,16 +71,18 @@ const SaveFilterTabDialog: React.FC<SaveFilterTabDialogProps> = ({
                 value={data.name}
                 onChange={change}
                 error={errors}
+                data-test-id="preset-name-text-field"
                 helperText={errors ? "This field is required" : null}
               />
             </DialogContent>
             <DialogActions>
-              <BackButton onClick={onClose}>
+              <BackButton onClick={onClose} data-test-id="cancel-preset-button">
                 <FormattedMessage {...buttonMessages.cancel} />
               </BackButton>
               <ConfirmButton
                 transitionState={confirmButtonState}
                 onClick={submit}
+                data-test-id="save-preset-button"
               >
                 <FormattedMessage {...buttonMessages.save} />
               </ConfirmButton>
