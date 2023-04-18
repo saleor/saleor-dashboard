@@ -18,6 +18,10 @@ export interface ColumnCategory extends Partial<FetchMoreProps> {
   availableNodes: AvailableColumn[];
   selectedNodes: AvailableColumn[];
   onSearch?: (query: string) => void;
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+  totalCount: number;
+  onFetchMore: () => void;
 }
 
 export interface UseColumnsProps {
@@ -155,8 +159,9 @@ export const parseCustomColumnsForProductListView = ({
   sort,
   onSearch,
   onFetchMore,
-  loading,
-  hasMore,
+  hasNextPage,
+  hasPreviousPage,
+  totalCount,
 }) => [
   {
     name: "Attributes",
@@ -173,8 +178,9 @@ export const parseCustomColumnsForProductListView = ({
     ),
     onSearch,
     onFetchMore,
-    loading,
-    hasMore,
+    hasNextPage,
+    hasPreviousPage,
+    totalCount,
   },
 ];
 

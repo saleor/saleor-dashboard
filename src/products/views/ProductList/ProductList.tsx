@@ -38,7 +38,6 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { commonMessages } from "@dashboard/intl";
-import { maybe } from "@dashboard/misc";
 import ProductExportDialog from "@dashboard/products/components/ProductExportDialog";
 import {
   getAttributeIdFromColumnValue,
@@ -108,7 +107,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   );
 
   const { customColumnsSettings, setCustomColumnsSettings } =
-    useCustomColumnSettings("PRODUCT_VIEW");
+    useCustomColumnSettings("PRODUCT_LIST");
 
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
@@ -337,7 +336,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const availableInGridAttributesOpts = useAvailableInGridAttributesSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 5,
+      first: 10,
     },
   });
 
@@ -424,32 +423,17 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           sort: params.sort,
         }}
         onSort={handleSort}
-        availableInGridAttributes={
-          mapEdgesToItems(
-            availableInGridAttributesOpts.result?.data?.availableInGrid,
-          ) || []
-        }
         currencySymbol={selectedChannel?.currencyCode || ""}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
         gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
         settings={settings}
-        loading={
-          availableInGridAttributesOpts.result.loading || gridAttributes.loading
-        }
-        hasMore={maybe(
-          () =>
-            availableInGridAttributesOpts.result.data.availableInGrid.pageInfo
-              .hasNextPage,
-          false,
-        )}
+        availableInGridAttributesOpts={availableInGridAttributesOpts}
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}
         selectedProductIds={listElements}
-        onColumnQueryChange={availableInGridAttributesOpts.search}
-        onFetchMore={availableInGridAttributesOpts.loadMore}
         onUpdateListSettings={updateListSettings}
         onAdd={() => openModal("create-product")}
         onAll={resetFilters}
@@ -481,7 +465,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         tabs={tabs.map(tab => tab.name)}
         onExport={() => openModal("export")}
         selectedChannelId={selectedChannel?.id}
-        columnQuery={availableInGridAttributesOpts.query}
         customColumnSettings={customColumnsSettings}
         setCustomColumnSettings={setCustomColumnsSettings}
       />

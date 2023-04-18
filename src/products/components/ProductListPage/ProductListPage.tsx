@@ -17,14 +17,13 @@ import {
   GridAttributesQuery,
   ProductListQuery,
   RefreshLimitsQuery,
-  SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import useAvailableInGridAttributesSearch from "@dashboard/searches/useAvailableInGridAttributesSearch";
 import {
   ChannelProps,
-  FetchMoreProps,
   FilterPageProps,
   ListActions,
   PageListProps,
@@ -54,14 +53,9 @@ export interface ProductListPageProps
       FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
       "onTabDelete"
     >,
-    FetchMoreProps,
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
-  availableInGridAttributes: RelayToFlat<
-    SearchAvailableInGridAttributesQuery["availableInGrid"]
-  >;
-  columnQuery: string;
   currencySymbol: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   limits: RefreshLimitsQuery["shop"]["limits"];
@@ -70,11 +64,13 @@ export interface ProductListPageProps
   hasPresetsChanged: boolean;
   onAdd: () => void;
   onExport: () => void;
-  onColumnQueryChange: (query: string) => void;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (tabIndex: number) => void;
   customColumnSettings: string[];
   setCustomColumnSettings: (cols: string[]) => void;
+  availableInGridAttributesOpts: ReturnType<
+    typeof useAvailableInGridAttributesSearch
+  >;
 }
 
 export type ProductListViewType = "datagrid" | "tile";
@@ -82,21 +78,16 @@ const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
-    columnQuery,
     currencySymbol,
     defaultSettings,
     gridAttributes,
     limits,
-    availableInGridAttributes,
+    availableInGridAttributesOpts,
     filterOpts,
-    hasMore,
     initialSearch,
-    loading,
     settings,
     onAdd,
-    onColumnQueryChange,
     onExport,
-    onFetchMore,
     onFilterChange,
     onFilterAttributeFocus,
     onSearchChange,
@@ -278,15 +269,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             hasRowHover={!isFilterPresetOpen}
             filterDependency={filterDependency}
             activeAttributeSortId={activeAttributeSortId}
-            columnQuery={columnQuery}
             defaultSettings={defaultSettings}
-            availableInGridAttributes={availableInGridAttributes}
-            isAttributeLoading={loading}
+            availableInGridAttributesOpts={availableInGridAttributesOpts}
             loading={listProps.disabled}
-            hasMore={hasMore}
             gridAttributes={gridAttributes}
-            onColumnQueryChange={onColumnQueryChange}
-            onFetchMore={onFetchMore}
             products={listProps.products}
             settings={settings}
             selectedChannelId={selectedChannelId}

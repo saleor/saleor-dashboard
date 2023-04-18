@@ -13,23 +13,20 @@ import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyCol
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@dashboard/config";
-import {
-  GridAttributesQuery,
-  ProductListQuery,
-  SearchAvailableInGridAttributesQuery,
-} from "@dashboard/graphql";
+import { GridAttributesQuery, ProductListQuery } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
+import useAvailableInGridAttributesSearch from "@dashboard/searches/useAvailableInGridAttributesSearch";
 import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
 import {
   ChannelProps,
-  FetchMoreProps,
   ListProps,
   PageListProps,
   RelayToFlat,
   SortPage,
 } from "@dashboard/types";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
@@ -47,22 +44,19 @@ interface ProductListDatagridProps
   extends ListProps<ProductListColumns>,
     PageListProps<ProductListColumns>,
     SortPage<ProductListUrlSortField>,
-    FetchMoreProps,
     ChannelProps {
   activeAttributeSortId: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   products: RelayToFlat<ProductListQuery["products"]>;
-  onRowClick?: (id: string) => void;
+  onRowClick: (id: string) => void;
   rowAnchor?: (id: string) => string;
-  columnQuery: string;
-  availableInGridAttributes: RelayToFlat<
-    SearchAvailableInGridAttributesQuery["availableInGrid"]
+  availableInGridAttributesOpts: ReturnType<
+    typeof useAvailableInGridAttributesSearch
   >;
-  onColumnQueryChange: (query: string) => void;
-  isAttributeLoading?: boolean;
   hasRowHover?: boolean;
   customColumnSettings: string[];
   setCustomColumnSettings: (cols: string[]) => void;
+  loading: boolean;
 }
 
 export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
@@ -76,13 +70,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   sort,
   loading,
   gridAttributes,
-  hasMore,
-  isAttributeLoading,
-  onFetchMore,
-  // columnQuery,
-  // defaultSettings,
-  availableInGridAttributes,
-  onColumnQueryChange,
+  availableInGridAttributesOpts,
   activeAttributeSortId,
   filterDependency,
   hasRowHover,
@@ -123,14 +111,23 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
       sort,
     ),
     columnCategories: parseCustomColumnsForProductListView({
-      attributesData: availableInGridAttributes,
+      attributesData:
+        mapEdgesToItems(
+          availableInGridAttributesOpts.result?.data?.availableInGrid,
+        ) || [],
       gridAttributesData: gridAttributes,
       activeAttributeSortId,
       sort,
-      onSearch: onColumnQueryChange,
-      onFetchMore,
-      hasMore,
-      loading: isAttributeLoading,
+      onSearch: availableInGridAttributesOpts.search,
+      onFetchMore: availableInGridAttributesOpts.loadMore,
+      hasNextPage:
+        availableInGridAttributesOpts.result?.data?.availableInGrid?.pageInfo
+          ?.hasNextPage ?? false,
+      hasPreviousPage:
+        availableInGridAttributesOpts.result?.data?.availableInGrid?.pageInfo
+          ?.hasPreviousPage ?? false,
+      totalCount:
+        availableInGridAttributesOpts.result?.data?.availableInGrid?.totalCount,
     }),
     selectedColumns: settings.columns,
     onSave: handleColumnChange,

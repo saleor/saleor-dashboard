@@ -90,6 +90,7 @@ export const NewColumnPickerCategories: React.FC<
                     </Checkbox>
                   </Box>
                 ))}
+
                 {/* TODO: Pagination */}
               </>
             )}
