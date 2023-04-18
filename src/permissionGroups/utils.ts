@@ -5,7 +5,7 @@ import {
 } from "@dashboard/graphql";
 import difference from "lodash/difference";
 
-import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
+import { OldPermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
 
 /**
  * Will return true if group has all permissions available in shop assigned.
@@ -43,7 +43,7 @@ export const extractPermissionCodes = (
  */
 export const permissionsDiff = (
   permissionGroup: PermissionGroupDetailsFragment,
-  formData: PermissionGroupDetailsPageFormData,
+  formData: OldPermissionGroupDetailsPageFormData,
 ) => {
   const newPermissions = formData.permissions;
   const oldPermissions = extractPermissionCodes(permissionGroup);
@@ -59,7 +59,7 @@ export const permissionsDiff = (
  */
 export const usersDiff = (
   permissionGroup: PermissionGroupDetailsFragment,
-  formData: PermissionGroupDetailsPageFormData,
+  formData: OldPermissionGroupDetailsPageFormData,
 ) => {
   const newUsers = formData.users.map(u => u.id);
   const oldUsers = permissionGroup?.users.map(u => u.id);

@@ -2226,6 +2226,7 @@ export const PermissionGroupFragmentDoc = gql`
     fragment PermissionGroup on Group {
   id
   name
+  userCanManage
   users {
     id
     firstName

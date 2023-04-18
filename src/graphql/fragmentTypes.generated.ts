@@ -35,7 +35,6 @@
       "ChannelUpdated",
       "CheckoutCreated",
       "CheckoutFilterShippingMethods",
-      "CheckoutFullyPaid",
       "CheckoutMetadataUpdated",
       "CheckoutUpdated",
       "CollectionCreated",
@@ -55,7 +54,6 @@
       "GiftCardCreated",
       "GiftCardDeleted",
       "GiftCardMetadataUpdated",
-      "GiftCardSent",
       "GiftCardStatusChanged",
       "GiftCardUpdated",
       "InvoiceDeleted",
@@ -70,7 +68,6 @@
       "OrderCancelled",
       "OrderConfirmed",
       "OrderCreated",
-      "OrderExpired",
       "OrderFilterShippingMethods",
       "OrderFulfilled",
       "OrderFullyPaid",
@@ -85,7 +82,6 @@
       "PaymentAuthorize",
       "PaymentCaptureEvent",
       "PaymentConfirmEvent",
-      "PaymentGatewayInitializeSession",
       "PaymentListGateways",
       "PaymentProcessEvent",
       "PaymentRefundEvent",
@@ -124,12 +120,7 @@
       "StaffUpdated",
       "ThumbnailCreated",
       "TransactionActionRequest",
-      "TransactionCancelationRequested",
-      "TransactionChargeRequested",
-      "TransactionInitializeSession",
       "TransactionItemMetadataUpdated",
-      "TransactionProcessSession",
-      "TransactionRefundRequested",
       "TranslationCreated",
       "TranslationUpdated",
       "VoucherCreated",
@@ -271,10 +262,6 @@
       "Voucher",
       "Warehouse"
     ],
-    "OrderOrCheckout": [
-      "Checkout",
-      "Order"
-    ],
     "TaxSourceLine": [
       "CheckoutLine",
       "OrderLine"
@@ -309,10 +296,6 @@
       "VoucherTranslation",
       "MenuItemTranslation"
     ],
-    "UserOrApp": [
-      "User",
-      "App"
-    ],
     "_Entity": [
       "App",
       "Address",
@@ -324,7 +307,6 @@
       "ProductMedia",
       "Category",
       "Collection",
-      "Order",
       "PageType"
     ]
   }

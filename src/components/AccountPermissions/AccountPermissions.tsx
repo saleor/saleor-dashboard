@@ -1,7 +1,7 @@
 import { useUser } from "@dashboard/auth";
 import CardTitle from "@dashboard/components/CardTitle";
 import Skeleton from "@dashboard/components/Skeleton";
-import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
+import { OldPermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
 import {
   Card,
   CardContent,
@@ -39,7 +39,7 @@ const useStyles = makeStyles(
 );
 
 interface AccountPermissionsProps {
-  permissions: PermissionData[];
+  permissions: OldPermissionData[];
   permissionsExceeded: boolean;
   data: {
     hasFullAccess: boolean;
