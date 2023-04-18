@@ -1,13 +1,13 @@
 import * as avatarImg from "@assets/images/avatars/avatar1.png";
 import {
   PermissionEnum,
-  PermissionGroupDetailsFragment,
   PermissionGroupErrorCode,
   PermissionGroupErrorFragment,
   PermissionGroupFragment,
   SearchStaffMembersQuery,
   StaffMemberDetailsFragment,
 } from "@dashboard/graphql";
+import { NewPermissionGroupDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
 import { RelayToFlat } from "@dashboard/types";
 
 export const permissionGroups: PermissionGroupFragment[] = [
@@ -90,27 +90,29 @@ export const permissionGroups: PermissionGroupFragment[] = [
   },
 ].map(edge => edge.node);
 
-export const userPermissionGroups: StaffMemberDetailsFragment["permissionGroups"] = [
-  {
-    id: "R3JvdXA6MQ==",
-    name: "Full Access",
-    userCanManage: false,
-    __typename: "Group",
-  },
-  {
-    id: "R3JvdXA6Mg==",
-    name: "Customer Support",
-    userCanManage: true,
-    __typename: "Group",
-  },
-];
+export const userPermissionGroups: StaffMemberDetailsFragment["permissionGroups"] =
+  [
+    {
+      id: "R3JvdXA6MQ==",
+      name: "Full Access",
+      userCanManage: false,
+      __typename: "Group",
+    },
+    {
+      id: "R3JvdXA6Mg==",
+      name: "Customer Support",
+      userCanManage: true,
+      __typename: "Group",
+    },
+  ];
 
-export const emptyPermissionGroup: PermissionGroupDetailsFragment = {
+export const emptyPermissionGroup: NewPermissionGroupDetailsFragment = {
   id: "R3JvdXA6Mw==",
   name: "Editors",
   userCanManage: true,
   users: [],
   __typename: "Group",
+
   permissions: [
     {
       code: PermissionEnum.MANAGE_PAGES,
@@ -118,6 +120,8 @@ export const emptyPermissionGroup: PermissionGroupDetailsFragment = {
       __typename: "Permission",
     },
   ],
+  accessibleChannels: [],
+  restrictedAccessToChannels: false,
 };
 
 export const errorsOfPermissionGroupCreate: PermissionGroupErrorFragment[] = [
@@ -135,7 +139,7 @@ export const errorsOfPermissionGroupCreate: PermissionGroupErrorFragment[] = [
   },
 ];
 
-export const permissionGroup: PermissionGroupDetailsFragment = {
+export const permissionGroup: NewPermissionGroupDetailsFragment = {
   id: "R3JvdXA6Mw==",
   name: "Editors",
   userCanManage: true,
@@ -159,6 +163,8 @@ export const permissionGroup: PermissionGroupDetailsFragment = {
       avatar: null,
     },
   ],
+  accessibleChannels: [],
+  restrictedAccessToChannels: false,
   __typename: "Group",
   permissions: [
     {

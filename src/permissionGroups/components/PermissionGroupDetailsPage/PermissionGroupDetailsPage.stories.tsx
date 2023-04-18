@@ -4,11 +4,12 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { emptyPermissionGroup, permissionGroup, users } from "../../fixtures";
-import PermissionGroupDetailsPage, {
-  PermissionGroupDetailsPageProps,
-} from "./PermissionGroupDetailsPage";
+import {
+  NewPermissionGroupDetailsPage,
+  NewPermissionGroupDetailsPageProps,
+} from "./NewPermissionGroupDetailsPage";
 
-const props: PermissionGroupDetailsPageProps = {
+const props: NewPermissionGroupDetailsPageProps = {
   disabled: false,
   errors: [],
   isChecked: () => false,
@@ -26,20 +27,21 @@ const props: PermissionGroupDetailsPageProps = {
   toggle: () => undefined,
   toggleAll: () => undefined,
   toolbar: null,
+  channels: [],
 };
 
 storiesOf("Permission Groups / Permission Group Details", module)
   .addDecorator(Decorator)
-  .add("default", () => <PermissionGroupDetailsPage {...props} />)
+  .add("default", () => <NewPermissionGroupDetailsPage {...props} />)
   .add("no members", () => (
-    <PermissionGroupDetailsPage
+    <NewPermissionGroupDetailsPage
       {...props}
       members={[]}
       permissionGroup={emptyPermissionGroup}
     />
   ))
   .add("loading", () => (
-    <PermissionGroupDetailsPage
+    <NewPermissionGroupDetailsPage
       {...props}
       disabled={true}
       permissionGroup={undefined}

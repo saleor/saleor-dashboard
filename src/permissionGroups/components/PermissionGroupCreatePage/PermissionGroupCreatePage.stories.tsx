@@ -4,26 +4,28 @@ import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { errorsOfPermissionGroupCreate } from "../../fixtures";
-import PermissionGroupCreatePage, {
-  PermissionGroupCreatePageProps,
-} from "./PermissionGroupCreatePage";
+import {
+  NewPermissionGroupCreatePage,
+  NewPermissionGroupCreatePageProps,
+} from "./NewPermissionGroupCreatePage";
 
-const props: PermissionGroupCreatePageProps = {
+const props: NewPermissionGroupCreatePageProps = {
   disabled: false,
   errors: [],
   onSubmit: () => undefined,
   permissions,
   saveButtonBarState: undefined,
+  channels: [],
 };
 
 storiesOf("Permission Groups / Permission Group Create", module)
   .addDecorator(Decorator)
-  .add("default", () => <PermissionGroupCreatePage {...props} />)
+  .add("default", () => <NewPermissionGroupCreatePage {...props} />)
   .add("loading", () => (
-    <PermissionGroupCreatePage {...props} disabled={true} />
+    <NewPermissionGroupCreatePage {...props} disabled={true} />
   ))
   .add("errors", () => (
-    <PermissionGroupCreatePage
+    <NewPermissionGroupCreatePage
       {...props}
       errors={errorsOfPermissionGroupCreate}
     />
