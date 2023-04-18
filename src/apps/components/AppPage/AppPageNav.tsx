@@ -59,9 +59,9 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
           <Button
             variant="secondary"
             size="medium"
-            onClick={() => {
-              window.open(supportUrl, "_blank");
-            }}
+            href={supportUrl}
+            target="_blank"
+            as="a"
           >
             <FormattedMessage defaultMessage="Support" id="HqRNN8" />
           </Button>
@@ -70,9 +70,9 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
           <Button
             variant="secondary"
             size="medium"
-            onClick={() => {
-              window.open(homepageUrl, "_blank");
-            }}
+            href={homepageUrl}
+            target="_blank"
+            as="a"
           >
             <FormattedMessage defaultMessage="Homepage" id="rxNddi" />
           </Button>
