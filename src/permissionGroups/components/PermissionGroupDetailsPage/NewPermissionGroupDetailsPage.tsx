@@ -122,34 +122,38 @@ export const NewPermissionGroupDetailsPage: React.FC<
             />
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
-            <Box display="grid" __gridTemplateRows="50%  50%" height="100vh">
-              <AccountPermissions
-                permissionsExceeded={permissionsExceeded}
-                data={data}
-                disabled={disabled}
-                permissions={permissions}
-                onChange={change}
-                errorMessage={permissionsError}
-                fullAccessLabel={intl.formatMessage({
-                  id: "mAabef",
-                  defaultMessage: "Group has full access to the store",
-                  description: "checkbox label",
-                })}
-                description={intl.formatMessage({
-                  id: "CYZse9",
-                  defaultMessage:
-                    "Expand or restrict group's permissions to access certain part of saleor system.",
-                  description: "card description",
-                })}
-              />
-              <ChannelPermission
-                description="Expand or restrict channels permissions"
-                fullAccessLabel="Group has full access to all channels"
-                channels={channels}
-                onChange={change}
-                disabled={disabled}
-                data={data}
-              />
+            <Box display="flex" flexDirection="column" height="100%">
+              <Box overflow="hidden" __maxHeight="50%">
+                <AccountPermissions
+                  permissionsExceeded={permissionsExceeded}
+                  data={data}
+                  disabled={disabled}
+                  permissions={permissions}
+                  onChange={change}
+                  errorMessage={permissionsError}
+                  fullAccessLabel={intl.formatMessage({
+                    id: "mAabef",
+                    defaultMessage: "Group has full access to the store",
+                    description: "checkbox label",
+                  })}
+                  description={intl.formatMessage({
+                    id: "CYZse9",
+                    defaultMessage:
+                      "Expand or restrict group's permissions to access certain part of saleor system.",
+                    description: "card description",
+                  })}
+                />
+              </Box>
+              <Box overflow="hidden" __maxHeight="50%">
+                <ChannelPermission
+                  description="Expand or restrict channels permissions"
+                  fullAccessLabel="Group has full access to all channels"
+                  channels={channels}
+                  onChange={change}
+                  disabled={disabled}
+                  data={data}
+                />
+              </Box>
             </Box>
           </DetailPageLayout.RightSidebar>
           <div>

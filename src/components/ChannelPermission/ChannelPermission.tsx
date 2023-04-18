@@ -78,7 +78,7 @@ export const ChannelPermission = ({
     !!data.channels.find(chan => chan.id === channel.id);
 
   return (
-    <Card>
+    <Card style={{ height: "100%" }}>
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Channels permissions",
@@ -110,7 +110,14 @@ export const ChannelPermission = ({
       </CardContent>
       {!data.hasAllChannels && (
         <>
-          <hr />
+          <Box
+            width="100%"
+            borderBottomStyle="solid"
+            borderBottomWidth={1}
+            borderColor="neutralPlain"
+            height={1}
+            margin={0}
+          />
           <Box __maxHeight="calc(100% - 180px)" overflowY="scroll">
             <CardContent>
               {channels.map(channel => (

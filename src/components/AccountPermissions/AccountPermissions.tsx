@@ -12,7 +12,6 @@ import {
   ListItemText,
   Typography,
 } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -21,22 +20,6 @@ const byAlphabeticalOrder =
   <T extends {}>(field: string) =>
   (a: T, b: T) =>
     a[field].localeCompare(b[field]);
-
-const useStyles = makeStyles(
-  theme => ({
-    checkboxContainer: {
-      marginTop: theme.spacing(),
-    },
-    hr: {
-      backgroundColor: theme.palette.divider,
-      border: "none",
-      height: 1,
-      marginBottom: 0,
-      marginTop: 0,
-    },
-  }),
-  { name: "AccountPermissions" },
-);
 
 interface AccountPermissionsProps {
   permissions: OldPermissionData[];
@@ -67,7 +50,6 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     byAlphabeticalOrder("name"),
   );
 
-  const classes = useStyles(props);
   const intl = useIntl();
   const { user } = useUser();
 
@@ -97,7 +79,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
   };
 
   return (
-    <Card>
+    <Card style={{ height: "100%" }}>
       <CardTitle
         title={intl.formatMessage({
           id: "Fbr4Vp",
@@ -117,7 +99,14 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
               })}
             </Typography>
           </CardContent>
-          <hr className={classes.hr} />
+          <Box
+            width="100%"
+            borderBottomStyle="solid"
+            borderBottomWidth={1}
+            borderColor="neutralPlain"
+            height={1}
+            margin={0}
+          />
           <CardContent>
             <Typography variant="body2">
               {intl.formatMessage({
@@ -163,7 +152,14 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
           </CardContent>
           {!data.hasFullAccess && (
             <>
-              <hr className={classes.hr} />
+              <Box
+                width="100%"
+                borderBottomStyle="solid"
+                borderBottomWidth={1}
+                borderColor="neutralPlain"
+                height={1}
+                margin={0}
+              />
               <Box __maxHeight="calc(100% - 180px)" overflowY="scroll">
                 <CardContent>
                   {permissions === undefined ? (
@@ -222,7 +218,14 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
           )}
           {!!errorMessage && (
             <>
-              <hr className={classes.hr} />
+              <Box
+                width="100%"
+                borderBottomStyle="solid"
+                borderBottomWidth={1}
+                borderColor="neutralPlain"
+                height={1}
+                margin={0}
+              />
               <CardContent>
                 <Typography variant="body2" color="error">
                   {errorMessage}
