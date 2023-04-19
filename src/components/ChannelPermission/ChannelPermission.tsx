@@ -102,7 +102,11 @@ export const ChannelPermission = ({
               marginTop={9}
               marginBottom={9}
             />
-            <Box __height="calc(100% - 190px)" overflowY="scroll">
+            <Box
+              __height="calc(100% - 190px)"
+              overflowY="scroll"
+              overflowX="hidden"
+            >
               <MultiAutocompleteSelectField
                 disabled={disabled}
                 choices={mapNodeToChoice(filteredChannels)}
@@ -116,7 +120,10 @@ export const ChannelPermission = ({
                 loading={false}
                 name="channels"
                 onChange={onChannelChange}
-                placeholder={"Test"}
+                placeholder={intl.formatMessage({
+                  defaultMessage: "Search channels",
+                  id: "0HBlkO",
+                })}
                 value={selectedChannels}
                 testId="channels"
               />
