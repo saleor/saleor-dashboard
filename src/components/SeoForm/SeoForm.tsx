@@ -200,7 +200,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
                         defaultMessage="({numberOfCharacters} of {maxCharacters} characters)"
                         id="yi1HSj"
                         values={{
-                          maxCharacters: maxSlugLength,
+                          maxCharacters: maxTitleLength,
                           numberOfCharacters: title?.length,
                         }}
                       />
