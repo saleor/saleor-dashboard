@@ -1,4 +1,7 @@
 import { ChannelFragment } from "@dashboard/graphql";
+import { useChannelsSearch } from "@dashboard/hooks/useChannelsSearch";
+import { FormChange } from "@dashboard/hooks/useForm";
+import { mapNodeToChoice } from "@dashboard/utils/maps";
 import {
   Card,
   CardContent,
@@ -6,76 +9,49 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Typography,
 } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui/next";
-import React, { ChangeEvent } from "react";
+import { Box, Text } from "@saleor/macaw-ui/next";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import CardTitle from "../CardTitle/CardTitle";
+import MultiAutocompleteSelectField, {
+  MultiAutocompleteChoiceType,
+} from "../MultiAutocompleteSelectField";
 
 interface ChannelPermissionProps {
-  channels: ChannelFragment[];
+  selectedChannels: string[];
+  allChannels?: ChannelFragment[];
+  channelsDisplayValues: MultiAutocompleteChoiceType[];
   description: string;
-  fullAccessLabel: string;
+  hasRestrictedChannels: boolean;
   disabled: boolean;
-  data: {
-    hasAllChannels: boolean;
-    channels: ChannelFragment[];
-  };
-  onChange: (event: ChangeEvent<any>, cb?: () => void) => void;
+  onChannelChange: FormChange;
+  onChange: FormChange;
 }
 
 export const ChannelPermission = ({
-  channels,
   description,
-  fullAccessLabel,
   disabled,
   onChange,
-  data,
+  onChannelChange,
+  channelsDisplayValues,
+  allChannels,
+  selectedChannels,
+  hasRestrictedChannels,
 }: ChannelPermissionProps) => {
   const intl = useIntl();
+
+  const { onQueryChange, filteredChannels } = useChannelsSearch(allChannels);
 
   const handleAllChannelsChange = () => {
     onChange({
       target: {
-        name: "hasAllChannels",
-        value: !data.hasAllChannels,
+        name: "hasRestrictedChannels",
+        value: !hasRestrictedChannels,
       },
-    } as any);
-
-    onChange({
-      target: {
-        name: "channels",
-        value: !data.hasAllChannels ? channels : [],
-      },
-    } as any);
+    });
   };
-
-  const handleChannelChange = (channel: ChannelFragment) => () => {
-    const hasChannelChecked = data.channels.find(
-      chan => chan.id === channel.id,
-    );
-
-    if (hasChannelChecked) {
-      onChange({
-        target: {
-          name: "channels",
-          value: data.channels.filter(chan => chan.id !== channel.id),
-        },
-      } as any);
-    } else {
-      onChange({
-        target: {
-          name: "channels",
-          value: [...data.channels, channel],
-        },
-      } as any);
-    }
-  };
-
-  const isChannelChecked = (channel: ChannelFragment) =>
-    !!data.channels.find(chan => chan.id === channel.id);
 
   return (
     <Card style={{ height: "100%" }}>
@@ -86,7 +62,10 @@ export const ChannelPermission = ({
         })}
       ></CardTitle>
       <CardContent>
-        <Typography variant="body2">{description}</Typography>
+        <Text as="p" variant="body" size="small" marginBottom={5}>
+          {description}
+        </Text>
+
         <ListItem
           role={undefined}
           onClick={handleAllChannelsChange}
@@ -98,58 +77,51 @@ export const ChannelPermission = ({
               data-test-id="full-access"
               color="secondary"
               edge="start"
-              checked={data.hasAllChannels}
+              checked={hasRestrictedChannels}
               disabled={disabled}
               tabIndex={-1}
               disableRipple
               inputProps={{ "aria-labelledby": "fullAccess" }}
             />
           </ListItemIcon>
-          <ListItemText primary={fullAccessLabel} />
-        </ListItem>
-      </CardContent>
-      {!data.hasAllChannels && (
-        <>
-          <Box
-            width="100%"
-            borderBottomStyle="solid"
-            borderBottomWidth={1}
-            borderColor="neutralPlain"
-            height={1}
-            margin={0}
+          <ListItemText
+            primary={intl.formatMessage({
+              defaultMessage: "Restrict access to channels",
+              id: "ay73LS",
+            })}
           />
-          <Box __maxHeight="calc(100% - 180px)" overflowY="scroll">
-            <CardContent>
-              {channels.map(channel => (
-                <ListItem
-                  key={channel.id}
-                  disabled={!channel.isActive}
-                  role={undefined}
-                  dense
-                  button
-                  onClick={handleChannelChange(channel)}
-                >
-                  <ListItemIcon>
-                    <Checkbox
-                      color="secondary"
-                      edge="start"
-                      checked={isChannelChecked(channel)}
-                      tabIndex={-1}
-                      disableRipple
-                      name={channel.name}
-                      inputProps={{ "aria-labelledby": channel.id }}
-                    />
-                  </ListItemIcon>
-                  <ListItemText
-                    id={channel.id}
-                    primary={channel.name.replace(/\./, "")}
-                  />
-                </ListItem>
-              ))}
-            </CardContent>
-          </Box>
-        </>
-      )}
+        </ListItem>
+        {hasRestrictedChannels && (
+          <>
+            <Box
+              width="100%"
+              borderBottomStyle="solid"
+              borderBottomWidth={1}
+              borderColor="neutralPlain"
+              height={1}
+              marginTop={9}
+              marginBottom={9}
+            />
+            <MultiAutocompleteSelectField
+              disabled={disabled}
+              choices={mapNodeToChoice(filteredChannels)}
+              displayValues={channelsDisplayValues}
+              fetchChoices={onQueryChange}
+              hasMore={false}
+              label={intl.formatMessage({
+                defaultMessage: "Channels permissions",
+                id: "vz3yxp",
+              })}
+              loading={false}
+              name="channels"
+              onChange={onChannelChange}
+              placeholder={"Test"}
+              value={selectedChannels}
+              testId="channels"
+            />
+          </>
+        )}
+      </CardContent>
     </Card>
   );
 };

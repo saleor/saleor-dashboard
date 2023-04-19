@@ -4,6 +4,7 @@ import { ChannelPermission } from "@dashboard/components/ChannelPermission";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import Savebar from "@dashboard/components/Savebar";
 import {
   ChannelFragment,
@@ -26,9 +27,11 @@ import {
 import { ListActions, SortPage } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
+import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
+import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useIntl } from "react-intl";
 
 import PermissionGroupInfo from "../PermissionGroupInfo";
@@ -37,11 +40,11 @@ import PermissionGroupMemberList from "../PermissionGroupMemberList";
 export interface NewPermissionGroupDetailsPageFormData {
   name: string;
   hasFullAccess: boolean;
-  hasAllChannels: boolean;
+  hasRestrictedChannels: boolean;
   isActive: boolean;
   permissions: PermissionEnum[];
   users: PermissionGroupDetailsFragment["users"];
-  channels: ChannelFragment[];
+  channels: string[];
 }
 
 export interface NewPermissionData
@@ -85,8 +88,9 @@ export const NewPermissionGroupDetailsPage: React.FC<
 
   const initialForm: NewPermissionGroupDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
-    hasAllChannels: !permissionGroup?.restrictedAccessToChannels ?? false,
-    channels: permissionGroup?.accessibleChannels ?? [],
+    hasRestrictedChannels: permissionGroup?.restrictedAccessToChannels ?? false,
+    channels:
+      permissionGroup?.accessibleChannels?.map(channel => channel.id) ?? [],
     isActive: false,
     name: permissionGroup?.name || "",
     permissions: extractPermissionCodes(permissionGroup),
@@ -99,73 +103,96 @@ export const NewPermissionGroupDetailsPage: React.FC<
     intl,
   );
 
+  const [channelsDisplayValues, setChannelDisplayValues] = useState<
+    MultiAutocompleteChoiceType[]
+  >(mapNodeToChoice(permissionGroup?.accessibleChannels));
+
+  useEffect(() => {
+    setChannelDisplayValues(
+      mapNodeToChoice(permissionGroup?.accessibleChannels),
+    );
+  }, [permissionGroup?.accessibleChannels]);
+
+  const channelChoices = mapNodeToChoice(channels);
+
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data, change, submit }) => (
-        <DetailPageLayout>
-          <TopNav
-            href={permissionGroupListUrl()}
-            title={permissionGroup?.name}
-          />
-          <DetailPageLayout.Content>
-            <PermissionGroupInfo
-              data={data}
-              disabled={disabled}
-              errors={errors}
-              onChange={change}
+      {({ data, change, submit, toggleValue }) => {
+        const handleChannelChange = createMultiAutocompleteSelectHandler(
+          toggleValue,
+          setChannelDisplayValues,
+          channelsDisplayValues,
+          channelChoices,
+        );
+
+        return (
+          <DetailPageLayout>
+            <TopNav
+              href={permissionGroupListUrl()}
+              title={permissionGroup?.name}
             />
-            <FormSpacer />
-            <PermissionGroupMemberList
-              disabled={disabled}
-              {...listProps}
-              users={data?.users || []}
-            />
-          </DetailPageLayout.Content>
-          <DetailPageLayout.RightSidebar>
-            <Box display="flex" flexDirection="column" height="100%">
-              <Box overflow="hidden" __maxHeight="50%">
-                <AccountPermissions
-                  permissionsExceeded={permissionsExceeded}
-                  data={data}
-                  disabled={disabled}
-                  permissions={permissions}
-                  onChange={change}
-                  errorMessage={permissionsError}
-                  fullAccessLabel={intl.formatMessage({
-                    id: "mAabef",
-                    defaultMessage: "Group has full access to the store",
-                    description: "checkbox label",
-                  })}
-                  description={intl.formatMessage({
-                    id: "CYZse9",
-                    defaultMessage:
-                      "Expand or restrict group's permissions to access certain part of saleor system.",
-                    description: "card description",
-                  })}
-                />
+            <DetailPageLayout.Content>
+              <PermissionGroupInfo
+                data={data}
+                disabled={disabled}
+                errors={errors}
+                onChange={change}
+              />
+              <FormSpacer />
+              <PermissionGroupMemberList
+                disabled={disabled}
+                {...listProps}
+                users={data?.users || []}
+              />
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
+              <Box display="flex" flexDirection="column" height="100%">
+                <Box overflow="hidden" __maxHeight="50%">
+                  <AccountPermissions
+                    permissionsExceeded={permissionsExceeded}
+                    data={data}
+                    disabled={disabled}
+                    permissions={permissions}
+                    onChange={change}
+                    errorMessage={permissionsError}
+                    fullAccessLabel={intl.formatMessage({
+                      id: "mAabef",
+                      defaultMessage: "Group has full access to the store",
+                      description: "checkbox label",
+                    })}
+                    description={intl.formatMessage({
+                      id: "CYZse9",
+                      defaultMessage:
+                        "Expand or restrict group's permissions to access certain part of saleor system.",
+                      description: "card description",
+                    })}
+                  />
+                </Box>
+                <Box overflow="hidden" __maxHeight="50%">
+                  <ChannelPermission
+                    description="Expand or restrict channels permissions"
+                    channelsDisplayValues={channelsDisplayValues}
+                    allChannels={channels}
+                    hasRestrictedChannels={data.hasRestrictedChannels}
+                    selectedChannels={data.channels}
+                    onChange={change}
+                    onChannelChange={handleChannelChange}
+                    disabled={disabled}
+                  />
+                </Box>
               </Box>
-              <Box overflow="hidden" __maxHeight="50%">
-                <ChannelPermission
-                  description="Expand or restrict channels permissions"
-                  fullAccessLabel="Group has full access to all channels"
-                  channels={channels}
-                  onChange={change}
-                  disabled={disabled}
-                  data={data}
-                />
-              </Box>
-            </Box>
-          </DetailPageLayout.RightSidebar>
-          <div>
-            <Savebar
-              onCancel={() => navigate(permissionGroupListUrl())}
-              onSubmit={submit}
-              state={saveButtonBarState}
-              disabled={disabled}
-            />
-          </div>
-        </DetailPageLayout>
-      )}
+            </DetailPageLayout.RightSidebar>
+            <div>
+              <Savebar
+                onCancel={() => navigate(permissionGroupListUrl())}
+                onSubmit={submit}
+                state={saveButtonBarState}
+                disabled={disabled}
+              />
+            </div>
+          </DetailPageLayout>
+        );
+      }}
     </Form>
   );
 };

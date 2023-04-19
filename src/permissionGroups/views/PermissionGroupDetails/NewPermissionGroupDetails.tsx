@@ -1,8 +1,8 @@
 import { useUser } from "@dashboard/auth";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { Button } from "@dashboard/components/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
-  useBaseChannelsQuery,
   useNewPermissionGroupDetailsQuery,
   usePermissionGroupUpdateMutation,
 } from "@dashboard/graphql";
@@ -58,7 +58,7 @@ export const NewPermissionGroupDetails: React.FC<
     variables: { id, userId: user?.user.id },
   });
 
-  const { data: channelData } = useBaseChannelsQuery();
+  const { availableChannels } = useAppChannel();
 
   const [membersList, setMembersList] = useStateFromProps(
     data?.permissionGroup.users,
@@ -156,7 +156,7 @@ export const NewPermissionGroupDetails: React.FC<
       <NewPermissionGroupDetailsPage
         permissionGroup={data?.permissionGroup}
         permissionsExceeded={permissionsExceeded}
-        channels={channelData?.channels}
+        channels={availableChannels}
         members={membersList || []}
         onAssign={() => openModal("assign")}
         onUnassign={ids => openModal("unassign", { ids })}

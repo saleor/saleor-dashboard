@@ -1,9 +1,7 @@
 import { useUser } from "@dashboard/auth";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import {
-  useBaseChannelsQuery,
-  useNewPermissionGroupCreateMutation,
-} from "@dashboard/graphql";
+import { useNewPermissionGroupCreateMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
@@ -46,7 +44,7 @@ export const NewPermissionGroupCreateView: React.FC = () => {
   const errors =
     createPermissionGroupResult?.data?.permissionGroupCreate?.errors || [];
 
-  const { data: channelData } = useBaseChannelsQuery();
+  const { availableChannels } = useAppChannel();
 
   const onSubmit = (formData: NewPermissionGroupCreateFormData) =>
     extractMutationErrors(
@@ -58,8 +56,8 @@ export const NewPermissionGroupCreateView: React.FC = () => {
               : formData.permissions,
             addUsers: [],
             name: formData.name,
-            addChannels: formData.channels.map(channel => channel.id),
-            restrictedAccessToChannels: !formData.hasAllChannels,
+            addChannels: formData.channels,
+            restrictedAccessToChannels: formData.hasRestrictedChannels,
           },
         },
       }),
@@ -90,7 +88,7 @@ export const NewPermissionGroupCreateView: React.FC = () => {
         errors={errors as any}
         disabled={createPermissionGroupResult.loading}
         permissions={permissions}
-        channels={channelData?.channels}
+        channels={availableChannels}
         saveButtonBarState={createPermissionGroupResult.status}
         onSubmit={onSubmit}
       />
