@@ -286,7 +286,7 @@ jobs:
             $auto_release
 
   send-slack-notification:
-    if: ${{ github.event_name == 'repository_dispatch' && ( needs.run-tests-on-release.outputs.status == 'failure' || needs.get-environment-variables.outputs.status == 'failure' || needs.add-review-and-merge-patch.outputs.status == 'failure') }}
+    if: ${{ failure() && github.event_name == 'repository_dispatch'}}
     runs-on: ubuntu-latest
     needs: [get-environment-variables, run-tests-on-release, add-review-and-merge-patch]
     steps:
