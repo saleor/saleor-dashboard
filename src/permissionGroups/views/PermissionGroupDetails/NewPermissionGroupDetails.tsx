@@ -4,7 +4,7 @@ import { Button } from "@dashboard/components/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   useNewPermissionGroupDetailsQuery,
-  usePermissionGroupUpdateMutation,
+  useNewPermissionGroupUpdateMutation,
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -16,6 +16,7 @@ import { extractMutationErrors } from "@dashboard/misc";
 import MembersErrorDialog from "@dashboard/permissionGroups/components/MembersErrorDialog";
 import {
   arePermissionsExceeded,
+  channelsDiff,
   permissionsDiff,
   usersDiff,
 } from "@dashboard/permissionGroups/utils";
@@ -77,7 +78,7 @@ export const NewPermissionGroupDetails: React.FC<
   );
 
   const [permissionGroupUpdate, permissionGroupUpdateResult] =
-    usePermissionGroupUpdateMutation({
+    useNewPermissionGroupUpdateMutation({
       onCompleted: data => {
         if (data.permissionGroupUpdate.errors.length === 0) {
           notify({
@@ -146,6 +147,8 @@ export const NewPermissionGroupDetails: React.FC<
             name: formData.name,
             ...permissionsDiff(data?.permissionGroup, formData),
             ...usersDiff(data?.permissionGroup, formData),
+            ...channelsDiff(data?.permissionGroup, formData),
+            restrictedAccessToChannels: formData.hasRestrictedChannels,
           },
         },
       }),
@@ -161,7 +164,8 @@ export const NewPermissionGroupDetails: React.FC<
         onAssign={() => openModal("assign")}
         onUnassign={ids => openModal("unassign", { ids })}
         errors={
-          permissionGroupUpdateResult?.data?.permissionGroupUpdate.errors || []
+          permissionGroupUpdateResult?.data?.permissionGroupUpdate.errors ||
+          ([] as any)
         }
         onSubmit={handleSubmit}
         permissions={permissions}

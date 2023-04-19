@@ -3,9 +3,13 @@ import {
   PermissionGroupDetailsFragment,
   UserFragment,
 } from "@dashboard/graphql";
+import { NewPermissionGroupDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
 import difference from "lodash/difference";
 
-import { OldPermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
+import {
+  NewPermissionGroupDetailsPageFormData,
+  OldPermissionGroupDetailsPageFormData,
+} from "./components/PermissionGroupDetailsPage";
 
 /**
  * Will return true if group has all permissions available in shop assigned.
@@ -67,6 +71,19 @@ export const usersDiff = (
   return {
     addUsers: difference(newUsers, oldUsers),
     removeUsers: difference(oldUsers, newUsers),
+  };
+};
+
+export const channelsDiff = (
+  permissionGroup: NewPermissionGroupDetailsFragment,
+  formData: NewPermissionGroupDetailsPageFormData,
+) => {
+  const newChannels = formData.channels;
+  const oldChannels = permissionGroup?.accessibleChannels.map(c => c.id);
+
+  return {
+    addChannels: difference(newChannels, oldChannels),
+    removeChannels: difference(oldChannels, newChannels),
   };
 };
 
