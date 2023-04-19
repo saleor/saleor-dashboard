@@ -80,10 +80,15 @@ export const channelsDiff = (
 ) => {
   const newChannels = formData.channels;
   const oldChannels = permissionGroup?.accessibleChannels.map(c => c.id);
+  const hasRestrictedChannels = permissionGroup?.restrictedAccessToChannels;
 
   return {
-    addChannels: difference(newChannels, oldChannels),
-    removeChannels: difference(oldChannels, newChannels),
+    addChannels: !hasRestrictedChannels
+      ? newChannels
+      : difference(newChannels, oldChannels),
+    removeChannels: !hasRestrictedChannels
+      ? []
+      : difference(oldChannels, newChannels),
   };
 };
 
