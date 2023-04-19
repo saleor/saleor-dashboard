@@ -54,14 +54,14 @@ export const ChannelPermission = ({
   };
 
   return (
-    <Card style={{ height: "100%" }}>
+    <Card style={{ height: "100%", overflow: "hidden" }}>
       <CardTitle
         title={intl.formatMessage({
           defaultMessage: "Channels permissions",
           id: "vz3yxp",
         })}
       ></CardTitle>
-      <CardContent>
+      <CardContent style={{ height: "100%" }}>
         <Text as="p" variant="body" size="small" marginBottom={5}>
           {description}
         </Text>
@@ -102,23 +102,25 @@ export const ChannelPermission = ({
               marginTop={9}
               marginBottom={9}
             />
-            <MultiAutocompleteSelectField
-              disabled={disabled}
-              choices={mapNodeToChoice(filteredChannels)}
-              displayValues={channelsDisplayValues}
-              fetchChoices={onQueryChange}
-              hasMore={false}
-              label={intl.formatMessage({
-                defaultMessage: "Channels permissions",
-                id: "vz3yxp",
-              })}
-              loading={false}
-              name="channels"
-              onChange={onChannelChange}
-              placeholder={"Test"}
-              value={selectedChannels}
-              testId="channels"
-            />
+            <Box __height="calc(100% - 190px)" overflowY="scroll">
+              <MultiAutocompleteSelectField
+                disabled={disabled}
+                choices={mapNodeToChoice(filteredChannels)}
+                displayValues={channelsDisplayValues}
+                fetchChoices={onQueryChange}
+                hasMore={false}
+                label={intl.formatMessage({
+                  defaultMessage: "Channels permissions",
+                  id: "vz3yxp",
+                })}
+                loading={false}
+                name="channels"
+                onChange={onChannelChange}
+                placeholder={"Test"}
+                value={selectedChannels}
+                testId="channels"
+              />
+            </Box>
           </>
         )}
       </CardContent>
