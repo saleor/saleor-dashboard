@@ -29,6 +29,7 @@ const SearchInput: React.FC<SearchInputProps> = props => {
               value={search}
               onChange={handleSearchChange}
               placeholder={placeholder}
+              data-test-id="search-input"
             />
           </Box>
         );

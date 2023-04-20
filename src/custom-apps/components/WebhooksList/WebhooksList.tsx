@@ -1,5 +1,6 @@
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
+import { Pill } from "@dashboard/components/Pill";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
@@ -21,7 +22,7 @@ import {
   TableCell,
   TableHead,
 } from "@material-ui/core";
-import { DeleteIcon, IconButton, Pill } from "@saleor/macaw-ui";
+import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

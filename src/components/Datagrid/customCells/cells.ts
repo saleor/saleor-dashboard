@@ -40,6 +40,24 @@ export function readonlyTextCell(
   };
 }
 
+export function tagsCell(
+  tags: Array<{ tag: string; color: string }>,
+  selectedTags: string[],
+  opts?: Partial<GridCell>,
+): GridCell {
+  return {
+    ...opts,
+    kind: GridCellKind.Custom,
+    allowOverlay: true,
+    copyData: selectedTags.join(", "),
+    data: {
+      kind: "tags-cell",
+      possibleTags: tags,
+      tags: selectedTags,
+    },
+  };
+}
+
 export function booleanCell(value: boolean): GridCell {
   return {
     ...common,
@@ -51,8 +69,12 @@ export function booleanCell(value: boolean): GridCell {
 
 export function loadingCell(): GridCell {
   return {
-    kind: GridCellKind.Loading,
+    kind: GridCellKind.Custom,
     allowOverlay: true,
+    copyData: "",
+    data: {
+      kind: "spinner-cell",
+    },
   };
 }
 
@@ -70,9 +92,14 @@ export function numberCell(
   };
 }
 
-export function moneyCell(value: number | null, currency: string): MoneyCell {
+export function moneyCell(
+  value: number | string | null,
+  currency: string,
+  opts?: Partial<GridCell>,
+): MoneyCell {
   return {
     ...common,
+    ...opts,
     kind: GridCellKind.Custom,
     data: {
       kind: "money-cell",
