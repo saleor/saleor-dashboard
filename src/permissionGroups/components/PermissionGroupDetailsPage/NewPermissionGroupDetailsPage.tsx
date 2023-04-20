@@ -90,7 +90,9 @@ export const NewPermissionGroupDetailsPage: React.FC<
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
     hasRestrictedChannels: permissionGroup?.restrictedAccessToChannels ?? false,
     channels:
-      permissionGroup?.accessibleChannels?.map(channel => channel.id) ?? [],
+      permissionGroup?.accessibleChannels?.length === channels.length
+        ? []
+        : permissionGroup?.accessibleChannels?.map(channel => channel.id) ?? [],
     isActive: false,
     name: permissionGroup?.name || "",
     permissions: extractPermissionCodes(permissionGroup),
@@ -105,12 +107,14 @@ export const NewPermissionGroupDetailsPage: React.FC<
 
   const [channelsDisplayValues, setChannelDisplayValues] = useState<
     MultiAutocompleteChoiceType[]
-  >(mapNodeToChoice(permissionGroup?.accessibleChannels));
+  >([]);
 
   useEffect(() => {
-    setChannelDisplayValues(
-      mapNodeToChoice(permissionGroup?.accessibleChannels),
-    );
+    if (permissionGroup?.accessibleChannels?.length !== channels.length) {
+      setChannelDisplayValues(
+        mapNodeToChoice(permissionGroup?.accessibleChannels),
+      );
+    }
   }, [permissionGroup?.accessibleChannels]);
 
   const channelChoices = mapNodeToChoice(channels);
