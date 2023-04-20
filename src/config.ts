@@ -125,7 +125,8 @@ export const defaultListSettings: AppListViewSettings = {
   },
 };
 
-export const APP_VERSION = packageInfo.version;
+export const APP_VERSION =
+  process.env.CUSTOM_VERSION || `v${packageInfo.version}`;
 
 export const DEMO_MODE = process.env.DEMO_MODE === "true";
 export const GTM_ID = process.env.GTM_ID;
