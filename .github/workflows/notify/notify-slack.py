@@ -45,6 +45,9 @@ class JobNotifier:
         # Development notifier configuration is available at: https://api.slack.com/apps/A0210C30YLD/
         self.slack_endpoint = os.environ["SLACK_WEBHOOK_URL"]
 
+        # ID of Slack Group to mention in case of failure
+        self.slack_mention_group_id = os.getenv("SLACK_MENTION_GROUP_ID", default="")
+
         # Workflow Run ID to retrieve the logs permalink of the actual run (failed/succeeded)
         self.run_id: str = os.environ["GITHUB_RUN_ID"]
 
@@ -69,10 +72,11 @@ class JobNotifier:
 
     def make_slack_message(self) -> dict:
         status = self.job_status.capitalize()
+        mention = self.slack_mention_group_id if status == "Failure" else ""
         # Dev deployment triggered by JohnDoe: Success
         text = (
             f"{self.author} deployment finished for '{self.deployment_kind.capitalize()}', result: "
-            f"{status}"
+            f"{status} {mention}"
         )
         message_data = {
             "attachments": [
