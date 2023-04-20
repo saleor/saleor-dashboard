@@ -59,6 +59,7 @@ jobs:
           JOB_DEPLOYMENT_KIND: staging
           JOB_STATUS: ${{ job.status }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
+          SLACK_MENTION_GROUP_ID: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
           JOB_TITLE: "Dashboard deployment to saleor-master-staging"
         run: |
           python3 ./.github/workflows/notify/notify-slack.py
