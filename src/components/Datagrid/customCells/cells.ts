@@ -50,7 +50,7 @@ export function tagsCell(
     ...opts,
     kind: GridCellKind.Custom,
     allowOverlay: true,
-    copyData: "4",
+    copyData: selectedTags.join(", "),
     data: {
       kind: "tags-cell",
       possibleTags: tags,
@@ -72,7 +72,7 @@ export function loadingCell(): GridCell {
   return {
     kind: GridCellKind.Custom,
     allowOverlay: true,
-    copyData: "4",
+    copyData: "",
     data: {
       kind: "spinner-cell",
     },

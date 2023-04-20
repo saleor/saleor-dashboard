@@ -16,13 +16,14 @@ import { useIntl } from "react-intl";
 
 import { useColumns, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
-import { canBeSorted, getColumnMetadata, getOrdersRowsLength } from "./utils";
+import { canBeSorted, getColumnNameAndId, getOrdersRowsLength } from "./utils";
 
 interface OrderListDatagridProps
   extends ListProps,
     SortPage<OrderListUrlSortField> {
   orders: RelayToFlat<OrderListQuery["orders"]>;
   onRowClick: (id: string) => void;
+  hasRowHover?: boolean;
 }
 
 export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
@@ -33,6 +34,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   onSort,
   sort,
   onRowClick,
+  hasRowHover,
 }) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
@@ -52,7 +54,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
 
   const handleHeaderClick = useCallback(
     (col: number) => {
-      const { columnName, columnId } = getColumnMetadata(columns[col].id);
+      const { columnName, columnId } = getColumnNameAndId(columns[col].id);
 
       if (canBeSorted(columnName)) {
         onSort(columnName, columnId);
@@ -82,6 +84,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           rowMarkers="none"
           loading={disabled}
           columnSelect="single"
+          hasRowHover={hasRowHover}
           freezeColumns={2}
           verticalBorder={col => (col > 1 ? true : false)}
           availableColumns={columns}

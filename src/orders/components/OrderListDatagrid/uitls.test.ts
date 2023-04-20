@@ -2,7 +2,7 @@ import { OrderListQuery } from "@dashboard/graphql";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat } from "@dashboard/types";
 
-import { canBeSorted, getColumnMetadata, getOrdersRowsLength } from "./utils";
+import { canBeSorted, getColumnNameAndId, getOrdersRowsLength } from "./utils";
 
 describe("OrderListDatagrid utils", () => {
   describe("getOrdersRowsLength", () => {
@@ -37,10 +37,10 @@ describe("OrderListDatagrid utils", () => {
     });
   });
 
-  describe("getColumnMetadata", () => {
+  describe("getColumnNameAndId", () => {
     it("should return column name with id when column name included colon", () => {
       // Arrange & Act
-      const rowLength = getColumnMetadata("attributes:123");
+      const rowLength = getColumnNameAndId("attributes:123");
 
       // Asset
       expect(rowLength).toEqual({
@@ -51,7 +51,7 @@ describe("OrderListDatagrid utils", () => {
 
     it("should return column name whem column name without colon", () => {
       // Arrange & Act
-      const rowLength = getColumnMetadata("test123");
+      const rowLength = getColumnNameAndId("test123");
 
       // Asset
       expect(rowLength).toEqual({

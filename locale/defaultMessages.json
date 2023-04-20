@@ -1191,6 +1191,9 @@
     "context": "unassign collection from sale and save, button",
     "string": "Unassign and save"
   },
+  "6SL46U": {
+    "string": "by {author}"
+  },
   "6WRFp2": {
     "context": "order history message",
     "string": "Note was added to the order"
@@ -6739,6 +6742,9 @@
   "lLwtgs": {
     "string": "Variants are disabled in this product type"
   },
+  "lNZuWl": {
+    "string": "All orders"
+  },
   "lOMgms": {
     "context": "fulfillment group",
     "string": "Fulfilled from:"
@@ -6810,6 +6816,9 @@
   "lw9WIk": {
     "context": "deleted multiple attributes",
     "string": "Attributes successfully delete"
+  },
+  "lwjzVj": {
+    "string": "Edit order"
   },
   "lzdvwp": {
     "context": "field is optional",

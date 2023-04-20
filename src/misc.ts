@@ -561,9 +561,9 @@ export const getByUnmatchingId =
 export const findById = <T extends Node>(id: string, list?: T[]) =>
   list?.find(getById(id));
 
-const colorWarning = "#FBE5AC";
-const colorWarningDark = "#3E2F0A";
-type CustomWarningColor = typeof colorWarning | typeof colorWarningDark;
+const COLOR_WARNING = "#FBE5AC";
+const COLOR_WARNING_DARK = "#3E2F0A";
+type CustomWarningColor = typeof COLOR_WARNING | typeof COLOR_WARNING_DARK;
 
 export const getStatusColor = (
   status: "error" | "warning" | "info" | "success" | "generic",
@@ -578,7 +578,9 @@ export const getStatusColor = (
       return "decorativeSurfaceSubdued2";
     case "warning":
       // TODO: use color from new macaw theme when will be ready
-      return currentTheme === "defaultDark" ? colorWarningDark : colorWarning;
+      return currentTheme === "defaultDark"
+        ? COLOR_WARNING_DARK
+        : COLOR_WARNING;
     case "generic":
       return "surfaceBrandSubdued";
     default:

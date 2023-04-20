@@ -1,6 +1,5 @@
 import { AppPermissionFragment } from "@dashboard/graphql";
-import { Tooltip } from "@saleor/macaw-ui";
-import { Box, InfoIcon } from "@saleor/macaw-ui/next";
+import { Box, InfoIcon, Tooltip } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -17,9 +16,17 @@ export const AppPermissions: React.FC<AppPermissionsProps> = ({
   const classes = useStyles();
 
   return (
-    <Tooltip
-      header={<FormattedMessage {...messages.appPermissions} />}
-      title={
+    <Tooltip>
+      <Tooltip.Trigger>
+        <Box display="flex" placeItems="center">
+          <InfoIcon color="iconNeutralSubdued" size="large" />
+        </Box>
+      </Tooltip.Trigger>
+      <Tooltip.Content side="bottom">
+        <Tooltip.Arrow />
+        <Tooltip.ContentHeading>
+          <FormattedMessage {...messages.appPermissions} />
+        </Tooltip.ContentHeading>
         <ul className={classes.list}>
           {permissions?.length ? (
             permissions?.map(permission => (
@@ -31,11 +38,7 @@ export const AppPermissions: React.FC<AppPermissionsProps> = ({
             </li>
           )}
         </ul>
-      }
-    >
-      <Box display="flex" placeItems="center">
-        <InfoIcon color="iconNeutralSubdued" size="large" />
-      </Box>
+      </Tooltip.Content>
     </Tooltip>
   );
 };

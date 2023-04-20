@@ -9,8 +9,9 @@ program
   .name("Approve PR")
   .description("Approve and merge PR if patch release")
   .option("--version <version>", "version of a project")
-  .option("--token <token>", "token fo login to cloud")
+  .option("--token <token>", "token for login to cloud")
   .option("--repo_token <repo_token>", "github token")
+  .option("--project <project>", "release project")
   .action(async options => {
     const isOldVersion = await checkIfOldVersion(
       options.version,
@@ -18,7 +19,7 @@ program
     );
     core.setOutput("IS_OLD_VERSION", isOldVersion);
 
-    if (!isPatchRelease(options.version)) {
+    if (!isPatchRelease(options.version) && options.project == "CORE") {
       //If it's minor version, check services, to get one before current
       //Then create environment with this service, and big db
       const snapshotWithBigDB = "nqw0Qmbr";
@@ -26,6 +27,7 @@ program
         options.version,
         options.token,
       );
+
       const environmentKey = await createEnvironment(
         options.version,
         options.token,
@@ -48,6 +50,9 @@ program
         )}.staging.saleor.cloud/`,
       );
     }
+
+    const branch = await getBranch(options.repo_token);
+    core.setOutput("branch", branch);
   })
   .parse();
 
@@ -60,7 +65,7 @@ async function createEnvironment(version, token, versionBefore, snapshot) {
         "service": "${versionBefore}",
         "project": "staging",
         "name": "minor-release-test-${version}",
-        "domain_label": "minor-release-test-${getFormattedVersion(version)}",
+        "domain_label": "minor-release-${version}",
         "restore_from": "${snapshot}"
       }`,
       headers: {
@@ -261,4 +266,29 @@ function sortServicesByVersion(services) {
       return patchVersionNumberB - patchVersionNumberA;
     } else return 0;
   });
+}
+
+async function getBranch(token, version) {
+  const regex = /^\d+\.\d+/;
+  const formattedVersion = version.match(regex)[0];
+
+  const octokit = new Octokit({
+    auth: token,
+  });
+
+  try {
+    const response = await octokit.request(
+      `GET /repos/{owner}/{repo}/branches/${formattedVersion}`,
+      {
+        owner: "saleor",
+        repo: "saleor-dashboard",
+        headers: {
+          "X-GitHub-Api-Version": "2022-11-28",
+        },
+      },
+    );
+    return response.status == 200 ? response.data.name : "main";
+  } catch (error) {
+    return "main";
+  }
 }

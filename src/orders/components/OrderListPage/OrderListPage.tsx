@@ -9,10 +9,12 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
 import CardMenu from "@dashboard/components/CardMenu";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import { orderMessages } from "@dashboard/orders/messages";
 import { DevModeQuery } from "@dashboard/orders/queries";
 import {
   OrderListUrlQueryParams,
@@ -29,7 +31,8 @@ import {
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { Box, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderLimitReached from "../OrderLimitReached";
@@ -42,13 +45,16 @@ import {
 
 export interface OrderListPageProps
   extends PageListProps,
-    FilterPageProps<OrderFilterKeys, OrderListFilterOpts>,
+    Omit<FilterPageProps<OrderFilterKeys, OrderListFilterOpts>, "onTabDelete">,
     SortPage<OrderListUrlSortField> {
   limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderListQuery["orders"]>;
+  hasPresetsChanged: boolean;
   onSettingsOpen: () => void;
   onAdd: () => void;
   params: OrderListUrlQueryParams;
+  onTabUpdate: (tabName: string) => void;
+  onTabDelete: (tabIndex: number) => void;
 }
 
 const useStyles = makeStyles(
@@ -69,6 +75,14 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   onSettingsOpen,
   onFilterChange,
   params,
+  onTabChange,
+  onTabDelete,
+  onTabSave,
+  onTabUpdate,
+  tabs,
+  onAll,
+  currentTab,
+  hasPresetsChanged,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -76,6 +90,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   const { ORDER_OVERVIEW_CREATE, ORDER_OVERVIEW_MORE_ACTIONS } = useExtensions(
     extensionMountPoints.ORDER_LIST,
@@ -103,58 +118,93 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 
   return (
     <ListPageLayout>
-      <TopNav title={intl.formatMessage(sectionNames.orders)} withoutBorder>
-        {!!onSettingsOpen && (
-          <CardMenu
-            className={classes.settings}
-            menuItems={[
-              {
-                label: intl.formatMessage({
-                  id: "vEwjub",
-                  defaultMessage: "Open in GraphiQL",
-                  description: "button",
-                }),
-                onSelect: openPlaygroundURL,
-              },
-              {
-                label: intl.formatMessage({
-                  id: "WbV1Xm",
-                  defaultMessage: "Order Settings",
-                  description: "button",
-                }),
-                onSelect: onSettingsOpen,
-              },
-              ...extensionMenuItems,
-            ]}
-          />
-        )}
-        <ButtonWithSelect
-          disabled={limitsReached}
-          options={extensionCreateButtonItems}
-          data-test-id="create-order-button"
-          onClick={onAdd}
+      <TopNav
+        title={intl.formatMessage(sectionNames.orders)}
+        withoutBorder
+        isAlignToRight={false}
+      >
+        <Box
+          __flex={1}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
         >
-          <FormattedMessage
-            id="LshEVn"
-            defaultMessage="Create order"
-            description="button"
-          />
-        </ButtonWithSelect>
-        {hasLimits(limits, "orders") && (
-          <LimitsInfo
-            text={intl.formatMessage(
-              {
-                id: "zyceue",
-                defaultMessage: "{count}/{max} orders",
-                description: "placed order counter",
-              },
-              {
-                count: limits.currentUsage.orders,
-                max: limits.allowedUsage.orders,
-              },
+          <Box display="flex">
+            <Box marginX={6} display="flex" alignItems="center">
+              <ChevronRightIcon />
+            </Box>
+
+            <FilterPresetsSelect
+              presetsChanged={hasPresetsChanged}
+              onSelect={onTabChange}
+              onRemove={onTabDelete}
+              onUpdate={onTabUpdate}
+              savedPresets={tabs}
+              activePreset={currentTab}
+              onSelectAll={onAll}
+              onSave={onTabSave}
+              isOpen={isFilterPresetOpen}
+              onOpenChange={setFilterPresetOpen}
+              selectAllLabel={intl.formatMessage(
+                orderMessages.filterPresetsAll,
+              )}
+            />
+          </Box>
+
+          <Box display="flex" alignItems="center" gap={5}>
+            {!!onSettingsOpen && (
+              <CardMenu
+                className={classes.settings}
+                menuItems={[
+                  {
+                    label: intl.formatMessage({
+                      id: "vEwjub",
+                      defaultMessage: "Open in GraphiQL",
+                      description: "button",
+                    }),
+                    onSelect: openPlaygroundURL,
+                  },
+                  {
+                    label: intl.formatMessage({
+                      id: "WbV1Xm",
+                      defaultMessage: "Order Settings",
+                      description: "button",
+                    }),
+                    onSelect: onSettingsOpen,
+                  },
+                  ...extensionMenuItems,
+                ]}
+              />
             )}
-          />
-        )}
+            <ButtonWithSelect
+              disabled={limitsReached}
+              options={extensionCreateButtonItems}
+              data-test-id="create-order-button"
+              onClick={onAdd}
+            >
+              <FormattedMessage
+                id="LshEVn"
+                defaultMessage="Create order"
+                description="button"
+              />
+            </ButtonWithSelect>
+            {hasLimits(limits, "orders") && (
+              <LimitsInfo
+                text={intl.formatMessage(
+                  {
+                    id: "zyceue",
+                    defaultMessage: "{count}/{max} orders",
+                    description: "placed order counter",
+                  },
+                  {
+                    count: limits.currentUsage.orders,
+                    max: limits.allowedUsage.orders,
+                  },
+                )}
+              />
+            )}
+          </Box>
+        </Box>
       </TopNav>
       {limitsReached && <OrderLimitReached />}
       <Card>
@@ -170,6 +220,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
         />
         <OrderListDatagrid
           {...listProps}
+          hasRowHover={!isFilterPresetOpen}
           onRowClick={id => {
             navigate(orderUrl(id));
           }}
