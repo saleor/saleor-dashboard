@@ -6,17 +6,17 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
-import { NewPermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
+import { PermissionWithChannelsData } from "@dashboard/permissionGroups/components/PermissonGroupWithChannelsDetailsPage";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import {
-  NewPermissionGroupCreateFormData,
-  NewPermissionGroupCreatePage,
-} from "../../components/PermissionGroupCreatePage";
+  PermissionGroupWithChannelsCreateFormData,
+  PermissionGroupWithChannelsCreatePage,
+} from "../../components/PermissionGroupWithChannelsCreatePage";
 import { permissionGroupDetailsUrl } from "../../urls";
 
-export const NewPermissionGroupCreateView: React.FC = () => {
+export const PermissionGroupWithChannelsCreate: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -46,7 +46,7 @@ export const NewPermissionGroupCreateView: React.FC = () => {
 
   const { availableChannels } = useAppChannel();
 
-  const onSubmit = (formData: NewPermissionGroupCreateFormData) =>
+  const onSubmit = (formData: PermissionGroupWithChannelsCreateFormData) =>
     extractMutationErrors(
       createPermissionGroup({
         variables: {
@@ -65,14 +65,14 @@ export const NewPermissionGroupCreateView: React.FC = () => {
 
   const userPermissions = user?.user.userPermissions.map(p => p.code) || [];
 
-  const permissions: NewPermissionData[] =
+  const permissions: PermissionWithChannelsData[] =
     shop?.permissions.map(
       p =>
         ({
           ...p,
           disabled: !userPermissions.includes(p.code),
           lastSource: false,
-        } as NewPermissionData),
+        } as PermissionWithChannelsData),
     ) || [];
 
   return (
@@ -84,7 +84,7 @@ export const NewPermissionGroupCreateView: React.FC = () => {
           description: "window title",
         })}
       />
-      <NewPermissionGroupCreatePage
+      <PermissionGroupWithChannelsCreatePage
         errors={errors as any}
         disabled={createPermissionGroupResult.loading}
         permissions={permissions}

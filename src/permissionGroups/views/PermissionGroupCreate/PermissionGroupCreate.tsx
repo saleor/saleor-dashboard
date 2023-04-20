@@ -5,17 +5,16 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
-import { OldPermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
+import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import {
-  OldPermissionGroupCreateFormData,
-  OldPermissionGroupCreatePage,
+import PermissionGroupCreatePage, {
+  PermissionGroupCreateFormData,
 } from "../../components/PermissionGroupCreatePage";
 import { permissionGroupDetailsUrl } from "../../urls";
 
-export const OldPermissionGroupCreateView: React.FC = () => {
+const PermissionGroupCreateView: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -43,7 +42,7 @@ export const OldPermissionGroupCreateView: React.FC = () => {
   const errors =
     createPermissionGroupResult?.data?.permissionGroupCreate?.errors || [];
 
-  const onSubmit = (formData: OldPermissionGroupCreateFormData) =>
+  const onSubmit = (formData: PermissionGroupCreateFormData) =>
     extractMutationErrors(
       createPermissionGroup({
         variables: {
@@ -60,14 +59,14 @@ export const OldPermissionGroupCreateView: React.FC = () => {
 
   const userPermissions = user?.user.userPermissions.map(p => p.code) || [];
 
-  const permissions: OldPermissionData[] =
+  const permissions: PermissionData[] =
     shop?.permissions.map(
       p =>
         ({
           ...p,
           disabled: !userPermissions.includes(p.code),
           lastSource: false,
-        } as OldPermissionData),
+        } as PermissionData),
     ) || [];
 
   return (
@@ -79,7 +78,7 @@ export const OldPermissionGroupCreateView: React.FC = () => {
           description: "window title",
         })}
       />
-      <OldPermissionGroupCreatePage
+      <PermissionGroupCreatePage
         errors={errors}
         disabled={createPermissionGroupResult.loading}
         permissions={permissions}
@@ -89,3 +88,6 @@ export const OldPermissionGroupCreateView: React.FC = () => {
     </>
   );
 };
+PermissionGroupCreateView.displayName = "PermissionGroupCreateView";
+
+export default PermissionGroupCreateView;

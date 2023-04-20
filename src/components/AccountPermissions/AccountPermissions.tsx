@@ -1,7 +1,7 @@
 import { useUser } from "@dashboard/auth";
 import CardTitle from "@dashboard/components/CardTitle";
 import Skeleton from "@dashboard/components/Skeleton";
-import { OldPermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
+import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
 import {
   Card,
   CardContent,
@@ -22,7 +22,7 @@ const byAlphabeticalOrder =
     a[field].localeCompare(b[field]);
 
 interface AccountPermissionsProps {
-  permissions: OldPermissionData[];
+  permissions: PermissionData[];
   permissionsExceeded: boolean;
   data: {
     hasFullAccess: boolean;

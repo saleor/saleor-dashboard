@@ -27,13 +27,13 @@ interface ChannelPermissionProps {
   hasRestrictedChannels: boolean;
   disabled: boolean;
   onChannelChange: FormChange;
-  onChange: FormChange;
+  onHasRestrictedChannelsChange: () => void;
 }
 
 export const ChannelPermission = ({
   description,
   disabled,
-  onChange,
+  onHasRestrictedChannelsChange,
   onChannelChange,
   channelsDisplayValues,
   allChannels,
@@ -43,15 +43,6 @@ export const ChannelPermission = ({
   const intl = useIntl();
 
   const { onQueryChange, filteredChannels } = useChannelsSearch(allChannels);
-
-  const handleAllChannelsChange = () => {
-    onChange({
-      target: {
-        name: "hasRestrictedChannels",
-        value: !hasRestrictedChannels,
-      },
-    });
-  };
 
   return (
     <Card style={{ height: "100%", overflow: "hidden" }}>
@@ -70,7 +61,7 @@ export const ChannelPermission = ({
 
         <ListItem
           role={undefined}
-          onClick={handleAllChannelsChange}
+          onClick={onHasRestrictedChannelsChange}
           dense
           button
         >

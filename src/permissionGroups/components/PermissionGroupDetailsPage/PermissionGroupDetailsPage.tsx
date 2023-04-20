@@ -30,7 +30,7 @@ import { useIntl } from "react-intl";
 import PermissionGroupInfo from "../PermissionGroupInfo";
 import PermissionGroupMemberList from "../PermissionGroupMemberList";
 
-export interface OldPermissionGroupDetailsPageFormData {
+export interface PermissionGroupDetailsPageFormData {
   name: string;
   hasFullAccess: boolean;
   isActive: boolean;
@@ -38,30 +38,28 @@ export interface OldPermissionGroupDetailsPageFormData {
   users: PermissionGroupDetailsFragment["users"];
 }
 
-export interface OldPermissionData
+export interface PermissionData
   extends Omit<UserPermissionFragment, "__typename"> {
   lastSource?: boolean;
   disabled?: boolean;
 }
 
-export interface OldPermissionGroupDetailsPageProps
+export interface PermissionGroupDetailsPageProps
   extends ListActions,
     SortPage<MembersListUrlSortField> {
   disabled: boolean;
   errors: PermissionGroupErrorFragment[];
   members: PermissionGroupDetailsFragment["users"];
   permissionGroup: PermissionGroupDetailsFragment;
-  permissions: OldPermissionData[];
+  permissions: PermissionData[];
   permissionsExceeded: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onAssign: () => void;
   onUnassign: (ids: string[]) => void;
-  onSubmit: (data: OldPermissionGroupDetailsPageFormData) => SubmitPromise;
+  onSubmit: (data: PermissionGroupDetailsPageFormData) => SubmitPromise;
 }
 
-export const OldPermissionGroupDetailsPage: React.FC<
-  OldPermissionGroupDetailsPageProps
-> = ({
+const PermissionGroupDetailsPage: React.FC<PermissionGroupDetailsPageProps> = ({
   disabled,
   errors,
   members,
@@ -75,7 +73,7 @@ export const OldPermissionGroupDetailsPage: React.FC<
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const initialForm: OldPermissionGroupDetailsPageFormData = {
+  const initialForm: PermissionGroupDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
     isActive: false,
     name: permissionGroup?.name || "",
@@ -145,3 +143,5 @@ export const OldPermissionGroupDetailsPage: React.FC<
     </Form>
   );
 };
+PermissionGroupDetailsPage.displayName = "PermissionGroupDetailsPage";
+export default PermissionGroupDetailsPage;

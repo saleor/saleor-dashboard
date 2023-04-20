@@ -37,7 +37,7 @@ import { useIntl } from "react-intl";
 import PermissionGroupInfo from "../PermissionGroupInfo";
 import PermissionGroupMemberList from "../PermissionGroupMemberList";
 
-export interface NewPermissionGroupDetailsPageFormData {
+export interface PermissionGroupWithChannelsDetailsPageFormData {
   name: string;
   hasFullAccess: boolean;
   hasRestrictedChannels: boolean;
@@ -47,13 +47,13 @@ export interface NewPermissionGroupDetailsPageFormData {
   channels: string[];
 }
 
-export interface NewPermissionData
+export interface PermissionWithChannelsData
   extends Omit<UserPermissionFragment, "__typename"> {
   lastSource?: boolean;
   disabled?: boolean;
 }
 
-export interface NewPermissionGroupDetailsPageProps
+export interface PermissonGroupWithChannelsDetailsPageProps
   extends ListActions,
     SortPage<MembersListUrlSortField> {
   channels: ChannelFragment[];
@@ -61,16 +61,18 @@ export interface NewPermissionGroupDetailsPageProps
   errors: PermissionGroupErrorFragment[];
   members: PermissionGroupDetailsFragment["users"];
   permissionGroup: NewPermissionGroupDetailsFragment;
-  permissions: NewPermissionData[];
+  permissions: PermissionWithChannelsData[];
   permissionsExceeded: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   onAssign: () => void;
   onUnassign: (ids: string[]) => void;
-  onSubmit: (data: NewPermissionGroupDetailsPageFormData) => SubmitPromise;
+  onSubmit: (
+    data: PermissionGroupWithChannelsDetailsPageFormData,
+  ) => SubmitPromise;
 }
 
-export const NewPermissionGroupDetailsPage: React.FC<
-  NewPermissionGroupDetailsPageProps
+export const PermissonGroupWithChannelsDetailsPage: React.FC<
+  PermissonGroupWithChannelsDetailsPageProps
 > = ({
   disabled,
   errors,
@@ -86,7 +88,7 @@ export const NewPermissionGroupDetailsPage: React.FC<
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const initialForm: NewPermissionGroupDetailsPageFormData = {
+  const initialForm: PermissionGroupWithChannelsDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
     hasRestrictedChannels: permissionGroup?.restrictedAccessToChannels ?? false,
     channels:
@@ -128,6 +130,15 @@ export const NewPermissionGroupDetailsPage: React.FC<
           channelsDisplayValues,
           channelChoices,
         );
+
+        const handleHasRestrictedChannelsChange = () => {
+          change({
+            target: {
+              name: "hasRestrictedChannels",
+              value: !data.hasRestrictedChannels,
+            },
+          });
+        };
 
         return (
           <DetailPageLayout>
@@ -178,7 +189,9 @@ export const NewPermissionGroupDetailsPage: React.FC<
                     allChannels={channels}
                     hasRestrictedChannels={data.hasRestrictedChannels}
                     selectedChannels={data.channels}
-                    onChange={change}
+                    onHasRestrictedChannelsChange={
+                      handleHasRestrictedChannelsChange
+                    }
                     onChannelChange={handleChannelChange}
                     disabled={disabled}
                   />

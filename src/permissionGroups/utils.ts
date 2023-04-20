@@ -6,11 +6,8 @@ import {
 import { NewPermissionGroupDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
 import difference from "lodash/difference";
 
-import {
-  NewPermissionGroupDetailsPageFormData,
-  OldPermissionGroupDetailsPageFormData,
-} from "./components/PermissionGroupDetailsPage";
-
+import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
+import { PermissionGroupWithChannelsDetailsPageFormData } from "./components/PermissonGroupWithChannelsDetailsPage";
 /**
  * Will return true if group has all permissions available in shop assigned.
  */
@@ -47,7 +44,7 @@ export const extractPermissionCodes = (
  */
 export const permissionsDiff = (
   permissionGroup: PermissionGroupDetailsFragment,
-  formData: OldPermissionGroupDetailsPageFormData,
+  formData: PermissionGroupDetailsPageFormData,
 ) => {
   const newPermissions = formData.permissions;
   const oldPermissions = extractPermissionCodes(permissionGroup);
@@ -63,7 +60,7 @@ export const permissionsDiff = (
  */
 export const usersDiff = (
   permissionGroup: PermissionGroupDetailsFragment,
-  formData: OldPermissionGroupDetailsPageFormData,
+  formData: PermissionGroupDetailsPageFormData,
 ) => {
   const newUsers = formData.users.map(u => u.id);
   const oldUsers = permissionGroup?.users.map(u => u.id);
@@ -76,7 +73,7 @@ export const usersDiff = (
 
 export const channelsDiff = (
   permissionGroup: NewPermissionGroupDetailsFragment,
-  formData: NewPermissionGroupDetailsPageFormData,
+  formData: PermissionGroupWithChannelsDetailsPageFormData,
 ) => {
   const newChannels = formData.channels;
   const oldChannels = permissionGroup?.accessibleChannels.map(c => c.id);

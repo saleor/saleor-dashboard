@@ -18,34 +18,38 @@ import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { OldPermissionData } from "../PermissionGroupDetailsPage";
+import { PermissionData } from "../PermissionGroupDetailsPage";
 import PermissionGroupInfo from "../PermissionGroupInfo";
 
-export interface OldPermissionGroupCreateFormData {
+export interface PermissionGroupCreateFormData {
   name: string;
   hasFullAccess: boolean;
   isActive: boolean;
   permissions: PermissionEnum[];
 }
 
-const initialForm: OldPermissionGroupCreateFormData = {
+const initialForm: PermissionGroupCreateFormData = {
   hasFullAccess: false,
   isActive: false,
   name: "",
   permissions: [],
 };
 
-export interface OldPermissionGroupCreatePageProps {
+export interface PermissionGroupCreatePageProps {
   disabled: boolean;
   errors: PermissionGroupErrorFragment[];
-  permissions: OldPermissionData[];
+  permissions: PermissionData[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onSubmit: (data: OldPermissionGroupCreateFormData) => SubmitPromise;
+  onSubmit: (data: PermissionGroupCreateFormData) => SubmitPromise;
 }
 
-export const OldPermissionGroupCreatePage: React.FC<
-  OldPermissionGroupCreatePageProps
-> = ({ disabled, permissions, onSubmit, saveButtonBarState, errors }) => {
+const PermissionGroupCreatePage: React.FC<PermissionGroupCreatePageProps> = ({
+  disabled,
+  permissions,
+  onSubmit,
+  saveButtonBarState,
+  errors,
+}) => {
   const intl = useIntl();
   const navigate = useNavigator();
 
@@ -108,3 +112,5 @@ export const OldPermissionGroupCreatePage: React.FC<
     </Form>
   );
 };
+PermissionGroupCreatePage.displayName = "PermissionGroupCreatePage";
+export default PermissionGroupCreatePage;

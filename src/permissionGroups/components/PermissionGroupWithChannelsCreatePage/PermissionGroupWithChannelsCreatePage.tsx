@@ -24,10 +24,10 @@ import { Box } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { NewPermissionData } from "../PermissionGroupDetailsPage";
 import PermissionGroupInfo from "../PermissionGroupInfo";
+import { PermissionWithChannelsData } from "../PermissonGroupWithChannelsDetailsPage";
 
-export interface NewPermissionGroupCreateFormData {
+export interface PermissionGroupWithChannelsCreateFormData {
   name: string;
   hasFullAccess: boolean;
   hasRestrictedChannels: boolean;
@@ -36,7 +36,7 @@ export interface NewPermissionGroupCreateFormData {
   channels: string[];
 }
 
-const initialForm: NewPermissionGroupCreateFormData = {
+const initialForm: PermissionGroupWithChannelsCreateFormData = {
   hasFullAccess: false,
   hasRestrictedChannels: false,
   isActive: false,
@@ -45,17 +45,17 @@ const initialForm: NewPermissionGroupCreateFormData = {
   channels: [],
 };
 
-export interface NewPermissionGroupCreatePageProps {
+export interface PermissionGroupWithChannelsCreatePageProps {
   disabled: boolean;
   errors: PermissionGroupErrorFragment[];
-  permissions: NewPermissionData[];
+  permissions: PermissionWithChannelsData[];
   channels: ChannelFragment[];
   saveButtonBarState: ConfirmButtonTransitionState;
-  onSubmit: (data: NewPermissionGroupCreateFormData) => SubmitPromise;
+  onSubmit: (data: PermissionGroupWithChannelsCreateFormData) => SubmitPromise;
 }
 
-export const NewPermissionGroupCreatePage: React.FC<
-  NewPermissionGroupCreatePageProps
+export const PermissionGroupWithChannelsCreatePage: React.FC<
+  PermissionGroupWithChannelsCreatePageProps
 > = ({
   disabled,
   permissions,
@@ -93,6 +93,15 @@ export const NewPermissionGroupCreatePage: React.FC<
           channelsDisplayValues,
           channelChoices,
         );
+
+        const handleHasRestrictedChannelsChange = () => {
+          change({
+            target: {
+              name: "hasRestrictedChannels",
+              value: !data.hasRestrictedChannels,
+            },
+          });
+        };
 
         return (
           <DetailPageLayout>
@@ -137,7 +146,9 @@ export const NewPermissionGroupCreatePage: React.FC<
                     allChannels={channels}
                     selectedChannels={data.channels}
                     onChannelChange={handleChannelChange}
-                    onChange={change}
+                    onHasRestrictedChannelsChange={
+                      handleHasRestrictedChannelsChange
+                    }
                     hasRestrictedChannels={data.hasRestrictedChannels}
                     disabled={disabled}
                   />
