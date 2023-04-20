@@ -42,7 +42,9 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
           gridTemplateColumns={{ mobile: 3, tablet: 5, desktop: 6 }}
           gap={9}
           padding={9}
-          style={{
+import { vars } from "@saleor/macaw-ui/next";
+
+          __paddingTop={`calc(${vars.space[9]} - ${vars.space[5]}`}
             paddingTop: "calc(var(--mu-space-9) - var(--mu-space-5))",
           }}
         >
