@@ -51,7 +51,7 @@ program
       );
     }
 
-    const branch = await getBranch(options.repo_token);
+    const branch = await getBranch(options.repo_token, options.version);
     core.setOutput("branch", branch);
   })
   .parse();
@@ -194,9 +194,7 @@ async function checkIfOldVersion(version, token) {
 }
 
 async function getTheNewestVersion(token) {
-  const octokit = new Octokit({
-    auth: token,
-  });
+  const octokit = new Octokit();
 
   const response = await octokit.request(
     "GET /repos/{owner}/{repo}/releases/latest",
