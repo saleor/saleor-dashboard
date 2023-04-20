@@ -43,7 +43,6 @@ export const PermissionGroupWithChannelsCreate: React.FC = () => {
 
   const errors =
     createPermissionGroupResult?.data?.permissionGroupCreate?.errors || [];
-
   const { availableChannels } = useAppChannel();
 
   const onSubmit = (formData: PermissionGroupWithChannelsCreateFormData) =>

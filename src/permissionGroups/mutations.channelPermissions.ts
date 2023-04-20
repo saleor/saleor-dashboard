@@ -15,8 +15,8 @@ export const permissionGroupWithChannelsCreateMutation = gql`
   }
 `;
 
-export const permissionGroupWithGroupUpdateMutation = gql`
-  mutation PermissionGroupWithGroupUpdate(
+export const permissionGroupWithChannelsUpdateMutation = gql`
+  mutation PermissionGroupWithChannelsUpdate(
     $id: ID!
     $input: PermissionGroupUpdateInput!
   ) {

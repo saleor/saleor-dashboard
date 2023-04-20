@@ -4,7 +4,7 @@ import { Button } from "@dashboard/components/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
   usePermissionGroupWithChannelsDetailsQuery,
-  usePermissionGroupWithGroupUpdateMutation,
+  usePermissionGroupWithChannelsUpdateMutation,
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -80,7 +80,7 @@ export const PermissionGroupWithChannelsDetails: React.FC<
   );
 
   const [permissionGroupUpdate, permissionGroupUpdateResult] =
-    usePermissionGroupWithGroupUpdateMutation({
+    usePermissionGroupWithChannelsUpdateMutation({
       onCompleted: data => {
         if (data.permissionGroupUpdate.errors.length === 0) {
           notify({

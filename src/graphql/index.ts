@@ -7,5 +7,5 @@ export {} from "./hooks.channelPermissions.generated";
 export {
   usePermissionGroupWithChannelsDetailsQuery,
   usePermissionGroupWithChannelsCreateMutation,
-  usePermissionGroupWithGroupUpdateMutation,
+  usePermissionGroupWithChannelsUpdateMutation,
 } from "./hooks.channelPermissions.generated";

@@ -71,6 +71,9 @@ export const usersDiff = (
   };
 };
 
+/**
+ * Return lists of channels which have to be added and removed from group.
+ */
 export const channelsDiff = (
   permissionGroup: PermissionGroupWithContextDetailsFragment,
   formData: PermissionGroupWithChannelsDetailsPageFormData,
@@ -79,13 +82,18 @@ export const channelsDiff = (
   const oldChannels = permissionGroup?.accessibleChannels.map(c => c.id);
   const hasRestrictedChannels = permissionGroup?.restrictedAccessToChannels;
 
+  if (!hasRestrictedChannels) {
+    // We get all channel from API when use has no restricted access to channels
+    // and we want send only those that was really added
+    return {
+      addChannels: newChannels,
+      removeChannels: [],
+    };
+  }
+
   return {
-    addChannels: !hasRestrictedChannels
-      ? newChannels
-      : difference(newChannels, oldChannels),
-    removeChannels: !hasRestrictedChannels
-      ? []
-      : difference(oldChannels, newChannels),
+    addChannels: difference(newChannels, oldChannels),
+    removeChannels: difference(oldChannels, newChannels),
   };
 };
 
@@ -101,10 +109,15 @@ export const arePermissionsExceeded = (
   return difference(groupPermissions, userPermissions).length > 0;
 };
 
+/**
+ * Return lists of permission group accessible channels.
+ */
 export const getPermissionGroupAccessibleChannels = (
   permissionGroup: PermissionGroupWithContextDetailsFragment,
   allChannelsLength: number,
 ) => {
+  // We don't want show all channels to user that has no restricted access to channels
+  // User will be able to select channels manually
   if (permissionGroup?.accessibleChannels?.length === allChannelsLength) {
     return [];
   }
