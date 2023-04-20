@@ -133,7 +133,6 @@ export const NewPermissionGroupCreatePage: React.FC<
                 </Box>
                 <Box overflow="hidden" __maxHeight="50%">
                   <ChannelPermission
-                    description="Expand or restrict channels permissions"
                     channelsDisplayValues={channelsDisplayValues}
                     allChannels={channels}
                     selectedChannels={data.channels}

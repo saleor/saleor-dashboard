@@ -23,7 +23,7 @@ interface ChannelPermissionProps {
   selectedChannels: string[];
   allChannels?: ChannelFragment[];
   channelsDisplayValues: MultiAutocompleteChoiceType[];
-  description: string;
+  description?: string;
   hasRestrictedChannels: boolean;
   disabled: boolean;
   onChannelChange: FormChange;
@@ -62,9 +62,11 @@ export const ChannelPermission = ({
         })}
       ></CardTitle>
       <CardContent style={{ height: "100%" }}>
-        <Text as="p" variant="body" size="small" marginBottom={5}>
-          {description}
-        </Text>
+        {description && (
+          <Text as="p" variant="body" size="small" marginBottom={5}>
+            {description}
+          </Text>
+        )}
 
         <ListItem
           role={undefined}
@@ -103,7 +105,7 @@ export const ChannelPermission = ({
               marginBottom={9}
             />
             <Box
-              __height="calc(100% - 190px)"
+              __height="calc(100% - 145px)"
               overflowY="scroll"
               overflowX="hidden"
             >

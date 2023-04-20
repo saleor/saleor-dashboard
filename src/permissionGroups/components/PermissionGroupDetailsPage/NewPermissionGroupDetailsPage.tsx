@@ -115,7 +115,7 @@ export const NewPermissionGroupDetailsPage: React.FC<
         mapNodeToChoice(permissionGroup?.accessibleChannels),
       );
     }
-  }, [permissionGroup?.accessibleChannels]);
+  }, [channels.length, permissionGroup?.accessibleChannels]);
 
   const channelChoices = mapNodeToChoice(channels);
 
@@ -174,7 +174,6 @@ export const NewPermissionGroupDetailsPage: React.FC<
                 </Box>
                 <Box overflow="hidden" __maxHeight="50%">
                   <ChannelPermission
-                    description="Expand or restrict channels permissions"
                     channelsDisplayValues={channelsDisplayValues}
                     allChannels={channels}
                     hasRestrictedChannels={data.hasRestrictedChannels}
