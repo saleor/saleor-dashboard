@@ -13,7 +13,7 @@ import {
   PermissionGroupErrorFragment,
   UserPermissionFragment,
 } from "@dashboard/graphql";
-import { NewPermissionGroupDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
+import { PermissionGroupWithContextDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {
@@ -22,6 +22,7 @@ import {
 } from "@dashboard/permissionGroups/urls";
 import {
   extractPermissionCodes,
+  getPermissionGroupAccessibleChannels,
   isGroupFullAccess,
 } from "@dashboard/permissionGroups/utils";
 import { ListActions, SortPage } from "@dashboard/types";
@@ -60,7 +61,7 @@ export interface PermissonGroupWithChannelsDetailsPageProps
   disabled: boolean;
   errors: PermissionGroupErrorFragment[];
   members: PermissionGroupDetailsFragment["users"];
-  permissionGroup: NewPermissionGroupDetailsFragment;
+  permissionGroup: PermissionGroupWithContextDetailsFragment;
   permissions: PermissionWithChannelsData[];
   permissionsExceeded: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
@@ -91,10 +92,10 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
   const initialForm: PermissionGroupWithChannelsDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
     hasRestrictedChannels: permissionGroup?.restrictedAccessToChannels ?? false,
-    channels:
-      permissionGroup?.accessibleChannels?.length === channels.length
-        ? []
-        : permissionGroup?.accessibleChannels?.map(channel => channel.id) ?? [],
+    channels: getPermissionGroupAccessibleChannels(
+      permissionGroup,
+      channels?.length ?? 0,
+    ),
     isActive: false,
     name: permissionGroup?.name || "",
     permissions: extractPermissionCodes(permissionGroup),

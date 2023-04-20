@@ -1,9 +1,9 @@
 import { gql } from "@apollo/client";
 
-export const newPermissionGroupDetailsQuery = gql`
-  query NewPermissionGroupDetails($id: ID!, $userId: ID!) {
+export const PermissionGroupWithChannelsDetailsQuery = gql`
+  query PermissionGroupWithChannelsDetails($id: ID!, $userId: ID!) {
     permissionGroup(id: $id) {
-      ...NewPermissionGroupDetails
+      ...PermissionGroupWithContextDetails
     }
     user(id: $userId) {
       editableGroups {

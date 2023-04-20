@@ -1,7 +1,7 @@
 import { useUser } from "@dashboard/auth";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { useNewPermissionGroupCreateMutation } from "@dashboard/graphql";
+import { usePermissionGroupWithChannelsCreateMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
@@ -24,7 +24,7 @@ export const PermissionGroupWithChannelsCreate: React.FC = () => {
   const user = useUser();
 
   const [createPermissionGroup, createPermissionGroupResult] =
-    useNewPermissionGroupCreateMutation({
+    usePermissionGroupWithChannelsCreateMutation({
       onCompleted: data => {
         if (data?.permissionGroupCreate?.errors.length === 0) {
           notify({

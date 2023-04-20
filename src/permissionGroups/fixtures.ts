@@ -7,7 +7,7 @@ import {
   SearchStaffMembersQuery,
   StaffMemberDetailsFragment,
 } from "@dashboard/graphql";
-import { NewPermissionGroupDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
+import { PermissionGroupWithContextDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
 import { RelayToFlat } from "@dashboard/types";
 
 export const permissionGroups: PermissionGroupFragment[] = [
@@ -106,7 +106,7 @@ export const userPermissionGroups: StaffMemberDetailsFragment["permissionGroups"
     },
   ];
 
-export const emptyPermissionGroup: NewPermissionGroupDetailsFragment = {
+export const emptyPermissionGroup: PermissionGroupWithContextDetailsFragment = {
   id: "R3JvdXA6Mw==",
   name: "Editors",
   userCanManage: true,
@@ -139,7 +139,7 @@ export const errorsOfPermissionGroupCreate: PermissionGroupErrorFragment[] = [
   },
 ];
 
-export const permissionGroup: NewPermissionGroupDetailsFragment = {
+export const permissionGroup: PermissionGroupWithContextDetailsFragment = {
   id: "R3JvdXA6Mw==",
   name: "Editors",
   userCanManage: true,

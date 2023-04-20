@@ -31,7 +31,7 @@ const props: PermissonGroupWithChannelsDetailsPageProps = {
   channels: [],
 };
 
-storiesOf("Permission Groups / Permission Group Details", module)
+storiesOf("Permission Groups / Permission Group With Channels Details", module)
   .addDecorator(Decorator)
   .add("default", () => <PermissonGroupWithChannelsDetailsPage {...props} />)
   .add("no members", () => (

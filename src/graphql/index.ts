@@ -5,7 +5,7 @@ export * from "./typePolicies.generated";
 export { default as introspectionQueryResultData } from "./fragmentTypes.generated";
 export {} from "./hooks.channelPermissions.generated";
 export {
-  useNewPermissionGroupDetailsQuery,
-  useNewPermissionGroupCreateMutation,
-  useNewPermissionGroupUpdateMutation,
+  usePermissionGroupWithChannelsDetailsQuery,
+  usePermissionGroupWithChannelsCreateMutation,
+  usePermissionGroupWithGroupUpdateMutation,
 } from "./hooks.channelPermissions.generated";

@@ -1,7 +1,9 @@
 import { gql } from "@apollo/client";
 
-export const newPermissionGroupCreate = gql`
-  mutation NewPermissionGroupCreate($input: PermissionGroupCreateInput!) {
+export const permissionGroupWithChannelsCreateMutation = gql`
+  mutation permissionGroupWithChannelsCreate(
+    $input: PermissionGroupCreateInput!
+  ) {
     permissionGroupCreate(input: $input) {
       errors {
         ...PermissionGroupError
@@ -13,8 +15,8 @@ export const newPermissionGroupCreate = gql`
   }
 `;
 
-export const newPermissionGroupUpdate = gql`
-  mutation NewPermissionGroupUpdate(
+export const permissionGroupWithGroupUpdateMutation = gql`
+  mutation PermissionGroupWithGroupUpdate(
     $id: ID!
     $input: PermissionGroupUpdateInput!
   ) {

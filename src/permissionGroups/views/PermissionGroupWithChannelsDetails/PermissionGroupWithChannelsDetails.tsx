@@ -3,8 +3,8 @@ import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { Button } from "@dashboard/components/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
-  useNewPermissionGroupDetailsQuery,
-  useNewPermissionGroupUpdateMutation,
+  usePermissionGroupWithChannelsDetailsQuery,
+  usePermissionGroupWithGroupUpdateMutation,
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -54,10 +54,12 @@ export const PermissionGroupWithChannelsDetails: React.FC<
   const intl = useIntl();
   const user = useUser();
 
-  const { data, loading, refetch } = useNewPermissionGroupDetailsQuery({
-    displayLoader: true,
-    variables: { id, userId: user?.user.id },
-  });
+  const { data, loading, refetch } = usePermissionGroupWithChannelsDetailsQuery(
+    {
+      displayLoader: true,
+      variables: { id, userId: user?.user.id },
+    },
+  );
 
   const { availableChannels } = useAppChannel();
 
@@ -78,7 +80,7 @@ export const PermissionGroupWithChannelsDetails: React.FC<
   );
 
   const [permissionGroupUpdate, permissionGroupUpdateResult] =
-    useNewPermissionGroupUpdateMutation({
+    usePermissionGroupWithGroupUpdateMutation({
       onCompleted: data => {
         if (data.permissionGroupUpdate.errors.length === 0) {
           notify({

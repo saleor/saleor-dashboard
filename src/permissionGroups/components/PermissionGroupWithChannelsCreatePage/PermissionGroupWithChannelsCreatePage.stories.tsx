@@ -18,7 +18,7 @@ const props: PermissionGroupWithChannelsCreatePageProps = {
   channels: [],
 };
 
-storiesOf("Permission Groups / Permission Group Create", module)
+storiesOf("Permission Groups / Permission Group With Channels Create", module)
   .addDecorator(Decorator)
   .add("default", () => <PermissionGroupWithChannelsCreatePage {...props} />)
   .add("loading", () => (

@@ -3,7 +3,7 @@ import {
   PermissionGroupDetailsFragment,
   UserFragment,
 } from "@dashboard/graphql";
-import { NewPermissionGroupDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
+import { PermissionGroupWithContextDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
 import difference from "lodash/difference";
 
 import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
@@ -72,7 +72,7 @@ export const usersDiff = (
 };
 
 export const channelsDiff = (
-  permissionGroup: NewPermissionGroupDetailsFragment,
+  permissionGroup: PermissionGroupWithContextDetailsFragment,
   formData: PermissionGroupWithChannelsDetailsPageFormData,
 ) => {
   const newChannels = formData.channels;
@@ -99,4 +99,15 @@ export const arePermissionsExceeded = (
   const groupPermissions = extractPermissionCodes(permissionGroup);
   const userPermissions = user.userPermissions.map(p => p.code);
   return difference(groupPermissions, userPermissions).length > 0;
+};
+
+export const getPermissionGroupAccessibleChannels = (
+  permissionGroup: PermissionGroupWithContextDetailsFragment,
+  allChannelsLength: number,
+) => {
+  if (permissionGroup?.accessibleChannels?.length === allChannelsLength) {
+    return [];
+  }
+
+  return permissionGroup?.accessibleChannels?.map(channel => channel.id) ?? [];
 };
