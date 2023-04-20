@@ -89,7 +89,13 @@ export const ProductTile: React.FC<ProductTileProps> = ({
       </Box>
       <Box
         position={"absolute"}
-        style={{
+        margin="auto"
+        __right={`calc(${vars.space[2]} / -2)`}
+        __top={`calc(${vars.space[2]} / -2)`}
+        __width={`calc(100% + ${vars.space[2]})`}
+        __height={`calc(100% + ${vars.space[2]})`}
+        __opactiy={0.1}
+        
           margin: "auto",
           right: `calc(${spacing(2)} / -2)`,
           top: `calc(${spacing(2)} / -2)`,
