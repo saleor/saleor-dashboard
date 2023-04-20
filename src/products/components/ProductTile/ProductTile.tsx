@@ -1,8 +1,13 @@
 import { StatusDot } from "@dashboard/components/StatusDot/StatusDot";
 import { ProductListQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
-import { useTheme } from "@saleor/macaw-ui";
-import { Box, ProductsIcons, sprinkles, Text } from "@saleor/macaw-ui/next";
+import {
+  Box,
+  ProductsIcons,
+  sprinkles,
+  Text,
+  vars,
+} from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { getTileStatus } from "./utils";
@@ -24,90 +29,73 @@ const commonThumbnailProps = {
 export const ProductTile: React.FC<ProductTileProps> = ({
   product,
   onClick,
-}) => {
-  const { spacing } = useTheme();
-
-  return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      onClick={onClick}
-      cursor="pointer"
-      borderRadius={3}
-      position="relative"
-      data-test-id={`product-tile-${product.id}`}
-    >
-      {product.thumbnail ? (
-        <Box
-          {...commonThumbnailProps}
-          as="img"
-          alt={product.name}
-          objectFit="scale-down"
-          src={product.thumbnail.url}
-        />
-      ) : (
-        <Box
-          {...commonThumbnailProps}
-          display="flex"
-          alignItems="center"
-          justifyContent="center"
-          backgroundColor="surfaceNeutralSubdued"
-        >
-          <Box __width="40%" __height="40%">
-            <ProductsIcons
-              size="fill"
-              color="iconNeutralDisabled"
-              data-test-id={`placeholder-svg-${product.id}`}
-            />
-          </Box>
-        </Box>
-      )}
-      <Box display="flex" alignItems="center">
-        <Box paddingRight={3}>
-          <StatusDot status={getTileStatus(product.channelListings)} />
-        </Box>
-        <Text
-          ellipsis
-          color="textNeutralSubdued"
-          variant="caption"
-          size="small"
-          alignItems="center"
-          className={sprinkles({ paddingY: 2 })}
-        >
-          {product.productType.name}
-        </Text>
-      </Box>
-      <Box display="flex" justifyContent="space-between" marginTop={2}>
-        <Text
-          ellipsis
-          color="textNeutralDefault"
-          variant="bodyEmp"
-          size="small"
-        >
-          {product.name}
-        </Text>
-      </Box>
+}) => (
+  <Box
+    display="flex"
+    flexDirection="column"
+    onClick={onClick}
+    cursor="pointer"
+    borderRadius={3}
+    position="relative"
+    data-test-id={`product-tile-${product.id}`}
+  >
+    {product.thumbnail ? (
       <Box
-        position={"absolute"}
-        margin="auto"
-        __right={`calc(${vars.space[2]} / -2)`}
-        __top={`calc(${vars.space[2]} / -2)`}
-        __width={`calc(100% + ${vars.space[2]})`}
-        __height={`calc(100% + ${vars.space[2]})`}
-        __opactiy={0.1}
-        
-          margin: "auto",
-          right: `calc(${spacing(2)} / -2)`,
-          top: `calc(${spacing(2)} / -2)`,
-          width: `calc(100% + ${spacing(2)})`,
-          height: `calc(100% + ${spacing(2)})`,
-          opacity: 0.1,
-        }}
-        borderRadius={5}
-        backgroundColor={{
-          hover: "highlightDim",
-        }}
-      ></Box>
+        {...commonThumbnailProps}
+        as="img"
+        alt={product.name}
+        objectFit="scale-down"
+        src={product.thumbnail.url}
+      />
+    ) : (
+      <Box
+        {...commonThumbnailProps}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+        backgroundColor="surfaceNeutralSubdued"
+      >
+        <Box __width="40%" __height="40%">
+          <ProductsIcons
+            size="fill"
+            color="iconNeutralDisabled"
+            data-test-id={`placeholder-svg-${product.id}`}
+          />
+        </Box>
+      </Box>
+    )}
+    <Box display="flex" alignItems="center">
+      <Box paddingRight={3}>
+        <StatusDot status={getTileStatus(product.channelListings)} />
+      </Box>
+      <Text
+        ellipsis
+        color="textNeutralSubdued"
+        variant="caption"
+        size="small"
+        alignItems="center"
+        className={sprinkles({ paddingY: 2 })}
+      >
+        {product.productType.name}
+      </Text>
     </Box>
-  );
-};
+    <Box display="flex" justifyContent="space-between" marginTop={2}>
+      <Text ellipsis color="textNeutralDefault" variant="bodyEmp" size="small">
+        {product.name}
+      </Text>
+    </Box>
+    <Box
+      position={"absolute"}
+      margin="auto"
+      __right={`calc(${vars.space[2]} / -2)`}
+      __top={`calc(${vars.space[2]} / -2)`}
+      __width={`calc(100% + ${vars.space[2]})`}
+      __height={`calc(100% + ${vars.space[2]})`}
+      __opacity={0.1}
+      borderRadius={5}
+      backgroundColor={{
+        hover: "highlightDim",
+      }}
+    ></Box>
+  </Box>
+);
