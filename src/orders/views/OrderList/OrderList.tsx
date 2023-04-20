@@ -18,14 +18,19 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { useSortRedirects } from "@dashboard/hooks/useSortRedirects";
-import { getStringOrPlaceholder } from "@dashboard/misc";
+import {
+  getActiveTabIndexAfterTabDelete,
+  getNextUniqueTabName,
+} from "@dashboard/products/views/ProductList/utils";
 import { ListViews } from "@dashboard/types";
+import { prepareQs } from "@dashboard/utils/filters/qs";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import React from "react";
+import { stringify } from "qs";
+import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import OrderListPage from "../../components/OrderListPage/OrderListPage";
@@ -39,13 +44,12 @@ import {
 } from "../../urls";
 import {
   deleteFilterTab,
-  getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
-  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
+  updateFilterTab,
 } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
@@ -59,6 +63,8 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.ORDER_LIST,
   );
+
+  const [tabIndexToDelete, setTabIndexToDelete] = useState<number | null>(null);
 
   usePaginationReset(orderListUrl, params, settings.rowNumber);
 
@@ -91,7 +97,8 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   const tabs = getFilterTabs();
 
-  const currentTab = getFiltersCurrentTab(params, tabs);
+  const currentTab =
+    params.activeTab !== undefined ? parseInt(params.activeTab, 10) : undefined;
 
   const [changeFilters, resetFilters, handleSearchChange] =
     createFilterHandlers({
@@ -99,6 +106,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
       getFilterQueryParam,
       navigate,
       params,
+      keepActiveTab: true,
     });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -106,21 +114,62 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     OrderListUrlQueryParams
   >(navigate, orderListUrl, params);
 
-  const handleTabChange = (tab: number) =>
-    navigate(
-      orderListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data,
-      }),
+  const hasPresetsChanged = () => {
+    const activeTab = tabs[currentTab - 1];
+    const { paresedQs } = prepareQs(location.search);
+
+    return (
+      activeTab?.data !== stringify(paresedQs) &&
+      location.search !== "" &&
+      stringify(paresedQs) !== ""
     );
+  };
+
+  const handleTabChange = (tab: number) => {
+    const qs = new URLSearchParams(getFilterTabs()[tab - 1]?.data ?? "");
+    qs.append("activeTab", tab.toString());
+
+    navigate(orderListUrl() + "?" + qs.toString());
+  };
 
   const handleFilterTabDelete = () => {
-    deleteFilterTab(currentTab);
-    navigate(orderListUrl());
+    deleteFilterTab(tabIndexToDelete);
+
+    // When deleting the current tab, navigate to the All orders tab
+    if (tabIndexToDelete === currentTab) {
+      navigate(orderListUrl());
+    } else {
+      const currentParams = { ...params };
+      // When deleting a tab that is not the current one, only remove the action param from the query
+      delete currentParams.action;
+      // When deleting a tab that is before the current one, decrease the activeTab param by 1
+      currentParams.activeTab = getActiveTabIndexAfterTabDelete(
+        currentTab,
+        tabIndexToDelete,
+      );
+      navigate(orderListUrl() + "?" + stringify(currentParams));
+    }
+  };
+
+  const hanleFilterTabUpdate = (tabName: string) => {
+    const { paresedQs, activeTab } = prepareQs(location.search);
+
+    updateFilterTab(tabName, stringify(paresedQs));
+    paresedQs.activeTab = activeTab;
+
+    navigate(orderListUrl() + "?" + stringify(paresedQs));
   };
 
   const handleFilterTabSave = (data: SaveFilterTabDialogFormData) => {
-    saveFilterTab(data.name, getActiveFilters(params));
+    const { paresedQs } = prepareQs(location.search);
+
+    saveFilterTab(
+      getNextUniqueTabName(
+        data.name,
+        tabs.map(tab => tab.name),
+      ),
+      stringify(paresedQs),
+    );
     handleTabChange(tabs.length + 1);
   };
 
@@ -169,13 +218,18 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}
         onTabSave={() => openModal("save-search")}
-        onTabDelete={() => openModal("delete-search")}
+        onTabDelete={(tabIndex: number) => {
+          setTabIndexToDelete(tabIndex);
+          openModal("delete-search");
+        }}
         onTabChange={handleTabChange}
+        onTabUpdate={hanleFilterTabUpdate}
         initialSearch={params.query || ""}
         tabs={getFilterTabs().map(tab => tab.name)}
         onAll={resetFilters}
         onSettingsOpen={() => navigate(orderSettingsPath)}
         params={params}
+        hasPresetsChanged={hasPresetsChanged()}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}
@@ -188,7 +242,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleFilterTabDelete}
-        tabName={getStringOrPlaceholder(tabs[currentTab - 1]?.name)}
+        tabName={tabs[tabIndexToDelete - 1]?.name ?? "..."}
       />
       {!noChannel && (
         <ChannelPickerDialog

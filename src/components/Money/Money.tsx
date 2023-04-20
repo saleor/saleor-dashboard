@@ -31,12 +31,10 @@ export const Money: React.FC<MoneyProps> = props => {
     return null;
   }
 
-  const amount = formatMoneyAmount(money, locale);
-
   return (
     <span className={classes.root} {...rest}>
       <span className={classes.currency}>{money.currency}</span>
-      {amount}
+      {formatMoneyAmount(money, locale)}
     </span>
   );
 };

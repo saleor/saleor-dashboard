@@ -1,6 +1,7 @@
 import CardTitle from "@dashboard/components/CardTitle";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
+import { Pill } from "@dashboard/components/Pill";
 import {
   WebhookEventTypeAsyncEnum,
   WebhookEventTypeSyncEnum,
@@ -17,7 +18,6 @@ import {
   PageTab,
   PageTabPanel,
   PageTabs,
-  Pill,
   useListWidths,
 } from "@saleor/macaw-ui";
 import React, { Dispatch, SetStateAction, useState } from "react";

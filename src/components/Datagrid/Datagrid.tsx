@@ -13,8 +13,8 @@ import DataEditor, {
   Item,
 } from "@glideapps/glide-data-grid";
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { Box, useTheme } from "@saleor/macaw-ui/next";
+import { Card, CardContent, CircularProgress } from "@material-ui/core";
+import { Box, Text, useTheme } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import range from "lodash/range";
 import React, {
@@ -35,7 +35,7 @@ import { FullScreenContainer } from "./components/FullScreenContainer";
 import { Header } from "./components/Header";
 import { RowActions } from "./components/RowActions";
 import { TooltipContainer } from "./components/TooltipContainer";
-import useCells from "./customCells/useCells";
+import { useCustomCellRenderers } from "./customCells/useCustomCellRenderers";
 import { headerIcons } from "./headerIcons";
 import useDatagridChange, {
   DatagridChange,
@@ -75,6 +75,7 @@ export interface DatagridProps {
   rows: number;
   title?: string;
   fullScreenTitle?: string;
+  loading?: boolean;
   selectionActions: (
     selection: number[],
     actions: MenuItemsActions,
@@ -118,6 +119,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   columnSelect = "none",
   onColumnMoved,
   onColumnResize,
+  loading,
   hasRowHover = false,
   ...datagridProps
 }): ReactElement => {
@@ -125,7 +127,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const { themeValues } = useTheme();
   const datagridTheme = useDatagridTheme(readonly);
   const editor = useRef<DataEditorRef>();
-  const cellProps = useCells();
+  const customRenderers = useCustomCellRenderers();
+
   const { scrolledToRight, scroller } = useScrollRight();
 
   const defualtColumnPickerProps = getDefultColumnPickerProps(
@@ -318,6 +321,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [selection, selectionActions, handleRemoveRows],
   );
 
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" marginY={12}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <FullScreenContainer
       open={isOpen}
@@ -366,8 +377,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   margin="auto"
                 />
                 <DataEditor
-                  {...cellProps}
                   {...datagridProps}
+                  customRenderers={customRenderers}
                   verticalBorder={verticalBorder}
                   headerIcons={headerIcons}
                   theme={datagridTheme}
@@ -463,13 +474,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
               </div>
             </>
           ) : (
-            <Box
-              borderTopStyle="solid"
-              borderTopWidth={1}
-              borderColor="neutralHighlight"
-              paddingY={9}
-            >
-              <Typography align="center">{emptyText}</Typography>
+            <Box padding={9} textAlign="center">
+              <Text size="small">{emptyText}</Text>
             </Box>
           )}
         </CardContent>

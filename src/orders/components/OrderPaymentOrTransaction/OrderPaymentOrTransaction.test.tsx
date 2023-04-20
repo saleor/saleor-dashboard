@@ -27,6 +27,23 @@ jest.mock("@saleor/macaw-ui", () => ({
   ResponsiveTable: jest.fn(() => <></>),
 }));
 
+jest.mock("@saleor/macaw-ui/next", () => ({
+  useTheme: jest.fn(() => () => ({})),
+  vars: {
+    colors: {
+      border: {
+        naturalPlain: "",
+      },
+      background: {
+        surfaceCriticalDepressed: "",
+        surfaceBrandDepressed: "",
+        decorativeSurfaceSubdued2: "",
+        surfaceBrandSubdued: "",
+      },
+    },
+  },
+}));
+
 jest.mock("@dashboard/hooks/useFlags", () => ({
   useFlags: jest.fn(() => ({ orderTransactions: { enabled: false } })),
 }));

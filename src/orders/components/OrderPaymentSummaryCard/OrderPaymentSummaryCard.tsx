@@ -1,6 +1,7 @@
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import { Hr } from "@dashboard/components/Hr";
+import { Pill } from "@dashboard/components/Pill";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderAction,
@@ -12,7 +13,6 @@ import {
   orderSendRefundUrl,
 } from "@dashboard/orders/urls";
 import { Card, CardContent, Typography } from "@material-ui/core";
-import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

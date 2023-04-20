@@ -29,7 +29,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
   const renderContent = useCallback(() => {
     if (loading) {
       return (
-        <Box display="flex" justifyContent="center" height="100%" marginY={12}>
+        <Box display="flex" justifyContent="center" marginY={12}>
           <CircularProgress />
         </Box>
       );
