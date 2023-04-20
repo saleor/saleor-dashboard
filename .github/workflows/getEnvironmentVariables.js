@@ -194,7 +194,9 @@ async function checkIfOldVersion(version, token) {
 }
 
 async function getTheNewestVersion(token) {
-  const octokit = new Octokit();
+  const octokit = new Octokit({
+    auth: token,
+  });
 
   const response = await octokit.request(
     "GET /repos/{owner}/{repo}/releases/latest",
