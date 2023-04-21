@@ -320,7 +320,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     [params, settings.rowNumber],
   );
 
-  const filteredColumnIds = customColumnsSettings
+  const filteredColumnIds = (customColumnsSettings ?? [])
     .filter(isAttributeColumnValue)
     .map(getAttributeIdFromColumnValue);
 
