@@ -199,7 +199,7 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     resolve: {
-      dedupe: ["react", "react-dom", "clsx"],
+      dedupe: ["react", "react-dom", "clsx", "@material-ui/styles"],
       alias: {
         "@assets": path.resolve(__dirname, "./assets"),
         "@locale": path.resolve(__dirname, "./locale"),
