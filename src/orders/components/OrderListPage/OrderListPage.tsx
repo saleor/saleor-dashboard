@@ -238,7 +238,12 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             hackARef.current.href = orderUrl(id);
           }}
         />
-        <a ref={hackARef} style={{ position: "absolute" }} />
+        <a
+          ref={hackARef}
+          style={{ position: "absolute" }}
+          tabIndex={-1}
+          aria-hidden={true}
+        />
       </Card>
     </ListPageLayout>
   );
