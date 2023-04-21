@@ -6,6 +6,6 @@ export const PAGE_DETAILS_SELECTORS = {
   isNotPublishedCheckbox: '[name="isPublished"][value=false]',
   uploadFileButton: '[data-test-id="button-upload-file"]',
   richTextEditorAttributeValue: '[class*="ce-paragraph"]',
-  booleanAttributeValueCheckbox: '[name*="attribute:"][type="checkbox"]',
+  booleanAttributeValueCheckbox: '[role="checkbox"]',
   numericAttributeValueInput: '[name*="attribute:"]',
 };

@@ -9,7 +9,7 @@ export function createAttributeWithInputType({
   entityType,
   numericSystemType,
   swatchImage,
-  valueRequired = true
+  valueRequired = true,
 }) {
   fillUpAttributeCreateFields({ name, attributeType, valueRequired });
   if (
@@ -34,7 +34,7 @@ export function createAttributeWithInputType({
 export function fillUpAttributeCreateFields({
   name,
   attributeType,
-  valueRequired
+  valueRequired,
 }) {
   fillUpAttributeNameAndCode(name);
   cy.get(ATTRIBUTES_DETAILS.inputTypeSelect)
@@ -49,9 +49,11 @@ export function fillUpAttributeCreateFields({
 export function fillUpAttributeNameAndCode(name, code = name) {
   return cy
     .get(ATTRIBUTES_DETAILS.nameInput)
-    .clearAndType(name)
+    .clear()
+    .type(name)
     .get(ATTRIBUTES_DETAILS.codeInput)
-    .clearAndType(code);
+    .clear()
+    .type(code);
 }
 
 export function saveAttribute() {
@@ -63,9 +65,7 @@ export function saveAttribute() {
 }
 
 export function submitAttribute() {
-  cy.get(BUTTON_SELECTORS.confirm)
-    .click()
-    .confirmationMessageShouldDisappear();
+  cy.get(BUTTON_SELECTORS.confirm).click().confirmationMessageShouldDisappear();
 }
 
 export function addSingleValue(valueName) {

@@ -26,9 +26,11 @@ export function fillUpShippingZoneData({
   channelName,
 }) {
   cy.get(SHIPPING_ZONE_DETAILS.nameInput)
-    .clearAndType(shippingName)
+    .clear()
+    .type(shippingName)
     .get(SHIPPING_ZONE_DETAILS.descriptionInput)
-    .clearAndType(shippingName)
+    .clear()
+    .type(shippingName)
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldAppear()
