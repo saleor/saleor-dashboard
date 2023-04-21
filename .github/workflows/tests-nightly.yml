@@ -125,6 +125,13 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
+      - name: Cypress install
+        id: cypress-install
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch'}}
+        uses: cypress-io/github-action@v5
+        with:
+          runTests: false
+
       - name: Cypress run
         id: cypress
         continue-on-error: true
@@ -146,6 +153,7 @@ jobs:
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
           STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
         with:
+          install: false
           parallel: true
           group: 'UI - Chrome'
           record: true
@@ -222,7 +230,14 @@ jobs:
             }else{
               return "@stable"
             }
-              
+
+      - name: Cypress install
+        id: cypress-install
+        continue-on-error: true
+        uses: cypress-io/github-action@v5
+        with:
+          runTests: false
+
       - name: Cypress run - automatically
         id: cypress
         continue-on-error: true
@@ -243,6 +258,7 @@ jobs:
           COMMIT_INFO_MESSAGE: Triggered via release - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}, ${{github.event.client_payload.pullRequestUrl}}
           CYPRESS_grepTags: ${{steps.set-tag-for-tests.outputs.result}}
         with:
+          install: false
           parallel: true
           group: 'UI - Chrome'
           record: true
@@ -298,4 +314,4 @@ jobs:
           JOB_TITLE: "Test release workflow - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}"
           JOB_KIND: "release tests"
         run: |
-          python3 ./.github/workflows/notify/notify-slack.py
+          python3 github/workflows/notify/notify-slack.py
