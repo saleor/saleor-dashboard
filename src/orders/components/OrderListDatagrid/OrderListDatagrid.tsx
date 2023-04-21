@@ -9,7 +9,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import { OrderListQuery } from "@dashboard/graphql";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
-import { Item } from "@glideapps/glide-data-grid";
+import { GridMouseEventArgs, Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
@@ -23,6 +23,7 @@ interface OrderListDatagridProps
     SortPage<OrderListUrlSortField> {
   orders: RelayToFlat<OrderListQuery["orders"]>;
   onRowClick: (id: string) => void;
+  onRowHover?: (args: GridMouseEventArgs, orderId?: string) => void;
   hasRowHover?: boolean;
 }
 
@@ -34,6 +35,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   onSort,
   sort,
   onRowClick,
+  onRowHover,
   hasRowHover,
 }) => {
   const intl = useIntl();
@@ -69,6 +71,19 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
       onRowClick(rowData.id);
     },
     [onRowClick, orders],
+  );
+
+  const handleRowHover = useCallback(
+    (args: GridMouseEventArgs) => {
+      if (args.kind === "cell") {
+        const [, row] = args.location;
+        const rowData = orders[row];
+        onRowHover(args, rowData.id);
+      } else {
+        onRowHover(args);
+      }
+    },
+    [onRowHover, orders],
   );
 
   const getCellContent = useGetCellContent({
@@ -113,6 +128,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           )}
           fullScreenTitle={intl.formatMessage(messages.orders)}
           onRowClick={handleRowClick}
+          onRowHover={handleRowHover}
         />
 
         <Box paddingX={9}>

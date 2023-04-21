@@ -86,6 +86,7 @@ export interface DatagridProps {
     defaultProps: Partial<ColumnPickerProps>,
   ) => ReactElement;
   onRowClick?: (item: Item) => void;
+  onRowHover?: (args: GridMouseEventArgs) => void;
   onColumnMoved?: (startIndex: number, endIndex: number) => void;
   onColumnResize?: (column: GridColumn, newSize: number) => void;
   readonly?: boolean;
@@ -111,6 +112,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   onChange,
   renderColumnPicker,
   onRowClick,
+  onRowHover,
   getColumnTooltipContent,
   readonly = false,
   rowMarkers = "checkbox",
@@ -227,8 +229,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
       if (hasRowHover) {
         setHoverRow(args.kind !== "cell" ? undefined : args.location[1]);
       }
+      if (onRowHover) {
+        onRowHover(args);
+      }
     },
-    [hasRowHover],
+    [onRowHover, hasRowHover],
   );
 
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
