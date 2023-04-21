@@ -26,7 +26,7 @@ export const useCustomColumnSettings = (view: DatagridViews) => {
       [view]: cols,
     }));
 
-  const customColumnsSettings = config[view];
+  const customColumnsSettings = config[view] ?? [];
 
   return { customColumnsSettings, setCustomColumnsSettings };
 };
