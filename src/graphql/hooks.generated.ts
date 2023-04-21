@@ -96,12 +96,6 @@ export const AppListItemFragmentDoc = gql`
   }
 }
     ${AppPermissionFragmentDoc}`;
-export const AppAvatarFragmentDoc = gql`
-    fragment AppAvatar on App {
-  id
-  name
-}
-    `;
 export const AttributeFragmentDoc = gql`
     fragment Attribute on Attribute {
   id
@@ -172,18 +166,6 @@ export const UserFragmentDoc = gql`
   }
 }
     ${UserPermissionFragmentDoc}`;
-export const UserBaseAvatarFragmentDoc = gql`
-    fragment UserBaseAvatar on User {
-  id
-  firstName
-  lastName
-  email
-  avatar {
-    url
-    alt
-  }
-}
-    `;
 export const CategoryFragmentDoc = gql`
     fragment Category on Category {
   id
@@ -214,6 +196,13 @@ export const CategoryDetailsFragmentDoc = gql`
   }
 }
     ${MetadataFragmentDoc}`;
+export const ChannelOrderSettingsFragmentDoc = gql`
+    fragment ChannelOrderSettings on Channel {
+  orderSettings {
+    markAsPaidStrategy
+  }
+}
+    `;
 export const ChannelErrorFragmentDoc = gql`
     fragment ChannelError on ChannelError {
   code
@@ -596,6 +585,34 @@ export const VoucherDetailsFragmentDoc = gql`
     ${VoucherFragmentDoc}
 ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PageInfoFragmentDoc}`;
+export const TransactionRequestActionErrorFragmentDoc = gql`
+    fragment TransactionRequestActionError on TransactionRequestActionError {
+  field
+  message
+  code
+}
+    `;
+export const TransactionCreateErrorFragmentDoc = gql`
+    fragment TransactionCreateError on TransactionCreateError {
+  field
+  message
+  code
+}
+    `;
+export const OrderGrantRefundCreateErrorFragmentDoc = gql`
+    fragment OrderGrantRefundCreateError on OrderGrantRefundCreateError {
+  field
+  message
+  code
+}
+    `;
+export const OrderGrantRefundUpdateErrorFragmentDoc = gql`
+    fragment OrderGrantRefundUpdateError on OrderGrantRefundUpdateError {
+  field
+  message
+  code
+}
+    `;
 export const AttributeErrorFragmentDoc = gql`
     fragment AttributeError on AttributeError {
   code
@@ -1246,21 +1263,232 @@ export const MenuDetailsFragmentDoc = gql`
   name
 }
     ${MenuItemNestedFragmentDoc}`;
-export const RefundOrderLineFragmentDoc = gql`
-    fragment RefundOrderLine on OrderLine {
+export const OrderLineGrantRefundFragmentDoc = gql`
+    fragment OrderLineGrantRefund on OrderLine {
   id
+  thumbnail {
+    url
+  }
   productName
   quantity
+  quantityToFulfill
+  variantName
+  productName
   unitPrice {
     gross {
       ...Money
     }
   }
-  thumbnail(size: 64) {
+}
+    ${MoneyFragmentDoc}`;
+export const OrderFulfillmentGrantRefundFragmentDoc = gql`
+    fragment OrderFulfillmentGrantRefund on Fulfillment {
+  id
+  fulfillmentOrder
+  status
+  lines {
+    id
+    quantity
+    orderLine {
+      ...OrderLineGrantRefund
+    }
+  }
+}
+    ${OrderLineGrantRefundFragmentDoc}`;
+export const OrderDetailsGrantRefundFragmentDoc = gql`
+    fragment OrderDetailsGrantRefund on Order {
+  id
+  number
+  lines {
+    ...OrderLineGrantRefund
+  }
+  fulfillments {
+    ...OrderFulfillmentGrantRefund
+  }
+  shippingPrice {
+    gross {
+      ...Money
+    }
+  }
+  total {
+    gross {
+      ...Money
+    }
+  }
+}
+    ${OrderLineGrantRefundFragmentDoc}
+${OrderFulfillmentGrantRefundFragmentDoc}
+${MoneyFragmentDoc}`;
+export const StaffMemberFragmentDoc = gql`
+    fragment StaffMember on User {
+  id
+  email
+  firstName
+  isActive
+  lastName
+}
+    `;
+export const StaffMemberAvatarFragmentDoc = gql`
+    fragment StaffMemberAvatar on User {
+  ...StaffMember
+  avatar(size: 512) {
     url
   }
 }
+    ${StaffMemberFragmentDoc}`;
+export const AppAvatarFragmentDoc = gql`
+    fragment AppAvatar on App {
+  id
+  name
+}
+    `;
+export const TransactionEventFragmentDoc = gql`
+    fragment TransactionEvent on TransactionEvent {
+  id
+  pspReference
+  amount {
+    ...Money
+  }
+  type
+  message
+  createdAt
+  createdBy {
+    ... on User {
+      ...StaffMemberAvatar
+    }
+    ... on App {
+      ...AppAvatar
+    }
+  }
+  externalUrl
+}
+    ${MoneyFragmentDoc}
+${StaffMemberAvatarFragmentDoc}
+${AppAvatarFragmentDoc}`;
+export const TransactionItemFragmentDoc = gql`
+    fragment TransactionItem on TransactionItem {
+  id
+  type
+  pspReference
+  actions
+  type
+  status
+  externalUrl
+  events {
+    ...TransactionEvent
+  }
+  authorizedAmount {
+    ...Money
+  }
+  chargedAmount {
+    ...Money
+  }
+  refundedAmount {
+    ...Money
+  }
+  canceledAmount {
+    ...Money
+  }
+  authorizePendingAmount {
+    ...Money
+  }
+  chargePendingAmount {
+    ...Money
+  }
+  refundPendingAmount {
+    ...Money
+  }
+  cancelPendingAmount {
+    ...Money
+  }
+}
+    ${TransactionEventFragmentDoc}
+${MoneyFragmentDoc}`;
+export const OrderPaymentFragmentDoc = gql`
+    fragment OrderPayment on Payment {
+  id
+  isActive
+  actions
+  gateway
+  paymentMethodType
+  availableCaptureAmount {
+    ...Money
+  }
+  capturedAmount {
+    ...Money
+  }
+  total {
+    ...Money
+  }
+  availableRefundAmount {
+    ...Money
+  }
+  modified
+  transactions {
+    id
+    token
+    created
+    kind
+    isSuccess
+  }
+}
     ${MoneyFragmentDoc}`;
+export const OrderGiftCardFragmentDoc = gql`
+    fragment OrderGiftCard on GiftCard {
+  id
+  last4CodeChars
+  events {
+    id
+    type
+    orderId
+    date
+    balance {
+      initialBalance {
+        ...Money
+      }
+      currentBalance {
+        ...Money
+      }
+      oldInitialBalance {
+        ...Money
+      }
+      oldCurrentBalance {
+        ...Money
+      }
+    }
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const UserBaseAvatarFragmentDoc = gql`
+    fragment UserBaseAvatar on User {
+  id
+  firstName
+  lastName
+  email
+  avatar {
+    url
+    alt
+  }
+}
+    `;
+export const OrderGrantedRefundFragmentDoc = gql`
+    fragment OrderGrantedRefund on OrderGrantedRefund {
+  id
+  createdAt
+  amount {
+    currency
+    amount
+  }
+  reason
+  user {
+    ...UserBaseAvatar
+  }
+  app {
+    id
+    name
+  }
+}
+    ${UserBaseAvatarFragmentDoc}`;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -1446,6 +1674,196 @@ export const InvoiceFragmentDoc = gql`
   status
 }
     `;
+export const OrderDetailsWithTransactionsFragmentDoc = gql`
+    fragment OrderDetailsWithTransactions on Order {
+  id
+  token
+  ...Metadata
+  billingAddress {
+    ...Address
+  }
+  transactions {
+    ...TransactionItem
+  }
+  payments {
+    ...OrderPayment
+  }
+  giftCards {
+    ...OrderGiftCard
+  }
+  grantedRefunds {
+    ...OrderGrantedRefund
+  }
+  isShippingRequired
+  canFinalize
+  created
+  customerNote
+  discounts {
+    id
+    type
+    calculationMode: valueType
+    value
+    reason
+    amount {
+      ...Money
+    }
+  }
+  events {
+    ...OrderEvent
+  }
+  fulfillments {
+    ...Fulfillment
+  }
+  lines {
+    ...OrderLine
+  }
+  number
+  isPaid
+  paymentStatus
+  shippingAddress {
+    ...Address
+  }
+  deliveryMethod {
+    __typename
+    ... on ShippingMethod {
+      id
+    }
+    ... on Warehouse {
+      id
+      clickAndCollectOption
+    }
+  }
+  shippingMethod {
+    id
+  }
+  shippingMethodName
+  collectionPointName
+  shippingPrice {
+    gross {
+      amount
+      currency
+    }
+  }
+  status
+  subtotal {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+  }
+  total {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+    tax {
+      ...Money
+    }
+  }
+  totalRemainingGrant {
+    ...Money
+  }
+  totalGrantedRefund {
+    ...Money
+  }
+  totalRefundPending {
+    ...Money
+  }
+  totalRefunded {
+    ...Money
+  }
+  actions
+  totalAuthorizePending {
+    ...Money
+  }
+  totalAuthorized {
+    ...Money
+  }
+  totalCharged {
+    ...Money
+  }
+  totalChargePending {
+    ...Money
+  }
+  totalCanceled {
+    ...Money
+  }
+  totalCancelPending {
+    ...Money
+  }
+  totalBalance {
+    ...Money
+  }
+  undiscountedTotal {
+    net {
+      ...Money
+    }
+    gross {
+      ...Money
+    }
+  }
+  user {
+    id
+    email
+  }
+  userEmail
+  shippingMethods {
+    id
+    name
+    price {
+      ...Money
+    }
+    active
+    message
+  }
+  invoices {
+    ...Invoice
+  }
+  channel {
+    isActive
+    id
+    name
+    currencyCode
+    slug
+    defaultCountry {
+      code
+    }
+    orderSettings {
+      markAsPaidStrategy
+    }
+  }
+  isPaid
+}
+    ${MetadataFragmentDoc}
+${AddressFragmentDoc}
+${TransactionItemFragmentDoc}
+${OrderPaymentFragmentDoc}
+${OrderGiftCardFragmentDoc}
+${OrderGrantedRefundFragmentDoc}
+${MoneyFragmentDoc}
+${OrderEventFragmentDoc}
+${FulfillmentFragmentDoc}
+${OrderLineFragmentDoc}
+${InvoiceFragmentDoc}`;
+export const RefundOrderLineFragmentDoc = gql`
+    fragment RefundOrderLine on OrderLine {
+  id
+  productName
+  quantity
+  unitPrice {
+    gross {
+      ...Money
+    }
+  }
+  thumbnail(size: 64) {
+    url
+  }
+}
+    ${MoneyFragmentDoc}`;
 export const OrderDetailsFragmentDoc = gql`
     fragment OrderDetails on Order {
   id
@@ -1820,15 +2238,6 @@ export const PermissionFragmentDoc = gql`
     fragment Permission on Permission {
   code
   name
-}
-    `;
-export const StaffMemberFragmentDoc = gql`
-    fragment StaffMember on User {
-  id
-  email
-  firstName
-  isActive
-  lastName
 }
     `;
 export const PermissionGroupMemberFragmentDoc = gql`
@@ -2461,14 +2870,6 @@ export const StaffMemberDetailsFragmentDoc = gql`
     code
     name
   }
-  avatar(size: 512) {
-    url
-  }
-}
-    ${StaffMemberFragmentDoc}`;
-export const StaffMemberAvatarFragmentDoc = gql`
-    fragment StaffMemberAvatar on User {
-  ...StaffMember
   avatar(size: 512) {
     url
   }

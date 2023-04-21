@@ -24,11 +24,19 @@ export type Scalars = {
    */
   DateTime: any;
   /**
+   * Custom Decimal implementation.
+   *
+   * Returns Decimal as a float in the API,
+   * parses float to the Decimal on the way back.
+   */
+  Decimal: any;
+  /**
    * The `GenericScalar` scalar type represents a generic
    * GraphQL scalar value that could be:
    * String, Boolean, Int, Float, List or Object.
    */
   GenericScalar: any;
+  JSON: any;
   JSONString: any;
   /**
    * Metadata is a map of key-value pairs, both keys and values are `String`.
@@ -42,6 +50,8 @@ export type Scalars = {
    * ```
    */
   Metadata: any;
+  /** The `Minute` scalar type represents number of minutes by integer value. */
+  Minute: any;
   /**
    * Nonnegative Decimal scalar implementation.
    *
@@ -94,6 +104,7 @@ export enum AccountErrorCode {
   ACCOUNT_NOT_CONFIRMED = 'ACCOUNT_NOT_CONFIRMED'
 }
 
+/** Fields required to update the user. */
 export type AccountInput = {
   /** Given name. */
   firstName?: InputMaybe<Scalars['String']>;
@@ -107,6 +118,7 @@ export type AccountInput = {
   defaultShippingAddress?: InputMaybe<AddressInput>;
 };
 
+/** Fields required to create a user. */
 export type AccountRegisterInput = {
   /** Given name. */
   firstName?: InputMaybe<Scalars['String']>;
@@ -258,7 +270,7 @@ export enum AppSortField {
 }
 
 export type AppSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort apps. */
   direction: OrderDirection;
   /** Sort apps by the selected field. */
   field: AppSortField;
@@ -297,7 +309,7 @@ export enum AttributeChoicesSortField {
 }
 
 export type AttributeChoicesSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort attribute choices. */
   direction: OrderDirection;
   /** Sort attribute choices by the selected field. */
   field: AttributeChoicesSortField;
@@ -457,7 +469,7 @@ export enum AttributeSortField {
 }
 
 export type AttributeSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort attributes. */
   direction: OrderDirection;
   /** Sort attributes by the selected field. */
   field: AttributeSortField;
@@ -834,7 +846,7 @@ export enum CategorySortField {
 }
 
 export type CategorySortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort categories. */
   direction: OrderDirection;
   /**
    * Specifies the channel in which to sort the data.
@@ -853,8 +865,6 @@ export type ChannelCreateInput = {
    * The channel stock settings.
    *
    * Added in Saleor 3.7.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   stockSettings?: InputMaybe<StockSettingsInput>;
   /** List of shipping zones to assign to the channel. */
@@ -863,8 +873,6 @@ export type ChannelCreateInput = {
    * List of warehouses to assign to the channel.
    *
    * Added in Saleor 3.5.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   addWarehouses?: InputMaybe<Array<Scalars['ID']>>;
   /**
@@ -883,8 +891,6 @@ export type ChannelCreateInput = {
    * Default country for the channel. Default country can be used in checkout to determine the stock quantities or calculate taxes when the country was not explicitly provided.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   defaultCountry: CountryCode;
 };
@@ -925,8 +931,6 @@ export type ChannelUpdateInput = {
    * The channel stock settings.
    *
    * Added in Saleor 3.7.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   stockSettings?: InputMaybe<StockSettingsInput>;
   /** List of shipping zones to assign to the channel. */
@@ -935,8 +939,6 @@ export type ChannelUpdateInput = {
    * List of warehouses to assign to the channel.
    *
    * Added in Saleor 3.5.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   addWarehouses?: InputMaybe<Array<Scalars['ID']>>;
   /**
@@ -961,8 +963,6 @@ export type ChannelUpdateInput = {
    * List of warehouses to unassign from the channel.
    *
    * Added in Saleor 3.5.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   removeWarehouses?: InputMaybe<Array<Scalars['ID']>>;
 };
@@ -975,6 +975,51 @@ export type CheckoutAddressValidationRules = {
   /** Determines if Saleor should apply normalization on address fields. Example: converting city field to uppercase letters. */
   enableFieldsNormalization?: InputMaybe<Scalars['Boolean']>;
 };
+
+/**
+ * Determine a current authorize status for checkout.
+ *
+ *     We treat the checkout as fully authorized when the sum of authorized and charged
+ *     funds cover the checkout.total.
+ *     We treat the checkout as partially authorized when the sum of authorized and charged
+ *     funds covers only part of the checkout.total
+ *     We treat the checkout as not authorized when the sum of authorized and charged funds
+ *     is 0.
+ *
+ *     NONE - the funds are not authorized
+ *     PARTIAL - the cover funds don't cover fully the checkout's total
+ *     FULL - the cover funds covers the checkout's total
+ *
+ */
+export enum CheckoutAuthorizeStatusEnum {
+  NONE = 'NONE',
+  PARTIAL = 'PARTIAL',
+  FULL = 'FULL'
+}
+
+/**
+ * Determine the current charge status for the checkout.
+ *
+ *     The checkout is considered overcharged when the sum of the transactionItem's charge
+ *     amounts exceeds the value of `checkout.total`.
+ *     If the sum of the transactionItem's charge amounts equals
+ *     `checkout.total`, we consider the checkout to be fully charged.
+ *     If the sum of the transactionItem's charge amounts covers a part of the
+ *     `checkout.total`, we treat the checkout as partially charged.
+ *
+ *
+ *     NONE - the funds are not charged.
+ *     PARTIAL - the funds that are charged don't cover the checkout's total
+ *     FULL - the funds that are charged fully cover the checkout's total
+ *     OVERCHARGED - the charged funds are bigger than checkout's total
+ *
+ */
+export enum CheckoutChargeStatusEnum {
+  NONE = 'NONE',
+  PARTIAL = 'PARTIAL',
+  FULL = 'FULL',
+  OVERCHARGED = 'OVERCHARGED'
+}
 
 export type CheckoutCreateInput = {
   /** Slug of a channel in which to create a checkout. */
@@ -993,8 +1038,6 @@ export type CheckoutCreateInput = {
    * The checkout validation rules that can be changed.
    *
    * Added in Saleor 3.5.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   validationRules?: InputMaybe<CheckoutValidationRules>;
 };
@@ -1037,6 +1080,9 @@ export type CheckoutFilterInput = {
   search?: InputMaybe<Scalars['String']>;
   metadata?: InputMaybe<Array<MetadataFilter>>;
   channels?: InputMaybe<Array<Scalars['ID']>>;
+  updatedAt?: InputMaybe<DateRangeInput>;
+  authorizeStatus?: InputMaybe<Array<CheckoutAuthorizeStatusEnum>>;
+  chargeStatus?: InputMaybe<Array<CheckoutChargeStatusEnum>>;
 };
 
 export type CheckoutLineInput = {
@@ -1048,16 +1094,12 @@ export type CheckoutLineInput = {
    * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   price?: InputMaybe<Scalars['PositiveDecimal']>;
   /**
    * Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.
    *
    * Added in Saleor 3.6.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   forceNewLine?: InputMaybe<Scalars['Boolean']>;
   /**
@@ -1081,8 +1123,6 @@ export type CheckoutLineUpdateInput = {
    * Custom price of the item. Can be set only by apps with `HANDLE_CHECKOUTS` permission. When the line with the same variant will be provided multiple times, the last price will be used.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   price?: InputMaybe<Scalars['PositiveDecimal']>;
   /**
@@ -1103,7 +1143,7 @@ export enum CheckoutSortField {
 }
 
 export type CheckoutSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort checkouts. */
   direction: OrderDirection;
   /** Sort checkouts by the selected field. */
   field: CheckoutSortField;
@@ -1259,7 +1299,7 @@ export enum CollectionSortField {
 }
 
 export type CollectionSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort collections. */
   direction: OrderDirection;
   /**
    * Specifies the channel in which to sort the data.
@@ -1563,6 +1603,27 @@ export type CountryRateUpdateInput = {
 };
 
 /** An enumeration. */
+export enum CustomerBulkUpdateErrorCode {
+  BLANK = 'BLANK',
+  DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE',
+  NOT_FOUND = 'NOT_FOUND',
+  MAX_LENGTH = 'MAX_LENGTH'
+}
+
+export type CustomerBulkUpdateInput = {
+  /** ID of a customer to update. */
+  id?: InputMaybe<Scalars['ID']>;
+  /** External ID of a customer to update. */
+  externalReference?: InputMaybe<Scalars['String']>;
+  /** Fields required to update a customer. */
+  input: CustomerInput;
+};
+
+/** An enumeration. */
 export enum CustomerEventsEnum {
   ACCOUNT_CREATED = 'ACCOUNT_CREATED',
   ACCOUNT_ACTIVATED = 'ACCOUNT_ACTIVATED',
@@ -1796,7 +1857,7 @@ export enum EventDeliveryAttemptSortField {
 }
 
 export type EventDeliveryAttemptSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort attempts. */
   direction: OrderDirection;
   /** Sort attempts by the selected field. */
   field: EventDeliveryAttemptSortField;
@@ -1813,7 +1874,7 @@ export enum EventDeliverySortField {
 }
 
 export type EventDeliverySortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort deliveries. */
   direction: OrderDirection;
   /** Sort deliveries by the selected field. */
   field: EventDeliverySortField;
@@ -1859,7 +1920,7 @@ export enum ExportFileSortField {
 }
 
 export type ExportFileSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort export file. */
   direction: OrderDirection;
   /** Sort export file by the selected field. */
   field: ExportFileSortField;
@@ -1978,16 +2039,12 @@ export type GiftCardCreateInput = {
    * The gift card tags to add.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   addTags?: InputMaybe<Array<Scalars['String']>>;
   /**
    * The gift card expiry date.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   expiryDate?: InputMaybe<Scalars['Date']>;
   /**
@@ -2010,16 +2067,12 @@ export type GiftCardCreateInput = {
    * Slug of a channel from which the email should be sent.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   channel?: InputMaybe<Scalars['String']>;
   /**
    * Determine if gift card is active.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   isActive: Scalars['Boolean'];
   /**
@@ -2032,8 +2085,6 @@ export type GiftCardCreateInput = {
    * The gift card note from the staff member.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   note?: InputMaybe<Scalars['String']>;
 };
@@ -2129,7 +2180,7 @@ export enum GiftCardSortField {
 }
 
 export type GiftCardSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort gift cards. */
   direction: OrderDirection;
   /** Sort gift cards by the selected field. */
   field: GiftCardSortField;
@@ -2144,16 +2195,12 @@ export type GiftCardUpdateInput = {
    * The gift card tags to add.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   addTags?: InputMaybe<Array<Scalars['String']>>;
   /**
    * The gift card expiry date.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   expiryDate?: InputMaybe<Scalars['Date']>;
   /**
@@ -2172,16 +2219,12 @@ export type GiftCardUpdateInput = {
    * The gift card tags to remove.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   removeTags?: InputMaybe<Array<Scalars['String']>>;
   /**
    * The gift card balance amount.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   balanceAmount?: InputMaybe<Scalars['PositiveDecimal']>;
 };
@@ -3003,6 +3046,22 @@ export enum LanguageCodeEnum {
   ZU_ZA = 'ZU_ZA'
 }
 
+/**
+ * Determine the mark as paid strategy for the channel.
+ *
+ *     TRANSACTION_FLOW - new orders marked as paid will receive a
+ *     `TransactionItem` object, that will cover the `order.total`.
+ *
+ *     PAYMENT_FLOW - new orders marked as paid will receive a
+ *     `Payment` object, that will cover the `order.total`.
+ *
+ *
+ */
+export enum MarkAsPaidStrategyEnum {
+  TRANSACTION_FLOW = 'TRANSACTION_FLOW',
+  PAYMENT_FLOW = 'PAYMENT_FLOW'
+}
+
 /** An enumeration. */
 export enum MeasurementUnitsEnum {
   CM = 'CM',
@@ -3049,8 +3108,17 @@ export enum MediaChoicesSortField {
   ID = 'ID'
 }
 
+export type MediaInput = {
+  /** Alt text for a product media. */
+  alt?: InputMaybe<Scalars['String']>;
+  /** Represents an image file in a multipart request. */
+  image?: InputMaybe<Scalars['Upload']>;
+  /** Represents an URL to an external media. */
+  mediaUrl?: InputMaybe<Scalars['String']>;
+};
+
 export type MediaSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort media. */
   direction: OrderDirection;
   /** Sort media by the selected field. */
   field: MediaChoicesSortField;
@@ -3137,7 +3205,7 @@ export type MenuItemMoveInput = {
 };
 
 export type MenuItemSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort menu items. */
   direction: OrderDirection;
   /** Sort menu items by the selected field. */
   field: MenuItemsSortField;
@@ -3156,7 +3224,7 @@ export enum MenuSortField {
 }
 
 export type MenuSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort menus. */
   direction: OrderDirection;
   /** Sort menus by the selected field. */
   field: MenuSortField;
@@ -3230,16 +3298,17 @@ export type OrderAddNoteInput = {
  * Determine a current authorize status for order.
  *
  *     We treat the order as fully authorized when the sum of authorized and charged funds
- *     cover the order.total.
+ *     cover the `order.total`-`order.totalGrantedRefund`.
  *     We treat the order as partially authorized when the sum of authorized and charged
- *     funds covers only part of the order.total
+ *     funds covers only part of the `order.total`-`order.totalGrantedRefund`.
  *     We treat the order as not authorized when the sum of authorized and charged funds is
  *     0.
  *
  *     NONE - the funds are not authorized
- *     PARTIAL - the funds that are authorized or charged don't cover fully the order's
- *     total
- *     FULL - the funds that are authorized or charged fully cover the order's total
+ *     PARTIAL - the funds that are authorized and charged don't cover fully the
+ *     `order.total`-`order.totalGrantedRefund`
+ *     FULL - the funds that are authorized and charged fully cover the
+ *     `order.total`-`order.totalGrantedRefund`
  *
  */
 export enum OrderAuthorizeStatusEnum {
@@ -3251,15 +3320,22 @@ export enum OrderAuthorizeStatusEnum {
 /**
  * Determine the current charge status for the order.
  *
- *     We treat the order as overcharged when the charged amount is bigger that order.total
- *     We treat the order as fully charged when the charged amount is equal to order.total.
- *     We treat the order as partially charged when the charged amount covers only part of
- *     the order.total
+ *     An order is considered overcharged when the sum of the
+ *     transactionItem's charge amounts exceeds the value of
+ *     `order.total` - `order.totalGrantedRefund`.
+ *     If the sum of the transactionItem's charge amounts equals
+ *     `order.total` - `order.totalGrantedRefund`, we consider the order to be fully
+ *     charged.
+ *     If the sum of the transactionItem's charge amounts covers a part of the
+ *     `order.total` - `order.totalGrantedRefund`, we treat the order as partially charged.
  *
  *     NONE - the funds are not charged.
- *     PARTIAL - the funds that are charged don't cover the order's total
- *     FULL - the funds that are charged fully cover the order's total
- *     OVERCHARGED - the charged funds are bigger than order's total
+ *     PARTIAL - the funds that are charged don't cover the
+ *     `order.total`-`order.totalGrantedRefund`
+ *     FULL - the funds that are charged fully cover the
+ *     `order.total`-`order.totalGrantedRefund`
+ *     OVERCHARGED - the charged funds are bigger than the
+ *     `order.total`-`order.totalGrantedRefund`
  *
  */
 export enum OrderChargeStatusEnum {
@@ -3338,6 +3414,7 @@ export enum OrderErrorCode {
   ORDER_NO_SHIPPING_ADDRESS = 'ORDER_NO_SHIPPING_ADDRESS',
   PAYMENT_ERROR = 'PAYMENT_ERROR',
   PAYMENT_MISSING = 'PAYMENT_MISSING',
+  TRANSACTION_ERROR = 'TRANSACTION_ERROR',
   REQUIRED = 'REQUIRED',
   SHIPPING_METHOD_NOT_APPLICABLE = 'SHIPPING_METHOD_NOT_APPLICABLE',
   SHIPPING_METHOD_REQUIRED = 'SHIPPING_METHOD_REQUIRED',
@@ -3349,8 +3426,7 @@ export enum OrderErrorCode {
   INSUFFICIENT_STOCK = 'INSUFFICIENT_STOCK',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   NOT_AVAILABLE_IN_CHANNEL = 'NOT_AVAILABLE_IN_CHANNEL',
-  CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
-  MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK = 'MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK'
+  CHANNEL_INACTIVE = 'CHANNEL_INACTIVE'
 }
 
 /** An enumeration. */
@@ -3366,7 +3442,7 @@ export enum OrderEventsEmailsEnum {
   DIGITAL_LINKS = 'DIGITAL_LINKS'
 }
 
-/** An enumeration. */
+/** The different order event types.  */
 export enum OrderEventsEnum {
   DRAFT_CREATED = 'DRAFT_CREATED',
   DRAFT_CREATED_FROM_REPLACE = 'DRAFT_CREATED_FROM_REPLACE',
@@ -3376,6 +3452,7 @@ export enum OrderEventsEnum {
   PLACED_FROM_DRAFT = 'PLACED_FROM_DRAFT',
   OVERSOLD_ITEMS = 'OVERSOLD_ITEMS',
   CANCELED = 'CANCELED',
+  EXPIRED = 'EXPIRED',
   ORDER_MARKED_AS_PAID = 'ORDER_MARKED_AS_PAID',
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
   ORDER_REPLACEMENT_CREATED = 'ORDER_REPLACEMENT_CREATED',
@@ -3397,9 +3474,14 @@ export enum OrderEventsEnum {
   PAYMENT_VOIDED = 'PAYMENT_VOIDED',
   PAYMENT_FAILED = 'PAYMENT_FAILED',
   TRANSACTION_EVENT = 'TRANSACTION_EVENT',
+  TRANSACTION_CHARGE_REQUESTED = 'TRANSACTION_CHARGE_REQUESTED',
+  /** This field will be removed in Saleor 3.14 (Preview Feature). Use `TRANSACTION_CHARGE_REQUESTED` instead. */
   TRANSACTION_CAPTURE_REQUESTED = 'TRANSACTION_CAPTURE_REQUESTED',
   TRANSACTION_REFUND_REQUESTED = 'TRANSACTION_REFUND_REQUESTED',
+  /** This field will be removed in Saleor 3.14 (Preview Feature). Use `TRANSACTION_CANCEL_REQUESTED` instead. */
   TRANSACTION_VOID_REQUESTED = 'TRANSACTION_VOID_REQUESTED',
+  TRANSACTION_CANCEL_REQUESTED = 'TRANSACTION_CANCEL_REQUESTED',
+  TRANSACTION_MARK_AS_PAID_FAILED = 'TRANSACTION_MARK_AS_PAID_FAILED',
   INVOICE_REQUESTED = 'INVOICE_REQUESTED',
   INVOICE_GENERATED = 'INVOICE_GENERATED',
   INVOICE_UPDATED = 'INVOICE_UPDATED',
@@ -3465,6 +3547,33 @@ export type OrderFulfillStockInput = {
   warehouse: Scalars['ID'];
 };
 
+/** An enumeration. */
+export enum OrderGrantRefundCreateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export type OrderGrantRefundCreateInput = {
+  /** Amount of the granted refund. */
+  amount: Scalars['Decimal'];
+  /** Reason of the granted refund. */
+  reason?: InputMaybe<Scalars['String']>;
+};
+
+/** An enumeration. */
+export enum OrderGrantRefundUpdateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED'
+}
+
+export type OrderGrantRefundUpdateInput = {
+  /** Amount of the granted refund. */
+  amount?: InputMaybe<Scalars['Decimal']>;
+  /** Reason of the granted refund. */
+  reason?: InputMaybe<Scalars['String']>;
+};
+
 export type OrderLineCreateInput = {
   /** Number of variant items ordered. */
   quantity: Scalars['Int'];
@@ -3474,8 +3583,6 @@ export type OrderLineCreateInput = {
    * Flag that allow force splitting the same variant into multiple lines by skipping the matching logic.
    *
    * Added in Saleor 3.6.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   forceNewLine?: InputMaybe<Scalars['Boolean']>;
 };
@@ -3558,6 +3665,32 @@ export type OrderSettingsInput = {
   automaticallyConfirmAllNewOrders?: InputMaybe<Scalars['Boolean']>;
   /** When enabled, all non-shippable gift card orders will be fulfilled automatically. By defualt set to True. */
   automaticallyFulfillNonShippableGiftCard?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Expiration time in minutes. Default null - means do not expire any orders. Enter 0 or null to disable.
+   *
+   * Added in Saleor 3.13.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  expireOrdersAfter?: InputMaybe<Scalars['Minute']>;
+  /**
+   * Determine what strategy will be used to mark the order as paid. Based on the chosen option, the proper object will be created and attached to the order when it's manually marked as paid.
+   * `PAYMENT_FLOW` - [default option] creates the `Payment` object.
+   * `TRANSACTION_FLOW` - creates the `TransactionItem` object.
+   *
+   * Added in Saleor 3.13.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  markAsPaidStrategy?: InputMaybe<MarkAsPaidStrategyEnum>;
+  /**
+   * Determine the transaction flow strategy to be used. Include the selected option in the payload sent to the payment app, as a requested action for the transaction.
+   *
+   * Added in Saleor 3.13.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  defaultTransactionFlowStrategy?: InputMaybe<TransactionFlowStrategyEnum>;
 };
 
 export type OrderSettingsUpdateInput = {
@@ -3595,7 +3728,7 @@ export enum OrderSortField {
 }
 
 export type OrderSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort orders. */
   direction: OrderDirection;
   /** Sort orders by the selected field. */
   field: OrderSortField;
@@ -3610,7 +3743,8 @@ export enum OrderStatus {
   PARTIALLY_RETURNED = 'PARTIALLY_RETURNED',
   RETURNED = 'RETURNED',
   FULFILLED = 'FULFILLED',
-  CANCELED = 'CANCELED'
+  CANCELED = 'CANCELED',
+  EXPIRED = 'EXPIRED'
 }
 
 export enum OrderStatusFilter {
@@ -3760,7 +3894,7 @@ export enum PageSortField {
 }
 
 export type PageSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort pages. */
   direction: OrderDirection;
   /** Sort pages by the selected field. */
   field: PageSortField;
@@ -3800,7 +3934,7 @@ export enum PageTypeSortField {
 }
 
 export type PageTypeSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort page types. */
   direction: OrderDirection;
   /** Sort page types by the selected field. */
   field: PageTypeSortField;
@@ -3869,6 +4003,27 @@ export type PaymentFilterInput = {
    */
   ids?: InputMaybe<Array<Scalars['ID']>>;
   checkouts?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+/** An enumeration. */
+export enum PaymentGatewayConfigErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+/** An enumeration. */
+export enum PaymentGatewayInitializeErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
+
+export type PaymentGatewayToInitialize = {
+  /** The identifier of the payment gateway app to initialize. */
+  id: Scalars['String'];
+  /** The data that will be passed to the payment gateway. */
+  data?: InputMaybe<Scalars['JSON']>;
 };
 
 export type PaymentInput = {
@@ -3947,13 +4102,14 @@ export type PermissionGroupFilterInput = {
   ids?: InputMaybe<Array<Scalars['ID']>>;
 };
 
+/** Sorting options for permission groups. */
 export enum PermissionGroupSortField {
   /** Sort permission group accounts by name. */
   NAME = 'NAME'
 }
 
 export type PermissionGroupSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort permission group. */
   direction: OrderDirection;
   /** Sort permission group by the selected field. */
   field: PermissionGroupSortField;
@@ -3999,7 +4155,7 @@ export enum PluginSortField {
 }
 
 export type PluginSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort plugins. */
   direction: OrderDirection;
   /** Sort plugins by the selected field. */
   field: PluginSortField;
@@ -4073,6 +4229,78 @@ export enum ProductAttributeType {
   VARIANT = 'VARIANT'
 }
 
+/** An enumeration. */
+export enum ProductBulkCreateErrorCode {
+  ATTRIBUTE_ALREADY_ASSIGNED = 'ATTRIBUTE_ALREADY_ASSIGNED',
+  ATTRIBUTE_CANNOT_BE_ASSIGNED = 'ATTRIBUTE_CANNOT_BE_ASSIGNED',
+  ATTRIBUTE_VARIANTS_DISABLED = 'ATTRIBUTE_VARIANTS_DISABLED',
+  BLANK = 'BLANK',
+  MAX_LENGTH = 'MAX_LENGTH',
+  DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  INVALID_PRICE = 'INVALID_PRICE',
+  PRODUCT_WITHOUT_CATEGORY = 'PRODUCT_WITHOUT_CATEGORY',
+  NOT_FOUND = 'NOT_FOUND',
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE',
+  PRODUCT_NOT_ASSIGNED_TO_CHANNEL = 'PRODUCT_NOT_ASSIGNED_TO_CHANNEL',
+  UNSUPPORTED_MEDIA_PROVIDER = 'UNSUPPORTED_MEDIA_PROVIDER'
+}
+
+export type ProductBulkCreateInput = {
+  /** List of attributes. */
+  attributes?: InputMaybe<Array<AttributeValueInput>>;
+  /** ID of the product's category. */
+  category?: InputMaybe<Scalars['ID']>;
+  /**
+   * Determine if taxes are being charged for the product.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. Use `Channel.taxConfiguration` to configure whether tax collection is enabled.
+   */
+  chargeTaxes?: InputMaybe<Scalars['Boolean']>;
+  /** List of IDs of collections that the product belongs to. */
+  collections?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * Product description.
+   *
+   * Rich text format. For reference see https://editorjs.io/
+   */
+  description?: InputMaybe<Scalars['JSONString']>;
+  /** Product name. */
+  name?: InputMaybe<Scalars['String']>;
+  /** Product slug. */
+  slug?: InputMaybe<Scalars['String']>;
+  /** ID of a tax class to assign to this product. If not provided, product will use the tax class which is assigned to the product type. */
+  taxClass?: InputMaybe<Scalars['ID']>;
+  /**
+   * Tax rate for enabled tax gateway.
+   *
+   * DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
+   */
+  taxCode?: InputMaybe<Scalars['String']>;
+  /** Search engine optimization fields. */
+  seo?: InputMaybe<SeoInput>;
+  /** Weight of the Product. */
+  weight?: InputMaybe<Scalars['WeightScalar']>;
+  /** Defines the product rating value. */
+  rating?: InputMaybe<Scalars['Float']>;
+  /** Fields required to update the product metadata. */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /** Fields required to update the product private metadata. */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /** External ID of this product. */
+  externalReference?: InputMaybe<Scalars['String']>;
+  /** ID of the type that product belongs to. */
+  productType: Scalars['ID'];
+  /** List of media inputs associated with the product. */
+  media?: InputMaybe<Array<MediaInput>>;
+  /** List of channels in which the product is available. */
+  channelListings?: InputMaybe<Array<ProductChannelListingCreateInput>>;
+  /** Input list of product variants to create. */
+  variants?: InputMaybe<Array<ProductVariantBulkCreateInput>>;
+};
+
 export type ProductChannelListingAddInput = {
   /** ID of a channel. */
   channelId: Scalars['ID'];
@@ -4110,6 +4338,21 @@ export type ProductChannelListingAddInput = {
   addVariants?: InputMaybe<Array<Scalars['ID']>>;
   /** List of variants from which the channel should be unassigned. */
   removeVariants?: InputMaybe<Array<Scalars['ID']>>;
+};
+
+export type ProductChannelListingCreateInput = {
+  /** ID of a channel. */
+  channelId: Scalars['ID'];
+  /** Determines if object is visible to customers. */
+  isPublished?: InputMaybe<Scalars['Boolean']>;
+  /** Publication date time. ISO 8601 standard. */
+  publishedAt?: InputMaybe<Scalars['DateTime']>;
+  /** Determines if product is visible in product listings (doesn't apply to product collections). */
+  visibleInListings?: InputMaybe<Scalars['Boolean']>;
+  /** Determine if product should be available for purchase. */
+  isAvailableForPurchase?: InputMaybe<Scalars['Boolean']>;
+  /** A start date time from which a product will be available for purchase. When not set and `isAvailable` is set to True, the current day is assumed. */
+  availableForPurchaseAt?: InputMaybe<Scalars['DateTime']>;
 };
 
 export type ProductChannelListingUpdateInput = {
@@ -4497,7 +4740,7 @@ export enum ProductTypeSortField {
 }
 
 export type ProductTypeSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort product types. */
   direction: OrderDirection;
   /** Sort product types by the selected field. */
   field: ProductTypeSortField;
@@ -4518,16 +4761,12 @@ export type ProductVariantBulkCreateInput = {
    * Determines if variant is in preorder.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   preorder?: InputMaybe<PreorderSettingsInput>;
   /**
    * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
   /**
@@ -4590,16 +4829,12 @@ export type ProductVariantBulkUpdateInput = {
    * Determines if variant is in preorder.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   preorder?: InputMaybe<PreorderSettingsInput>;
   /**
    * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
   /**
@@ -4651,8 +4886,6 @@ export type ProductVariantChannelListingAddInput = {
    * The threshold for preorder variant in channel.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   preorderThreshold?: InputMaybe<Scalars['Int']>;
 };
@@ -4681,16 +4914,12 @@ export type ProductVariantCreateInput = {
    * Determines if variant is in preorder.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   preorder?: InputMaybe<PreorderSettingsInput>;
   /**
    * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
   /**
@@ -4740,16 +4969,12 @@ export type ProductVariantInput = {
    * Determines if variant is in preorder.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   preorder?: InputMaybe<PreorderSettingsInput>;
   /**
    * Determines maximum quantity of `ProductVariant`,that can be bought in a single checkout.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   quantityLimitPerCustomer?: InputMaybe<Scalars['Int']>;
   /**
@@ -4778,7 +5003,7 @@ export enum ProductVariantSortField {
 }
 
 export type ProductVariantSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort productVariants. */
   direction: OrderDirection;
   /** Sort productVariants by the selected field. */
   field: ProductVariantSortField;
@@ -4889,7 +5114,7 @@ export enum SaleSortField {
 }
 
 export type SaleSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort sales. */
   direction: OrderDirection;
   /**
    * Specifies the channel in which to sort the data.
@@ -5097,8 +5322,6 @@ export type ShopSettingsInput = {
    * Default number of maximum line quantity in single checkout. Minimum possible value is 1, default value is 50.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   limitQuantityPerCheckout?: InputMaybe<Scalars['Int']>;
   /**
@@ -5133,6 +5356,7 @@ export type SiteDomainInput = {
   name?: InputMaybe<Scalars['String']>;
 };
 
+/** Fields required to create a staff user. */
 export type StaffCreateInput = {
   /** Given name. */
   firstName?: InputMaybe<Scalars['String']>;
@@ -5150,6 +5374,7 @@ export type StaffCreateInput = {
   redirectUrl?: InputMaybe<Scalars['String']>;
 };
 
+/** Represents status of a staff account. */
 export enum StaffMemberStatus {
   /** User account has been activated. */
   ACTIVE = 'ACTIVE',
@@ -5166,6 +5391,7 @@ export type StaffNotificationRecipientInput = {
   active?: InputMaybe<Scalars['Boolean']>;
 };
 
+/** Fields required to update a staff user. */
 export type StaffUpdateInput = {
   /** Given name. */
   firstName?: InputMaybe<Scalars['String']>;
@@ -5318,7 +5544,7 @@ export enum TaxClassSortField {
 }
 
 export type TaxClassSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort tax classes. */
   direction: OrderDirection;
   /** Sort tax classes by the selected field. */
   field: TaxClassSortField;
@@ -5432,13 +5658,16 @@ export enum TimePeriodTypeEnum {
  *     The following actions are possible:
  *     CHARGE - Represents the charge action.
  *     REFUND - Represents a refund action.
- *     VOID - Represents a void action.
+ *     VOID - Represents a void action. This field will be removed
+ *     in Saleor 3.14 (Preview Feature). Use `CANCEL` instead.
+ *     CANCEL - Represents a cancel action. Added in Saleor 3.12.
  *
  */
 export enum TransactionActionEnum {
   CHARGE = 'CHARGE',
   REFUND = 'REFUND',
-  VOID = 'VOID'
+  VOID = 'VOID',
+  CANCEL = 'CANCEL'
 }
 
 /** An enumeration. */
@@ -5447,16 +5676,47 @@ export enum TransactionCreateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   NOT_FOUND = 'NOT_FOUND',
   INCORRECT_CURRENCY = 'INCORRECT_CURRENCY',
-  METADATA_KEY_REQUIRED = 'METADATA_KEY_REQUIRED'
+  METADATA_KEY_REQUIRED = 'METADATA_KEY_REQUIRED',
+  UNIQUE = 'UNIQUE'
 }
 
 export type TransactionCreateInput = {
-  /** Status of the transaction. */
-  status: Scalars['String'];
-  /** Payment type used for this transaction. */
-  type: Scalars['String'];
-  /** Reference of the transaction. */
+  /**
+   * Status of the transaction.
+   *
+   * DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.
+   */
+  status?: InputMaybe<Scalars['String']>;
+  /**
+   * Payment type used for this transaction.
+   *
+   * DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `name` and `message` instead.
+   */
+  type?: InputMaybe<Scalars['String']>;
+  /**
+   * Payment name of the transaction.
+   *
+   * Added in Saleor 3.13.
+   */
+  name?: InputMaybe<Scalars['String']>;
+  /**
+   * The message of the transaction.
+   *
+   * Added in Saleor 3.13.
+   */
+  message?: InputMaybe<Scalars['String']>;
+  /**
+   * Reference of the transaction.
+   *
+   * DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `pspReference` instead.
+   */
   reference?: InputMaybe<Scalars['String']>;
+  /**
+   * PSP Reference of the transaction.
+   *
+   * Added in Saleor 3.13.
+   */
+  pspReference?: InputMaybe<Scalars['String']>;
   /** List of all possible actions for the transaction */
   availableActions?: InputMaybe<Array<TransactionActionEnum>>;
   /** Amount authorized by this transaction. */
@@ -5465,22 +5725,139 @@ export type TransactionCreateInput = {
   amountCharged?: InputMaybe<MoneyInput>;
   /** Amount refunded by this transaction. */
   amountRefunded?: InputMaybe<MoneyInput>;
-  /** Amount voided by this transaction. */
+  /**
+   * Amount voided by this transaction.
+   *
+   * DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `amountCanceled` instead.
+   */
   amountVoided?: InputMaybe<MoneyInput>;
+  /**
+   * Amount canceled by this transaction.
+   *
+   * Added in Saleor 3.13.
+   */
+  amountCanceled?: InputMaybe<MoneyInput>;
   /** Payment public metadata. */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Payment private metadata. */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * The url that will allow to redirect user to payment provider page with transaction event details.
+   *
+   * Added in Saleor 3.13.
+   */
+  externalUrl?: InputMaybe<Scalars['String']>;
 };
 
 export type TransactionEventInput = {
-  /** Current status of the payment transaction. */
-  status: TransactionStatus;
-  /** Reference of the transaction. */
+  /**
+   * Current status of the payment transaction.
+   *
+   * DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Status will be calculated by Saleor.
+   */
+  status?: InputMaybe<TransactionStatus>;
+  /**
+   * Reference of the transaction.
+   *
+   * DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `pspReference` instead.
+   */
   reference?: InputMaybe<Scalars['String']>;
-  /** Name of the transaction. */
+  /**
+   * PSP Reference related to this action.
+   *
+   * Added in Saleor 3.13.
+   */
+  pspReference?: InputMaybe<Scalars['String']>;
+  /**
+   * Name of the transaction.
+   *
+   * DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `message` instead. `name` field will be added to `message`.
+   */
   name?: InputMaybe<Scalars['String']>;
+  /**
+   * The message related to the event.
+   *
+   * Added in Saleor 3.13.
+   */
+  message?: InputMaybe<Scalars['String']>;
 };
+
+/** An enumeration. */
+export enum TransactionEventReportErrorCode {
+  INVALID = 'INVALID',
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  NOT_FOUND = 'NOT_FOUND',
+  INCORRECT_DETAILS = 'INCORRECT_DETAILS',
+  ALREADY_EXISTS = 'ALREADY_EXISTS'
+}
+
+/**
+ * Represents possible event types.
+ *
+ *     Added in Saleor 3.12.
+ *
+ *     The following types are possible:
+ *     AUTHORIZATION_SUCCESS - represents success authorization.
+ *     AUTHORIZATION_FAILURE - represents failure authorization.
+ *     AUTHORIZATION_ADJUSTMENT - represents authorization adjustment.
+ *     AUTHORIZATION_REQUEST - represents authorization request.
+ *     AUTHORIZATION_ACTION_REQUIRED - represents authorization that needs
+ *     additional actions from the customer.
+ *     CHARGE_ACTION_REQUIRED - represents charge that needs
+ *     additional actions from the customer.
+ *     CHARGE_SUCCESS - represents success charge.
+ *     CHARGE_FAILURE - represents failure charge.
+ *     CHARGE_BACK - represents chargeback.
+ *     CHARGE_REQUEST - represents charge request.
+ *     REFUND_SUCCESS - represents success refund.
+ *     REFUND_FAILURE - represents failure refund.
+ *     REFUND_REVERSE - represents reverse refund.
+ *     REFUND_REQUEST - represents refund request.
+ *     CANCEL_SUCCESS - represents success cancel.
+ *     CANCEL_FAILURE - represents failure cancel.
+ *     CANCEL_REQUEST - represents cancel request.
+ *     INFO - represents info event.
+ *
+ */
+export enum TransactionEventTypeEnum {
+  AUTHORIZATION_SUCCESS = 'AUTHORIZATION_SUCCESS',
+  AUTHORIZATION_FAILURE = 'AUTHORIZATION_FAILURE',
+  AUTHORIZATION_ADJUSTMENT = 'AUTHORIZATION_ADJUSTMENT',
+  AUTHORIZATION_REQUEST = 'AUTHORIZATION_REQUEST',
+  AUTHORIZATION_ACTION_REQUIRED = 'AUTHORIZATION_ACTION_REQUIRED',
+  CHARGE_ACTION_REQUIRED = 'CHARGE_ACTION_REQUIRED',
+  CHARGE_SUCCESS = 'CHARGE_SUCCESS',
+  CHARGE_FAILURE = 'CHARGE_FAILURE',
+  CHARGE_BACK = 'CHARGE_BACK',
+  CHARGE_REQUEST = 'CHARGE_REQUEST',
+  REFUND_SUCCESS = 'REFUND_SUCCESS',
+  REFUND_FAILURE = 'REFUND_FAILURE',
+  REFUND_REVERSE = 'REFUND_REVERSE',
+  REFUND_REQUEST = 'REFUND_REQUEST',
+  CANCEL_SUCCESS = 'CANCEL_SUCCESS',
+  CANCEL_FAILURE = 'CANCEL_FAILURE',
+  CANCEL_REQUEST = 'CANCEL_REQUEST',
+  INFO = 'INFO'
+}
+
+/**
+ * Determine the transaction flow strategy.
+ *
+ *     AUTHORIZATION - the processed transaction should be only authorized
+ *     CHARGE - the processed transaction should be charged.
+ *
+ */
+export enum TransactionFlowStrategyEnum {
+  AUTHORIZATION = 'AUTHORIZATION',
+  CHARGE = 'CHARGE'
+}
+
+/** An enumeration. */
+export enum TransactionInitializeErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND'
+}
 
 /** An enumeration. */
 export enum TransactionKind {
@@ -5497,6 +5874,16 @@ export enum TransactionKind {
 }
 
 /** An enumeration. */
+export enum TransactionProcessErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  TRANSACTION_ALREADY_PROCESSED = 'TRANSACTION_ALREADY_PROCESSED',
+  MISSING_PAYMENT_APP_RELATION = 'MISSING_PAYMENT_APP_RELATION',
+  MISSING_PAYMENT_APP = 'MISSING_PAYMENT_APP'
+}
+
+/** An enumeration. */
 export enum TransactionRequestActionErrorCode {
   INVALID = 'INVALID',
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
@@ -5504,7 +5891,15 @@ export enum TransactionRequestActionErrorCode {
   MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK = 'MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK'
 }
 
-/** An enumeration. */
+/**
+ * Represents a status of payment transaction.
+ *
+ *     The following statuses are possible:
+ *     SUCCESS - Represents a sucess action.
+ *     FAILURE - Represents a failure action.
+ *     PENDING - Represents a pending action.
+ *
+ */
 export enum TransactionStatus {
   PENDING = 'PENDING',
   SUCCESS = 'SUCCESS',
@@ -5517,16 +5912,47 @@ export enum TransactionUpdateErrorCode {
   GRAPHQL_ERROR = 'GRAPHQL_ERROR',
   NOT_FOUND = 'NOT_FOUND',
   INCORRECT_CURRENCY = 'INCORRECT_CURRENCY',
-  METADATA_KEY_REQUIRED = 'METADATA_KEY_REQUIRED'
+  METADATA_KEY_REQUIRED = 'METADATA_KEY_REQUIRED',
+  UNIQUE = 'UNIQUE'
 }
 
 export type TransactionUpdateInput = {
-  /** Status of the transaction. */
+  /**
+   * Status of the transaction.
+   *
+   * DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.
+   */
   status?: InputMaybe<Scalars['String']>;
-  /** Payment type used for this transaction. */
+  /**
+   * Payment type used for this transaction.
+   *
+   * DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `name` and `message` instead.
+   */
   type?: InputMaybe<Scalars['String']>;
-  /** Reference of the transaction. */
+  /**
+   * Payment name of the transaction.
+   *
+   * Added in Saleor 3.13.
+   */
+  name?: InputMaybe<Scalars['String']>;
+  /**
+   * The message of the transaction.
+   *
+   * Added in Saleor 3.13.
+   */
+  message?: InputMaybe<Scalars['String']>;
+  /**
+   * Reference of the transaction.
+   *
+   * DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `pspReference` instead.
+   */
   reference?: InputMaybe<Scalars['String']>;
+  /**
+   * PSP Reference of the transaction.
+   *
+   * Added in Saleor 3.13.
+   */
+  pspReference?: InputMaybe<Scalars['String']>;
   /** List of all possible actions for the transaction */
   availableActions?: InputMaybe<Array<TransactionActionEnum>>;
   /** Amount authorized by this transaction. */
@@ -5535,12 +5961,28 @@ export type TransactionUpdateInput = {
   amountCharged?: InputMaybe<MoneyInput>;
   /** Amount refunded by this transaction. */
   amountRefunded?: InputMaybe<MoneyInput>;
-  /** Amount voided by this transaction. */
+  /**
+   * Amount voided by this transaction.
+   *
+   * DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `amountCanceled` instead.
+   */
   amountVoided?: InputMaybe<MoneyInput>;
+  /**
+   * Amount canceled by this transaction.
+   *
+   * Added in Saleor 3.13.
+   */
+  amountCanceled?: InputMaybe<MoneyInput>;
   /** Payment public metadata. */
   metadata?: InputMaybe<Array<MetadataInput>>;
   /** Payment private metadata. */
   privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * The url that will allow to redirect user to payment provider page with transaction event details.
+   *
+   * Added in Saleor 3.13.
+   */
+  externalUrl?: InputMaybe<Scalars['String']>;
 };
 
 export enum TranslatableKinds {
@@ -5634,7 +6076,7 @@ export enum UserSortField {
 }
 
 export type UserSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort users. */
   direction: OrderDirection;
   /** Sort users by the selected field. */
   field: UserSortField;
@@ -5760,7 +6202,7 @@ export enum VoucherSortField {
 }
 
 export type VoucherSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort vouchers. */
   direction: OrderDirection;
   /**
    * Specifies the channel in which to sort the data.
@@ -5833,7 +6275,7 @@ export enum WarehouseSortField {
 }
 
 export type WarehouseSortingInput = {
-  /** Specifies the direction in which to sort products. */
+  /** Specifies the direction in which to sort warehouses. */
   direction: OrderDirection;
   /** Sort warehouses by the selected field. */
   field: WarehouseSortField;
@@ -5858,16 +6300,12 @@ export type WarehouseUpdateInput = {
    * Click and collect options: local, all or disabled.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   clickAndCollectOption?: InputMaybe<WarehouseClickAndCollectOptionEnum>;
   /**
    * Visibility of warehouse stocks.
    *
    * Added in Saleor 3.1.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   isPrivate?: InputMaybe<Scalars['Boolean']>;
 };
@@ -5901,8 +6339,6 @@ export type WebhookCreateInput = {
    * Subscription query used to define a webhook payload.
    *
    * Added in Saleor 3.2.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   query?: InputMaybe<Scalars['String']>;
   /**
@@ -5993,14 +6429,20 @@ export enum WebhookEventTypeAsyncEnum {
   GIFT_CARD_UPDATED = 'GIFT_CARD_UPDATED',
   /** A gift card is deleted. */
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
+  /**
+   * A gift card has been sent.
+   *
+   * Added in Saleor 3.13.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  GIFT_CARD_SENT = 'GIFT_CARD_SENT',
   /** A gift card status is changed. */
   GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
   /**
    * A gift card metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   /** A new menu created. */
@@ -6025,14 +6467,14 @@ export enum WebhookEventTypeAsyncEnum {
   ORDER_UPDATED = 'ORDER_UPDATED',
   /** An order is cancelled. */
   ORDER_CANCELLED = 'ORDER_CANCELLED',
+  /** An order is expired. */
+  ORDER_EXPIRED = 'ORDER_EXPIRED',
   /** An order is fulfilled. */
   ORDER_FULFILLED = 'ORDER_FULFILLED',
   /**
    * An order metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   ORDER_METADATA_UPDATED = 'ORDER_METADATA_UPDATED',
   /** A draft order is created. */
@@ -6065,8 +6507,6 @@ export enum WebhookEventTypeAsyncEnum {
    * A customer account metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
   /** A new collection is created. */
@@ -6079,8 +6519,6 @@ export enum WebhookEventTypeAsyncEnum {
    * A collection metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   COLLECTION_METADATA_UPDATED = 'COLLECTION_METADATA_UPDATED',
   /** A new product is created. */
@@ -6111,8 +6549,6 @@ export enum WebhookEventTypeAsyncEnum {
    * A product metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
   /** A new product variant is created. */
@@ -6131,20 +6567,17 @@ export enum WebhookEventTypeAsyncEnum {
    * A product variant metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A new checkout is created. */
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
   /** A checkout is updated. It also triggers all updates related to the checkout. */
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
+  CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
   /**
    * A checkout metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
   /** A new fulfillment is created. */
@@ -6157,8 +6590,6 @@ export enum WebhookEventTypeAsyncEnum {
    * A fulfillment metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   FULFILLMENT_METADATA_UPDATED = 'FULFILLMENT_METADATA_UPDATED',
   /** User notification triggered. */
@@ -6197,8 +6628,6 @@ export enum WebhookEventTypeAsyncEnum {
    * A shipping zone metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   SHIPPING_ZONE_METADATA_UPDATED = 'SHIPPING_ZONE_METADATA_UPDATED',
   /** A new staff user is created. */
@@ -6207,14 +6636,16 @@ export enum WebhookEventTypeAsyncEnum {
   STAFF_UPDATED = 'STAFF_UPDATED',
   /** A staff user is deleted. */
   STAFF_DELETED = 'STAFF_DELETED',
-  /** An action requested for transaction. */
+  /**
+   * An action requested for transaction.
+   *
+   * DEPRECATED: this subscription will be removed in Saleor 3.14 (Preview Feature). Use `TRANSACTION_CHARGE_REQUESTED`, `TRANSACTION_REFUND_REQUESTED`, `TRANSACTION_CANCELATION_REQUESTED` instead.
+   */
   TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
   /**
    * Transaction item metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   TRANSACTION_ITEM_METADATA_UPDATED = 'TRANSACTION_ITEM_METADATA_UPDATED',
   /** A new translation is created. */
@@ -6231,8 +6662,6 @@ export enum WebhookEventTypeAsyncEnum {
    * A warehouse metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   WAREHOUSE_METADATA_UPDATED = 'WAREHOUSE_METADATA_UPDATED',
   /** A new voucher created. */
@@ -6245,8 +6674,6 @@ export enum WebhookEventTypeAsyncEnum {
    * A voucher metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   VOUCHER_METADATA_UPDATED = 'VOUCHER_METADATA_UPDATED',
   /** An observability event is created. */
@@ -6309,14 +6736,20 @@ export enum WebhookEventTypeEnum {
   GIFT_CARD_UPDATED = 'GIFT_CARD_UPDATED',
   /** A gift card is deleted. */
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
+  /**
+   * A gift card has been sent.
+   *
+   * Added in Saleor 3.13.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  GIFT_CARD_SENT = 'GIFT_CARD_SENT',
   /** A gift card status is changed. */
   GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
   /**
    * A gift card metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   /** A new menu created. */
@@ -6341,14 +6774,14 @@ export enum WebhookEventTypeEnum {
   ORDER_UPDATED = 'ORDER_UPDATED',
   /** An order is cancelled. */
   ORDER_CANCELLED = 'ORDER_CANCELLED',
+  /** An order is expired. */
+  ORDER_EXPIRED = 'ORDER_EXPIRED',
   /** An order is fulfilled. */
   ORDER_FULFILLED = 'ORDER_FULFILLED',
   /**
    * An order metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   ORDER_METADATA_UPDATED = 'ORDER_METADATA_UPDATED',
   /** A draft order is created. */
@@ -6381,8 +6814,6 @@ export enum WebhookEventTypeEnum {
    * A customer account metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   CUSTOMER_METADATA_UPDATED = 'CUSTOMER_METADATA_UPDATED',
   /** A new collection is created. */
@@ -6395,8 +6826,6 @@ export enum WebhookEventTypeEnum {
    * A collection metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   COLLECTION_METADATA_UPDATED = 'COLLECTION_METADATA_UPDATED',
   /** A new product is created. */
@@ -6427,8 +6856,6 @@ export enum WebhookEventTypeEnum {
    * A product metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   PRODUCT_METADATA_UPDATED = 'PRODUCT_METADATA_UPDATED',
   /** A new product variant is created. */
@@ -6447,20 +6874,17 @@ export enum WebhookEventTypeEnum {
    * A product variant metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   /** A new checkout is created. */
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
   /** A checkout is updated. It also triggers all updates related to the checkout. */
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
+  CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
   /**
    * A checkout metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
   /** A new fulfillment is created. */
@@ -6473,8 +6897,6 @@ export enum WebhookEventTypeEnum {
    * A fulfillment metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   FULFILLMENT_METADATA_UPDATED = 'FULFILLMENT_METADATA_UPDATED',
   /** User notification triggered. */
@@ -6513,8 +6935,6 @@ export enum WebhookEventTypeEnum {
    * A shipping zone metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   SHIPPING_ZONE_METADATA_UPDATED = 'SHIPPING_ZONE_METADATA_UPDATED',
   /** A new staff user is created. */
@@ -6523,14 +6943,16 @@ export enum WebhookEventTypeEnum {
   STAFF_UPDATED = 'STAFF_UPDATED',
   /** A staff user is deleted. */
   STAFF_DELETED = 'STAFF_DELETED',
-  /** An action requested for transaction. */
+  /**
+   * An action requested for transaction.
+   *
+   * DEPRECATED: this subscription will be removed in Saleor 3.14 (Preview Feature). Use `TRANSACTION_CHARGE_REQUESTED`, `TRANSACTION_REFUND_REQUESTED`, `TRANSACTION_CANCELATION_REQUESTED` instead.
+   */
   TRANSACTION_ACTION_REQUEST = 'TRANSACTION_ACTION_REQUEST',
   /**
    * Transaction item metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   TRANSACTION_ITEM_METADATA_UPDATED = 'TRANSACTION_ITEM_METADATA_UPDATED',
   /** A new translation is created. */
@@ -6547,8 +6969,6 @@ export enum WebhookEventTypeEnum {
    * A warehouse metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   WAREHOUSE_METADATA_UPDATED = 'WAREHOUSE_METADATA_UPDATED',
   /** A new voucher created. */
@@ -6561,8 +6981,6 @@ export enum WebhookEventTypeEnum {
    * A voucher metadata is updated.
    *
    * Added in Saleor 3.8.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   VOUCHER_METADATA_UPDATED = 'VOUCHER_METADATA_UPDATED',
   /** An observability event is created. */
@@ -6588,19 +7006,39 @@ export enum WebhookEventTypeEnum {
   /** Void payment. */
   PAYMENT_VOID = 'PAYMENT_VOID',
   /**
+   * Event called when charge has been requested for transaction.
+   *
+   * Added in Saleor 3.13.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  TRANSACTION_CHARGE_REQUESTED = 'TRANSACTION_CHARGE_REQUESTED',
+  /**
+   * Event called when refund has been requested for transaction.
+   *
+   * Added in Saleor 3.13.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  TRANSACTION_REFUND_REQUESTED = 'TRANSACTION_REFUND_REQUESTED',
+  /**
+   * Event called when cancel has been requested for transaction.
+   *
+   * Added in Saleor 3.13.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  TRANSACTION_CANCELATION_REQUESTED = 'TRANSACTION_CANCELATION_REQUESTED',
+  /**
    * Event called for checkout tax calculation.
    *
    * Added in Saleor 3.6.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   CHECKOUT_CALCULATE_TAXES = 'CHECKOUT_CALCULATE_TAXES',
   /**
    * Event called for order tax calculation.
    *
    * Added in Saleor 3.6.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   ORDER_CALCULATE_TAXES = 'ORDER_CALCULATE_TAXES',
   /** Fetch external shipping methods for checkout. */
@@ -6608,7 +7046,10 @@ export enum WebhookEventTypeEnum {
   /** Filter shipping methods for order. */
   ORDER_FILTER_SHIPPING_METHODS = 'ORDER_FILTER_SHIPPING_METHODS',
   /** Filter shipping methods for checkout. */
-  CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS'
+  CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS',
+  PAYMENT_GATEWAY_INITIALIZE_SESSION = 'PAYMENT_GATEWAY_INITIALIZE_SESSION',
+  TRANSACTION_INITIALIZE_SESSION = 'TRANSACTION_INITIALIZE_SESSION',
+  TRANSACTION_PROCESS_SESSION = 'TRANSACTION_PROCESS_SESSION'
 }
 
 /** Enum determining type of webhook. */
@@ -6628,19 +7069,39 @@ export enum WebhookEventTypeSyncEnum {
   /** Void payment. */
   PAYMENT_VOID = 'PAYMENT_VOID',
   /**
+   * Event called when charge has been requested for transaction.
+   *
+   * Added in Saleor 3.13.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  TRANSACTION_CHARGE_REQUESTED = 'TRANSACTION_CHARGE_REQUESTED',
+  /**
+   * Event called when refund has been requested for transaction.
+   *
+   * Added in Saleor 3.13.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  TRANSACTION_REFUND_REQUESTED = 'TRANSACTION_REFUND_REQUESTED',
+  /**
+   * Event called when cancel has been requested for transaction.
+   *
+   * Added in Saleor 3.13.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  TRANSACTION_CANCELATION_REQUESTED = 'TRANSACTION_CANCELATION_REQUESTED',
+  /**
    * Event called for checkout tax calculation.
    *
    * Added in Saleor 3.6.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   CHECKOUT_CALCULATE_TAXES = 'CHECKOUT_CALCULATE_TAXES',
   /**
    * Event called for order tax calculation.
    *
    * Added in Saleor 3.6.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   ORDER_CALCULATE_TAXES = 'ORDER_CALCULATE_TAXES',
   /** Fetch external shipping methods for checkout. */
@@ -6648,7 +7109,10 @@ export enum WebhookEventTypeSyncEnum {
   /** Filter shipping methods for order. */
   ORDER_FILTER_SHIPPING_METHODS = 'ORDER_FILTER_SHIPPING_METHODS',
   /** Filter shipping methods for checkout. */
-  CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS'
+  CHECKOUT_FILTER_SHIPPING_METHODS = 'CHECKOUT_FILTER_SHIPPING_METHODS',
+  PAYMENT_GATEWAY_INITIALIZE_SESSION = 'PAYMENT_GATEWAY_INITIALIZE_SESSION',
+  TRANSACTION_INITIALIZE_SESSION = 'TRANSACTION_INITIALIZE_SESSION',
+  TRANSACTION_PROCESS_SESSION = 'TRANSACTION_PROCESS_SESSION'
 }
 
 /** An enumeration. */
@@ -6676,6 +7140,7 @@ export enum WebhookSampleEventTypeEnum {
   GIFT_CARD_CREATED = 'GIFT_CARD_CREATED',
   GIFT_CARD_UPDATED = 'GIFT_CARD_UPDATED',
   GIFT_CARD_DELETED = 'GIFT_CARD_DELETED',
+  GIFT_CARD_SENT = 'GIFT_CARD_SENT',
   GIFT_CARD_STATUS_CHANGED = 'GIFT_CARD_STATUS_CHANGED',
   GIFT_CARD_METADATA_UPDATED = 'GIFT_CARD_METADATA_UPDATED',
   MENU_CREATED = 'MENU_CREATED',
@@ -6689,6 +7154,7 @@ export enum WebhookSampleEventTypeEnum {
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
   ORDER_UPDATED = 'ORDER_UPDATED',
   ORDER_CANCELLED = 'ORDER_CANCELLED',
+  ORDER_EXPIRED = 'ORDER_EXPIRED',
   ORDER_FULFILLED = 'ORDER_FULFILLED',
   ORDER_METADATA_UPDATED = 'ORDER_METADATA_UPDATED',
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
@@ -6725,6 +7191,7 @@ export enum WebhookSampleEventTypeEnum {
   PRODUCT_VARIANT_METADATA_UPDATED = 'PRODUCT_VARIANT_METADATA_UPDATED',
   CHECKOUT_CREATED = 'CHECKOUT_CREATED',
   CHECKOUT_UPDATED = 'CHECKOUT_UPDATED',
+  CHECKOUT_FULLY_PAID = 'CHECKOUT_FULLY_PAID',
   CHECKOUT_METADATA_UPDATED = 'CHECKOUT_METADATA_UPDATED',
   FULFILLMENT_CREATED = 'FULFILLMENT_CREATED',
   FULFILLMENT_CANCELED = 'FULFILLMENT_CANCELED',
@@ -6809,8 +7276,6 @@ export type WebhookUpdateInput = {
    * Subscription query used to define a webhook payload.
    *
    * Added in Saleor 3.2.
-   *
-   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   query?: InputMaybe<Scalars['String']>;
   /**
@@ -7700,6 +8165,8 @@ export type CategoryFragment = { __typename: 'Category', id: string, name: strin
 
 export type CategoryDetailsFragment = { __typename: 'Category', id: string, name: string, slug: string, description: any | null, seoDescription: string | null, seoTitle: string | null, backgroundImage: { __typename: 'Image', alt: string | null, url: string } | null, parent: { __typename: 'Category', id: string } | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
+export type ChannelOrderSettingsFragment = { __typename: 'Channel', orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } };
+
 export type ChannelErrorFragment = { __typename: 'ChannelError', code: ChannelErrorCode, field: string | null, message: string | null };
 
 export type ChannelFragment = { __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } };
@@ -7725,6 +8192,14 @@ export type SaleDetailsFragment = { __typename: 'Sale', id: string, name: string
 export type VoucherFragment = { __typename: 'Voucher', id: string, code: string, startDate: any, endDate: any | null, usageLimit: number | null, type: VoucherTypeEnum, discountValueType: DiscountValueTypeEnum, minCheckoutItemsQuantity: number | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> | null, channelListings: Array<{ __typename: 'VoucherChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, minSpent: { __typename: 'Money', amount: number, currency: string } | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 export type VoucherDetailsFragment = { __typename: 'Voucher', code: string, usageLimit: number | null, used: number, applyOncePerOrder: boolean, applyOncePerCustomer: boolean, onlyForStaff: boolean, id: string, startDate: any, endDate: any | null, type: VoucherTypeEnum, discountValueType: DiscountValueTypeEnum, minCheckoutItemsQuantity: number | null, productsCount: { __typename: 'ProductCountableConnection', totalCount: number | null } | null, collectionsCount: { __typename: 'CollectionCountableConnection', totalCount: number | null } | null, categoriesCount: { __typename: 'CategoryCountableConnection', totalCount: number | null } | null, products?: { __typename: 'ProductCountableConnection', edges: Array<{ __typename: 'ProductCountableEdge', node: { __typename: 'Product', id: string, name: string, productType: { __typename: 'ProductType', id: string, name: string }, thumbnail: { __typename: 'Image', url: string } | null, channelListings: Array<{ __typename: 'ProductChannelListing', isPublished: boolean, publicationDate: any | null, isAvailableForPurchase: boolean | null, availableForPurchase: any | null, visibleInListings: boolean, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string } }> | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, collections?: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, categories?: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, products: { __typename: 'ProductCountableConnection', totalCount: number | null } | null } }>, pageInfo: { __typename: 'PageInfo', endCursor: string | null, hasNextPage: boolean, hasPreviousPage: boolean, startCursor: string | null } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }> | null, channelListings: Array<{ __typename: 'VoucherChannelListing', id: string, discountValue: number, currency: string, channel: { __typename: 'Channel', id: string, name: string, currencyCode: string }, minSpent: { __typename: 'Money', amount: number, currency: string } | null }> | null, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
+
+export type TransactionRequestActionErrorFragment = { __typename: 'TransactionRequestActionError', field: string | null, message: string | null, code: TransactionRequestActionErrorCode };
+
+export type TransactionCreateErrorFragment = { __typename: 'TransactionCreateError', field: string | null, message: string | null, code: TransactionCreateErrorCode };
+
+export type OrderGrantRefundCreateErrorFragment = { __typename: 'OrderGrantRefundCreateError', field: string | null, message: string | null, code: OrderGrantRefundCreateErrorCode };
+
+export type OrderGrantRefundUpdateErrorFragment = { __typename: 'OrderGrantRefundUpdateError', field: string | null, message: string | null, code: OrderGrantRefundUpdateErrorCode };
 
 export type AttributeErrorFragment = { __typename: 'AttributeError', code: AttributeErrorCode, field: string | null, message: string | null };
 
@@ -7943,6 +8418,24 @@ export type MenuItemFragment = { __typename: 'MenuItem', id: string, level: numb
 export type MenuItemNestedFragment = { __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null };
 
 export type MenuDetailsFragment = { __typename: 'Menu', id: string, name: string, items: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, children: Array<{ __typename: 'MenuItem', id: string, level: number, name: string, url: string | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null, category: { __typename: 'Category', id: string, name: string } | null, collection: { __typename: 'Collection', id: string, name: string } | null, page: { __typename: 'Page', id: string, title: string } | null }> | null };
+
+export type TransactionEventFragment = { __typename: 'TransactionEvent', id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, externalUrl: string, amount: { __typename: 'Money', amount: number, currency: string }, createdBy: { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | { __typename: 'App', id: string, name: string | null } | null };
+
+export type TransactionItemFragment = { __typename: 'TransactionItem', id: string, type: string, pspReference: string, actions: Array<TransactionActionEnum>, status: string, externalUrl: string, events: Array<{ __typename: 'TransactionEvent', id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, externalUrl: string, amount: { __typename: 'Money', amount: number, currency: string }, createdBy: { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | { __typename: 'App', id: string, name: string | null } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } };
+
+export type OrderPaymentFragment = { __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null };
+
+export type OrderGiftCardFragment = { __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> };
+
+export type OrderGrantedRefundFragment = { __typename: 'OrderGrantedRefund', id: string, createdAt: any, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null } | null };
+
+export type OrderLineGrantRefundFragment = { __typename: 'OrderLine', id: string, productName: string, quantity: number, quantityToFulfill: number, variantName: string, thumbnail: { __typename: 'Image', url: string } | null, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } };
+
+export type OrderFulfillmentGrantRefundFragment = { __typename: 'Fulfillment', id: string, fulfillmentOrder: number, status: FulfillmentStatus, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, orderLine: { __typename: 'OrderLine', id: string, productName: string, quantity: number, quantityToFulfill: number, variantName: string, thumbnail: { __typename: 'Image', url: string } | null, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } | null }> | null };
+
+export type OrderDetailsGrantRefundFragment = { __typename: 'Order', id: string, number: string, lines: Array<{ __typename: 'OrderLine', id: string, productName: string, quantity: number, quantityToFulfill: number, variantName: string, thumbnail: { __typename: 'Image', url: string } | null, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, fulfillmentOrder: number, status: FulfillmentStatus, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, orderLine: { __typename: 'OrderLine', id: string, productName: string, quantity: number, quantityToFulfill: number, variantName: string, thumbnail: { __typename: 'Image', url: string } | null, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } } | null }> | null }>, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } } };
+
+export type OrderDetailsWithTransactionsFragment = { __typename: 'Order', id: string, token: string, isShippingRequired: boolean, canFinalize: boolean, created: any, customerNote: string, number: string, isPaid: boolean, paymentStatus: PaymentChargeStatusEnum, shippingMethodName: string | null, collectionPointName: string | null, status: OrderStatus, actions: Array<OrderAction>, userEmail: string | null, billingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, transactions: Array<{ __typename: 'TransactionItem', id: string, type: string, pspReference: string, actions: Array<TransactionActionEnum>, status: string, externalUrl: string, events: Array<{ __typename: 'TransactionEvent', id: string, pspReference: string, type: TransactionEventTypeEnum | null, message: string, createdAt: any, externalUrl: string, amount: { __typename: 'Money', amount: number, currency: string }, createdBy: { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string, avatar: { __typename: 'Image', url: string } | null } | { __typename: 'App', id: string, name: string | null } | null }>, authorizedAmount: { __typename: 'Money', amount: number, currency: string }, chargedAmount: { __typename: 'Money', amount: number, currency: string }, refundedAmount: { __typename: 'Money', amount: number, currency: string }, canceledAmount: { __typename: 'Money', amount: number, currency: string }, authorizePendingAmount: { __typename: 'Money', amount: number, currency: string }, chargePendingAmount: { __typename: 'Money', amount: number, currency: string }, refundPendingAmount: { __typename: 'Money', amount: number, currency: string }, cancelPendingAmount: { __typename: 'Money', amount: number, currency: string } }>, payments: Array<{ __typename: 'Payment', id: string, isActive: boolean, actions: Array<OrderAction>, gateway: string, paymentMethodType: string, modified: any, availableCaptureAmount: { __typename: 'Money', amount: number, currency: string } | null, capturedAmount: { __typename: 'Money', amount: number, currency: string } | null, total: { __typename: 'Money', amount: number, currency: string } | null, availableRefundAmount: { __typename: 'Money', amount: number, currency: string } | null, transactions: Array<{ __typename: 'Transaction', id: string, token: string, created: any, kind: TransactionKind, isSuccess: boolean }> | null }>, giftCards: Array<{ __typename: 'GiftCard', id: string, last4CodeChars: string, events: Array<{ __typename: 'GiftCardEvent', id: string, type: GiftCardEventsEnum | null, orderId: string | null, date: any | null, balance: { __typename: 'GiftCardEventBalance', initialBalance: { __typename: 'Money', amount: number, currency: string } | null, currentBalance: { __typename: 'Money', amount: number, currency: string }, oldInitialBalance: { __typename: 'Money', amount: number, currency: string } | null, oldCurrentBalance: { __typename: 'Money', amount: number, currency: string } | null } | null }> }>, grantedRefunds: Array<{ __typename: 'OrderGrantedRefund', id: string, createdAt: any, reason: string | null, amount: { __typename: 'Money', currency: string, amount: number }, user: { __typename: 'User', id: string, firstName: string, lastName: string, email: string, avatar: { __typename: 'Image', url: string, alt: string | null } | null } | null, app: { __typename: 'App', id: string, name: string | null } | null }>, discounts: Array<{ __typename: 'OrderDiscount', id: string, type: OrderDiscountType, value: any, reason: string | null, calculationMode: DiscountValueTypeEnum, amount: { __typename: 'Money', amount: number, currency: string } }>, events: Array<{ __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string } | null }> | null }>, fulfillments: Array<{ __typename: 'Fulfillment', id: string, fulfillmentOrder: number, status: FulfillmentStatus, trackingNumber: string, lines: Array<{ __typename: 'FulfillmentLine', id: string, quantity: number, orderLine: { __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null } | null }> | null, warehouse: { __typename: 'Warehouse', id: string, name: string } | null }>, lines: Array<{ __typename: 'OrderLine', id: string, isShippingRequired: boolean, productName: string, productSku: string | null, quantity: number, quantityFulfilled: number, quantityToFulfill: number, unitDiscountValue: any, unitDiscountReason: string | null, unitDiscountType: DiscountValueTypeEnum | null, allocations: Array<{ __typename: 'Allocation', id: string, quantity: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, variant: { __typename: 'ProductVariant', id: string, quantityAvailable: number | null, preorder: { __typename: 'PreorderData', endDate: any | null } | null, stocks: Array<{ __typename: 'Stock', id: string, quantity: number, quantityAllocated: number, warehouse: { __typename: 'Warehouse', id: string, name: string } }> | null, product: { __typename: 'Product', id: string, isAvailableForPurchase: boolean | null } } | null, totalPrice: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, unitDiscount: { __typename: 'Money', amount: number, currency: string }, undiscountedUnitPrice: { __typename: 'TaxedMoney', currency: string, gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, unitPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, thumbnail: { __typename: 'Image', url: string } | null }>, shippingAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, deliveryMethod: { __typename: 'Warehouse', id: string, clickAndCollectOption: WarehouseClickAndCollectOptionEnum } | { __typename: 'ShippingMethod', id: string } | null, shippingMethod: { __typename: 'ShippingMethod', id: string } | null, shippingPrice: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string } }, subtotal: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string } }, total: { __typename: 'TaxedMoney', gross: { __typename: 'Money', amount: number, currency: string }, net: { __typename: 'Money', amount: number, currency: string }, tax: { __typename: 'Money', amount: number, currency: string } }, totalRemainingGrant: { __typename: 'Money', amount: number, currency: string }, totalGrantedRefund: { __typename: 'Money', amount: number, currency: string }, totalRefundPending: { __typename: 'Money', amount: number, currency: string }, totalRefunded: { __typename: 'Money', amount: number, currency: string }, totalAuthorizePending: { __typename: 'Money', amount: number, currency: string }, totalAuthorized: { __typename: 'Money', amount: number, currency: string }, totalCharged: { __typename: 'Money', amount: number, currency: string }, totalChargePending: { __typename: 'Money', amount: number, currency: string }, totalCanceled: { __typename: 'Money', amount: number, currency: string }, totalCancelPending: { __typename: 'Money', amount: number, currency: string }, totalBalance: { __typename: 'Money', amount: number, currency: string }, undiscountedTotal: { __typename: 'TaxedMoney', net: { __typename: 'Money', amount: number, currency: string }, gross: { __typename: 'Money', amount: number, currency: string } }, user: { __typename: 'User', id: string, email: string } | null, shippingMethods: Array<{ __typename: 'ShippingMethod', id: string, name: string, active: boolean, message: string | null, price: { __typename: 'Money', amount: number, currency: string } }>, invoices: Array<{ __typename: 'Invoice', id: string, number: string | null, createdAt: any, url: string | null, status: JobStatusEnum }>, channel: { __typename: 'Channel', isActive: boolean, id: string, name: string, currencyCode: string, slug: string, defaultCountry: { __typename: 'CountryDisplay', code: string }, orderSettings: { __typename: 'OrderSettings', markAsPaidStrategy: MarkAsPaidStrategyEnum } }, metadata: Array<{ __typename: 'MetadataItem', key: string, value: string }>, privateMetadata: Array<{ __typename: 'MetadataItem', key: string, value: string }> };
 
 export type OrderEventFragment = { __typename: 'OrderEvent', id: string, amount: number | null, shippingCostsIncluded: boolean | null, date: any | null, email: string | null, emailType: OrderEventsEmailsEnum | null, invoiceNumber: string | null, message: string | null, quantity: number | null, transactionReference: string | null, type: OrderEventsEnum | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, relatedOrder: { __typename: 'Order', id: string, number: string } | null, user: { __typename: 'User', id: string, email: string, firstName: string, lastName: string } | null, app: { __typename: 'App', id: string, name: string | null, appUrl: string | null } | null, lines: Array<{ __typename: 'OrderEventOrderLineObject', quantity: number | null, itemName: string | null, discount: { __typename: 'OrderEventDiscountObject', valueType: DiscountValueTypeEnum, value: any, reason: string | null, oldValueType: DiscountValueTypeEnum | null, oldValue: any | null, amount: { __typename: 'Money', amount: number, currency: string } | null, oldAmount: { __typename: 'Money', amount: number, currency: string } | null } | null, orderLine: { __typename: 'OrderLine', id: string, productName: string, variantName: string } | null }> | null };
 
