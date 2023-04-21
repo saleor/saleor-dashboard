@@ -66,7 +66,7 @@ jobs:
       - name: Cypress run test percy
         if: contains(fromJSON('["percy", "all"]'), env.TEST_KIND)
         continue-on-error: true
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         env:
           API_URI: ${{ steps.get-env-urls.outputs.API_URL }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
@@ -84,7 +84,7 @@ jobs:
       - name: Cypress run test functional
         if: contains(fromJSON('["functional", "all"]'), env.TEST_KIND)
         continue-on-error: true
-        uses: cypress-io/github-action@v4
+        uses: cypress-io/github-action@v5
         env:
           API_URI: ${{ steps.get-env-urls.outputs.API_URL }}
           APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
