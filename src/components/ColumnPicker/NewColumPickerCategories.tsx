@@ -60,7 +60,7 @@ export const NewColumnPickerCategories: React.FC<
       </Box>
       {selectedCategory ? (
         <>
-          <Box paddingX={7}>
+          <Box paddingX={7} style={{ boxSizing: "border-box" }}>
             <SearchInput
               size="small"
               placeholder="Search for columns"
