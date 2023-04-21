@@ -193,28 +193,16 @@ export const fragmentOrderDetails = gql`
       ...Address
     }
     transactions {
-      id
+      ...TransactionItem
+    }
+    payments {
+      ...OrderPayment
     }
     giftCards {
-      events {
-        id
-        type
-        orderId
-        balance {
-          initialBalance {
-            ...Money
-          }
-          currentBalance {
-            ...Money
-          }
-          oldInitialBalance {
-            ...Money
-          }
-          oldCurrentBalance {
-            ...Money
-          }
-        }
-      }
+      ...OrderGiftCard
+    }
+    grantedRefunds {
+      ...OrderGrantedRefund
     }
     isShippingRequired
     canFinalize
@@ -286,11 +274,39 @@ export const fragmentOrderDetails = gql`
         ...Money
       }
     }
+    totalRemainingGrant {
+      ...Money
+    }
+    totalGrantedRefund {
+      ...Money
+    }
+    totalRefundPending {
+      ...Money
+    }
+    totalRefunded {
+      ...Money
+    }
     actions
+    totalAuthorizePending {
+      ...Money
+    }
     totalAuthorized {
       ...Money
     }
+    # TODO: Remove me
     totalCaptured {
+      ...Money
+    }
+    totalCharged {
+      ...Money
+    }
+    totalChargePending {
+      ...Money
+    }
+    totalCanceled {
+      ...Money
+    }
+    totalCancelPending {
       ...Money
     }
     totalBalance {
@@ -329,6 +345,9 @@ export const fragmentOrderDetails = gql`
       slug
       defaultCountry {
         code
+      }
+      orderSettings {
+        markAsPaidStrategy
       }
     }
     isPaid
@@ -599,171 +618,5 @@ export const fragmentOrderDetailsGrantRefund = gql`
         ...Money
       }
     }
-  }
-`;
-
-export const fragmentOrderDetailsWithTransactions = gql`
-  fragment OrderDetailsWithTransactions on Order {
-    id
-    token
-    ...Metadata
-    billingAddress {
-      ...Address
-    }
-    transactions {
-      ...TransactionItem
-    }
-    payments {
-      ...OrderPayment
-    }
-    giftCards {
-      ...OrderGiftCard
-    }
-    grantedRefunds {
-      ...OrderGrantedRefund
-    }
-    isShippingRequired
-    canFinalize
-    created
-    customerNote
-    discounts {
-      id
-      type
-      calculationMode: valueType
-      value
-      reason
-      amount {
-        ...Money
-      }
-    }
-    events {
-      ...OrderEvent
-    }
-    fulfillments {
-      ...Fulfillment
-    }
-    lines {
-      ...OrderLine
-    }
-    number
-    isPaid
-    paymentStatus
-    shippingAddress {
-      ...Address
-    }
-    deliveryMethod {
-      __typename
-      ... on ShippingMethod {
-        id
-      }
-      ... on Warehouse {
-        id
-        clickAndCollectOption
-      }
-    }
-    shippingMethod {
-      id
-    }
-    shippingMethodName
-    collectionPointName
-    shippingPrice {
-      gross {
-        amount
-        currency
-      }
-    }
-    status
-    subtotal {
-      gross {
-        ...Money
-      }
-      net {
-        ...Money
-      }
-    }
-    total {
-      gross {
-        ...Money
-      }
-      net {
-        ...Money
-      }
-      tax {
-        ...Money
-      }
-    }
-    totalRemainingGrant {
-      ...Money
-    }
-    totalGrantedRefund {
-      ...Money
-    }
-    totalRefundPending {
-      ...Money
-    }
-    totalRefunded {
-      ...Money
-    }
-    actions
-    totalAuthorizePending {
-      ...Money
-    }
-    totalAuthorized {
-      ...Money
-    }
-    totalCharged {
-      ...Money
-    }
-    totalChargePending {
-      ...Money
-    }
-    totalCanceled {
-      ...Money
-    }
-    totalCancelPending {
-      ...Money
-    }
-    totalBalance {
-      ...Money
-    }
-    undiscountedTotal {
-      net {
-        ...Money
-      }
-      gross {
-        ...Money
-      }
-    }
-    user {
-      id
-      email
-    }
-    userEmail
-    shippingMethods {
-      id
-      name
-      price {
-        ...Money
-      }
-      active
-      message
-    }
-    invoices {
-      ...Invoice
-    }
-    channel {
-      isActive
-      id
-      name
-      currencyCode
-      slug
-      defaultCountry {
-        code
-      }
-      orderSettings {
-        markAsPaidStrategy
-      }
-    }
-    isPaid
   }
 `;

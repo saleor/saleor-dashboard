@@ -110,15 +110,18 @@ export const orderDetailsQuery = gql`
       defaultWeightUnit
       fulfillmentAllowUnpaid
       fulfillmentAutoApprove
+      availablePaymentGateways {
+        ...PaymentGateway
+      }
     }
   }
 `;
 
-// TODO: Remvoe this query into OrderDetails
+// TODO: Remove this query (already covered by OrderDetails)
 export const orderDetailsWithTransactionsQuery = gql`
   query OrderDetailsWithTransactions($id: ID!) {
     order(id: $id) {
-      ...OrderDetailsWithTransactions
+      ...OrderDetails
     }
 
     shop {
