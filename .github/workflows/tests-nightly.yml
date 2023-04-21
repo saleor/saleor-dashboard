@@ -315,4 +315,4 @@ jobs:
           JOB_TITLE: "Test release workflow - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}"
           JOB_KIND: "release tests"
         run: |
-          python3 github/workflows/notify/notify-slack.py
+          python3 .github/workflows/notify/notify-slack.py
