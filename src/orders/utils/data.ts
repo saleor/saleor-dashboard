@@ -14,7 +14,6 @@ import {
   StockFragment,
   WarehouseFragment,
 } from "@dashboard/graphql";
-import { OrderDetailsWithTransactionsFragment } from "@dashboard/graphql/types.transactions.generated";
 import { FormsetData } from "@dashboard/hooks/useFormset";
 import { findInEnum, getById } from "@dashboard/misc";
 import { IMoney } from "@dashboard/utils/intl";
@@ -41,8 +40,8 @@ export interface OrderLineWithStockWarehouses {
 }
 
 export function getOrderCharged(order: any) {
-  if ((order as OrderDetailsWithTransactionsFragment)?.totalCharged) {
-    return (order as OrderDetailsWithTransactionsFragment).totalCharged;
+  if ((order as OrderDetailsFragment)?.totalCharged) {
+    return (order as OrderDetailsFragment).totalCharged;
   }
   return (order as OrderDetailsFragment)?.totalCaptured;
 }

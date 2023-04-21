@@ -1,7 +1,7 @@
 import { channel, channelCreateErrors } from "@dashboard/channels/fixtures";
 import { countries } from "@dashboard/fixtures";
 import { ChannelErrorFragment } from "@dashboard/graphql";
-import { MarkAsPaidStrategyEnum } from "@dashboard/graphql/types.transactions.generated";
+import { MarkAsPaidStrategyEnum } from "@dashboard/graphql/types.generated";
 import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";

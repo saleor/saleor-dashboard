@@ -5,10 +5,10 @@ import {
   ChannelCreateMutation,
   ChannelErrorFragment,
   useChannelCreateMutation,
+  useChannelCreateWithSettingsMutation,
   useChannelReorderWarehousesMutation,
 } from "@dashboard/graphql";
-import { useChannelCreateWithSettingsMutation } from "@dashboard/graphql/transactions";
-import { MarkAsPaidStrategyEnum } from "@dashboard/graphql/types.transactions.generated";
+import { MarkAsPaidStrategyEnum } from "@dashboard/graphql/types.generated";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { useFlags } from "@dashboard/hooks/useFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";

@@ -13,14 +13,14 @@ export type {
 } from "./hooks.generated";
 
 export {
-  OrderDetailsWithTransactionsFragmentDoc as OrderDetailsFragmentDoc,
+  OrderDetailsFragmentDoc as OrderDetailsFragmentDoc,
   OrderDetailsWithTransactionsDocument as OrderDetailsDocument,
   useOrderDetailsWithTransactionsQuery as useOrderDetailsQuery,
   useOrderDetailsWithTransactionsLazyQuery as useOrderDetailsLazyQuery,
 } from "./hooks.generated";
 
 export type {
-  OrderDetailsWithTransactionsFragment as OrderDetailsFragment,
+  OrderDetailsFragment as OrderDetailsFragment,
   OrderDetailsWithTransactionsQueryVariables as OrderDetailsQueryVariables,
   OrderDetailsWithTransactionsQuery as OrderDetailsQuery,
 } from "./types.generated";

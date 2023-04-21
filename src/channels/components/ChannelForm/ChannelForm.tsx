@@ -11,13 +11,11 @@ import SingleAutocompleteSelectField, {
 } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   ChannelErrorFragment,
+  ChannelOrderSettingsFragment,
   CountryCode,
+  MarkAsPaidStrategyEnum,
   StockSettingsInput,
 } from "@dashboard/graphql";
-import {
-  ChannelOrderSettingsFragment,
-  MarkAsPaidStrategyEnum,
-} from "@dashboard/graphql/types.transactions.generated";
 import useClipboard from "@dashboard/hooks/useClipboard";
 import { useFlags } from "@dashboard/hooks/useFlags";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
@@ -252,6 +250,3 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
     </>
   );
 };
-
-ChannelForm.displayName = "ChannelForm";
-export default ChannelForm;

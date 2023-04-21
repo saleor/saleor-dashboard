@@ -14,7 +14,7 @@ import {
   useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
 } from "@dashboard/graphql";
-import { OrderDetailsWithTransactionsQueryResult } from "@dashboard/graphql/hooks.transactions.generated";
+import { OrderDetailsWithTransactionsQueryResult } from "@dashboard/graphql/hooks.generated";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { CustomerEditData } from "@dashboard/orders/components/OrderCustomer";
 import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";

@@ -1,5 +1,5 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { TransactionActionEnum } from "@dashboard/graphql/transactions";
+import { TransactionActionEnum } from "@dashboard/graphql";
 import { useFlags } from "@dashboard/hooks/useFlags";
 import {
   OrderBothTypes,

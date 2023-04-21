@@ -1,34 +1,29 @@
 import {
+  MarkAsPaidStrategyEnum,
   OrderDetailsFragment,
   OrderDetailsQuery,
+  OrderDetailsWithTransactionsQuery,
   OrderErrorCode as OrderErrorCodeWithoutTransactions,
+  OrderErrorCode as OrderErrorCodeWithTransactions,
   OrderErrorFragment as OrderErrorFragmentWithoutTransactions,
   OrderEventFragment as OrderEventFragmentWithoutTransactions,
-  OrderEventsEnum as OrderEventsEnumWithoutTransactions,
-  OrderRefundDataQuery,
-} from "@dashboard/graphql";
-import {
-  MarkAsPaidStrategyEnum,
-  OrderDetailsWithTransactionsFragment,
-  OrderDetailsWithTransactionsQuery,
-  OrderErrorCode as OrderErrorCodeWithTransactions,
   OrderEventFragment as OrderEventFragmentWithTransactions,
+  OrderEventsEnum as OrderEventsEnumWithoutTransactions,
   OrderEventsEnum as OrderEventsEnumWithTransactions,
+  OrderRefundDataQuery,
   TransactionEventFragment,
   TransactionItemFragment,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 
 export type ShopWithTransactions = OrderDetailsWithTransactionsQuery["shop"];
 export type ShopBothTypes = OrderDetailsQuery["shop"] | ShopWithTransactions;
 
-export type OrderBothTypes =
-  | OrderDetailsFragment
-  | OrderDetailsWithTransactionsFragment;
+export type OrderBothTypes = OrderDetailsFragment | OrderDetailsFragment;
 
 /** use type from WithTransactions, exclude fields not available on old OrderDetails */
 export type OrderSharedType = Pick<
-  OrderDetailsWithTransactionsFragment,
-  keyof OrderDetailsFragment & keyof OrderDetailsWithTransactionsFragment
+  OrderDetailsFragment,
+  keyof OrderDetailsFragment & keyof OrderDetailsFragment
 >;
 
 // convert TS enum to string union
@@ -63,13 +58,13 @@ export const OrderEventsEnum = {
 export const isOrderWithTransactions = (
   _order: unknown,
   featureFlag: boolean,
-): _order is OrderDetailsWithTransactionsFragment => featureFlag;
+): _order is OrderDetailsFragment => featureFlag;
 
 /** Check if order has transactions & feature flag enabled */
 export const orderHasTransactions = (
   order: unknown,
   featureFlag: boolean,
-): order is OrderDetailsWithTransactionsFragment => {
+): order is OrderDetailsFragment => {
   if (isOrderWithTransactions(order, featureFlag)) {
     return order?.transactions?.length > 0;
   }
@@ -80,7 +75,7 @@ export const orderHasTransactions = (
 export const orderChannelUseTransactions = (
   order: any,
   featureFlag: boolean,
-): order is OrderDetailsWithTransactionsFragment => {
+): order is OrderDetailsFragment => {
   if (orderHasTransactions(order, featureFlag)) {
     return true;
   }
@@ -99,7 +94,7 @@ export type OrderRefundData = OrderRefundDataQuery["order"];
 export type OrderRefundSharedType = Pick<
   OrderRefundData,
   keyof OrderDetailsFragment &
-    keyof OrderDetailsWithTransactionsFragment &
+    keyof OrderDetailsFragment &
     keyof OrderRefundData
 >;
 

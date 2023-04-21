@@ -1,4 +1,4 @@
-import { TransactionEventFragment } from "@dashboard/graphql/transactions";
+import { TransactionEventFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";

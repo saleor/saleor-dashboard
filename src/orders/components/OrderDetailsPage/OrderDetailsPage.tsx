@@ -11,13 +11,13 @@ import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
-import { OrderDetailsFragment, OrderDetailsQuery } from "@dashboard/graphql";
 import {
-  OrderDetailsWithTransactionsFragment,
+  OrderDetailsFragment,
+  OrderDetailsQuery,
   OrderDetailsWithTransactionsQuery,
   OrderStatus,
   TransactionActionEnum,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
@@ -45,7 +45,7 @@ import Title from "./Title";
 import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
 
 export interface OrderDetailsPageProps {
-  order: OrderDetailsFragment | OrderDetailsWithTransactionsFragment;
+  order: OrderDetailsFragment | OrderDetailsFragment;
   shop: OrderDetailsQuery["shop"] | OrderDetailsWithTransactionsQuery["shop"];
   shippingMethods?: Array<{
     id: string;

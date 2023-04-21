@@ -17,8 +17,8 @@ import {
 import {
   useChannelOrderSettingsQuery,
   useChannelOrderSettingsUpdateMutation,
-} from "@dashboard/graphql/hooks.transactions.generated";
-import { MarkAsPaidStrategyEnum } from "@dashboard/graphql/types.transactions.generated";
+} from "@dashboard/graphql/hooks.generated";
+import { MarkAsPaidStrategyEnum } from "@dashboard/graphql/types.generated";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { useFlags } from "@dashboard/hooks/useFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";

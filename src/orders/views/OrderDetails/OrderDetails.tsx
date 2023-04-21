@@ -4,16 +4,14 @@ import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
+  OrderDetailsWithTransactionsDocument,
   OrderStatus,
   useOrderConfirmMutation,
   useOrderDetailsQuery,
+  useOrderDetailsWithTransactionsQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
-import {
-  OrderDetailsWithTransactionsDocument,
-  useOrderDetailsWithTransactionsQuery,
-} from "@dashboard/graphql/transactions";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import { useFlags } from "@dashboard/hooks/useFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";

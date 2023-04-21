@@ -24,7 +24,7 @@ import {
 import {
   ChannelOrderSettingsFragment,
   MarkAsPaidStrategyEnum,
-} from "@dashboard/graphql/types.transactions.generated";
+} from "@dashboard/graphql/types.generated";
 import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { SubmitPromise } from "@dashboard/hooks/useForm";

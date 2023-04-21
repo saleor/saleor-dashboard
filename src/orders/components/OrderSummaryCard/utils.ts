@@ -1,8 +1,5 @@
 import { subtractMoney } from "@dashboard/components/Money";
-import {
-  GiftCardEventsEnum,
-  OrderDetailsFragment,
-} from "@dashboard/graphql/transactions";
+import { GiftCardEventsEnum, OrderDetailsFragment } from "@dashboard/graphql";
 import { OrderBothTypes } from "@dashboard/orders/types";
 import { getOrderCharged } from "@dashboard/orders/utils/data";
 import { IMoney } from "@dashboard/utils/intl";

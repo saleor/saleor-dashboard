@@ -8,10 +8,13 @@ import {
   OrderAction,
   OrderDetailsFragment,
   OrderDetailsQuery,
+  OrderDetailsWithTransactionsQuery,
   OrderEventsEmailsEnum,
   OrderEventsEnum,
   OrderFulfillLineFragment,
+  OrderGrantedRefundFragment,
   OrderListQuery,
+  OrderPaymentFragment,
   OrderSettingsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
@@ -20,18 +23,12 @@ import {
   SearchWarehousesQuery,
   ShopOrderSettingsFragment,
   TransactionActionEnum,
-  TransactionKind,
-  WeightUnitsEnum,
-} from "@dashboard/graphql";
-import {
-  OrderDetailsWithTransactionsFragment,
-  OrderDetailsWithTransactionsQuery,
-  OrderGrantedRefundFragment,
-  OrderPaymentFragment,
   TransactionEventFragment,
   TransactionEventTypeEnum,
   TransactionItemFragment,
-} from "@dashboard/graphql/transactions";
+  TransactionKind,
+  WeightUnitsEnum,
+} from "@dashboard/graphql";
 import { staffMember } from "@dashboard/staff/fixtures";
 import { RelayToFlat } from "@dashboard/types";
 import {
@@ -1679,8 +1676,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
   userEmail: "melissa.simon@example.com",
 });
 
-export const orderWithTransactions: OrderDetailsWithTransactionsFragment = {
-  ...(order(undefined) as unknown as OrderDetailsWithTransactionsFragment),
+export const orderWithTransactions: OrderDetailsFragment = {
+  ...(order(undefined) as unknown as OrderDetailsFragment),
   payments: [],
   grantedRefunds: [],
   totalGrantedRefund: prepareMoney(0),
@@ -2126,24 +2123,21 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
   userEmail: null,
 });
 
-export const draftOrderWithTransactions: OrderDetailsWithTransactionsFragment =
-  {
-    ...(draftOrder(
-      undefined,
-    ) as unknown as OrderDetailsWithTransactionsFragment),
-    payments: [],
-    transactions: [],
-    grantedRefunds: [],
-    totalRemainingGrant: prepareMoney(0),
-    totalGrantedRefund: prepareMoney(0),
-    totalAuthorizePending: prepareMoney(0),
-    totalCharged: prepareMoney(0),
-    totalChargePending: prepareMoney(0),
-    totalRefunded: prepareMoney(0),
-    totalRefundPending: prepareMoney(0),
-    totalCanceled: prepareMoney(0),
-    totalCancelPending: prepareMoney(0),
-  };
+export const draftOrderWithTransactions: OrderDetailsFragment = {
+  ...(draftOrder(undefined) as unknown as OrderDetailsFragment),
+  payments: [],
+  transactions: [],
+  grantedRefunds: [],
+  totalRemainingGrant: prepareMoney(0),
+  totalGrantedRefund: prepareMoney(0),
+  totalAuthorizePending: prepareMoney(0),
+  totalCharged: prepareMoney(0),
+  totalChargePending: prepareMoney(0),
+  totalRefunded: prepareMoney(0),
+  totalRefundPending: prepareMoney(0),
+  totalCanceled: prepareMoney(0),
+  totalCancelPending: prepareMoney(0),
+};
 
 export const flatOrders = orders.map(order => ({
   ...order,
