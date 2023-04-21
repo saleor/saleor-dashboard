@@ -208,7 +208,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
   return (
     <div
       data-test-id="graphiql-container"
-      className="graphiql-container"
+      className={clsx("graphiql-container", classes.graphiqlContainer)}
       style={rootStyle}
     >
       <div className="graphiql-sidebar">

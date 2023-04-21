@@ -35,6 +35,9 @@ export const useStyles = makeStyles(
     graphiqlEditors: {
       borderRadius: "0 !important",
     },
+    graphiqlContainer: {
+      fontVariantLigatures: "none",
+    },
   }),
   { name: "GraphiQL" },
 );
