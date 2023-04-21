@@ -17,9 +17,9 @@ import { ColumnCategory, filterEmptyColumn } from "./utils";
 
 export interface NewColumPickerProps {
   staticColumns: AvailableColumn[];
-  customColumns: AvailableColumn[];
+  customColumns?: AvailableColumn[];
   selectedColumns: string[];
-  columnCategories: ColumnCategory[];
+  columnCategories?: ColumnCategory[];
   customColumnSettings: string[];
   onSave: (columns: string[]) => void;
   onCustomColumnSelect: (columns: string[]) => void;
@@ -77,37 +77,53 @@ export const NewColumPicker: React.FC<NewColumPickerProps> = props => {
                 </Toggle>
               </Box>
             ))}
-            <Box
-              display="flex"
-              justifyContent="space-between"
-              alignItems="center"
-              marginTop={6}
-            >
-              <Text variant="caption" size="small" color="textNeutralSubdued">
-                <FormattedMessage {...messages.custom} />
-              </Text>
-              <Button
-                variant="secondary"
-                size="small"
-                icon={<PlusIcon size="small" />}
-                onClick={() => setExpanded(true)}
-              />
-            </Box>
-            {customColumns.map(column => (
-              <Box padding={3} key={column.id}>
-                <Toggle
-                  onPressedChange={() => handleToggle(column.id)}
-                  pressed={selectedColumns.includes(column.id)}
+            {columnCategories && (
+              <>
+                <Box
+                  display="flex"
+                  justifyContent="space-between"
+                  alignItems="center"
+                  marginTop={6}
                 >
-                  <Text variant="body" size="small" color="textNeutralSubdued">
-                    {`${column.metaGroup} /`}
+                  <Text
+                    variant="caption"
+                    size="small"
+                    color="textNeutralSubdued"
+                  >
+                    <FormattedMessage {...messages.custom} />
                   </Text>
-                  <Text variant="body" size="small" color="textNeutralDefault">
-                    {column.title}
-                  </Text>
-                </Toggle>
-              </Box>
-            ))}
+                  <Button
+                    variant="secondary"
+                    size="small"
+                    icon={<PlusIcon size="small" />}
+                    onClick={() => setExpanded(true)}
+                  />
+                </Box>
+                {customColumns.map(column => (
+                  <Box padding={3} key={column.id}>
+                    <Toggle
+                      onPressedChange={() => handleToggle(column.id)}
+                      pressed={selectedColumns.includes(column.id)}
+                    >
+                      <Text
+                        variant="body"
+                        size="small"
+                        color="textNeutralSubdued"
+                      >
+                        {`${column.metaGroup} /`}
+                      </Text>
+                      <Text
+                        variant="body"
+                        size="small"
+                        color="textNeutralDefault"
+                      >
+                        {column.title}
+                      </Text>
+                    </Toggle>
+                  </Box>
+                ))}
+              </>
+            )}
           </Box>
         </Box>
       </Popover.Content>

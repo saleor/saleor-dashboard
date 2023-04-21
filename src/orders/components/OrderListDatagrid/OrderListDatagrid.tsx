@@ -1,10 +1,11 @@
-import ColumnPicker from "@dashboard/components/ColumnPicker";
+import { NewColumPicker } from "@dashboard/components/ColumnPicker/NewColumPicker";
+import { useColumns } from "@dashboard/components/ColumnPicker/utils";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
-import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
 import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { OrderListQuery } from "@dashboard/graphql";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
@@ -14,7 +15,7 @@ import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
-import { useColumns, useGetCellContent } from "./datagrid";
+import { orderListStaticColumnAdapter, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
 import { canBeSorted, getColumnNameAndId, getOrdersRowsLength } from "./utils";
 
@@ -25,6 +26,8 @@ interface OrderListDatagridProps
   onRowClick?: (id: string) => void;
   rowAnchor?: (id: string) => string;
   hasRowHover?: boolean;
+  customColumnSettings: string[];
+  setCustomColumnSettings: (cols: string[]) => void;
 }
 
 export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
@@ -37,32 +40,42 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   onRowClick,
   hasRowHover,
   rowAnchor,
+  customColumnSettings,
+  setCustomColumnSettings,
 }) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
-  const availableColumns = useColumns(sort);
   const ordersLength = getOrdersRowsLength(orders, disabled);
 
-  const {
-    availableColumnsChoices,
-    columnChoices,
-    columns,
-    defaultColumns,
-    onColumnMoved,
-    onColumnResize,
-    onColumnsChange,
-    picker,
-  } = useColumnsDefault(availableColumns);
+  const handleColumnChange = useCallback(
+    picked => {
+      onUpdateListSettings("columns", picked.filter(Boolean));
+    },
+    [onUpdateListSettings],
+  );
+
+  const emptyColumn = useEmptyColumn();
+  const { handlers, staticColumns, visibleColumns, selectedColumns } =
+    useColumns({
+      staticColumns: orderListStaticColumnAdapter(emptyColumn, intl, sort),
+      columnCategories: [],
+      selectedColumns: settings?.columns ?? [],
+      onSave: handleColumnChange,
+      setCustomColumnSettings,
+      customColumnSettings,
+    });
 
   const handleHeaderClick = useCallback(
     (col: number) => {
-      const { columnName, columnId } = getColumnNameAndId(columns[col].id);
+      const { columnName, columnId } = getColumnNameAndId(
+        visibleColumns[col].id,
+      );
 
       if (canBeSorted(columnName)) {
         onSort(columnName, columnId);
       }
     },
-    [columns, onSort],
+    [visibleColumns, onSort],
   );
 
   const handleRowClick = useCallback(
@@ -89,7 +102,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   );
 
   const getCellContent = useGetCellContent({
-    columns,
+    columns: visibleColumns,
     orders,
   });
 
@@ -104,7 +117,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           hasRowHover={hasRowHover}
           freezeColumns={2}
           verticalBorder={col => (col > 1 ? true : false)}
-          availableColumns={columns}
+          availableColumns={visibleColumns}
           onHeaderClicked={handleHeaderClick}
           emptyText={intl.formatMessage(messages.emptyText)}
           getCellContent={getCellContent}
@@ -112,20 +125,15 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           menuItems={() => []}
           rows={getOrdersRowsLength(orders, disabled)}
           selectionActions={() => null}
-          onColumnResize={onColumnResize}
-          onColumnMoved={onColumnMoved}
-          renderColumnPicker={defaultProps => (
-            <ColumnPicker
-              {...defaultProps}
-              availableColumns={availableColumnsChoices}
-              initialColumns={columnChoices}
-              defaultColumns={defaultColumns}
-              onSave={onColumnsChange}
-              hasMore={false}
-              loading={false}
-              onFetchMore={() => undefined}
-              onQueryChange={picker.setQuery}
-              query={picker.query}
+          onColumnResize={handlers.onResize}
+          onColumnMoved={handlers.onMove}
+          renderColumnPicker={() => (
+            <NewColumPicker
+              staticColumns={staticColumns}
+              selectedColumns={selectedColumns}
+              onSave={handlers.onChange}
+              customColumnSettings={customColumnSettings}
+              onCustomColumnSelect={handlers.onCustomColumnSelect}
             />
           )}
           fullScreenTitle={intl.formatMessage(messages.orders)}

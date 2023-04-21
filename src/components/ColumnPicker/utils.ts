@@ -56,8 +56,8 @@ export const useColumns = ({
 
   const initialColumnsState = React.useMemo(
     () =>
-      [...staticColumns, ...customColumns].filter(column =>
-        selectedColumns.includes(column.id),
+      [...staticColumns, ...customColumns].filter(
+        column => selectedColumns.includes(column.id) || column.id === "empty",
       ),
     [customColumns, staticColumns, selectedColumns],
   );

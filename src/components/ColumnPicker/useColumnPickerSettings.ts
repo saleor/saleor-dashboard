@@ -2,7 +2,7 @@ import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 
 const COLUMN_PICKER_KEY = "columnPickerConfig";
 
-export type DatagridViews = "PRODUCT_LIST" | "PRODUCT_DETAILS";
+export type DatagridViews = "PRODUCT_LIST" | "PRODUCT_DETAILS" | "ORDER_LIST";
 
 type CustomColumnSettings = {
   [view in DatagridViews]: string[];
@@ -11,6 +11,7 @@ type CustomColumnSettings = {
 export const defaultCustomColumns: CustomColumnSettings = {
   PRODUCT_LIST: [],
   PRODUCT_DETAILS: [],
+  ORDER_LIST: [],
 };
 
 export const useCustomColumnSettings = (view: DatagridViews) => {

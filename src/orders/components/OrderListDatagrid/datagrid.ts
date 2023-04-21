@@ -5,7 +5,6 @@ import {
   textCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
-import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { formatMoneyAmount } from "@dashboard/components/Money";
@@ -13,12 +12,11 @@ import { OrderListQuery } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import {
   getStatusColor,
-  isFirstColumn,
   transformOrderStatus,
   transformPaymentStatus,
 } from "@dashboard/misc";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
-import { RelayToFlat, Sort } from "@dashboard/types";
+import { RelayToFlat } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import {
@@ -27,62 +25,48 @@ import {
   useTheme,
 } from "@saleor/macaw-ui/next";
 import moment from "moment-timezone";
-import { useMemo } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
-export const useColumns = (sort: Sort<OrderListUrlSortField>) => {
-  const intl = useIntl();
-  const emptyColumn = useEmptyColumn();
-
-  const columns = useMemo(
-    () => [
-      emptyColumn,
-      {
-        id: "number",
-        title: intl.formatMessage(columnsMessages.number),
-        width: 100,
-        icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.number),
-      },
-      {
-        id: "date",
-        title: intl.formatMessage(columnsMessages.date),
-        width: 200,
-        icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.date),
-      },
-      {
-        id: "customer",
-        title: intl.formatMessage(columnsMessages.customer),
-        width: 200,
-        icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.customer),
-      },
-      {
-        id: "payment",
-        title: intl.formatMessage(columnsMessages.payment),
-        width: 200,
-        icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.payment),
-      },
-      {
-        id: "status",
-        title: intl.formatMessage(columnsMessages.status),
-        width: 200,
-        icon: getColumnSortDirectionIcon(
-          sort,
-          OrderListUrlSortField.fulfillment,
-        ),
-      },
-      {
-        id: "total",
-        title: intl.formatMessage(columnsMessages.total),
-        width: 150,
-      },
-    ],
-    [emptyColumn, intl, sort],
-  );
-
-  return columns;
-};
+export const orderListStaticColumnAdapter = (emptyColumn, intl, sort) => [
+  emptyColumn,
+  {
+    id: "number",
+    title: intl.formatMessage(columnsMessages.number),
+    width: 100,
+    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.number),
+  },
+  {
+    id: "date",
+    title: intl.formatMessage(columnsMessages.date),
+    width: 200,
+    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.date),
+  },
+  {
+    id: "customer",
+    title: intl.formatMessage(columnsMessages.customer),
+    width: 200,
+    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.customer),
+  },
+  {
+    id: "payment",
+    title: intl.formatMessage(columnsMessages.payment),
+    width: 200,
+    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.payment),
+  },
+  {
+    id: "status",
+    title: intl.formatMessage(columnsMessages.status),
+    width: 200,
+    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.fulfillment),
+  },
+  {
+    id: "total",
+    title: intl.formatMessage(columnsMessages.total),
+    width: 150,
+  },
+];
 
 interface GetCellContentProps {
   columns: AvailableColumn[];
@@ -102,10 +86,6 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
     [column, row]: Item,
     { added, removed }: GetCellContentOpts,
   ): GridCell => {
-    if (isFirstColumn(column)) {
-      return readonlyTextCell("");
-    }
-
     const columnId = columns[column]?.id;
 
     if (!columnId) {

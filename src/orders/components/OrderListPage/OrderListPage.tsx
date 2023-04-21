@@ -54,6 +54,8 @@ export interface OrderListPageProps
   params: OrderListUrlQueryParams;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (tabIndex: number) => void;
+  customColumnSettings: string[];
+  setCustomColumnSettings: (cols: string[]) => void;
 }
 
 const useStyles = makeStyles(
@@ -82,6 +84,8 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   onAll,
   currentTab,
   hasPresetsChanged,
+  customColumnSettings,
+  setCustomColumnSettings,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -220,6 +224,8 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           {...listProps}
           hasRowHover={!isFilterPresetOpen}
           rowAnchor={orderUrl}
+          customColumnSettings={customColumnSettings}
+          setCustomColumnSettings={setCustomColumnSettings}
         />
       </Card>
     </ListPageLayout>

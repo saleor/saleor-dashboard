@@ -84,6 +84,8 @@ const props: OrderListPageProps = {
   hasPresetsChanged: false,
   onTabSave: () => undefined,
   onTabUpdate: () => undefined,
+  customColumnSettings: [],
+  setCustomColumnSettings: () => undefined,
 };
 
 storiesOf("Orders / Order list", module)
