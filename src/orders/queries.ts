@@ -114,6 +114,51 @@ export const orderDetailsQuery = gql`
   }
 `;
 
+// TODO: Remvoe this query into OrderDetails
+export const orderDetailsWithTransactionsQuery = gql`
+  query OrderDetailsWithTransactions($id: ID!) {
+    order(id: $id) {
+      ...OrderDetailsWithTransactions
+    }
+
+    shop {
+      countries {
+        code
+        country
+      }
+      defaultWeightUnit
+      fulfillmentAllowUnpaid
+      fulfillmentAutoApprove
+      availablePaymentGateways {
+        ...PaymentGateway
+      }
+    }
+  }
+`;
+
+export const orderDetailsGrantedRefund = gql`
+  query OrderDetailsGrantRefund($id: ID!) {
+    order(id: $id) {
+      ...OrderDetailsGrantRefund
+    }
+  }
+`;
+
+export const orderDetailsGrantedRefundEdit = gql`
+  query OrderDetailsGrantRefundEdit($id: ID!) {
+    order(id: $id) {
+      ...OrderDetailsGrantRefund
+      grantedRefunds {
+        id
+        reason
+        amount {
+          ...Money
+        }
+      }
+    }
+  }
+`;
+
 export const orderFulfillData = gql`
   query OrderFulfillData($orderId: ID!) {
     order(id: $orderId) {

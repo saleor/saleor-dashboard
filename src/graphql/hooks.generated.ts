@@ -196,13 +196,6 @@ export const CategoryDetailsFragmentDoc = gql`
   }
 }
     ${MetadataFragmentDoc}`;
-export const ChannelOrderSettingsFragmentDoc = gql`
-    fragment ChannelOrderSettings on Channel {
-  orderSettings {
-    markAsPaidStrategy
-  }
-}
-    `;
 export const ChannelErrorFragmentDoc = gql`
     fragment ChannelError on ChannelError {
   code
@@ -242,6 +235,13 @@ export const ChannelDetailsFragmentDoc = gql`
 }
     ${ChannelFragmentDoc}
 ${WarehouseFragmentDoc}`;
+export const ChannelOrderSettingsFragmentDoc = gql`
+    fragment ChannelOrderSettings on Channel {
+  orderSettings {
+    markAsPaidStrategy
+  }
+}
+    `;
 export const CollectionFragmentDoc = gql`
     fragment Collection on Collection {
   id
@@ -585,34 +585,6 @@ export const VoucherDetailsFragmentDoc = gql`
     ${VoucherFragmentDoc}
 ${ChannelListingProductWithoutPricingFragmentDoc}
 ${PageInfoFragmentDoc}`;
-export const TransactionRequestActionErrorFragmentDoc = gql`
-    fragment TransactionRequestActionError on TransactionRequestActionError {
-  field
-  message
-  code
-}
-    `;
-export const TransactionCreateErrorFragmentDoc = gql`
-    fragment TransactionCreateError on TransactionCreateError {
-  field
-  message
-  code
-}
-    `;
-export const OrderGrantRefundCreateErrorFragmentDoc = gql`
-    fragment OrderGrantRefundCreateError on OrderGrantRefundCreateError {
-  field
-  message
-  code
-}
-    `;
-export const OrderGrantRefundUpdateErrorFragmentDoc = gql`
-    fragment OrderGrantRefundUpdateError on OrderGrantRefundUpdateError {
-  field
-  message
-  code
-}
-    `;
 export const AttributeErrorFragmentDoc = gql`
     fragment AttributeError on AttributeError {
   code
@@ -1089,6 +1061,34 @@ export const TaxClassDeleteErrorFragmentDoc = gql`
   message
 }
     `;
+export const TransactionRequestActionErrorFragmentDoc = gql`
+    fragment TransactionRequestActionError on TransactionRequestActionError {
+  field
+  message
+  code
+}
+    `;
+export const TransactionCreateErrorFragmentDoc = gql`
+    fragment TransactionCreateError on TransactionCreateError {
+  field
+  message
+  code
+}
+    `;
+export const OrderGrantRefundCreateErrorFragmentDoc = gql`
+    fragment OrderGrantRefundCreateError on OrderGrantRefundCreateError {
+  field
+  message
+  code
+}
+    `;
+export const OrderGrantRefundUpdateErrorFragmentDoc = gql`
+    fragment OrderGrantRefundUpdateError on OrderGrantRefundUpdateError {
+  field
+  message
+  code
+}
+    `;
 export const GiftCardsSettingsFragmentDoc = gql`
     fragment GiftCardsSettings on GiftCardSettings {
   expiryType
@@ -1263,6 +1263,431 @@ export const MenuDetailsFragmentDoc = gql`
   name
 }
     ${MenuItemNestedFragmentDoc}`;
+export const RefundOrderLineFragmentDoc = gql`
+    fragment RefundOrderLine on OrderLine {
+  id
+  productName
+  quantity
+  unitPrice {
+    gross {
+      ...Money
+    }
+  }
+  thumbnail(size: 64) {
+    url
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const OrderEventFragmentDoc = gql`
+    fragment OrderEvent on OrderEvent {
+  id
+  amount
+  shippingCostsIncluded
+  date
+  email
+  emailType
+  invoiceNumber
+  discount {
+    valueType
+    value
+    reason
+    amount {
+      amount
+      currency
+    }
+    oldValueType
+    oldValue
+    oldAmount {
+      amount
+      currency
+    }
+  }
+  relatedOrder {
+    id
+    number
+  }
+  message
+  quantity
+  transactionReference
+  type
+  user {
+    id
+    email
+    firstName
+    lastName
+  }
+  app {
+    id
+    name
+    appUrl
+  }
+  lines {
+    quantity
+    itemName
+    discount {
+      valueType
+      value
+      reason
+      amount {
+        amount
+        currency
+      }
+      oldValueType
+      oldValue
+      oldAmount {
+        amount
+        currency
+      }
+    }
+    orderLine {
+      id
+      productName
+      variantName
+    }
+  }
+}
+    `;
+export const StockFragmentDoc = gql`
+    fragment Stock on Stock {
+  id
+  quantity
+  quantityAllocated
+  warehouse {
+    ...Warehouse
+  }
+}
+    ${WarehouseFragmentDoc}`;
+export const TaxedMoneyFragmentDoc = gql`
+    fragment TaxedMoney on TaxedMoney {
+  net {
+    ...Money
+  }
+  gross {
+    ...Money
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const OrderLineFragmentDoc = gql`
+    fragment OrderLine on OrderLine {
+  id
+  isShippingRequired
+  allocations {
+    id
+    quantity
+    warehouse {
+      id
+      name
+    }
+  }
+  variant {
+    id
+    quantityAvailable
+    preorder {
+      endDate
+    }
+    stocks {
+      ...Stock
+    }
+    product {
+      id
+      isAvailableForPurchase
+    }
+  }
+  productName
+  productSku
+  quantity
+  quantityFulfilled
+  quantityToFulfill
+  totalPrice {
+    ...TaxedMoney
+  }
+  unitDiscount {
+    amount
+    currency
+  }
+  unitDiscountValue
+  unitDiscountReason
+  unitDiscountType
+  undiscountedUnitPrice {
+    currency
+    gross {
+      amount
+      currency
+    }
+    net {
+      amount
+      currency
+    }
+  }
+  unitPrice {
+    gross {
+      amount
+      currency
+    }
+    net {
+      amount
+      currency
+    }
+  }
+  thumbnail {
+    url
+  }
+}
+    ${StockFragmentDoc}
+${TaxedMoneyFragmentDoc}`;
+export const FulfillmentFragmentDoc = gql`
+    fragment Fulfillment on Fulfillment {
+  id
+  lines {
+    id
+    quantity
+    orderLine {
+      ...OrderLine
+    }
+  }
+  fulfillmentOrder
+  status
+  trackingNumber
+  warehouse {
+    id
+    name
+  }
+}
+    ${OrderLineFragmentDoc}`;
+export const InvoiceFragmentDoc = gql`
+    fragment Invoice on Invoice {
+  id
+  number
+  createdAt
+  url
+  status
+}
+    `;
+export const OrderDetailsFragmentDoc = gql`
+    fragment OrderDetails on Order {
+  id
+  token
+  ...Metadata
+  billingAddress {
+    ...Address
+  }
+  transactions {
+    id
+  }
+  giftCards {
+    events {
+      id
+      type
+      orderId
+      balance {
+        initialBalance {
+          ...Money
+        }
+        currentBalance {
+          ...Money
+        }
+        oldInitialBalance {
+          ...Money
+        }
+        oldCurrentBalance {
+          ...Money
+        }
+      }
+    }
+  }
+  isShippingRequired
+  canFinalize
+  created
+  customerNote
+  discounts {
+    id
+    type
+    calculationMode: valueType
+    value
+    reason
+    amount {
+      ...Money
+    }
+  }
+  events {
+    ...OrderEvent
+  }
+  fulfillments {
+    ...Fulfillment
+  }
+  lines {
+    ...OrderLine
+  }
+  number
+  isPaid
+  paymentStatus
+  shippingAddress {
+    ...Address
+  }
+  deliveryMethod {
+    __typename
+    ... on ShippingMethod {
+      id
+    }
+    ... on Warehouse {
+      id
+      clickAndCollectOption
+    }
+  }
+  shippingMethod {
+    id
+  }
+  shippingMethodName
+  collectionPointName
+  shippingPrice {
+    gross {
+      amount
+      currency
+    }
+  }
+  status
+  subtotal {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+  }
+  total {
+    gross {
+      ...Money
+    }
+    net {
+      ...Money
+    }
+    tax {
+      ...Money
+    }
+  }
+  actions
+  totalAuthorized {
+    ...Money
+  }
+  totalCaptured {
+    ...Money
+  }
+  totalBalance {
+    ...Money
+  }
+  undiscountedTotal {
+    net {
+      ...Money
+    }
+    gross {
+      ...Money
+    }
+  }
+  user {
+    id
+    email
+  }
+  userEmail
+  shippingMethods {
+    id
+    name
+    price {
+      ...Money
+    }
+    active
+    message
+  }
+  invoices {
+    ...Invoice
+  }
+  channel {
+    isActive
+    id
+    name
+    currencyCode
+    slug
+    defaultCountry {
+      code
+    }
+  }
+  isPaid
+}
+    ${MetadataFragmentDoc}
+${AddressFragmentDoc}
+${MoneyFragmentDoc}
+${OrderEventFragmentDoc}
+${FulfillmentFragmentDoc}
+${OrderLineFragmentDoc}
+${InvoiceFragmentDoc}`;
+export const OrderSettingsFragmentDoc = gql`
+    fragment OrderSettings on OrderSettings {
+  automaticallyConfirmAllNewOrders
+  automaticallyFulfillNonShippableGiftCard
+}
+    `;
+export const ShopOrderSettingsFragmentDoc = gql`
+    fragment ShopOrderSettings on Shop {
+  fulfillmentAutoApprove
+  fulfillmentAllowUnpaid
+}
+    `;
+export const OrderFulfillLineFragmentDoc = gql`
+    fragment OrderFulfillLine on OrderLine {
+  id
+  isShippingRequired
+  productName
+  quantity
+  allocations {
+    id
+    quantity
+    warehouse {
+      id
+      name
+    }
+  }
+  quantityFulfilled
+  quantityToFulfill
+  variant {
+    id
+    name
+    sku
+    preorder {
+      endDate
+    }
+    attributes {
+      values {
+        id
+        name
+      }
+    }
+    stocks {
+      ...Stock
+    }
+    trackInventory
+  }
+  thumbnail(size: 64) {
+    url
+  }
+}
+    ${StockFragmentDoc}`;
+export const OrderLineStockDataFragmentDoc = gql`
+    fragment OrderLineStockData on OrderLine {
+  id
+  allocations {
+    quantity
+    warehouse {
+      id
+    }
+  }
+  quantity
+  quantityToFulfill
+  variant {
+    stocks {
+      ...Stock
+    }
+  }
+}
+    ${StockFragmentDoc}`;
 export const OrderLineGrantRefundFragmentDoc = gql`
     fragment OrderLineGrantRefund on OrderLine {
   id
@@ -1489,191 +1914,6 @@ export const OrderGrantedRefundFragmentDoc = gql`
   }
 }
     ${UserBaseAvatarFragmentDoc}`;
-export const OrderEventFragmentDoc = gql`
-    fragment OrderEvent on OrderEvent {
-  id
-  amount
-  shippingCostsIncluded
-  date
-  email
-  emailType
-  invoiceNumber
-  discount {
-    valueType
-    value
-    reason
-    amount {
-      amount
-      currency
-    }
-    oldValueType
-    oldValue
-    oldAmount {
-      amount
-      currency
-    }
-  }
-  relatedOrder {
-    id
-    number
-  }
-  message
-  quantity
-  transactionReference
-  type
-  user {
-    id
-    email
-    firstName
-    lastName
-  }
-  app {
-    id
-    name
-    appUrl
-  }
-  lines {
-    quantity
-    itemName
-    discount {
-      valueType
-      value
-      reason
-      amount {
-        amount
-        currency
-      }
-      oldValueType
-      oldValue
-      oldAmount {
-        amount
-        currency
-      }
-    }
-    orderLine {
-      id
-      productName
-      variantName
-    }
-  }
-}
-    `;
-export const StockFragmentDoc = gql`
-    fragment Stock on Stock {
-  id
-  quantity
-  quantityAllocated
-  warehouse {
-    ...Warehouse
-  }
-}
-    ${WarehouseFragmentDoc}`;
-export const TaxedMoneyFragmentDoc = gql`
-    fragment TaxedMoney on TaxedMoney {
-  net {
-    ...Money
-  }
-  gross {
-    ...Money
-  }
-}
-    ${MoneyFragmentDoc}`;
-export const OrderLineFragmentDoc = gql`
-    fragment OrderLine on OrderLine {
-  id
-  isShippingRequired
-  allocations {
-    id
-    quantity
-    warehouse {
-      id
-      name
-    }
-  }
-  variant {
-    id
-    quantityAvailable
-    preorder {
-      endDate
-    }
-    stocks {
-      ...Stock
-    }
-    product {
-      id
-      isAvailableForPurchase
-    }
-  }
-  productName
-  productSku
-  quantity
-  quantityFulfilled
-  quantityToFulfill
-  totalPrice {
-    ...TaxedMoney
-  }
-  unitDiscount {
-    amount
-    currency
-  }
-  unitDiscountValue
-  unitDiscountReason
-  unitDiscountType
-  undiscountedUnitPrice {
-    currency
-    gross {
-      amount
-      currency
-    }
-    net {
-      amount
-      currency
-    }
-  }
-  unitPrice {
-    gross {
-      amount
-      currency
-    }
-    net {
-      amount
-      currency
-    }
-  }
-  thumbnail {
-    url
-  }
-}
-    ${StockFragmentDoc}
-${TaxedMoneyFragmentDoc}`;
-export const FulfillmentFragmentDoc = gql`
-    fragment Fulfillment on Fulfillment {
-  id
-  lines {
-    id
-    quantity
-    orderLine {
-      ...OrderLine
-    }
-  }
-  fulfillmentOrder
-  status
-  trackingNumber
-  warehouse {
-    id
-    name
-  }
-}
-    ${OrderLineFragmentDoc}`;
-export const InvoiceFragmentDoc = gql`
-    fragment Invoice on Invoice {
-  id
-  number
-  createdAt
-  url
-  status
-}
-    `;
 export const OrderDetailsWithTransactionsFragmentDoc = gql`
     fragment OrderDetailsWithTransactions on Order {
   id
@@ -1849,246 +2089,6 @@ ${OrderEventFragmentDoc}
 ${FulfillmentFragmentDoc}
 ${OrderLineFragmentDoc}
 ${InvoiceFragmentDoc}`;
-export const RefundOrderLineFragmentDoc = gql`
-    fragment RefundOrderLine on OrderLine {
-  id
-  productName
-  quantity
-  unitPrice {
-    gross {
-      ...Money
-    }
-  }
-  thumbnail(size: 64) {
-    url
-  }
-}
-    ${MoneyFragmentDoc}`;
-export const OrderDetailsFragmentDoc = gql`
-    fragment OrderDetails on Order {
-  id
-  token
-  ...Metadata
-  billingAddress {
-    ...Address
-  }
-  transactions {
-    id
-  }
-  giftCards {
-    events {
-      id
-      type
-      orderId
-      balance {
-        initialBalance {
-          ...Money
-        }
-        currentBalance {
-          ...Money
-        }
-        oldInitialBalance {
-          ...Money
-        }
-        oldCurrentBalance {
-          ...Money
-        }
-      }
-    }
-  }
-  isShippingRequired
-  canFinalize
-  created
-  customerNote
-  discounts {
-    id
-    type
-    calculationMode: valueType
-    value
-    reason
-    amount {
-      ...Money
-    }
-  }
-  events {
-    ...OrderEvent
-  }
-  fulfillments {
-    ...Fulfillment
-  }
-  lines {
-    ...OrderLine
-  }
-  number
-  isPaid
-  paymentStatus
-  shippingAddress {
-    ...Address
-  }
-  deliveryMethod {
-    __typename
-    ... on ShippingMethod {
-      id
-    }
-    ... on Warehouse {
-      id
-      clickAndCollectOption
-    }
-  }
-  shippingMethod {
-    id
-  }
-  shippingMethodName
-  collectionPointName
-  shippingPrice {
-    gross {
-      amount
-      currency
-    }
-  }
-  status
-  subtotal {
-    gross {
-      ...Money
-    }
-    net {
-      ...Money
-    }
-  }
-  total {
-    gross {
-      ...Money
-    }
-    net {
-      ...Money
-    }
-    tax {
-      ...Money
-    }
-  }
-  actions
-  totalAuthorized {
-    ...Money
-  }
-  totalCaptured {
-    ...Money
-  }
-  totalBalance {
-    ...Money
-  }
-  undiscountedTotal {
-    net {
-      ...Money
-    }
-    gross {
-      ...Money
-    }
-  }
-  user {
-    id
-    email
-  }
-  userEmail
-  shippingMethods {
-    id
-    name
-    price {
-      ...Money
-    }
-    active
-    message
-  }
-  invoices {
-    ...Invoice
-  }
-  channel {
-    isActive
-    id
-    name
-    currencyCode
-    slug
-    defaultCountry {
-      code
-    }
-  }
-  isPaid
-}
-    ${MetadataFragmentDoc}
-${AddressFragmentDoc}
-${MoneyFragmentDoc}
-${OrderEventFragmentDoc}
-${FulfillmentFragmentDoc}
-${OrderLineFragmentDoc}
-${InvoiceFragmentDoc}`;
-export const OrderSettingsFragmentDoc = gql`
-    fragment OrderSettings on OrderSettings {
-  automaticallyConfirmAllNewOrders
-  automaticallyFulfillNonShippableGiftCard
-}
-    `;
-export const ShopOrderSettingsFragmentDoc = gql`
-    fragment ShopOrderSettings on Shop {
-  fulfillmentAutoApprove
-  fulfillmentAllowUnpaid
-}
-    `;
-export const OrderFulfillLineFragmentDoc = gql`
-    fragment OrderFulfillLine on OrderLine {
-  id
-  isShippingRequired
-  productName
-  quantity
-  allocations {
-    id
-    quantity
-    warehouse {
-      id
-      name
-    }
-  }
-  quantityFulfilled
-  quantityToFulfill
-  variant {
-    id
-    name
-    sku
-    preorder {
-      endDate
-    }
-    attributes {
-      values {
-        id
-        name
-      }
-    }
-    stocks {
-      ...Stock
-    }
-    trackInventory
-  }
-  thumbnail(size: 64) {
-    url
-  }
-}
-    ${StockFragmentDoc}`;
-export const OrderLineStockDataFragmentDoc = gql`
-    fragment OrderLineStockData on OrderLine {
-  id
-  allocations {
-    quantity
-    warehouse {
-      id
-    }
-  }
-  quantity
-  quantityToFulfill
-  variant {
-    stocks {
-      ...Stock
-    }
-  }
-}
-    ${StockFragmentDoc}`;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
@@ -4982,6 +4982,89 @@ export function useChannelReorderWarehousesMutation(baseOptions?: ApolloReactHoo
 export type ChannelReorderWarehousesMutationHookResult = ReturnType<typeof useChannelReorderWarehousesMutation>;
 export type ChannelReorderWarehousesMutationResult = Apollo.MutationResult<Types.ChannelReorderWarehousesMutation>;
 export type ChannelReorderWarehousesMutationOptions = Apollo.BaseMutationOptions<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>;
+export const ChannelOrderSettingsUpdateDocument = gql`
+    mutation ChannelOrderSettingsUpdate($id: ID!, $input: ChannelUpdateInput!) {
+  channelUpdate(id: $id, input: $input) {
+    channel {
+      ...ChannelDetails
+      ...ChannelOrderSettings
+    }
+    errors {
+      ...ChannelError
+    }
+  }
+}
+    ${ChannelDetailsFragmentDoc}
+${ChannelOrderSettingsFragmentDoc}
+${ChannelErrorFragmentDoc}`;
+export type ChannelOrderSettingsUpdateMutationFn = Apollo.MutationFunction<Types.ChannelOrderSettingsUpdateMutation, Types.ChannelOrderSettingsUpdateMutationVariables>;
+
+/**
+ * __useChannelOrderSettingsUpdateMutation__
+ *
+ * To run a mutation, you first call `useChannelOrderSettingsUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChannelOrderSettingsUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [channelOrderSettingsUpdateMutation, { data, loading, error }] = useChannelOrderSettingsUpdateMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useChannelOrderSettingsUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChannelOrderSettingsUpdateMutation, Types.ChannelOrderSettingsUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ChannelOrderSettingsUpdateMutation, Types.ChannelOrderSettingsUpdateMutationVariables>(ChannelOrderSettingsUpdateDocument, options);
+      }
+export type ChannelOrderSettingsUpdateMutationHookResult = ReturnType<typeof useChannelOrderSettingsUpdateMutation>;
+export type ChannelOrderSettingsUpdateMutationResult = Apollo.MutationResult<Types.ChannelOrderSettingsUpdateMutation>;
+export type ChannelOrderSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ChannelOrderSettingsUpdateMutation, Types.ChannelOrderSettingsUpdateMutationVariables>;
+export const ChannelCreateWithSettingsDocument = gql`
+    mutation ChannelCreateWithSettings($input: ChannelCreateInput!) {
+  channelCreate(input: $input) {
+    channel {
+      ...ChannelDetails
+      ...ChannelOrderSettings
+    }
+    errors {
+      ...ChannelError
+    }
+  }
+}
+    ${ChannelDetailsFragmentDoc}
+${ChannelOrderSettingsFragmentDoc}
+${ChannelErrorFragmentDoc}`;
+export type ChannelCreateWithSettingsMutationFn = Apollo.MutationFunction<Types.ChannelCreateWithSettingsMutation, Types.ChannelCreateWithSettingsMutationVariables>;
+
+/**
+ * __useChannelCreateWithSettingsMutation__
+ *
+ * To run a mutation, you first call `useChannelCreateWithSettingsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useChannelCreateWithSettingsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [channelCreateWithSettingsMutation, { data, loading, error }] = useChannelCreateWithSettingsMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useChannelCreateWithSettingsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChannelCreateWithSettingsMutation, Types.ChannelCreateWithSettingsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.ChannelCreateWithSettingsMutation, Types.ChannelCreateWithSettingsMutationVariables>(ChannelCreateWithSettingsDocument, options);
+      }
+export type ChannelCreateWithSettingsMutationHookResult = ReturnType<typeof useChannelCreateWithSettingsMutation>;
+export type ChannelCreateWithSettingsMutationResult = Apollo.MutationResult<Types.ChannelCreateWithSettingsMutation>;
+export type ChannelCreateWithSettingsMutationOptions = Apollo.BaseMutationOptions<Types.ChannelCreateWithSettingsMutation, Types.ChannelCreateWithSettingsMutationVariables>;
 export const BaseChannelsDocument = gql`
     query BaseChannels {
   channels {
@@ -5085,6 +5168,41 @@ export function useChannelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHook
 export type ChannelQueryHookResult = ReturnType<typeof useChannelQuery>;
 export type ChannelLazyQueryHookResult = ReturnType<typeof useChannelLazyQuery>;
 export type ChannelQueryResult = Apollo.QueryResult<Types.ChannelQuery, Types.ChannelQueryVariables>;
+export const ChannelOrderSettingsDocument = gql`
+    query ChannelOrderSettings($id: ID!) {
+  channel(id: $id) {
+    ...ChannelOrderSettings
+  }
+}
+    ${ChannelOrderSettingsFragmentDoc}`;
+
+/**
+ * __useChannelOrderSettingsQuery__
+ *
+ * To run a query within a React component, call `useChannelOrderSettingsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useChannelOrderSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useChannelOrderSettingsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useChannelOrderSettingsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ChannelOrderSettingsQuery, Types.ChannelOrderSettingsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.ChannelOrderSettingsQuery, Types.ChannelOrderSettingsQueryVariables>(ChannelOrderSettingsDocument, options);
+      }
+export function useChannelOrderSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelOrderSettingsQuery, Types.ChannelOrderSettingsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.ChannelOrderSettingsQuery, Types.ChannelOrderSettingsQueryVariables>(ChannelOrderSettingsDocument, options);
+        }
+export type ChannelOrderSettingsQueryHookResult = ReturnType<typeof useChannelOrderSettingsQuery>;
+export type ChannelOrderSettingsLazyQueryHookResult = ReturnType<typeof useChannelOrderSettingsLazyQuery>;
+export type ChannelOrderSettingsQueryResult = Apollo.QueryResult<Types.ChannelOrderSettingsQuery, Types.ChannelOrderSettingsQueryVariables>;
 export const CollectionUpdateDocument = gql`
     mutation CollectionUpdate($id: ID!, $input: CollectionInput!) {
   collectionUpdate(id: $id, input: $input) {
@@ -9979,6 +10097,254 @@ export function useOrderSettingsUpdateMutation(baseOptions?: ApolloReactHooks.Mu
 export type OrderSettingsUpdateMutationHookResult = ReturnType<typeof useOrderSettingsUpdateMutation>;
 export type OrderSettingsUpdateMutationResult = Apollo.MutationResult<Types.OrderSettingsUpdateMutation>;
 export type OrderSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.OrderSettingsUpdateMutation, Types.OrderSettingsUpdateMutationVariables>;
+export const OrderTransactionRequestActionDocument = gql`
+    mutation OrderTransactionRequestAction($action: TransactionActionEnum!, $transactionId: ID!) {
+  transactionRequestAction(actionType: $action, id: $transactionId) {
+    errors {
+      ...TransactionRequestActionError
+    }
+  }
+}
+    ${TransactionRequestActionErrorFragmentDoc}`;
+export type OrderTransactionRequestActionMutationFn = Apollo.MutationFunction<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>;
+
+/**
+ * __useOrderTransactionRequestActionMutation__
+ *
+ * To run a mutation, you first call `useOrderTransactionRequestActionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOrderTransactionRequestActionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [orderTransactionRequestActionMutation, { data, loading, error }] = useOrderTransactionRequestActionMutation({
+ *   variables: {
+ *      action: // value for 'action'
+ *      transactionId: // value for 'transactionId'
+ *   },
+ * });
+ */
+export function useOrderTransactionRequestActionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>(OrderTransactionRequestActionDocument, options);
+      }
+export type OrderTransactionRequestActionMutationHookResult = ReturnType<typeof useOrderTransactionRequestActionMutation>;
+export type OrderTransactionRequestActionMutationResult = Apollo.MutationResult<Types.OrderTransactionRequestActionMutation>;
+export type OrderTransactionRequestActionMutationOptions = Apollo.BaseMutationOptions<Types.OrderTransactionRequestActionMutation, Types.OrderTransactionRequestActionMutationVariables>;
+export const OrderGrantRefundAddDocument = gql`
+    mutation OrderGrantRefundAdd($orderId: ID!, $amount: Decimal!, $reason: String) {
+  orderGrantRefundCreate(id: $orderId, input: {amount: $amount, reason: $reason}) {
+    errors {
+      ...OrderGrantRefundCreateError
+    }
+  }
+}
+    ${OrderGrantRefundCreateErrorFragmentDoc}`;
+export type OrderGrantRefundAddMutationFn = Apollo.MutationFunction<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>;
+
+/**
+ * __useOrderGrantRefundAddMutation__
+ *
+ * To run a mutation, you first call `useOrderGrantRefundAddMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOrderGrantRefundAddMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [orderGrantRefundAddMutation, { data, loading, error }] = useOrderGrantRefundAddMutation({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *      amount: // value for 'amount'
+ *      reason: // value for 'reason'
+ *   },
+ * });
+ */
+export function useOrderGrantRefundAddMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>(OrderGrantRefundAddDocument, options);
+      }
+export type OrderGrantRefundAddMutationHookResult = ReturnType<typeof useOrderGrantRefundAddMutation>;
+export type OrderGrantRefundAddMutationResult = Apollo.MutationResult<Types.OrderGrantRefundAddMutation>;
+export type OrderGrantRefundAddMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundAddMutation, Types.OrderGrantRefundAddMutationVariables>;
+export const OrderGrantRefundEditDocument = gql`
+    mutation OrderGrantRefundEdit($refundId: ID!, $amount: Decimal!, $reason: String) {
+  orderGrantRefundUpdate(id: $refundId, input: {amount: $amount, reason: $reason}) {
+    errors {
+      ...OrderGrantRefundUpdateError
+    }
+  }
+}
+    ${OrderGrantRefundUpdateErrorFragmentDoc}`;
+export type OrderGrantRefundEditMutationFn = Apollo.MutationFunction<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>;
+
+/**
+ * __useOrderGrantRefundEditMutation__
+ *
+ * To run a mutation, you first call `useOrderGrantRefundEditMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOrderGrantRefundEditMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [orderGrantRefundEditMutation, { data, loading, error }] = useOrderGrantRefundEditMutation({
+ *   variables: {
+ *      refundId: // value for 'refundId'
+ *      amount: // value for 'amount'
+ *      reason: // value for 'reason'
+ *   },
+ * });
+ */
+export function useOrderGrantRefundEditMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>(OrderGrantRefundEditDocument, options);
+      }
+export type OrderGrantRefundEditMutationHookResult = ReturnType<typeof useOrderGrantRefundEditMutation>;
+export type OrderGrantRefundEditMutationResult = Apollo.MutationResult<Types.OrderGrantRefundEditMutation>;
+export type OrderGrantRefundEditMutationOptions = Apollo.BaseMutationOptions<Types.OrderGrantRefundEditMutation, Types.OrderGrantRefundEditMutationVariables>;
+export const OrderSendRefundDocument = gql`
+    mutation OrderSendRefund($amount: PositiveDecimal!, $transactionId: ID!) {
+  transactionRequestAction(
+    actionType: REFUND
+    amount: $amount
+    id: $transactionId
+  ) {
+    transaction {
+      ...TransactionItem
+    }
+    errors {
+      ...TransactionRequestActionError
+    }
+  }
+}
+    ${TransactionItemFragmentDoc}
+${TransactionRequestActionErrorFragmentDoc}`;
+export type OrderSendRefundMutationFn = Apollo.MutationFunction<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>;
+
+/**
+ * __useOrderSendRefundMutation__
+ *
+ * To run a mutation, you first call `useOrderSendRefundMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useOrderSendRefundMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [orderSendRefundMutation, { data, loading, error }] = useOrderSendRefundMutation({
+ *   variables: {
+ *      amount: // value for 'amount'
+ *      transactionId: // value for 'transactionId'
+ *   },
+ * });
+ */
+export function useOrderSendRefundMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>(OrderSendRefundDocument, options);
+      }
+export type OrderSendRefundMutationHookResult = ReturnType<typeof useOrderSendRefundMutation>;
+export type OrderSendRefundMutationResult = Apollo.MutationResult<Types.OrderSendRefundMutation>;
+export type OrderSendRefundMutationOptions = Apollo.BaseMutationOptions<Types.OrderSendRefundMutation, Types.OrderSendRefundMutationVariables>;
+export const CreateManualTransactionCaptureDocument = gql`
+    mutation CreateManualTransactionCapture($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String, $pspReference: String) {
+  transactionCreate(
+    id: $orderId
+    transaction: {type: "Manual capture", status: "Success", pspReference: $pspReference, amountCharged: {amount: $amount, currency: $currency}}
+    transactionEvent: {status: SUCCESS, pspReference: $pspReference, name: $description}
+  ) {
+    transaction {
+      ...TransactionItem
+    }
+    errors {
+      ...TransactionCreateError
+    }
+  }
+}
+    ${TransactionItemFragmentDoc}
+${TransactionCreateErrorFragmentDoc}`;
+export type CreateManualTransactionCaptureMutationFn = Apollo.MutationFunction<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>;
+
+/**
+ * __useCreateManualTransactionCaptureMutation__
+ *
+ * To run a mutation, you first call `useCreateManualTransactionCaptureMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateManualTransactionCaptureMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createManualTransactionCaptureMutation, { data, loading, error }] = useCreateManualTransactionCaptureMutation({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *      amount: // value for 'amount'
+ *      currency: // value for 'currency'
+ *      description: // value for 'description'
+ *      pspReference: // value for 'pspReference'
+ *   },
+ * });
+ */
+export function useCreateManualTransactionCaptureMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>(CreateManualTransactionCaptureDocument, options);
+      }
+export type CreateManualTransactionCaptureMutationHookResult = ReturnType<typeof useCreateManualTransactionCaptureMutation>;
+export type CreateManualTransactionCaptureMutationResult = Apollo.MutationResult<Types.CreateManualTransactionCaptureMutation>;
+export type CreateManualTransactionCaptureMutationOptions = Apollo.BaseMutationOptions<Types.CreateManualTransactionCaptureMutation, Types.CreateManualTransactionCaptureMutationVariables>;
+export const CreateManualTransactionRefundDocument = gql`
+    mutation CreateManualTransactionRefund($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String, $pspReference: String) {
+  transactionCreate(
+    id: $orderId
+    transaction: {type: "Manual refund", status: "Success", pspReference: $pspReference, amountRefunded: {amount: $amount, currency: $currency}}
+    transactionEvent: {status: SUCCESS, pspReference: $pspReference, name: $description}
+  ) {
+    transaction {
+      ...TransactionItem
+    }
+    errors {
+      ...TransactionCreateError
+    }
+  }
+}
+    ${TransactionItemFragmentDoc}
+${TransactionCreateErrorFragmentDoc}`;
+export type CreateManualTransactionRefundMutationFn = Apollo.MutationFunction<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>;
+
+/**
+ * __useCreateManualTransactionRefundMutation__
+ *
+ * To run a mutation, you first call `useCreateManualTransactionRefundMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useCreateManualTransactionRefundMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [createManualTransactionRefundMutation, { data, loading, error }] = useCreateManualTransactionRefundMutation({
+ *   variables: {
+ *      orderId: // value for 'orderId'
+ *      amount: // value for 'amount'
+ *      currency: // value for 'currency'
+ *      description: // value for 'description'
+ *      pspReference: // value for 'pspReference'
+ *   },
+ * });
+ */
+export function useCreateManualTransactionRefundMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>(CreateManualTransactionRefundDocument, options);
+      }
+export type CreateManualTransactionRefundMutationHookResult = ReturnType<typeof useCreateManualTransactionRefundMutation>;
+export type CreateManualTransactionRefundMutationResult = Apollo.MutationResult<Types.CreateManualTransactionRefundMutation>;
+export type CreateManualTransactionRefundMutationOptions = Apollo.BaseMutationOptions<Types.CreateManualTransactionRefundMutation, Types.CreateManualTransactionRefundMutationVariables>;
 export const OrderListDocument = gql`
     query OrderList($first: Int, $after: String, $last: Int, $before: String, $filter: OrderFilterInput, $sort: OrderSortingInput) {
   orders(
@@ -10171,6 +10537,132 @@ export function useOrderDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type OrderDetailsQueryHookResult = ReturnType<typeof useOrderDetailsQuery>;
 export type OrderDetailsLazyQueryHookResult = ReturnType<typeof useOrderDetailsLazyQuery>;
 export type OrderDetailsQueryResult = Apollo.QueryResult<Types.OrderDetailsQuery, Types.OrderDetailsQueryVariables>;
+export const OrderDetailsWithTransactionsDocument = gql`
+    query OrderDetailsWithTransactions($id: ID!) {
+  order(id: $id) {
+    ...OrderDetailsWithTransactions
+  }
+  shop {
+    countries {
+      code
+      country
+    }
+    defaultWeightUnit
+    fulfillmentAllowUnpaid
+    fulfillmentAutoApprove
+    availablePaymentGateways {
+      ...PaymentGateway
+    }
+  }
+}
+    ${OrderDetailsWithTransactionsFragmentDoc}
+${PaymentGatewayFragmentDoc}`;
+
+/**
+ * __useOrderDetailsWithTransactionsQuery__
+ *
+ * To run a query within a React component, call `useOrderDetailsWithTransactionsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderDetailsWithTransactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderDetailsWithTransactionsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useOrderDetailsWithTransactionsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderDetailsWithTransactionsQuery, Types.OrderDetailsWithTransactionsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderDetailsWithTransactionsQuery, Types.OrderDetailsWithTransactionsQueryVariables>(OrderDetailsWithTransactionsDocument, options);
+      }
+export function useOrderDetailsWithTransactionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderDetailsWithTransactionsQuery, Types.OrderDetailsWithTransactionsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsWithTransactionsQuery, Types.OrderDetailsWithTransactionsQueryVariables>(OrderDetailsWithTransactionsDocument, options);
+        }
+export type OrderDetailsWithTransactionsQueryHookResult = ReturnType<typeof useOrderDetailsWithTransactionsQuery>;
+export type OrderDetailsWithTransactionsLazyQueryHookResult = ReturnType<typeof useOrderDetailsWithTransactionsLazyQuery>;
+export type OrderDetailsWithTransactionsQueryResult = Apollo.QueryResult<Types.OrderDetailsWithTransactionsQuery, Types.OrderDetailsWithTransactionsQueryVariables>;
+export const OrderDetailsGrantRefundDocument = gql`
+    query OrderDetailsGrantRefund($id: ID!) {
+  order(id: $id) {
+    ...OrderDetailsGrantRefund
+  }
+}
+    ${OrderDetailsGrantRefundFragmentDoc}`;
+
+/**
+ * __useOrderDetailsGrantRefundQuery__
+ *
+ * To run a query within a React component, call `useOrderDetailsGrantRefundQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderDetailsGrantRefundQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderDetailsGrantRefundQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useOrderDetailsGrantRefundQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>(OrderDetailsGrantRefundDocument, options);
+      }
+export function useOrderDetailsGrantRefundLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>(OrderDetailsGrantRefundDocument, options);
+        }
+export type OrderDetailsGrantRefundQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundQuery>;
+export type OrderDetailsGrantRefundLazyQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundLazyQuery>;
+export type OrderDetailsGrantRefundQueryResult = Apollo.QueryResult<Types.OrderDetailsGrantRefundQuery, Types.OrderDetailsGrantRefundQueryVariables>;
+export const OrderDetailsGrantRefundEditDocument = gql`
+    query OrderDetailsGrantRefundEdit($id: ID!) {
+  order(id: $id) {
+    ...OrderDetailsGrantRefund
+    grantedRefunds {
+      id
+      reason
+      amount {
+        ...Money
+      }
+    }
+  }
+}
+    ${OrderDetailsGrantRefundFragmentDoc}
+${MoneyFragmentDoc}`;
+
+/**
+ * __useOrderDetailsGrantRefundEditQuery__
+ *
+ * To run a query within a React component, call `useOrderDetailsGrantRefundEditQuery` and pass it any options that fit your needs.
+ * When your component renders, `useOrderDetailsGrantRefundEditQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useOrderDetailsGrantRefundEditQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useOrderDetailsGrantRefundEditQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>(OrderDetailsGrantRefundEditDocument, options);
+      }
+export function useOrderDetailsGrantRefundEditLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>(OrderDetailsGrantRefundEditDocument, options);
+        }
+export type OrderDetailsGrantRefundEditQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundEditQuery>;
+export type OrderDetailsGrantRefundEditLazyQueryHookResult = ReturnType<typeof useOrderDetailsGrantRefundEditLazyQuery>;
+export type OrderDetailsGrantRefundEditQueryResult = Apollo.QueryResult<Types.OrderDetailsGrantRefundEditQuery, Types.OrderDetailsGrantRefundEditQueryVariables>;
 export const OrderFulfillDataDocument = gql`
     query OrderFulfillData($orderId: ID!) {
   order(id: $orderId) {

@@ -34,3 +34,11 @@ export const channelDetailsFragment = gql`
     }
   }
 `;
+
+export const channelOrderSettings = gql`
+  fragment ChannelOrderSettings on Channel {
+    orderSettings {
+      markAsPaidStrategy
+    }
+  }
+`;
