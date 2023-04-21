@@ -260,7 +260,7 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
           ) : null}
         </div>
         <div ref={pluginResize.secondRef} style={{ minWidth: 0 }}>
-          <div className="graphiql-sessions">
+          <div className={clsx("graphiql-sessions", classes.graphiqlSessions)}>
             <div
               role="tabpanel"
               id="graphiql-session"
@@ -270,7 +270,10 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
             >
               <div ref={editorResize.firstRef}>
                 <div
-                  className="graphiql-editors full-height"
+                  className={clsx(
+                    "graphiql-editors full-height",
+                    classes.graphiqlEditors,
+                  )}
                   style={{ boxShadow: "none" }}
                 >
                   <div ref={editorToolsResize.firstRef}>
