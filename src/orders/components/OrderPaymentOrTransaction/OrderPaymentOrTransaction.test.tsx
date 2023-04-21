@@ -29,6 +29,7 @@ jest.mock("@saleor/macaw-ui", () => ({
 
 jest.mock("@saleor/macaw-ui/next", () => ({
   useTheme: jest.fn(() => () => ({})),
+  Divider: jest.fn(() => <></>),
   vars: {
     colors: {
       border: {
