@@ -21,7 +21,7 @@ import MultiAutocompleteSelectField, {
 
 interface ChannelPermissionProps {
   selectedChannels: string[];
-  allChannels?: ChannelFragment[];
+  allChannels: ChannelFragment[];
   channelsDisplayValues: MultiAutocompleteChoiceType[];
   description?: string;
   hasRestrictedChannels: boolean;
@@ -60,21 +60,21 @@ export const ChannelPermission = ({
         )}
 
         <ListItem
-          role={undefined}
+          disabled={disabled}
           onClick={onHasRestrictedChannelsChange}
           dense
           button
+          data-test-id="restrict-channels"
         >
           <ListItemIcon>
             <Checkbox
-              data-test-id="full-access"
               color="secondary"
               edge="start"
               checked={hasRestrictedChannels}
               disabled={disabled}
               tabIndex={-1}
               disableRipple
-              inputProps={{ "aria-labelledby": "fullAccess" }}
+              inputProps={{ "aria-labelledby": "restrictedChannels" }}
             />
           </ListItemIcon>
           <ListItemText
