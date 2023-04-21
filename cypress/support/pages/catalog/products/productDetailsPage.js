@@ -37,6 +37,7 @@ function updateProductManageInChannel(productUrl, manageSelector) {
     .get(AVAILABLE_CHANNELS_FORM.assignedChannels)
     .click()
     .get(manageSelector)
+    .first()
     .click()
     .waitForProgressBarToNotBeVisible()
     .addAliasToGraphRequest("ProductChannelListingUpdate")

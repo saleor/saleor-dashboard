@@ -87,7 +87,11 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
         flexDirection="column"
         gap={6}
       >
-        <RadioGroup.Item id={`${id}-isPublished-true`} value="true">
+        <RadioGroup.Item
+          id={`${id}-isPublished-true`}
+          value="true"
+          name="isPublished"
+        >
           <Box display="flex" alignItems="baseline" gap={5}>
             <Text>{messages.visibleLabel}</Text>
             {isPublished &&
@@ -100,7 +104,11 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
               )}
           </Box>
         </RadioGroup.Item>
-        <RadioGroup.Item id={`${id}-isPublished-false`} value="false">
+        <RadioGroup.Item
+          id={`${id}-isPublished-false`}
+          value="false"
+          name="isPublished"
+        >
           <Box display="flex" alignItems="baseline" gap={5}>
             <Text>{messages.hiddenLabel}</Text>
             {publicationDate &&
