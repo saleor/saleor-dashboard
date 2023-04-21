@@ -3,7 +3,7 @@ import { makeStyles } from "@saleor/macaw-ui";
 import { useTheme, vars } from "@saleor/macaw-ui/next";
 import { useMemo } from "react";
 
-export const cellHeight = 36;
+export const cellHeight = 40;
 
 const useStyles = makeStyles(
   () => {
@@ -33,7 +33,7 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        height: cellHeight + 16,
+        height: cellHeight,
       },
       columnPickerBackground: {
         background: vars.colors.background.plain,
@@ -205,23 +205,24 @@ export function useDatagridTheme(
       accentFg: "transparent",
       bgCell: themeValues.colors.background.plain,
       bgHeader: themeValues.colors.background.plain,
-      bgHeaderHasFocus: themeValues.colors.background.plain,
+      bgHeaderHasFocus:
+        themeValues.colors.background.interactiveNeutralSecondaryHovering,
       bgHeaderHovered: hasHeaderClickable
-        ? themeValues.colors.background.surfaceNeutralHighlight
+        ? themeValues.colors.background.interactiveNeutralSecondaryHovering
         : themeValues.colors.background.plain,
       bgBubbleSelected: themeValues.colors.background.plain,
-      textHeader: themeValues.colors.foreground.iconNeutralPlain,
       borderColor: themeValues.colors.border.neutralHighlight,
       fontFamily: "'Inter var', sans-serif",
       baseFontStyle: themeValues.fontSize.bodySmall,
-      headerFontStyle: themeValues.fontSize.captionSmall,
+      headerFontStyle: themeValues.fontSize.bodySmall,
       editorFontSize: themeValues.fontSize.bodySmall,
-      textMedium: themeValues.colors.background.interactiveNeutralDefault,
-      textGroupHeader: themeValues.colors.foreground.iconNeutralPlain,
+      textMedium: themeValues.colors.foreground.iconNeutralPlain,
+      textGroupHeader: themeValues.colors.foreground.iconNeutralDefault,
       textBubble: themeValues.colors.background.interactiveNeutralDefault,
-      textDark: themeValues.colors.background.interactiveNeutralDefault,
-      textLight: themeValues.colors.background.interactiveNeutralDefault,
-      textHeaderSelected: themeValues.colors.foreground.textBrandDefault,
+      textDark: themeValues.colors.foreground.iconNeutralDefault,
+      textLight: themeValues.colors.foreground.iconNeutralDefault,
+      textHeader: themeValues.colors.foreground.iconNeutralDefault,
+      textHeaderSelected: themeValues.colors.background.plain,
       cellHorizontalPadding: 8,
       cellVerticalPadding: 8,
       lineHeight: 20,
@@ -232,8 +233,9 @@ export function useDatagridTheme(
   const readonylDatagridTheme = useMemo(
     () => ({
       ...datagridTheme,
-      accentColor: themeValues.colors.background.surfaceBrandDepressed,
-      accentLight: themeValues.colors.background.plain,
+      accentColor: themeValues.colors.background.decorativeSurfacePlain3,
+      accentLight:
+        themeValues.colors.background.interactiveNeutralSecondaryHovering,
     }),
     [themeValues, datagridTheme],
   );

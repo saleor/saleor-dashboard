@@ -1,0 +1,33 @@
+name: Clean environments
+on:
+  schedule:
+    - cron: "0 0 * * 0"
+  workflow_dispatch:
+    branches: ["main"]
+
+jobs:
+  cleanEnvironments:
+    runs-on: ubuntu-latest
+    env:
+      TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
+      SNAPSHOT: 9oUFxT7f
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Install dependencies
+        run: |
+          cd .github/workflows
+          npm ci
+
+      - name: clean environments
+        id: clean-environments
+        run: |
+          node .github/workflows/cleanEnvironments.js \
+          --token "$TOKEN" \
+          --snapshot "$SNAPSHOT"
