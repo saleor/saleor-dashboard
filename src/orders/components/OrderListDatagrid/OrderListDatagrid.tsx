@@ -22,7 +22,7 @@ interface OrderListDatagridProps
   extends ListProps,
     SortPage<OrderListUrlSortField> {
   orders: RelayToFlat<OrderListQuery["orders"]>;
-  onRowClick: (id: string) => void;
+  onRowClick?: (id: string) => void;
   onRowHover?: (args: GridMouseEventArgs, orderId?: string) => void;
   hasRowHover?: boolean;
 }
@@ -67,6 +67,10 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
 
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
+      if (!onRowClick) {
+        return;
+      }
+
       const rowData = orders[row];
       onRowClick(rowData.id);
     },
@@ -75,6 +79,10 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
 
   const handleRowHover = useCallback(
     (args: GridMouseEventArgs) => {
+      if (!onRowHover) {
+        return;
+      }
+
       if (args.kind === "cell") {
         const [, row] = args.location;
         const rowData = orders[row];

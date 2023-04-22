@@ -223,9 +223,6 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
         <OrderListDatagrid
           {...listProps}
           hasRowHover={!isFilterPresetOpen}
-          onRowClick={id => {
-            navigate(orderUrl(id));
-          }}
           onRowHover={(args, id) => {
             if (args.kind !== "cell" || !id || !hackARef.current) {
               return;
@@ -238,12 +235,18 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             hackARef.current.href = orderUrl(id);
           }}
         />
-        <a
-          ref={hackARef}
-          style={{ position: "absolute" }}
-          tabIndex={-1}
-          aria-hidden={true}
-        />
+        {!listProps.disabled && (
+          <a
+            ref={hackARef}
+            style={{ position: "absolute", outline: `1px solid red` }}
+            tabIndex={-1}
+            aria-hidden={true}
+            onClick={e => {
+              e.preventDefault();
+              navigate(e.currentTarget.pathname);
+            }}
+          />
+        )}
       </Card>
     </ListPageLayout>
   );
