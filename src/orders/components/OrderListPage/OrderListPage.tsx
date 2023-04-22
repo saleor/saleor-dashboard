@@ -238,7 +238,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
         {!listProps.disabled && (
           <a
             ref={hackARef}
-            style={{ position: "absolute", outline: `1px solid red` }}
+            style={{ position: "absolute" }}
             tabIndex={-1}
             aria-hidden={true}
             onClick={e => {
