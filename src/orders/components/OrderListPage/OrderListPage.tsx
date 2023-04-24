@@ -12,7 +12,6 @@ import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { orderMessages } from "@dashboard/orders/messages";
 import { DevModeQuery } from "@dashboard/orders/queries";
@@ -32,7 +31,7 @@ import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import { Box, ChevronRightIcon } from "@saleor/macaw-ui/next";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderLimitReached from "../OrderLimitReached";
@@ -87,7 +86,6 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
-  const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
@@ -115,8 +113,6 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
     context.setVariables(variables);
     context.setDevModeVisibility(true);
   };
-
-  const hackARef = useRef<HTMLAnchorElement>(null);
 
   return (
     <ListPageLayout>
@@ -223,30 +219,8 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
         <OrderListDatagrid
           {...listProps}
           hasRowHover={!isFilterPresetOpen}
-          onRowHover={(args, id) => {
-            if (args.kind !== "cell" || !id || !hackARef.current) {
-              return;
-            }
-
-            hackARef.current.style.left = `${window.scrollX + args.bounds.x}px`;
-            hackARef.current.style.width = `${args.bounds.width}px`;
-            hackARef.current.style.top = `${window.scrollY + args.bounds.y}px`;
-            hackARef.current.style.height = `${args.bounds.height}px`;
-            hackARef.current.href = orderUrl(id);
-          }}
+          rowAnchor={orderUrl}
         />
-        {!listProps.disabled && (
-          <a
-            ref={hackARef}
-            style={{ position: "absolute" }}
-            tabIndex={-1}
-            aria-hidden={true}
-            onClick={e => {
-              e.preventDefault();
-              navigate(e.currentTarget.pathname);
-            }}
-          />
-        )}
       </Card>
     </ListPageLayout>
   );

@@ -9,7 +9,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import { OrderListQuery } from "@dashboard/graphql";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
-import { GridMouseEventArgs, Item } from "@glideapps/glide-data-grid";
+import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
@@ -23,7 +23,7 @@ interface OrderListDatagridProps
     SortPage<OrderListUrlSortField> {
   orders: RelayToFlat<OrderListQuery["orders"]>;
   onRowClick?: (id: string) => void;
-  onRowHover?: (args: GridMouseEventArgs, orderId?: string) => void;
+  rowAnchor?: (id: string) => string;
   hasRowHover?: boolean;
 }
 
@@ -35,8 +35,8 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   onSort,
   sort,
   onRowClick,
-  onRowHover,
   hasRowHover,
+  rowAnchor,
 }) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
@@ -77,21 +77,15 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
     [onRowClick, orders],
   );
 
-  const handleRowHover = useCallback(
-    (args: GridMouseEventArgs) => {
-      if (!onRowHover) {
+  const handleRowAnchor = useCallback(
+    ([, row]: Item) => {
+      if (!rowAnchor) {
         return;
       }
-
-      if (args.kind === "cell") {
-        const [, row] = args.location;
-        const rowData = orders[row];
-        onRowHover(args, rowData.id);
-      } else {
-        onRowHover(args);
-      }
+      const rowData = orders[row];
+      return rowAnchor(rowData.id);
     },
-    [onRowHover, orders],
+    [rowAnchor, orders],
   );
 
   const getCellContent = useGetCellContent({
@@ -136,7 +130,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           )}
           fullScreenTitle={intl.formatMessage(messages.orders)}
           onRowClick={handleRowClick}
-          onRowHover={handleRowHover}
+          rowAnchor={handleRowAnchor}
         />
 
         <Box paddingX={9}>
