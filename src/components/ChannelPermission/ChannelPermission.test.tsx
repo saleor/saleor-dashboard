@@ -1,7 +1,6 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
-import { act } from "react-dom/test-utils";
 
 import { ChannelPermission } from "./ChannelPermission";
 import { allChannels } from "./fixtures";
@@ -136,42 +135,5 @@ describe("ChannelPermission", () => {
 
     // Assert
     expect(screen.getByText(selectedChannels[0].name)).toBeInTheDocument();
-  });
-
-  it.skip("should be able to select resticted channels", async () => {
-    // Arrange
-    const mockOnChannelChange = jest.fn();
-    const user = userEvent.setup();
-
-    render(
-      <ChannelPermission
-        selectedChannels={[]}
-        allChannels={allChannels}
-        channelsDisplayValues={[]}
-        disabled={false}
-        onChannelChange={mockOnChannelChange}
-        onHasRestrictedChannelsChange={jest.fn()}
-        hasRestrictedChannels={true}
-      />,
-    );
-
-    // Act
-    await act(async () => {
-      user.click(await screen.findByTestId("multiAutocompleteSelectField"));
-    });
-    screen.debug();
-    // await userEvent.click(
-    //   await screen.findByTestId("multi-autocomplete-select-option")[0],
-    // );
-    // await userEvent.click(
-    //   await screen.findByTestId("multi-autocomplete-select-option")[2],
-    // );
-    // await userEvent.click(await screen.findByRole("combobox"));
-
-    // Assert
-    // expect(mockOnChannelChange).toBeCalledTimes(2);
-
-    // expect(await screen.findByText("Channel-1")).toBeInTheDocument();
-    // expect(await screen.findByText(allChannels[2].name)).toBeInTheDocument();
   });
 });
