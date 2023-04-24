@@ -89,7 +89,7 @@ describe("Permission group utils", () => {
     it("should return true when have all permissions available in shop assigned", () => {
       const permissionGroup = {
         permissions: [
-          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxe" },
+          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
           { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
           { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
           { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
@@ -97,7 +97,7 @@ describe("Permission group utils", () => {
       } as PermissionGroupDetailsFragment;
 
       const shopPermissions = [
-        { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxe" },
+        { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
         { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
         { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
         { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
@@ -116,7 +116,7 @@ describe("Permission group utils", () => {
       } as PermissionGroupDetailsFragment;
 
       const shopPermissions = [
-        { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxe" },
+        { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
         { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
         { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
         { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
@@ -128,7 +128,7 @@ describe("Permission group utils", () => {
     it("should return false when permission does not have all shop permissions", () => {
       const permissionGroup = {
         permissions: [
-          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxe" },
+          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
           { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
           { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
           { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
@@ -137,7 +137,7 @@ describe("Permission group utils", () => {
 
       const shopPermissions = [
         { code: PermissionEnum.MANAGE_ORDERS, name: "Handle order" },
-        { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxe" },
+        { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
         { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
         { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
         { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
@@ -151,7 +151,7 @@ describe("Permission group utils", () => {
     it("should return list of permission codes", () => {
       const permissions = {
         permissions: [
-          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxe" },
+          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
           { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
           { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
           { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
@@ -196,7 +196,7 @@ describe("Permission group utils", () => {
 
       const permissionGroup = {
         permissions: [
-          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxe" },
+          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
           { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
         ],
       } as PermissionGroupDetailsFragment;
@@ -253,7 +253,7 @@ describe("Permission group utils", () => {
     it("should return false when number of permissions is not exceeded", () => {
       const permissions = {
         permissions: [
-          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxe" },
+          { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
           { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
           { code: PermissionEnum.HANDLE_PAYMENTS, name: "Handle payments" },
           { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
