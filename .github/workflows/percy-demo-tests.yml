@@ -31,7 +31,7 @@ jobs:
   cypress-run-tests:
     runs-on: ubuntu-latest
     env:
-      TEST_KIND: ${{ github.event.inputs.testsKind || github.event.client_payload.testsKind || "all"}}
+      TEST_KIND: ${{ github.event.inputs.testsKind || github.event.client_payload.testsKind || 'all'}}
     container: cypress/browsers:node18.12.0-chrome106-ff106
 
     steps:
