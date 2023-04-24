@@ -167,6 +167,7 @@ jobs:
     outputs:
       url: ${{ steps.get-environment-variables.outputs.url }}
       is_old_version: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
+      branch: ${{ steps.get-environment-variables.outputs.branch }}
     env:
       REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
