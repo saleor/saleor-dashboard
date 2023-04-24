@@ -343,6 +343,9 @@
     "context": "min price in channel",
     "string": "Min. value"
   },
+  "0HBlkO": {
+    "string": "Search channels"
+  },
   "0KmZCN": {
     "context": "button",
     "string": "Open playground"
@@ -5409,6 +5412,9 @@
     "context": "range input label",
     "string": "Postal codes (end)"
   },
+  "ay73LS": {
+    "string": "Restrict access to channels"
+  },
   "b+jcaN": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
   },
@@ -8145,6 +8151,9 @@
   "vy7fjd": {
     "context": "tab name",
     "string": "All Categories"
+  },
+  "vz3yxp": {
+    "string": "Channels permissions"
   },
   "vzce9B": {
     "context": "customer gift cards card subtitle",
