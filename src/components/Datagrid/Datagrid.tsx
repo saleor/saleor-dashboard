@@ -236,10 +236,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
       // the code below is responsible for adding native <a> element when hovering over rows in the datagrid
       // this makes it possible to open links in a new tab and copy them
-      if (args.kind !== "cell" || !hackARef.current) {
+      if (args.kind !== "cell" || !hackARef.current || !rowAnchor) {
         return;
       }
-      const href = rowAnchor?.(args.location);
+      const href = rowAnchor(args.location);
 
       if (!href) {
         return;
