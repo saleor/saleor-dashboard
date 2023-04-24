@@ -13,6 +13,7 @@ import {
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
+import { buttonMessages } from "@dashboard/intl";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
 import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
@@ -26,9 +27,9 @@ import {
 } from "@dashboard/types";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn, Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, Button } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
 import { isAttributeColumnValue } from "../ProductListPage/utils";
 import { useColumnPickerColumns } from "./hooks/useColumnPickerColumns";
@@ -227,13 +228,13 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         <Datagrid
           readonly
           loading={loading}
-          rowMarkers="none"
+          rowMarkers="checkbox"
           columnSelect="single"
-          freezeColumns={2}
+          freezeColumns={1}
           hasRowHover={hasRowHover}
           onColumnMoved={handleColumnMoved}
           onColumnResize={handleColumnResize}
-          verticalBorder={col => (col > 1 ? true : false)}
+          verticalBorder={true}
           getColumnTooltipContent={handleGetColumnTooltipContent}
           availableColumns={columns}
           onHeaderClicked={handleHeaderClicked}
@@ -242,7 +243,15 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           getCellError={() => false}
           menuItems={() => []}
           rows={productsLength}
-          selectionActions={() => null}
+          selectionActions={(indexes, { removeRows }) => (
+            <Button
+              variant="primary"
+              size="small"
+              onClick={() => removeRows(indexes)}
+            >
+              <FormattedMessage {...buttonMessages.delete} />
+            </Button>
+          )}
           fullScreenTitle={intl.formatMessage(messages.products)}
           onRowClick={handleRowClick}
           renderColumnPicker={defaultProps => (
