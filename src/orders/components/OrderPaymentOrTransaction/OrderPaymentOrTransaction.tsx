@@ -1,9 +1,8 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { TransactionActionEnum } from "@dashboard/graphql";
-import { useFlags } from "@dashboard/hooks/useFlags";
 import {
   OrderBothTypes,
-  orderChannelUseTransactions,
+  orderShouldUseTransactions,
   ShopBothTypes,
   ShopWithTransactions,
 } from "@dashboard/orders/types";
@@ -12,7 +11,7 @@ import React from "react";
 import OrderPayment from "../OrderPayment/OrderPayment";
 import { OrderTransactionsWrapper } from "./OrderTransactionsWrapper";
 
-interface OrderPaymentOrTransactionProps {
+export interface OrderPaymentOrTransactionProps {
   order: OrderBothTypes;
   shop: ShopBothTypes;
   onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
@@ -35,9 +34,7 @@ export const OrderPaymentOrTransaction: React.FC<
   onMarkAsPaid,
   onAddManualTransaction,
 }) => {
-  const { orderTransactions } = useFlags(["orderTransactions"]);
-
-  if (orderChannelUseTransactions(order, orderTransactions.enabled)) {
+  if (orderShouldUseTransactions(order)) {
     return (
       <OrderTransactionsWrapper
         order={order}

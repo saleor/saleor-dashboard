@@ -14,7 +14,6 @@ import {
   useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
 } from "@dashboard/graphql";
-import { OrderDetailsWithTransactionsQueryResult } from "@dashboard/graphql/hooks.generated";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { CustomerEditData } from "@dashboard/orders/components/OrderCustomer";
 import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
@@ -58,9 +57,7 @@ interface OrderDraftDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   loading: any;
-  data:
-    | OrderDetailsQueryResult["data"]
-    | OrderDetailsWithTransactionsQueryResult["data"];
+  data: OrderDetailsQueryResult["data"];
   orderAddNote: any;
   orderLineUpdate: PartialMutationProviderOutput<
     OrderLineUpdateMutation,

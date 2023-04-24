@@ -6,11 +6,11 @@ import {
 } from "@dashboard/graphql";
 import {
   grantedRefunds,
+  order,
   ORDER_AMOUNT,
-  orderWithTransactions as order,
   payments,
   prepareMoney,
-  shopWithTransactions,
+  shop,
   transactions,
 } from "@dashboard/orders/fixtures";
 import { OrderBothTypes } from "@dashboard/orders/types";
@@ -43,9 +43,9 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onShippingAddressEdit: undefined,
   onSubmit: () => undefined,
   onAddManualTransaction: () => undefined,
-  order,
+  order: order(null),
   errors: [],
-  shop: shopWithTransactions,
+  shop,
   saveButtonBarState: "default",
 };
 

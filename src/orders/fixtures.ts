@@ -9,7 +9,6 @@ import {
   OrderAction,
   OrderDetailsFragment,
   OrderDetailsQuery,
-  OrderDetailsWithTransactionsQuery,
   OrderEventsEmailsEnum,
   OrderEventsEnum,
   OrderFulfillLineFragment,
@@ -61,6 +60,11 @@ export const countries: CountryWithCodeFragment[] = [
 
 const paymentGateways: PaymentGatewayFragment[] = [
   { __typename: "PaymentGateway", id: "app.saleor.adyen", name: "Adyen" },
+  {
+    id: MOCK_PAYMENT_GATEWAY_ID,
+    name: "Mock Payment Gateway",
+    __typename: "PaymentGateway",
+  },
 ];
 
 export const shop: OrderDetailsQuery["shop"] = {
@@ -70,17 +74,6 @@ export const shop: OrderDetailsQuery["shop"] = {
   fulfillmentAllowUnpaid: true,
   fulfillmentAutoApprove: true,
   availablePaymentGateways: paymentGateways,
-};
-
-export const shopWithTransactions: OrderDetailsWithTransactionsQuery["shop"] = {
-  ...shop,
-  availablePaymentGateways: [
-    {
-      id: MOCK_PAYMENT_GATEWAY_ID,
-      name: "Mock Payment Gateway",
-      __typename: "PaymentGateway",
-    },
-  ],
 };
 
 export const clients: RelayToFlat<SearchCustomersQuery["search"]> = [

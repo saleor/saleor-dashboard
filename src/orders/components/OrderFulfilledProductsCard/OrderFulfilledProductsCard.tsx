@@ -1,7 +1,6 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
-import { useFlags } from "@dashboard/hooks/useFlags";
 import TrashIcon from "@dashboard/icons/Trash";
 import { orderHasTransactions, OrderSharedType } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
@@ -49,9 +48,6 @@ const OrderFulfilledProductsCard: React.FC<
     onTrackingCodeAdd,
   } = props;
   const classes = useStyles(props);
-  const { orderTransactions: transactionsFeatureFlag } = useFlags([
-    "orderTransactions",
-  ]);
 
   if (!fulfillment) {
     return null;
@@ -106,10 +102,7 @@ const OrderFulfilledProductsCard: React.FC<
             fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
             onTrackingCodeAdd={onTrackingCodeAdd}
             onApprove={onOrderFulfillmentApprove}
-            hasTransactions={orderHasTransactions(
-              order,
-              transactionsFeatureFlag.enabled,
-            )}
+            hasTransactions={orderHasTransactions(order)}
           />
         </CardContent>
       </Card>

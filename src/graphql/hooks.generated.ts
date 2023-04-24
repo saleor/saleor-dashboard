@@ -232,16 +232,12 @@ export const ChannelDetailsFragmentDoc = gql`
   warehouses {
     ...Warehouse
   }
-}
-    ${ChannelFragmentDoc}
-${WarehouseFragmentDoc}`;
-export const ChannelOrderSettingsFragmentDoc = gql`
-    fragment ChannelOrderSettings on Channel {
   orderSettings {
     markAsPaidStrategy
   }
 }
-    `;
+    ${ChannelFragmentDoc}
+${WarehouseFragmentDoc}`;
 export const CollectionFragmentDoc = gql`
     fragment Collection on Collection {
   id
@@ -4829,89 +4825,6 @@ export function useChannelReorderWarehousesMutation(baseOptions?: ApolloReactHoo
 export type ChannelReorderWarehousesMutationHookResult = ReturnType<typeof useChannelReorderWarehousesMutation>;
 export type ChannelReorderWarehousesMutationResult = Apollo.MutationResult<Types.ChannelReorderWarehousesMutation>;
 export type ChannelReorderWarehousesMutationOptions = Apollo.BaseMutationOptions<Types.ChannelReorderWarehousesMutation, Types.ChannelReorderWarehousesMutationVariables>;
-export const ChannelOrderSettingsUpdateDocument = gql`
-    mutation ChannelOrderSettingsUpdate($id: ID!, $input: ChannelUpdateInput!) {
-  channelUpdate(id: $id, input: $input) {
-    channel {
-      ...ChannelDetails
-      ...ChannelOrderSettings
-    }
-    errors {
-      ...ChannelError
-    }
-  }
-}
-    ${ChannelDetailsFragmentDoc}
-${ChannelOrderSettingsFragmentDoc}
-${ChannelErrorFragmentDoc}`;
-export type ChannelOrderSettingsUpdateMutationFn = Apollo.MutationFunction<Types.ChannelOrderSettingsUpdateMutation, Types.ChannelOrderSettingsUpdateMutationVariables>;
-
-/**
- * __useChannelOrderSettingsUpdateMutation__
- *
- * To run a mutation, you first call `useChannelOrderSettingsUpdateMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChannelOrderSettingsUpdateMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [channelOrderSettingsUpdateMutation, { data, loading, error }] = useChannelOrderSettingsUpdateMutation({
- *   variables: {
- *      id: // value for 'id'
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useChannelOrderSettingsUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChannelOrderSettingsUpdateMutation, Types.ChannelOrderSettingsUpdateMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ChannelOrderSettingsUpdateMutation, Types.ChannelOrderSettingsUpdateMutationVariables>(ChannelOrderSettingsUpdateDocument, options);
-      }
-export type ChannelOrderSettingsUpdateMutationHookResult = ReturnType<typeof useChannelOrderSettingsUpdateMutation>;
-export type ChannelOrderSettingsUpdateMutationResult = Apollo.MutationResult<Types.ChannelOrderSettingsUpdateMutation>;
-export type ChannelOrderSettingsUpdateMutationOptions = Apollo.BaseMutationOptions<Types.ChannelOrderSettingsUpdateMutation, Types.ChannelOrderSettingsUpdateMutationVariables>;
-export const ChannelCreateWithSettingsDocument = gql`
-    mutation ChannelCreateWithSettings($input: ChannelCreateInput!) {
-  channelCreate(input: $input) {
-    channel {
-      ...ChannelDetails
-      ...ChannelOrderSettings
-    }
-    errors {
-      ...ChannelError
-    }
-  }
-}
-    ${ChannelDetailsFragmentDoc}
-${ChannelOrderSettingsFragmentDoc}
-${ChannelErrorFragmentDoc}`;
-export type ChannelCreateWithSettingsMutationFn = Apollo.MutationFunction<Types.ChannelCreateWithSettingsMutation, Types.ChannelCreateWithSettingsMutationVariables>;
-
-/**
- * __useChannelCreateWithSettingsMutation__
- *
- * To run a mutation, you first call `useChannelCreateWithSettingsMutation` within a React component and pass it any options that fit your needs.
- * When your component renders, `useChannelCreateWithSettingsMutation` returns a tuple that includes:
- * - A mutate function that you can call at any time to execute the mutation
- * - An object with fields that represent the current status of the mutation's execution
- *
- * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
- *
- * @example
- * const [channelCreateWithSettingsMutation, { data, loading, error }] = useChannelCreateWithSettingsMutation({
- *   variables: {
- *      input: // value for 'input'
- *   },
- * });
- */
-export function useChannelCreateWithSettingsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.ChannelCreateWithSettingsMutation, Types.ChannelCreateWithSettingsMutationVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useMutation<Types.ChannelCreateWithSettingsMutation, Types.ChannelCreateWithSettingsMutationVariables>(ChannelCreateWithSettingsDocument, options);
-      }
-export type ChannelCreateWithSettingsMutationHookResult = ReturnType<typeof useChannelCreateWithSettingsMutation>;
-export type ChannelCreateWithSettingsMutationResult = Apollo.MutationResult<Types.ChannelCreateWithSettingsMutation>;
-export type ChannelCreateWithSettingsMutationOptions = Apollo.BaseMutationOptions<Types.ChannelCreateWithSettingsMutation, Types.ChannelCreateWithSettingsMutationVariables>;
 export const BaseChannelsDocument = gql`
     query BaseChannels {
   channels {
@@ -5015,41 +4928,6 @@ export function useChannelLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHook
 export type ChannelQueryHookResult = ReturnType<typeof useChannelQuery>;
 export type ChannelLazyQueryHookResult = ReturnType<typeof useChannelLazyQuery>;
 export type ChannelQueryResult = Apollo.QueryResult<Types.ChannelQuery, Types.ChannelQueryVariables>;
-export const ChannelOrderSettingsDocument = gql`
-    query ChannelOrderSettings($id: ID!) {
-  channel(id: $id) {
-    ...ChannelOrderSettings
-  }
-}
-    ${ChannelOrderSettingsFragmentDoc}`;
-
-/**
- * __useChannelOrderSettingsQuery__
- *
- * To run a query within a React component, call `useChannelOrderSettingsQuery` and pass it any options that fit your needs.
- * When your component renders, `useChannelOrderSettingsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useChannelOrderSettingsQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useChannelOrderSettingsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.ChannelOrderSettingsQuery, Types.ChannelOrderSettingsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.ChannelOrderSettingsQuery, Types.ChannelOrderSettingsQueryVariables>(ChannelOrderSettingsDocument, options);
-      }
-export function useChannelOrderSettingsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.ChannelOrderSettingsQuery, Types.ChannelOrderSettingsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.ChannelOrderSettingsQuery, Types.ChannelOrderSettingsQueryVariables>(ChannelOrderSettingsDocument, options);
-        }
-export type ChannelOrderSettingsQueryHookResult = ReturnType<typeof useChannelOrderSettingsQuery>;
-export type ChannelOrderSettingsLazyQueryHookResult = ReturnType<typeof useChannelOrderSettingsLazyQuery>;
-export type ChannelOrderSettingsQueryResult = Apollo.QueryResult<Types.ChannelOrderSettingsQuery, Types.ChannelOrderSettingsQueryVariables>;
 export const CollectionUpdateDocument = gql`
     mutation CollectionUpdate($id: ID!, $input: CollectionInput!) {
   collectionUpdate(id: $id, input: $input) {
@@ -10388,54 +10266,6 @@ export function useOrderDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQuer
 export type OrderDetailsQueryHookResult = ReturnType<typeof useOrderDetailsQuery>;
 export type OrderDetailsLazyQueryHookResult = ReturnType<typeof useOrderDetailsLazyQuery>;
 export type OrderDetailsQueryResult = Apollo.QueryResult<Types.OrderDetailsQuery, Types.OrderDetailsQueryVariables>;
-export const OrderDetailsWithTransactionsDocument = gql`
-    query OrderDetailsWithTransactions($id: ID!) {
-  order(id: $id) {
-    ...OrderDetails
-  }
-  shop {
-    countries {
-      code
-      country
-    }
-    defaultWeightUnit
-    fulfillmentAllowUnpaid
-    fulfillmentAutoApprove
-    availablePaymentGateways {
-      ...PaymentGateway
-    }
-  }
-}
-    ${OrderDetailsFragmentDoc}
-${PaymentGatewayFragmentDoc}`;
-
-/**
- * __useOrderDetailsWithTransactionsQuery__
- *
- * To run a query within a React component, call `useOrderDetailsWithTransactionsQuery` and pass it any options that fit your needs.
- * When your component renders, `useOrderDetailsWithTransactionsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useOrderDetailsWithTransactionsQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useOrderDetailsWithTransactionsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.OrderDetailsWithTransactionsQuery, Types.OrderDetailsWithTransactionsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.OrderDetailsWithTransactionsQuery, Types.OrderDetailsWithTransactionsQueryVariables>(OrderDetailsWithTransactionsDocument, options);
-      }
-export function useOrderDetailsWithTransactionsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.OrderDetailsWithTransactionsQuery, Types.OrderDetailsWithTransactionsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.OrderDetailsWithTransactionsQuery, Types.OrderDetailsWithTransactionsQueryVariables>(OrderDetailsWithTransactionsDocument, options);
-        }
-export type OrderDetailsWithTransactionsQueryHookResult = ReturnType<typeof useOrderDetailsWithTransactionsQuery>;
-export type OrderDetailsWithTransactionsLazyQueryHookResult = ReturnType<typeof useOrderDetailsWithTransactionsLazyQuery>;
-export type OrderDetailsWithTransactionsQueryResult = Apollo.QueryResult<Types.OrderDetailsWithTransactionsQuery, Types.OrderDetailsWithTransactionsQueryVariables>;
 export const OrderDetailsGrantRefundDocument = gql`
     query OrderDetailsGrantRefund($id: ID!) {
   order(id: $id) {

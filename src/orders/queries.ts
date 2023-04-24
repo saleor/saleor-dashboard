@@ -117,28 +117,6 @@ export const orderDetailsQuery = gql`
   }
 `;
 
-// TODO: Remove this query (already covered by OrderDetails)
-export const orderDetailsWithTransactionsQuery = gql`
-  query OrderDetailsWithTransactions($id: ID!) {
-    order(id: $id) {
-      ...OrderDetails
-    }
-
-    shop {
-      countries {
-        code
-        country
-      }
-      defaultWeightUnit
-      fulfillmentAllowUnpaid
-      fulfillmentAutoApprove
-      availablePaymentGateways {
-        ...PaymentGateway
-      }
-    }
-  }
-`;
-
 export const orderDetailsGrantedRefund = gql`
   query OrderDetailsGrantRefund($id: ID!) {
     order(id: $id) {

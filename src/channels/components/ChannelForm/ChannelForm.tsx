@@ -11,13 +11,11 @@ import SingleAutocompleteSelectField, {
 } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   ChannelErrorFragment,
-  ChannelOrderSettingsFragment,
   CountryCode,
   MarkAsPaidStrategyEnum,
   StockSettingsInput,
 } from "@dashboard/graphql";
 import useClipboard from "@dashboard/hooks/useClipboard";
-import { useFlags } from "@dashboard/hooks/useFlags";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -61,7 +59,6 @@ export interface ChannelFormProps {
   onCurrencyCodeChange?: (event: ChangeEvent) => void;
   onDefaultCountryChange: (event: ChangeEvent) => void;
   onMarkAsPaidStrategyChange: () => void;
-  orderSettings: ChannelOrderSettingsFragment["orderSettings"];
 }
 
 export const ChannelForm: React.FC<ChannelFormProps> = ({
@@ -84,7 +81,6 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
     errors,
   );
   const classes = useStyles();
-  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   return (
     <>
@@ -229,7 +225,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           <FormSpacer />
           <ControlledSwitch
             data-test-id="order-settings-mark-as-paid"
-            disabled={disabled || !orderTransactions.enabled}
+            disabled={disabled}
             checked={
               data.markAsPaidStrategy ===
               MarkAsPaidStrategyEnum.TRANSACTION_FLOW

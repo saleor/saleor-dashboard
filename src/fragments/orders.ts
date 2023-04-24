@@ -187,6 +187,7 @@ export const invoiceFragment = gql`
 export const fragmentOrderDetails = gql`
   fragment OrderDetails on Order {
     id
+    # TODO: remove me
     token
     ...Metadata
     billingAddress {
@@ -243,6 +244,7 @@ export const fragmentOrderDetails = gql`
         clickAndCollectOption
       }
     }
+    # TODO: remove me
     shippingMethod {
       id
     }
@@ -452,6 +454,7 @@ export const transactionEvent = gql`
 export const transactionItemFragment = gql`
   fragment TransactionItem on TransactionItem {
     id
+    # TODO: remove me
     type
     pspReference
     actions

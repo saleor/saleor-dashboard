@@ -23,11 +23,3 @@ export const channelDetails = gql`
     }
   }
 `;
-
-export const channelOrderSettings = gql`
-  query ChannelOrderSettings($id: ID!) {
-    channel(id: $id) {
-      ...ChannelOrderSettings
-    }
-  }
-`;

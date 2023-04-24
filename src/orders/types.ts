@@ -2,92 +2,49 @@ import {
   MarkAsPaidStrategyEnum,
   OrderDetailsFragment,
   OrderDetailsQuery,
-  OrderDetailsWithTransactionsQuery,
-  OrderErrorCode as OrderErrorCodeWithoutTransactions,
-  OrderErrorCode as OrderErrorCodeWithTransactions,
-  OrderErrorFragment as OrderErrorFragmentWithoutTransactions,
-  OrderEventFragment as OrderEventFragmentWithoutTransactions,
-  OrderEventFragment as OrderEventFragmentWithTransactions,
-  OrderEventsEnum as OrderEventsEnumWithoutTransactions,
-  OrderEventsEnum as OrderEventsEnumWithTransactions,
+  OrderErrorCode,
+  OrderErrorFragment,
+  OrderEventFragment,
+  OrderEventsEnum,
   OrderRefundDataQuery,
   TransactionEventFragment,
   TransactionItemFragment,
 } from "@dashboard/graphql";
 
-export type ShopWithTransactions = OrderDetailsWithTransactionsQuery["shop"];
-export type ShopBothTypes = OrderDetailsQuery["shop"] | ShopWithTransactions;
-
-export type OrderBothTypes = OrderDetailsFragment | OrderDetailsFragment;
-
-/** use type from WithTransactions, exclude fields not available on old OrderDetails */
-export type OrderSharedType = Pick<
-  OrderDetailsFragment,
-  keyof OrderDetailsFragment & keyof OrderDetailsFragment
->;
-
-// convert TS enum to string union
-type OrderErrorCodeWithoutTransactionsUnion =
-  OrderErrorCodeWithoutTransactions[keyof OrderErrorCodeWithoutTransactions];
-type OrderErrorCodeWithTransactionsUnion =
-  OrderErrorCodeWithTransactions[keyof OrderErrorCodeWithTransactions];
-export type OrderErrorCode = OrderErrorCodeWithoutTransactionsUnion &
-  OrderErrorCodeWithTransactionsUnion;
-export const OrderErrorCode = {
-  ...OrderErrorCodeWithTransactions,
-  ...OrderErrorCodeWithoutTransactions,
+// TODO: remove me: feature flag leftovers
+export type ShopWithTransactions = OrderDetailsQuery["shop"];
+export type ShopBothTypes = OrderDetailsQuery["shop"];
+export type OrderBothTypes = OrderDetailsFragment;
+export type OrderSharedType = OrderDetailsFragment;
+export {
+  OrderErrorCode,
+  type OrderErrorFragment,
+  type OrderEventFragment,
+  OrderEventsEnum,
 };
-
-export type OrderErrorFragment = Omit<
-  OrderErrorFragmentWithoutTransactions,
-  "code"
-> & {
-  code: OrderErrorCode;
-};
-
-export type OrderEventFragment =
-  | OrderEventFragmentWithTransactions
-  | OrderEventFragmentWithoutTransactions;
-
-export const OrderEventsEnum = {
-  ...OrderEventsEnumWithTransactions,
-  ...OrderEventsEnumWithoutTransactions,
-};
-
-/** Type guard for order with transactions */
-export const isOrderWithTransactions = (
-  _order: unknown,
-  featureFlag: boolean,
-): _order is OrderDetailsFragment => featureFlag;
 
 /** Check if order has transactions & feature flag enabled */
-export const orderHasTransactions = (
-  order: unknown,
-  featureFlag: boolean,
-): order is OrderDetailsFragment => {
-  if (isOrderWithTransactions(order, featureFlag)) {
-    return order?.transactions?.length > 0;
-  }
+export const orderHasTransactions = (order: OrderDetailsFragment): boolean =>
+  order?.transactions?.length > 0;
 
-  return false;
-};
+export const orderHasPayments = (order: OrderDetailsFragment): boolean =>
+  order?.payments?.length > 0;
 
-export const orderChannelUseTransactions = (
-  order: any,
-  featureFlag: boolean,
-): order is OrderDetailsFragment => {
-  if (orderHasTransactions(order, featureFlag)) {
+export const orderShouldUseTransactions = (
+  order: OrderDetailsFragment,
+): boolean => {
+  if (orderHasTransactions(order)) {
     return true;
   }
 
-  if (isOrderWithTransactions(order, featureFlag)) {
-    return (
-      order?.channel?.orderSettings?.markAsPaidStrategy ===
-      MarkAsPaidStrategyEnum.TRANSACTION_FLOW
-    );
+  if (orderHasPayments(order)) {
+    return false;
   }
 
-  return false;
+  return (
+    order?.channel?.orderSettings?.markAsPaidStrategy ===
+    MarkAsPaidStrategyEnum.TRANSACTION_FLOW
+  );
 };
 
 export type OrderRefundData = OrderRefundDataQuery["order"];
@@ -106,7 +63,8 @@ export type TransactionEventType =
   | "CANCEL"
   | "CHARGEBACK"
   | "AUTHORIZATION_ADJUSTMENT"
-  | "REFUND_REVERSED";
+  | "REFUND_REVERSED"
+  | "INFO";
 
 /** Status of the transaction (e.g. CHARGE_SUCCESS -> SUCCESS) */
 export type TransactionEventStatus =

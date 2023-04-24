@@ -14,7 +14,6 @@ import Savebar from "@dashboard/components/Savebar";
 import {
   OrderDetailsFragment,
   OrderDetailsQuery,
-  OrderDetailsWithTransactionsQuery,
   OrderStatus,
   TransactionActionEnum,
 } from "@dashboard/graphql";
@@ -46,7 +45,7 @@ import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
 
 export interface OrderDetailsPageProps {
   order: OrderDetailsFragment | OrderDetailsFragment;
-  shop: OrderDetailsQuery["shop"] | OrderDetailsWithTransactionsQuery["shop"];
+  shop: OrderDetailsQuery["shop"];
   shippingMethods?: Array<{
     id: string;
     name: string;

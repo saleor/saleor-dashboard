@@ -2,7 +2,6 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { OrderErrorFragment } from "@dashboard/graphql";
-import { useFlags } from "@dashboard/hooks/useFlags";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
 import {
@@ -38,8 +37,6 @@ export interface OrderReturnPageProps {
 
 const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
   const { order, loading, errors = [], onSubmit, submitStatus } = props;
-
-  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   const intl = useIntl();
   return (
@@ -114,7 +111,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
             )}
           </DetailPageLayout.Content>
           <DetailPageLayout.RightSidebar>
-            {orderHasTransactions(order, orderTransactions.enabled) ? (
+            {orderHasTransactions(order) ? (
               <SubmitCard
                 disabled={isSaveDisabled}
                 onSubmit={submit}

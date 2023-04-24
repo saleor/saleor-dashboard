@@ -32,11 +32,6 @@ export const channelDetailsFragment = gql`
     warehouses {
       ...Warehouse
     }
-  }
-`;
-
-export const channelOrderSettings = gql`
-  fragment ChannelOrderSettings on Channel {
     orderSettings {
       markAsPaidStrategy
     }

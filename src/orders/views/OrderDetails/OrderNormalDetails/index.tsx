@@ -5,7 +5,6 @@ import {
   FulfillmentFragment,
   FulfillmentStatus,
   OrderDetailsQueryResult,
-  OrderDetailsWithTransactionsQueryResult,
   OrderFulfillmentApproveMutation,
   OrderFulfillmentApproveMutationVariables,
   OrderTransactionRequestActionMutation,
@@ -64,9 +63,7 @@ import {
 interface OrderNormalDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
-  data:
-    | OrderDetailsQueryResult["data"]
-    | OrderDetailsWithTransactionsQueryResult["data"];
+  data: OrderDetailsQueryResult["data"];
   orderAddNote: any;
   orderInvoiceRequest: any;
   handleSubmit: any;
