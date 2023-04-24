@@ -34,6 +34,7 @@ const props: ProductListPageProps = {
       ...sortPageProps.sort,
       sort: ProductListUrlSortField.name,
     },
+    setClearRowSelectionCallback: { current: null },
     channels: [],
     columnQuery: "",
     currentTab: 0,

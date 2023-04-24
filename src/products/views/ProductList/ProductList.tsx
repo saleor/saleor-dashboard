@@ -98,6 +98,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const { queue } = useBackgroundTask();
 
   const [tabIndexToDelete, setTabIndexToDelete] = useState<number | null>(null);
+  const clearRowSelectionCallback = React.useRef<() => void | null>(null);
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
     params?.ids ?? [],
   );
@@ -414,6 +415,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     <PaginatorContext.Provider value={paginationValues}>
       <ProductListPage
         activeAttributeSortId={params.attributeId}
+        setClearRowSelectionCallback={clearRowSelectionCallback}
         sort={{
           asc: params.asc,
           sort: params.sort,
@@ -481,11 +483,19 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       <ActionDialog
         open={params.action === "delete"}
         confirmButtonState={productBulkDeleteOpts.status}
-        onClose={closeModal}
+        onClose={() => {
+          closeModal();
+          if (clearRowSelectionCallback.current) {
+            clearRowSelectionCallback.current();
+          }
+        }}
         onConfirm={() => {
           productBulkDelete({
             variables: { ids: listElements },
           });
+          if (clearRowSelectionCallback.current) {
+            clearRowSelectionCallback.current();
+          }
         }}
         title={intl.formatMessage({
           id: "F4WdSO",

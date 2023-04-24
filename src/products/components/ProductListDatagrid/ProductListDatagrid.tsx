@@ -32,7 +32,7 @@ import {
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn, Item } from "@glideapps/glide-data-grid";
 import { Box, Button } from "@saleor/macaw-ui/next";
-import React, { useCallback, useMemo } from "react";
+import React, { MutableRefObject, useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { isAttributeColumnValue } from "../ProductListPage/utils";
@@ -59,6 +59,7 @@ interface ProductListDatagridProps
   availableInGridAttributes: RelayToFlat<
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
+  setClearRowSelectionCallback: MutableRefObject<() => void | null>;
   onColumnQueryChange: (query: string) => void;
   isAttributeLoading?: boolean;
   hasRowHover?: boolean;
@@ -84,6 +85,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   onColumnQueryChange,
   activeAttributeSortId,
   filterDependency,
+  setClearRowSelectionCallback,
   hasRowHover,
 }) => {
   const intl = useIntl();
@@ -228,11 +230,12 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   );
 
   const handleRowDelete = useCallback(
-    (indexes: number[]) => {
+    (indexes: number[], clearSelection: () => void) => {
       const productsIds = indexes.map(index => products[index].id);
+      setClearRowSelectionCallback.current = clearSelection;
       navigate(productListUrl({ action: "delete", ids: productsIds }));
     },
-    [navigate, products],
+    [navigate, products, setClearRowSelectionCallback],
   );
 
   return (
@@ -256,11 +259,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           getCellError={() => false}
           menuItems={() => []}
           rows={productsLength}
-          selectionActions={indexes => (
+          selectionActions={(indexes, { clearSelection }) => (
             <Button
               variant="primary"
               size="small"
-              onClick={() => handleRowDelete(indexes)}
+              onClick={() => handleRowDelete(indexes, clearSelection)}
             >
               <FormattedMessage {...buttonMessages.delete} />
             </Button>

@@ -62,6 +62,7 @@ export interface GetCellContentOpts {
 
 export interface MenuItemsActions {
   removeRows: (indexes: number[]) => void;
+  clearSelection: () => void;
 }
 
 export interface DatagridProps {
@@ -318,6 +319,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       selection?.rows.length > 0
         ? selectionActions(Array.from(selection.rows), {
             removeRows: handleRemoveRows,
+            clearSelection: () => setSelection(undefined),
           })
         : null,
     [selection, selectionActions, handleRemoveRows],
