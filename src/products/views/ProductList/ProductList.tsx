@@ -99,7 +99,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const [tabIndexToDelete, setTabIndexToDelete] = useState<number | null>(null);
   const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    [],
+    params?.ids ?? [],
   );
 
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(

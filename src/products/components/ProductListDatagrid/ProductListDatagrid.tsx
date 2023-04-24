@@ -13,8 +13,12 @@ import {
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
-import { ProductListUrlSortField } from "@dashboard/products/urls";
+import {
+  productListUrl,
+  ProductListUrlSortField,
+} from "@dashboard/products/urls";
 import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
 import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
 import {
@@ -83,6 +87,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   hasRowHover,
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const searchProductType = useSearchProductTypes();
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
@@ -222,6 +227,14 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [onUpdateListSettings],
   );
 
+  const handleRowDelete = useCallback(
+    (indexes: number[]) => {
+      const productsIds = indexes.map(index => products[index].id);
+      navigate(productListUrl({ action: "delete", ids: productsIds }));
+    },
+    [navigate, products],
+  );
+
   return (
     <Box __marginTop={productsLength > 0 ? -1 : 0}>
       <DatagridChangeStateContext.Provider value={datagrid}>
@@ -243,11 +256,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           getCellError={() => false}
           menuItems={() => []}
           rows={productsLength}
-          selectionActions={(indexes, { removeRows }) => (
+          selectionActions={indexes => (
             <Button
               variant="primary"
               size="small"
-              onClick={() => removeRows(indexes)}
+              onClick={() => handleRowDelete(indexes)}
             >
               <FormattedMessage {...buttonMessages.delete} />
             </Button>
