@@ -26,7 +26,7 @@ import {
   getAllOrderFulfilledLines,
   getAllOrderWaitingLines,
 } from "../components/OrderReturnPage/utils";
-import { OrderRefundSharedType, OrderSharedType } from "../types";
+import { OrderRefundSharedType } from "../types";
 
 export type OrderWithTotalAndTotalCaptured = Pick<
   OrderRefundDataQuery["order"],
@@ -39,11 +39,11 @@ export interface OrderLineWithStockWarehouses {
   };
 }
 
-export function getOrderCharged(order: any) {
-  if ((order as OrderDetailsFragment)?.totalCharged) {
-    return (order as OrderDetailsFragment).totalCharged;
+export function getOrderCharged(order: OrderDetailsFragment) {
+  if (order?.totalCharged) {
+    return order.totalCharged;
   }
-  return (order as OrderDetailsFragment)?.totalCaptured;
+  return order?.totalCaptured;
 }
 
 export function getToFulfillOrderLines(lines?: OrderLineStockDataFragment[]) {
@@ -70,9 +70,12 @@ export function getPreviouslyRefundedPrice(
   order: OrderRefundSharedType,
 ): IMoney {
   return (
-    getOrderCharged(order) &&
+    getOrderCharged(order as OrderDetailsFragment) &&
     order?.total?.gross &&
-    subtractMoney(getOrderCharged(order), order?.total?.gross)
+    subtractMoney(
+      getOrderCharged(order as OrderDetailsFragment),
+      order?.total?.gross,
+    )
   );
 }
 
@@ -100,7 +103,7 @@ const getFulfillmentByFulfillmentLineId = (order, fulfillmentLineId) => {
 };
 
 const selectItemPriceAndQuantity = (
-  order: OrderSharedType,
+  order: OrderDetailsFragment,
   {
     fulfilledItemsQuantities,
     waitingItemsQuantities,
@@ -131,7 +134,7 @@ const selectItemPriceAndQuantity = (
 };
 
 export const getReplacedProductsAmount = (
-  order: OrderSharedType,
+  order: OrderDetailsFragment,
   {
     itemsToBeReplaced,
     unfulfilledItemsQuantities,
@@ -170,7 +173,7 @@ export const getReplacedProductsAmount = (
 };
 
 export const getReturnSelectedProductsAmount = (
-  order: OrderSharedType,
+  order: OrderDetailsFragment,
   {
     itemsToBeReplaced,
     waitingItemsQuantities,
@@ -296,7 +299,7 @@ export function addressToAddressInput<T>(
 }
 
 export const getVariantSearchAddress = (
-  order: OrderSharedType,
+  order: OrderDetailsFragment,
 ): AddressInput => {
   if (order.shippingAddress) {
     return addressToAddressInput(order.shippingAddress);

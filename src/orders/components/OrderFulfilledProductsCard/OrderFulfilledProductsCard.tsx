@@ -2,7 +2,7 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import TrashIcon from "@dashboard/icons/Trash";
-import { orderHasTransactions, OrderSharedType } from "@dashboard/orders/types";
+import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
 import { Card, CardContent, TableBody } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
@@ -19,7 +19,7 @@ import useStyles from "./styles";
 interface OrderFulfilledProductsCardProps {
   fulfillment: OrderDetailsFragment["fulfillments"][0];
   fulfillmentAllowUnpaid: boolean;
-  order?: OrderSharedType;
+  order?: OrderDetailsFragment;
   onOrderFulfillmentApprove: () => void;
   onOrderFulfillmentCancel: () => void;
   onTrackingCodeAdd: () => void;

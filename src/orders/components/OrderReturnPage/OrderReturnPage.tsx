@@ -1,14 +1,10 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { OrderErrorFragment } from "@dashboard/graphql";
+import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import { renderCollection } from "@dashboard/misc";
-import {
-  OrderBothTypes,
-  orderHasTransactions,
-  OrderSharedType,
-} from "@dashboard/orders/types";
+import { orderHasTransactions } from "@dashboard/orders/types";
 import { orderUrl } from "@dashboard/orders/urls";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
@@ -28,7 +24,7 @@ import {
 } from "./utils";
 
 export interface OrderReturnPageProps {
-  order: OrderBothTypes;
+  order: OrderDetailsFragment;
   loading: boolean;
   errors?: OrderErrorFragment[];
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
@@ -55,7 +51,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
                 <ItemsCard
                   errors={errors}
                   order={order}
-                  lines={getUnfulfilledLines(order as OrderSharedType)}
+                  lines={getUnfulfilledLines(order as OrderDetailsFragment)}
                   itemsQuantities={data.unfulfilledItemsQuantities}
                   itemsSelections={data.itemsToBeReplaced}
                   onChangeQuantity={handlers.changeUnfulfiledItemsQuantity}
@@ -68,7 +64,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
               </>
             )}
             {renderCollection(
-              getWaitingFulfillments(order as OrderSharedType),
+              getWaitingFulfillments(order as OrderDetailsFragment),
               ({ id, lines }) => (
                 <React.Fragment key={id}>
                   <ItemsCard
@@ -89,7 +85,7 @@ const OrderRefundPage: React.FC<OrderReturnPageProps> = props => {
               ),
             )}
             {renderCollection(
-              getFulfilledFulfillemnts(order as OrderSharedType),
+              getFulfilledFulfillemnts(order as OrderDetailsFragment),
               ({ id, lines }) => (
                 <React.Fragment key={id}>
                   <ItemsCard

@@ -69,6 +69,8 @@ describe("OrderPaymentOrTransaction", () => {
         {...sharedProps}
         order={{
           ...order,
+          transactions: [],
+          payments: [],
           channel: {
             ...order.channel,
             orderSettings: {

@@ -1,27 +1,10 @@
 import {
   MarkAsPaidStrategyEnum,
   OrderDetailsFragment,
-  OrderDetailsQuery,
-  OrderErrorCode,
-  OrderErrorFragment,
-  OrderEventFragment,
-  OrderEventsEnum,
   OrderRefundDataQuery,
   TransactionEventFragment,
   TransactionItemFragment,
 } from "@dashboard/graphql";
-
-// TODO: remove me: feature flag leftovers
-export type ShopWithTransactions = OrderDetailsQuery["shop"];
-export type ShopBothTypes = OrderDetailsQuery["shop"];
-export type OrderBothTypes = OrderDetailsFragment;
-export type OrderSharedType = OrderDetailsFragment;
-export {
-  OrderErrorCode,
-  type OrderErrorFragment,
-  type OrderEventFragment,
-  OrderEventsEnum,
-};
 
 /** Check if order has transactions & feature flag enabled */
 export const orderHasTransactions = (order: OrderDetailsFragment): boolean =>

@@ -22,7 +22,6 @@ import {
   OrderCustomerChangeData,
 } from "@dashboard/orders/components/OrderCustomerChangeDialog/form";
 import OrderCustomerChangeDialog from "@dashboard/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
-import { OrderBothTypes, OrderSharedType } from "@dashboard/orders/types";
 import {
   getVariantSearchAddress,
   isAnyAddressEditModalOpen,
@@ -98,7 +97,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   openModal,
   closeModal,
 }) => {
-  const order = data.order as OrderBothTypes;
+  const order = data.order;
   const navigate = useNavigator();
 
   const { data: channelUsabilityData } = useChannelUsabilityDataQuery({
@@ -115,7 +114,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       channel: order.channel.slug,
-      address: getVariantSearchAddress(order as OrderSharedType),
+      address: getVariantSearchAddress(order),
       isPublished: true,
       stockAvailability: StockAvailability.IN_STOCK,
     },

@@ -1,6 +1,7 @@
 import {
   FulfillmentStatus,
   GiftCardEventsEnum,
+  OrderDetailsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
@@ -13,7 +14,6 @@ import {
   shop,
   transactions,
 } from "@dashboard/orders/fixtures";
-import { OrderBothTypes } from "@dashboard/orders/types";
 import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -304,7 +304,7 @@ storiesOf("Views / Orders / Order details / transactions", module)
               ],
             },
           ],
-        } as OrderBothTypes
+        } as OrderDetailsFragment
       }
     />
   ));

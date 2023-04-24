@@ -13,7 +13,6 @@ import {
   useCustomerAddressesQuery,
   useWarehouseListQuery,
 } from "@dashboard/graphql";
-// TODO: Add feature flags
 import useNavigator from "@dashboard/hooks/useNavigator";
 import OrderCannotCancelOrderDialog from "@dashboard/orders/components/OrderCannotCancelOrderDialog";
 import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
