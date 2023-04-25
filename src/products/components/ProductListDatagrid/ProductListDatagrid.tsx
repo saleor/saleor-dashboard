@@ -32,7 +32,7 @@ import {
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn, Item } from "@glideapps/glide-data-grid";
 import { Box, Button } from "@saleor/macaw-ui/next";
-import React, { MutableRefObject, useCallback, useMemo } from "react";
+import React, { useCallback, useMemo } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { isAttributeColumnValue } from "../ProductListPage/utils";
@@ -59,9 +59,8 @@ interface ProductListDatagridProps
   availableInGridAttributes: RelayToFlat<
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
-  setClearRowSelectionCallback: MutableRefObject<() => void | null>;
   onColumnQueryChange: (query: string) => void;
-  onSelectRows: (rows: number[]) => void;
+  onSelectRows: (rows: number[], clearSelection: () => void) => void;
   isAttributeLoading?: boolean;
   hasRowHover?: boolean;
 }
@@ -86,7 +85,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   onColumnQueryChange,
   activeAttributeSortId,
   filterDependency,
-  setClearRowSelectionCallback,
   onSelectRows,
   hasRowHover,
 }) => {
@@ -231,14 +229,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [onUpdateListSettings],
   );
 
-  const handleRowDelete = useCallback(
-    (clearSelection: () => void) => {
-      setClearRowSelectionCallback.current = clearSelection;
-      navigate(productListUrl({ action: "delete" }));
-    },
-    [navigate, setClearRowSelectionCallback],
-  );
-
   return (
     <Box __marginTop={productsLength > 0 ? -1 : 0}>
       <DatagridChangeStateContext.Provider value={datagrid}>
@@ -261,11 +251,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           menuItems={() => []}
           rows={productsLength}
           onRowSelectionChange={onSelectRows}
-          selectionActions={(_, { clearSelection }) => (
+          selectionActions={() => (
             <Button
               variant="primary"
               size="small"
-              onClick={() => handleRowDelete(clearSelection)}
+              onClick={() => navigate(productListUrl({ action: "delete" }))}
             >
               <FormattedMessage {...buttonMessages.delete} />
             </Button>

@@ -72,7 +72,7 @@ export interface ProductListPageProps
   onColumnQueryChange: (query: string) => void;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (tabIndex: number) => void;
-  onSelectProductIds: (ids: number[]) => void;
+  onSelectProductIds: (ids: number[], clearSelection: () => void) => void;
 }
 
 export type ProductListViewType = "datagrid" | "tile";

@@ -64,7 +64,7 @@ import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
 import { stringify } from "qs";
-import React, { useRef, useState } from "react";
+import React, { useLayoutEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useSortRedirects } from "../../../hooks/useSortRedirects";
@@ -108,6 +108,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       clearRowSelectionCallback.current();
     }
   };
+
+  useLayoutEffect(() => {
+    clearRowSelection();
+  }, [params]);
 
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
@@ -317,8 +321,17 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       }),
     );
 
-  const handleSetSelectedProductIds = (rows: number[]) => {
-    selectedProductIds.current = rows.map(row => products[row].id);
+  const handleSetSelectedProductIds = (
+    rows: number[],
+    clearSelection: () => void,
+  ) => {
+    selectedProductIds.current = products
+      ? rows.map(row => products[row].id)
+      : [];
+
+    if (!clearRowSelectionCallback.current) {
+      clearRowSelectionCallback.current = clearSelection;
+    }
   };
 
   const kindOpts = getProductKindOpts(availableProductKinds, intl);
@@ -454,7 +467,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         products={products}
         onColumnQueryChange={availableInGridAttributesOpts.search}
         onFetchMore={availableInGridAttributesOpts.loadMore}
-        onUpdateListSettings={updateListSettings}
+        onUpdateListSettings={(...props) => {
+          clearRowSelection();
+          updateListSettings(...props);
+        }}
         onAdd={() => openModal("create-product")}
         onAll={resetFilters}
         onSearchChange={handleSearchChange}

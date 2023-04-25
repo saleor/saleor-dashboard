@@ -90,7 +90,7 @@ export interface DatagridProps {
   onRowClick?: (item: Item) => void;
   onColumnMoved?: (startIndex: number, endIndex: number) => void;
   onColumnResize?: (column: GridColumn, newSize: number) => void;
-  onRowSelectionChange?: (rowsId: number[]) => void;
+  onRowSelectionChange?: (rowsId: number[], clearSelection: () => void) => void;
   readonly?: boolean;
   hasRowHover?: boolean;
   rowMarkers?: DataEditorProps["rowMarkers"];
@@ -149,7 +149,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   useEffect(() => {
     if (onRowSelectionChange && selection) {
-      onRowSelectionChange(Array.from(selection.rows));
+      onRowSelectionChange(Array.from(selection.rows), () => {
+        setSelection(undefined);
+      });
     }
   }, [onRowSelectionChange, selection]);
 
