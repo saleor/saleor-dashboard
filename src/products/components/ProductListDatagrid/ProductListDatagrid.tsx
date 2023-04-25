@@ -13,12 +13,8 @@ import {
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
-import {
-  productListUrl,
-  ProductListUrlSortField,
-} from "@dashboard/products/urls";
+import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
 import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
 import {
@@ -59,6 +55,7 @@ interface ProductListDatagridProps
   availableInGridAttributes: RelayToFlat<
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
+  onProductsDelete: () => void;
   onColumnQueryChange: (query: string) => void;
   onSelectProductIds: (rowsIndex: number[], clearSelection: () => void) => void;
   isAttributeLoading?: boolean;
@@ -86,10 +83,10 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   activeAttributeSortId,
   filterDependency,
   onSelectProductIds,
+  onProductsDelete,
   hasRowHover,
 }) => {
   const intl = useIntl();
-  const navigate = useNavigator();
   const searchProductType = useSearchProductTypes();
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
@@ -252,11 +249,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           rows={productsLength}
           onRowSelectionChange={onSelectProductIds}
           selectionActions={() => (
-            <Button
-              variant="primary"
-              size="small"
-              onClick={() => navigate(productListUrl({ action: "delete" }))}
-            >
+            <Button variant="primary" size="small" onClick={onProductsDelete}>
               <FormattedMessage {...buttonMessages.delete} />
             </Button>
           )}

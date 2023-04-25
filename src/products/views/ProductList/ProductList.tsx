@@ -483,6 +483,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           setTabIndexToDelete(tabIndex);
           openModal("delete-search");
         }}
+        onProductsDelete={() => openModal("delete")}
         onTabChange={handleTabChange}
         hasPresetsChanged={hasPresetsChanged()}
         initialSearch={params.query || ""}

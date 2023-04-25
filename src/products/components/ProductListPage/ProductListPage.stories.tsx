@@ -34,6 +34,7 @@ const props: ProductListPageProps = {
       ...sortPageProps.sort,
       sort: ProductListUrlSortField.name,
     },
+    onProductsDelete: () => undefined,
     onSelectProductIds: () => undefined,
     channels: [],
     columnQuery: "",

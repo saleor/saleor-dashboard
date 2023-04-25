@@ -71,6 +71,7 @@ export interface ProductListPageProps
   onColumnQueryChange: (query: string) => void;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (tabIndex: number) => void;
+  onProductsDelete: () => void;
   onSelectProductIds: (ids: number[], clearSelection: () => void) => void;
 }
 
@@ -109,7 +110,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onTabUpdate,
     hasPresetsChanged,
     selectedProductIds,
-    onSelectProductIds,
     ...listProps
   } = props;
   const intl = useIntl();
@@ -288,7 +288,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             settings={settings}
             selectedChannelId={selectedChannelId}
             onUpdateListSettings={onUpdateListSettings}
-            onSelectProductIds={onSelectProductIds}
             onRowClick={id => {
               navigate(productUrl(id));
             }}
