@@ -9,7 +9,8 @@ import useLocale from "@dashboard/hooks/useLocale";
 import { buttonMessages } from "@dashboard/intl";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import { useId } from "@reach/auto-id";
-import { ConfirmButtonTransitionState, LayoutButton } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Button } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -98,14 +99,14 @@ export const RefundCard = ({
               locale,
             )}
           </span>
-          <LayoutButton
-            state={!loading && "hover"}
+          <Button
             disabled={loading}
-            className={classes.applyButton}
+            variant="secondary"
+            size="small"
             onClick={() => form.set({ amount: totalSelectedPrice.toString() })}
           >
             <FormattedMessage {...buttonMessages.apply} />
-          </LayoutButton>
+          </Button>
         </div>
         <div>
           <PriceField
