@@ -518,8 +518,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
             description="dialog content"
             values={{
-              counter: params?.ids?.length,
-              displayQuantity: <strong>{params?.ids?.length}</strong>,
+              counter: selectedProductIds.current.length,
+              displayQuantity: (
+                <strong>{selectedProductIds.current.length}</strong>
+              ),
             }}
           />
         </DialogContentText>
