@@ -144,8 +144,7 @@ describe("Orders", () => {
         variantsList,
         address,
       }).then(order => {
-        cy.visit(urlList.orders);
-        cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
+        cy.visit(urlList.orders + `${order.id}`);
         cy.get(ORDERS_SELECTORS.salesChannel)
           .find("[button]")
           .should("not.exist");
@@ -168,9 +167,7 @@ describe("Orders", () => {
       })
         .then(({ order: orderResp }) => {
           order = orderResp;
-          cy.visit(urlList.orders);
-          cy.expectSkeletonIsVisible();
-          cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
+          cy.visit(urlList.orders + `${order.id}`);
           cy.get(SHARED_ELEMENTS.skeleton)
             .should("not.exist")
             .get(ORDERS_SELECTORS.cancelFulfillment)
@@ -206,9 +203,7 @@ describe("Orders", () => {
       })
         .then(({ order: orderResp }) => {
           order = orderResp;
-          cy.visit(urlList.orders);
-          cy.expectSkeletonIsVisible();
-          cy.contains(ORDERS_SELECTORS.orderRow, order.number).click();
+          cy.visit(urlList.orders + `${order.id}`);
           cy.get(ORDERS_SELECTORS.refundButton)
             .click()
             .get(ORDER_REFUND.productsQuantityInput)

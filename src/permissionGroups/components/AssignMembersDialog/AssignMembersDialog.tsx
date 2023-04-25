@@ -95,12 +95,6 @@ const useStyles = makeStyles(
     overflow: {
       overflowY: "visible",
     },
-    scrollArea: {
-      maxHeight: 400,
-      overflowY: "scroll",
-      paddingTop: 0,
-      paddingBottom: 0,
-    },
     table: {
       marginBottom: theme.spacing(3),
     },
@@ -139,8 +133,6 @@ function handleStaffMemberAssign(
     setSelectedMembers([...selectedMembers, member]);
   }
 }
-
-const scrollableTargetId = "assignMembersScrollableDialog";
 
 const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
   confirmButtonState,
@@ -194,11 +186,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
           disabled={disabled}
         />
       </DialogContent>
-      <DialogContent
-        className={classes.scrollArea}
-        ref={anchor}
-        id={scrollableTargetId}
-      >
+      <DialogContent ref={anchor}>
         <InfiniteScroll
           dataLength={staffMembers?.length || 0}
           next={onFetchMore}
@@ -212,7 +200,7 @@ const AssignMembersDialog: React.FC<AssignMembersDialogProps> = ({
               </div>
             </>
           }
-          scrollableTarget={scrollableTargetId}
+          height={400}
         >
           <ResponsiveTable className={classes.table}>
             <TableBody>
