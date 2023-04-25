@@ -242,9 +242,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           });
           refetch();
           limitOpts.refetch();
-          if (clearRowSelectionCallback.current) {
-            clearRowSelectionCallback.current();
-          }
+          clearRowSelection();
         }
       },
     });
@@ -483,9 +481,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         confirmButtonState={productBulkDeleteOpts.status}
         onClose={() => {
           closeModal();
-          if (clearRowSelectionCallback.current) {
-            clearRowSelectionCallback.current();
-          }
+          clearRowSelection();
         }}
         onConfirm={() => {
           productBulkDelete({

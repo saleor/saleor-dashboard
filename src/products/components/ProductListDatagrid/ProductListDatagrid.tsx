@@ -232,12 +232,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   );
 
   const handleRowDelete = useCallback(
-    (indexes: number[], clearSelection: () => void) => {
-      const productsIds = indexes.map(index => products[index].id);
+    (clearSelection: () => void) => {
       setClearRowSelectionCallback.current = clearSelection;
-      navigate(productListUrl({ action: "delete", ids: productsIds }));
+      navigate(productListUrl({ action: "delete" }));
     },
-    [navigate, products, setClearRowSelectionCallback],
+    [navigate, setClearRowSelectionCallback],
   );
 
   return (
@@ -262,11 +261,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           menuItems={() => []}
           rows={productsLength}
           onRowSelectionChange={onSelectRows}
-          selectionActions={(indexes, { clearSelection }) => (
+          selectionActions={(_, { clearSelection }) => (
             <Button
               variant="primary"
               size="small"
-              onClick={() => handleRowDelete(indexes, clearSelection)}
+              onClick={() => handleRowDelete(clearSelection)}
             >
               <FormattedMessage {...buttonMessages.delete} />
             </Button>
