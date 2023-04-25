@@ -1,13 +1,19 @@
 import TableRowLink from "@dashboard/components/TableRowLink";
 import { MetadataInput } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
-import { Table, TableBody, TableCell, TableHead } from "@material-ui/core";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TextField,
+} from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
 import {
   Box,
   Button,
   ChervonDownIcon,
   ChervonUpIcon,
-  Input,
   Text,
   TrashBinIcon,
   vars,
@@ -19,6 +25,20 @@ import { DashboardCard } from "../Card";
 import Skeleton from "../Skeleton";
 import { EventDataAction } from "./types";
 import { nameInputPrefix, nameSeparator, valueInputPrefix } from "./utils";
+
+const useStyles = makeStyles(
+  theme => ({
+    input: {
+      padding: theme.spacing(0.5, 2),
+    },
+    nameInput: {
+      padding: "13px 16px",
+    },
+  }),
+  {
+    name: "Metadata",
+  },
+);
 
 export interface MetadataCardProps {
   data: MetadataInput[];
@@ -33,6 +53,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
 }) => {
   const intl = useIntl();
   const [expanded, setExpanded] = React.useState(false);
+  const classes = useStyles();
 
   return (
     <DashboardCard
@@ -103,7 +124,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                 <Table>
                   <TableHead>
                     <TableRowLink>
-                      <TableCell style={{ paddingLeft: vars.space[12] }}>
+                      <TableCell style={{ paddingLeft: vars.space[9] }}>
                         <Text variant="caption" color="textNeutralSubdued">
                           <FormattedMessage
                             id="nudPsY"
@@ -112,7 +133,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                           />
                         </Text>
                       </TableCell>
-                      <TableCell style={{ paddingLeft: vars.space[12] }}>
+                      <TableCell style={{ paddingLeft: vars.space[11] }}>
                         <Text variant="caption" color="textNeutralSubdued">
                           <FormattedMessage
                             id="LkuDEb"
@@ -140,22 +161,37 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                   <TableBody>
                     {data.map((field, fieldIndex) => (
                       <TableRowLink data-test-id="field" key={fieldIndex}>
-                        <TableCell>
-                          <Input
+                        <TableCell style={{ paddingLeft: vars.space[9] }}>
+                          <TextField
+                            InputProps={{
+                              classes: {
+                                input: classes.nameInput,
+                              },
+                            }}
+                            inputProps={{
+                              "aria-label": `${nameInputPrefix}${nameSeparator}${fieldIndex}`,
+                            }}
                             name={`${nameInputPrefix}${nameSeparator}${fieldIndex}`}
+                            fullWidth
                             onChange={onChange}
                             value={field.key}
-                            size="small"
-                            aria-label={`${nameInputPrefix}${nameSeparator}{fieldIndex}`}
                           />
                         </TableCell>
                         <TableCell>
-                          <Input
+                          <TextField
+                            InputProps={{
+                              classes: {
+                                root: classes.input,
+                              },
+                            }}
+                            inputProps={{
+                              "aria-label": `${valueInputPrefix}${nameSeparator}${fieldIndex}`,
+                            }}
+                            multiline
                             name={`${valueInputPrefix}${nameSeparator}${fieldIndex}`}
+                            fullWidth
                             onChange={onChange}
                             value={field.value}
-                            size="small"
-                            aria-label={`${valueInputPrefix}${nameSeparator}{fieldIndex}`}
                           />
                         </TableCell>
                         <TableCell style={{ paddingRight: vars.space[9] }}>
@@ -181,7 +217,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                   </TableBody>
                 </Table>
               )}
-              <DashboardCard.Content marginTop={5} paddingLeft={11}>
+              <DashboardCard.Content marginTop={5} paddingLeft={9}>
                 <Button
                   variant="secondary"
                   data-test-id="add-field"
