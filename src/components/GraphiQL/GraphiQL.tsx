@@ -205,12 +205,25 @@ export function GraphiQLInterface(props: GraphiQLInterfaceProps) {
     }
   };
 
+  const overwriteCodeMirrorCSSVariables = {
+    __html: `
+      .graphiql-container, .CodeMirror-info, .CodeMirror-lint-tooltip, reach-portal{
+        --font-size-hint: ${rootStyle["--font-size-hint"]} !important;
+        --font-size-inline-code: ${rootStyle["--font-size-inline-code"]} !important;
+        --font-size-body: ${rootStyle["--font-size-body"]} !important;
+        --font-size-h4: ${rootStyle["--font-size-h4"]} !important;
+        --font-size-h3: ${rootStyle["--font-size-h3"]} !important;
+        --font-size-h2: ${rootStyle["--font-size-h2"]} !important;
+    `,
+  };
+
   return (
     <div
       data-test-id="graphiql-container"
       className="graphiql-container"
       style={rootStyle}
     >
+      <style dangerouslySetInnerHTML={overwriteCodeMirrorCSSVariables}></style>
       <div className="graphiql-sidebar">
         <div className="graphiql-sidebar-section">
           {pluginContext?.plugins.map(plugin => {
