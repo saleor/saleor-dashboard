@@ -22,6 +22,7 @@ import React, {
   ReactElement,
   ReactNode,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -89,6 +90,7 @@ export interface DatagridProps {
   onRowClick?: (item: Item) => void;
   onColumnMoved?: (startIndex: number, endIndex: number) => void;
   onColumnResize?: (column: GridColumn, newSize: number) => void;
+  onRowSelectionChange?: (rowsId: number[]) => void;
   readonly?: boolean;
   hasRowHover?: boolean;
   rowMarkers?: DataEditorProps["rowMarkers"];
@@ -122,6 +124,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   onColumnResize,
   loading,
   hasRowHover = false,
+  onRowSelectionChange,
   ...datagridProps
 }): ReactElement => {
   const classes = useStyles();
@@ -143,6 +146,12 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const [selection, setSelection] = useState<GridSelection>();
   const [hoverRow, setHoverRow] = useState<number | undefined>(undefined);
+
+  useEffect(() => {
+    if (onRowSelectionChange && selection) {
+      onRowSelectionChange(Array.from(selection.rows));
+    }
+  }, [onRowSelectionChange, selection]);
 
   usePortalClasses({ className: classes.portal });
   usePreventHistoryBack(scroller);

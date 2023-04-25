@@ -26,7 +26,6 @@ import {
   ChannelProps,
   FetchMoreProps,
   FilterPageProps,
-  ListActions,
   PageListProps,
   RelayToFlat,
   SortPage,
@@ -49,7 +48,6 @@ import {
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
-    ListActions,
     Omit<
       FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
       "onTabDelete"
@@ -74,6 +72,7 @@ export interface ProductListPageProps
   onColumnQueryChange: (query: string) => void;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (tabIndex: number) => void;
+  onSelectProductIds: (ids: number[]) => void;
 }
 
 export type ProductListViewType = "datagrid" | "tile";
@@ -101,7 +100,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onSearchChange,
     onUpdateListSettings,
     selectedChannelId,
-    selectedProductIds,
     activeAttributeSortId,
     onTabChange,
     onTabDelete,
@@ -111,6 +109,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     tabs,
     onTabUpdate,
     hasPresetsChanged,
+    selectedProductIds,
+    onSelectProductIds,
     ...listProps
   } = props;
   const intl = useIntl();
@@ -135,6 +135,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       "productListViewType",
       DEFAULT_PRODUCT_LIST_VIEW_TYPE,
     );
+
   const isDatagridView = storedProductListViewType === "datagrid";
 
   return (
@@ -288,6 +289,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             settings={settings}
             selectedChannelId={selectedChannelId}
             onUpdateListSettings={onUpdateListSettings}
+            onSelectRows={onSelectProductIds}
             onRowClick={id => {
               navigate(productUrl(id));
             }}

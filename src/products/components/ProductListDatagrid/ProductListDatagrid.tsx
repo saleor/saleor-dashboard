@@ -61,6 +61,7 @@ interface ProductListDatagridProps
   >;
   setClearRowSelectionCallback: MutableRefObject<() => void | null>;
   onColumnQueryChange: (query: string) => void;
+  onSelectRows: (rows: number[]) => void;
   isAttributeLoading?: boolean;
   hasRowHover?: boolean;
 }
@@ -86,6 +87,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   activeAttributeSortId,
   filterDependency,
   setClearRowSelectionCallback,
+  onSelectRows,
   hasRowHover,
 }) => {
   const intl = useIntl();
@@ -259,6 +261,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           getCellError={() => false}
           menuItems={() => []}
           rows={productsLength}
+          onRowSelectionChange={onSelectRows}
           selectionActions={(indexes, { clearSelection }) => (
             <Button
               variant="primary"
