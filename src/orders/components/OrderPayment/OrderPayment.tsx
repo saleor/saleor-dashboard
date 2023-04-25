@@ -105,7 +105,11 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                       </Button>
                     )}
                     {canMarkAsPaid && (
-                      <Button variant="tertiary" onClick={onMarkAsPaid}>
+                      <Button
+                        variant="tertiary"
+                        onClick={onMarkAsPaid}
+                        data-test-id="markAsPaidButton"
+                      >
                         <FormattedMessage
                           {...paymentButtonMessages.markAsPaid}
                         />

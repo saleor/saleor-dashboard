@@ -16,6 +16,11 @@ export const DescriptionField: React.FC<
       disabled={submitState === "loading" || disabled}
       onChange={handleChangeDescription}
       value={description}
+      InputProps={{
+        inputProps: {
+          "data-test-id": "transactionDescription",
+        },
+      }}
     />
   );
 };

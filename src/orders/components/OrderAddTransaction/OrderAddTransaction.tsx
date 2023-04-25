@@ -40,7 +40,11 @@ const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({
 
   return (
     <div className={classes.wrapper}>
-      <Button variant="primary" onClick={onAddTransaction}>
+      <Button
+        variant="primary"
+        onClick={onAddTransaction}
+        data-test-id="captureManualTransactionButton"
+      >
         <FormattedMessage {...addTransactionMessages.captureTransaction} />
       </Button>
     </div>

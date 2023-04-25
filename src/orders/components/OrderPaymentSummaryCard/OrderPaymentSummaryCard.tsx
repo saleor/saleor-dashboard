@@ -82,7 +82,11 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
               <FormattedMessage {...orderPaymentMessages.noPayments} />
             </Typography>
             {canMarkAsPaid && (
-              <Button variant="tertiary" onClick={() => onMarkAsPaid()}>
+              <Button
+                variant="tertiary"
+                onClick={() => onMarkAsPaid()}
+                data-test-id="markAsPaidButton"
+              >
                 <FormattedMessage
                   {...orderPaymentActionButtonMessages.markAsPaid}
                 />
@@ -101,6 +105,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
                   <Button
                     href={orderGrantRefundUrl(order.id)}
                     variant="secondary"
+                    data-test-id="grantRefundButton"
                   >
                     <FormattedMessage
                       {...orderPaymentActionButtonMessages.grantRefund}

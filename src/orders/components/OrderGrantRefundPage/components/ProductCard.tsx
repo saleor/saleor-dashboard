@@ -67,7 +67,11 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
           </>
         }
         toolbar={
-          <Button variant="secondary" onClick={handleSetMaxQuanity}>
+          <Button
+            variant="secondary"
+            onClick={handleSetMaxQuanity}
+            data-test-id="setMaxQuantityButton"
+          >
             <FormattedMessage {...grantRefundPageMessages.setMaxQuantity} />
           </Button>
         }

@@ -9,4 +9,10 @@ export const ORDERS_SELECTORS = {
   orderFulfillmentFrame: "[data-test-id='order-fulfillment']",
   refundButton: '[data-test-id="refund-button"]',
   fulfillMenuButton: '[data-test-id="fulfill-menu"]',
+  markAsPaidButton: '[data-test-id="markAsPaidButton"]',
+  transactionReferenceInput: 'input[name="transactionReference"]',
+  orderTransactionsList: '[data-test-id="orderTransactionsList"]',
+  grantRefundButton: '[data-test-id="grantRefundButton"]',
+  captureManualTransactionButton:
+    '[data-test-id="captureManualTransactionButton"]',
 };
