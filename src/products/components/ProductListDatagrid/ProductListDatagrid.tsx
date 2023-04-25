@@ -60,7 +60,7 @@ interface ProductListDatagridProps
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
   onColumnQueryChange: (query: string) => void;
-  onSelectRows: (rows: number[], clearSelection: () => void) => void;
+  onSelectProductIds: (rowsIndex: number[], clearSelection: () => void) => void;
   isAttributeLoading?: boolean;
   hasRowHover?: boolean;
 }
@@ -85,7 +85,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   onColumnQueryChange,
   activeAttributeSortId,
   filterDependency,
-  onSelectRows,
+  onSelectProductIds,
   hasRowHover,
 }) => {
   const intl = useIntl();
@@ -250,7 +250,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           getCellError={() => false}
           menuItems={() => []}
           rows={productsLength}
-          onRowSelectionChange={onSelectRows}
+          onRowSelectionChange={onSelectProductIds}
           selectionActions={() => (
             <Button
               variant="primary"

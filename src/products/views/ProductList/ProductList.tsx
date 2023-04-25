@@ -102,6 +102,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ListViews.PRODUCT_LIST,
   );
 
+  // Keep reference to clear datagrid selection function
   const clearRowSelectionCallback = React.useRef<() => void | null>(null);
   const clearRowSelection = () => {
     if (clearRowSelectionCallback.current) {
@@ -109,9 +110,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     }
   };
 
+  // Whenever pagination change we need to clear datagrid selection
   useLayoutEffect(() => {
     clearRowSelection();
-  }, [params]);
+  }, [params.after, params.before]);
 
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
@@ -436,7 +438,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     <PaginatorContext.Provider value={paginationValues}>
       <ProductListPage
         activeAttributeSortId={params.attributeId}
-        setClearRowSelectionCallback={clearRowSelectionCallback}
         sort={{
           asc: params.asc,
           sort: params.sort,

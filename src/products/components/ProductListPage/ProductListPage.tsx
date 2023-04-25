@@ -33,7 +33,7 @@ import {
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon, Text } from "@saleor/macaw-ui/next";
-import React, { MutableRefObject, useState } from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField, productUrl } from "../../urls";
@@ -66,7 +66,6 @@ export interface ProductListPageProps
   products: RelayToFlat<ProductListQuery["products"]>;
   selectedProductIds: string[];
   hasPresetsChanged: boolean;
-  setClearRowSelectionCallback: MutableRefObject<() => void | null>;
   onAdd: () => void;
   onExport: () => void;
   onColumnQueryChange: (query: string) => void;
@@ -289,7 +288,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             settings={settings}
             selectedChannelId={selectedChannelId}
             onUpdateListSettings={onUpdateListSettings}
-            onSelectRows={onSelectProductIds}
+            onSelectProductIds={onSelectProductIds}
             onRowClick={id => {
               navigate(productUrl(id));
             }}

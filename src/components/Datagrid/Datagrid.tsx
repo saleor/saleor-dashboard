@@ -63,7 +63,6 @@ export interface GetCellContentOpts {
 
 export interface MenuItemsActions {
   removeRows: (indexes: number[]) => void;
-  clearSelection: () => void;
 }
 
 export interface DatagridProps {
@@ -147,8 +146,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const [selection, setSelection] = useState<GridSelection>();
   const [hoverRow, setHoverRow] = useState<number | undefined>(undefined);
 
+  // Allow to listen to which  row is selected and notfiy parent component
   useEffect(() => {
     if (onRowSelectionChange && selection) {
+      // Second parameter is callback to clear selection from parent component
       onRowSelectionChange(Array.from(selection.rows), () => {
         setSelection(undefined);
       });
@@ -330,7 +331,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
       selection?.rows.length > 0
         ? selectionActions(Array.from(selection.rows), {
             removeRows: handleRemoveRows,
-            clearSelection: () => setSelection(undefined),
           })
         : null,
     [selection, selectionActions, handleRemoveRows],
