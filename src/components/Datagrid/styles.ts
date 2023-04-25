@@ -132,7 +132,7 @@ const useStyles = makeStyles(
         height: `calc(${cellHeight}px - 1px)`,
       },
       rowColumnGroup: {
-        height: cellHeight + 15,
+        height: cellHeight,
       },
       rowActionScrolledToRight: {
         borderLeftColor: vars.colors.border.neutralHighlight,
