@@ -63,6 +63,7 @@ export const TransactionEvents: React.FC<OrderTransactionEventsProps> = ({
         events,
         transactionEvent => (
           <EventItem
+            key={transactionEvent.id}
             event={transactionEvent}
             onHover={setHoveredPspReference}
             hoveredPspReference={hoveredPspReference}
