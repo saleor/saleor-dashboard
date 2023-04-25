@@ -37,10 +37,6 @@ const useStyles = makeStyles(
     colName: {
       paddingLeft: 0,
     },
-    content: {
-      overflowY: "scroll",
-      height: 450,
-    },
     searchBar: {
       marginBottom: theme.spacing(3),
     },
@@ -93,8 +89,6 @@ const handleProductAssign = (
     setSelectedProducts([...selectedProducts, product]);
   }
 };
-
-const scrollableTargetId = "shippingMethodProductsAddScrollableDialog";
 
 const ShippingMethodProductsAddDialog: React.FC<
   ShippingMethodProductsAddDialogProps
@@ -161,7 +155,7 @@ const ShippingMethodProductsAddDialog: React.FC<
             }}
           />
         </div>
-        <div className={classes.content} id={scrollableTargetId}>
+        <div>
           <InfiniteScroll
             dataLength={products?.length}
             next={onFetchMore}
@@ -172,7 +166,7 @@ const ShippingMethodProductsAddDialog: React.FC<
                 <CircularProgress size={16} />
               </div>
             }
-            scrollableTarget={scrollableTargetId}
+            height={450}
           >
             <ResponsiveTable key="table">
               <TableBody>

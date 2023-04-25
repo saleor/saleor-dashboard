@@ -44,3 +44,7 @@ body {
 .remove-icon-background svg {
   background: none !important;
 }
+
+[id*="ScrollableDialog"] .infinite-scroll-component {
+  overflow: hidden !important;
+}

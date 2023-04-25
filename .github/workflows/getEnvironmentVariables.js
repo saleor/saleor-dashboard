@@ -51,7 +51,7 @@ program
       );
     }
 
-    const branch = await getBranch(options.repo_token);
+    const branch = await getBranch(options.repo_token, options.version);
     core.setOutput("branch", branch);
   })
   .parse();

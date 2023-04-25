@@ -127,7 +127,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
 }): ReactElement => {
   const classes = useStyles();
   const { themeValues } = useTheme();
-  const datagridTheme = useDatagridTheme(readonly);
+  const datagridTheme = useDatagridTheme(readonly, readonly);
   const editor = useRef<DataEditorRef>();
   const customRenderers = useCustomCellRenderers();
 
@@ -250,8 +250,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
       }
 
       const overrideTheme = {
-        bgCell: themeValues.colors.background.surfaceNeutralHighlight,
-        bgCellMedium: themeValues.colors.background.surfaceNeutralHighlight,
+        bgCell:
+          themeValues.colors.background.interactiveNeutralSecondaryHovering,
+        bgCellMedium:
+          themeValues.colors.background.interactiveNeutralSecondaryHovering,
         accentLight: undefined,
       };
 
@@ -406,7 +408,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   getRowThemeOverride={handleGetThemeOverride}
                   gridSelection={selection}
                   rowHeight={cellHeight}
-                  headerHeight={cellHeight + 16}
+                  headerHeight={cellHeight}
                   ref={editor}
                   onPaste
                   rightElementProps={{
