@@ -121,6 +121,13 @@ input AccountInput {
 
   """Shipping address of the customer."""
   defaultShippingAddress: AddressInput
+
+  """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
 }
 
 """Register a new user."""
@@ -5321,6 +5328,20 @@ input CustomerInput {
   """A note about the user."""
   note: String
 
+  """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the user private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
+
   """User language code."""
   languageCode: LanguageCodeEnum
 
@@ -7767,6 +7788,20 @@ input InvoiceCreateInput {
 
   """URL of an invoice to download."""
   url: String!
+
+  """
+  Fields required to update the invoice metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the invoice private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
 }
 
 """
@@ -8814,15 +8849,6 @@ type Manifest {
   
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
-  audience: String
-
-  """
-  Determines the app's required Saleor version as semver range.
-  
-  Added in Saleor 3.13.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  """
   requiredSaleorVersion: AppManifestRequiredSaleorVersion
 
   """
@@ -9640,7 +9666,7 @@ type Mutation {
   """
   Updates a webhook subscription. 
   
-  Requires one of the following permissions: MANAGE_APPS.
+  Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
   """
   webhookUpdate(
     """ID of a webhook to update."""
@@ -10359,7 +10385,7 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productBulkCreate(
-    """Policies of error handling."""
+    """Policies of error handling. DEFAULT: REJECT_EVERYTHING"""
     errorPolicy: ErrorPolicyEnum
 
     """Input list of products to create."""
@@ -13175,11 +13201,11 @@ type Mutation {
   ): CreateToken
 
   """
-  Refresh JWT token. Mutation tries to take refreshToken from the input.If it fails it will try to take refreshToken from the http-only cookie -refreshToken. csrfToken is required when refreshToken is provided as a cookie.
+  Refresh JWT token. Mutation tries to take refreshToken from the input. If it fails it will try to take `refreshToken` from the http-only cookie `refreshToken`. `csrfToken` is required when `refreshToken` is provided as a cookie.
   """
   tokenRefresh(
     """
-    CSRF token required to refresh token. This argument is required when refreshToken is provided as a cookie.
+    CSRF token required to refresh token. This argument is required when `refreshToken` is provided as a cookie.
     """
     csrfToken: String
 
@@ -13879,8 +13905,6 @@ type Order implements Node & ObjectWithMetadata {
   Denormalized tax class assigned to the shipping method.
   
   Added in Saleor 3.9.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   
   Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
   """
@@ -14890,6 +14914,30 @@ type OrderFullyPaid implements Event {
 }
 
 """
+The order is fully refunded.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type OrderFullyRefunded implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The order the event relates to."""
+  order: Order
+}
+
+"""
 Adds granted refund to the order.
 
 Added in Saleor 3.13.
@@ -15147,8 +15195,6 @@ type OrderLine implements Node & ObjectWithMetadata {
   
   Added in Saleor 3.9.
   
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
-  
   Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
   """
   taxClass: TaxClass
@@ -15312,6 +15358,30 @@ enum OrderOriginEnum {
 }
 
 """
+Payment has been made. The order may be partially or fully paid.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type OrderPaid implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The order the event relates to."""
+  order: Order
+}
+
+"""
 Refund an order. 
 
 Requires one of the following permissions: MANAGE_ORDERS.
@@ -15353,6 +15423,30 @@ input OrderRefundProductsInput {
   If true, Saleor will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored.
   """
   includeShippingCosts: Boolean = false
+}
+
+"""
+The order received a refund. The order may be partially or fully refunded.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type OrderRefunded implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The order the event relates to."""
+  order: Order
 }
 
 input OrderReturnFulfillmentLineInput {
@@ -21792,7 +21886,11 @@ type Query {
     cityArea: String
   ): AddressValidationData
 
-  """Look up an address by ID."""
+  """
+  Look up an address by ID.
+  
+  Requires one of the following permissions: MANAGE_USERS, OWNER.
+  """
   address(
     """ID of an address."""
     id: ID!
@@ -21931,7 +22029,7 @@ type ReducedRate {
 }
 
 """
-Refresh JWT token. Mutation tries to take refreshToken from the input.If it fails it will try to take refreshToken from the http-only cookie -refreshToken. csrfToken is required when refreshToken is provided as a cookie.
+Refresh JWT token. Mutation tries to take refreshToken from the input. If it fails it will try to take `refreshToken` from the http-only cookie `refreshToken`. `csrfToken` is required when `refreshToken` is provided as a cookie.
 """
 type RefreshToken {
   """JWT token, required to authenticate."""
@@ -23898,6 +23996,20 @@ input StaffCreateInput {
   """A note about the user."""
   note: String
 
+  """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the user private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
+
   """List of permission group IDs to which user should be assigned."""
   addGroups: [ID!]
 
@@ -24083,6 +24195,20 @@ input StaffUpdateInput {
 
   """A note about the user."""
   note: String
+
+  """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the user private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
 
   """List of permission group IDs to which user should be assigned."""
   addGroups: [ID!]
@@ -26211,6 +26337,20 @@ input UpdateInvoiceInput {
 
   """URL of an invoice to download."""
   url: String
+
+  """
+  Fields required to update the invoice metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the invoice private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
 }
 
 """
@@ -26543,6 +26683,20 @@ input UserCreateInput {
 
   """A note about the user."""
   note: String
+
+  """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the user private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
 
   """User language code."""
   languageCode: LanguageCodeEnum
@@ -27990,8 +28144,35 @@ enum WebhookEventTypeAsyncEnum {
   """
   ORDER_CONFIRMED
 
+  """
+  Payment has been made. The order may be partially or fully paid.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_PAID
+
   """Payment is made and an order is fully paid."""
   ORDER_FULLY_PAID
+
+  """
+  The order received a refund. The order may be partially or fully refunded.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_REFUNDED
+
+  """
+  The order is fully refunded.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_FULLY_REFUNDED
 
   """
   An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED.
@@ -28416,8 +28597,35 @@ enum WebhookEventTypeEnum {
   """
   ORDER_CONFIRMED
 
+  """
+  Payment has been made. The order may be partially or fully paid.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_PAID
+
   """Payment is made and an order is fully paid."""
   ORDER_FULLY_PAID
+
+  """
+  The order received a refund. The order may be partially or fully refunded.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_REFUNDED
+
+  """
+  The order is fully refunded.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_FULLY_REFUNDED
 
   """
   An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED.
@@ -28910,7 +29118,10 @@ enum WebhookSampleEventTypeEnum {
   MENU_ITEM_DELETED
   ORDER_CREATED
   ORDER_CONFIRMED
+  ORDER_PAID
   ORDER_FULLY_PAID
+  ORDER_REFUNDED
+  ORDER_FULLY_REFUNDED
   ORDER_UPDATED
   ORDER_CANCELLED
   ORDER_EXPIRED
@@ -29036,7 +29247,7 @@ enum WebhookTriggerErrorCode {
 """
 Updates a webhook subscription. 
 
-Requires one of the following permissions: MANAGE_APPS.
+Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
 """
 type WebhookUpdate {
   webhookErrors: [WebhookError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")

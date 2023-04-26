@@ -116,6 +116,12 @@ export type AccountInput = {
   defaultBillingAddress?: InputMaybe<AddressInput>;
   /** Shipping address of the customer. */
   defaultShippingAddress?: InputMaybe<AddressInput>;
+  /**
+   * Fields required to update the user metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 /** Fields required to create a user. */
@@ -1672,6 +1678,18 @@ export type CustomerInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
+  /**
+   * Fields required to update the user metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the user private metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /**
@@ -2241,6 +2259,18 @@ export type InvoiceCreateInput = {
   number: Scalars['String'];
   /** URL of an invoice to download. */
   url: Scalars['String'];
+  /**
+   * Fields required to update the invoice metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the invoice private metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 /** An enumeration. */
@@ -5409,6 +5439,18 @@ export type StaffCreateInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
+  /**
+   * Fields required to update the user metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the user private metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of permission group IDs to which user should be assigned. */
   addGroups?: InputMaybe<Array<Scalars['ID']>>;
   /** URL of a view where users should be redirected to set the password. URL in RFC 1808 format. */
@@ -5444,6 +5486,18 @@ export type StaffUpdateInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
+  /**
+   * Fields required to update the user metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the user private metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of permission group IDs to which user should be assigned. */
   addGroups?: InputMaybe<Array<Scalars['ID']>>;
   /** List of permission group IDs from which user should be unassigned. */
@@ -6065,6 +6119,18 @@ export type UpdateInvoiceInput = {
   number?: InputMaybe<Scalars['String']>;
   /** URL of an invoice to download. */
   url?: InputMaybe<Scalars['String']>;
+  /**
+   * Fields required to update the invoice metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the invoice private metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 /** An enumeration. */
@@ -6087,6 +6153,18 @@ export type UserCreateInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
+  /**
+   * Fields required to update the user metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the user private metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /**
@@ -6502,8 +6580,32 @@ export enum WebhookEventTypeAsyncEnum {
   ORDER_CREATED = 'ORDER_CREATED',
   /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
   ORDER_CONFIRMED = 'ORDER_CONFIRMED',
+  /**
+   * Payment has been made. The order may be partially or fully paid.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_PAID = 'ORDER_PAID',
   /** Payment is made and an order is fully paid. */
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
+  /**
+   * The order received a refund. The order may be partially or fully refunded.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_REFUNDED = 'ORDER_REFUNDED',
+  /**
+   * The order is fully refunded.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_FULLY_REFUNDED = 'ORDER_FULLY_REFUNDED',
   /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
   ORDER_UPDATED = 'ORDER_UPDATED',
   /** An order is cancelled. */
@@ -6809,8 +6911,32 @@ export enum WebhookEventTypeEnum {
   ORDER_CREATED = 'ORDER_CREATED',
   /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
   ORDER_CONFIRMED = 'ORDER_CONFIRMED',
+  /**
+   * Payment has been made. The order may be partially or fully paid.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_PAID = 'ORDER_PAID',
   /** Payment is made and an order is fully paid. */
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
+  /**
+   * The order received a refund. The order may be partially or fully refunded.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_REFUNDED = 'ORDER_REFUNDED',
+  /**
+   * The order is fully refunded.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_FULLY_REFUNDED = 'ORDER_FULLY_REFUNDED',
   /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
   ORDER_UPDATED = 'ORDER_UPDATED',
   /** An order is cancelled. */
@@ -7192,7 +7318,10 @@ export enum WebhookSampleEventTypeEnum {
   MENU_ITEM_DELETED = 'MENU_ITEM_DELETED',
   ORDER_CREATED = 'ORDER_CREATED',
   ORDER_CONFIRMED = 'ORDER_CONFIRMED',
+  ORDER_PAID = 'ORDER_PAID',
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
+  ORDER_REFUNDED = 'ORDER_REFUNDED',
+  ORDER_FULLY_REFUNDED = 'ORDER_FULLY_REFUNDED',
   ORDER_UPDATED = 'ORDER_UPDATED',
   ORDER_CANCELLED = 'ORDER_CANCELLED',
   ORDER_EXPIRED = 'ORDER_EXPIRED',

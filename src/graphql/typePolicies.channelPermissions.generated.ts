@@ -2972,6 +2972,14 @@ export type OrderFullyPaidFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	order?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type OrderFullyRefundedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'order' | OrderFullyRefundedKeySpecifier)[];
+export type OrderFullyRefundedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	order?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type OrderGrantRefundCreateKeySpecifier = ('order' | 'grantedRefund' | 'errors' | OrderGrantRefundCreateKeySpecifier)[];
 export type OrderGrantRefundCreateFieldPolicy = {
 	order?: FieldPolicy<any> | FieldReadFunction<any>,
@@ -3092,11 +3100,27 @@ export type OrderMetadataUpdatedFieldPolicy = {
 	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
 	order?: FieldPolicy<any> | FieldReadFunction<any>
 };
+export type OrderPaidKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'order' | OrderPaidKeySpecifier)[];
+export type OrderPaidFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	order?: FieldPolicy<any> | FieldReadFunction<any>
+};
 export type OrderRefundKeySpecifier = ('order' | 'orderErrors' | 'errors' | OrderRefundKeySpecifier)[];
 export type OrderRefundFieldPolicy = {
 	order?: FieldPolicy<any> | FieldReadFunction<any>,
 	orderErrors?: FieldPolicy<any> | FieldReadFunction<any>,
 	errors?: FieldPolicy<any> | FieldReadFunction<any>
+};
+export type OrderRefundedKeySpecifier = ('issuedAt' | 'version' | 'issuingPrincipal' | 'recipient' | 'order' | OrderRefundedKeySpecifier)[];
+export type OrderRefundedFieldPolicy = {
+	issuedAt?: FieldPolicy<any> | FieldReadFunction<any>,
+	version?: FieldPolicy<any> | FieldReadFunction<any>,
+	issuingPrincipal?: FieldPolicy<any> | FieldReadFunction<any>,
+	recipient?: FieldPolicy<any> | FieldReadFunction<any>,
+	order?: FieldPolicy<any> | FieldReadFunction<any>
 };
 export type OrderSettingsKeySpecifier = ('automaticallyConfirmAllNewOrders' | 'automaticallyFulfillNonShippableGiftCard' | 'expireOrdersAfter' | 'markAsPaidStrategy' | 'defaultTransactionFlowStrategy' | OrderSettingsKeySpecifier)[];
 export type OrderSettingsFieldPolicy = {
@@ -7300,6 +7324,10 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | OrderFullyPaidKeySpecifier | (() => undefined | OrderFullyPaidKeySpecifier),
 		fields?: OrderFullyPaidFieldPolicy,
 	},
+	OrderFullyRefunded?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | OrderFullyRefundedKeySpecifier | (() => undefined | OrderFullyRefundedKeySpecifier),
+		fields?: OrderFullyRefundedFieldPolicy,
+	},
 	OrderGrantRefundCreate?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | OrderGrantRefundCreateKeySpecifier | (() => undefined | OrderGrantRefundCreateKeySpecifier),
 		fields?: OrderGrantRefundCreateFieldPolicy,
@@ -7352,9 +7380,17 @@ export type StrictTypedTypePolicies = {
 		keyFields?: false | OrderMetadataUpdatedKeySpecifier | (() => undefined | OrderMetadataUpdatedKeySpecifier),
 		fields?: OrderMetadataUpdatedFieldPolicy,
 	},
+	OrderPaid?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | OrderPaidKeySpecifier | (() => undefined | OrderPaidKeySpecifier),
+		fields?: OrderPaidFieldPolicy,
+	},
 	OrderRefund?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | OrderRefundKeySpecifier | (() => undefined | OrderRefundKeySpecifier),
 		fields?: OrderRefundFieldPolicy,
+	},
+	OrderRefunded?: Omit<TypePolicy, "fields" | "keyFields"> & {
+		keyFields?: false | OrderRefundedKeySpecifier | (() => undefined | OrderRefundedKeySpecifier),
+		fields?: OrderRefundedFieldPolicy,
 	},
 	OrderSettings?: Omit<TypePolicy, "fields" | "keyFields"> & {
 		keyFields?: false | OrderSettingsKeySpecifier | (() => undefined | OrderSettingsKeySpecifier),
