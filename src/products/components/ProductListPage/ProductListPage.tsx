@@ -38,6 +38,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField, productUrl } from "../../urls";
 import { ProductListDatagrid } from "../ProductListDatagrid";
+import { ProductListDeleteButton } from "../ProductListDeleteButton";
 import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import { ProductListViewSwitch } from "../ProductListViewSwitch";
 import {
@@ -110,6 +111,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onTabUpdate,
     hasPresetsChanged,
     selectedProductIds,
+    onProductsDelete,
     ...listProps
   } = props;
   const intl = useIntl();
@@ -262,10 +264,16 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               defaultMessage: "Search Products...",
             })}
             actions={
-              <ProductListViewSwitch
-                defaultValue={storedProductListViewType}
-                setProductListViewType={setProductListViewType}
-              />
+              <Box display="flex" gap={7}>
+                <ProductListDeleteButton
+                  onClick={onProductsDelete}
+                  show={selectedProductIds.length > 0}
+                />
+                <ProductListViewSwitch
+                  defaultValue={storedProductListViewType}
+                  setProductListViewType={setProductListViewType}
+                />
+              </Box>
             }
           />
         </Box>

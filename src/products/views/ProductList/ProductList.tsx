@@ -63,8 +63,9 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
+import isEqual from "lodash/isEqual";
 import { stringify } from "qs";
-import React, { useLayoutEffect, useRef, useState } from "react";
+import React, { useCallback, useLayoutEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useSortRedirects } from "../../../hooks/useSortRedirects";
@@ -96,7 +97,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const { queue } = useBackgroundTask();
 
   const [tabIndexToDelete, setTabIndexToDelete] = useState<number | null>(null);
-  const selectedProductIds = useRef<string[]>([]);
+  const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
 
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
@@ -322,20 +323,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         ...DEFAULT_INITIAL_PAGINATION_DATA,
       }),
     );
-
-  const handleSetSelectedProductIds = (
-    rows: number[],
-    clearSelection: () => void,
-  ) => {
-    selectedProductIds.current = products
-      ? rows.map(row => products[row].id)
-      : [];
-
-    if (!clearRowSelectionCallback.current) {
-      clearRowSelectionCallback.current = clearSelection;
-    }
-  };
-
   const kindOpts = getProductKindOpts(availableProductKinds, intl);
   const paginationState = createPaginationState(settings.rowNumber, params);
   const channelOpts = availableChannels
@@ -369,6 +356,26 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   });
 
   const products = mapEdgesToItems(data?.products);
+
+  const handleSetSelectedProductIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!products) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => products[row].id);
+      const haveSaveValues = isEqual(rowsIds, selectedProductIds);
+
+      if (!haveSaveValues) {
+        setSelectedProductIds(rowsIds);
+      }
+
+      if (!clearRowSelectionCallback.current) {
+        clearRowSelectionCallback.current = clearSelection;
+      }
+    },
+    [products, selectedProductIds],
+  );
 
   const availableInGridAttributesOpts = useAvailableInGridAttributesSearch({
     variables: {
@@ -490,7 +497,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         tabs={tabs.map(tab => tab.name)}
         onExport={() => openModal("export")}
         selectedChannelId={selectedChannel?.id}
-        selectedProductIds={selectedProductIds.current}
+        selectedProductIds={selectedProductIds}
         onSelectProductIds={handleSetSelectedProductIds}
         columnQuery={availableInGridAttributesOpts.query}
       />
@@ -503,7 +510,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         }}
         onConfirm={() => {
           productBulkDelete({
-            variables: { ids: selectedProductIds.current },
+            variables: { ids: selectedProductIds },
           });
         }}
         title={intl.formatMessage({
@@ -519,10 +526,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
             description="dialog content"
             values={{
-              counter: selectedProductIds.current.length,
-              displayQuantity: (
-                <strong>{selectedProductIds.current.length}</strong>
-              ),
+              counter: selectedProductIds.length,
+              displayQuantity: <strong>{selectedProductIds.length}</strong>,
             }}
           />
         </DialogContentText>
@@ -546,7 +551,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           all: countAllProducts.data?.products?.totalCount,
           filter: data?.products?.totalCount,
         }}
-        selectedProducts={selectedProductIds.current.length}
+        selectedProducts={selectedProductIds.length}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         channels={availableChannels}
         onClose={closeModal}
@@ -556,7 +561,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
               input: {
                 ...data,
                 filter,
-                ids: selectedProductIds.current,
+                ids: selectedProductIds,
               },
             },
           })

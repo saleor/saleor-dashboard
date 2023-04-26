@@ -13,7 +13,6 @@ import {
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
-import { buttonMessages } from "@dashboard/intl";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
 import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
@@ -27,9 +26,9 @@ import {
 } from "@dashboard/types";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn, Item } from "@glideapps/glide-data-grid";
-import { Box, Button } from "@saleor/macaw-ui/next";
+import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { isAttributeColumnValue } from "../ProductListPage/utils";
 import { useColumnPickerColumns } from "./hooks/useColumnPickerColumns";
@@ -55,7 +54,6 @@ interface ProductListDatagridProps
   availableInGridAttributes: RelayToFlat<
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
-  onProductsDelete: () => void;
   onColumnQueryChange: (query: string) => void;
   onSelectProductIds: (rowsIndex: number[], clearSelection: () => void) => void;
   isAttributeLoading?: boolean;
@@ -83,7 +81,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   activeAttributeSortId,
   filterDependency,
   onSelectProductIds,
-  onProductsDelete,
   hasRowHover,
 }) => {
   const intl = useIntl();
@@ -248,11 +245,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           menuItems={() => []}
           rows={productsLength}
           onRowSelectionChange={onSelectProductIds}
-          selectionActions={() => (
-            <Button variant="primary" size="small" onClick={onProductsDelete}>
-              <FormattedMessage {...buttonMessages.delete} />
-            </Button>
-          )}
+          selectionActions={() => null}
           fullScreenTitle={intl.formatMessage(messages.products)}
           onRowClick={handleRowClick}
           renderColumnPicker={defaultProps => (
