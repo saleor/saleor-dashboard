@@ -33,6 +33,7 @@ export default defineConfig(({ command, mode }) => {
     APP_TEMPLATE_GALLERY_PATH,
     DEMO_MODE,
     SKIP_SOURCEMAPS,
+    CUSTOM_VERSION,
   } = env;
 
   const sourcemap = SKIP_SOURCEMAPS ? false : true;
@@ -122,6 +123,7 @@ export default defineConfig(({ command, mode }) => {
         SENTRY_DSN,
         ENVIRONMENT,
         DEMO_MODE,
+        CUSTOM_VERSION,
       },
     },
     build: {
