@@ -118,7 +118,10 @@ export const getPermissionGroupAccessibleChannels = (
 ) => {
   // We don't want show all channels to user that has no restricted access to channels
   // User will be able to select channels manually
-  if (permissionGroup?.accessibleChannels?.length === allChannelsLength) {
+  if (
+    permissionGroup?.accessibleChannels?.length === allChannelsLength &&
+    !permissionGroup?.restrictedAccessToChannels
+  ) {
     return [];
   }
 
