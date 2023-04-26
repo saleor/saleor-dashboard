@@ -23,6 +23,7 @@ const useStyles = makeStyles(
         "& .ce-block__content": {
           margin: 0,
           maxWidth: "unset",
+          paddingRight: "54px",
         },
         "& .ce-conversion-tool": {
           ...hover,
