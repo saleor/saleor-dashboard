@@ -81,7 +81,6 @@ export function fillUpVariantDetails({
     .each(input => {
       cy.wrap(input).type(costPrice);
     });
-
   if (variantName) {
     cy.get(VARIANTS_SELECTORS.variantNameInput).type(variantName);
   }
