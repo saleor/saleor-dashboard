@@ -68,6 +68,7 @@ export const OrderDraftDetailsDatagrid = ({
       {
         label: intl.formatMessage(messages.deleteOrder),
         onSelect: () => {
+          setEditedLineId(null);
           onOrderLineRemove(lines[index].id);
         },
       },
