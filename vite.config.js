@@ -38,6 +38,7 @@ export default defineConfig(({ command, mode }) => {
     APPS_TUNNEL_URL_KEYWORDS,
     SKIP_SOURCEMAPS,
     DEMO_MODE,
+    CUSTOM_VERSION,
     FLAGS_SERVICE_ENABLED,
     FLAGSMITH_ID,
   } = env;
@@ -141,6 +142,7 @@ export default defineConfig(({ command, mode }) => {
         SENTRY_DSN,
         ENVIRONMENT,
         DEMO_MODE,
+        CUSTOM_VERSION,
       },
     },
     build: {
