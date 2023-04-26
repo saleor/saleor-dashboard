@@ -1,5 +1,5 @@
 import { Locale } from "@dashboard/components/Locale";
-import { getMoney } from "@dashboard/components/Money/utils";
+import { formatMoneyAmount } from "@dashboard/components/Money";
 import {
   CustomCell,
   CustomRenderer,
@@ -58,12 +58,12 @@ export const moneyCellRenderer = (): CustomRenderer<MoneyCell> => ({
     const { currency, value, undiscounted, locale } = cell.data;
     const hasValue = value === 0 ? true : !!value;
     const formattedValue = value
-      ? getMoney({ amount: Number(value), currency }, locale)
+      ? formatMoneyAmount({ amount: Number(value), currency }, locale)
       : "-";
 
     const formattedUndiscounted =
       undiscounted && undiscounted !== value
-        ? getMoney({ amount: Number(undiscounted), currency }, locale)
+        ? formatMoneyAmount({ amount: Number(undiscounted), currency }, locale)
         : "";
 
     const formattedWithDiscount = formattedUndiscounted + " " + formattedValue;

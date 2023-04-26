@@ -96,7 +96,7 @@ export function numberCell(
 interface MoneyCellData {
   value: number | string | null;
   discount?: string | number;
-  readonly undiscounted?: string | number;
+  undiscounted?: string | number;
   currency: string;
   locale: Locale;
 }
