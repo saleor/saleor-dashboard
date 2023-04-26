@@ -21,7 +21,7 @@ const VersionInfo: React.FC<VersionInfoProps> = ({
     <Typography variant="caption" className={classes.container}>
       <div
         className={classes.versionItem}
-      >{`dashboard v${dashboardVersion}`}</div>
+      >{`dashboard ${dashboardVersion}`}</div>
       <div className={classes.versionItem}>{`core v${coreVersion}`}</div>
     </Typography>
   );

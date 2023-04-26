@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core";
-import { Tooltip } from "@saleor/macaw-ui";
+import { Tooltip } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 
@@ -41,11 +41,26 @@ const OverflowTooltip: React.FC<OverflowTooltipProps> = ({
     vertical: checkVertical,
   });
 
-  return (
-    <Tooltip title={title ?? children} header={header} disabled={!isOverflow}>
+  if (!isOverflow) {
+    return (
       <div ref={ref} className={clsx(classes.wrapper, className)}>
         {children}
       </div>
+    );
+  }
+
+  return (
+    <Tooltip>
+      <Tooltip.Trigger>
+        <div ref={ref} className={clsx(classes.wrapper, className)}>
+          {children}
+        </div>
+      </Tooltip.Trigger>
+      <Tooltip.Content side="top">
+        <Tooltip.Arrow />
+        <Tooltip.ContentHeading>{header}</Tooltip.ContentHeading>
+        {title ?? children}
+      </Tooltip.Content>
     </Tooltip>
   );
 };

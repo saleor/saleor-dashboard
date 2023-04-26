@@ -85,6 +85,7 @@ enum AccountErrorCode {
   PASSWORD_TOO_COMMON
   PASSWORD_TOO_SHORT
   PASSWORD_TOO_SIMILAR
+  PASSWORD_RESET_ALREADY_REQUESTED
   REQUIRED
   UNIQUE
   JWT_SIGNATURE_EXPIRED
@@ -597,6 +598,15 @@ type App implements Node & ObjectWithMetadata {
   accessToken: String
 
   """
+  The App's author name.
+  
+  Added in Saleor 3.13.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  author: String
+
+  """
   App's dashboard extensions.
   
   Added in Saleor 3.1.
@@ -734,6 +744,7 @@ enum AppErrorCode {
   UNIQUE
   OUT_OF_SCOPE_APP
   OUT_OF_SCOPE_PERMISSION
+  UNSUPPORTED_SALEOR_VERSION
 }
 
 """Represents app data."""
@@ -919,6 +930,26 @@ type AppManifestExtension {
 
   """Type of way how app extension will be opened."""
   target: AppExtensionTargetEnum!
+}
+
+type AppManifestRequiredSaleorVersion {
+  """
+  Required Saleor version as semver range.
+  
+  Added in Saleor 3.13.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  constraint: String!
+
+  """
+  Informs if the Saleor version matches the required one.
+  
+  Added in Saleor 3.13.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  satisfied: Boolean!
 }
 
 type AppManifestWebhook {
@@ -2227,14 +2258,91 @@ input BulkAttributeValueInput {
   id: ID
 
   """
-  The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
+  The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.This field will be removed in Saleor 4.0.
   """
   values: [String!]
+
+  """
+  Attribute value ID.
+  
+  Added in Saleor 3.12.
+  """
+  dropdown: AttributeValueSelectableTypeInput
+
+  """
+  Attribute value ID.
+  
+  Added in Saleor 3.12.
+  """
+  swatch: AttributeValueSelectableTypeInput
+
+  """
+  List of attribute value IDs.
+  
+  Added in Saleor 3.12.
+  """
+  multiselect: [AttributeValueSelectableTypeInput!]
+
+  """
+  Numeric value of an attribute.
+  
+  Added in Saleor 3.12.
+  """
+  numeric: String
+
+  """
+  URL of the file attribute. Every time, a new value is created.
+  
+  Added in Saleor 3.12.
+  """
+  file: String
+
+  """
+  File content type.
+  
+  Added in Saleor 3.12.
+  """
+  contentType: String
+
+  """
+  List of entity IDs that will be used as references.
+  
+  Added in Saleor 3.12.
+  """
+  references: [ID!]
+
+  """
+  Text content in JSON format.
+  
+  Added in Saleor 3.12.
+  """
+  richText: JSONString
+
+  """
+  Plain text content.
+  
+  Added in Saleor 3.12.
+  """
+  plainText: String
 
   """
   The boolean value of an attribute to resolve. If the passed value is non-existent, it will be created.
   """
   boolean: Boolean
+
+  """
+  Represents the date value of the attribute value.
+  
+  Added in Saleor 3.12.
+  """
+  date: Date
+
+  """
+  Represents the date/time value of the attribute value.
+  
+  Added in Saleor 3.12.
+  """
+  dateTime: DateTime
 }
 
 type BulkProductError {
@@ -2477,12 +2585,12 @@ type Category implements Node & ObjectWithMetadata {
   ): CategoryCountableConnection
   backgroundImage(
     """
-    Size of the image. If not provided, the original image will be returned.
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
     """
     size: Int
 
     """
-    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    The format of the image. When not provided, format of the original image will be used.
     
     Added in Saleor 3.6.
     
@@ -4042,12 +4150,12 @@ type Collection implements Node & ObjectWithMetadata {
   ): ProductCountableConnection
   backgroundImage(
     """
-    Size of the image. If not provided, the original image will be returned.
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
     """
     size: Int
 
     """
-    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    The format of the image. When not provided, format of the original image will be used.
     
     Added in Saleor 3.6.
     
@@ -8634,6 +8742,24 @@ type Manifest {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   audience: String
+
+  """
+  Determines the app's required Saleor version as semver range.
+  
+  Added in Saleor 3.13.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  requiredSaleorVersion: AppManifestRequiredSaleorVersion
+
+  """
+  The App's author name.
+  
+  Added in Saleor 3.13.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  author: String
 }
 
 type Margin {
@@ -9645,6 +9771,23 @@ type Mutation {
     """Determines if a taxes should be exempt."""
     taxExemption: Boolean!
   ): TaxExemptionManage
+
+  """
+  Updates stocks for a given variant and warehouse.
+  
+  Added in Saleor 3.13.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_PRODUCTS.
+  """
+  stockBulkUpdate(
+    """Policies of error handling. DEFAULT: REJECT_EVERYTHING"""
+    errorPolicy: ErrorPolicyEnum
+
+    """Input list of stocks to update."""
+    stocks: [StockBulkUpdateInput!]!
+  ): StockBulkUpdate
 
   """
   Creates a new staff notification recipient. 
@@ -13529,7 +13672,7 @@ type Order implements Node & ObjectWithMetadata {
   
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   
-  Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
   """
   shippingTaxClass: TaxClass
 
@@ -14491,12 +14634,12 @@ type OrderLine implements Node & ObjectWithMetadata {
   digitalContentUrl: DigitalContentUrl
   thumbnail(
     """
-    Size of the image. If not provided, the original image will be returned.
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
     """
     size: Int
 
     """
-    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    The format of the image. When not provided, format of the original image will be used.
     
     Added in Saleor 3.6.
     
@@ -14557,7 +14700,7 @@ type OrderLine implements Node & ObjectWithMetadata {
   
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   
-  Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
   """
   taxClass: TaxClass
 
@@ -15591,7 +15734,7 @@ type PageType implements Node & ObjectWithMetadata {
   """
   Attributes that can be assigned to the page type.
   
-  Requires one of the following permissions: MANAGE_PAGES.
+  Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
   """
   availableAttributes(
     filter: AttributeFilterInput
@@ -15613,7 +15756,7 @@ type PageType implements Node & ObjectWithMetadata {
   """
   Whether page type has pages assigned.
   
-  Requires one of the following permissions: MANAGE_PAGES.
+  Requires one of the following permissions: MANAGE_PAGES, MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
   """
   hasPages: Boolean
 }
@@ -16844,12 +16987,12 @@ type Product implements Node & ObjectWithMetadata {
   descriptionJson: JSONString @deprecated(reason: "This field will be removed in Saleor 4.0. Use the `description` field instead.")
   thumbnail(
     """
-    Size of the image. If not provided, the original image will be returned.
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
     """
     size: Int
 
     """
-    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    The format of the image. When not provided, format of the original image will be used.
     
     Added in Saleor 3.6.
     
@@ -16965,7 +17108,7 @@ type Product implements Node & ObjectWithMetadata {
   """
   Tax class assigned to this product type. All products of this product type use this tax class, unless it's overridden in the `Product` type.
   
-  Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
   """
   taxClass: TaxClass
 
@@ -17274,7 +17417,7 @@ input ProductCreateInput {
   """
   Tax rate for enabled tax gateway. 
   
-  DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product.
+  DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
   """
   taxCode: String
 
@@ -17518,12 +17661,12 @@ type ProductImage {
   sortOrder: Int
   url(
     """
-    Size of the image. If not provided, the original image will be returned.
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
     """
     size: Int
 
     """
-    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    The format of the image. When not provided, format of the original image will be used.
     
     Added in Saleor 3.6.
     
@@ -17571,7 +17714,7 @@ input ProductInput {
   """
   Tax rate for enabled tax gateway. 
   
-  DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product.
+  DEPRECATED: this field will be removed in Saleor 4.0. Use tax classes to control the tax calculation for a product. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
   """
   taxCode: String
 
@@ -17673,12 +17816,12 @@ type ProductMedia implements Node & ObjectWithMetadata {
   oembedData: JSONString!
   url(
     """
-    Size of the image. If not provided, the original image will be returned.
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
     """
     size: Int
 
     """
-    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    The format of the image. When not provided, format of the original image will be used.
     
     Added in Saleor 3.6.
     
@@ -18173,7 +18316,7 @@ type ProductType implements Node & ObjectWithMetadata {
   """
   Tax class assigned to this product type. All products of this product type use this tax class, unless it's overridden in the `Product` type.
   
-  Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
   """
   taxClass: TaxClass
 
@@ -18325,7 +18468,7 @@ input ProductTypeInput {
   """
   Tax rate for enabled tax gateway. 
   
-  DEPRECATED: this field will be removed in Saleor 4.0.. Use tax classes to control the tax calculation for a product type.
+  DEPRECATED: this field will be removed in Saleor 4.0.. Use tax classes to control the tax calculation for a product type. If taxCode is provided, Saleor will try to find a tax class with given code (codes are stored in metadata) and assign it. If no tax class is found, it would be created and assigned.
   """
   taxCode: String
 
@@ -21882,7 +22025,7 @@ type ShippingMethodType implements Node & ObjectWithMetadata {
   """
   Tax class assigned to this shipping method.
   
-  Requires one of the following permissions: MANAGE_TAXES, MANAGE_SHIPPING.
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
   """
   taxClass: TaxClass
 }
@@ -23161,6 +23304,70 @@ enum StockAvailability {
   OUT_OF_STOCK
 }
 
+type StockBulkResult {
+  """Stock data."""
+  stock: Stock
+
+  """List of errors occurred on create or update attempt."""
+  errors: [StockBulkUpdateError!]
+}
+
+"""
+Updates stocks for a given variant and warehouse.
+
+Added in Saleor 3.13.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_PRODUCTS.
+"""
+type StockBulkUpdate {
+  """Returns how many objects were updated."""
+  count: Int!
+
+  """List of the updated stocks."""
+  results: [StockBulkResult!]!
+  errors: [StockBulkUpdateError!]!
+}
+
+type StockBulkUpdateError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: StockBulkUpdateErrorCode!
+}
+
+"""An enumeration."""
+enum StockBulkUpdateErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  REQUIRED
+}
+
+input StockBulkUpdateInput {
+  """Variant ID."""
+  variantId: ID
+
+  """Variant external reference."""
+  variantExternalReference: String
+
+  """Warehouse ID."""
+  warehouseId: ID
+
+  """Warehouse external reference."""
+  warehouseExternalReference: String
+
+  """Quantity of items available for sell."""
+  quantity: Int!
+}
+
 type StockCountableConnection {
   """Pagination data for this connection."""
   pageInfo: PageInfo!
@@ -24030,6 +24237,8 @@ type ThumbnailCreated implements Event {
 
 """An enumeration."""
 enum ThumbnailFormatEnum {
+  ORIGINAL
+  AVIF
   WEBP
 }
 
@@ -24785,12 +24994,12 @@ type User implements Node & ObjectWithMetadata {
   editableGroups: [Group!]
   avatar(
     """
-    Size of the image. If not provided, the original image will be returned.
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
     """
     size: Int
 
     """
-    The format of the image. When not provided, format of the original image will be used. Must be provided together with the size value, otherwise original image will be returned.
+    The format of the image. When not provided, format of the original image will be used.
     
     Added in Saleor 3.6.
     

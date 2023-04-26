@@ -1,7 +1,7 @@
 import Grid from "@dashboard/components/Grid";
 import { Typography } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
-import { Tooltip } from "@saleor/macaw-ui";
+import { Tooltip } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 
@@ -30,8 +30,14 @@ const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
         <Typography>
           {label}
           {description && (
-            <Tooltip title={description}>
-              <HelpOutline className={classes.tooltipIcon} />
+            <Tooltip>
+              <Tooltip.Trigger>
+                <HelpOutline className={classes.tooltipIcon} />
+              </Tooltip.Trigger>
+              <Tooltip.Content side="bottom">
+                <Tooltip.Arrow />
+                {description}
+              </Tooltip.Content>
             </Tooltip>
           )}
         </Typography>

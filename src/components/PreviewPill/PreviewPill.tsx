@@ -1,8 +1,8 @@
 import { Grow, Paper, Popper, Typography } from "@material-ui/core";
-import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { Pill } from "../Pill";
 import messages from "./messages";
 import useStyles from "./styles";
 

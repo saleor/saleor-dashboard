@@ -33,7 +33,8 @@ const props: OrderListPageProps = {
     },
     channel: {
       active: false,
-      value: [
+      value: [],
+      choices: [
         {
           label: "Channel PLN",
           value: "channelId",
@@ -79,6 +80,10 @@ const props: OrderListPageProps = {
     sort: OrderListUrlSortField.number,
   },
   params: {},
+  currentTab: 0,
+  hasPresetsChanged: false,
+  onTabSave: () => undefined,
+  onTabUpdate: () => undefined,
 };
 
 storiesOf("Orders / Order list", module)

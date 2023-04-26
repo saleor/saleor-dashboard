@@ -4,7 +4,7 @@ import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { AllocationStrategyEnum, StockSettingsInput } from "@dashboard/graphql";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import HelpOutline from "@material-ui/icons/HelpOutline";
-import { Tooltip } from "@saleor/macaw-ui";
+import { Tooltip } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -52,26 +52,26 @@ const ChannelAllocationStrategy: React.FC<ChannelAllocationStrategyProps> = ({
           label={
             <Typography>
               <FormattedMessage {...messages.allocationStrategyDescription} />
-              <Tooltip
-                title={
-                  <>
-                    <FormattedMessage {...messages.allocaationMayOccur} />
-                    <ul>
-                      <li>
-                        <FormattedMessage
-                          {...messages.allocaationMayOccurWithTrackInventory}
-                        />
-                      </li>
-                      <li>
-                        <FormattedMessage
-                          {...messages.allocaationMayOccurWithReservationTime}
-                        />
-                      </li>
-                    </ul>
-                  </>
-                }
-              >
-                <HelpOutline className={classes.tooltipIcon} />
+              <Tooltip>
+                <Tooltip.Trigger>
+                  <HelpOutline className={classes.tooltipIcon} />
+                </Tooltip.Trigger>
+                <Tooltip.Content side="bottom">
+                  <Tooltip.Arrow />
+                  <FormattedMessage {...messages.allocaationMayOccur} />
+                  <ul>
+                    <li>
+                      <FormattedMessage
+                        {...messages.allocaationMayOccurWithTrackInventory}
+                      />
+                    </li>
+                    <li>
+                      <FormattedMessage
+                        {...messages.allocaationMayOccurWithReservationTime}
+                      />
+                    </li>
+                  </ul>
+                </Tooltip.Content>
               </Tooltip>
             </Typography>
           }

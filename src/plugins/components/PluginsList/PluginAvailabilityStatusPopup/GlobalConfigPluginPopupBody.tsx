@@ -1,7 +1,7 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { Pill } from "@dashboard/components/Pill";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { CardContent, Typography } from "@material-ui/core";
-import { Pill } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -14,9 +14,9 @@ interface GlobalConfigPluginPopupBodyProps {
   plugin: PluginBaseFragment;
 }
 
-const GlobalConfigPluginPopupBody: React.FC<GlobalConfigPluginPopupBodyProps> = ({
-  plugin,
-}) => {
+const GlobalConfigPluginPopupBody: React.FC<
+  GlobalConfigPluginPopupBodyProps
+> = ({ plugin }) => {
   const intl = useIntl();
 
   const { active } = plugin.globalConfiguration;

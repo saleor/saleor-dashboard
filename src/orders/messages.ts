@@ -13,6 +13,10 @@ export const orderMessages = defineMessages({
     defaultMessage: "Order #{orderNumber}",
     description: "page header",
   },
+  filterPresetsAll: {
+    defaultMessage: "All orders",
+    id: "lNZuWl",
+  },
 });
 
 export const transactionEventTypeMap = defineMessages<TransactionEventType>({

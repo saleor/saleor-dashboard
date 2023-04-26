@@ -1,4 +1,4 @@
-import { Tooltip } from "@saleor/macaw-ui";
+import { Tooltip } from "@saleor/macaw-ui/next";
 import moment from "moment-timezone";
 import React from "react";
 import ReactMoment from "react-moment";
@@ -31,12 +31,18 @@ export const DateTime: React.FC<DateTimeProps> = ({ date, plain }) => {
                 plain ? (
                   getTitle(date, locale, tz)
                 ) : (
-                  <Tooltip title={getTitle(date, locale, tz)}>
-                    <div>
-                      <ReactMoment from={currentDate} locale={locale} tz={tz}>
-                        {date}
-                      </ReactMoment>
-                    </div>
+                  <Tooltip>
+                    <Tooltip.Trigger>
+                      <div>
+                        <ReactMoment from={currentDate} locale={locale} tz={tz}>
+                          {date}
+                        </ReactMoment>
+                      </div>
+                    </Tooltip.Trigger>
+                    <Tooltip.Content side="bottom">
+                      <Tooltip.Arrow />
+                      {getTitle(date, locale, tz)}
+                    </Tooltip.Content>
                   </Tooltip>
                 )
               }

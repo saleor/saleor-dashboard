@@ -35,7 +35,7 @@ import {
   OrderListUrlQueryParams,
 } from "../../urls";
 
-export const ORDER_FILTERS_KEY = "orderFilters";
+export const ORDER_FILTERS_KEY = "orderFiltersPresets";
 
 export function getFilterOpts(
   params: OrderListUrlFilters,
@@ -53,7 +53,8 @@ export function getFilterOpts(
     channel: channels
       ? {
           active: params?.channel !== undefined,
-          value: channels,
+          choices: channels,
+          value: params?.channel ?? [],
         }
       : null,
     created: {
@@ -198,8 +199,12 @@ export function getFilterQueryParam(
   }
 }
 
-export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
-  createFilterTabUtils<OrderListUrlFilters>(ORDER_FILTERS_KEY);
+export const {
+  deleteFilterTab,
+  getFilterTabs,
+  saveFilterTab,
+  updateFilterTab,
+} = createFilterTabUtils<string>(ORDER_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
   createFilterUtils<OrderListUrlQueryParams, OrderListUrlFilters>({

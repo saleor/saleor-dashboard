@@ -25,6 +25,7 @@
     "@editorjs/paragraph": "^2.8.0",
     "@editorjs/quote": "^2.4.0",
     "@glideapps/glide-data-grid": "^5.0.0",
+    "@glideapps/glide-data-grid-cells": "^5.2.1",
     "@graphiql/plugin-explorer": "^0.1.12",
     "@graphiql/react": "^0.15.0",
     "@graphiql/toolkit": "^0.8.0",
@@ -33,8 +34,8 @@
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
-    "@saleor/macaw-ui": "^0.8.0-pre.50",
-    "@saleor/sdk": "^0.4.6",
+    "@saleor/macaw-ui": "0.8.0-pre.68",
+    "@saleor/sdk": "^0.5.0",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
     "@uiw/react-color-hue": "0.0.34",
@@ -68,7 +69,7 @@
     "marked": "^4.0.17",
     "moment-timezone": "^0.5.32",
     "pixelmatch": "^5.3.0",
-    "qs": "^6.10.1",
+    "qs": "^6.10.3",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-draggable": "^4.4.5",
@@ -126,7 +127,7 @@
     "@pollyjs/core": "~5.0.0",
     "@pollyjs/persister-fs": "~5.0.0",
     "@release-it/bumper": "^2.0.0",
-    "@saleor/app-sdk": "^0.34.1",
+    "@saleor/app-sdk": "0.37.3",
     "@types/apollo-upload-client": "^17.0.2",
     "@types/color-convert": "^2.0.0",
     "@types/debug": "^4.1.7",
@@ -156,6 +157,7 @@
     "core-js": "^3.7.0",
     "cross-env": "^6.0.3",
     "cypress-recurse": "^1.27.0",
+    "dependency-cruiser": "^12.10.0",
     "dotenv": "^10.0.0",
     "env-var": "^7.3.0",
     "esbuild-loader": "^2.18.0",
@@ -224,8 +226,19 @@
     "mochawesome-report-generator": "^6.0.1",
     "prettier": "^2.8.4",
     "setup-polly-jest": "^0.9.1",
-    "ts-jest": "^27.1.5"
+    "ts-jest": "^27.1.5",
+    "@swc/core-darwin-arm64": "1.3.40",
+    "@swc/core-darwin-x64": "1.3.40",
+    "@swc/core-linux-arm-gnueabihf": "1.3.40",
+    "@swc/core-linux-arm64-gnu": "1.3.40",
+    "@swc/core-linux-arm64-musl": "1.3.40",
+    "@swc/core-linux-x64-gnu": "1.3.40",
+    "@swc/core-linux-x64-musl": "1.3.40",
+    "@swc/core-win32-arm64-msvc": "1.3.40",
+    "@swc/core-win32-ia32-msvc": "1.3.40",
+    "@swc/core-win32-x64-msvc": "1.3.40"
   },
+  "//@swc/*": "swc packages are required until https://github.com/npm/cli/issues/4828 is fixed",
   "jest": {
     "resetMocks": false,
     "globals": {
@@ -312,7 +325,8 @@
     "postinstall": "node scripts/patchReactVirtualized.js",
     "predev": "npm run build-types",
     "release": "release-it",
-    "prepare": "is-ci || husky install"
+    "prepare": "is-ci || husky install",
+    "dep-status": "depcruise --config .dependency-cruiser.js src"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }

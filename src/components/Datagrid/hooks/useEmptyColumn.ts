@@ -1,17 +1,16 @@
-import { themes, useTheme } from "@saleor/macaw-ui/next";
+import { useTheme } from "@saleor/macaw-ui/next";
 
 export const useEmptyColumn = () => {
-  const { theme: currentTheme } = useTheme();
-  const theme = themes[currentTheme];
+  const { themeValues } = useTheme();
 
   return {
     id: "empty",
     title: "",
     width: 20,
     themeOverride: {
-      accentColor: theme.colors.background.plain,
-      accentLight: theme.colors.background.plain,
-      bgHeaderHovered: theme.colors.background.plain,
+      accentColor: themeValues.colors.background.plain,
+      accentLight: themeValues.colors.background.plain,
+      bgHeaderHovered: themeValues.colors.background.plain,
     },
   };
 };

@@ -3414,6 +3414,7 @@ export const AppDocument = gql`
   app(id: $id) {
     ...App
     aboutApp
+    author
     permissions {
       code
       name

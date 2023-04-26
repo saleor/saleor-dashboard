@@ -3,8 +3,8 @@ import {
   usePluginContext,
   useTheme as useGraphiQLTheme,
 } from "@graphiql/react";
-import { makeStyles, useTheme } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
+import { makeStyles } from "@saleor/macaw-ui";
+import { useTheme, vars } from "@saleor/macaw-ui/next";
 import { useEffect } from "react";
 
 export const useStyles = makeStyles(
@@ -55,6 +55,14 @@ export const useEditorStyles = () => {
 };
 
 export const useDashboardTheme = () => {
+  const {
+    themeValues: {
+      colors: { background },
+    },
+  } = useTheme();
+
+  const match = background.plain.match(/hsla\(([^)]+)\)/);
+
   const rootStyle = {
     "--font-size-body": vars.fontSize.bodyMedium,
     "--font-size-h2": vars.fontSize.headingLarge,
@@ -63,6 +71,7 @@ export const useDashboardTheme = () => {
     "--font-weight-regular": vars.fontWeight.bodyLarge,
     "--font-size-hint": vars.fontSize.bodyEmpLarge,
     "--font-size-inline-code": vars.fontSize.bodySmall,
+    "--color-base": match ? match[1] : background.plain,
   } as React.CSSProperties;
 
   return { rootStyle };
@@ -70,12 +79,9 @@ export const useDashboardTheme = () => {
 
 export const useGraphiQLThemeSwitcher = () => {
   const theme = useTheme();
-  const { theme: graphiqlTheme, setTheme: setGraphiqlTheme } =
-    useGraphiQLTheme();
+  const { setTheme: setGraphiQLTheme } = useGraphiQLTheme();
 
   useEffect(() => {
-    if (theme.themeType !== graphiqlTheme) {
-      setGraphiqlTheme(theme.themeType);
-    }
+    setGraphiQLTheme(theme.theme === "defaultDark" ? "dark" : "light");
   });
 };
