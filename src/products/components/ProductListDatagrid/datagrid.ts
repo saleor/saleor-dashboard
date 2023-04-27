@@ -75,7 +75,7 @@ export const productListStaticColumnAdapter = (intl, emptyColumn, sort) =>
     icon: getColumnSortDirectionIcon(sort, column.id),
   }));
 
-export const productListCustomColumnAdapter = ({
+export const productListDynamicColumnAdapter = ({
   attributesData,
   gridAttributesData,
   activeAttributeSortId,

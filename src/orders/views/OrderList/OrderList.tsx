@@ -1,6 +1,6 @@
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useCustomColumnSettings } from "@dashboard/components/ColumnPicker/useColumnPickerSettings";
+import { useDynamicColumnSettings } from "@dashboard/components/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
@@ -64,8 +64,8 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.ORDER_LIST,
   );
-  const { customColumnsSettings, setCustomColumnsSettings } =
-    useCustomColumnSettings("ORDER_LIST");
+  const { columnPickerSettings, setDynamicColumnsSettings } =
+    useDynamicColumnSettings("ORDER_LIST");
 
   const [tabIndexToDelete, setTabIndexToDelete] = useState<number | null>(null);
 
@@ -233,8 +233,8 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         onSettingsOpen={() => navigate(orderSettingsPath)}
         params={params}
         hasPresetsChanged={hasPresetsChanged()}
-        customColumnSettings={customColumnsSettings}
-        setCustomColumnSettings={setCustomColumnsSettings}
+        columnPickerSettings={columnPickerSettings}
+        setDynamicColumnSettings={setDynamicColumnsSettings}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}

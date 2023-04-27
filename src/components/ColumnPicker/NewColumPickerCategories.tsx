@@ -15,9 +15,9 @@ import { ColumnCategory } from "./useColumns";
 
 export interface NewColumnPickerCategoriesProps {
   columnCategories: ColumnCategory[];
-  customColumnSettings: string[];
+  columnPickerSettings: string[];
   onClose: () => void;
-  onCustomColumnSelect: (columns: string[]) => void;
+  onDynamicColumnSelect: (columns: string[]) => void;
 }
 
 const getExitIcon = (columnCategories, selectedCategory) => {
@@ -52,8 +52,8 @@ export const NewColumnPickerCategories: React.FC<
 > = ({
   columnCategories,
   onClose,
-  onCustomColumnSelect,
-  customColumnSettings,
+  onDynamicColumnSelect,
+  columnPickerSettings,
 }) => {
   const [selectedCategory, setSelectedCategory] = React.useState<string>();
 
@@ -63,12 +63,12 @@ export const NewColumnPickerCategories: React.FC<
   );
 
   const changeHandler = (column: string) => {
-    if (customColumnSettings.includes(column)) {
-      onCustomColumnSelect(
-        customColumnSettings.filter(currentCol => currentCol !== column),
+    if (columnPickerSettings.includes(column)) {
+      onDynamicColumnSelect(
+        columnPickerSettings.filter(currentCol => currentCol !== column),
       );
     } else {
-      onCustomColumnSelect([...customColumnSettings, column]);
+      onDynamicColumnSelect([...columnPickerSettings, column]);
     }
   };
 
@@ -119,7 +119,7 @@ export const NewColumnPickerCategories: React.FC<
                   >
                     <Checkbox
                       onCheckedChange={() => changeHandler(node.id)}
-                      checked={customColumnSettings.includes(node.id)}
+                      checked={columnPickerSettings.includes(node.id)}
                     >
                       <Text size="small" color="textNeutralSubdued">
                         {node.title}

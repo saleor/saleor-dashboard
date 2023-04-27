@@ -4,29 +4,29 @@ const COLUMN_PICKER_KEY = "columnPickerConfig";
 
 export type DatagridViews = "PRODUCT_LIST" | "PRODUCT_DETAILS" | "ORDER_LIST";
 
-type CustomColumnSettings = {
+type DynamicColumnSettings = {
   [view in DatagridViews]: string[];
 };
 
-export const defaultCustomColumns: CustomColumnSettings = {
+export const defaultDynamicColumns: DynamicColumnSettings = {
   PRODUCT_LIST: [],
   PRODUCT_DETAILS: [],
   ORDER_LIST: [],
 };
 
-export const useCustomColumnSettings = (view: DatagridViews) => {
+export const useDynamicColumnSettings = (view: DatagridViews) => {
   const [config, setConfig] = useLocalStorage(
     COLUMN_PICKER_KEY,
-    defaultCustomColumns,
+    defaultDynamicColumns,
   );
 
-  const setCustomColumnsSettings = (cols: string[]) =>
+  const setDynamicColumnsSettings = (cols: string[]) =>
     setConfig(currentSettings => ({
       ...currentSettings,
       [view]: cols,
     }));
 
-  const customColumnsSettings = config[view] ?? [];
+  const columnPickerSettings = config[view] ?? [];
 
-  return { customColumnsSettings, setCustomColumnsSettings };
+  return { columnPickerSettings, setDynamicColumnsSettings };
 };

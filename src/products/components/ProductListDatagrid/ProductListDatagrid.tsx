@@ -33,7 +33,7 @@ import {
   createGetCellContent,
   getColumnMetadata,
   getProductRowsLength,
-  productListCustomColumnAdapter,
+  productListDynamicColumnAdapter,
   productListStaticColumnAdapter,
 } from "./datagrid";
 import { messages } from "./messages";
@@ -52,8 +52,8 @@ interface ProductListDatagridProps
     typeof useAvailableInGridAttributesSearch
   >;
   hasRowHover?: boolean;
-  customColumnSettings: string[];
-  setCustomColumnSettings: (cols: string[]) => void;
+  columnPickerSettings: string[];
+  setDynamicColumnSettings: (cols: string[]) => void;
   loading: boolean;
 }
 
@@ -73,8 +73,8 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   filterDependency,
   hasRowHover,
   rowAnchor,
-  customColumnSettings,
-  setCustomColumnSettings,
+  columnPickerSettings,
+  setDynamicColumnSettings,
 }) => {
   const intl = useIntl();
   const searchProductType = useSearchProductTypes();
@@ -99,12 +99,12 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     handlers,
     visibleColumns,
     staticColumns,
-    customColumns,
+    dynamicColumns,
     selectedColumns,
     columnCategories,
   } = useColumns({
     staticColumns: productListStaticColumnAdapter(intl, emptyColumn, sort),
-    columnCategories: productListCustomColumnAdapter({
+    columnCategories: productListDynamicColumnAdapter({
       attributesData:
         mapEdgesToItems(
           availableInGridAttributesOpts.result?.data?.availableInGrid,
@@ -125,8 +125,8 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     }),
     selectedColumns: settings.columns,
     onSave: handleColumnChange,
-    customColumnSettings,
-    setCustomColumnSettings,
+    columnPickerSettings,
+    setDynamicColumnSettings,
   });
 
   const handleHeaderClicked = useCallback(
@@ -239,11 +239,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           renderColumnPicker={() => (
             <NewColumPicker
               staticColumns={staticColumns}
-              customColumns={customColumns}
+              dynamicColumns={dynamicColumns}
               selectedColumns={selectedColumns}
               columnCategories={columnCategories}
-              onCustomColumnSelect={handlers.onCustomColumnSelect}
-              customColumnSettings={customColumnSettings}
+              onDynamicColumnSelect={handlers.onDynamicColumnSelect}
+              columnPickerSettings={columnPickerSettings}
               onSave={handlers.onChange}
             />
           )}

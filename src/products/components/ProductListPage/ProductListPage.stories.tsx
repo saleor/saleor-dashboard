@@ -64,8 +64,8 @@ const props: ProductListPageProps = {
     ...pageListProps.default.settings,
     columns: ["availability", "productType", "price"],
   },
-  customColumnSettings: [],
-  setCustomColumnSettings: () => undefined,
+  columnPickerSettings: [],
+  setDynamicColumnSettings: () => undefined,
 };
 
 storiesOf("Products / Product list", module)

@@ -23,8 +23,8 @@ export interface UseColumnsProps {
   columnCategories?: ColumnCategory[];
   selectedColumns: string[];
   onSave: (columns: string[]) => void;
-  customColumnSettings: string[];
-  setCustomColumnSettings: (cols: string[]) => void;
+  columnPickerSettings: string[];
+  setDynamicColumnSettings: (cols: string[]) => void;
 }
 
 export const useColumns = ({
@@ -32,28 +32,28 @@ export const useColumns = ({
   selectedColumns,
   columnCategories,
   onSave,
-  customColumnSettings,
-  setCustomColumnSettings,
+  columnPickerSettings,
+  setDynamicColumnSettings,
 }: UseColumnsProps) => {
-  const customColumns: AvailableColumn[] = React.useMemo(
+  const dynamicColumns: AvailableColumn[] = React.useMemo(
     () =>
       columnCategories.reduce((columns: AvailableColumn[], category) => {
         category.selectedNodes.forEach(column => {
-          if (customColumnSettings.includes(column.id)) {
+          if (columnPickerSettings.includes(column.id)) {
             columns.push(column);
           }
         });
         return columns;
       }, [] as AvailableColumn[]),
-    [columnCategories, customColumnSettings],
+    [columnCategories, columnPickerSettings],
   );
 
   const initialColumnsState = React.useMemo(
     () =>
-      [...staticColumns, ...customColumns].filter(
+      [...staticColumns, ...dynamicColumns].filter(
         column => selectedColumns.includes(column.id) || column.id === "empty",
       ),
-    [customColumns, staticColumns, selectedColumns],
+    [dynamicColumns, staticColumns, selectedColumns],
   );
 
   const [visibleColumns, setVisibleColumns] =
@@ -84,20 +84,20 @@ export const useColumns = ({
   );
 
   const onChange = onSave;
-  const onCustomColumnSelect = setCustomColumnSettings;
+  const onDynamicColumnSelect = setDynamicColumnSettings;
 
   return {
     handlers: {
       onMove,
       onResize,
       onChange,
-      onCustomColumnSelect,
+      onDynamicColumnSelect,
     },
     visibleColumns,
     staticColumns,
-    customColumns,
+    dynamicColumns,
     selectedColumns,
     columnCategories,
-    customColumnSettings,
+    columnPickerSettings,
   };
 };

@@ -18,12 +18,12 @@ import { filterEmptyColumn } from "./utils";
 
 export interface NewColumPickerProps {
   staticColumns: AvailableColumn[];
-  customColumns?: AvailableColumn[];
+  dynamicColumns?: AvailableColumn[];
   selectedColumns: string[];
   columnCategories?: ColumnCategory[];
-  customColumnSettings: string[];
+  columnPickerSettings: string[];
   onSave: (columns: string[]) => void;
-  onCustomColumnSelect: (columns: string[]) => void;
+  onDynamicColumnSelect: (columns: string[]) => void;
 }
 
 export const NewColumPicker: React.FC<NewColumPickerProps> = props => {
@@ -31,9 +31,9 @@ export const NewColumPicker: React.FC<NewColumPickerProps> = props => {
     staticColumns,
     selectedColumns,
     columnCategories,
-    customColumns,
-    customColumnSettings,
-    onCustomColumnSelect,
+    dynamicColumns,
+    columnPickerSettings,
+    onDynamicColumnSelect,
     onSave,
   } = props;
 
@@ -58,8 +58,8 @@ export const NewColumPicker: React.FC<NewColumPickerProps> = props => {
           {expanded && (
             <NewColumnPickerCategories
               columnCategories={columnCategories}
-              customColumnSettings={customColumnSettings}
-              onCustomColumnSelect={onCustomColumnSelect}
+              columnPickerSettings={columnPickerSettings}
+              onDynamicColumnSelect={onDynamicColumnSelect}
               onClose={() => setExpanded(false)}
             />
           )}
@@ -104,7 +104,7 @@ export const NewColumPicker: React.FC<NewColumPickerProps> = props => {
                     onClick={() => setExpanded(true)}
                   />
                 </Box>
-                {customColumns.map(column => (
+                {dynamicColumns.map(column => (
                   <Box padding={3} key={column.id}>
                     <Toggle
                       onPressedChange={() => handleToggle(column.id)}

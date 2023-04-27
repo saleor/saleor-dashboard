@@ -49,11 +49,11 @@ Firstly, in the view file, we need to provide two settings object, one for the s
 The reason why column picker settings object needs to be in the view file and cannot be integrated into internal logic of useColumns is because we use column picker settings in the query. For example, we need to know which columns are selected in order to fetch the correct data from the API.
  
  ```tsx
-const { customColumnsSettings, setCustomColumnsSettings } =
-useCustomColumnSettings("PRODUCT_LIST");
+const { columnPickerSettings, setDynamicColumnsSettings } =
+useDynamicColumnSettings("PRODUCT_LIST");
 
 // Translates columnIDs to api IDs
-const filteredColumnIds = customColumnsSettings
+const filteredColumnIds = columnPickerSettings
     .filter(isAttributeColumnValue)
     .map(getAttributeIdFromColumnValue);
 
@@ -105,7 +105,7 @@ We cannot rely on single query, because searching through attributes would influ
 
 Example:
 ```tsx
-export const parseCustomColumnsForProductListView = ({
+export const parseDynamicColumnsForProductListView = ({
   attributesData,
   gridAttributesData,
   activeAttributeSortId,

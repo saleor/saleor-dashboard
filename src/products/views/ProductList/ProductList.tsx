@@ -1,7 +1,7 @@
 import { filterable } from "@dashboard/attributes/utils/data";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useCustomColumnSettings } from "@dashboard/components/ColumnPicker/useColumnPickerSettings";
+import { useDynamicColumnSettings } from "@dashboard/components/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
@@ -106,8 +106,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ListViews.PRODUCT_LIST,
   );
 
-  const { customColumnsSettings, setCustomColumnsSettings } =
-    useCustomColumnSettings("PRODUCT_LIST");
+  const { columnPickerSettings, setDynamicColumnsSettings } =
+    useDynamicColumnSettings("PRODUCT_LIST");
 
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
@@ -320,7 +320,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     [params, settings.rowNumber],
   );
 
-  const filteredColumnIds = (customColumnsSettings ?? [])
+  const filteredColumnIds = (columnPickerSettings ?? [])
     .filter(isAttributeColumnValue)
     .map(getAttributeIdFromColumnValue);
 
@@ -465,8 +465,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         tabs={tabs.map(tab => tab.name)}
         onExport={() => openModal("export")}
         selectedChannelId={selectedChannel?.id}
-        customColumnSettings={customColumnsSettings}
-        setCustomColumnSettings={setCustomColumnsSettings}
+        columnPickerSettings={columnPickerSettings}
+        setDynamicColumnSettings={setDynamicColumnsSettings}
       />
       <ActionDialog
         open={params.action === "delete"}

@@ -66,8 +66,8 @@ export interface ProductListPageProps
   onExport: () => void;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (tabIndex: number) => void;
-  customColumnSettings: string[];
-  setCustomColumnSettings: (cols: string[]) => void;
+  columnPickerSettings: string[];
+  setDynamicColumnSettings: (cols: string[]) => void;
   availableInGridAttributesOpts: ReturnType<
     typeof useAvailableInGridAttributesSearch
   >;
@@ -103,8 +103,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     tabs,
     onTabUpdate,
     hasPresetsChanged,
-    customColumnSettings,
-    setCustomColumnSettings,
+    columnPickerSettings,
+    setDynamicColumnSettings,
     ...listProps
   } = props;
   const intl = useIntl();
@@ -281,8 +281,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             onRowClick={id => {
               navigate(productUrl(id));
             }}
-            customColumnSettings={customColumnSettings}
-            setCustomColumnSettings={setCustomColumnSettings}
+            columnPickerSettings={columnPickerSettings}
+            setDynamicColumnSettings={setDynamicColumnSettings}
           />
         ) : (
           <ProductListTiles
