@@ -235,7 +235,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
         hackARef.current.click();
       }
     },
-    [onRowClick],
+    [onRowClick, handleRowHover],
   );
 
   const handleRowHover = useCallback(
