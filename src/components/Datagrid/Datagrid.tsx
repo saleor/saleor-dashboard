@@ -225,19 +225,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [onCellEdited, availableColumns],
   );
 
-  const handleCellClick = useCallback(
-    (item: Item, args: CellClickedEventArgs) => {
-      if (onRowClick && item[0] !== -1) {
-        onRowClick(item);
-      }
-      handleRowHover(args);
-      if (hackARef.current) {
-        hackARef.current.click();
-      }
-    },
-    [onRowClick, handleRowHover],
-  );
-
   const handleRowHover = useCallback(
     (args: GridMouseEventArgs) => {
       if (hasRowHover) {
@@ -264,6 +251,19 @@ export const Datagrid: React.FC<DatagridProps> = ({
       hackARef.current.dataset.reactRouterPath = href;
     },
     [hasRowHover, rowAnchor],
+  );
+
+  const handleCellClick = useCallback(
+    (item: Item, args: CellClickedEventArgs) => {
+      if (onRowClick && item[0] !== -1) {
+        onRowClick(item);
+      }
+      handleRowHover(args);
+      if (hackARef.current) {
+        hackARef.current.click();
+      }
+    },
+    [onRowClick, handleRowHover],
   );
 
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
