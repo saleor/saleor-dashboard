@@ -20,6 +20,33 @@ export interface NewColumnPickerCategoriesProps {
   onCustomColumnSelect: (columns: string[]) => void;
 }
 
+const getExitIcon = (columnCategories, selectedCategory) => {
+  if (columnCategories.length === 1) {
+    return <CloseIcon />;
+  }
+  if (selectedCategory) {
+    return <ArrowLeftIcon />;
+  } else {
+    return <CloseIcon />;
+  }
+};
+
+const getExitOnClick = ({
+  columnCategories,
+  selectedCategory,
+  setSelectedCategory,
+  onClose,
+}) => {
+  if (columnCategories.length === 1) {
+    return onClose;
+  }
+  if (selectedCategory) {
+    return () => setSelectedCategory(undefined);
+  } else {
+    return onClose;
+  }
+};
+
 export const NewColumnPickerCategories: React.FC<
   NewColumnPickerCategoriesProps
 > = ({
@@ -45,18 +72,28 @@ export const NewColumnPickerCategories: React.FC<
     }
   };
 
+  React.useEffect(() => {
+    // Preselect category when there is only one
+    if (columnCategories.length === 1) {
+      setSelectedCategory(columnCategories[0].name);
+    }
+  }, [columnCategories]);
+
   return (
     <Box backgroundColor="subdued">
       <Box display="flex" paddingX={7} paddingY={5} gap={5} alignItems="center">
         <Button
           variant="tertiary"
           size="small"
-          icon={selectedCategory ? <ArrowLeftIcon /> : <CloseIcon />}
-          onClick={
-            selectedCategory ? () => setSelectedCategory(undefined) : onClose
-          }
+          icon={getExitIcon(columnCategories, selectedCategory)}
+          onClick={getExitOnClick({
+            columnCategories,
+            selectedCategory,
+            setSelectedCategory,
+            onClose,
+          })}
         />
-        <Text size="small">Categories</Text>
+        <Text size="small">{selectedCategory ?? "Categories"}</Text>
       </Box>
       {selectedCategory ? (
         <>
