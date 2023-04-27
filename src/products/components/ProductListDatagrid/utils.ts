@@ -15,15 +15,114 @@ import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { getMoneyRange } from "@dashboard/components/MoneyRange";
 import { ProductListColumns } from "@dashboard/config";
-import { GridAttributesQuery, ProductListQuery } from "@dashboard/graphql";
+import {
+  GridAttributesQuery,
+  ProductListQuery,
+  SearchAvailableInGridAttributesQuery,
+} from "@dashboard/graphql";
+import { commonMessages } from "@dashboard/intl";
 import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
+import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { Item } from "@glideapps/glide-data-grid";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
+import { columnsMessages } from "./messages";
+
+export const parseStaticColumnsForProductListView = (intl, emptyColumn, sort) =>
+  [
+    emptyColumn,
+    {
+      id: "name",
+      title: intl.formatMessage(commonMessages.product),
+      width: 300,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.name),
+    },
+    {
+      id: "productType",
+      title: intl.formatMessage(columnsMessages.type),
+      width: 200,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.productType),
+    },
+    {
+      id: "description",
+      title: intl.formatMessage(commonMessages.description),
+      width: 400,
+    },
+    {
+      id: "availability",
+      title: intl.formatMessage(columnsMessages.availability),
+      width: 250,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.availability),
+    },
+    {
+      id: "date",
+      title: intl.formatMessage(columnsMessages.updatedAt),
+      width: 250,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.date),
+    },
+    {
+      id: "price",
+      title: intl.formatMessage(columnsMessages.price),
+      width: 250,
+      icon: getColumnSortIconName(sort, ProductListUrlSortField.price),
+    },
+  ].map(column => ({
+    ...column,
+    icon: getColumnSortDirectionIcon(sort, column.id),
+  }));
+
+export const parseCustomColumnsForProductListView = ({
+  attributesData,
+  gridAttributesData,
+  activeAttributeSortId,
+  sort,
+  onSearch,
+  onFetchMore,
+  hasNextPage,
+  hasPreviousPage,
+  totalCount,
+}) => [
+  {
+    name: "Attributes",
+    prefix: "attribute",
+    availableNodes: parseAttributesColumns(
+      attributesData,
+      activeAttributeSortId,
+      sort,
+    ),
+    selectedNodes: parseAttributesColumns(
+      gridAttributesData,
+      activeAttributeSortId,
+      sort,
+    ),
+    onSearch,
+    onFetchMore,
+    hasNextPage,
+    hasPreviousPage,
+    totalCount,
+  },
+];
+
+export const parseAttributesColumns = (
+  attributes: RelayToFlat<
+    SearchAvailableInGridAttributesQuery["availableInGrid"]
+  >,
+  activeAttributeSortId: string,
+  sort: Sort<ProductListUrlSortField>,
+) =>
+  attributes.map(attribute => ({
+    id: `attribute:${attribute.id}`,
+    title: attribute.name,
+    metaGroup: "Attribute",
+    width: 200,
+    icon:
+      attribute.id === activeAttributeSortId &&
+      getColumnSortIconName(sort, ProductListUrlSortField.attribute),
+  }));
 
 export function getColumnSortIconName(
   { sort, asc }: Sort<ProductListUrlSortField>,
