@@ -1,8 +1,10 @@
 import "@glideapps/glide-data-grid/dist/index.css";
 
+import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
 import DataEditor, {
+  CellClickedEventArgs,
   DataEditorProps,
   DataEditorRef,
   EditableGridCell,
@@ -220,10 +222,12 @@ export const Datagrid: React.FC<DatagridProps> = ({
   );
 
   const handleCellClick = useCallback(
-    (item: Item) => {
+    (item: Item, args: CellClickedEventArgs) => {
       if (onRowClick && item[0] !== -1) {
         onRowClick(item);
       }
+      handleRowHover(args);
+      hackARef.current.click();
     },
     [onRowClick],
   );
@@ -249,7 +253,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
       hackARef.current.style.width = `${args.bounds.width}px`;
       hackARef.current.style.top = `${window.scrollY + args.bounds.y}px`;
       hackARef.current.style.height = `${args.bounds.height}px`;
-      hackARef.current.href = href;
+      hackARef.current.href =
+        getAppMountUri() + (href.startsWith("/") ? href.slice(1) : href);
+      hackARef.current.dataset.reactRouterPath = href;
     },
     [hasRowHover, rowAnchor],
   );
@@ -344,6 +350,22 @@ export const Datagrid: React.FC<DatagridProps> = ({
           })
         : null,
     [selection, selectionActions, handleRemoveRows],
+  );
+
+  // Hide the link when scrolling over it so that the scroll/wheel events go through to the Datagrid
+  // Show the link quickly after the last scroll/wheel event
+  const hideLinkAndShowAfterDelay = useCallback(
+    (() => {
+      let timer: ReturnType<typeof setTimeout> | null = null;
+      return () => {
+        clearTimeout(timer);
+        hackARef.current.style.display = "none";
+        timer = setTimeout(() => {
+          hackARef.current.style.display = "block";
+        }, 100);
+      };
+    })(),
+    [hackARef],
   );
 
   if (loading) {
@@ -510,16 +532,19 @@ export const Datagrid: React.FC<DatagridProps> = ({
         bounds={tooltip?.bounds}
         title={tooltip?.title}
       />
-      <a
-        ref={hackARef}
-        style={{ position: "absolute" }}
-        tabIndex={-1}
-        aria-hidden={true}
-        onClick={e => {
-          e.preventDefault();
-          navigate(e.currentTarget.pathname);
-        }}
-      />
+      {rowAnchor && (
+        <a
+          ref={hackARef}
+          style={{ position: "absolute", outline: `1px solid red` }}
+          tabIndex={-1}
+          aria-hidden={true}
+          onWheelCapture={hideLinkAndShowAfterDelay}
+          onClick={e => {
+            e.preventDefault();
+            navigate(e.currentTarget.dataset.reactRouterPath);
+          }}
+        />
+      )}
     </FullScreenContainer>
   );
 };
