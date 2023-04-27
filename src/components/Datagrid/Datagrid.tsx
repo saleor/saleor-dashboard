@@ -1,5 +1,6 @@
 import "@glideapps/glide-data-grid/dist/index.css";
 
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
 import DataEditor, {
   DataEditorProps,
@@ -94,6 +95,7 @@ export interface DatagridProps {
   freezeColumns?: DataEditorProps["freezeColumns"];
   verticalBorder?: DataEditorProps["verticalBorder"];
   columnSelect?: DataEditorProps["columnSelect"];
+  rowAnchor?: (item: Item) => string;
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -120,6 +122,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   onColumnMoved,
   onColumnResize,
   loading,
+  rowAnchor,
   hasRowHover = false,
   ...datagridProps
 }): ReactElement => {
@@ -128,6 +131,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const datagridTheme = useDatagridTheme(readonly, readonly);
   const editor = useRef<DataEditorRef>();
   const customRenderers = useCustomCellRenderers();
+
+  const hackARef = useRef<HTMLAnchorElement>(null);
+  const navigate = useNavigator();
 
   const { scrolledToRight, scroller } = useScrollRight();
 
@@ -227,8 +233,25 @@ export const Datagrid: React.FC<DatagridProps> = ({
       if (hasRowHover) {
         setHoverRow(args.kind !== "cell" ? undefined : args.location[1]);
       }
+
+      // the code below is responsible for adding native <a> element when hovering over rows in the datagrid
+      // this makes it possible to open links in a new tab and copy them
+      if (args.kind !== "cell" || !hackARef.current || !rowAnchor) {
+        return;
+      }
+      const href = rowAnchor(args.location);
+
+      if (!href) {
+        return;
+      }
+
+      hackARef.current.style.left = `${window.scrollX + args.bounds.x}px`;
+      hackARef.current.style.width = `${args.bounds.width}px`;
+      hackARef.current.style.top = `${window.scrollY + args.bounds.y}px`;
+      hackARef.current.style.height = `${args.bounds.height}px`;
+      hackARef.current.href = href;
     },
-    [hasRowHover],
+    [hasRowHover, rowAnchor],
   );
 
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
@@ -486,6 +509,16 @@ export const Datagrid: React.FC<DatagridProps> = ({
         clearTooltip={clearTooltip}
         bounds={tooltip?.bounds}
         title={tooltip?.title}
+      />
+      <a
+        ref={hackARef}
+        style={{ position: "absolute" }}
+        tabIndex={-1}
+        aria-hidden={true}
+        onClick={e => {
+          e.preventDefault();
+          navigate(e.currentTarget.pathname);
+        }}
       />
     </FullScreenContainer>
   );
