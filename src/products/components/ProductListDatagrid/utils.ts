@@ -16,100 +16,14 @@ import { Locale } from "@dashboard/components/Locale";
 import { getMoneyRange } from "@dashboard/components/MoneyRange";
 import { ProductListColumns } from "@dashboard/config";
 import { GridAttributesQuery, ProductListQuery } from "@dashboard/graphql";
-import { commonMessages } from "@dashboard/intl";
 import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
-import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { Item } from "@glideapps/glide-data-grid";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
-import { columnsMessages } from "./messages";
-
-interface GetColumnsProps {
-  intl: IntlShape;
-  sort: Sort<ProductListUrlSortField>;
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
-  gridAttributesFromSettings: ProductListColumns[];
-  activeAttributeSortId: string;
-  emptyColumn: AvailableColumn;
-}
-
-export function getColumns({
-  intl,
-  sort,
-  gridAttributes,
-  gridAttributesFromSettings,
-  activeAttributeSortId,
-  emptyColumn,
-}: GetColumnsProps): AvailableColumn[] {
-  return [
-    emptyColumn,
-    {
-      id: "name",
-      title: intl.formatMessage(commonMessages.product),
-      width: 300,
-      icon: getColumnSortDirectionIcon(sort, ProductListUrlSortField.name),
-    },
-    {
-      id: "productType",
-      title: intl.formatMessage(columnsMessages.type),
-      width: 200,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.productType),
-    },
-    {
-      id: "description",
-      title: intl.formatMessage(commonMessages.description),
-      width: 400,
-    },
-    {
-      id: "availability",
-      title: intl.formatMessage(columnsMessages.availability),
-      width: 250,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.availability),
-    },
-    {
-      id: "date",
-      title: intl.formatMessage(columnsMessages.updatedAt),
-      width: 250,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.date),
-    },
-    {
-      id: "price",
-      title: intl.formatMessage(columnsMessages.price),
-      width: 250,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.price),
-    },
-    ...gridAttributesFromSettings.map(
-      toAttributeColumnData(gridAttributes, activeAttributeSortId, sort),
-    ),
-  ];
-}
-
-export function toAttributeColumnData(
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>,
-  activeAttributeSortId: string,
-  sort: Sort<ProductListUrlSortField>,
-) {
-  return (attribute: ProductListColumns) => {
-    const attributeId = getAttributeIdFromColumnValue(attribute);
-
-    const title =
-      gridAttributes.find(gridAttribute => attributeId === gridAttribute.id)
-        ?.name ?? "";
-
-    return {
-      id: attribute,
-      title,
-      width: 200,
-      icon:
-        attributeId === activeAttributeSortId &&
-        getColumnSortDirectionIcon(sort, ProductListUrlSortField.attribute),
-    };
-  };
-}
 
 export function getColumnSortIconName(
   { sort, asc }: Sort<ProductListUrlSortField>,
