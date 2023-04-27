@@ -131,10 +131,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const classes = useStyles();
   const { themeValues } = useTheme();
   const datagridTheme = useDatagridTheme(readonly, readonly);
-  const editor = useRef<DataEditorRef>();
+  const editor = useRef<DataEditorRef | null>(null);
   const customRenderers = useCustomCellRenderers();
 
-  const hackARef = useRef<HTMLAnchorElement>(null);
+  const hackARef = useRef<HTMLAnchorElement | null>(null);
   const navigate = useNavigator();
 
   const { scrolledToRight, scroller } = useScrollRight();
@@ -212,6 +212,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const handleOnCellEdited = useCallback(
     ([column, row]: Item, newValue: EditableGridCell): void => {
       onCellEdited([column, row], newValue);
+      if (!editor.current) {
+        return;
+      }
+
       editor.current.updateCells(
         range(availableColumns.length).map(offset => ({
           cell: [column + offset, row],
@@ -227,7 +231,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
         onRowClick(item);
       }
       handleRowHover(args);
-      hackARef.current.click();
+      if (hackARef.current) {
+        hackARef.current.click();
+      }
     },
     [onRowClick],
   );
@@ -281,7 +287,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           themeValues.colors.background.interactiveNeutralSecondaryHovering,
         bgCellMedium:
           themeValues.colors.background.interactiveNeutralSecondaryHovering,
-        accentLight: undefined,
+        accentLight: undefined as string | undefined,
       };
 
       if (readonly) {
@@ -327,6 +333,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
         clearTooltip();
       }
 
+      if (!onColumnResize) {
+        return;
+      }
       onColumnResize(column, newSize);
     },
     [clearTooltip, onColumnResize, tooltip],
@@ -337,6 +346,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
       if (tooltip) {
         clearTooltip();
       }
+      if (!onColumnMoved) {
+        return;
+      }
       onColumnMoved(startIndex, endIndex);
     },
     [clearTooltip, onColumnMoved, tooltip],
@@ -344,7 +356,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const selectionActionsComponent = useMemo(
     () =>
-      selection?.rows.length > 0
+      selection?.rows && selection?.rows.length > 0
         ? selectionActions(Array.from(selection.rows), {
             removeRows: handleRemoveRows,
           })
@@ -358,10 +370,17 @@ export const Datagrid: React.FC<DatagridProps> = ({
     (() => {
       let timer: ReturnType<typeof setTimeout> | null = null;
       return () => {
-        clearTimeout(timer);
-        hackARef.current.style.display = "none";
+        if (timer) {
+          clearTimeout(timer);
+        }
+
+        if (hackARef.current) {
+          hackARef.current.style.display = "none";
+        }
         timer = setTimeout(() => {
-          hackARef.current.style.display = "block";
+          if (hackARef.current) {
+            hackARef.current.style.display = "block";
+          }
         }, 100);
       };
     })(),
@@ -409,7 +428,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
         <CardContent classes={{ root: classes.cardContentRoot }}>
           {rowsTotal > 0 ? (
             <>
-              {selection?.rows.length > 0 && (
+              {selection?.rows && selection?.rows.length > 0 && (
                 <div className={classes.actionBtnBar}>
                   {selectionActionsComponent}
                 </div>
@@ -541,7 +560,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
           onWheelCapture={hideLinkAndShowAfterDelay}
           onClick={e => {
             e.preventDefault();
-            navigate(e.currentTarget.dataset.reactRouterPath);
+            if (e.currentTarget.dataset.reactRouterPath) {
+              navigate(e.currentTarget.dataset.reactRouterPath);
+            }
           }}
         />
       )}
