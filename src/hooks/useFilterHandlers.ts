@@ -107,7 +107,7 @@ export const useFilterHandlers = <
         return false;
       }
 
-      if (!hasQuery && prevAsc !== null) {
+      if (prevAsc !== null) {
         return true;
       }
 
