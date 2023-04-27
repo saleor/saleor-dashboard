@@ -66,6 +66,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
       <CardTitle
         toolbar={
           <Pill
+            key={payment.status}
             label={payment.localized}
             color={payment.status}
             className={classes.paymentStatus}

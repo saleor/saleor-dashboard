@@ -9,15 +9,19 @@ import Link from "../Link";
 const useStyles = makeStyles(
   theme => ({
     container: {
-      alignItems: "center",
+      alignItems: "start",
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
       width: "100%",
     },
+    title: {
+      wordBreak: "break-all",
+    },
     date: {
       color: theme.typography.caption.color,
       paddingLeft: 24,
+      whiteSpace: "nowrap",
     },
     elementsContainer: {
       alignItems: "center",
@@ -60,7 +64,7 @@ export const TimelineEventHeader: React.FC<
 
   return (
     <div className={classes.container}>
-      {title && <Typography>{title}</Typography>}
+      {title && <Typography className={classes.title}>{title}</Typography>}
       {titleElements && (
         <div className={classes.elementsContainer}>
           {titleElements.filter(Boolean).map(({ text, link }) => {
