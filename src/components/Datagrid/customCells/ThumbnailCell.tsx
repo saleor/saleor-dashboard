@@ -1,7 +1,8 @@
 import {
   CustomCell,
-  CustomCellRenderer,
+  CustomRenderer,
   getMiddleCenterBias,
+  GridCellKind,
   TextCellEntry,
 } from "@glideapps/glide-data-grid";
 import React from "react";
@@ -14,7 +15,8 @@ export interface ThumbnailCellProps {
 
 export type ThumbnailCell = CustomCell<ThumbnailCellProps>;
 
-export const thumbnailCellRenderer: CustomCellRenderer<ThumbnailCell> = {
+export const thumbnailCellRenderer: CustomRenderer<ThumbnailCell> = {
+  kind: GridCellKind.Custom,
   isMatch: (cell: CustomCell): cell is ThumbnailCell =>
     (cell.data as any).kind === "thumbnail-cell",
   draw: (args, cell) => {

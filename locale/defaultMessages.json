@@ -1191,6 +1191,9 @@
     "context": "unassign collection from sale and save, button",
     "string": "Unassign and save"
   },
+  "6SL46U": {
+    "string": "by {author}"
+  },
   "6WRFp2": {
     "context": "order history message",
     "string": "Note was added to the order"
@@ -3311,6 +3314,9 @@
     "context": "WarehouseSettings pickup title",
     "string": "Pickup"
   },
+  "MJ2jZQ": {
+    "string": "Total"
+  },
   "MJBAqv": {
     "context": "column title used by/customer",
     "string": "Used by"
@@ -3518,6 +3524,9 @@
   "NlSJMM": {
     "context": "channels section name",
     "string": "Channels"
+  },
+  "NmK6zy": {
+    "string": "Payment"
   },
   "NnhrxZ": {
     "context": "amount of sent refund for transaction",
@@ -4745,10 +4754,6 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}"
   },
-  "WRkCFt": {
-    "context": "tab name",
-    "string": "All Orders"
-  },
   "WS4ov0": {
     "context": "notifier message",
     "string": "Note was added sucessfully"
@@ -4918,6 +4923,9 @@
   "XPiJex": {
     "context": "Transaction void button - return preauthorized amount to client",
     "string": "Void"
+  },
+  "XPruqs": {
+    "string": "Order"
   },
   "XQBVEJ": {
     "context": "order return error description when cannot refund",
@@ -6720,6 +6728,9 @@
   "lLwtgs": {
     "string": "Variants are disabled in this product type"
   },
+  "lNZuWl": {
+    "string": "All orders"
+  },
   "lOMgms": {
     "context": "fulfillment group",
     "string": "Fulfilled from:"
@@ -6791,6 +6802,9 @@
   "lw9WIk": {
     "context": "deleted multiple attributes",
     "string": "Attributes successfully delete"
+  },
+  "lwjzVj": {
+    "string": "Edit order"
   },
   "lzdvwp": {
     "context": "field is optional",
@@ -7955,6 +7969,9 @@
   },
   "un+VWt": {
     "string": "Search products"
+  },
+  "uoKAmI": {
+    "string": "Add new order"
   },
   "usSkzP": {
     "context": "navigator order mode description",

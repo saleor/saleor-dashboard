@@ -1,7 +1,8 @@
 import {
   CustomCell,
-  CustomCellRenderer,
+  CustomRenderer,
   getMiddleCenterBias,
+  GridCellKind,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
 import React from "react";
@@ -11,7 +12,7 @@ import { usePriceField } from "../../PriceField/usePriceField";
 interface MoneyCellProps {
   readonly kind: "money-cell";
   readonly currency: string;
-  readonly value: number | null;
+  readonly value: number | string | null;
 }
 
 export type MoneyCell = CustomCell<MoneyCellProps>;
@@ -45,7 +46,8 @@ const MoneyCellEdit: ReturnType<ProvideEditorCallback<MoneyCell>> = ({
   );
 };
 
-export const moneyCellRenderer = (): CustomCellRenderer<MoneyCell> => ({
+export const moneyCellRenderer = (): CustomRenderer<MoneyCell> => ({
+  kind: GridCellKind.Custom,
   isMatch: (c): c is MoneyCell => (c.data as any).kind === "money-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;

@@ -1,5 +1,6 @@
 import "@glideapps/glide-data-grid/dist/index.css";
 
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
 import DataEditor, {
   DataEditorProps,
@@ -13,8 +14,8 @@ import DataEditor, {
   Item,
 } from "@glideapps/glide-data-grid";
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { Box, useTheme } from "@saleor/macaw-ui/next";
+import { Card, CardContent, CircularProgress } from "@material-ui/core";
+import { Box, Text, useTheme } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import range from "lodash/range";
 import React, {
@@ -35,7 +36,7 @@ import { FullScreenContainer } from "./components/FullScreenContainer";
 import { Header } from "./components/Header";
 import { RowActions } from "./components/RowActions";
 import { TooltipContainer } from "./components/TooltipContainer";
-import useCells from "./customCells/useCells";
+import { useCustomCellRenderers } from "./customCells/useCustomCellRenderers";
 import { headerIcons } from "./headerIcons";
 import useDatagridChange, {
   DatagridChange,
@@ -75,6 +76,7 @@ export interface DatagridProps {
   rows: number;
   title?: string;
   fullScreenTitle?: string;
+  loading?: boolean;
   selectionActions: (
     selection: number[],
     actions: MenuItemsActions,
@@ -93,6 +95,7 @@ export interface DatagridProps {
   freezeColumns?: DataEditorProps["freezeColumns"];
   verticalBorder?: DataEditorProps["verticalBorder"];
   columnSelect?: DataEditorProps["columnSelect"];
+  rowAnchor?: (item: Item) => string;
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -118,14 +121,20 @@ export const Datagrid: React.FC<DatagridProps> = ({
   columnSelect = "none",
   onColumnMoved,
   onColumnResize,
+  loading,
+  rowAnchor,
   hasRowHover = false,
   ...datagridProps
 }): ReactElement => {
   const classes = useStyles();
   const { themeValues } = useTheme();
-  const datagridTheme = useDatagridTheme(readonly);
+  const datagridTheme = useDatagridTheme(readonly, readonly);
   const editor = useRef<DataEditorRef>();
-  const cellProps = useCells();
+  const customRenderers = useCustomCellRenderers();
+
+  const hackARef = useRef<HTMLAnchorElement>(null);
+  const navigate = useNavigator();
+
   const { scrolledToRight, scroller } = useScrollRight();
 
   const defualtColumnPickerProps = getDefultColumnPickerProps(
@@ -224,8 +233,25 @@ export const Datagrid: React.FC<DatagridProps> = ({
       if (hasRowHover) {
         setHoverRow(args.kind !== "cell" ? undefined : args.location[1]);
       }
+
+      // the code below is responsible for adding native <a> element when hovering over rows in the datagrid
+      // this makes it possible to open links in a new tab and copy them
+      if (args.kind !== "cell" || !hackARef.current || !rowAnchor) {
+        return;
+      }
+      const href = rowAnchor(args.location);
+
+      if (!href) {
+        return;
+      }
+
+      hackARef.current.style.left = `${window.scrollX + args.bounds.x}px`;
+      hackARef.current.style.width = `${args.bounds.width}px`;
+      hackARef.current.style.top = `${window.scrollY + args.bounds.y}px`;
+      hackARef.current.style.height = `${args.bounds.height}px`;
+      hackARef.current.href = href;
     },
-    [hasRowHover],
+    [hasRowHover, rowAnchor],
   );
 
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
@@ -245,8 +271,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
       }
 
       const overrideTheme = {
-        bgCell: themeValues.colors.background.surfaceNeutralHighlight,
-        bgCellMedium: themeValues.colors.background.surfaceNeutralHighlight,
+        bgCell:
+          themeValues.colors.background.interactiveNeutralSecondaryHovering,
+        bgCellMedium:
+          themeValues.colors.background.interactiveNeutralSecondaryHovering,
         accentLight: undefined,
       };
 
@@ -318,6 +346,14 @@ export const Datagrid: React.FC<DatagridProps> = ({
     [selection, selectionActions, handleRemoveRows],
   );
 
+  if (loading) {
+    return (
+      <Box display="flex" justifyContent="center" marginY={12}>
+        <CircularProgress />
+      </Box>
+    );
+  }
+
   return (
     <FullScreenContainer
       open={isOpen}
@@ -366,8 +402,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   margin="auto"
                 />
                 <DataEditor
-                  {...cellProps}
                   {...datagridProps}
+                  customRenderers={customRenderers}
                   verticalBorder={verticalBorder}
                   headerIcons={headerIcons}
                   theme={datagridTheme}
@@ -393,7 +429,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   getRowThemeOverride={handleGetThemeOverride}
                   gridSelection={selection}
                   rowHeight={cellHeight}
-                  headerHeight={cellHeight + 16}
+                  headerHeight={cellHeight}
                   ref={editor}
                   onPaste
                   rightElementProps={{
@@ -463,13 +499,8 @@ export const Datagrid: React.FC<DatagridProps> = ({
               </div>
             </>
           ) : (
-            <Box
-              borderTopStyle="solid"
-              borderTopWidth={1}
-              borderColor="neutralHighlight"
-              paddingY={9}
-            >
-              <Typography align="center">{emptyText}</Typography>
+            <Box padding={9} textAlign="center">
+              <Text size="small">{emptyText}</Text>
             </Box>
           )}
         </CardContent>
@@ -478,6 +509,16 @@ export const Datagrid: React.FC<DatagridProps> = ({
         clearTooltip={clearTooltip}
         bounds={tooltip?.bounds}
         title={tooltip?.title}
+      />
+      <a
+        ref={hackARef}
+        style={{ position: "absolute" }}
+        tabIndex={-1}
+        aria-hidden={true}
+        onClick={e => {
+          e.preventDefault();
+          navigate(e.currentTarget.pathname);
+        }}
       />
     </FullScreenContainer>
   );
