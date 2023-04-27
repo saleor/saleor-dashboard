@@ -96,7 +96,8 @@ export const EventItem: React.FC<EventItemProps> = ({
   const classes = useStyles();
   const { type, status } = mapTransactionEvent(event);
 
-  const isHovered = event.pspReference === hoveredPspReference;
+  const isHovered =
+    event.pspReference && event.pspReference === hoveredPspReference;
 
   return (
     <TableRow
