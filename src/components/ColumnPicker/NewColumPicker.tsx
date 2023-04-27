@@ -49,7 +49,11 @@ export const NewColumPicker: React.FC<NewColumPickerProps> = props => {
         <Button variant="tertiary" icon={<TableEditIcon />} />
       </Popover.Trigger>
       <Popover.Content sideOffset={4}>
-        <Box display="grid" gridTemplateColumns={expanded ? 2 : 1}>
+        <Box
+          display="grid"
+          gridTemplateColumns={expanded ? 2 : 1}
+          overflow="hidden"
+        >
           {expanded && (
             <NewColumnPickerCategories
               columnCategories={columnCategories}
