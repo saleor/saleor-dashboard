@@ -30,7 +30,7 @@ import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
-import { columnsMessages } from "./messages";
+import { categoryMetaGroups, columnsMessages } from "./messages";
 
 export const productListStaticColumnAdapter = (intl, emptyColumn, sort) =>
   [
@@ -85,19 +85,22 @@ export const productListDynamicColumnAdapter = ({
   hasNextPage,
   hasPreviousPage,
   totalCount,
+  intl,
 }) => [
   {
-    name: "Attributes",
+    name: intl.formatMessage(categoryMetaGroups.attribute),
     prefix: "attribute",
     availableNodes: parseAttributesColumns(
       attributesData,
       activeAttributeSortId,
       sort,
+      intl,
     ),
     selectedNodes: parseAttributesColumns(
       gridAttributesData,
       activeAttributeSortId,
       sort,
+      intl,
     ),
     onSearch,
     onFetchMore,
@@ -113,11 +116,12 @@ export const parseAttributesColumns = (
   >,
   activeAttributeSortId: string,
   sort: Sort<ProductListUrlSortField>,
+  intl: IntlShape,
 ) =>
   attributes.map(attribute => ({
     id: `attribute:${attribute.id}`,
     title: attribute.name,
-    metaGroup: "Attribute",
+    metaGroup: intl.formatMessage(categoryMetaGroups.attribute),
     width: 200,
     icon:
       attribute.id === activeAttributeSortId &&

@@ -1,17 +1,18 @@
 import { CircularProgress } from "@material-ui/core";
 import {
-  ArrowLeftIcon,
   Box,
   Button,
   Checkbox,
-  CloseIcon,
   List,
   SearchInput,
   Text,
 } from "@saleor/macaw-ui/next";
 import React from "react";
+import { FormattedMessage, useIntl } from "react-intl";
 
+import messages from "./messages";
 import { ColumnCategory } from "./useColumns";
+import { getExitIcon, getExitOnClick } from "./utils";
 
 export interface NewColumnPickerCategoriesProps {
   columnCategories: ColumnCategory[];
@@ -19,33 +20,6 @@ export interface NewColumnPickerCategoriesProps {
   onClose: () => void;
   onDynamicColumnSelect: (columns: string[]) => void;
 }
-
-const getExitIcon = (columnCategories, selectedCategory) => {
-  if (columnCategories.length === 1) {
-    return <CloseIcon />;
-  }
-  if (selectedCategory) {
-    return <ArrowLeftIcon />;
-  } else {
-    return <CloseIcon />;
-  }
-};
-
-const getExitOnClick = ({
-  columnCategories,
-  selectedCategory,
-  setSelectedCategory,
-  onClose,
-}) => {
-  if (columnCategories.length === 1) {
-    return onClose;
-  }
-  if (selectedCategory) {
-    return () => setSelectedCategory(undefined);
-  } else {
-    return onClose;
-  }
-};
 
 export const NewColumnPickerCategories: React.FC<
   NewColumnPickerCategoriesProps
@@ -55,6 +29,8 @@ export const NewColumnPickerCategories: React.FC<
   onDynamicColumnSelect,
   columnPickerSettings,
 }) => {
+  const intl = useIntl();
+
   const [selectedCategory, setSelectedCategory] = React.useState<string>();
 
   const currentCategory = React.useMemo(
@@ -93,14 +69,16 @@ export const NewColumnPickerCategories: React.FC<
             onClose,
           })}
         />
-        <Text size="small">{selectedCategory ?? "Categories"}</Text>
+        <Text size="small">
+          {selectedCategory ?? <FormattedMessage {...messages.categories} />}
+        </Text>
       </Box>
       {selectedCategory ? (
         <>
           <Box paddingX={7} style={{ boxSizing: "border-box" }}>
             <SearchInput
               size="small"
-              placeholder="Search for columns"
+              placeholder={intl.formatMessage(messages.searchForColumns)}
               onChange={e => currentCategory.onSearch(e.target.value ?? "")}
             />
           </Box>

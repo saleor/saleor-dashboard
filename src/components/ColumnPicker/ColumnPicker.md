@@ -11,7 +11,7 @@ In datagrid views various types of columns are available. We can split them into
 
 For identification, every column has an ID. It is a string that is unique within the view. For example, `id` column has ID `id`, `name` column has ID `name`.
 
-For custom columns, the naming convetion is as follows:
+For dynamic columns, the naming convetion is as follows:
 
 ```
 column_name:column_id
@@ -25,15 +25,15 @@ attribute:QXR0cmlidXRlOjIx
 `useColumns` is a custom hook that is used as single source of truth for both Datagrid and Column Picker. It returns an object with the following properties:
 - visible columns - array of visible columns for the datagrid
 - static columns - array of static columns for the column picker
-- custom columns - array of custom columns for the column picker
+- dynamic columns - array of dynamic columns for the column picker
 - column categories - array of column categories, which is abstraction for dynamic column. For example attributes is a column category, whereas Flavor attribute is an actual column value. This object has all API-related properties, like search handler, fetch more props, etc.
 - selected columns - array of column IDs which are selected in the column picker. It is saved in local storage
-- custom column settings - array of column IDs which are selected in the left section of the column picker. It is saved in local storage.
+- dynamic column settings - array of column IDs which are selected in the left section of the column picker. It is saved in local storage.
 - handlers:
   - column resize handler (for datagrid)
   - column reorder handler (for datagrid)
   - column visibility handler (for column picker)
-  - custom column selection handler (for column picker)
+  - dynamic column selection handler (for column picker)
 
 In order to use this hook, you need to provide four things:
 - `staticColumns` - array of static columns in datagrid-ready format (`AvailableColumns[]`)
@@ -44,7 +44,7 @@ In order to use this hook, you need to provide four things:
 ## Adapting new views
 
 ### Column picker settings
-Firstly, in the view file, we need to provide two settings object, one for the selected columns and one for the custom column settings. We should use `useColumnPickerSettings` and `useListSettings` hook for that.
+Firstly, in the view file, we need to provide two settings object, one for the selected columns and one for the dynamic column settings. We should use `useColumnPickerSettings` and `useListSettings` hook for that.
 
 The reason why column picker settings object needs to be in the view file and cannot be integrated into internal logic of useColumns is because we use column picker settings in the query. For example, we need to know which columns are selected in order to fetch the correct data from the API.
  

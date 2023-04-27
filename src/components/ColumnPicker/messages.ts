@@ -26,6 +26,16 @@ const messages = defineMessages({
     defaultMessage: "Custom",
     description: "column picker section header",
   },
+  categories: {
+    id: "4ELCCk",
+    defaultMessage: "Categories",
+    description: "column picker section default header",
+  },
+  searchForColumns: {
+    id: "Xsh2Pa",
+    defaultMessage: "Search for columns",
+    description: "column picker search input placeholder",
+  },
 });
 
 export default messages;

@@ -1,0 +1,43 @@
+import { ArrowLeftIcon, CloseIcon } from "@saleor/macaw-ui/next";
+import React from "react";
+
+import { AvailableColumn } from "../Datagrid/types";
+import { ColumnCategory } from "./useColumns";
+
+export const filterEmptyColumn = (column: AvailableColumn) =>
+  column.title !== "";
+
+export const getExitIcon = (
+  columnCategories: ColumnCategory[],
+  selectedCategory: string,
+) => {
+  if (columnCategories.length === 1) {
+    return <CloseIcon />;
+  }
+  if (selectedCategory) {
+    return <ArrowLeftIcon />;
+  } else {
+    return <CloseIcon />;
+  }
+};
+
+export const getExitOnClick = ({
+  columnCategories,
+  selectedCategory,
+  setSelectedCategory,
+  onClose,
+}: {
+  columnCategories: ColumnCategory[];
+  selectedCategory: string;
+  setSelectedCategory: (category: string | undefined) => void;
+  onClose: () => void;
+}) => {
+  if (columnCategories.length === 1) {
+    return onClose;
+  }
+  if (selectedCategory) {
+    return () => setSelectedCategory(undefined);
+  } else {
+    return onClose;
+  }
+};

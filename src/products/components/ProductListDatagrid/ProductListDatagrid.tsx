@@ -122,6 +122,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           ?.hasPreviousPage ?? false,
       totalCount:
         availableInGridAttributesOpts.result?.data?.availableInGrid?.totalCount,
+      intl,
     }),
     selectedColumns: settings.columns,
     onSave: handleColumnChange,
