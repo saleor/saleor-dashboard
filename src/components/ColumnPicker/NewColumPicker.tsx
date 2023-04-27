@@ -13,7 +13,8 @@ import { FormattedMessage } from "react-intl";
 import { AvailableColumn } from "../Datagrid/types";
 import messages from "./messages";
 import { NewColumnPickerCategories } from "./NewColumPickerCategories";
-import { ColumnCategory, filterEmptyColumn } from "./utils";
+import { ColumnCategory } from "./useColumns";
+import { filterEmptyColumn } from "./utils";
 
 export interface NewColumPickerProps {
   staticColumns: AvailableColumn[];

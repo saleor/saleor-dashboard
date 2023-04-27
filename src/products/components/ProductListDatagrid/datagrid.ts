@@ -32,7 +32,7 @@ import { IntlShape } from "react-intl";
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
 import { columnsMessages } from "./messages";
 
-export const parseStaticColumnsForProductListView = (intl, emptyColumn, sort) =>
+export const productListStaticColumnAdapter = (intl, emptyColumn, sort) =>
   [
     emptyColumn,
     {
@@ -75,7 +75,7 @@ export const parseStaticColumnsForProductListView = (intl, emptyColumn, sort) =>
     icon: getColumnSortDirectionIcon(sort, column.id),
   }));
 
-export const parseCustomColumnsForProductListView = ({
+export const productListCustomColumnAdapter = ({
   attributesData,
   gridAttributesData,
   activeAttributeSortId,

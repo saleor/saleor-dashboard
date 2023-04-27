@@ -1,5 +1,5 @@
 import { NewColumPicker } from "@dashboard/components/ColumnPicker/NewColumPicker";
-import { useColumns } from "@dashboard/components/ColumnPicker/utils";
+import { useColumns } from "@dashboard/components/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,

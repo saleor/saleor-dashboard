@@ -1,9 +1,5 @@
 import { NewColumPicker } from "@dashboard/components/ColumnPicker/NewColumPicker";
-import {
-  parseCustomColumnsForProductListView,
-  parseStaticColumnsForProductListView,
-  useColumns,
-} from "@dashboard/components/ColumnPicker/utils";
+import { useColumns } from "@dashboard/components/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
@@ -33,12 +29,14 @@ import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { isAttributeColumnValue } from "../ProductListPage/utils";
-import { messages } from "./messages";
 import {
   createGetCellContent,
   getColumnMetadata,
   getProductRowsLength,
-} from "./utils";
+  productListCustomColumnAdapter,
+  productListStaticColumnAdapter,
+} from "./datagrid";
+import { messages } from "./messages";
 
 interface ProductListDatagridProps
   extends ListProps<ProductListColumns>,
@@ -105,12 +103,8 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     selectedColumns,
     columnCategories,
   } = useColumns({
-    staticColumns: parseStaticColumnsForProductListView(
-      intl,
-      emptyColumn,
-      sort,
-    ),
-    columnCategories: parseCustomColumnsForProductListView({
+    staticColumns: productListStaticColumnAdapter(intl, emptyColumn, sort),
+    columnCategories: productListCustomColumnAdapter({
       attributesData:
         mapEdgesToItems(
           availableInGridAttributesOpts.result?.data?.availableInGrid,

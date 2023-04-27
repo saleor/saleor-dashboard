@@ -11,7 +11,7 @@ import {
 } from "@saleor/macaw-ui/next";
 import React from "react";
 
-import { ColumnCategory } from "./utils";
+import { ColumnCategory } from "./useColumns";
 
 export interface NewColumnPickerCategoriesProps {
   columnCategories: ColumnCategory[];
