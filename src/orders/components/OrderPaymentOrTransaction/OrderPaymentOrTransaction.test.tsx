@@ -1,14 +1,16 @@
-import { useFlags } from "@dashboard/hooks/useFlags";
+import { MarkAsPaidStrategyEnum } from "@dashboard/graphql";
 import {
-  order,
-  orderWithTransactions,
+  order as orderFixture,
+  payments,
   shop,
-  shopWithTransactions,
 } from "@dashboard/orders/fixtures";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 
-import { OrderPaymentOrTransaction } from "./OrderPaymentOrTransaction";
+import {
+  OrderPaymentOrTransaction,
+  OrderPaymentOrTransactionProps,
+} from "./OrderPaymentOrTransaction";
 
 jest.mock("react-intl", () => ({
   useIntl: jest.fn(() => ({
@@ -44,51 +46,76 @@ jest.mock("@saleor/macaw-ui/next", () => ({
   },
 }));
 
-jest.mock("@dashboard/hooks/useFlags", () => ({
-  useFlags: jest.fn(() => ({ orderTransactions: { enabled: false } })),
-}));
-
 jest.mock("react-router-dom", () => ({
   Link: jest.fn(({ to, ...props }) => <a href={to} {...props} />),
 }));
 
-const mockedUseFlags = useFlags as jest.MockedFunction<typeof useFlags>;
-
 describe("OrderPaymentOrTransaction", () => {
-  it("renders OrderPayment when transactions are disabled", () => {
+  const order = orderFixture(undefined);
+  const sharedProps = {
+    order,
+    shop,
+    onMarkAsPaid: () => undefined,
+    onPaymentRefund: () => undefined,
+    onAddManualTransaction: () => undefined,
+    onPaymentCapture: () => undefined,
+    onTransactionAction: () => undefined,
+    onPaymentVoid: () => undefined,
+  } as OrderPaymentOrTransactionProps;
+
+  it("renders OrderPayment when transactions are disabled in channel", () => {
     render(
       <OrderPaymentOrTransaction
-        order={order(undefined)}
-        shop={shop}
-        onMarkAsPaid={() => undefined}
-        onPaymentRefund={() => undefined}
-        onAddManualTransaction={() => undefined}
-        onPaymentCapture={() => undefined}
-        onTransactionAction={() => undefined}
-        onPaymentVoid={() => undefined}
+        {...sharedProps}
+        order={{
+          ...order,
+          transactions: [],
+          payments: [],
+          channel: {
+            ...order.channel,
+            orderSettings: {
+              markAsPaidStrategy: MarkAsPaidStrategyEnum.PAYMENT_FLOW,
+              __typename: "OrderSettings",
+            },
+          },
+        }}
       />,
     );
 
     expect(screen.queryByTestId("OrderPayment")).toBeInTheDocument();
   });
 
-  it("renders OrderTransaction when transactions are enabled", () => {
-    mockedUseFlags.mockImplementationOnce(() => ({
-      orderTransactions: { enabled: true, value: "true" },
-    }));
-
+  it("renders OrderPayment when payments are used in order", () => {
     render(
       <OrderPaymentOrTransaction
-        order={orderWithTransactions}
-        shop={shopWithTransactions}
-        onMarkAsPaid={() => undefined}
-        onPaymentRefund={() => undefined}
-        onAddManualTransaction={() => undefined}
-        onPaymentCapture={() => undefined}
-        onTransactionAction={() => undefined}
-        onPaymentVoid={() => undefined}
+        {...sharedProps}
+        order={{
+          ...order,
+          transactions: [],
+          payments: [payments.pending],
+        }}
       />,
     );
+
+    expect(screen.queryByTestId("OrderPayment")).toBeInTheDocument();
+  });
+
+  it("renders OrderTransaction when transactions are enabled in channel", () => {
+    render(
+      <OrderPaymentOrTransaction
+        {...sharedProps}
+        order={{
+          ...order,
+          transactions: [],
+        }}
+      />,
+    );
+
+    expect(screen.queryByTestId("OrderSummaryCard")).toBeInTheDocument();
+  });
+
+  it("renders OrderTransaction when transactions are used in order", () => {
+    render(<OrderPaymentOrTransaction {...sharedProps} />);
 
     expect(screen.queryByTestId("OrderSummaryCard")).toBeInTheDocument();
   });

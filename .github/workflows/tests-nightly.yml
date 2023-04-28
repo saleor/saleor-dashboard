@@ -95,7 +95,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NODE_OPTIONS: "--max_old_space_size=4096"
-      GREP_TAGS: ${{ github.event.inputs.tags || "@allEnv"}}
+      GREP_TAGS: ${{ github.event.inputs.tags || '@allEnv'}}
     outputs:
       status: ${{ steps.cypress.outcome }}
     container: cypress/browsers:node18.12.0-chrome106-ff106
@@ -167,6 +167,7 @@ jobs:
     outputs:
       url: ${{ steps.get-environment-variables.outputs.url }}
       is_old_version: ${{ steps.get-environment-variables.outputs.IS_OLD_VERSION }}
+      branch: ${{ steps.get-environment-variables.outputs.branch }}
     env:
       REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}

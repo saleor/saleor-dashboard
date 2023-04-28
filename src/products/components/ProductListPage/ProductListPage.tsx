@@ -296,9 +296,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             settings={settings}
             selectedChannelId={selectedChannelId}
             onUpdateListSettings={onUpdateListSettings}
-            onRowClick={id => {
-              navigate(productUrl(id));
-            }}
+            rowAnchor={productUrl}
           />
         ) : (
           <ProductListTiles
