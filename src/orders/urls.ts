@@ -1,4 +1,4 @@
-import { TransactionActionEnum } from "@dashboard/graphql/transactions";
+import { TransactionActionEnum } from "@dashboard/graphql";
 import { stringifyQs } from "@dashboard/utils/urls";
 import urlJoin from "url-join";
 

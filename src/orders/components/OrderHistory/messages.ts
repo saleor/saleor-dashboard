@@ -1,5 +1,8 @@
-import { OrderEventsEmailsEnum } from "@dashboard/graphql";
-import { OrderEventFragment, OrderEventsEnum } from "@dashboard/orders/types";
+import {
+  OrderEventFragment,
+  OrderEventsEmailsEnum,
+  OrderEventsEnum,
+} from "@dashboard/graphql";
 import { IntlShape } from "react-intl";
 
 const getUserOrApp = (event: OrderEventFragment) => {

@@ -1,19 +1,19 @@
 import {
   FulfillmentStatus,
   GiftCardEventsEnum,
+  OrderDetailsFragment,
   OrderStatus,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
 import {
   grantedRefunds,
+  order,
   ORDER_AMOUNT,
-  orderWithTransactions as order,
   payments,
   prepareMoney,
-  shopWithTransactions,
+  shop,
   transactions,
 } from "@dashboard/orders/fixtures";
-import { OrderBothTypes } from "@dashboard/orders/types";
 import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
@@ -43,9 +43,9 @@ const props: Omit<OrderDetailsPageProps, "classes"> = {
   onShippingAddressEdit: undefined,
   onSubmit: () => undefined,
   onAddManualTransaction: () => undefined,
-  order,
+  order: order(null),
   errors: [],
-  shop: shopWithTransactions,
+  shop,
   saveButtonBarState: "default",
 };
 
@@ -304,7 +304,7 @@ storiesOf("Views / Orders / Order details / transactions", module)
               ],
             },
           ],
-        } as OrderBothTypes
+        } as OrderDetailsFragment
       }
     />
   ));

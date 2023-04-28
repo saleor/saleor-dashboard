@@ -1,7 +1,7 @@
 import { DateTime } from "@dashboard/components/Date";
 import { Pill } from "@dashboard/components/Pill";
+import { OrderDetailsFragment } from "@dashboard/graphql";
 import { transformOrderStatus } from "@dashboard/misc";
-import { OrderSharedType } from "@dashboard/orders/types";
 import { Typography } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -10,7 +10,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 export interface TitleProps {
-  order?: OrderSharedType;
+  order?: OrderDetailsFragment;
 }
 
 const useStyles = makeStyles(

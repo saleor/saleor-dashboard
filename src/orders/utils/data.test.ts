@@ -9,7 +9,7 @@ import {
 import { FormsetData } from "@dashboard/hooks/useFormset";
 
 import { LineItemData } from "../components/OrderReturnPage/form";
-import { OrderRefundSharedType, OrderSharedType } from "../types";
+import { OrderRefundSharedType } from "../types";
 import {
   getAllFulfillmentLinesPriceSum,
   getPreviouslyRefundedPrice,
@@ -1543,7 +1543,7 @@ describe("Get the total value of all replaced products", () => {
             __typename: "Fulfillment",
           },
         ],
-      } as unknown as OrderSharedType,
+      } as unknown as OrderDetailsFragment,
       {
         itemsToBeReplaced,
         unfulfilledItemsQuantities,
@@ -2342,7 +2342,7 @@ describe("Get the total value of all selected products", () => {
             __typename: "Fulfillment",
           },
         ],
-      } as unknown as OrderSharedType,
+      } as unknown as OrderDetailsFragment,
       {
         itemsToBeReplaced,
         waitingItemsQuantities,

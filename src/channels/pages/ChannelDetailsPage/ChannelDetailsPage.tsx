@@ -21,10 +21,7 @@ import {
   SearchWarehousesQuery,
   StockSettingsInput,
 } from "@dashboard/graphql";
-import {
-  ChannelOrderSettingsFragment,
-  MarkAsPaidStrategyEnum,
-} from "@dashboard/graphql/types.transactions.generated";
+import { MarkAsPaidStrategyEnum } from "@dashboard/graphql/types.generated";
 import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -71,7 +68,6 @@ export interface ChannelDetailsPageProps<
   updateChannelStatus?: () => void;
   searchShippingZones: (query: string) => void;
   searchWarehouses: (query: string) => void;
-  orderSettings: ChannelOrderSettingsFragment["orderSettings"];
 }
 
 const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
@@ -95,7 +91,6 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
   channelWarehouses = [],
   allWarehousesCount,
   countries,
-  orderSettings,
 }: ChannelDetailsPageProps<TErrors>) {
   const navigate = useNavigator();
   const intl = useIntl();
@@ -110,7 +105,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
 
   const countryChoices = mapCountriesToChoices(countries || []);
 
-  const { defaultCountry, stockSettings, ...formData } =
+  const { defaultCountry, stockSettings, orderSettings, ...formData } =
     channel || ({} as ChannelDetailsFragment);
   const initialStockSettings: StockSettingsInput = {
     allocationStrategy: AllocationStrategyEnum.PRIORITIZE_SORTING_ORDER,
@@ -129,7 +124,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     ...initialStockSettings,
     shippingZonesToDisplay: channelShippingZones,
     warehousesToDisplay: channelWarehouses,
-    markAsPaidStrategy: orderSettings.markAsPaidStrategy,
+    markAsPaidStrategy: orderSettings?.markAsPaidStrategy,
   };
 
   const getFilteredShippingZonesChoices = (
@@ -227,7 +222,6 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
             <DetailPageLayout.Content>
               <ChannelForm
                 data={data}
-                orderSettings={orderSettings}
                 disabled={disabled}
                 currencyCodes={currencyCodes}
                 countries={countryChoices}

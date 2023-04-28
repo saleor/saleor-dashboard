@@ -1,8 +1,5 @@
 import CardTitle from "@dashboard/components/CardTitle";
-import {
-  OrderDetailsFragment,
-  OrderDiscountType,
-} from "@dashboard/graphql/transactions";
+import { OrderDetailsFragment, OrderDiscountType } from "@dashboard/graphql";
 import { Card, CardContent } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";

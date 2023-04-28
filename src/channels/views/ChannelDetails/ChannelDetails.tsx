@@ -14,13 +14,7 @@ import {
   useChannelsQuery,
   useChannelUpdateMutation,
 } from "@dashboard/graphql";
-import {
-  useChannelOrderSettingsQuery,
-  useChannelOrderSettingsUpdateMutation,
-} from "@dashboard/graphql/hooks.transactions.generated";
-import { MarkAsPaidStrategyEnum } from "@dashboard/graphql/types.transactions.generated";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
-import { useFlags } from "@dashboard/hooks/useFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
@@ -57,8 +51,6 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
   const intl = useIntl();
   const shop = useShop();
 
-  const { orderTransactions } = useFlags(["orderTransactions"]);
-
   const channelsListData = useChannelsQuery({ displayLoader: true });
 
   const [openModal, closeModal] = createDialogActionHandlers<
@@ -71,16 +63,9 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
       notify(getDefaultNotifierSuccessErrorData(errors, intl)),
   });
 
-  const [updateChannelSettings] = useChannelOrderSettingsUpdateMutation();
-
   const { data, loading } = useChannelQuery({
     displayLoader: true,
     variables: { id },
-  });
-
-  const { data: channelSettingsData } = useChannelOrderSettingsQuery({
-    variables: { id },
-    skip: !orderTransactions.enabled,
   });
 
   const handleError = (error: ChannelErrorFragment) => {
@@ -145,41 +130,17 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
           stockSettings: {
             allocationStrategy,
           },
+          orderSettings: {
+            markAsPaidStrategy,
+          },
         },
       },
     });
 
-    // TODO: Remove this when we remove orderTransactions flag, move to updateChannel mutation
-    let updateChannelOrderSettingsMutation: ReturnType<
-      typeof updateChannelSettings
-    >;
-    if (orderTransactions.enabled) {
-      updateChannelOrderSettingsMutation = updateChannelSettings({
-        variables: {
-          id: data?.channel.id,
-          input: {
-            orderSettings: {
-              markAsPaidStrategy,
-            },
-          },
-        },
-      });
-    } else {
-      updateChannelOrderSettingsMutation = new Promise(resolve =>
-        resolve(null),
-      );
-    }
-
-    const [resultChannel] = await Promise.all([
-      updateChannelMutation,
-      updateChannelOrderSettingsMutation,
-    ]);
+    const resultChannel = await updateChannelMutation;
     const errors = await extractMutationErrors(updateChannelMutation);
-    const settingsErrors = await extractMutationErrors(
-      updateChannelOrderSettingsMutation,
-    );
 
-    if (!errors?.length && !settingsErrors?.length) {
+    if (!errors?.length) {
       const moves = calculateItemsOrderMoves(
         resultChannel.data?.channelUpdate.channel?.warehouses,
         warehousesToDisplay,
@@ -193,7 +154,7 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
       });
     }
 
-    return errors || settingsErrors;
+    return errors;
   };
 
   const onDeleteCompleted = (data: ChannelDeleteMutation) => {
@@ -266,12 +227,6 @@ export const ChannelDetails: React.FC<ChannelDetailsProps> = ({
         })}
       />
       <ChannelDetailsPage
-        orderSettings={
-          channelSettingsData?.channel?.orderSettings ?? {
-            markAsPaidStrategy: MarkAsPaidStrategyEnum.PAYMENT_FLOW,
-            __typename: "OrderSettings",
-          }
-        }
         channelShippingZones={channelShippingZones}
         allShippingZonesCount={
           shippingZonesCountData?.shippingZones?.totalCount

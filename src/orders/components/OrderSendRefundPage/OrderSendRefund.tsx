@@ -7,7 +7,7 @@ import Skeleton from "@dashboard/components/Skeleton";
 import {
   CreateManualTransactionRefundMutationVariables,
   OrderDetailsFragment,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Card, CardContent } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
