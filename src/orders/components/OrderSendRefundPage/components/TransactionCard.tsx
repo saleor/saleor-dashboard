@@ -95,14 +95,12 @@ export const TransactionCard: React.FC<TransactionCardProps> = ({
     TransactionActionEnum.REFUND,
   );
 
-  const isManualRefund = transaction.type === "Manual refund";
-
   return (
     <OrderTransaction
       transaction={transaction}
       onTransactionAction={() => undefined}
       showActions={false}
-      disabled={!canBeRefunded && !isManualRefund}
+      disabled={!canBeRefunded}
       cardFooter={
         canBeRefunded && (
           <div className={classes.wrapper}>
