@@ -1,5 +1,6 @@
 import { CircularProgress } from "@material-ui/core";
 import {
+  ArrowRightIcon,
   Box,
   Button,
   Checkbox,
@@ -32,6 +33,7 @@ export const NewColumnPickerCategories: React.FC<
   const intl = useIntl();
 
   const [selectedCategory, setSelectedCategory] = React.useState<string>();
+  const [query, setQuery] = React.useState<string>("");
 
   const currentCategory = React.useMemo(
     () => columnCategories.find(category => category.name === selectedCategory),
@@ -79,7 +81,11 @@ export const NewColumnPickerCategories: React.FC<
             <SearchInput
               size="small"
               placeholder={intl.formatMessage(messages.searchForColumns)}
-              onChange={e => currentCategory.onSearch(e.target.value ?? "")}
+              value={query}
+              onChange={e => {
+                setQuery(e.target.value ?? "");
+                return currentCategory.onSearch(e.target.value ?? "");
+              }}
             />
           </Box>
           <Box padding={8}>
@@ -105,8 +111,13 @@ export const NewColumnPickerCategories: React.FC<
                     </Checkbox>
                   </Box>
                 ))}
-
-                {/* TODO: Pagination */}
+                <Button
+                  onClick={() => {
+                    currentCategory.onNextPage(query);
+                  }}
+                >
+                  <ArrowRightIcon />
+                </Button>
               </>
             )}
           </Box>

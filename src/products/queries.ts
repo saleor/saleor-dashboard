@@ -262,6 +262,34 @@ export const gridAttributes = gql`
   }
 `;
 
+export const availableColumnAttribues = gql`
+  query AvailableColumnAttributes(
+    $search: String!
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+  ) {
+    attributes(
+      filter: { search: $search }
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+    ) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+`;
+
 export const defaultGraphiQLQuery = `query ProductDetails($id: ID!) {
   product(id: $id) {
     id

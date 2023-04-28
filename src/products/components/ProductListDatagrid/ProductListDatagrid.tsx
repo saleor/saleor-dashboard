@@ -9,11 +9,14 @@ import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyCol
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@dashboard/config";
-import { GridAttributesQuery, ProductListQuery } from "@dashboard/graphql";
+import {
+  GridAttributesQuery,
+  ProductListQuery,
+  useAvailableColumnAttributesQuery,
+} from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
-import useAvailableInGridAttributesSearch from "@dashboard/searches/useAvailableInGridAttributesSearch";
 import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
 import {
   ChannelProps,
@@ -49,7 +52,7 @@ interface ProductListDatagridProps
   onRowClick: (id: string) => void;
   rowAnchor?: (id: string) => string;
   availableInGridAttributesOpts: ReturnType<
-    typeof useAvailableInGridAttributesSearch
+    typeof useAvailableColumnAttributesQuery
   >;
   hasRowHover?: boolean;
   columnPickerSettings: string[];
@@ -106,22 +109,33 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     staticColumns: productListStaticColumnAdapter(intl, emptyColumn, sort),
     columnCategories: productListDynamicColumnAdapter({
       attributesData:
-        mapEdgesToItems(
-          availableInGridAttributesOpts.result?.data?.availableInGrid,
-        ) || [],
+        mapEdgesToItems(availableInGridAttributesOpts.data?.attributes) || [],
       gridAttributesData: gridAttributes,
       activeAttributeSortId,
       sort,
-      onSearch: availableInGridAttributesOpts.search,
-      onFetchMore: availableInGridAttributesOpts.loadMore,
+      onSearch: (query: string) =>
+        availableInGridAttributesOpts.fetchMore({ variables: { query } }),
+      onNextPage: (query: string) =>
+        availableInGridAttributesOpts.refetch({
+          search: query,
+          after:
+            availableInGridAttributesOpts.data?.attributes?.pageInfo.endCursor,
+          first: 10,
+        }),
+      onPreviousPage: (query: string) =>
+        availableInGridAttributesOpts.refetch({
+          search: query,
+          before:
+            availableInGridAttributesOpts.data?.attributes?.pageInfo
+              .startCursor,
+          last: 10,
+        }),
       hasNextPage:
-        availableInGridAttributesOpts.result?.data?.availableInGrid?.pageInfo
-          ?.hasNextPage ?? false,
+        availableInGridAttributesOpts.data?.attributes?.pageInfo?.hasNextPage ??
+        false,
       hasPreviousPage:
-        availableInGridAttributesOpts.result?.data?.availableInGrid?.pageInfo
+        availableInGridAttributesOpts.data?.attributes?.pageInfo
           ?.hasPreviousPage ?? false,
-      totalCount:
-        availableInGridAttributesOpts.result?.data?.availableInGrid?.totalCount,
       intl,
     }),
     selectedColumns: settings.columns,

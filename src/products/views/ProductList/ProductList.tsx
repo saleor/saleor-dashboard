@@ -16,6 +16,7 @@ import {
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   ProductListQueryVariables,
+  useAvailableColumnAttributesQuery,
   useGridAttributesQuery,
   useInitialProductFilterAttributesQuery,
   useInitialProductFilterCategoriesQuery,
@@ -53,7 +54,6 @@ import {
 } from "@dashboard/products/urls";
 import useAttributeSearch from "@dashboard/searches/useAttributeSearch";
 import useAttributeValueSearch from "@dashboard/searches/useAttributeValueSearch";
-import useAvailableInGridAttributesSearch from "@dashboard/searches/useAvailableInGridAttributesSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
@@ -333,11 +333,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
   });
 
-  const availableInGridAttributesOpts = useAvailableInGridAttributesSearch({
+  const availableColumnsAttributesOpts = useAvailableColumnAttributesQuery({
     variables: {
-      ...DEFAULT_INITIAL_SEARCH_DATA,
+      after: null,
+      search: "",
       first: 10,
     },
+    fetchPolicy: "network-only",
+    nextFetchPolicy: "cache-first",
+    notifyOnNetworkStatusChange: true,
   });
 
   const gridAttributes = useGridAttributesQuery({
@@ -429,7 +433,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         filterOpts={filterOpts}
         gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
         settings={settings}
-        availableInGridAttributesOpts={availableInGridAttributesOpts}
+        availableInGridAttributesOpts={availableColumnsAttributesOpts}
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}

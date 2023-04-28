@@ -81,10 +81,10 @@ export const productListDynamicColumnAdapter = ({
   activeAttributeSortId,
   sort,
   onSearch,
-  onFetchMore,
   hasNextPage,
   hasPreviousPage,
-  totalCount,
+  onNextPage,
+  onPreviousPage,
   intl,
 }) => [
   {
@@ -103,10 +103,10 @@ export const productListDynamicColumnAdapter = ({
       intl,
     ),
     onSearch,
-    onFetchMore,
     hasNextPage,
     hasPreviousPage,
-    totalCount,
+    onNextPage,
+    onPreviousPage,
   },
 ];
 

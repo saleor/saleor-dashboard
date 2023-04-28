@@ -14,8 +14,8 @@ export interface ColumnCategory extends Partial<FetchMoreProps> {
   onSearch?: (query: string) => void;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
-  totalCount: number;
-  onFetchMore: () => void;
+  onNextPage: (query: string) => void;
+  onPreviousPage: (query: string) => void;
 }
 
 export interface UseColumnsProps {

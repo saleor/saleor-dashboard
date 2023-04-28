@@ -17,11 +17,11 @@ import {
   GridAttributesQuery,
   ProductListQuery,
   RefreshLimitsQuery,
+  useAvailableColumnAttributesQuery,
 } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import useAvailableInGridAttributesSearch from "@dashboard/searches/useAvailableInGridAttributesSearch";
 import {
   ChannelProps,
   FilterPageProps,
@@ -69,7 +69,7 @@ export interface ProductListPageProps
   columnPickerSettings: string[];
   setDynamicColumnSettings: (cols: string[]) => void;
   availableInGridAttributesOpts: ReturnType<
-    typeof useAvailableInGridAttributesSearch
+    typeof useAvailableColumnAttributesQuery
   >;
 }
 
