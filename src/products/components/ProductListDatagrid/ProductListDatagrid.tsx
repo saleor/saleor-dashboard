@@ -49,7 +49,8 @@ interface ProductListDatagridProps
   activeAttributeSortId: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   products: RelayToFlat<ProductListQuery["products"]>;
-  onRowClick: (id: string) => void;
+  onRowClick?: (id: string) => void;
+  rowAnchor?: (id: string) => string;
   columnQuery: string;
   availableInGridAttributes: RelayToFlat<
     SearchAvailableInGridAttributesQuery["availableInGrid"]
@@ -80,6 +81,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   activeAttributeSortId,
   filterDependency,
   hasRowHover,
+  rowAnchor,
 }) => {
   const intl = useIntl();
   const searchProductType = useSearchProductTypes();
@@ -185,10 +187,24 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
+      if (!onRowClick) {
+        return;
+      }
       const rowData = products[row];
       onRowClick(rowData.id);
     },
     [onRowClick, products],
+  );
+
+  const handleRowAnchor = useCallback(
+    ([, row]: Item) => {
+      if (!rowAnchor) {
+        return;
+      }
+      const rowData = products[row];
+      return rowAnchor(rowData.id);
+    },
+    [rowAnchor, products],
   );
 
   const handleGetColumnTooltipContent = useCallback(
@@ -245,6 +261,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           selectionActions={() => null}
           fullScreenTitle={intl.formatMessage(messages.products)}
           onRowClick={handleRowClick}
+          rowAnchor={handleRowAnchor}
           renderColumnPicker={defaultProps => (
             <ColumnPicker
               {...defaultProps}

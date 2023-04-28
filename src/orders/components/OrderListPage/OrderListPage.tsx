@@ -12,7 +12,6 @@ import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { OrderListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { orderMessages } from "@dashboard/orders/messages";
 import { DevModeQuery } from "@dashboard/orders/queries";
@@ -87,7 +86,6 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 }) => {
   const intl = useIntl();
   const classes = useStyles({});
-  const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
@@ -221,9 +219,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
         <OrderListDatagrid
           {...listProps}
           hasRowHover={!isFilterPresetOpen}
-          onRowClick={id => {
-            navigate(orderUrl(id));
-          }}
+          rowAnchor={orderUrl}
         />
       </Card>
     </ListPageLayout>
