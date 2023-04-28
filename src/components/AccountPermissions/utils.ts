@@ -1,4 +1,5 @@
 import {
+  PermissionEnum,
   PermissionGroupDetailsQuery,
   ShopInfoQuery,
   UserDetailsQuery,
@@ -30,3 +31,8 @@ export const getPermissionsComponentChoices = (
     lastSource: lastSourcesOfPermissionIds.includes(perm.code),
   }));
 };
+
+export const hasPermissionSelected = (
+  permissions: string[],
+  permissionCode: PermissionEnum,
+) => permissions.filter(userPerm => userPerm === permissionCode).length === 1;

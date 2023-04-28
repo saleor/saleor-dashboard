@@ -16,6 +16,8 @@ import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { hasPermissionSelected } from "./utils";
+
 const byAlphabeticalOrder =
   <T extends {}>(field: string) =>
   (a: T, b: T) =>
@@ -67,7 +69,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
       },
     } as any);
   };
-  const handlePermissionChange = (key, value) => () => {
+  const handlePermissionChange = (key: string, value: boolean) => {
     onChange({
       target: {
         name: "permissions",
@@ -172,22 +174,21 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                         role={undefined}
                         dense
                         button
-                        onClick={handlePermissionChange(
-                          perm.code,
-                          data.permissions.filter(
-                            userPerm => userPerm === perm.code,
-                          ).length === 1,
-                        )}
+                        onClick={() =>
+                          handlePermissionChange(
+                            perm.code,
+                            hasPermissionSelected(data.permissions, perm.code),
+                          )
+                        }
                       >
                         <ListItemIcon>
                           <Checkbox
                             color="secondary"
                             edge="start"
-                            checked={
-                              data.permissions.filter(
-                                userPerm => userPerm === perm.code,
-                              ).length === 1
-                            }
+                            checked={hasPermissionSelected(
+                              data.permissions,
+                              perm.code,
+                            )}
                             tabIndex={-1}
                             disableRipple
                             name={perm.code}
