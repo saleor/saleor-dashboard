@@ -57,10 +57,13 @@ describe("Plugins", () => {
       channel: defaultChannel.slug,
     })
       .then(() => {
-        getMailsForUser(customerEmail);
+        getMailsForUser(customerEmail)
+        .mpLatest()
+        .mpGetMailDetails()
+        .its("Subject")
       })
-      .then(mails => {
-        expect(mails[0].Content.Headers.Subject[0]).to.eq(randomName);
+      .then(subject => {
+        expect(subject).to.eq(randomName);
       });
   });
 
