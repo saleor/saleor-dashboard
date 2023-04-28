@@ -42,9 +42,7 @@ module.exports = ({ config }) => {
     "@material-ui/styles": path.resolve("./node_modules/@material-ui/styles"),
   };
   config.plugins.push(
-    new CheckerPlugin({
-      eslint: true,
-    }),
+    new CheckerPlugin(),
     new webpack.DefinePlugin({
       FLAGS_SERVICE_ENABLED: false,
       FLAGS: {},

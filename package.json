@@ -150,6 +150,7 @@
     "babel-core": "^7.0.0-bridge.0",
     "babel-jest": "^27.5.1",
     "babel-loader": "^8.0.6",
+    "chromatic": "^6.17.3",
     "ci-info": "^3.7.0",
     "codecov": "^3.7.1",
     "core-js": "^3.7.0",
@@ -159,7 +160,7 @@
     "dotenv": "^10.0.0",
     "env-var": "^7.3.0",
     "esbuild-loader": "^2.18.0",
-    "fork-ts-checker-webpack-plugin": "^3.1.1",
+    "fork-ts-checker-webpack-plugin": "^6.0.0",
     "graphql-request": "^3.7.0",
     "identity-obj-proxy": "^3.0.0",
     "is-ci": "^3.0.1",
@@ -324,7 +325,8 @@
     "predev": "npm run build-types",
     "release": "release-it",
     "prepare": "is-ci || husky install",
-    "dep-status": "depcruise --config .dependency-cruiser.js src"
+    "dep-status": "depcruise --config .dependency-cruiser.js src",
+    "chromatic": "chromatic --exit-zero-on-changes"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }

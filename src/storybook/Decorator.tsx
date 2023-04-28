@@ -1,6 +1,7 @@
 import "@saleor/macaw-ui/next/style";
 
 import { ExternalAppProvider } from "@dashboard/apps/components/ExternalAppContext";
+import { DevModeProvider } from "@dashboard/components/DevModePanel/DevModeProvider";
 import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
 import { FlagsServiceProvider } from "@dashboard/hooks/useFlags/flagsService";
 import { paletteOverrides, themeOverrides } from "@dashboard/themeOverrides";
@@ -36,13 +37,15 @@ export const Decorator = storyFn => (
                   <ExternalAppProvider>
                     <FlagsServiceProvider>
                       <MessageManagerProvider>
-                        <div
-                          style={{
-                            padding: 24,
-                          }}
-                        >
-                          {storyFn()}
-                        </div>
+                        <DevModeProvider>
+                          <div
+                            style={{
+                              padding: 24,
+                            }}
+                          >
+                            {storyFn()}
+                          </div>
+                        </DevModeProvider>
                       </MessageManagerProvider>
                     </FlagsServiceProvider>
                   </ExternalAppProvider>
