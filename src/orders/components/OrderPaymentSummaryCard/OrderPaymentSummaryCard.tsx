@@ -2,10 +2,7 @@ import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import { Pill } from "@dashboard/components/Pill";
 import Skeleton from "@dashboard/components/Skeleton";
-import {
-  OrderAction,
-  OrderDetailsFragment,
-} from "@dashboard/graphql/transactions";
+import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
 import { transformPaymentStatus } from "@dashboard/misc";
 import {
   orderGrantRefundUrl,
@@ -69,6 +66,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
       <CardTitle
         toolbar={
           <Pill
+            key={payment.status}
             label={payment.localized}
             color={payment.status}
             className={classes.paymentStatus}

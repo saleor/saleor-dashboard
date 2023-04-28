@@ -13,7 +13,6 @@ export const useStyles = makeStyles(
     },
     cardLoading: {
       height: "20em",
-      background: "white",
     },
     form: {
       display: "contents",

@@ -6,20 +6,18 @@ import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import FormSpacer from "@dashboard/components/FormSpacer";
+import Link from "@dashboard/components/Link";
+import PreviewPill from "@dashboard/components/PreviewPill";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
 } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   ChannelErrorFragment,
   CountryCode,
+  MarkAsPaidStrategyEnum,
   StockSettingsInput,
 } from "@dashboard/graphql";
-import {
-  ChannelOrderSettingsFragment,
-  MarkAsPaidStrategyEnum,
-} from "@dashboard/graphql/types.transactions.generated";
 import useClipboard from "@dashboard/hooks/useClipboard";
-import { useFlags } from "@dashboard/hooks/useFlags";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
@@ -31,6 +29,7 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -63,7 +62,6 @@ export interface ChannelFormProps {
   onCurrencyCodeChange?: (event: ChangeEvent) => void;
   onDefaultCountryChange: (event: ChangeEvent) => void;
   onMarkAsPaidStrategyChange: () => void;
-  orderSettings: ChannelOrderSettingsFragment["orderSettings"];
 }
 
 export const ChannelForm: React.FC<ChannelFormProps> = ({
@@ -86,7 +84,6 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
     errors,
   );
   const classes = useStyles();
-  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   return (
     <>
@@ -229,29 +226,62 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             onChange={onDefaultCountryChange}
           />
           <FormSpacer />
-          <ControlledSwitch
-            data-test-id="order-settings-mark-as-paid"
-            disabled={disabled || !orderTransactions.enabled}
-            checked={
-              data.markAsPaidStrategy ===
-              MarkAsPaidStrategyEnum.TRANSACTION_FLOW
-            }
-            onChange={onMarkAsPaidStrategyChange}
-            name="markAsPaidStrategy"
-            label={intl.formatMessage({
-              defaultMessage: "Mark as paid uses Transactions API",
-              id: "NkLZBG",
-            })}
-            secondLabel={intl.formatMessage({
-              defaultMessage: "Creates a single payment when unchecked",
-              id: "F5OqYa",
-            })}
-          />
+          <Box display="flex" gap={4} alignItems="center">
+            <ControlledSwitch
+              data-test-id="order-settings-mark-as-paid"
+              disabled={disabled}
+              checked={
+                data.markAsPaidStrategy ===
+                MarkAsPaidStrategyEnum.TRANSACTION_FLOW
+              }
+              onChange={onMarkAsPaidStrategyChange}
+              name="markAsPaidStrategy"
+              label={
+                <span>
+                  <FormattedMessage
+                    defaultMessage='"Mark as paid" feature creates a'
+                    id="MDOw8D"
+                  />{" "}
+                  <Link
+                    href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
+                    target="_blank"
+                    rel="noopener noreferer"
+                  >
+                    <FormattedMessage
+                      defaultMessage="Transaction"
+                      id="1+ROfp"
+                    />
+                  </Link>{" "}
+                  <FormattedMessage
+                    defaultMessage="- used by Payment Apps"
+                    id="Fqe4aB"
+                  />
+                </span>
+              }
+              secondLabel={
+                <span>
+                  <FormattedMessage
+                    defaultMessage="If left unchecked it creates a"
+                    id="hHv0ih"
+                  />{" "}
+                  <Link
+                    href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
+                    target="_blank"
+                    rel="noopener noreferer"
+                  >
+                    <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
+                  </Link>{" "}
+                  <FormattedMessage
+                    defaultMessage="- used by Payment Plugins"
+                    id="50lR2F"
+                  />
+                </span>
+              }
+            />
+            <PreviewPill />
+          </Box>
         </CardContent>
       </Card>
     </>
   );
 };
-
-ChannelForm.displayName = "ChannelForm";
-export default ChannelForm;

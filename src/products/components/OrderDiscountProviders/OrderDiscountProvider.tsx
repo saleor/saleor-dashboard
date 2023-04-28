@@ -1,5 +1,6 @@
 import {
   MoneyFragment,
+  OrderDetailsFragment,
   useOrderDiscountAddMutation,
   useOrderDiscountDeleteMutation,
   useOrderDiscountUpdateMutation,
@@ -7,7 +8,6 @@ import {
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
-import { OrderBothTypes } from "@dashboard/orders/types";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React, { createContext } from "react";
 import { useIntl } from "react-intl";
@@ -32,7 +32,7 @@ export interface OrderDiscountContextConsumerProps
 
 interface OrderDiscountProviderProps {
   children: React.ReactNode;
-  order?: OrderBothTypes;
+  order?: OrderDetailsFragment;
 }
 
 export const OrderDiscountProvider: React.FC<OrderDiscountProviderProps> = ({

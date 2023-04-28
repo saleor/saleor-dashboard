@@ -19,7 +19,9 @@ export const orderMessages = defineMessages({
   },
 });
 
-export const transactionEventTypeMap = defineMessages<TransactionEventType>({
+export const transactionEventTypeMap = defineMessages<
+  Exclude<TransactionEventType, "INFO">
+>({
   AUTHORIZATION: {
     defaultMessage: "Authorization",
     id: "qtF0Ft",

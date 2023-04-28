@@ -20,6 +20,12 @@ const useStyles = makeStyles(
       overflow: "hidden",
       textOverflow: "ellipsis",
     },
+    children: {
+      overflow: "hidden",
+      textOverflow: "ellipsis",
+      maxWidth: "80vw",
+      wordBreak: "break-word",
+    },
   },
   {
     name: "OverflowTooltip",
@@ -59,7 +65,7 @@ const OverflowTooltip: React.FC<OverflowTooltipProps> = ({
       <Tooltip.Content side="top">
         <Tooltip.Arrow />
         <Tooltip.ContentHeading>{header}</Tooltip.ContentHeading>
-        {title ?? children}
+        <div className={classes.children}>{title ?? children}</div>
       </Tooltip.Content>
     </Tooltip>
   );

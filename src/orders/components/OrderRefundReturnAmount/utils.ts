@@ -1,9 +1,6 @@
+import { OrderDetailsFragment } from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";
-import {
-  OrderBothTypes,
-  OrderRefundSharedType,
-  OrderSharedType,
-} from "@dashboard/orders/types";
+import { OrderRefundSharedType } from "@dashboard/orders/types";
 import {
   getAllFulfillmentLinesPriceSum,
   getOrderCharged,
@@ -23,7 +20,7 @@ export const getMiscellaneousAmountValues = (
 ): OrderRefundAmountValuesProps => {
   const authorizedAmount = order?.total?.gross;
   const previouslyRefunded = getPreviouslyRefundedPrice(order);
-  const maxRefund = getOrderCharged(order);
+  const maxRefund = getOrderCharged(order as OrderDetailsFragment);
 
   return {
     authorizedAmount,
@@ -59,7 +56,7 @@ export const getProductsAmountValues = ({
   const shipmentCost = getShipmentCost(order);
 
   const previouslyRefunded = getPreviouslyRefundedPrice(order);
-  const maxRefund = getOrderCharged(order);
+  const maxRefund = getOrderCharged(order as OrderDetailsFragment);
   const refundedLinesSum = getRefundedLinesPriceSum(
     order?.lines,
     unfulfilledItemsQuantities as FormsetData<null, string>,
@@ -138,7 +135,7 @@ const getReturnTotalAmount = ({
   order,
   maxRefund,
 }: {
-  order: OrderBothTypes;
+  order: OrderDetailsFragment;
   selectedProductsValue: IMoney;
   refundShipmentCosts: boolean;
   maxRefund: IMoney;
@@ -157,7 +154,7 @@ const getReturnTotalAmount = ({
 };
 
 export const getReturnProductsAmountValues = (
-  order: OrderBothTypes,
+  order: OrderDetailsFragment,
   formData: OrderReturnFormData,
 ) => {
   const authorizedAmount = getAuthorizedAmount(order);
@@ -170,12 +167,15 @@ export const getReturnProductsAmountValues = (
   } = formData;
 
   const replacedProductsValue = authorizedAmount?.currency && {
-    amount: getReplacedProductsAmount(order as OrderSharedType, formData),
+    amount: getReplacedProductsAmount(order as OrderDetailsFragment, formData),
     currency: authorizedAmount.currency,
   };
 
   const selectedProductsValue = authorizedAmount?.currency && {
-    amount: getReturnSelectedProductsAmount(order as OrderSharedType, formData),
+    amount: getReturnSelectedProductsAmount(
+      order as OrderDetailsFragment,
+      formData,
+    ),
     currency: authorizedAmount.currency,
   };
 
