@@ -1,7 +1,7 @@
 
 const mhApiUrl = (path) => {
-  const envValue = Cypress.env('mailpitUrl');
-  const basePath = envValue ? envValue : Cypress.config('mailpitUrl');
+  const envValue = Cypress.env('MAILPITURL');
+  const basePath = envValue ? envValue : Cypress.config('MAILPITURL');
   return `${basePath}/api${path}`;
 };
 
