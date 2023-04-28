@@ -1,5 +1,4 @@
 import { Divider, Fade, Modal, Paper } from "@material-ui/core";
-import { APP_VERSION } from "@saleor/config";
 import useLocalStorage from "@saleor/hooks/useLocalStorage";
 import useNotifier from "@saleor/hooks/useNotifier";
 import { makeStyles, useTheme } from "@saleor/macaw-ui";
@@ -7,7 +6,6 @@ import Downshift from "downshift";
 import hotkeys from "hotkeys-js";
 import React from "react";
 import { useIntl } from "react-intl";
-import cmp from "semver-compare";
 
 import {
   getActions,
@@ -83,9 +81,8 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
       setVisibility(!visible);
     });
 
-    if (cmp(APP_VERSION, "2.1.0") !== 1 && !notifiedAboutNavigator) {
+    if (!notifiedAboutNavigator) {
       notify({
-        autohide: null,
         text: intl.formatMessage(
           {
             id: "EM+30g",
