@@ -114,13 +114,15 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
       activeAttributeSortId,
       sort,
       onSearch: (query: string) =>
-        availableInGridAttributesOpts.fetchMore({ variables: { query } }),
+        availableInGridAttributesOpts.refetch({ search: query }),
       onNextPage: (query: string) =>
         availableInGridAttributesOpts.refetch({
           search: query,
           after:
             availableInGridAttributesOpts.data?.attributes?.pageInfo.endCursor,
           first: 10,
+          last: null,
+          before: null,
         }),
       onPreviousPage: (query: string) =>
         availableInGridAttributesOpts.refetch({
@@ -129,6 +131,8 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
             availableInGridAttributesOpts.data?.attributes?.pageInfo
               .startCursor,
           last: 10,
+          first: null,
+          after: null,
         }),
       hasNextPage:
         availableInGridAttributesOpts.data?.attributes?.pageInfo?.hasNextPage ??

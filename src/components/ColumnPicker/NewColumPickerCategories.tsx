@@ -1,6 +1,5 @@
 import { CircularProgress } from "@material-ui/core";
 import {
-  ArrowRightIcon,
   Box,
   Button,
   Checkbox,
@@ -12,6 +11,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
+import { NewColumnPickerPagination } from "./NewColumnPickerPagination";
 import { ColumnCategory } from "./useColumns";
 import { getExitIcon, getExitOnClick } from "./utils";
 
@@ -58,42 +58,58 @@ export const NewColumnPickerCategories: React.FC<
   }, [columnCategories]);
 
   return (
-    <Box backgroundColor="subdued">
-      <Box display="flex" paddingX={7} paddingY={5} gap={5} alignItems="center">
-        <Button
-          variant="tertiary"
-          size="small"
-          icon={getExitIcon(columnCategories, selectedCategory)}
-          onClick={getExitOnClick({
-            columnCategories,
-            selectedCategory,
-            setSelectedCategory,
-            onClose,
-          })}
-        />
-        <Text size="small">
-          {selectedCategory ?? <FormattedMessage {...messages.categories} />}
-        </Text>
-      </Box>
-      {selectedCategory ? (
-        <>
-          <Box paddingX={7} style={{ boxSizing: "border-box" }}>
-            <SearchInput
-              size="small"
-              placeholder={intl.formatMessage(messages.searchForColumns)}
-              value={query}
-              onChange={e => {
-                setQuery(e.target.value ?? "");
-                return currentCategory.onSearch(e.target.value ?? "");
-              }}
-            />
-          </Box>
-          <Box padding={8}>
-            {currentCategory.availableNodes === undefined ? (
-              <CircularProgress />
-            ) : (
-              <>
-                {currentCategory.availableNodes.map(node => (
+    <Box
+      backgroundColor="subdued"
+      display="flex"
+      flexDirection="column"
+      justifyContent="space-between"
+    >
+      <Box>
+        <Box
+          display="flex"
+          paddingX={7}
+          paddingY={5}
+          gap={5}
+          alignItems="center"
+        >
+          <Button
+            variant="tertiary"
+            size="small"
+            icon={getExitIcon(columnCategories, selectedCategory)}
+            onClick={getExitOnClick({
+              columnCategories,
+              selectedCategory,
+              setSelectedCategory,
+              onClose,
+            })}
+          />
+          <Text size="small">
+            {selectedCategory ?? <FormattedMessage {...messages.categories} />}
+          </Text>
+        </Box>
+        {selectedCategory ? (
+          <>
+            <Box
+              display="flex"
+              paddingX={7}
+              style={{ boxSizing: "border-box" }}
+              __flex="1 1 auto"
+            >
+              <SearchInput
+                size="small"
+                placeholder={intl.formatMessage(messages.searchForColumns)}
+                value={query}
+                onChange={e => {
+                  setQuery(e.target.value ?? "");
+                  return currentCategory.onSearch(e.target.value ?? "");
+                }}
+              />
+            </Box>
+            <Box paddingX={8} paddingY={4}>
+              {currentCategory.availableNodes === undefined ? (
+                <CircularProgress />
+              ) : (
+                currentCategory.availableNodes.map(node => (
                   <Box
                     display="flex"
                     alignItems="center"
@@ -110,31 +126,33 @@ export const NewColumnPickerCategories: React.FC<
                       </Text>
                     </Checkbox>
                   </Box>
-                ))}
-                <Button
-                  onClick={() => {
-                    currentCategory.onNextPage(query);
-                  }}
-                >
-                  <ArrowRightIcon />
-                </Button>
-              </>
-            )}
-          </Box>
-        </>
-      ) : (
-        <List padding={8}>
-          {columnCategories.map(category => (
-            <List.Item
-              key={category.prefix}
-              padding={4}
-              borderRadius={3}
-              onClick={() => setSelectedCategory(category.name)}
-            >
-              <Text size="small">{category.name}</Text>
-            </List.Item>
-          ))}
-        </List>
+                ))
+              )}
+            </Box>
+          </>
+        ) : (
+          <List padding={8}>
+            {columnCategories.map(category => (
+              <List.Item
+                key={category.prefix}
+                padding={4}
+                borderRadius={3}
+                onClick={() => setSelectedCategory(category.name)}
+              >
+                <Text size="small">{category.name}</Text>
+              </List.Item>
+            ))}
+          </List>
+        )}
+      </Box>
+      {selectedCategory && (
+        <NewColumnPickerPagination
+          query={query}
+          hasNextPage={currentCategory.hasNextPage}
+          hasPreviousPage={currentCategory.hasPreviousPage}
+          onNextPage={currentCategory.onNextPage}
+          onPreviousPage={currentCategory.onPreviousPage}
+        />
       )}
     </Box>
   );

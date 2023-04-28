@@ -41,13 +41,9 @@ const props: ProductListPageProps = {
     onTabSave: () => undefined,
     onTabUpdate: () => undefined,
     availableInGridAttributesOpts: {
-      loadMore: () => undefined,
-      search: () => undefined,
-      query: "",
-      result: {
-        data: [],
-      } as any,
-    },
+      data: {},
+      refetch: () => undefined,
+    } as any,
     onColumnQueryChange: () => undefined,
   },
   activeAttributeSortId: undefined,
