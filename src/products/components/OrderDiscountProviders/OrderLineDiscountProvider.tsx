@@ -1,5 +1,6 @@
 import {
   MoneyFragment,
+  OrderDetailsFragment,
   useOrderLineDiscountRemoveMutation,
   useOrderLineDiscountUpdateMutation,
 } from "@dashboard/graphql";
@@ -7,7 +8,6 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { getById } from "@dashboard/misc";
 import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
-import { OrderBothTypes } from "@dashboard/orders/types";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React, { createContext, useState } from "react";
 import { useIntl } from "react-intl";
@@ -38,7 +38,7 @@ export interface OrderLineDiscountContextConsumerProps
 
 interface DiscountProviderProps {
   children: React.ReactNode;
-  order: OrderBothTypes;
+  order: OrderDetailsFragment;
 }
 
 export const OrderLineDiscountContext =

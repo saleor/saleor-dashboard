@@ -1,7 +1,7 @@
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
+import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import {
   OrderLineDiscountConsumer,
   OrderLineDiscountContextConsumerProps,
@@ -56,7 +56,7 @@ const useStyles = makeStyles(
 );
 
 interface OrderDraftDetailsProductsProps {
-  order?: OrderSharedType;
+  order?: OrderDetailsFragment;
   errors: OrderErrorFragment[];
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;

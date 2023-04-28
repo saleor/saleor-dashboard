@@ -2,11 +2,11 @@ import Decorator from "@dashboard/storybook/Decorator";
 import { storiesOf } from "@storybook/react";
 import React from "react";
 
-import { orderWithTransactions, prepareMoney } from "../../fixtures";
+import { order as orderFixture, prepareMoney } from "../../fixtures";
 import OrderSendRefund, { OrderSendRefundPageProps } from "./OrderSendRefund";
 
 const props: OrderSendRefundPageProps = {
-  order: orderWithTransactions,
+  order: orderFixture(null),
   loading: false,
   onAddManualRefund: () => undefined,
   addManualRefundState: "default",
@@ -20,7 +20,7 @@ storiesOf("Views / Orders / Send refund order", module)
     <OrderSendRefund
       {...props}
       order={{
-        ...orderWithTransactions,
+        ...orderFixture(null),
         totalGrantedRefund: prepareMoney(10),
         totalRemainingGrant: prepareMoney(10),
       }}

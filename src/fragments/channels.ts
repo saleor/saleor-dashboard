@@ -32,5 +32,8 @@ export const channelDetailsFragment = gql`
     warehouses {
       ...Warehouse
     }
+    orderSettings {
+      markAsPaidStrategy
+    }
   }
 `;

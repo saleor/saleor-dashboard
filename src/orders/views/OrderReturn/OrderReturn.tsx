@@ -3,7 +3,6 @@ import {
   useFulfillmentReturnProductsMutation,
   useOrderDetailsQuery,
 } from "@dashboard/graphql";
-import { useFlags } from "@dashboard/hooks/useFlags";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
@@ -26,8 +25,6 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
-
-  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
@@ -84,10 +81,7 @@ const OrderReturn: React.FC<OrderReturnProps> = ({ orderId }) => {
           input: new ReturnFormDataParser({
             order: data.order,
             formData,
-            refundsEnabled: !orderHasTransactions(
-              data.order,
-              orderTransactions.enabled,
-            ),
+            refundsEnabled: !orderHasTransactions(data.order),
           }).getParsedData(),
         },
       }),

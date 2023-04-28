@@ -14,7 +14,6 @@ import {
   useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
 } from "@dashboard/graphql";
-import { OrderDetailsWithTransactionsQueryResult } from "@dashboard/graphql/hooks.transactions.generated";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { CustomerEditData } from "@dashboard/orders/components/OrderCustomer";
 import { OrderCustomerAddressesEditDialogOutput } from "@dashboard/orders/components/OrderCustomerAddressesEditDialog/types";
@@ -23,7 +22,6 @@ import {
   OrderCustomerChangeData,
 } from "@dashboard/orders/components/OrderCustomerChangeDialog/form";
 import OrderCustomerChangeDialog from "@dashboard/orders/components/OrderCustomerChangeDialog/OrderCustomerChangeDialog";
-import { OrderBothTypes, OrderSharedType } from "@dashboard/orders/types";
 import {
   getVariantSearchAddress,
   isAnyAddressEditModalOpen,
@@ -58,9 +56,7 @@ interface OrderDraftDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   loading: any;
-  data:
-    | OrderDetailsQueryResult["data"]
-    | OrderDetailsWithTransactionsQueryResult["data"];
+  data: OrderDetailsQueryResult["data"];
   orderAddNote: any;
   orderLineUpdate: PartialMutationProviderOutput<
     OrderLineUpdateMutation,
@@ -101,7 +97,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   openModal,
   closeModal,
 }) => {
-  const order = data.order as OrderBothTypes;
+  const order = data.order;
   const navigate = useNavigator();
 
   const { data: channelUsabilityData } = useChannelUsabilityDataQuery({
@@ -118,7 +114,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       channel: order.channel.slug,
-      address: getVariantSearchAddress(order as OrderSharedType),
+      address: getVariantSearchAddress(order),
       isPublished: true,
       stockAvailability: StockAvailability.IN_STOCK,
     },

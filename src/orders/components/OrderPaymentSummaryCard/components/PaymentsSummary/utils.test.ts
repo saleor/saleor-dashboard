@@ -1,11 +1,13 @@
 import {
-  orderWithTransactions,
+  order as orderFixture,
   prepareMoney,
 } from "@dashboard/orders/fixtures";
 
 import { getShouldDisplayAmounts } from "./utils";
 
 describe("PaymentSummary / getShouldDisplayAmounts", () => {
+  const order = orderFixture(null);
+
   it("hides everything when no order is passed", () => {
     expect(getShouldDisplayAmounts(undefined)).toStrictEqual(
       expect.objectContaining({
@@ -20,7 +22,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
   it("displays everything, but authorized if there's a pending value", () => {
     expect(
       getShouldDisplayAmounts({
-        ...orderWithTransactions,
+        ...order,
         totalAuthorized: prepareMoney(0),
         totalAuthorizePending: prepareMoney(0),
         totalCharged: prepareMoney(1),
@@ -38,14 +40,14 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
 
   it("displays everything with authorized if there's a pending value", () => {
     const result1 = getShouldDisplayAmounts({
-      ...orderWithTransactions,
+      ...order,
       totalAuthorized: prepareMoney(12),
       totalAuthorizePending: prepareMoney(0),
       totalChargePending: prepareMoney(1),
     });
 
     const result2 = getShouldDisplayAmounts({
-      ...orderWithTransactions,
+      ...order,
       totalAuthorized: prepareMoney(12),
       totalAuthorizePending: prepareMoney(12),
     });
@@ -64,7 +66,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
   it("displays capture and authorize amount when they are different", () => {
     expect(
       getShouldDisplayAmounts({
-        ...orderWithTransactions,
+        ...order,
         totalAuthorized: prepareMoney(10),
         totalCharged: prepareMoney(12),
       }),
@@ -81,7 +83,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
   it("displays capoture amount when it's not equal to total amount", () => {
     expect(
       getShouldDisplayAmounts({
-        ...orderWithTransactions,
+        ...order,
         totalAuthorized: prepareMoney(0),
         totalCharged: prepareMoney(12),
         total: {
@@ -104,7 +106,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
   it("displays authorized if there is authorized amount", () => {
     expect(
       getShouldDisplayAmounts({
-        ...orderWithTransactions,
+        ...order,
         totalAuthorized: prepareMoney(10),
         totalCharged: prepareMoney(0),
       }),
@@ -123,7 +125,7 @@ describe("PaymentSummary / getShouldDisplayAmounts", () => {
   it("hides everything if order is fully settled", () => {
     expect(
       getShouldDisplayAmounts({
-        ...orderWithTransactions,
+        ...order,
         totalCharged: prepareMoney(1),
         total: {
           tax: prepareMoney(0),

@@ -2,7 +2,7 @@
 const { generate } = require("@graphql-codegen/cli");
 
 // Feature flags names that will be used as suffix for generated files
-const FEATURE_FLAGS = ["transactions", "channelPermissions"];
+const FEATURE_FLAGS = ["channelPermissions"];
 
 const schemaSuffixes = ["default", ...FEATURE_FLAGS];
 
