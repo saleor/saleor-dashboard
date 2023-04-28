@@ -8,12 +8,14 @@ import useAppState from "@dashboard/hooks/useAppState";
 import { ThemeProvider } from "@dashboard/theme";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
-import React from "react";
+import React, { useEffect } from "react";
 import { render } from "react-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import urlJoin from "url-join";
+import useRouter from "use-react-router";
 
 import AppsSection from "./apps";
 import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
@@ -24,6 +26,7 @@ import Auth, { useUser } from "./auth";
 import AuthProvider from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
+import { loginCallbackPath } from "./auth/urls";
 import CategorySection from "./categories";
 import ChannelsSection from "./channels";
 import { channelsSection } from "./channels/urls";
@@ -74,6 +77,7 @@ import StaffSection from "./staff";
 import TaxesSection from "./taxes";
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import TranslationsSection from "./translations";
+import { getAppMountUriForRedirect } from "./utils/urls";
 import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
 
@@ -142,10 +146,48 @@ const App: React.FC = () => (
   </SaleorProvider>
 );
 
+const useAuthentication = () => {
+  const paramName = "saleorPluginId";
+  const router = useRouter();
+  const params = new URLSearchParams(router.location.search);
+  const shouldRedirect = params.has(paramName);
+  const { authenticated, authenticating, requestLoginByExternalPlugin } =
+    useUser();
+
+  const handleAuthentication = async () => {
+    const pluginId = params.get(paramName);
+    const redirectUri = urlJoin(
+      window.location.origin,
+      getAppMountUriForRedirect(),
+      loginCallbackPath,
+    );
+    const response = await requestLoginByExternalPlugin(pluginId, {
+      redirectUri,
+    });
+    const data = JSON.parse(response?.authenticationData || "");
+
+    if (data && !response?.errors?.length) {
+      window.location.href = data.authorizationUrl;
+    }
+  };
+
+  useEffect(() => {
+    if (!shouldRedirect) {
+      return;
+    }
+    handleAuthentication();
+  }, []);
+
+  return {
+    authenticated,
+    authenticating: authenticating || shouldRedirect,
+  };
+};
+
 const Routes: React.FC = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();
-  const { authenticated, authenticating } = useUser();
+  const { authenticated, authenticating } = useAuthentication();
 
   const { channel } = useAppChannel(false);
 
