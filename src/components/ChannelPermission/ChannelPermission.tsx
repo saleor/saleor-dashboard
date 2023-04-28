@@ -2,19 +2,10 @@ import { ChannelFragment } from "@dashboard/graphql";
 import { useChannelsSearch } from "@dashboard/hooks/useChannelsSearch";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import {
-  Card,
-  CardContent,
-  Checkbox,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-} from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Checkbox, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import CardTitle from "../CardTitle/CardTitle";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType,
 } from "../MultiAutocompleteSelectField";
@@ -45,45 +36,34 @@ export const ChannelPermission = ({
   const { onQueryChange, filteredChannels } = useChannelsSearch(allChannels);
 
   return (
-    <Card style={{ height: "100%", overflow: "hidden" }}>
-      <CardTitle
-        title={intl.formatMessage({
+    <Box height="100%" overflow="hidden" paddingX={9} paddingY={9}>
+      <Text as="p" variant="bodyEmp" size="large" marginBottom={7}>
+        {intl.formatMessage({
           defaultMessage: "Channels permissions",
           id: "vz3yxp",
         })}
-      ></CardTitle>
-      <CardContent style={{ height: "100%" }}>
+      </Text>
+      <Box height="100%">
         {description && (
           <Text as="p" variant="body" size="small" marginBottom={5}>
             {description}
           </Text>
         )}
 
-        <ListItem
+        <Checkbox
+          checked={hasRestrictedChannels}
+          onCheckedChange={onHasRestrictedChannelsChange}
           disabled={disabled}
-          onClick={onHasRestrictedChannelsChange}
-          dense
-          button
-          data-test-id="restrict-channels"
+          tabIndex={-1}
         >
-          <ListItemIcon>
-            <Checkbox
-              color="secondary"
-              edge="start"
-              checked={hasRestrictedChannels}
-              disabled={disabled}
-              tabIndex={-1}
-              disableRipple
-              inputProps={{ "aria-labelledby": "restrictedChannels" }}
-            />
-          </ListItemIcon>
-          <ListItemText
-            primary={intl.formatMessage({
+          <Text variant="body" pointerEvents="none">
+            {intl.formatMessage({
               defaultMessage: "Restrict access to channels",
               id: "ay73LS",
             })}
-          />
-        </ListItem>
+          </Text>
+        </Checkbox>
+
         {hasRestrictedChannels && (
           <>
             <Box
@@ -96,7 +76,7 @@ export const ChannelPermission = ({
               marginBottom={9}
             />
             <Box
-              __height="calc(100% - 145px)"
+              __height="calc(100% - 115px)"
               overflowY="scroll"
               overflowX="hidden"
             >
@@ -123,7 +103,7 @@ export const ChannelPermission = ({
             </Box>
           </>
         )}
-      </CardContent>
-    </Card>
+      </Box>
+    </Box>
   );
 };
