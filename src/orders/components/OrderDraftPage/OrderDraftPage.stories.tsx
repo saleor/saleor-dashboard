@@ -46,6 +46,7 @@ const order = draftOrder(placeholderImage);
 const props: Omit<OrderDraftPageProps, "classes"> = {
   ...fetchMoreProps,
   loading: false,
+  disabled: false,
   fetchUsers: () => undefined,
   onBillingAddressEdit: undefined,
   onCustomerEdit: () => undefined,

@@ -1,5 +1,5 @@
 import Money from "@dashboard/components/Money";
-import { TransactionEventFragment } from "@dashboard/graphql/transactions";
+import { TransactionEventFragment } from "@dashboard/graphql";
 import { TransactionFakeEvent } from "@dashboard/orders/types";
 import { TableCell, TableRow } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -47,13 +47,23 @@ const useStyles = makeStyles(
         width: "126px",
       },
     },
+    colMessage: {
+      minWidth: "200px",
+      maxWidth: "250px",
+      wordBreak: "break-word",
+      whiteSpace: "normal",
+    },
     colPspReference: {
-      [theme.breakpoints.up("md")]: {
-        width: "250px",
-      },
+      minWidth: "10px",
+      maxWidth: "150px",
+    },
+    spacer: {
+      minWidth: "150px",
+      maxWidth: "150px",
     },
     colDate: {
       width: "25%",
+      whiteSpace: "nowrap",
     },
     colCreatedBy: {
       width: "20%",
@@ -86,7 +96,8 @@ export const EventItem: React.FC<EventItemProps> = ({
   const classes = useStyles();
   const { type, status } = mapTransactionEvent(event);
 
-  const isHovered = event.pspReference === hoveredPspReference;
+  const isHovered =
+    event.pspReference && event.pspReference === hoveredPspReference;
 
   return (
     <TableRow
@@ -100,20 +111,19 @@ export const EventItem: React.FC<EventItemProps> = ({
       <TableCell>
         {event.amount?.currency && <Money money={event.amount} />}
       </TableCell>
-      <TableCell
-        className={classes.colSmall}
-        colSpan={!event.pspReference && 2}
-      >
+      <TableCell className={clsx(classes.colSmall, classes.colMessage)}>
         <EventType type={type} message={event.message} />
       </TableCell>
-      {event.pspReference && (
-        <TableCell className={clsx(classes.colSmall, classes.colPspReference)}>
+      <TableCell className={clsx(classes.colSmall, classes.colPspReference)}>
+        {event.pspReference ? (
           <PspReference
             reference={event.pspReference}
             url={event.externalUrl}
           />
-        </TableCell>
-      )}
+        ) : (
+          <div className={classes.spacer} />
+        )}
+      </TableCell>
       <TableCell
         className={clsx(classes.colDate, !hasCreatedBy && classes.colLast)}
       >

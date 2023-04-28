@@ -28,12 +28,12 @@ export const EventType = ({ type, message }: EventTypeProps) => {
 
   const displayType = mapEventToMessage
     ? intl.formatMessage(mapEventToMessage)
-    : type ?? message;
+    : message || type;
 
   return (
     <Box display="flex" alignItems="center">
       {displayType}
-      {type !== null && message && (
+      {displayType !== message && message && (
         <Tooltip>
           <Tooltip.Trigger>
             <div className={classes.tooltipWrapper}>

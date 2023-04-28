@@ -6,7 +6,7 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
+import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import React, { useCallback, useState } from "react";
 import { useIntl } from "react-intl";
@@ -22,7 +22,7 @@ import { messages } from "./messages";
 
 interface OrderDraftDetailsDatagridProps {
   loading: boolean;
-  lines: OrderSharedType["lines"];
+  lines: OrderDetailsFragment["lines"];
   errors: OrderErrorFragment[];
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;

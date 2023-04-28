@@ -7,17 +7,14 @@ import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
 import {
   ChannelUsabilityDataQuery,
+  OrderDetailsFragment,
+  OrderErrorFragment,
   OrderLineInput,
   SearchCustomersQuery,
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
-import {
-  OrderBothTypes,
-  OrderErrorFragment,
-  OrderSharedType,
-} from "@dashboard/orders/types";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Typography } from "@material-ui/core";
@@ -32,8 +29,8 @@ import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderDraftAlert from "./OrderDraftAlert";
 
 export interface OrderDraftPageProps extends FetchMoreProps {
-  loading: boolean;
-  order?: OrderBothTypes;
+  disabled: boolean;
+  order?: OrderDetailsFragment;
   channelUsabilityData?: ChannelUsabilityDataQuery;
   users: RelayToFlat<SearchCustomersQuery["search"]>;
   usersLoading: boolean;
@@ -116,11 +113,11 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       </TopNav>
       <DetailPageLayout.Content>
         <OrderDraftAlert
-          order={order as OrderSharedType}
+          order={order as OrderDetailsFragment}
           channelUsabilityData={channelUsabilityData}
         />
         <OrderDraftDetails
-          order={order as OrderSharedType}
+          order={order as OrderDetailsFragment}
           channelUsabilityData={channelUsabilityData}
           errors={errors}
           loading={loading}
@@ -145,7 +142,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           hasMore={hasMore}
           loading={usersLoading}
           errors={errors}
-          order={order as OrderSharedType}
+          order={order as OrderDetailsFragment}
           users={users}
           onBillingAddressEdit={onBillingAddressEdit}
           onCustomerEdit={onCustomerEdit}

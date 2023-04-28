@@ -9,13 +9,13 @@ import {
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import {
   getDatagridRowDataIndex,
   getStatusColor,
   isFirstColumn,
 } from "@dashboard/misc";
-import { OrderErrorFragment, OrderSharedType } from "@dashboard/orders/types";
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
@@ -70,7 +70,7 @@ export const useColumns = () => {
 interface GetCellContentProps {
   columns: AvailableColumn[];
   loading: boolean;
-  lines: OrderSharedType["lines"];
+  lines: OrderDetailsFragment["lines"];
   errors: OrderErrorFragment[];
 }
 
@@ -181,7 +181,7 @@ interface OrderStatus {
 
 const getOrderLineStatus = (
   intl: IntlShape,
-  line: OrderSharedType["lines"][number],
+  line: OrderDetailsFragment["lines"][number],
   error?: OrderErrorFragment,
 ): OrderStatus[] => {
   const statuses = [];

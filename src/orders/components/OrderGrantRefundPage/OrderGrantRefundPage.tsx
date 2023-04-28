@@ -2,7 +2,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Skeleton from "@dashboard/components/Skeleton";
-import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql/transactions";
+import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
@@ -61,7 +61,7 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
     }
   }, [order]);
 
-  const { set, change, data, submit } = useGrantRefundForm({
+  const { set, change, data, submit, setIsDirty } = useGrantRefundForm({
     onSubmit,
     initialData,
   });
@@ -92,7 +92,10 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
       <form onSubmit={handleSubmit} className={classes.form}>
         <GrantRefundContext.Provider
           value={{
-            dispatch,
+            dispatch: (...args) => {
+              setIsDirty(true);
+              dispatch(...args);
+            },
             state,
             form: { change, data, set },
             totalSelectedPrice,

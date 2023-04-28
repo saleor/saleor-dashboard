@@ -12,7 +12,6 @@ export const useStyles = makeStyles(
     },
     cardLoading: {
       height: "20em",
-      background: "white",
     },
   },
   { name: "OrderSendRefundPage" },
