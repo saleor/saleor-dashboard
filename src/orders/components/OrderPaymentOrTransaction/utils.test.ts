@@ -1,25 +1,19 @@
-import {
-  order,
-  orderWithTransactions,
-  payments,
-} from "@dashboard/orders/fixtures";
+import { order as orderFixture, payments } from "@dashboard/orders/fixtures";
 
 import { getFilteredPayments } from "./utils";
 
-describe("getFilteredTransactions", () => {
+describe("getFilteredPayments", () => {
+  const order = orderFixture(null);
   it("returns empty when there is no order", () => {
     expect(getFilteredPayments(null)).toStrictEqual([]);
   });
 
   it("returns empty when there are no payments", () => {
-    expect(
-      getFilteredPayments({ ...orderWithTransactions, payments: [] }),
-    ).toStrictEqual([]);
+    expect(getFilteredPayments(order)).toStrictEqual([]);
   });
 
   it("returns payments that are active and have transactions attached", () => {
     expect(
-      // @ts-expect-error types mistmatch in generated types
       getFilteredPayments({ ...order, payments: [payments.authorized] }),
     ).toStrictEqual([payments.authorized]);
   });

@@ -8,8 +8,8 @@
       const result: PossibleTypesResultData = {
   "possibleTypes": {
     "DeliveryMethod": [
-      "Warehouse",
-      "ShippingMethod"
+      "ShippingMethod",
+      "Warehouse"
     ],
     "Event": [
       "AddressCreated",
@@ -35,6 +35,7 @@
       "ChannelUpdated",
       "CheckoutCreated",
       "CheckoutFilterShippingMethods",
+      "CheckoutFullyPaid",
       "CheckoutMetadataUpdated",
       "CheckoutUpdated",
       "CollectionCreated",
@@ -54,6 +55,7 @@
       "GiftCardCreated",
       "GiftCardDeleted",
       "GiftCardMetadataUpdated",
+      "GiftCardSent",
       "GiftCardStatusChanged",
       "GiftCardUpdated",
       "InvoiceDeleted",
@@ -68,6 +70,7 @@
       "OrderCancelled",
       "OrderConfirmed",
       "OrderCreated",
+      "OrderExpired",
       "OrderFilterShippingMethods",
       "OrderFulfilled",
       "OrderFullyPaid",
@@ -82,6 +85,7 @@
       "PaymentAuthorize",
       "PaymentCaptureEvent",
       "PaymentConfirmEvent",
+      "PaymentGatewayInitializeSession",
       "PaymentListGateways",
       "PaymentProcessEvent",
       "PaymentRefundEvent",
@@ -120,7 +124,12 @@
       "StaffUpdated",
       "ThumbnailCreated",
       "TransactionActionRequest",
+      "TransactionCancelationRequested",
+      "TransactionChargeRequested",
+      "TransactionInitializeSession",
       "TransactionItemMetadataUpdated",
+      "TransactionProcessSession",
+      "TransactionRefundRequested",
       "TranslationCreated",
       "TranslationUpdated",
       "VoucherCreated",
@@ -262,6 +271,10 @@
       "Voucher",
       "Warehouse"
     ],
+    "OrderOrCheckout": [
+      "Checkout",
+      "Order"
+    ],
     "TaxSourceLine": [
       "CheckoutLine",
       "OrderLine"
@@ -271,43 +284,48 @@
       "Order"
     ],
     "TranslatableItem": [
-      "ProductTranslatableContent",
-      "CollectionTranslatableContent",
-      "CategoryTranslatableContent",
       "AttributeTranslatableContent",
       "AttributeValueTranslatableContent",
-      "ProductVariantTranslatableContent",
+      "CategoryTranslatableContent",
+      "CollectionTranslatableContent",
+      "MenuItemTranslatableContent",
       "PageTranslatableContent",
-      "ShippingMethodTranslatableContent",
+      "ProductTranslatableContent",
+      "ProductVariantTranslatableContent",
       "SaleTranslatableContent",
-      "VoucherTranslatableContent",
-      "MenuItemTranslatableContent"
+      "ShippingMethodTranslatableContent",
+      "VoucherTranslatableContent"
     ],
     "TranslationTypes": [
-      "ProductTranslation",
-      "CollectionTranslation",
-      "CategoryTranslation",
       "AttributeTranslation",
       "AttributeValueTranslation",
-      "ProductVariantTranslation",
+      "CategoryTranslation",
+      "CollectionTranslation",
+      "MenuItemTranslation",
       "PageTranslation",
-      "ShippingMethodTranslation",
+      "ProductTranslation",
+      "ProductVariantTranslation",
       "SaleTranslation",
-      "VoucherTranslation",
-      "MenuItemTranslation"
+      "ShippingMethodTranslation",
+      "VoucherTranslation"
+    ],
+    "UserOrApp": [
+      "App",
+      "User"
     ],
     "_Entity": [
-      "App",
       "Address",
-      "User",
-      "Group",
-      "ProductVariant",
-      "Product",
-      "ProductType",
-      "ProductMedia",
+      "App",
       "Category",
       "Collection",
-      "PageType"
+      "Group",
+      "Order",
+      "PageType",
+      "Product",
+      "ProductMedia",
+      "ProductType",
+      "ProductVariant",
+      "User"
     ]
   }
 };

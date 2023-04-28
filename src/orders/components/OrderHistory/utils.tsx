@@ -1,7 +1,4 @@
-import {
-  OrderEventFragment,
-  OrderEventsEnum,
-} from "@dashboard/graphql/transactions";
+import { OrderEventFragment, OrderEventsEnum } from "@dashboard/graphql";
 import { getFullName } from "@dashboard/misc";
 import { orderUrl } from "@dashboard/orders/urls";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";

@@ -16,6 +16,7 @@ export const DescriptionField: React.FC<
       disabled={submitState === "loading" || disabled}
       onChange={handleChangeDescription}
       value={description}
+      inputProps={{ ...props.inputProps, maxLength: 512 }}
     />
   );
 };

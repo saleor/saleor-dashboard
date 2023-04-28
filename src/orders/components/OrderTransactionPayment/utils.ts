@@ -4,7 +4,7 @@ import {
   PaymentGatewayFragment,
   TransactionActionEnum,
   TransactionKind,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 import {
   TransactionEventStatus,
   TransactionFakeEvent,
