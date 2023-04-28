@@ -110,6 +110,32 @@ export const orderDetailsQuery = gql`
       defaultWeightUnit
       fulfillmentAllowUnpaid
       fulfillmentAutoApprove
+      availablePaymentGateways {
+        ...PaymentGateway
+      }
+    }
+  }
+`;
+
+export const orderDetailsGrantedRefund = gql`
+  query OrderDetailsGrantRefund($id: ID!) {
+    order(id: $id) {
+      ...OrderDetailsGrantRefund
+    }
+  }
+`;
+
+export const orderDetailsGrantedRefundEdit = gql`
+  query OrderDetailsGrantRefundEdit($id: ID!) {
+    order(id: $id) {
+      ...OrderDetailsGrantRefund
+      grantedRefunds {
+        id
+        reason
+        amount {
+          ...Money
+        }
+      }
     }
   }
 `;

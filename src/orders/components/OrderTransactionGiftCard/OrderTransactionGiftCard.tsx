@@ -3,7 +3,7 @@ import {
   OrderDetailsFragment,
   OrderGiftCardFragment,
   TransactionEventTypeEnum,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 import { FakeTransaction, TransactionFakeEvent } from "@dashboard/orders/types";
 import { prepareMoney } from "@dashboard/orders/utils/data";
 import React from "react";

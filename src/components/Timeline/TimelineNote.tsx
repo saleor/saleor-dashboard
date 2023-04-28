@@ -22,6 +22,7 @@ const useStyles = makeStyles(
       background: vars.colors.background.surfaceNeutralPlain,
     },
     cardContent: {
+      wordBreak: "break-all",
       borderRadius: "4px",
       border: `1px solid ${vars.colors.border.neutralDefault}`,
       "&:last-child": {
