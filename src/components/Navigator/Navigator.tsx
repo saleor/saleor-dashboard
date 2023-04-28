@@ -83,7 +83,6 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
 
     if (!notifiedAboutNavigator) {
       notify({
-        autohide: null,
         text: intl.formatMessage(
           {
             id: "EM+30g",
