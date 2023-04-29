@@ -68,7 +68,7 @@ export interface ProductListPageProps
   onTabDelete: (tabIndex: number) => void;
   columnPickerSettings: string[];
   setDynamicColumnSettings: (cols: string[]) => void;
-  availableInGridAttributesOpts: ReturnType<
+  availableColumnsAttributesOpts: ReturnType<
     typeof useAvailableColumnAttributesQuery
   >;
 }
@@ -82,7 +82,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     defaultSettings,
     gridAttributes,
     limits,
-    availableInGridAttributesOpts,
+    availableColumnsAttributesOpts,
     filterOpts,
     initialSearch,
     settings,
@@ -270,7 +270,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             filterDependency={filterDependency}
             activeAttributeSortId={activeAttributeSortId}
             defaultSettings={defaultSettings}
-            availableInGridAttributesOpts={availableInGridAttributesOpts}
+            availableColumnsAttributesOpts={availableColumnsAttributesOpts}
             loading={listProps.disabled}
             gridAttributes={gridAttributes}
             products={listProps.products}

@@ -433,7 +433,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         filterOpts={filterOpts}
         gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
         settings={settings}
-        availableInGridAttributesOpts={availableColumnsAttributesOpts}
+        availableColumnsAttributesOpts={availableColumnsAttributesOpts}
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
         products={mapEdgesToItems(data?.products)}

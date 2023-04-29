@@ -51,7 +51,7 @@ interface ProductListDatagridProps
   products: RelayToFlat<ProductListQuery["products"]>;
   onRowClick: (id: string) => void;
   rowAnchor?: (id: string) => string;
-  availableInGridAttributesOpts: ReturnType<
+  availableColumnsAttributesOpts: ReturnType<
     typeof useAvailableColumnAttributesQuery
   >;
   hasRowHover?: boolean;
@@ -71,7 +71,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   sort,
   loading,
   gridAttributes,
-  availableInGridAttributesOpts,
+  availableColumnsAttributesOpts,
   activeAttributeSortId,
   filterDependency,
   hasRowHover,
@@ -109,36 +109,36 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     staticColumns: productListStaticColumnAdapter(intl, emptyColumn, sort),
     columnCategories: productListDynamicColumnAdapter({
       attributesData:
-        mapEdgesToItems(availableInGridAttributesOpts.data?.attributes) || [],
+        mapEdgesToItems(availableColumnsAttributesOpts.data?.attributes) || [],
       gridAttributesData: gridAttributes,
       activeAttributeSortId,
       sort,
       onSearch: (query: string) =>
-        availableInGridAttributesOpts.refetch({ search: query }),
+        availableColumnsAttributesOpts.refetch({ search: query }),
       onNextPage: (query: string) =>
-        availableInGridAttributesOpts.refetch({
+        availableColumnsAttributesOpts.refetch({
           search: query,
           after:
-            availableInGridAttributesOpts.data?.attributes?.pageInfo.endCursor,
+            availableColumnsAttributesOpts.data?.attributes?.pageInfo.endCursor,
           first: 10,
           last: null,
           before: null,
         }),
       onPreviousPage: (query: string) =>
-        availableInGridAttributesOpts.refetch({
+        availableColumnsAttributesOpts.refetch({
           search: query,
           before:
-            availableInGridAttributesOpts.data?.attributes?.pageInfo
+            availableColumnsAttributesOpts.data?.attributes?.pageInfo
               .startCursor,
           last: 10,
           first: null,
           after: null,
         }),
       hasNextPage:
-        availableInGridAttributesOpts.data?.attributes?.pageInfo?.hasNextPage ??
-        false,
+        availableColumnsAttributesOpts.data?.attributes?.pageInfo
+          ?.hasNextPage ?? false,
       hasPreviousPage:
-        availableInGridAttributesOpts.data?.attributes?.pageInfo
+        availableColumnsAttributesOpts.data?.attributes?.pageInfo
           ?.hasPreviousPage ?? false,
       intl,
     }),

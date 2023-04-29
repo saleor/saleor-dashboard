@@ -40,7 +40,7 @@ const props: ProductListPageProps = {
     hasPresetsChanged: false,
     onTabSave: () => undefined,
     onTabUpdate: () => undefined,
-    availableInGridAttributesOpts: {
+    availableColumnsAttributesOpts: {
       data: {},
       refetch: () => undefined,
     } as any,
