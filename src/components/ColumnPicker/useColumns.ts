@@ -1,12 +1,11 @@
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import { FetchMoreProps } from "@dashboard/types";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
 import React from "react";
 
 import { AvailableColumn } from "../Datagrid/types";
 
-export interface ColumnCategory extends Partial<FetchMoreProps> {
+export interface ColumnCategory {
   name: string;
   prefix: string;
   availableNodes: AvailableColumn[];
