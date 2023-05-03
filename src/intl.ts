@@ -555,6 +555,11 @@ export const sectionNames = defineMessages({
     defaultMessage: "Webhooks & Events",
     description: "webhooks and events section name",
   },
+  provinces: {
+    id: "XMxpgB",
+    defaultMessage: "Provinces",
+    description: "Provinces section name",
+  },
 });
 
 export const commonStatusMessages = defineMessages({

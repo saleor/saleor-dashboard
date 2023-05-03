@@ -16,6 +16,7 @@ import { commonMessages, sectionNames } from "@dashboard/intl";
 import { orderDraftListUrl, orderListUrl } from "@dashboard/orders/urls";
 import { pageListPath } from "@dashboard/pages/urls";
 import { productListUrl } from "@dashboard/products/urls";
+import { provincesListUrl } from "@dashboard/provinces/urls";
 import { languageListUrl } from "@dashboard/translations/urls";
 import {
   ConfigurationIcon,
@@ -106,6 +107,14 @@ export function useMenuStructure() {
       ],
       id: "products",
       type: "itemGroup",
+    },
+    {
+      icon: <HomeIcon {...iconSettings} />,
+      label: "Provinces",
+      permissions: [],
+      url: provincesListUrl(),
+      id: "provinces",
+      type: "item",
     },
     {
       children: [
