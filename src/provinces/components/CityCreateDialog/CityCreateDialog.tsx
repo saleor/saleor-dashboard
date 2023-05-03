@@ -34,7 +34,6 @@ const CityCreateDialog = (props: CityDialogProps) => {
         <DialogContent>
           <CityDialogForm
             provinces={provinces}
-            selectedProvince={provinces[0]}
             onSubmit={data => handleSubmit(data)}
             onClose={props.onClose}
             selectedCity={selectedCity}
