@@ -27,6 +27,8 @@ const useStyles = makeStyles(
       display: "flex",
       alignItems: "center",
       fontSize: "16px",
+    },
+    expanded: {
       fontWeight: "bold",
     },
     section: {
@@ -54,30 +56,32 @@ const useStyles = makeStyles(
 
 export const ProvinceList = (props: ProvinceListPageProps) => {
   const classes = useStyles(props);
-  const [openedFilter, setOpenedFilter] = useState(null);
+  const [openedAcc, setOpenedAcc] = useState("");
 
-  const handleFilterOpen = item => {
-    if (openedFilter !== item.id) {
-      setOpenedFilter(item.id);
+  const handleAccordionOpen = (item: IProvinces) => {
+    // debugger;
+    if (openedAcc !== item.id) {
+      setOpenedAcc(item.id);
     } else {
-      setOpenedFilter(null);
+      setOpenedAcc("");
     }
   };
   return (
     <>
       {props.provinceList.map(item => (
         <Accordion
-          expanded={item.id === openedFilter}
-          onChange={() => handleFilterOpen(item)}
+          expanded={item.id === openedAcc}
+          onChange={() => handleAccordionOpen(item)}
         >
           <AccordionSummary
             expandIcon={<ExpandIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
+            className={item.id === openedAcc ? classes.expanded : ""}
           >
             <div className={classes.header}>
               <div className={classes.section}> {item.priority}</div>
-              <div className={classes.section}> {item.name}</div>
+              <div className={classes.section}> استان {item.name}</div>
             </div>
           </AccordionSummary>
           <AccordionDetails>
