@@ -3,7 +3,7 @@ import CityDeleteDialog from "@dashboard/provinces/components/CityDeleteDialog/C
 import ProvinceHeader from "@dashboard/provinces/components/ProvinceHeader/ProvinceHeader";
 import { ProvinceList } from "@dashboard/provinces/components/ProvinceList/ProvinceList";
 import provinceList from "@dashboard/provinces/mockData/data";
-import IProvinces, { ICities } from "@dashboard/provinces/models/Provinces";
+import { ICities } from "@dashboard/provinces/models/Provinces";
 import { makeStyles } from "@saleor/macaw-ui";
 import React, { useState } from "react";
 
@@ -20,7 +20,7 @@ const useStyles = makeStyles(
 
 const Provinces = props => {
   const classes = useStyles(props);
-  const [provinces, setProvinces] = useState(provinceList);
+  const [provinces] = useState(provinceList);
   const [openDialog, setOpenDialog] = useState(false);
   const [openDelDialog, setOpenDelDialog] = useState(false);
   const [city, setCity] = useState<ICities>();
@@ -31,24 +31,12 @@ const Provinces = props => {
     setOpenDelDialog(true);
   };
 
-  function remove(city) {
-    const newProvinces: IProvinces[] = provinces.map(pr => {
-      if (pr.id === city.provinceId) {
-        const index = pr.cities.indexOf(city);
-        pr.cities.splice(index, 1);
-      }
-      return pr;
-    });
-
-    setProvinces(newProvinces);
+  function remove(city: ICities) {
+    const prov = findProvince(city);
+    const index = prov.cities.indexOf(city);
+    prov.cities.splice(index, 1);
     setOpenDelDialog(false);
   }
-
-  const edit = (city: ICities) => {
-    setCity(city);
-    setFormType("edit");
-    setOpenDialog(true);
-  };
 
   const handleOpenDialog = () => {
     setOpenDialog(true);
@@ -56,25 +44,24 @@ const Provinces = props => {
   };
 
   const addCity = (data: ICities) => {
-    const newProvinces: IProvinces[] = provinces.map(pr => {
-      if (pr.id === data.provinceId) {
-        pr.cities.push(data);
-      }
-      return pr;
-    });
-    setProvinces(newProvinces);
+    const prov = findProvince(data);
+    prov.cities.push(data);
+  };
+
+  const handleEdit = (city: ICities) => {
+    setCity(city);
+    setFormType("edit");
+    setOpenDialog(true);
   };
 
   const editCity = (data: ICities) => {
-    const newProvinces: IProvinces[] = provinces.map(pr => {
-      if (pr.id === data.provinceId) {
-        const foundIndex = pr.cities.findIndex(x => x.id === data.id);
-        pr.cities[foundIndex] = data;
-      }
-      return pr;
-    });
-    setProvinces(newProvinces);
+    const prov = findProvince(data);
+    const foundIndex = prov.cities.findIndex(x => x.id === data.id);
+    prov.cities[foundIndex] = data;
   };
+
+  const findProvince = (data: ICities) =>
+    provinces.find(item => item.id === data.provinceId);
 
   return (
     <>
@@ -83,7 +70,7 @@ const Provinces = props => {
         <ProvinceList
           provinceList={provinceList}
           onRemove={city => handleRemove(city)}
-          onEdit={city => edit(city)}
+          onEdit={city => handleEdit(city)}
         />
       </div>
 
