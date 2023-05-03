@@ -1,5 +1,5 @@
 export default interface IProvinces {
-  id: number;
+  id: string;
   name: string;
   priority: string;
   cities: ICities[];
@@ -7,7 +7,7 @@ export default interface IProvinces {
 
 export interface ICities {
   id: string;
-  provinceId: number;
+  provinceId: string;
   name: string;
   priority: string;
 }
