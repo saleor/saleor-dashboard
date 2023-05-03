@@ -258,6 +258,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
         return;
       }
 
+      // Omit column with selection checkbox
+      if (!["number", "none"].includes(rowMarkers) && args.location[0] === -1) {
+        return;
+      }
+
       hackARef.current.style.left = `${window.scrollX + args.bounds.x}px`;
       hackARef.current.style.width = `${args.bounds.width}px`;
       hackARef.current.style.top = `${window.scrollY + args.bounds.y}px`;
