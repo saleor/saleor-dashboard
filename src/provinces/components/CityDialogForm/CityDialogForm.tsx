@@ -1,11 +1,11 @@
 import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
+import SingleSelectField from "@dashboard/components/SingleSelectField";
 import IProvinces, { ICities } from "@dashboard/provinces/models/Provinces";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React, { useState } from "react";
 export interface CityDialogFormProps {
   provinces: IProvinces[];
-  selectedProvince: IProvinces;
   onSubmit: (data: ICities) => void;
   onClose: () => void;
   selectedCity: ICities;
@@ -34,14 +34,13 @@ const useStyles = makeStyles(
 const CityDialogForm = (props: CityDialogFormProps) => {
   const classes = useStyles(props);
   const { provinces, onClose, onSubmit, selectedCity, type } = props;
-  const [provinceId, setProvinceId] = useState(
-    type === "add" ? 1 : selectedCity.provinceId,
-  );
   const [name, setName] = useState(type === "add" ? "" : selectedCity.name);
+  const [provinceId, setProvinceId] = useState(
+    type === "add" ? "1" : selectedCity.provinceId,
+  );
   const [priority, setPriority] = useState(
     type === "add" ? "" : selectedCity.priority,
   );
-
   const [cityId] = useState(
     type === "add" ? "id_" + Math.random() : selectedCity.id,
   );
@@ -51,23 +50,23 @@ const CityDialogForm = (props: CityDialogFormProps) => {
     onClose();
   };
 
+  const inputTypeChoices = provinces.map(item => ({
+    value: item.id,
+    label: item.name,
+  }));
+
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <label>Province</label>
-        <select
-          value={provinceId}
-          name="provinceId"
-          className={classes.select + " " + classes.input}
-          onChange={e => setProvinceId(+e.target.value)}
+        <SingleSelectField
+          choices={inputTypeChoices}
           disabled={type === "edit"}
-        >
-          {provinces.map(item => (
-            <option key={item.id} value={item.id}>
-              {item.name}
-            </option>
-          ))}
-        </select>
+          className={classes.input}
+          label={"Province"}
+          name="inputType"
+          onChange={e => setProvinceId(e.target.value)}
+          value={provinceId}
+        />
         <TextField
           fullWidth
           className={classes.input}
@@ -76,10 +75,6 @@ const CityDialogForm = (props: CityDialogFormProps) => {
           name="name"
           onChange={e => setName(e.target.value)}
           value={name}
-          inputProps={{
-            "data-test-id": "name",
-            spellCheck: false,
-          }}
         />
         <TextField
           fullWidth
@@ -89,13 +84,9 @@ const CityDialogForm = (props: CityDialogFormProps) => {
           name="priority"
           onChange={e => setPriority(e.target.value)}
           value={priority}
-          inputProps={{
-            "data-test-id": "priority",
-            spellCheck: false,
-          }}
         />
         <DialogButtons
-          disabled={false}
+          disabled={!priority || !name}
           onConfirm={handleSubmit}
           confirmButtonLabel={"save"}
           confirmButtonState={"default"}
