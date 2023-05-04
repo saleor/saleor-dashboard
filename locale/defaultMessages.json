@@ -1614,6 +1614,10 @@
     "context": "area units type",
     "string": "Area"
   },
+  "AD1PlC": {
+    "context": "channels availability text",
+    "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
+  },
   "ADTNND": {
     "context": "product type",
     "string": "Physical"
@@ -8100,10 +8104,6 @@
     "context": "voucher discount type",
     "string": "Fixed Amount"
   },
-  "vY2lpx": {
-    "context": "channels availability text",
-    "string": "Available at {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
-  },
   "vZMs8f": {
     "context": "default product variant indicator",
     "string": "Default"
@@ -8496,6 +8496,9 @@
   "yhv3HX": {
     "context": "voucher requirements, header",
     "string": "Minimum Requirements"
+  },
+  "yi1HSj": {
+    "string": "({numberOfCharacters} of {maxCharacters} characters)"
   },
   "ymo+cm": {
     "context": "voucher discount",

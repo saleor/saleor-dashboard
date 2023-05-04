@@ -56,7 +56,6 @@ const props: ProductUpdatePageProps = {
   onSubmit: () => undefined,
   onVariantShow: () => undefined,
   refetch: () => undefined,
-  placeholderImage,
   product,
   referencePages: [],
   referenceProducts: [],

@@ -4,7 +4,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Metadata from "@dashboard/components/Metadata/Metadata";
+import { Metadata } from "@dashboard/components/Metadata/Metadata";
 import { MetadataFormData } from "@dashboard/components/Metadata/types";
 import Savebar from "@dashboard/components/Savebar";
 import { ListSettingsUpdate } from "@dashboard/components/TablePagination";
