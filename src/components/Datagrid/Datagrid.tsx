@@ -1,8 +1,10 @@
 import "@glideapps/glide-data-grid/dist/index.css";
 
+import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { usePreventHistoryBack } from "@dashboard/hooks/usePreventHistoryBack";
 import DataEditor, {
+  CellClickedEventArgs,
   DataEditorProps,
   DataEditorRef,
   EditableGridCell,
@@ -131,10 +133,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const classes = useStyles();
   const { themeValues } = useTheme();
   const datagridTheme = useDatagridTheme(readonly, readonly);
-  const editor = useRef<DataEditorRef>();
+  const editor = useRef<DataEditorRef | null>(null);
   const customRenderers = useCustomCellRenderers();
 
-  const hackARef = useRef<HTMLAnchorElement>(null);
+  const hackARef = useRef<HTMLAnchorElement | null>(null);
   const navigate = useNavigator();
 
   const { scrolledToRight, scroller } = useScrollRight();
@@ -212,6 +214,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const handleOnCellEdited = useCallback(
     ([column, row]: Item, newValue: EditableGridCell): void => {
       onCellEdited([column, row], newValue);
+      if (!editor.current) {
+        return;
+      }
+
       editor.current.updateCells(
         range(availableColumns.length).map(offset => ({
           cell: [column + offset, row],
@@ -219,15 +225,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
       );
     },
     [onCellEdited, availableColumns],
-  );
-
-  const handleCellClick = useCallback(
-    (item: Item) => {
-      if (onRowClick && item[0] !== -1) {
-        onRowClick(item);
-      }
-    },
-    [onRowClick],
   );
 
   const handleRowHover = useCallback(
@@ -251,9 +248,24 @@ export const Datagrid: React.FC<DatagridProps> = ({
       hackARef.current.style.width = `${args.bounds.width}px`;
       hackARef.current.style.top = `${window.scrollY + args.bounds.y}px`;
       hackARef.current.style.height = `${args.bounds.height}px`;
-      hackARef.current.href = href;
+      hackARef.current.href =
+        getAppMountUri() + (href.startsWith("/") ? href.slice(1) : href);
+      hackARef.current.dataset.reactRouterPath = href;
     },
     [hasRowHover, rowAnchor],
+  );
+
+  const handleCellClick = useCallback(
+    (item: Item, args: CellClickedEventArgs) => {
+      if (onRowClick && item[0] !== -1) {
+        onRowClick(item);
+      }
+      handleRowHover(args);
+      if (hackARef.current) {
+        hackARef.current.click();
+      }
+    },
+    [onRowClick, handleRowHover],
   );
 
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
@@ -277,7 +289,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
           themeValues.colors.background.interactiveNeutralSecondaryHovering,
         bgCellMedium:
           themeValues.colors.background.interactiveNeutralSecondaryHovering,
-        accentLight: undefined,
+        accentLight: undefined as string | undefined,
       };
 
       if (readonly) {
@@ -323,6 +335,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
         clearTooltip();
       }
 
+      if (!onColumnResize) {
+        return;
+      }
       onColumnResize(column, newSize);
     },
     [clearTooltip, onColumnResize, tooltip],
@@ -333,6 +348,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
       if (tooltip) {
         clearTooltip();
       }
+      if (!onColumnMoved) {
+        return;
+      }
       onColumnMoved(startIndex, endIndex);
     },
     [clearTooltip, onColumnMoved, tooltip],
@@ -340,12 +358,35 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const selectionActionsComponent = useMemo(
     () =>
-      selection?.rows.length > 0
+      selection?.rows && selection?.rows.length > 0
         ? selectionActions(Array.from(selection.rows), {
             removeRows: handleRemoveRows,
           })
         : null,
     [selection, selectionActions, handleRemoveRows],
+  );
+
+  // Hide the link when scrolling over it so that the scroll/wheel events go through to the Datagrid
+  // Show the link quickly after the last scroll/wheel event
+  const hideLinkAndShowAfterDelay = useCallback(
+    (() => {
+      let timer: ReturnType<typeof setTimeout> | null = null;
+      return () => {
+        if (timer) {
+          clearTimeout(timer);
+        }
+
+        if (hackARef.current) {
+          hackARef.current.style.display = "none";
+        }
+        timer = setTimeout(() => {
+          if (hackARef.current) {
+            hackARef.current.style.display = "block";
+          }
+        }, 100);
+      };
+    })(),
+    [hackARef],
   );
 
   if (loading) {
@@ -389,7 +430,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
         <CardContent classes={{ root: classes.cardContentRoot }}>
           {rowsTotal > 0 || showEmptyDatagrid ? (
             <>
-              {selection?.rows.length > 0 && (
+              {selection?.rows && selection?.rows.length > 0 && (
                 <div className={classes.actionBtnBar}>
                   {selectionActionsComponent}
                 </div>
@@ -512,16 +553,21 @@ export const Datagrid: React.FC<DatagridProps> = ({
         bounds={tooltip?.bounds}
         title={tooltip?.title}
       />
-      <a
-        ref={hackARef}
-        style={{ position: "absolute" }}
-        tabIndex={-1}
-        aria-hidden={true}
-        onClick={e => {
-          e.preventDefault();
-          navigate(e.currentTarget.pathname);
-        }}
-      />
+      {rowAnchor && (
+        <a
+          ref={hackARef}
+          style={{ position: "absolute" }}
+          tabIndex={-1}
+          aria-hidden={true}
+          onWheelCapture={hideLinkAndShowAfterDelay}
+          onClick={e => {
+            e.preventDefault();
+            if (e.currentTarget.dataset.reactRouterPath) {
+              navigate(e.currentTarget.dataset.reactRouterPath);
+            }
+          }}
+        />
+      )}
     </FullScreenContainer>
   );
 };
