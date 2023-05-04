@@ -16,7 +16,7 @@ export enum VariantAttributeScope {
 }
 
 export interface AttributeRowHandlers {
-  onChange: FormsetChange<string>;
+  onChange: FormsetChange<string | boolean>;
   onFileChange: FormsetChange<File>;
   onMultiChange: FormsetChange<string>;
   onReferencesAddClick: (attribute: AttributeInput) => void;

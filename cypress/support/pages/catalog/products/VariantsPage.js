@@ -35,7 +35,6 @@ export function createVariant({
   cy.get(VARIANTS_SELECTORS.saveButton)
     .click()
     .get(VARIANTS_SELECTORS.skuTextField)
-    .find("input")
     .should("be.enabled")
     .get(BUTTON_SELECTORS.back)
     .click()
@@ -86,7 +85,7 @@ export function fillUpVariantDetails({
     cy.get(VARIANTS_SELECTORS.variantNameInput).type(variantName);
   }
   if (sku) {
-    cy.get(VARIANTS_SELECTORS.skuTextField).type(sku);
+    cy.get(VARIANTS_SELECTORS.skuTextField).click({ force: true }).type(sku);
   }
   if (warehouseName) {
     cy.get(VARIANTS_SELECTORS.addWarehouseButton).click();
@@ -114,7 +113,7 @@ export function fillUpVariantAttributeAndSku({ attributeName, sku }) {
     .contains(attributeName)
     .click();
   if (sku) {
-    cy.get(VARIANTS_SELECTORS.skuTextField).type(sku);
+    cy.get(VARIANTS_SELECTORS.skuTextField).click({ force: true }).type(sku);
   }
 }
 
