@@ -1,5 +1,4 @@
 import {
-  loadingCell,
   moneyCell,
   readonlyTextCell,
   tagsCell,
@@ -74,14 +73,12 @@ export const useColumns = () => {
 
 interface GetCellContentProps {
   columns: AvailableColumn[];
-  loading: boolean;
   lines: OrderDetailsFragment["lines"];
   errors: OrderErrorFragment[];
 }
 
 export const useGetCellContent = ({
   columns,
-  loading,
   lines,
   errors,
 }: GetCellContentProps) => {
@@ -96,10 +93,6 @@ export const useGetCellContent = ({
   ): GridCell => {
     if (isFirstColumn(column)) {
       return readonlyTextCell("", false);
-    }
-
-    if (loading) {
-      return loadingCell();
     }
 
     const columnId = columns[column].id;

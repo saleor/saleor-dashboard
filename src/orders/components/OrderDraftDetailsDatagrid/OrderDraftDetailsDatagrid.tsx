@@ -29,7 +29,6 @@ interface OrderDraftDetailsDatagridProps {
 }
 
 export const OrderDraftDetailsDatagrid = ({
-  loading,
   lines,
   errors,
   onOrderLineChange,
@@ -48,7 +47,6 @@ export const OrderDraftDetailsDatagrid = ({
   const getCellContent = useGetCellContent({
     columns: availableColumns,
     lines,
-    loading,
     errors,
   });
 
@@ -97,14 +95,23 @@ export const OrderDraftDetailsDatagrid = ({
   }, [discountProviderValues]);
 
   const handleDatagridChange = useCallback(
-    ({ updates }: DatagridChangeOpts) => {
+    async (
+      { updates }: DatagridChangeOpts,
+      setMarkCellsDirty: (areCellsDirty: boolean) => void,
+    ) => {
+      const promises = [];
       updates.forEach(({ data, column, row }) => {
         const orderId = lines[row].id;
 
         if (column === "quantity") {
-          onOrderLineChange(orderId, { quantity: data });
+          promises.push(onOrderLineChange(orderId, { quantity: data }));
         }
       });
+
+      if (promises.length) {
+        await Promise.all(promises);
+        setMarkCellsDirty(false);
+      }
     },
     [lines, onOrderLineChange],
   );
@@ -121,7 +128,7 @@ export const OrderDraftDetailsDatagrid = ({
         getCellContent={getCellContent}
         getCellError={() => false}
         menuItems={getMenuItems}
-        rows={loading ? 1 : lines.length}
+        rows={lines.length}
         selectionActions={() => null}
         onColumnResize={onColumnResize}
         onColumnMoved={onColumnMoved}
