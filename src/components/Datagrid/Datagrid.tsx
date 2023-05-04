@@ -55,7 +55,10 @@ import useStyles, {
   useFullScreenStyles,
 } from "./styles";
 import { AvailableColumn } from "./types";
-import { getDefultColumnPickerProps } from "./utils";
+import {
+  getDefultColumnPickerProps,
+  preventRowClickOnSelectionCheckbox,
+} from "./utils";
 
 export interface GetCellContentOpts {
   changes: MutableRefObject<DatagridChange[]>;
@@ -255,8 +258,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
         return;
       }
 
-      // Omit column with selection checkbox
-      if (!["number", "none"].includes(rowMarkers) && args.location[0] === -1) {
+      if (preventRowClickOnSelectionCheckbox(rowMarkers, args.location[0])) {
         return;
       }
 
@@ -273,15 +275,21 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const handleCellClick = useCallback(
     (item: Item, args: CellClickedEventArgs) => {
-      if (onRowClick && item[0] !== -1) {
+      if (preventRowClickOnSelectionCheckbox(rowMarkers, item[0])) {
+        return;
+      }
+
+      if (onRowClick) {
         onRowClick(item);
       }
+
       handleRowHover(args);
+
       if (hackARef.current) {
         hackARef.current.click();
       }
     },
-    [onRowClick, handleRowHover],
+    [rowMarkers, onRowClick, handleRowHover],
   );
 
   const handleGridSelectionChange = (gridSelection: GridSelection) => {
