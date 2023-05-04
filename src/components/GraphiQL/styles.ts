@@ -11,6 +11,10 @@ export const useStyles = makeStyles(
   () => ({
     pre: {
       whiteSpace: "break-spaces",
+      maxHeight: 450,
+      overflowY: "scroll",
+      marginBottom: 0,
+      marginTop: -26,
     },
     main: {
       position: "relative",
@@ -21,6 +25,18 @@ export const useStyles = makeStyles(
       "& > :first-child": {
         overflowY: "scroll !important",
       },
+    },
+    graphiqlSessions: {
+      margin: "0 !important",
+      marginRight: "var(--px-16) !important",
+      paddingTop: "var(--px-16)",
+      borderRadius: "0 !important",
+    },
+    graphiqlEditors: {
+      borderRadius: "0 !important",
+    },
+    graphiqlContainer: {
+      fontVariantLigatures: "none",
     },
   }),
   { name: "GraphiQL" },
