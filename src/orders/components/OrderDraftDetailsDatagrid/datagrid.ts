@@ -44,6 +44,11 @@ export const useColumns = () => {
         width: 250,
       },
       {
+        id: "sku",
+        title: "SKU",
+        width: 150,
+      },
+      {
         id: "quantity",
         title: intl.formatMessage(columnsMessages.quantity),
         width: 150,
@@ -148,6 +153,8 @@ export const useGetCellContent = ({
             allowOverlay: false,
           },
         );
+      case "sku":
+        return readonlyTextCell(rowData.productSku, false);
       case "total":
         return moneyCell(
           {
