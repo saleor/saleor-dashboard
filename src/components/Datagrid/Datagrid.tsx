@@ -234,7 +234,13 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const handleCellClick = useCallback(
     (item: Item) => {
+      // eslint-disable-next-line no-console
+      console.log(item);
+
       if (onRowClick && item[0] !== -1) {
+        // eslint-disable-next-line no-console
+        console.log("click");
+
         onRowClick(item);
       }
     },
@@ -259,9 +265,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
       }
 
       // Omit column with selection checkbox
-      // eslint-disable-next-line no-console
-      console.log(args.location);
-
       if (!["number", "none"].includes(rowMarkers) && args.location[0] === -1) {
         return;
       }
