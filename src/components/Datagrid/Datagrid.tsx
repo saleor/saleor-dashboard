@@ -259,6 +259,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
       }
 
       // Omit column with selection checkbox
+      // eslint-disable-next-line no-console
+      console.log(args.location);
+
       if (!["number", "none"].includes(rowMarkers) && args.location[0] === -1) {
         return;
       }
