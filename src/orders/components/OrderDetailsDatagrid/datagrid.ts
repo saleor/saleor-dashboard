@@ -5,11 +5,10 @@ import {
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
-import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderLineFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
-import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
+import { getDatagridRowDataIndex } from "@dashboard/misc";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
@@ -18,11 +17,9 @@ import { columnsMessages } from "./messages";
 
 export const useColumns = (): AvailableColumn[] => {
   const intl = useIntl();
-  const emptyColumn = useEmptyColumn();
 
   const columns = useMemo(
     () => [
-      emptyColumn,
       {
         id: "product",
         title: intl.formatMessage(columnsMessages.product),
@@ -49,7 +46,7 @@ export const useColumns = (): AvailableColumn[] => {
         width: 100,
       },
     ],
-    [emptyColumn, intl],
+    [intl],
   );
 
   return columns;
@@ -69,10 +66,6 @@ export const useGetCellContent = ({
   const { locale } = useLocale();
   const getCellContent = useCallback(
     ([column, row]: Item, { added, removed }: GetCellContentOpts): GridCell => {
-      if (isFirstColumn(column)) {
-        return readonlyTextCell("", false);
-      }
-
       if (loading) {
         return loadingCell();
       }

@@ -50,8 +50,7 @@ export const OrderDetailsDatagrid = ({
         showEmptyDatagrid
         rowMarkers="none"
         columnSelect="single"
-        freezeColumns={2}
-        verticalBorder={col => (col > 1 ? true : false)}
+        freezeColumns={1}
         availableColumns={columns}
         emptyText={intl.formatMessage(messages.emptyText)}
         getCellContent={getCellContent}
