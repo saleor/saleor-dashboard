@@ -68,21 +68,18 @@ export const OrderDraftDetailsDatagrid = ({
       { updates }: DatagridChangeOpts,
       setMarkCellsDirty: (areCellsDirty: boolean) => void,
     ) => {
-      const promises = [];
+      await Promise.all(
+        updates.map(({ data, column, row }) => {
+          const orderId = lines[row].id;
 
-      updates.forEach(({ data, column, row }) => {
-        const orderId = lines[row].id;
+          if (column === "quantity" && data !== "") {
+            return onOrderLineChange(orderId, { quantity: data });
+          }
+        }),
+      );
 
-        if (column === "quantity" && data !== "") {
-          promises.push(onOrderLineChange(orderId, { quantity: data }));
-        }
-      });
-
-      if (promises.length) {
-        await Promise.all(promises);
-        setMarkCellsDirty(false);
-        datagrid.changes.current = [];
-      }
+      datagrid.changes.current = [];
+      setMarkCellsDirty(false);
     },
     [datagrid.changes, lines, onOrderLineChange],
   );
