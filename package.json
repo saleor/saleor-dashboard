@@ -92,7 +92,8 @@
     "slugify": "^1.4.6",
     "tslib": "^2.4.1",
     "url-join": "^4.0.1",
-    "use-react-router": "^1.0.7"
+    "use-react-router": "^1.0.7",
+    "omit-deep-lodash": "^1.1.5"
   },
   "devDependencies": {
     "@babel/cli": "^7.5.5",
@@ -181,7 +182,8 @@
     "workbox-precaching": "^6.1.2",
     "workbox-routing": "^6.1.2",
     "workbox-strategies": "^6.1.2",
-    "msw": "^0.35.0"
+    "msw": "^0.35.0",
+    "@types/omit-deep-lodash": "^1.1.1"
   },
   "optionalDependencies": {
     "@storybook/react": "^5.1.9",
