@@ -7,6 +7,7 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { TrashBinIcon } from "@saleor/macaw-ui/next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
@@ -53,6 +54,7 @@ export const OrderDraftDetailsDatagrid = ({
     index => [
       {
         label: intl.formatMessage(messages.deleteOrder),
+        Icon: <TrashBinIcon />,
         onSelect: () => {
           onOrderLineRemove(lines[index].id);
         },
