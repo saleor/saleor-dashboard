@@ -12,7 +12,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Button, Popover, sprinkles } from "@saleor/macaw-ui/next";
+import { Box, Button, Popover } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -189,20 +189,19 @@ const OrderDraftDetailsSummary: React.FC<
                   <Link>{intl.formatMessage(discountTitle)}</Link>
                 </Button>
               </Popover.Trigger>
-              <Popover.Content
-                align="start"
-                className={sprinkles({ zIndex: "3" })}
-              >
-                <OrderDiscountCommonModal
-                  modalType={ORDER_DISCOUNT}
-                  existingDiscount={orderDiscount}
-                  maxPrice={undiscountedPrice}
-                  onConfirm={addOrderDiscount}
-                  onClose={closeDialog}
-                  onRemove={removeOrderDiscount}
-                  confirmStatus={orderDiscountAddStatus}
-                  removeStatus={orderDiscountRemoveStatus}
-                />
+              <Popover.Content align="start">
+                <Box boxShadow="overlay">
+                  <OrderDiscountCommonModal
+                    modalType={ORDER_DISCOUNT}
+                    existingDiscount={orderDiscount}
+                    maxPrice={undiscountedPrice}
+                    onConfirm={addOrderDiscount}
+                    onClose={closeDialog}
+                    onRemove={removeOrderDiscount}
+                    confirmStatus={orderDiscountAddStatus}
+                    removeStatus={orderDiscountRemoveStatus}
+                  />
+                </Box>
               </Popover.Content>
             </Popover>
           </td>
