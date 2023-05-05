@@ -80,6 +80,16 @@ const messages = defineMessages({
     defaultMessage: "Invalid value",
     description: "value input helper text",
   },
+  valueBiggerThatPrice: {
+    defaultMessage: "Can not be higher than the price",
+    id: "dl23LG",
+    description: "value input helper text",
+  },
+  valueBiggerThat100: {
+    defaultMessage: "Can not be higher than 100%",
+    id: "Znru5E",
+    description: "value input helper text",
+  },
   discountValueLabel: {
     id: "GAmGog",
     defaultMessage: "Discount value",
@@ -142,7 +152,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
 
   const initialData = getInitialData();
 
-  const [isValueError, setValueError] = useState<boolean>(false);
+  const [valueErrorMsg, setValueErrorMsg] = useState<string | null>(null);
   const [reason, setReason] = useState<string>(initialData.reason);
   const [value, setValue] = useState<string>(initialData.value);
   const [calculationMode, setCalculationMode] = useState<DiscountValueTypeEnum>(
@@ -172,20 +182,36 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   ) => {
     const value = event.target.value;
 
-    handleSetError(value);
+    setValueErrorMsg(getErrorMessage(value));
     setValue(value);
   };
 
   const getParsedDiscountValue = () => parseFloat(value) || 0;
 
-  const isAmountTooLarge = () => {
+  const isAmountTooLarge = (value?: string) => {
     const topAmount = isDiscountTypePercentage ? 100 : maxAmount;
+
+    if (value) {
+      return (parseFloat(value) || 0) > topAmount;
+    }
 
     return getParsedDiscountValue() > topAmount;
   };
 
-  const handleSetError = (value: string) => {
-    setValueError(!numbersRegex.test(value));
+  const getErrorMessage = (value: string): string | null => {
+    if (isAmountTooLarge(value)) {
+      if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
+        return intl.formatMessage(messages.valueBiggerThat100);
+      }
+
+      return intl.formatMessage(messages.valueBiggerThatPrice);
+    }
+
+    if (!numbersRegex.test(value)) {
+      return intl.formatMessage(messages.invalidValue);
+    }
+
+    return null;
   };
 
   const handleConfirm = () => {
@@ -200,7 +226,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     setReason(initialData.reason);
     setValue(initialData.value);
     setCalculationMode(initialData.calculationMode);
-    setValueError(false);
+    setValueErrorMsg(null);
   };
 
   useEffect(setDefaultValues, [
@@ -231,7 +257,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
       ? recalculatedValueFromPercentageToFixed
       : recalculatedValueFromFixedToPercentage;
 
-    handleSetError(recalculatedValue);
+    setValueErrorMsg(getErrorMessage(recalculatedValue));
     setValue(recalculatedValue);
   };
 
@@ -246,7 +272,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     calculationMode === DiscountValueTypeEnum.FIXED ? currency : "%";
 
   const isSubmitDisabled =
-    !getParsedDiscountValue() || isValueError || isAmountTooLarge();
+    !getParsedDiscountValue() || !valueErrorMsg || isAmountTooLarge();
 
   return (
     <Card>
@@ -263,8 +289,8 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
         <CardSpacer />
         <PriceField
           label={intl.formatMessage(messages.discountValueLabel)}
-          error={isValueError}
-          hint={isValueError && intl.formatMessage(messages.invalidValue)}
+          error={!!valueErrorMsg}
+          hint={valueErrorMsg}
           value={value}
           onChange={handleSetDiscountValue}
           currencySymbol={valueFieldSymbol}
