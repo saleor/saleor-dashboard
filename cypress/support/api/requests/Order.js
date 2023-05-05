@@ -157,7 +157,7 @@ export function getOrder(orderId) {
       }
     }
   }`;
-  cy.sendRequestWithQuery(query).its("body.data.order");
+  return cy.sendRequestWithQuery(query).its("body.data.order");
 }
 
 export function fulfillOrder({ orderId, warehouse, quantity, linesId }) {

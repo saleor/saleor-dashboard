@@ -3,40 +3,32 @@
 
 import faker from "faker";
 
-import { ORDER_GRANT_REFUND } from "../../elements/orders/order-grant-refund";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
-import { ORDER_TRANSACTION_CREATE } from "../../elements/orders/transaction-selectoris";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import { urlList } from "../../fixtures/urlList";
-import { ONE_PERMISSION_USERS } from "../../fixtures/users";
+import { ONE_PERMISSION_USERS, urlList } from "../../fixtures";
 import {
   createChannel,
-  updateChannelOrderSettings,
-} from "../../support/api/requests/Channels";
-import {
   createCustomer,
   deleteCustomersStartsWith,
-} from "../../support/api/requests/Customer";
-import { getOrder } from "../../support/api/requests/Order";
-import { deleteChannelsStartsWith } from "../../support/api/utils/channelsUtils";
+  getOrder,
+  updateChannelOrderSettings,
+} from "../../support/api/requests";
 import {
   createOrder,
   createReadyToFulfillOrder,
-} from "../../support/api/utils/ordersUtils";
-import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import {
   createShipping,
+  deleteChannelsStartsWith,
   deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
-import {
   getDefaultTaxClass,
+  productsUtils,
   updateTaxConfigurationForChannel,
-} from "../../support/api/utils/taxesUtils";
+} from "../../support/api/utils";
+import { transactionsOrderUtils } from "../../support/pages/";
 
 describe("Orders", () => {
   const startsWith = "CyOrders-";
   const randomName = startsWith + faker.datatype.number();
+  const randomRefNumber = startsWith + faker.datatype.number();
+  const randomPSPNumber = startsWith + faker.datatype.number();
 
   let customer;
   let channel;
@@ -129,7 +121,7 @@ describe("Orders", () => {
   });
 
   it(
-    "should capture manual transaction. TC: 3901",
+    "should mark order as paid. TC: 3901",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       createOrder({
@@ -138,25 +130,15 @@ describe("Orders", () => {
         channelId: channel.id,
         variantsList,
         address,
-      })
-        .then(order => {
-          cy.visit(urlList.orders + `${order.id}`);
-          cy.addAliasToGraphRequest("OrderMarkAsPaid");
-          cy.get(SHARED_ELEMENTS.skeleton).should("not.exist");
-          cy.get(ORDERS_SELECTORS.markAsPaidButton).click();
-          cy.get(ORDERS_SELECTORS.transactionReferenceInput).type(
-            `ref_${randomName}`,
-          );
-          cy.get(BUTTON_SELECTORS.submit)
-            .click()
-            .waitForRequestAndCheckIfNoErrors("@OrderMarkAsPaid");
-          cy.get(ORDERS_SELECTORS.orderTransactionsList).should("be.visible");
-          getOrder(order.id);
-        })
-        .then(orderResp => {
+      }).then(order => {
+        cy.visit(urlList.orders + `${order.id}`);
+        transactionsOrderUtils.markAsPaidOrderWithRefNumber(randomRefNumber);
+        cy.checkIfElementIsVisible(ORDERS_SELECTORS.orderTransactionsList);
+        getOrder(order.id).then(orderResp => {
           expect(orderResp.paymentStatus).to.be.eq("FULLY_CHARGED");
           expect(orderResp.transactions).to.be.not.null;
         });
+      });
     },
   );
 
@@ -164,63 +146,36 @@ describe("Orders", () => {
     "should be able to grant and send refund TC: 3902",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
-      let order;
-
       createReadyToFulfillOrder({
         customerId: customer.id,
         shippingMethod,
         channelId: channel.id,
         variantsList,
         address,
-      })
-        .then(({ order: orderResp }) => {
-          order = orderResp;
-          const total = order.total.gross.amount;
+      }).then(({ order: orderResp }) => {
+        const orderPrice = orderResp.total.gross.amount;
 
-          cy.visit(urlList.orders + `${order.id}`);
-          cy.addAliasToGraphRequest("OrderDetailsGrantRefund");
-          cy.get(SHARED_ELEMENTS.skeleton).should("not.exist");
-          cy.get(ORDERS_SELECTORS.markAsPaidButton).should("not.exist");
-          cy.get(ORDERS_SELECTORS.grantRefundButton).click();
-          cy.waitForRequestAndCheckIfNoErrors("@OrderDetailsGrantRefund");
-          cy.get(SHARED_ELEMENTS.skeleton).should("not.exist");
-          cy.get(ORDER_GRANT_REFUND.setMaxQuantityButton).click();
-          cy.get(ORDER_GRANT_REFUND.refundReasonInput).type(
-            `reason_${randomName}`,
-          );
-          cy.get(ORDER_GRANT_REFUND.refundShippingCheckbox).click();
-          cy.get(ORDER_GRANT_REFUND.applySelectedRefundButton).click();
-          cy.get(ORDER_GRANT_REFUND.refundAmountInput).should(
-            "contain.value",
-            total,
-          );
-          cy.get(ORDER_GRANT_REFUND.grantRefundButton)
-            .should("be.enabled")
-            .click()
-            .confirmationMessageShouldAppear();
-
-          cy.get(ORDERS_SELECTORS.refundButton).click();
-          cy.get(ORDER_TRANSACTION_CREATE.transactionDescription).type(
-            `desc_${randomName}`,
-          );
-          cy.get(ORDER_TRANSACTION_CREATE.transactionPspReference).type(
-            `psp_${randomName}`,
-          );
-          cy.get(ORDER_TRANSACTION_CREATE.transactAmountInput).type(total);
-          cy.get(ORDER_TRANSACTION_CREATE.manualTransactionSubmit)
-            .click()
-            .confirmationMessageShouldAppear();
-          getOrder(order.id);
-        })
-        .then(orderResp => {
-          expect(orderResp.paymentStatus).to.be.eq("FULLY_REFUNDED");
+        cy.visit(urlList.orders + `${orderResp.id}`);
+        cy.checkIfElementNotExist(ORDERS_SELECTORS.markAsPaidButton);
+        transactionsOrderUtils.grantRefundAllProductsAndShippingWithReason(
+          "refund reason: wrong size",
+          orderPrice,
+        );
+        transactionsOrderUtils.sendRefundWithDescriptionPSPAndAmount(
+          "refund description",
+          randomPSPNumber,
+          orderPrice,
+        );
+        getOrder(orderResp.id).then(orderResp => {
+          expect(orderResp.paymentStatus).to.be.eq("NOT_CHARGED");
           expect(orderResp.transactions).to.be.not.null;
         });
+      });
     },
   );
 
   it(
-    "should be able to capture manual transaction for partial amount TC: 3903",
+    "should be able to capture manual transaction that covers partial order price TC: 3903",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       createOrder({
@@ -229,30 +184,20 @@ describe("Orders", () => {
         channelId: channel.id,
         variantsList,
         address,
-      })
-        .then(order => {
-          let total = order.total.gross.amount;
-          total = total - 1;
+      }).then(order => {
+        const partialOrderPrice = order.total.gross.amount - 1;
 
-          cy.visit(urlList.orders + `${order.id}`);
-          cy.get(SHARED_ELEMENTS.skeleton).should("not.exist");
-          cy.get(ORDERS_SELECTORS.captureManualTransactionButton).click();
-          cy.get(ORDER_TRANSACTION_CREATE.transactionDescription).type(
-            `desc_${randomName}`,
-          );
-          cy.get(ORDER_TRANSACTION_CREATE.transactionPspReference).type(
-            `psp_${randomName}`,
-          );
-          cy.get(ORDER_TRANSACTION_CREATE.transactAmountInput).type(total);
-          cy.get(ORDER_TRANSACTION_CREATE.manualTransactionSubmit)
-            .click()
-            .confirmationMessageShouldAppear();
-          getOrder(order.id);
-        })
-        .then(orderResp => {
+        cy.visit(urlList.orders + `${order.id}`);
+        transactionsOrderUtils.captureManualTransaction(
+          "Manual capture description",
+          randomPSPNumber,
+          partialOrderPrice,
+        );
+        getOrder(order.id).then(orderResp => {
           expect(orderResp.paymentStatus).to.be.eq("PARTIALLY_CHARGED");
           expect(orderResp.transactions).to.be.not.null;
         });
+      });
     },
   );
 });
