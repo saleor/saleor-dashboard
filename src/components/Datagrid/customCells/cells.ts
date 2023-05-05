@@ -11,6 +11,7 @@ import {
   DropdownChoice,
 } from "./DropdownCell";
 import { MoneyCell } from "./MoneyCell";
+import { MoneyDiscuntedCell } from "./MoneyDiscountedCell";
 import { ThumbnailCell } from "./ThumbnailCell";
 
 const common = {
@@ -114,6 +115,41 @@ export function moneyCell(
       value,
       currency,
       undiscounted,
+      locale,
+    },
+    copyData: value?.toString() ?? "",
+  };
+}
+
+interface MoneyDiscountedCellData {
+  value: number | string | null;
+  discount?: string | number;
+  undiscounted?: string | number;
+  currency: string;
+  locale: Locale;
+  lineItemId?: string;
+}
+
+export function moneyDiscountedCell(
+  {
+    value,
+    undiscounted,
+    currency,
+    locale,
+    lineItemId,
+  }: MoneyDiscountedCellData,
+  opts?: Partial<GridCell>,
+): MoneyDiscuntedCell {
+  return {
+    ...common,
+    ...opts,
+    kind: GridCellKind.Custom,
+    data: {
+      kind: "money-discounted-cell",
+      value,
+      currency,
+      undiscounted,
+      lineItemId,
       locale,
     },
     copyData: value?.toString() ?? "",
