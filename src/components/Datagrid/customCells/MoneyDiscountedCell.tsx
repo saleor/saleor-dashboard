@@ -48,7 +48,7 @@ const MoneyDiscountedCellEditor = ({ onFinishedEditing, value }) => {
     <OrderDiscountCommonModal
       onClose={() => onFinishedEditing(undefined)}
       modalType={ORDER_LINE_DISCOUNT}
-      maxPrice={discountProviderValues.unitDiscountedPrice}
+      maxPrice={discountProviderValues.unitUndiscountedPrice}
       onConfirm={handleDiscountConfirm}
       onRemove={handleDiscountRemove}
       existingDiscount={discountProviderValues.orderLineDiscount}
