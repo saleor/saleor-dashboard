@@ -3,7 +3,6 @@ import {
   CountryCode,
   useAddressValidationRulesQuery,
 } from "@dashboard/graphql";
-import { ChoiceValue } from "@dashboard/saleor-sdk/apollo/types";
 
 interface AreaChoices {
   label: string;
@@ -11,7 +10,9 @@ interface AreaChoices {
   raw: string;
 }
 
-const prepareChoices = (values: ChoiceValue[]): AreaChoices[] =>
+const prepareChoices = (
+  values: AddressValidationRulesQuery["addressValidationRules"]["countryAreaChoices"],
+): AreaChoices[] =>
   values.map(v => ({
     label: v.verbose,
     value: v.verbose,

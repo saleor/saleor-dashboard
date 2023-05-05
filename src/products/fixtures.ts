@@ -8,7 +8,6 @@ import {
   ProductVariantFragment,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
-import { ProductType } from "@dashboard/saleor-sdk/apollo/types";
 import { RelayToFlat } from "@dashboard/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
@@ -3827,9 +3826,7 @@ export const variantProductImages = (placeholderImage: string) =>
 export const variantSiblings = (placeholderImage: string) =>
   variant(placeholderImage).product.variants;
 
-export const productTypesList: Array<
-  Pick<ProductType, "id" | "name" | "hasVariants">
-> = [
+export const productTypesList = [
   {
     hasVariants: true,
     id: "UHJvZHVjdFR5cGU6Nw==",

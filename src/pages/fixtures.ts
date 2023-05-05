@@ -3,7 +3,6 @@ import {
   PageDetailsFragment,
   PageFragment,
 } from "@dashboard/graphql";
-import { PageType } from "@dashboard/saleor-sdk/apollo/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 
@@ -442,7 +441,7 @@ export const page: PageDetailsFragment = {
   title: "About",
 };
 
-export const pageTypesList: Array<Pick<PageType, "id" | "name">> = [
+export const pageTypesList: Array<{ id: string; name: string }> = [
   {
     id: "1111ZHVjdFR5cGU6Nw==",
     name: "General",

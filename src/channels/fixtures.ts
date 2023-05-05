@@ -4,9 +4,9 @@ import {
   ChannelErrorCode,
   ChannelErrorFragment,
   MarkAsPaidStrategyEnum,
+  MoneyInput,
   ProductFragment,
 } from "@dashboard/graphql";
-import { Money } from "@dashboard/saleor-sdk/apollo/types";
 
 export const channelCreateErrors: ChannelErrorFragment[] = [
   {
@@ -297,10 +297,10 @@ type ProductChannelsWithPricing = ProductFragment["channelListings"][0] & {
   pricing: {
     priceRange: {
       start: {
-        net: Money;
+        net: MoneyInput;
       };
       stop: {
-        net: Money;
+        net: MoneyInput;
       };
     };
   };
