@@ -5,8 +5,6 @@ import {
 import OrderTransaction, {
   OrderTransactionProps,
 } from "@dashboard/orders/components/OrderTransaction";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { prepareMoney } from "../fixtures";
@@ -150,7 +148,10 @@ const longAmountProps: OrderTransactionProps = {
   },
 };
 
-storiesOf("Orders / OrderTransaction", module)
-  .addDecorator(Decorator)
-  .add("default", () => <OrderTransaction {...props} />)
-  .add("long amounts", () => <OrderTransaction {...longAmountProps} />);
+export default {
+  title: "Orders / OrderTransaction",
+};
+
+export const Default = () => <OrderTransaction {...props} />;
+
+export const LongAmounts = () => <OrderTransaction {...longAmountProps} />;

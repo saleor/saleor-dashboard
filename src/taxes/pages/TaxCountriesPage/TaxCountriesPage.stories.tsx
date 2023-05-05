@@ -1,6 +1,4 @@
-import Decorator from "@dashboard/storybook/Decorator";
 import { taxCountryConfigurations } from "@dashboard/taxes/fixtures";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import TaxCountriesPage, { TaxCountriesPageProps } from "./TaxCountriesPage";
@@ -16,9 +14,10 @@ const props: TaxCountriesPageProps = {
   disabled: false,
 };
 
-storiesOf("Taxes / Countries view", module)
-  .addDecorator(Decorator)
-  .add("loading", () => (
-    <TaxCountriesPage {...props} countryTaxesData={undefined} />
-  ))
-  .add("default", () => <TaxCountriesPage {...props} />);
+export default {
+  title: "Taxes / Countries view",
+};
+
+export const Loading = () => (
+  <TaxCountriesPage {...props} countryTaxesData={undefined} />
+);

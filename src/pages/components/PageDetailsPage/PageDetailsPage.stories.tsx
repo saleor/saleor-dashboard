@@ -2,8 +2,6 @@ import { fetchMoreProps } from "@dashboard/fixtures";
 import { PageErrorCode } from "@dashboard/graphql";
 import { PageData } from "@dashboard/pages/components/PageDetailsPage/form";
 import { page } from "@dashboard/pages/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import PageDetailsPage, { PageDetailsPageProps } from "./PageDetailsPage";
@@ -25,16 +23,21 @@ const props: PageDetailsPageProps = {
   fetchMoreAttributeValues: fetchMoreProps,
 };
 
-storiesOf("Pages / Page details", module)
-  .addDecorator(Decorator)
-  .add("default", () => <PageDetailsPage {...props} />)
-  .add("loading", () => (
-    <PageDetailsPage {...props} loading={true} page={undefined} />
-  ))
-  .add("form errors", () => (
-    <PageDetailsPage
-      {...props}
-      errors={([
+export default {
+  title: "Pages / Page details",
+};
+
+export const Default = () => <PageDetailsPage {...props} />;
+
+export const Loading = () => (
+  <PageDetailsPage {...props} loading={true} page={undefined} />
+);
+
+export const FormErrors = () => (
+  <PageDetailsPage
+    {...props}
+    errors={(
+      [
         "title",
         "slug",
         "content",
@@ -42,12 +45,13 @@ storiesOf("Pages / Page details", module)
         "isPublished",
         "seoDescription",
         "seoTitle",
-      ] as Array<keyof PageData>).map(field => ({
-        __typename: "PageError",
-        attributes: [],
-        code: PageErrorCode.INVALID,
-        field,
-        message: "Page field error",
-      }))}
-    />
-  ));
+      ] as Array<keyof PageData>
+    ).map(field => ({
+      __typename: "PageError",
+      attributes: [],
+      code: PageErrorCode.INVALID,
+      field,
+      message: "Page field error",
+    }))}
+  />
+);

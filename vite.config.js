@@ -57,7 +57,7 @@ export default defineConfig(({ command, mode }) => {
   const plugins = [
     react(),
     createHtmlPlugin({
-      entry: "/index.tsx",
+      entry: path.resolve(__dirname, "src", "index.tsx"),
       template: "index.html",
       inject: {
         data: {
@@ -115,7 +115,7 @@ export default defineConfig(({ command, mode }) => {
           Since "src" is exposed as a root,
           sw.js has to be moved above, to preventing loading in a dev mode.
         */
-        srcDir: "../",
+        srcDir: path.resolve(__dirname),
         filename: "sw.js",
       }),
     );

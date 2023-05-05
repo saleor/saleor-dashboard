@@ -10,11 +10,9 @@ import {
 import { StaffMemberStatus } from "@dashboard/graphql";
 import { staffMembers } from "@dashboard/staff/fixtures";
 import { StaffListUrlSortField } from "@dashboard/staff/urls";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import StaffListPage, { StaffListPageProps } from "./StaffListPage";
 
 const props: StaffListPageProps = {
@@ -38,14 +36,19 @@ const props: StaffListPageProps = {
   staffMembers,
 };
 
-storiesOf("Staff / Staff members", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <StaffListPage {...props} />)
-  .add("when loading", () => (
-    <StaffListPage {...props} disabled={true} staffMembers={undefined} />
-  ))
-  .add("no limits", () => <StaffListPage {...props} limits={undefined} />)
-  .add("limits reached", () => (
-    <StaffListPage {...props} limits={limitsReached} />
-  ));
+export default {
+  title: "Staff / Staff members",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <StaffListPage {...props} />;
+
+export const WhenLoading = () => (
+  <StaffListPage {...props} disabled={true} staffMembers={undefined} />
+);
+
+export const NoLimits = () => <StaffListPage {...props} limits={undefined} />;
+
+export const LimitsReached = () => (
+  <StaffListPage {...props} limits={limitsReached} />
+);

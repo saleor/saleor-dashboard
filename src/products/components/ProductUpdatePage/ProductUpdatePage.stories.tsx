@@ -6,10 +6,8 @@ import {
   ProductErrorCode,
   ProductVariantBulkErrorCode,
 } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
 import { taxClasses } from "@dashboard/taxes/fixtures";
 import { warehouseList } from "@dashboard/warehouses/fixtures";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { product as productFixture } from "../../fixtures";
@@ -67,119 +65,133 @@ const props: ProductUpdatePageProps = {
   attributeValues: [],
 };
 
-storiesOf("Products / Product edit", module)
-  .addDecorator(Decorator)
-  .add("when data is fully loaded", () => <ProductUpdatePage {...props} />)
-  .add("when product has no images", () => (
-    <ProductUpdatePage {...props} media={[]} />
-  ))
-  .add("when product has no variants", () => (
-    <ProductUpdatePage
-      {...props}
-      product={{
-        ...product,
-        productType: { ...product.productType, hasVariants: false },
-      }}
-    />
-  ))
-  .add("when loading data", () => (
-    <ProductUpdatePage
-      {...props}
-      disabled={true}
-      header={undefined}
-      categories={[]}
-      variants={undefined}
-      product={undefined}
-      collections={undefined}
-      media={undefined}
-    />
-  ))
-  .add("no variants", () => (
-    <ProductUpdatePage
-      {...props}
-      product={{
-        ...props.product,
-        productType: {
-          ...product.productType,
-          hasVariants: false,
-        },
-      }}
-    />
-  ))
-  .add("no stock and no variants", () => (
-    <ProductUpdatePage
-      {...props}
-      product={{
-        ...product,
+export default {
+  title: "Products / Product edit",
+};
 
-        productType: {
-          ...product.productType,
-          hasVariants: false,
+export const WhenDataIsFullyLoaded = () => <ProductUpdatePage {...props} />;
+
+export const WhenProductHasNoImages = () => (
+  <ProductUpdatePage {...props} media={[]} />
+);
+
+export const WhenProductHasNoVariants = () => (
+  <ProductUpdatePage
+    {...props}
+    product={{
+      ...product,
+      productType: { ...product.productType, hasVariants: false },
+    }}
+  />
+);
+
+export const WhenLoadingData = () => (
+  <ProductUpdatePage
+    {...props}
+    disabled={true}
+    header={undefined}
+    categories={[]}
+    variants={undefined}
+    product={undefined}
+    collections={undefined}
+    media={undefined}
+  />
+);
+
+export const NoVariants = () => (
+  <ProductUpdatePage
+    {...props}
+    product={{
+      ...props.product,
+      productType: {
+        ...product.productType,
+        hasVariants: false,
+      },
+    }}
+  />
+);
+
+export const NoStockAndNoVariants = () => (
+  <ProductUpdatePage
+    {...props}
+    product={{
+      ...product,
+
+      productType: {
+        ...product.productType,
+        hasVariants: false,
+      },
+      variants: [
+        {
+          ...product.variants[0],
+          stocks: [],
         },
-        variants: [
-          {
-            ...product.variants[0],
-            stocks: [],
-          },
-        ],
-      }}
-    />
-  ))
-  .add("no stock, no variants and no warehouses", () => (
-    <ProductUpdatePage
-      {...props}
-      warehouses={[]}
-      product={{
-        ...product,
-        productType: {
-          ...product.productType,
-          hasVariants: false,
+      ],
+    }}
+  />
+);
+
+export const NoStockNoVariantsAndNoWarehouses = () => (
+  <ProductUpdatePage
+    {...props}
+    warehouses={[]}
+    product={{
+      ...product,
+      productType: {
+        ...product.productType,
+        hasVariants: false,
+      },
+      variants: [
+        {
+          ...product.variants[0],
+          stocks: [],
         },
-        variants: [
-          {
-            ...product.variants[0],
-            stocks: [],
-          },
-        ],
-      }}
-    />
-  ))
-  .add("no product attributes", () => (
-    <ProductUpdatePage
-      {...props}
-      product={{
-        ...props.product,
-        attributes: [],
-      }}
-    />
-  ))
-  .add("form errors", () => (
-    <ProductUpdatePage
-      {...props}
-      errors={(
-        [
-          "attributes",
-          "category",
-          "chargeTaxes",
-          "collections",
-          "name",
-          "publicationDate",
-          "seoDescription",
-          "seoTitle",
-          "sku",
-          "stockQuantity",
-        ] as Array<keyof ProductUpdateFormData | "attributes">
-      ).map(field => ({
-        __typename: "ProductError",
-        attributes:
-          field === "attributes" ? [product.attributes[0].attribute.id] : null,
-        code: ProductErrorCode.INVALID,
-        field,
-        message: "Attributes invalid",
-      }))}
-    />
-  ))
-  .add("no limits", () => <ProductUpdatePage {...props} limits={undefined} />)
-  .add("limits reached", () => (
-    <ProductUpdatePage {...props} limits={limitsReached} />
-  ));
+      ],
+    }}
+  />
+);
+
+export const NoProductAttributes = () => (
+  <ProductUpdatePage
+    {...props}
+    product={{
+      ...props.product,
+      attributes: [],
+    }}
+  />
+);
+
+export const FormErrors = () => (
+  <ProductUpdatePage
+    {...props}
+    errors={(
+      [
+        "attributes",
+        "category",
+        "chargeTaxes",
+        "collections",
+        "name",
+        "publicationDate",
+        "seoDescription",
+        "seoTitle",
+        "sku",
+        "stockQuantity",
+      ] as Array<keyof ProductUpdateFormData | "attributes">
+    ).map(field => ({
+      __typename: "ProductError",
+      attributes:
+        field === "attributes" ? [product.attributes[0].attribute.id] : null,
+      code: ProductErrorCode.INVALID,
+      field,
+      message: "Attributes invalid",
+    }))}
+  />
+);
+
+export const NoLimits = () => (
+  <ProductUpdatePage {...props} limits={undefined} />
+);
+
+export const LimitsReached = () => (
+  <ProductUpdatePage {...props} limits={limitsReached} />
+);
