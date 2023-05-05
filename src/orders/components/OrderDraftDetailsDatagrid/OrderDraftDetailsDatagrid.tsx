@@ -33,11 +33,6 @@ export const OrderDraftDetailsDatagrid = ({
   const datagrid = useDatagridChangeState();
 
   const { availableColumns } = useColumns();
-  const getCellContent = useGetCellContent({
-    columns: availableColumns,
-    lines,
-    errors,
-  });
 
   const {
     availableColumnsChoices,
@@ -49,6 +44,12 @@ export const OrderDraftDetailsDatagrid = ({
     onColumnsChange,
     picker,
   } = useColumnsDefault(availableColumns);
+
+  const getCellContent = useGetCellContent({
+    columns,
+    lines,
+    errors,
+  });
 
   const getMenuItems = useCallback(
     index => [
