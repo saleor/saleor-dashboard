@@ -3,7 +3,7 @@ import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Metadata, { MetadataFormData } from "@dashboard/components/Metadata";
+import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import { PageErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";

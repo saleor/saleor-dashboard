@@ -1,7 +1,7 @@
 export const AVAILABLE_CHANNELS_FORM = {
   manageChannelsButton: "[data-test-id='channels-availability-manage-button']",
   assignedChannels: "[data-test-id='expand-icon']",
-  publishedRadioButtons: "[name*='isPublished']",
+  publishedRadioButtons: "[name*='isPublished'] > ",
   availableForPurchaseRadioButtons: "[name*='isAvailableForPurchase']",
   radioButtonsValueTrue: "[value='true']",
   radioButtonsValueFalse: "[value='false']",
