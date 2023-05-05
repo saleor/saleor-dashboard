@@ -6,9 +6,9 @@ import {
   clients,
   draftOrder,
 } from "@dashboard/orders/fixtures";
-import { MockedUserProvider } from "@dashboard/storybook/MockedUserProvider";
 import React from "react";
 
+import { MockedUserProvider } from "../../../../.storybook/helpers";
 import OrderDraftPageComponent, { OrderDraftPageProps } from "./OrderDraftPage";
 import { getDiscountsProvidersWrapper } from "./storybook.utils";
 

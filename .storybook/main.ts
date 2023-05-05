@@ -22,15 +22,7 @@ const config: StorybookConfig = {
   },
 
   async viteFinal(config) {
-    config.plugins = await withoutVitePlugins(config.plugins, [
-      // "vite-plugin-pwa:build",
-      // "vite-plugin-pwa",
-      // "vite-plugin-pwa:info",
-      // "vite-plugin-pwa:build",
-      // "vite-plugin-pwa:dev-sw",
-      // "vite:react-swc",
-      "vite:html",
-    ]);
+    config.plugins = await withoutVitePlugins(config.plugins, ["vite:html"]);
 
     return mergeConfig(config, {
       resolve: {
