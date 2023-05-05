@@ -25,6 +25,39 @@ interface MoneyDiscountedCellProps {
 
 export type MoneyDiscuntedCell = CustomCell<MoneyDiscountedCellProps>;
 
+const MoneyDiscountedCellEditor = ({ onFinishedEditing, value }) => {
+  const getDiscountProviderValues = useOrderLineDiscountContext();
+  const editedLineId = value.data.lineItemId;
+  const discountProviderValues = editedLineId
+    ? getDiscountProviderValues(editedLineId)
+    : null;
+
+  const handleDiscountConfirm = useCallback(
+    async (discount: OrderDiscountCommonInput) => {
+      await discountProviderValues.addOrderLineDiscount(discount);
+      onFinishedEditing(undefined);
+    },
+    [discountProviderValues, onFinishedEditing],
+  );
+  const handleDiscountRemove = useCallback(async () => {
+    await discountProviderValues.removeOrderLineDiscount();
+    onFinishedEditing(undefined);
+  }, [discountProviderValues, onFinishedEditing]);
+
+  return (
+    <OrderDiscountCommonModal
+      onClose={() => onFinishedEditing(undefined)}
+      modalType={ORDER_LINE_DISCOUNT}
+      maxPrice={discountProviderValues.unitDiscountedPrice}
+      onConfirm={handleDiscountConfirm}
+      onRemove={handleDiscountRemove}
+      existingDiscount={discountProviderValues.orderLineDiscount}
+      confirmStatus={discountProviderValues.orderLineDiscountUpdateStatus}
+      removeStatus={discountProviderValues.orderLineDiscountRemoveStatus}
+    />
+  );
+};
+
 export const moneyDiscountedCellRenderer =
   (): CustomRenderer<MoneyDiscuntedCell> => ({
     kind: GridCellKind.Custom,
@@ -90,50 +123,8 @@ export const moneyDiscountedCellRenderer =
       return true;
     },
     provideEditor: () => ({
-      editor: ({ onFinishedEditing, value }) => {
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const getDiscountProviderValues = useOrderLineDiscountContext();
-        const editedLineId = value.data.lineItemId;
-        const discountProviderValues = editedLineId
-          ? getDiscountProviderValues(editedLineId)
-          : null;
-
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const handleDiscountConfirm = useCallback(
-          async (discount: OrderDiscountCommonInput) => {
-            await discountProviderValues.addOrderLineDiscount(discount);
-            onFinishedEditing(undefined);
-          },
-          [discountProviderValues, onFinishedEditing],
-        );
-        // eslint-disable-next-line react-hooks/rules-of-hooks
-        const handleDiscountRemove = useCallback(async () => {
-          await discountProviderValues.removeOrderLineDiscount();
-          onFinishedEditing(undefined);
-        }, [discountProviderValues, onFinishedEditing]);
-
-        return (
-          <OrderDiscountCommonModal
-            onClose={() => onFinishedEditing(undefined)}
-            modalType={ORDER_LINE_DISCOUNT}
-            maxPrice={discountProviderValues.unitDiscountedPrice}
-            onConfirm={handleDiscountConfirm}
-            onRemove={handleDiscountRemove}
-            existingDiscount={discountProviderValues.orderLineDiscount}
-            confirmStatus={discountProviderValues.orderLineDiscountUpdateStatus}
-            removeStatus={discountProviderValues.orderLineDiscountRemoveStatus}
-          />
-        );
-      },
+      editor: MoneyDiscountedCellEditor,
       disablePadding: true,
-      deletedValue: cell => ({
-        ...cell,
-        copyData: "",
-        data: {
-          ...cell.data,
-          value: cell.data.value ?? null,
-        },
-      }),
     }),
     onPaste: (value, data) => ({
       ...data,
