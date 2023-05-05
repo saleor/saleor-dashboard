@@ -533,16 +533,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   }
                   rowMarkerWidth={48}
                 />
-                <Box
-                  position="relative"
-                  backgroundColor="plain"
-                  borderTopWidth={1}
-                  borderTopStyle="solid"
-                  borderColor="neutralPlain"
-                  __maxWidth={contentMaxWidth}
-                  margin="auto"
-                  zIndex="2"
-                />
                 {/* FIXME: https://github.com/glideapps/glide-data-grid/issues/505 */}
                 {hasColumnGroups && (
                   <div className={classes.columnGroupFixer} />
