@@ -2,9 +2,9 @@ import { Button } from "@dashboard/components/Button";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { SetPasswordData } from "@dashboard/saleor-sdk";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import { TextField, Typography } from "@material-ui/core";
-import { SetPasswordData } from "@saleor/sdk";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

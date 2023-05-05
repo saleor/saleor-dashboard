@@ -11,7 +11,7 @@ for (const rawSuffix of schemaSuffixes) {
 
   generate(
     {
-      schema: `./introspection${suffix}.json`,
+      schema: [`./introspection${suffix}.json`, "local-schema.graphql"],
       overwrite: true,
       generates: {
         [getOutputPath("fragmentTypes", suffix)]: {
@@ -97,6 +97,7 @@ function getDocumentsPaths(suffix, rawSuffix) {
     `./src/**/queries${suffix}.ts`,
     `./src/**/mutations${suffix}.ts`,
     `./src/**/fragments/*${suffix}.ts`,
+    `./src/**/fragments${suffix}.ts`,
     `./src/searches/*${suffix}.ts`,
     // Remove feature flag files from default suffix (matches glob)
     ...FEATURE_FLAGS.filter(flag => flag !== rawSuffix).map(

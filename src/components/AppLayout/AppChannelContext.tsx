@@ -2,7 +2,7 @@ import { useUser } from "@dashboard/auth";
 import { ChannelFragment, useBaseChannelsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { getById } from "@dashboard/misc";
-import { useSaleorConfig } from "@saleor/sdk";
+import { useSaleorConfig } from "@dashboard/saleor-sdk";
 import React from "react";
 
 interface UseAppChannel {

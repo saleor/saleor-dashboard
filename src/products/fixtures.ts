@@ -8,8 +8,8 @@ import {
   ProductVariantFragment,
   WeightUnitsEnum,
 } from "@dashboard/graphql";
+import { ProductType } from "@dashboard/saleor-sdk/apollo/types";
 import { RelayToFlat } from "@dashboard/types";
-import { ProductType } from "@saleor/sdk/dist/apollo/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 

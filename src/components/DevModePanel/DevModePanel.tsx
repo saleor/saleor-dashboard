@@ -1,8 +1,8 @@
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
+import { createFetch } from "@dashboard/saleor-sdk";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import { Dialog, DialogContent } from "@material-ui/core";
 import { DialogHeader } from "@saleor/macaw-ui";
-import { createFetch } from "@saleor/sdk";
 import React from "react";
 import { useIntl } from "react-intl";
 

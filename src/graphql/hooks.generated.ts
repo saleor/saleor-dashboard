@@ -3123,6 +3123,62 @@ export const WebhookDetailsFragmentDoc = gql`
   customHeaders
 }
     ${WebhookFragmentDoc}`;
+export const AccountErrorFragmentFragmentDoc = gql`
+    fragment AccountErrorFragment on AccountError {
+  code
+  field
+  message
+}
+    `;
+export const UserBaseFragmentFragmentDoc = gql`
+    fragment UserBaseFragment on User {
+  id
+  email
+  firstName
+  lastName
+  isStaff
+}
+    `;
+export const AddressFragmentFragmentDoc = gql`
+    fragment AddressFragment on Address {
+  id
+  firstName
+  lastName
+  companyName
+  streetAddress1
+  streetAddress2
+  city
+  cityArea
+  postalCode
+  country {
+    code
+    country
+  }
+  countryArea
+  phone
+  isDefaultBillingAddress
+  isDefaultShippingAddress
+}
+    `;
+export const UserDetailsFragmentFragmentDoc = gql`
+    fragment UserDetailsFragment on User {
+  ...UserBaseFragment
+  metadata {
+    key
+    value
+  }
+  defaultShippingAddress {
+    ...AddressFragment
+  }
+  defaultBillingAddress {
+    ...AddressFragment
+  }
+  addresses {
+    ...AddressFragment
+  }
+}
+    ${UserBaseFragmentFragmentDoc}
+${AddressFragmentFragmentDoc}`;
 export const AppCreateDocument = gql`
     mutation AppCreate($input: AppInput!) {
   appCreate(input: $input) {
@@ -13756,6 +13812,1084 @@ export function useGridAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type GridAttributesQueryHookResult = ReturnType<typeof useGridAttributesQuery>;
 export type GridAttributesLazyQueryHookResult = ReturnType<typeof useGridAttributesLazyQuery>;
 export type GridAttributesQueryResult = Apollo.QueryResult<Types.GridAttributesQuery, Types.GridAttributesQueryVariables>;
+export const SdkloginWithoutDetailsDocument = gql`
+    mutation sdkloginWithoutDetails($email: String!, $password: String!) {
+  tokenCreate(email: $email, password: $password) {
+    refreshToken
+    token
+    errors {
+      ...AccountErrorFragment
+    }
+    user {
+      ...UserBaseFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}
+${UserBaseFragmentFragmentDoc}`;
+export type SdkloginWithoutDetailsMutationFn = Apollo.MutationFunction<Types.SdkloginWithoutDetailsMutation, Types.SdkloginWithoutDetailsMutationVariables>;
+
+/**
+ * __useSdkloginWithoutDetailsMutation__
+ *
+ * To run a mutation, you first call `useSdkloginWithoutDetailsMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkloginWithoutDetailsMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkloginWithoutDetailsMutation, { data, loading, error }] = useSdkloginWithoutDetailsMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useSdkloginWithoutDetailsMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkloginWithoutDetailsMutation, Types.SdkloginWithoutDetailsMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkloginWithoutDetailsMutation, Types.SdkloginWithoutDetailsMutationVariables>(SdkloginWithoutDetailsDocument, options);
+      }
+export type SdkloginWithoutDetailsMutationHookResult = ReturnType<typeof useSdkloginWithoutDetailsMutation>;
+export type SdkloginWithoutDetailsMutationResult = Apollo.MutationResult<Types.SdkloginWithoutDetailsMutation>;
+export type SdkloginWithoutDetailsMutationOptions = Apollo.BaseMutationOptions<Types.SdkloginWithoutDetailsMutation, Types.SdkloginWithoutDetailsMutationVariables>;
+export const SdkloginDocument = gql`
+    mutation sdklogin($email: String!, $password: String!) {
+  tokenCreate(email: $email, password: $password) {
+    token
+    refreshToken
+    errors {
+      ...AccountErrorFragment
+    }
+    user {
+      ...UserDetailsFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}
+${UserDetailsFragmentFragmentDoc}`;
+export type SdkloginMutationFn = Apollo.MutationFunction<Types.SdkloginMutation, Types.SdkloginMutationVariables>;
+
+/**
+ * __useSdkloginMutation__
+ *
+ * To run a mutation, you first call `useSdkloginMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkloginMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkloginMutation, { data, loading, error }] = useSdkloginMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useSdkloginMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkloginMutation, Types.SdkloginMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkloginMutation, Types.SdkloginMutationVariables>(SdkloginDocument, options);
+      }
+export type SdkloginMutationHookResult = ReturnType<typeof useSdkloginMutation>;
+export type SdkloginMutationResult = Apollo.MutationResult<Types.SdkloginMutation>;
+export type SdkloginMutationOptions = Apollo.BaseMutationOptions<Types.SdkloginMutation, Types.SdkloginMutationVariables>;
+export const SdkregisterDocument = gql`
+    mutation sdkregister($input: AccountRegisterInput!) {
+  accountRegister(input: $input) {
+    errors {
+      ...AccountErrorFragment
+    }
+    requiresConfirmation
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}`;
+export type SdkregisterMutationFn = Apollo.MutationFunction<Types.SdkregisterMutation, Types.SdkregisterMutationVariables>;
+
+/**
+ * __useSdkregisterMutation__
+ *
+ * To run a mutation, you first call `useSdkregisterMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkregisterMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkregisterMutation, { data, loading, error }] = useSdkregisterMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSdkregisterMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkregisterMutation, Types.SdkregisterMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkregisterMutation, Types.SdkregisterMutationVariables>(SdkregisterDocument, options);
+      }
+export type SdkregisterMutationHookResult = ReturnType<typeof useSdkregisterMutation>;
+export type SdkregisterMutationResult = Apollo.MutationResult<Types.SdkregisterMutation>;
+export type SdkregisterMutationOptions = Apollo.BaseMutationOptions<Types.SdkregisterMutation, Types.SdkregisterMutationVariables>;
+export const SdkrefreshTokenDocument = gql`
+    mutation sdkrefreshToken($refreshToken: String!) {
+  tokenRefresh(refreshToken: $refreshToken) {
+    token
+    errors {
+      ...AccountErrorFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}`;
+export type SdkrefreshTokenMutationFn = Apollo.MutationFunction<Types.SdkrefreshTokenMutation, Types.SdkrefreshTokenMutationVariables>;
+
+/**
+ * __useSdkrefreshTokenMutation__
+ *
+ * To run a mutation, you first call `useSdkrefreshTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkrefreshTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkrefreshTokenMutation, { data, loading, error }] = useSdkrefreshTokenMutation({
+ *   variables: {
+ *      refreshToken: // value for 'refreshToken'
+ *   },
+ * });
+ */
+export function useSdkrefreshTokenMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkrefreshTokenMutation, Types.SdkrefreshTokenMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkrefreshTokenMutation, Types.SdkrefreshTokenMutationVariables>(SdkrefreshTokenDocument, options);
+      }
+export type SdkrefreshTokenMutationHookResult = ReturnType<typeof useSdkrefreshTokenMutation>;
+export type SdkrefreshTokenMutationResult = Apollo.MutationResult<Types.SdkrefreshTokenMutation>;
+export type SdkrefreshTokenMutationOptions = Apollo.BaseMutationOptions<Types.SdkrefreshTokenMutation, Types.SdkrefreshTokenMutationVariables>;
+export const SdkrefreshTokenWithUserDocument = gql`
+    mutation sdkrefreshTokenWithUser($refreshToken: String!) {
+  tokenRefresh(refreshToken: $refreshToken) {
+    token
+    user {
+      ...UserDetailsFragment
+    }
+    errors {
+      ...AccountErrorFragment
+    }
+  }
+}
+    ${UserDetailsFragmentFragmentDoc}
+${AccountErrorFragmentFragmentDoc}`;
+export type SdkrefreshTokenWithUserMutationFn = Apollo.MutationFunction<Types.SdkrefreshTokenWithUserMutation, Types.SdkrefreshTokenWithUserMutationVariables>;
+
+/**
+ * __useSdkrefreshTokenWithUserMutation__
+ *
+ * To run a mutation, you first call `useSdkrefreshTokenWithUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkrefreshTokenWithUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkrefreshTokenWithUserMutation, { data, loading, error }] = useSdkrefreshTokenWithUserMutation({
+ *   variables: {
+ *      refreshToken: // value for 'refreshToken'
+ *   },
+ * });
+ */
+export function useSdkrefreshTokenWithUserMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkrefreshTokenWithUserMutation, Types.SdkrefreshTokenWithUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkrefreshTokenWithUserMutation, Types.SdkrefreshTokenWithUserMutationVariables>(SdkrefreshTokenWithUserDocument, options);
+      }
+export type SdkrefreshTokenWithUserMutationHookResult = ReturnType<typeof useSdkrefreshTokenWithUserMutation>;
+export type SdkrefreshTokenWithUserMutationResult = Apollo.MutationResult<Types.SdkrefreshTokenWithUserMutation>;
+export type SdkrefreshTokenWithUserMutationOptions = Apollo.BaseMutationOptions<Types.SdkrefreshTokenWithUserMutation, Types.SdkrefreshTokenWithUserMutationVariables>;
+export const SdkverifyTokenDocument = gql`
+    mutation sdkverifyToken($token: String!) {
+  tokenVerify(token: $token) {
+    isValid
+    payload
+    user {
+      ...UserDetailsFragment
+    }
+    errors {
+      ...AccountErrorFragment
+    }
+  }
+}
+    ${UserDetailsFragmentFragmentDoc}
+${AccountErrorFragmentFragmentDoc}`;
+export type SdkverifyTokenMutationFn = Apollo.MutationFunction<Types.SdkverifyTokenMutation, Types.SdkverifyTokenMutationVariables>;
+
+/**
+ * __useSdkverifyTokenMutation__
+ *
+ * To run a mutation, you first call `useSdkverifyTokenMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkverifyTokenMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkverifyTokenMutation, { data, loading, error }] = useSdkverifyTokenMutation({
+ *   variables: {
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useSdkverifyTokenMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkverifyTokenMutation, Types.SdkverifyTokenMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkverifyTokenMutation, Types.SdkverifyTokenMutationVariables>(SdkverifyTokenDocument, options);
+      }
+export type SdkverifyTokenMutationHookResult = ReturnType<typeof useSdkverifyTokenMutation>;
+export type SdkverifyTokenMutationResult = Apollo.MutationResult<Types.SdkverifyTokenMutation>;
+export type SdkverifyTokenMutationOptions = Apollo.BaseMutationOptions<Types.SdkverifyTokenMutation, Types.SdkverifyTokenMutationVariables>;
+export const SdkexternalAuthenticationUrlDocument = gql`
+    mutation sdkexternalAuthenticationUrl($pluginId: String = "mirumee.authentication.openidconnect", $input: JSONString!) {
+  externalAuthenticationUrl(pluginId: $pluginId, input: $input) {
+    authenticationData
+    errors {
+      ...AccountErrorFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}`;
+export type SdkexternalAuthenticationUrlMutationFn = Apollo.MutationFunction<Types.SdkexternalAuthenticationUrlMutation, Types.SdkexternalAuthenticationUrlMutationVariables>;
+
+/**
+ * __useSdkexternalAuthenticationUrlMutation__
+ *
+ * To run a mutation, you first call `useSdkexternalAuthenticationUrlMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkexternalAuthenticationUrlMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkexternalAuthenticationUrlMutation, { data, loading, error }] = useSdkexternalAuthenticationUrlMutation({
+ *   variables: {
+ *      pluginId: // value for 'pluginId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSdkexternalAuthenticationUrlMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkexternalAuthenticationUrlMutation, Types.SdkexternalAuthenticationUrlMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkexternalAuthenticationUrlMutation, Types.SdkexternalAuthenticationUrlMutationVariables>(SdkexternalAuthenticationUrlDocument, options);
+      }
+export type SdkexternalAuthenticationUrlMutationHookResult = ReturnType<typeof useSdkexternalAuthenticationUrlMutation>;
+export type SdkexternalAuthenticationUrlMutationResult = Apollo.MutationResult<Types.SdkexternalAuthenticationUrlMutation>;
+export type SdkexternalAuthenticationUrlMutationOptions = Apollo.BaseMutationOptions<Types.SdkexternalAuthenticationUrlMutation, Types.SdkexternalAuthenticationUrlMutationVariables>;
+export const SdkexternalObtainAccessTokensDocument = gql`
+    mutation sdkexternalObtainAccessTokens($pluginId: String = "mirumee.authentication.openidconnect", $input: JSONString!) {
+  externalObtainAccessTokens(pluginId: $pluginId, input: $input) {
+    token
+    refreshToken
+    user {
+      ...UserDetailsFragment
+    }
+    errors {
+      ...AccountErrorFragment
+    }
+  }
+}
+    ${UserDetailsFragmentFragmentDoc}
+${AccountErrorFragmentFragmentDoc}`;
+export type SdkexternalObtainAccessTokensMutationFn = Apollo.MutationFunction<Types.SdkexternalObtainAccessTokensMutation, Types.SdkexternalObtainAccessTokensMutationVariables>;
+
+/**
+ * __useSdkexternalObtainAccessTokensMutation__
+ *
+ * To run a mutation, you first call `useSdkexternalObtainAccessTokensMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkexternalObtainAccessTokensMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkexternalObtainAccessTokensMutation, { data, loading, error }] = useSdkexternalObtainAccessTokensMutation({
+ *   variables: {
+ *      pluginId: // value for 'pluginId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSdkexternalObtainAccessTokensMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkexternalObtainAccessTokensMutation, Types.SdkexternalObtainAccessTokensMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkexternalObtainAccessTokensMutation, Types.SdkexternalObtainAccessTokensMutationVariables>(SdkexternalObtainAccessTokensDocument, options);
+      }
+export type SdkexternalObtainAccessTokensMutationHookResult = ReturnType<typeof useSdkexternalObtainAccessTokensMutation>;
+export type SdkexternalObtainAccessTokensMutationResult = Apollo.MutationResult<Types.SdkexternalObtainAccessTokensMutation>;
+export type SdkexternalObtainAccessTokensMutationOptions = Apollo.BaseMutationOptions<Types.SdkexternalObtainAccessTokensMutation, Types.SdkexternalObtainAccessTokensMutationVariables>;
+export const SdkexternalRefreshDocument = gql`
+    mutation sdkexternalRefresh($pluginId: String = "mirumee.authentication.openidconnect", $input: JSONString!) {
+  externalRefresh(pluginId: $pluginId, input: $input) {
+    token
+    refreshToken
+    errors {
+      ...AccountErrorFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}`;
+export type SdkexternalRefreshMutationFn = Apollo.MutationFunction<Types.SdkexternalRefreshMutation, Types.SdkexternalRefreshMutationVariables>;
+
+/**
+ * __useSdkexternalRefreshMutation__
+ *
+ * To run a mutation, you first call `useSdkexternalRefreshMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkexternalRefreshMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkexternalRefreshMutation, { data, loading, error }] = useSdkexternalRefreshMutation({
+ *   variables: {
+ *      pluginId: // value for 'pluginId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSdkexternalRefreshMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkexternalRefreshMutation, Types.SdkexternalRefreshMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkexternalRefreshMutation, Types.SdkexternalRefreshMutationVariables>(SdkexternalRefreshDocument, options);
+      }
+export type SdkexternalRefreshMutationHookResult = ReturnType<typeof useSdkexternalRefreshMutation>;
+export type SdkexternalRefreshMutationResult = Apollo.MutationResult<Types.SdkexternalRefreshMutation>;
+export type SdkexternalRefreshMutationOptions = Apollo.BaseMutationOptions<Types.SdkexternalRefreshMutation, Types.SdkexternalRefreshMutationVariables>;
+export const SdkexternalRefreshWithUserDocument = gql`
+    mutation sdkexternalRefreshWithUser($pluginId: String = "mirumee.authentication.openidconnect", $input: JSONString!) {
+  externalRefresh(pluginId: $pluginId, input: $input) {
+    token
+    refreshToken
+    user {
+      ...UserDetailsFragment
+    }
+    errors {
+      ...AccountErrorFragment
+    }
+  }
+}
+    ${UserDetailsFragmentFragmentDoc}
+${AccountErrorFragmentFragmentDoc}`;
+export type SdkexternalRefreshWithUserMutationFn = Apollo.MutationFunction<Types.SdkexternalRefreshWithUserMutation, Types.SdkexternalRefreshWithUserMutationVariables>;
+
+/**
+ * __useSdkexternalRefreshWithUserMutation__
+ *
+ * To run a mutation, you first call `useSdkexternalRefreshWithUserMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkexternalRefreshWithUserMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkexternalRefreshWithUserMutation, { data, loading, error }] = useSdkexternalRefreshWithUserMutation({
+ *   variables: {
+ *      pluginId: // value for 'pluginId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSdkexternalRefreshWithUserMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkexternalRefreshWithUserMutation, Types.SdkexternalRefreshWithUserMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkexternalRefreshWithUserMutation, Types.SdkexternalRefreshWithUserMutationVariables>(SdkexternalRefreshWithUserDocument, options);
+      }
+export type SdkexternalRefreshWithUserMutationHookResult = ReturnType<typeof useSdkexternalRefreshWithUserMutation>;
+export type SdkexternalRefreshWithUserMutationResult = Apollo.MutationResult<Types.SdkexternalRefreshWithUserMutation>;
+export type SdkexternalRefreshWithUserMutationOptions = Apollo.BaseMutationOptions<Types.SdkexternalRefreshWithUserMutation, Types.SdkexternalRefreshWithUserMutationVariables>;
+export const SdkexternalVerifyDocument = gql`
+    mutation sdkexternalVerify($pluginId: String = "mirumee.authentication.openidconnect", $input: JSONString!) {
+  externalVerify(pluginId: $pluginId, input: $input) {
+    isValid
+    verifyData
+    user {
+      ...UserDetailsFragment
+      userPermissions {
+        code
+        name
+      }
+    }
+    errors {
+      ...AccountErrorFragment
+    }
+  }
+}
+    ${UserDetailsFragmentFragmentDoc}
+${AccountErrorFragmentFragmentDoc}`;
+export type SdkexternalVerifyMutationFn = Apollo.MutationFunction<Types.SdkexternalVerifyMutation, Types.SdkexternalVerifyMutationVariables>;
+
+/**
+ * __useSdkexternalVerifyMutation__
+ *
+ * To run a mutation, you first call `useSdkexternalVerifyMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkexternalVerifyMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkexternalVerifyMutation, { data, loading, error }] = useSdkexternalVerifyMutation({
+ *   variables: {
+ *      pluginId: // value for 'pluginId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSdkexternalVerifyMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkexternalVerifyMutation, Types.SdkexternalVerifyMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkexternalVerifyMutation, Types.SdkexternalVerifyMutationVariables>(SdkexternalVerifyDocument, options);
+      }
+export type SdkexternalVerifyMutationHookResult = ReturnType<typeof useSdkexternalVerifyMutation>;
+export type SdkexternalVerifyMutationResult = Apollo.MutationResult<Types.SdkexternalVerifyMutation>;
+export type SdkexternalVerifyMutationOptions = Apollo.BaseMutationOptions<Types.SdkexternalVerifyMutation, Types.SdkexternalVerifyMutationVariables>;
+export const SdkexternalLogoutDocument = gql`
+    mutation sdkexternalLogout($pluginId: String = "mirumee.authentication.openidconnect", $input: JSONString!) {
+  externalLogout(pluginId: $pluginId, input: $input) {
+    logoutData
+    errors {
+      ...AccountErrorFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}`;
+export type SdkexternalLogoutMutationFn = Apollo.MutationFunction<Types.SdkexternalLogoutMutation, Types.SdkexternalLogoutMutationVariables>;
+
+/**
+ * __useSdkexternalLogoutMutation__
+ *
+ * To run a mutation, you first call `useSdkexternalLogoutMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkexternalLogoutMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkexternalLogoutMutation, { data, loading, error }] = useSdkexternalLogoutMutation({
+ *   variables: {
+ *      pluginId: // value for 'pluginId'
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSdkexternalLogoutMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkexternalLogoutMutation, Types.SdkexternalLogoutMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkexternalLogoutMutation, Types.SdkexternalLogoutMutationVariables>(SdkexternalLogoutDocument, options);
+      }
+export type SdkexternalLogoutMutationHookResult = ReturnType<typeof useSdkexternalLogoutMutation>;
+export type SdkexternalLogoutMutationResult = Apollo.MutationResult<Types.SdkexternalLogoutMutation>;
+export type SdkexternalLogoutMutationOptions = Apollo.BaseMutationOptions<Types.SdkexternalLogoutMutation, Types.SdkexternalLogoutMutationVariables>;
+export const SdkpasswordChangeDocument = gql`
+    mutation sdkpasswordChange($newPassword: String!, $oldPassword: String!) {
+  passwordChange(newPassword: $newPassword, oldPassword: $oldPassword) {
+    errors {
+      ...AccountErrorFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}`;
+export type SdkpasswordChangeMutationFn = Apollo.MutationFunction<Types.SdkpasswordChangeMutation, Types.SdkpasswordChangeMutationVariables>;
+
+/**
+ * __useSdkpasswordChangeMutation__
+ *
+ * To run a mutation, you first call `useSdkpasswordChangeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkpasswordChangeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkpasswordChangeMutation, { data, loading, error }] = useSdkpasswordChangeMutation({
+ *   variables: {
+ *      newPassword: // value for 'newPassword'
+ *      oldPassword: // value for 'oldPassword'
+ *   },
+ * });
+ */
+export function useSdkpasswordChangeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkpasswordChangeMutation, Types.SdkpasswordChangeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkpasswordChangeMutation, Types.SdkpasswordChangeMutationVariables>(SdkpasswordChangeDocument, options);
+      }
+export type SdkpasswordChangeMutationHookResult = ReturnType<typeof useSdkpasswordChangeMutation>;
+export type SdkpasswordChangeMutationResult = Apollo.MutationResult<Types.SdkpasswordChangeMutation>;
+export type SdkpasswordChangeMutationOptions = Apollo.BaseMutationOptions<Types.SdkpasswordChangeMutation, Types.SdkpasswordChangeMutationVariables>;
+export const SdkrequestPasswordResetDocument = gql`
+    mutation sdkrequestPasswordReset($email: String!, $redirectUrl: String!, $channel: String!) {
+  requestPasswordReset(
+    email: $email
+    redirectUrl: $redirectUrl
+    channel: $channel
+  ) {
+    errors {
+      ...AccountErrorFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}`;
+export type SdkrequestPasswordResetMutationFn = Apollo.MutationFunction<Types.SdkrequestPasswordResetMutation, Types.SdkrequestPasswordResetMutationVariables>;
+
+/**
+ * __useSdkrequestPasswordResetMutation__
+ *
+ * To run a mutation, you first call `useSdkrequestPasswordResetMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkrequestPasswordResetMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkrequestPasswordResetMutation, { data, loading, error }] = useSdkrequestPasswordResetMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      redirectUrl: // value for 'redirectUrl'
+ *      channel: // value for 'channel'
+ *   },
+ * });
+ */
+export function useSdkrequestPasswordResetMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkrequestPasswordResetMutation, Types.SdkrequestPasswordResetMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkrequestPasswordResetMutation, Types.SdkrequestPasswordResetMutationVariables>(SdkrequestPasswordResetDocument, options);
+      }
+export type SdkrequestPasswordResetMutationHookResult = ReturnType<typeof useSdkrequestPasswordResetMutation>;
+export type SdkrequestPasswordResetMutationResult = Apollo.MutationResult<Types.SdkrequestPasswordResetMutation>;
+export type SdkrequestPasswordResetMutationOptions = Apollo.BaseMutationOptions<Types.SdkrequestPasswordResetMutation, Types.SdkrequestPasswordResetMutationVariables>;
+export const SdksetPasswordDocument = gql`
+    mutation sdksetPassword($token: String!, $email: String!, $password: String!) {
+  setPassword(token: $token, email: $email, password: $password) {
+    errors {
+      ...AccountErrorFragment
+    }
+    token
+    refreshToken
+    user {
+      ...UserDetailsFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}
+${UserDetailsFragmentFragmentDoc}`;
+export type SdksetPasswordMutationFn = Apollo.MutationFunction<Types.SdksetPasswordMutation, Types.SdksetPasswordMutationVariables>;
+
+/**
+ * __useSdksetPasswordMutation__
+ *
+ * To run a mutation, you first call `useSdksetPasswordMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdksetPasswordMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdksetPasswordMutation, { data, loading, error }] = useSdksetPasswordMutation({
+ *   variables: {
+ *      token: // value for 'token'
+ *      email: // value for 'email'
+ *      password: // value for 'password'
+ *   },
+ * });
+ */
+export function useSdksetPasswordMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdksetPasswordMutation, Types.SdksetPasswordMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdksetPasswordMutation, Types.SdksetPasswordMutationVariables>(SdksetPasswordDocument, options);
+      }
+export type SdksetPasswordMutationHookResult = ReturnType<typeof useSdksetPasswordMutation>;
+export type SdksetPasswordMutationResult = Apollo.MutationResult<Types.SdksetPasswordMutation>;
+export type SdksetPasswordMutationOptions = Apollo.BaseMutationOptions<Types.SdksetPasswordMutation, Types.SdksetPasswordMutationVariables>;
+export const SdkrequestEmailChangeDocument = gql`
+    mutation sdkrequestEmailChange($channel: String!, $newEmail: String!, $password: String!, $redirectUrl: String!) {
+  requestEmailChange(
+    channel: $channel
+    newEmail: $newEmail
+    password: $password
+    redirectUrl: $redirectUrl
+  ) {
+    errors {
+      ...AccountErrorFragment
+    }
+    user {
+      ...UserDetailsFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}
+${UserDetailsFragmentFragmentDoc}`;
+export type SdkrequestEmailChangeMutationFn = Apollo.MutationFunction<Types.SdkrequestEmailChangeMutation, Types.SdkrequestEmailChangeMutationVariables>;
+
+/**
+ * __useSdkrequestEmailChangeMutation__
+ *
+ * To run a mutation, you first call `useSdkrequestEmailChangeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkrequestEmailChangeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkrequestEmailChangeMutation, { data, loading, error }] = useSdkrequestEmailChangeMutation({
+ *   variables: {
+ *      channel: // value for 'channel'
+ *      newEmail: // value for 'newEmail'
+ *      password: // value for 'password'
+ *      redirectUrl: // value for 'redirectUrl'
+ *   },
+ * });
+ */
+export function useSdkrequestEmailChangeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkrequestEmailChangeMutation, Types.SdkrequestEmailChangeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkrequestEmailChangeMutation, Types.SdkrequestEmailChangeMutationVariables>(SdkrequestEmailChangeDocument, options);
+      }
+export type SdkrequestEmailChangeMutationHookResult = ReturnType<typeof useSdkrequestEmailChangeMutation>;
+export type SdkrequestEmailChangeMutationResult = Apollo.MutationResult<Types.SdkrequestEmailChangeMutation>;
+export type SdkrequestEmailChangeMutationOptions = Apollo.BaseMutationOptions<Types.SdkrequestEmailChangeMutation, Types.SdkrequestEmailChangeMutationVariables>;
+export const SdkconfirmEmailChangeDocument = gql`
+    mutation sdkconfirmEmailChange($channel: String!, $token: String!) {
+  confirmEmailChange(channel: $channel, token: $token) {
+    errors {
+      ...AccountErrorFragment
+    }
+    user {
+      ...UserDetailsFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}
+${UserDetailsFragmentFragmentDoc}`;
+export type SdkconfirmEmailChangeMutationFn = Apollo.MutationFunction<Types.SdkconfirmEmailChangeMutation, Types.SdkconfirmEmailChangeMutationVariables>;
+
+/**
+ * __useSdkconfirmEmailChangeMutation__
+ *
+ * To run a mutation, you first call `useSdkconfirmEmailChangeMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkconfirmEmailChangeMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkconfirmEmailChangeMutation, { data, loading, error }] = useSdkconfirmEmailChangeMutation({
+ *   variables: {
+ *      channel: // value for 'channel'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useSdkconfirmEmailChangeMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkconfirmEmailChangeMutation, Types.SdkconfirmEmailChangeMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkconfirmEmailChangeMutation, Types.SdkconfirmEmailChangeMutationVariables>(SdkconfirmEmailChangeDocument, options);
+      }
+export type SdkconfirmEmailChangeMutationHookResult = ReturnType<typeof useSdkconfirmEmailChangeMutation>;
+export type SdkconfirmEmailChangeMutationResult = Apollo.MutationResult<Types.SdkconfirmEmailChangeMutation>;
+export type SdkconfirmEmailChangeMutationOptions = Apollo.BaseMutationOptions<Types.SdkconfirmEmailChangeMutation, Types.SdkconfirmEmailChangeMutationVariables>;
+export const SdkaccountRequestDeletionDocument = gql`
+    mutation sdkaccountRequestDeletion($channel: String!, $redirectUrl: String!) {
+  accountRequestDeletion(channel: $channel, redirectUrl: $redirectUrl) {
+    errors {
+      ...AccountErrorFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}`;
+export type SdkaccountRequestDeletionMutationFn = Apollo.MutationFunction<Types.SdkaccountRequestDeletionMutation, Types.SdkaccountRequestDeletionMutationVariables>;
+
+/**
+ * __useSdkaccountRequestDeletionMutation__
+ *
+ * To run a mutation, you first call `useSdkaccountRequestDeletionMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkaccountRequestDeletionMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkaccountRequestDeletionMutation, { data, loading, error }] = useSdkaccountRequestDeletionMutation({
+ *   variables: {
+ *      channel: // value for 'channel'
+ *      redirectUrl: // value for 'redirectUrl'
+ *   },
+ * });
+ */
+export function useSdkaccountRequestDeletionMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkaccountRequestDeletionMutation, Types.SdkaccountRequestDeletionMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkaccountRequestDeletionMutation, Types.SdkaccountRequestDeletionMutationVariables>(SdkaccountRequestDeletionDocument, options);
+      }
+export type SdkaccountRequestDeletionMutationHookResult = ReturnType<typeof useSdkaccountRequestDeletionMutation>;
+export type SdkaccountRequestDeletionMutationResult = Apollo.MutationResult<Types.SdkaccountRequestDeletionMutation>;
+export type SdkaccountRequestDeletionMutationOptions = Apollo.BaseMutationOptions<Types.SdkaccountRequestDeletionMutation, Types.SdkaccountRequestDeletionMutationVariables>;
+export const SdkaccountDeleteDocument = gql`
+    mutation sdkaccountDelete($token: String!) {
+  accountDelete(token: $token) {
+    errors {
+      ...AccountErrorFragment
+    }
+    user {
+      ...UserDetailsFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}
+${UserDetailsFragmentFragmentDoc}`;
+export type SdkaccountDeleteMutationFn = Apollo.MutationFunction<Types.SdkaccountDeleteMutation, Types.SdkaccountDeleteMutationVariables>;
+
+/**
+ * __useSdkaccountDeleteMutation__
+ *
+ * To run a mutation, you first call `useSdkaccountDeleteMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkaccountDeleteMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkaccountDeleteMutation, { data, loading, error }] = useSdkaccountDeleteMutation({
+ *   variables: {
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useSdkaccountDeleteMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkaccountDeleteMutation, Types.SdkaccountDeleteMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkaccountDeleteMutation, Types.SdkaccountDeleteMutationVariables>(SdkaccountDeleteDocument, options);
+      }
+export type SdkaccountDeleteMutationHookResult = ReturnType<typeof useSdkaccountDeleteMutation>;
+export type SdkaccountDeleteMutationResult = Apollo.MutationResult<Types.SdkaccountDeleteMutation>;
+export type SdkaccountDeleteMutationOptions = Apollo.BaseMutationOptions<Types.SdkaccountDeleteMutation, Types.SdkaccountDeleteMutationVariables>;
+export const SdkaccountUpdateDocument = gql`
+    mutation sdkaccountUpdate($input: AccountInput!) {
+  accountUpdate(input: $input) {
+    errors {
+      ...AccountErrorFragment
+    }
+    user {
+      ...UserDetailsFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}
+${UserDetailsFragmentFragmentDoc}`;
+export type SdkaccountUpdateMutationFn = Apollo.MutationFunction<Types.SdkaccountUpdateMutation, Types.SdkaccountUpdateMutationVariables>;
+
+/**
+ * __useSdkaccountUpdateMutation__
+ *
+ * To run a mutation, you first call `useSdkaccountUpdateMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkaccountUpdateMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkaccountUpdateMutation, { data, loading, error }] = useSdkaccountUpdateMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSdkaccountUpdateMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkaccountUpdateMutation, Types.SdkaccountUpdateMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkaccountUpdateMutation, Types.SdkaccountUpdateMutationVariables>(SdkaccountUpdateDocument, options);
+      }
+export type SdkaccountUpdateMutationHookResult = ReturnType<typeof useSdkaccountUpdateMutation>;
+export type SdkaccountUpdateMutationResult = Apollo.MutationResult<Types.SdkaccountUpdateMutation>;
+export type SdkaccountUpdateMutationOptions = Apollo.BaseMutationOptions<Types.SdkaccountUpdateMutation, Types.SdkaccountUpdateMutationVariables>;
+export const SdksetAccountDefaultAddressDocument = gql`
+    mutation sdksetAccountDefaultAddress($id: ID!, $type: AddressTypeEnum!) {
+  accountSetDefaultAddress(id: $id, type: $type) {
+    errors {
+      ...AccountErrorFragment
+    }
+    user {
+      ...UserDetailsFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}
+${UserDetailsFragmentFragmentDoc}`;
+export type SdksetAccountDefaultAddressMutationFn = Apollo.MutationFunction<Types.SdksetAccountDefaultAddressMutation, Types.SdksetAccountDefaultAddressMutationVariables>;
+
+/**
+ * __useSdksetAccountDefaultAddressMutation__
+ *
+ * To run a mutation, you first call `useSdksetAccountDefaultAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdksetAccountDefaultAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdksetAccountDefaultAddressMutation, { data, loading, error }] = useSdksetAccountDefaultAddressMutation({
+ *   variables: {
+ *      id: // value for 'id'
+ *      type: // value for 'type'
+ *   },
+ * });
+ */
+export function useSdksetAccountDefaultAddressMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdksetAccountDefaultAddressMutation, Types.SdksetAccountDefaultAddressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdksetAccountDefaultAddressMutation, Types.SdksetAccountDefaultAddressMutationVariables>(SdksetAccountDefaultAddressDocument, options);
+      }
+export type SdksetAccountDefaultAddressMutationHookResult = ReturnType<typeof useSdksetAccountDefaultAddressMutation>;
+export type SdksetAccountDefaultAddressMutationResult = Apollo.MutationResult<Types.SdksetAccountDefaultAddressMutation>;
+export type SdksetAccountDefaultAddressMutationOptions = Apollo.BaseMutationOptions<Types.SdksetAccountDefaultAddressMutation, Types.SdksetAccountDefaultAddressMutationVariables>;
+export const SdkdeleteAccountAddressDocument = gql`
+    mutation sdkdeleteAccountAddress($addressId: ID!) {
+  accountAddressDelete(id: $addressId) {
+    errors {
+      ...AccountErrorFragment
+    }
+    user {
+      ...UserDetailsFragment
+    }
+  }
+}
+    ${AccountErrorFragmentFragmentDoc}
+${UserDetailsFragmentFragmentDoc}`;
+export type SdkdeleteAccountAddressMutationFn = Apollo.MutationFunction<Types.SdkdeleteAccountAddressMutation, Types.SdkdeleteAccountAddressMutationVariables>;
+
+/**
+ * __useSdkdeleteAccountAddressMutation__
+ *
+ * To run a mutation, you first call `useSdkdeleteAccountAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkdeleteAccountAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkdeleteAccountAddressMutation, { data, loading, error }] = useSdkdeleteAccountAddressMutation({
+ *   variables: {
+ *      addressId: // value for 'addressId'
+ *   },
+ * });
+ */
+export function useSdkdeleteAccountAddressMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkdeleteAccountAddressMutation, Types.SdkdeleteAccountAddressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkdeleteAccountAddressMutation, Types.SdkdeleteAccountAddressMutationVariables>(SdkdeleteAccountAddressDocument, options);
+      }
+export type SdkdeleteAccountAddressMutationHookResult = ReturnType<typeof useSdkdeleteAccountAddressMutation>;
+export type SdkdeleteAccountAddressMutationResult = Apollo.MutationResult<Types.SdkdeleteAccountAddressMutation>;
+export type SdkdeleteAccountAddressMutationOptions = Apollo.BaseMutationOptions<Types.SdkdeleteAccountAddressMutation, Types.SdkdeleteAccountAddressMutationVariables>;
+export const SdkcreateAccountAddressDocument = gql`
+    mutation sdkcreateAccountAddress($input: AddressInput!) {
+  accountAddressCreate(input: $input) {
+    address {
+      ...AddressFragment
+    }
+    errors {
+      ...AccountErrorFragment
+    }
+    user {
+      ...UserDetailsFragment
+    }
+  }
+}
+    ${AddressFragmentFragmentDoc}
+${AccountErrorFragmentFragmentDoc}
+${UserDetailsFragmentFragmentDoc}`;
+export type SdkcreateAccountAddressMutationFn = Apollo.MutationFunction<Types.SdkcreateAccountAddressMutation, Types.SdkcreateAccountAddressMutationVariables>;
+
+/**
+ * __useSdkcreateAccountAddressMutation__
+ *
+ * To run a mutation, you first call `useSdkcreateAccountAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkcreateAccountAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkcreateAccountAddressMutation, { data, loading, error }] = useSdkcreateAccountAddressMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *   },
+ * });
+ */
+export function useSdkcreateAccountAddressMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkcreateAccountAddressMutation, Types.SdkcreateAccountAddressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkcreateAccountAddressMutation, Types.SdkcreateAccountAddressMutationVariables>(SdkcreateAccountAddressDocument, options);
+      }
+export type SdkcreateAccountAddressMutationHookResult = ReturnType<typeof useSdkcreateAccountAddressMutation>;
+export type SdkcreateAccountAddressMutationResult = Apollo.MutationResult<Types.SdkcreateAccountAddressMutation>;
+export type SdkcreateAccountAddressMutationOptions = Apollo.BaseMutationOptions<Types.SdkcreateAccountAddressMutation, Types.SdkcreateAccountAddressMutationVariables>;
+export const SdkupdateAccountAddressDocument = gql`
+    mutation sdkupdateAccountAddress($input: AddressInput!, $id: ID!) {
+  accountAddressUpdate(input: $input, id: $id) {
+    address {
+      ...AddressFragment
+    }
+    errors {
+      ...AccountErrorFragment
+    }
+    user {
+      ...UserDetailsFragment
+    }
+  }
+}
+    ${AddressFragmentFragmentDoc}
+${AccountErrorFragmentFragmentDoc}
+${UserDetailsFragmentFragmentDoc}`;
+export type SdkupdateAccountAddressMutationFn = Apollo.MutationFunction<Types.SdkupdateAccountAddressMutation, Types.SdkupdateAccountAddressMutationVariables>;
+
+/**
+ * __useSdkupdateAccountAddressMutation__
+ *
+ * To run a mutation, you first call `useSdkupdateAccountAddressMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkupdateAccountAddressMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkupdateAccountAddressMutation, { data, loading, error }] = useSdkupdateAccountAddressMutation({
+ *   variables: {
+ *      input: // value for 'input'
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useSdkupdateAccountAddressMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkupdateAccountAddressMutation, Types.SdkupdateAccountAddressMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkupdateAccountAddressMutation, Types.SdkupdateAccountAddressMutationVariables>(SdkupdateAccountAddressDocument, options);
+      }
+export type SdkupdateAccountAddressMutationHookResult = ReturnType<typeof useSdkupdateAccountAddressMutation>;
+export type SdkupdateAccountAddressMutationResult = Apollo.MutationResult<Types.SdkupdateAccountAddressMutation>;
+export type SdkupdateAccountAddressMutationOptions = Apollo.BaseMutationOptions<Types.SdkupdateAccountAddressMutation, Types.SdkupdateAccountAddressMutationVariables>;
+export const SdkaccountConfirmDocument = gql`
+    mutation sdkaccountConfirm($email: String!, $token: String!) {
+  confirmAccount(email: $email, token: $token) {
+    user {
+      ...UserDetailsFragment
+    }
+    errors {
+      ...AccountErrorFragment
+    }
+  }
+}
+    ${UserDetailsFragmentFragmentDoc}
+${AccountErrorFragmentFragmentDoc}`;
+export type SdkaccountConfirmMutationFn = Apollo.MutationFunction<Types.SdkaccountConfirmMutation, Types.SdkaccountConfirmMutationVariables>;
+
+/**
+ * __useSdkaccountConfirmMutation__
+ *
+ * To run a mutation, you first call `useSdkaccountConfirmMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useSdkaccountConfirmMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [sdkaccountConfirmMutation, { data, loading, error }] = useSdkaccountConfirmMutation({
+ *   variables: {
+ *      email: // value for 'email'
+ *      token: // value for 'token'
+ *   },
+ * });
+ */
+export function useSdkaccountConfirmMutation(baseOptions?: ApolloReactHooks.MutationHookOptions<Types.SdkaccountConfirmMutation, Types.SdkaccountConfirmMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useMutation<Types.SdkaccountConfirmMutation, Types.SdkaccountConfirmMutationVariables>(SdkaccountConfirmDocument, options);
+      }
+export type SdkaccountConfirmMutationHookResult = ReturnType<typeof useSdkaccountConfirmMutation>;
+export type SdkaccountConfirmMutationResult = Apollo.MutationResult<Types.SdkaccountConfirmMutation>;
+export type SdkaccountConfirmMutationOptions = Apollo.BaseMutationOptions<Types.SdkaccountConfirmMutation, Types.SdkaccountConfirmMutationVariables>;
+export const UserWithoutDetailsDocument = gql`
+    query UserWithoutDetails {
+  user: me {
+    ...UserBaseFragment
+  }
+  authenticated @client
+  authenticating @client
+}
+    ${UserBaseFragmentFragmentDoc}`;
+
+/**
+ * __useUserWithoutDetailsQuery__
+ *
+ * To run a query within a React component, call `useUserWithoutDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserWithoutDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserWithoutDetailsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserWithoutDetailsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.UserWithoutDetailsQuery, Types.UserWithoutDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.UserWithoutDetailsQuery, Types.UserWithoutDetailsQueryVariables>(UserWithoutDetailsDocument, options);
+      }
+export function useUserWithoutDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.UserWithoutDetailsQuery, Types.UserWithoutDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.UserWithoutDetailsQuery, Types.UserWithoutDetailsQueryVariables>(UserWithoutDetailsDocument, options);
+        }
+export type UserWithoutDetailsQueryHookResult = ReturnType<typeof useUserWithoutDetailsQuery>;
+export type UserWithoutDetailsLazyQueryHookResult = ReturnType<typeof useUserWithoutDetailsLazyQuery>;
+export type UserWithoutDetailsQueryResult = Apollo.QueryResult<Types.UserWithoutDetailsQuery, Types.UserWithoutDetailsQueryVariables>;
+export const UserDocument = gql`
+    query User {
+  user: me {
+    ...UserDetailsFragment
+  }
+  authenticated @client
+  authenticating @client
+}
+    ${UserDetailsFragmentFragmentDoc}`;
+
+/**
+ * __useUserQuery__
+ *
+ * To run a query within a React component, call `useUserQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.UserQuery, Types.UserQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.UserQuery, Types.UserQueryVariables>(UserDocument, options);
+      }
+export function useUserLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.UserQuery, Types.UserQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.UserQuery, Types.UserQueryVariables>(UserDocument, options);
+        }
+export type UserQueryHookResult = ReturnType<typeof useUserQuery>;
+export type UserLazyQueryHookResult = ReturnType<typeof useUserLazyQuery>;
+export type UserQueryResult = Apollo.QueryResult<Types.UserQuery, Types.UserQueryVariables>;
 export const SearchAttributesDocument = gql`
     query SearchAttributes($after: String, $first: Int!, $query: String!) {
   search: attributes(after: $after, first: $first, filter: {search: $query}) {

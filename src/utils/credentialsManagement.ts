@@ -1,5 +1,5 @@
 import { UserFragment } from "@dashboard/graphql";
-import { UserDetailsFragment } from "@saleor/sdk/dist/apollo/types";
+import { UserDetailsFragment } from "@dashboard/saleor-sdk/apollo/types";
 
 export const isSupported = !!window.PasswordCredential;
 

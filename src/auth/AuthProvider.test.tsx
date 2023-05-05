@@ -1,7 +1,7 @@
 /** @jest-environment setup-polly-jest/jest-environment-jsdom */
 
 import { getApiUrl } from "@dashboard/config";
-import { createSaleorClient, SaleorProvider } from "@saleor/sdk";
+import { createSaleorClient, SaleorProvider } from "@dashboard/saleor-sdk";
 import setupApi from "@test/api";
 import { act, renderHook } from "@testing-library/react-hooks";
 import React from "react";

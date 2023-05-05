@@ -3,7 +3,7 @@ import {
   GetExternalAccessTokenData,
   GetExternalAuthUrlData,
   LoginData,
-} from "@saleor/sdk";
+} from "@dashboard/saleor-sdk";
 
 export interface RequestExternalLoginInput {
   redirectUri: string;
@@ -26,7 +26,8 @@ export const UserContextError = {
   unknownLoginError: "unknownLoginError",
 } as const;
 
-export type UserContextError = typeof UserContextError[keyof typeof UserContextError];
+export type UserContextError =
+  (typeof UserContextError)[keyof typeof UserContextError];
 
 export interface UserContext {
   login: (username: string, password: string) => Promise<LoginData>;
