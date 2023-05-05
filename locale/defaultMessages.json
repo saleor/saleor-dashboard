@@ -1741,6 +1741,9 @@
     "context": "notification",
     "string": "Published pages"
   },
+  "B/TEDt": {
+    "string": "Allow access to all channels"
+  },
   "B/y6LC": {
     "context": "section header",
     "string": "Unfulfilled Products"
@@ -5422,9 +5425,6 @@
     "context": "range input label",
     "string": "Postal codes (end)"
   },
-  "ay73LS": {
-    "string": "Restrict access to channels"
-  },
   "b+jcaN": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
   },
@@ -8305,6 +8305,9 @@
   "xGC2Ge": {
     "context": "grant refund, button",
     "string": "Set max. quantities"
+  },
+  "xGknjS": {
+    "string": "Select visible channels"
   },
   "xHj9Qe": {
     "context": "gift card settings header",

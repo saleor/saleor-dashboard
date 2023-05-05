@@ -51,15 +51,15 @@ export const ChannelPermission = ({
         )}
 
         <Checkbox
-          checked={hasRestrictedChannels}
+          checked={!hasRestrictedChannels}
           onCheckedChange={onHasRestrictedChannelsChange}
           disabled={disabled}
           tabIndex={-1}
         >
-          <Text variant="body" pointerEvents="none">
+          <Text variant="body">
             {intl.formatMessage({
-              defaultMessage: "Restrict access to channels",
-              id: "ay73LS",
+              defaultMessage: "Allow access to all channels",
+              id: "B/TEDt",
             })}
           </Text>
         </Checkbox>
@@ -87,8 +87,8 @@ export const ChannelPermission = ({
                 fetchChoices={onQueryChange}
                 hasMore={false}
                 label={intl.formatMessage({
-                  defaultMessage: "Channels permissions",
-                  id: "vz3yxp",
+                  defaultMessage: "Select visible channels",
+                  id: "xGknjS",
                 })}
                 loading={false}
                 name="channels"
