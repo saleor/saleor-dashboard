@@ -1,18 +1,19 @@
 import { Channel as ChannelList, ChannelData } from "@dashboard/channels/utils";
-import Hr from "@dashboard/components/Hr";
 import { PermissionEnum } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { RequireOnlyOne } from "@dashboard/misc";
-import { Typography } from "@material-ui/core";
+import { Box, Divider, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import ChannelAvailabilityItemContent from "./Channel/ChannelAvailabilityItemContent";
-import ChannelAvailabilityItemWrapper from "./Channel/ChannelAvailabilityItemWrapper";
-import ChannelsAvailabilityCardWrapper, {
+import {
+  ChannelAvailabilityItemContent,
+  ChannelAvailabilityItemWrapper,
+} from "./Channel";
+import {
+  ChannelsAvailabilityCardWrapper,
   ChannelsAvailabilityWrapperProps,
 } from "./ChannelsAvailabilityCardWrapper";
-import { useStyles } from "./styles";
 import { ChannelOpts, ChannelsAvailabilityError, Messages } from "./types";
 import { getChannelsAvailabilityMessages } from "./utils";
 
@@ -36,7 +37,9 @@ export type ChannelsAvailabilityCardProps = RequireOnlyOne<
   "channels" | "channelsList"
 >;
 
-export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = props => {
+export const ChannelsAvailability: React.FC<
+  ChannelsAvailabilityCardProps
+> = props => {
   const {
     channelsList,
     errors = [],
@@ -49,7 +52,6 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = pro
   } = props;
   const intl = useIntl();
   const localizeDate = useDateLocalize();
-  const classes = useStyles({});
 
   const channelsMessages = getChannelsAvailabilityMessages({
     messages,
@@ -88,12 +90,10 @@ export const ChannelsAvailability: React.FC<ChannelsAvailabilityCardProps> = pro
         : channelsList
         ? channelsList.map(data => (
             <React.Fragment key={data.id}>
-              <div className={classes.channelItem}>
-                <div className={classes.channelName}>
-                  <Typography>{data.name}</Typography>
-                </div>
-              </div>
-              <Hr className={classes.hr} />
+              <Box>
+                <Text>{data.name}</Text>
+              </Box>
+              <Divider />
             </React.Fragment>
           ))
         : null}

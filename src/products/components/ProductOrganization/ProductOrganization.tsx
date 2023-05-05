@@ -1,7 +1,4 @@
-import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
-import { FormSpacer } from "@dashboard/components/FormSpacer";
-import Hr from "@dashboard/components/Hr";
+import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType,
@@ -16,12 +13,10 @@ import {
 } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
-import { maybe } from "@dashboard/misc";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -30,22 +25,6 @@ interface ProductType {
   id: string;
   name: string;
 }
-
-const useStyles = makeStyles(
-  theme => ({
-    card: {
-      overflow: "visible",
-    },
-    cardSubtitle: {
-      fontSize: theme.typography.body1.fontSize,
-      marginBottom: theme.spacing(0.5),
-    },
-    label: {
-      marginBottom: theme.spacing(0.5),
-    },
-  }),
-  { name: "ProductOrganization" },
-);
 
 interface ProductOrganizationProps {
   canChangeType: boolean;
@@ -74,7 +53,9 @@ interface ProductOrganizationProps {
   onProductTypeChange?: (event: ChangeEvent) => void;
 }
 
-const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
+export const ProductOrganization: React.FC<
+  ProductOrganizationProps
+> = props => {
   const {
     canChangeType,
     categories,
@@ -98,7 +79,6 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
     onProductTypeChange,
   } = props;
 
-  const classes = useStyles(props);
   const intl = useIntl();
 
   const formErrors = getFormErrors(
@@ -111,15 +91,15 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
       : null;
 
   return (
-    <Card className={classes.card}>
-      <CardTitle
-        title={intl.formatMessage({
+    <DashboardCard>
+      <DashboardCard.Title>
+        {intl.formatMessage({
           id: "JjeZEG",
           defaultMessage: "Organize Product",
           description: "section header",
         })}
-      />
-      <CardContent>
+      </DashboardCard.Title>
+      <DashboardCard.Content gap={8} display="flex" flexDirection="column">
         {canChangeType ? (
           <SingleAutocompleteSelectField
             displayValue={productTypeInputDisplayValue}
@@ -139,36 +119,33 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
             {...fetchMoreProductTypes}
           />
         ) : (
-          <>
-            <Typography className={classes.label} variant="caption">
-              <FormattedMessage id="anK7jD" defaultMessage="Product Type" />
-            </Typography>
-            <Typography>
-              <Link
-                href={productTypeUrl(productType?.id) ?? ""}
-                disabled={!productType?.id}
-              >
-                {productType?.name ?? "..."}
-              </Link>
-            </Typography>
-            <CardSpacer />
-            <Typography className={classes.label} variant="caption">
-              <FormattedMessage id="Be+J13" defaultMessage="Configurable" />
-            </Typography>
-            <Typography>
-              {maybe(
-                () =>
-                  productType.hasVariants
-                    ? intl.formatMessage(commonMessages.yes)
-                    : intl.formatMessage(commonMessages.no),
-                "...",
-              )}
-            </Typography>
-          </>
+          <Box display="flex" flexDirection="column" gap={6}>
+            <Box display="flex" flexDirection="column">
+              <Text variant="bodyEmp">
+                <FormattedMessage id="anK7jD" defaultMessage="Product Type" />
+              </Text>
+              <Text variant="caption">
+                <Link
+                  href={productTypeUrl(productType?.id) ?? ""}
+                  disabled={!productType?.id}
+                >
+                  {productType?.name ?? "..."}
+                </Link>
+              </Text>
+            </Box>
+
+            <Box display="flex" flexDirection="column">
+              <Text variant="bodyEmp">
+                <FormattedMessage id="Be+J13" defaultMessage="Configurable" />
+              </Text>
+              <Text variant="caption">
+                {productType?.hasVariants
+                  ? intl.formatMessage(commonMessages.yes)
+                  : intl.formatMessage(commonMessages.no)}
+              </Text>
+            </Box>
+          </Box>
         )}
-        <FormSpacer />
-        <Hr />
-        <FormSpacer />
         <SingleAutocompleteSelectField
           displayValue={categoryInputDisplayValue}
           error={!!(formErrors.category || noCategoryError)}
@@ -189,9 +166,6 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           data-test-id="category"
           {...fetchMoreCategories}
         />
-        <FormSpacer />
-        <Hr />
-        <FormSpacer />
         <MultiAutocompleteSelectField
           displayValues={collectionsInputDisplayValue}
           error={!!formErrors.collections}
@@ -217,9 +191,7 @@ const ProductOrganization: React.FC<ProductOrganizationProps> = props => {
           testId="collection"
           {...fetchMoreCollections}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
-ProductOrganization.displayName = "ProductOrganization";
-export default ProductOrganization;

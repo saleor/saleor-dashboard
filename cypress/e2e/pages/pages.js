@@ -162,7 +162,9 @@ describe("Tests for pages", () => {
       .then(({ page }) => {
         cy.visit(pageDetailsUrl(page.id))
           .get(PAGE_DETAILS_SELECTORS.nameInput)
-          .clearAndType(updatedName)
+          .clear()
+          .type(updatedName)
+          // .clearAndType(updatedName)
           .get(PAGE_DETAILS_SELECTORS.isNotPublishedCheckbox)
           .click()
           .addAliasToGraphRequest("PageUpdate")
