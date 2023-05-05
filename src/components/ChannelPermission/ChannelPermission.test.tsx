@@ -19,7 +19,7 @@ jest.mock("@saleor/macaw-ui", () => ({
   ChevronIcon: jest.fn(() => () => <></>),
   IconButton: props => <button {...props} />,
 }));
-// jest.spyOn(console, "error").mockImplementation(() => jest.fn());
+
 describe("ChannelPermission", () => {
   it("should render by default header and checkbox", () => {
     // Arrange & Act
@@ -38,13 +38,13 @@ describe("ChannelPermission", () => {
     // Assert
     expect(screen.getByText(/channels permissions/i)).toBeInTheDocument();
     expect(screen.getByRole("checkbox")).toBeInTheDocument();
-    expect(screen.getByRole("checkbox")).not.toBeChecked();
+    expect(screen.getByRole("checkbox")).toBeChecked();
     expect(
-      screen.getByText(/restrict access to channels/i),
+      screen.getByText(/allow access to all channels/i),
     ).toBeInTheDocument();
   });
 
-  it("should render channels select when checkbox is checked", () => {
+  it("should render channels select when access to all channels checkbox unchecked", () => {
     // Arrange & Act
     render(
       <ChannelPermission
@@ -59,7 +59,7 @@ describe("ChannelPermission", () => {
     );
 
     // Assert
-    expect(screen.getByRole("checkbox")).toBeChecked();
+    expect(screen.getByRole("checkbox")).not.toBeChecked();
     expect(screen.getByRole("listbox")).toBeInTheDocument();
   });
 
