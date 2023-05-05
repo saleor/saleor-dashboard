@@ -13,7 +13,7 @@ interface TopNavProps {
   isAlignToRight?: boolean;
 }
 
-export const TopNav: React.FC<PropsWithChildren<TopNavProps>> = ({
+export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
   title,
   href,
   withoutBorder = false,

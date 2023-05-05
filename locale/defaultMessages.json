@@ -448,6 +448,9 @@
     "context": "sum of all pending refunds inside an order",
     "string": "Pending refunds"
   },
+  "1+ROfp": {
+    "string": "Transaction"
+  },
   "1/oG76": {
     "context": "dialog header",
     "string": "Delete Sale"
@@ -971,6 +974,9 @@
   "4yRwN+": {
     "context": "content",
     "string": "Saleor couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your Saleor. Please use the button below to get back to system’s dashboard."
+  },
+  "50lR2F": {
+    "string": "- used by Payment Plugins"
   },
   "51HE+Q": {
     "string": "No sales found"
@@ -1607,6 +1613,10 @@
   "A9QSur": {
     "context": "area units type",
     "string": "Area"
+  },
+  "AD1PlC": {
+    "context": "channels availability text",
+    "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
   },
   "ADTNND": {
     "context": "product type",
@@ -2298,9 +2308,6 @@
     "context": "sale name",
     "string": "Name"
   },
-  "F5OqYa": {
-    "string": "Creates a single payment when unchecked"
-  },
   "F69lwk": {
     "context": "settings menu item",
     "string": "Settings"
@@ -2420,6 +2427,9 @@
   },
   "FpIcp9": {
     "string": "No customers found"
+  },
+  "Fqe4aB": {
+    "string": "- used by Payment Apps"
   },
   "Ftz7VI": {
     "context": "input label, transaction amount",
@@ -3306,6 +3316,9 @@
     "context": "custom app token key",
     "string": "Key"
   },
+  "MDOw8D": {
+    "string": "\"Mark as paid\" feature creates a"
+  },
   "MHVglr": {
     "context": "deactivate",
     "string": "Deactivate"
@@ -3513,9 +3526,6 @@
   "Nj9iSB": {
     "context": "table header column",
     "string": "Tax rate"
-  },
-  "NkLZBG": {
-    "string": "Mark as paid uses Transactions API"
   },
   "NlEVVT": {
     "context": "label for button",
@@ -6163,6 +6173,9 @@
     "context": "product type name",
     "string": "Type Name"
   },
+  "hHv0ih": {
+    "string": "If left unchecked it creates a"
+  },
   "hJZwTS": {
     "string": "Email address"
   },
@@ -8091,10 +8104,6 @@
     "context": "voucher discount type",
     "string": "Fixed Amount"
   },
-  "vY2lpx": {
-    "context": "channels availability text",
-    "string": "Available at {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
-  },
   "vZMs8f": {
     "context": "default product variant indicator",
     "string": "Default"
@@ -8487,6 +8496,9 @@
   "yhv3HX": {
     "context": "voucher requirements, header",
     "string": "Minimum Requirements"
+  },
+  "yi1HSj": {
+    "string": "({numberOfCharacters} of {maxCharacters} characters)"
   },
   "ymo+cm": {
     "context": "voucher discount",

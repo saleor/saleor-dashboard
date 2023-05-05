@@ -1,121 +1,23 @@
-import { Button } from "@dashboard/components/Button";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
+import Skeleton from "@dashboard/components/Skeleton";
 import { ProductMediaFragment, ProductMediaType } from "@dashboard/graphql";
-import { ProductMediaPopper } from "@dashboard/products/components/ProductMediaPopper/ProductMediaPopper";
 import { ReorderAction } from "@dashboard/types";
 import createMultiFileUploadHandler from "@dashboard/utils/handlers/multiFileUploadHandler";
-import { Card, CardContent } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { vars } from "@saleor/macaw-ui/next";
-import clsx from "clsx";
+import {
+  Box,
+  Button,
+  Dropdown,
+  List,
+  sprinkles,
+  Text,
+} from "@saleor/macaw-ui/next";
 import React from "react";
-import { defineMessages, useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 import { SortableContainer, SortableElement } from "react-sortable-hoc";
 
-const messages = defineMessages({
-  media: {
-    id: "/Mcvt4",
-    defaultMessage: "Media",
-    description: "section header",
-  },
-  upload: {
-    id: "mGiA6q",
-    defaultMessage: "Upload",
-    description: "modal button upload",
-  },
-});
-
-const useStyles = makeStyles(
-  theme => ({
-    card: {
-      marginTop: theme.spacing(2),
-      [theme.breakpoints.down("sm")]: {
-        marginTop: 0,
-      },
-    },
-    fileField: {
-      display: "none",
-    },
-    icon: {
-      color: "rgba(255, 255, 255, 0.54)",
-    },
-    image: {
-      height: "100%",
-      objectFit: "contain",
-      userSelect: "none",
-      width: "100%",
-    },
-    imageContainer: {
-      "&:hover, &.dragged": {
-        "& $imageOverlay": {
-          display: "block",
-        },
-      },
-      background: "#ffffff",
-      border: `1px solid ${vars.colors.border.neutralPlain}`,
-      borderRadius: theme.spacing(),
-      height: 140,
-      margin: "auto",
-      overflow: "hidden",
-      padding: theme.spacing(2),
-      position: "relative",
-      width: 140,
-    },
-    imageGridContainer: {
-      position: "relative",
-    },
-    imageOverlay: {
-      background: "rgba(0, 0, 0, 0.6)",
-      cursor: "move",
-      display: "none",
-      height: 140,
-      left: 0,
-      padding: theme.spacing(2),
-      position: "absolute",
-      top: 0,
-      width: 140,
-    },
-    imageOverlayToolbar: {
-      alignContent: "flex-end",
-      display: "flex",
-      position: "relative",
-      right: theme.spacing(-3),
-      top: theme.spacing(-2),
-    },
-    imageUpload: {
-      height: "100%",
-      left: 0,
-      outline: 0,
-      position: "absolute",
-      top: 0,
-      width: "100%",
-    },
-    imageUploadActive: {
-      zIndex: 1,
-    },
-    imageUploadIconActive: {
-      display: "block",
-    },
-    root: {
-      display: "grid",
-      gridColumnGap: theme.spacing(2),
-      gridRowGap: theme.spacing(2),
-      gridTemplateColumns: "repeat(4, 1fr)",
-      [theme.breakpoints.down("sm")]: {
-        gridTemplateColumns: "repeat(3, 1fr)",
-      },
-      [theme.breakpoints.down("xs")]: {
-        gridTemplateColumns: "repeat(2, 1fr)",
-      },
-    },
-    rootDragActive: {
-      opacity: 0.2,
-    },
-  }),
-  { name: "ProductMedia" },
-);
+import { messages } from "./messages";
 
 interface SortableMediaProps {
   media: {
@@ -163,7 +65,6 @@ const MediaListContainer = SortableContainer<MediaListContainerProps>(
 );
 
 interface ProductMediaProps {
-  placeholderImage?: string;
   media: ProductMediaFragment[];
   loading?: boolean;
   getImageEditUrl: (id: string) => string;
@@ -176,7 +77,6 @@ interface ProductMediaProps {
 const ProductMedia: React.FC<ProductMediaProps> = props => {
   const {
     media,
-    placeholderImage,
     getImageEditUrl,
     onImageDelete,
     onImageReorder,
@@ -184,14 +84,12 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
     openMediaUrlModal,
   } = props;
 
-  const classes = useStyles(props);
   const intl = useIntl();
   const imagesUpload = React.useRef<HTMLInputElement>(null);
   const anchor = React.useRef<HTMLButtonElement>();
   const [imagesToUpload, setImagesToUpload] = React.useState<
     ProductMediaFragment[]
   >([]);
-  const [popperOpenStatus, setPopperOpenStatus] = React.useState(false);
 
   const handleImageUpload = createMultiFileUploadHandler(onImageUpload, {
     onAfterUpload: () =>
@@ -219,61 +117,92 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
   });
 
   return (
-    <Card className={classes.card}>
-      <CardTitle
-        title={intl.formatMessage(messages.media)}
-        toolbar={
-          <>
-            <Button
-              onClick={() => setPopperOpenStatus(true)}
-              variant="tertiary"
-              data-test-id="button-upload-image"
-              ref={anchor}
-            >
-              {intl.formatMessage(messages.upload)}
-            </Button>
-
-            <ProductMediaPopper
-              anchorRef={anchor.current}
-              imagesUploadRef={imagesUpload.current}
-              setPopperStatus={setPopperOpenStatus}
-              popperStatus={popperOpenStatus}
-              openMediaUrlModal={openMediaUrlModal}
-            />
-
-            <input
-              className={classes.fileField}
-              id="fileUpload"
-              onChange={event => handleImageUpload(event.target.files)}
-              multiple
-              type="file"
-              ref={imagesUpload}
-              accept="image/*"
-            />
-          </>
-        }
-      />
-      <div className={classes.imageGridContainer}>
-        {media === undefined ? (
-          <CardContent>
-            <div className={classes.root}>
-              <div className={classes.imageContainer}>
-                <img className={classes.image} src={placeholderImage} />
-              </div>
-            </div>
-          </CardContent>
-        ) : media.length > 0 ? (
-          <>
-            <ImageUpload
-              className={classes.imageUpload}
-              isActiveClassName={classes.imageUploadActive}
-              disableClick={true}
-              hideUploadIcon={true}
-              iconContainerActiveClassName={classes.imageUploadIconActive}
-              onImageUpload={handleImageUpload}
-            >
-              {({ isDragActive }) => (
-                <CardContent>
+    <DashboardCard>
+      <DashboardCard.Title>
+        <Box display="flex" justifyContent="space-between" cursor="pointer">
+          <FormattedMessage {...messages.media} />
+          <Dropdown>
+            <Dropdown.Trigger>
+              <Button
+                variant="secondary"
+                type="button"
+                data-test-id="button-upload-image"
+                ref={anchor}
+              >
+                {intl.formatMessage(messages.upload)}
+              </Button>
+            </Dropdown.Trigger>
+            <Dropdown.Content align="end">
+              <List
+                padding={5}
+                borderRadius={4}
+                boxShadow="overlay"
+                backgroundColor="surfaceNeutralPlain"
+              >
+                <Dropdown.Item>
+                  <List.Item
+                    borderRadius={4}
+                    paddingX={4}
+                    paddingY={5}
+                    onClick={() => imagesUpload.current.click()}
+                    data-test-id="upload-images"
+                  >
+                    <Text>{intl.formatMessage(messages.uploadImages)}</Text>
+                  </List.Item>
+                </Dropdown.Item>
+                <Dropdown.Item>
+                  <List.Item
+                    borderRadius={4}
+                    paddingX={4}
+                    paddingY={5}
+                    onClick={openMediaUrlModal}
+                    data-test-id="upload-media-url"
+                  >
+                    <Text>{intl.formatMessage(messages.uploadUrl)}</Text>
+                  </List.Item>
+                </Dropdown.Item>
+              </List>
+            </Dropdown.Content>
+          </Dropdown>
+        </Box>
+      </DashboardCard.Title>
+      <DashboardCard.Content>
+        <Box>
+          <Box
+            as="input"
+            display="none"
+            id="fileUpload"
+            onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+              handleImageUpload(event.target.files)
+            }
+            multiple
+            type="file"
+            ref={imagesUpload}
+            accept="image/*"
+          />
+        </Box>
+        <Box position="relative">
+          {media === undefined ? (
+            <Box padding={8}>
+              <Skeleton />
+            </Box>
+          ) : media.length > 0 ? (
+            <>
+              <ImageUpload
+                className={sprinkles({
+                  height: "100%",
+                  width: "100%",
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                })}
+                isActiveClassName={sprinkles({ zIndex: "1" })}
+                disableClick={true}
+                hideUploadIcon={true}
+                iconContainerActiveClassName={sprinkles({ display: "block" })}
+                onImageUpload={handleImageUpload}
+              >
+                {({ isDragActive }) => (
                   <MediaListContainer
                     distance={20}
                     helperClass="dragged"
@@ -281,22 +210,24 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
                     media={media}
                     preview={imagesToUpload}
                     onSortEnd={onImageReorder}
-                    className={clsx({
-                      [classes.root]: true,
-                      [classes.rootDragActive]: isDragActive,
+                    className={sprinkles({
+                      display: "grid",
+                      gap: 8,
+                      gridTemplateColumns: { mobile: 2, tablet: 3, desktop: 4 },
+                      opacity: isDragActive ? "0.2" : "1",
                     })}
                     onDelete={onImageDelete}
                     getEditHref={getImageEditUrl}
                   />
-                </CardContent>
-              )}
-            </ImageUpload>
-          </>
-        ) : (
-          <ImageUpload onImageUpload={handleImageUpload} />
-        )}
-      </div>
-    </Card>
+                )}
+              </ImageUpload>
+            </>
+          ) : (
+            <ImageUpload onImageUpload={handleImageUpload} />
+          )}
+        </Box>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 ProductMedia.displayName = "ProductMedia";

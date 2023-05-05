@@ -10,7 +10,7 @@ Cypress.Commands.add("clearAndType", { prevSubject: true }, (subject, text) => {
     if (subject.find("[contenteditable]").length > 0) {
       cy.wrap(subject).find("[contenteditable]").clear().type(text);
     } else {
-      cy.wrap(subject).clear().type(text);
+      cy.wrap(subject).clear({ force: true }).type(text);
     }
   });
 });
