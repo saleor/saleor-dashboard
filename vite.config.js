@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import react from "@vitejs/plugin-react-swc";
-import { copyFileSync } from "fs";
+import { copyFileSync, mkdirSync } from "fs";
 import path from "path";
 import nodePolyfills from "rollup-plugin-polyfill-node";
 import { defineConfig, loadEnv, searchForWorkspaceRoot } from "vite";
@@ -13,7 +13,11 @@ const copyOgImage = () => ({
   name: "copy-og-image",
   apply: "build",
   writeBundle: () => {
-    copyFileSync("./assets/og.png", "./build/dashboard/og.png");
+    mkdirSync(path.resolve("build", "dashboard"), { recursive: true });
+    copyFileSync(
+      path.resolve("assets", "og.png"),
+      path.resolve("build", "dashboard", "og.png"),
+    );
   },
 });
 
