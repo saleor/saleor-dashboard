@@ -12,7 +12,8 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React, { useRef } from "react";
+import { Button, Popover, sprinkles } from "@saleor/macaw-ui/next";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
@@ -86,8 +87,6 @@ const OrderDraftDetailsSummary: React.FC<
 
   const intl = useIntl();
   const classes = useStyles(props);
-
-  const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
 
   if (!order) {
     return null;
@@ -179,22 +178,33 @@ const OrderDraftDetailsSummary: React.FC<
   return (
     <table className={classes.root}>
       <tbody>
-        <tr className={classes.relativeRow} ref={popperAnchorRef}>
+        <tr className={classes.relativeRow}>
           <td>
-            <Link onClick={openDialog}>
-              {intl.formatMessage(discountTitle)}
-            </Link>
-            <OrderDiscountCommonModal
-              modalType={ORDER_DISCOUNT}
-              existingDiscount={orderDiscount}
-              maxPrice={undiscountedPrice}
-              isOpen={isDialogOpen}
-              onConfirm={addOrderDiscount}
-              onClose={closeDialog}
-              onRemove={removeOrderDiscount}
-              confirmStatus={orderDiscountAddStatus}
-              removeStatus={orderDiscountRemoveStatus}
-            />
+            <Popover open={isDialogOpen}>
+              <Popover.Trigger>
+                <Button
+                  variant="tertiary"
+                  onClick={isDialogOpen ? closeDialog : openDialog}
+                >
+                  <Link>{intl.formatMessage(discountTitle)}</Link>
+                </Button>
+              </Popover.Trigger>
+              <Popover.Content
+                align="start"
+                className={sprinkles({ zIndex: "3" })}
+              >
+                <OrderDiscountCommonModal
+                  modalType={ORDER_DISCOUNT}
+                  existingDiscount={orderDiscount}
+                  maxPrice={undiscountedPrice}
+                  onConfirm={addOrderDiscount}
+                  onClose={closeDialog}
+                  onRemove={removeOrderDiscount}
+                  confirmStatus={orderDiscountAddStatus}
+                  removeStatus={orderDiscountRemoveStatus}
+                />
+              </Popover.Content>
+            </Popover>
           </td>
           <td className={classes.textRight}>
             {getOrderDiscountLabel(orderDiscount)}
