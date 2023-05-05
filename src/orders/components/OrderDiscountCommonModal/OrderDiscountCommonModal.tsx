@@ -18,7 +18,6 @@ import {
   OrderDiscountType,
 } from "./types";
 
-const fullNumbersRegex = /^[0-9]*$/;
 const numbersRegex = /([0-9]+\.?[0-9]*)$/;
 const PERMIL = 0.01;
 
@@ -186,11 +185,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   };
 
   const handleSetError = (value: string) => {
-    const regexToCheck = isDiscountTypePercentage
-      ? fullNumbersRegex
-      : numbersRegex;
-
-    setValueError(!regexToCheck.test(value));
+    setValueError(!numbersRegex.test(value));
   };
 
   const handleConfirm = () => {
