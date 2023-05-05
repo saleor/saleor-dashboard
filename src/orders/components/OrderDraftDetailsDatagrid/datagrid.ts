@@ -1,5 +1,6 @@
 import {
   moneyCell,
+  moneyDiscountedCell,
   readonlyTextCell,
   tagsCell,
   textCell,
@@ -122,16 +123,16 @@ export const useGetCellContent = ({
       case "quantity":
         return textCell(change || rowData.quantity.toString());
       case "price":
-        return moneyCell(
+        return moneyDiscountedCell(
           {
             value: unitDiscountedPrice.amount,
             currency: unitDiscountedPrice.currency,
             undiscounted: unitUndiscountedPrice.amount,
+            lineItemId: rowData.id,
             locale,
           },
           {
-            readonly: true,
-            allowOverlay: false,
+            allowOverlay: true,
           },
         );
       case "status":

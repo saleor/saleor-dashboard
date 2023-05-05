@@ -7,15 +7,9 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
-import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
-import React, { useCallback, useState } from "react";
+import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
-import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
-import {
-  ORDER_LINE_DISCOUNT,
-  OrderDiscountCommonInput,
-} from "../OrderDiscountCommonModal/types";
 import { FormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { useColumns, useGetCellContent } from "./datagrid";
 import { messages } from "./messages";
@@ -36,12 +30,6 @@ export const OrderDraftDetailsDatagrid = ({
 }: OrderDraftDetailsDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
-  const [isDialogOpen, setIsDialogOpen] = useState(false);
-  const [editedLineId, setEditedLineId] = useState<string | null>(null);
-  const getDiscountProviderValues = useOrderLineDiscountContext();
-  const discountProviderValues = editedLineId
-    ? getDiscountProviderValues(editedLineId)
-    : null;
 
   const { availableColumns } = useColumns();
   const getCellContent = useGetCellContent({
@@ -66,33 +54,12 @@ export const OrderDraftDetailsDatagrid = ({
       {
         label: intl.formatMessage(messages.deleteOrder),
         onSelect: () => {
-          setEditedLineId(null);
           onOrderLineRemove(lines[index].id);
-        },
-      },
-      {
-        label: intl.formatMessage(messages.editDiscount),
-        onSelect: () => {
-          setEditedLineId(lines[index].id);
-          setIsDialogOpen(true);
         },
       },
     ],
     [intl, lines, onOrderLineRemove],
   );
-
-  const handleDiscountConfirm = useCallback(
-    async (discount: OrderDiscountCommonInput) => {
-      await discountProviderValues.addOrderLineDiscount(discount);
-      setIsDialogOpen(false);
-    },
-    [discountProviderValues],
-  );
-
-  const handleDiscountRemove = useCallback(async () => {
-    await discountProviderValues.removeOrderLineDiscount();
-    setIsDialogOpen(false);
-  }, [discountProviderValues]);
 
   const handleDatagridChange = useCallback(
     async (
@@ -152,20 +119,6 @@ export const OrderDraftDetailsDatagrid = ({
         )}
         onChange={handleDatagridChange}
       />
-
-      {discountProviderValues !== null && (
-        <OrderDiscountCommonModal
-          isOpen={isDialogOpen}
-          onClose={() => setIsDialogOpen(false)}
-          modalType={ORDER_LINE_DISCOUNT}
-          maxPrice={discountProviderValues.unitDiscountedPrice}
-          onConfirm={handleDiscountConfirm}
-          onRemove={handleDiscountRemove}
-          existingDiscount={discountProviderValues.orderLineDiscount}
-          confirmStatus={discountProviderValues.orderLineDiscountUpdateStatus}
-          removeStatus={discountProviderValues.orderLineDiscountRemoveStatus}
-        />
-      )}
     </DatagridChangeStateContext.Provider>
   );
 };

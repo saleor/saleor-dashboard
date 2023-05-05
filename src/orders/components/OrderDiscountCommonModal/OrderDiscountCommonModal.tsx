@@ -6,13 +6,7 @@ import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
 import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
 import { buttonMessages } from "@dashboard/intl";
-import {
-  Card,
-  CardContent,
-  Dialog,
-  TextField,
-  Typography,
-} from "@material-ui/core";
+import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
@@ -106,7 +100,6 @@ export interface OrderDiscountCommonModalProps {
   onRemove: () => void;
   modalType: OrderDiscountType;
   existingDiscount: OrderDiscountCommonInput;
-  isOpen: boolean;
   confirmStatus: ConfirmButtonTransitionState;
   removeStatus: ConfirmButtonTransitionState;
 }
@@ -118,7 +111,6 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   onClose,
   onRemove,
   existingDiscount,
-  isOpen,
   confirmStatus,
   removeStatus,
 }) => {
@@ -262,62 +254,60 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     !getParsedDiscountValue() || isValueError || isAmountTooLarge();
 
   return (
-    <Dialog open={isOpen}>
-      <Card>
-        <ModalTitle title={intl.formatMessage(dialogTitle)} onClose={onClose} />
-        <CardContent>
-          <RadioGroupField
-            innerContainerClassName={classes.radioContainer}
-            choices={discountTypeChoices}
-            name="discountType"
-            variant="inlineJustify"
-            value={calculationMode}
-            onChange={event => setCalculationMode(event.target.value)}
-          />
-          <CardSpacer />
-          <PriceField
-            label={intl.formatMessage(messages.discountValueLabel)}
-            error={isValueError}
-            hint={isValueError && intl.formatMessage(messages.invalidValue)}
-            value={value}
-            onChange={handleSetDiscountValue}
-            currencySymbol={valueFieldSymbol}
-          />
-          <CardSpacer />
-          <Typography>
-            {intl.formatMessage(messages.discountReasonLabel)}
-          </Typography>
-          <TextField
-            className={classes.reasonInput}
-            label={intl.formatMessage(messages.discountReasonLabel)}
-            value={reason}
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              setReason(event.target.value)
-            }
-          />
-        </CardContent>
-        <DialogButtons
-          onConfirm={handleConfirm}
-          onClose={onClose}
-          disabled={isSubmitDisabled}
-          showBackButton={false}
-          confirmButtonState={confirmStatus}
-        >
-          {existingDiscount && (
-            <div className={classes.buttonWrapper}>
-              <ConfirmButton
-                data-test-id="button-remove"
-                onClick={onRemove}
-                className={classes.removeButton}
-                transitionState={removeStatus}
-              >
-                {intl.formatMessage(buttonMessages.remove)}
-              </ConfirmButton>
-            </div>
-          )}
-        </DialogButtons>
-      </Card>
-    </Dialog>
+    <Card>
+      <ModalTitle title={intl.formatMessage(dialogTitle)} onClose={onClose} />
+      <CardContent>
+        <RadioGroupField
+          innerContainerClassName={classes.radioContainer}
+          choices={discountTypeChoices}
+          name="discountType"
+          variant="inlineJustify"
+          value={calculationMode}
+          onChange={event => setCalculationMode(event.target.value)}
+        />
+        <CardSpacer />
+        <PriceField
+          label={intl.formatMessage(messages.discountValueLabel)}
+          error={isValueError}
+          hint={isValueError && intl.formatMessage(messages.invalidValue)}
+          value={value}
+          onChange={handleSetDiscountValue}
+          currencySymbol={valueFieldSymbol}
+        />
+        <CardSpacer />
+        <Typography>
+          {intl.formatMessage(messages.discountReasonLabel)}
+        </Typography>
+        <TextField
+          className={classes.reasonInput}
+          label={intl.formatMessage(messages.discountReasonLabel)}
+          value={reason}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            setReason(event.target.value)
+          }
+        />
+      </CardContent>
+      <DialogButtons
+        onConfirm={handleConfirm}
+        onClose={onClose}
+        disabled={isSubmitDisabled}
+        showBackButton={false}
+        confirmButtonState={confirmStatus}
+      >
+        {existingDiscount && (
+          <div className={classes.buttonWrapper}>
+            <ConfirmButton
+              data-test-id="button-remove"
+              onClick={onRemove}
+              className={classes.removeButton}
+              transitionState={removeStatus}
+            >
+              {intl.formatMessage(buttonMessages.remove)}
+            </ConfirmButton>
+          </div>
+        )}
+      </DialogButtons>
+    </Card>
   );
 };
 
