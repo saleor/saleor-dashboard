@@ -12,7 +12,7 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import { Box, Button, Popover } from "@saleor/macaw-ui/next";
+import { Box, Button, Popover, sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -189,7 +189,10 @@ const OrderDraftDetailsSummary: React.FC<
                   <Link>{intl.formatMessage(discountTitle)}</Link>
                 </Button>
               </Popover.Trigger>
-              <Popover.Content align="start">
+              <Popover.Content
+                align="start"
+                className={sprinkles({ zIndex: "3" })}
+              >
                 <Box boxShadow="overlay">
                   <OrderDiscountCommonModal
                     modalType={ORDER_DISCOUNT}
