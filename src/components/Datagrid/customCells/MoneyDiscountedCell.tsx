@@ -124,7 +124,10 @@ export const moneyDiscountedCellRenderer =
     },
     provideEditor: () => ({
       editor: MoneyDiscountedCellEditor,
-      disablePadding: true,
+      styleOverride: {
+        padding: "41px 0 0 0",
+      },
+      disableStyling: true,
     }),
     onPaste: (value, data) => ({
       ...data,
