@@ -6,6 +6,7 @@ import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
 import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
 import { buttonMessages } from "@dashboard/intl";
+import { toFixed } from "@dashboard/utils/toFixed";
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
@@ -132,7 +133,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     const stringifiedValue = existingDiscount.value.toString();
 
     if (calculationMode === DiscountValueTypeEnum.FIXED) {
-      return parseFloat(stringifiedValue).toFixed(2);
+      return parseFloat(stringifiedValue).toString();
     }
 
     return stringifiedValue;
@@ -245,12 +246,12 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     const recalculatedValueFromPercentageToFixed = (
       (getParsedDiscountValue() * maxPrice.amount) /
       100
-    ).toFixed(2);
+    ).toString();
 
     const recalculatedValueFromFixedToPercentage = (
       (getParsedDiscountValue() / maxPrice.amount) *
       100
-    ).toFixed(2);
+    ).toString();
 
     const recalculatedValue = changedFromPercentageToFixed
       ? recalculatedValueFromPercentageToFixed
@@ -291,7 +292,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
           label={intl.formatMessage(messages.discountValueLabel)}
           error={!!valueErrorMsg}
           hint={valueErrorMsg}
-          value={value}
+          value={toFixed(value, 2)}
           onChange={handleSetDiscountValue}
           currencySymbol={valueFieldSymbol}
         />
