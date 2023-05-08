@@ -26,6 +26,7 @@ import Auth, { useUser } from "./auth";
 import AuthProvider from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
+import { useAuthParameters } from "./auth/hooks/useAuthParameters";
 import { loginCallbackPath } from "./auth/urls";
 import CategorySection from "./categories";
 import ChannelsSection from "./channels";
@@ -153,14 +154,19 @@ const useAuthentication = () => {
   const shouldRedirect = params.has(paramName);
   const { authenticated, authenticating, requestLoginByExternalPlugin } =
     useUser();
+  const { setRequestedExternalPluginId } = useAuthParameters();
 
   const handleAuthentication = async () => {
     const pluginId = params.get(paramName);
+
+    setRequestedExternalPluginId(pluginId);
+
     const redirectUri = urlJoin(
       window.location.origin,
       getAppMountUriForRedirect(),
       loginCallbackPath,
     );
+
     const response = await requestLoginByExternalPlugin(pluginId, {
       redirectUri,
     });
