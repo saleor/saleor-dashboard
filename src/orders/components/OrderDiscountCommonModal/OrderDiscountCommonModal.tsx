@@ -272,7 +272,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     calculationMode === DiscountValueTypeEnum.FIXED ? currency : "%";
 
   const isSubmitDisabled =
-    !getParsedDiscountValue() || !valueErrorMsg || isAmountTooLarge();
+    !getParsedDiscountValue() || valueErrorMsg || isAmountTooLarge();
 
   return (
     <Card>
