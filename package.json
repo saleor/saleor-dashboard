@@ -120,7 +120,6 @@
     "@graphql-codegen/typescript-apollo-client-helpers": "^2.1.10",
     "@graphql-codegen/typescript-operations": "^2.2.4",
     "@graphql-codegen/typescript-react-apollo": "^3.2.5",
-    "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@percy/cli": "^1.21.0",
     "@percy/cypress": "^3.1.2",
     "@pollyjs/adapter-node-http": "~5.0.0",
