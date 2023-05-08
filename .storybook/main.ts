@@ -25,6 +25,11 @@ const config: StorybookConfig = {
     config.plugins = await withoutVitePlugins(config.plugins, ["vite:html"]);
 
     return mergeConfig(config, {
+      build: {
+        commonjsOptions: {
+          transformMixedEsModules: true,
+        },
+      },
       resolve: {
         alias: {
           "@material-ui/lab": resolve("./node_modules/@material-ui/lab"),

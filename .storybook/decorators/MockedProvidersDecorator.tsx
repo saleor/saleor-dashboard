@@ -17,9 +17,6 @@ import MessageManagerProvider from "../../src/components/messages";
 import { getAppMountUri } from "../../src/config";
 import { ApolloMockedProvider } from "../../testUtils/ApolloMockedProvider";
 
-// see https://github.com/remarkjs/react-markdown/issues/339
-window.process = { ...window.process, cwd: () => "" };
-
 export const MockedProvidersDecorator: React.FC = ({ children }) => (
   <ApolloMockedProvider>
     <IntlProvider defaultLocale={Locale.EN} locale={Locale.EN}>
