@@ -4,11 +4,19 @@ on:
     tags:
       # Matches stable and pre-releases
       - "[0-9]+.[0-9]+.[0-9]+*"
+    branches:
+      # Matches release branches
+      - "[0-9]+.[0-9]+"
   workflow_dispatch:
     inputs:
       git_ref:
-        description: Git ref (tag, branch or commit hash) with helm chart to deploy
+        description: Git ref (tag, branch or commit hash) to deploy
         required: true
+      trigger_release:
+        type: boolean
+        description: "Trigger release"
+        required: true
+        default: false
 
 jobs:
   build:
@@ -36,6 +44,14 @@ jobs:
           set -x
           environment=$(echo $VERSION | sed -n 's#\([0-9]\+\).\([0-9]\+\).*#saleor-staging-v\1\2#p')
           echo "ENVIRONMENT=${environment}" >> $GITHUB_ENV
+      
+      - name: Set custom version
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        # Add commit hash to basic version number
+        run: |
+          set -x
+          hash=$(git rev-parse --short HEAD)
+          echo "CUSTOM_VERSION=${VERSION}-${hash}" >> $GITHUB_ENV
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -65,6 +81,7 @@ jobs:
           for i in {1..3}; do aws cloudfront create-invalidation --distribution-id ${{ secrets.AWS_STAGING_CF_DIST_ID }} --paths "/dashboard*" && break || sleep 5; done
 
       - name: Prepare Sandbox release pull request
+        if: ${{ startsWith(github.ref, 'refs/tags/') || github.event.inputs.trigger_release == 'true' }}
         run: |
           export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
@@ -86,6 +103,6 @@ jobs:
           JOB_STATUS: ${{ job.status }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CLOUD_DEPLOYMENTS_WEBHOOK_URL }}
           SLACK_MENTION_GROUP_ID: ${{ secrets.SLACK_DASHBOARD_GROUP_ID }}
-          JOB_TITLE: "Dashboard deployment to ${{ env.ENVIRONMENT }}"
+          JOB_TITLE: "Dashboard deployment of ${{ env.CUSTOM_VERSION || env.VERSION }} to ${{ env.ENVIRONMENT }}"
         run: |
           python3 ./.github/workflows/notify/notify-slack.py
