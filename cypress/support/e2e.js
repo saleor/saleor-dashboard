@@ -11,9 +11,10 @@ import "./customCommands/sharedElementsOperations/progressBar.js";
 import "./customCommands/sharedElementsOperations/selects.js";
 import "./customCommands/sharedElementsOperations/tables";
 import "./customCommands/sharedElementsOperations/deleteElement";
-import "cypress-mailhog";
 import "cypress-file-upload";
 import "cypress-mochawesome-reporter/register";
+import "./customCommands/basicOperations/mailpit";
+
 
 import { commandTimings } from "cypress-timings";
 
