@@ -114,6 +114,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   // Whenever pagination change we need to clear datagrid selection
   useLayoutEffect(() => {
     clearRowSelection();
+    setSelectedProductIds([]);
   }, [params.after, params.before]);
 
   usePaginationReset(productListUrl, params, settings.rowNumber);
