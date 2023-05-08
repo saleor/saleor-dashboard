@@ -16,6 +16,7 @@ import {
 import { PermissionGroupWithContextDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import { buttonMessages } from "@dashboard/intl";
 import {
   MembersListUrlSortField,
   permissionGroupListUrl,
@@ -178,11 +179,9 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
                     permissions={permissions}
                     onChange={change}
                     errorMessage={permissionsError}
-                    fullAccessLabel={intl.formatMessage({
-                      id: "mAabef",
-                      defaultMessage: "Group has full access to the store",
-                      description: "checkbox label",
-                    })}
+                    fullAccessLabel={intl.formatMessage(
+                      buttonMessages.selectAll,
+                    )}
                     description={intl.formatMessage({
                       id: "CYZse9",
                       defaultMessage:

@@ -13,7 +13,7 @@ import {
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { sectionNames } from "@dashboard/intl";
+import { buttonMessages, sectionNames } from "@dashboard/intl";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
@@ -127,11 +127,9 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
                     disabled={disabled}
                     permissions={permissions}
                     onChange={change}
-                    fullAccessLabel={intl.formatMessage({
-                      id: "mAabef",
-                      defaultMessage: "Group has full access to the store",
-                      description: "checkbox label",
-                    })}
+                    fullAccessLabel={intl.formatMessage(
+                      buttonMessages.selectAll,
+                    )}
                     description={intl.formatMessage({
                       id: "CYZse9",
                       defaultMessage:

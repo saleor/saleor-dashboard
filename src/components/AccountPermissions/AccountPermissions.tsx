@@ -5,14 +5,14 @@ import { PermissionData } from "@dashboard/permissionGroups/components/Permissio
 import {
   Card,
   CardContent,
-  Checkbox,
+  Checkbox as MuiCheckbox,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Typography,
 } from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, Checkbox, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -131,28 +131,18 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
         <>
           <CardContent>
             <Typography variant="body2">{description}</Typography>
-            <ListItem
-              role={undefined}
-              dense
-              button
-              onClick={handleFullAccessChange}
-            >
-              <ListItemIcon>
-                <Checkbox
-                  data-test-id="full-access"
-                  color="secondary"
-                  edge="start"
-                  checked={data.hasFullAccess}
-                  disabled={disabled}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ "aria-labelledby": "fullAccess" }}
-                />
-              </ListItemIcon>
-              <ListItemText primary={fullAccessLabel} />
-            </ListItem>
+            <Box marginTop={6}>
+              <Checkbox
+                disabled={disabled}
+                checked={data.hasFullAccess}
+                onCheckedChange={handleFullAccessChange}
+                tabIndex={-1}
+              >
+                <Text variant="body">{fullAccessLabel}</Text>
+              </Checkbox>
+            </Box>
           </CardContent>
-          {!data.hasFullAccess && (
+          {
             <>
               <Box
                 width="100%"
@@ -182,7 +172,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                         }
                       >
                         <ListItemIcon>
-                          <Checkbox
+                          <MuiCheckbox
                             color="secondary"
                             edge="start"
                             checked={hasPermissionSelected(
@@ -216,7 +206,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                 </CardContent>
               </Box>
             </>
-          )}
+          }
           {!!errorMessage && (
             <>
               <Box
