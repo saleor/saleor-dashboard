@@ -113,19 +113,19 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
   >([]);
 
   useEffect(() => {
+    if (!permissionGroup) {
+      return;
+    }
+
     if (
-      permissionGroup?.accessibleChannels?.length !== channels.length ||
-      permissionGroup?.restrictedAccessToChannels
+      permissionGroup.accessibleChannels?.length !== channels.length ||
+      permissionGroup.restrictedAccessToChannels
     ) {
       setChannelDisplayValues(
         mapNodeToChoice(permissionGroup?.accessibleChannels),
       );
     }
-  }, [
-    channels.length,
-    permissionGroup?.accessibleChannels,
-    permissionGroup?.restrictedAccessToChannels,
-  ]);
+  }, [channels.length, permissionGroup]);
 
   const channelChoices = mapNodeToChoice(channels);
 
