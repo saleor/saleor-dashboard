@@ -63,7 +63,7 @@ describe("ChannelPermission", () => {
     expect(screen.getByRole("listbox")).toBeInTheDocument();
   });
 
-  it("should render restricted checkbox disabled", () => {
+  it("should render restricted checkbox not disabled", () => {
     // Arrange & Act
     const mockOnHasRestrictedChannelsChange = jest.fn();
 
@@ -84,7 +84,7 @@ describe("ChannelPermission", () => {
 
     // Assert
     expect(mockOnHasRestrictedChannelsChange).not.toHaveBeenCalled();
-    expect(screen.getByRole("checkbox")).toBeDisabled();
+    expect(screen.getByRole("checkbox")).not.toBeDisabled();
   });
 
   it("should render selected channels when has restricted channels selected", () => {
