@@ -105,22 +105,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 
   const handleColumnMoved = useCallback(
     (startIndex: number, endIndex: number): void => {
-      // Keep empty column always at beginning
-      if (startIndex === 0) {
-        return setColumns(prevColumns => [...prevColumns]);
-      }
-
-      // Keep empty column always at beginning
-      if (endIndex === 0) {
-        return setColumns(old =>
-          addAtIndex(
-            old[startIndex],
-            removeAtIndex(old, startIndex),
-            endIndex + 1,
-          ),
-        );
-      }
-
       setColumns(old =>
         addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
       );
@@ -247,7 +231,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           loading={loading}
           rowMarkers="checkbox"
           columnSelect="single"
-          freezeColumns={1}
           hasRowHover={hasRowHover}
           onColumnMoved={handleColumnMoved}
           onColumnResize={handleColumnResize}

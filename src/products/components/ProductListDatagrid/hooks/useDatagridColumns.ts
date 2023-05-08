@@ -38,7 +38,6 @@ export const useDatagridColumns = ({
 
   const [columns, setColumns] = useState<AvailableColumn[]>([
     initialColumns.current[0],
-    initialColumns.current[1],
     ...initialColumns.current.filter(col =>
       settings.columns.includes(col.id as ProductListColumns),
     ),
@@ -83,7 +82,7 @@ function byColumnsInSettingsOrStaticColumns(
 ) {
   return (column: AvailableColumn) =>
     settings.columns.includes(column.id as ProductListColumns) ||
-    ["empty", "name"].includes(column.id);
+    ["name"].includes(column.id);
 }
 
 function toCurrentColumnData(

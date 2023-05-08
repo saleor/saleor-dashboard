@@ -73,6 +73,7 @@ export interface ProductListPageProps
   onTabDelete: (tabIndex: number) => void;
   onProductsDelete: () => void;
   onSelectProductIds: (ids: number[], clearSelection: () => void) => void;
+  clearRowSelection: () => void;
 }
 
 export type ProductListViewType = "datagrid" | "tile";
@@ -111,6 +112,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     hasPresetsChanged,
     selectedProductIds,
     onProductsDelete,
+    clearRowSelection,
     ...listProps
   } = props;
   const intl = useIntl();
@@ -270,7 +272,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                 />
                 <ProductListViewSwitch
                   defaultValue={storedProductListViewType}
-                  setProductListViewType={setProductListViewType}
+                  setProductListViewType={props => {
+                    setProductListViewType(props);
+                    clearRowSelection();
+                  }}
                 />
               </Box>
             }

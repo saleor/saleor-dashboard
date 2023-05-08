@@ -106,6 +106,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   // Keep reference to clear datagrid selection function
   const clearRowSelectionCallback = React.useRef<() => void | null>(null);
   const clearRowSelection = () => {
+    setSelectedProductIds([]);
     if (clearRowSelectionCallback.current) {
       clearRowSelectionCallback.current();
     }
@@ -114,7 +115,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   // Whenever pagination change we need to clear datagrid selection
   useLayoutEffect(() => {
     clearRowSelection();
-    setSelectedProductIds([]);
   }, [params.after, params.before]);
 
   usePaginationReset(productListUrl, params, settings.rowNumber);
@@ -267,6 +267,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const handleTabChange = (tab: number) => {
     clearRowSelection();
+
     const qs = new URLSearchParams(getFilterTabs()[tab - 1]?.data ?? "");
     qs.append("activeTab", tab.toString());
 
@@ -501,13 +502,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         selectedProductIds={selectedProductIds}
         onSelectProductIds={handleSetSelectedProductIds}
         columnQuery={availableInGridAttributesOpts.query}
+        clearRowSelection={clearRowSelection}
       />
       <ActionDialog
         open={params.action === "delete"}
         confirmButtonState={productBulkDeleteOpts.status}
         onClose={() => {
           closeModal();
-          clearRowSelection();
         }}
         onConfirm={() => {
           productBulkDelete({
