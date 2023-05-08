@@ -39,11 +39,6 @@ export const useColumns = () => {
         width: 300,
       },
       {
-        id: "status",
-        title: "Status",
-        width: 250,
-      },
-      {
         id: "sku",
         title: "SKU",
         width: 150,
@@ -62,6 +57,11 @@ export const useColumns = () => {
         id: "total",
         title: intl.formatMessage(columnsMessages.total),
         width: 150,
+      },
+      {
+        id: "status",
+        title: "Status",
+        width: 250,
       },
     ],
     [emptyColumn, intl],
