@@ -250,7 +250,7 @@ export const getPreorderEndHourFormData = (endDate?: string) =>
   endDate ? moment(endDate).format("HH:mm") : "";
 
 export const getSelectedMedia = <
-  T extends Pick<ProductMediaFragment, "id" | "sortOrder">
+  T extends Pick<ProductMediaFragment, "id" | "sortOrder">,
 >(
   media: T[] = [],
   selectedMediaIds: string[],

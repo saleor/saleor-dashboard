@@ -11,7 +11,6 @@ import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import { TopNavMenu } from "@dashboard/components/TopNavMenu";
 import { ProductListColumns } from "@dashboard/config";
 import {
   GridAttributesQuery,
@@ -191,7 +190,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                 )}
               </Text>
             )}
-            <TopNavMenu
+            <TopNav.Menu
               dataTestId="menu"
               items={[
                 {

@@ -4,9 +4,9 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Metadata from "@dashboard/components/Metadata";
+import { Metadata } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
-import SeoForm from "@dashboard/components/SeoForm";
+import { SeoForm } from "@dashboard/components/SeoForm";
 import {
   CollectionChannelListingErrorFragment,
   CollectionErrorFragment,

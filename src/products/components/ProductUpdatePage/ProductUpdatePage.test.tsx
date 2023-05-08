@@ -66,7 +66,6 @@ const props: ProductUpdatePageProps = {
   onMediaUrlUpload: () => undefined,
   onSubmit,
   onVariantShow: () => undefined,
-  placeholderImage,
   product,
   referencePages: [],
   referenceProducts: [],
