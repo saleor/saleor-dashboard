@@ -249,9 +249,10 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
       maxPrice.amount
     ).toFixed(2);
 
-    const recalculatedValueFromFixedToPercentage = Math.round(
-      (getParsedDiscountValue() * (1 / PERMIL)) / maxPrice.amount,
-    ).toString();
+    const recalculatedValueFromFixedToPercentage = (
+      (getParsedDiscountValue() * (1 / PERMIL)) /
+      maxPrice.amount
+    ).toFixed(2);
 
     const recalculatedValue = changedFromPercentageToFixed
       ? recalculatedValueFromPercentageToFixed
@@ -259,6 +260,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
 
     setValueErrorMsg(getErrorMessage(recalculatedValue));
     setValue(recalculatedValue);
+    previousCalculationMode.current = calculationMode;
   };
 
   useUpdateEffect(handleValueConversion, [calculationMode]);
