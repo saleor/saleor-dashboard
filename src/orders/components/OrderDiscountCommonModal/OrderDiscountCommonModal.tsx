@@ -19,7 +19,6 @@ import {
 } from "./types";
 
 const numbersRegex = /([0-9]+\.?[0-9]*)$/;
-const PERMIL = 0.01;
 
 const useStyles = makeStyles(
   theme => ({
@@ -244,14 +243,13 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
       calculationMode === DiscountValueTypeEnum.FIXED;
 
     const recalculatedValueFromPercentageToFixed = (
-      getParsedDiscountValue() *
-      PERMIL *
-      maxPrice.amount
+      (getParsedDiscountValue() * maxPrice.amount) /
+      100
     ).toFixed(2);
 
     const recalculatedValueFromFixedToPercentage = (
-      (getParsedDiscountValue() * (1 / PERMIL)) /
-      maxPrice.amount
+      (getParsedDiscountValue() / maxPrice.amount) *
+      100
     ).toFixed(2);
 
     const recalculatedValue = changedFromPercentageToFixed
