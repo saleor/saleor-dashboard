@@ -46,7 +46,7 @@ export const useColumns = () => {
       {
         id: "quantity",
         title: intl.formatMessage(columnsMessages.quantity),
-        width: 150,
+        width: 80,
       },
       {
         id: "price",
