@@ -1,15 +1,19 @@
 import { Locale } from "@dashboard/components/Locale";
-import { formatMoneyAmount } from "@dashboard/components/Money";
 import {
   CustomCell,
   CustomRenderer,
-  getMiddleCenterBias,
   GridCellKind,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
 import React from "react";
 
-import { usePriceField } from "../../PriceField/usePriceField";
+import { usePriceField } from "../../../PriceField/usePriceField";
+import {
+  drawCurrency,
+  drawLineCrossedPrice,
+  drawPrice,
+  getFormattedMoney,
+} from "./utils";
 
 interface MoneyCellProps {
   readonly kind: "money-cell";
@@ -57,52 +61,30 @@ export const moneyCellRenderer = (): CustomRenderer<MoneyCell> => ({
     const { ctx, theme, rect } = args;
     const { currency, value, undiscounted, locale } = cell.data;
     const hasValue = value === 0 ? true : !!value;
-    const formattedValue = value
-      ? formatMoneyAmount({ amount: Number(value), currency }, locale)
-      : "-";
-
-    const formattedUndiscounted =
-      undiscounted && undiscounted !== value
-        ? formatMoneyAmount({ amount: Number(undiscounted), currency }, locale)
-        : "";
-
+    const formattedValue = getFormattedMoney(value, currency, locale, "-");
+    const formattedUndiscounted = getFormattedMoney(
+      undiscounted !== value ? undiscounted : "",
+      currency,
+      locale,
+    );
     const formattedWithDiscount = formattedUndiscounted + " " + formattedValue;
 
-    ctx.fillStyle = theme.textDark;
-    ctx.textAlign = "right";
-    ctx.fillText(
-      formattedWithDiscount,
-      rect.x + rect.width - 8,
-      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-    );
+    drawPrice(ctx, theme, rect, formattedWithDiscount);
 
     // Draw crossed line above price without discount
     if (undiscounted && undiscounted !== value) {
-      const { width: totalTextWidth } = ctx.measureText(formattedWithDiscount);
-      const { width: undiscountedTextWidth } = ctx.measureText(
+      drawLineCrossedPrice(
+        ctx,
+        rect,
+        formattedWithDiscount,
         formattedUndiscounted,
-      );
-
-      ctx.fillRect(
-        rect.x + rect.width - 8 - totalTextWidth,
-        rect.y + rect.height / 2,
-        undiscountedTextWidth,
-        1,
       );
     }
 
     ctx.save();
-    ctx.fillStyle = theme.textMedium;
-    ctx.textAlign = "left";
-    ctx.font = [
-      theme.baseFontStyle.replace(/bold/g, "normal"),
-      theme.fontFamily,
-    ].join(" ");
-    ctx.fillText(
-      hasValue ? currency : "-",
-      rect.x + 8,
-      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-    );
+
+    drawCurrency(ctx, theme, rect, hasValue ? currency : "-");
+
     ctx.restore();
     return true;
   },

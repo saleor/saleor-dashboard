@@ -10,8 +10,7 @@ import {
   DropdownCellContentProps,
   DropdownChoice,
 } from "./DropdownCell";
-import { MoneyCell } from "./MoneyCell";
-import { MoneyDiscuntedCell } from "./MoneyDiscountedCell";
+import { MoneyCell, MoneyDiscuntedCell } from "./Money";
 import { ThumbnailCell } from "./ThumbnailCell";
 
 const common = {

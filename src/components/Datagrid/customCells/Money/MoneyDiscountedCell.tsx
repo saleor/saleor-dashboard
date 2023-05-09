@@ -1,5 +1,4 @@
 import { Locale } from "@dashboard/components/Locale";
-import { formatMoneyAmount } from "@dashboard/components/Money";
 import OrderDiscountCommonModal from "@dashboard/orders/components/OrderDiscountCommonModal/OrderDiscountCommonModal";
 import {
   ORDER_LINE_DISCOUNT,
@@ -9,10 +8,16 @@ import { useOrderLineDiscountContext } from "@dashboard/products/components/Orde
 import {
   CustomCell,
   CustomRenderer,
-  getMiddleCenterBias,
   GridCellKind,
 } from "@glideapps/glide-data-grid";
 import React, { useCallback } from "react";
+
+import {
+  drawCurrency,
+  drawLineCrossedPrice,
+  drawPrice,
+  getFormattedMoney,
+} from "./utils";
 
 interface MoneyDiscountedCellProps {
   readonly kind: "money-discounted-cell";
@@ -67,58 +72,31 @@ export const moneyDiscountedCellRenderer =
       const { ctx, theme, rect } = args;
       const { currency, value, undiscounted, locale } = cell.data;
       const hasValue = value === 0 ? true : !!value;
-      const formattedValue = value
-        ? formatMoneyAmount({ amount: Number(value), currency }, locale)
-        : "-";
-
-      const formattedUndiscounted =
-        undiscounted && undiscounted !== value
-          ? formatMoneyAmount(
-              { amount: Number(undiscounted), currency },
-              locale,
-            )
-          : "";
-
+      const formattedValue = getFormattedMoney(value, currency, locale, "-");
+      const formattedUndiscounted = getFormattedMoney(
+        undiscounted !== value ? undiscounted : "",
+        currency,
+        locale,
+      );
       const formattedWithDiscount =
         formattedUndiscounted + " " + formattedValue;
 
-      ctx.fillStyle = theme.textDark;
-      ctx.textAlign = "right";
-      ctx.fillText(
-        formattedWithDiscount,
-        rect.x + rect.width - 8,
-        rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-      );
+      drawPrice(ctx, theme, rect, formattedWithDiscount);
 
       // Draw crossed line above price without discount
       if (undiscounted && undiscounted !== value) {
-        const { width: totalTextWidth } = ctx.measureText(
+        drawLineCrossedPrice(
+          ctx,
+          rect,
           formattedWithDiscount,
-        );
-        const { width: undiscountedTextWidth } = ctx.measureText(
           formattedUndiscounted,
-        );
-
-        ctx.fillRect(
-          rect.x + rect.width - 8 - totalTextWidth,
-          rect.y + rect.height / 2,
-          undiscountedTextWidth,
-          1,
         );
       }
 
       ctx.save();
-      ctx.fillStyle = theme.textMedium;
-      ctx.textAlign = "left";
-      ctx.font = [
-        theme.baseFontStyle.replace(/bold/g, "normal"),
-        theme.fontFamily,
-      ].join(" ");
-      ctx.fillText(
-        hasValue ? currency : "-",
-        rect.x + 8,
-        rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-      );
+
+      drawCurrency(ctx, theme, rect, hasValue ? currency : "-");
+
       ctx.restore();
       return true;
     },

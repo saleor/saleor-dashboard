@@ -28,22 +28,22 @@ export const useColumns = (): AvailableColumn[] => {
       {
         id: "sku",
         title: intl.formatMessage(columnsMessages.sku),
-        width: 100,
+        width: 150,
       },
       {
         id: "quantity",
         title: intl.formatMessage(columnsMessages.quantity),
-        width: 100,
+        width: 80,
       },
       {
         id: "price",
         title: intl.formatMessage(columnsMessages.price),
-        width: 100,
+        width: 150,
       },
       {
         id: "total",
         title: intl.formatMessage(columnsMessages.total),
-        width: 100,
+        width: 150,
       },
     ],
     [intl],
