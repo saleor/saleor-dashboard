@@ -1,10 +1,11 @@
 import DebounceForm from "@dashboard/components/DebounceForm";
 import Form from "@dashboard/components/Form";
 import { OrderLineFragment, OrderLineInput } from "@dashboard/graphql";
-import createNonNegativeValueChangeHandler from "@dashboard/utils/handlers/nonNegativeValueChangeHandler";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
+
+import { createPositiveIntegerChangeHandler } from "./utils";
 
 const useStyles = makeStyles(
   () => ({
@@ -38,9 +39,7 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
   return (
     <Form initial={{ quantity }} onSubmit={data => handleSubmit(id, data)}>
       {({ change, data, submit, set }) => {
-        const handleQuantityChange = createNonNegativeValueChangeHandler(
-          change,
-        );
+        const handleQuantityChange = createPositiveIntegerChangeHandler(change);
 
         return (
           <DebounceForm
@@ -53,7 +52,7 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
                 className={classes.quantityField}
                 fullWidth
                 name="quantity"
-                type="number"
+                type="text"
                 value={data.quantity}
                 onChange={debounce}
                 onBlur={() => {
@@ -62,7 +61,7 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
                   }
                   submit();
                 }}
-                inputProps={{ min: 1 }}
+                inputProps={{ min: 1, max: 2147483647 }}
               />
             )}
           </DebounceForm>
