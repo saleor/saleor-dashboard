@@ -46,7 +46,7 @@ export function useAuthProvider({
   const { login, getExternalAuthUrl, getExternalAccessToken, logout } =
     useAuth();
   const navigate = useNavigator();
-  const { authenticated, authenticating, user } = useAuthState();
+  const { authenticated, authenticating } = useAuthState();
   const [requestedExternalPluginId] = useLocalStorage(
     "requestedExternalPluginId",
     null,
@@ -236,8 +236,8 @@ export function useAuthProvider({
     requestLoginByExternalPlugin: handleRequestExternalLogin,
     loginByExternalPlugin: handleExternalLogin,
     logout: handleLogout,
-    authenticating: authenticating && !errors.length,
-    authenticated: authenticated && user?.isStaff,
+    authenticating: authenticating && userDetails.loading && !errors.length,
+    authenticated: authenticated && userDetails.data?.me.isStaff,
     user: userDetails.data?.me,
     errors,
   };
