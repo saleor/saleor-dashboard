@@ -57,43 +57,41 @@ describe("As an admin I want to use attributes in variant selection", () => {
           name,
           inputType,
           attributeValues,
-        })
-          .then(({ productType: productTypeResp }) => {
-            productType = productTypeResp;
+        }).then(({ productType: productTypeResp }) => {
+          productType = productTypeResp;
 
-            createProductInChannelWithoutVariants({
-              categoryId: category.id,
-              productTypeId: productType.id,
-              name,
-              channelId: channel.id,
+          createProductInChannelWithoutVariants({
+            categoryId: category.id,
+            productTypeId: productType.id,
+            name,
+            channelId: channel.id,
+          })
+            .then(productResp => {
+              product = productResp;
+
+              cy.visit(addVariantUrl(product.id)).addAliasToGraphRequest(
+                "VariantCreate",
+              );
+
+              fillUpVariantDetails({
+                sku: name,
+                attributeName: attributeValues[0],
+                attributeType: inputType,
+                costPrice: 10,
+                price: 10,
+                variantName: "variant name random",
+              });
+              cy.wait("@VariantCreate");
+            })
+            .then(({ response }) => {
+              const variant =
+                response.body.data.productVariantCreate.productVariant;
+              getVariant(variant.id, channel.slug).then(({ attributes }) => {
+                expect(attributes[0].attribute.inputType).to.eq(inputType);
+                cy.confirmationMessageShouldAppear();
+              });
             });
-          })
-          .then(productResp => {
-            product = productResp;
-
-            cy.visit(addVariantUrl(product.id)).addAliasToGraphRequest(
-              "VariantCreate",
-            );
-
-            fillUpVariantDetails({
-              sku: name,
-              attributeName: attributeValues[0],
-              attributeType: inputType,
-              costPrice: 10,
-              price: 10,
-            });
-
-            cy.wait("@VariantCreate");
-          })
-          .then(({ response }) => {
-            const variant =
-              response.body.data.productVariantCreate.productVariant;
-            getVariant(variant.id, channel.slug);
-          })
-          .then(({ attributes }) => {
-            expect(attributes[0].attribute.inputType).to.eq(inputType);
-            cy.confirmationMessageShouldAppear();
-          });
+        });
       },
     );
   });
