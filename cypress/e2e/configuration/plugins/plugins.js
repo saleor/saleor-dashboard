@@ -68,10 +68,16 @@ describe("As an admin I want to manage plugins", () => {
       customerRegistration({
         email: customerEmail,
         channel: defaultChannel.slug,
-      });
-      getMailsForUser(customerEmail)
-        .its("0.Content.Headers.Subject.0")
-        .should("eq", randomName);
+      })
+        .then(() => {
+          getMailsForUser(customerEmail)
+            .mpLatest()
+            .mpGetMailDetails()
+            .its("Subject");
+        })
+        .then(subject => {
+          expect(subject).to.eq(randomName);
+        });
     },
   );
 
