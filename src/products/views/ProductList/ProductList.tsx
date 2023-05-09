@@ -65,7 +65,7 @@ import { getSortUrlVariables } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
 import isEqual from "lodash/isEqual";
 import { stringify } from "qs";
-import React, { useCallback, useLayoutEffect, useState } from "react";
+import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useSortRedirects } from "../../../hooks/useSortRedirects";
@@ -98,6 +98,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const [tabIndexToDelete, setTabIndexToDelete] = useState<number | null>(null);
   const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
+  const deleteButtonRef = useRef<HTMLButtonElement>(null);
 
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
@@ -503,17 +504,24 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onSelectProductIds={handleSetSelectedProductIds}
         columnQuery={availableInGridAttributesOpts.query}
         clearRowSelection={clearRowSelection}
+        setBulkDeleteButtonRef={(ref: HTMLButtonElement) => {
+          deleteButtonRef.current = ref;
+        }}
       />
       <ActionDialog
         open={params.action === "delete"}
         confirmButtonState={productBulkDeleteOpts.status}
         onClose={() => {
           closeModal();
+          setTimeout(() => {
+            deleteButtonRef.current.blur();
+          }, 0);
         }}
         onConfirm={() => {
           productBulkDelete({
             variables: { ids: selectedProductIds },
           });
+          deleteButtonRef.current.blur();
         }}
         title={intl.formatMessage({
           id: "F4WdSO",

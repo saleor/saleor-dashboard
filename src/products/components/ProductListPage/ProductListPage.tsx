@@ -74,6 +74,7 @@ export interface ProductListPageProps
   onProductsDelete: () => void;
   onSelectProductIds: (ids: number[], clearSelection: () => void) => void;
   clearRowSelection: () => void;
+  setBulkDeleteButtonRef: (ref: HTMLButtonElement) => void;
 }
 
 export type ProductListViewType = "datagrid" | "tile";
@@ -113,6 +114,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     selectedProductIds,
     onProductsDelete,
     clearRowSelection,
+    setBulkDeleteButtonRef,
     ...listProps
   } = props;
   const intl = useIntl();
@@ -267,6 +269,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             actions={
               <Box display="flex" gap={7}>
                 <ProductListDeleteButton
+                  ref={setBulkDeleteButtonRef}
                   onClick={onProductsDelete}
                   show={selectedProductIds.length > 0}
                 />
