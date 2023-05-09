@@ -1,3 +1,4 @@
+import { getAppMountUri } from "@dashboard/config";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { useEffect } from "react";
 import urlJoin from "url-join";
@@ -7,18 +8,18 @@ import { useUser } from "..";
 import { loginCallbackPath } from "../urls";
 import { useAuthParameters } from "./useAuthParameters";
 
+const PLUGIN_ID_PARAM = "saleorPluginId";
+
 export const useAuthRedirection = () => {
-  const paramName = "saleorPluginId";
   const router = useRouter();
   const params = new URLSearchParams(router.location.search);
-  const shouldRedirect = params.has(paramName);
+  const shouldRedirect = params.has(PLUGIN_ID_PARAM);
   const { authenticated, authenticating, requestLoginByExternalPlugin } =
     useUser();
   const { setRequestedExternalPluginId } = useAuthParameters();
+  const pluginId = params.get(PLUGIN_ID_PARAM);
 
   const handleAuthentication = async () => {
-    const pluginId = params.get(paramName);
-
     setRequestedExternalPluginId(pluginId);
 
     const redirectUri = urlJoin(
@@ -41,8 +42,16 @@ export const useAuthRedirection = () => {
     if (!shouldRedirect) {
       return;
     }
-    handleAuthentication();
-  }, []);
+
+    if (authenticated || authenticating) {
+      window.location.href = getAppMountUri();
+      return;
+    }
+
+    if (!authenticated && !authenticating) {
+      handleAuthentication();
+    }
+  }, [shouldRedirect, authenticated, authenticating]);
 
   return {
     authenticated,

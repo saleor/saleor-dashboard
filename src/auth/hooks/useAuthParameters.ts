@@ -1,5 +1,7 @@
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 
+import { loginCallbackPath } from "../urls";
+
 export const useAuthParameters = () => {
   const [requestedExternalPluginId, setRequestedExternalPluginId] =
     useLocalStorage("requestedExternalPluginId", null);
@@ -10,7 +12,8 @@ export const useAuthParameters = () => {
 
   return {
     requestedExternalPluginId,
-    fallbackUri: fallbackUri === "null" ? null : fallbackUri,
+    fallbackUri: fallbackUri === "null" ? "/" : fallbackUri,
+    isCallbackPath: location.pathname.includes(loginCallbackPath),
     setRequestedExternalPluginId,
     setFallbackUri,
   };

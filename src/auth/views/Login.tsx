@@ -33,6 +33,7 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   const {
     fallbackUri,
     requestedExternalPluginId,
+    isCallbackPath,
     setFallbackUri,
     setRequestedExternalPluginId,
   } = useAuthParameters();
@@ -68,15 +69,13 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     });
     setRequestedExternalPluginId(null);
     if (result && !result?.errors?.length) {
-      navigate(fallbackUri ?? "/");
+      navigate(fallbackUri);
       setFallbackUri(null);
     }
   };
 
   useEffect(() => {
     const { code, state } = params;
-    const isCallbackPath = location.pathname.includes(loginCallbackPath);
-
     const externalAuthParamsExist = code && state && isCallbackPath;
     const externalAuthNotPerformed = !authenticating && !errors.length;
 
