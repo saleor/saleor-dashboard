@@ -65,7 +65,7 @@ import { getSortUrlVariables } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
 import isEqual from "lodash/isEqual";
 import { stringify } from "qs";
-import React, { useCallback, useLayoutEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { useSortRedirects } from "../../../hooks/useSortRedirects";
@@ -114,7 +114,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   };
 
   // Whenever pagination change we need to clear datagrid selection
-  useLayoutEffect(() => {
+  useEffect(() => {
     clearRowSelection();
   }, [params.after, params.before]);
 
@@ -326,6 +326,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         ...DEFAULT_INITIAL_PAGINATION_DATA,
       }),
     );
+
+  const handleSubmitBulkDelete = () => {
+    productBulkDelete({
+      variables: { ids: selectedProductIds },
+    });
+    deleteButtonRef.current.blur();
+    clearRowSelection();
+  };
+
   const kindOpts = getProductKindOpts(availableProductKinds, intl);
   const paginationState = createPaginationState(settings.rowNumber, params);
   const channelOpts = availableChannels
@@ -517,12 +526,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             deleteButtonRef.current.blur();
           }, 0);
         }}
-        onConfirm={() => {
-          productBulkDelete({
-            variables: { ids: selectedProductIds },
-          });
-          deleteButtonRef.current.blur();
-        }}
+        onConfirm={handleSubmitBulkDelete}
         title={intl.formatMessage({
           id: "F4WdSO",
           defaultMessage: "Delete Products",
