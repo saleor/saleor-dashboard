@@ -55,7 +55,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_mailHogUrl: ${{ secrets.CYPRESS_MAILHOG }}
+          CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
           COMMIT_INFO_MESSAGE: Cypress repeat with - ${{ github.event.inputs.spec }} ${{ github.event.inputs.grep }} ${{ github.event.inputs.dashboard_url}}
           CYPRESS_grep: ${{ github.event.inputs.grep }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
