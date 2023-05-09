@@ -61,7 +61,6 @@ const TableLineForm: React.FC<TableLineFormProps> = ({
                   }
                   submit();
                 }}
-                inputProps={{ min: 1, max: 2147483647 }}
               />
             )}
           </DebounceForm>
