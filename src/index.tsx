@@ -17,10 +17,11 @@ import { useLocationState } from "./apps/hooks/useLocationState";
 import { appsSection } from "./apps/urls";
 import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
-import Auth, { useUser } from "./auth";
+import Auth from "./auth";
 import AuthProvider from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
+import { useAuthRedirection } from "./auth/hooks/useAuthRedirection";
 import CategorySection from "./categories";
 import ChannelsSection from "./channels";
 import { channelsSection } from "./channels/urls";
@@ -112,7 +113,7 @@ const App: React.FC = () => (
 const Routes: React.FC = () => {
   const intl = useIntl();
   const [, dispatchAppState] = useAppState();
-  const { authenticated, authenticating } = useUser();
+  const { authenticated, authenticating } = useAuthRedirection();
 
   const { channel } = useAppChannel(false);
 
