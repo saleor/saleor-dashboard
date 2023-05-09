@@ -14,7 +14,7 @@ jobs:
         with:
           node-version-file: ".nvmrc"
       - name: Cache node modules
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         env:
           cache-name: cache-node-modules
         with:
@@ -30,6 +30,6 @@ jobs:
         run: npm ci
 
       - name: Publish to Chromatic
-        uses: chromaui/action@v1
+        uses: chromaui/action@a89b674adf766dbde41ad9ea2b2b60b91188a0f0 # v6.17.4
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
