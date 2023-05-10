@@ -69,13 +69,27 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
       },
     } as any);
   };
+
   const handlePermissionChange = (key: string, value: boolean) => {
+    const updatedPersmissions = !value
+      ? data.permissions.concat([key])
+      : data.permissions.filter(perm => perm !== key);
+
+    onChange({
+      target: {
+        name: "hasFullAccess",
+        value:
+          permissions.length === updatedPersmissions.length &&
+          !data.hasFullAccess
+            ? true
+            : false,
+      },
+    } as any);
+
     onChange({
       target: {
         name: "permissions",
-        value: !value
-          ? data.permissions.concat([key])
-          : data.permissions.filter(perm => perm !== key),
+        value: updatedPersmissions,
       },
     } as any);
   };
