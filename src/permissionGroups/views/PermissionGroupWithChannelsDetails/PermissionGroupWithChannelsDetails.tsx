@@ -136,7 +136,9 @@ export const PermissionGroupWithChannelsDetails: React.FC<
     data?.permissionGroup,
     user.user,
   );
-  const disabled = loading || !isGroupEditable || permissionsExceeded;
+
+  const isLoading = loading || permissionGroupUpdateResult.loading;
+  const disabled = isLoading || !isGroupEditable || permissionsExceeded;
 
   const handleSubmit = async (
     formData: PermissionGroupWithChannelsDetailsPageFormData,
@@ -173,9 +175,7 @@ export const PermissionGroupWithChannelsDetails: React.FC<
         permissions={permissions}
         saveButtonBarState={permissionGroupUpdateResult.status}
         disabled={disabled}
-        disabledChannelPermissions={
-          loading || permissionGroupUpdateResult.loading
-        }
+        disabledChannelPermissions={isLoading}
         toggle={toggle}
         toggleAll={toggleAll}
         isChecked={isSelected}
