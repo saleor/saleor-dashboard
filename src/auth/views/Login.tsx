@@ -1,5 +1,4 @@
 import { useAvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
-import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import React, { useEffect } from "react";
@@ -9,6 +8,7 @@ import useRouter from "use-react-router";
 import { useUser } from "..";
 import LoginPage from "../components/LoginPage";
 import { LoginFormData } from "../components/LoginPage/types";
+import { useAuthParameters } from "../hooks/useAuthParameters";
 import { loginCallbackPath, LoginUrlQueryParams } from "../urls";
 
 interface LoginViewProps {
@@ -29,15 +29,14 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     data: externalAuthentications,
     loading: externalAuthenticationsLoading,
   } = useAvailableExternalAuthenticationsQuery();
-  const [
-    requestedExternalPluginId,
-    setRequestedExternalPluginId,
-  ] = useLocalStorage("requestedExternalPluginId", null);
 
-  const [fallbackUri, setFallbackUri] = useLocalStorage(
-    "externalLoginFallbackUri",
-    null,
-  );
+  const {
+    fallbackUri,
+    requestedExternalPluginId,
+    isCallbackPath,
+    setFallbackUri,
+    setRequestedExternalPluginId,
+  } = useAuthParameters();
 
   const handleSubmit = async (data: LoginFormData) => {
     const result = await login(data.email, data.password);
@@ -70,15 +69,13 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     });
     setRequestedExternalPluginId(null);
     if (result && !result?.errors?.length) {
-      navigate(fallbackUri ?? "/");
+      navigate(fallbackUri);
       setFallbackUri(null);
     }
   };
 
   useEffect(() => {
     const { code, state } = params;
-    const isCallbackPath = location.pathname.includes(loginCallbackPath);
-
     const externalAuthParamsExist = code && state && isCallbackPath;
     const externalAuthNotPerformed = !authenticating && !errors.length;
 

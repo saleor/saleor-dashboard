@@ -1,5 +1,5 @@
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
-import { FulfillmentStatus } from "@dashboard/graphql";
+import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import useForm, {
   CommonUseFormResultWithHandlers,
   SubmitPromise,
@@ -10,7 +10,6 @@ import useFormset, {
 } from "@dashboard/hooks/useFormset";
 import useHandleFormSubmit from "@dashboard/hooks/useHandleFormSubmit";
 import { getById } from "@dashboard/misc";
-import { OrderBothTypes, OrderSharedType } from "@dashboard/orders/types";
 import React, { useEffect } from "react";
 
 import { OrderRefundAmountCalculationMode } from "../OrderRefundPage/form";
@@ -66,7 +65,7 @@ export type UseOrderRefundFormResult = CommonUseFormResultWithHandlers<
 
 interface OrderReturnProps {
   children: (props: UseOrderRefundFormResult) => React.ReactNode;
-  order: OrderBothTypes;
+  order: OrderDetailsFragment;
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise;
 }
 
@@ -77,7 +76,7 @@ const getOrderRefundPageFormData = (): OrderReturnData => ({
 });
 
 function useOrderReturnForm(
-  order: OrderSharedType,
+  order: OrderDetailsFragment,
   onSubmit: (data: OrderRefundSubmitData) => SubmitPromise,
 ): UseOrderRefundFormResult {
   const {
@@ -276,7 +275,7 @@ const OrderReturnForm: React.FC<OrderReturnProps> = ({
   order,
   onSubmit,
 }) => {
-  const props = useOrderReturnForm(order as OrderSharedType, onSubmit);
+  const props = useOrderReturnForm(order as OrderDetailsFragment, onSubmit);
 
   return <form>{children(props)}</form>;
 };

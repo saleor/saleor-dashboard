@@ -13,7 +13,6 @@ import {
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
-import { buttonMessages } from "@dashboard/intl";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
 import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
@@ -27,10 +26,9 @@ import {
 } from "@dashboard/types";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn, Item } from "@glideapps/glide-data-grid";
-import { Button } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import { isAttributeColumnValue } from "../ProductListPage/utils";
 import { useColumnPickerColumns } from "./hooks/useColumnPickerColumns";
@@ -51,12 +49,14 @@ interface ProductListDatagridProps
   activeAttributeSortId: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   products: RelayToFlat<ProductListQuery["products"]>;
-  onRowClick: (id: string) => void;
+  onRowClick?: (id: string) => void;
+  rowAnchor?: (id: string) => string;
   columnQuery: string;
   availableInGridAttributes: RelayToFlat<
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
   onColumnQueryChange: (query: string) => void;
+  onSelectProductIds: (rowsIndex: number[], clearSelection: () => void) => void;
   isAttributeLoading?: boolean;
   hasRowHover?: boolean;
 }
@@ -81,12 +81,15 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   onColumnQueryChange,
   activeAttributeSortId,
   filterDependency,
+  onSelectProductIds,
   hasRowHover,
+  rowAnchor,
 }) => {
   const intl = useIntl();
   const searchProductType = useSearchProductTypes();
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
+  const productsLength = getProductRowsLength(disabled, products, disabled);
   const gridAttributesFromSettings = useMemo(
     () => settings.columns.filter(isAttributeColumnValue),
     [settings.columns],
@@ -102,22 +105,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 
   const handleColumnMoved = useCallback(
     (startIndex: number, endIndex: number): void => {
-      // Keep empty column always at beginning
-      if (startIndex === 0) {
-        return setColumns(prevColumns => [...prevColumns]);
-      }
-
-      // Keep empty column always at beginning
-      if (endIndex === 0) {
-        return setColumns(old =>
-          addAtIndex(
-            old[startIndex],
-            removeAtIndex(old, startIndex),
-            endIndex + 1,
-          ),
-        );
-      }
-
       setColumns(old =>
         addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
       );
@@ -160,14 +147,12 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         gridAttributes,
         gridAttributesFromSettings,
         selectedChannelId,
-        loading,
       }),
     [
       columns,
       gridAttributes,
       gridAttributesFromSettings,
       intl,
-      loading,
       locale,
       products,
       searchProductType,
@@ -188,10 +173,24 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
+      if (!onRowClick) {
+        return;
+      }
       const rowData = products[row];
       onRowClick(rowData.id);
     },
     [onRowClick, products],
+  );
+
+  const handleRowAnchor = useCallback(
+    ([, row]: Item) => {
+      if (!rowAnchor) {
+        return;
+      }
+      const rowData = products[row];
+      return rowAnchor(rowData.id);
+    },
+    [rowAnchor, products],
   );
 
   const handleGetColumnTooltipContent = useCallback(
@@ -225,17 +224,17 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   );
 
   return (
-    <Box __marginTop={-1}>
+    <Box __marginTop={productsLength > 0 ? -1 : 0}>
       <DatagridChangeStateContext.Provider value={datagrid}>
         <Datagrid
           readonly
-          rowMarkers="none"
+          loading={loading}
+          rowMarkers="checkbox"
           columnSelect="single"
-          freezeColumns={2}
           hasRowHover={hasRowHover}
           onColumnMoved={handleColumnMoved}
           onColumnResize={handleColumnResize}
-          verticalBorder={col => (col > 1 ? true : false)}
+          verticalBorder={col => col > 0}
           getColumnTooltipContent={handleGetColumnTooltipContent}
           availableColumns={columns}
           onHeaderClicked={handleHeaderClicked}
@@ -243,14 +242,12 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           getCellContent={getCellContent}
           getCellError={() => false}
           menuItems={() => []}
-          rows={getProductRowsLength(disabled, products)}
-          selectionActions={(indexes, { removeRows }) => (
-            <Button variant="tertiary" onClick={() => removeRows(indexes)}>
-              <FormattedMessage {...buttonMessages.delete} />
-            </Button>
-          )}
+          rows={productsLength}
+          onRowSelectionChange={onSelectProductIds}
+          selectionActions={() => null}
           fullScreenTitle={intl.formatMessage(messages.products)}
           onRowClick={handleRowClick}
+          rowAnchor={handleRowAnchor}
           renderColumnPicker={defaultProps => (
             <ColumnPicker
               {...defaultProps}

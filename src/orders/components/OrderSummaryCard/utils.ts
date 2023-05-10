@@ -1,9 +1,5 @@
 import { subtractMoney } from "@dashboard/components/Money";
-import {
-  GiftCardEventsEnum,
-  OrderDetailsFragment,
-} from "@dashboard/graphql/transactions";
-import { OrderBothTypes } from "@dashboard/orders/types";
+import { GiftCardEventsEnum, OrderDetailsFragment } from "@dashboard/graphql";
 import { getOrderCharged } from "@dashboard/orders/utils/data";
 import { IMoney } from "@dashboard/utils/intl";
 import compact from "lodash/compact";
@@ -43,7 +39,9 @@ export const extractOrderGiftCardUsedAmount = (
   }, 0);
 };
 
-export const extractOutstandingBalance = (order: OrderBothTypes): IMoney =>
+export const extractOutstandingBalance = (
+  order: OrderDetailsFragment,
+): IMoney =>
   getOrderCharged(order) &&
   order?.total?.gross &&
   subtractMoney(order.total.gross, getOrderCharged(order));

@@ -33,9 +33,6 @@ export const ListFilters = ({
       gap={7}
       paddingBottom={5}
       paddingX={9}
-      borderColor="neutralPlain"
-      borderBottomStyle="solid"
-      borderBottomWidth={1}
     >
       <Box display="flex" alignItems="center" gap={7}>
         <FiltersSelect

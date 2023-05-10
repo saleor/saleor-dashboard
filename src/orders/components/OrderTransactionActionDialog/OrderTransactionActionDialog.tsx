@@ -1,5 +1,5 @@
 import ConfirmButton from "@dashboard/components/ConfirmButton";
-import { TransactionActionEnum } from "@dashboard/graphql/transactions";
+import { TransactionActionEnum } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
 import {
   Dialog,

@@ -15,15 +15,16 @@ export const useStyles = makeStyles(
       flexDirection: "row",
     },
     radioLabel: {
-      alignItems: "start",
       marginBottom: theme.spacing(-0.5),
+      display: "flex",
+      alignItems: "center",
     },
     radioLabelInline: {
       alignItems: "start",
       marginRight: theme.spacing(4),
     },
     label: {
-      marginTop: theme.spacing(1.5),
+      marginTop: theme.spacing(0.2),
     },
     root: {
       "& $radioLabel": {

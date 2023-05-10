@@ -1,4 +1,6 @@
 import {
+  CreateManualTransactionCaptureMutation,
+  CreateManualTransactionCaptureMutationVariables,
   InvoiceEmailSendMutation,
   InvoiceEmailSendMutationVariables,
   InvoiceRequestMutation,
@@ -31,10 +33,13 @@ import {
   OrderMarkAsPaidMutationVariables,
   OrderShippingMethodUpdateMutation,
   OrderShippingMethodUpdateMutationVariables,
+  OrderTransactionRequestActionMutation,
+  OrderTransactionRequestActionMutationVariables,
   OrderUpdateMutation,
   OrderUpdateMutationVariables,
   OrderVoidMutation,
   OrderVoidMutationVariables,
+  useCreateManualTransactionCaptureMutation,
   useInvoiceEmailSendMutation,
   useInvoiceRequestMutation,
   useOrderAddNoteMutation,
@@ -51,17 +56,10 @@ import {
   useOrderLineUpdateMutation,
   useOrderMarkAsPaidMutation,
   useOrderShippingMethodUpdateMutation,
+  useOrderTransactionRequestActionMutation,
   useOrderUpdateMutation,
   useOrderVoidMutation,
 } from "@dashboard/graphql";
-import {
-  CreateManualTransactionCaptureMutation,
-  CreateManualTransactionCaptureMutationVariables,
-  OrderTransactionRequestActionMutation,
-  OrderTransactionRequestActionMutationVariables,
-  useCreateManualTransactionCaptureMutation,
-  useOrderTransactionRequestActionMutation,
-} from "@dashboard/graphql/transactions";
 import React from "react";
 
 import { getMutationProviderData } from "../../misc";

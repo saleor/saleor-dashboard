@@ -1,4 +1,5 @@
 import Checkbox from "@dashboard/components/Checkbox";
+import { Pill } from "@dashboard/components/Pill";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableCellHeader from "@dashboard/components/TableCellHeader";
@@ -11,7 +12,7 @@ import { PageListUrlSortField, pageUrl } from "@dashboard/pages/urls";
 import { ListActions, ListProps, SortPage } from "@dashboard/types";
 import { getArrowDirection } from "@dashboard/utils/sort";
 import { Card, TableBody, TableCell, TableFooter } from "@material-ui/core";
-import { makeStyles, Pill } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
