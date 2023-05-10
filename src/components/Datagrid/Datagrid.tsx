@@ -25,6 +25,7 @@ import React, {
   ReactElement,
   ReactNode,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -54,7 +55,10 @@ import useStyles, {
   useFullScreenStyles,
 } from "./styles";
 import { AvailableColumn } from "./types";
-import { getDefultColumnPickerProps } from "./utils";
+import {
+  getDefultColumnPickerProps,
+  preventRowClickOnSelectionCheckbox,
+} from "./utils";
 
 export interface GetCellContentOpts {
   changes: MutableRefObject<DatagridChange[]>;
@@ -91,6 +95,7 @@ export interface DatagridProps {
   onRowClick?: (item: Item) => void;
   onColumnMoved?: (startIndex: number, endIndex: number) => void;
   onColumnResize?: (column: GridColumn, newSize: number) => void;
+  onRowSelectionChange?: (rowsId: number[], clearSelection: () => void) => void;
   readonly?: boolean;
   hasRowHover?: boolean;
   rowMarkers?: DataEditorProps["rowMarkers"];
@@ -126,6 +131,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   loading,
   rowAnchor,
   hasRowHover = false,
+  onRowSelectionChange,
   ...datagridProps
 }): ReactElement => {
   const classes = useStyles();
@@ -150,6 +156,16 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const [selection, setSelection] = useState<GridSelection>();
   const [hoverRow, setHoverRow] = useState<number | undefined>(undefined);
+
+  // Allow to listen to which row is selected and notfiy parent component
+  useEffect(() => {
+    if (onRowSelectionChange && selection) {
+      // Second parameter is callback to clear selection from parent component
+      onRowSelectionChange(Array.from(selection.rows), () => {
+        setSelection(undefined);
+      });
+    }
+  }, [onRowSelectionChange, selection]);
 
   usePortalClasses({ className: classes.portal });
   usePreventHistoryBack(scroller);
@@ -242,6 +258,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
         return;
       }
 
+      if (preventRowClickOnSelectionCheckbox(rowMarkers, args.location[0])) {
+        return;
+      }
+
       hackARef.current.style.left = `${window.scrollX + args.bounds.x}px`;
       hackARef.current.style.width = `${args.bounds.width}px`;
       hackARef.current.style.top = `${window.scrollY + args.bounds.y}px`;
@@ -250,20 +270,26 @@ export const Datagrid: React.FC<DatagridProps> = ({
         getAppMountUri() + (href.startsWith("/") ? href.slice(1) : href);
       hackARef.current.dataset.reactRouterPath = href;
     },
-    [hasRowHover, rowAnchor],
+    [hasRowHover, rowAnchor, rowMarkers],
   );
 
   const handleCellClick = useCallback(
     (item: Item, args: CellClickedEventArgs) => {
-      if (onRowClick && item[0] !== -1) {
+      if (preventRowClickOnSelectionCheckbox(rowMarkers, item[0])) {
+        return;
+      }
+
+      if (onRowClick) {
         onRowClick(item);
       }
+
       handleRowHover(args);
+
       if (hackARef.current) {
         hackARef.current.click();
       }
     },
-    [onRowClick, handleRowHover],
+    [rowMarkers, onRowClick, handleRowHover],
   );
 
   const handleGridSelectionChange = (gridSelection: GridSelection) => {

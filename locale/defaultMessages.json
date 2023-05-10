@@ -6483,6 +6483,9 @@
     "context": "VariantDetailsChannelsAvailabilityCard no items available",
     "string": "This variant is not available at any of the channels"
   },
+  "jrBxCQ": {
+    "string": "Bulk product delete"
+  },
   "jswILH": {
     "context": "add attribute as column in product list table",
     "string": "Add to Column Options"

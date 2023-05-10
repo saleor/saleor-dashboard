@@ -79,7 +79,7 @@ export const Attributes: React.FC<AttributesProps> = ({
         <Box display="flex" flexDirection="column" gap={5}>
           <Accordion defaultValue="attributes-accordion">
             <Accordion.Item value="attributes-accordion">
-              <Accordion.Item.Trigger buttonDataTestId="attributes-expand">
+              <Accordion.Trigger buttonDataTestId="attributes-expand">
                 <Text variant="caption" color="textNeutralSubdued">
                   <FormattedMessage
                     {...messages.attributesNumber}
@@ -88,8 +88,8 @@ export const Attributes: React.FC<AttributesProps> = ({
                     }}
                   />
                 </Text>
-              </Accordion.Item.Trigger>
-              <Accordion.Item.Content>
+              </Accordion.Trigger>
+              <Accordion.Content>
                 {attributes.length > 0 && (
                   <ul>
                     <Divider />
@@ -108,7 +108,7 @@ export const Attributes: React.FC<AttributesProps> = ({
                     ))}
                   </ul>
                 )}
-              </Accordion.Item.Content>
+              </Accordion.Content>
             </Accordion.Item>
           </Accordion>
         </Box>
