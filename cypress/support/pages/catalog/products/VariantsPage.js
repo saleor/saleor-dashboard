@@ -161,7 +161,7 @@ export function selectOptionsAttribute(attributeName) {
 }
 
 export function selectBooleanAttributeToTrue() {
-  cy.get(VARIANTS_SELECTORS.booleanAttributeCheckbox).click();
+  cy.get(VARIANTS_SELECTORS.attributeSelector).click();
 }
 
 export function selectDateAttribute() {
