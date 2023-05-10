@@ -50,4 +50,7 @@ export const PRODUCTS_LIST = {
   },
   resultsOnPageSelect: "[data-test-id='PaginationRowNumberSelect']",
   rowNumberOption: "[data-test-id='rowNumberOption']",
+  tileViewButton: '[data-test-id="tileViewButton"]',
+  datagridViewButton: '[data-test-id="datagridViewButton"]',
+  tileProductsView: '[data-test-id="tileView"]',
 };
