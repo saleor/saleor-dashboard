@@ -12,6 +12,7 @@ import {
 
 const props: PermissonGroupWithChannelsDetailsPageProps = {
   disabled: false,
+  disabledChannelPermissions: false,
   errors: [],
   isChecked: () => false,
   members: users,

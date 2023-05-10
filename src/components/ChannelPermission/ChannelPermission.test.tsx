@@ -27,7 +27,6 @@ describe("ChannelPermission", () => {
       <ChannelPermission
         selectedChannels={[]}
         allChannels={allChannels}
-        channelsDisplayValues={[]}
         disabled={false}
         onChannelChange={jest.fn}
         onHasRestrictedChannelsChange={jest.fn}
@@ -50,7 +49,6 @@ describe("ChannelPermission", () => {
       <ChannelPermission
         selectedChannels={[]}
         allChannels={allChannels}
-        channelsDisplayValues={[]}
         disabled={false}
         onChannelChange={jest.fn}
         onHasRestrictedChannelsChange={jest.fn}
@@ -63,7 +61,7 @@ describe("ChannelPermission", () => {
     expect(screen.getByRole("listbox")).toBeInTheDocument();
   });
 
-  it("should render restricted checkbox not disabled", () => {
+  it("should render restricted checkbox disabled", () => {
     // Arrange & Act
     const mockOnHasRestrictedChannelsChange = jest.fn();
 
@@ -71,7 +69,6 @@ describe("ChannelPermission", () => {
       <ChannelPermission
         selectedChannels={[]}
         allChannels={allChannels}
-        channelsDisplayValues={[]}
         disabled={true}
         onChannelChange={jest.fn}
         onHasRestrictedChannelsChange={mockOnHasRestrictedChannelsChange}
@@ -84,7 +81,7 @@ describe("ChannelPermission", () => {
 
     // Assert
     expect(mockOnHasRestrictedChannelsChange).not.toHaveBeenCalled();
-    expect(screen.getByRole("checkbox")).not.toBeDisabled();
+    expect(screen.getByRole("checkbox")).toBeDisabled();
   });
 
   it("should render selected channels when has restricted channels selected", () => {
@@ -92,9 +89,8 @@ describe("ChannelPermission", () => {
     const selectedChannels = [allChannels[1]];
     render(
       <ChannelPermission
-        selectedChannels={selectedChannels.map(x => x.id)}
         allChannels={allChannels}
-        channelsDisplayValues={selectedChannels.map(x => ({
+        selectedChannels={selectedChannels.map(x => ({
           label: x.name,
           value: x.id,
         }))}
@@ -114,9 +110,8 @@ describe("ChannelPermission", () => {
     const selectedChannels = [allChannels[1]];
     render(
       <ChannelPermission
-        selectedChannels={selectedChannels.map(x => x.id)}
         allChannels={allChannels}
-        channelsDisplayValues={selectedChannels.map(x => ({
+        selectedChannels={selectedChannels.map(x => ({
           label: x.name,
           value: x.id,
         }))}

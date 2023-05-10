@@ -22,7 +22,7 @@ describe("Permission group utils", () => {
   describe("channelDiff", () => {
     it("should return empty added channel and no removed channels when user had no restricted channels", () => {
       const formData = {
-        channels: ["1"],
+        channels: [{ value: "1", label: "channel-1" }],
       } as PermissionGroupWithChannelsDetailsPageFormData;
 
       const permissionGroup = {
@@ -54,7 +54,11 @@ describe("Permission group utils", () => {
 
     it("should return all added and removed channels", () => {
       const formData = {
-        channels: ["2", "3", "55"],
+        channels: [
+          { value: "2", label: "channel-2" },
+          { value: "3", label: "channel-3" },
+          { value: "55", label: "channel-55" },
+        ],
       } as PermissionGroupWithChannelsDetailsPageFormData;
 
       const permissionGroup = {
@@ -348,7 +352,10 @@ describe("Permission group utils", () => {
         4,
       );
 
-      expect(accessibleChannels).toEqual(["1", "2"]);
+      expect(accessibleChannels).toEqual([
+        { label: "Channel 1", value: "1" },
+        { label: "Channel 2", value: "2" },
+      ]);
     });
   });
 });
