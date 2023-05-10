@@ -51,6 +51,7 @@ export const ChannelPermission = ({
         )}
 
         <Checkbox
+          disabled={disabled}
           checked={!hasRestrictedChannels}
           onCheckedChange={onHasRestrictedChannelsChange}
           tabIndex={-1}
