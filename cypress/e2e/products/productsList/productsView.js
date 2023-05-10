@@ -15,7 +15,7 @@ describe("As an user I should be able switch between product views", () => {
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       changeToTileView();
-      cy.get(PRODUCTS_LIST.tileProductsView).should("be.visible");
+      cy.checkIfElementIsVisible(PRODUCTS_LIST.tileProductsView)
       cy.get(PRODUCTS_LIST.dataGridTable).should("not.exist");
     },
   );
