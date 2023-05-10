@@ -65,13 +65,19 @@ describe("As an admin I want to manage plugins", () => {
         .get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationMessageShouldDisappear();
-      customerRegistration({
-        email: customerEmail,
-        channel: defaultChannel.slug,
-      });
-      getMailsForUser(customerEmail)
-        .its("0.Content.Headers.Subject.0")
-        .should("eq", randomName);
+        customerRegistration({
+          email: customerEmail,
+          channel: defaultChannel.slug,
+        })
+          .then(() => {
+            getMailsForUser(customerEmail)
+            .mpLatest()
+            .mpGetMailDetails()
+            .its("Subject")
+          })
+          .then(subject => {
+            expect(subject).to.eq(randomName);
+          });
     },
   );
 

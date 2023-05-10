@@ -19,22 +19,23 @@ export function inviteStaffMemberWithFirstPermission({
 }
 
 /**
- * Function mhGetMailsByRecipient first get all emails from mailhog with a timeout, and after that it finds email from recipient.
+ * Function mpGetMailsByRecipient first get all emails from mailpit with a timeout, and after that it finds email from recipient.
  * It cloud happened that invite email from saleor has not been received yet, so in this case the action should be retried.
  */
 export function getMailActivationLinkForUser(email, i = 0) {
   if (i > 3) {
     throw new Error(`There is no email invitation for user ${email}`);
   }
-  return cy.mhGetMailsByRecipient(email).should(mails => {
+  return cy.mpGetMailsByRecipient(email).then(mails => {
     if (!mails.length) {
       cy.wait(10000);
       getMailActivationLinkForUser(email, i + 1);
     } else {
       cy.wrap(mails)
-        .mhFirst()
+        .mpLatest()
         .should("not.eq", undefined)
-        .mhGetBody()
+        .mpGetMailDetails()
+        .its("Text")
         .then(body => {
           const urlRegex = /\[([^\]]*)\]/;
           const bodyWithoutWhiteSpaces = body.replace(/(\r\n|\n|\r|\s)/gm, "");
@@ -48,22 +49,23 @@ export function getMailActivationLinkForUserAndSubject(email, subject, i = 0) {
   if (i > 3) {
     throw new Error(`There is no email invitation for user ${email}`);
   }
-  return cy.mhGetMailsByRecipient(email).should(mails => {
+  return cy.mpGetMailsByRecipient(email).then(mails => {
     if (!mails.length) {
       cy.wait(10000);
       getMailActivationLinkForUserAndSubject(email, subject, i + 1);
     } else {
       cy.wrap(mails)
-        .mhGetMailsBySubject(subject)
-        .should(mailsWithSubject => {
+        .mpGetMailsBySubject(subject)
+        .then(mailsWithSubject => {
           if (!mailsWithSubject.length) {
             cy.wait(10000);
             getMailActivationLinkForUserAndSubject(email, subject, i + 1);
           } else {
             cy.wrap(mailsWithSubject)
-              .mhFirst()
+              .mpLatest()
               .should("not.eq", undefined)
-              .mhGetBody()
+              .mpGetMailDetails()
+              .its("Text")
               .then(body => {
                 const urlRegex = /\[([^\]]*)\]/;
                 const bodyWithoutWhiteSpaces = body.replace(
@@ -82,12 +84,12 @@ export function getMailWithResetPasswordLink(email, subject, i = 0) {
   if (i > 5) {
     throw new Error(`There is no email with reset password for user ${email}`);
   }
-  return cy.mhGetMailsByRecipient(email).should(mails => {
+  return cy.mpGetMailsByRecipient(email).should(mails => {
     if (!mails.length) {
       cy.wait(3000);
       getMailWithResetPasswordLink(email, subject, i + 1);
     } else {
-      cy.mhGetMailsBySubject(subject);
+      cy.mpGetMailsBySubject(subject);
       return mails;
     }
   });
@@ -97,7 +99,7 @@ export function getMailsForUser(email, i = 0) {
   if (i > 5) {
     throw new Error(`There is no email invitation for user ${email}`);
   }
-  return cy.mhGetMailsByRecipient(email).should(mails => {
+  return cy.mpGetMailsByRecipient(email).then(mails => {
     if (!mails.length) {
       cy.wait(3000);
       getMailsForUser(email, i + 1);
