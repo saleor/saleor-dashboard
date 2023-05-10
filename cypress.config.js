@@ -23,7 +23,7 @@ module.exports = defineConfig({
       config = require("./cypress/plugins/index.js")(on, config);
       on("after:spec", (spec, results) => {
         if (results && results.video) {
-          return fs.unlink(results.video, function (err) {
+          return fs.unlink(results.video, function(err) {
             if (err) {
               console.warn(`Could not remove video - ${err}`);
             } else {
