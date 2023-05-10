@@ -21,7 +21,7 @@ import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/mult
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import PermissionGroupInfo from "../PermissionGroupInfo";
@@ -33,7 +33,7 @@ export interface PermissionGroupWithChannelsCreateFormData {
   hasRestrictedChannels: boolean;
   isActive: boolean;
   permissions: PermissionEnum[];
-  channels: string[];
+  channels: MultiAutocompleteChoiceType[];
 }
 
 const initialForm: PermissionGroupWithChannelsCreateFormData = {
@@ -73,10 +73,6 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
     intl,
   );
 
-  const [channelsDisplayValues, setChannelDisplayValues] = useState<
-    MultiAutocompleteChoiceType[]
-  >([]);
-
   const channelChoices = mapNodeToChoice(channels);
 
   return (
@@ -89,8 +85,8 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
       {({ data, change, submit, isSaveDisabled, toggleValue }) => {
         const handleChannelChange = createMultiAutocompleteSelectHandler(
           toggleValue,
-          setChannelDisplayValues,
-          channelsDisplayValues,
+          choice => change({ target: { name: "channels", value: choice } }),
+          data.channels,
           channelChoices,
         );
 
@@ -99,6 +95,14 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
             target: {
               name: "hasRestrictedChannels",
               value: !data.hasRestrictedChannels,
+            },
+          });
+
+          // Reset channels when switching between restricted and full access
+          change({
+            target: {
+              name: "channels",
+              value: [],
             },
           });
         };
@@ -140,7 +144,6 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
                 </Box>
                 <Box overflow="hidden" __maxHeight="50%">
                   <ChannelPermission
-                    channelsDisplayValues={channelsDisplayValues}
                     allChannels={channels}
                     selectedChannels={data.channels}
                     onChannelChange={handleChannelChange}

@@ -42,11 +42,12 @@ export interface MultiAutocompleteSelectFieldProps
   popperPlacement?: PopperPlacementType;
 }
 
-const DebounceAutocomplete: React.ComponentType<DebounceProps<
-  string
->> = Debounce;
+const DebounceAutocomplete: React.ComponentType<DebounceProps<string>> =
+  Debounce;
 
-const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFieldProps> = props => {
+const MultiAutocompleteSelectFieldComponent: React.FC<
+  MultiAutocompleteSelectFieldProps
+> = props => {
   const {
     add,
     allowCustomValues,
@@ -260,12 +261,9 @@ const MultiAutocompleteSelectFieldComponent: React.FC<MultiAutocompleteSelectFie
   );
 };
 
-const MultiAutocompleteSelectField: React.FC<MultiAutocompleteSelectFieldProps> = ({
-  choices,
-  fetchChoices,
-  testId,
-  ...props
-}) => {
+const MultiAutocompleteSelectField: React.FC<
+  MultiAutocompleteSelectFieldProps
+> = ({ choices, fetchChoices, testId, ...props }) => {
   const [query, setQuery] = React.useState("");
 
   if (fetchChoices) {

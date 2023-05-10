@@ -1,3 +1,4 @@
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import {
   PermissionFragment,
   PermissionGroupDetailsFragment,
@@ -78,7 +79,7 @@ export const channelsDiff = (
   permissionGroup: PermissionGroupWithContextDetailsFragment,
   formData: PermissionGroupWithChannelsDetailsPageFormData,
 ) => {
-  const newChannels = formData.channels;
+  const newChannels = formData.channels.map(c => c.value);
   const oldChannels = permissionGroup?.accessibleChannels.map(c => c.id);
   const hasRestrictedChannels = permissionGroup?.restrictedAccessToChannels;
 
@@ -115,7 +116,7 @@ export const arePermissionsExceeded = (
 export const getPermissionGroupAccessibleChannels = (
   permissionGroup: PermissionGroupWithContextDetailsFragment,
   allChannelsLength: number,
-) => {
+): MultiAutocompleteChoiceType[] => {
   // We don't want show all channels to user that has no restricted access to channels
   // User will be able to select channels manually
   if (
@@ -125,5 +126,13 @@ export const getPermissionGroupAccessibleChannels = (
     return [];
   }
 
-  return permissionGroup?.accessibleChannels?.map(channel => channel.id) ?? [];
+  return (
+    permissionGroup?.accessibleChannels.map(
+      channel =>
+        ({
+          label: channel.name,
+          value: channel.id,
+        } as unknown as MultiAutocompleteChoiceType),
+    ) ?? []
+  );
 };

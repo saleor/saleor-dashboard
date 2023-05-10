@@ -33,7 +33,7 @@ import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/mult
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import PermissionGroupInfo from "../PermissionGroupInfo";
@@ -46,7 +46,7 @@ export interface PermissionGroupWithChannelsDetailsPageFormData {
   isActive: boolean;
   permissions: PermissionEnum[];
   users: PermissionGroupDetailsFragment["users"];
-  channels: string[];
+  channels: MultiAutocompleteChoiceType[];
 }
 
 export interface PermissionWithChannelsData
@@ -111,25 +111,6 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
     intl,
   );
 
-  const [channelsDisplayValues, setChannelDisplayValues] = useState<
-    MultiAutocompleteChoiceType[]
-  >([]);
-
-  useEffect(() => {
-    if (!permissionGroup) {
-      return;
-    }
-
-    if (
-      permissionGroup.accessibleChannels?.length !== channels.length ||
-      permissionGroup.restrictedAccessToChannels
-    ) {
-      setChannelDisplayValues(
-        mapNodeToChoice(permissionGroup?.accessibleChannels),
-      );
-    }
-  }, [channels.length, permissionGroup]);
-
   const channelChoices = mapNodeToChoice(channels);
 
   return (
@@ -137,8 +118,8 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
       {({ data, change, submit, toggleValue }) => {
         const handleChannelChange = createMultiAutocompleteSelectHandler(
           toggleValue,
-          setChannelDisplayValues,
-          channelsDisplayValues,
+          choice => change({ target: { name: "channels", value: choice } }),
+          data.channels,
           channelChoices,
         );
 
@@ -147,6 +128,14 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
             target: {
               name: "hasRestrictedChannels",
               value: !data.hasRestrictedChannels,
+            },
+          });
+
+          // Reset channels when switching between restricted and full access
+          change({
+            target: {
+              name: "channels",
+              value: [],
             },
           });
         };
@@ -194,7 +183,6 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
                 </Box>
                 <Box overflow="hidden" __maxHeight="50%">
                   <ChannelPermission
-                    channelsDisplayValues={channelsDisplayValues}
                     allChannels={channels}
                     hasRestrictedChannels={data.hasRestrictedChannels}
                     selectedChannels={data.channels}

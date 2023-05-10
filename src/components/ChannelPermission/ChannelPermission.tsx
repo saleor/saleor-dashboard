@@ -11,9 +11,8 @@ import MultiAutocompleteSelectField, {
 } from "../MultiAutocompleteSelectField";
 
 interface ChannelPermissionProps {
-  selectedChannels: string[];
+  selectedChannels: MultiAutocompleteChoiceType[];
   allChannels: ChannelFragment[];
-  channelsDisplayValues: MultiAutocompleteChoiceType[];
   description?: string;
   hasRestrictedChannels: boolean;
   disabled: boolean;
@@ -26,7 +25,6 @@ export const ChannelPermission = ({
   disabled,
   onHasRestrictedChannelsChange,
   onChannelChange,
-  channelsDisplayValues,
   allChannels,
   selectedChannels,
   hasRestrictedChannels,
@@ -49,7 +47,6 @@ export const ChannelPermission = ({
             {description}
           </Text>
         )}
-
         <Checkbox
           disabled={disabled}
           checked={!hasRestrictedChannels}
@@ -63,7 +60,6 @@ export const ChannelPermission = ({
             })}
           </Text>
         </Checkbox>
-
         {hasRestrictedChannels && (
           <>
             <Box
@@ -83,7 +79,7 @@ export const ChannelPermission = ({
               <MultiAutocompleteSelectField
                 disabled={disabled}
                 choices={mapNodeToChoice(filteredChannels)}
-                displayValues={channelsDisplayValues}
+                displayValues={selectedChannels}
                 fetchChoices={onQueryChange}
                 hasMore={false}
                 label={intl.formatMessage({
@@ -97,7 +93,7 @@ export const ChannelPermission = ({
                   defaultMessage: "Search channels",
                   id: "0HBlkO",
                 })}
-                value={selectedChannels}
+                value={selectedChannels.map(channel => channel.value)}
                 testId="channels"
               />
             </Box>
