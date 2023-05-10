@@ -131,3 +131,7 @@ export function sortProductsBy(sortBy) {
     .waitForRequestAndCheckIfNoErrors("@ProductList");
   expectProductsSortedBy(sortBy, false);
 }
+
+export function changeToTileView() {
+  cy.clickOnElement(PRODUCTS_LIST.tileViewButton);
+}
