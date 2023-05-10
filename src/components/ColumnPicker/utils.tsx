@@ -16,9 +16,8 @@ export const getExitIcon = (
   }
   if (selectedCategory) {
     return <ArrowLeftIcon />;
-  } else {
-    return <CloseIcon />;
   }
+  return <CloseIcon />;
 };
 
 export const getExitOnClick = ({

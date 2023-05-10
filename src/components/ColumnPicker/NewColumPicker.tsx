@@ -7,7 +7,7 @@ import {
   Text,
   Toggle,
 } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import { AvailableColumn } from "../Datagrid/types";
@@ -26,18 +26,16 @@ export interface NewColumPickerProps {
   onDynamicColumnSelect: (columns: string[]) => void;
 }
 
-export const NewColumPicker: React.FC<NewColumPickerProps> = props => {
-  const {
-    staticColumns,
-    selectedColumns,
-    columnCategories,
-    dynamicColumns,
-    columnPickerSettings,
-    onDynamicColumnSelect,
-    onSave,
-  } = props;
-
-  const [expanded, setExpanded] = React.useState(false);
+export const NewColumPicker: React.FC<NewColumPickerProps> = ({
+  staticColumns,
+  selectedColumns,
+  columnCategories,
+  dynamicColumns,
+  columnPickerSettings,
+  onDynamicColumnSelect,
+  onSave,
+}) => {
+  const [expanded, setExpanded] = useState(false);
 
   const handleToggle = (id: string) =>
     selectedColumns.includes(id)

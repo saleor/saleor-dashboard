@@ -7,7 +7,7 @@ import {
   SearchInput,
   Text,
 } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
@@ -32,23 +32,20 @@ export const NewColumnPickerCategories: React.FC<
 }) => {
   const intl = useIntl();
 
-  const [selectedCategory, setSelectedCategory] = React.useState<string>();
-  const [query, setQuery] = React.useState<string>("");
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [query, setQuery] = useState<string>("");
 
-  const currentCategory = React.useMemo(
+  const currentCategory = useMemo(
     () => columnCategories.find(category => category.name === selectedCategory),
     [columnCategories, selectedCategory],
   );
 
-  const changeHandler = (column: string) => {
-    if (columnPickerSettings.includes(column)) {
-      onDynamicColumnSelect(
-        columnPickerSettings.filter(currentCol => currentCol !== column),
-      );
-    } else {
-      onDynamicColumnSelect([...columnPickerSettings, column]);
-    }
-  };
+  const changeHandler = (column: string) =>
+    columnPickerSettings.includes(column)
+      ? onDynamicColumnSelect(
+          columnPickerSettings.filter(currentCol => currentCol !== column),
+        )
+      : onDynamicColumnSelect([...columnPickerSettings, column]);
 
   React.useEffect(() => {
     // Preselect category when there is only one
@@ -101,7 +98,7 @@ export const NewColumnPickerCategories: React.FC<
                 value={query}
                 onChange={e => {
                   setQuery(e.target.value ?? "");
-                  return currentCategory.onSearch(e.target.value ?? "");
+                  currentCategory.onSearch(e.target.value ?? "");
                 }}
               />
             </Box>
