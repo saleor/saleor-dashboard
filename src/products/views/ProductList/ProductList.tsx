@@ -382,9 +382,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         setSelectedProductIds(rowsIds);
       }
 
-      if (!clearRowSelectionCallback.current) {
-        clearRowSelectionCallback.current = clearSelection;
-      }
+      clearRowSelectionCallback.current = clearSelection;
     },
     [products, selectedProductIds],
   );
