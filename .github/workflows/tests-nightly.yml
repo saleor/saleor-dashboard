@@ -96,6 +96,8 @@ jobs:
       NODE_OPTIONS: "--max_old_space_size=4096"
     outputs:
       status: ${{ steps.cypress.outcome }}
+      dashboard_url: ${{ steps.cypress.outputs.dashboardUrl }}
+      environment: ${{  steps.get-env-uri.outputs.ENV_URI }}
     container: cypress/browsers:node18.12.0-chrome106-ff106
     strategy:
       fail-fast: false
@@ -333,10 +335,10 @@ jobs:
       - name: Notify Slack
         if: steps.get-tests-results.outputs.testStatus == 'true'
         env:
-          JOB_DEPLOYMENT_KIND: staging
+          JOB_DEPLOYMENT_KIND: ${{ needs.run-tests-in-parallel.outputs.environment }}
           JOB_STATUS: ${{ job.status }}
-          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_RELEASES_WEBHOOK_URL }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_SALEOR_QA_WEBHOOK_URL }}
           JOB_TITLE: "A lot of tests failed, something is probably broken - ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}"
-          JOB_KIND: "release tests"
+          JOB_KIND: "Tests"
         run: |
           python3 .github/workflows/notify/notify-slack.py
