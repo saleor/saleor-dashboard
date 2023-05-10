@@ -81,9 +81,11 @@ describe("As an admin I want to export gift card", () => {
             TEST_ADMIN_USER.email,
             `Your exported gift cards data #${exportId} is ready`,
             "csv",
-          ).then(body => {
-            expect(body).to.contain(".csv");
-          });
+          )
+            .its("Text")
+            .then(body => {
+              expect(body).to.contain(".csv");
+            });
         });
     },
   );
@@ -139,9 +141,11 @@ describe("As an admin I want to export gift card", () => {
             TEST_ADMIN_USER.email,
             `Your exported gift cards data #${exportId} is ready`,
             "xlsx",
-          ).then(body => {
-            expect(body).to.contain(".xlsx");
-          });
+          )
+            .its("Text")
+            .then(body => {
+              expect(body).to.contain(".xlsx");
+            });
         });
     },
   );
