@@ -48,6 +48,7 @@ describe("As an admin I want to use attributes in variant selection", () => {
         const name = `${startsWith}${
           attributeType.key
         }${faker.datatype.number()}`;
+        const variantName = `cypress_variant_${faker.datatype.number()}`;
         const inputType = attributeType.key;
         const attributeValues = ["1", "2"];
         let productType;
@@ -79,7 +80,7 @@ describe("As an admin I want to use attributes in variant selection", () => {
                 attributeType: inputType,
                 costPrice: 10,
                 price: 10,
-                variantName: "variant name random",
+                variantName,
               });
               cy.wait("@VariantCreate");
             })
