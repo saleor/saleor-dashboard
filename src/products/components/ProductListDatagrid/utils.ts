@@ -17,7 +17,7 @@ import { getMoneyRange } from "@dashboard/components/MoneyRange";
 import { ProductListColumns } from "@dashboard/config";
 import { GridAttributesQuery, ProductListQuery } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
+import { getDatagridRowDataIndex } from "@dashboard/misc";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
@@ -34,7 +34,6 @@ interface GetColumnsProps {
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   gridAttributesFromSettings: ProductListColumns[];
   activeAttributeSortId: string;
-  emptyColumn: AvailableColumn;
 }
 
 export function getColumns({
@@ -43,10 +42,8 @@ export function getColumns({
   gridAttributes,
   gridAttributesFromSettings,
   activeAttributeSortId,
-  emptyColumn,
 }: GetColumnsProps): AvailableColumn[] {
   return [
-    emptyColumn,
     {
       id: "name",
       title: intl.formatMessage(commonMessages.product),
@@ -149,10 +146,6 @@ export function createGetCellContent({
     [column, row]: Item,
     { changes, getChangeIndex, added, removed }: GetCellContentOpts,
   ) => {
-    if (isFirstColumn(column)) {
-      return readonlyTextCell("");
-    }
-
     const columnId = columns[column]?.id;
 
     if (!columnId) {
