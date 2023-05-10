@@ -118,6 +118,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     clearRowSelection();
   }, [params.after, params.before]);
 
+  // Remove focus from delete button after delete action
+  useEffect(() => {
+    if (!params.action && deleteButtonRef.current) {
+      deleteButtonRef.current.blur();
+    }
+  }, [params.action]);
+
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
@@ -518,12 +525,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       <ActionDialog
         open={params.action === "delete"}
         confirmButtonState={productBulkDeleteOpts.status}
-        onClose={() => {
-          closeModal();
-          setTimeout(() => {
-            deleteButtonRef.current.blur();
-          }, 0);
-        }}
+        onClose={closeModal}
         onConfirm={handleSubmitBulkDelete}
         title={intl.formatMessage({
           id: "F4WdSO",

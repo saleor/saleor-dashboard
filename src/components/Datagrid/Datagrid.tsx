@@ -157,7 +157,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const [selection, setSelection] = useState<GridSelection>();
   const [hoverRow, setHoverRow] = useState<number | undefined>(undefined);
 
-  // Allow to listen to which  row is selected and notfiy parent component
+  // Allow to listen to which row is selected and notfiy parent component
   useEffect(() => {
     if (onRowSelectionChange && selection) {
       // Second parameter is callback to clear selection from parent component
