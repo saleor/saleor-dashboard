@@ -180,7 +180,7 @@ jobs:
       - name: get environment variables
         id: get-environment-variables
         run: |
-              node .github/workflows/getEnvironmentVariables.js \
+              node .github/workflows/cypressTestsHelpers/getEnvironmentVariables.js \
               --version $VERSION \
               --token "$TOKEN" \
               --repo_token "$REPO_TOKEN"
@@ -285,7 +285,7 @@ jobs:
             export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
             )
-            node .github/workflows/approveAndMergeReleasePR.js \
+            node .github/workflows/cypressTestsHelpers/approveAndMergeReleasePR.js \
             --version $version \
             --pull_request_number $pull_request_number \
             --dashboard_url $dashboard_url \
@@ -329,7 +329,7 @@ jobs:
          tests_status: ${{ needs.run-tests-in-parallel.outputs.status }}
          dashboard_url: ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}
         run: |
-            node .github/workflows/getFailedTests.js \
+            node .github/workflows/cypressTestsHelpers/getFailedTests.js \
             --dashboard_url $dashboard_url 
 
       - name: Notify Slack
