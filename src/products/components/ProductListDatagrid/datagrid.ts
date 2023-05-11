@@ -123,8 +123,9 @@ export const parseAttributesColumns = (
     metaGroup: intl.formatMessage(categoryMetaGroups.attribute),
     width: 200,
     icon:
-      attribute.id === activeAttributeSortId &&
-      getColumnSortIconName(sort, ProductListUrlSortField.attribute),
+      attribute.id === activeAttributeSortId
+        ? getColumnSortIconName(sort, ProductListUrlSortField.attribute)
+        : undefined,
   }));
 
 export function getColumnSortIconName(
