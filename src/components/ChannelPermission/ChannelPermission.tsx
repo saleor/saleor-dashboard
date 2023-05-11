@@ -9,6 +9,7 @@ import { useIntl } from "react-intl";
 import MultiAutocompleteSelectField, {
   MultiAutocompleteChoiceType,
 } from "../MultiAutocompleteSelectField";
+import { messages } from "./messages";
 
 interface ChannelPermissionProps {
   selectedChannels: MultiAutocompleteChoiceType[];
@@ -36,10 +37,7 @@ export const ChannelPermission = ({
   return (
     <Box height="100%" overflow="hidden" paddingX={9} paddingY={9}>
       <Text as="p" variant="bodyEmp" size="large" marginBottom={7}>
-        {intl.formatMessage({
-          defaultMessage: "Channels permissions",
-          id: "vz3yxp",
-        })}
+        {intl.formatMessage(messages.title)}
       </Text>
       <Box height="100%">
         {description && (
@@ -54,10 +52,7 @@ export const ChannelPermission = ({
           tabIndex={-1}
         >
           <Text variant="body">
-            {intl.formatMessage({
-              defaultMessage: "Allow access to all channels",
-              id: "B/TEDt",
-            })}
+            {intl.formatMessage(messages.allowAllChannels)}
           </Text>
         </Checkbox>
         {hasRestrictedChannels && (
@@ -82,17 +77,11 @@ export const ChannelPermission = ({
                 displayValues={selectedChannels}
                 fetchChoices={onQueryChange}
                 hasMore={false}
-                label={intl.formatMessage({
-                  defaultMessage: "Select visible channels",
-                  id: "xGknjS",
-                })}
+                label={intl.formatMessage(messages.selectChannels)}
                 loading={false}
                 name="channels"
                 onChange={onChannelChange}
-                placeholder={intl.formatMessage({
-                  defaultMessage: "Search channels",
-                  id: "0HBlkO",
-                })}
+                placeholder={intl.formatMessage(messages.searchChannels)}
                 value={selectedChannels.map(channel => channel.value)}
                 testId="channels"
               />
