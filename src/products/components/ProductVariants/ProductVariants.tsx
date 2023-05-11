@@ -13,7 +13,6 @@ import {
   RefreshLimitsQuery,
   WarehouseFragment,
 } from "@dashboard/graphql";
-import useLocale from "@dashboard/hooks/useLocale";
 import EditIcon from "@dashboard/icons/Edit";
 import { buttonMessages } from "@dashboard/intl";
 import { ProductVariantListError } from "@dashboard/products/views/ProductUpdate/handlers/errors";
@@ -54,7 +53,6 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
   onRowClick,
 }) => {
   const intl = useIntl();
-  const { locale } = useLocale();
   // const limitReached = isLimitReached(limits, "productVariants");
 
   const variantDefaultColumns = React.useMemo(
@@ -102,11 +100,10 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         row,
         channels,
         variants,
-        locale,
         searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
-    [channels, columns, locale, onAttributeValuesSearch, variants],
+    [channels, columns, onAttributeValuesSearch, variants],
   );
 
   const getCellError = React.useCallback(
@@ -117,11 +114,10 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         row,
         channels,
         variants,
-        locale,
         searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
-    [errors, columns, channels, variants, locale, onAttributeValuesSearch],
+    [errors, columns, channels, variants, onAttributeValuesSearch],
   );
 
   return (
