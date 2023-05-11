@@ -12,6 +12,7 @@ import {
 } from "@glideapps/glide-data-grid";
 import React, { useCallback } from "react";
 
+import { cellHeight } from "../../styles";
 import {
   drawCurrency,
   drawLineCrossedPrice,
@@ -27,6 +28,9 @@ interface MoneyDiscountedCellProps {
   readonly lineItemId?: string;
   readonly locale: Locale;
 }
+
+const DATAGRID_BORDER_WIDTH = 1;
+const ROW_HEIGHT = cellHeight + DATAGRID_BORDER_WIDTH;
 
 export type MoneyDiscuntedCell = CustomCell<MoneyDiscountedCellProps>;
 
@@ -103,7 +107,7 @@ export const moneyDiscountedCellRenderer =
     provideEditor: () => ({
       editor: MoneyDiscountedCellEditor,
       styleOverride: {
-        padding: "41px 0 0 0",
+        padding: `${ROW_HEIGHT}px 0 0 0`,
       },
       disableStyling: true,
     }),
