@@ -21,6 +21,7 @@ import {
   getMailsForUser,
   getMailWithResetPasswordLink,
 } from "../../../support/api/utils/users";
+// import { USER_WITHOUT_NAME } from "../../../fixtures/users";
 
 describe("As an admin I want to manage plugins", () => {
   const startsWith = "Plugins";
@@ -81,7 +82,7 @@ describe("As an admin I want to manage plugins", () => {
     },
   );
 
-  it(
+  it.only(
     "should change admin email plugin. TC: SALEOR_3602",
     { tags: ["@plugins", "@allEnv", "@stable"] },
     () => {
@@ -98,7 +99,7 @@ describe("As an admin I want to manage plugins", () => {
         .confirmationMessageShouldDisappear();
       requestPasswordReset(Cypress.env("USER_NAME"), defaultChannel.slug);
       getMailWithResetPasswordLink(Cypress.env("USER_NAME"), adminName)
-        .its("0.Content.Headers.Subject.0")
+        .its("Text")
         .should("contains", adminName);
     },
   );

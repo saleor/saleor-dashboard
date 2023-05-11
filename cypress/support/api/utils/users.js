@@ -110,7 +110,7 @@ export function getMailWithResetPasswordLink(email, subject, i = 0) {
           cy.wait(3000);
           getMailWithResetPasswordLink(serverStoredEmail, subject, i + 1);
         } else {
-          cy.wrap(resetPasswordMails);
+          cy.wrap(resetPasswordMails).mpLatest().mpGetMailDetails();
         }
       });
     }
