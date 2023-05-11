@@ -111,8 +111,4 @@ export const moneyDiscountedCellRenderer =
       },
       disableStyling: true,
     }),
-    onPaste: (value, data) => ({
-      ...data,
-      value: parseFloat(value),
-    }),
   });
