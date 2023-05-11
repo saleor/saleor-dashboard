@@ -63,6 +63,7 @@ const OrderMarkAsPaidDialog: React.FC<OrderMarkAsPaidDialogProps> = ({
         })}
         value={transactionReference}
         onChange={handleTransactionReference}
+        data-test-id="transaction-reference-input"
       />
       {errors.length > 0 && (
         <>

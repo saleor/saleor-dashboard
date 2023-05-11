@@ -41,7 +41,10 @@ const OrderTransaction: React.FC<OrderTransactionProps> = ({
   }
 
   return (
-    <Card className={clsx(classes.card, disabled && classes.disabled)}>
+    <Card
+      className={clsx(classes.card, disabled && classes.disabled)}
+      data-test-id="orderTransactionsList"
+    >
       <CardTitle
         transaction={transaction}
         onTransactionAction={onTransactionAction}

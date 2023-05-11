@@ -12,7 +12,7 @@ Cypress.Commands.add("mpGetAllMails", (fromLast = 60000) =>
   cy
     .request({
       method: "GET",
-      url: mhApiUrl("/v1/messages?limit=9999"),
+      url: mhApiUrl("/v1/messages?limit=100"),
     })
     .then(response => {
       // by default get mails received in last 60000ms

@@ -200,7 +200,7 @@ export function createOrder({
       orderRequest.addShippingMethod(order.id, shippingMethod);
     })
     .then(() => orderRequest.completeOrder(order.id))
-    .then(() => order);
+    .then(resp => (order = resp.order));
 }
 
 function assignVariantsToOrder(order, variantsList) {

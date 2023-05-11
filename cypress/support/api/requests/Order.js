@@ -12,6 +12,12 @@ export function markOrderAsPaid(orderId) {
         lines{
           id
         }
+        total{
+          gross{
+            amount
+            currency
+          }
+        }
       }
     }
   }`;
@@ -94,6 +100,12 @@ export function completeOrder(orderId) {
         lines{
           id
         }
+        total{
+          gross{
+            amount
+            currency
+          }
+        }
       }
       errors{
         message
@@ -111,6 +123,9 @@ export function getOrder(orderId) {
       token
       paymentStatus
       isShippingRequired
+      transactions{
+        id
+      }
       shippingMethod{
         id
       }
@@ -142,7 +157,7 @@ export function getOrder(orderId) {
       }
     }
   }`;
-  cy.sendRequestWithQuery(query).its("body.data.order");
+  return cy.sendRequestWithQuery(query).its("body.data.order");
 }
 
 export function fulfillOrder({ orderId, warehouse, quantity, linesId }) {
