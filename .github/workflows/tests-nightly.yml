@@ -322,6 +322,10 @@ jobs:
 
   send-slack-notification-scheduled-and-manually:
     if: ${{always() && github.event_name != 'repository_dispatch'}}
+    defaults:
+      run:
+       shell: bash
+       working-directory: .github/workflows
     runs-on: ubuntu-latest
     needs: [run-tests-in-parallel]
     steps:
@@ -335,7 +339,6 @@ jobs:
 
       - name: Install dependencies
         run: |
-              cd .github/workflows
               npm ci
 
       - name: Get tests results
@@ -344,7 +347,7 @@ jobs:
          tests_status: ${{ needs.run-tests-in-parallel.outputs.status }}
          dashboard_url: ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}
         run: |
-            node .github/workflows/cypressTestsHelpers/getFailedTests.js \
+            node cypressTestsHelpers/getFailedTests.js \
             --dashboard_url $dashboard_url 
 
       - name: Notify Slack
