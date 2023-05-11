@@ -50,6 +50,15 @@ Cypress.Commands.add("checkIfDataAreNotNull", data => {
 Cypress.Commands.add("checkIfElementIsVisible", element => {
   cy.get(element).should("be.visible");
 });
+Cypress.Commands.add("checkIfElementIsNotVisible", element => {
+  cy.get(element).should("not.be.visible");
+});
+Cypress.Commands.add("checkIfElementExist", element => {
+  cy.get(element).should("exist");
+});
+Cypress.Commands.add("checkIfElementNotExist", element => {
+  cy.get(element).should("not.exist");
+});
 Cypress.Commands.add("assertCanvasRowsNumber", (canvas, rowNumber) => {
   cy.get(canvas).find("tr").should("have.length", rowNumber);
 });
