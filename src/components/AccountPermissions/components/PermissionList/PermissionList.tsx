@@ -21,7 +21,6 @@ interface PermissionListProps {
 
 export const PermissionList = ({
   permissions,
-
   onPermissionChange,
   selectedPermissions,
 }: PermissionListProps) => {
