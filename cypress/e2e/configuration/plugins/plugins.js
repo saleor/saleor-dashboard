@@ -21,7 +21,6 @@ import {
   getMailsForUser,
   getMailWithResetPasswordLink,
 } from "../../../support/api/utils/users";
-// import { USER_WITHOUT_NAME } from "../../../fixtures/users";
 
 describe("As an admin I want to manage plugins", () => {
   const startsWith = "Plugins";
