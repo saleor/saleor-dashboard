@@ -2,17 +2,16 @@ import { AddressTypeInput } from "@dashboard/customers/types";
 import { AccountErrorFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
-import getAccountErrorMessage from "@dashboard/utils/errors/account";
-import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
-import { IntlShape, useIntl } from "react-intl";
+import { useIntl } from "react-intl";
 
 import FormSpacer from "../FormSpacer";
 import SingleAutocompleteSelectField, {
   SingleAutocompleteChoiceType,
 } from "../SingleAutocompleteSelectField";
+import { getErrorMessage } from "./getErrorMessage";
 import { useAddressValidation } from "./useAddressValidation";
 
 const useStyles = makeStyles(
@@ -36,17 +35,6 @@ interface AddressEditProps {
   onCountryChange(event: React.ChangeEvent<any>);
 }
 
-function getErrorMessage(
-  err: AccountErrorFragment | OrderErrorFragment,
-  intl: IntlShape,
-): string {
-  if (err?.__typename === "AccountError") {
-    return getAccountErrorMessage(err, intl);
-  }
-
-  return getOrderErrorMessage(err, intl);
-}
-
 const PossibleFormFields = {
   CITY: "city",
   CITY_AREA: "cityArea",
@@ -61,9 +49,8 @@ const PossibleFormFields = {
   STREET_ADDRESS_2: "streetAddress2",
 } as const;
 
-const formFields: Array<keyof AddressTypeInput> = Object.values(
-  PossibleFormFields,
-);
+const formFields: Array<keyof AddressTypeInput> =
+  Object.values(PossibleFormFields);
 
 const AddressEdit: React.FC<AddressEditProps> = props => {
   const {

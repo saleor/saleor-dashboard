@@ -1,8 +1,6 @@
-import { Button } from "@dashboard/components/Button";
 import { FileFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { Typography } from "@material-ui/core";
-import { DeleteIcon, IconButton, makeStyles } from "@saleor/macaw-ui";
+import { Box, Button, Text, TrashBinIcon } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -19,7 +17,6 @@ export interface FileUploadFieldProps {
     React.InputHTMLAttributes<HTMLInputElement>,
     HTMLInputElement
   >;
-  className?: string;
   disabled: boolean;
   loading: boolean;
   file: FileChoiceType;
@@ -29,44 +26,17 @@ export interface FileUploadFieldProps {
   onFileDelete: () => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    errorText: {
-      color: theme.palette.error.light,
-    },
-    fileField: {
-      display: "none",
-    },
-    fileUrl: {
-      color: theme.palette.primary.main,
-      textDecoration: "none",
-    },
-    uploadFileContent: {
-      alignItems: "center",
-      color: theme.palette.primary.main,
-      display: "flex",
-      fontSize: theme.typography.body1.fontSize,
-    },
-    uploadFileName: {
-      minWidth: "6rem",
-    },
-  }),
-  { name: "FileUploadField" },
-);
-
 const FileUploadField: React.FC<FileUploadFieldProps> = props => {
   const {
     loading,
     disabled,
     file,
-    className,
     error,
     helperText,
     onFileUpload,
     onFileDelete,
     inputProps,
   } = props;
-  const classes = useStyles({});
   const intl = useIntl();
 
   const fileInputAnchor = React.createRef<HTMLInputElement>();
@@ -85,52 +55,46 @@ const FileUploadField: React.FC<FileUploadFieldProps> = props => {
 
   return (
     <>
-      <div className={className}>
+      <Box display="flex" justifyContent="flex-end">
         {file.label ? (
-          <div className={classes.uploadFileContent}>
-            <div className={classes.uploadFileName}>
+          <Box display="flex" gap={5} alignItems="center">
+            <Text variant="caption">
               {loading ? (
                 <Skeleton />
               ) : (
-                <a
-                  href={file.file?.url}
-                  target="blank"
-                  className={classes.fileUrl}
-                >
+                <a href={file.file?.url} target="blank">
                   {file.label}
                 </a>
               )}
-            </div>
-            <IconButton
+            </Text>
+            <Button
+              icon={<TrashBinIcon />}
               variant="secondary"
-              color="primary"
               onClick={handleFileDelete}
               disabled={disabled || loading}
               data-test-id="button-delete-file"
-            >
-              <DeleteIcon />
-            </IconButton>
-          </div>
+              type="button"
+            />
+          </Box>
         ) : (
-          <div>
-            <Button
-              onClick={clickFileInput}
-              disabled={disabled || loading}
-              variant="secondary"
-              data-test-id="button-upload-file"
-            >
-              {intl.formatMessage(commonMessages.chooseFile)}
-            </Button>
-          </div>
+          <Button
+            onClick={clickFileInput}
+            disabled={disabled || loading}
+            variant="secondary"
+            data-test-id="button-upload-file"
+            type="button"
+          >
+            {intl.formatMessage(commonMessages.chooseFile)}
+          </Button>
         )}
         {error && (
-          <Typography variant="caption" className={classes.errorText}>
+          <Text variant="caption" color="textCriticalDefault">
             {helperText}
-          </Typography>
+          </Text>
         )}
-      </div>
+      </Box>
       <input
-        className={classes.fileField}
+        style={{ display: "none" }}
         id="fileUpload"
         onChange={event => onFileUpload(event.target.files[0])}
         type="file"

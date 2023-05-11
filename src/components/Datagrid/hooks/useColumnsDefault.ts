@@ -16,11 +16,29 @@ export function useColumnsDefault(
 
   const onColumnMoved = useCallback(
     (startIndex: number, endIndex: number): void => {
+      // When empty column prevent to rearrange it order
+      if (availableColumns[0]?.id === "empty") {
+        if (startIndex === 0) {
+          return setDisplayedColumns(prevColumns => [...prevColumns]);
+        }
+
+        // Keep empty column always at beginning
+        if (endIndex === 0) {
+          return setDisplayedColumns(old =>
+            addAtIndex(
+              old[startIndex],
+              removeAtIndex(old, startIndex),
+              endIndex + 1,
+            ),
+          );
+        }
+      }
+
       setDisplayedColumns(old =>
         addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
       );
     },
-    [setDisplayedColumns],
+    [availableColumns, setDisplayedColumns],
   );
   const onColumnResize = useCallback(
     (column: GridColumn, newSize: number) =>
@@ -34,13 +52,22 @@ export function useColumnsDefault(
     [setColumnState],
   );
   const onColumnsChange = useCallback(
-    (picked: string[]) =>
+    (picked: string[]) => {
+      // Keep empty column at first place
+      const isEmptyColumn = availableColumns[0]?.id === "empty";
+      const emptyColumn = isEmptyColumn ? [availableColumns[0].id] : [];
+
       setDisplayedColumns(prevColumns => [
+        ...emptyColumn,
+        ...(isEmptyColumn
+          ? [availableColumns[1].id]
+          : [availableColumns[0].id]),
         ...prevColumns.filter(column => picked.includes(column)),
         ...picked
           .filter(column => !prevColumns.find(c => c === column))
           .map(column => availableColumns.find(ac => ac.id === column).id),
-      ]),
+      ]);
+    },
     [availableColumns, setDisplayedColumns],
   );
 
@@ -48,9 +75,10 @@ export function useColumnsDefault(
     () => displayedColumns.map(id => columnState.find(ac => ac.id === id)),
     [displayedColumns, columnState],
   );
+
   const columnChoices = useMemo(
     () =>
-      columns.map(({ id, title }) => ({
+      applyFilters(columns).map(({ id, title }) => ({
         label: title,
         value: id,
       })),
@@ -58,14 +86,14 @@ export function useColumnsDefault(
   );
   const availableColumnsChoices = useMemo(
     () =>
-      availableColumns.map(({ id, title }) => ({
+      applyFilters(availableColumns).map(({ id, title }) => ({
         label: title,
         value: id,
       })),
     [availableColumns],
   );
   const defaultColumns = useMemo(
-    () => availableColumns.map(({ id }) => id),
+    () => applyFilters(availableColumns).map(({ id }) => id),
     [availableColumns],
   );
 
@@ -83,4 +111,24 @@ export function useColumnsDefault(
       setQuery,
     },
   };
+}
+
+function applyFilters(columns: readonly AvailableColumn[]) {
+  return columns.filter(byNoEmptyColumn).filter(byNotFirstColumn);
+}
+
+function byNoEmptyColumn(column: AvailableColumn) {
+  return column.id !== "empty";
+}
+
+function byNotFirstColumn(
+  _: AvailableColumn,
+  index: number,
+  array: AvailableColumn[],
+) {
+  if (array.some(col => col.id === "empty")) {
+    return index > 1;
+  }
+
+  return index > 0;
 }

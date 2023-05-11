@@ -45,13 +45,15 @@ export interface SingleAutocompleteSelectFieldProps
   nakedInput?: boolean;
   onBlur?: () => void;
   popperPlacement?: PopperPlacementType;
+  id?: string;
 }
 
-const DebounceAutocomplete: React.ComponentType<DebounceProps<
-  string
->> = Debounce;
+const DebounceAutocomplete: React.ComponentType<DebounceProps<string>> =
+  Debounce;
 
-const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectFieldProps> = props => {
+const SingleAutocompleteSelectFieldComponent: React.FC<
+  SingleAutocompleteSelectFieldProps
+> = props => {
   const {
     add,
     allowCustomValues,
@@ -78,6 +80,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
     nakedInput = false,
     onBlur,
     popperPlacement = "bottom-end",
+    id,
     ...rest
   } = props;
   const classes = useStyles(props);
@@ -243,6 +246,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
                   fullWidth={true}
                   onBlur={onBlur}
                   inputRef={input}
+                  id={id}
                 />
                 {isOpen && (!!inputValue || !!choices.length) && (
                   <Popper
@@ -284,11 +288,9 @@ const SingleAutocompleteSelectFieldComponent: React.FC<SingleAutocompleteSelectF
   );
 };
 
-const SingleAutocompleteSelectField: React.FC<SingleAutocompleteSelectFieldProps> = ({
-  choices,
-  fetchChoices,
-  ...rest
-}) => {
+const SingleAutocompleteSelectField: React.FC<
+  SingleAutocompleteSelectFieldProps
+> = ({ choices, fetchChoices, ...rest }) => {
   const [query, setQuery] = React.useState("");
 
   if (fetchChoices) {

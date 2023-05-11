@@ -1,4 +1,3 @@
-import { Button } from "@dashboard/components/Button";
 import {
   CollectionErrorFragment,
   PageErrorFragment,
@@ -6,15 +5,13 @@ import {
 } from "@dashboard/graphql";
 import { getFieldError, getProductErrorMessage } from "@dashboard/utils/errors";
 import getPageErrorMessage from "@dashboard/utils/errors/page";
-import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
+import { Box, Button, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { defineMessages, FormattedMessage, useIntl } from "react-intl";
-import slugify from "slugify";
 
-import CardTitle from "../CardTitle";
-import FormSpacer from "../FormSpacer";
+import { DashboardCard } from "../Card";
 
 enum SeoField {
   slug = "slug",
@@ -28,28 +25,7 @@ const maxTitleLength = 70;
 const maxDescriptionLength = 300;
 
 const useStyles = makeStyles(
-  theme => ({
-    addressBar: {
-      color: "#006621",
-      fontSize: "13px",
-      lineHeight: "16px",
-      marginBottom: "2px",
-      overflow: "hidden",
-      textOverflow: "ellipsis",
-      whiteSpace: "nowrap",
-    },
-    container: {
-      width: "100%",
-    },
-    descriptionBar: {
-      color: "#545454",
-      fontSize: "13px",
-      lineHeight: "18px",
-      overflowWrap: "break-word",
-    },
-    helperText: {
-      marginBottom: theme.spacing(3),
-    },
+  {
     label: {
       flex: 1,
     },
@@ -59,21 +35,7 @@ const useStyles = makeStyles(
       },
       display: "flex",
     },
-    preview: {
-      minHeight: theme.spacing(10),
-    },
-    title: {
-      padding: 0,
-    },
-    titleBar: {
-      color: "#1a0dab",
-      fontSize: "18px",
-      lineHeight: "21px",
-      overflowWrap: "break-word",
-      textDecoration: "none",
-      wordWrap: "break-word",
-    },
-  }),
+  },
   { name: "SeoForm" },
 );
 
@@ -95,7 +57,7 @@ interface SeoFormProps {
   onClick?();
 }
 
-const SeoForm: React.FC<SeoFormProps> = props => {
+export const SeoForm: React.FC<SeoFormProps> = props => {
   const {
     description,
     descriptionPlaceholder,
@@ -157,17 +119,18 @@ const SeoForm: React.FC<SeoFormProps> = props => {
   const getError = (fieldName: SeoField) => getFieldError(errors, fieldName);
 
   return (
-    <Card>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "TGX4T1",
-          defaultMessage: "Search Engine Preview",
-        })}
-        toolbar={
+    <DashboardCard>
+      <DashboardCard.Title>
+        <Box display="flex" justifyContent="space-between" alignItems="center">
+          <FormattedMessage
+            defaultMessage="Search Engine Preview"
+            id="TGX4T1"
+          />
           <Button
-            variant="tertiary"
+            variant="secondary"
             onClick={toggleExpansion}
             data-test-id="edit-seo"
+            type="button"
           >
             <FormattedMessage
               id="s5Imt5"
@@ -175,91 +138,77 @@ const SeoForm: React.FC<SeoFormProps> = props => {
               description="button"
             />
           </Button>
-        }
-      />
-      <CardContent>
-        {shouldDisplayHelperText && (
-          <Typography className={clsx({ [classes.helperText]: expanded })}>
-            {helperText}
-          </Typography>
-        )}
+        </Box>
+      </DashboardCard.Title>
+      <DashboardCard.Content>
+        {shouldDisplayHelperText && <Text>{helperText}</Text>}
         {expanded && (
-          <div className={classes.container}>
-            <TextField
-              error={!!getError(SeoField.slug) || slug.length > maxSlugLength}
-              name={SeoField.slug}
-              label={
-                <div className={classes.labelContainer}>
-                  <div className={classes.label}>
-                    <FormattedMessage id="IoDlcd" defaultMessage="Slug" />
-                  </div>
-                  {slug?.length > 0 && (
-                    <span>
-                      <FormattedMessage
-                        id="ChAjJu"
-                        defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
-                        description="character limit"
-                        values={{
-                          maxCharacters: maxSlugLength,
-                          numberOfCharacters: slug?.length,
-                        }}
-                      />
-                    </span>
-                  )}
-                </div>
-              }
-              InputProps={{
-                inputProps: {
-                  maxLength: maxSlugLength,
-                },
-              }}
-              helperText={getSlugHelperMessage()}
-              value={slug}
-              disabled={loading || disabled}
-              placeholder={slug || slugify(slugPlaceholder, { lower: true })}
-              onChange={handleSlugChange}
-              fullWidth
-            />
-            <FormSpacer />
-            <TextField
+          <Box display="grid" gap={5}>
+            <Box>
+              <Input
+                error={!!getError(SeoField.slug) || slug.length > maxSlugLength}
+                name={SeoField.slug}
+                label={
+                  <Box display="flex" gap={3}>
+                    <Box as="span">
+                      <FormattedMessage defaultMessage="Slug" id="IoDlcd" />
+                    </Box>
+                    {slug?.length > 0 && (
+                      <Box as="span">
+                        <FormattedMessage
+                          defaultMessage="({numberOfCharacters} of {maxCharacters} characters)"
+                          id="yi1HSj"
+                          values={{
+                            maxCharacters: maxSlugLength,
+                            numberOfCharacters: slug?.length,
+                          }}
+                        />
+                      </Box>
+                    )}
+                  </Box>
+                }
+                helperText={getSlugHelperMessage()}
+                size="small"
+                value={slug}
+                onChange={handleSlugChange}
+                disabled={loading || disabled}
+                maxLength={maxSlugLength}
+                placeholder={slugPlaceholder}
+              />
+            </Box>
+            <Input
+              size="small"
               error={title?.length > maxTitleLength}
               name={SeoField.title}
-              label={
-                <div className={classes.labelContainer}>
-                  <div className={classes.label}>
-                    <FormattedMessage
-                      id="w2Cewo"
-                      defaultMessage="Search engine title"
-                    />
-                  </div>
-                  {title?.length > 0 && (
-                    <span>
-                      <FormattedMessage
-                        id="ChAjJu"
-                        defaultMessage="{numberOfCharacters} of {maxCharacters} characters"
-                        description="character limit"
-                        values={{
-                          maxCharacters: maxTitleLength,
-                          numberOfCharacters: title.length,
-                        }}
-                      />
-                    </span>
-                  )}
-                </div>
-              }
-              InputProps={{
-                inputProps: {
-                  maxLength: maxTitleLength,
-                },
-              }}
-              helperText={intl.formatMessage(seoFieldMessage)}
               value={title ?? ""}
               disabled={loading || disabled}
-              placeholder={titlePlaceholder}
               onChange={onChange}
-              fullWidth
+              maxLength={maxTitleLength}
+              placeholder={titlePlaceholder}
+              helperText={intl.formatMessage(seoFieldMessage)}
+              label={
+                <Box display="flex" gap={3}>
+                  <Box as="span">
+                    <FormattedMessage
+                      defaultMessage="Search engine title"
+                      id="w2Cewo"
+                    />
+                  </Box>
+                  {title?.length > 0 && (
+                    <Box as="span">
+                      <FormattedMessage
+                        defaultMessage="({numberOfCharacters} of {maxCharacters} characters)"
+                        id="yi1HSj"
+                        values={{
+                          maxCharacters: maxTitleLength,
+                          numberOfCharacters: title?.length,
+                        }}
+                      />
+                    </Box>
+                  )}
+                </Box>
+              }
             />
-            <FormSpacer />
             <TextField
               error={description?.length > maxDescriptionLength}
               name={SeoField.description}
@@ -300,11 +249,9 @@ const SeoForm: React.FC<SeoFormProps> = props => {
               placeholder={descriptionPlaceholder}
               rows={10}
             />
-          </div>
+          </Box>
         )}
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
-SeoForm.displayName = "SeoForm";
-export default SeoForm;

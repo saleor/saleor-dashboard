@@ -1,7 +1,8 @@
 import {
   CustomCell,
-  CustomCellRenderer,
+  CustomRenderer,
   getMiddleCenterBias,
+  GridCellKind,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
 import React from "react";
@@ -38,7 +39,8 @@ const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
 
 export const numberCellRenderer = (
   locale: Locale,
-): CustomCellRenderer<NumberCell> => ({
+): CustomRenderer<NumberCell> => ({
+  kind: GridCellKind.Custom,
   isMatch: (c): c is NumberCell => (c.data as any).kind === "number-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;

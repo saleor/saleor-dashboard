@@ -1,9 +1,9 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
-import { TransactionActionEnum } from "@dashboard/graphql/types.generated";
 import {
-  OrderDetailsWithTransactionsFragment,
-  OrderDetailsWithTransactionsQuery,
-} from "@dashboard/graphql/types.transactions.generated";
+  OrderDetailsFragment,
+  OrderDetailsQuery,
+  TransactionActionEnum,
+} from "@dashboard/graphql/types.generated";
 import React from "react";
 
 import OrderAddTransaction from "../OrderAddTransaction";
@@ -17,8 +17,8 @@ import OrderTransactionPayment from "../OrderTransactionPayment";
 import { getFilteredPayments } from "./utils";
 
 interface OrderTransactionsWrapper {
-  order: OrderDetailsWithTransactionsFragment;
-  shop: OrderDetailsWithTransactionsQuery["shop"];
+  order: OrderDetailsFragment;
+  shop: OrderDetailsQuery["shop"];
   onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
   onPaymentCapture();
   onMarkAsPaid();

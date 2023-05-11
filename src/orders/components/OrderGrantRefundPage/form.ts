@@ -30,7 +30,7 @@ export const useGrantRefundForm = ({
     },
   );
 
-  const { setExitDialogSubmitRef } = useExitFormDialog({
+  const { setExitDialogSubmitRef, setIsDirty } = useExitFormDialog({
     formId,
   });
 
@@ -43,5 +43,5 @@ export const useGrantRefundForm = ({
 
   React.useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 
-  return { set, change, data, submit };
+  return { set, change, data, submit, setIsDirty };
 };

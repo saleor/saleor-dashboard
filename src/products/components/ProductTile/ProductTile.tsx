@@ -1,7 +1,13 @@
 import { StatusDot } from "@dashboard/components/StatusDot/StatusDot";
 import { ProductListQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";
-import { Box, ProductsIcons, sprinkles, Text } from "@saleor/macaw-ui/next";
+import {
+  Box,
+  ProductsIcons,
+  sprinkles,
+  Text,
+  vars,
+} from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { getTileStatus } from "./utils";
@@ -15,7 +21,7 @@ const commonThumbnailProps = {
   borderColor: "neutralHighlight",
   borderStyle: "solid",
   borderWidth: 1,
-  marginBottom: 8,
+  marginBottom: 4,
   borderRadius: 3,
   aspectRatio: "1 / 1",
 } as const;
@@ -29,9 +35,8 @@ export const ProductTile: React.FC<ProductTileProps> = ({
     flexDirection="column"
     onClick={onClick}
     cursor="pointer"
-    backgroundColor={{ hover: "interactiveNeutralHighlightHovering" }}
-    borderRadius={4}
-    padding={5}
+    borderRadius={3}
+    position="relative"
     data-test-id={`product-tile-${product.id}`}
   >
     {product.thumbnail ? (
@@ -59,22 +64,38 @@ export const ProductTile: React.FC<ProductTileProps> = ({
         </Box>
       </Box>
     )}
-    <Text
-      ellipsis
-      color="textNeutralSubdued"
-      variant="caption"
-      size="small"
-      className={sprinkles({ paddingY: 2 })}
-    >
-      {product.productType.name}
-    </Text>
+    <Box display="flex" alignItems="center">
+      <Box paddingRight={3}>
+        <StatusDot status={getTileStatus(product.channelListings)} />
+      </Box>
+      <Text
+        ellipsis
+        color="textNeutralSubdued"
+        variant="caption"
+        size="small"
+        alignItems="center"
+        className={sprinkles({ paddingY: 2 })}
+      >
+        {product.productType.name}
+      </Text>
+    </Box>
     <Box display="flex" justifyContent="space-between" marginTop={2}>
       <Text ellipsis color="textNeutralDefault" variant="bodyEmp" size="small">
         {product.name}
       </Text>
-      <Box padding={5}>
-        <StatusDot status={getTileStatus(product.channelListings)} />
-      </Box>
     </Box>
+    <Box
+      position={"absolute"}
+      margin="auto"
+      __right={`calc(${vars.space[8]} / -2)`}
+      __top={`calc(${vars.space[8]} / -2)`}
+      __width={`calc(100% + ${vars.space[8]})`}
+      __height={`calc(100% + ${vars.space[8]})`}
+      __opacity={0.1}
+      borderRadius={5}
+      backgroundColor={{
+        hover: "highlightDim",
+      }}
+    ></Box>
   </Box>
 );

@@ -1,4 +1,4 @@
-import { OrderSharedType } from "@dashboard/orders/types";
+import { OrderDetailsFragment } from "@dashboard/graphql";
 
 import {
   getFulfilledFulfillemnts,
@@ -6,7 +6,7 @@ import {
   getWaitingFulfillments,
 } from "../OrderReturnPage/utils";
 
-export const hasAnyItemsReplaceable = (order?: OrderSharedType) => {
+export const hasAnyItemsReplaceable = (order?: OrderDetailsFragment) => {
   if (!order) {
     return false;
   }

@@ -1,4 +1,4 @@
-import { TransactionEventFragment } from "@dashboard/graphql/transactions";
+import { TransactionEventFragment } from "@dashboard/graphql";
 import {
   TransactionFakeEvent,
   TransactionMappingResult,

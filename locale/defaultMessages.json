@@ -448,6 +448,9 @@
     "context": "sum of all pending refunds inside an order",
     "string": "Pending refunds"
   },
+  "1+ROfp": {
+    "string": "Transaction"
+  },
   "1/oG76": {
     "context": "dialog header",
     "string": "Delete Sale"
@@ -972,6 +975,9 @@
     "context": "content",
     "string": "Saleor couldn’t fetch crucial information regarding installation. Without those System can’t install the app in your Saleor. Please use the button below to get back to system’s dashboard."
   },
+  "50lR2F": {
+    "string": "- used by Payment Plugins"
+  },
   "51HE+Q": {
     "string": "No sales found"
   },
@@ -1190,6 +1196,9 @@
   "6RtE2D": {
     "context": "unassign collection from sale and save, button",
     "string": "Unassign and save"
+  },
+  "6SL46U": {
+    "string": "by {author}"
   },
   "6WRFp2": {
     "context": "order history message",
@@ -1604,6 +1613,10 @@
   "A9QSur": {
     "context": "area units type",
     "string": "Area"
+  },
+  "AD1PlC": {
+    "context": "channels availability text",
+    "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
   },
   "ADTNND": {
     "context": "product type",
@@ -2295,9 +2308,6 @@
     "context": "sale name",
     "string": "Name"
   },
-  "F5OqYa": {
-    "string": "Creates a single payment when unchecked"
-  },
   "F69lwk": {
     "context": "settings menu item",
     "string": "Settings"
@@ -2417,6 +2427,9 @@
   },
   "FpIcp9": {
     "string": "No customers found"
+  },
+  "Fqe4aB": {
+    "string": "- used by Payment Apps"
   },
   "Ftz7VI": {
     "context": "input label, transaction amount",
@@ -3303,6 +3316,9 @@
     "context": "custom app token key",
     "string": "Key"
   },
+  "MDOw8D": {
+    "string": "\"Mark as paid\" feature creates a"
+  },
   "MHVglr": {
     "context": "deactivate",
     "string": "Deactivate"
@@ -3310,6 +3326,9 @@
   "MIC9W7": {
     "context": "WarehouseSettings pickup title",
     "string": "Pickup"
+  },
+  "MJ2jZQ": {
+    "string": "Total"
   },
   "MJBAqv": {
     "context": "column title used by/customer",
@@ -3508,9 +3527,6 @@
     "context": "table header column",
     "string": "Tax rate"
   },
-  "NkLZBG": {
-    "string": "Mark as paid uses Transactions API"
-  },
   "NlEVVT": {
     "context": "label for button",
     "string": "Create class"
@@ -3518,6 +3534,9 @@
   "NlSJMM": {
     "context": "channels section name",
     "string": "Channels"
+  },
+  "NmK6zy": {
+    "string": "Payment"
   },
   "NnhrxZ": {
     "context": "amount of sent refund for transaction",
@@ -4745,10 +4764,6 @@
     "context": "dialog content",
     "string": "{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}"
   },
-  "WRkCFt": {
-    "context": "tab name",
-    "string": "All Orders"
-  },
   "WS4ov0": {
     "context": "notifier message",
     "string": "Note was added sucessfully"
@@ -4918,6 +4933,9 @@
   "XPiJex": {
     "context": "Transaction void button - return preauthorized amount to client",
     "string": "Void"
+  },
+  "XPruqs": {
+    "string": "Order"
   },
   "XQBVEJ": {
     "context": "order return error description when cannot refund",
@@ -6155,6 +6173,9 @@
     "context": "product type name",
     "string": "Type Name"
   },
+  "hHv0ih": {
+    "string": "If left unchecked it creates a"
+  },
   "hJZwTS": {
     "string": "Email address"
   },
@@ -6462,6 +6483,9 @@
     "context": "VariantDetailsChannelsAvailabilityCard no items available",
     "string": "This variant is not available at any of the channels"
   },
+  "jrBxCQ": {
+    "string": "Bulk product delete"
+  },
   "jswILH": {
     "context": "add attribute as column in product list table",
     "string": "Add to Column Options"
@@ -6720,6 +6744,9 @@
   "lLwtgs": {
     "string": "Variants are disabled in this product type"
   },
+  "lNZuWl": {
+    "string": "All orders"
+  },
   "lOMgms": {
     "context": "fulfillment group",
     "string": "Fulfilled from:"
@@ -6791,6 +6818,9 @@
   "lw9WIk": {
     "context": "deleted multiple attributes",
     "string": "Attributes successfully delete"
+  },
+  "lwjzVj": {
+    "string": "Edit order"
   },
   "lzdvwp": {
     "context": "field is optional",
@@ -7956,6 +7986,9 @@
   "un+VWt": {
     "string": "Search products"
   },
+  "uoKAmI": {
+    "string": "Add new order"
+  },
   "usSkzP": {
     "context": "navigator order mode description",
     "string": "Search Orders"
@@ -8073,10 +8106,6 @@
   "vXFPD6": {
     "context": "voucher discount type",
     "string": "Fixed Amount"
-  },
-  "vY2lpx": {
-    "context": "channels availability text",
-    "string": "Available at {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
   },
   "vZMs8f": {
     "context": "default product variant indicator",
@@ -8470,6 +8499,9 @@
   "yhv3HX": {
     "context": "voucher requirements, header",
     "string": "Minimum Requirements"
+  },
+  "yi1HSj": {
+    "string": "({numberOfCharacters} of {maxCharacters} characters)"
   },
   "ymo+cm": {
     "context": "voucher discount",

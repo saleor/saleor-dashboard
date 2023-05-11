@@ -13,9 +13,15 @@ export const orderMessages = defineMessages({
     defaultMessage: "Order #{orderNumber}",
     description: "page header",
   },
+  filterPresetsAll: {
+    defaultMessage: "All orders",
+    id: "lNZuWl",
+  },
 });
 
-export const transactionEventTypeMap = defineMessages<TransactionEventType>({
+export const transactionEventTypeMap = defineMessages<
+  Exclude<TransactionEventType, "INFO">
+>({
   AUTHORIZATION: {
     defaultMessage: "Authorization",
     id: "qtF0Ft",

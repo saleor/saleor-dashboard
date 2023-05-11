@@ -2,7 +2,6 @@ import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/mes
 import { getChannelAvailabilityLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import {
   dropdownCell,
-  loadingCell,
   readonlyTextCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
@@ -18,8 +17,10 @@ import { getMoneyRange } from "@dashboard/components/MoneyRange";
 import { ProductListColumns } from "@dashboard/config";
 import { GridAttributesQuery, ProductListQuery } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
+import { getDatagridRowDataIndex } from "@dashboard/misc";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
+import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { Item } from "@glideapps/glide-data-grid";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
@@ -33,7 +34,6 @@ interface GetColumnsProps {
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   gridAttributesFromSettings: ProductListColumns[];
   activeAttributeSortId: string;
-  emptyColumn: AvailableColumn;
 }
 
 export function getColumns({
@@ -42,15 +42,13 @@ export function getColumns({
   gridAttributes,
   gridAttributesFromSettings,
   activeAttributeSortId,
-  emptyColumn,
 }: GetColumnsProps): AvailableColumn[] {
   return [
-    emptyColumn,
     {
       id: "name",
       title: intl.formatMessage(commonMessages.product),
       width: 300,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.name),
+      icon: getColumnSortDirectionIcon(sort, ProductListUrlSortField.name),
     },
     {
       id: "productType",
@@ -105,7 +103,7 @@ export function toAttributeColumnData(
       width: 200,
       icon:
         attributeId === activeAttributeSortId &&
-        getColumnSortIconName(sort, ProductListUrlSortField.attribute),
+        getColumnSortDirectionIcon(sort, ProductListUrlSortField.attribute),
     };
   };
 }
@@ -134,7 +132,6 @@ interface GetCellContentProps {
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   gridAttributesFromSettings: ProductListColumns[];
   selectedChannelId?: string;
-  loading?: boolean;
 }
 
 export function createGetCellContent({
@@ -144,20 +141,11 @@ export function createGetCellContent({
   locale,
   products,
   selectedChannelId,
-  loading,
 }: GetCellContentProps) {
   return (
     [column, row]: Item,
     { changes, getChangeIndex, added, removed }: GetCellContentOpts,
   ) => {
-    if (column === -1) {
-      return readonlyTextCell("");
-    }
-
-    if (loading) {
-      return loadingCell();
-    }
-
     const columnId = columns[column]?.id;
 
     if (!columnId) {
@@ -167,7 +155,7 @@ export function createGetCellContent({
     const change = changes.current[getChangeIndex(columnId, row)]?.data;
     const rowData = added.includes(row)
       ? undefined
-      : products[row + removed.filter(r => r <= row).length];
+      : products[getDatagridRowDataIndex(row, removed)];
 
     const channel = rowData?.channelListings?.find(
       listing => listing.channel.id === selectedChannelId,
@@ -364,7 +352,12 @@ export function getColumnMetadata(column: string) {
 export function getProductRowsLength(
   disabled: boolean,
   product?: RelayToFlat<ProductListQuery["products"]>,
+  loading?: boolean,
 ) {
+  if (loading) {
+    return 1;
+  }
+
   if (product?.length) {
     return product.length;
   }
