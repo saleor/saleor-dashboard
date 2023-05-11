@@ -1,4 +1,3 @@
-import { Locale } from "@dashboard/components/Locale";
 import {
   CustomCell,
   CustomRenderer,
@@ -8,19 +7,12 @@ import {
 import React from "react";
 
 import { usePriceField } from "../../../PriceField/usePriceField";
-import {
-  drawCurrency,
-  drawLineCrossedPrice,
-  drawPrice,
-  getFormattedMoney,
-} from "./utils";
+import { drawCurrency, drawPrice } from "./utils";
 
 interface MoneyCellProps {
   readonly kind: "money-cell";
   readonly currency: string;
-  readonly undiscounted?: string | number;
   readonly value: number | string | null;
-  readonly locale: Locale;
 }
 
 export type MoneyCell = CustomCell<MoneyCellProps>;
@@ -59,27 +51,11 @@ export const moneyCellRenderer = (): CustomRenderer<MoneyCell> => ({
   isMatch: (c): c is MoneyCell => (c.data as any).kind === "money-cell",
   draw: (args, cell) => {
     const { ctx, theme, rect } = args;
-    const { currency, value, undiscounted, locale } = cell.data;
+    const { currency, value } = cell.data;
     const hasValue = value === 0 ? true : !!value;
-    const formattedValue = getFormattedMoney(value, currency, locale, "-");
-    const formattedUndiscounted = getFormattedMoney(
-      undiscounted !== value ? undiscounted : "",
-      currency,
-      locale,
-    );
-    const formattedWithDiscount = formattedUndiscounted + " " + formattedValue;
+    const formatted = value?.toString() ?? "-";
 
-    drawPrice(ctx, theme, rect, formattedWithDiscount);
-
-    // Draw crossed line above price without discount
-    if (undiscounted && undiscounted !== value) {
-      drawLineCrossedPrice(
-        ctx,
-        rect,
-        formattedWithDiscount,
-        formattedUndiscounted,
-      );
-    }
+    drawPrice(ctx, theme, rect, formatted);
 
     ctx.save();
 

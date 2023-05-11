@@ -93,16 +93,9 @@ export function numberCell(
   };
 }
 
-interface MoneyCellData {
-  value: number | string | null;
-  discount?: string | number;
-  undiscounted?: string | number;
-  currency: string;
-  locale: Locale;
-}
-
 export function moneyCell(
-  { value, undiscounted, currency, locale }: MoneyCellData,
+  value: number | string | null,
+  currency: string,
   opts?: Partial<GridCell>,
 ): MoneyCell {
   return {
@@ -113,8 +106,6 @@ export function moneyCell(
       kind: "money-cell",
       value,
       currency,
-      undiscounted,
-      locale,
     },
     copyData: value?.toString() ?? "",
   };

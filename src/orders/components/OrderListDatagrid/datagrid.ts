@@ -127,7 +127,7 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
       case "status":
         return getStatusCellContent(intl, themeValues, currentTheme, rowData);
       case "total":
-        return getTotalCellContent(locale, rowData);
+        return getTotalCellContent(rowData);
       default:
         return textCell("");
     }
@@ -212,18 +212,12 @@ export function getStatusCellContent(
 }
 
 export function getTotalCellContent(
-  locale: Locale,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   if (rowData?.total?.gross) {
-    return moneyCell(
-      {
-        value: rowData.total.gross.amount,
-        currency: rowData.total.gross.currency,
-        locale,
-      },
-      { cursor: "pointer" },
-    );
+    return moneyCell(rowData.total.gross.amount, rowData.total.gross.currency, {
+      cursor: "pointer",
+    });
   }
 
   return readonlyTextCell("-");

@@ -10,7 +10,6 @@ import { emptyDropdownCellValue } from "@dashboard/components/Datagrid/customCel
 import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { Locale } from "@dashboard/components/Locale";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import {
   ProductDetailsVariantFragment,
@@ -88,7 +87,6 @@ interface GetDataOrError {
   variants: ProductDetailsVariantFragment[];
   changes: MutableRefObject<DatagridChange[]>;
   channels: ChannelData[];
-  locale: Locale;
   added: number[];
   removed: number[];
   searchAttributeValues: (
@@ -109,7 +107,6 @@ export function getData({
   channels,
   variants,
   searchAttributeValues,
-  locale,
 }: GetDataOrError): GridCell {
   // For some reason it happens when user deselects channel
   if (column === -1) {
@@ -162,7 +159,7 @@ export function getData({
     )?.currency;
     const value = change?.value ?? listing?.price?.amount ?? 0;
 
-    return moneyCell({ value, currency, locale });
+    return moneyCell(value, currency);
   }
 
   if (getColumnChannelAvailability(columnId)) {

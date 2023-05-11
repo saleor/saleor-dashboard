@@ -151,11 +151,8 @@ export const useGetCellContent = ({
         return readonlyTextCell(rowData.productSku, false);
       case "total":
         return moneyCell(
-          {
-            value: rowData.totalPrice.gross.amount,
-            currency: rowData.totalPrice.gross.currency,
-            locale,
-          },
+          rowData.totalPrice.gross.amount,
+          rowData.totalPrice.gross.currency,
           {
             readonly: true,
             allowOverlay: false,
