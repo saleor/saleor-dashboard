@@ -1,22 +1,13 @@
 import { useUser } from "@dashboard/auth";
-import CardTitle from "@dashboard/components/CardTitle";
-import Skeleton from "@dashboard/components/Skeleton";
 import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
-import {
-  Card,
-  CardContent,
-  Checkbox as MuiCheckbox,
-  List,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Typography,
-} from "@material-ui/core";
-import { Box, Checkbox, Text } from "@saleor/macaw-ui/next";
-import React from "react";
+import { Box, Text } from "@saleor/macaw-ui/next";
+import React, { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
 
-import { hasPermissionSelected } from "./utils";
+import { Header } from "./components/Header";
+import { PermissionsExceeded } from "./components/PermissionExeeded";
+import { PermissionList } from "./components/PermissionList";
+import { messages } from "./messages";
 
 const byAlphabeticalOrder =
   <T extends {}>(field: string) =>
@@ -61,13 +52,14 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
         name: "permissions",
         value: !data.hasFullAccess ? permissions.map(perm => perm.code) : [],
       },
-    } as any);
+    } as ChangeEvent<any>);
+
     onChange({
       target: {
         name: "hasFullAccess",
         value: !data.hasFullAccess,
       },
-    } as any);
+    } as ChangeEvent<any>);
   };
 
   const handlePermissionChange = (key: string, value: boolean) => {
@@ -84,37 +76,36 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
             ? true
             : false,
       },
-    } as any);
+    } as ChangeEvent<any>);
 
     onChange({
       target: {
         name: "permissions",
         value: updatedPersmissions,
       },
-    } as any);
+    } as ChangeEvent<any>);
   };
 
   return (
-    <Card style={{ height: "100%" }}>
-      <CardTitle
-        title={intl.formatMessage({
-          id: "Fbr4Vp",
-          defaultMessage: "Permissions",
-          description: "dialog header",
-        })}
-      />
+    <Box height="100%" overflow="hidden" paddingX={9} paddingY={9}>
+      <Text as="p" variant="bodyEmp" size="large" marginBottom={7}>
+        {intl.formatMessage(messages.title)}
+      </Text>
+
       {permissionsExceeded && (
+        <PermissionsExceeded userPermissions={user.userPermissions} />
+      )}
+
+      {!permissionsExceeded && (
         <>
-          <CardContent style={{ paddingLeft: 0 }}>
-            <Typography variant="body2">
-              {intl.formatMessage({
-                id: "MVU6ol",
-                defaultMessage:
-                  "This groups permissions exceeds your own. You are able only to manage permissions that you have.",
-                description: "exceeded permissions description",
-              })}
-            </Typography>
-          </CardContent>
+          <Header
+            disabled={disabled}
+            description={description}
+            fullAccessLabel={fullAccessLabel}
+            hasFullAccess={data.hasFullAccess}
+            onFullAccessChange={handleFullAccessChange}
+          />
+
           <Box
             width="100%"
             borderBottomStyle="solid"
@@ -123,104 +114,14 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
             height={1}
             margin={0}
           />
-          <CardContent>
-            <Typography variant="body2">
-              {intl.formatMessage({
-                id: "6cS4Rd",
-                defaultMessage: "Available permissions",
-                description: "card section description",
-              })}
-            </Typography>
-            <List dense={true}>
-              {user.userPermissions.map(perm => (
-                <ListItem key={perm.code}>
-                  <ListItemText primary={`- ${perm.name}`} />
-                </ListItem>
-              ))}
-            </List>
-          </CardContent>
-        </>
-      )}
-      {!permissionsExceeded && (
-        <>
-          <CardContent>
-            <Typography variant="body2">{description}</Typography>
-            <Box marginTop={6}>
-              <Checkbox
-                disabled={disabled}
-                checked={data.hasFullAccess}
-                onCheckedChange={handleFullAccessChange}
-                tabIndex={-1}
-              >
-                <Text variant="body">{fullAccessLabel}</Text>
-              </Checkbox>
-            </Box>
-          </CardContent>
-          {
-            <>
-              <Box
-                width="100%"
-                borderBottomStyle="solid"
-                borderBottomWidth={1}
-                borderColor="neutralPlain"
-                height={1}
-                margin={0}
-              />
-              <Box __maxHeight="calc(100% - 180px)" overflowY="scroll">
-                <CardContent>
-                  {permissions === undefined ? (
-                    <Skeleton />
-                  ) : (
-                    permissions.map(perm => (
-                      <ListItem
-                        key={perm.code}
-                        disabled={perm.disabled}
-                        role={undefined}
-                        dense
-                        button
-                        onClick={() =>
-                          handlePermissionChange(
-                            perm.code,
-                            hasPermissionSelected(data.permissions, perm.code),
-                          )
-                        }
-                      >
-                        <ListItemIcon>
-                          <MuiCheckbox
-                            color="secondary"
-                            edge="start"
-                            checked={hasPermissionSelected(
-                              data.permissions,
-                              perm.code,
-                            )}
-                            tabIndex={-1}
-                            disableRipple
-                            name={perm.code}
-                            inputProps={{ "aria-labelledby": perm.code }}
-                          />
-                        </ListItemIcon>
-                        <ListItemText
-                          id={perm.code}
-                          primary={perm.name.replace(/\./, "")}
-                          secondary={
-                            perm.lastSource
-                              ? intl.formatMessage({
-                                  id: "VmMDLN",
-                                  defaultMessage:
-                                    "This group is last source of that permission",
-                                  description:
-                                    "permission list item description",
-                                })
-                              : perm.code
-                          }
-                        />
-                      </ListItem>
-                    ))
-                  )}
-                </CardContent>
-              </Box>
-            </>
-          }
+          <Box __maxHeight="calc(100% - 180px)" overflowY="scroll">
+            <PermissionList
+              permissions={permissions}
+              onPermissionChange={handlePermissionChange}
+              selectedPermissions={data.permissions}
+            />
+          </Box>
+
           {!!errorMessage && (
             <>
               <Box
@@ -229,18 +130,17 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
                 borderBottomWidth={1}
                 borderColor="neutralPlain"
                 height={1}
-                margin={0}
+                marginTop={6}
+                marginBottom={6}
               />
-              <CardContent>
-                <Typography variant="body2" color="error">
-                  {errorMessage}
-                </Typography>
-              </CardContent>
+              <Text as="p" variant="body" color="textCriticalSubdued">
+                {errorMessage}
+              </Text>
             </>
           )}
         </>
       )}
-    </Card>
+    </Box>
   );
 };
 
