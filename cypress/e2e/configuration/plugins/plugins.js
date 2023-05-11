@@ -81,7 +81,7 @@ describe("As an admin I want to manage plugins", () => {
     },
   );
 
-  it.only(
+  it(
     "should change admin email plugin. TC: SALEOR_3602",
     { tags: ["@plugins", "@allEnv", "@stable"] },
     () => {
