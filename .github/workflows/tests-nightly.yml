@@ -160,7 +160,7 @@ jobs:
 
 
       - name: Cypress install chrome
-        id: cypress-install
+        id: cypress-install-chrome
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["Chrome", "all"]'), steps.get-browsers.outputs.result)}}
         uses: cypress-io/github-action@v5
         with:
@@ -168,7 +168,7 @@ jobs:
           browser: chrome
 
       - name: Cypress run chrome
-        id: cypress
+        id: cypress-chrome
         continue-on-error: true
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["Chrome", "all"]'), steps.get-browsers.outputs.result)}}
         uses: cypress-io/github-action@v5
@@ -196,15 +196,15 @@ jobs:
           browser: chrome
 
       - name: Cypress install firefox
-        id: cypress-install
+        id: cypress-install-firefox
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["Firefox", "all"]'), steps.get-browsers.outputs.result)}}
         uses: cypress-io/github-action@v5
         with:
           runTests: false
           browser: firefox
 
-      - name: Cypress run chrome
-        id: cypress
+      - name: Cypress run firefox
+        id: cypress-firefox
         continue-on-error: true
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["Firefox", "all"]'), steps.get-browsers.outputs.result)}}
         uses: cypress-io/github-action@v5
