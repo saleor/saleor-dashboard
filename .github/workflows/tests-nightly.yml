@@ -141,17 +141,17 @@ jobs:
         id: get-browsers
         uses: actions/github-script@v6
         env:
-          browsers: ${{github.event.inputs.browsers}}
+          browser: ${{github.event.inputs.browser}}
           event_name: ${{github.event_name}}
         with:
           result-encoding: string
           script: |
-            const { browsers } = process.env
+            const { browser } = process.env
             const { event_name } = process.env
 
             switch (event_name) {
               case 'workflow_dispatch':
-                return browsers
+                return browser
               case 'schedule':
                 return 'all'
               default:
