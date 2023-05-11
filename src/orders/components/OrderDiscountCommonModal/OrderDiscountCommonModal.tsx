@@ -81,13 +81,13 @@ const messages = defineMessages({
     description: "value input helper text",
   },
   valueBiggerThatPrice: {
-    defaultMessage: "Can not be higher than the price",
-    id: "dl23LG",
+    defaultMessage: "Cannot be higher than the price",
+    id: "VIdXPy",
     description: "value input helper text",
   },
   valueBiggerThat100: {
-    defaultMessage: "Can not be higher than 100%",
-    id: "Znru5E",
+    defaultMessage: "Cannot be higher than 100%",
+    id: "zHx85l",
     description: "value input helper text",
   },
   discountValueLabel: {
