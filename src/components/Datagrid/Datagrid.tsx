@@ -152,7 +152,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
   const [selection, setSelection] = useState<GridSelection>();
   const [hoverRow, setHoverRow] = useState<number | undefined>(undefined);
-  const [markCellsDirty, setMarkCellsDirty] = useState(true);
+  const [areCellsDirty, setCellsDirty] = useState(true);
 
   usePortalClasses({ className: classes.portal });
   usePreventHistoryBack(scroller);
@@ -169,7 +169,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
     availableColumns,
     rows,
     onChange,
-    (areCellsDirty: boolean) => setMarkCellsDirty(areCellsDirty),
+    (areCellsDirty: boolean) => setCellsDirty(areCellsDirty),
   );
 
   const rowsTotal = rows - removed.length + added.length;
@@ -189,7 +189,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
 
       return {
         ...getCellContent(item, opts),
-        ...(changed && markCellsDirty
+        ...(changed && areCellsDirty
           ? {
               themeOverride: {
                 bgCell: themeValues.colors.background.surfaceBrandSubdued,
@@ -212,7 +212,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
       getChangeIndex,
       availableColumns,
       getCellContent,
-      markCellsDirty,
+      areCellsDirty,
       themeValues.colors.background.surfaceBrandSubdued,
       themeValues.colors.background.surfaceCriticalDepressed,
       getCellError,
