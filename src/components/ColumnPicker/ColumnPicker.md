@@ -44,7 +44,7 @@ In order to use this hook, you need to provide four things:
 ## Adapting new views
 
 ### Column picker settings
-Firstly, in the view file, we need to provide two settings object, one for the selected columns and one for the dynamic column settings. We should use `useColumnPickerSettings` and `useListSettings` hook for that.
+Firstly, in the view file, we need to provide two settings object, one for the selected columns and one for the dynamic column settings. We should use `useColumnPickerSettings` and `useListSettings` hook for that. The first settings object manages columns selected for the datagrid (visible columns). The second manages state of seleceted dynamic columns (if we pick a value from left side of column picked, it is then displayed on the right side of the picker as dynamic column with togglable visibility). Toggling the visiblity saves the column in the first settings object.
 
 The reason why column picker settings object needs to be in the view file and cannot be integrated into internal logic of useColumns is because we use column picker settings in the query. For example, we need to know which columns are selected in order to fetch the correct data from the API.
  
@@ -138,6 +138,56 @@ export const parseDynamicColumnsForProductListView = ({
 ];
 ```
 Here we only have 1 column category, attributes. `attributesData` is the result of the first query, `gridAttributesData` is the result of the second query. We also provide pagination props, which are used in the column picker.
+
+Queries which are used in this case are for categories. Let's look at the first query:
+```tsx
+export const availableColumnAttribues = gql`
+  query AvailableColumnAttributes(
+    $search: String!
+    $before: String
+    $after: String
+    $first: Int
+    $last: Int
+  ) {
+    attributes(
+      filter: { search: $search }
+      before: $before
+      after: $after
+      first: $first
+      last: $last
+    ) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+  }
+`;
+```
+This query is used to fetch all **available** attributes. It is paginated and has a search filter and results are displayed in the left part of the column picker.
+
+The second query is similar, but it has a filter of IDs, which come from local storage settings (useColumnPickerSettngs):
+```tsx
+export const gridAttributes = gql`
+  query GridAttributes($ids: [ID!]!) {
+    grid: attributes(first: 25, filter: { ids: $ids }) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;
+```
+Data of this query is displayed in the right part of the column picker, below the static columns.
+
 
 Here is the adapter for the dynamic columns inside the category:
 ```tsx
