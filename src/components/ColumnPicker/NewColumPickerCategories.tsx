@@ -60,6 +60,7 @@ export const NewColumnPickerCategories: React.FC<
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
+      __minHeight="502px"
     >
       <Box>
         <Box
