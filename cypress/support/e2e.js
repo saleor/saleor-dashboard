@@ -112,11 +112,6 @@ Cypress.Commands.add("clickGridCell", (col, row) => {
     cy.get("body").click(bounds.center.x, bounds.center.y);
   });
 });
-Cypress.Commands.add("over", (col, row) => {
-  cy.getGridCellInfo(col, row).then(bounds => {
-    cy.get("body").trigger("mouseenter", bounds.center.x, bounds.center.y);
-  });
-});
 
 Cypress.Commands.add("clickGridHeader", col => {
   cy.getGridCellInfo(col, 0).then(bounds => {
