@@ -310,6 +310,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [get-environment-variables, run-tests-on-release, add-review-and-merge-patch]
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
       - name: Notify Slack
         env:
           JOB_DEPLOYMENT_KIND: staging
@@ -318,7 +321,7 @@ jobs:
           JOB_TITLE: "Test release workflow - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}"
           JOB_KIND: "release tests"
         run: |
-          python3 ./.github/workflows/notify/notify-slack.py
+          python3 .github/workflows/notify/notify-slack.py
 
   send-slack-notification-scheduled-and-manually:
     if: ${{always() && github.event_name != 'repository_dispatch'}}
