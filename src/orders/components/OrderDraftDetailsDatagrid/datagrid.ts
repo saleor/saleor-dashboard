@@ -148,7 +148,7 @@ export const useGetCellContent = ({
           },
         );
       case "sku":
-        return readonlyTextCell(rowData.productSku, false);
+        return readonlyTextCell(rowData?.productSku ?? "", false);
       case "total":
         return moneyCell(
           rowData.totalPrice.gross.amount,
