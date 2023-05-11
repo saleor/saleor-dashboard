@@ -1,4 +1,3 @@
-import { useFlags } from "@dashboard/hooks/useFlags";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -110,7 +109,6 @@ const OrderGrantRefundEdit: React.FC<RouteComponentProps<any>> = ({
 
 const Component = () => {
   const intl = useIntl();
-  const { orderTransactions } = useFlags(["orderTransactions"]);
 
   return (
     <>
@@ -125,24 +123,15 @@ const Component = () => {
           path={orderPaymentRefundPath(":id")}
           component={OrderPaymentRefund}
         />
-        {orderTransactions.enabled && (
-          <Route
-            path={orderSendRefundPath(":id")}
-            component={OrderSendRefund}
-          />
-        )}
-        {orderTransactions.enabled && (
-          <Route
-            path={orderGrantRefundEditPath(":orderId", ":refundId")}
-            component={OrderGrantRefundEdit}
-          />
-        )}
-        {orderTransactions.enabled && (
-          <Route
-            path={orderGrantRefundPath(":id")}
-            component={OrderGrantRefund}
-          />
-        )}
+        <Route path={orderSendRefundPath(":id")} component={OrderSendRefund} />
+        <Route
+          path={orderGrantRefundEditPath(":orderId", ":refundId")}
+          component={OrderGrantRefundEdit}
+        />
+        <Route
+          path={orderGrantRefundPath(":id")}
+          component={OrderGrantRefund}
+        />
         <Route path={orderPath(":id")} component={OrderDetails} />
       </Switch>
     </>

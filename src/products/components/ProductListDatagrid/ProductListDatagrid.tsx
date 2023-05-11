@@ -54,6 +54,7 @@ interface ProductListDatagridProps
   availableColumnsAttributesOpts: ReturnType<
     typeof useAvailableColumnAttributesQuery
   >;
+  onSelectProductIds: (rowsIndex: number[], clearSelection: () => void) => void;
   hasRowHover?: boolean;
   columnPickerSettings: string[];
   setDynamicColumnSettings: (cols: string[]) => void;
@@ -74,6 +75,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   availableColumnsAttributesOpts,
   activeAttributeSortId,
   filterDependency,
+  onSelectProductIds,
   hasRowHover,
   rowAnchor,
   columnPickerSettings,
@@ -236,13 +238,12 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         <Datagrid
           readonly
           loading={loading}
-          rowMarkers="none"
+          rowMarkers="checkbox"
           columnSelect="single"
-          freezeColumns={1}
           hasRowHover={hasRowHover}
           onColumnMoved={handlers.onMove}
           onColumnResize={handlers.onResize}
-          verticalBorder={col => (col > 1 ? true : false)}
+          verticalBorder={col => col > 0}
           getColumnTooltipContent={handleGetColumnTooltipContent}
           availableColumns={visibleColumns}
           onHeaderClicked={handleHeaderClicked}
@@ -251,6 +252,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           getCellError={() => false}
           menuItems={() => []}
           rows={productsLength}
+          onRowSelectionChange={onSelectProductIds}
           selectionActions={() => null}
           fullScreenTitle={intl.formatMessage(messages.products)}
           onRowClick={handleRowClick}

@@ -21,7 +21,7 @@ import {
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
-import { getDatagridRowDataIndex, isFirstColumn } from "@dashboard/misc";
+import { getDatagridRowDataIndex } from "@dashboard/misc";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
@@ -166,10 +166,6 @@ export function createGetCellContent({
     [column, row]: Item,
     { changes, getChangeIndex, added, removed }: GetCellContentOpts,
   ) => {
-    if (isFirstColumn(column)) {
-      return readonlyTextCell("");
-    }
-
     const columnId = columns[column]?.id;
 
     if (!columnId) {

@@ -1,7 +1,6 @@
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
-import { Hr } from "@dashboard/components/Hr";
 import Money from "@dashboard/components/Money";
 import { Pill } from "@dashboard/components/Pill";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -12,6 +11,7 @@ import {
   OrderStatus,
 } from "@dashboard/graphql";
 import { Card, CardContent } from "@material-ui/core";
+import { Divider } from "@saleor/macaw-ui/next";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -105,7 +105,11 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
                       </Button>
                     )}
                     {canMarkAsPaid && (
-                      <Button variant="tertiary" onClick={onMarkAsPaid}>
+                      <Button
+                        variant="tertiary"
+                        onClick={onMarkAsPaid}
+                        data-test-id="markAsPaidButton"
+                      >
                         <FormattedMessage
                           {...paymentButtonMessages.markAsPaid}
                         />
@@ -201,7 +205,7 @@ const OrderPayment: React.FC<OrderPaymentProps> = props => {
           </div>
         </div>
       </CardContent>
-      <Hr />
+      <Divider />
       <CardContent className={classes.payments}>
         <div className={classes.root}>
           {!!usedGiftCardAmount && (

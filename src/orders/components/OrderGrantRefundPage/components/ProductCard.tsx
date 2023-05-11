@@ -2,7 +2,7 @@ import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import { OrderLineGrantRefundFragment } from "@dashboard/graphql/transactions";
+import { OrderLineGrantRefundFragment } from "@dashboard/graphql";
 import { renderCollection } from "@dashboard/misc";
 import {
   Card,
@@ -67,7 +67,11 @@ export const ProductsCard: React.FC<ProductsCardProps> = ({
           </>
         }
         toolbar={
-          <Button variant="secondary" onClick={handleSetMaxQuanity}>
+          <Button
+            variant="secondary"
+            onClick={handleSetMaxQuanity}
+            data-test-id="setMaxQuantityButton"
+          >
             <FormattedMessage {...grantRefundPageMessages.setMaxQuantity} />
           </Button>
         }

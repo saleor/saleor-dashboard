@@ -3,7 +3,7 @@ import {
   TransactionEventFragment,
   TransactionEventTypeEnum,
   TransactionItemFragment,
-} from "@dashboard/graphql/transactions";
+} from "@dashboard/graphql";
 import {
   FakeTransaction,
   TransactionFakeEvent,
@@ -24,10 +24,15 @@ export const mapActionToMessage: Record<
   VOID: transactionActionMessages.void,
   CHARGE: transactionActionMessages.capture,
   CANCEL: transactionActionMessages.cancel,
+  // refund is handled in "Send refund" view not in Transactions list
   REFUND: null,
 };
 
 const typeMap: Record<TransactionEventTypeEnum, TransactionMappingResult> = {
+  INFO: {
+    type: "INFO",
+    status: "INFO",
+  },
   CHARGE_BACK: {
     type: "CHARGEBACK",
     status: "INFO",
@@ -46,6 +51,10 @@ const typeMap: Record<TransactionEventTypeEnum, TransactionMappingResult> = {
     type: "AUTHORIZATION",
     status: "FAILED",
   },
+  AUTHORIZATION_ACTION_REQUIRED: {
+    type: "AUTHORIZATION",
+    status: "INFO",
+  },
   AUTHORIZATION_REQUEST: {
     type: "AUTHORIZATION",
     status: "REQUEST",
@@ -59,6 +68,10 @@ const typeMap: Record<TransactionEventTypeEnum, TransactionMappingResult> = {
   CHARGE_FAILURE: {
     type: "CHARGE",
     status: "FAILED",
+  },
+  CHARGE_ACTION_REQUIRED: {
+    type: "CHARGE",
+    status: "INFO",
   },
   CHARGE_REQUEST: {
     type: "CHARGE",

@@ -1,4 +1,4 @@
-import { OrderDetailsFragment } from "@dashboard/graphql/transactions";
+import { OrderDetailsFragment } from "@dashboard/graphql";
 
 /** Returns paymetns from order that were used to pay for the order */
 export function getFilteredPayments(order: OrderDetailsFragment) {

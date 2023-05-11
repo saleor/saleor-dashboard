@@ -7,10 +7,9 @@ import { commonMessages } from "@dashboard/intl";
 import { joinDateTime, splitDateTime } from "@dashboard/misc";
 import { TextField } from "@material-ui/core";
 import { TextFieldProps } from "@material-ui/core/TextField";
+import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
-
-import { useStyles } from "./styles";
 
 type DateTimeFieldProps = Omit<TextFieldProps, "label" | "error"> & {
   onChange: (value: string) => void;
@@ -26,12 +25,11 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   value,
 }) => {
   const intl = useIntl();
-  const classes = useStyles();
 
   const parsedValue = value ? splitDateTime(value) : { date: "", time: "" };
 
   return (
-    <>
+    <Box display="flex" gap={2}>
       <TextField
         fullWidth
         disabled={disabled}
@@ -47,11 +45,6 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         type="date"
         value={parsedValue.date}
         InputLabelProps={{ shrink: true }}
-        InputProps={{
-          classes: {
-            root: classes.dateField,
-          },
-        }}
       />
       <TextField
         fullWidth
@@ -68,12 +61,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
         type="time"
         value={parsedValue.time}
         InputLabelProps={{ shrink: true }}
-        InputProps={{
-          classes: {
-            root: classes.timeField,
-          },
-        }}
       />
-    </>
+    </Box>
   );
 };

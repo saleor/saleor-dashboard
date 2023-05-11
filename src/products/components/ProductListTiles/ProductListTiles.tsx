@@ -3,7 +3,7 @@ import { ProductListColumns } from "@dashboard/config";
 import { ProductListQuery } from "@dashboard/graphql";
 import { ListProps, RelayToFlat } from "@dashboard/types";
 import { CircularProgress } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Text, vars } from "@saleor/macaw-ui/next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
@@ -42,6 +42,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
           gridTemplateColumns={{ mobile: 3, tablet: 5, desktop: 6 }}
           gap={9}
           padding={9}
+          __paddingTop={`calc(${vars.space[9]} - ${vars.space[5]}`}
         >
           {products.map(product => (
             <ProductTile

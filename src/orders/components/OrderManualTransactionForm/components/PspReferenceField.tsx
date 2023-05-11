@@ -16,6 +16,11 @@ export const PspReferenceField: React.FC<
       disabled={submitState === "loading" || disabled}
       onChange={handleChangePspReference}
       value={pspReference}
+      inputProps={{
+        ...props.inputProps,
+        maxLength: 512,
+        "data-test-id": "transactionPspReference",
+      }}
     />
   );
 };

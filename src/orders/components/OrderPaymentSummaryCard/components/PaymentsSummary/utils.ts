@@ -1,4 +1,4 @@
-import { OrderDetailsFragment } from "@dashboard/graphql/transactions";
+import { OrderDetailsFragment } from "@dashboard/graphql";
 
 import { PaymentState } from "./types";
 

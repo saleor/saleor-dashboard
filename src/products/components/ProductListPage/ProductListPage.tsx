@@ -11,7 +11,6 @@ import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
-import { TopNavMenu } from "@dashboard/components/TopNavMenu";
 import { ProductListColumns } from "@dashboard/config";
 import {
   GridAttributesQuery,
@@ -25,7 +24,6 @@ import { sectionNames } from "@dashboard/intl";
 import {
   ChannelProps,
   FilterPageProps,
-  ListActions,
   PageListProps,
   RelayToFlat,
   SortPage,
@@ -38,6 +36,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField, productUrl } from "../../urls";
 import { ProductListDatagrid } from "../ProductListDatagrid";
+import { ProductListDeleteButton } from "../ProductListDeleteButton";
 import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import { ProductListViewSwitch } from "../ProductListViewSwitch";
 import {
@@ -48,7 +47,6 @@ import {
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
-    ListActions,
     Omit<
       FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
       "onTabDelete"
@@ -71,6 +69,10 @@ export interface ProductListPageProps
   availableColumnsAttributesOpts: ReturnType<
     typeof useAvailableColumnAttributesQuery
   >;
+  onProductsDelete: () => void;
+  onSelectProductIds: (ids: number[], clearSelection: () => void) => void;
+  clearRowSelection: () => void;
+  setBulkDeleteButtonRef: (ref: HTMLButtonElement) => void;
 }
 
 export type ProductListViewType = "datagrid" | "tile";
@@ -93,7 +95,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onSearchChange,
     onUpdateListSettings,
     selectedChannelId,
-    selectedProductIds,
     activeAttributeSortId,
     onTabChange,
     onTabDelete,
@@ -105,6 +106,10 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     hasPresetsChanged,
     columnPickerSettings,
     setDynamicColumnSettings,
+    selectedProductIds,
+    onProductsDelete,
+    clearRowSelection,
+    setBulkDeleteButtonRef,
     ...listProps
   } = props;
   const intl = useIntl();
@@ -129,6 +134,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
       "productListViewType",
       DEFAULT_PRODUCT_LIST_VIEW_TYPE,
     );
+
   const isDatagridView = storedProductListViewType === "datagrid";
 
   return (
@@ -183,7 +189,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                 )}
               </Text>
             )}
-            <TopNavMenu
+            <TopNav.Menu
               dataTestId="menu"
               items={[
                 {
@@ -256,10 +262,20 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               defaultMessage: "Search Products...",
             })}
             actions={
-              <ProductListViewSwitch
-                defaultValue={storedProductListViewType}
-                setProductListViewType={setProductListViewType}
-              />
+              <Box display="flex" gap={7}>
+                <ProductListDeleteButton
+                  ref={setBulkDeleteButtonRef}
+                  onClick={onProductsDelete}
+                  show={selectedProductIds.length > 0}
+                />
+                <ProductListViewSwitch
+                  defaultValue={storedProductListViewType}
+                  setProductListViewType={props => {
+                    setProductListViewType(props);
+                    clearRowSelection();
+                  }}
+                />
+              </Box>
             }
           />
         </Box>

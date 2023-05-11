@@ -1,5 +1,5 @@
 import Skeleton from "@dashboard/components/Skeleton";
-import { OrderDetailsFragment } from "@dashboard/graphql/transactions";
+import { OrderDetailsFragment } from "@dashboard/graphql";
 import { Button, makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -40,7 +40,11 @@ const OrderAddTransaction: React.FC<OrderAddTransactionProps> = ({
 
   return (
     <div className={classes.wrapper}>
-      <Button variant="primary" onClick={onAddTransaction}>
+      <Button
+        variant="primary"
+        onClick={onAddTransaction}
+        data-test-id="captureManualTransactionButton"
+      >
         <FormattedMessage {...addTransactionMessages.captureTransaction} />
       </Button>
     </div>
