@@ -38,11 +38,14 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
   helperText,
   editorRef,
   onInitialize,
+  onChange,
   ...props
 }) => {
   const classes = useStyles({});
   const id = useId(defaultId);
   const [isFocused, setIsFocused] = React.useState(false);
+  const [hasValue, setHasValue] = React.useState(false);
+  const isTyped = Boolean(hasValue || isFocused);
 
   const handleInitialize = React.useCallback((editor: EditorCore) => {
     if (onInitialize) {
@@ -68,7 +71,17 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
       fullWidth
       variant="outlined"
     >
-      <InputLabel focused={true} shrink={true}>
+      <InputLabel
+        focused={true}
+        shrink={true}
+        classes={{
+          disabled: classes.labelDisabled,
+          error: classes.labelError,
+          root: classes.labelRoot,
+        }}
+        error={error}
+        disabled={disabled}
+      >
         {label}
       </InputLabel>
       {hasRendered && (
@@ -76,17 +89,25 @@ const RichTextEditor: React.FC<RichTextEditorProps> = ({
           // match with the id of holder div
           holder={id}
           tools={tools}
-          // LogLeves is undefined at runtime
+          // Log level is undefined at runtime
           logLevel={"ERROR" as LogLevels.ERROR}
           onInitialize={handleInitialize}
+          onChange={async event => {
+            const editorJsValue = await event.saver.save();
+            setHasValue(editorJsValue.blocks.length > 0);
+            return onChange?.();
+          }}
           {...props}
         >
           <div
             id={id}
             className={clsx(classes.editor, classes.root, {
+              [classes.rootErrorFocus]: isFocused && error,
               [classes.rootActive]: isFocused,
               [classes.rootDisabled]: disabled,
               [classes.rootError]: error,
+              [classes.rootTyped]:
+                isTyped || props.defaultValue?.blocks?.length > 0,
             })}
             onFocus={() => setIsFocused(true)}
             onBlur={() => setIsFocused(false)}

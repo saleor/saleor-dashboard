@@ -1,4 +1,3 @@
-import placeholderImg from "@assets/images/placeholder255x255.png";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { AttributeInput } from "@dashboard/components/Attributes";
@@ -114,10 +113,8 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     },
   });
 
-  const [
-    reorderProductImages,
-    reorderProductImagesOpts,
-  ] = useProductMediaReorderMutation({});
+  const [reorderProductImages, reorderProductImagesOpts] =
+    useProductMediaReorderMutation({});
 
   const [deleteProduct, deleteProductOpts] = useProductDeleteMutation({
     onCompleted: () => {
@@ -132,25 +129,23 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     },
   });
 
-  const [
-    createProductImage,
-    createProductImageOpts,
-  ] = useProductMediaCreateMutation({
-    onCompleted: data => {
-      const imageError = data.productMediaCreate.errors.find(
-        error =>
-          error.field ===
-          ("image" as keyof ProductMediaCreateMutationVariables),
-      );
-      if (imageError) {
-        notify({
-          status: "error",
-          title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
-          text: intl.formatMessage(errorMessages.imageUploadErrorText),
-        });
-      }
-    },
-  });
+  const [createProductImage, createProductImageOpts] =
+    useProductMediaCreateMutation({
+      onCompleted: data => {
+        const imageError = data.productMediaCreate.errors.find(
+          error =>
+            error.field ===
+            ("image" as keyof ProductMediaCreateMutationVariables),
+        );
+        if (imageError) {
+          notify({
+            status: "error",
+            title: intl.formatMessage(errorMessages.imgageUploadErrorTitle),
+            text: intl.formatMessage(errorMessages.imageUploadErrorText),
+          });
+        }
+      },
+    });
 
   const [deleteProductImage] = useProductMediaDeleteMutation({
     onCompleted: () =>
@@ -175,28 +170,26 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
     },
   });
 
-  const [
-    createProductMedia,
-    createProductMediaOpts,
-  ] = useProductMediaCreateMutation({
-    onCompleted: data => {
-      const errors = data.productMediaCreate.errors;
+  const [createProductMedia, createProductMediaOpts] =
+    useProductMediaCreateMutation({
+      onCompleted: data => {
+        const errors = data.productMediaCreate.errors;
 
-      if (errors.length) {
-        errors.map(error =>
+        if (errors.length) {
+          errors.map(error =>
+            notify({
+              status: "error",
+              text: getProductErrorMessage(error, intl),
+            }),
+          );
+        } else {
           notify({
-            status: "error",
-            text: getProductErrorMessage(error, intl),
-          }),
-        );
-      } else {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      }
-    },
-  });
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+        }
+      },
+    });
 
   const handleMediaUrlUpload = (mediaUrl: string) => {
     const variables = {
@@ -282,8 +275,9 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
   );
 
   const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
-      ?.hasNextPage,
+    hasMore:
+      !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
+        ?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
     onFetchMore: loadMoreAttributeValues,
   };
@@ -316,7 +310,6 @@ export const ProductUpdate: React.FC<ProductUpdateProps> = ({ id, params }) => {
         saveButtonBarState={formTransitionState}
         media={data?.product?.media}
         header={product?.name}
-        placeholderImage={placeholderImg}
         product={product}
         warehouses={warehouses}
         taxClasses={taxClasses ?? []}

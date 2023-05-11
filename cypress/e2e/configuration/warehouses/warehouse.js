@@ -193,7 +193,9 @@ describe("As an admin I want to manage warehouses", () => {
           warehouse = warehouseResp;
           cy.visit(warehouseDetailsUrl(warehouse.id))
             .get(WAREHOUSES_DETAILS.nameInput)
-            .clearAndType(updatedName)
+            .clear()
+            .type(updatedName)
+            // .clearAndType(updatedName)
             .fillUpBasicAddress(secondUsAddress)
             .addAliasToGraphRequest("WarehouseUpdate")
             .get(BUTTON_SELECTORS.confirm)

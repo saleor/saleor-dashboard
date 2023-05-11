@@ -1,6 +1,5 @@
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
-import { Hr } from "@dashboard/components/Hr";
 import { Pill } from "@dashboard/components/Pill";
 import Skeleton from "@dashboard/components/Skeleton";
 import { OrderAction, OrderDetailsFragment } from "@dashboard/graphql";
@@ -10,6 +9,7 @@ import {
   orderSendRefundUrl,
 } from "@dashboard/orders/urls";
 import { Card, CardContent, Typography } from "@material-ui/core";
+import { Divider } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -83,7 +83,11 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
               <FormattedMessage {...orderPaymentMessages.noPayments} />
             </Typography>
             {canMarkAsPaid && (
-              <Button variant="tertiary" onClick={() => onMarkAsPaid()}>
+              <Button
+                variant="tertiary"
+                onClick={() => onMarkAsPaid()}
+                data-test-id="markAsPaidButton"
+              >
                 <FormattedMessage
                   {...orderPaymentActionButtonMessages.markAsPaid}
                 />
@@ -94,7 +98,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
       <PaymentsSummary order={order} />
       {canAnyRefund && (
         <>
-          <Hr />
+          <Divider />
           <CardTitle
             toolbar={
               <div className={classes.refundsButtons}>
@@ -102,6 +106,7 @@ const OrderPaymentSummaryCard: React.FC<OrderPaymementProps> = ({
                   <Button
                     href={orderGrantRefundUrl(order.id)}
                     variant="secondary"
+                    data-test-id="grantRefundButton"
                   >
                     <FormattedMessage
                       {...orderPaymentActionButtonMessages.grantRefund}

@@ -6,14 +6,14 @@ import CannotDefineChannelsAvailabilityCard from "@dashboard/channels/components
 import { ChannelData } from "@dashboard/channels/utils";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeValueDialog";
-import Attributes, { AttributeInput } from "@dashboard/components/Attributes";
+import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import Metadata from "@dashboard/components/Metadata";
+import { Metadata } from "@dashboard/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import Savebar from "@dashboard/components/Savebar";
-import SeoForm from "@dashboard/components/SeoForm";
+import { SeoForm } from "@dashboard/components/SeoForm";
 import {
   PermissionEnum,
   ProductChannelListingErrorFragment,
@@ -30,7 +30,7 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
-import ProductVariantPrice from "@dashboard/products/components/ProductVariantPrice";
+import { ProductVariantPrice } from "@dashboard/products/components/ProductVariantPrice";
 import {
   ProductCreateUrlQueryParams,
   productListUrl,
@@ -41,10 +41,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import { FetchMoreProps, RelayToFlat } from "../../../types";
-import ProductDetailsForm from "../ProductDetailsForm";
-import ProductOrganization from "../ProductOrganization";
-import ProductShipping from "../ProductShipping/ProductShipping";
-import ProductStocks from "../ProductStocks";
+import { ProductDetailsForm } from "../ProductDetailsForm";
+import { ProductOrganization } from "../ProductOrganization";
+import { ProductShipping } from "../ProductShipping";
+import { ProductStocks } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
 import ProductCreateForm, {
   ProductCreateData,
@@ -263,7 +263,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                   richTextGetters={attributeRichTextGetters}
                 />
               )}
-              <CardSpacer />
               {isSimpleProduct && (
                 <>
                   <ProductShipping
@@ -273,14 +272,12 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                     weightUnit={weightUnit}
                     onChange={change}
                   />
-                  <CardSpacer />
                   <ProductVariantPrice
                     ProductVariantChannelListings={data.channelListings}
                     errors={channelsErrors}
                     loading={loading}
                     onChange={handlers.changeChannelPrice}
                   />
-                  <CardSpacer />
                   <ProductStocks
                     data={data}
                     disabled={loading}
@@ -315,7 +312,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 loading={loading}
                 onChange={change}
               />
-              <CardSpacer />
               <Metadata data={data} onChange={handlers.changeMetadata} />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
@@ -341,7 +337,6 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
                 onProductTypeChange={handlers.selectProductType}
                 collectionsInputDisplayValue={selectedCollections}
               />
-              <CardSpacer />
               {isSimpleProduct ? (
                 <ChannelsAvailabilityCard
                   managePermissions={[PermissionEnum.MANAGE_PRODUCTS]}

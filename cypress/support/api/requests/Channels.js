@@ -83,3 +83,37 @@ export function updateChannelWarehouses(channelId, warehouseId) {
   }`;
   return cy.sendRequestWithQuery(mutation);
 }
+
+export function updateChannelOrderSettings({
+  channelId,
+  automaticallyConfirmAllNewOrders = true,
+  automaticallyFulfillNonShippableGiftCard = true,
+  expireOrdersAfter = 0,
+  markAsPaidStrategy = "PAYMENT_FLOW", // TRANSACTION_FLOW - creates the TransactionItem object.
+  defaultTransactionFlowStrategy = "AUTHORIZATION",
+}) {
+  const mutation = `mutation{
+    channelUpdate(id:"${channelId}",  input: {orderSettings: {
+      automaticallyConfirmAllNewOrders: ${automaticallyConfirmAllNewOrders}, 
+      automaticallyFulfillNonShippableGiftCard: ${automaticallyFulfillNonShippableGiftCard}, 
+      expireOrdersAfter: ${expireOrdersAfter}, 
+      markAsPaidStrategy: ${markAsPaidStrategy}, 
+      defaultTransactionFlowStrategy: ${defaultTransactionFlowStrategy} 
+    }}){
+      errors{
+        field
+        message
+      }
+      channel {
+        orderSettings{
+          automaticallyConfirmAllNewOrders
+          automaticallyFulfillNonShippableGiftCard
+          expireOrdersAfter
+          markAsPaidStrategy
+          defaultTransactionFlowStrategy
+        }
+      }
+    }
+  }`;
+  return cy.sendRequestWithQuery(mutation);
+}

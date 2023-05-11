@@ -1,16 +1,18 @@
 import { ChannelData } from "@dashboard/channels/utils";
-import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
-import Hr from "@dashboard/components/Hr";
-import RadioSwitchField from "@dashboard/components/RadioSwitchField";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
-import { TextField, Typography } from "@material-ui/core";
-import clsx from "clsx";
+import { TextField } from "@material-ui/core";
+import {
+  Box,
+  Checkbox,
+  Divider,
+  RadioGroup,
+  Text,
+} from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
-import { useStyles } from "../styles";
 import { ChannelOpts, ChannelsAvailabilityError, Messages } from "../types";
 import { availabilityItemMessages } from "./messages";
 
@@ -22,7 +24,7 @@ export interface ChannelContentProps {
   onChange: (id: string, data: ChannelOpts) => void;
 }
 
-const ChannelContent: React.FC<ChannelContentProps> = ({
+export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
   data,
   disabled,
   errors,
@@ -55,7 +57,6 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   );
   const [isAvailableDate, setAvailableDate] = useState(false);
   const intl = useIntl();
-  const classes = useStyles({});
 
   const parsedDate = new Date(dateNow);
   const todayDateUTC = parsedDate.toISOString().slice(0, 10);
@@ -70,57 +71,64 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
   );
 
   return (
-    <div className={classes.container}>
-      <RadioSwitchField
-        classes={{
-          radioLabel: classes.radioLabel,
-        }}
-        className={classes.radioField}
-        disabled={disabled}
-        firstOptionLabel={
-          <>
-            <p className={classes.label}>{messages.visibleLabel}</p>
-            {isPublished &&
-              publicationDate &&
-              Date.parse(publicationDate) < dateNow && (
-                <span className={classes.secondLabel}>
-                  {messages.visibleSecondLabel ||
-                    visibleMessage(publicationDate)}
-                </span>
-              )}
-          </>
-        }
-        name="isPublished"
-        secondOptionLabel={
-          <>
-            <p className={classes.label}>{messages.hiddenLabel}</p>
-            {publicationDate &&
-              !isPublished &&
-              Date.parse(publicationDate) >= dateNow && (
-                <span className={classes.secondLabel}>
-                  {messages.hiddenSecondLabel}
-                </span>
-              )}
-          </>
-        }
-        value={isPublished}
-        onChange={() => {
+    <Box display="flex" gap={6} paddingTop={6} flexDirection="column">
+      <RadioGroup
+        value={String(isPublished)}
+        onValueChange={value => {
           onChange(id, {
             ...formData,
-            isPublished: !isPublished,
+            isPublished: value === "true",
             publicationDate:
               !isPublished && !publicationDate ? todayDateUTC : publicationDate,
           });
         }}
-      />
+        disabled={disabled}
+        display="flex"
+        flexDirection="column"
+        gap={6}
+      >
+        <RadioGroup.Item
+          id={`${id}-isPublished-true`}
+          value="true"
+          name="isPublished"
+        >
+          <Box display="flex" alignItems="baseline" gap={5}>
+            <Text>{messages.visibleLabel}</Text>
+            {isPublished &&
+              publicationDate &&
+              Date.parse(publicationDate) < dateNow && (
+                <Text variant="caption" color="textNeutralSubdued">
+                  {messages.visibleSecondLabel ||
+                    visibleMessage(publicationDate)}
+                </Text>
+              )}
+          </Box>
+        </RadioGroup.Item>
+        <RadioGroup.Item
+          id={`${id}-isPublished-false`}
+          value="false"
+          name="isPublished"
+        >
+          <Box display="flex" alignItems="baseline" gap={5}>
+            <Text>{messages.hiddenLabel}</Text>
+            {publicationDate &&
+              !isPublished &&
+              Date.parse(publicationDate) >= dateNow && (
+                <Text variant="caption" color="textNeutralSubdued">
+                  {messages.hiddenSecondLabel}
+                </Text>
+              )}
+          </Box>
+        </RadioGroup.Item>
+      </RadioGroup>
       {!isPublished && (
-        <>
-          <Typography
-            className={classes.setPublicationDate}
-            onClick={() => setPublicationDate(!isPublicationDate)}
+        <Box display="flex" flexDirection="column" alignItems="start" gap={3}>
+          <Checkbox
+            onCheckedChange={(checked: boolean) => setPublicationDate(checked)}
+            checked={isPublicationDate}
           >
             {intl.formatMessage(availabilityItemMessages.setPublicationDate)}
-          </Typography>
+          </Checkbox>
           {isPublicationDate && (
             <TextField
               error={!!formErrors.publicationDate}
@@ -141,64 +149,75 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                   publicationDate: e.target.value || null,
                 })
               }
-              className={classes.date}
               InputLabelProps={{
                 shrink: true,
               }}
             />
           )}
-        </>
+        </Box>
       )}
       {hasAvailableProps && (
         <>
-          <Hr />
-          <RadioSwitchField
-            classes={{
-              radioLabel: classes.radioLabel,
-            }}
-            className={classes.radioField}
+          <Divider />
+          <RadioGroup
             disabled={disabled}
-            firstOptionLabel={
-              <>
-                <p className={classes.label}>{messages.availableLabel}</p>
+            name={`channel:isAvailableForPurchase:${id}`}
+            value={String(isAvailable)}
+            onValueChange={value =>
+              onChange(id, {
+                ...formData,
+                availableForPurchase: !value ? null : availableForPurchase,
+                isAvailableForPurchase: value === "true",
+              })
+            }
+            display="flex"
+            flexDirection="column"
+            gap={6}
+          >
+            <RadioGroup.Item
+              id={`channel:isAvailableForPurchase:${id}-true`}
+              value="true"
+            >
+              <Box display="flex" __alignItems="baseline" gap={5}>
+                <Text>{messages.availableLabel}</Text>
                 {isAvailable &&
                   availableForPurchase &&
                   Date.parse(availableForPurchase) < dateNow && (
-                    <span className={classes.secondLabel}>
+                    <Text variant="caption" color="textNeutralSubdued">
                       {visibleMessage(availableForPurchase)}
-                    </span>
+                    </Text>
                   )}
-              </>
-            }
-            name={`channel:isAvailableForPurchase:${id}`}
-            secondOptionLabel={
-              <>
-                <p className={classes.label}>{messages.unavailableLabel}</p>
+              </Box>
+            </RadioGroup.Item>
+            <RadioGroup.Item
+              id={`channel:isAvailableForPurchase:${id}-false`}
+              value="false"
+            >
+              <Box display="flex" __alignItems="baseline" gap={5}>
+                <Text>{messages.unavailableLabel}</Text>
                 {availableForPurchase && !isAvailable && (
-                  <span className={classes.secondLabel}>
+                  <Text variant="caption" color="textNeutralSubdued">
                     {messages.availableSecondLabel}
-                  </span>
+                  </Text>
                 )}
-              </>
-            }
-            value={isAvailable}
-            onChange={e => {
-              const { value } = e.target;
-              return onChange(id, {
-                ...formData,
-                availableForPurchase: !value ? null : availableForPurchase,
-                isAvailableForPurchase: value,
-              });
-            }}
-          />
+              </Box>
+            </RadioGroup.Item>
+          </RadioGroup>
           {!isAvailable && (
-            <>
-              <Typography
-                className={classes.setPublicationDate}
-                onClick={() => setAvailableDate(!isAvailableDate)}
+            <Box
+              display="flex"
+              gap={3}
+              flexDirection="column"
+              alignItems="start"
+            >
+              <Checkbox
+                onCheckedChange={(checked: boolean) =>
+                  setAvailableDate(checked)
+                }
+                checked={isAvailableDate}
               >
                 {messages.setAvailabilityDateLabel}
-              </Typography>
+              </Checkbox>
               {isAvailableDate && (
                 <TextField
                   error={!!formErrors.availableForPurchaseDate}
@@ -224,46 +243,41 @@ const ChannelContent: React.FC<ChannelContentProps> = ({
                       availableForPurchase: e.target.value,
                     })
                   }
-                  className={classes.date}
                   InputLabelProps={{
                     shrink: true,
                   }}
                 />
               )}
-            </>
+            </Box>
           )}
         </>
       )}
       {visibleInListings !== undefined && (
         <>
-          <Hr />
-          <ControlledCheckbox
-            className={classes.checkbox}
+          <Divider />
+          <Checkbox
             name={`channel:visibleInListings:${id}`}
+            id={`channel:visibleInListings:${id}`}
             checked={!visibleInListings}
             disabled={disabled}
-            label={
-              <>
-                <p className={clsx(classes.label, classes.listingLabel)}>
-                  {intl.formatMessage(availabilityItemMessages.hideInListings)}
-                </p>
-                <span className={classes.secondLabel}>
-                  {intl.formatMessage(
-                    availabilityItemMessages.hideInListingsDescription,
-                  )}
-                </span>
-              </>
-            }
-            onChange={e =>
+            onCheckedChange={checked => {
               onChange(id, {
                 ...formData,
-                visibleInListings: !e.target.value,
-              })
-            }
-          />
+                visibleInListings: !checked,
+              });
+            }}
+          >
+            <Text cursor="pointer">
+              {intl.formatMessage(availabilityItemMessages.hideInListings)}
+            </Text>
+          </Checkbox>
+          <Text variant="caption" color="textNeutralSubdued">
+            {intl.formatMessage(
+              availabilityItemMessages.hideInListingsDescription,
+            )}
+          </Text>
         </>
       )}
-    </div>
+    </Box>
   );
 };
-export default ChannelContent;
