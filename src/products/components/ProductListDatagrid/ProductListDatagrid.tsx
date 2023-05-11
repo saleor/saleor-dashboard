@@ -5,7 +5,6 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
-import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@dashboard/config";
@@ -98,8 +97,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [onUpdateListSettings],
   );
 
-  const emptyColumn = useEmptyColumn();
-
   const {
     handlers,
     visibleColumns,
@@ -108,7 +105,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     selectedColumns,
     columnCategories,
   } = useColumns({
-    staticColumns: productListStaticColumnAdapter(intl, emptyColumn, sort),
+    staticColumns: productListStaticColumnAdapter(intl, sort),
     columnCategories: productListDynamicColumnAdapter({
       attributesData:
         mapEdgesToItems(availableColumnsAttributesOpts.data?.attributes) || [],

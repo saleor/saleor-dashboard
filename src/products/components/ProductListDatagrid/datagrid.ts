@@ -32,9 +32,8 @@ import { IntlShape } from "react-intl";
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
 import { categoryMetaGroups, columnsMessages } from "./messages";
 
-export const productListStaticColumnAdapter = (intl, emptyColumn, sort) =>
+export const productListStaticColumnAdapter = (intl, sort) =>
   [
-    emptyColumn,
     {
       id: "name",
       title: intl.formatMessage(commonMessages.product),
