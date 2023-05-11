@@ -8,7 +8,7 @@ import { urlList } from "../../../fixtures/urlList";
 import { getDefaultChannel, productsUtils } from "../../../support/api/utils/";
 import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
 
-describe("Test for metadata", () => {
+describe("Test for deleting products", () => {
   const startsWith = "AABulkDeleteCypress";
   const name = `${startsWith}${faker.datatype.number()}`;
   const name2 = `${startsWith}${faker.datatype.number()}`;
@@ -46,14 +46,15 @@ describe("Test for metadata", () => {
   });
 
   it(
-    "should create metadata for product",
+    "should delete 2 first products on products grid view",
     { tags: ["@metadata", "@allEnv", "@stable"] },
     () => {
       cy.clearSessionData().loginUserViaRequest();
       cy.visit(urlList.products);
+      // checks two first rows on products data grid
       cy.clickGridCell(0, 0);
       cy.clickGridCell(0, 1);
-      cy.get(BUTTON_SELECTORS.deleteProductsButton).click();
+      cy.clickOnElement(BUTTON_SELECTORS.deleteProductsButton);
       cy.contains(DIALOGS_MESSAGES.confirmProductsDeletion).should(
         "be.visible",
       );
@@ -62,6 +63,8 @@ describe("Test for metadata", () => {
         .waitForRequestAndCheckIfNoErrors("@productBulkDelete");
       ensureCanvasStatic(PRODUCTS_LIST.dataGridTable);
       cy.get(BUTTON_SELECTORS.submit).should("not.exist");
+      cy.contains(name).should("not.exist");
+      cy.contains(name2).should("not.exist");
     },
   );
 });
