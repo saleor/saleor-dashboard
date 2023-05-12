@@ -1,11 +1,13 @@
-import CardDecorator from "@dashboard/storybook/CardDecorator";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { CardDecorator } from "../../../../.storybook/decorators";
 import ResetPasswordSuccessPage from "./ResetPasswordSuccessPage";
 
-storiesOf("Authentication / Reset password success", module)
-  .addDecorator(CardDecorator)
-  .addDecorator(Decorator)
-  .add("default", () => <ResetPasswordSuccessPage onBack={() => undefined} />);
+export default {
+  title: "Authentication / Reset password success",
+  decorators: [CardDecorator],
+};
+
+export const Default = () => (
+  <ResetPasswordSuccessPage onBack={() => undefined} />
+);

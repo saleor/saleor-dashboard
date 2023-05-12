@@ -2,12 +2,10 @@ import placeholderImage from "@assets/images/placeholder255x255.png";
 import { category as categoryFixture } from "@dashboard/categories/fixtures";
 import { listActionsProps } from "@dashboard/fixtures";
 import { ProductErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import CategoryUpdatePage, {
   CategoryPageTab,
   CategoryUpdatePageProps,
@@ -35,61 +33,66 @@ const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   ...listActionsProps,
 };
 
-storiesOf("Categories / Update category", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <CategoryUpdatePage {...updateProps} />)
-  .add("products", () => (
-    <CategoryUpdatePage
-      {...updateProps}
-      currentTab={CategoryPageTab.products}
-    />
-  ))
-  .add("no background", () => (
-    <CategoryUpdatePage
-      {...updateProps}
-      category={{
-        ...category,
-        backgroundImage: null,
-      }}
-    />
-  ))
-  .add("no subcategories", () => (
-    <CategoryUpdatePage {...updateProps} subcategories={[]} />
-  ))
-  .add("no products", () => (
-    <CategoryUpdatePage
-      {...updateProps}
-      products={[]}
-      currentTab={CategoryPageTab.products}
-    />
-  ))
-  .add("loading", () => (
-    <CategoryUpdatePage
-      {...updateProps}
-      subcategories={undefined}
-      disabled={true}
-      products={undefined}
-      category={undefined}
-    />
-  ))
-  .add("form errors", () => (
-    <CategoryUpdatePage
-      {...updateProps}
-      errors={[
-        {
-          code: ProductErrorCode.REQUIRED,
-          field: "name",
-          message: "Product field name required",
-        },
-        {
-          code: ProductErrorCode.REQUIRED,
-          field: "description",
-          message: "Product field description required",
-        },
-      ].map(err => ({
-        __typename: "ProductError",
-        ...err,
-      }))}
-    />
-  ));
+export default {
+  title: "Categories / Update category",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <CategoryUpdatePage {...updateProps} />;
+
+export const Products = () => (
+  <CategoryUpdatePage {...updateProps} currentTab={CategoryPageTab.products} />
+);
+
+export const NoBackground = () => (
+  <CategoryUpdatePage
+    {...updateProps}
+    category={{
+      ...category,
+      backgroundImage: null,
+    }}
+  />
+);
+
+export const NoSubcategories = () => (
+  <CategoryUpdatePage {...updateProps} subcategories={[]} />
+);
+
+export const NoProducts = () => (
+  <CategoryUpdatePage
+    {...updateProps}
+    products={[]}
+    currentTab={CategoryPageTab.products}
+  />
+);
+
+export const Loading = () => (
+  <CategoryUpdatePage
+    {...updateProps}
+    subcategories={undefined}
+    disabled={true}
+    products={undefined}
+    category={undefined}
+  />
+);
+
+export const FormErrors = () => (
+  <CategoryUpdatePage
+    {...updateProps}
+    errors={[
+      {
+        code: ProductErrorCode.REQUIRED,
+        field: "name",
+        message: "Product field name required",
+      },
+      {
+        code: ProductErrorCode.REQUIRED,
+        field: "description",
+        message: "Product field description required",
+      },
+    ].map(err => ({
+      __typename: "ProductError",
+      ...err,
+    }))}
+  />
+);

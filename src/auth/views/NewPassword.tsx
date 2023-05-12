@@ -17,7 +17,9 @@ const NewPassword: React.FC<RouteComponentProps> = ({ location }) => {
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<SetPasswordData["errors"]>([]);
 
-  const params: NewPasswordUrlQueryParams = parseQs(location.search.substr(1));
+  const params: NewPasswordUrlQueryParams = parseQs(
+    location.search.substr(1),
+  ) as any;
 
   const handleSubmit = async (data: NewPasswordPageFormData) => {
     setLoading(true);

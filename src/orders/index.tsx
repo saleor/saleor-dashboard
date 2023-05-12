@@ -36,7 +36,7 @@ import OrderSendRefundComponent from "./views/OrderSendRefund";
 import OrderSettings from "./views/OrderSettings";
 
 const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: OrderListUrlQueryParams = asSortParams(
     qs,
     OrderListUrlSortField,
@@ -46,7 +46,7 @@ const OrderList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   return <OrderListComponent params={params} />;
 };
 const OrderDraftList: React.FC<RouteComponentProps<any>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: OrderDraftListUrlQueryParams = asSortParams(
     qs,
     OrderDraftListUrlSortField,
@@ -61,7 +61,7 @@ const OrderDetails: React.FC<RouteComponentProps<any>> = ({
   location,
   match,
 }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: OrderUrlQueryParams = qs;
   const id = match.params.id;
 
@@ -72,7 +72,7 @@ const OrderFulfill: React.FC<RouteComponentProps<any>> = ({
   location,
   match,
 }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: OrderFulfillUrlQueryParams = qs;
   return (
     <OrderFulfillComponent

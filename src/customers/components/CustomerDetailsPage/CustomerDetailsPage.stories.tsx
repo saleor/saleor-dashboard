@@ -1,9 +1,7 @@
 import { AccountErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { MockedUserProvider } from "@dashboard/storybook/MockedUserProvider";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { MockedUserProvider } from "../../../../.storybook/helpers";
 import { customer } from "../../fixtures";
 import CustomerDetailsPageComponent, {
   CustomerDetailsPageProps,
@@ -32,84 +30,96 @@ const CustomerDetailsPage = props => (
   </MockedUserProvider>
 );
 
-storiesOf("Customers / Customer details", module)
-  .addDecorator(Decorator)
-  .add("default", () => <CustomerDetailsPage {...props} />)
-  .add("loading", () => (
-    <CustomerDetailsPage {...props} customer={undefined} disabled={true} />
-  ))
-  .add("form errors", () => (
-    <CustomerDetailsPage
-      {...props}
-      errors={(["email", "firstName", "lastName"] as Array<
+export default {
+  title: "Customers / Customer details",
+};
+
+export const Default = () => <CustomerDetailsPage {...props} />;
+
+export const Loading = () => (
+  <CustomerDetailsPage {...props} customer={undefined} disabled={true} />
+);
+
+export const FormErrors = () => (
+  <CustomerDetailsPage
+    {...props}
+    errors={(
+      ["email", "firstName", "lastName"] as Array<
         keyof CustomerDetailsPageErrors
-      >).map(field => ({
-        __typename: "AccountError",
-        code: AccountErrorCode.INVALID,
-        field,
-        addressType: null,
-        message: "Account invalid",
-      }))}
-    />
-  ))
-  .add("different addresses", () => (
-    <CustomerDetailsPage
-      {...props}
-      customer={{
-        ...customer,
-        defaultBillingAddress: {
-          ...customer.defaultBillingAddress,
-          id: "AvSduf72=",
-        },
-      }}
-    />
-  ))
-  .add("never logged", () => (
-    <CustomerDetailsPage
-      {...props}
-      customer={{
-        ...customer,
-        lastLogin: null,
-      }}
-    />
-  ))
-  .add("never placed order", () => (
-    <CustomerDetailsPage
-      {...props}
-      customer={{
-        ...customer,
-        lastPlacedOrder: {
-          ...customer.lastPlacedOrder,
-          edges: [],
-        },
-      }}
-    />
-  ))
-  .add("no default billing address", () => (
-    <CustomerDetailsPage
-      {...props}
-      customer={{
-        ...customer,
-        defaultBillingAddress: null,
-      }}
-    />
-  ))
-  .add("no default shipping address", () => (
-    <CustomerDetailsPage
-      {...props}
-      customer={{
-        ...customer,
-        defaultShippingAddress: null,
-      }}
-    />
-  ))
-  .add("no address at all", () => (
-    <CustomerDetailsPage
-      {...props}
-      customer={{
-        ...customer,
-        defaultBillingAddress: null,
-        defaultShippingAddress: null,
-      }}
-    />
-  ));
+      >
+    ).map(field => ({
+      __typename: "AccountError",
+      code: AccountErrorCode.INVALID,
+      field,
+      addressType: null,
+      message: "Account invalid",
+    }))}
+  />
+);
+
+export const DifferentAddresses = () => (
+  <CustomerDetailsPage
+    {...props}
+    customer={{
+      ...customer,
+      defaultBillingAddress: {
+        ...customer.defaultBillingAddress,
+        id: "AvSduf72=",
+      },
+    }}
+  />
+);
+
+export const NeverLogged = () => (
+  <CustomerDetailsPage
+    {...props}
+    customer={{
+      ...customer,
+      lastLogin: null,
+    }}
+  />
+);
+
+export const NeverPlacedOrder = () => (
+  <CustomerDetailsPage
+    {...props}
+    customer={{
+      ...customer,
+      lastPlacedOrder: {
+        ...customer.lastPlacedOrder,
+        edges: [],
+      },
+    }}
+  />
+);
+
+export const NoDefaultBillingAddress = () => (
+  <CustomerDetailsPage
+    {...props}
+    customer={{
+      ...customer,
+      defaultBillingAddress: null,
+    }}
+  />
+);
+
+export const NoDefaultShippingAddress = () => (
+  <CustomerDetailsPage
+    {...props}
+    customer={{
+      ...customer,
+      defaultShippingAddress: null,
+    }}
+  />
+);
+
+export const NoAddressAtAll = () => (
+  <CustomerDetailsPage
+    {...props}
+    customer={{
+      ...customer,
+      defaultBillingAddress: null,
+      defaultShippingAddress: null,
+    }}
+  />
+);

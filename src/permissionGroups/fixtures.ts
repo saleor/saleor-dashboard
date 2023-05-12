@@ -1,4 +1,4 @@
-import * as avatarImg from "@assets/images/avatars/avatar1.png";
+import avatarImg from "@assets/images/avatars/avatar.png";
 import {
   PermissionEnum,
   PermissionGroupDetailsFragment,
@@ -90,20 +90,21 @@ export const permissionGroups: PermissionGroupFragment[] = [
   },
 ].map(edge => edge.node);
 
-export const userPermissionGroups: StaffMemberDetailsFragment["permissionGroups"] = [
-  {
-    id: "R3JvdXA6MQ==",
-    name: "Full Access",
-    userCanManage: false,
-    __typename: "Group",
-  },
-  {
-    id: "R3JvdXA6Mg==",
-    name: "Customer Support",
-    userCanManage: true,
-    __typename: "Group",
-  },
-];
+export const userPermissionGroups: StaffMemberDetailsFragment["permissionGroups"] =
+  [
+    {
+      id: "R3JvdXA6MQ==",
+      name: "Full Access",
+      userCanManage: false,
+      __typename: "Group",
+    },
+    {
+      id: "R3JvdXA6Mg==",
+      name: "Customer Support",
+      userCanManage: true,
+      __typename: "Group",
+    },
+  ];
 
 export const emptyPermissionGroup: PermissionGroupDetailsFragment = {
   id: "R3JvdXA6Mw==",

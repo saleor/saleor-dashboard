@@ -2,8 +2,6 @@ import {
   orderSettings as orderSettingsFixture,
   shopOrderSettings as shopOrderSettingsFixture,
 } from "@dashboard/orders/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderSettings, { OrderSettingsPageProps } from "./OrderSettingsPage";
@@ -16,14 +14,17 @@ const props: OrderSettingsPageProps = {
   saveButtonBarState: "default",
 };
 
-storiesOf(" Orders / Order settings", module)
-  .addDecorator(Decorator)
-  .add("default", () => <OrderSettings {...props} />)
-  .add("loading", () => (
-    <OrderSettings
-      {...props}
-      disabled={true}
-      orderSettings={undefined}
-      shop={undefined}
-    />
-  ));
+export default {
+  title: " Orders / Order settings",
+};
+
+export const Default = () => <OrderSettings {...props} />;
+
+export const Loading = () => (
+  <OrderSettings
+    {...props}
+    disabled={true}
+    orderSettings={undefined}
+    shop={undefined}
+  />
+);

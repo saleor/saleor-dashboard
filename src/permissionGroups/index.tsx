@@ -22,7 +22,7 @@ import PermissionGroupListComponent from "./views/PermissionGroupList";
 const permissionGroupList: React.FC<RouteComponentProps<{}>> = ({
   location,
 }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: PermissionGroupListUrlQueryParams = asSortParams(
     qs,
     PermissionGroupListUrlSortField,
@@ -34,10 +34,10 @@ const permissionGroupList: React.FC<RouteComponentProps<{}>> = ({
 interface PermissionGroupDetailsRouteProps {
   id: string;
 }
-const PermissionGroupDetails: React.FC<RouteComponentProps<
-  PermissionGroupDetailsRouteProps
->> = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
+const PermissionGroupDetails: React.FC<
+  RouteComponentProps<PermissionGroupDetailsRouteProps>
+> = ({ match }) => {
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: PermissionGroupDetailsUrlQueryParams = asSortParams(
     qs,
     MembersListUrlSortField,
