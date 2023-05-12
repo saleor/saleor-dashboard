@@ -33,11 +33,11 @@ on:
       browser:
         required: true 
         description: 'Browser'
-        default: 'Chrome'
+        default: 'chrome'
         type: choice
         options:
-        - Chrome
-        - Firefox
+        - chrome
+        - firefox
         - all
 
   schedule:
@@ -103,13 +103,11 @@ jobs:
     if: ${{ always() && github.event_name != 'repository_dispatch'  }} #Wait for revert-automation-env-to-snap, bot run always, even if skipped
     runs-on: ubuntu-latest
     env:
-      NODE_OPTIONS: "--max_old_space_size=4096"
       GREP_TAGS: ${{ github.event.inputs.tags || '@allEnv'}}
     outputs:
       status: ${{ steps.cypress.outcome }}
       dashboard_url: ${{ steps.cypress.outputs.dashboardUrl }}
       environment: ${{  steps.get-env-uri.outputs.ENV_URI }}
-    container: cypress/browsers:node18.12.0-chrome106-ff106
     strategy:
       fail-fast: false
       matrix:
@@ -118,6 +116,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
 
       - name: Check if other env
         id: get-typed-env-uri
@@ -155,7 +158,7 @@ jobs:
               case 'schedule':
                 return 'all'
               default:
-                return 'Chrome'
+                return 'chrome'
             }
 
 
@@ -169,7 +172,7 @@ jobs:
       - name: Cypress run chrome
         id: cypress-chrome
         continue-on-error: true
-        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["Chrome", "all"]'), steps.get-browsers.outputs.result)}}
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["chrome", "all"]'), steps.get-browsers.outputs.result)}}
         uses: cypress-io/github-action@v5
         env:
           API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
@@ -193,16 +196,11 @@ jobs:
           record: true
           tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ env.GREP_TAGS }}
           browser: chrome
-
-      
-      - name: Install Firefox
-        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["Firefox", "all"]'), steps.get-browsers.outputs.result)}}
-        uses: browser-actions/setup-firefox@v1
         
       - name: Cypress run firefox
         id: cypress-firefox
         continue-on-error: true
-        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["Firefox", "all"]'), steps.get-browsers.outputs.result)}}
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["firefox", "all"]'), steps.get-browsers.outputs.result)}}
         uses: cypress-io/github-action@v5
         env:
           API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
