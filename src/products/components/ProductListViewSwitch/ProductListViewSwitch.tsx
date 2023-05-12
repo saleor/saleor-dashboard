@@ -21,11 +21,11 @@ export const ProductListViewSwitch = ({
     <Switch.Item
       id="datagrid"
       value="datagrid"
-      data-test-id="datagridViewButton"
+      data-test-id="datagrid-view-button"
     >
       <ViewListIcon size="medium" />
     </Switch.Item>
-    <Switch.Item id="tile" value="tile" data-test-id="tileViewButton">
+    <Switch.Item id="tile" value="tile" data-test-id="tile-view-button">
       <ViewTilesIcon size="medium" />
     </Switch.Item>
   </Switch>
