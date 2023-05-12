@@ -1,6 +1,4 @@
 import { PageErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import PageTypeCreatePage, {
@@ -14,22 +12,26 @@ const props: Omit<PageTypeCreatePageProps, "classes"> = {
   saveButtonBarState: "default",
 };
 
-storiesOf("Page types / Create page type", module)
-  .addDecorator(Decorator)
-  .add("default", () => <PageTypeCreatePage {...props} />)
-  .add("loading", () => <PageTypeCreatePage {...props} disabled={true} />)
-  .add("form errors", () => (
-    <PageTypeCreatePage
-      {...props}
-      errors={[
-        {
-          code: PageErrorCode.REQUIRED,
-          field: "name",
-          message: "Field is required",
-        },
-      ].map(err => ({
-        __typename: "PageError",
-        ...err,
-      }))}
-    />
-  ));
+export default {
+  title: "Page types / Create page type",
+};
+
+export const Default = () => <PageTypeCreatePage {...props} />;
+
+export const Loading = () => <PageTypeCreatePage {...props} disabled={true} />;
+
+export const FormErrors = () => (
+  <PageTypeCreatePage
+    {...props}
+    errors={[
+      {
+        code: PageErrorCode.REQUIRED,
+        field: "name",
+        message: "Field is required",
+      },
+    ].map(err => ({
+      __typename: "PageError",
+      ...err,
+    }))}
+  />
+);

@@ -1,9 +1,7 @@
 import { CollectionListUrlSortField } from "@dashboard/collections/urls";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import CollectionListPage, {
   CollectionListPageProps,
 } from "../../../collections/components/CollectionListPage";
@@ -34,11 +32,15 @@ const props: CollectionListPageProps = {
   filterOpts: collectionListFilterOpts,
 };
 
-storiesOf("Collections / Collection list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <CollectionListPage {...props} />)
-  .add("loading", () => (
-    <CollectionListPage {...props} collections={undefined} disabled={true} />
-  ))
-  .add("no data", () => <CollectionListPage {...props} collections={[]} />);
+export default {
+  title: "Collections / Collection list",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <CollectionListPage {...props} />;
+
+export const Loading = () => (
+  <CollectionListPage {...props} collections={undefined} disabled={true} />
+);
+
+export const NoData = () => <CollectionListPage {...props} collections={[]} />;
