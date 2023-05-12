@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 import { NodeGlobalsPolyfillPlugin } from "@esbuild-plugins/node-globals-polyfill";
 import react from "@vitejs/plugin-react-swc";
-import { copyFileSync } from "fs";
+import { copyFileSync, mkdirSync } from "fs";
 import path from "path";
 import nodePolyfills from "rollup-plugin-polyfill-node";
 import { defineConfig, loadEnv, searchForWorkspaceRoot } from "vite";
@@ -13,7 +13,11 @@ const copyOgImage = () => ({
   name: "copy-og-image",
   apply: "build",
   writeBundle: () => {
-    copyFileSync("./assets/og.png", "./build/dashboard/og.png");
+    mkdirSync(path.resolve("build", "dashboard"), { recursive: true });
+    copyFileSync(
+      path.resolve("assets", "og.png"),
+      path.resolve("build", "dashboard", "og.png"),
+    );
   },
 });
 
@@ -57,7 +61,7 @@ export default defineConfig(({ command, mode }) => {
   const plugins = [
     react(),
     createHtmlPlugin({
-      entry: "/index.tsx",
+      entry: path.resolve(__dirname, "src", "index.tsx"),
       template: "index.html",
       inject: {
         data: {
@@ -115,7 +119,7 @@ export default defineConfig(({ command, mode }) => {
           Since "src" is exposed as a root,
           sw.js has to be moved above, to preventing loading in a dev mode.
         */
-        srcDir: "../",
+        srcDir: path.resolve(__dirname),
         filename: "sw.js",
       }),
     );

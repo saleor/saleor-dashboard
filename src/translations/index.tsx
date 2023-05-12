@@ -69,7 +69,7 @@ const TranslationsCategories: React.FC<TranslationsEntityRouteProps> = ({
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsCategoriesQueryParams = {
-    activeField: qs.activeField,
+    activeField: qs.activeField as string,
   };
   return (
     <TranslationsCategoriesComponent
@@ -85,7 +85,7 @@ const TranslationsCollections: React.FC<TranslationsEntityRouteProps> = ({
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsCollectionsQueryParams = {
-    activeField: qs.activeField,
+    activeField: qs.activeField as string,
   };
   return (
     <TranslationsCollectionsComponent
@@ -101,7 +101,7 @@ const TranslationsProducts: React.FC<TranslationsEntityRouteProps> = ({
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsProductsQueryParams = {
-    activeField: qs.activeField,
+    activeField: qs.activeField as string,
   };
   return (
     <TranslationsProductsComponent
@@ -116,13 +116,12 @@ type TranslationsProductVariantProps = RouteComponentProps<{
   id: string;
   languageCode: string;
 }>;
-const TranslationsProductVariants: React.FC<TranslationsProductVariantProps> = ({
-  location,
-  match,
-}) => {
+const TranslationsProductVariants: React.FC<
+  TranslationsProductVariantProps
+> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsProductVariantsQueryParams = {
-    activeField: qs.activeField,
+    activeField: qs.activeField as string,
   };
   return (
     <TranslationsProductVariantsComponent
@@ -139,7 +138,7 @@ const TranslationsSales: React.FC<TranslationsEntityRouteProps> = ({
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsSalesQueryParams = {
-    activeField: qs.activeField,
+    activeField: qs.activeField as string,
   };
   return (
     <TranslationsSaleComponent
@@ -155,7 +154,7 @@ const TranslationsVouchers: React.FC<TranslationsEntityRouteProps> = ({
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsVouchersQueryParams = {
-    activeField: qs.activeField,
+    activeField: qs.activeField as string,
   };
   return (
     <TranslationsVouchersComponent
@@ -171,7 +170,7 @@ const TranslationsPages: React.FC<TranslationsEntityRouteProps> = ({
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsPagesQueryParams = {
-    activeField: qs.activeField,
+    activeField: qs.activeField as string,
   };
   return (
     <TranslationsPagesComponent
@@ -187,7 +186,7 @@ const TranslationsAttributes: React.FC<TranslationsEntityRouteProps> = ({
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsAttributesQueryParams = {
-    activeField: qs.activeField,
+    activeField: qs.activeField as string,
   };
   return (
     <TranslationsAttributesComponent
@@ -203,7 +202,7 @@ const TranslationsShippingMethod: React.FC<TranslationsEntityRouteProps> = ({
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsShippingMethodQueryParams = {
-    activeField: qs.activeField,
+    activeField: qs.activeField as string,
   };
   return (
     <TranslationsShippingMethodComponent
@@ -219,7 +218,7 @@ const TranslationsMenuItem: React.FC<TranslationsEntityRouteProps> = ({
 }) => {
   const qs = parseQs(location.search.substr(1));
   const params: TranslationsShippingMethodQueryParams = {
-    activeField: qs.activeField,
+    activeField: qs.activeField as string,
   };
   return (
     <TranslationsMenuItemComponent

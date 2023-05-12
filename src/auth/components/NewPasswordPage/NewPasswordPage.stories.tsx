@@ -1,30 +1,32 @@
 import { AccountErrorCode } from "@dashboard/graphql";
-import CardDecorator from "@dashboard/storybook//CardDecorator";
-import Decorator from "@dashboard/storybook//Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { CardDecorator } from "../../../../.storybook/decorators";
 import NewPasswordPage from "./NewPasswordPage";
 
-storiesOf("Authentication / Set up a new password", module)
-  .addDecorator(CardDecorator)
-  .addDecorator(Decorator)
-  .add("default", () => (
-    <NewPasswordPage errors={[]} loading={false} onSubmit={() => undefined} />
-  ))
-  .add("loading", () => (
-    <NewPasswordPage errors={[]} loading={true} onSubmit={() => undefined} />
-  ))
-  .add("too short error", () => (
-    <NewPasswordPage
-      errors={["password"].map(field => ({
-        __typename: "AccountError",
-        code: AccountErrorCode.PASSWORD_TOO_SHORT,
-        field,
-        addressType: null,
-        message: null,
-      }))}
-      loading={false}
-      onSubmit={() => undefined}
-    />
-  ));
+export default {
+  title: "Authentication / Set up a new password",
+  decorators: [CardDecorator],
+};
+
+export const Default = () => (
+  <NewPasswordPage errors={[]} loading={false} onSubmit={() => undefined} />
+);
+
+export const Loading = () => (
+  <NewPasswordPage errors={[]} loading={true} onSubmit={() => undefined} />
+);
+
+export const TooShortError = () => (
+  <NewPasswordPage
+    errors={["password"].map(field => ({
+      __typename: "AccountError",
+      code: AccountErrorCode.PASSWORD_TOO_SHORT,
+      field,
+      addressType: null,
+      message: null,
+    }))}
+    loading={false}
+    onSubmit={() => undefined}
+  />
+);

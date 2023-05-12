@@ -1,7 +1,8 @@
 import { Card, CardContent } from "@material-ui/core";
+import { Decorator } from "@storybook/react";
 import React from "react";
 
-const CardDecorator = storyFn => (
+export const CardDecorator: Decorator = Story => (
   <Card
     style={{
       margin: "auto",
@@ -10,7 +11,8 @@ const CardDecorator = storyFn => (
       width: 400,
     }}
   >
-    <CardContent>{storyFn()}</CardContent>
+    <CardContent>
+      <Story />
+    </CardContent>
   </Card>
 );
-export default CardDecorator;

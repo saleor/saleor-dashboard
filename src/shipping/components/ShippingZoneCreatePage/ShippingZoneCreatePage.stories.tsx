@@ -1,7 +1,5 @@
 import { ShippingErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
 import { mapCountriesToCountriesCodes } from "@dashboard/utils/maps";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ShippingZoneCreatePage, {
@@ -45,19 +43,25 @@ const props: ShippingZoneCreatePageProps = {
   saveButtonBarState: "default",
 };
 
-storiesOf("Shipping / Create shipping zone", module)
-  .addDecorator(Decorator)
-  .add("default", () => <ShippingZoneCreatePage {...props} />)
-  .add("loading", () => <ShippingZoneCreatePage {...props} disabled={true} />)
-  .add("form errors", () => (
-    <ShippingZoneCreatePage
-      {...props}
-      errors={["name"].map(field => ({
-        __typename: "ShippingError",
-        channels: [],
-        code: ShippingErrorCode.INVALID,
-        field,
-        message: "Name field invalid",
-      }))}
-    />
-  ));
+export default {
+  title: "Shipping / Create shipping zone",
+};
+
+export const Default = () => <ShippingZoneCreatePage {...props} />;
+
+export const Loading = () => (
+  <ShippingZoneCreatePage {...props} disabled={true} />
+);
+
+export const FormErrors = () => (
+  <ShippingZoneCreatePage
+    {...props}
+    errors={["name"].map(field => ({
+      __typename: "ShippingError",
+      channels: [],
+      code: ShippingErrorCode.INVALID,
+      field,
+      message: "Name field invalid",
+    }))}
+  />
+);

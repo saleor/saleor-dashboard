@@ -1,7 +1,5 @@
 import { userPermissionGroups } from "@dashboard/permissionGroups/fixtures";
 import { staffMember } from "@dashboard/staff/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import StaffDetailsPage, { StaffDetailsPageProps } from "./StaffDetailsPage";
@@ -26,19 +24,26 @@ const props: Omit<StaffDetailsPageProps, "classes"> = {
   staffMember: { ...staffMember, permissionGroups: userPermissionGroups },
 };
 
-storiesOf("Staff / Staff member details", module)
-  .addDecorator(Decorator)
-  .add("default", () => <StaffDetailsPage {...props} />)
-  .add("loading", () => (
-    <StaffDetailsPage {...props} disabled={true} staffMember={undefined} />
-  ))
-  .add("not admin", () => <StaffDetailsPage {...props} canEditStatus={false} />)
-  .add("himself", () => (
-    <StaffDetailsPage
-      {...props}
-      canEditStatus={false}
-      canRemove={false}
-      canEditAvatar={true}
-      canEditPreferences={true}
-    />
-  ));
+export default {
+  title: "Staff / Staff member details",
+};
+
+export const Default = () => <StaffDetailsPage {...props} />;
+
+export const Loading = () => (
+  <StaffDetailsPage {...props} disabled={true} staffMember={undefined} />
+);
+
+export const NotAdmin = () => (
+  <StaffDetailsPage {...props} canEditStatus={false} />
+);
+
+export const Himself = () => (
+  <StaffDetailsPage
+    {...props}
+    canEditStatus={false}
+    canRemove={false}
+    canEditAvatar={true}
+    canEditPreferences={true}
+  />
+);

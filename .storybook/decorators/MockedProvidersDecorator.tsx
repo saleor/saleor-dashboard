@@ -1,22 +1,23 @@
 import "@saleor/macaw-ui/next/style";
 
-import { ExternalAppProvider } from "@dashboard/apps/components/ExternalAppContext";
-import { Locale, RawLocaleProvider } from "@dashboard/components/Locale";
-import { FlagsServiceProvider } from "@dashboard/hooks/useFlags/flagsService";
-import { paletteOverrides, themeOverrides } from "@dashboard/themeOverrides";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { ThemeProvider } from "@saleor/macaw-ui/next";
 import React from "react";
 import { IntlProvider } from "react-intl";
 import { BrowserRouter } from "react-router-dom";
+import { ExternalAppProvider } from "../../src/apps/components/ExternalAppContext";
+import { DevModeProvider } from "../../src/components/DevModePanel/DevModeProvider";
+import { Locale, RawLocaleProvider } from "../../src/components/Locale";
+import { FlagsServiceProvider } from "../../src/hooks/useFlags/flagsService";
+import { paletteOverrides, themeOverrides } from "../../src/themeOverrides";
 
+import { Provider as DateProvider } from "../../src/components/Date/DateContext";
+import { TimezoneProvider } from "../../src/components/Timezone";
+import MessageManagerProvider from "../../src/components/messages";
+import { getAppMountUri } from "../../src/config";
 import { ApolloMockedProvider } from "../../testUtils/ApolloMockedProvider";
-import { Provider as DateProvider } from "../components/Date/DateContext";
-import MessageManagerProvider from "../components/messages";
-import { TimezoneProvider } from "../components/Timezone";
-import { getAppMountUri } from "../config";
 
-export const Decorator = storyFn => (
+export const MockedProvidersDecorator: React.FC = ({ children }) => (
   <ApolloMockedProvider>
     <IntlProvider defaultLocale={Locale.EN} locale={Locale.EN}>
       <RawLocaleProvider
@@ -36,13 +37,15 @@ export const Decorator = storyFn => (
                   <ExternalAppProvider>
                     <FlagsServiceProvider>
                       <MessageManagerProvider>
-                        <div
-                          style={{
-                            padding: 24,
-                          }}
-                        >
-                          {storyFn()}
-                        </div>
+                        <DevModeProvider>
+                          <div
+                            style={{
+                              padding: 24,
+                            }}
+                          >
+                            {children}
+                          </div>
+                        </DevModeProvider>
                       </MessageManagerProvider>
                     </FlagsServiceProvider>
                   </ExternalAppProvider>
@@ -55,4 +58,3 @@ export const Decorator = storyFn => (
     </IntlProvider>
   </ApolloMockedProvider>
 );
-export default Decorator;

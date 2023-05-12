@@ -1,7 +1,7 @@
-import { UserContext } from "@dashboard/auth";
-import { adminUserPermissions } from "@dashboard/fixtures";
-import { UserFragment } from "@dashboard/graphql";
 import * as React from "react";
+import { UserContext } from "../../src/auth";
+import { adminUserPermissions } from "../../src/fixtures";
+import { UserFragment } from "../../src/graphql";
 
 export const MockedUserProvider: React.FC<{
   customPermissions?: UserFragment["userPermissions"];

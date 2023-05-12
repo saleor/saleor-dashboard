@@ -2,11 +2,9 @@ import { channelsList } from "@dashboard/channels/fixtures";
 import { createChannelsDataWithDiscountPrice } from "@dashboard/channels/utils";
 import { listActionsProps, pageListProps } from "@dashboard/fixtures";
 import { DiscountErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import { voucherDetails } from "../../fixtures";
 import VoucherDetailsPage, {
   VoucherDetailsPageFormData,
@@ -54,17 +52,22 @@ const props: VoucherDetailsPageProps = {
   voucher: voucherDetails,
 };
 
-storiesOf("Discounts / Voucher details", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <VoucherDetailsPage {...props} />)
-  .add("loading", () => (
-    <VoucherDetailsPage {...props} disabled={true} voucher={undefined} />
-  ))
-  .add("form errors", () => (
-    <VoucherDetailsPage
-      {...props}
-      errors={([
+export default {
+  title: "Discounts / Voucher details",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <VoucherDetailsPage {...props} />;
+
+export const Loading = () => (
+  <VoucherDetailsPage {...props} disabled={true} voucher={undefined} />
+);
+
+export const Error = () => (
+  <VoucherDetailsPage
+    {...props}
+    errors={(
+      [
         "applyOncePerOrder",
         "code",
         "discountType",
@@ -75,12 +78,13 @@ storiesOf("Discounts / Voucher details", module)
         "type",
         "usageLimit",
         "discountValue",
-      ] as Array<keyof VoucherDetailsPageFormData>).map(field => ({
-        __typename: "DiscountError",
-        channels: [],
-        code: DiscountErrorCode.INVALID,
-        field,
-        message: "Discount invalid",
-      }))}
-    />
-  ));
+      ] as Array<keyof VoucherDetailsPageFormData>
+    ).map(field => ({
+      __typename: "DiscountError",
+      channels: [],
+      code: DiscountErrorCode.INVALID,
+      field,
+      message: "Discount invalid",
+    }))}
+  />
+);
