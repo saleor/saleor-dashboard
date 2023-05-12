@@ -4621,6 +4621,10 @@
     "context": "error message",
     "string": "Default shipping zone already exists"
   },
+  "VIdXPy": {
+    "context": "value input helper text",
+    "string": "Cannot be higher than the price"
+  },
   "VKWPBf": {
     "context": "dialog header",
     "string": "Delete Staff User Avatar"
@@ -5155,6 +5159,9 @@
   },
   "Yy/yDL": {
     "string": "Reset password"
+  },
+  "YzLUXA": {
+    "string": "Ensure this value is greater than 0."
   },
   "Z/7hyu": {
     "context": "card balance label",
@@ -8560,6 +8567,10 @@
   "zDvDnG": {
     "context": "modal header",
     "string": "Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."
+  },
+  "zHx85l": {
+    "context": "value input helper text",
+    "string": "Cannot be higher than 100%"
   },
   "zKOGkU": {
     "context": "time during discount is active, header",
