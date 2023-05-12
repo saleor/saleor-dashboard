@@ -1,0 +1,134 @@
+name: Execute nightly tests
+run-name: Run tests on ${{ inputs.environment }}${{github.event.client_payload.version}} ${{github.event.client_payload.project}}
+
+on: [push]
+
+jobs:
+  run-tests-in-parallel:
+    needs: ['revert-automation-env-to-snap']
+    if: ${{ always() && github.event_name != 'repository_dispatch'  }} #Wait for revert-automation-env-to-snap, bot run always, even if skipped
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: "--max_old_space_size=4096"
+      GREP_TAGS: ${{ github.event.inputs.tags || '@allEnv'}}
+    outputs:
+      status: ${{ steps.cypress.outcome }}
+      dashboard_url: ${{ steps.cypress.outputs.dashboardUrl }}
+      environment: ${{  steps.get-env-uri.outputs.ENV_URI }}
+    container: cypress/browsers:node18.12.0-chrome106-ff106
+    strategy:
+      fail-fast: false
+      matrix:
+        # run copies of the current job in parallel
+        containers: [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Check if other env
+        id: get-typed-env-uri
+        if: ${{ github.event.inputs.environment == 'Other' }}
+        run: |
+          echo "ENV_URI=${{github.event.inputs.otherEnvironment}}" >> $GITHUB_OUTPUT
+      - name: Get env
+        id: get-env-uri
+        env:
+          DEFAULT_ENV_URI: 'https://automation-dashboard.staging.saleor.cloud/'
+          TYPED_ENV_URI: ''
+        run: |
+          echo "ENV_URI=${{ steps.get-typed-env-uri.outputs.ENV_URI || github.event.inputs.environment || env.DEFAULT_ENV_URI }}" >> $GITHUB_OUTPUT
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Get browsers
+        id: get-browsers
+        uses: actions/github-script@v6
+        env:
+          browser: ${{github.event.inputs.browser}}
+          event_name: ${{github.event_name}}
+        with:
+          result-encoding: string
+          script: |
+            const { browser } = process.env
+            const { event_name } = process.env
+
+            switch (event_name) {
+              case 'workflow_dispatch':
+                return browser
+              case 'schedule':
+                return 'all'
+              default:
+                return 'Chrome'
+            }
+
+
+      - name: Cypress install
+        id: cypress-install
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch'}}
+        uses: cypress-io/github-action@v5
+        with:
+          runTests: false
+
+      - name: Cypress run chrome
+        id: cypress-chrome
+        continue-on-error: true
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["Chrome", "all"]'), steps.get-browsers.outputs.result)}}
+        uses: cypress-io/github-action@v5
+        env:
+          API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
+          COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
+          CYPRESS_grepTags: ${{ env.GREP_TAGS }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
+        with:
+          install: false
+          parallel: true
+          group: 'UI - Chrome'
+          record: true
+          tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ env.GREP_TAGS }}
+          browser: chrome
+
+      
+      - name: Install Firefox
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["Firefox", "all"]'), steps.get-browsers.outputs.result)}}
+        uses: browser-actions/setup-firefox@v1
+        
+      - name: Cypress run firefox
+        id: cypress-firefox
+        continue-on-error: true
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["Firefox", "all"]'), steps.get-browsers.outputs.result)}}
+        uses: cypress-io/github-action@v5
+        env:
+          API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
+          COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
+          CYPRESS_grepTags: ${{ env.GREP_TAGS }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
+        with:
+          install: false
+          parallel: true
+          group: 'UI - Firefox'
+          record: true
+          tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ env.GREP_TAGS }}
+          browser: firefox
