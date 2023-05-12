@@ -11,6 +11,7 @@ import {
   VariantAttributeScope,
 } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { MetadataFormData } from "@dashboard/components/Metadata";
@@ -30,7 +31,6 @@ import { VariantDetailsChannelsAvailabilityCard } from "@dashboard/products/comp
 import { productUrl } from "@dashboard/products/urls";
 import { getSelectedMedia } from "@dashboard/products/utils/data";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

@@ -10,6 +10,7 @@ import {
   VariantAttributeScope,
 } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
@@ -27,7 +28,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { ProductDetailsChannelsAvailabilityCard } from "@dashboard/products/components/ProductVariantChannels/ChannelsAvailabilityCard";
 import { productUrl } from "@dashboard/products/urls";
 import { FetchMoreProps, RelayToFlat, ReorderAction } from "@dashboard/types";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { defineMessages, useIntl } from "react-intl";
 

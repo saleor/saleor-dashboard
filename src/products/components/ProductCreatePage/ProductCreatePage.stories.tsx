@@ -1,5 +1,6 @@
 import { channelsList } from "@dashboard/channels/fixtures";
 import { createChannelsData } from "@dashboard/channels/utils";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { fetchMoreProps } from "@dashboard/fixtures";
 import {
   ProductChannelListingErrorFragment,
@@ -12,7 +13,6 @@ import {
 } from "@dashboard/productTypes/fixtures";
 import { taxClasses } from "@dashboard/taxes/fixtures";
 import { warehouseList } from "@dashboard/warehouses/fixtures";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 
 import { product as productFixture } from "../../fixtures";

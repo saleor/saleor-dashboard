@@ -1,4 +1,4 @@
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import React from "react";
 
 import { ManualTransactionContext } from "./context";

@@ -1,11 +1,11 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Skeleton from "@dashboard/components/Skeleton";
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { orderUrl } from "@dashboard/orders/urls";
 import { Card, CardContent, TextField, Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";

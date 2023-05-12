@@ -6,6 +6,7 @@ import {
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -24,7 +25,6 @@ import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

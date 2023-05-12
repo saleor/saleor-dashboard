@@ -1,10 +1,11 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { Choice } from "@dashboard/components/SingleSelectField";
 import useChoiceSearch from "@dashboard/hooks/useChoiceSearch";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { MenuItem } from "@material-ui/core";
-import { Autocomplete, ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { Autocomplete } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

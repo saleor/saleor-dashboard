@@ -1,3 +1,4 @@
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
   MoneyFragment,
   OrderDetailsFragment,
@@ -8,7 +9,6 @@ import {
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import { OrderDiscountCommonInput } from "@dashboard/orders/components/OrderDiscountCommonModal/types";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React, { createContext } from "react";
 import { useIntl } from "react-intl";
 
