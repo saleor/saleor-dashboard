@@ -100,13 +100,19 @@ export function getMailWithResetPasswordLink(email, subject, i = 0) {
       `There is no email with reset password for user ${serverStoredEmail}`,
     );
   }
-  return cy.mpGetMailsByRecipient(serverStoredEmail).should(mails => {
+  return cy.mpGetMailsByRecipient(serverStoredEmail).then(mails => {
     if (!mails.length) {
       cy.wait(3000);
       getMailWithResetPasswordLink(serverStoredEmail, subject, i + 1);
     } else {
-      cy.mpGetMailsBySubject(subject);
-      return mails;
+      cy.mpGetMailsBySubject(subject).then(resetPasswordMails => {
+        if (!resetPasswordMails.length) {
+          cy.wait(3000);
+          getMailWithResetPasswordLink(serverStoredEmail, subject, i + 1);
+        } else {
+          cy.wrap(resetPasswordMails).mpLatest().mpGetMailDetails();
+        }
+      });
     }
   });
 }
@@ -138,7 +144,7 @@ export function getMailWithGiftCardExportWithAttachment(
   if (i > 5) {
     throw new Error(`There is no email Gift Card export for user ${email}`);
   }
-  return cy.mpGetMailsByRecipient(email).should(mails => {
+  return cy.mpGetMailsByRecipient(email).then(mails => {
     if (!mails.length) {
       cy.wait(3000);
       getMailWithGiftCardExportWithAttachment(
@@ -148,7 +154,7 @@ export function getMailWithGiftCardExportWithAttachment(
         i + 1,
       );
     } else {
-      cy.mpGetMailsBySubject(subject).should(mailsWithSubject => {
+      cy.mpGetMailsBySubject(subject).then(mailsWithSubject => {
         if (!mailsWithSubject.length) {
           cy.wait(10000);
           getMailWithGiftCardExportWithAttachment(
@@ -160,8 +166,8 @@ export function getMailWithGiftCardExportWithAttachment(
         } else {
           cy.wrap(mailsWithSubject)
             .mpLatest()
-            .should("not.eq", undefined)
-            .mpGetMailDetails();
+            .mpGetMailDetails()
+            .should("not.eq", undefined);
         }
       });
     }

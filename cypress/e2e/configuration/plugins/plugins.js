@@ -98,7 +98,7 @@ describe("As an admin I want to manage plugins", () => {
         .confirmationMessageShouldDisappear();
       requestPasswordReset(Cypress.env("USER_NAME"), defaultChannel.slug);
       getMailWithResetPasswordLink(Cypress.env("USER_NAME"), adminName)
-        .its("0.Content.Headers.Subject.0")
+        .its("Subject")
         .should("contains", adminName);
     },
   );
