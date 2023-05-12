@@ -1620,7 +1620,7 @@
   },
   "ADTNND": {
     "context": "product type",
-    "string": "Physical"
+    "string": "Shippable"
   },
   "AHK0K9": {
     "context": "dialog content",
@@ -5405,7 +5405,7 @@
   },
   "asdvmK": {
     "context": "product type",
-    "string": "Digital"
+    "string": "Not shippable"
   },
   "auxEP1": {
     "context": "input placeholder",
@@ -6508,8 +6508,8 @@
     "string": "Collections"
   },
   "jyTwDR": {
-    "context": "product type is either simple or configurable",
-    "string": "Type"
+    "context": "Product type is shippable",
+    "string": "Shippable"
   },
   "jyaAlB": {
     "context": "button",
@@ -8450,10 +8450,6 @@
   "yMi8I8": {
     "context": "dialog header",
     "string": "Dectivate App"
-  },
-  "yNb+dT": {
-    "context": "product type",
-    "string": "Simple product"
   },
   "yOaNWB": {
     "context": "delete shipping method",
