@@ -12,7 +12,6 @@ import {
   ProductErrorFragment,
 } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { commonMessages } from "@dashboard/intl";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
