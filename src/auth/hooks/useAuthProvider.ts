@@ -141,14 +141,14 @@ export function useAuthProvider({
         includeDetails: false,
       });
 
+      if (isEmpty(result.data.tokenCreate.user.userPermissions)) {
+        setErrors(["noPermissionsError"]);
+        await handleLogout();
+      }
+
       if (result && !result.data.tokenCreate.errors.length) {
         if (DEMO_MODE) {
           displayDemoMessage(intl, notify);
-        }
-
-        if (isEmpty(result.data.tokenCreate.user.userPermissions)) {
-          setErrors(["noPermissionsError"]);
-          await handleLogout();
         }
 
         saveCredentials(result.data.tokenCreate.user, password);
@@ -190,14 +190,14 @@ export function useAuthProvider({
         input: JSON.stringify(input),
       });
 
-      if (result && !result.data?.externalObtainAccessTokens.errors.length) {
-        if (
-          isEmpty(result.data?.externalObtainAccessTokens.user.userPermissions)
-        ) {
-          setErrors(["noPermissionsError"]);
-          await handleLogout();
-        }
+      if (
+        isEmpty(result.data?.externalObtainAccessTokens.user.userPermissions)
+      ) {
+        setErrors(["noPermissionsError"]);
+        await handleLogout();
+      }
 
+      if (result && !result.data?.externalObtainAccessTokens.errors.length) {
         if (DEMO_MODE) {
           displayDemoMessage(intl, notify);
         }
@@ -236,8 +236,8 @@ export function useAuthProvider({
     requestLoginByExternalPlugin: handleRequestExternalLogin,
     loginByExternalPlugin: handleExternalLogin,
     logout: handleLogout,
-    authenticating: authenticating && userDetails.loading && !errors.length,
-    authenticated: authenticated && user?.isStaff,
+    authenticating: authenticating && !errors.length,
+    authenticated: authenticated && !!user?.isStaff && !errors.length,
     user: userDetails.data?.me,
     errors,
   };
