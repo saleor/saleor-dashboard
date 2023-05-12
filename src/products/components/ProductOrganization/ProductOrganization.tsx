@@ -132,17 +132,6 @@ export const ProductOrganization: React.FC<
                 </Link>
               </Text>
             </Box>
-
-            <Box display="flex" flexDirection="column">
-              <Text variant="bodyEmp">
-                <FormattedMessage id="Be+J13" defaultMessage="Configurable" />
-              </Text>
-              <Text variant="caption">
-                {productType?.hasVariants
-                  ? intl.formatMessage(commonMessages.yes)
-                  : intl.formatMessage(commonMessages.no)}
-              </Text>
-            </Box>
           </Box>
         )}
         <SingleAutocompleteSelectField
