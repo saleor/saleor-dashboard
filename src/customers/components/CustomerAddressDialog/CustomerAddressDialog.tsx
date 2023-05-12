@@ -1,7 +1,7 @@
 import AddressEdit from "@dashboard/components/AddressEdit";
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import {
   AccountErrorFragment,

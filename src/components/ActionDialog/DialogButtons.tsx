@@ -5,7 +5,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
-import ConfirmButton from "../ConfirmButton";
+import { ConfirmButton } from "../ConfirmButton/ConfirmButton";
 import { ActionDialogVariant } from "./types";
 
 interface DialogButtonsProps {
@@ -46,7 +46,7 @@ const DialogButtons: React.FC<DialogButtonsProps> = props => {
           disabled={disabled}
           transitionState={confirmButtonState}
           onClick={onConfirm}
-          error={variant === "delete"}
+          variant={variant === "delete" ? "error" : "primary"}
           data-test-id="submit"
         >
           {confirmButtonLabel ||

@@ -1,5 +1,5 @@
 import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Skeleton from "@dashboard/components/Skeleton";
 import {

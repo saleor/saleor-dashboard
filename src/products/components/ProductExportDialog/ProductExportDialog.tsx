@@ -1,5 +1,5 @@
 import { Button } from "@dashboard/components/Button";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import makeCreatorSteps, { Step } from "@dashboard/components/CreatorSteps";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import {

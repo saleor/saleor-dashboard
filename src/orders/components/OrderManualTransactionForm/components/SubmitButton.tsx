@@ -1,4 +1,5 @@
-import ConfirmButton, {
+import {
+  ConfirmButton,
   ConfirmButtonProps,
 } from "@dashboard/components/ConfirmButton";
 import React from "react";

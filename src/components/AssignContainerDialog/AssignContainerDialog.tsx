@@ -19,7 +19,7 @@ import InfiniteScroll from "react-infinite-scroll-component";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
-import ConfirmButton from "../ConfirmButton";
+import { ConfirmButton } from "../ConfirmButton";
 import { useStyles } from "./styles";
 
 export interface AssignContainerDialogFormData {

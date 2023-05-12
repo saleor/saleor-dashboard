@@ -1,6 +1,6 @@
 import CardTitle from "@dashboard/components/CardTitle";
 import Checkbox from "@dashboard/components/Checkbox";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { formatMoneyAmount } from "@dashboard/components/Money";
 import PriceField from "@dashboard/components/PriceField";
 import Skeleton from "@dashboard/components/Skeleton";

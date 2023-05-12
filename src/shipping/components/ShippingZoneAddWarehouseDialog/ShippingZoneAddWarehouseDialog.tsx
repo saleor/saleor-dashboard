@@ -1,6 +1,6 @@
 import BackButton from "@dashboard/components/BackButton";
 import CompanyAddressForm from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";

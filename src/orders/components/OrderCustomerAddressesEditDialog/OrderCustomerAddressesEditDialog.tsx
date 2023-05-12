@@ -1,5 +1,5 @@
 import Checkbox from "@dashboard/components/Checkbox";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { AddressTypeInput } from "@dashboard/customers/types";

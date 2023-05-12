@@ -1,4 +1,4 @@
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import {
   Button,

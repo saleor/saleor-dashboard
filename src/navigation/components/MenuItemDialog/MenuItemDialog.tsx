@@ -1,6 +1,6 @@
 import AutocompleteSelectMenu from "@dashboard/components/AutocompleteSelectMenu";
 import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import {
   MenuErrorFragment,

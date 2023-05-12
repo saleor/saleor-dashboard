@@ -13,9 +13,9 @@ export type ConfirmButtonTransitionState =
   | "success"
   | "error";
 
-export type ConfirmButtonLabels = Record<"confirm" | "error", string>;
+export type ConfirmButtonLabels = Partial<Record<"confirm" | "error", string>>;
 
-interface ConfirmButtonProps extends ButtonProps {
+export interface ConfirmButtonProps extends ButtonProps {
   labels?: ConfirmButtonLabels;
   noTransition?: boolean;
   transitionState: ConfirmButtonTransitionState;
