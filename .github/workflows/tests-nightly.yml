@@ -159,13 +159,12 @@ jobs:
             }
 
 
-      - name: Cypress install chrome
-        id: cypress-install-chrome
-        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["Chrome", "all"]'), steps.get-browsers.outputs.result)}}
+      - name: Cypress install
+        id: cypress-install
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch'}}
         uses: cypress-io/github-action@v5
         with:
           runTests: false
-          browser: chrome
 
       - name: Cypress run chrome
         id: cypress-chrome
@@ -195,14 +194,11 @@ jobs:
           tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ env.GREP_TAGS }}
           browser: chrome
 
-      - name: Cypress install firefox
-        id: cypress-install-firefox
+      
+      - name: Install Firefox
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["Firefox", "all"]'), steps.get-browsers.outputs.result)}}
-        uses: cypress-io/github-action@v5
-        with:
-          runTests: false
-          browser: firefox
-
+        uses: browser-actions/setup-firefox@v1
+        
       - name: Cypress run firefox
         id: cypress-firefox
         continue-on-error: true
