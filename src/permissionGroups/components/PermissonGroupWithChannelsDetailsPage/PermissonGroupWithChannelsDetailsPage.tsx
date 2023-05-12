@@ -31,7 +31,6 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
 import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -66,7 +65,7 @@ export interface PermissonGroupWithChannelsDetailsPageProps
   permissionGroup: PermissionGroupWithContextDetailsFragment;
   permissions: PermissionWithChannelsData[];
   permissionsExceeded: boolean;
-  saveButtonBarState: ConfirmButtonTransitionState;
+  saveButtonBarState: "loading" | "success" | "error" | "default";
   onAssign: () => void;
   onUnassign: (ids: string[]) => void;
   onSubmit: (
