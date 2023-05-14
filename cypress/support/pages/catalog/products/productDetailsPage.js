@@ -25,24 +25,24 @@ export function updateProductPublish(productUrl, isPublished) {
   updateProductManageInChannel(productUrl, publishedSelector);
 }
 
-export function updateProductVisibleInListings(productUrl) {
-  updateProductManageInChannel(
-    productUrl,
-    AVAILABLE_CHANNELS_FORM.visibleInListingsButton,
-  );
+export function updateProductVisibleInListings() {
+  updateProductManageInChannel(AVAILABLE_CHANNELS_FORM.visibleInListingsButton);
 }
 
-function updateProductManageInChannel(productUrl, manageSelector) {
-  cy.visit(productUrl)
-    .get(AVAILABLE_CHANNELS_FORM.assignedChannels)
+function updateProductManageInChannel(manageSelector) {
+  cy.get(AVAILABLE_CHANNELS_FORM.assignedChannels)
     .click()
     .get(manageSelector)
     .first()
+    .scrollIntoView()
     .click()
+    // cypress click is to fast - our app is nor ready to handle new event when click occurs - solution could be disabling save button until app is ready to handle new event
+    .wait(1000)
     .waitForProgressBarToNotBeVisible()
     .addAliasToGraphRequest("ProductChannelListingUpdate")
     .get(BUTTON_SELECTORS.confirm)
     .click()
+    .confirmationMessageShouldAppear()
     .wait("@ProductChannelListingUpdate");
 }
 
