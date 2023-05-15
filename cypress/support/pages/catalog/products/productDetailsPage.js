@@ -16,13 +16,13 @@ export function updateProductIsAvailableForPurchase(
     ? valueTrue
     : valueFalse;
   const availableForPurchaseSelector = `${AVAILABLE_CHANNELS_FORM.availableForPurchaseRadioButtons}${isAvailableForPurchaseSelector}`;
-  updateProductManageInChannel(productUrl, availableForPurchaseSelector);
+  updateProductManageInChannel(availableForPurchaseSelector);
 }
 
-export function updateProductPublish(productUrl, isPublished) {
+export function updateProductPublish(isPublished) {
   const isPublishedSelector = isPublished ? valueTrue : valueFalse;
   const publishedSelector = `${AVAILABLE_CHANNELS_FORM.publishedRadioButtons}${isPublishedSelector}`;
-  updateProductManageInChannel(productUrl, publishedSelector);
+  updateProductManageInChannel(publishedSelector);
 }
 
 export function updateProductVisibleInListings() {
