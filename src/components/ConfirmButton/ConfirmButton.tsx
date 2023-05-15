@@ -1,7 +1,7 @@
 import { buttonMessages, commonMessages } from "@dashboard/intl";
 import CircularProgress from "@material-ui/core/CircularProgress";
 import CheckIcon from "@material-ui/icons/Check";
-import { Button, ButtonProps } from "@saleor/macaw-ui/next";
+import { Button, ButtonProps, sprinkles } from "@saleor/macaw-ui/next";
 import React, { useEffect, useRef, useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -27,7 +27,10 @@ export const ConfirmButton = ({
   noTransition,
   transitionState,
   onTransitionToDefault,
+  onClick,
+  disabled,
   children,
+  variant,
   ...props
 }: ConfirmButtonProps) => {
   const intl = useIntl();
@@ -82,21 +85,46 @@ export const ConfirmButton = ({
     ...labels,
   };
 
-  const renderContent = () => {
-    if (transitionState === "loading") {
-      return <CircularProgress size={24} color="inherit" />;
-    }
+  return (
+    <Button
+      {...props}
+      variant={transitionState === "error" && isCompleted ? "error" : variant}
+      disabled={!isCompleted && disabled}
+      onClick={transitionState === "loading" ? undefined : onClick}
+      data-test-state={isCompleted ? transitionState : "default"}
+    >
+      <CircularProgress
+        size={20}
+        color="inherit"
+        className={sprinkles({
+          position: "absolute",
+          transition: "ease",
+          opacity: transitionState !== "loading" ? "0" : "1",
+        })}
+      />
 
-    if (transitionState === "success" && isCompleted) {
-      return <CheckIcon />;
-    }
+      <CheckIcon
+        className={sprinkles({
+          position: "absolute",
+          transition: "ease",
+          opacity: !(transitionState === "success" && isCompleted) ? "0" : "1",
+        })}
+      />
 
-    if (transitionState === "error" && isCompleted) {
-      return <span>{componentLabels.error}</span>;
-    }
-
-    return <span>{children || componentLabels.confirm}</span>;
-  };
-
-  return <Button {...props}>{renderContent()}</Button>;
+      <span
+        className={sprinkles({
+          opacity:
+            (transitionState === "loading" || transitionState === "success") &&
+            isCompleted
+              ? "0"
+              : "1",
+          transition: "ease",
+        })}
+      >
+        {transitionState === "error" && isCompleted
+          ? componentLabels.error
+          : children || componentLabels.confirm}
+      </span>
+    </Button>
+  );
 };
