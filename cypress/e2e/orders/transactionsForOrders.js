@@ -114,10 +114,12 @@ describe("Orders", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.order,
-    );
+    cy.clearSessionData()
+      .loginUserViaRequest("auth", ONE_PERMISSION_USERS.order)
+      .then(() => {
+        // set notifiedAboutNavigator to make navigator banner gone from the start - banner was covering needed elements during test
+        window.localStorage.setItem("notifiedAboutNavigator", "true");
+      });
   });
 
   it(
