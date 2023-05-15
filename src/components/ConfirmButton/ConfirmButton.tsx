@@ -38,6 +38,22 @@ export const ConfirmButton = ({
     useState(false);
   const timeout = useRef<number>();
 
+  const isCompleted = noTransition
+    ? transitionState !== "default"
+    : displayCompletedActionState;
+
+  const isError = transitionState === "error" && isCompleted;
+
+  const defaultLabels: ConfirmButtonLabels = {
+    confirm: intl.formatMessage(buttonMessages.save),
+    error: intl.formatMessage(commonMessages.error),
+  };
+
+  const componentLabels: ConfirmButtonLabels = {
+    ...defaultLabels,
+    ...labels,
+  };
+
   useEffect(() => {
     if (!noTransition && transitionState === "loading") {
       setDisplayCompletedActionState(true);
@@ -71,59 +87,61 @@ export const ConfirmButton = ({
     };
   }, [noTransition, transitionState, onTransitionToDefault]);
 
-  const isCompleted = noTransition
-    ? transitionState !== "default"
-    : displayCompletedActionState;
+  const renderContext = () => {
+    if (transitionState === "loading") {
+      return (
+        <CircularProgress
+          size={20}
+          color="inherit"
+          data-test-id="button-progress"
+          className={sprinkles({
+            position: "absolute",
+          })}
+        />
+      );
+    }
 
-  const defaultLabels: ConfirmButtonLabels = {
-    confirm: intl.formatMessage(buttonMessages.save),
-    error: intl.formatMessage(commonMessages.error),
+    if (transitionState === "success" && isCompleted) {
+      return (
+        <CheckIcon
+          data-test-id="button-success"
+          className={sprinkles({
+            position: "absolute",
+          })}
+        />
+      );
+    }
+
+    return null;
   };
 
-  const componentLabels: ConfirmButtonLabels = {
-    ...defaultLabels,
-    ...labels,
+  const getByLabelText = () => {
+    if (isError) {
+      return componentLabels.error;
+    }
+
+    return children || componentLabels.confirm;
   };
 
   return (
     <Button
       {...props}
-      variant={transitionState === "error" && isCompleted ? "error" : variant}
+      variant={isError && !noTransition ? "error" : variant}
       disabled={!isCompleted && disabled}
       onClick={transitionState === "loading" ? undefined : onClick}
       data-test-state={isCompleted ? transitionState : "default"}
     >
-      <CircularProgress
-        size={20}
-        color="inherit"
-        className={sprinkles({
-          position: "absolute",
-          transition: "ease",
-          opacity: transitionState !== "loading" ? "0" : "1",
-        })}
-      />
-
-      <CheckIcon
-        className={sprinkles({
-          position: "absolute",
-          transition: "ease",
-          opacity: !(transitionState === "success" && isCompleted) ? "0" : "1",
-        })}
-      />
-
+      {renderContext()}
       <span
         className={sprinkles({
           opacity:
-            (transitionState === "loading" || transitionState === "success") &&
-            isCompleted
+            ["loading", "success"].includes(transitionState) && isCompleted
               ? "0"
               : "1",
           transition: "ease",
         })}
       >
-        {transitionState === "error" && isCompleted
-          ? componentLabels.error
-          : children || componentLabels.confirm}
+        {getByLabelText()}
       </span>
     </Button>
   );
