@@ -1,7 +1,5 @@
 export * from "./PermissonGroupWithChannelsDetailsPage";
 import { permissions } from "@dashboard/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { emptyPermissionGroup, permissionGroup, users } from "../../fixtures";
@@ -12,7 +10,6 @@ import {
 
 const props: PermissonGroupWithChannelsDetailsPageProps = {
   disabled: false,
-  disabledChannelPermissions: false,
   errors: [],
   isChecked: () => false,
   members: users,
@@ -30,23 +27,30 @@ const props: PermissonGroupWithChannelsDetailsPageProps = {
   toggleAll: () => undefined,
   toolbar: null,
   channels: [],
+  disabledChannelPermissions: false,
 };
 
-storiesOf("Permission Groups / Permission Group With Channels Details", module)
-  .addDecorator(Decorator)
-  .add("default", () => <PermissonGroupWithChannelsDetailsPage {...props} />)
-  .add("no members", () => (
-    <PermissonGroupWithChannelsDetailsPage
-      {...props}
-      members={[]}
-      permissionGroup={emptyPermissionGroup}
-    />
-  ))
-  .add("loading", () => (
-    <PermissonGroupWithChannelsDetailsPage
-      {...props}
-      disabled={true}
-      permissionGroup={undefined}
-      permissions={undefined}
-    />
-  ));
+export default {
+  title: "Permission Groups / Permission Group Details",
+};
+
+export const Default = () => (
+  <PermissonGroupWithChannelsDetailsPage {...props} />
+);
+
+export const NoMembers = () => (
+  <PermissonGroupWithChannelsDetailsPage
+    {...props}
+    members={[]}
+    permissionGroup={emptyPermissionGroup}
+  />
+);
+
+export const Loading = () => (
+  <PermissonGroupWithChannelsDetailsPage
+    {...props}
+    disabled={true}
+    permissionGroup={undefined}
+    permissions={undefined}
+  />
+);
