@@ -2,6 +2,7 @@ import {
   fireEvent,
   render,
   screen,
+  waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import React from "react";
@@ -110,6 +111,7 @@ describe("ConfirmButton", () => {
       />,
     );
     expect(screen.getByTestId("button-progress")).toBeInTheDocument();
+    expect(screen.queryByText(/error/i)).not.toBeInTheDocument();
 
     rerender(
       <ConfirmButton
@@ -121,6 +123,10 @@ describe("ConfirmButton", () => {
       />,
     );
 
-    expect(screen.getByText(/error/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByText(/error/i)).toBeInTheDocument();
+    });
+
+    expect(screen.queryByTestId("button-progress")).not.toBeInTheDocument();
   });
 });

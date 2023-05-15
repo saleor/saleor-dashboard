@@ -87,7 +87,7 @@ export const ConfirmButton = ({
     };
   }, [noTransition, transitionState, onTransitionToDefault]);
 
-  const renderContext = () => {
+  const renderContent = () => {
     if (transitionState === "loading") {
       return (
         <CircularProgress
@@ -126,12 +126,12 @@ export const ConfirmButton = ({
   return (
     <Button
       {...props}
-      variant={isError && !noTransition ? "error" : variant}
+      variant={isError ? "error" : variant}
       disabled={!isCompleted && disabled}
       onClick={transitionState === "loading" ? undefined : onClick}
       data-test-state={isCompleted ? transitionState : "default"}
     >
-      {renderContext()}
+      {renderContent()}
       <span
         className={sprinkles({
           opacity:
