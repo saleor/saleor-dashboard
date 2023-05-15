@@ -72,7 +72,8 @@ describe("Products displayed in listings", () => {
         .then(({ product: productResp }) => {
           const product = productResp;
           const productUrl = productDetailsUrl(product.id);
-          updateProductVisibleInListings(productUrl);
+          cy.visit(productUrl);
+          updateProductVisibleInListings();
           searchInShop(productName);
         })
         .then(resp => {
@@ -103,7 +104,8 @@ describe("Products displayed in listings", () => {
         .then(({ product: productResp }) => {
           const product = productResp;
           const productUrl = productDetailsUrl(product.id);
-          updateProductVisibleInListings(productUrl);
+          cy.visit(productUrl);
+          updateProductVisibleInListings();
 
           searchInShop(productName).then(resp => {
             const isProductVisible = isProductVisibleInSearchResult(
