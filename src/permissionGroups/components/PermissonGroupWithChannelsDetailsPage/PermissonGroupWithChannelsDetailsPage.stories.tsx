@@ -1,8 +1,13 @@
 export * from "./PermissonGroupWithChannelsDetailsPage";
-import { permissions } from "@dashboard/fixtures";
+import { channels, permissions } from "@dashboard/fixtures";
 import React from "react";
 
-import { emptyPermissionGroup, permissionGroup, users } from "../../fixtures";
+import {
+  emptyPermissionGroup,
+  permissionGroup,
+  permissionGroupWithChannels,
+  users,
+} from "../../fixtures";
 import {
   PermissonGroupWithChannelsDetailsPage,
   PermissonGroupWithChannelsDetailsPageProps,
@@ -26,7 +31,7 @@ const props: PermissonGroupWithChannelsDetailsPageProps = {
   toggle: () => undefined,
   toggleAll: () => undefined,
   toolbar: null,
-  channels: [],
+  channels,
   disabledChannelPermissions: false,
 };
 
@@ -52,5 +57,12 @@ export const Loading = () => (
     disabled={true}
     permissionGroup={undefined}
     permissions={undefined}
+  />
+);
+
+export const WithRestrictedChannels = () => (
+  <PermissonGroupWithChannelsDetailsPage
+    {...props}
+    permissionGroup={permissionGroupWithChannels}
   />
 );

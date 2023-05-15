@@ -1,4 +1,4 @@
-import { permissions } from "@dashboard/fixtures";
+import { channels, permissions } from "@dashboard/fixtures";
 import React from "react";
 
 import { errorsOfPermissionGroupCreate } from "../../fixtures";
@@ -12,7 +12,7 @@ const props: PermissionGroupWithChannelsCreatePageProps = {
   errors: [],
   onSubmit: () => undefined,
   permissions,
-  channels: [],
+  channels,
   saveButtonBarState: undefined,
 };
 

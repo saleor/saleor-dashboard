@@ -1,4 +1,5 @@
 import avatarImg from "@assets/images/avatars/avatar.png";
+import { channels } from "@dashboard/fixtures";
 import {
   PermissionEnum,
   PermissionGroupErrorCode,
@@ -174,6 +175,43 @@ export const permissionGroup: PermissionGroupWithContextDetailsFragment = {
     },
   ],
 };
+
+export const permissionGroupWithChannels: PermissionGroupWithContextDetailsFragment =
+  {
+    id: "R3JvdXA6Mw==",
+    name: "Editors",
+    userCanManage: true,
+    users: [
+      {
+        id: "VXNlcjoyMg==",
+        firstName: "Joshua",
+        lastName: "Mitchell",
+        __typename: "User",
+        email: "joshua.mitchell@example.com",
+        isActive: true,
+        avatar: null,
+      },
+      {
+        id: "VXNlcjoyMw==",
+        firstName: "Bryan",
+        lastName: "Rodgers",
+        __typename: "User",
+        email: "bryan.rodgers@example.com",
+        isActive: true,
+        avatar: null,
+      },
+    ],
+    accessibleChannels: [channels[0]],
+    restrictedAccessToChannels: true,
+    __typename: "Group",
+    permissions: [
+      {
+        code: PermissionEnum.MANAGE_PAGES,
+        name: "Manage pages.",
+        __typename: "Permission",
+      },
+    ],
+  };
 
 export const users: RelayToFlat<SearchStaffMembersQuery["search"]> = [
   {
