@@ -3,9 +3,11 @@ import {
   Button,
   PlusIcon,
   Popover,
+  sprinkles,
   TableEditIcon,
   Text,
   Toggle,
+  vars,
 } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
@@ -35,6 +37,7 @@ export const NewColumnPicker: React.FC<NewColumnPickerProps> = ({
   onDynamicColumnSelect,
   onSave,
 }) => {
+  const [pickerOpen, setPickerOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
   const handleToggle = (id: string) =>
@@ -43,11 +46,22 @@ export const NewColumnPicker: React.FC<NewColumnPickerProps> = ({
       : onSave([...selectedColumns, id]);
 
   return (
-    <Popover>
+    <Popover open={pickerOpen} onOpenChange={() => setPickerOpen(!pickerOpen)}>
       <Popover.Trigger>
-        <Button variant="tertiary" icon={<TableEditIcon />} />
+        <Button
+          variant="tertiary"
+          icon={<TableEditIcon />}
+          __backgroundColor={
+            pickerOpen
+              ? vars.colors.background.interactiveNeutralSecondaryPressing
+              : undefined
+          }
+          __borderColor={
+            pickerOpen ? vars.colors.border.neutralSubdued : undefined
+          }
+        />
       </Popover.Trigger>
-      <Popover.Content sideOffset={4}>
+      <Popover.Content className={sprinkles({ margin: 4 })}>
         <Box
           display="grid"
           gridTemplateColumns={expanded ? 2 : 1}
