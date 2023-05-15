@@ -1,4 +1,4 @@
-import { NewColumPicker } from "@dashboard/components/ColumnPicker/NewColumPicker";
+import { NewColumnPicker } from "@dashboard/components/ColumnPicker/NewColumnPicker";
 import { useColumns } from "@dashboard/components/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
@@ -255,7 +255,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           onRowClick={handleRowClick}
           rowAnchor={handleRowAnchor}
           renderColumnPicker={() => (
-            <NewColumPicker
+            <NewColumnPicker
               staticColumns={staticColumns}
               dynamicColumns={dynamicColumns}
               selectedColumns={selectedColumns}

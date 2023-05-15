@@ -12,11 +12,11 @@ import { FormattedMessage } from "react-intl";
 
 import { AvailableColumn } from "../Datagrid/types";
 import messages from "./messages";
-import { NewColumnPickerCategories } from "./NewColumPickerCategories";
+import { NewColumnPickerCategories } from "./NewColumnPickerCategories";
 import { ColumnCategory } from "./useColumns";
 import { filterEmptyColumn } from "./utils";
 
-export interface NewColumPickerProps {
+export interface NewColumnPickerProps {
   staticColumns: AvailableColumn[];
   dynamicColumns?: AvailableColumn[];
   selectedColumns: string[];
@@ -26,7 +26,7 @@ export interface NewColumPickerProps {
   onDynamicColumnSelect: (columns: string[]) => void;
 }
 
-export const NewColumPicker: React.FC<NewColumPickerProps> = ({
+export const NewColumnPicker: React.FC<NewColumnPickerProps> = ({
   staticColumns,
   selectedColumns,
   columnCategories,
