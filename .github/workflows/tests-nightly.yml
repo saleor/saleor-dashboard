@@ -365,7 +365,7 @@ jobs:
             node .github/workflows/cypressTestsHelpers/approveAndMergeReleasePR.js \
             --version $version \
             --pull_request_number $pull_request_number \
-            --dashboard_url $dashboard_url \
+            --dashboard_url "$dashboard_url" \
             $auto_release
 
   send-slack-notification:
@@ -411,7 +411,7 @@ jobs:
          dashboard_url: ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}
         run: |
             node cypressTestsHelpers/getFailedTests.js \
-            --dashboard_url $dashboard_url 
+            --dashboard_url "$dashboard_url"
 
       - name: Notify Slack
         if: steps.get-tests-results.outputs.testStatus == 'true'
