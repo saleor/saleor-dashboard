@@ -3,6 +3,7 @@ import {
   ORDER_GRANT_REFUND,
   ORDER_TRANSACTION_CREATE,
   ORDERS_SELECTORS,
+  SHARED_ELEMENTS,
 } from "../../elements";
 
 export function markAsPaidOrderWithRefNumber(transactionNumber) {
@@ -34,6 +35,8 @@ export function grantRefundAllProductsAndShippingWithReason(
   clickMaxQuantityButton();
   typeRefundReason(refundReason);
   clickRefundShippingCheckbox();
+  // this check makes sure no banner covers apply button which was making this action flaky
+  cy.get(SHARED_ELEMENTS.notificationMessage).should("not.exist");
   clickApplyRefundButton();
   cy.get(ORDER_GRANT_REFUND.refundAmountInput).should("contain.value", total);
   clickConfirmRefundButton();
