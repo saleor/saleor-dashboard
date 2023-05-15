@@ -31,7 +31,7 @@ const props: PermissonGroupWithChannelsDetailsPageProps = {
 };
 
 export default {
-  title: "Permission Groups / Permission Group Details",
+  title: "Permission Groups / Permission Group Details With Channels",
 };
 
 export const Default = () => (

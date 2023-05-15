@@ -17,7 +17,7 @@ const props: PermissionGroupWithChannelsCreatePageProps = {
 };
 
 export default {
-  title: "Permission Groups / Permission Group Create",
+  title: "Permission Groups / Permission Group Create With Channels",
 };
 
 export const Default = () => (
