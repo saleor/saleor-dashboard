@@ -1,4 +1,3 @@
-import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { ProductListColumns } from "@dashboard/config";
 import { GridAttributesQuery } from "@dashboard/graphql";
@@ -26,7 +25,6 @@ export const useDatagridColumns = ({
   settings,
 }: UseDatagridColumnsProps) => {
   const intl = useIntl();
-  const emptyColumn = useEmptyColumn();
 
   const initialColumns = useRef(
     getColumns({
@@ -35,13 +33,11 @@ export const useDatagridColumns = ({
       gridAttributes,
       gridAttributesFromSettings,
       activeAttributeSortId,
-      emptyColumn,
     }),
   );
 
   const [columns, setColumns] = useState<AvailableColumn[]>([
     initialColumns.current[0],
-    initialColumns.current[1],
     ...initialColumns.current.filter(col =>
       settings.columns.includes(col.id as ProductListColumns),
     ),
@@ -86,7 +82,7 @@ function byColumnsInSettingsOrStaticColumns(
 ) {
   return (column: AvailableColumn) =>
     settings.columns.includes(column.id as ProductListColumns) ||
-    ["empty", "name"].includes(column.id);
+    ["name"].includes(column.id);
 }
 
 function toCurrentColumnData(

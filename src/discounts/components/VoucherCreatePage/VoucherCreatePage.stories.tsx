@@ -1,8 +1,6 @@
 import { channelsList } from "@dashboard/channels/fixtures";
 import { createVoucherChannels } from "@dashboard/channels/utils";
 import { DiscountErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import VoucherCreatePage, {
@@ -23,13 +21,17 @@ const props: VoucherCreatePageProps = {
   saveButtonBarState: "default",
 };
 
-storiesOf("Discounts / Voucher create", module)
-  .addDecorator(Decorator)
-  .add("default", () => <VoucherCreatePage {...props} />)
-  .add("form errors", () => (
-    <VoucherCreatePage
-      {...props}
-      errors={([
+export default {
+  title: "Discounts / Voucher create",
+};
+
+export const Default = () => <VoucherCreatePage {...props} />;
+
+export const FormErrors = () => (
+  <VoucherCreatePage
+    {...props}
+    errors={(
+      [
         "applyOncePerOrder",
         "code",
         "discountType",
@@ -40,12 +42,13 @@ storiesOf("Discounts / Voucher create", module)
         "type",
         "usageLimit",
         "value",
-      ] as Array<keyof FormData>).map(field => ({
-        __typename: "DiscountError",
-        channels: [],
-        code: DiscountErrorCode.INVALID,
-        field,
-        message: "Discount invalid",
-      }))}
-    />
-  ));
+      ] as Array<keyof FormData>
+    ).map(field => ({
+      __typename: "DiscountError",
+      channels: [],
+      code: DiscountErrorCode.INVALID,
+      field,
+      message: "Discount invalid",
+    }))}
+  />
+);

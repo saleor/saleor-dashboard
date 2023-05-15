@@ -59,6 +59,7 @@ export const RefundCard = ({
               id={`checkbox-${id}`}
               value={state.refundShipping}
               onChange={() => dispatch({ type: "toggleRefundShipping" })}
+              data-test-id="refundShippingCheckbox"
             />
             <label htmlFor={`checkbox-${id}`}>
               {!currency ? (
@@ -104,6 +105,7 @@ export const RefundCard = ({
             variant="secondary"
             size="small"
             onClick={() => form.set({ amount: totalSelectedPrice.toString() })}
+            data-test-id="applySelectedRefundButton"
           >
             <FormattedMessage {...buttonMessages.apply} />
           </Button>
@@ -131,6 +133,7 @@ export const RefundCard = ({
             transitionState={submitState}
             variant="primary"
             type="submit"
+            data-test-id="grantRefundButton"
           >
             {isEdit ? (
               <FormattedMessage {...grantRefundPageMessages.editRefundBtn} />

@@ -6,12 +6,10 @@ import {
   sortPageProps,
   tabPageProps,
 } from "@dashboard/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { WarehouseListUrlSortField } from "@dashboard/warehouses/urls";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import { warehouseList } from "../../fixtures";
 import WarehouseListPage, { WarehouseListPageProps } from "./WarehouseListPage";
 
@@ -29,15 +27,23 @@ const props: WarehouseListPageProps = {
   warehouses: warehouseList,
 };
 
-storiesOf("Warehouses / Warehouse list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <WarehouseListPage {...props} />)
-  .add("loading", () => (
-    <WarehouseListPage {...props} disabled={true} warehouses={undefined} />
-  ))
-  .add("no data", () => <WarehouseListPage {...props} warehouses={[]} />)
-  .add("no limits", () => <WarehouseListPage {...props} limits={undefined} />)
-  .add("limits reached", () => (
-    <WarehouseListPage {...props} limits={limitsReached} />
-  ));
+export default {
+  title: "Warehouses / Warehouse list",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <WarehouseListPage {...props} />;
+
+export const Loading = () => (
+  <WarehouseListPage {...props} disabled={true} warehouses={undefined} />
+);
+
+export const NoData = () => <WarehouseListPage {...props} warehouses={[]} />;
+
+export const NoLimits = () => (
+  <WarehouseListPage {...props} limits={undefined} />
+);
+
+export const LimitsReached = () => (
+  <WarehouseListPage {...props} limits={limitsReached} />
+);
