@@ -1,8 +1,6 @@
 import { countries } from "@dashboard/fixtures";
 import { CountryFragment } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
 import { taxConfigurations } from "@dashboard/taxes/fixtures";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import TaxChannelsPage from "./TaxChannelsPage";
@@ -28,10 +26,15 @@ const props = {
   disabled: false,
 };
 
-storiesOf("Taxes / Channels view", module)
-  .addDecorator(Decorator)
-  .add("loading", () => (
-    <TaxChannelsPage {...props} taxConfigurations={undefined} />
-  ))
-  .add("default", () => <TaxChannelsPage {...props} />)
-  .add("add country", () => <TaxChannelsPage {...props} isDialogOpen={true} />);
+export default {
+  title: "Taxes / Channels view",
+  excludeStories: ["castedCountries"],
+};
+
+export const Loading = () => (
+  <TaxChannelsPage {...props} taxConfigurations={undefined} />
+);
+
+export const AddCountry = () => (
+  <TaxChannelsPage {...props} isDialogOpen={true} />
+);

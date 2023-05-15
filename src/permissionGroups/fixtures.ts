@@ -1,4 +1,4 @@
-import * as avatarImg from "@assets/images/avatars/avatar1.png";
+import avatarImg from "@assets/images/avatars/avatar.png";
 import {
   PermissionEnum,
   PermissionGroupErrorCode,

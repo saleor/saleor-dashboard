@@ -1,8 +1,6 @@
-import CardDecorator from "@dashboard/storybook/CardDecorator";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { CardDecorator } from "../../../../.storybook/decorators";
 import LoginPage, { LoginCardProps } from "./LoginPage";
 
 const props: Omit<LoginCardProps, "classes"> = {
@@ -20,13 +18,21 @@ const props: Omit<LoginCardProps, "classes"> = {
   onSubmit: () => undefined,
 };
 
-storiesOf("Authentication / Log in", module)
-  .addDecorator(CardDecorator)
-  .addDecorator(Decorator)
-  .add("default", () => <LoginPage {...props} />)
-  .add("error login", () => <LoginPage {...props} errors={["loginError"]} />)
-  .add("error external login", () => (
-    <LoginPage {...props} errors={["externalLoginError"]} />
-  ))
-  .add("disabled", () => <LoginPage {...props} disabled={true} />)
-  .add("loading", () => <LoginPage {...props} loading={true} />);
+export default {
+  title: "Authentication / Log in",
+  decorators: [CardDecorator],
+};
+
+export const Default = () => <LoginPage {...props} />;
+
+export const ErrorLogin = () => (
+  <LoginPage {...props} errors={["loginError"]} />
+);
+
+export const ErrorExternalLogin = () => (
+  <LoginPage {...props} errors={["externalLoginError"]} />
+);
+
+export const Disabled = () => <LoginPage {...props} disabled={true} />;
+
+export const Loading = () => <LoginPage {...props} loading={true} />;

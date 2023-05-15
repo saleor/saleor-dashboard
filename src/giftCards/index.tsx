@@ -31,7 +31,7 @@ const GiftCardUpdatePage: React.FC<RouteComponentProps<{ id: string }>> = ({
 };
 
 const GiftCardList: React.FC<RouteComponentProps<any>> = () => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: GiftCardListUrlQueryParams = asSortParams(
     qs,
     GiftCardUrlSortField,

@@ -25,7 +25,7 @@ import { PermissionGroupWithChannelsDetails as PermissionGroupWithChannelsDetail
 const permissionGroupList: React.FC<RouteComponentProps<{}>> = ({
   location,
 }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: PermissionGroupListUrlQueryParams = asSortParams(
     qs,
     PermissionGroupListUrlSortField,
@@ -40,7 +40,7 @@ interface PermissionGroupDetailsRouteProps {
 const PermissionGroupDetails: React.FC<
   RouteComponentProps<PermissionGroupDetailsRouteProps>
 > = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: PermissionGroupDetailsUrlQueryParams = asSortParams(
     qs,
     MembersListUrlSortField,
@@ -57,7 +57,7 @@ const PermissionGroupDetails: React.FC<
 const PermissionGroupWithChannelsDetails: React.FC<
   RouteComponentProps<PermissionGroupDetailsRouteProps>
 > = ({ match }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: PermissionGroupDetailsUrlQueryParams = asSortParams(
     qs,
     MembersListUrlSortField,
