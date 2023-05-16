@@ -1,6 +1,6 @@
 name: QA
 
-on: [pull_request]
+on: [push]
 
 jobs:
   chromatic-storybook:
