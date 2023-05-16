@@ -135,3 +135,7 @@ export function sortProductsBy(sortBy) {
 export function changeToTileView() {
   cy.clickOnElement(PRODUCTS_LIST.tileViewButton);
 }
+
+export function changeToDatagridView() {
+  cy.clickOnElement(PRODUCTS_LIST.datagridViewButton);
+}
