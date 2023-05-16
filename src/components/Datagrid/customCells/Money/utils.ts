@@ -65,7 +65,7 @@ export function getFormattedMoney(
   locale: Locale,
   placeholder = "",
 ) {
-  if (value) {
+  if (value !== undefined && value !== null) {
     return formatMoneyAmount({ amount: Number(value), currency }, locale);
   }
 

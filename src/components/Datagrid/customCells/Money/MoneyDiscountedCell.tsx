@@ -88,7 +88,7 @@ export const moneyDiscountedCellRenderer =
       drawPrice(ctx, theme, rect, formattedWithDiscount);
 
       // Draw crossed line above price without discount
-      if (undiscounted && undiscounted !== value) {
+      if (undiscounted !== undefined && undiscounted !== value) {
         drawLineCrossedPrice(
           ctx,
           rect,
