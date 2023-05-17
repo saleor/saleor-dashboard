@@ -25,4 +25,10 @@ export const ADD_PRODUCT_TO_ORDER_DIALOG = {
   productName: "[data-test-id='product-name']",
   productVariant: "[data-test-id='variant']",
   checkbox: "[data-test-id='checkbox']",
+  markAsPaidButton: '[data-test-id="markAsPaidButton"]',
+  transactionReferenceInput: '[data-test-id="transaction-reference-input"]',
+  orderTransactionsList: '[data-test-id="orderTransactionsList"]',
+  grantRefundButton: '[data-test-id="grantRefundButton"]',
+  captureManualTransactionButton:
+    '[data-test-id="captureManualTransactionButton"]',
 };

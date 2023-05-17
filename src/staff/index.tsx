@@ -17,7 +17,7 @@ import StaffDetailsComponent from "./views/StaffDetails";
 import StaffListComponent from "./views/StaffList";
 
 const StaffList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: StaffListUrlQueryParams = asSortParams(
     qs,
     StaffListUrlSortField,

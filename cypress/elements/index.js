@@ -25,6 +25,8 @@ export {
   ADD_PRODUCT_TO_ORDER_DIALOG,
   DRAFT_ORDER_SELECTORS,
   DRAFT_ORDERS_LIST_SELECTORS,
+  ORDER_GRANT_REFUND,
+  ORDER_TRANSACTION_CREATE,
   ORDERS_SELECTORS,
 } from "./orders";
 export { PAGE_DETAILS_SELECTORS, PAGES_LIST_SELECTORS } from "./pages/";
@@ -49,4 +51,3 @@ export {
   STAFF_MEMBERS_LIST_SELECTORS,
 } from "./staffMembers";
 export { LANGUAGES_LIST_SELECTORS } from "./translations";
-export { ORDER_REFUND } from "./orders/order-refund";

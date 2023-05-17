@@ -76,7 +76,7 @@ jobs:
         env:
           CI: true
           SALEOR_CLI_ENV: staging
-        run: npx saleor backup restore W5yhqHkw --skip-webhooks-update
+        run: npx saleor backup restore vmSD8fo4 --skip-webhooks-update
 
       - name: Notify Slack
         if: ${{ failure() }}
@@ -148,7 +148,7 @@ jobs:
           CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_mailHogUrl: ${{ secrets.CYPRESS_MAILHOG }}
+          CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
           COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
           CYPRESS_grepTags: ${{ env.GREP_TAGS }}
           STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
@@ -256,7 +256,7 @@ jobs:
           STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
           CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          CYPRESS_mailHogUrl: ${{ secrets.CYPRESS_MAILHOG }}
+          CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
           COMMIT_INFO_MESSAGE: Triggered via release - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}, ${{github.event.client_payload.pullRequestUrl}}
           CYPRESS_grepTags: ${{steps.set-tag-for-tests.outputs.result}}
         with:

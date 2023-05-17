@@ -2,12 +2,10 @@ import placeholderImage from "@assets/images/placeholder60x60.png";
 import { adminUserPermissions } from "@dashboard/fixtures";
 import { PermissionEnum } from "@dashboard/graphql";
 import { shop as shopFixture } from "@dashboard/home/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { MockedUserProvider } from "@dashboard/storybook/MockedUserProvider";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { MockedUserProvider } from "../../../../.storybook/helpers";
 import HomePageComponent, { HomePageProps } from "./HomePage";
 
 const shop = shopFixture(placeholderImage);
@@ -38,41 +36,48 @@ const HomePage = props => {
   );
 };
 
-storiesOf("Home", module)
-  .addDecorator(Decorator)
-  .add("default", () => <HomePage {...homePageProps} />)
-  .add("loading", () => (
-    <HomePage
-      {...homePageProps}
-      activities={undefined}
-      orders={undefined}
-      ordersToCapture={undefined}
-      ordersToFulfill={undefined}
-      productsOutOfStock={undefined}
-      sales={undefined}
-      topProducts={undefined}
-      userName={undefined}
-    />
-  ))
-  .add("no data", () => (
-    <HomePage {...homePageProps} topProducts={[]} activities={[]} />
-  ))
-  .add("no permissions", () => (
-    <HomePage {...homePageProps} customPermissions={[]} />
-  ))
-  .add("product permissions", () => (
-    <HomePage
-      {...homePageProps}
-      customPermissions={adminUserPermissions.filter(
-        perm => perm.code === PermissionEnum.MANAGE_PRODUCTS,
-      )}
-    />
-  ))
-  .add("order permissions", () => (
-    <HomePage
-      {...homePageProps}
-      customPermissions={adminUserPermissions.filter(
-        perm => perm.code === PermissionEnum.MANAGE_ORDERS,
-      )}
-    />
-  ));
+export default {
+  title: "Home / Home",
+};
+
+export const Default = () => <HomePage {...homePageProps} />;
+
+export const Loading = () => (
+  <HomePage
+    {...homePageProps}
+    activities={undefined}
+    orders={undefined}
+    ordersToCapture={undefined}
+    ordersToFulfill={undefined}
+    productsOutOfStock={undefined}
+    sales={undefined}
+    topProducts={undefined}
+    userName={undefined}
+  />
+);
+
+export const NoData = () => (
+  <HomePage {...homePageProps} topProducts={[]} activities={[]} />
+);
+
+export const NoPermissions = () => (
+  <HomePage {...homePageProps} customPermissions={[]} />
+);
+
+export const ProductPermissions = () => (
+  <HomePage
+    {...homePageProps}
+    customPermissions={adminUserPermissions.filter(
+      perm => perm.code === PermissionEnum.MANAGE_PRODUCTS,
+    )}
+  />
+);
+
+export const OrderPermissions = () => (
+  <HomePage
+    {...homePageProps}
+    customPermissions={adminUserPermissions.filter(
+      perm => perm.code === PermissionEnum.MANAGE_ORDERS,
+    )}
+  />
+);

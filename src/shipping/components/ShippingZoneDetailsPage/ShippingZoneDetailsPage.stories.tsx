@@ -1,8 +1,6 @@
 import { fetchMoreProps, searchPageProps } from "@dashboard/fixtures";
 import { ShippingErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
 import { warehouseList } from "@dashboard/warehouses/fixtures";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { shippingZone } from "../../fixtures";
@@ -31,25 +29,29 @@ const props: ShippingZoneDetailsPageProps = {
   warehouses: warehouseList,
 };
 
-storiesOf("Shipping / Shipping zone details", module)
-  .addDecorator(Decorator)
-  .add("default", () => <ShippingZoneDetailsPage {...props} />)
-  .add("loading", () => (
-    <ShippingZoneDetailsPage
-      {...props}
-      disabled={true}
-      shippingZone={undefined}
-    />
-  ))
-  .add("form errors", () => (
-    <ShippingZoneDetailsPage
-      {...props}
-      errors={["name"].map(field => ({
-        __typename: "ShippingError",
-        channels: [],
-        code: ShippingErrorCode.INVALID,
-        field,
-        message: "Name field invalid",
-      }))}
-    />
-  ));
+export default {
+  title: "Shipping / Shipping zone details",
+};
+
+export const Default = () => <ShippingZoneDetailsPage {...props} />;
+
+export const Loading = () => (
+  <ShippingZoneDetailsPage
+    {...props}
+    disabled={true}
+    shippingZone={undefined}
+  />
+);
+
+export const FormErrors = () => (
+  <ShippingZoneDetailsPage
+    {...props}
+    errors={["name"].map(field => ({
+      __typename: "ShippingError",
+      channels: [],
+      code: ShippingErrorCode.INVALID,
+      field,
+      message: "Name field invalid",
+    }))}
+  />
+);

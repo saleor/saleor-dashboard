@@ -16,6 +16,7 @@ export const SubmitButton: React.FC<
       type="submit"
       transitionState={submitState}
       disabled={!amount || disabled}
+      data-test-id="manualTransactionSubmit"
     />
   );
 };

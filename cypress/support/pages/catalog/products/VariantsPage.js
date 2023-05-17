@@ -80,7 +80,6 @@ export function fillUpVariantDetails({
     .each(input => {
       cy.wrap(input).type(costPrice);
     });
-
   if (variantName) {
     cy.get(VARIANTS_SELECTORS.variantNameInput).type(variantName);
   }
@@ -162,7 +161,7 @@ export function selectOptionsAttribute(attributeName) {
 }
 
 export function selectBooleanAttributeToTrue() {
-  cy.get(VARIANTS_SELECTORS.booleanAttributeCheckbox).click();
+  cy.get(VARIANTS_SELECTORS.attributeSelector).click();
 }
 
 export function selectDateAttribute() {

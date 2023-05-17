@@ -27,7 +27,7 @@ import {
   useWarehouseListQuery,
 } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
+import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -60,16 +60,14 @@ import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { ListViews } from "@dashboard/types";
 import { prepareQs } from "@dashboard/utils/filters/qs";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import isEqual from "lodash/isEqual";
 import { stringify } from "qs";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useSortRedirects } from "../../../hooks/useSortRedirects";
 import ProductListPage from "../../components/ProductListPage";
 import {
   deleteFilterTab,
@@ -80,7 +78,7 @@ import {
   saveFilterTab,
   updateFilterTab,
 } from "./filters";
-import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
+import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 import {
   getActiveTabIndexAfterTabDelete,
   getAvailableProductKinds,
@@ -98,13 +96,33 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const { queue } = useBackgroundTask();
 
   const [tabIndexToDelete, setTabIndexToDelete] = useState<number | null>(null);
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    [],
-  );
+  const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
+  const deleteButtonRef = useRef<HTMLButtonElement>(null);
 
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
   );
+
+  // Keep reference to clear datagrid selection function
+  const clearRowSelectionCallback = React.useRef<() => void | null>(null);
+  const clearRowSelection = () => {
+    setSelectedProductIds([]);
+    if (clearRowSelectionCallback.current) {
+      clearRowSelectionCallback.current();
+    }
+  };
+
+  // Whenever pagination change we need to clear datagrid selection
+  useEffect(() => {
+    clearRowSelection();
+  }, [params.after, params.before]);
+
+  // Remove focus from delete button after delete action
+  useEffect(() => {
+    if (!params.action && deleteButtonRef.current) {
+      deleteButtonRef.current.blur();
+    }
+  }, [params.action]);
 
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
@@ -183,13 +201,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     channel => channel.slug === params.channel,
   );
 
-  useSortRedirects<ProductListUrlSortField>({
-    params,
-    defaultSortField: DEFAULT_SORT_KEY,
-    urlFunc: productListUrl,
-    resetToDefault: !canBeSorted(params.sort, !!selectedChannel),
-  });
-
   const [openModal, closeModal] = createDialogActionHandlers<
     ProductListUrlDialog,
     ProductListUrlQueryParams
@@ -223,23 +234,40 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           id: data.exportProducts.exportFile.id,
         });
         closeModal();
-        reset();
+        clearRowSelection();
       }
     },
   });
 
-  const [changeFilters, resetFilters, handleSearchChange] =
-    createFilterHandlers({
-      cleanupFn: reset,
-      createUrl: productListUrl,
-      getFilterQueryParam,
-      navigate,
-      params,
-      keepActiveTab: true,
+  const [productBulkDelete, productBulkDeleteOpts] =
+    useProductBulkDeleteMutation({
+      onCompleted: data => {
+        if (data.productBulkDelete.errors.length === 0) {
+          closeModal();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          refetch();
+          limitOpts.refetch();
+          clearRowSelection();
+        }
+      },
     });
 
+  const [changeFilters, resetFilters, handleSearchChange] = useFilterHandlers({
+    cleanupFn: clearRowSelection,
+    createUrl: productListUrl,
+    getFilterQueryParam,
+    params,
+    keepActiveTab: true,
+    defaultSortField: DEFAULT_SORT_KEY,
+    hasSortWithRank: true,
+  });
+
   const handleTabChange = (tab: number) => {
-    reset();
+    clearRowSelection();
+
     const qs = new URLSearchParams(getFilterTabs()[tab - 1]?.data ?? "");
     qs.append("activeTab", tab.toString());
 
@@ -248,7 +276,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const handleFilterTabDelete = () => {
     deleteFilterTab(tabIndexToDelete);
-    reset();
+    clearRowSelection();
 
     // When deleting the current tab, navigate to the All products
     if (tabIndexToDelete === currentTab) {
@@ -298,6 +326,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       }),
     );
 
+  const handleSubmitBulkDelete = () => {
+    productBulkDelete({
+      variables: { ids: selectedProductIds },
+    });
+    deleteButtonRef.current.blur();
+    clearRowSelection();
+  };
+
   const kindOpts = getProductKindOpts(availableProductKinds, intl);
   const paginationState = createPaginationState(settings.rowNumber, params);
   const channelOpts = availableChannels
@@ -330,6 +366,26 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     },
   });
 
+  const products = mapEdgesToItems(data?.products);
+
+  const handleSetSelectedProductIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!products) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => products[row].id);
+      const haveSaveValues = isEqual(rowsIds, selectedProductIds);
+
+      if (!haveSaveValues) {
+        setSelectedProductIds(rowsIds);
+      }
+
+      clearRowSelectionCallback.current = clearSelection;
+    },
+    [products, selectedProductIds],
+  );
+
   const availableInGridAttributesOpts = useAvailableInGridAttributesSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
@@ -340,22 +396,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     variables: { ids: filteredColumnIds },
     skip: filteredColumnIds.length === 0,
   });
-
-  const [productBulkDelete, productBulkDeleteOpts] =
-    useProductBulkDeleteMutation({
-      onCompleted: data => {
-        if (data.productBulkDelete.errors.length === 0) {
-          closeModal();
-          notify({
-            status: "success",
-            text: intl.formatMessage(commonMessages.savedChanges),
-          });
-          reset();
-          refetch();
-          limitOpts.refetch();
-        }
-      },
-    });
 
   const {
     loadMore: loadMoreDialogProductTypes,
@@ -441,26 +481,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         )}
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
-        products={mapEdgesToItems(data?.products)}
-        selectedProductIds={listElements}
+        products={products}
         onColumnQueryChange={availableInGridAttributesOpts.search}
         onFetchMore={availableInGridAttributesOpts.loadMore}
-        onUpdateListSettings={updateListSettings}
+        onUpdateListSettings={(...props) => {
+          clearRowSelection();
+          updateListSettings(...props);
+        }}
         onAdd={() => openModal("create-product")}
         onAll={resetFilters}
-        toolbar={
-          <IconButton
-            variant="secondary"
-            color="primary"
-            onClick={() => openModal("delete")}
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
-        isChecked={isSelected}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}
         onFilterAttributeFocus={setFocusedAttribute}
@@ -470,23 +499,26 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           setTabIndexToDelete(tabIndex);
           openModal("delete-search");
         }}
+        onProductsDelete={() => openModal("delete")}
         onTabChange={handleTabChange}
         hasPresetsChanged={hasPresetsChanged()}
         initialSearch={params.query || ""}
         tabs={tabs.map(tab => tab.name)}
         onExport={() => openModal("export")}
         selectedChannelId={selectedChannel?.id}
+        selectedProductIds={selectedProductIds}
+        onSelectProductIds={handleSetSelectedProductIds}
         columnQuery={availableInGridAttributesOpts.query}
+        clearRowSelection={clearRowSelection}
+        setBulkDeleteButtonRef={(ref: HTMLButtonElement) => {
+          deleteButtonRef.current = ref;
+        }}
       />
       <ActionDialog
         open={params.action === "delete"}
         confirmButtonState={productBulkDeleteOpts.status}
         onClose={closeModal}
-        onConfirm={() => {
-          productBulkDelete({
-            variables: { ids: listElements },
-          });
-        }}
+        onConfirm={handleSubmitBulkDelete}
         title={intl.formatMessage({
           id: "F4WdSO",
           defaultMessage: "Delete Products",
@@ -500,8 +532,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
             description="dialog content"
             values={{
-              counter: params?.ids?.length,
-              displayQuantity: <strong>{params?.ids?.length}</strong>,
+              counter: selectedProductIds.length,
+              displayQuantity: <strong>{selectedProductIds.length}</strong>,
             }}
           />
         </DialogContentText>
@@ -525,7 +557,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           all: countAllProducts.data?.products?.totalCount,
           filter: data?.products?.totalCount,
         }}
-        selectedProducts={listElements.length}
+        selectedProducts={selectedProductIds.length}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         channels={availableChannels}
         onClose={closeModal}
@@ -535,7 +567,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
               input: {
                 ...data,
                 filter,
-                ids: listElements,
+                ids: selectedProductIds,
               },
             },
           })

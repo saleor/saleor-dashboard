@@ -1,11 +1,9 @@
 import { listActionsProps } from "@dashboard/fixtures";
 import { WeightUnitsEnum } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { formError } from "@dashboard/storybook/formError";
 import { taxClasses } from "@dashboard/taxes/fixtures";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { formError } from "../../../../.storybook/helpers";
 import { productType } from "../../fixtures";
 import ProductTypeDetailsPage, {
   ProductTypeDetailsPageProps,
@@ -33,29 +31,34 @@ const props: Omit<ProductTypeDetailsPageProps, "classes"> = {
   selectedVariantAttributes: [],
 };
 
-storiesOf("Product types / Product type details", module)
-  .addDecorator(Decorator)
-  .add("default", () => <ProductTypeDetailsPage {...props} />)
-  .add("loading", () => (
-    <ProductTypeDetailsPage
-      {...props}
-      disabled={true}
-      pageTitle={undefined}
-      productType={undefined}
-    />
-  ))
-  .add("no attributes", () => (
-    <ProductTypeDetailsPage
-      {...props}
-      productType={{
-        ...productType,
-        productAttributes: [],
-      }}
-    />
-  ))
-  .add("form errors", () => (
-    <ProductTypeDetailsPage
-      {...props}
-      errors={(["name"] as Array<keyof ProductTypeForm>).map(formError)}
-    />
-  ));
+export default {
+  title: "Product types / Product type details",
+};
+
+export const Default = () => <ProductTypeDetailsPage {...props} />;
+
+export const Loading = () => (
+  <ProductTypeDetailsPage
+    {...props}
+    disabled={true}
+    pageTitle={undefined}
+    productType={undefined}
+  />
+);
+
+export const NoAttributes = () => (
+  <ProductTypeDetailsPage
+    {...props}
+    productType={{
+      ...productType,
+      productAttributes: [],
+    }}
+  />
+);
+
+export const FormErrors = () => (
+  <ProductTypeDetailsPage
+    {...props}
+    errors={(["name"] as Array<keyof ProductTypeForm>).map(formError)}
+  />
+);

@@ -155,6 +155,11 @@ const OrderGrantRefundPage: React.FC<OrderGrantRefundPageProps> = ({
                     name={"reason" as keyof OrderGrantRefundFormData}
                     onChange={change}
                     type="text"
+                    InputProps={{
+                      inputProps: {
+                        "data-test-id": "refundReasonInput",
+                      },
+                    }}
                   />
                 </CardContent>
               </Card>

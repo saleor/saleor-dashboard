@@ -5,7 +5,7 @@ import faker from "faker";
 
 import {
   BUTTON_SELECTORS,
-  ORDER_REFUND,
+  ORDER_GRANT_REFUND,
   ORDERS_SELECTORS,
   SHARED_ELEMENTS,
 } from "../../elements/";
@@ -221,7 +221,7 @@ describe("Orders", () => {
           cy.visit(urlList.orders + `${order.id}`);
           cy.get(ORDERS_SELECTORS.refundButton)
             .click()
-            .get(ORDER_REFUND.productsQuantityInput)
+            .get(ORDER_GRANT_REFUND.productsQuantityInput)
             .type("1")
             .addAliasToGraphRequest("OrderFulfillmentRefundProducts");
           cy.get(BUTTON_SELECTORS.submit)
