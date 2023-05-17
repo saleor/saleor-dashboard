@@ -67,12 +67,31 @@ export const useColumns = ({
 
   const onMove = React.useCallback(
     (startIndex: number, endIndex: number): void => {
+      // When empty column prevent to rearrange it order
+      if (visibleColumns[0]?.id === "empty") {
+        if (startIndex === 0) {
+          return;
+        }
+
+        // Keep empty column always at beginning
+        if (endIndex === 0) {
+          return setVisibleColumns(old =>
+            addAtIndex(
+              old[startIndex],
+              removeAtIndex(old, startIndex),
+              endIndex + 1,
+            ),
+          );
+        }
+      }
+
       setVisibleColumns(old =>
         addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
       );
     },
-    [setVisibleColumns],
+    [visibleColumns, setVisibleColumns],
   );
+
   const onResize = React.useCallback(
     (column: GridColumn, newSize: number) => {
       if (column.id === "empty") {
