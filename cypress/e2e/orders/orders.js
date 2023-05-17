@@ -270,7 +270,7 @@ describe("Orders", () => {
   );
 
   it(
-    "should remove product from unconfirmed order . TC: 2126",
+    "should remove product from unconfirmed order . TC: SALEOR_2126",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       createUnconfirmedOrder({
@@ -288,7 +288,7 @@ describe("Orders", () => {
     },
   );
   it(
-    "should change quantity of products on order detail view . TC: 2127",
+    "should change quantity of products on order detail view . TC: SALEOR_2127",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       createUnconfirmedOrder({
@@ -314,7 +314,7 @@ describe("Orders", () => {
     },
   );
   it(
-    "should add new product on order detail view . TC: 2128",
+    "should add new product on order detail view . TC: SALEOR_2128",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       createUnconfirmedOrder({
