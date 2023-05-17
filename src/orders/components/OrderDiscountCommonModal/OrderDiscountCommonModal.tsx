@@ -304,6 +304,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
           className={classes.reasonInput}
           label={intl.formatMessage(messages.discountReasonLabel)}
           value={reason}
+          data-test-id="discount-reason"
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             setReason(event.target.value)
           }
