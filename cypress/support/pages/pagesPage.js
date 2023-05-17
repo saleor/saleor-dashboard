@@ -78,10 +78,6 @@ function openCreatePageAndFillUpGeneralFields({
   if (!isPublished) {
     cy.get(PAGE_DETAILS_SELECTORS.isNotPublishedCheckbox).click();
   }
-  cy.fillAutocompleteSelect(
-    PAGE_DETAILS_SELECTORS.pageTypesAutocompleteSelect,
-    pageTypeName,
-  );
 }
 
 function savePage() {
