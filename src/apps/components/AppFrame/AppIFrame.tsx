@@ -34,6 +34,7 @@ const _AppIFrame = forwardRef<HTMLIFrameElement, AppIFrameProps>(
 
     return (
       <iframe
+        data-test-id="app-frame"
         ref={ref}
         src={iframeSrc}
         onLoad={onLoad}
