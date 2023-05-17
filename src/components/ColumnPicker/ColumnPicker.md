@@ -29,6 +29,7 @@ attribute:QXR0cmlidXRlOjIx
 - column categories - array of column categories, which is abstraction for dynamic column. For example attributes is a column category, whereas Flavor attribute is an actual column value. This object has all API-related properties, like search handler, fetch more props, etc.
 - selected columns - array of column IDs which are selected in the column picker. It is saved in local storage
 - dynamic column settings - array of column IDs which are selected in the left section of the column picker. It is saved in local storage.
+- recently added column - this value is used in datagrid component to enable auto-scroll to newly added column
 - handlers:
   - column resize handler (for datagrid)
   - column reorder handler (for datagrid)
@@ -46,7 +47,7 @@ In order to use this hook, you need to provide four things:
 ### Column picker settings
 Firstly, in the view file, we need to provide two settings object, one for the selected columns and one for the dynamic column settings. We should use `useColumnPickerSettings` and `useListSettings` hook for that. The first settings object manages columns selected for the datagrid (visible columns). The second manages state of seleceted dynamic columns (if we pick a value from left side of column picked, it is then displayed on the right side of the picker as dynamic column with togglable visibility). Toggling the visiblity saves the column in the first settings object.
 
-The reason why column picker settings object needs to be in the view file and cannot be integrated into internal logic of useColumns is because we use column picker settings in the query. For example, we need to know which columns are selected in order to fetch the correct data from the API.
+The reason why column picker settings object needs to be in the view file and cannot be integrated into internal logic of useColumns is because we use column picker settings in the query. We need to know which columns are selected in order to fetch the correct data from the API.
  
  ```tsx
 const { columnPickerSettings, setDynamicColumnsSettings } =
