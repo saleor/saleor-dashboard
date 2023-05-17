@@ -8,4 +8,5 @@ export {
   usePermissionGroupWithChannelsDetailsQuery,
   usePermissionGroupWithChannelsCreateMutation,
   usePermissionGroupWithChannelsUpdateMutation,
+  useUserDetailsWithChannelsQuery,
 } from "./hooks.channelPermissions.generated";
