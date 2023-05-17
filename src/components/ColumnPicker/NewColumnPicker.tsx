@@ -1,7 +1,6 @@
 import {
   Box,
   Button,
-  PlusIcon,
   Popover,
   sprinkles,
   TableEditIcon,
@@ -15,6 +14,7 @@ import { FormattedMessage } from "react-intl";
 import { AvailableColumn } from "../Datagrid/types";
 import messages from "./messages";
 import { NewColumnPickerCategories } from "./NewColumnPickerCategories";
+import { NewColumnPickerDynamicColumns } from "./NewColumnPickerDynamicColumns";
 import { ColumnCategory } from "./useColumns";
 import { filterEmptyColumn } from "./utils";
 
@@ -95,51 +95,12 @@ export const NewColumnPicker: React.FC<NewColumnPickerProps> = ({
               </Box>
             ))}
             {columnCategories && (
-              <>
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  marginTop={6}
-                >
-                  <Text
-                    variant="caption"
-                    size="small"
-                    color="textNeutralSubdued"
-                  >
-                    <FormattedMessage {...messages.custom} />
-                  </Text>
-                  <Button
-                    variant="secondary"
-                    size="small"
-                    icon={<PlusIcon size="small" />}
-                    onClick={() => setExpanded(true)}
-                  />
-                </Box>
-                {dynamicColumns.map(column => (
-                  <Box padding={3} key={column.id}>
-                    <Toggle
-                      onPressedChange={() => handleToggle(column.id)}
-                      pressed={selectedColumns.includes(column.id)}
-                    >
-                      <Text
-                        variant="body"
-                        size="small"
-                        color="textNeutralSubdued"
-                      >
-                        {`${column.metaGroup} /`}
-                      </Text>
-                      <Text
-                        variant="body"
-                        size="small"
-                        color="textNeutralDefault"
-                      >
-                        {column.title}
-                      </Text>
-                    </Toggle>
-                  </Box>
-                ))}
-              </>
+              <NewColumnPickerDynamicColumns
+                dynamicColumns={dynamicColumns}
+                selectedColumns={selectedColumns}
+                setExpanded={setExpanded}
+                handleToggle={handleToggle}
+              />
             )}
           </Box>
         </Box>
