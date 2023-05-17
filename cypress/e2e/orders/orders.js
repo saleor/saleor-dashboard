@@ -238,7 +238,7 @@ describe("Orders", () => {
   );
 
   it(
-    "should add line item discount (for single product in order) . TC: 2108",
+    "should add line item discount (for single product in order) . TC: SALEOR_2125",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       const totalPrice = variantPrice + shippingPrice;
@@ -270,7 +270,7 @@ describe("Orders", () => {
   );
 
   it(
-    "should remove product from unconfirmed order . TC: 2109",
+    "should remove product from unconfirmed order . TC: 2126",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       createUnconfirmedOrder({
@@ -288,7 +288,7 @@ describe("Orders", () => {
     },
   );
   it(
-    "should change quantity of products on order detail view . TC: 2110",
+    "should change quantity of products on order detail view . TC: 2127",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       createUnconfirmedOrder({
@@ -314,7 +314,7 @@ describe("Orders", () => {
     },
   );
   it(
-    "should add new product on order detail view . TC: 2111",
+    "should add new product on order detail view . TC: 2128",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       createUnconfirmedOrder({

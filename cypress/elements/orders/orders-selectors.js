@@ -19,16 +19,16 @@ export const ORDERS_SELECTORS = {
   orderSummaryTotalPriceRow: '[data-test-id="order-total-price"]',
   dataGridTable: "[data-testid='data-grid-canvas']",
   productDeleteFromRowButton: "[data-test-id='row-action-button']",
+  markAsPaidButton: '[data-test-id="markAsPaidButton"]',
+  grantRefundButton: '[data-test-id="grantRefundButton"]',
+  transactionReferenceInput: '[data-test-id="transaction-reference-input"]',
+  orderTransactionsList: '[data-test-id="orderTransactionsList"]',
+  captureManualTransactionButton:
+    '[data-test-id="captureManualTransactionButton"]',
 };
 export const ADD_PRODUCT_TO_ORDER_DIALOG = {
   productRow: "[data-test-id='product']",
   productName: "[data-test-id='product-name']",
   productVariant: "[data-test-id='variant']",
   checkbox: "[data-test-id='checkbox']",
-  markAsPaidButton: '[data-test-id="markAsPaidButton"]',
-  transactionReferenceInput: '[data-test-id="transaction-reference-input"]',
-  orderTransactionsList: '[data-test-id="orderTransactionsList"]',
-  grantRefundButton: '[data-test-id="grantRefundButton"]',
-  captureManualTransactionButton:
-    '[data-test-id="captureManualTransactionButton"]',
 };
