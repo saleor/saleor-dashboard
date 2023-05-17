@@ -1,7 +1,5 @@
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { FulfillmentStatus } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import OrderGrantRefundPage, {
@@ -244,14 +242,17 @@ const props: OrderGrantRefundPageProps = {
   onSubmit: data => console.log("onSubmit", data),
 };
 
-storiesOf("Views / Orders / Grant refund order", module)
-  .addDecorator(Decorator)
-  .add("grant refund", () => <OrderGrantRefundPage {...props} />)
-  .add("loading", () => (
-    <OrderGrantRefundPage
-      submitState="loading"
-      order={null}
-      loading={true}
-      onSubmit={() => undefined}
-    />
-  ));
+export default {
+  title: "Orders / Grant refund order",
+};
+
+export const GrantRefund = () => <OrderGrantRefundPage {...props} />;
+
+export const Loading = () => (
+  <OrderGrantRefundPage
+    submitState="loading"
+    order={null}
+    loading={true}
+    onSubmit={() => undefined}
+  />
+);

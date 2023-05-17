@@ -1,11 +1,9 @@
 import { ShippingMethodTypeEnum } from "@dashboard/graphql";
 import { shippingZone } from "@dashboard/shipping/fixtures";
-import Decorator from "@dashboard/storybook//Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { taxClasses } from "@dashboard/taxes/fixtures";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import ShippingZoneRatesPage, {
   ShippingZoneRatesPageProps,
 } from "./ShippingZoneRatesPage";
@@ -70,32 +68,38 @@ const props: ShippingZoneRatesPageProps = {
   fetchMoreTaxClasses: undefined,
 };
 
-storiesOf("Shipping / Shipping rate", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("create price rate", () => <ShippingZoneRatesPage {...props} />)
-  .add("create weight rate", () => (
-    <ShippingZoneRatesPage {...props} variant={ShippingMethodTypeEnum.WEIGHT} />
-  ))
-  .add("loading", () => (
-    <ShippingZoneRatesPage
-      {...props}
-      disabled={true}
-      rate={undefined}
-      saveButtonBarState={"loading"}
-    />
-  ))
-  .add("update price rate", () => (
-    <ShippingZoneRatesPage
-      {...props}
-      shippingChannels={channels}
-      rate={shippingZone.shippingMethods[2]}
-    />
-  ))
-  .add("update weight rate", () => (
-    <ShippingZoneRatesPage
-      {...props}
-      shippingChannels={channels}
-      variant={ShippingMethodTypeEnum.WEIGHT}
-    />
-  ));
+export default {
+  title: "Shipping / Shipping rate",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const CreatePriceRate = () => <ShippingZoneRatesPage {...props} />;
+
+export const CreateWeightRate = () => (
+  <ShippingZoneRatesPage {...props} variant={ShippingMethodTypeEnum.WEIGHT} />
+);
+
+export const Loading = () => (
+  <ShippingZoneRatesPage
+    {...props}
+    disabled={true}
+    rate={undefined}
+    saveButtonBarState={"loading"}
+  />
+);
+
+export const UpdatePriceRate = () => (
+  <ShippingZoneRatesPage
+    {...props}
+    shippingChannels={channels}
+    rate={shippingZone.shippingMethods[2]}
+  />
+);
+
+export const UpdateWeightRate = () => (
+  <ShippingZoneRatesPage
+    {...props}
+    shippingChannels={channels}
+    variant={ShippingMethodTypeEnum.WEIGHT}
+  />
+);

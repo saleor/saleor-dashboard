@@ -1,4 +1,4 @@
-export { deleteChannelsStartsWith } from "./channelsUtils";
+export { deleteChannelsStartsWith, getDefaultChannel } from "./channelsUtils";
 export { createOrder, createReadyToFulfillOrder } from "./ordersUtils";
 export { createShipping, deleteShippingStartsWith } from "./shippingUtils";
 export {

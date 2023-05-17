@@ -1,6 +1,4 @@
 import { permissions } from "@dashboard/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { emptyPermissionGroup, permissionGroup, users } from "../../fixtures";
@@ -28,21 +26,25 @@ const props: PermissionGroupDetailsPageProps = {
   toolbar: null,
 };
 
-storiesOf("Permission Groups / Permission Group Details", module)
-  .addDecorator(Decorator)
-  .add("default", () => <PermissionGroupDetailsPage {...props} />)
-  .add("no members", () => (
-    <PermissionGroupDetailsPage
-      {...props}
-      members={[]}
-      permissionGroup={emptyPermissionGroup}
-    />
-  ))
-  .add("loading", () => (
-    <PermissionGroupDetailsPage
-      {...props}
-      disabled={true}
-      permissionGroup={undefined}
-      permissions={undefined}
-    />
-  ));
+export default {
+  title: "Permission Groups / Permission Group Details",
+};
+
+export const Default = () => <PermissionGroupDetailsPage {...props} />;
+
+export const NoMembers = () => (
+  <PermissionGroupDetailsPage
+    {...props}
+    members={[]}
+    permissionGroup={emptyPermissionGroup}
+  />
+);
+
+export const Loading = () => (
+  <PermissionGroupDetailsPage
+    {...props}
+    disabled={true}
+    permissionGroup={undefined}
+    permissions={undefined}
+  />
+);

@@ -3,11 +3,9 @@ import {
   pageListProps,
   sortPageProps,
 } from "@dashboard/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import { permissionGroups } from "../../fixtures";
 import { PermissionGroupListUrlSortField } from "../../urls";
 import PermissionGroupListPage, {
@@ -27,17 +25,17 @@ const props: PermissionGroupListPageProps = {
   },
 };
 
-storiesOf("Permission Groups / Permission Group List", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <PermissionGroupListPage {...props} />)
-  .add("loading", () => (
-    <PermissionGroupListPage
-      {...props}
-      permissionGroups={undefined}
-      disabled={true}
-    />
-  ))
-  .add("no data", () => (
-    <PermissionGroupListPage {...props} permissionGroups={[]} disabled={true} />
-  ));
+export default {
+  title: "Permission Groups / Permission Group List",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <PermissionGroupListPage {...props} />;
+
+export const Loading = () => (
+  <PermissionGroupListPage
+    {...props}
+    permissionGroups={undefined}
+    disabled={true}
+  />
+);
