@@ -141,7 +141,7 @@ export function useAuthProvider({
         includeDetails: false,
       });
 
-      if (isEmpty(result.data.tokenCreate.user.userPermissions)) {
+      if (isEmpty(result.data?.tokenCreate.user.userPermissions)) {
         setErrors(["noPermissionsError"]);
         await handleLogout();
       }

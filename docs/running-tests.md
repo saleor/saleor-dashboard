@@ -23,11 +23,3 @@ You are ready to run Cypress commands like:
 ```shell
 npm run cy:open
 ```
-
-## Updating recorded responses
-
-We are using [Polly.js](https://netflix.github.io/pollyjs/#/) to record and replay API responses. Before you run update make sure that you have Saleor running at `localhost:8000/graphql/`. To update the recorded responses, run:
-
-```shell
-POLLY_MODE=record npm run test
-```
