@@ -62,7 +62,7 @@ export const NewColumnPickerCategories: React.FC<
       justifyContent="space-between"
       __minHeight="502px"
     >
-      <Box>
+      <Box display="flex" flexDirection="column" height="100%">
         <Box
           display="flex"
           paddingX={7}
@@ -91,7 +91,6 @@ export const NewColumnPickerCategories: React.FC<
               display="flex"
               paddingX={7}
               style={{ boxSizing: "border-box" }}
-              __flex="1 1 auto"
             >
               <SearchInput
                 size="small"
@@ -103,9 +102,17 @@ export const NewColumnPickerCategories: React.FC<
                 }}
               />
             </Box>
-            <Box paddingX={8} paddingY={4}>
-              {currentCategory.availableNodes === undefined ? (
-                <CircularProgress />
+            <Box paddingX={8} paddingY={4} flexGrow="1">
+              {!currentCategory.availableNodes.length ? (
+                <Box
+                  width="100%"
+                  height="100%"
+                  display="flex"
+                  alignItems="center"
+                  justifyContent="center"
+                >
+                  <CircularProgress />
+                </Box>
               ) : (
                 currentCategory.availableNodes.map(node => (
                   <Box
