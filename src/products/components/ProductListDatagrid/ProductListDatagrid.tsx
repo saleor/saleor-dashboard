@@ -104,6 +104,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     dynamicColumns,
     selectedColumns,
     columnCategories,
+    recentlyAddedColumn,
   } = useColumns({
     staticColumns: productListStaticColumnAdapter(intl, sort),
     columnCategories: productListDynamicColumnAdapter({
@@ -254,6 +255,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           fullScreenTitle={intl.formatMessage(messages.products)}
           onRowClick={handleRowClick}
           rowAnchor={handleRowAnchor}
+          recentlyAddedColumn={recentlyAddedColumn}
           renderColumnPicker={() => (
             <NewColumnPicker
               staticColumns={staticColumns}

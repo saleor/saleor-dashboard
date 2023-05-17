@@ -55,6 +55,10 @@ export const useColumns = ({
     [dynamicColumns, staticColumns, selectedColumns],
   );
 
+  const [recentlyAddedColumn, setRecentlyAddedColumn] = React.useState<
+    string | null
+  >(null);
+
   const [visibleColumns, setVisibleColumns] =
     useStateFromProps(initialColumnsState);
 
@@ -82,7 +86,16 @@ export const useColumns = ({
     [setVisibleColumns],
   );
 
-  const onChange = onSave;
+  const onChange = (columns: string[]) => {
+    const isColumnAdded = columns.length > selectedColumns.length;
+    if (isColumnAdded) {
+      setRecentlyAddedColumn(columns.find(x => !selectedColumns.includes(x)));
+    } else {
+      setRecentlyAddedColumn(null);
+    }
+    onSave(columns);
+  };
+
   const onDynamicColumnSelect = setDynamicColumnSettings;
 
   return {
@@ -98,5 +111,6 @@ export const useColumns = ({
     selectedColumns,
     columnCategories,
     columnPickerSettings,
+    recentlyAddedColumn,
   };
 };
