@@ -98,6 +98,8 @@ jobs:
       GREP_TAGS: ${{ github.event.inputs.tags || '@allEnv'}}
     outputs:
       status: ${{ steps.cypress.outcome }}
+      dashboard_url: ${{ steps.cypress.outputs.dashboardUrl }}
+      environment: ${{  steps.get-env-uri.outputs.ENV_URI }}
     container: cypress/browsers:node18.12.0-chrome106-ff106
     strategy:
       fail-fast: false
@@ -190,7 +192,7 @@ jobs:
       - name: get environment variables
         id: get-environment-variables
         run: |
-              node .github/workflows/getEnvironmentVariables.js \
+              node .github/workflows/cypressTestsHelpers/getEnvironmentVariables.js \
               --version $VERSION \
               --token "$TOKEN" \
               --repo_token "$REPO_TOKEN" \
@@ -297,7 +299,7 @@ jobs:
             export GITHUB_TOKEN=$( \
             curl --request GET --url ${{ secrets.VAULT_URL}} --header "Authorization: JWT ${{ secrets.VAULT_JWT }}" | jq -r .token \
             )
-            node .github/workflows/approveAndMergeReleasePR.js \
+            node .github/workflows/cypressTestsHelpers/approveAndMergeReleasePR.js \
             --version $version \
             --pull_request_number $pull_request_number \
             --dashboard_url $dashboard_url \
@@ -308,6 +310,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [get-environment-variables, run-tests-on-release, add-review-and-merge-patch]
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
       - name: Notify Slack
         env:
           JOB_DEPLOYMENT_KIND: staging
@@ -315,5 +320,46 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_RELEASES_WEBHOOK_URL }}
           JOB_TITLE: "Test release workflow - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}"
           JOB_KIND: "release tests"
+        run: |
+          python3 .github/workflows/notify/notify-slack.py
+
+  send-slack-notification-scheduled-and-manually:
+    if: ${{always() && github.event_name != 'repository_dispatch'}}
+    defaults:
+      run:
+       shell: bash
+       working-directory: .github/workflows
+    runs-on: ubuntu-latest
+    needs: [run-tests-in-parallel]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: Install dependencies
+        run: |
+              npm ci
+
+      - name: Get tests results
+        id: get-tests-results
+        env: 
+         tests_status: ${{ needs.run-tests-in-parallel.outputs.status }}
+         dashboard_url: ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}
+        run: |
+            node cypressTestsHelpers/getFailedTests.js \
+            --dashboard_url $dashboard_url 
+
+      - name: Notify Slack
+        if: steps.get-tests-results.outputs.testStatus == 'true'
+        env:
+          JOB_DEPLOYMENT_KIND: ${{ needs.run-tests-in-parallel.outputs.environment }}
+          JOB_STATUS: ${{ job.status }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_SALEOR_QA_WEBHOOK_URL }}
+          JOB_TITLE: "A lot of tests failed, something is probably broken - ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}"
+          JOB_KIND: "Tests"
         run: |
           python3 .github/workflows/notify/notify-slack.py
