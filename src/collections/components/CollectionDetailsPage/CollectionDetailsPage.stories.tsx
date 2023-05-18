@@ -4,11 +4,9 @@ import { createCollectionChannelsData } from "@dashboard/channels/utils";
 import { collection as collectionFixture } from "@dashboard/collections/fixtures";
 import { listActionsProps, pageListProps } from "@dashboard/fixtures";
 import { CollectionErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import CollectionDetailsPage, {
   CollectionDetailsPageProps,
 } from "./CollectionDetailsPage";
@@ -39,42 +37,47 @@ const props: Omit<CollectionDetailsPageProps, "classes"> = {
   selectedChannelId: "123",
 };
 
-storiesOf("Collections / Collection detailsCollection details", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <CollectionDetailsPage {...props} />)
-  .add("loading", () => (
-    <CollectionDetailsPage {...props} collection={undefined} disabled={true} />
-  ))
-  .add("form errors", () => (
-    <CollectionDetailsPage
-      {...props}
-      errors={[
-        {
-          code: CollectionErrorCode.REQUIRED,
-          field: "name",
-          message: "Collection field name required",
-        },
-        {
-          code: CollectionErrorCode.REQUIRED,
-          field: "description",
-          message: "Collection field description required",
-        },
-      ].map(err => ({
-        __typename: "CollectionError",
-        ...err,
-      }))}
-    />
-  ))
-  .add("no products", () => (
-    <CollectionDetailsPage
-      {...props}
-      collection={{
-        ...collection,
-        products: {
-          ...collection.products,
-          edges: [],
-        },
-      }}
-    />
-  ));
+export default {
+  title: "Collections / Collection detailsCollection details",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <CollectionDetailsPage {...props} />;
+
+export const Loading = () => (
+  <CollectionDetailsPage {...props} collection={undefined} disabled={true} />
+);
+
+export const FormErrors = () => (
+  <CollectionDetailsPage
+    {...props}
+    errors={[
+      {
+        code: CollectionErrorCode.REQUIRED,
+        field: "name",
+        message: "Collection field name required",
+      },
+      {
+        code: CollectionErrorCode.REQUIRED,
+        field: "description",
+        message: "Collection field description required",
+      },
+    ].map(err => ({
+      __typename: "CollectionError",
+      ...err,
+    }))}
+  />
+);
+
+export const NoProducts = () => (
+  <CollectionDetailsPage
+    {...props}
+    collection={{
+      ...collection,
+      products: {
+        ...collection.products,
+        edges: [],
+      },
+    }}
+  />
+);

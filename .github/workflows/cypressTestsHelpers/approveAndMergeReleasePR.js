@@ -1,6 +1,8 @@
 const { Octokit } = require("@octokit/core");
 const { Command } = require("commander");
 const { GraphQLClient } = require("graphql-request");
+const { statusAndID } = require("./getTestsResults");
+const { failedTestCases } = require("./getTestsResults");
 
 const program = new Command();
 const client = new GraphQLClient("https://dashboard.cypress.io/graphql");
@@ -33,7 +35,7 @@ program
 
     const commitId = pullRequest.data.merge_commit_sha;
 
-    const data = await getTestsStatusAndId(options.dashboard_url);
+    const data = await statusAndID(options.dashboard_url);
 
     let testsStatus = data.status;
 
@@ -42,7 +44,7 @@ program
     if (testsStatus === "FAILED") {
       const failedNewTests = [];
       const listOfTestIssues = await getListOfTestsIssues(octokit);
-      const testCases = await getFailedTestCases(data.runId);
+      const testCases = await failedTestCases(data.runId);
       testCases.forEach(testCase => {
         if (testCase.titleParts) {
           const issue = issueOnGithub(listOfTestIssues, testCase.titleParts[1]);
@@ -131,76 +133,6 @@ program
 function isPatchRelease(version) {
   const regex = /\d+\.\d+\.[1-9]/;
   return version.match(regex) ? true : false;
-}
-
-async function getTestsStatusAndId(dashboardUrl) {
-  const getProjectRegex = /\/projects\/([^\/]*)/;
-  const getRunRegex = /\/runs\/([^\/]*)/;
-
-  const requestVariables = {
-    projectId: dashboardUrl.match(getProjectRegex)[1],
-    buildNumber: dashboardUrl.match(getRunRegex)[1],
-  };
-
-  const throwErrorAfterTimeout = setTimeout(function () {
-    throw new Error("Run have still running status, after all tests executed");
-  }, 1200000);
-
-  const data = await waitForTestsToFinish(requestVariables);
-
-  clearTimeout(throwErrorAfterTimeout);
-  return { status: data.status, runId: data.id };
-}
-
-async function waitForTestsToFinish(requestVariables) {
-  return new Promise((resolve, reject) => {
-    client
-      .request(
-        `query ($projectId: String!, $buildNumber: ID!) {
-      runByBuildNumber(buildNumber: $buildNumber, projectId: $projectId) {
-        status,
-        id
-      }
-    }`,
-        requestVariables,
-      )
-      .then(response => {
-        if (response.runByBuildNumber.status === "RUNNING") {
-          setTimeout(async function () {
-            resolve(await waitForTestsToFinish(requestVariables));
-          }, 10000);
-        } else {
-          resolve(response.runByBuildNumber);
-        }
-      });
-  });
-}
-
-async function getFailedTestCases(runId) {
-  const requestVariables = {
-    input: {
-      runId,
-      testResultState: ["FAILED"],
-    },
-  };
-
-  return new Promise((resolve, reject) => {
-    client
-      .request(
-        `query RunTestResults($input: TestResultsTableInput!) {
-          testResults(input: $input) {
-            ... on TestResult {
-            ...RunTestResult
-            }
-          }
-        }
-        fragment RunTestResult on TestResult {  id  titleParts  state}`,
-        requestVariables,
-      )
-      .then(response => {
-        resolve(response.testResults);
-      });
-  });
 }
 
 async function getListOfTestsIssues(octokit) {

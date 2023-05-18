@@ -91,7 +91,8 @@ describe("Products available in listings", () => {
         .then(({ product: productResp }) => {
           product = productResp;
           const productUrl = productDetailsUrl(product.id);
-          updateProductIsAvailableForPurchase(productUrl, true);
+          cy.visit(productUrl);
+          updateProductIsAvailableForPurchase(true);
         })
         .then(() => {
           getProductDetails(product.id, defaultChannel.slug);
@@ -121,7 +122,8 @@ describe("Products available in listings", () => {
         .then(({ product: productResp }) => {
           product = productResp;
           const productUrl = productDetailsUrl(product.id);
-          updateProductIsAvailableForPurchase(productUrl, false);
+          cy.visit(productUrl);
+          updateProductIsAvailableForPurchase(false);
         })
         .then(() => {
           getProductDetails(product.id, defaultChannel.slug);

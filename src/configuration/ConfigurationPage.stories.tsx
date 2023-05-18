@@ -1,12 +1,14 @@
 import { createConfigurationMenu } from "@dashboard/configuration";
 import { UserFragment } from "@dashboard/graphql";
 import { staffMember } from "@dashboard/staff/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import { ConfigurationPage } from "./ConfigurationPage";
+
+export default {
+  title: "Configuration / Configuration",
+};
 
 const user = {
   __typename: staffMember.__typename,
@@ -40,14 +42,13 @@ const Story: React.FC<{ user: UserFragment }> = ({ user }) => {
   );
 };
 
-storiesOf("Configuration", module)
-  .addDecorator(Decorator)
-  .add("default", () => <Story user={user} />)
-  .add("partial access", () => (
-    <Story
-      user={{
-        ...user,
-        userPermissions: user.userPermissions.slice(2, 6),
-      }}
-    />
-  ));
+export const Default = () => <Story user={user} />;
+
+export const PartialAccess = () => (
+  <Story
+    user={{
+      ...user,
+      userPermissions: user.userPermissions.slice(2, 6),
+    }}
+  />
+);

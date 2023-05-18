@@ -8,11 +8,9 @@ import {
   tabPageProps,
 } from "@dashboard/fixtures";
 import { DiscountStatusEnum, DiscountValueTypeEnum } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import SaleListPage, { SaleListPageProps } from "./SaleListPage";
 
 const props: SaleListPageProps = {
@@ -56,16 +54,21 @@ const props: SaleListPageProps = {
   },
 };
 
-storiesOf("Discounts / Sale list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <SaleListPage {...props} />)
-  .add("loading", () => <SaleListPage {...props} sales={undefined} />)
-  .add("no data", () => <SaleListPage {...props} sales={[]} />)
-  .add("no channels", () => (
-    <SaleListPage
-      {...props}
-      sales={saleList.map(sale => ({ ...sale, channelListings: [] }))}
-      selectedChannelId=""
-    />
-  ));
+export default {
+  title: "Discounts / Sale list",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <SaleListPage {...props} />;
+
+export const Loading = () => <SaleListPage {...props} sales={undefined} />;
+
+export const NoData = () => <SaleListPage {...props} sales={[]} />;
+
+export const NoChannels = () => (
+  <SaleListPage
+    {...props}
+    sales={saleList.map(sale => ({ ...sale, channelListings: [] }))}
+    selectedChannelId=""
+  />
+);

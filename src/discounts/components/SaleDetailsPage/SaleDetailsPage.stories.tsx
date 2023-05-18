@@ -3,11 +3,9 @@ import { createSaleChannels } from "@dashboard/channels/utils";
 import { sale } from "@dashboard/discounts/fixtures";
 import { listActionsProps } from "@dashboard/fixtures";
 import { DiscountErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import SaleDetailsPage, {
   SaleDetailsPageProps,
   SaleDetailsPageTab,
@@ -50,28 +48,34 @@ const props: SaleDetailsPageProps = {
   ...listActionsProps,
 };
 
-storiesOf(" Discounts / Sale details", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <SaleDetailsPage {...props} />)
-  .add("loading", () => (
-    <SaleDetailsPage {...props} sale={undefined} disabled={true} />
-  ))
-  .add("form errors", () => (
-    <SaleDetailsPage
-      {...props}
-      errors={["name", "startDate", "endDate", "value"].map(field => ({
-        __typename: "DiscountError",
-        channels: [],
-        code: DiscountErrorCode.INVALID,
-        field,
-        message: "Discount invalid",
-      }))}
-    />
-  ))
-  .add("collections", () => (
-    <SaleDetailsPage {...props} activeTab={SaleDetailsPageTab.collections} />
-  ))
-  .add("products", () => (
-    <SaleDetailsPage {...props} activeTab={SaleDetailsPageTab.products} />
-  ));
+export default {
+  title: " Discounts / Sale details",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <SaleDetailsPage {...props} />;
+
+export const Loading = () => (
+  <SaleDetailsPage {...props} sale={undefined} disabled={true} />
+);
+
+export const FormErrors = () => (
+  <SaleDetailsPage
+    {...props}
+    errors={["name", "startDate", "endDate", "value"].map(field => ({
+      __typename: "DiscountError",
+      channels: [],
+      code: DiscountErrorCode.INVALID,
+      field,
+      message: "Discount invalid",
+    }))}
+  />
+);
+
+export const Collections = () => (
+  <SaleDetailsPage {...props} activeTab={SaleDetailsPageTab.collections} />
+);
+
+export const Products = () => (
+  <SaleDetailsPage {...props} activeTab={SaleDetailsPageTab.products} />
+);

@@ -21,9 +21,9 @@ import CategoryListComponent from "./views/CategoryList";
 interface CategoryDetailsRouteParams {
   id: string;
 }
-const CategoryDetails: React.FC<RouteComponentProps<
-  CategoryDetailsRouteParams
->> = ({ location, match }) => {
+const CategoryDetails: React.FC<
+  RouteComponentProps<CategoryDetailsRouteParams>
+> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CategoryUrlQueryParams = qs;
 
@@ -38,16 +38,16 @@ const CategoryDetails: React.FC<RouteComponentProps<
 interface CategoryCreateRouteParams {
   id: string;
 }
-const CategoryCreate: React.FC<RouteComponentProps<
-  CategoryCreateRouteParams
->> = ({ match }) => (
+const CategoryCreate: React.FC<
+  RouteComponentProps<CategoryCreateRouteParams>
+> = ({ match }) => (
   <CategoryCreateView
     parentId={match.params.id ? decodeURIComponent(match.params.id) : undefined}
   />
 );
 
 const CategoryList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: CategoryListUrlQueryParams = {
     ...asSortParams(qs, CategoryListUrlSortField),
   };
