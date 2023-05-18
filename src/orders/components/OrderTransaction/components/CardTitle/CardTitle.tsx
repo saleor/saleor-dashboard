@@ -3,6 +3,7 @@ import {
   TransactionActionEnum,
   TransactionItemFragment,
 } from "@dashboard/graphql";
+import { maybe } from "@dashboard/misc";
 import { FakeTransaction } from "@dashboard/orders/types";
 import { IconButton } from "@material-ui/core";
 import { Button, LinkIcon } from "@saleor/macaw-ui";
@@ -45,7 +46,14 @@ export const CardTitle: React.FC<CardTitleProps> = ({
     canceledAmount,
     chargedAmount,
     authorizedAmount,
+    type,
   } = transaction;
+
+  // Capitalize transaction type
+  const title = maybe(
+    () => type[0].toUpperCase() + type.slice(1).toLowerCase(),
+    "Transaction",
+  );
 
   return (
     <DefaultCardTitle
@@ -61,7 +69,7 @@ export const CardTitle: React.FC<CardTitleProps> = ({
                 <LinkIcon />
               </IconButton>
             )}
-            {transaction.type}
+            {title}
           </TransactionLink>
 
           <div className={classes.dataDisplay}>
