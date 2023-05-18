@@ -1,4 +1,4 @@
-import { UserFragment } from "@dashboard/graphql";
+import { UserFragment, UserWithChannelsFragment } from "@dashboard/graphql";
 import {
   GetExternalAccessTokenData,
   GetExternalAuthUrlData,
@@ -26,7 +26,8 @@ export const UserContextError = {
   unknownLoginError: "unknownLoginError",
 } as const;
 
-export type UserContextError = typeof UserContextError[keyof typeof UserContextError];
+export type UserContextError =
+  (typeof UserContextError)[keyof typeof UserContextError];
 
 export interface UserContext {
   login: (username: string, password: string) => Promise<LoginData>;
@@ -39,7 +40,7 @@ export interface UserContext {
     pluginId: string,
     input: RequestExternalLoginInput,
   ) => Promise<GetExternalAuthUrlData>;
-  user?: UserFragment;
+  user?: UserFragment | UserWithChannelsFragment;
   authenticating: boolean;
   authenticated: boolean;
   errors: UserContextError[];

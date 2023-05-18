@@ -10,3 +10,4 @@ export {
   usePermissionGroupWithChannelsUpdateMutation,
   useUserDetailsWithChannelsQuery,
 } from "./hooks.channelPermissions.generated";
+export type { UserWithChannelsFragment } from "./types.channelPermissions.generated";
