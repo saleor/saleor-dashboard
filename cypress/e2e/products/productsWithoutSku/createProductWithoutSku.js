@@ -150,13 +150,13 @@ describe("Creating variants", () => {
           getProductVariants(createdProduct.id, defaultChannel.slug);
         })
         .then(([firstVariant, secondVariant]) => {
-          expect(firstVariant).to.have.property("price", variants[0].price);
-          expect(secondVariant).to.have.property("name", name);
-          expect(secondVariant).to.have.property("price", variants[1].price);
+          expect(secondVariant).to.have.property("price", variants[0].price);
+          expect(firstVariant).to.have.property("name", name);
+          expect(firstVariant).to.have.property("price", variants[1].price);
           createWaitingForCaptureOrder({
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
-            variantsList: [secondVariant],
+            variantsList: [firstVariant],
             shippingMethodName: shippingMethod.name,
             address,
           });
