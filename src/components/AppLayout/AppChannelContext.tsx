@@ -43,6 +43,24 @@ export const AppChannelProvider: React.FC = ({ children }) => {
 
   const [isPickerActive, setPickerActive] = React.useState(false);
   React.useEffect(() => {
+    if ("accessibleChannels" in user) {
+      const accessibleChannelsIds = user.accessibleChannels.map(
+        chan => chan.id,
+      );
+      const accessibleChannels = channelData?.channels?.filter(channel =>
+        accessibleChannelsIds.includes(channel.id),
+      );
+
+      if (
+        !isValidChannel(selectedChannel, accessibleChannels) &&
+        channelData?.channels?.length > 0
+      ) {
+        setSelectedChannel(accessibleChannels[0].id);
+      }
+
+      return;
+    }
+
     if (
       !isValidChannel(selectedChannel, channelData?.channels) &&
       channelData?.channels?.length > 0
