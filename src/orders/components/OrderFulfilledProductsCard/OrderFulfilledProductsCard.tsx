@@ -1,11 +1,11 @@
-import CardSpacer from "@dashboard/components/CardSpacer";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import TrashIcon from "@dashboard/icons/Trash";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import { Card, CardContent, TableBody } from "@material-ui/core";
+import { TableBody } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
+import { Box, Divider } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { renderCollection } from "../../../misc";
@@ -62,17 +62,17 @@ const OrderFulfilledProductsCard: React.FC<
   };
 
   return (
-    <>
-      <Card>
-        <OrderCardTitle
-          withStatus
-          lines={fulfillment?.lines}
-          fulfillmentOrder={fulfillment?.fulfillmentOrder}
-          status={fulfillment?.status}
-          warehouseName={fulfillment?.warehouse?.name}
-          orderNumber={order?.number}
-          toolbar={
-            cancelableStatuses.includes(fulfillment?.status) && (
+    <Box>
+      <OrderCardTitle
+        withStatus
+        lines={fulfillment?.lines}
+        fulfillmentOrder={fulfillment?.fulfillmentOrder}
+        status={fulfillment?.status}
+        warehouseName={fulfillment?.warehouse?.name}
+        orderNumber={order?.number}
+        toolbar={
+          <Box display="flex" alignItems="center" gap={6}>
+            {cancelableStatuses.includes(fulfillment?.status) && (
               <IconButton
                 variant="secondary"
                 className={classes.deleteIcon}
@@ -81,33 +81,34 @@ const OrderFulfilledProductsCard: React.FC<
               >
                 <TrashIcon />
               </IconButton>
-            )
-          }
-        />
-        <CardContent>
-          <ResponsiveTable className={classes.table}>
-            <TableHeader />
-            <TableBody>
-              {renderCollection(getLines(), line => (
-                <TableLine key={line.id} line={line} />
-              ))}
-            </TableBody>
-            <ExtraInfoLines fulfillment={fulfillment} />
-          </ResponsiveTable>
-          <ActionButtons
-            orderId={order?.id}
-            status={fulfillment?.status}
-            trackingNumber={fulfillment?.trackingNumber}
-            orderIsPaid={order?.isPaid}
-            fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
-            onTrackingCodeAdd={onTrackingCodeAdd}
-            onApprove={onOrderFulfillmentApprove}
-            hasTransactions={orderHasTransactions(order)}
-          />
-        </CardContent>
-      </Card>
-      <CardSpacer />
-    </>
+            )}
+            <ActionButtons
+              orderId={order?.id}
+              status={fulfillment?.status}
+              trackingNumber={fulfillment?.trackingNumber}
+              orderIsPaid={order?.isPaid}
+              fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
+              onTrackingCodeAdd={onTrackingCodeAdd}
+              onApprove={onOrderFulfillmentApprove}
+              hasTransactions={orderHasTransactions(order)}
+            />
+          </Box>
+        }
+      />
+      <Box>
+        <ResponsiveTable className={classes.table}>
+          <TableHeader />
+          <TableBody>
+            {renderCollection(getLines(), line => (
+              <TableLine key={line.id} line={line} />
+            ))}
+          </TableBody>
+          <ExtraInfoLines fulfillment={fulfillment} />
+        </ResponsiveTable>
+        {props.children}
+      </Box>
+      <Divider />
+    </Box>
   );
 };
 
