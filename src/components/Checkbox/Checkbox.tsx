@@ -35,6 +35,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ helperText, error, ...props }) => {
   return (
     <>
       <MuiCheckbox
+        data-test-id="checkbox"
         {...rest}
         onClick={
           disableClickPropagation

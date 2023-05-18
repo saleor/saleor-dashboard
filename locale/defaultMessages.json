@@ -2134,6 +2134,9 @@
     "context": "checkbox label",
     "string": "Restrict order value"
   },
+  "DhFqJF": {
+    "string": "Edit discount"
+  },
   "Dhherd": {
     "context": "dialog header, title",
     "string": "Invoice Generation"
@@ -3237,6 +3240,9 @@
     "context": "cancelled fulfillment, section header",
     "string": "Refunded and Returned"
   },
+  "LKD6fB": {
+    "string": "Remove product"
+  },
   "LKoIB1": {
     "string": "Add search engine title and description to make this product easier to find"
   },
@@ -3647,10 +3653,6 @@
     "context": "input label",
     "string": "Stock reservation for authenticated user (in minutes)"
   },
-  "Oad+ES": {
-    "context": "alert message",
-    "string": "This product is not published in this channel."
-  },
   "ObRk1O": {
     "string": "If this option is disabled, discount will be counted for every eligible product"
   },
@@ -3923,6 +3925,10 @@
   "QJG+d/": {
     "context": "staff added type order discount",
     "string": "Staff added"
+  },
+  "QL4a0Z": {
+    "context": "alert message",
+    "string": "Not published in this channel"
   },
   "QLVddq": {
     "context": "button",
@@ -4428,9 +4434,6 @@
     "context": "searchbar placeholder",
     "string": "Country"
   },
-  "UD7/q8": {
-    "string": "No Products added to Order"
-  },
   "UJnqdm": {
     "context": "dialog header",
     "string": "Unassign Attribute From Product Type"
@@ -4617,6 +4620,10 @@
   "VIABHy": {
     "context": "error message",
     "string": "Default shipping zone already exists"
+  },
+  "VIdXPy": {
+    "context": "value input helper text",
+    "string": "Cannot be higher than the price"
   },
   "VKWPBf": {
     "context": "dialog header",
@@ -5153,6 +5160,9 @@
   "Yy/yDL": {
     "string": "Reset password"
   },
+  "YzLUXA": {
+    "string": "Ensure this value is greater than 0."
+  },
   "Z/7hyu": {
     "context": "card balance label",
     "string": "Card Balance"
@@ -5194,6 +5204,10 @@
   },
   "ZIc5lM": {
     "string": "Product Name"
+  },
+  "ZJOX8n": {
+    "context": "alert message",
+    "string": "Product no longer exists"
   },
   "ZJPYFl": {
     "context": "accepted header names",
@@ -5736,6 +5750,10 @@
   "d9UqaJ": {
     "context": "error message",
     "string": "Cannot change the quantity because of insufficient stock"
+  },
+  "dDCLFW": {
+    "context": "alert message",
+    "string": "Not available for sale this channel"
   },
   "dEUZg2": {
     "context": "header",
@@ -7221,10 +7239,6 @@
     "context": "gift card history message",
     "string": "Gift card was activated"
   },
-  "pEMxyy": {
-    "context": "alert message",
-    "string": "This product does no longer exist."
-  },
   "pFVX6g": {
     "string": "Variant with these attributes already exists"
   },
@@ -8557,6 +8571,10 @@
     "context": "modal header",
     "string": "Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."
   },
+  "zHx85l": {
+    "context": "value input helper text",
+    "string": "Cannot be higher than 100%"
+  },
   "zKOGkU": {
     "context": "time during discount is active, header",
     "string": "Active Dates"
@@ -8564,10 +8582,6 @@
   "zLtb4N": {
     "context": "gift card removed success alert message",
     "string": "{selectedItemsCount,plural,one{Successfully deleted gift card} other{Successfully deleted gift cards}}"
-  },
-  "zO+l0L": {
-    "context": "alert message",
-    "string": "This product is not available for sale in this channel."
   },
   "zQX6xO": {
     "context": "dialog header",
