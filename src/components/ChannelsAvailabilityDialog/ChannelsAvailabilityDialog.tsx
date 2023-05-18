@@ -1,5 +1,7 @@
+import { useUser } from "@dashboard/auth";
 import { Channel } from "@dashboard/channels/utils";
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { ChannelFragment } from "@dashboard/graphql";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 
@@ -23,7 +25,17 @@ export interface ChannelsAvailabilityDialogProps {
   toggleAll?: (items: Channel[], selected: number) => void;
 }
 
-export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProps> = ({
+function getAccessibleChannels(
+  channels: Channel[],
+  userAccessibleChannels: ChannelFragment[],
+) {
+  const ids = userAccessibleChannels.map(channel => channel.id);
+  return channels.filter(channel => ids.includes(channel.id));
+}
+
+export const ChannelsAvailabilityDialog: React.FC<
+  ChannelsAvailabilityDialogProps
+> = ({
   isSelected,
   channels,
   confirmButtonState,
@@ -37,9 +49,14 @@ export const ChannelsAvailabilityDialog: React.FC<ChannelsAvailabilityDialogProp
   title,
   toggleAll,
 }) => {
-  const { query, onQueryChange, filteredChannels } = useChannelsSearch(
+  const { user } = useUser();
+  channels = getAccessibleChannels(
     channels,
+    "accessibleChannels" in user ? user.accessibleChannels : [],
   );
+
+  const { query, onQueryChange, filteredChannels } =
+    useChannelsSearch(channels);
   const hasChannels = channels.length > 0;
 
   const handleToggleAll = () => toggleAll(channels, selected);
