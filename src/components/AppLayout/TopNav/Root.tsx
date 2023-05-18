@@ -1,3 +1,5 @@
+import { useUser } from "@dashboard/auth";
+import { filterAccessibleChannes } from "@dashboard/misc";
 import { Box, Text } from "@saleor/macaw-ui/next";
 import React, { PropsWithChildren } from "react";
 
@@ -22,6 +24,7 @@ export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
 }) => {
   const { availableChannels, channel, isPickerActive, setChannel } =
     useAppChannel(false);
+  const user = useUser();
 
   return (
     <TopNavWrapper withoutBorder={withoutBorder}>
@@ -38,7 +41,7 @@ export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
       >
         {isPickerActive && (
           <AppChannelSelect
-            channels={availableChannels}
+            channels={filterAccessibleChannes(availableChannels, user)}
             selectedChannelId={channel?.id}
             onChannelSelect={setChannel}
           />

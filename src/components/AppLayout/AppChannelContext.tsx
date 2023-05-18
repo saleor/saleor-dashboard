@@ -67,7 +67,7 @@ export const AppChannelProvider: React.FC = ({ children }) => {
     ) {
       setSelectedChannel(channelData.channels[0].id);
     }
-  }, [channelData]);
+  }, [channelData, selectedChannel, setSelectedChannel, user]);
 
   React.useEffect(() => {
     setChannel(selectedChannel);
