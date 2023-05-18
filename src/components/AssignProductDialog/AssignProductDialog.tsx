@@ -148,7 +148,10 @@ const AssignProductDialog: React.FC<AssignProductDialogProps> = props => {
                   const isSelected = productsDict[product.id] || false;
 
                   return (
-                    <TableRowLink key={product.id}>
+                    <TableRowLink
+                      key={product.id}
+                      data-test-id="assign-product-table-row"
+                    >
                       <TableCellAvatar
                         className={classes.avatar}
                         thumbnail={maybe(() => product.thumbnail.url)}

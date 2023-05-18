@@ -24,7 +24,7 @@ export const ATTRIBUTES_DETAILS = {
   entityTypeOptions: {
     PRODUCT: '[data-test-id="select-field-option-PRODUCT"]',
     PRODUCT_VARIANT: '[data-test-id="select-field-option-PRODUCT_VARIANT"]',
-    PAGE: '[data-test-id*="PAGE"]',
+    PAGE: '[data-test-id="select-field-option-PAGE"]',
   },
   selectUnitCheckbox: '[name="selectUnit"]',
   unitSystemSelect: '[data-test-id="unit-system"]',
