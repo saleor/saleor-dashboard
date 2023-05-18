@@ -73,18 +73,6 @@ export const CardTitle: React.FC<CardTitleProps> = ({
           </TransactionLink>
 
           <div className={classes.dataDisplay}>
-            {showActions &&
-              transaction.actions
-                .filter(action => action !== TransactionActionEnum.REFUND)
-                .map(action => (
-                  <Button
-                    variant="tertiary"
-                    onClick={() => onTransactionAction(transaction.id, action)}
-                  >
-                    <FormattedMessage {...mapActionToMessage[action]} />
-                  </Button>
-                ))}
-
             {cancelPendingAmount.amount > 0 && (
               <MoneyDisplay
                 label={intl.formatMessage(messages.cancelPending)}
@@ -140,6 +128,22 @@ export const CardTitle: React.FC<CardTitleProps> = ({
                 money={authorizedAmount}
               />
             )}
+
+            {showActions &&
+              transaction.actions
+                .filter(action => action !== TransactionActionEnum.REFUND)
+                .map(action => (
+                  <div>
+                    <Button
+                      variant="tertiary"
+                      onClick={() =>
+                        onTransactionAction(transaction.id, action)
+                      }
+                    >
+                      <FormattedMessage {...mapActionToMessage[action]} />
+                    </Button>
+                  </div>
+                ))}
           </div>
         </div>
       }
