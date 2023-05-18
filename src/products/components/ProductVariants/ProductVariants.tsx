@@ -78,7 +78,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
             getColumnData(c, channels, warehouses, variantAttributes, intl),
           )
         : [],
-    [variantAttributes, warehouses, channels],
+    [variantAttributes, warehouses, channels, intl],
   );
 
   const {
@@ -103,7 +103,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
-    [columns, variants],
+    [channels, columns, onAttributeValuesSearch, variants],
   );
 
   const getCellError = React.useCallback(
@@ -117,7 +117,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         searchAttributeValues: onAttributeValuesSearch,
         ...opts,
       }),
-    [columns, variants, errors],
+    [errors, columns, channels, variants, onAttributeValuesSearch],
   );
 
   return (

@@ -3,7 +3,7 @@
 import faker from "faker";
 
 import { BUTTON_SELECTORS, PRODUCTS_LIST } from "../../../elements/";
-import { DIALOGS_MESSAGES } from "../../../fixtures/";
+import { MESSAGES } from "../../../fixtures/";
 import { urlList } from "../../../fixtures/urlList";
 import { getDefaultChannel, productsUtils } from "../../../support/api/utils/";
 import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
@@ -55,9 +55,7 @@ describe("Test for deleting products", () => {
       cy.clickGridCell(0, 0);
       cy.clickGridCell(0, 1);
       cy.clickOnElement(BUTTON_SELECTORS.deleteProductsButton);
-      cy.contains(DIALOGS_MESSAGES.confirmProductsDeletion).should(
-        "be.visible",
-      );
+      cy.contains(MESSAGES.confirmProductsDeletion).should("be.visible");
       cy.addAliasToGraphRequest("productBulkDelete")
         .clickSubmitButton()
         .waitForRequestAndCheckIfNoErrors("@productBulkDelete");

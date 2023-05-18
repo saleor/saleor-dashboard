@@ -30,6 +30,15 @@ on:
         description: 'Type env if "Other" option is selected'
         type: string
         default: 'https://vXX.staging.saleor.cloud/' 
+      browser:
+        required: true 
+        description: 'Browser'
+        default: 'chrome'
+        type: choice
+        options:
+        - chrome
+        - firefox
+        - all
 
   schedule:
     - cron: '00 2 * * 1-5'
@@ -76,7 +85,7 @@ jobs:
         env:
           CI: true
           SALEOR_CLI_ENV: staging
-        run: npx saleor backup restore vmSD8fo4 --skip-webhooks-update
+        run: npx saleor backup restore W5yhqHkw --skip-webhooks-update
 
       - name: Notify Slack
         if: ${{ failure() }}
@@ -94,13 +103,11 @@ jobs:
     if: ${{ always() && github.event_name != 'repository_dispatch'  }} #Wait for revert-automation-env-to-snap, bot run always, even if skipped
     runs-on: ubuntu-latest
     env:
-      NODE_OPTIONS: "--max_old_space_size=4096"
       GREP_TAGS: ${{ github.event.inputs.tags || '@allEnv'}}
     outputs:
       status: ${{ steps.cypress.outcome }}
       dashboard_url: ${{ steps.cypress.outputs.dashboardUrl }}
       environment: ${{  steps.get-env-uri.outputs.ENV_URI }}
-    container: cypress/browsers:node18.12.0-chrome106-ff106
     strategy:
       fail-fast: false
       matrix:
@@ -109,6 +116,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
 
       - name: Check if other env
         id: get-typed-env-uri
@@ -128,6 +140,28 @@ jobs:
         with:
           node-version-file: '.nvmrc'
 
+      - name: Get browsers
+        id: get-browsers
+        uses: actions/github-script@v6
+        env:
+          browser: ${{github.event.inputs.browser}}
+          event_name: ${{github.event_name}}
+        with:
+          result-encoding: string
+          script: |
+            const { browser } = process.env
+            const { event_name } = process.env
+
+            switch (event_name) {
+              case 'workflow_dispatch':
+                return browser
+              case 'schedule':
+                return 'all'
+              default:
+                return 'chrome'
+            }
+
+
       - name: Cypress install
         id: cypress-install
         if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch'}}
@@ -135,10 +169,10 @@ jobs:
         with:
           runTests: false
 
-      - name: Cypress run
-        id: cypress
+      - name: Cypress run chrome
+        id: cypress-chrome
         continue-on-error: true
-        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch'}}
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["chrome", "all"]'), steps.get-browsers.outputs.result)}}
         uses: cypress-io/github-action@v5
         env:
           API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
@@ -161,6 +195,35 @@ jobs:
           group: 'UI - Chrome'
           record: true
           tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ env.GREP_TAGS }}
+          browser: chrome
+        
+      - name: Cypress run firefox
+        id: cypress-firefox
+        continue-on-error: true
+        if: ${{ github.event.inputs.tests != 'Critical' && github.event_name != 'repository_dispatch' && contains(fromJSON('["firefox", "all"]'), steps.get-browsers.outputs.result)}}
+        uses: cypress-io/github-action@v5
+        env:
+          API_URI: ${{ steps.get-env-uri.outputs.ENV_URI }}graphql/
+          APP_MOUNT_URI: ${{ secrets.APP_MOUNT_URI }}
+          CYPRESS_baseUrl: ${{ steps.get-env-uri.outputs.ENV_URI }}dashboard/
+          CYPRESS_USER_NAME: ${{ secrets.CYPRESS_USER_NAME }}
+          CYPRESS_SECOND_USER_NAME: ${{ secrets.CYPRESS_SECOND_USER_NAME }}
+          CYPRESS_USER_PASSWORD: ${{ secrets.CYPRESS_USER_PASSWORD }}
+          CYPRESS_PERMISSIONS_USERS_PASSWORD: ${{ secrets.CYPRESS_PERMISSIONS_USERS_PASSWORD }}
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          CYPRESS_MAILPITURL: ${{ secrets.CYPRESS_MAILPITURL }}
+          COMMIT_INFO_MESSAGE: All tests triggered via ${{ github.event_name}} on ${{ steps.get-env-uri.outputs.ENV_URI }}
+          CYPRESS_grepTags: ${{ env.GREP_TAGS }}
+          STRIPE_SECRET_KEY: ${{ secrets.STRIPE_SECRET_KEY }}
+          STRIPE_PUBLIC_KEY: ${{ secrets.STRIPE_PUBLIC_KEY }}
+        with:
+          install: false
+          parallel: true
+          group: 'UI - Firefox'
+          record: true
+          tag: ${{ steps.get-env-uri.outputs.ENV_URI }},${{ env.GREP_TAGS }}
+          browser: firefox
 
   get-environment-variables:
     if: ${{ github.event_name == 'repository_dispatch' && (github.event.client_payload.environment == 'SANDBOX' || github.event.client_payload.environment == 'STAGING')}}
@@ -302,7 +365,7 @@ jobs:
             node .github/workflows/cypressTestsHelpers/approveAndMergeReleasePR.js \
             --version $version \
             --pull_request_number $pull_request_number \
-            --dashboard_url $dashboard_url \
+            --dashboard_url "$dashboard_url" \
             $auto_release
 
   send-slack-notification:
@@ -321,7 +384,8 @@ jobs:
           JOB_TITLE: "Test release workflow - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}"
           JOB_KIND: "release tests"
         run: |
-          python3 .github/workflows/notify/notify-slack.py
+          python3 ./.github/workflows/notify/notify-slack.py
+
 
   send-slack-notification-scheduled-and-manually:
     if: ${{always() && github.event_name != 'repository_dispatch'}}
@@ -351,7 +415,8 @@ jobs:
          dashboard_url: ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}
         run: |
             node cypressTestsHelpers/getFailedTests.js \
-            --dashboard_url $dashboard_url 
+            --dashboard_url "$dashboard_url"
+
 
       - name: Notify Slack
         if: steps.get-tests-results.outputs.testStatus == 'true'

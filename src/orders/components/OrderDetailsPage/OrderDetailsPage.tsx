@@ -53,7 +53,7 @@ export interface OrderDetailsPageProps {
     id: string;
     name: string;
   }>;
-  disabled: boolean;
+  loading: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   onOrderLineAdd?: () => void;
@@ -88,7 +88,7 @@ export interface OrderDetailsPageProps {
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const {
-    disabled,
+    loading,
     order,
     shop,
     saveButtonBarState,
@@ -146,11 +146,11 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
 
   const allowSave = () => {
     if (!isOrderUnconfirmed) {
-      return disabled;
+      return loading;
     } else if (!order?.lines?.length) {
       return true;
     }
-    return disabled;
+    return loading;
   };
 
   const selectCardMenuItems = filteredConditionalItems([
@@ -224,12 +224,14 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   notAllowedToFulfillUnpaid={notAllowedToFulfillUnpaid}
                   lines={unfulfilled}
                   onFulfill={onOrderFulfill}
+                  loading={loading}
                 />
               ) : (
                 <>
                   <OrderDraftDetails
                     order={order}
                     errors={errors}
+                    loading={loading}
                     onOrderLineAdd={onOrderLineAdd}
                     onOrderLineChange={onOrderLineChange}
                     onOrderLineRemove={onOrderLineRemove}

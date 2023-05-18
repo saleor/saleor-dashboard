@@ -1,13 +1,13 @@
 import {
   CustomCell,
   CustomRenderer,
-  getMiddleCenterBias,
   GridCellKind,
   ProvideEditorCallback,
 } from "@glideapps/glide-data-grid";
 import React from "react";
 
-import { usePriceField } from "../../PriceField/usePriceField";
+import { usePriceField } from "../../../PriceField/usePriceField";
+import { drawCurrency, drawPrice } from "./utils";
 
 interface MoneyCellProps {
   readonly kind: "money-cell";
@@ -55,28 +55,13 @@ export const moneyCellRenderer = (): CustomRenderer<MoneyCell> => ({
     const hasValue = value === 0 ? true : !!value;
     const formatted = value?.toString() ?? "-";
 
-    ctx.fillStyle = theme.textDark;
-    ctx.textAlign = "right";
-    ctx.fillText(
-      formatted,
-      rect.x + rect.width - 8,
-      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-    );
+    drawPrice(ctx, theme, rect, formatted);
 
     ctx.save();
-    ctx.fillStyle = theme.textMedium;
-    ctx.textAlign = "left";
-    ctx.font = [
-      theme.baseFontStyle.replace(/bold/g, "normal"),
-      theme.fontFamily,
-    ].join(" ");
-    ctx.fillText(
-      hasValue ? currency : "-",
-      rect.x + 8,
-      rect.y + rect.height / 2 + getMiddleCenterBias(ctx, theme),
-    );
-    ctx.restore();
 
+    drawCurrency(ctx, theme, rect, hasValue ? currency : "-");
+
+    ctx.restore();
     return true;
   },
   provideEditor: () => ({

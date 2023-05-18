@@ -77,6 +77,7 @@ export const PriceField: React.FC<PriceFieldProps> = props => {
       fullWidth
       value={value}
       InputLabelProps={InputLabelProps}
+      data-test-id="price-field"
       InputProps={{
         ...InputProps,
         endAdornment: currencySymbol ? (

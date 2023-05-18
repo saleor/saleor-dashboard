@@ -18,10 +18,14 @@ export const ProductListViewSwitch = ({
       setProductListViewType(value as ProductListViewType);
     }}
   >
-    <Switch.Item id="datagrid" value="datagrid">
+    <Switch.Item
+      id="datagrid"
+      value="datagrid"
+      data-test-id="datagrid-view-button"
+    >
       <ViewListIcon size="medium" />
     </Switch.Item>
-    <Switch.Item id="tile" value="tile">
+    <Switch.Item id="tile" value="tile" data-test-id="tile-view-button">
       <ViewTilesIcon size="medium" />
     </Switch.Item>
   </Switch>

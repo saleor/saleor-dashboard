@@ -8,10 +8,7 @@ import { editSeoSettings } from "../seoComponent";
 const valueTrue = AVAILABLE_CHANNELS_FORM.radioButtonsValueTrue;
 const valueFalse = AVAILABLE_CHANNELS_FORM.radioButtonsValueFalse;
 
-export function updateProductIsAvailableForPurchase(
-  productUrl,
-  isAvailableForPurchase,
-) {
+export function updateProductIsAvailableForPurchase(isAvailableForPurchase) {
   const isAvailableForPurchaseSelector = isAvailableForPurchase
     ? valueTrue
     : valueFalse;
@@ -43,6 +40,7 @@ function updateProductManageInChannel(manageSelector) {
     .get(BUTTON_SELECTORS.confirm)
     .click()
     .confirmationMessageShouldAppear()
+    .confirmationMessageShouldDisappear()
     .wait("@ProductChannelListingUpdate");
 }
 
@@ -154,6 +152,7 @@ export function addVariantToDataGrid(variantName) {
 
 export function enterVariantEditPage() {
   cy.get(PRODUCT_DETAILS.dataGridTable)
+    .scrollIntoView()
     .should("be.visible")
     .wait(1000)
     .get(PRODUCT_DETAILS.editVariant)
