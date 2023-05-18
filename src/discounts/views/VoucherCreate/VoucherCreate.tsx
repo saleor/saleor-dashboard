@@ -1,3 +1,4 @@
+import { useUser } from "@dashboard/auth";
 import { ChannelsAction } from "@dashboard/channels/urls";
 import {
   ChannelVoucherData,
@@ -16,6 +17,7 @@ import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { sectionNames } from "@dashboard/intl";
+import { filterAccessibleChannes } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import React from "react";
@@ -38,6 +40,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
+  const user = useUser();
 
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
@@ -48,7 +51,7 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
 
   const { availableChannels } = useAppChannel(false);
   const allChannels: ChannelVoucherData[] = createSortedVoucherData(
-    availableChannels,
+    filterAccessibleChannes(availableChannels, user),
   );
 
   const {
@@ -69,10 +72,8 @@ export const VoucherCreateView: React.FC<VoucherCreateProps> = ({ params }) => {
     { formId: VOUCHER_CREATE_FORM_ID },
   );
 
-  const [
-    updateChannels,
-    updateChannelsOpts,
-  ] = useVoucherChannelListingUpdateMutation({});
+  const [updateChannels, updateChannelsOpts] =
+    useVoucherChannelListingUpdateMutation({});
 
   const [voucherCreate, voucherCreateOpts] = useVoucherCreateMutation({
     onCompleted: data => {
