@@ -5,6 +5,9 @@ on:
     branches-ignore:
       # Matches release branches
       - "[0-9]+.[0-9]+"
+    tags-ignore:
+      # Matches release tags
+      - "*"
 
 jobs:
   chromatic-storybook:
