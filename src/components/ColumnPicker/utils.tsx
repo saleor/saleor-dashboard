@@ -40,3 +40,16 @@ export const getExitOnClick = ({
     return onClose;
   }
 };
+
+export const isLastEnabledColumn = (
+  columnIdToCheck: string,
+  targetArray: AvailableColumn[],
+  selectedColumns: string[],
+): boolean => {
+  const enabledColumns = targetArray.filter(column =>
+    selectedColumns.includes(column.id),
+  );
+  return (
+    enabledColumns.length === 1 && enabledColumns[0].id === columnIdToCheck
+  );
+};

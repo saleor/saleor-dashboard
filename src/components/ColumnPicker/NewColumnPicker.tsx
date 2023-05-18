@@ -16,7 +16,7 @@ import messages from "./messages";
 import { NewColumnPickerCategories } from "./NewColumnPickerCategories";
 import { NewColumnPickerDynamicColumns } from "./NewColumnPickerDynamicColumns";
 import { ColumnCategory } from "./useColumns";
-import { filterEmptyColumn } from "./utils";
+import { filterEmptyColumn, isLastEnabledColumn } from "./utils";
 
 export interface NewColumnPickerProps {
   staticColumns: AvailableColumn[];
@@ -93,6 +93,12 @@ export const NewColumnPicker: React.FC<NewColumnPickerProps> = ({
                 <Toggle
                   onPressedChange={() => handleToggle(column.id)}
                   pressed={selectedColumns.includes(column.id)}
+                  // One static column must always be enabled
+                  disabled={isLastEnabledColumn(
+                    column.id,
+                    staticColumns,
+                    selectedColumns,
+                  )}
                 >
                   <Text variant="body" size="small" color="textNeutralDefault">
                     {column.title}
