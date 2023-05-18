@@ -81,7 +81,7 @@ export const NewColumnPicker: React.FC<NewColumnPickerProps> = ({
               onClose={() => setExpanded(false)}
             />
           )}
-          <Box __width="320px" backgroundColor="plain" padding={7}>
+          <Box __minWidth="320px" backgroundColor="plain" padding={7}>
             <Box marginBottom={6}>
               <Text variant="caption" size="small" color="textNeutralSubdued">
                 <FormattedMessage {...messages.column} />
