@@ -6252,7 +6252,7 @@
   },
   "hnaOnB": {
     "context": "button, opens modal to create transaction in order",
-    "string": "Capture manual transaction"
+    "string": "Manual transaction"
   },
   "ho75Lr": {
     "context": "status label deactivated",
