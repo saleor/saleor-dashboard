@@ -35,19 +35,8 @@ export const useColumns = ({
   setDynamicColumnSettings,
 }: UseColumnsProps) => {
   const dynamicColumns: AvailableColumn[] = React.useMemo(
-    () =>
-      columnCategories.reduce<AvailableColumn[]>(
-        (columns: AvailableColumn[], category) => {
-          category.selectedNodes.forEach(column => {
-            if (columnPickerSettings.includes(column.id)) {
-              columns.push(column);
-            }
-          });
-          return columns;
-        },
-        [],
-      ),
-    [columnCategories, columnPickerSettings],
+    () => columnCategories.flatMap(category => category.selectedNodes),
+    [columnCategories],
   );
 
   const initialColumnsState = React.useMemo(
