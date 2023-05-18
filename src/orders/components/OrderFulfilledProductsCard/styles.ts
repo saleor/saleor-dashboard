@@ -27,9 +27,6 @@ const useStyles = makeStyles(
     infoLabelWithMargin: {
       marginBottom: theme.spacing(),
     },
-    infoRow: {
-      padding: theme.spacing(2, 3),
-    },
   }),
   { name: "OrderFulfilledProductsCard" },
 );
