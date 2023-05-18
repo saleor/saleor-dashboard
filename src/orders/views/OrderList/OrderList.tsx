@@ -1,3 +1,4 @@
+import { useUser } from "@dashboard/auth";
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
@@ -18,6 +19,7 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
+import { filterAccessibleChannes } from "@dashboard/misc";
 import {
   getActiveTabIndexAfterTabDelete,
   getNextUniqueTabName,
@@ -67,6 +69,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   usePaginationReset(orderListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
+  const user = useUser();
 
   const [createOrder] = useOrderDraftCreateMutation({
     onCompleted: data => {
@@ -90,7 +93,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   const noChannel = !channel && typeof channel !== "undefined";
   const channelOpts = availableChannels
-    ? mapNodeToChoice(availableChannels)
+    ? mapNodeToChoice(filterAccessibleChannes(availableChannels, user))
     : null;
 
   const tabs = getFilterTabs();
