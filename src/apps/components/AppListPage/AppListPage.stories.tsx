@@ -1,6 +1,4 @@
 import { installedAppsList } from "@dashboard/apps/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import AppListPage, { AppListPageProps } from "./AppListPage";
@@ -10,14 +8,17 @@ const props: AppListPageProps = {
   installedApps: installedAppsList,
 };
 
-storiesOf("Apps / New Apps / App List", module)
-  .addDecorator(Decorator)
-  .add("default", () => <AppListPage {...props} />)
-  .add("empty", () => (
-    <AppListPage
-      {...props}
-      installedApps={[]}
-      installableMarketplaceApps={[]}
-      comingSoonMarketplaceApps={[]}
-    />
-  ));
+export default {
+  title: "Apps / New Apps / App List",
+};
+
+export const Default = () => <AppListPage {...props} />;
+
+export const Empty = () => (
+  <AppListPage
+    {...props}
+    installedApps={[]}
+    installableMarketplaceApps={[]}
+    comingSoonMarketplaceApps={[]}
+  />
+);

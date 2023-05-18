@@ -22,7 +22,7 @@ import CustomerDetailsViewComponent from "./views/CustomerDetails";
 import CustomerListViewComponent from "./views/CustomerList";
 
 const CustomerListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: CustomerListUrlQueryParams = asSortParams(
     qs,
     CustomerListUrlSortField,
@@ -34,9 +34,9 @@ const CustomerListView: React.FC<RouteComponentProps<{}>> = ({ location }) => {
 interface CustomerDetailsRouteParams {
   id: string;
 }
-const CustomerDetailsView: React.FC<RouteComponentProps<
-  CustomerDetailsRouteParams
->> = ({ location, match }) => {
+const CustomerDetailsView: React.FC<
+  RouteComponentProps<CustomerDetailsRouteParams>
+> = ({ location, match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomerUrlQueryParams = qs;
 
@@ -51,9 +51,9 @@ const CustomerDetailsView: React.FC<RouteComponentProps<
 interface CustomerAddressesRouteParams {
   id: string;
 }
-const CustomerAddressesView: React.FC<RouteComponentProps<
-  CustomerAddressesRouteParams
->> = ({ match }) => {
+const CustomerAddressesView: React.FC<
+  RouteComponentProps<CustomerAddressesRouteParams>
+> = ({ match }) => {
   const qs = parseQs(location.search.substr(1));
   const params: CustomerAddressesUrlQueryParams = qs;
 

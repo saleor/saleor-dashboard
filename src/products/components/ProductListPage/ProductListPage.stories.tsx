@@ -13,12 +13,10 @@ import { products as productListFixture } from "@dashboard/products/fixtures";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { productListFilterOpts } from "@dashboard/products/views/ProductList/fixtures";
 import { attributes } from "@dashboard/productTypes/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { ListViews } from "@dashboard/types";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import ProductListPage, { ProductListPageProps } from "./ProductListPage";
 
 const products = productListFixture(placeholderImage);
@@ -63,28 +61,38 @@ const props: ProductListPageProps = {
   },
 };
 
-storiesOf("Products / Product list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <ProductListPage {...props} />)
-  .add("loading", () => (
-    <ProductListPage
-      {...props}
-      products={undefined}
-      currentTab={undefined}
-      disabled={true}
-    />
-  ))
-  .add("with data", () => <ProductListPage {...props} products={products} />)
-  .add("no data", () => <ProductListPage {...props} products={[]} />)
-  .add("no channels", () => (
-    <ProductListPage
-      {...props}
-      selectedChannelId={""}
-      products={products.map(product => ({ ...product, channelListings: [] }))}
-    />
-  ))
-  .add("no limits", () => <ProductListPage {...props} limits={undefined} />)
-  .add("limits reached", () => (
-    <ProductListPage {...props} limits={limitsReached} />
-  ));
+export default {
+  title: "Products / Product list",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <ProductListPage {...props} />;
+
+export const Loading = () => (
+  <ProductListPage
+    {...props}
+    products={undefined}
+    currentTab={undefined}
+    disabled={true}
+  />
+);
+
+export const WithData = () => (
+  <ProductListPage {...props} products={products} />
+);
+
+export const NoData = () => <ProductListPage {...props} products={[]} />;
+
+export const NoChannels = () => (
+  <ProductListPage
+    {...props}
+    selectedChannelId={""}
+    products={products.map(product => ({ ...product, channelListings: [] }))}
+  />
+);
+
+export const NoLimits = () => <ProductListPage {...props} limits={undefined} />;
+
+export const LimitsReached = () => (
+  <ProductListPage {...props} limits={limitsReached} />
+);

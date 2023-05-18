@@ -53,7 +53,7 @@ export interface OrderDraftPageProps extends FetchMoreProps {
 
 const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
   const {
-    disabled,
+    loading,
     fetchUsers,
     hasMore,
     saveButtonBarState,
@@ -120,6 +120,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           order={order as OrderDetailsFragment}
           channelUsabilityData={channelUsabilityData}
           errors={errors}
+          loading={loading}
           onOrderLineAdd={onOrderLineAdd}
           onOrderLineChange={onOrderLineChange}
           onOrderLineRemove={onOrderLineRemove}
@@ -152,7 +153,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       </DetailPageLayout.RightSidebar>
       <Savebar
         state={saveButtonBarState}
-        disabled={disabled}
+        disabled={loading}
         onCancel={() => navigate(orderDraftListUrl())}
         onSubmit={onDraftFinalize}
         labels={{

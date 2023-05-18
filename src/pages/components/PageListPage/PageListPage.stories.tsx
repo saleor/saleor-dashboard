@@ -5,11 +5,9 @@ import {
 } from "@dashboard/fixtures";
 import { pageList } from "@dashboard/pages/fixtures";
 import { PageListUrlSortField } from "@dashboard/pages/urls";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import PageListPage, { PageListPageProps } from "./PageListPage";
 
 const props: PageListPageProps = {
@@ -30,11 +28,15 @@ const props: PageListPageProps = {
   },
 };
 
-storiesOf("Pages / Page list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <PageListPage {...props} />)
-  .add("loading", () => (
-    <PageListPage {...props} disabled={true} pages={undefined} />
-  ))
-  .add("no data", () => <PageListPage {...props} pages={[]} />);
+export default {
+  title: "Pages / Page list",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <PageListPage {...props} />;
+
+export const Loading = () => (
+  <PageListPage {...props} disabled={true} pages={undefined} />
+);
+
+export const NoData = () => <PageListPage {...props} pages={[]} />;

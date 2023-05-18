@@ -8,11 +8,9 @@ import {
 } from "@dashboard/fixtures";
 import { ProductTypeConfigurable, ProductTypeEnum } from "@dashboard/graphql";
 import { ProductTypeListUrlSortField } from "@dashboard/productTypes/urls";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import { productTypes } from "../../fixtures";
 import ProductTypeListPage, {
   ProductTypeListPageProps,
@@ -42,11 +40,17 @@ const props: ProductTypeListPageProps = {
   productTypes,
 };
 
-storiesOf("Product types / Product types list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <ProductTypeListPage {...props} />)
-  .add("loading", () => (
-    <ProductTypeListPage {...props} disabled={true} productTypes={undefined} />
-  ))
-  .add("no data", () => <ProductTypeListPage {...props} productTypes={[]} />);
+export default {
+  title: "Product types / Product types list",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <ProductTypeListPage {...props} />;
+
+export const Loading = () => (
+  <ProductTypeListPage {...props} disabled={true} productTypes={undefined} />
+);
+
+export const NoData = () => (
+  <ProductTypeListPage {...props} productTypes={[]} />
+);

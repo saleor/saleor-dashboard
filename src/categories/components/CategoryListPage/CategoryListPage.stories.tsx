@@ -7,11 +7,9 @@ import {
   sortPageProps,
   tabPageProps,
 } from "@dashboard/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import CategoryListPage, { CategoryTableProps } from "./CategoryListPage";
 
 const categoryTableProps: CategoryTableProps = {
@@ -28,13 +26,17 @@ const categoryTableProps: CategoryTableProps = {
   },
 };
 
-storiesOf("Categories / Category list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <CategoryListPage {...categoryTableProps} />)
-  .add("loading", () => (
-    <CategoryListPage {...categoryTableProps} categories={undefined} />
-  ))
-  .add("empty", () => (
-    <CategoryListPage {...categoryTableProps} categories={[]} />
-  ));
+export default {
+  title: "Categories / Category list",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <CategoryListPage {...categoryTableProps} />;
+
+export const Loading = () => (
+  <CategoryListPage {...categoryTableProps} categories={undefined} />
+);
+
+export const Empty = () => (
+  <CategoryListPage {...categoryTableProps} categories={[]} />
+);

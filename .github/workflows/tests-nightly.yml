@@ -373,6 +373,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: [get-environment-variables, run-tests-on-release, add-review-and-merge-patch]
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        
       - name: Notify Slack
         env:
           JOB_DEPLOYMENT_KIND: staging
@@ -382,6 +385,7 @@ jobs:
           JOB_KIND: "release tests"
         run: |
           python3 ./.github/workflows/notify/notify-slack.py
+
 
   send-slack-notification-scheduled-and-manually:
     if: ${{always() && github.event_name != 'repository_dispatch'}}
@@ -412,6 +416,7 @@ jobs:
         run: |
             node cypressTestsHelpers/getFailedTests.js \
             --dashboard_url "$dashboard_url"
+
 
       - name: Notify Slack
         if: steps.get-tests-results.outputs.testStatus == 'true'

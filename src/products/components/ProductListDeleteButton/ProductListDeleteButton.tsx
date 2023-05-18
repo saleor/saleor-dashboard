@@ -23,6 +23,7 @@ export const ProductListDeleteButton = forwardRef<
           onClick={onClick}
           icon={<TrashBinIcon />}
           variant="secondary"
+          data-test-id="delete-products-button"
         />
       </Tooltip.Trigger>
       <Tooltip.Content side="bottom">
