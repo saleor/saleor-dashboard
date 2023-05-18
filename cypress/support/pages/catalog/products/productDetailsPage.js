@@ -152,6 +152,7 @@ export function addVariantToDataGrid(variantName) {
 
 export function enterVariantEditPage() {
   cy.get(PRODUCT_DETAILS.dataGridTable)
+    .scrollIntoView()
     .should("be.visible")
     .wait(1000)
     .get(PRODUCT_DETAILS.editVariant)
