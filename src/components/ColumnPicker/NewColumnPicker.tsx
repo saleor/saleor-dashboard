@@ -46,7 +46,13 @@ export const NewColumnPicker: React.FC<NewColumnPickerProps> = ({
       : onSave([...selectedColumns, id]);
 
   return (
-    <Popover open={pickerOpen} onOpenChange={() => setPickerOpen(!pickerOpen)}>
+    <Popover
+      open={pickerOpen}
+      onOpenChange={() => {
+        setExpanded(false);
+        setPickerOpen(!pickerOpen);
+      }}
+    >
       <Popover.Trigger>
         <Button
           variant="tertiary"
