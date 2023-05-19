@@ -96,12 +96,6 @@ export const AppListItemFragmentDoc = gql`
   }
 }
     ${AppPermissionFragmentDoc}`;
-export const AppAvatarFragmentDoc = gql`
-    fragment AppAvatar on App {
-  id
-  name
-}
-    `;
 export const AttributeFragmentDoc = gql`
     fragment Attribute on Attribute {
   id
@@ -157,6 +151,42 @@ export const UserPermissionFragmentDoc = gql`
   name
 }
     `;
+export const ChannelFragmentFragmentDoc = gql`
+    fragment ChannelFragment on Channel {
+  id
+  isActive
+  name
+  slug
+  currencyCode
+  defaultCountry {
+    code
+    country
+  }
+  stockSettings {
+    allocationStrategy
+  }
+}
+    `;
+export const UserWithChannelsFragmentDoc = gql`
+    fragment UserWithChannels on User {
+  id
+  email
+  firstName
+  lastName
+  isStaff
+  userPermissions {
+    ...UserPermission
+  }
+  avatar {
+    url
+  }
+  accessibleChannels {
+    ...ChannelFragment
+  }
+  restrictedAccessToChannels
+}
+    ${UserPermissionFragmentDoc}
+${ChannelFragmentFragmentDoc}`;
 export const UserFragmentDoc = gql`
     fragment User on User {
   id
@@ -172,18 +202,6 @@ export const UserFragmentDoc = gql`
   }
 }
     ${UserPermissionFragmentDoc}`;
-export const UserBaseAvatarFragmentDoc = gql`
-    fragment UserBaseAvatar on User {
-  id
-  firstName
-  lastName
-  email
-  avatar {
-    url
-    alt
-  }
-}
-    `;
 export const CategoryFragmentDoc = gql`
     fragment Category on Category {
   id
@@ -249,6 +267,9 @@ export const ChannelDetailsFragmentDoc = gql`
   hasOrders
   warehouses {
     ...Warehouse
+  }
+  orderSettings {
+    markAsPaidStrategy
   }
 }
     ${ChannelFragmentDoc}
@@ -1072,6 +1093,34 @@ export const TaxClassDeleteErrorFragmentDoc = gql`
   message
 }
     `;
+export const TransactionRequestActionErrorFragmentDoc = gql`
+    fragment TransactionRequestActionError on TransactionRequestActionError {
+  field
+  message
+  code
+}
+    `;
+export const TransactionCreateErrorFragmentDoc = gql`
+    fragment TransactionCreateError on TransactionCreateError {
+  field
+  message
+  code
+}
+    `;
+export const OrderGrantRefundCreateErrorFragmentDoc = gql`
+    fragment OrderGrantRefundCreateError on OrderGrantRefundCreateError {
+  field
+  message
+  code
+}
+    `;
+export const OrderGrantRefundUpdateErrorFragmentDoc = gql`
+    fragment OrderGrantRefundUpdateError on OrderGrantRefundUpdateError {
+  field
+  message
+  code
+}
+    `;
 export const GiftCardsSettingsFragmentDoc = gql`
     fragment GiftCardsSettings on GiftCardSettings {
   expiryType
@@ -1261,6 +1310,176 @@ export const RefundOrderLineFragmentDoc = gql`
   }
 }
     ${MoneyFragmentDoc}`;
+export const StaffMemberFragmentDoc = gql`
+    fragment StaffMember on User {
+  id
+  email
+  firstName
+  isActive
+  lastName
+}
+    `;
+export const StaffMemberAvatarFragmentDoc = gql`
+    fragment StaffMemberAvatar on User {
+  ...StaffMember
+  avatar(size: 512) {
+    url
+  }
+}
+    ${StaffMemberFragmentDoc}`;
+export const AppAvatarFragmentDoc = gql`
+    fragment AppAvatar on App {
+  id
+  name
+}
+    `;
+export const TransactionEventFragmentDoc = gql`
+    fragment TransactionEvent on TransactionEvent {
+  id
+  pspReference
+  amount {
+    ...Money
+  }
+  type
+  message
+  createdAt
+  createdBy {
+    ... on User {
+      ...StaffMemberAvatar
+    }
+    ... on App {
+      ...AppAvatar
+    }
+  }
+  externalUrl
+}
+    ${MoneyFragmentDoc}
+${StaffMemberAvatarFragmentDoc}
+${AppAvatarFragmentDoc}`;
+export const TransactionItemFragmentDoc = gql`
+    fragment TransactionItem on TransactionItem {
+  id
+  type
+  pspReference
+  actions
+  type
+  status
+  externalUrl
+  events {
+    ...TransactionEvent
+  }
+  authorizedAmount {
+    ...Money
+  }
+  chargedAmount {
+    ...Money
+  }
+  refundedAmount {
+    ...Money
+  }
+  canceledAmount {
+    ...Money
+  }
+  authorizePendingAmount {
+    ...Money
+  }
+  chargePendingAmount {
+    ...Money
+  }
+  refundPendingAmount {
+    ...Money
+  }
+  cancelPendingAmount {
+    ...Money
+  }
+}
+    ${TransactionEventFragmentDoc}
+${MoneyFragmentDoc}`;
+export const OrderPaymentFragmentDoc = gql`
+    fragment OrderPayment on Payment {
+  id
+  isActive
+  actions
+  gateway
+  paymentMethodType
+  availableCaptureAmount {
+    ...Money
+  }
+  capturedAmount {
+    ...Money
+  }
+  total {
+    ...Money
+  }
+  availableRefundAmount {
+    ...Money
+  }
+  modified
+  transactions {
+    id
+    token
+    created
+    kind
+    isSuccess
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const OrderGiftCardFragmentDoc = gql`
+    fragment OrderGiftCard on GiftCard {
+  id
+  last4CodeChars
+  events {
+    id
+    type
+    orderId
+    date
+    balance {
+      initialBalance {
+        ...Money
+      }
+      currentBalance {
+        ...Money
+      }
+      oldInitialBalance {
+        ...Money
+      }
+      oldCurrentBalance {
+        ...Money
+      }
+    }
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const UserBaseAvatarFragmentDoc = gql`
+    fragment UserBaseAvatar on User {
+  id
+  firstName
+  lastName
+  email
+  avatar {
+    url
+    alt
+  }
+}
+    `;
+export const OrderGrantedRefundFragmentDoc = gql`
+    fragment OrderGrantedRefund on OrderGrantedRefund {
+  id
+  createdAt
+  amount {
+    currency
+    amount
+  }
+  reason
+  user {
+    ...UserBaseAvatar
+  }
+  app {
+    id
+    name
+  }
+}
+    ${UserBaseAvatarFragmentDoc}`;
 export const OrderEventFragmentDoc = gql`
     fragment OrderEvent on OrderEvent {
   id
@@ -1455,28 +1674,16 @@ export const OrderDetailsFragmentDoc = gql`
     ...Address
   }
   transactions {
-    id
+    ...TransactionItem
+  }
+  payments {
+    ...OrderPayment
   }
   giftCards {
-    events {
-      id
-      type
-      orderId
-      balance {
-        initialBalance {
-          ...Money
-        }
-        currentBalance {
-          ...Money
-        }
-        oldInitialBalance {
-          ...Money
-        }
-        oldCurrentBalance {
-          ...Money
-        }
-      }
-    }
+    ...OrderGiftCard
+  }
+  grantedRefunds {
+    ...OrderGrantedRefund
   }
   isShippingRequired
   canFinalize
@@ -1548,11 +1755,38 @@ export const OrderDetailsFragmentDoc = gql`
       ...Money
     }
   }
+  totalRemainingGrant {
+    ...Money
+  }
+  totalGrantedRefund {
+    ...Money
+  }
+  totalRefundPending {
+    ...Money
+  }
+  totalRefunded {
+    ...Money
+  }
   actions
+  totalAuthorizePending {
+    ...Money
+  }
   totalAuthorized {
     ...Money
   }
   totalCaptured {
+    ...Money
+  }
+  totalCharged {
+    ...Money
+  }
+  totalChargePending {
+    ...Money
+  }
+  totalCanceled {
+    ...Money
+  }
+  totalCancelPending {
     ...Money
   }
   totalBalance {
@@ -1592,11 +1826,18 @@ export const OrderDetailsFragmentDoc = gql`
     defaultCountry {
       code
     }
+    orderSettings {
+      markAsPaidStrategy
+    }
   }
   isPaid
 }
     ${MetadataFragmentDoc}
 ${AddressFragmentDoc}
+${TransactionItemFragmentDoc}
+${OrderPaymentFragmentDoc}
+${OrderGiftCardFragmentDoc}
+${OrderGrantedRefundFragmentDoc}
 ${MoneyFragmentDoc}
 ${OrderEventFragmentDoc}
 ${FulfillmentFragmentDoc}
@@ -1671,6 +1912,62 @@ export const OrderLineStockDataFragmentDoc = gql`
   }
 }
     ${StockFragmentDoc}`;
+export const OrderLineGrantRefundFragmentDoc = gql`
+    fragment OrderLineGrantRefund on OrderLine {
+  id
+  thumbnail {
+    url
+  }
+  productName
+  quantity
+  quantityToFulfill
+  variantName
+  productName
+  unitPrice {
+    gross {
+      ...Money
+    }
+  }
+}
+    ${MoneyFragmentDoc}`;
+export const OrderFulfillmentGrantRefundFragmentDoc = gql`
+    fragment OrderFulfillmentGrantRefund on Fulfillment {
+  id
+  fulfillmentOrder
+  status
+  lines {
+    id
+    quantity
+    orderLine {
+      ...OrderLineGrantRefund
+    }
+  }
+}
+    ${OrderLineGrantRefundFragmentDoc}`;
+export const OrderDetailsGrantRefundFragmentDoc = gql`
+    fragment OrderDetailsGrantRefund on Order {
+  id
+  number
+  lines {
+    ...OrderLineGrantRefund
+  }
+  fulfillments {
+    ...OrderFulfillmentGrantRefund
+  }
+  shippingPrice {
+    gross {
+      ...Money
+    }
+  }
+  total {
+    gross {
+      ...Money
+    }
+  }
+}
+    ${OrderLineGrantRefundFragmentDoc}
+${OrderFulfillmentGrantRefundFragmentDoc}
+${MoneyFragmentDoc}`;
 export const PageTypeFragmentDoc = gql`
     fragment PageType on PageType {
   id
@@ -1820,15 +2117,6 @@ export const PermissionFragmentDoc = gql`
     fragment Permission on Permission {
   code
   name
-}
-    `;
-export const StaffMemberFragmentDoc = gql`
-    fragment StaffMember on User {
-  id
-  email
-  firstName
-  isActive
-  lastName
 }
     `;
 export const PermissionGroupMemberFragmentDoc = gql`
@@ -2484,14 +2772,6 @@ export const StaffMemberDetailsFragmentDoc = gql`
   }
 }
     ${StaffMemberFragmentDoc}`;
-export const StaffMemberAvatarFragmentDoc = gql`
-    fragment StaffMemberAvatar on User {
-  ...StaffMember
-  avatar(size: 512) {
-    url
-  }
-}
-    ${StaffMemberFragmentDoc}`;
 export const CountryFragmentDoc = gql`
     fragment Country on CountryDisplay {
   country
@@ -2897,6 +3177,40 @@ export const WebhookDetailsFragmentDoc = gql`
   customHeaders
 }
     ${WebhookFragmentDoc}`;
+export const UserDetailsWithChannelsDocument = gql`
+    query UserDetailsWithChannels {
+  me {
+    ...UserWithChannels
+  }
+}
+    ${UserWithChannelsFragmentDoc}`;
+
+/**
+ * __useUserDetailsWithChannelsQuery__
+ *
+ * To run a query within a React component, call `useUserDetailsWithChannelsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useUserDetailsWithChannelsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useUserDetailsWithChannelsQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useUserDetailsWithChannelsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.UserDetailsWithChannelsQuery, Types.UserDetailsWithChannelsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.UserDetailsWithChannelsQuery, Types.UserDetailsWithChannelsQueryVariables>(UserDetailsWithChannelsDocument, options);
+      }
+export function useUserDetailsWithChannelsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.UserDetailsWithChannelsQuery, Types.UserDetailsWithChannelsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.UserDetailsWithChannelsQuery, Types.UserDetailsWithChannelsQueryVariables>(UserDetailsWithChannelsDocument, options);
+        }
+export type UserDetailsWithChannelsQueryHookResult = ReturnType<typeof useUserDetailsWithChannelsQuery>;
+export type UserDetailsWithChannelsLazyQueryHookResult = ReturnType<typeof useUserDetailsWithChannelsLazyQuery>;
+export type UserDetailsWithChannelsQueryResult = Apollo.QueryResult<Types.UserDetailsWithChannelsQuery, Types.UserDetailsWithChannelsQueryVariables>;
 export const PermissionGroupWithChannelsCreateDocument = gql`
     mutation permissionGroupWithChannelsCreate($input: PermissionGroupCreateInput!) {
   permissionGroupCreate(input: $input) {
