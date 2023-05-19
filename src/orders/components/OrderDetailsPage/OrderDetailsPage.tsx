@@ -257,6 +257,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                   }
                 >
                   <Metadata
+                    isLoading={loading}
                     data={data[fulfillment.id]}
                     onChange={x => handleChangeMetadata(x, fulfillment.id)}
                   />
@@ -273,6 +274,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 onAddManualTransaction={onAddManualTransaction}
               />
               <Metadata
+                isLoading={loading}
                 data={data[order?.id]}
                 onChange={x => handleChangeMetadata(x, order?.id)}
               />

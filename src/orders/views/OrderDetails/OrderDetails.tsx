@@ -189,6 +189,7 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                 <OrderNormalDetails
                   id={id}
                   params={params}
+                  loading={loading}
                   data={data}
                   orderAddNote={orderAddNote}
                   orderInvoiceRequest={orderInvoiceRequest}
