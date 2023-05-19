@@ -1,5 +1,5 @@
 import { CollectionListUrlSortField } from "@dashboard/collections/urls";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
 import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import CollectionListPage, {
@@ -32,15 +32,41 @@ const props: CollectionListPageProps = {
   filterOpts: collectionListFilterOpts,
 };
 
-export default {
+const meta: Meta<typeof CollectionListPage> = {
   title: "Collections / Collection list",
   decorators: [PaginatorContextDecorator],
+  component: CollectionListPage,
 };
 
-export const Default = () => <CollectionListPage {...props} />;
+export default meta;
+type Story = StoryObj<typeof CollectionListPage>;
 
-export const Loading = () => (
-  <CollectionListPage {...props} collections={undefined} disabled={true} />
-);
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
 
-export const NoData = () => <CollectionListPage {...props} collections={[]} />;
+export const Loading: Story = {
+  args: {
+    ...props,
+    collections: undefined,
+    disabled: true,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoData: Story = {
+  args: {
+    ...props,
+    collections: [],
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

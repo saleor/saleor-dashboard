@@ -1,5 +1,6 @@
 import { pageListProps, searchPageProps } from "@dashboard/fixtures";
 import { LanguageCodeEnum } from "@dashboard/graphql";
+import { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 
 import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
@@ -31,12 +32,7 @@ const props: TranslationsEntitiesListPageProps = {
   },
 };
 
-export default {
-  title: "Translations / Entity list",
-  decorators: [PaginatorContextDecorator],
-};
-
-export const Default = () => (
+const ListPage = props => (
   <TranslationsEntitiesListPage {...props}>
     <TranslationsEntitiesList
       disabled={false}
@@ -56,3 +52,20 @@ export const Default = () => (
     />
   </TranslationsEntitiesListPage>
 );
+
+const meta: Meta<typeof ListPage> = {
+  title: "Translations / Entity list",
+  decorators: [PaginatorContextDecorator],
+  component: ListPage,
+};
+export default meta;
+type Story = StoryObj<typeof ListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
