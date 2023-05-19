@@ -80,7 +80,7 @@ function createMetadataUpdateHandler<TData extends MetadataFormData, TError>(
         const keyDiff = arrayDiff(initialKeys, modifiedKeys);
         const privateMetadataInput = filterMetadataArray(data.privateMetadata);
 
-        if (privateMetadataInput.length) {
+        if (privateMetadataInput.length || keyDiff.removed.length) {
           const updatePrivateMetaResult = await updatePrivateMetadata({
             id: initial.id,
             input: privateMetadataInput,
