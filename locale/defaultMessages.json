@@ -35,10 +35,6 @@
     "context": "order shipping method name",
     "string": "Shipping"
   },
-  "+FWlRD": {
-    "context": "button",
-    "string": "Open app"
-  },
   "+HuipK": {
     "context": "variant sku",
     "string": "SKU {sku}"
@@ -1812,10 +1808,6 @@
     "context": "header",
     "string": "Activity"
   },
-  "BYGJ/j": {
-    "context": "button label",
-    "string": "Settings"
-  },
   "BYTvv/": {
     "context": "Dry run events unavailable",
     "string": "The following events from provided query are currently not available for dry run:"
@@ -3297,6 +3289,10 @@
   "LshEVn": {
     "context": "button",
     "string": "Create order"
+  },
+  "LwX0Ug": {
+    "context": "Button with Manage app label",
+    "string": "Manage app"
   },
   "Lx1ima": {
     "context": "button",
