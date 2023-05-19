@@ -23,4 +23,14 @@ export const messages = defineMessages({
       "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers.",
     description: "section description",
   },
+  sectionEmailConfirmationTitle: {
+    id: '02keiY',
+    defaultMessage: "Email confirmation",
+    description: "Email confirmation title",
+  },
+  sectionEmailConfirmationDescription: {
+    id: 'zx00MK',
+    defaultMessage: "Email confirmation description",
+    description: "Email confirmation description",
+  },
 });

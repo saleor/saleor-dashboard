@@ -321,6 +321,10 @@
   "01+5kQ": {
     "string": "Mark as paid"
   },
+  "02keiY": {
+    "context": "Email confirmation title",
+    "string": "Email confirmation"
+  },
   "05hqq6": {
     "context": "checkbox label",
     "string": "Automatically approve all fulfillments"
@@ -8663,6 +8667,10 @@
   },
   "ztQgD8": {
     "string": "No attributes found"
+  },
+  "zx00MK": {
+    "context": "Email confirmation description",
+    "string": "Email confirmation description"
   },
   "zxs6G3": {
     "string": "Manage how you ship out orders"

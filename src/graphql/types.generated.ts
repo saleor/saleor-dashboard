@@ -116,6 +116,12 @@ export type AccountInput = {
   defaultBillingAddress?: InputMaybe<AddressInput>;
   /** Shipping address of the customer. */
   defaultShippingAddress?: InputMaybe<AddressInput>;
+  /**
+   * Fields required to update the user metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 /** Fields required to create a user. */
@@ -1021,6 +1027,25 @@ export enum CheckoutChargeStatusEnum {
   OVERCHARGED = 'OVERCHARGED'
 }
 
+/** An enumeration. */
+export enum CheckoutCreateFromOrderErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  INVALID = 'INVALID',
+  ORDER_NOT_FOUND = 'ORDER_NOT_FOUND',
+  CHANNEL_INACTIVE = 'CHANNEL_INACTIVE',
+  TAX_ERROR = 'TAX_ERROR'
+}
+
+/** An enumeration. */
+export enum CheckoutCreateFromOrderUnavailableVariantErrorCode {
+  NOT_FOUND = 'NOT_FOUND',
+  PRODUCT_UNAVAILABLE_FOR_PURCHASE = 'PRODUCT_UNAVAILABLE_FOR_PURCHASE',
+  UNAVAILABLE_VARIANT_IN_CHANNEL = 'UNAVAILABLE_VARIANT_IN_CHANNEL',
+  PRODUCT_NOT_PUBLISHED = 'PRODUCT_NOT_PUBLISHED',
+  QUANTITY_GREATER_THAN_LIMIT = 'QUANTITY_GREATER_THAN_LIMIT',
+  INSUFFICIENT_STOCK = 'INSUFFICIENT_STOCK'
+}
+
 export type CheckoutCreateInput = {
   /** Slug of a channel in which to create a checkout. */
   channel?: InputMaybe<Scalars['String']>;
@@ -1672,6 +1697,18 @@ export type CustomerInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
+  /**
+   * Fields required to update the user metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the user private metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /**
@@ -2241,6 +2278,18 @@ export type InvoiceCreateInput = {
   number: Scalars['String'];
   /** URL of an invoice to download. */
   url: Scalars['String'];
+  /**
+   * Fields required to update the invoice metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the invoice private metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 /** An enumeration. */
@@ -3381,6 +3430,7 @@ export type OrderDiscountCommonInput = {
 
 /** An enumeration. */
 export enum OrderDiscountType {
+  SALE = 'SALE',
   VOUCHER = 'VOUCHER',
   MANUAL = 'MANUAL'
 }
@@ -4081,20 +4131,37 @@ export type PermissionGroupCreateInput = {
   addPermissions?: InputMaybe<Array<PermissionEnum>>;
   /** List of users to assign to this group. */
   addUsers?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * List of channels to assign to this group.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  addChannels?: InputMaybe<Array<Scalars['ID']>>;
   /** Group name. */
   name: Scalars['String'];
+  /**
+   * Determine if the group has restricted access to channels.  DEFAULT: False
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  restrictedAccessToChannels?: InputMaybe<Scalars['Boolean']>;
 };
 
 /** An enumeration. */
 export enum PermissionGroupErrorCode {
+  REQUIRED = 'REQUIRED',
+  UNIQUE = 'UNIQUE',
   ASSIGN_NON_STAFF_MEMBER = 'ASSIGN_NON_STAFF_MEMBER',
   DUPLICATED_INPUT_ITEM = 'DUPLICATED_INPUT_ITEM',
   CANNOT_REMOVE_FROM_LAST_GROUP = 'CANNOT_REMOVE_FROM_LAST_GROUP',
   LEFT_NOT_MANAGEABLE_PERMISSION = 'LEFT_NOT_MANAGEABLE_PERMISSION',
   OUT_OF_SCOPE_PERMISSION = 'OUT_OF_SCOPE_PERMISSION',
   OUT_OF_SCOPE_USER = 'OUT_OF_SCOPE_USER',
-  REQUIRED = 'REQUIRED',
-  UNIQUE = 'UNIQUE'
+  OUT_OF_SCOPE_CHANNEL = 'OUT_OF_SCOPE_CHANNEL'
 }
 
 export type PermissionGroupFilterInput = {
@@ -4120,12 +4187,36 @@ export type PermissionGroupUpdateInput = {
   addPermissions?: InputMaybe<Array<PermissionEnum>>;
   /** List of users to assign to this group. */
   addUsers?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * List of channels to assign to this group.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  addChannels?: InputMaybe<Array<Scalars['ID']>>;
   /** Group name. */
   name?: InputMaybe<Scalars['String']>;
   /** List of permission code names to unassign from this group. */
   removePermissions?: InputMaybe<Array<PermissionEnum>>;
   /** List of users to unassign from this group. */
   removeUsers?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * List of channels to unassign from this group.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  removeChannels?: InputMaybe<Array<Scalars['ID']>>;
+  /**
+   * Determine if the group has restricted access to channels.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  restrictedAccessToChannels?: InputMaybe<Scalars['Boolean']>;
 };
 
 export enum PluginConfigurationType {
@@ -5325,6 +5416,12 @@ export type ShopSettingsInput = {
    */
   limitQuantityPerCheckout?: InputMaybe<Scalars['Int']>;
   /**
+   * Enable automatic account confirmation by email.
+   *
+   * Added in Saleor 3.14.
+   */
+  enableAccountConfirmationByEmail?: InputMaybe<Scalars['Boolean']>;
+  /**
    * Include taxes in prices.
    *
    * DEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
@@ -5368,6 +5465,18 @@ export type StaffCreateInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
+  /**
+   * Fields required to update the user metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the user private metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of permission group IDs to which user should be assigned. */
   addGroups?: InputMaybe<Array<Scalars['ID']>>;
   /** URL of a view where users should be redirected to set the password. URL in RFC 1808 format. */
@@ -5403,6 +5512,18 @@ export type StaffUpdateInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
+  /**
+   * Fields required to update the user metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the user private metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** List of permission group IDs to which user should be assigned. */
   addGroups?: InputMaybe<Array<Scalars['ID']>>;
   /** List of permission group IDs from which user should be unassigned. */
@@ -6024,6 +6145,18 @@ export type UpdateInvoiceInput = {
   number?: InputMaybe<Scalars['String']>;
   /** URL of an invoice to download. */
   url?: InputMaybe<Scalars['String']>;
+  /**
+   * Fields required to update the invoice metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the invoice private metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
 };
 
 /** An enumeration. */
@@ -6046,6 +6179,18 @@ export type UserCreateInput = {
   isActive?: InputMaybe<Scalars['Boolean']>;
   /** A note about the user. */
   note?: InputMaybe<Scalars['String']>;
+  /**
+   * Fields required to update the user metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /**
+   * Fields required to update the user private metadata.
+   *
+   * Added in Saleor 3.14.
+   */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
   /** User language code. */
   languageCode?: InputMaybe<LanguageCodeEnum>;
   /**
@@ -6461,8 +6606,32 @@ export enum WebhookEventTypeAsyncEnum {
   ORDER_CREATED = 'ORDER_CREATED',
   /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
   ORDER_CONFIRMED = 'ORDER_CONFIRMED',
+  /**
+   * Payment has been made. The order may be partially or fully paid.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_PAID = 'ORDER_PAID',
   /** Payment is made and an order is fully paid. */
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
+  /**
+   * The order received a refund. The order may be partially or fully refunded.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_REFUNDED = 'ORDER_REFUNDED',
+  /**
+   * The order is fully refunded.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_FULLY_REFUNDED = 'ORDER_FULLY_REFUNDED',
   /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
   ORDER_UPDATED = 'ORDER_UPDATED',
   /** An order is cancelled. */
@@ -6768,8 +6937,32 @@ export enum WebhookEventTypeEnum {
   ORDER_CREATED = 'ORDER_CREATED',
   /** An order is confirmed (status change unconfirmed -> unfulfilled) by a staff user using the OrderConfirm mutation. It also triggers when the user completes the checkout and the shop setting `automatically_confirm_all_new_orders` is enabled. */
   ORDER_CONFIRMED = 'ORDER_CONFIRMED',
+  /**
+   * Payment has been made. The order may be partially or fully paid.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_PAID = 'ORDER_PAID',
   /** Payment is made and an order is fully paid. */
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
+  /**
+   * The order received a refund. The order may be partially or fully refunded.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_REFUNDED = 'ORDER_REFUNDED',
+  /**
+   * The order is fully refunded.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_FULLY_REFUNDED = 'ORDER_FULLY_REFUNDED',
   /** An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED. */
   ORDER_UPDATED = 'ORDER_UPDATED',
   /** An order is cancelled. */
@@ -7151,7 +7344,10 @@ export enum WebhookSampleEventTypeEnum {
   MENU_ITEM_DELETED = 'MENU_ITEM_DELETED',
   ORDER_CREATED = 'ORDER_CREATED',
   ORDER_CONFIRMED = 'ORDER_CONFIRMED',
+  ORDER_PAID = 'ORDER_PAID',
   ORDER_FULLY_PAID = 'ORDER_FULLY_PAID',
+  ORDER_REFUNDED = 'ORDER_REFUNDED',
+  ORDER_FULLY_REFUNDED = 'ORDER_FULLY_REFUNDED',
   ORDER_UPDATED = 'ORDER_UPDATED',
   ORDER_CANCELLED = 'ORDER_CANCELLED',
   ORDER_EXPIRED = 'ORDER_EXPIRED',
@@ -8543,7 +8739,7 @@ export type LimitInfoFragment = { __typename: 'Limits', channels?: number | null
 
 export type ShopLimitFragment = { __typename: 'Shop', limits: { __typename: 'LimitInfo', currentUsage: { __typename: 'Limits', channels?: number | null, orders?: number | null, productVariants?: number | null, staffUsers?: number | null, warehouses?: number | null }, allowedUsage: { __typename: 'Limits', channels?: number | null, orders?: number | null, productVariants?: number | null, staffUsers?: number | null, warehouses?: number | null } } };
 
-export type ShopFragment = { __typename: 'Shop', customerSetPasswordUrl: string | null, defaultMailSenderAddress: string | null, defaultMailSenderName: string | null, description: string | null, name: string, reserveStockDurationAnonymousUser: number | null, reserveStockDurationAuthenticatedUser: number | null, limitQuantityPerCheckout: number | null, companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }>, domain: { __typename: 'Domain', host: string } };
+export type ShopFragment = { __typename: 'Shop', customerSetPasswordUrl: string | null, defaultMailSenderAddress: string | null, defaultMailSenderName: string | null, description: string | null, name: string, reserveStockDurationAnonymousUser: number | null, reserveStockDurationAuthenticatedUser: number | null, limitQuantityPerCheckout: number | null, enableAccountConfirmationByEmail: boolean | null, companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }>, domain: { __typename: 'Domain', host: string } };
 
 export type StaffMemberFragment = { __typename: 'User', id: string, email: string, firstName: string, isActive: boolean, lastName: string };
 
@@ -10129,12 +10325,12 @@ export type ShopSettingsUpdateMutationVariables = Exact<{
 }>;
 
 
-export type ShopSettingsUpdateMutation = { __typename: 'Mutation', shopSettingsUpdate: { __typename: 'ShopSettingsUpdate', errors: Array<{ __typename: 'ShopError', code: ShopErrorCode, field: string | null, message: string | null }>, shop: { __typename: 'Shop', customerSetPasswordUrl: string | null, defaultMailSenderAddress: string | null, defaultMailSenderName: string | null, description: string | null, name: string, reserveStockDurationAnonymousUser: number | null, reserveStockDurationAuthenticatedUser: number | null, limitQuantityPerCheckout: number | null, companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }>, domain: { __typename: 'Domain', host: string } } | null } | null, shopAddressUpdate: { __typename: 'ShopAddressUpdate', errors: Array<{ __typename: 'ShopError', code: ShopErrorCode, field: string | null, message: string | null }>, shop: { __typename: 'Shop', companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null } | null };
+export type ShopSettingsUpdateMutation = { __typename: 'Mutation', shopSettingsUpdate: { __typename: 'ShopSettingsUpdate', errors: Array<{ __typename: 'ShopError', code: ShopErrorCode, field: string | null, message: string | null }>, shop: { __typename: 'Shop', customerSetPasswordUrl: string | null, defaultMailSenderAddress: string | null, defaultMailSenderName: string | null, description: string | null, name: string, reserveStockDurationAnonymousUser: number | null, reserveStockDurationAuthenticatedUser: number | null, limitQuantityPerCheckout: number | null, enableAccountConfirmationByEmail: boolean | null, companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }>, domain: { __typename: 'Domain', host: string } } | null } | null, shopAddressUpdate: { __typename: 'ShopAddressUpdate', errors: Array<{ __typename: 'ShopError', code: ShopErrorCode, field: string | null, message: string | null }>, shop: { __typename: 'Shop', companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null } | null } | null };
 
 export type SiteSettingsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SiteSettingsQuery = { __typename: 'Query', shop: { __typename: 'Shop', customerSetPasswordUrl: string | null, defaultMailSenderAddress: string | null, defaultMailSenderName: string | null, description: string | null, name: string, reserveStockDurationAnonymousUser: number | null, reserveStockDurationAuthenticatedUser: number | null, limitQuantityPerCheckout: number | null, companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }>, domain: { __typename: 'Domain', host: string } } };
+export type SiteSettingsQuery = { __typename: 'Query', shop: { __typename: 'Shop', customerSetPasswordUrl: string | null, defaultMailSenderAddress: string | null, defaultMailSenderName: string | null, description: string | null, name: string, reserveStockDurationAnonymousUser: number | null, reserveStockDurationAuthenticatedUser: number | null, limitQuantityPerCheckout: number | null, enableAccountConfirmationByEmail: boolean | null, companyAddress: { __typename: 'Address', city: string, cityArea: string, companyName: string, countryArea: string, firstName: string, id: string, lastName: string, phone: string | null, postalCode: string, streetAddress1: string, streetAddress2: string, country: { __typename: 'CountryDisplay', code: string, country: string } } | null, countries: Array<{ __typename: 'CountryDisplay', code: string, country: string }>, domain: { __typename: 'Domain', host: string } } };
 
 export type StaffMemberAddMutationVariables = Exact<{
   input: StaffCreateInput;

@@ -2,7 +2,6 @@ import { createCountryHandler } from "@dashboard/components/AddressEdit/createCo
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import Form from "@dashboard/components/Form";
-import Hr from "@dashboard/components/Hr";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import Savebar from "@dashboard/components/Savebar";
@@ -16,12 +15,13 @@ import { commonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
 import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
 import { messages } from "./messages";
+import { DashboardCard } from "@dashboard/components/Card";
 
 export interface SiteSettingsPageAddressFormData {
   city: string;
@@ -159,7 +159,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                   />
                 </Box>
 
-                <Hr className={classes.hr} />
+                <Divider />
 
                 <Box display="grid" __gridTemplateColumns="1fr 3fr">
                   <PageSectionHeader
@@ -183,7 +183,27 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                     onCountryChange={handleCountrySelect}
                   />
                 </Box>
+
+                <Divider />
+
+                <Box display="grid" __gridTemplateColumns="1fr 3fr">
+                  <PageSectionHeader
+                    title={intl.formatMessage(messages.sectionEmailConfirmationTitle)}
+                    description={intl.formatMessage(
+                      messages.sectionEmailConfirmationDescription,
+                    )}
+                  />
+                  <DashboardCard>
+                    <DashboardCard.Title>asdasd</DashboardCard.Title>
+                    <DashboardCard.Content>
+                      <Checkbox>
+                        <Text variant="body">Option 1</Text>
+                      </Checkbox>
+                    </DashboardCard.Content>
+                  </DashboardCard>
+                </Box>
               </Box>
+
 
               <Savebar
                 state={saveButtonBarState}
