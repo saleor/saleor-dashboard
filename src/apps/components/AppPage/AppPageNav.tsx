@@ -64,7 +64,7 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
       </Box>
       <Box display="flex" gap={4}>
         <Button
-          whiteSpace={"nowrap"}
+          whiteSpace="nowrap"
           variant="secondary"
           onClick={navigateToManageAppScreen}
           data-test-id="app-settings-button"
