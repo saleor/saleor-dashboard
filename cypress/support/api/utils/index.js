@@ -6,3 +6,8 @@ export {
   updateTaxConfigurationForChannel,
 } from "./taxesUtils";
 export * as productsUtils from "./products/productsUtils";
+export {
+  getMailActivationLinkForUser,
+  getMailActivationLinkForUserAndSubject,
+  inviteStaffMemberWithFirstPermission,
+} from "./users";

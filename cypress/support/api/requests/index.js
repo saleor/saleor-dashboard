@@ -3,3 +3,8 @@ export { createCustomer, deleteCustomersStartsWith } from "./Customer";
 export { createDraftOrder, getOrder } from "./Order";
 export { updateMetadata, updatePrivateMetadata } from "./Metadata";
 export { getProductMetadata } from "./storeFront/ProductDetails";
+export { activatePlugin, updatePlugin } from "./Plugins";
+export {
+  deleteStaffMembersStartsWith,
+  updateStaffMember,
+} from "./StaffMembers";
