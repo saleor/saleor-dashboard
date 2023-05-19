@@ -1,7 +1,7 @@
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { AppQuery } from "@dashboard/graphql";
-import React, { useMemo } from "react";
+import React from "react";
 
 import DeactivatedText from "../DeactivatedText";
 import HeaderOptions from "./HeaderOptions";
@@ -19,10 +19,10 @@ const Header: React.FC<HeaderProps> = ({
   onAppDeactivateOpen,
   onAppDeleteOpen,
 }) => {
-  const backButtonTarget = useMemo(
-    () => (data?.id ? AppUrls.resolveAppUrl(data.id) : "#"),
-    [data.id],
-  );
+  /**
+   * App is null with first render so fallback with HTML-safe fallback
+   */
+  const backButtonTarget = data?.id ? AppUrls.resolveAppUrl(data.id) : "#";
 
   return (
     <>

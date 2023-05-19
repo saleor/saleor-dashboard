@@ -4,7 +4,7 @@ import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
 import { LinkState } from "@dashboard/components/Link";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Button, Text } from "@saleor/macaw-ui/next";
-import React, { useCallback } from "react";
+import React from "react";
 import { FormattedMessage } from "react-intl";
 import { useLocation } from "react-router";
 
@@ -27,9 +27,9 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
   const goBackLink = location.state?.from ?? AppUrls.resolveAppListUrl();
   const navigate = useNavigator();
 
-  const navigateToManageAppScreen = useCallback(() => {
+  const navigateToManageAppScreen = () => {
     navigate(AppUrls.resolveAppDetailsUrl(appId));
-  }, [appId, navigate]);
+  };
 
   return (
     <TopNavWrapper>
