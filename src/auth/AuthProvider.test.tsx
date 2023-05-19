@@ -1,5 +1,8 @@
 import { useApolloClient } from "@apollo/client";
-import { useUserDetailsQuery } from "@dashboard/graphql";
+import {
+  useUserDetailsQuery,
+  useUserDetailsWithChannelsQuery,
+} from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { useAuth, useAuthState } from "@saleor/sdk";
 import { act, renderHook } from "@testing-library/react-hooks";
@@ -62,6 +65,9 @@ jest.mock("@dashboard/graphql", () => ({
   useUserDetailsQuery: jest.fn(() => ({
     data: undefined,
   })),
+  useUserDetailsWithChannelsQuery: jest.fn(() => ({
+    data: undefined,
+  })),
 }));
 
 jest.mock("@dashboard/hooks/useNotifier", () => ({
@@ -109,6 +115,14 @@ describe("AuthProvider", () => {
         },
       },
     }));
+    (useUserDetailsWithChannelsQuery as jest.Mock).mockImplementation(() => ({
+      data: {
+        me: {
+          email: adminCredentials.email,
+          isStaff: true,
+        },
+      },
+    }));
 
     // Act
     const hook = renderHook(() =>
@@ -141,6 +155,11 @@ describe("AuthProvider", () => {
         me: null,
       },
     }));
+    (useUserDetailsWithChannelsQuery as jest.Mock).mockImplementation(() => ({
+      data: {
+        me: null,
+      },
+    }));
 
     // Act
     const hook = renderHook(() =>
@@ -163,6 +182,24 @@ describe("AuthProvider", () => {
       authenticating: false,
     }));
     (useUserDetailsQuery as jest.Mock).mockImplementation(() => ({
+      data: {
+        me: {
+          email: nonStaffUserCredentials.email,
+          isStaff: false,
+        },
+      },
+    }));
+
+    (useUserDetailsQuery as jest.Mock).mockImplementation(() => ({
+      data: {
+        me: {
+          email: nonStaffUserCredentials.email,
+          isStaff: false,
+        },
+      },
+    }));
+
+    (useUserDetailsWithChannelsQuery as jest.Mock).mockImplementation(() => ({
       data: {
         me: {
           email: nonStaffUserCredentials.email,
