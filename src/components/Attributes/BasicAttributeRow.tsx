@@ -19,18 +19,18 @@ export const BasicAttributeRow: React.FC<BasicAttributeRowProps> = ({
     as="li"
     justifyContent="space-between"
     alignItems="center"
-    paddingY={3}
-    paddingX={2}
+    paddingY="s6"
+    paddingX="s0.5"
     display="grid"
     gridTemplateColumns={2}
-    gap={8}
+    gap="s5"
   >
     <Box
       data-test-id="attribute-label"
       as="label"
       htmlFor={id}
       display="flex"
-      gap={3}
+      gap="s1"
       cursor={clickableLabel ? "pointer" : "auto"}
     >
       <Text>{label}</Text>

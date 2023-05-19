@@ -143,13 +143,13 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
       <DashboardCard.Content>
         {shouldDisplayHelperText && <Text>{helperText}</Text>}
         {expanded && (
-          <Box display="grid" gap={5}>
+          <Box display="grid" gap="s2">
             <Box>
               <Input
                 error={!!getError(SeoField.slug) || slug.length > maxSlugLength}
                 name={SeoField.slug}
                 label={
-                  <Box display="flex" gap={3}>
+                  <Box display="flex" gap="s1">
                     <Box as="span">
                       <FormattedMessage defaultMessage="Slug" id="IoDlcd" />
                     </Box>
@@ -187,7 +187,7 @@ export const SeoForm: React.FC<SeoFormProps> = props => {
               placeholder={titlePlaceholder}
               helperText={intl.formatMessage(seoFieldMessage)}
               label={
-                <Box display="flex" gap={3}>
+                <Box display="flex" gap="s1">
                   <Box as="span">
                     <FormattedMessage
                       defaultMessage="Search engine title"

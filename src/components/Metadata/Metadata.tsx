@@ -53,7 +53,7 @@ export const Metadata: React.FC<MetadataProps> = ({ data, onChange }) => {
   };
 
   return (
-    <Box display="grid" gap={5} paddingBottom={9}>
+    <Box display="grid" gap="s2" paddingBottom="s6">
       <MetadataCard
         data={data?.metadata}
         isPrivate={false}

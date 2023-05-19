@@ -17,7 +17,7 @@ export const AppManifestUrl: React.FC<AppManifestUrlProps> = ({
   return (
     <Box
       display="flex"
-      gap={4}
+      gap="s1.5"
       onClick={e => {
         try {
           e.preventDefault();
