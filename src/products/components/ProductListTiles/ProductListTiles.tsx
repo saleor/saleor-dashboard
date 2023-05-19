@@ -43,6 +43,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
           gap={9}
           padding={9}
           __paddingTop={`calc(${vars.space[9]} - ${vars.space[5]}`}
+          data-test-id="tile-view"
         >
           {products.map(product => (
             <ProductTile

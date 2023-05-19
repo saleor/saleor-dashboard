@@ -164,7 +164,6 @@ describe("Tests for pages", () => {
           .get(PAGE_DETAILS_SELECTORS.nameInput)
           .clear()
           .type(updatedName)
-          // .clearAndType(updatedName)
           .get(PAGE_DETAILS_SELECTORS.isNotPublishedCheckbox)
           .click()
           .addAliasToGraphRequest("PageUpdate")

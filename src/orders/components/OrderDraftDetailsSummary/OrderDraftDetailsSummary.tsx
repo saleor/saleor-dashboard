@@ -12,7 +12,8 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { Typography } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
-import React, { useRef } from "react";
+import { Box, Button, Popover, sprinkles } from "@saleor/macaw-ui/next";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import OrderDiscountCommonModal from "../OrderDiscountCommonModal";
@@ -86,8 +87,6 @@ const OrderDraftDetailsSummary: React.FC<
 
   const intl = useIntl();
   const classes = useStyles(props);
-
-  const popperAnchorRef = useRef<HTMLTableRowElement | null>(null);
 
   if (!order) {
     return null;
@@ -179,36 +178,47 @@ const OrderDraftDetailsSummary: React.FC<
   return (
     <table className={classes.root}>
       <tbody>
-        <tr className={classes.relativeRow} ref={popperAnchorRef}>
+        <tr className={classes.relativeRow}>
           <td>
-            <Link onClick={openDialog}>
-              {intl.formatMessage(discountTitle)}
-            </Link>
-            <OrderDiscountCommonModal
-              dialogPlacement="bottom-start"
-              modalType={ORDER_DISCOUNT}
-              anchorRef={popperAnchorRef}
-              existingDiscount={orderDiscount}
-              maxPrice={undiscountedPrice}
-              isOpen={isDialogOpen}
-              onConfirm={addOrderDiscount}
-              onClose={closeDialog}
-              onRemove={removeOrderDiscount}
-              confirmStatus={orderDiscountAddStatus}
-              removeStatus={orderDiscountRemoveStatus}
-            />
+            <Popover open={isDialogOpen}>
+              <Popover.Trigger>
+                <Button
+                  variant="tertiary"
+                  onClick={isDialogOpen ? closeDialog : openDialog}
+                >
+                  <Link>{intl.formatMessage(discountTitle)}</Link>
+                </Button>
+              </Popover.Trigger>
+              <Popover.Content
+                align="start"
+                className={sprinkles({ zIndex: "3" })}
+              >
+                <Box boxShadow="overlay">
+                  <OrderDiscountCommonModal
+                    modalType={ORDER_DISCOUNT}
+                    existingDiscount={orderDiscount}
+                    maxPrice={undiscountedPrice}
+                    onConfirm={addOrderDiscount}
+                    onClose={closeDialog}
+                    onRemove={removeOrderDiscount}
+                    confirmStatus={orderDiscountAddStatus}
+                    removeStatus={orderDiscountRemoveStatus}
+                  />
+                </Box>
+              </Popover.Content>
+            </Popover>
           </td>
           <td className={classes.textRight}>
             {getOrderDiscountLabel(orderDiscount)}
           </td>
         </tr>
-        <tr>
+        <tr data-test-id="order-subtotal-price">
           <td>{intl.formatMessage(messages.subtotal)}</td>
           <td className={classes.textRight}>
             <Money money={subtotal.gross} />
           </td>
         </tr>
-        <tr>
+        <tr data-test-id="order-add-shipping-line">
           <td>
             {hasShippingMethods && getShippingMethodComponent()}
 
@@ -230,13 +240,13 @@ const OrderDraftDetailsSummary: React.FC<
             )}
           </td>
         </tr>
-        <tr>
+        <tr data-test-id="order-taxes-price">
           <td>{intl.formatMessage(messages.taxes)}</td>
           <td className={classes.textRight}>
             <Money money={order.total.tax} />
           </td>
         </tr>
-        <tr>
+        <tr data-test-id="order-total-price">
           <td>{intl.formatMessage(messages.total)}</td>
           <td className={classes.textRight}>
             <Money money={total.gross} />
