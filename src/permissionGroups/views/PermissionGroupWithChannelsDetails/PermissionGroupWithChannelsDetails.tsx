@@ -61,7 +61,7 @@ export const PermissionGroupWithChannelsDetails: React.FC<
     },
   );
 
-  const { availableChannels } = useAppChannel();
+  const { availableChannels } = useAppChannel(false);
 
   const [membersList, setMembersList] = useStateFromProps(
     data?.permissionGroup.users,
