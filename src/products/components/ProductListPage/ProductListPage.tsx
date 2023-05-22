@@ -1,3 +1,4 @@
+import { LazyQueryResult } from "@apollo/client/react";
 import {
   extensionMountPoints,
   mapToMenuItems,
@@ -13,6 +14,7 @@ import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { ProductListColumns } from "@dashboard/config";
 import {
+  Exact,
   GridAttributesQuery,
   ProductListQuery,
   RefreshLimitsQuery,
@@ -55,7 +57,12 @@ export interface ProductListPageProps
     ChannelProps {
   activeAttributeSortId: string;
   currencySymbol: string;
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
+  gridAttributesOpts: LazyQueryResult<
+    GridAttributesQuery,
+    Exact<{
+      ids: string | string[];
+    }>
+  >;
   limits: RefreshLimitsQuery["shop"]["limits"];
   products: RelayToFlat<ProductListQuery["products"]>;
   selectedProductIds: string[];
@@ -82,7 +89,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
     currencySymbol,
     defaultSettings,
-    gridAttributes,
+    gridAttributesOpts,
     limits,
     availableColumnsAttributesOpts,
     filterOpts,
@@ -288,7 +295,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             defaultSettings={defaultSettings}
             availableColumnsAttributesOpts={availableColumnsAttributesOpts}
             loading={listProps.disabled}
-            gridAttributes={gridAttributes}
+            gridAttributesOpts={gridAttributesOpts}
             products={listProps.products}
             settings={settings}
             selectedChannelId={selectedChannelId}

@@ -1,5 +1,6 @@
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 import { getChannelAvailabilityLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
+import { ColumnCategory } from "@dashboard/components/ColumnPicker/useColumns";
 import {
   dropdownCell,
   readonlyTextCell,
@@ -14,9 +15,7 @@ import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { getMoneyRange } from "@dashboard/components/MoneyRange";
-import { ProductListColumns } from "@dashboard/config";
 import {
-  GridAttributesQuery,
   ProductListQuery,
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
@@ -85,7 +84,7 @@ export const productListDynamicColumnAdapter = ({
   onNextPage,
   onPreviousPage,
   intl,
-}) => [
+}): ColumnCategory[] => [
   {
     name: intl.formatMessage(categoryMetaGroups.attribute),
     prefix: "attribute",
@@ -117,7 +116,7 @@ export const parseAttributesColumns = (
   sort: Sort<ProductListUrlSortField>,
   intl: IntlShape,
 ) =>
-  attributes.map(attribute => ({
+  attributes?.map(attribute => ({
     id: `attribute:${attribute.id}`,
     title: attribute.name,
     metaGroup: intl.formatMessage(categoryMetaGroups.attribute),
@@ -149,8 +148,6 @@ interface GetCellContentProps {
   intl: IntlShape;
   getProductTypes: (query: string) => Promise<DropdownChoice[]>;
   locale: Locale;
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
-  gridAttributesFromSettings: ProductListColumns[];
   selectedChannelId?: string;
 }
 

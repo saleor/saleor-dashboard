@@ -13718,7 +13718,18 @@ export type ProductMediaByIdLazyQueryHookResult = ReturnType<typeof useProductMe
 export type ProductMediaByIdQueryResult = Apollo.QueryResult<Types.ProductMediaByIdQuery, Types.ProductMediaByIdQueryVariables>;
 export const GridAttributesDocument = gql`
     query GridAttributes($ids: [ID!]!) {
-  grid: attributes(first: 25, filter: {ids: $ids}) {
+  left: attributes(first: 10) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+  right: attributes(first: 25, filter: {ids: $ids}) {
     edges {
       node {
         id
@@ -13727,7 +13738,7 @@ export const GridAttributesDocument = gql`
     }
   }
 }
-    `;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useGridAttributesQuery__

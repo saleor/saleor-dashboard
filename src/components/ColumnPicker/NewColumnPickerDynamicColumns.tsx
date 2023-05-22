@@ -32,7 +32,7 @@ export const NewColumnPickerDynamicColumns: React.FC<
         onClick={() => setExpanded(true)}
       />
     </Box>
-    {dynamicColumns.map(column => (
+    {dynamicColumns?.map(column => (
       <Box padding={3} key={column.id}>
         <Toggle
           onPressedChange={() => handleToggle(column.id)}

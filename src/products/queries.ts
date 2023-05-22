@@ -251,7 +251,18 @@ export const productMediaQuery = gql`
 
 export const gridAttributes = gql`
   query GridAttributes($ids: [ID!]!) {
-    grid: attributes(first: 25, filter: { ids: $ids }) {
+    left: attributes(first: 10) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+      pageInfo {
+        ...PageInfo
+      }
+    }
+    right: attributes(first: 25, filter: { ids: $ids }) {
       edges {
         node {
           id

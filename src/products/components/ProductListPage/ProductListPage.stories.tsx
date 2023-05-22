@@ -12,7 +12,6 @@ import {
 import { products as productListFixture } from "@dashboard/products/fixtures";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { productListFilterOpts } from "@dashboard/products/views/ProductList/fixtures";
-import { attributes } from "@dashboard/productTypes/fixtures";
 import Decorator from "@dashboard/storybook/Decorator";
 import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { ListViews } from "@dashboard/types";
@@ -52,7 +51,7 @@ const props: ProductListPageProps = {
   currencySymbol: "USD",
   defaultSettings: defaultListSettings[ListViews.PRODUCT_LIST],
   filterOpts: productListFilterOpts,
-  gridAttributes: attributes,
+  gridAttributesOpts: {} as any,
   limits,
   onExport: () => undefined,
   products,

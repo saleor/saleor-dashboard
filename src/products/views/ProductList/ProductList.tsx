@@ -17,7 +17,7 @@ import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   ProductListQueryVariables,
   useAvailableColumnAttributesQuery,
-  useGridAttributesQuery,
+  useGridAttributesLazyQuery,
   useInitialProductFilterAttributesQuery,
   useInitialProductFilterCategoriesQuery,
   useInitialProductFilterCollectionsQuery,
@@ -407,10 +407,12 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     notifyOnNetworkStatusChange: true,
   });
 
-  const gridAttributes = useGridAttributesQuery({
-    variables: { ids: filteredColumnIds },
-    skip: filteredColumnIds.length === 0,
-  });
+  const [gridAttributesQuery, gridAttributesOpts] =
+    useGridAttributesLazyQuery();
+
+  useEffect(() => {
+    gridAttributesQuery({ variables: { ids: filteredColumnIds } });
+  }, []);
 
   const {
     loadMore: loadMoreDialogProductTypes,
@@ -478,7 +480,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
-        gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
+        gridAttributesOpts={gridAttributesOpts}
         settings={settings}
         availableColumnsAttributesOpts={availableColumnsAttributesOpts}
         disabled={loading}

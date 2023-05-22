@@ -124,12 +124,47 @@ const expectedVisibleColumns = [
   },
 ];
 
-const expectedDynamicColumns = mockedCategories[0].selectedNodes;
+// In order of mockedColumnPickerSettings
+const expectedDynamicColumns = [
+  {
+    id: "attribute:QXR0cmlidXRlOjIx",
+    title: "ABV",
+    metaGroup: "Attributes",
+    width: 200,
+  },
+  {
+    id: "attribute:QXR0cmlidXRlOjE1",
+    title: "Bottle Size",
+    metaGroup: "Attributes",
+    width: 200,
+  },
+  {
+    id: "attribute:QXR0cmlidXRlOjUwOQ==",
+    title: "storage size ",
+    metaGroup: "Attributes",
+    width: 200,
+  },
+  {
+    id: "attribute:QXR0cmlidXRlOjI5",
+    title: "Tag",
+    metaGroup: "Attributes",
+    width: 200,
+  },
+  {
+    id: "attribute:QXR0cmlidXRlOjE0",
+    title: "Color",
+    metaGroup: "Attributes",
+    width: 200,
+  },
+];
 
 const setDynamicColumnSettings = jest.fn();
 const onSave = jest.fn();
 
 describe("useColumns", () => {
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
   it("should return initial state", () => {
     // Arrange
     const { result } = renderHook(() =>
@@ -213,7 +248,34 @@ describe("useColumns", () => {
     // Assert
     expect(onSave).toHaveBeenCalledTimes(1);
   });
-  it("should call setDynamicColumnSettings when dynamic column is selected", () => {
+  it("should set recentlyAddedColumn when column is added", () => {
+    // Arrange
+    const { result } = renderHook(() =>
+      useColumns({
+        staticColumns: mockedColumns,
+        selectedColumns: mockedSelectedColumns,
+        columnCategories: mockedCategories,
+        onSave,
+        columnPickerSettings: mockedColumnPickerSettings,
+        setDynamicColumnSettings,
+      }),
+    );
+
+    // Act
+    act(() =>
+      result.current.handlers.onChange([
+        "name",
+        "attribute:QXR0cmlidXRlOjE0",
+        "attribute:QXR0cmlidXRlOjIx",
+      ]),
+    );
+
+    // Assert
+    expect(result.current.recentlyAddedColumn).toEqual(
+      "attribute:QXR0cmlidXRlOjIx",
+    );
+  });
+  it("should update dynamic columns when new column is picked", () => {
     // Arrange
     const { result } = renderHook(() =>
       useColumns({
@@ -229,11 +291,73 @@ describe("useColumns", () => {
     // Act
     act(() =>
       result.current.handlers.onDynamicColumnSelect([
-        "attribute:QXR0cmlidXRlOjE",
+        ...mockedColumnPickerSettings,
+        "attribute:QXR0cmlidXRlOjI3",
       ]),
     );
 
     // Assert
     expect(setDynamicColumnSettings).toHaveBeenCalledTimes(1);
+    expect(result.current.dynamicColumns).toEqual([
+      ...expectedDynamicColumns,
+      {
+        id: "attribute:QXR0cmlidXRlOjI3",
+        title: "Author",
+        metaGroup: "Attributes",
+        width: 200,
+      },
+    ]);
+  });
+  it("should update dynamic columns when column is removed", () => {
+    // Arrange
+    const { result } = renderHook(() =>
+      useColumns({
+        staticColumns: mockedColumns,
+        selectedColumns: mockedSelectedColumns,
+        columnCategories: mockedCategories,
+        onSave,
+        columnPickerSettings: mockedColumnPickerSettings,
+        setDynamicColumnSettings,
+      }),
+    );
+
+    // Act
+    act(() =>
+      result.current.handlers.onDynamicColumnSelect([
+        "attribute:QXR0cmlidXRlOjIx",
+        "attribute:QXR0cmlidXRlOjE1",
+        "attribute:QXR0cmlidXRlOjI5",
+        "attribute:QXR0cmlidXRlOjE0",
+      ]),
+    );
+
+    // Assert
+    expect(setDynamicColumnSettings).toHaveBeenCalledTimes(1);
+    expect(result.current.dynamicColumns).toEqual([
+      {
+        id: "attribute:QXR0cmlidXRlOjIx",
+        title: "ABV",
+        metaGroup: "Attributes",
+        width: 200,
+      },
+      {
+        id: "attribute:QXR0cmlidXRlOjE1",
+        title: "Bottle Size",
+        metaGroup: "Attributes",
+        width: 200,
+      },
+      {
+        id: "attribute:QXR0cmlidXRlOjI5",
+        title: "Tag",
+        metaGroup: "Attributes",
+        width: 200,
+      },
+      {
+        id: "attribute:QXR0cmlidXRlOjE0",
+        title: "Color",
+        metaGroup: "Attributes",
+        width: 200,
+      },
+    ]);
   });
 });

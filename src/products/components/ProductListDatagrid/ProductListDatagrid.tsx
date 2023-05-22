@@ -1,3 +1,4 @@
+import { LazyQueryResult } from "@apollo/client/react";
 import { NewColumnPicker } from "@dashboard/components/ColumnPicker/NewColumnPicker";
 import { useColumns } from "@dashboard/components/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
@@ -9,6 +10,7 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@dashboard/config";
 import {
+  Exact,
   GridAttributesQuery,
   ProductListQuery,
   useAvailableColumnAttributesQuery,
@@ -30,7 +32,6 @@ import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { isAttributeColumnValue } from "../ProductListPage/utils";
 import {
   createGetCellContent,
   getColumnMetadata,
@@ -46,7 +47,12 @@ interface ProductListDatagridProps
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
+  gridAttributesOpts: LazyQueryResult<
+    GridAttributesQuery,
+    Exact<{
+      ids: string | string[];
+    }>
+  >;
   products: RelayToFlat<ProductListQuery["products"]>;
   onRowClick: (id: string) => void;
   rowAnchor?: (id: string) => string;
@@ -70,7 +76,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   onSort,
   sort,
   loading,
-  gridAttributes,
+  gridAttributesOpts,
   availableColumnsAttributesOpts,
   activeAttributeSortId,
   filterDependency,
@@ -85,10 +91,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
   const productsLength = getProductRowsLength(disabled, products, disabled);
-  const gridAttributesFromSettings = useMemo(
-    () => settings.columns.filter(isAttributeColumnValue),
-    [settings.columns],
-  );
 
   const handleColumnChange = useCallback(
     (picked: ProductListColumns[]) => {
@@ -96,7 +98,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     },
     [onUpdateListSettings],
   );
-
   const {
     handlers,
     visibleColumns,
@@ -109,8 +110,8 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     staticColumns: productListStaticColumnAdapter(intl, sort),
     columnCategories: productListDynamicColumnAdapter({
       attributesData:
-        mapEdgesToItems(availableColumnsAttributesOpts.data?.attributes) || [],
-      gridAttributesData: gridAttributes,
+        mapEdgesToItems(availableColumnsAttributesOpts.data?.attributes) ?? [],
+      gridAttributesData: mapEdgesToItems(gridAttributesOpts.data?.right),
       activeAttributeSortId,
       sort,
       onSearch: (query: string) =>
@@ -214,18 +215,14 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         intl,
         getProductTypes: searchProductType,
         locale,
-        gridAttributes,
-        gridAttributesFromSettings,
         selectedChannelId,
       }),
     [
       visibleColumns,
-      gridAttributes,
-      gridAttributesFromSettings,
-      intl,
-      locale,
       products,
+      intl,
       searchProductType,
+      locale,
       selectedChannelId,
     ],
   );

@@ -1,6 +1,7 @@
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
+import uniqBy from "lodash/uniqBy";
 import React from "react";
 
 import { AvailableColumn } from "../Datagrid/types";
@@ -34,14 +35,29 @@ export const useColumns = ({
   columnPickerSettings,
   setDynamicColumnSettings,
 }: UseColumnsProps) => {
-  const dynamicColumns: AvailableColumn[] = React.useMemo(
-    () => columnCategories.flatMap(category => category.selectedNodes),
-    [columnCategories],
-  );
+  const [dynamicColumns, updateDynamicColumns] =
+    React.useState<AvailableColumn[]>(null);
+
+  React.useEffect(() => {
+    if (
+      dynamicColumns === null &&
+      columnCategories.every(category => Array.isArray(category.selectedNodes))
+    ) {
+      updateDynamicColumns(
+        columnCategories
+          .flatMap(category => category.selectedNodes)
+          .sort(
+            (a, b) =>
+              columnPickerSettings.indexOf(a.id) -
+              columnPickerSettings.indexOf(b.id),
+          ),
+      );
+    }
+  }, [columnCategories, columnPickerSettings, dynamicColumns]);
 
   const initialColumnsState = React.useMemo(
     () =>
-      [...staticColumns, ...dynamicColumns].filter(
+      [...staticColumns, ...(dynamicColumns ?? [])].filter(
         column => selectedColumns.includes(column.id) || column.id === "empty",
       ),
     [dynamicColumns, staticColumns, selectedColumns],
@@ -98,16 +114,34 @@ export const useColumns = ({
   );
 
   const onChange = (columns: string[]) => {
+    // Recently added is used by datagrid to auto-scroll to the column
     const isColumnAdded = columns.length > selectedColumns.length;
     if (isColumnAdded) {
       setRecentlyAddedColumn(columns.find(x => !selectedColumns.includes(x)));
     } else {
       setRecentlyAddedColumn(null);
     }
+    // Saves in LS
     onSave(columns);
   };
 
-  const onDynamicColumnSelect = setDynamicColumnSettings;
+  const onDynamicColumnSelect = (columns: string[]) => {
+    setDynamicColumnSettings(columns);
+
+    updateDynamicColumns(prevDynamicColumns =>
+      uniqBy(
+        [
+          ...prevDynamicColumns,
+          ...columnCategories
+            .flatMap(category => category.availableNodes)
+            .filter(x => columns.includes(x.id)),
+        ],
+        "id",
+      )
+        .sort((a, b) => columns.indexOf(a.id) - columns.indexOf(b.id))
+        .filter(x => columns.includes(x.id)),
+    );
+  };
 
   return {
     handlers: {
