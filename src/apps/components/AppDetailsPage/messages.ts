@@ -1,11 +1,6 @@
 import { defineMessages } from "react-intl";
 
 export default defineMessages({
-  openApp: {
-    id: "+FWlRD",
-    defaultMessage: "Open app",
-    description: "button",
-  },
   supportLink: {
     id: "Nsk5WL",
     defaultMessage: "Get support",
