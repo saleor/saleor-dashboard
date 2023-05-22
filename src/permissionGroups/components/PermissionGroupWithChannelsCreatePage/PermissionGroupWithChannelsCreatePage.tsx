@@ -80,6 +80,7 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
       confirmLeave
       initial={{
         ...initialForm,
+        channels: channelChoices,
       }}
       onSubmit={onSubmit}
       disabled={disabled}
