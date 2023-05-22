@@ -270,7 +270,7 @@ describe("Staff members", () => {
     },
   );
 
-  it.only(
+  it(
     "should create new user and successfully change password. TC: SALEOR_3510",
     { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
