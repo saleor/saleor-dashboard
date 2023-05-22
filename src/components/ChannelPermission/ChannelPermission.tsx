@@ -15,20 +15,22 @@ interface ChannelPermissionProps {
   selectedChannels: MultiAutocompleteChoiceType[];
   allChannels: ChannelFragment[];
   description?: string;
-  hasRestrictedChannels: boolean;
+  hasAllChannels: boolean;
   disabled: boolean;
   onChannelChange: FormChange;
-  onHasRestrictedChannelsChange: () => void;
+  onHasAllChannelsChange: () => void;
 }
+
+const MIN_CHANNELS_AMOUNT = 0;
 
 export const ChannelPermission = ({
   description,
   disabled,
-  onHasRestrictedChannelsChange,
+  onHasAllChannelsChange,
   onChannelChange,
   allChannels,
   selectedChannels,
-  hasRestrictedChannels,
+  hasAllChannels,
 }: ChannelPermissionProps) => {
   const intl = useIntl();
 
@@ -45,48 +47,46 @@ export const ChannelPermission = ({
             {description}
           </Text>
         )}
-        <Checkbox
-          disabled={disabled}
-          checked={!hasRestrictedChannels}
-          onCheckedChange={onHasRestrictedChannelsChange}
-          tabIndex={-1}
-        >
-          <Text variant="body">
-            {intl.formatMessage(messages.allowAllChannels)}
-          </Text>
-        </Checkbox>
-        {hasRestrictedChannels && (
-          <>
-            <Box
-              width="100%"
-              borderBottomStyle="solid"
-              borderBottomWidth={1}
-              borderColor="neutralPlain"
-              height={1}
-              marginTop={9}
-              marginBottom={9}
+        {filteredChannels.length > MIN_CHANNELS_AMOUNT && (
+          <Checkbox
+            disabled={disabled}
+            checked={hasAllChannels}
+            onCheckedChange={onHasAllChannelsChange}
+            tabIndex={-1}
+          >
+            <Text variant="body">
+              {intl.formatMessage(messages.allowAllChannels)}
+            </Text>
+          </Checkbox>
+        )}
+        {!hasAllChannels && filteredChannels.length > MIN_CHANNELS_AMOUNT && (
+          <Box
+            width="100%"
+            borderBottomStyle="solid"
+            borderBottomWidth={1}
+            borderColor="neutralPlain"
+            height={1}
+            marginTop={9}
+            marginBottom={9}
+          />
+        )}
+        {!hasAllChannels && (
+          <Box __height="100%" overflowY="scroll" overflowX="hidden">
+            <MultiAutocompleteSelectField
+              disabled={disabled}
+              choices={mapNodeToChoice(filteredChannels)}
+              displayValues={selectedChannels}
+              fetchChoices={onQueryChange}
+              hasMore={false}
+              label={intl.formatMessage(messages.selectChannels)}
+              loading={false}
+              name="channels"
+              onChange={onChannelChange}
+              placeholder={intl.formatMessage(messages.searchChannels)}
+              value={selectedChannels.map(channel => channel.value)}
+              testId="channels"
             />
-            <Box
-              __height="calc(100% - 115px)"
-              overflowY="scroll"
-              overflowX="hidden"
-            >
-              <MultiAutocompleteSelectField
-                disabled={disabled}
-                choices={mapNodeToChoice(filteredChannels)}
-                displayValues={selectedChannels}
-                fetchChoices={onQueryChange}
-                hasMore={false}
-                label={intl.formatMessage(messages.selectChannels)}
-                loading={false}
-                name="channels"
-                onChange={onChannelChange}
-                placeholder={intl.formatMessage(messages.searchChannels)}
-                value={selectedChannels.map(channel => channel.value)}
-                testId="channels"
-              />
-            </Box>
-          </>
+          </Box>
         )}
       </Box>
     </Box>

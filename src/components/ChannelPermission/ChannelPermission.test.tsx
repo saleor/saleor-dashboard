@@ -29,8 +29,8 @@ describe("ChannelPermission", () => {
         allChannels={allChannels}
         disabled={false}
         onChannelChange={jest.fn}
-        onHasRestrictedChannelsChange={jest.fn}
-        hasRestrictedChannels={false}
+        onHasAllChannelsChange={jest.fn}
+        hasAllChannels={true}
       />,
     );
 
@@ -51,8 +51,8 @@ describe("ChannelPermission", () => {
         allChannels={allChannels}
         disabled={false}
         onChannelChange={jest.fn}
-        onHasRestrictedChannelsChange={jest.fn}
-        hasRestrictedChannels={true}
+        onHasAllChannelsChange={jest.fn}
+        hasAllChannels={false}
       />,
     );
 
@@ -63,7 +63,7 @@ describe("ChannelPermission", () => {
 
   it("should render restricted checkbox disabled", () => {
     // Arrange & Act
-    const mockOnHasRestrictedChannelsChange = jest.fn();
+    const mockonHasAllChannelsChange = jest.fn();
 
     render(
       <ChannelPermission
@@ -71,8 +71,8 @@ describe("ChannelPermission", () => {
         allChannels={allChannels}
         disabled={true}
         onChannelChange={jest.fn}
-        onHasRestrictedChannelsChange={mockOnHasRestrictedChannelsChange}
-        hasRestrictedChannels={false}
+        onHasAllChannelsChange={mockonHasAllChannelsChange}
+        hasAllChannels={true}
       />,
     );
 
@@ -80,7 +80,7 @@ describe("ChannelPermission", () => {
     userEvent.click(screen.getByRole("checkbox"));
 
     // Assert
-    expect(mockOnHasRestrictedChannelsChange).not.toHaveBeenCalled();
+    expect(mockonHasAllChannelsChange).not.toHaveBeenCalled();
     expect(screen.getByRole("checkbox")).toBeDisabled();
   });
 
@@ -96,8 +96,8 @@ describe("ChannelPermission", () => {
         }))}
         disabled={false}
         onChannelChange={jest.fn}
-        onHasRestrictedChannelsChange={jest.fn}
-        hasRestrictedChannels={true}
+        onHasAllChannelsChange={jest.fn}
+        hasAllChannels={false}
       />,
     );
 
@@ -117,8 +117,8 @@ describe("ChannelPermission", () => {
         }))}
         disabled={false}
         onChannelChange={jest.fn}
-        onHasRestrictedChannelsChange={jest.fn}
-        hasRestrictedChannels={true}
+        onHasAllChannelsChange={jest.fn}
+        hasAllChannels={false}
       />,
     );
 

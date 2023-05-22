@@ -10,10 +10,11 @@ import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroup
 import { PermissionGroupWithChannelsDetailsPageFormData } from "./components/PermissonGroupWithChannelsDetailsPage";
 import {
   arePermissionsExceeded,
+  calculateRestrictedAccessToChannels,
   channelsDiff,
   extractPermissionCodes,
-  getPermissionGroupAccessibleChannels,
   isGroupFullAccess,
+  mapAccessibleChannelsToChoice,
   permissionsDiff,
   usersDiff,
 } from "./utils";
@@ -303,7 +304,7 @@ describe("Permission group utils", () => {
   });
 
   describe("getPermissionGroupAccessibleChannels", () => {
-    it("should return empty array when accessible channels length equal length of all channels", () => {
+    it("should return all accessible channels ", () => {
       const permissionGroup = {
         accessibleChannels: [
           {
@@ -321,41 +322,63 @@ describe("Permission group utils", () => {
         ],
       } as PermissionGroupWithContextDetailsFragment;
 
-      const accessibleChannels = getPermissionGroupAccessibleChannels(
-        permissionGroup,
-        2,
-      );
-
-      expect(accessibleChannels).toEqual([]);
-    });
-
-    it("should return all accessible channels when accessible channels length is less than all channels length", () => {
-      const permissionGroup = {
-        accessibleChannels: [
-          {
-            id: "1",
-            name: "Channel 1",
-            slug: "channel-1",
-            currencyCode: "USD",
-          },
-          {
-            id: "2",
-            name: "Channel 2",
-            slug: "channel-2",
-            currencyCode: "USD",
-          },
-        ],
-      } as PermissionGroupWithContextDetailsFragment;
-
-      const accessibleChannels = getPermissionGroupAccessibleChannels(
-        permissionGroup,
-        4,
-      );
+      const accessibleChannels = mapAccessibleChannelsToChoice(permissionGroup);
 
       expect(accessibleChannels).toEqual([
         { label: "Channel 1", value: "1" },
         { label: "Channel 2", value: "2" },
       ]);
+    });
+  });
+
+  describe("calculateRestrictedAccessToChannels", () => {
+    it("should return true when restrictedAccessToChannels is true", () => {
+      // Arrange
+      const hasRestrictedChannels = true;
+
+      // Act
+      const restrictedAccessToChannels = calculateRestrictedAccessToChannels(
+        hasRestrictedChannels,
+        [],
+        [],
+      );
+
+      // Assert
+      expect(restrictedAccessToChannels).toBe(true);
+    });
+
+    it("should return true when restrictedAccessToChannels is false but selected channels length not equal all channels length", () => {
+      // Arrange
+      const hasRestrictedChannels = false;
+      const selectedChannels = [1];
+      const allChannels = [1, 2, 3];
+
+      // Act
+      const restrictedAccessToChannels = calculateRestrictedAccessToChannels(
+        hasRestrictedChannels,
+        selectedChannels,
+        allChannels,
+      );
+
+      // Assert
+      expect(restrictedAccessToChannels).toBe(true);
+    });
+
+    it("should return false when restrictedAccessToChannels is false but selected channels length is equal all channels length", () => {
+      // Arrange
+      const hasRestrictedChannels = false;
+      const selectedChannels = [1];
+      const allChannels = [1];
+
+      // Act
+      const restrictedAccessToChannels = calculateRestrictedAccessToChannels(
+        hasRestrictedChannels,
+        selectedChannels,
+        allChannels,
+      );
+
+      // Assert
+      expect(restrictedAccessToChannels).toBe(false);
     });
   });
 });

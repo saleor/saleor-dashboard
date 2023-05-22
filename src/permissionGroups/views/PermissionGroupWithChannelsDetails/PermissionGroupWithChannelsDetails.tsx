@@ -12,10 +12,11 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors } from "@dashboard/misc";
+import { extractMutationErrors, hasRestrictedChannels } from "@dashboard/misc";
 import MembersErrorDialog from "@dashboard/permissionGroups/components/MembersErrorDialog";
 import {
   arePermissionsExceeded,
+  calculateRestrictedAccessToChannels,
   channelsDiff,
   permissionsDiff,
   usersDiff,
@@ -152,7 +153,11 @@ export const PermissionGroupWithChannelsDetails: React.FC<
             ...permissionsDiff(data?.permissionGroup, formData),
             ...usersDiff(data?.permissionGroup, formData),
             ...channelsDiff(data?.permissionGroup, formData),
-            restrictedAccessToChannels: formData.hasRestrictedChannels,
+            restrictedAccessToChannels: calculateRestrictedAccessToChannels(
+              hasRestrictedChannels(user),
+              formData.channels,
+              availableChannels,
+            ),
           },
         },
       }),

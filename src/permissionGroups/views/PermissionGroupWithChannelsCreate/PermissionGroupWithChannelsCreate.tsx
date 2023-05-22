@@ -5,7 +5,11 @@ import { usePermissionGroupWithChannelsCreateMutation } from "@dashboard/graphql
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
-import { extractMutationErrors } from "@dashboard/misc";
+import {
+  extractMutationErrors,
+  filterAccessibleChannes,
+  hasRestrictedChannels,
+} from "@dashboard/misc";
 import { PermissionWithChannelsData } from "@dashboard/permissionGroups/components/PermissonGroupWithChannelsDetailsPage";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -15,6 +19,7 @@ import {
   PermissionGroupWithChannelsCreatePage,
 } from "../../components/PermissionGroupWithChannelsCreatePage";
 import { permissionGroupDetailsUrl } from "../../urls";
+import { calculateRestrictedAccessToChannels } from "../../utils";
 
 export const PermissionGroupWithChannelsCreate: React.FC = () => {
   const navigate = useNavigator();
@@ -45,22 +50,28 @@ export const PermissionGroupWithChannelsCreate: React.FC = () => {
     createPermissionGroupResult?.data?.permissionGroupCreate?.errors || [];
   const { availableChannels } = useAppChannel(false);
 
-  const onSubmit = (formData: PermissionGroupWithChannelsCreateFormData) =>
-    extractMutationErrors(
+  const onSubmit = (formData: PermissionGroupWithChannelsCreateFormData) => {
+    const hasUserRestrictedChannels = hasRestrictedChannels(user);
+    const channels = formData.channels.map(channel => channel.value);
+
+    return extractMutationErrors(
       createPermissionGroup({
         variables: {
           input: {
-            addPermissions: formData.hasFullAccess
-              ? shop.permissions.map(perm => perm.code)
-              : formData.permissions,
+            addPermissions: formData.permissions,
             addUsers: [],
             name: formData.name,
-            addChannels: formData.channels.map(channel => channel.value),
-            restrictedAccessToChannels: formData.hasRestrictedChannels,
+            addChannels: channels,
+            restrictedAccessToChannels: calculateRestrictedAccessToChannels(
+              hasUserRestrictedChannels,
+              formData.channels,
+              availableChannels,
+            ),
           },
         },
       }),
     );
+  };
 
   const userPermissions = user?.user.userPermissions.map(p => p.code) || [];
 
@@ -87,7 +98,8 @@ export const PermissionGroupWithChannelsCreate: React.FC = () => {
         errors={errors as any}
         disabled={createPermissionGroupResult.loading}
         permissions={permissions}
-        channels={availableChannels}
+        channels={filterAccessibleChannes(availableChannels, user)}
+        hasRestrictedChannels={hasRestrictedChannels(user)}
         saveButtonBarState={createPermissionGroupResult.status}
         onSubmit={onSubmit}
       />

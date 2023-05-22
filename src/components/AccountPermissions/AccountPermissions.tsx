@@ -50,7 +50,9 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     onChange({
       target: {
         name: "permissions",
-        value: !data.hasFullAccess ? permissions.map(perm => perm.code) : [],
+        value: !data.hasFullAccess
+          ? permissions.filter(perm => !perm.disabled).map(perm => perm.code)
+          : [],
       },
     } as ChangeEvent<any>);
 

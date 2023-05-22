@@ -113,26 +113,31 @@ export const arePermissionsExceeded = (
 /**
  * Return lists of permission group accessible channels.
  */
-export const getPermissionGroupAccessibleChannels = (
+export const mapAccessibleChannelsToChoice = (
   permissionGroup: PermissionGroupWithContextDetailsFragment,
-  allChannelsLength: number,
-): MultiAutocompleteChoiceType[] => {
-  // We don't want show all channels to user that has no restricted access to channels
-  // User will be able to select channels manually
+): MultiAutocompleteChoiceType[] =>
+  permissionGroup?.accessibleChannels.map(
+    channel =>
+      ({
+        label: channel.name,
+        value: channel.id,
+      } as unknown as MultiAutocompleteChoiceType),
+  ) ?? [];
+
+/**
+ * Calcualte if restricted access to channels should be enabled.
+ */
+export const calculateRestrictedAccessToChannels = (
+  hasUserRestrictedChannels: boolean,
+  selectedChannels: unknown[],
+  allChannels: unknown[],
+) => {
   if (
-    permissionGroup?.accessibleChannels?.length === allChannelsLength &&
-    !permissionGroup?.restrictedAccessToChannels
+    hasUserRestrictedChannels ||
+    selectedChannels.length !== allChannels.length
   ) {
-    return [];
+    return true;
   }
 
-  return (
-    permissionGroup?.accessibleChannels.map(
-      channel =>
-        ({
-          label: channel.name,
-          value: channel.id,
-        } as unknown as MultiAutocompleteChoiceType),
-    ) ?? []
-  );
+  return false;
 };
