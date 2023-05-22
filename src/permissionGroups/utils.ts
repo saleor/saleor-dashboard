@@ -83,16 +83,6 @@ export const channelsDiff = (
 ) => {
   const newChannels = formData.channels.map(c => c.value);
   const oldChannels = permissionGroup?.accessibleChannels.map(c => c.id);
-  const hasRestrictedChannels = permissionGroup?.restrictedAccessToChannels;
-
-  if (!hasRestrictedChannels) {
-    // We get all channels from API when user has no restricted access to channels
-    // and we want to send only those that were really added
-    return {
-      addChannels: newChannels,
-      removeChannels: [],
-    };
-  }
 
   return {
     addChannels: difference(newChannels, oldChannels),

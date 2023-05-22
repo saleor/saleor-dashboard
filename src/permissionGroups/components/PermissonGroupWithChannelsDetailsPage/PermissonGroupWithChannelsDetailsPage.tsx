@@ -104,10 +104,14 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
     permissionGroup?.accessibleChannels ?? [],
   );
 
+  const allChannels = mapAccessibleChannelsToChoice(
+    permissionGroup,
+    isUserAbleToEdit,
+  );
   const initialForm: PermissionGroupWithChannelsDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
     hasAllChannels: !permissionGroup?.restrictedAccessToChannels ?? false,
-    channels: mapAccessibleChannelsToChoice(permissionGroup, isUserAbleToEdit),
+    channels: allChannels,
     isActive: false,
     name: permissionGroup?.name || "",
     permissions: extractPermissionCodes(permissionGroup),
@@ -146,7 +150,7 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
           change({
             target: {
               name: "channels",
-              value: hasAllChannels ? userChannels : [],
+              value: hasAllChannels ? allChannels : [],
             },
           });
         };
