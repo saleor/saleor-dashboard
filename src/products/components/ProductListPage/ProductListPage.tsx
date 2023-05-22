@@ -18,7 +18,7 @@ import {
   GridAttributesQuery,
   ProductListQuery,
   RefreshLimitsQuery,
-  useAvailableColumnAttributesQuery,
+  useAvailableColumnAttributesLazyQuery,
 } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -74,7 +74,7 @@ export interface ProductListPageProps
   columnPickerSettings: string[];
   setDynamicColumnSettings: (cols: string[]) => void;
   availableColumnsAttributesOpts: ReturnType<
-    typeof useAvailableColumnAttributesQuery
+    typeof useAvailableColumnAttributesLazyQuery
   >;
   onProductsDelete: () => void;
   onSelectProductIds: (ids: number[], clearSelection: () => void) => void;

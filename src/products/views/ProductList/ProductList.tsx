@@ -16,7 +16,7 @@ import {
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   ProductListQueryVariables,
-  useAvailableColumnAttributesQuery,
+  useAvailableColumnAttributesLazyQuery,
   useGridAttributesLazyQuery,
   useInitialProductFilterAttributesQuery,
   useInitialProductFilterCategoriesQuery,
@@ -396,21 +396,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     [products, selectedProductIds],
   );
 
-  const availableColumnsAttributesOpts = useAvailableColumnAttributesQuery({
-    variables: {
-      after: null,
-      search: "",
-      first: 10,
-    },
-    fetchPolicy: "network-only",
-    nextFetchPolicy: "cache-first",
-    notifyOnNetworkStatusChange: true,
-  });
+  const availableColumnsAttributesOpts =
+    useAvailableColumnAttributesLazyQuery();
 
   const [gridAttributesQuery, gridAttributesOpts] =
     useGridAttributesLazyQuery();
 
   useEffect(() => {
+    // Fetch this only on initial render
     gridAttributesQuery({ variables: { ids: filteredColumnIds } });
   }, []);
 
