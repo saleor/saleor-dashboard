@@ -18,14 +18,14 @@ import { PermissionGroupWithContextDetailsFragment } from "@dashboard/graphql/ty
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
-import { filterAccessibleChannes } from "@dashboard/misc";
 import {
   MembersListUrlSortField,
   permissionGroupListUrl,
 } from "@dashboard/permissionGroups/urls";
 import {
-  calculateRestrictedAccessToChannels,
+  checkIfUserHasAllRequiredChannels,
   extractPermissionCodes,
+  hasRestrictedChannels,
   isGroupFullAccess,
   mapAccessibleChannelsToChoice,
 } from "@dashboard/permissionGroups/utils";
@@ -38,6 +38,7 @@ import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
+import { filterAccessibleChannes } from "../../utils";
 import PermissionGroupInfo from "../PermissionGroupInfo";
 import PermissionGroupMemberList from "../PermissionGroupMemberList";
 
@@ -96,15 +97,17 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
   const user = useUser();
 
   const userChannels = filterAccessibleChannes(channels, user);
+  const hasUserRestrictedChannels = hasRestrictedChannels(user);
+
+  const isUserAbleToEdit = checkIfUserHasAllRequiredChannels(
+    user,
+    permissionGroup?.accessibleChannels ?? [],
+  );
 
   const initialForm: PermissionGroupWithChannelsDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
-    hasAllChannels: !calculateRestrictedAccessToChannels(
-      permissionGroup?.restrictedAccessToChannels ?? false,
-      permissionGroup?.accessibleChannels ?? [],
-      channels,
-    ),
-    channels: mapAccessibleChannelsToChoice(permissionGroup),
+    hasAllChannels: !permissionGroup?.restrictedAccessToChannels ?? false,
+    channels: mapAccessibleChannelsToChoice(permissionGroup, isUserAbleToEdit),
     isActive: false,
     name: permissionGroup?.name || "",
     permissions: extractPermissionCodes(permissionGroup),
@@ -143,7 +146,7 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
           change({
             target: {
               name: "channels",
-              value: hasAllChannels ? channels : [],
+              value: hasAllChannels ? userChannels : [],
             },
           });
         };
@@ -196,7 +199,8 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
                     selectedChannels={data.channels}
                     onHasAllChannelsChange={handleHasAllChannelsChange}
                     onChannelChange={handleChannelChange}
-                    disabled={disabledChannelPermissions}
+                    disabled={disabledChannelPermissions || !isUserAbleToEdit}
+                    disabledSelectAllChannls={hasUserRestrictedChannels}
                   />
                 </Box>
               </Box>

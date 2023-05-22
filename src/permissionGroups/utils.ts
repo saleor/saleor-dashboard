@@ -1,5 +1,7 @@
+import { UserContext } from "@dashboard/auth/types";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import {
+  ChannelFragment,
   PermissionFragment,
   PermissionGroupDetailsFragment,
   UserFragment,
@@ -115,12 +117,14 @@ export const arePermissionsExceeded = (
  */
 export const mapAccessibleChannelsToChoice = (
   permissionGroup: PermissionGroupWithContextDetailsFragment,
+  isUserAbleToEdit?: boolean,
 ): MultiAutocompleteChoiceType[] =>
   permissionGroup?.accessibleChannels.map(
     channel =>
       ({
         label: channel.name,
         value: channel.id,
+        disabled: isUserAbleToEdit !== undefined ? !isUserAbleToEdit : false,
       } as unknown as MultiAutocompleteChoiceType),
   ) ?? [];
 
@@ -140,4 +144,53 @@ export const calculateRestrictedAccessToChannels = (
   }
 
   return false;
+};
+
+export const checkIfUserHasAllRequiredChannels = (
+  user: UserContext,
+  permissionGroupAccessibleChannels: ChannelFragment[],
+) => {
+  const userChannels = getUserRestrictedChannels(user).map(c => c.id);
+
+  return permissionGroupAccessibleChannels?.every(permChan =>
+    userChannels.includes(permChan.id),
+  );
+};
+
+export const filterAccessibleChannes = (
+  availableChannels: ChannelFragment[],
+  { user }: UserContext,
+): ChannelFragment[] => {
+  if (!user) {
+    return availableChannels;
+  }
+
+  if (
+    "restrictedAccessToChannels" in user &&
+    user.restrictedAccessToChannels === false
+  ) {
+    return availableChannels;
+  }
+
+  if ("accessibleChannels" in user) {
+    return user.accessibleChannels;
+  }
+
+  return availableChannels;
+};
+
+export const hasRestrictedChannels = ({ user }: UserContext) => {
+  if ("restrictedAccessToChannels" in user) {
+    return user.restrictedAccessToChannels;
+  }
+
+  return false;
+};
+
+export const getUserRestrictedChannels = ({ user }: UserContext) => {
+  if ("accessibleChannels" in user) {
+    return user.accessibleChannels;
+  }
+
+  return [];
 };

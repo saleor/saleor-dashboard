@@ -28,6 +28,7 @@ describe("ChannelPermission", () => {
         selectedChannels={[]}
         allChannels={allChannels}
         disabled={false}
+        disabledSelectAllChannls={false}
         onChannelChange={jest.fn}
         onHasAllChannelsChange={jest.fn}
         hasAllChannels={true}
@@ -50,6 +51,7 @@ describe("ChannelPermission", () => {
         selectedChannels={[]}
         allChannels={allChannels}
         disabled={false}
+        disabledSelectAllChannls={false}
         onChannelChange={jest.fn}
         onHasAllChannelsChange={jest.fn}
         hasAllChannels={false}
@@ -70,6 +72,7 @@ describe("ChannelPermission", () => {
         selectedChannels={[]}
         allChannels={allChannels}
         disabled={true}
+        disabledSelectAllChannls={false}
         onChannelChange={jest.fn}
         onHasAllChannelsChange={mockonHasAllChannelsChange}
         hasAllChannels={true}
@@ -95,6 +98,7 @@ describe("ChannelPermission", () => {
           value: x.id,
         }))}
         disabled={false}
+        disabledSelectAllChannls={false}
         onChannelChange={jest.fn}
         onHasAllChannelsChange={jest.fn}
         hasAllChannels={false}
@@ -116,6 +120,7 @@ describe("ChannelPermission", () => {
           value: x.id,
         }))}
         disabled={false}
+        disabledSelectAllChannls={false}
         onChannelChange={jest.fn}
         onHasAllChannelsChange={jest.fn}
         hasAllChannels={false}

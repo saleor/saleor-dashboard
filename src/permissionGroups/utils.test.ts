@@ -325,8 +325,8 @@ describe("Permission group utils", () => {
       const accessibleChannels = mapAccessibleChannelsToChoice(permissionGroup);
 
       expect(accessibleChannels).toEqual([
-        { label: "Channel 1", value: "1" },
-        { label: "Channel 2", value: "2" },
+        { label: "Channel 1", value: "1", disabled: false },
+        { label: "Channel 2", value: "2", disabled: false },
       ]);
     });
   });

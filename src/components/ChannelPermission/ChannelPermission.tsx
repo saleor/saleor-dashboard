@@ -17,6 +17,7 @@ interface ChannelPermissionProps {
   description?: string;
   hasAllChannels: boolean;
   disabled: boolean;
+  disabledSelectAllChannls: boolean;
   onChannelChange: FormChange;
   onHasAllChannelsChange: () => void;
 }
@@ -30,6 +31,7 @@ export const ChannelPermission = ({
   onChannelChange,
   allChannels,
   selectedChannels,
+  disabledSelectAllChannls,
   hasAllChannels,
 }: ChannelPermissionProps) => {
   const intl = useIntl();
@@ -49,7 +51,7 @@ export const ChannelPermission = ({
         )}
         {filteredChannels.length > MIN_CHANNELS_AMOUNT && (
           <Checkbox
-            disabled={disabled}
+            disabled={disabled || disabledSelectAllChannls}
             checked={hasAllChannels}
             onCheckedChange={onHasAllChannelsChange}
             tabIndex={-1}
@@ -59,18 +61,19 @@ export const ChannelPermission = ({
             </Text>
           </Checkbox>
         )}
-        {!hasAllChannels && filteredChannels.length > MIN_CHANNELS_AMOUNT && (
-          <Box
-            width="100%"
-            borderBottomStyle="solid"
-            borderBottomWidth={1}
-            borderColor="neutralPlain"
-            height={1}
-            marginTop={9}
-            marginBottom={9}
-          />
-        )}
-        {!hasAllChannels && (
+        {(!hasAllChannels || disabledSelectAllChannls) &&
+          filteredChannels.length > MIN_CHANNELS_AMOUNT && (
+            <Box
+              width="100%"
+              borderBottomStyle="solid"
+              borderBottomWidth={1}
+              borderColor="neutralPlain"
+              height={1}
+              marginTop={9}
+              marginBottom={9}
+            />
+          )}
+        {(!hasAllChannels || disabledSelectAllChannls) && (
           <Box __height="100%" overflowY="scroll" overflowX="hidden">
             <MultiAutocompleteSelectField
               disabled={disabled}

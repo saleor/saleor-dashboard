@@ -12,12 +12,13 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
-import { extractMutationErrors, hasRestrictedChannels } from "@dashboard/misc";
+import { extractMutationErrors } from "@dashboard/misc";
 import MembersErrorDialog from "@dashboard/permissionGroups/components/MembersErrorDialog";
 import {
   arePermissionsExceeded,
   calculateRestrictedAccessToChannels,
   channelsDiff,
+  hasRestrictedChannels,
   permissionsDiff,
   usersDiff,
 } from "@dashboard/permissionGroups/utils";
@@ -180,7 +181,7 @@ export const PermissionGroupWithChannelsDetails: React.FC<
         permissions={permissions}
         saveButtonBarState={permissionGroupUpdateResult.status}
         disabled={disabled}
-        disabledChannelPermissions={isLoading || hasRestrictedChannels(user)}
+        disabledChannelPermissions={isLoading}
         toggle={toggle}
         toggleAll={toggleAll}
         isChecked={isSelected}

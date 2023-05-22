@@ -62,6 +62,7 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
   channels,
   onSubmit,
   saveButtonBarState,
+  hasRestrictedChannels,
   errors,
 }) => {
   const intl = useIntl();
@@ -80,7 +81,8 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
       confirmLeave
       initial={{
         ...initialForm,
-        channels: channelChoices,
+        hasAllChannels: !hasRestrictedChannels,
+        channels: hasRestrictedChannels ? [] : channelChoices,
       }}
       onSubmit={onSubmit}
       disabled={disabled}
@@ -154,6 +156,7 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
                     onChannelChange={handleChannelChange}
                     onHasAllChannelsChange={handleHasAllChannelsChange}
                     hasAllChannels={data.hasAllChannels}
+                    disabledSelectAllChannls={hasRestrictedChannels}
                     disabled={disabled}
                   />
                 </Box>

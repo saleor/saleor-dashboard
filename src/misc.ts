@@ -1,7 +1,6 @@
 import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
 import {
   AddressInput,
-  ChannelFragment,
   CountryCode,
   DateRangeInput,
   OrderStatus,
@@ -14,7 +13,6 @@ import uniqBy from "lodash/uniqBy";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
-import { UserContext } from "./auth/types";
 import { MultiAutocompleteChoiceType } from "./components/MultiAutocompleteSelectField";
 import { AddressType, AddressTypeInput } from "./customers/types";
 import {
@@ -603,41 +601,3 @@ export const getDatagridRowDataIndex = (
 ) =>
   rowIndex +
   getAllRemovedRowsBeforeRowIndex(rowIndex, removedRowsIndexs).length;
-
-export const filterAccessibleChannes = (
-  availableChannels: ChannelFragment[],
-  { user }: UserContext,
-): ChannelFragment[] => {
-  if (!user) {
-    return availableChannels;
-  }
-
-  if (
-    "restrictedAccessToChannels" in user &&
-    user.restrictedAccessToChannels === false
-  ) {
-    return availableChannels;
-  }
-
-  if ("accessibleChannels" in user) {
-    return user.accessibleChannels;
-  }
-
-  return availableChannels;
-};
-
-export const hasRestrictedChannels = ({ user }: UserContext) => {
-  if ("restrictedAccessToChannels" in user) {
-    return user.restrictedAccessToChannels;
-  }
-
-  return false;
-};
-
-export const getUserRestrictedChannels = ({ user }: UserContext) => {
-  if ("accessibleChannels" in user) {
-    return user.accessibleChannels;
-  }
-
-  return [];
-};
