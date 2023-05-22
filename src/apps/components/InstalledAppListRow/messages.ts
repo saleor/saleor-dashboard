@@ -6,11 +6,6 @@ export const messages = defineMessages({
     defaultMessage: "Tunnel - development",
     description: "label",
   },
-  settings: {
-    id: "BYGJ/j",
-    defaultMessage: "Settings",
-    description: "button label",
-  },
   appDisabled: {
     id: "7u9Ep7",
     defaultMessage: "Disabled",
