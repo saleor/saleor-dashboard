@@ -144,8 +144,10 @@ export const PermissionGroupWithChannelsDetails: React.FC<
 
   const handleSubmit = async (
     formData: PermissionGroupWithChannelsDetailsPageFormData,
-  ) =>
-    extractMutationErrors(
+  ) => {
+    const hasUserRestrictedChannels = hasRestrictedChannels(user);
+
+    return extractMutationErrors(
       permissionGroupUpdate({
         variables: {
           id,
@@ -153,9 +155,13 @@ export const PermissionGroupWithChannelsDetails: React.FC<
             name: formData.name,
             ...permissionsDiff(data?.permissionGroup, formData),
             ...usersDiff(data?.permissionGroup, formData),
-            ...channelsDiff(data?.permissionGroup, formData),
+            ...channelsDiff(
+              data?.permissionGroup,
+              formData,
+              hasUserRestrictedChannels,
+            ),
             restrictedAccessToChannels: calculateRestrictedAccessToChannels(
-              hasRestrictedChannels(user),
+              hasUserRestrictedChannels,
               formData.channels,
               availableChannels,
             ),
@@ -163,6 +169,7 @@ export const PermissionGroupWithChannelsDetails: React.FC<
         },
       }),
     );
+  };
 
   return (
     <>

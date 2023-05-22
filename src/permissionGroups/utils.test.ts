@@ -21,6 +21,39 @@ import {
 
 describe("Permission group utils", () => {
   describe("channelDiff", () => {
+    it("should return  added channel and no removed channels when user had no restricted channels", () => {
+      const formData = {
+        channels: [{ value: "1", label: "channel-1" }],
+      } as PermissionGroupWithChannelsDetailsPageFormData;
+
+      const permissionGroup = {
+        restrictedAccessToChannels: false,
+        accessibleChannels: [
+          {
+            id: "1",
+            name: "channel-1",
+          },
+          {
+            id: "2",
+            name: "channel-2",
+          },
+          {
+            id: "3",
+            name: "channel-3",
+          },
+        ],
+      } as PermissionGroupWithContextDetailsFragment;
+
+      const { addChannels, removeChannels } = channelsDiff(
+        permissionGroup,
+        formData,
+        false,
+      );
+
+      expect(addChannels).toEqual(["1"]);
+      expect(removeChannels).toEqual([]);
+    });
+
     it("should return all added and removed channels", () => {
       const formData = {
         channels: [
@@ -51,6 +84,7 @@ describe("Permission group utils", () => {
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
+        true,
       );
 
       expect(addChannels).toEqual(["55"]);
