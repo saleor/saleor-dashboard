@@ -6,7 +6,7 @@ import {
 import { PluginConfigurationType } from "@dashboard/graphql";
 import { pluginList } from "@dashboard/plugins/fixtures";
 import { PluginListUrlSortField } from "@dashboard/plugins/urls";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
 import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import PluginsListPage, { PluginsListPageProps } from "./PluginsListPage";
@@ -47,9 +47,19 @@ const props: PluginsListPageProps = {
   },
 };
 
-export default {
+const meta: Meta<typeof PluginsListPage> = {
   title: "Plugins / Plugin list",
   decorators: [PaginatorContextDecorator],
+  component: PluginsListPage,
 };
+export default meta;
+type Story = StoryObj<typeof PluginsListPage>;
 
-export const Default = () => <PluginsListPage {...props} />;
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

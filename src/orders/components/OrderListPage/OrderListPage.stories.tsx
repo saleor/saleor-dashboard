@@ -9,7 +9,7 @@ import {
 import { OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { orders } from "@dashboard/orders/fixtures";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
 import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import { OrderFilterGiftCard } from "./filters";
@@ -84,26 +84,61 @@ const props: OrderListPageProps = {
   onTabUpdate: () => undefined,
 };
 
-export default {
+const meta: Meta<typeof OrderListPage> = {
   title: "Orders / Order list",
   decorators: [PaginatorContextDecorator],
+  component: OrderListPage,
+};
+export default meta;
+type Story = StoryObj<typeof OrderListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
 };
 
-export const Default = () => <OrderListPage {...props} />;
+export const Loading: Story = {
+  args: {
+    ...props,
+    orders: undefined,
+    currentTab: undefined,
+    disabled: true,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.9, pauseAnimationAtEnd: true },
+  },
+};
 
-export const Loading = () => (
-  <OrderListPage
-    {...props}
-    orders={undefined}
-    currentTab={undefined}
-    disabled={true}
-  />
-);
+export const WhenNoData: Story = {
+  args: {
+    ...props,
+    orders: [],
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
 
-export const WhenNoData = () => <OrderListPage {...props} orders={[]} />;
+export const NoLimits: Story = {
+  args: {
+    ...props,
+    limits: undefined,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
 
-export const NoLimits = () => <OrderListPage {...props} limits={undefined} />;
-
-export const LimitsReached = () => (
-  <OrderListPage {...props} limits={limitsReached} />
-);
+export const LimitsReached: Story = {
+  args: {
+    ...props,
+    limits: limitsReached,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

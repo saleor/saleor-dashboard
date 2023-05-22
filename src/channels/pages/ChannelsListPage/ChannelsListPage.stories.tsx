@@ -1,6 +1,6 @@
 import { channelsList } from "@dashboard/channels/fixtures";
 import { limits, limitsReached } from "@dashboard/fixtures";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
 import ChannelsListPage, { ChannelsListPageProps } from "./ChannelsListPage";
 
@@ -10,18 +10,48 @@ const props: ChannelsListPageProps = {
   onRemove: () => undefined,
 };
 
-export default {
+const meta: Meta<typeof ChannelsListPage> = {
   title: "Channels / Channels list",
+  component: ChannelsListPage,
+};
+export default meta;
+type Story = StoryObj<typeof ChannelsListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
 };
 
-export const Default = () => <ChannelsListPage {...props} />;
+export const Empty: Story = {
+  args: {
+    ...props,
+    channelsList: [],
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
 
-export const Empty = () => <ChannelsListPage {...props} channelsList={[]} />;
+export const NoLimits: Story = {
+  args: {
+    ...props,
+    limits: undefined,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
 
-export const NoLimits = () => (
-  <ChannelsListPage {...props} limits={undefined} />
-);
-
-export const LimitsReached = () => (
-  <ChannelsListPage {...props} limits={limitsReached} />
-);
+export const LimitsReached: Story = {
+  args: {
+    ...props,
+    limits: limitsReached,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
