@@ -14,7 +14,7 @@ import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { productListFilterOpts } from "@dashboard/products/views/ProductList/fixtures";
 import { attributes } from "@dashboard/productTypes/fixtures";
 import { ListViews } from "@dashboard/types";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
 import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import ProductListPage, { ProductListPageProps } from "./ProductListPage";
@@ -61,38 +61,85 @@ const props: ProductListPageProps = {
   },
 };
 
-export default {
+const meta: Meta<typeof ProductListPage> = {
   title: "Products / Product list",
   decorators: [PaginatorContextDecorator],
+  component: ProductListPage,
+};
+export default meta;
+type Story = StoryObj<typeof ProductListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
 };
 
-export const Default = () => <ProductListPage {...props} />;
+export const Loading: Story = {
+  args: {
+    ...props,
+    products: undefined,
+    currentTab: undefined,
+    disabled: true,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.9, pauseAnimationAtEnd: true },
+  },
+};
 
-export const Loading = () => (
-  <ProductListPage
-    {...props}
-    products={undefined}
-    currentTab={undefined}
-    disabled={true}
-  />
-);
+export const WithData: Story = {
+  args: {
+    ...props,
+    products,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
 
-export const WithData = () => (
-  <ProductListPage {...props} products={products} />
-);
+export const NoData: Story = {
+  args: {
+    ...props,
+    products: [],
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
 
-export const NoData = () => <ProductListPage {...props} products={[]} />;
+export const NoChannels: Story = {
+  args: {
+    ...props,
+    selectedChannelId: "",
+    products: products.map(product => ({
+      ...product,
+      channelListings: [],
+    })),
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
 
-export const NoChannels = () => (
-  <ProductListPage
-    {...props}
-    selectedChannelId={""}
-    products={products.map(product => ({ ...product, channelListings: [] }))}
-  />
-);
+export const NoLimits: Story = {
+  args: {
+    ...props,
+    limits: undefined,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
 
-export const NoLimits = () => <ProductListPage {...props} limits={undefined} />;
-
-export const LimitsReached = () => (
-  <ProductListPage {...props} limits={limitsReached} />
-);
+export const LimitsReached: Story = {
+  args: {
+    ...props,
+    limits: limitsReached,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
