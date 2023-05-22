@@ -10,6 +10,7 @@ import {
   useOrderDraftCreateMutation,
   useOrderListQuery,
 } from "@dashboard/graphql";
+import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -18,7 +19,6 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { useSortRedirects } from "@dashboard/hooks/useSortRedirects";
 import {
   getActiveTabIndexAfterTabDelete,
   getNextUniqueTabName,
@@ -26,7 +26,6 @@ import {
 import { ListViews } from "@dashboard/types";
 import { prepareQs } from "@dashboard/utils/filters/qs";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
-import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
@@ -39,7 +38,6 @@ import {
   orderListUrl,
   OrderListUrlDialog,
   OrderListUrlQueryParams,
-  OrderListUrlSortField,
   orderSettingsPath,
   orderUrl,
 } from "../../urls";
@@ -103,14 +101,13 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const currentTab =
     params.activeTab !== undefined ? parseInt(params.activeTab, 10) : undefined;
 
-  const [changeFilters, resetFilters, handleSearchChange] =
-    createFilterHandlers({
-      createUrl: orderListUrl,
-      getFilterQueryParam,
-      navigate,
-      params,
-      keepActiveTab: true,
-    });
+  const [changeFilters, resetFilters, handleSearchChange] = useFilterHandlers({
+    createUrl: orderListUrl,
+    getFilterQueryParam,
+    params,
+    defaultSortField: DEFAULT_SORT_KEY,
+    hasSortWithRank: true,
+  });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderListUrlDialog,
@@ -198,12 +195,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   });
 
   const handleSort = createSortHandler(navigate, orderListUrl, params);
-
-  useSortRedirects<OrderListUrlSortField>({
-    params,
-    defaultSortField: DEFAULT_SORT_KEY,
-    urlFunc: orderListUrl,
-  });
 
   return (
     <PaginatorContext.Provider value={paginationValues}>

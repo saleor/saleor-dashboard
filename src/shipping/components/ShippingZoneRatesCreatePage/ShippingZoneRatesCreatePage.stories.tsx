@@ -2,9 +2,7 @@ import {
   PostalCodeRuleInclusionTypeEnum,
   ShippingMethodTypeEnum,
 } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook//Decorator";
 import { taxClasses } from "@dashboard/taxes/fixtures";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import ShippingZoneRatesCreatePage, {
@@ -78,20 +76,24 @@ const props: ShippingZoneRatesCreatePageProps = {
   fetchMoreTaxClasses: undefined,
 };
 
-storiesOf("Shipping / ShippingZoneRatesCreatePage", module)
-  .addDecorator(Decorator)
-  .add("create price", () => <ShippingZoneRatesCreatePage {...props} />)
-  .add("loading", () => (
-    <ShippingZoneRatesCreatePage
-      {...props}
-      disabled={true}
-      saveButtonBarState={"loading"}
-    />
-  ))
-  .add("create weight", () => (
-    <ShippingZoneRatesCreatePage
-      {...props}
-      shippingChannels={channels}
-      variant={ShippingMethodTypeEnum.WEIGHT}
-    />
-  ));
+export default {
+  title: "Shipping / ShippingZoneRatesCreatePage",
+};
+
+export const CreatePrice = () => <ShippingZoneRatesCreatePage {...props} />;
+
+export const Loading = () => (
+  <ShippingZoneRatesCreatePage
+    {...props}
+    disabled={true}
+    saveButtonBarState={"loading"}
+  />
+);
+
+export const CreateWeight = () => (
+  <ShippingZoneRatesCreatePage
+    {...props}
+    shippingChannels={channels}
+    variant={ShippingMethodTypeEnum.WEIGHT}
+  />
+);

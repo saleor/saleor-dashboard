@@ -6,11 +6,9 @@ import {
   clients,
   draftOrder,
 } from "@dashboard/orders/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { MockedUserProvider } from "@dashboard/storybook/MockedUserProvider";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { MockedUserProvider } from "../../../../.storybook/helpers";
 import OrderDraftPageComponent, { OrderDraftPageProps } from "./OrderDraftPage";
 import { getDiscountsProvidersWrapper } from "./storybook.utils";
 
@@ -45,6 +43,7 @@ const order = draftOrder(placeholderImage);
 
 const props: Omit<OrderDraftPageProps, "classes"> = {
   ...fetchMoreProps,
+  loading: false,
   disabled: false,
   fetchUsers: () => undefined,
   onBillingAddressEdit: undefined,
@@ -79,24 +78,26 @@ const OrderDraftPage = props => {
   );
 };
 
-storiesOf("Orders / Order draft", module)
-  .addDecorator(Decorator)
-  .addDecorator(DiscountsDecorator)
-  .add("default", () => <OrderDraftPage {...props} />)
-  .add("loading", () => (
-    <OrderDraftPage
-      {...props}
-      disabled={true}
-      order={undefined}
-      channelUsabilityData={undefined}
-    />
-  ))
-  .add("without lines", () => (
-    <OrderDraftPage {...props} order={{ ...order, lines: [] }} />
-  ))
-  .add("no user permissions", () => (
-    <OrderDraftPage {...props} customPermissions={[]} />
-  ))
-  .add("with errors", () => (
-    <OrderDraftPage {...props} errors={finalizeErrors} />
-  ));
+export default {
+  title: "Orders / Order draft",
+  decorators: [DiscountsDecorator],
+};
+
+export const Default = () => <OrderDraftPage {...props} />;
+
+export const Loading = () => (
+  <OrderDraftPage
+    {...props}
+    disabled={true}
+    order={undefined}
+    channelUsabilityData={undefined}
+  />
+);
+
+export const NoUserPermissions = () => (
+  <OrderDraftPage {...props} customPermissions={[]} />
+);
+
+export const WithErrors = () => (
+  <OrderDraftPage {...props} errors={finalizeErrors} />
+);

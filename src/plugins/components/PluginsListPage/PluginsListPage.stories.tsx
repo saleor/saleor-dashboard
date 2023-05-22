@@ -6,11 +6,9 @@ import {
 import { PluginConfigurationType } from "@dashboard/graphql";
 import { pluginList } from "@dashboard/plugins/fixtures";
 import { PluginListUrlSortField } from "@dashboard/plugins/urls";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import PluginsListPage, { PluginsListPageProps } from "./PluginsListPage";
 
 const props: PluginsListPageProps = {
@@ -49,11 +47,9 @@ const props: PluginsListPageProps = {
   },
 };
 
-storiesOf("Plugins / Plugin list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <PluginsListPage {...props} />)
-  .add("loading", () => (
-    <PluginsListPage {...props} disabled={true} plugins={undefined} />
-  ))
-  .add("no data", () => <PluginsListPage {...props} plugins={[]} />);
+export default {
+  title: "Plugins / Plugin list",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <PluginsListPage {...props} />;

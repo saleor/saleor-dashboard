@@ -7,7 +7,6 @@ import {
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
-import { formatMoneyAmount } from "@dashboard/components/Money";
 import { OrderListQuery } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import {
@@ -108,7 +107,7 @@ export const useGetCellContent = ({ columns, orders }: GetCellContentProps) => {
       case "status":
         return getStatusCellContent(intl, themeValues, currentTheme, rowData);
       case "total":
-        return getTotalCellContent(locale, rowData);
+        return getTotalCellContent(rowData);
       default:
         return textCell("");
     }
@@ -193,15 +192,12 @@ export function getStatusCellContent(
 }
 
 export function getTotalCellContent(
-  locale: Locale,
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
   if (rowData?.total?.gross) {
-    return moneyCell(
-      formatMoneyAmount(rowData.total.gross, locale),
-      rowData.total.gross.currency,
-      { cursor: "pointer" },
-    );
+    return moneyCell(rowData.total.gross.amount, rowData.total.gross.currency, {
+      cursor: "pointer",
+    });
   }
 
   return readonlyTextCell("-");

@@ -22,6 +22,8 @@ export { SALES_SELECTORS, VOUCHERS_SELECTORS } from "./discounts";
 export { HOMEPAGE_SELECTORS } from "./homePage/homePage-selectors";
 export { PAGINATION } from "./navigation";
 export {
+  ADD_PRODUCT_TO_ORDER_DIALOG,
+  DRAFT_ORDER_SELECTORS,
   DRAFT_ORDERS_LIST_SELECTORS,
   ORDER_GRANT_REFUND,
   ORDER_TRANSACTION_CREATE,

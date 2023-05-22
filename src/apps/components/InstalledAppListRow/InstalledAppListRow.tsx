@@ -1,18 +1,9 @@
-import { useAppListContext } from "@dashboard/apps/context";
 import { appsMessages } from "@dashboard/apps/messages";
 import { InstalledApp } from "@dashboard/apps/types";
 import { AppUrls } from "@dashboard/apps/urls";
 import { isAppInTunnel } from "@dashboard/apps/utils";
 import Link from "@dashboard/components/Link";
-import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import {
-  Box,
-  Button,
-  Chip,
-  List,
-  sprinkles,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { Box, Chip, List, sprinkles, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
@@ -25,7 +16,7 @@ import { messages } from "./messages";
 export const InstalledAppListRow: React.FC<InstalledApp> = props => {
   const { app, isExternal, logo } = props;
   const intl = useIntl();
-  const { openAppSettings } = useAppListContext();
+
   const location = useLocation();
 
   return (
@@ -44,7 +35,11 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         justifyContent="space-between"
         flexDirection="row"
         flexWrap="wrap"
-        backgroundColor={!app.isActive ? "surfaceNeutralSubdued" : undefined}
+        transition={"ease"}
+        backgroundColor={{
+          default: !app.isActive ? "surfaceNeutralSubdued" : undefined,
+          hover: "surfaceNeutralSubdued",
+        }}
         cursor={app.isActive ? "pointer" : "not-allowed"}
       >
         <Box
@@ -102,15 +97,6 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
             )}
             <AppPermissions permissions={app.permissions} />
           </Box>
-          <TableButtonWrapper>
-            <Button
-              variant="secondary"
-              onClick={() => openAppSettings(app.id)}
-              data-test-id="app-settings-button"
-            >
-              <FormattedMessage {...messages.settings} />
-            </Button>
-          </TableButtonWrapper>
         </Box>
       </List.Item>
     </Link>

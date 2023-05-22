@@ -5,11 +5,9 @@ import {
 } from "@dashboard/fixtures";
 import { menuList } from "@dashboard/navigation/fixtures";
 import { MenuListUrlSortField } from "@dashboard/navigation/urls";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import MenuListPage, { MenuListPageProps } from "./MenuListPage";
 
 const props: MenuListPageProps = {
@@ -24,11 +22,15 @@ const props: MenuListPageProps = {
   },
 };
 
-storiesOf("Navigation / Menu list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <MenuListPage {...props} />)
-  .add("loading", () => (
-    <MenuListPage {...props} disabled={true} menus={undefined} />
-  ))
-  .add("no data", () => <MenuListPage {...props} menus={[]} />);
+export default {
+  title: "Navigation / Menu list",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <MenuListPage {...props} />;
+
+export const Loading = () => (
+  <MenuListPage {...props} disabled={true} menus={undefined} />
+);
+
+export const NoData = () => <MenuListPage {...props} menus={[]} />;

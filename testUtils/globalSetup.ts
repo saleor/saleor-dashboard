@@ -1,3 +1,3 @@
-module.exports = async function () {
+module.exports = function () {
   process.env.TZ = "UTC";
 };

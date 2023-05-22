@@ -13,7 +13,7 @@ import MenuDetailsComponent from "./views/MenuDetails";
 import MenuListComponent from "./views/MenuList";
 
 const MenuList: React.FC<RouteComponentProps<{}>> = ({ location }) => {
-  const qs = parseQs(location.search.substr(1));
+  const qs = parseQs(location.search.substr(1)) as any;
   const params: MenuListUrlQueryParams = asSortParams(qs, MenuListUrlSortField);
 
   return <MenuListComponent params={params} />;
