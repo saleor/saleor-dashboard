@@ -14,6 +14,7 @@ const props: PermissionGroupWithChannelsCreatePageProps = {
   permissions,
   channels,
   saveButtonBarState: undefined,
+  hasRestrictedChannels: false,
 };
 
 export default {
