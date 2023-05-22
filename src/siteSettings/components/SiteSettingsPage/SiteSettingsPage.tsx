@@ -1,5 +1,6 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -14,14 +15,13 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
 import SiteCheckoutSettingsCard from "../SiteCheckoutSettingsCard";
 import { messages } from "./messages";
-import { DashboardCard } from "@dashboard/components/Card";
 
 export interface SiteSettingsPageAddressFormData {
   city: string;
@@ -40,6 +40,7 @@ export interface SiteSettingsPageFormData
   reserveStockDurationAnonymousUser: number;
   reserveStockDurationAuthenticatedUser: number;
   limitQuantityPerCheckout: number;
+  emailConfirmation: boolean;
 }
 
 export interface SiteSettingsPageProps {
@@ -68,22 +69,8 @@ export function areAddressInputFieldsModified(
     .some(field => field !== "");
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    hr: {
-      gridColumnEnd: "span 2",
-      margin: theme.spacing(1, 0),
-    },
-  }),
-  {
-    name: "SiteSettingsPage",
-  },
-);
-
 const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
   const { disabled, errors, saveButtonBarState, shop, onSubmit } = props;
-
-  const classes = useStyles(props);
   const intl = useIntl();
   const navigate = useNavigator();
 
@@ -104,6 +91,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     streetAddress1: shop?.companyAddress?.streetAddress1 || "",
     streetAddress2: shop?.companyAddress?.streetAddress2 || "",
   };
+
   const initialForm: SiteSettingsPageFormData = {
     ...initialFormAddress,
     description: shop?.description || "",
@@ -112,6 +100,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     reserveStockDurationAuthenticatedUser:
       shop?.reserveStockDurationAuthenticatedUser ?? 0,
     limitQuantityPerCheckout: shop?.limitQuantityPerCheckout ?? 0,
+    emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
   };
 
   return (
@@ -135,6 +124,10 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
         );
 
         const handleCountrySelect = createCountryHandler(countrySelect, set);
+
+        const handleEmailConfirmationChange = isEnabled => {
+          change({ target: { name: "emailConfirmation", value: isEnabled } });
+        };
 
         return (
           <DetailPageLayout gridTemplateColumns={1}>
@@ -188,22 +181,34 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
 
                 <Box display="grid" __gridTemplateColumns="1fr 3fr">
                   <PageSectionHeader
-                    title={intl.formatMessage(messages.sectionEmailConfirmationTitle)}
+                    title={intl.formatMessage(
+                      messages.sectionEmailConfirmationTitle,
+                    )}
                     description={intl.formatMessage(
                       messages.sectionEmailConfirmationDescription,
                     )}
                   />
                   <DashboardCard>
-                    <DashboardCard.Title>asdasd</DashboardCard.Title>
+                    <DashboardCard.Title>
+                      {intl.formatMessage(
+                        messages.sectionEmailConfirmationHeader,
+                      )}
+                    </DashboardCard.Title>
                     <DashboardCard.Content>
-                      <Checkbox>
-                        <Text variant="body">Option 1</Text>
+                      <Checkbox
+                        checked={data.emailConfirmation}
+                        onCheckedChange={handleEmailConfirmationChange}
+                      >
+                        <Text variant="body">
+                          {intl.formatMessage(
+                            messages.sectionEmailConfirmationHeader,
+                          )}
+                        </Text>
                       </Checkbox>
                     </DashboardCard.Content>
                   </DashboardCard>
                 </Box>
               </Box>
-
 
               <Savebar
                 state={saveButtonBarState}

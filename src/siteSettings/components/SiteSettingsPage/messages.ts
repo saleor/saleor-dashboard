@@ -24,13 +24,25 @@ export const messages = defineMessages({
     description: "section description",
   },
   sectionEmailConfirmationTitle: {
-    id: '02keiY',
+    id: "FA0Sxs",
     defaultMessage: "Email confirmation",
-    description: "Email confirmation title",
+    description: "Email confirmation",
+  },
+  sectionEmailConfirmationHeader: {
+    id: "roWCaz",
+    defaultMessage: "Newly registered users email confirmation",
+    description: "Newly registered users email confirmation",
+  },
+  sectionEmailConfirmationOption: {
+    id: "uRfta0",
+    defaultMessage: "Enable email confirmation",
+    description: "Enable email confirmation",
   },
   sectionEmailConfirmationDescription: {
-    id: 'zx00MK',
-    defaultMessage: "Email confirmation description",
-    description: "Email confirmation description",
+    id: "GpyFuP",
+    defaultMessage:
+      "Require an confirmation for newly registered users by using their email.",
+    description:
+      "Require an confirmation for newly registered users by using their email.",
   },
 });

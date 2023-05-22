@@ -321,10 +321,6 @@
   "01+5kQ": {
     "string": "Mark as paid"
   },
-  "02keiY": {
-    "context": "Email confirmation title",
-    "string": "Email confirmation"
-  },
   "05hqq6": {
     "context": "checkbox label",
     "string": "Automatically approve all fulfillments"
@@ -2330,6 +2326,10 @@
   "FA+MRz": {
     "string": "Set plugin as active"
   },
+  "FA0Sxs": {
+    "context": "Email confirmation",
+    "string": "Email confirmation"
+  },
   "FBtqtl": {
     "context": "payment status",
     "string": "Unpaid"
@@ -2607,6 +2607,10 @@
   "GpqEl5": {
     "context": "shipping method description",
     "string": "Description"
+  },
+  "GpyFuP": {
+    "context": "Require an confirmation for newly registered users by using their email.",
+    "string": "Require an confirmation for newly registered users by using their email."
   },
   "Gr1SAu": {
     "string": "Customer Name"
@@ -7555,6 +7559,10 @@
     "context": "expires in label",
     "string": "Expires in"
   },
+  "roWCaz": {
+    "context": "Newly registered users email confirmation",
+    "string": "Newly registered users email confirmation"
+  },
   "rpFdD1": {
     "string": "Search Product Type"
   },
@@ -7940,6 +7948,10 @@
   "uRTj1Q": {
     "context": "error message",
     "string": "Invoice not found"
+  },
+  "uRfta0": {
+    "context": "Enable email confirmation",
+    "string": "Enable email confirmation"
   },
   "uT5L4h": {
     "context": "cancel button label",
@@ -8667,10 +8679,6 @@
   },
   "ztQgD8": {
     "string": "No attributes found"
-  },
-  "zx00MK": {
-    "context": "Email confirmation description",
-    "string": "Email confirmation description"
   },
   "zxs6G3": {
     "string": "Manage how you ship out orders"

@@ -1,16 +1,16 @@
 import React from "react";
+
+import { DashboardCard } from "../Card";
 import CompanyAddressForm, {
   CompanyAddressFormProps,
 } from "./CompanyAddressForm";
-import { DashboardCard } from "../Card";
 
 interface CompanyAddressInputProps extends CompanyAddressFormProps {
-  className?: string;
   header: string;
 }
 
 const CompanyAddressInput: React.FC<CompanyAddressInputProps> = props => {
-  const { className, header, ...formProps } = props;
+  const { header, ...formProps } = props;
 
   return (
     <DashboardCard>
