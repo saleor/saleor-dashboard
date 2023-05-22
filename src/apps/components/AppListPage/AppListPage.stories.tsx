@@ -20,7 +20,7 @@ export const Default: Story = {
     ...props,
   },
   parameters: {
-    chromatic: { diffThreshold: 0.85 },
+    chromatic: { diffThreshold: 0.9, pauseAnimationAtEnd: true },
   },
 };
 

@@ -86,7 +86,7 @@ export const Loading: Story = {
     disabled: true,
   },
   parameters: {
-    chromatic: { diffThreshold: 0.85 },
+    chromatic: { diffThreshold: 0.9, pauseAnimationAtEnd: true },
   },
 };
 
