@@ -2,6 +2,7 @@ import { AppAvatar } from "@dashboard/apps/components/AppAvatar/AppAvatar";
 import { AppUrls } from "@dashboard/apps/urls";
 import { TopNavLink, TopNavWrapper } from "@dashboard/components/AppLayout";
 import { LinkState } from "@dashboard/components/Link";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Button, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
@@ -12,6 +13,7 @@ interface AppPageNavProps {
   supportUrl: string | undefined | null;
   homepageUrl: string | undefined | null;
   author: string | undefined | null;
+  appId: string;
 }
 
 export const AppPageNav: React.FC<AppPageNavProps> = ({
@@ -19,9 +21,15 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
   supportUrl,
   homepageUrl,
   author,
+  appId,
 }) => {
   const location = useLocation<LinkState>();
   const goBackLink = location.state?.from ?? AppUrls.resolveAppListUrl();
+  const navigate = useNavigator();
+
+  const navigateToManageAppScreen = () => {
+    navigate(AppUrls.resolveAppDetailsUrl(appId));
+  };
 
   return (
     <TopNavWrapper>
@@ -55,6 +63,18 @@ export const AppPageNav: React.FC<AppPageNavProps> = ({
         </Box>
       </Box>
       <Box display="flex" gap={4}>
+        <Button
+          whiteSpace="nowrap"
+          variant="secondary"
+          onClick={navigateToManageAppScreen}
+          data-test-id="app-settings-button"
+        >
+          <FormattedMessage
+            defaultMessage="Manage app"
+            id="LwX0Ug"
+            description="Button with Manage app label"
+          />
+        </Button>
         {supportUrl && (
           <Button
             variant="secondary"

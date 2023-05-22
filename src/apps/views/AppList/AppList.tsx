@@ -135,7 +135,6 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     () => ({
       retryAppInstallation: handleAppInstallRetry,
       removeAppInstallation: id => openModal("app-installation-remove", { id }),
-      openAppSettings: id => navigate(AppUrls.resolveAppDetailsUrl(id)),
     }),
     [navigate, openModal],
   );
