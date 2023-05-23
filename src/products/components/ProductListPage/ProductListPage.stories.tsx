@@ -9,7 +9,10 @@ import {
   pageListProps,
   sortPageProps,
 } from "@dashboard/fixtures";
-import { products as productListFixture } from "@dashboard/products/fixtures";
+import {
+  gridAttributesResult,
+  products as productListFixture,
+} from "@dashboard/products/fixtures";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { productListFilterOpts } from "@dashboard/products/views/ProductList/fixtures";
 import { ListViews } from "@dashboard/types";
@@ -39,17 +42,19 @@ const props: ProductListPageProps = {
     hasPresetsChanged: false,
     onTabSave: () => undefined,
     onTabUpdate: () => undefined,
-    availableColumnsAttributesOpts: {
-      data: {},
-      refetch: () => undefined,
-    } as any,
+    availableColumnsAttributesOpts: [
+      () => undefined,
+      { data: undefined },
+    ] as any,
     onColumnQueryChange: () => undefined,
   },
   activeAttributeSortId: undefined,
   currencySymbol: "USD",
   defaultSettings: defaultListSettings[ListViews.PRODUCT_LIST],
   filterOpts: productListFilterOpts,
-  gridAttributesOpts: {} as any,
+  gridAttributesOpts: {
+    data: gridAttributesResult,
+  } as any,
   limits,
   onExport: () => undefined,
   products,
