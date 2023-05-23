@@ -49,12 +49,7 @@ export const CardTitle: React.FC<CardTitleProps> = ({
     type,
   } = transaction;
 
-  // Capitalize transaction type
-  const title = maybe(
-    () => type[0].toUpperCase() + type.slice(1).toLowerCase(),
-    "Transaction",
-  );
-
+  const title = capitalize(type || "Transaction")
   return (
     <DefaultCardTitle
       className={className}
