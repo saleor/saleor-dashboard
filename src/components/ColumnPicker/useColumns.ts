@@ -125,6 +125,9 @@ export const useColumns = ({
     onSave(columns);
   };
 
+  // Should be used only for special cases
+  const onCustomUpdateVisible = setVisibleColumns;
+
   const onDynamicColumnSelect = (columns: string[]) => {
     setDynamicColumnSettings(columns);
 
@@ -149,6 +152,7 @@ export const useColumns = ({
       onResize,
       onChange,
       onDynamicColumnSelect,
+      onCustomUpdateVisible,
     },
     visibleColumns,
     staticColumns,

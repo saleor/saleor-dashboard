@@ -33,8 +33,13 @@ import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import {
+  getAttributeIdFromColumnValue,
+  isAttributeColumnValue,
+} from "../ProductListPage/utils";
+import {
   createGetCellContent,
   getColumnMetadata,
+  getColumnSortIconName,
   getProductRowsLength,
   productListDynamicColumnAdapter,
   productListStaticColumnAdapter,
@@ -161,6 +166,31 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     columnPickerSettings,
     setDynamicColumnSettings,
   });
+
+  React.useEffect(() => {
+    handlers.onCustomUpdateVisible(prevColumns =>
+      prevColumns.map(column => {
+        if (isAttributeColumnValue(column.id)) {
+          if (
+            getAttributeIdFromColumnValue(column.id) === activeAttributeSortId
+          ) {
+            return {
+              ...column,
+              icon: getColumnSortIconName(
+                sort,
+                ProductListUrlSortField.attribute,
+              ),
+            };
+          }
+          return {
+            ...column,
+            icon: undefined,
+          };
+        }
+        return column;
+      }),
+    );
+  }, [activeAttributeSortId, sort]);
 
   const handleHeaderClicked = useCallback(
     (col: number) => {

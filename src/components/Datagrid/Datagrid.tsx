@@ -173,11 +173,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
   }, [onRowSelectionChange, selection]);
 
   useEffect(() => {
-    if (recentlyAddedColumn) {
+    if (recentlyAddedColumn && editor.current) {
       const columnIndex = availableColumns.findIndex(
         column => column.id === recentlyAddedColumn,
       );
-      const datagridScroll = editor.current?.scrollTo;
+      const datagridScroll = editor.current.scrollTo;
       datagridScroll(columnIndex, 0, "horizontal", 0, 0, { hAlign: "start" });
     }
   }, [recentlyAddedColumn, availableColumns, editor]);
