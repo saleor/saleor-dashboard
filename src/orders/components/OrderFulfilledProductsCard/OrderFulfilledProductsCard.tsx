@@ -20,6 +20,7 @@ interface OrderFulfilledProductsCardProps {
   onOrderFulfillmentApprove: () => void;
   onOrderFulfillmentCancel: () => void;
   onTrackingCodeAdd: () => void;
+  dataTestId?: string;
 }
 
 const statusesToMergeLines = [
@@ -43,6 +44,7 @@ const OrderFulfilledProductsCard: React.FC<
     onOrderFulfillmentApprove,
     onOrderFulfillmentCancel,
     onTrackingCodeAdd,
+    dataTestId,
   } = props;
   const classes = useStyles(props);
 
@@ -61,7 +63,7 @@ const OrderFulfilledProductsCard: React.FC<
   };
 
   return (
-    <Box>
+    <Box data-test-id={dataTestId}>
       <OrderCardTitle
         withStatus
         lines={fulfillment?.lines}

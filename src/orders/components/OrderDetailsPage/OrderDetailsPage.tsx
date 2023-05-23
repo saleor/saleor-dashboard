@@ -242,6 +242,7 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               )}
               {order?.fulfillments?.map(fulfillment => (
                 <OrderFulfilledProductsCard
+                  dataTestId="fulfilled-order-section"
                   key={fulfillment.id}
                   fulfillment={fulfillment}
                   fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
