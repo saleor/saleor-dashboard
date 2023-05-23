@@ -16,7 +16,7 @@ export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
       return (
         <Pill
           color="warning"
-          size={"small"}
+          size="small"
           label={intl.formatMessage(statusMessages.pending)}
         />
       );
