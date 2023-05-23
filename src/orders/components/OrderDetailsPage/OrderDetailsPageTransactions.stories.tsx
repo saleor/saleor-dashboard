@@ -16,7 +16,7 @@ import React from "react";
 import OrderDetailsPage, { OrderDetailsPageProps } from "./OrderDetailsPage";
 
 const props: Omit<OrderDetailsPageProps, "classes"> = {
-  disabled: false,
+  loading: false,
   onBillingAddressEdit: undefined,
   onTransactionAction: () => undefined,
   onFulfillmentApprove: () => undefined,

@@ -1,5 +1,7 @@
+import { UserContext } from "@dashboard/auth/types";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import {
+  ChannelFragment,
   PermissionFragment,
   PermissionGroupDetailsFragment,
   UserFragment,
@@ -84,8 +86,6 @@ export const channelsDiff = (
   const hasRestrictedChannels = permissionGroup?.restrictedAccessToChannels;
 
   if (!hasRestrictedChannels) {
-    // We get all channels from API when user has no restricted access to channels
-    // and we want to send only those that were really added
     return {
       addChannels: newChannels,
       removeChannels: [],
@@ -113,26 +113,100 @@ export const arePermissionsExceeded = (
 /**
  * Return lists of permission group accessible channels.
  */
-export const getPermissionGroupAccessibleChannels = (
+export const mapAccessibleChannelsToChoice = (
   permissionGroup: PermissionGroupWithContextDetailsFragment,
-  allChannelsLength: number,
-): MultiAutocompleteChoiceType[] => {
-  // We don't want show all channels to user that has no restricted access to channels
-  // User will be able to select channels manually
-  if (
-    permissionGroup?.accessibleChannels?.length === allChannelsLength &&
-    !permissionGroup?.restrictedAccessToChannels
-  ) {
-    return [];
+  isUserAbleToEdit?: boolean,
+): MultiAutocompleteChoiceType[] =>
+  permissionGroup?.accessibleChannels.map(
+    channel =>
+      ({
+        label: channel.name,
+        value: channel.id,
+        disabled: isUserAbleToEdit !== undefined ? !isUserAbleToEdit : false,
+      } as unknown as MultiAutocompleteChoiceType),
+  ) ?? [];
+
+/**
+ * Calcualte if restricted access to channels should be enabled.
+ */
+export const checkIfPermissionGroupHasRestrictedChannels = (
+  hasUserRestrictedChannels: boolean,
+  selectedChannels: unknown[],
+  allChannels: unknown[],
+) => {
+  // When user has restricted access to channels we know that group has restricted access to channels.
+  if (hasUserRestrictedChannels) {
+    return true;
   }
 
-  return (
-    permissionGroup?.accessibleChannels.map(
-      channel =>
-        ({
-          label: channel.name,
-          value: channel.id,
-        } as unknown as MultiAutocompleteChoiceType),
-    ) ?? []
+  // When user has full access and selected less channel group has restricted access to channels.
+  if (
+    !hasUserRestrictedChannels &&
+    selectedChannels.length !== allChannels.length
+  ) {
+    return true;
+  }
+
+  return false;
+};
+
+/**
+ * User is eligible to edit channels when he has access to all channels in permission group.
+ */
+export const checkIfUserIsEligibleToEditChannels = (
+  user: UserContext["user"],
+  permissionGroupAccessibleChannels: ChannelFragment[],
+) => {
+  const userChannels = getUserAccessibleChannels(user).map(c => c.id);
+
+  return permissionGroupAccessibleChannels.every(permChan =>
+    userChannels.includes(permChan.id),
   );
+};
+
+/**
+ * Get channels options for select field.
+ */
+export const getChannelsOptions = (
+  availableChannels: ChannelFragment[],
+  user?: UserContext["user"],
+): ChannelFragment[] => {
+  if (!user) {
+    return availableChannels;
+  }
+
+  if (
+    "restrictedAccessToChannels" in user &&
+    user.restrictedAccessToChannels === false
+  ) {
+    return availableChannels;
+  }
+
+  if ("accessibleChannels" in user) {
+    return user.accessibleChannels;
+  }
+
+  return availableChannels;
+};
+
+/**
+ * Check if user has restricted access to channels.
+ */
+export const checkIfUserHasRestictedChannels = (user?: UserContext["user"]) => {
+  if (user && "restrictedAccessToChannels" in user) {
+    return user.restrictedAccessToChannels;
+  }
+
+  return false;
+};
+
+/**
+ * Get user accessible channels.
+ */
+const getUserAccessibleChannels = (user?: UserContext["user"]) => {
+  if (user && "accessibleChannels" in user) {
+    return user.accessibleChannels;
+  }
+
+  return [];
 };

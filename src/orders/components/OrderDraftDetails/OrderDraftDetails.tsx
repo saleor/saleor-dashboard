@@ -22,6 +22,7 @@ interface OrderDraftDetailsProps {
   order: OrderDetailsFragment;
   channelUsabilityData?: ChannelUsabilityDataQuery;
   errors: OrderErrorFragment[];
+  loading: boolean;
   onOrderLineAdd: () => void;
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
@@ -32,6 +33,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   order,
   channelUsabilityData,
   errors,
+  loading,
   onOrderLineAdd,
   onOrderLineChange,
   onOrderLineRemove,
@@ -70,6 +72,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
       <OrderDraftDetailsProducts
         order={order}
         errors={errors}
+        loading={loading}
         onOrderLineChange={onOrderLineChange}
         onOrderLineRemove={onOrderLineRemove}
       />

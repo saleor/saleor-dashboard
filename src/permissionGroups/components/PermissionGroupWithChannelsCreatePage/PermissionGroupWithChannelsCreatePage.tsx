@@ -29,7 +29,7 @@ import { PermissionWithChannelsData } from "../PermissonGroupWithChannelsDetails
 export interface PermissionGroupWithChannelsCreateFormData {
   name: string;
   hasFullAccess: boolean;
-  hasRestrictedChannels: boolean;
+  hasAllChannels: boolean;
   isActive: boolean;
   permissions: PermissionEnum[];
   channels: MultiAutocompleteChoiceType[];
@@ -37,7 +37,7 @@ export interface PermissionGroupWithChannelsCreateFormData {
 
 const initialForm: PermissionGroupWithChannelsCreateFormData = {
   hasFullAccess: false,
-  hasRestrictedChannels: false,
+  hasAllChannels: true,
   isActive: false,
   name: "",
   permissions: [],
@@ -49,6 +49,7 @@ export interface PermissionGroupWithChannelsCreatePageProps {
   errors: PermissionGroupErrorFragment[];
   permissions: PermissionWithChannelsData[];
   channels: ChannelFragment[];
+  hasRestrictedChannels: boolean;
   saveButtonBarState: "loading" | "success" | "error" | "default";
   onSubmit: (data: PermissionGroupWithChannelsCreateFormData) => SubmitPromise;
 }
@@ -61,6 +62,7 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
   channels,
   onSubmit,
   saveButtonBarState,
+  hasRestrictedChannels,
   errors,
 }) => {
   const intl = useIntl();
@@ -77,7 +79,11 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
   return (
     <Form
       confirmLeave
-      initial={initialForm}
+      initial={{
+        ...initialForm,
+        hasAllChannels: !hasRestrictedChannels,
+        channels: hasRestrictedChannels ? [] : channelChoices,
+      }}
       onSubmit={onSubmit}
       disabled={disabled}
     >
@@ -89,11 +95,13 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
           channelChoices,
         );
 
-        const handleHasRestrictedChannelsChange = () => {
+        const handleHasAllChannelsChange = () => {
+          const hasAllChannels = !data.hasAllChannels;
+
           change({
             target: {
-              name: "hasRestrictedChannels",
-              value: !data.hasRestrictedChannels,
+              name: "hasAllChannels",
+              value: hasAllChannels,
             },
           });
 
@@ -101,7 +109,7 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
           change({
             target: {
               name: "channels",
-              value: [],
+              value: hasAllChannels ? channelChoices : [],
             },
           });
         };
@@ -141,16 +149,15 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
                     })}
                   />
                 </Box>
-                <Box overflow="hidden" __maxHeight="50%">
+                <Box overflow="hidden" __maxHeight="50%" height="100%">
                   <ChannelPermission
                     allChannels={channels}
                     selectedChannels={data.channels}
                     onChannelChange={handleChannelChange}
-                    onHasRestrictedChannelsChange={
-                      handleHasRestrictedChannelsChange
-                    }
-                    hasRestrictedChannels={data.hasRestrictedChannels}
+                    onHasAllChannelsChange={handleHasAllChannelsChange}
+                    hasAllChannels={data.hasAllChannels}
                     disabled={disabled}
+                    disabledSelectAllChannls={hasRestrictedChannels}
                   />
                 </Box>
               </Box>

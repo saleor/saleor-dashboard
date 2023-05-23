@@ -4,10 +4,6 @@ const { defineConfig } = require("cypress");
 const fs = require("fs");
 
 module.exports = defineConfig({
-  reporter: "junit",
-  reporterOptions: {
-    mochaFile: "results/my-test-output-[hash].xml",
-  },
   projectId: "51ef7c",
   chromeWebSecurity: false,
   defaultCommandTimeout: 20000,

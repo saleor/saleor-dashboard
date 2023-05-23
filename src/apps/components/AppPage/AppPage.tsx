@@ -25,6 +25,7 @@ export const AppPage: React.FC<AppPageProps> = ({
 }) => (
   <DetailPageLayout gridTemplateColumns={1} withSavebar={false}>
     <AppPageNav
+      appId={data.id}
       name={data?.name}
       supportUrl={data?.supportUrl}
       homepageUrl={data?.homepageUrl}

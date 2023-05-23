@@ -6,7 +6,7 @@ import {
   tabPageProps,
 } from "@dashboard/fixtures";
 import { PageTypeListUrlSortField } from "@dashboard/pageTypes/urls";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
 import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import { pageTypes } from "../../fixtures";
@@ -25,15 +25,40 @@ const props: PageTypeListPageProps = {
   pageTypes,
 };
 
-export default {
+const meta: Meta<typeof PageTypeListPage> = {
   title: "Page types / Page types list",
   decorators: [PaginatorContextDecorator],
+  component: PageTypeListPage,
+};
+export default meta;
+type Story = StoryObj<typeof PageTypeListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
 };
 
-export const Default = () => <PageTypeListPage {...props} />;
+export const Loading: Story = {
+  args: {
+    ...props,
+    pageTypes: undefined,
+    disabled: true,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
 
-export const Loading = () => (
-  <PageTypeListPage {...props} disabled={true} pageTypes={undefined} />
-);
-
-export const NoData = () => <PageTypeListPage {...props} pageTypes={[]} />;
+export const NoData: Story = {
+  args: {
+    ...props,
+    pageTypes: [],
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

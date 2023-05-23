@@ -14,12 +14,6 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import MembersErrorDialog from "@dashboard/permissionGroups/components/MembersErrorDialog";
-import {
-  arePermissionsExceeded,
-  channelsDiff,
-  permissionsDiff,
-  usersDiff,
-} from "@dashboard/permissionGroups/utils";
 import useStaffMemberSearch from "@dashboard/searches/useStaffMemberSearch";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
@@ -39,6 +33,14 @@ import {
   PermissionGroupDetailsUrlDialog,
   PermissionGroupDetailsUrlQueryParams,
 } from "../../urls";
+import {
+  arePermissionsExceeded,
+  channelsDiff,
+  checkIfPermissionGroupHasRestrictedChannels,
+  checkIfUserHasRestictedChannels,
+  permissionsDiff,
+  usersDiff,
+} from "../../utils";
 
 interface PermissionGroupDetailsProps {
   id: string;
@@ -61,7 +63,7 @@ export const PermissionGroupWithChannelsDetails: React.FC<
     },
   );
 
-  const { availableChannels } = useAppChannel();
+  const { availableChannels } = useAppChannel(false);
 
   const [membersList, setMembersList] = useStateFromProps(
     data?.permissionGroup.users,
@@ -142,8 +144,12 @@ export const PermissionGroupWithChannelsDetails: React.FC<
 
   const handleSubmit = async (
     formData: PermissionGroupWithChannelsDetailsPageFormData,
-  ) =>
-    extractMutationErrors(
+  ) => {
+    const hasUserRestrictedChannels = checkIfUserHasRestictedChannels(
+      user.user,
+    );
+
+    return extractMutationErrors(
       permissionGroupUpdate({
         variables: {
           id,
@@ -152,11 +158,17 @@ export const PermissionGroupWithChannelsDetails: React.FC<
             ...permissionsDiff(data?.permissionGroup, formData),
             ...usersDiff(data?.permissionGroup, formData),
             ...channelsDiff(data?.permissionGroup, formData),
-            restrictedAccessToChannels: formData.hasRestrictedChannels,
+            restrictedAccessToChannels:
+              checkIfPermissionGroupHasRestrictedChannels(
+                hasUserRestrictedChannels,
+                formData.channels,
+                availableChannels,
+              ),
           },
         },
       }),
     );
+  };
 
   return (
     <>

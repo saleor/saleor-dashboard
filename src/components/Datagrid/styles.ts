@@ -66,7 +66,7 @@ const useStyles = makeStyles(
           boxShadow: "none !important",
           padding: "0 !important",
         },
-        "& input, & textarea": {
+        "& input:not([class*='MuiInputBase']), & textarea": {
           appearance: "none",
           background: "none",
           border: "none",
@@ -77,7 +77,7 @@ const useStyles = makeStyles(
           padding: vars.space[3],
           outline: 0,
         },
-        '& input[type="number"]': {
+        "& input[type='number']:not([class*='MuiInputBase'])": {
           textAlign: "right",
           width: "100%",
         },
