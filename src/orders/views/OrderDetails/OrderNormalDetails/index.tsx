@@ -64,6 +64,7 @@ interface OrderNormalDetailsProps {
   id: string;
   params: OrderUrlQueryParams;
   data: OrderDetailsQueryResult["data"];
+  loading: boolean;
   orderAddNote: any;
   orderInvoiceRequest: any;
   handleSubmit: any;
@@ -104,6 +105,7 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
   id,
   params,
   data,
+  loading,
   orderAddNote,
   orderInvoiceRequest,
   handleSubmit,
@@ -187,7 +189,9 @@ export const OrderNormalDetails: React.FC<OrderNormalDetailsProps> = ({
       <OrderDetailsPage
         onOrderReturn={() => navigate(orderReturnUrl(id))}
         loading={
-          updateMetadataOpts.loading || updatePrivateMetadataOpts.loading
+          loading ||
+          updateMetadataOpts.loading ||
+          updatePrivateMetadataOpts.loading
         }
         errors={errors}
         onNoteAdd={variables =>

@@ -1207,6 +1207,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       __typename: "Fulfillment",
       fulfillmentOrder: 2,
       id: "RnVsZmlsbG1lbnQ6MjQ=",
+      metadata: [],
+      privateMetadata: [],
       lines: [
         {
           __typename: "FulfillmentLine",
@@ -1331,6 +1333,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       __typename: "Fulfillment",
       fulfillmentOrder: 1,
       id: "RnVsZmlsbG1lbnQ6OQ==",
+      metadata: [],
+      privateMetadata: [],
       lines: [
         {
           __typename: "FulfillmentLine",
