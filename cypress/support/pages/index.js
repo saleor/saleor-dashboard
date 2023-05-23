@@ -19,3 +19,15 @@ export {
   changeQuantityOfProducts,
   deleteProductFromGridTableOnIndex,
 } from "./ordersOperations";
+export { expectWelcomeMessageIncludes } from "./homePage";
+export { getDisplayedSelectors } from "./permissionsPage";
+export {
+  fillUpOnlyUserDetails,
+  fillUpSetPassword,
+  fillUpUserDetailsAndAddFirstPermission,
+  updateUserActiveFlag,
+} from "./userPage";
+export {
+  expectMainMenuAvailableSections,
+  expectMainMenuSectionsToBeVisible,
+} from "./mainMenuPage";

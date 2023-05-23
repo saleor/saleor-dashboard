@@ -12,3 +12,8 @@ export {
   createReadyToFulfillOrder,
   createUnconfirmedOrder,
 } from "./ordersUtils";
+export {
+  getMailActivationLinkForUser,
+  getMailActivationLinkForUserAndSubject,
+  inviteStaffMemberWithFirstPermission,
+} from "./users";

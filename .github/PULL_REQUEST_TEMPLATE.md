@@ -1,8 +1,4 @@
-I want to merge this change because...
-
-<!-- Please mention all relevant issue numbers. -->
-
-**PR intended to be tested with API branch:** <!-- For example: feature/warehouses  -->
+closes #...
 
 ### Screenshots
 
@@ -15,9 +11,10 @@ greatly reduce the amount of work needed to review your work. -->
 
 1. [ ] This code contains UI changes
 2. [ ] All visible strings are translated with proper context including data-formatting
-3. [ ] Attributes `[data-test-id]` are added for new elements
-4. [ ] Changes are mentioned in the changelog
-5. [ ] The changes are tested in different browsers and in light/dark mode
+3. [ ] Attributes `data-test-id` are added for new elements
+4. [ ] The changes are tested in Chrome/Firefox/Safari browsers and in light/dark mode
+5. [ ] Your code works with the latest stable version of the core
+
 
 ### Test environment config
 
