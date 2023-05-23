@@ -1,4 +1,4 @@
-import "vitest/globals";
+/// <reference types="vitest/globals" />
 
 declare module "*.jpg";
 declare module "*.png";
