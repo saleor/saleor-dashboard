@@ -15,7 +15,7 @@ import {
   UserPermissionFragment,
 } from "@dashboard/graphql";
 import { PermissionGroupWithContextDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
 import {
@@ -25,7 +25,6 @@ import {
 import { ListActions, SortPage } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
-import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
@@ -128,13 +127,15 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
 
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
-      {({ data, change, submit, toggleValue }) => {
-        const handleChannelChange = createMultiAutocompleteSelectHandler(
-          toggleValue,
-          choice => change({ target: { name: "channels", value: choice } }),
-          data.channels,
-          channelChoices,
-        );
+      {({ data, change, submit }) => {
+        const handleChannelChange: FormChange = event => {
+          change({
+            target: {
+              name: "channels",
+              value: event.target.value,
+            },
+          });
+        };
 
         const handleHasAllChannelsChange = () => {
           const hasAllChannels = !data.hasAllChannels;
@@ -196,7 +197,7 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
                     })}
                   />
                 </Box>
-                <Box overflow="hidden" __maxHeight="50%">
+                <Box overflow="hidden" __height="50%">
                   <ChannelPermission
                     allChannels={channelsOptions}
                     hasAllChannels={data.hasAllChannels}

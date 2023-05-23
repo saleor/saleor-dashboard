@@ -1,14 +1,11 @@
 import { ChannelFragment } from "@dashboard/graphql";
-import { useChannelsSearch } from "@dashboard/hooks/useChannelsSearch";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { Box, Checkbox, Text } from "@saleor/macaw-ui/next";
+import { Box, Checkbox, Multiselect, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import MultiAutocompleteSelectField, {
-  MultiAutocompleteChoiceType,
-} from "../MultiAutocompleteSelectField";
+import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import { messages } from "./messages";
 
 interface ChannelPermissionProps {
@@ -33,8 +30,6 @@ export const ChannelPermission = ({
   disabledSelectAllChannls,
 }: ChannelPermissionProps) => {
   const intl = useIntl();
-
-  const { onQueryChange, filteredChannels } = useChannelsSearch(allChannels);
 
   return (
     <Box height="100%" overflow="hidden" paddingX={9} paddingY={9}>
@@ -73,20 +68,18 @@ export const ChannelPermission = ({
         )}
 
         {!hasAllChannels && (
-          <Box __height="100%" overflowY="scroll" overflowX="hidden">
-            <MultiAutocompleteSelectField
+          <Box __height="100%">
+            <Multiselect
               disabled={disabled}
-              choices={mapNodeToChoice(filteredChannels)}
-              displayValues={selectedChannels}
-              fetchChoices={onQueryChange}
-              hasMore={false}
+              options={mapNodeToChoice(allChannels)}
               label={intl.formatMessage(messages.selectChannels)}
-              loading={false}
-              name="channels"
-              onChange={onChannelChange}
+              value={selectedChannels as any}
               placeholder={intl.formatMessage(messages.searchChannels)}
-              value={selectedChannels.map(channel => channel.value)}
-              testId="channels"
+              onChange={values => {
+                onChannelChange({
+                  target: { name: "channels", value: values },
+                });
+              }}
             />
           </Box>
         )}
