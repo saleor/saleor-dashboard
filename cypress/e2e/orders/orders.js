@@ -9,41 +9,43 @@ import {
   ORDERS_SELECTORS,
   SHARED_ELEMENTS,
 } from "../../elements/";
-import { MESSAGES } from "../../fixtures";
-import { urlList } from "../../fixtures/urlList";
-import { ONE_PERMISSION_USERS } from "../../fixtures/users";
+import { MESSAGES, ONE_PERMISSION_USERS, urlList } from "../../fixtures";
 import {
   createCustomer,
   deleteCustomersStartsWith,
-} from "../../support/api/requests/Customer";
-import {
   getOrder,
+  updateMetadata,
   updateOrdersSettings,
-} from "../../support/api/requests/Order";
-import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
+  updatePrivateMetadata,
+} from "../../support/api/requests/";
 import {
   createFulfilledOrder,
   createOrder,
   createReadyToFulfillOrder,
-  createUnconfirmedOrder,
-} from "../../support/api/utils/ordersUtils";
-import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import {
   createShipping,
+  createUnconfirmedOrder,
   deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
-import {
+  getDefaultChannel,
   getDefaultTaxClass,
+  productsUtils,
   updateTaxConfigurationForChannel,
-} from "../../support/api/utils/taxesUtils";
-import { selectChannelInPicker } from "../../support/pages/channelsPage";
-import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
+} from "../../support/api/utils/";
 import {
   addNewProductToOrder,
+  addPrivateMetadataFieldFulfillmentOrder,
+  addPublicMetadataFieldFulfillmentOrder,
   applyFixedLineDiscountForProduct,
   changeQuantityOfProducts,
+  deletePrivateFulfillmentMetadata,
   deleteProductFromGridTableOnIndex,
-} from "../../support/pages/ordersOperations";
+  deletePublicFulfillmentMetadata,
+  expandPrivateFulfillmentMetadata,
+  expandPublicFulfillmentMetadata,
+  finalizeDraftOrder,
+  selectChannelInPicker,
+  updatePrivateMetadataFieldFulfillmentOrder,
+  updatePublicMetadataFieldFulfillmentOrder,
+} from "../../support/pages/";
 
 describe("Orders", () => {
   const startsWith = "CyOrders-";
@@ -59,6 +61,16 @@ describe("Orders", () => {
 
   const shippingPrice = 2;
   const variantPrice = 1;
+  const metadataName = randomName + "- metadata name";
+  const metadataValue = randomName + "- metadata value";
+  const privateMetadataName = randomName + "- private metadata name";
+  const privateMetadataValue = randomName + "- private metadata value";
+  const updatedMetadataName = metadataName + "- updated metadata name";
+  const updatedMetadataValue = metadataValue + "- updated metadata value";
+  const updatedPrivateMetadataName =
+    privateMetadataName + "- updated private metadata name";
+  const updatedPrivateMetadataValue =
+    privateMetadataValue + "- updated private metadata value";
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -331,6 +343,183 @@ describe("Orders", () => {
             "contain.text",
             productName,
           );
+        });
+      });
+    },
+  );
+
+  it(
+    "should create metadata and private metadata for fulfilled order . TC: SALEOR_2129",
+    { tags: ["@orders", "@allEnv", "@stable"] },
+    () => {
+      let order;
+
+      cy.addAliasToGraphRequest("UpdateMetadata");
+      cy.addAliasToGraphRequest("UpdatePrivateMetadata");
+      createFulfilledOrder({
+        customerId: customer.id,
+        channelId: defaultChannel.id,
+        shippingMethod,
+        variantsList,
+        address,
+        warehouse: warehouse.id,
+      })
+        .then(({ order: orderResp }) => {
+          order = orderResp;
+          cy.visit(urlList.orders + `${order.id}`);
+          addPublicMetadataFieldFulfillmentOrder(
+            0,
+            metadataName,
+            metadataValue,
+          );
+          addPrivateMetadataFieldFulfillmentOrder(
+            0,
+            privateMetadataName,
+            privateMetadataValue,
+          );
+        })
+        .then(() => {
+          cy.clickConfirmButton()
+            .waitForRequestAndCheckIfNoErrors("@UpdateMetadata")
+            .waitForRequestAndCheckIfNoErrors("@UpdatePrivateMetadata");
+          cy.confirmationMessageShouldAppear();
+          getOrder(order.id).then(orderResponse => {
+            // check to see updated fulfillment metadata and private meta data
+            cy.wrap(orderResponse.fulfillments[0].metadata[0]).should(
+              "deep.equal",
+              {
+                key: metadataName,
+                value: metadataValue,
+              },
+            );
+            cy.wrap(orderResponse.fulfillments[0].privateMetadata[0]).should(
+              "deep.equal",
+              {
+                key: privateMetadataName,
+                value: privateMetadataValue,
+              },
+            );
+          });
+        });
+    },
+  );
+  it(
+    "should update metadata and private metadata for fulfilled order .  TC: SALEOR_2130",
+    { tags: ["@orders", "@allEnv", "@stable"] },
+    () => {
+      cy.addAliasToGraphRequest("UpdateMetadata");
+      cy.addAliasToGraphRequest("UpdatePrivateMetadata");
+      createFulfilledOrder({
+        customerId: customer.id,
+        channelId: defaultChannel.id,
+        shippingMethod,
+        variantsList,
+        address,
+        warehouse: warehouse.id,
+      }).then(orderResp => {
+        getOrder(orderResp.order.id).then(orderDetails => {
+          updateMetadata(
+            orderDetails.fulfillments[0].id,
+            metadataName,
+            metadataValue,
+          ).then(() => {
+            updatePrivateMetadata(
+              orderDetails.fulfillments[0].id,
+              privateMetadataName,
+              privateMetadataValue,
+            )
+              .then(() => {
+                cy.visit(urlList.orders + `${orderResp.order.id}`);
+                updatePublicMetadataFieldFulfillmentOrder(
+                  0,
+                  updatedMetadataName,
+                  updatedMetadataValue,
+                );
+                updatePrivateMetadataFieldFulfillmentOrder(
+                  0,
+                  updatedPrivateMetadataName,
+                  updatedPrivateMetadataValue,
+                );
+              })
+              .then(() => {
+                cy.clickConfirmButton()
+                  .waitForRequestAndCheckIfNoErrors("@UpdateMetadata")
+                  .waitForRequestAndCheckIfNoErrors("@UpdatePrivateMetadata");
+                cy.confirmationMessageShouldAppear();
+                getOrder(orderResp.order.id).then(orderResponse => {
+                  // check to see updated fulfillment metadata and private meta data
+                  cy.wrap(orderResponse.fulfillments[0].metadata[0]).should(
+                    "deep.equal",
+                    {
+                      key: updatedMetadataName,
+                      value: updatedMetadataValue,
+                    },
+                  );
+                  cy.wrap(
+                    orderResponse.fulfillments[0].privateMetadata[0],
+                  ).should("deep.equal", {
+                    key: updatedPrivateMetadataName,
+                    value: updatedPrivateMetadataValue,
+                  });
+                });
+              });
+          });
+        });
+      });
+    },
+  );
+  it(
+    "should delete metadata and private metadata for fulfilled order .  TC: SALEOR_2131",
+    { tags: ["@orders", "@allEnv", "@stable"] },
+    () => {
+      cy.addAliasToGraphRequest("UpdateMetadata");
+      cy.addAliasToGraphRequest("UpdatePrivateMetadata");
+      createFulfilledOrder({
+        customerId: customer.id,
+        channelId: defaultChannel.id,
+        shippingMethod,
+        variantsList,
+        address,
+        warehouse: warehouse.id,
+      }).then(orderResp => {
+        getOrder(orderResp.order.id).then(orderDetails => {
+          updateMetadata(
+            orderDetails.fulfillments[0].id,
+            metadataName,
+            metadataValue,
+          ).then(() => {
+            updatePrivateMetadata(
+              orderDetails.fulfillments[0].id,
+              privateMetadataName,
+              privateMetadataValue,
+            )
+              .then(() => {
+                cy.visit(urlList.orders + `${orderResp.order.id}`);
+                expandPublicFulfillmentMetadata(0);
+                deletePublicFulfillmentMetadata(0, 0);
+                expandPrivateFulfillmentMetadata(0);
+                deletePrivateFulfillmentMetadata(0, 0);
+              })
+              .then(() => {
+                cy.clickConfirmButton()
+                  .waitForRequestAndCheckIfNoErrors("@UpdateMetadata")
+                  .waitForRequestAndCheckIfNoErrors("@UpdatePrivateMetadata");
+                cy.confirmationMessageShouldAppear();
+                cy.contains(privateMetadataName).should("not.exist");
+                cy.contains(metadataName).should("not.exist");
+                getOrder(orderResp.order.id).then(orderResponse => {
+                  // check to see updated fulfillment metadata and private meta data
+                  cy.wrap(orderResponse.fulfillments[0].metadata).should(
+                    "deep.equal",
+                    [],
+                  );
+                  cy.wrap(orderResponse.fulfillments[0].privateMetadata).should(
+                    "deep.equal",
+                    [],
+                  );
+                });
+              });
+          });
         });
       });
     },
