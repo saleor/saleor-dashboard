@@ -167,6 +167,9 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     setDynamicColumnSettings,
   });
 
+  // Logic for updating sort icon in dynamic columns
+  // This is workaround before sorting is abstracted into useColumns
+  // Tracked in https://github.com/saleor/saleor-dashboard/issues/3685
   React.useEffect(() => {
     handlers.onCustomUpdateVisible(prevColumns =>
       prevColumns.map(column => {
