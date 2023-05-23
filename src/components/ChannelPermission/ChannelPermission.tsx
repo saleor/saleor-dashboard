@@ -5,11 +5,10 @@ import { Box, Checkbox, Multiselect, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { MultiAutocompleteChoiceType } from "../MultiAutocompleteSelectField";
 import { messages } from "./messages";
 
 interface ChannelPermissionProps {
-  selectedChannels: MultiAutocompleteChoiceType[];
+  selectedChannels: string[];
   allChannels: ChannelFragment[];
   description?: string;
   hasAllChannels: boolean;
@@ -32,7 +31,7 @@ export const ChannelPermission = ({
   const intl = useIntl();
 
   return (
-    <Box height="100%" overflow="hidden" paddingX={9} paddingY={9}>
+    <Box height="100%" paddingX={9} paddingY={9}>
       <Text as="p" variant="bodyEmp" size="large" marginBottom={7}>
         {intl.formatMessage(messages.title)}
       </Text>
@@ -70,10 +69,11 @@ export const ChannelPermission = ({
         {!hasAllChannels && (
           <Box __height="100%">
             <Multiselect
+              data-test-id="channels"
               disabled={disabled}
               options={mapNodeToChoice(allChannels)}
               label={intl.formatMessage(messages.selectChannels)}
-              value={selectedChannels as any}
+              value={selectedChannels}
               placeholder={intl.formatMessage(messages.searchChannels)}
               onChange={values => {
                 onChannelChange({

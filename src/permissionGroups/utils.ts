@@ -81,7 +81,7 @@ export const channelsDiff = (
   permissionGroup: PermissionGroupWithContextDetailsFragment,
   formData: PermissionGroupWithChannelsDetailsPageFormData,
 ) => {
-  const newChannels = formData.channels.map(c => c.value);
+  const newChannels = formData.channels;
   const oldChannels = permissionGroup?.accessibleChannels.map(c => c.id);
   const hasRestrictedChannels = permissionGroup?.restrictedAccessToChannels;
 

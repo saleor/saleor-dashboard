@@ -5,7 +5,6 @@ import { ChannelPermission } from "@dashboard/components/ChannelPermission";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import Savebar from "@dashboard/components/Savebar";
 import {
   ChannelFragment,
@@ -36,7 +35,6 @@ import {
   extractPermissionCodes,
   getChannelsOptions,
   isGroupFullAccess,
-  mapAccessibleChannelsToChoice,
 } from "../../utils";
 import PermissionGroupInfo from "../PermissionGroupInfo";
 import PermissionGroupMemberList from "../PermissionGroupMemberList";
@@ -48,7 +46,7 @@ export interface PermissionGroupWithChannelsDetailsPageFormData {
   isActive: boolean;
   permissions: PermissionEnum[];
   users: PermissionGroupDetailsFragment["users"];
-  channels: MultiAutocompleteChoiceType[];
+  channels: string[];
 }
 
 export interface PermissionWithChannelsData
@@ -102,15 +100,10 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
   );
   const hasUserRestrictedChannels = checkIfUserHasRestictedChannels(user.user);
 
-  const allChannels = mapAccessibleChannelsToChoice(
-    permissionGroup,
-    isUserAbleToEdit,
-  );
-
   const initialForm: PermissionGroupWithChannelsDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
     hasAllChannels: !permissionGroup?.restrictedAccessToChannels ?? false,
-    channels: allChannels,
+    channels: permissionGroup?.accessibleChannels.map(channel => channel.id),
     isActive: false,
     name: permissionGroup?.name || "",
     permissions: extractPermissionCodes(permissionGroup),
@@ -197,7 +190,7 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
                     })}
                   />
                 </Box>
-                <Box overflow="hidden" __height="50%">
+                <Box overflow="hidden" __maxHeight="50%" height="100%">
                   <ChannelPermission
                     allChannels={channelsOptions}
                     hasAllChannels={data.hasAllChannels}

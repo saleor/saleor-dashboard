@@ -1,4 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import {
+  act,
+  render,
+  screen,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 
@@ -93,10 +98,7 @@ describe("ChannelPermission", () => {
     render(
       <ChannelPermission
         allChannels={allChannels}
-        selectedChannels={selectedChannels.map(x => ({
-          label: x.name,
-          value: x.id,
-        }))}
+        selectedChannels={selectedChannels.map(chan => chan.id)}
         disabled={false}
         disabledSelectAllChannls={false}
         onChannelChange={jest.fn}
@@ -109,16 +111,13 @@ describe("ChannelPermission", () => {
     expect(screen.getByText(selectedChannels[0].name)).toBeInTheDocument();
   });
 
-  it("should allow to remove selected channels", () => {
+  it("should allow to remove selected channels", async () => {
     // Arrange & Act
     const selectedChannels = [allChannels[1]];
     render(
       <ChannelPermission
         allChannels={allChannels}
-        selectedChannels={selectedChannels.map(x => ({
-          label: x.name,
-          value: x.id,
-        }))}
+        selectedChannels={selectedChannels.map(x => x.id)}
         disabled={false}
         disabledSelectAllChannls={false}
         onChannelChange={jest.fn}
@@ -131,9 +130,11 @@ describe("ChannelPermission", () => {
     expect(screen.getByText(selectedChannels[0].name)).toBeInTheDocument();
 
     // Act
-    userEvent.click(screen.getByTestId("channels-remove"));
+    act(() => {
+      userEvent.click(screen.getByText(/✕/i));
+    });
 
     // Assert
-    expect(screen.getByText(selectedChannels[0].name)).toBeInTheDocument();
+    waitForElementToBeRemoved(screen.getByText(selectedChannels[0].name));
   });
 });

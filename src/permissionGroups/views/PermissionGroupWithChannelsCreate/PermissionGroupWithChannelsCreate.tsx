@@ -58,7 +58,7 @@ export const PermissionGroupWithChannelsCreate: React.FC = () => {
             addPermissions: formData.permissions,
             addUsers: [],
             name: formData.name,
-            addChannels: formData.channels.map(channel => channel.value),
+            addChannels: formData.channels,
             restrictedAccessToChannels:
               hasUserRestrictedChannels || !formData.hasAllChannels,
           },
