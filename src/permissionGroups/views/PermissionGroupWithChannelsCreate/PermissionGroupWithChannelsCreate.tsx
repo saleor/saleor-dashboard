@@ -15,7 +15,10 @@ import {
   PermissionGroupWithChannelsCreatePage,
 } from "../../components/PermissionGroupWithChannelsCreatePage";
 import { permissionGroupDetailsUrl } from "../../urls";
-import { filterAccessibleChannes, hasRestrictedChannels } from "../../utils";
+import {
+  checkIfUserHasRestictedChannels,
+  getChannelsOptions,
+} from "../../utils";
 
 export const PermissionGroupWithChannelsCreate: React.FC = () => {
   const navigate = useNavigator();
@@ -23,7 +26,7 @@ export const PermissionGroupWithChannelsCreate: React.FC = () => {
   const intl = useIntl();
   const shop = useShop();
   const user = useUser();
-  const hasUserRestrictedChannels = hasRestrictedChannels(user);
+  const hasUserRestrictedChannels = checkIfUserHasRestictedChannels(user.user);
 
   const [createPermissionGroup, createPermissionGroupResult] =
     usePermissionGroupWithChannelsCreateMutation({
@@ -88,7 +91,7 @@ export const PermissionGroupWithChannelsCreate: React.FC = () => {
         errors={errors as any}
         disabled={createPermissionGroupResult.loading}
         permissions={permissions}
-        channels={filterAccessibleChannes(availableChannels, user)}
+        channels={getChannelsOptions(availableChannels, user.user)}
         hasRestrictedChannels={hasUserRestrictedChannels}
         saveButtonBarState={createPermissionGroupResult.status}
         onSubmit={onSubmit}

@@ -80,10 +80,10 @@ export const usersDiff = (
 export const channelsDiff = (
   permissionGroup: PermissionGroupWithContextDetailsFragment,
   formData: PermissionGroupWithChannelsDetailsPageFormData,
-  hasRestrictedChannels: boolean,
 ) => {
   const newChannels = formData.channels.map(c => c.value);
   const oldChannels = permissionGroup?.accessibleChannels.map(c => c.id);
+  const hasRestrictedChannels = permissionGroup?.restrictedAccessToChannels;
 
   if (!hasRestrictedChannels) {
     return {
@@ -129,13 +129,19 @@ export const mapAccessibleChannelsToChoice = (
 /**
  * Calcualte if restricted access to channels should be enabled.
  */
-export const calculateRestrictedAccessToChannels = (
+export const checkIfPermissionGroupHasRestrictedChannels = (
   hasUserRestrictedChannels: boolean,
   selectedChannels: unknown[],
   allChannels: unknown[],
 ) => {
+  // When user has restricted access to channels we know that group has restricted access to channels.
+  if (hasUserRestrictedChannels) {
+    return true;
+  }
+
+  // When user has full access and selected less channel group has restricted access to channels.
   if (
-    hasUserRestrictedChannels ||
+    !hasUserRestrictedChannels &&
     selectedChannels.length !== allChannels.length
   ) {
     return true;
@@ -144,20 +150,26 @@ export const calculateRestrictedAccessToChannels = (
   return false;
 };
 
-export const checkIfUserHasAllRequiredChannels = (
-  user: UserContext,
+/**
+ * User is eligible to edit channels when he has access to all channels in permission group.
+ */
+export const checkIfUserIsEligibleToEditChannels = (
+  user: UserContext["user"],
   permissionGroupAccessibleChannels: ChannelFragment[],
 ) => {
-  const userChannels = getUserRestrictedChannels(user).map(c => c.id);
+  const userChannels = getUserAccessibleChannels(user).map(c => c.id);
 
-  return permissionGroupAccessibleChannels?.every(permChan =>
+  return permissionGroupAccessibleChannels.every(permChan =>
     userChannels.includes(permChan.id),
   );
 };
 
-export const filterAccessibleChannes = (
+/**
+ * Get channels options for select field.
+ */
+export const getChannelsOptions = (
   availableChannels: ChannelFragment[],
-  { user }: UserContext,
+  user?: UserContext["user"],
 ): ChannelFragment[] => {
   if (!user) {
     return availableChannels;
@@ -177,15 +189,21 @@ export const filterAccessibleChannes = (
   return availableChannels;
 };
 
-export const hasRestrictedChannels = ({ user }: UserContext) => {
-  if ("restrictedAccessToChannels" in user) {
+/**
+ * Check if user has restricted access to channels.
+ */
+export const checkIfUserHasRestictedChannels = (user?: UserContext["user"]) => {
+  if (user && "restrictedAccessToChannels" in user) {
     return user.restrictedAccessToChannels;
   }
 
   return false;
 };
 
-export const getUserRestrictedChannels = ({ user }: UserContext) => {
+/**
+ * Get user accessible channels.
+ */
+const getUserAccessibleChannels = (user: UserContext["user"]) => {
   if ("accessibleChannels" in user) {
     return user.accessibleChannels;
   }

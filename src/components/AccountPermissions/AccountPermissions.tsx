@@ -69,6 +69,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
       ? data.permissions.concat([key])
       : data.permissions.filter(perm => perm !== key);
 
+    // If all permissions are selected, set hasFullAccess to true
     onChange({
       target: {
         name: "hasFullAccess",

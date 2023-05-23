@@ -22,13 +22,6 @@ import {
   MembersListUrlSortField,
   permissionGroupListUrl,
 } from "@dashboard/permissionGroups/urls";
-import {
-  checkIfUserHasAllRequiredChannels,
-  extractPermissionCodes,
-  hasRestrictedChannels,
-  isGroupFullAccess,
-  mapAccessibleChannelsToChoice,
-} from "@dashboard/permissionGroups/utils";
 import { ListActions, SortPage } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
@@ -38,7 +31,14 @@ import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { filterAccessibleChannes } from "../../utils";
+import {
+  checkIfUserHasRestictedChannels,
+  checkIfUserIsEligibleToEditChannels,
+  extractPermissionCodes,
+  getChannelsOptions,
+  isGroupFullAccess,
+  mapAccessibleChannelsToChoice,
+} from "../../utils";
 import PermissionGroupInfo from "../PermissionGroupInfo";
 import PermissionGroupMemberList from "../PermissionGroupMemberList";
 
@@ -96,13 +96,12 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
   const navigate = useNavigator();
   const user = useUser();
 
-  const userChannels = filterAccessibleChannes(channels, user);
-  const hasUserRestrictedChannels = hasRestrictedChannels(user);
-
-  const isUserAbleToEdit = checkIfUserHasAllRequiredChannels(
-    user,
+  const channelsOptions = getChannelsOptions(channels, user.user);
+  const isUserAbleToEdit = checkIfUserIsEligibleToEditChannels(
+    user.user,
     permissionGroup?.accessibleChannels ?? [],
   );
+  const hasUserRestrictedChannels = checkIfUserHasRestictedChannels(user.user);
 
   const allChannels = mapAccessibleChannelsToChoice(
     permissionGroup,
@@ -199,7 +198,7 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
                 </Box>
                 <Box overflow="hidden" __maxHeight="50%">
                   <ChannelPermission
-                    allChannels={userChannels}
+                    allChannels={channelsOptions}
                     hasAllChannels={data.hasAllChannels}
                     selectedChannels={data.channels}
                     onHasAllChannelsChange={handleHasAllChannelsChange}

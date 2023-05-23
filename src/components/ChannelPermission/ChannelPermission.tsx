@@ -22,8 +22,6 @@ interface ChannelPermissionProps {
   onHasAllChannelsChange: () => void;
 }
 
-const MIN_CHANNELS_AMOUNT = 0;
-
 export const ChannelPermission = ({
   description,
   disabled,
@@ -31,8 +29,8 @@ export const ChannelPermission = ({
   onChannelChange,
   allChannels,
   selectedChannels,
-  disabledSelectAllChannls,
   hasAllChannels,
+  disabledSelectAllChannls,
 }: ChannelPermissionProps) => {
   const intl = useIntl();
 
@@ -43,37 +41,38 @@ export const ChannelPermission = ({
       <Text as="p" variant="bodyEmp" size="large" marginBottom={7}>
         {intl.formatMessage(messages.title)}
       </Text>
+
       <Box height="100%">
         {description && (
           <Text as="p" variant="body" size="small" marginBottom={5}>
             {description}
           </Text>
         )}
-        {filteredChannels.length > MIN_CHANNELS_AMOUNT && (
-          <Checkbox
-            disabled={disabled || disabledSelectAllChannls}
-            checked={hasAllChannels}
-            onCheckedChange={onHasAllChannelsChange}
-            tabIndex={-1}
-          >
-            <Text variant="body">
-              {intl.formatMessage(messages.allowAllChannels)}
-            </Text>
-          </Checkbox>
+
+        <Checkbox
+          disabled={disabled || disabledSelectAllChannls}
+          checked={hasAllChannels}
+          onCheckedChange={onHasAllChannelsChange}
+          tabIndex={-1}
+        >
+          <Text variant="body">
+            {intl.formatMessage(messages.allowAllChannels)}
+          </Text>
+        </Checkbox>
+
+        {!hasAllChannels && (
+          <Box
+            width="100%"
+            borderBottomStyle="solid"
+            borderBottomWidth={1}
+            borderColor="neutralPlain"
+            height={1}
+            marginTop={9}
+            marginBottom={9}
+          />
         )}
-        {(!hasAllChannels || disabledSelectAllChannls) &&
-          filteredChannels.length > MIN_CHANNELS_AMOUNT && (
-            <Box
-              width="100%"
-              borderBottomStyle="solid"
-              borderBottomWidth={1}
-              borderColor="neutralPlain"
-              height={1}
-              marginTop={9}
-              marginBottom={9}
-            />
-          )}
-        {(!hasAllChannels || disabledSelectAllChannls) && (
+
+        {!hasAllChannels && (
           <Box __height="100%" overflowY="scroll" overflowX="hidden">
             <MultiAutocompleteSelectField
               disabled={disabled}

@@ -1,4 +1,6 @@
+import { UserContext } from "@dashboard/auth/types";
 import {
+  ChannelFragment,
   PermissionEnum,
   PermissionFragment,
   PermissionGroupDetailsFragment,
@@ -10,9 +12,12 @@ import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroup
 import { PermissionGroupWithChannelsDetailsPageFormData } from "./components/PermissonGroupWithChannelsDetailsPage";
 import {
   arePermissionsExceeded,
-  calculateRestrictedAccessToChannels,
   channelsDiff,
+  checkIfPermissionGroupHasRestrictedChannels,
+  checkIfUserHasRestictedChannels,
+  checkIfUserIsEligibleToEditChannels,
   extractPermissionCodes,
+  getChannelsOptions,
   isGroupFullAccess,
   mapAccessibleChannelsToChoice,
   permissionsDiff,
@@ -47,7 +52,6 @@ describe("Permission group utils", () => {
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
-        false,
       );
 
       expect(addChannels).toEqual(["1"]);
@@ -84,10 +88,37 @@ describe("Permission group utils", () => {
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
-        true,
       );
 
       expect(addChannels).toEqual(["55"]);
+      expect(removeChannels).toEqual(["1"]);
+    });
+
+    it("should only removed channels", () => {
+      const formData = {
+        channels: [{ value: "2", label: "channel-2" }],
+      } as PermissionGroupWithChannelsDetailsPageFormData;
+
+      const permissionGroup = {
+        restrictedAccessToChannels: true,
+        accessibleChannels: [
+          {
+            id: "1",
+            name: "channel-1",
+          },
+          {
+            id: "2",
+            name: "channel-2",
+          },
+        ],
+      } as PermissionGroupWithContextDetailsFragment;
+
+      const { addChannels, removeChannels } = channelsDiff(
+        permissionGroup,
+        formData,
+      );
+
+      expect(addChannels).toEqual([]);
       expect(removeChannels).toEqual(["1"]);
     });
   });
@@ -333,17 +364,18 @@ describe("Permission group utils", () => {
     });
   });
 
-  describe("calculateRestrictedAccessToChannels", () => {
+  describe("checkIfPermissionGroupHasRestrictedChannels", () => {
     it("should return true when restrictedAccessToChannels is true", () => {
       // Arrange
       const hasRestrictedChannels = true;
 
       // Act
-      const restrictedAccessToChannels = calculateRestrictedAccessToChannels(
-        hasRestrictedChannels,
-        [],
-        [],
-      );
+      const restrictedAccessToChannels =
+        checkIfPermissionGroupHasRestrictedChannels(
+          hasRestrictedChannels,
+          [],
+          [],
+        );
 
       // Assert
       expect(restrictedAccessToChannels).toBe(true);
@@ -356,11 +388,12 @@ describe("Permission group utils", () => {
       const allChannels = [1, 2, 3];
 
       // Act
-      const restrictedAccessToChannels = calculateRestrictedAccessToChannels(
-        hasRestrictedChannels,
-        selectedChannels,
-        allChannels,
-      );
+      const restrictedAccessToChannels =
+        checkIfPermissionGroupHasRestrictedChannels(
+          hasRestrictedChannels,
+          selectedChannels,
+          allChannels,
+        );
 
       // Assert
       expect(restrictedAccessToChannels).toBe(true);
@@ -373,14 +406,193 @@ describe("Permission group utils", () => {
       const allChannels = [1];
 
       // Act
-      const restrictedAccessToChannels = calculateRestrictedAccessToChannels(
-        hasRestrictedChannels,
-        selectedChannels,
-        allChannels,
-      );
+      const restrictedAccessToChannels =
+        checkIfPermissionGroupHasRestrictedChannels(
+          hasRestrictedChannels,
+          selectedChannels,
+          allChannels,
+        );
 
       // Assert
       expect(restrictedAccessToChannels).toBe(false);
+    });
+  });
+
+  describe("getChannelsOptions", () => {
+    it("should return available channels when no users", () => {
+      // Arrange
+      const availableChannels = [
+        {
+          id: "1",
+          name: "Channel 1",
+          slug: "channel-1",
+          currencyCode: "USD",
+        },
+        {
+          id: "2",
+          name: "Channel 2",
+          slug: "channel-2",
+          currencyCode: "USD",
+        },
+      ] as ChannelFragment[];
+
+      // Act
+      const filteredChannels = getChannelsOptions(availableChannels);
+
+      // Assert
+      expect(filteredChannels).toEqual(availableChannels);
+    });
+
+    it("should return available channels when user has no restricted channels", () => {
+      // Arrange
+      const availableChannels = [
+        {
+          id: "1",
+          name: "Channel 1",
+          slug: "channel-1",
+          currencyCode: "USD",
+        },
+        {
+          id: "2",
+          name: "Channel 2",
+          slug: "channel-2",
+          currencyCode: "USD",
+        },
+      ] as ChannelFragment[];
+
+      const user = {
+        restrictedAccessToChannels: false,
+      } as UserContext["user"];
+
+      // Act
+      const filteredChannels = getChannelsOptions(availableChannels, user);
+
+      // Assert
+      expect(filteredChannels).toEqual(availableChannels);
+    });
+
+    it("should return user accessible channels when user has accessibleChannels", () => {
+      // Arrange
+      const availableChannels = [
+        {
+          id: "1",
+          name: "Channel 1",
+          slug: "channel-1",
+          currencyCode: "USD",
+        },
+        {
+          id: "2",
+          name: "Channel 2",
+          slug: "channel-2",
+          currencyCode: "USD",
+        },
+      ] as ChannelFragment[];
+
+      const user = {
+        accessibleChannels: [
+          {
+            id: "1",
+            name: "UserChannel 1",
+            slug: "Userchannel-1",
+          },
+        ],
+      } as UserContext["user"];
+
+      // Act
+      const filteredChannels = getChannelsOptions(availableChannels, user);
+
+      // Assert
+      expect(filteredChannels).toEqual([
+        {
+          id: "1",
+          name: "UserChannel 1",
+          slug: "Userchannel-1",
+        },
+      ]);
+    });
+  });
+
+  describe("checkIfUserHasRestictedChannels", () => {
+    it("should return true when user has restricted channels", () => {
+      // Arrange
+      const user = {
+        restrictedAccessToChannels: true,
+      } as UserContext["user"];
+
+      // Act
+      const hasRestrictedChannels = checkIfUserHasRestictedChannels(user);
+
+      // Assert
+      expect(hasRestrictedChannels).toBe(true);
+    });
+
+    it("should return false when user has no restricted channels", () => {
+      // Arrange
+      const user = {
+        restrictedAccessToChannels: false,
+      } as UserContext["user"];
+
+      // Act
+      const hasRestrictedChannels = checkIfUserHasRestictedChannels(user);
+
+      // Assert
+      expect(hasRestrictedChannels).toBe(false);
+    });
+
+    it("should return false when user no user", () => {
+      // Arrange and Act
+      const hasRestrictedChannels = checkIfUserHasRestictedChannels(undefined);
+
+      // Assert
+      expect(hasRestrictedChannels).toBe(false);
+    });
+  });
+
+  describe("checkIfUserIsEligibleToEditChannels", () => {
+    it("should return true when user has all channels that permission group has", () => {
+      // Arrange
+      const user = {
+        accessibleChannels: [
+          { id: "1", name: "Channel 1", slug: "channel-1" },
+          { id: "2", name: "Channel 2", slug: "channel-2" },
+          { id: "3", name: "Channel 3", slug: "channel-3" },
+        ],
+      } as UserContext["user"];
+
+      const permissionGroupAccessibleChannels = [
+        { id: "1", name: "Channel 1", slug: "channel-1" },
+        { id: "2", name: "Channel 2", slug: "channel-2" },
+      ] as ChannelFragment[];
+
+      // Act
+      const isEligible = checkIfUserIsEligibleToEditChannels(
+        user,
+        permissionGroupAccessibleChannels,
+      );
+
+      // Assert
+      expect(isEligible).toBe(true);
+    });
+
+    it("should return false when user does not have all channels required in permission group", () => {
+      // Arrange
+      const user = {
+        accessibleChannels: [{ id: "1", name: "Channel 1", slug: "channel-1" }],
+      } as UserContext["user"];
+
+      const permissionGroupAccessibleChannels = [
+        { id: "1", name: "Channel 1", slug: "channel-1" },
+        { id: "2", name: "Channel 2", slug: "channel-2" },
+      ] as ChannelFragment[];
+
+      // Act
+      const isEligible = checkIfUserIsEligibleToEditChannels(
+        user,
+        permissionGroupAccessibleChannels,
+      );
+
+      // Assert
+      expect(isEligible).toBe(false);
     });
   });
 });
