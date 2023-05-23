@@ -18,6 +18,8 @@ export {
   CUSTOMER_DETAILS_SELECTORS,
   CUSTOMERS_LIST_SELECTORS,
 } from "./customer/";
+export { MENU as LEFT_MENU_SELECTORS } from "./account/left-menu/left-menu-selectors";
+
 export { SALES_SELECTORS, VOUCHERS_SELECTORS } from "./discounts";
 export { HOMEPAGE_SELECTORS } from "./homePage/homePage-selectors";
 export { PAGINATION } from "./navigation";

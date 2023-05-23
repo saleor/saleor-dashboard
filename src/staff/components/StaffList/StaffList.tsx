@@ -143,7 +143,9 @@ const StaffList: React.FC<StaffListProps> = props => {
                 </Box>
               </TableCell>
               <TableCell>
-                <Text size="small">{staffMember?.email}</Text>
+                <Text size="small" data-test-id="user-mail">
+                  {staffMember?.email}
+                </Text>
               </TableCell>
             </TableRowLink>
           ),
