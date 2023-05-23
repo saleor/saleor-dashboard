@@ -1,45 +1,41 @@
 import { AppActionsHandler } from "@dashboard/apps/components/AppFrame/appActionsHandler";
 import * as ExternalAppContext from "@dashboard/apps/components/ExternalAppContext/ExternalAppContext";
 import * as dashboardConfig from "@dashboard/config";
-import { UseNotifierResult } from "@dashboard/hooks/useNotifier";
 import { renderHook } from "@testing-library/react-hooks";
 import * as ReactIntl from "react-intl";
 import { IntlShape } from "react-intl";
 
-const mockNotify = jest.fn();
-const mockCloseExternalApp = jest.fn();
+const mockNotify = vi.fn();
+const mockCloseExternalApp = vi.fn();
 
-jest.mock(
-  "@dashboard/hooks/useNotifier",
-  (): UseNotifierResult => () => mockNotify,
-);
+vi.mock("@dashboard/hooks/useNotifier", () => ({ default: () => mockNotify }));
 
-jest.spyOn(ExternalAppContext, "useExternalApp").mockImplementation(() => ({
+vi.spyOn(ExternalAppContext, "useExternalApp").mockImplementation(() => ({
   close: mockCloseExternalApp,
-  openApp: jest.fn(),
+  openApp: vi.fn(),
   open: true,
-  closeApp: jest.fn(),
+  closeApp: vi.fn(),
 }));
 
-jest
-  .spyOn(dashboardConfig, "getAppMountUri")
-  .mockImplementation(() => "http://localhost:3000");
-
-jest.spyOn(ReactIntl, "useIntl").mockImplementation(
-  // @ts-ignore - only mock required method
-  (): Pick<IntlShape, "formatMessage"> => ({
-    formatMessage: jest.fn(),
-  }),
+vi.spyOn(dashboardConfig, "getAppMountUri").mockImplementation(
+  () => "http://localhost:3000",
 );
 
-const mockNavigate = jest.fn();
-jest.mock("@dashboard/hooks/useNavigator", () => () => mockNavigate);
+vi.spyOn(ReactIntl, "useIntl").mockImplementation(
+  // @ts-ignore - only mock required method
+  (): Pick<IntlShape, "formatMessage"> => ({ formatMessage: vi.fn() }),
+);
+
+const mockNavigate = vi.fn();
+vi.mock("@dashboard/hooks/useNavigator", () => ({
+  default: () => mockNavigate,
+}));
 
 describe("AppActionsHandler", function () {
   const { location } = window;
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   /**
@@ -89,10 +85,10 @@ describe("AppActionsHandler", function () {
   });
   describe("useUpdateRoutingAction", () => {
     it("Updates dashboard url properly", () => {
-      const mockHistoryPushState = jest.fn();
-      jest
-        .spyOn(window.history, "pushState")
-        .mockImplementation(mockHistoryPushState);
+      const mockHistoryPushState = vi.fn();
+      vi.spyOn(window.history, "pushState").mockImplementation(
+        mockHistoryPushState,
+      );
 
       const {
         result: {
@@ -124,15 +120,15 @@ describe("AppActionsHandler", function () {
         AppActionsHandler.useHandleRedirectAction("XYZ"),
       );
 
-      let mockWindowOpen = jest.fn();
+      let mockWindowOpen = vi.fn();
 
       beforeEach(() => {
         hookRenderResult = renderHook(() =>
           AppActionsHandler.useHandleRedirectAction("XYZ"),
         );
-        mockWindowOpen = jest.fn();
+        mockWindowOpen = vi.fn();
 
-        jest.spyOn(window, "open").mockImplementation(mockWindowOpen);
+        vi.spyOn(window, "open").mockImplementation(mockWindowOpen);
       });
 
       it("Opens external URL in new browser context", () => {
@@ -188,7 +184,7 @@ describe("AppActionsHandler", function () {
     });
 
     describe("Open in new the same browser context", () => {
-      jest.spyOn(window, "confirm").mockReturnValue(true);
+      vi.spyOn(window, "confirm").mockReturnValue(true);
 
       const hookRenderResult = renderHook(() =>
         AppActionsHandler.useHandleRedirectAction("XYZ"),
@@ -222,10 +218,10 @@ describe("AppActionsHandler", function () {
       });
 
       it("Update route within the same app", () => {
-        const mockHistoryPushState = jest.fn();
-        jest
-          .spyOn(window.history, "pushState")
-          .mockImplementation(mockHistoryPushState);
+        const mockHistoryPushState = vi.fn();
+        vi.spyOn(window.history, "pushState").mockImplementation(
+          mockHistoryPushState,
+        );
 
         window.location.pathname = "/apps/XYZ/app/foo";
 

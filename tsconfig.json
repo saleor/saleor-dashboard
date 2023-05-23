@@ -20,13 +20,13 @@
     "alwaysStrict": true,
     "strictBindCallApply": true,
     "useUnknownInCatchVariables": true,
+    "resolveJsonModule": true,
     "paths": {
       "@assets/*": ["assets/*"],
       "@locale/*": ["locale/*"],
       "@dashboard/*": ["src/*"],
       "@test/*": ["testUtils/*"]
-    },
-    "resolveJsonModule": true
+    }
   },
   "exclude": ["node_modules", "cypress"]
 }

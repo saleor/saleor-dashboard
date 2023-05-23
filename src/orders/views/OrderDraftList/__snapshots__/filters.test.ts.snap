@@ -1,4 +1,14 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Filtering URL params > should not be empty if active filters are present 1`] = `
+{
+  "createdFrom": "2019-12-09",
+  "createdTo": "2019-12-38",
+  "customer": "admin@example.com",
+}
+`;
+
+exports[`Filtering URL params > should not be empty if active filters are present 2`] = `"createdFrom=2019-12-09&createdTo=2019-12-38&customer=admin%40example.com"`;
 
 exports[`Filtering URL params should not be empty if active filters are present 1`] = `
 Object {

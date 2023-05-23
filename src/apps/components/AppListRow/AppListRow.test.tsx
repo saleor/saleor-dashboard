@@ -14,16 +14,18 @@ import React from "react";
 
 import AppListRow from "./AppListRow";
 
-jest.mock("@dashboard/apps/context", () => ({
-  useAppListContext: jest.fn(() => ({
-    openAppSettings: jest.fn(),
-    removeAppInstallation: jest.fn(),
-    retryAppInstallation: jest.fn(),
+vi.mock("@dashboard/apps/context", () => ({
+  useAppListContext: vi.fn(() => ({
+    openAppSettings: vi.fn(),
+    removeAppInstallation: vi.fn(),
+    retryAppInstallation: vi.fn(),
   })),
 }));
 
-jest.mock("@dashboard/config", () => {
-  const original = jest.requireActual("@dashboard/config");
+vi.mock("@dashboard/config", async () => {
+  const original = await vi.importActual<typeof import("@dashboard/config")>(
+    "@dashboard/config",
+  );
 
   return {
     __esModule: true,
@@ -70,8 +72,8 @@ describe("Apps AppListRow", () => {
 
   it("calls handlers when released app data passed and buttons clicked", async () => {
     // Arrange
-    const navigateToAppInstallPage = jest.fn();
-    const navigateToVercelDeploymentPage = jest.fn();
+    const navigateToAppInstallPage = vi.fn();
+    const navigateToVercelDeploymentPage = vi.fn();
     render(
       <Wrapper>
         <AppListRow
@@ -217,10 +219,10 @@ describe("Apps AppListRow", () => {
 
   it("calls handlers when failed installation data passed and buttons clicked", async () => {
     // Arrange
-    const openAppSettings = jest.fn();
-    const removeAppInstallation = jest.fn();
-    const retryAppInstallation = jest.fn();
-    jest.spyOn(context, "useAppListContext").mockImplementation(() => ({
+    const openAppSettings = vi.fn();
+    const removeAppInstallation = vi.fn();
+    const retryAppInstallation = vi.fn();
+    vi.spyOn(context, "useAppListContext").mockImplementation(() => ({
       openAppSettings,
       removeAppInstallation,
       retryAppInstallation,

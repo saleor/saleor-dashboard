@@ -8,7 +8,7 @@ import { props } from "./fixtures";
 import { Metadata } from "./Metadata";
 
 const Component = () => {
-  const { change, data } = useForm(props.data, jest.fn());
+  const { change, data } = useForm(props.data, vi.fn());
 
   return (
     <Wrapper>
@@ -34,7 +34,7 @@ describe("Metadata editor", () => {
     expect(editor).toHaveAttribute(isExpandedAttribute, "true");
   });
 
-  xit("can edit field name", async () => {
+  it.skip("can edit field name", async () => {
     // Arrange
     render(<Component />);
     const user = userEvent.setup();
@@ -52,7 +52,7 @@ describe("Metadata editor", () => {
     expect(input).toHaveValue("key with new name");
   });
 
-  xit("can edit field value", async () => {
+  it.skip("can edit field value", async () => {
     // Arrange
     render(<Component />);
     const user = userEvent.setup();
@@ -86,7 +86,7 @@ describe("Metadata editor", () => {
     );
   });
 
-  xit("can add field", async () => {
+  it.skip("can add field", async () => {
     // Arrange
     render(<Component />);
     const user = userEvent.setup();

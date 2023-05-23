@@ -22,14 +22,14 @@ describe("AppUrls (apps/urls.ts)", () => {
 
   describe("resolveAppIframeUrl", () => {
     afterAll(() => {
-      jest.clearAllMocks();
+      vi.clearAllMocks();
     });
 
     describe("For full URL provided in env", () => {
       beforeEach(() => {
-        jest
-          .spyOn(config, "getApiUrl")
-          .mockImplementation(() => "https://shop.saleor.cloud/graphql/");
+        vi.spyOn(config, "getApiUrl").mockImplementation(
+          () => "https://shop.saleor.cloud/graphql/",
+        );
       });
 
       it.each<

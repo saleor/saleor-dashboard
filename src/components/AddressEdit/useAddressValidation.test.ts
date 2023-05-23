@@ -1,17 +1,24 @@
 import { useAddressValidationRulesQuery } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
+import { Mock } from "vitest";
 
 import { useAddressValidation } from "./useAddressValidation";
 
-jest.mock("@dashboard/graphql", () => ({
-  CountryCode: jest.requireActual("@dashboard/graphql").CountryCode,
-  useAddressValidationRulesQuery: jest.fn(),
-}));
+vi.mock("@dashboard/graphql", async () => {
+  const actual = await vi.importActual<typeof import("@dashboard/graphql")>(
+    "@dashboard/graphql",
+  );
+
+  return {
+    CountryCode: actual.CountryCode,
+    useAddressValidationRulesQuery: vi.fn(),
+  };
+});
 
 describe("useAddressValidation", () => {
   it("skips loading validation rules when country is not provided", () => {
     // Arrange
-    (useAddressValidationRulesQuery as jest.Mock).mockReturnValue({
+    (useAddressValidationRulesQuery as Mock).mockReturnValue({
       data: null,
       loading: false,
     });
@@ -32,7 +39,7 @@ describe("useAddressValidation", () => {
 
   it("loads validation rules when country is provided", () => {
     // Arrange
-    (useAddressValidationRulesQuery as jest.Mock).mockReturnValue({
+    (useAddressValidationRulesQuery as Mock).mockReturnValue({
       data: {
         addressValidationRules: {
           countryAreaChoices: [

@@ -18,7 +18,7 @@ describe("ProductTile", () => {
     const product = mockProduct(true);
 
     // Act
-    render(<ProductTile product={product} onClick={jest.fn()} />);
+    render(<ProductTile product={product} onClick={vi.fn()} />);
 
     // Assert
     const img = screen.getByAltText(product.name);
@@ -33,7 +33,7 @@ describe("ProductTile", () => {
     const product = mockProduct(false);
 
     // Act
-    render(<ProductTile product={product} onClick={jest.fn()} />);
+    render(<ProductTile product={product} onClick={vi.fn()} />);
 
     // Assert
     expect(
@@ -46,7 +46,7 @@ describe("ProductTile", () => {
   it("fires onClick when clicked", async () => {
     // Arrange
     const product = mockProduct(null);
-    const onClick = jest.fn();
+    const onClick = vi.fn();
     const user = userEvent.setup();
 
     // Act

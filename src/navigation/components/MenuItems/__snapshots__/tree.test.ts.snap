@@ -1,4 +1,4 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Properly computes diffs # 1`] = `
 Array [
@@ -25,6 +25,39 @@ Array [
 exports[`Properly computes diffs # 3`] = `
 Array [
   Object {
+    "id": "2accessories",
+    "parentId": "4apparel",
+    "sortOrder": 0,
+    "type": "move",
+  },
+]
+`;
+
+exports[`Properly computes diffs > # 1`] = `
+[
+  {
+    "id": "1glasses",
+    "parentId": "0jewelry",
+    "sortOrder": 0,
+    "type": "move",
+  },
+]
+`;
+
+exports[`Properly computes diffs > # 2`] = `
+[
+  {
+    "id": "1glasses",
+    "parentId": "2accessories",
+    "sortOrder": -1,
+    "type": "move",
+  },
+]
+`;
+
+exports[`Properly computes diffs > # 3`] = `
+[
+  {
     "id": "2accessories",
     "parentId": "4apparel",
     "sortOrder": 0,

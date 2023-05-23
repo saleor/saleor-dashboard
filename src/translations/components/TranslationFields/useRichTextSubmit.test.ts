@@ -1,17 +1,18 @@
 import useRichText from "@dashboard/utils/richText/useRichText";
 import { renderHook } from "@testing-library/react-hooks";
+import { Mock } from "vitest";
 
 import { useRichTextSubmit } from "./useRichTextSubmit";
 
-jest.mock("@dashboard/utils/richText/useRichText", () => jest.fn());
+vi.mock("@dashboard/utils/richText/useRichText", () => ({ default: vi.fn() }));
 
 describe("useRichTextSubmit", () => {
   it("submits value from editor succesfully", async () => {
     // Given
     const textEditorValue = "text editor value";
-    const getValue = jest.fn(() => textEditorValue);
-    (useRichText as jest.Mock).mockImplementation(() => ({ getValue }));
-    const submitFn = jest.fn();
+    const getValue = vi.fn(() => textEditorValue);
+    (useRichText as Mock).mockImplementation(() => ({ getValue }));
+    const submitFn = vi.fn();
     const { result } = renderHook(() => useRichTextSubmit("initial", submitFn));
 
     // When

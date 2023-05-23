@@ -2,18 +2,18 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { useFilterHandlers } from "./useFilterHandlers";
 
-jest.mock("./useNavigator", () => () => jest.fn());
+vi.mock("./useNavigator", () => ({ default: () => vi.fn() }));
 
 describe("useFilterHandlers", () => {
   describe("resetFilters", () => {
     test("should run cleanup function and call createUrl function", () => {
       // Arrange
-      const cleanupFn = jest.fn();
-      const createUrl = jest.fn();
+      const cleanupFn = vi.fn();
+      const createUrl = vi.fn();
 
       const { result } = renderHook(() =>
         useFilterHandlers({
-          getFilterQueryParam: jest.fn(),
+          getFilterQueryParam: vi.fn(),
           createUrl,
           cleanupFn,
           params: {
@@ -45,12 +45,12 @@ describe("useFilterHandlers", () => {
 
   describe("changeFilters", () => {
     test("should call cleanup function when provided", () => {
-      const cleanupFn = jest.fn();
+      const cleanupFn = vi.fn();
 
       const { result } = renderHook(() =>
         useFilterHandlers({
-          getFilterQueryParam: jest.fn(),
-          createUrl: jest.fn(),
+          getFilterQueryParam: vi.fn(),
+          createUrl: vi.fn(),
           cleanupFn,
           params: {
             activeTab: "tab",
@@ -74,11 +74,11 @@ describe("useFilterHandlers", () => {
     });
 
     test("should call createUrl function with with proper params when no filters", () => {
-      const createUrl = jest.fn();
+      const createUrl = vi.fn();
 
       const { result } = renderHook(() =>
         useFilterHandlers({
-          getFilterQueryParam: jest.fn(filter => ({
+          getFilterQueryParam: vi.fn(filter => ({
             [filter.name]: filter.value,
           })),
           createUrl,
@@ -108,11 +108,11 @@ describe("useFilterHandlers", () => {
     });
 
     test("should call createUrl function with with proper params when filters selected", () => {
-      const createUrl = jest.fn();
+      const createUrl = vi.fn();
 
       const { result } = renderHook(() =>
         useFilterHandlers({
-          getFilterQueryParam: jest.fn(filter => ({
+          getFilterQueryParam: vi.fn(filter => ({
             [filter.name]: filter.value[0],
           })),
           createUrl,
@@ -159,11 +159,11 @@ describe("useFilterHandlers", () => {
     });
 
     test("should call createUrl function with active tab value when keepActiveTab is true", () => {
-      const createUrl = jest.fn();
+      const createUrl = vi.fn();
 
       const { result } = renderHook(() =>
         useFilterHandlers({
-          getFilterQueryParam: jest.fn(filter => ({
+          getFilterQueryParam: vi.fn(filter => ({
             [filter.name]: filter.value[0],
           })),
           createUrl,
@@ -204,12 +204,12 @@ describe("useFilterHandlers", () => {
 
   describe("handleSearchChange", () => {
     test("should call createUrl function when provided", () => {
-      const cleanupFn = jest.fn();
+      const cleanupFn = vi.fn();
 
       const { result } = renderHook(() =>
         useFilterHandlers({
-          getFilterQueryParam: jest.fn(),
-          createUrl: jest.fn(),
+          getFilterQueryParam: vi.fn(),
+          createUrl: vi.fn(),
           cleanupFn,
           params: {
             activeTab: "tab",
@@ -233,11 +233,11 @@ describe("useFilterHandlers", () => {
     });
 
     test("should run createUrl function with params and query", () => {
-      const createUrl = jest.fn();
+      const createUrl = vi.fn();
 
       const { result } = renderHook(() =>
         useFilterHandlers({
-          getFilterQueryParam: jest.fn(filter => ({
+          getFilterQueryParam: vi.fn(filter => ({
             [filter.name]: filter.value[0],
           })),
           createUrl,
@@ -270,11 +270,11 @@ describe("useFilterHandlers", () => {
     });
 
     test("should run createUrl function  with sort rank and asc false when hasSortWithRank is true", () => {
-      const createUrl = jest.fn();
+      const createUrl = vi.fn();
 
       const { result } = renderHook(() =>
         useFilterHandlers({
-          getFilterQueryParam: jest.fn(filter => ({
+          getFilterQueryParam: vi.fn(filter => ({
             [filter.name]: filter.value[0],
           })),
           createUrl,

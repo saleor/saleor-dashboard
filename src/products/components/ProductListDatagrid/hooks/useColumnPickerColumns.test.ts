@@ -8,11 +8,11 @@ import { renderHook } from "@testing-library/react-hooks";
 
 import { useColumnPickerColumns } from "./useColumnPickerColumns";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
+vi.mock("react-intl", () => ({
+  useIntl: vi.fn(() => ({
+    formatMessage: vi.fn(x => x.defaultMessage),
   })),
-  defineMessages: jest.fn(x => x),
+  defineMessages: vi.fn(x => x),
 }));
 
 describe("useColumnPickerColumns", () => {

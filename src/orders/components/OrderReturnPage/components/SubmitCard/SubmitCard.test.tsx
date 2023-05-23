@@ -7,7 +7,7 @@ import { SubmitCard } from "./SubmitCard";
 
 describe("SubmitCard", () => {
   it("submits on click", async () => {
-    const submitFn = jest.fn();
+    const submitFn = vi.fn();
     render(
       <Wrapper>
         <SubmitCard

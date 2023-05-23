@@ -18,7 +18,7 @@ describe("OrderAddTransaction", () => {
   });
 
   it("calls onAddTransaction when clicked", async () => {
-    const callback = jest.fn();
+    const callback = vi.fn();
 
     render(
       <Wrapper>

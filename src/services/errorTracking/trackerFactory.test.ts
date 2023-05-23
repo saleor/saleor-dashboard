@@ -2,9 +2,9 @@ import { ErrorTrackerFactory } from "./trackerFactory";
 import { TrackerMethods, TrackerPermission } from "./types";
 
 const testErrorId = "testId";
-const initMockFn = jest.fn();
-const captureExceptionMockFn = jest.fn(_ => testErrorId);
-const setUserDataMockFn = jest.fn();
+const initMockFn = vi.fn();
+const captureExceptionMockFn = vi.fn(_ => testErrorId);
+const setUserDataMockFn = vi.fn();
 
 const TestAdapter = (): TrackerMethods => {
   const init: TrackerMethods["init"] = () => {

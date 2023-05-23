@@ -11,21 +11,22 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import React from "react";
 import { MemoryRouter } from "react-router-dom";
+import { Mock } from "vitest";
 
 import ProductUpdatePage, { ProductUpdatePageProps } from "./ProductUpdatePage";
 
 const product = productFixture(placeholderImage);
 
-const onSubmit = jest.fn();
-const useNavigator = jest.spyOn(_useNavigator, "default");
-jest.mock("@dashboard/components/RichTextEditor/RichTextEditor");
-jest.mock("@dashboard/utils/richText/useRichText");
+const onSubmit = vi.fn();
+const useNavigator = vi.spyOn(_useNavigator, "default");
+vi.mock("@dashboard/components/RichTextEditor/RichTextEditor");
+vi.mock("@dashboard/utils/richText/useRichText");
 /**
  * Mocking glide library. We do want to test only if page renders, grid itself has dedicated tests.
  */
-jest.mock("@glideapps/glide-data-grid", () => {
-  const { forwardRef } = jest.requireActual<typeof import("react")>("react");
-  const dataGrid = jest.requireActual<
+vi.mock("@glideapps/glide-data-grid", async () => {
+  const { forwardRef } = await vi.importActual<typeof import("react")>("react");
+  const dataGrid = await vi.importActual<
     typeof import("@glideapps/glide-data-grid")
   >("@glideapps/glide-data-grid");
 
@@ -77,12 +78,12 @@ const props: ProductUpdatePageProps = {
   attributeValues: [],
 };
 
-xdescribe("Product details page", () => {
-  useNavigator.mockImplementation();
+describe.skip("Product details page", () => {
+  (useNavigator as Mock).mockImplementation(() => ({}));
 
   // Disabled because of failure on intel macbooks.
   // TODO: Rewrite without using Wrapper
-  xit("can select empty option on attribute", async () => {
+  it.skip("can select empty option on attribute", async () => {
     // Arrange
     render(
       <MemoryRouter>

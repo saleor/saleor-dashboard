@@ -8,7 +8,7 @@ import { ExitFormDialogContext } from "./ExitFormDialogProvider";
 import { useExitFormDialog } from "./useExitFormDialog";
 import { useExitFormDialogProvider } from "./useExitFormDialogProvider";
 
-jest.mock("../../hooks/useNotifier", () => undefined);
+vi.mock("../../hooks/useNotifier", () => undefined);
 
 const MockExitFormDialogProvider = ({ children }) => {
   const { providerData } = useExitFormDialogProvider();
@@ -47,7 +47,7 @@ const setup = (submitFn: () => SubmitPromise, confirmLeave = true) =>
 describe("useExitFormDialog", () => {
   it("blocks navigation after leaving dirty form", async () => {
     // Given
-    const submitFn = jest.fn(() => Promise.resolve([]));
+    const submitFn = vi.fn(() => Promise.resolve([]));
     const { result } = setup(submitFn);
 
     // When
@@ -67,7 +67,7 @@ describe("useExitFormDialog", () => {
 
   it("allows navigation after leaving dirty form if no confirmation is needed", async () => {
     // Given
-    const submitFn = jest.fn(() => Promise.resolve([]));
+    const submitFn = vi.fn(() => Promise.resolve([]));
     const { result } = setup(submitFn, false);
 
     // When
@@ -86,7 +86,7 @@ describe("useExitFormDialog", () => {
   });
   it("navigates to full url with querystring", async () => {
     // Given
-    const submitFn = jest.fn(() => Promise.resolve([]));
+    const submitFn = vi.fn(() => Promise.resolve([]));
     const { result } = setup(submitFn);
     const qs = "?param=value";
     const targetPathWithQs = targetPath + qs;

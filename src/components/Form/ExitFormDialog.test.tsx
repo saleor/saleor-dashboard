@@ -4,25 +4,25 @@ import React from "react";
 
 import ExitFormDialog from "./ExitFormDialog";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
+vi.mock("react-intl", () => ({
+  useIntl: vi.fn(() => ({
+    formatMessage: vi.fn(x => x.defaultMessage),
   })),
-  defineMessages: jest.fn(x => x),
+  defineMessages: vi.fn(x => x),
 }));
 
-jest.mock("@saleor/macaw-ui", () => ({
-  useStyles: jest.fn(() => () => ({})),
-  makeStyles: jest.fn(() => () => ({})),
-  DialogHeader: jest.fn(() => () => <></>),
+vi.mock("@saleor/macaw-ui", () => ({
+  useStyles: vi.fn(() => () => ({})),
+  makeStyles: vi.fn(() => () => ({})),
+  DialogHeader: vi.fn(() => () => <></>),
 }));
 
 describe("ExitFormDialog", () => {
   it("closes when ignore changes is clicked", async () => {
     // Arrange
     const props = {
-      onClose: jest.fn(),
-      onLeave: jest.fn(),
+      onClose: vi.fn(),
+      onLeave: vi.fn(),
       isOpen: true,
     };
     const user = userEvent.setup();
@@ -37,8 +37,8 @@ describe("ExitFormDialog", () => {
   it("closes when keep editing is clicked", async () => {
     // Arrange
     const props = {
-      onClose: jest.fn(),
-      onLeave: jest.fn(),
+      onClose: vi.fn(),
+      onLeave: vi.fn(),
       isOpen: true,
     };
     const user = userEvent.setup();

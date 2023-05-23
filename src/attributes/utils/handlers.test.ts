@@ -190,8 +190,8 @@ const createFileAttribute = (value: string) =>
 
 describe("Multiple select change handler", () => {
   it("is able to select value", () => {
-    const change = jest.fn();
-    const trigger = jest.fn();
+    const change = vi.fn();
+    const trigger = vi.fn();
     const handler = createAttributeMultiChangeHandler(
       change,
       multipleValueAttributes,
@@ -209,8 +209,8 @@ describe("Multiple select change handler", () => {
   });
 
   it("is able to deselect value", () => {
-    const change = jest.fn();
-    const trigger = jest.fn();
+    const change = vi.fn();
+    const trigger = vi.fn();
     const handler = createAttributeMultiChangeHandler(
       change,
       multipleValueAttributes,
@@ -226,8 +226,8 @@ describe("Multiple select change handler", () => {
   });
 
   it("is able to add custom value", () => {
-    const change = jest.fn();
-    const trigger = jest.fn();
+    const change = vi.fn();
+    const trigger = vi.fn();
     const handler = createAttributeMultiChangeHandler(
       change,
       multipleValueAttributes,

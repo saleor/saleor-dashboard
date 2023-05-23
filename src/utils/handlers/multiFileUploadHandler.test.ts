@@ -5,15 +5,13 @@ const testFiles = Array(5)
   .map(() => new File([""], "mockFile"));
 
 describe("Multiple file upload handler", () => {
-  it("properly handles success", done => {
+  it("properly handles success", async () => {
     const cbs = {
-      onAfterUpload: jest.fn(),
-      onBeforeUpload: jest.fn(),
-      onCompleted: jest.fn(files =>
-        expect(files.length).toBe(testFiles.length),
-      ),
-      onError: jest.fn(),
-      onStart: jest.fn(),
+      onAfterUpload: vi.fn(),
+      onBeforeUpload: vi.fn(),
+      onCompleted: vi.fn(files => expect(files.length).toBe(testFiles.length)),
+      onError: vi.fn(),
+      onStart: vi.fn(),
     };
     const handle = createMultiFileUploadHandler(() => {
       const promise = new Promise<void>(resolve => {
@@ -25,25 +23,22 @@ describe("Multiple file upload handler", () => {
       return promise;
     }, cbs);
 
-    handle((testFiles as unknown) as FileList).then(() => {
-      expect(cbs.onAfterUpload).toBeCalledTimes(testFiles.length);
-      expect(cbs.onBeforeUpload).toBeCalledTimes(testFiles.length);
-      expect(cbs.onCompleted).toBeCalledTimes(1);
-      expect(cbs.onError).toBeCalledTimes(0);
-      expect(cbs.onStart).toBeCalledTimes(1);
-      done();
-    });
+    await handle(testFiles as unknown as FileList);
+
+    expect(cbs.onAfterUpload).toBeCalledTimes(testFiles.length);
+    expect(cbs.onBeforeUpload).toBeCalledTimes(testFiles.length);
+    expect(cbs.onCompleted).toBeCalledTimes(1);
+    expect(cbs.onError).toBeCalledTimes(0);
+    expect(cbs.onStart).toBeCalledTimes(1);
   });
 
-  it("properly handles error", done => {
+  it("properly handles error", async () => {
     const cbs = {
-      onAfterUpload: jest.fn(),
-      onBeforeUpload: jest.fn(),
-      onCompleted: jest.fn(files =>
-        expect(files.length).toBe(testFiles.length),
-      ),
-      onError: jest.fn(),
-      onStart: jest.fn(),
+      onAfterUpload: vi.fn(),
+      onBeforeUpload: vi.fn(),
+      onCompleted: vi.fn(files => expect(files.length).toBe(testFiles.length)),
+      onError: vi.fn(),
+      onStart: vi.fn(),
     };
     const handle = createMultiFileUploadHandler((_, fileIndex) => {
       const promise = new Promise<void>((resolve, reject) => {
@@ -56,12 +51,11 @@ describe("Multiple file upload handler", () => {
       return promise;
     }, cbs);
 
-    handle((testFiles as unknown) as FileList).then(() => {
-      expect(cbs.onAfterUpload).toBeCalledTimes(testFiles.length - 1);
-      expect(cbs.onBeforeUpload).toBeCalledTimes(testFiles.length);
-      expect(cbs.onCompleted).toBeCalledTimes(1);
-      expect(cbs.onError).toBeCalledTimes(1);
-      done();
-    });
+    await handle(testFiles as unknown as FileList);
+
+    expect(cbs.onAfterUpload).toBeCalledTimes(testFiles.length - 1);
+    expect(cbs.onBeforeUpload).toBeCalledTimes(testFiles.length);
+    expect(cbs.onCompleted).toBeCalledTimes(1);
+    expect(cbs.onError).toBeCalledTimes(1);
   });
 });

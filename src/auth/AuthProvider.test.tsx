@@ -4,6 +4,7 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { useAuth, useAuthState } from "@saleor/sdk";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { useIntl } from "react-intl";
+import { Mock } from "vitest";
 
 import { useAuthProvider } from "./hooks/useAuthProvider";
 
@@ -23,16 +24,16 @@ beforeEach(() => {
   sessionStorage.clear();
 });
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
+vi.mock("react-intl", () => ({
+  useIntl: vi.fn(() => ({
+    formatMessage: vi.fn(x => x.defaultMessage),
   })),
-  defineMessages: jest.fn(x => x),
+  defineMessages: vi.fn(x => x),
 }));
 
-jest.mock("@saleor/sdk", () => ({
-  useAuth: jest.fn(() => ({
-    login: jest.fn(() => ({
+vi.mock("@saleor/sdk", () => ({
+  useAuth: vi.fn(() => ({
+    login: vi.fn(() => ({
       data: {
         tokenCreate: {
           errors: [],
@@ -47,42 +48,42 @@ jest.mock("@saleor/sdk", () => ({
         },
       },
     })),
-    logout: jest.fn(),
+    logout: vi.fn(),
   })),
-  useAuthState: jest.fn(() => undefined),
+  useAuthState: vi.fn(() => undefined),
 }));
-jest.mock("@apollo/client", () => ({
-  useApolloClient: jest.fn(() => ({
-    clearStore: jest.fn(),
+vi.mock("@apollo/client", () => ({
+  useApolloClient: vi.fn(() => ({
+    clearStore: vi.fn(),
   })),
-  ApolloError: jest.fn(),
+  ApolloError: vi.fn(),
 }));
 
-jest.mock("@dashboard/graphql", () => ({
-  useUserDetailsQuery: jest.fn(() => ({
+vi.mock("@dashboard/graphql", () => ({
+  useUserDetailsQuery: vi.fn(() => ({
     data: undefined,
   })),
 }));
 
-jest.mock("@dashboard/hooks/useNotifier", () => ({
+vi.mock("@dashboard/hooks/useNotifier", () => ({
   __esModule: true,
-  default: jest.fn(() => () => undefined),
+  default: vi.fn(() => () => undefined),
 }));
 
-jest.mock("@dashboard/hooks/useNavigator", () => ({
+vi.mock("@dashboard/hooks/useNavigator", () => ({
   __esModule: true,
-  default: jest.fn(() => () => undefined),
+  default: vi.fn(() => () => undefined),
 }));
-jest.mock("@dashboard/hooks/useLocalStorage", () => ({
+vi.mock("@dashboard/hooks/useLocalStorage", () => ({
   __esModule: true,
-  default: jest.fn(() => []),
+  default: vi.fn(() => []),
 }));
-jest.mock("@dashboard/auth", () => ({
-  useUser: jest.fn(),
+vi.mock("@dashboard/auth", () => ({
+  useUser: vi.fn(),
 }));
-jest.mock("use-react-router", () => ({
+vi.mock("use-react-router", () => ({
   __esModule: true,
-  default: jest.fn(() => ({
+  default: vi.fn(() => ({
     location: {},
   })),
 }));
@@ -94,14 +95,14 @@ describe("AuthProvider", () => {
     const notify = useNotifier();
     const apolloClient = useApolloClient();
 
-    (useAuthState as jest.Mock).mockImplementation(() => ({
+    (useAuthState as Mock).mockImplementation(() => ({
       authenticated: true,
       authenticating: false,
       user: {
         isStaff: true,
       },
     }));
-    (useUserDetailsQuery as jest.Mock).mockImplementation(() => ({
+    (useUserDetailsQuery as Mock).mockImplementation(() => ({
       data: {
         me: {
           email: adminCredentials.email,
@@ -132,11 +133,11 @@ describe("AuthProvider", () => {
     const notify = useNotifier();
     const apolloClient = useApolloClient();
 
-    (useAuthState as jest.Mock).mockImplementation(() => ({
+    (useAuthState as Mock).mockImplementation(() => ({
       authenticated: false,
       authenticating: false,
     }));
-    (useUserDetailsQuery as jest.Mock).mockImplementation(() => ({
+    (useUserDetailsQuery as Mock).mockImplementation(() => ({
       data: {
         me: null,
       },
@@ -158,11 +159,11 @@ describe("AuthProvider", () => {
     const notify = useNotifier();
     const apolloClient = useApolloClient();
 
-    (useAuthState as jest.Mock).mockImplementation(() => ({
+    (useAuthState as Mock).mockImplementation(() => ({
       authenticated: false,
       authenticating: false,
     }));
-    (useUserDetailsQuery as jest.Mock).mockImplementation(() => ({
+    (useUserDetailsQuery as Mock).mockImplementation(() => ({
       data: {
         me: {
           email: nonStaffUserCredentials.email,
@@ -192,8 +193,8 @@ describe("AuthProvider", () => {
     const notify = useNotifier();
     const apolloClient = useApolloClient();
 
-    (useAuth as jest.Mock).mockImplementation(() => ({
-      login: jest.fn(() => ({
+    (useAuth as Mock).mockImplementation(() => ({
+      login: vi.fn(() => ({
         data: {
           tokenCreate: {
             errors: [],
@@ -203,7 +204,7 @@ describe("AuthProvider", () => {
           },
         },
       })),
-      logout: jest.fn(),
+      logout: vi.fn(),
     }));
 
     // Act

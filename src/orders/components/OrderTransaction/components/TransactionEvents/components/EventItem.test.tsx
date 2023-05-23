@@ -9,7 +9,7 @@ import { EventItem } from "./EventItem";
 
 describe("EventItem", () => {
   it("displays correct event data", () => {
-    const onHover = jest.fn();
+    const onHover = vi.fn();
     render(
       <MemoryRouter>
         <Wrapper>
@@ -29,7 +29,9 @@ describe("EventItem", () => {
     expect(row).toHaveTextContent(transactionEvent.amount.amount.toString());
     expect(row).toHaveTextContent(transactionEvent.amount.currency);
     expect(row).toHaveTextContent(transactionEvent.pspReference);
-    expect(row).toHaveTextContent("Aug 12, 2022, 02:40 PM"); // date from transactionEvent
+    expect(row).toHaveTextContent(
+      "SuccessUSD58.98CaptureXCFDROVCDF232332DFGSAug 12, 2022, 04:40 PM GMT+2Checkout App",
+    ); // date from transactionEvent
     expect(row).toHaveTextContent(transactionEvent.createdBy.name);
     expect(onHover).not.toHaveBeenCalled();
   });
@@ -51,7 +53,7 @@ describe("EventItem", () => {
   });
 
   it("calls onHover function when hovered", async () => {
-    const onHover = jest.fn();
+    const onHover = vi.fn();
     render(
       <Wrapper>
         <EventItem

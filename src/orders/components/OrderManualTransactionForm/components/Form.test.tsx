@@ -16,7 +16,7 @@ const commonTransactionFormProps: Pick<
 
 describe("OrderManualTrasactionForm / Form", () => {
   test("it handles submit event", () => {
-    const submitFn = jest.fn();
+    const submitFn = vi.fn();
     render(
       <OrderManualTransactionForm
         {...commonTransactionFormProps}
@@ -42,7 +42,7 @@ describe("OrderManualTrasactionForm / Form", () => {
   });
 
   test("it doesn't handle submit if amount is missing", () => {
-    const submitFn = jest.fn();
+    const submitFn = vi.fn();
     render(
       <OrderManualTransactionForm
         {...commonTransactionFormProps}

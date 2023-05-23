@@ -4,7 +4,7 @@ import React from "react";
 
 import { ProductListDeleteButton } from "./ProductListDeleteButton";
 
-jest.mock("react-intl", () => ({
+vi.mock("react-intl", () => ({
   FormattedMessage: ({ defaultMessage }) => <>{defaultMessage}</>,
 }));
 
@@ -12,7 +12,7 @@ describe("ProductListDeleteButton", () => {
   it("should return null when show is equal false", () => {
     // Arrange & Act
     const { container } = render(
-      <ProductListDeleteButton show={false} onClick={jest.fn()} />,
+      <ProductListDeleteButton show={false} onClick={vi.fn()} />,
     );
 
     // Assert
@@ -21,7 +21,7 @@ describe("ProductListDeleteButton", () => {
 
   it("should render button", async () => {
     // Arrange & Act
-    render(<ProductListDeleteButton show onClick={jest.fn()} />);
+    render(<ProductListDeleteButton show onClick={vi.fn()} />);
 
     // Assert
     expect(screen.getByRole("button")).toBeInTheDocument();
@@ -29,7 +29,7 @@ describe("ProductListDeleteButton", () => {
 
   it("should fire callback on click", async () => {
     // Arrange
-    const onClick = jest.fn();
+    const onClick = vi.fn();
 
     // Act
     render(<ProductListDeleteButton show onClick={onClick} />);

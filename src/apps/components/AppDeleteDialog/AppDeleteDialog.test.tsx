@@ -16,8 +16,8 @@ describe("Apps AppDeleteDialog", () => {
           open={true}
           name={name}
           type="EXTERNAL"
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
+          onClose={vi.fn()}
+          onConfirm={vi.fn()}
         />
       </Wrapper>,
     );
@@ -43,8 +43,8 @@ describe("Apps AppDeleteDialog", () => {
           open={true}
           name={name}
           type="CUSTOM"
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
+          onClose={vi.fn()}
+          onConfirm={vi.fn()}
         />
       </Wrapper>,
     );
@@ -69,8 +69,8 @@ describe("Apps AppDeleteDialog", () => {
           open={true}
           name={""}
           type="EXTERNAL"
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
+          onClose={vi.fn()}
+          onConfirm={vi.fn()}
         />
       </Wrapper>,
     );
@@ -92,8 +92,8 @@ describe("Apps AppDeleteDialog", () => {
           open={true}
           name={""}
           type="CUSTOM"
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
+          onClose={vi.fn()}
+          onConfirm={vi.fn()}
         />
       </Wrapper>,
     );
@@ -115,8 +115,8 @@ describe("Apps AppDeleteDialog", () => {
           open={true}
           name={null}
           type="EXTERNAL"
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
+          onClose={vi.fn()}
+          onConfirm={vi.fn()}
         />
       </Wrapper>,
     );
@@ -138,8 +138,8 @@ describe("Apps AppDeleteDialog", () => {
           open={true}
           name={null}
           type="CUSTOM"
-          onClose={jest.fn()}
-          onConfirm={jest.fn()}
+          onClose={vi.fn()}
+          onConfirm={vi.fn()}
         />
       </Wrapper>,
     );

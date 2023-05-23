@@ -2,11 +2,12 @@ import { AccountErrorFragment, OrderErrorFragment } from "@dashboard/graphql";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { IntlShape } from "react-intl";
+import { Mock } from "vitest";
 
 import { getErrorMessage } from "./getErrorMessage";
 
-jest.mock("@dashboard/utils/errors/account", () => jest.fn());
-jest.mock("@dashboard/utils/errors/order", () => jest.fn());
+vi.mock("@dashboard/utils/errors/account", () => ({ default: vi.fn() }));
+vi.mock("@dashboard/utils/errors/order", () => ({ default: vi.fn() }));
 
 describe("getErrorMessage", () => {
   it("returns original message when it exist", () => {
@@ -33,9 +34,7 @@ describe("getErrorMessage", () => {
       code: "INVALID",
     } as AccountErrorFragment;
     const intlShape = {} as IntlShape;
-    (getAccountErrorMessage as jest.Mock).mockReturnValue(
-      "account error message",
-    );
+    (getAccountErrorMessage as Mock).mockReturnValue("account error message");
 
     // Act
     const message = getErrorMessage(error, intlShape);
@@ -52,7 +51,7 @@ describe("getErrorMessage", () => {
       code: "INVALID",
     } as unknown as OrderErrorFragment;
     const intlShape = {} as IntlShape;
-    (getOrderErrorMessage as jest.Mock).mockReturnValue("order error message");
+    (getOrderErrorMessage as Mock).mockReturnValue("order error message");
 
     // Act
     const message = getErrorMessage(error, intlShape);

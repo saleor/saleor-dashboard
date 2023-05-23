@@ -28,8 +28,8 @@ const Component = ({
 describe("Apps InstalledAppListRow", () => {
   it("displays app details when basic app data passed", () => {
     // Arrange
-    const removeAppInstallation = jest.fn();
-    const retryAppInstallation = jest.fn();
+    const removeAppInstallation = vi.fn();
+    const retryAppInstallation = vi.fn();
     render(
       <Component
         data={{
@@ -64,8 +64,8 @@ describe("Apps InstalledAppListRow", () => {
 
   it("displays external label when app is external", () => {
     // Arrange
-    const removeAppInstallation = jest.fn();
-    const retryAppInstallation = jest.fn();
+    const removeAppInstallation = vi.fn();
+    const retryAppInstallation = vi.fn();
 
     render(
       <Component
@@ -87,8 +87,8 @@ describe("Apps InstalledAppListRow", () => {
 
   it("displays tunnnel label when app is served via tunnnel", () => {
     // Arrange
-    const removeAppInstallation = jest.fn();
-    const retryAppInstallation = jest.fn();
+    const removeAppInstallation = vi.fn();
+    const retryAppInstallation = vi.fn();
     const AppsConfig = getAppsConfig();
 
     render(

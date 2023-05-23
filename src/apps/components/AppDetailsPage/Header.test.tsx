@@ -4,27 +4,29 @@ import React from "react";
 
 import Header from "./Header";
 
-const mockHeaderOptions = jest.fn();
-const mockTopNav = jest.fn();
+const mockHeaderOptions = vi.fn();
+const mockTopNav = vi.fn();
 
-jest.mock("@dashboard/components/AppLayout/TopNav", () => ({
+vi.mock("@dashboard/components/AppLayout/TopNav", () => ({
   TopNav: props => {
     mockTopNav(props);
     return <>{props.children}</>;
   },
 }));
-jest.mock("../DeactivatedText", () => () => "deactivated");
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
+vi.mock("../DeactivatedText", () => ({ default: () => "deactivated" }));
+vi.mock("react-intl", () => ({
+  useIntl: vi.fn(() => ({
+    formatMessage: vi.fn(x => x.defaultMessage),
   })),
-  defineMessages: jest.fn(x => x),
+  defineMessages: vi.fn(x => x),
   FormattedMessage: ({ defaultMessage }) => <>{defaultMessage}</>,
 }));
-jest.mock("./HeaderOptions", () => props => {
-  mockHeaderOptions(props);
-  return <></>;
-});
+vi.mock("./HeaderOptions", () => ({
+  default: props => {
+    mockHeaderOptions(props);
+    return <></>;
+  },
+}));
 
 beforeEach(() => {
   mockHeaderOptions.mockClear();
@@ -34,9 +36,9 @@ beforeEach(() => {
 describe("Apps AppDetailsPage Header", () => {
   it("displays app details options when active app data passed", () => {
     // Arrange
-    const onAppActivateOpen = jest.fn();
-    const onAppDeactivateOpen = jest.fn();
-    const onAppDeleteOpen = jest.fn();
+    const onAppActivateOpen = vi.fn();
+    const onAppDeactivateOpen = vi.fn();
+    const onAppDeleteOpen = vi.fn();
 
     // Act
     render(
@@ -62,9 +64,9 @@ describe("Apps AppDetailsPage Header", () => {
 
   it("displays app details options when inactive app data passed", () => {
     // Arrange
-    const onAppActivateOpen = jest.fn();
-    const onAppDeactivateOpen = jest.fn();
-    const onAppDeleteOpen = jest.fn();
+    const onAppActivateOpen = vi.fn();
+    const onAppDeactivateOpen = vi.fn();
+    const onAppDeleteOpen = vi.fn();
 
     // Act
     render(

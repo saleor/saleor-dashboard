@@ -10,11 +10,11 @@ import React from "react";
 
 import NotInstalledAppListRow from "./NotInstalledAppListRow";
 
-jest.mock("@dashboard/apps/context", () => ({
-  useAppListContext: jest.fn(() => ({
-    openAppSettings: jest.fn(),
-    removeAppInstallation: jest.fn(),
-    retryAppInstallation: jest.fn(),
+vi.mock("@dashboard/apps/context", () => ({
+  useAppListContext: vi.fn(() => ({
+    openAppSettings: vi.fn(),
+    removeAppInstallation: vi.fn(),
+    retryAppInstallation: vi.fn(),
   })),
 }));
 
@@ -73,10 +73,10 @@ describe("Apps NotInstalledAppListRow", () => {
 
   it("calls handlers when app installation data passed and buttons clicked", async () => {
     // Arrange
-    const openAppSettings = jest.fn();
-    const removeAppInstallation = jest.fn();
-    const retryAppInstallation = jest.fn();
-    jest.spyOn(context, "useAppListContext").mockImplementation(() => ({
+    const openAppSettings = vi.fn();
+    const removeAppInstallation = vi.fn();
+    const retryAppInstallation = vi.fn();
+    vi.spyOn(context, "useAppListContext").mockImplementation(() => ({
       openAppSettings,
       removeAppInstallation,
       retryAppInstallation,

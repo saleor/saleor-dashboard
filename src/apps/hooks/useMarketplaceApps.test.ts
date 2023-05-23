@@ -5,11 +5,11 @@ import useMarketplaceApps from "./useMarketplaceApps";
 
 const mockApps = [releasedApp, comingSoonApp];
 
-global.fetch = jest.fn(url => {
+global.fetch = vi.fn(url => {
   if (url === "https://marketplace.com/apps") {
     return Promise.resolve({
       ok: true,
-      json: jest.fn(() => Promise.resolve(mockApps)),
+      json: vi.fn(() => Promise.resolve(mockApps)),
     } as unknown as Response);
   }
   if (url === "https://marketplace.com/failing-apps-endpoint") {

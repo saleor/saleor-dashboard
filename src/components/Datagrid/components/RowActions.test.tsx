@@ -26,7 +26,7 @@ describe("RowActions", () => {
           menuItems={[
             {
               label: "Edit",
-              onSelect: jest.fn(),
+              onSelect: vi.fn(),
               Icon: <EditIcon data-test-id="edit-icon" />,
             },
           ]}
@@ -48,7 +48,7 @@ describe("RowActions", () => {
           menuItems={[
             {
               label: "Edit",
-              onSelect: jest.fn(),
+              onSelect: vi.fn(),
             },
           ]}
           disabled={false}
@@ -68,17 +68,17 @@ describe("RowActions", () => {
           menuItems={[
             {
               label: "Edit",
-              onSelect: jest.fn(),
+              onSelect: vi.fn(),
               testId: "edit-button",
             },
             {
               label: "Delete",
-              onSelect: jest.fn(),
+              onSelect: vi.fn(),
               testId: "delete-button",
             },
             {
               label: "Upgrade",
-              onSelect: jest.fn(),
+              onSelect: vi.fn(),
               testId: "upgrade-button",
             },
           ]}
@@ -100,7 +100,7 @@ describe("RowActions", () => {
 
   it("should fire callback when click on icon button when single menu item with icon props", async () => {
     // Arrange
-    const onSelectCallback = jest.fn();
+    const onSelectCallback = vi.fn();
 
     render(
       <ThemeProvider>
@@ -126,7 +126,7 @@ describe("RowActions", () => {
 
   it("should fire callback when click on icon button when multiple menu item", async () => {
     // Arrange
-    const onIconClickCallback = jest.fn();
+    const onIconClickCallback = vi.fn();
 
     render(
       <ThemeProvider>
@@ -139,11 +139,11 @@ describe("RowActions", () => {
             },
             {
               label: "Delete",
-              onSelect: jest.fn(),
+              onSelect: vi.fn(),
             },
             {
               label: "Upgrade",
-              onSelect: jest.fn(),
+              onSelect: vi.fn(),
             },
           ]}
           disabled={false}
@@ -167,11 +167,11 @@ describe("RowActions", () => {
           menuItems={[
             {
               label: "Edit",
-              onSelect: jest.fn(),
+              onSelect: vi.fn(),
             },
             {
               label: "Delete",
-              onSelect: jest.fn(),
+              onSelect: vi.fn(),
             },
           ]}
           disabled={true}
@@ -191,7 +191,7 @@ describe("RowActions", () => {
           menuItems={[
             {
               label: "Edit",
-              onSelect: jest.fn(),
+              onSelect: vi.fn(),
               Icon: <EditIcon />,
             },
           ]}

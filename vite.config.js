@@ -22,7 +22,7 @@ const copyOgImage = () => ({
 });
 
 export default defineConfig(({ command, mode }) => {
-  const isDev = command !== "build";
+  const isDev = !["build", "serve"].includes(command);
   const env = loadEnv(mode, process.cwd(), "");
   /*
     Using explicit env variables, there is no need to expose all of them (security).
@@ -193,7 +193,7 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     optimizeDeps: {
-      include: ["esm-dep > cjs-dep", "@saleor/macaw-ui"],
+      // include: ["esm-dep > cjs-dep", "@saleor/macaw-ui"],
       esbuildOptions: {
         plugins: [
           /*
@@ -209,6 +209,7 @@ export default defineConfig(({ command, mode }) => {
       alias: {
         "@assets": path.resolve(__dirname, "./assets"),
         "@locale": path.resolve(__dirname, "./locale"),
+        "@test": path.resolve(__dirname, "./testUtils"),
         "@dashboard": path.resolve(__dirname, "./src"),
         src: path.resolve(__dirname, "./src"),
         /*
@@ -220,6 +221,16 @@ export default defineConfig(({ command, mode }) => {
           __dirname,
           "./node_modules/moment/min/moment-with-locales.js",
         ),
+      },
+    },
+    test: {
+      globals: true,
+      environment: "jsdom",
+      setupFiles: [path.resolve(__dirname, "./testUtils/setup.ts")],
+      exclude: ["**/node_modules/**"],
+      deps: {
+        fallbackCJS: true,
+        external: ["@material-ui/core"],
       },
     },
     plugins,

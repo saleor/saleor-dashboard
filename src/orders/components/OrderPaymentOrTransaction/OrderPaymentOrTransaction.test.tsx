@@ -12,26 +12,26 @@ import {
   OrderPaymentOrTransactionProps,
 } from "./OrderPaymentOrTransaction";
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn((x: any) => x.defaultMessage),
+vi.mock("react-intl", () => ({
+  useIntl: vi.fn(() => ({
+    formatMessage: vi.fn((x: any) => x.defaultMessage),
   })),
-  defineMessages: jest.fn(x => x),
-  FormattedMessage: jest.fn(({ defaultMessage }) => defaultMessage),
+  defineMessages: vi.fn(x => x),
+  FormattedMessage: vi.fn(({ defaultMessage }) => defaultMessage),
 }));
 
-jest.mock("@saleor/macaw-ui", () => ({
-  useTheme: jest.fn(() => () => ({})),
-  useStyles: jest.fn(() => () => ({})),
-  makeStyles: jest.fn(() => () => ({})),
-  Pill: jest.fn(() => <></>),
-  Button: jest.fn(() => <></>),
-  ResponsiveTable: jest.fn(() => <></>),
+vi.mock("@saleor/macaw-ui", () => ({
+  useTheme: vi.fn(() => () => ({})),
+  useStyles: vi.fn(() => () => ({})),
+  makeStyles: vi.fn(() => () => ({})),
+  Pill: vi.fn(() => <></>),
+  Button: vi.fn(() => <></>),
+  ResponsiveTable: vi.fn(() => <></>),
 }));
 
-jest.mock("@saleor/macaw-ui/next", () => ({
-  useTheme: jest.fn(() => () => ({})),
-  Divider: jest.fn(() => <></>),
+vi.mock("@saleor/macaw-ui/next", () => ({
+  useTheme: vi.fn(() => () => ({})),
+  Divider: vi.fn(() => <></>),
   vars: {
     colors: {
       border: {
@@ -47,8 +47,8 @@ jest.mock("@saleor/macaw-ui/next", () => ({
   },
 }));
 
-jest.mock("react-router-dom", () => ({
-  Link: jest.fn(({ to, ...props }) => <a href={to} {...props} />),
+vi.mock("react-router-dom", () => ({
+  Link: vi.fn(({ to, ...props }) => <a href={to} {...props} />),
 }));
 
 describe("OrderPaymentOrTransaction", () => {

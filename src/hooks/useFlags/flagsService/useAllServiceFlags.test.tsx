@@ -3,7 +3,7 @@ import { renderHook } from "@testing-library/react-hooks";
 import { useAllServiceFlags } from "./useAllServiceFlags";
 
 afterAll(() => {
-  jest.clearAllMocks();
+  vi.clearAllMocks();
 });
 
 describe("useAllServiceFlags hook", () => {

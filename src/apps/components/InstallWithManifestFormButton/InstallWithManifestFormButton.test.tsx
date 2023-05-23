@@ -8,7 +8,7 @@ import InstallWithManifestFormButton from "./InstallWithManifestFormButton";
 describe("Apps InstallWithManifestFormButton", () => {
   it("submit form when valid manifest url value passed", async () => {
     // Arrange
-    const submitHandler = jest.fn();
+    const submitHandler = vi.fn();
     render(
       <Wrapper>
         <InstallWithManifestFormButton onSubmitted={submitHandler} />
@@ -37,7 +37,7 @@ describe("Apps InstallWithManifestFormButton", () => {
 
   it("return error when invalid manifest url value passed", async () => {
     // Arrange
-    const submitHandler = jest.fn();
+    const submitHandler = vi.fn();
     render(
       <Wrapper>
         <InstallWithManifestFormButton onSubmitted={submitHandler} />

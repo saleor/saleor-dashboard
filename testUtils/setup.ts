@@ -1,6 +1,12 @@
-import "@testing-library/jest-dom";
+import matchers from "@testing-library/jest-dom/matchers";
+import { cleanup, configure } from "@testing-library/react";
+import { afterEach, expect } from "vitest";
 
-import { configure } from "@testing-library/react";
+expect.extend(matchers);
+
+afterEach(() => {
+  cleanup();
+});
 
 document.getElementById = () => document.createElement("div");
 
@@ -9,12 +15,12 @@ document.getElementById = () => document.createElement("div");
 document.createRange = () => {
   const range = new Range();
 
-  range.getBoundingClientRect = jest.fn();
+  range.getBoundingClientRect = vi.fn();
 
   range.getClientRects = () => ({
     item: () => null,
     length: 0,
-    [Symbol.iterator]: jest.fn(),
+    [Symbol.iterator]: vi.fn(),
   });
 
   return range;

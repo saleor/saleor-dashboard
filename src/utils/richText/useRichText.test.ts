@@ -17,7 +17,7 @@ const fixtures: Fixtures = {
   },
 };
 
-const triggerChange = jest.fn();
+const triggerChange = vi.fn();
 
 describe("useRichText", () => {
   it("properly informs RichTextEditor when data is ready to mount", () => {
@@ -57,15 +57,15 @@ describe("useRichText", () => {
   });
 
   it("runs editorJS .save() when getValue is called", async () => {
-    const saveFn = jest.fn(async () => fixtures.short);
+    const saveFn = vi.fn(async () => fixtures.short);
     const { result } = renderHook(() =>
       useRichText({ initial: "", triggerChange }),
     );
     result.current.editorRef.current = {
       save: saveFn,
-      destroy: jest.fn(),
-      clear: jest.fn(),
-      render: jest.fn(),
+      destroy: vi.fn(),
+      clear: vi.fn(),
+      render: vi.fn(),
     };
 
     expect(await result.current.getValue()).toStrictEqual(fixtures.short);

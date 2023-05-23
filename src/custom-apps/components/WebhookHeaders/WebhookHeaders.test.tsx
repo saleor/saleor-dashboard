@@ -21,7 +21,7 @@ export const props: WebhookHeadersProps = {
 };
 
 const Component = () => {
-  const { change, data } = useForm(props.data, jest.fn());
+  const { change, data } = useForm(props.data, vi.fn());
 
   return (
     <Wrapper>

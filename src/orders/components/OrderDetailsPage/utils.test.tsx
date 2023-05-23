@@ -121,8 +121,8 @@ describe("createMetadataHandler", () => {
         privateMetadata: [{ key: "fpmt1", value: "fpmt1-value" }],
       },
     };
-    const set = jest.fn();
-    const triggerChange = jest.fn();
+    const set = vi.fn();
+    const triggerChange = vi.fn();
     const handler = createMetadataHandler(currentData, set, triggerChange);
 
     // Act

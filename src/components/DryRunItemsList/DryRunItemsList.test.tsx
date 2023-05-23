@@ -8,11 +8,11 @@ import DryRunItemsList from "./DryRunItemsList";
 
 const mocks: MockedResponse[] = [...productsMocks];
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
+vi.mock("react-intl", () => ({
+  useIntl: vi.fn(() => ({
+    formatMessage: vi.fn(x => x.defaultMessage),
   })),
-  defineMessages: jest.fn(x => x),
+  defineMessages: vi.fn(x => x),
 }));
 
 describe("DryRunItemsList", () => {
@@ -20,7 +20,7 @@ describe("DryRunItemsList", () => {
     // Arrange
     const props = {
       objectId: null,
-      setObjectId: jest.fn(),
+      setObjectId: vi.fn(),
       object: "PRODUCT",
     };
 

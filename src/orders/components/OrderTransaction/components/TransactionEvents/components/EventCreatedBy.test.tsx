@@ -23,10 +23,8 @@ describe("EventCreatedBy", () => {
     const link = screen.getByRole("link");
 
     expect(link).toHaveTextContent(appAvatar.name);
-    expect(link).toHaveProperty(
-      "href",
-      "http://localhost" +
-        AppPaths.resolveAppPath(encodeURIComponent(appAvatar.id)),
+    expect(link.getAttribute("href")).toBe(
+      AppPaths.resolveAppPath(encodeURIComponent(appAvatar.id)),
     );
   });
 
@@ -40,10 +38,8 @@ describe("EventCreatedBy", () => {
 
     expect(link).toHaveTextContent(staffMemberAvatar.firstName);
     expect(link).toHaveTextContent(staffMemberAvatar.lastName);
-    expect(link).toHaveProperty(
-      "href",
-      "http://localhost" +
-        staffMemberDetailsPath(encodeURIComponent(staffMemberAvatar.id)),
+    expect(link.getAttribute("href")).toEqual(
+      staffMemberDetailsPath(encodeURIComponent(staffMemberAvatar.id)),
     );
   });
 });

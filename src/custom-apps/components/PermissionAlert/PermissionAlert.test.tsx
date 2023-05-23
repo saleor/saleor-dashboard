@@ -7,23 +7,23 @@ import React from "react";
 
 import PermissionAlert from "./PermissionAlert";
 
-jest.mock("@graphiql/toolkit", () => ({
-  clear: jest.fn(),
-  createGraphiQLFetcher: jest.fn(_x => jest.fn() as Fetcher),
+vi.mock("@graphiql/toolkit", () => ({
+  clear: vi.fn(),
+  createGraphiQLFetcher: vi.fn(_x => vi.fn() as Fetcher),
 }));
 
-jest.mock("react-intl", () => ({
-  useIntl: jest.fn(() => ({
-    formatMessage: jest.fn(x => x.defaultMessage),
+vi.mock("react-intl", () => ({
+  useIntl: vi.fn(() => ({
+    formatMessage: vi.fn(x => x.defaultMessage),
   })),
-  defineMessages: jest.fn(x => x),
+  defineMessages: vi.fn(x => x),
 }));
 
-jest.mock("@saleor/macaw-ui", () => ({
-  useTheme: jest.fn(() => () => ({})),
-  useStyles: jest.fn(() => () => ({})),
-  makeStyles: jest.fn(() => () => ({})),
-  DialogHeader: jest.fn(() => () => <></>),
+vi.mock("@saleor/macaw-ui", () => ({
+  useTheme: vi.fn(() => () => ({})),
+  useStyles: vi.fn(() => () => ({})),
+  makeStyles: vi.fn(() => () => ({})),
+  DialogHeader: vi.fn(() => () => <></>),
 }));
 
 beforeEach(() => {
