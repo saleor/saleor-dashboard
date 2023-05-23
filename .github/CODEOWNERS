@@ -1,1 +1,3 @@
+* @saleor/dashboard
 .github/workflows/* @saleor/sre
+cypress/* @saleor/qa

@@ -3,10 +3,13 @@
 
 import faker from "faker";
 
-import { ORDER_REFUND } from "../../elements/orders/order-refund";
-import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
+import {
+  BUTTON_SELECTORS,
+  ORDER_GRANT_REFUND,
+  ORDERS_SELECTORS,
+  SHARED_ELEMENTS,
+} from "../../elements/";
+import { MESSAGES } from "../../fixtures";
 import { urlList } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import {
@@ -22,6 +25,7 @@ import {
   createFulfilledOrder,
   createOrder,
   createReadyToFulfillOrder,
+  createUnconfirmedOrder,
 } from "../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
 import {
@@ -34,6 +38,12 @@ import {
 } from "../../support/api/utils/taxesUtils";
 import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
+import {
+  addNewProductToOrder,
+  applyFixedLineDiscountForProduct,
+  changeQuantityOfProducts,
+  deleteProductFromGridTableOnIndex,
+} from "../../support/pages/ordersOperations";
 
 describe("Orders", () => {
   const startsWith = "CyOrders-";
@@ -46,6 +56,9 @@ describe("Orders", () => {
   let variantsList;
   let address;
   let taxClass;
+
+  const shippingPrice = 2;
+  const variantPrice = 1;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
@@ -73,6 +86,7 @@ describe("Orders", () => {
         createShipping({
           channelId: defaultChannel.id,
           name: randomName,
+          price: shippingPrice,
           address,
           taxClassId: taxClass.id,
         });
@@ -95,6 +109,7 @@ describe("Orders", () => {
           productsUtils.createProductInChannel({
             name: randomName,
             channelId: defaultChannel.id,
+            price: variantPrice,
             warehouseId: warehouse.id,
             productTypeId: productTypeResp.id,
             attributeId: attributeResp.id,
@@ -206,7 +221,7 @@ describe("Orders", () => {
           cy.visit(urlList.orders + `${order.id}`);
           cy.get(ORDERS_SELECTORS.refundButton)
             .click()
-            .get(ORDER_REFUND.productsQuantityInput)
+            .get(ORDER_GRANT_REFUND.productsQuantityInput)
             .type("1")
             .addAliasToGraphRequest("OrderFulfillmentRefundProducts");
           cy.get(BUTTON_SELECTORS.submit)
@@ -219,6 +234,105 @@ describe("Orders", () => {
         .then(orderResp => {
           expect(orderResp.paymentStatus).to.be.eq("PARTIALLY_REFUNDED");
         });
+    },
+  );
+
+  it(
+    "should add line item discount (for single product in order) . TC: SALEOR_2125",
+    { tags: ["@orders", "@allEnv", "@stable"] },
+    () => {
+      const totalPrice = variantPrice + shippingPrice;
+      const inlineDiscount = 0.5;
+      const discountReason = "product damaged";
+      createUnconfirmedOrder({
+        customerId: customer.id,
+        channelId: defaultChannel.id,
+        shippingMethod,
+        variantsList,
+        address,
+      }).then(unconfirmedOrderResponse => {
+        cy.visit(urlList.orders + `${unconfirmedOrderResponse.order.id}`);
+        applyFixedLineDiscountForProduct(inlineDiscount, discountReason);
+        cy.get(ORDERS_SELECTORS.priceCellFirstRowOrderDetails).should(
+          "have.text",
+          inlineDiscount,
+        );
+        cy.get(ORDERS_SELECTORS.orderSummarySubtotalPriceRow).should(
+          "contain.text",
+          variantPrice - inlineDiscount,
+        );
+        cy.get(ORDERS_SELECTORS.orderSummaryTotalPriceRow).should(
+          "contain.text",
+          totalPrice - inlineDiscount,
+        );
+      });
+    },
+  );
+
+  it(
+    "should remove product from unconfirmed order . TC: SALEOR_2126",
+    { tags: ["@orders", "@allEnv", "@stable"] },
+    () => {
+      createUnconfirmedOrder({
+        customerId: customer.id,
+        channelId: defaultChannel.id,
+        shippingMethod,
+        variantsList,
+        address,
+      }).then(unconfirmedOrderResponse => {
+        cy.visit(urlList.orders + `${unconfirmedOrderResponse.order.id}`);
+        deleteProductFromGridTableOnIndex(0);
+        cy.contains(MESSAGES.noProductFound).should("be.visible");
+        cy.get(ORDERS_SELECTORS.productDeleteFromRowButton).should("not.exist");
+      });
+    },
+  );
+  it(
+    "should change quantity of products on order detail view . TC: SALEOR_2127",
+    { tags: ["@orders", "@allEnv", "@stable"] },
+    () => {
+      createUnconfirmedOrder({
+        customerId: customer.id,
+        channelId: defaultChannel.id,
+        shippingMethod,
+        variantsList,
+        address,
+      }).then(unconfirmedOrderResponse => {
+        cy.visit(urlList.orders + `${unconfirmedOrderResponse.order.id}`);
+
+        changeQuantityOfProducts();
+
+        cy.get(ORDERS_SELECTORS.orderSummarySubtotalPriceRow).should(
+          "contain.text",
+          variantPrice * 2,
+        );
+        cy.get(ORDERS_SELECTORS.orderSummaryTotalPriceRow).should(
+          "contain.text",
+          shippingPrice + variantPrice * 2,
+        );
+      });
+    },
+  );
+  it(
+    "should add new product on order detail view . TC: SALEOR_2128",
+    { tags: ["@orders", "@allEnv", "@stable"] },
+    () => {
+      createUnconfirmedOrder({
+        customerId: customer.id,
+        channelId: defaultChannel.id,
+        shippingMethod,
+        variantsList,
+        address,
+      }).then(unconfirmedOrderResponse => {
+        cy.visit(urlList.orders + `${unconfirmedOrderResponse.order.id}`);
+        cy.get(ORDERS_SELECTORS.dataGridTable).should("be.visible");
+        addNewProductToOrder().then(productName => {
+          cy.get(ORDERS_SELECTORS.productNameSecondRowOrderDetails).should(
+            "contain.text",
+            productName,
+          );
+        });
+      });
     },
   );
 });

@@ -4,7 +4,6 @@ import { InstalledApp } from "@dashboard/apps/types";
 import { getAppsConfig } from "@dashboard/config";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import React from "react";
 import { MemoryRouter as Router } from "react-router-dom";
 
@@ -29,7 +28,6 @@ const Component = ({
 describe("Apps InstalledAppListRow", () => {
   it("displays app details when basic app data passed", () => {
     // Arrange
-    const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
     render(
@@ -39,7 +37,6 @@ describe("Apps InstalledAppListRow", () => {
           isExternal: false,
         }}
         context={{
-          openAppSettings,
           removeAppInstallation,
           retryAppInstallation,
         }}
@@ -67,9 +64,9 @@ describe("Apps InstalledAppListRow", () => {
 
   it("displays external label when app is external", () => {
     // Arrange
-    const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
+
     render(
       <Component
         data={{
@@ -77,7 +74,6 @@ describe("Apps InstalledAppListRow", () => {
           isExternal: true,
         }}
         context={{
-          openAppSettings,
           removeAppInstallation,
           retryAppInstallation,
         }}
@@ -91,10 +87,10 @@ describe("Apps InstalledAppListRow", () => {
 
   it("displays tunnnel label when app is served via tunnnel", () => {
     // Arrange
-    const openAppSettings = jest.fn();
     const removeAppInstallation = jest.fn();
     const retryAppInstallation = jest.fn();
     const AppsConfig = getAppsConfig();
+
     render(
       <Component
         data={{
@@ -106,7 +102,6 @@ describe("Apps InstalledAppListRow", () => {
           isExternal: false,
         }}
         context={{
-          openAppSettings,
           removeAppInstallation,
           retryAppInstallation,
         }}
@@ -116,34 +111,5 @@ describe("Apps InstalledAppListRow", () => {
 
     // Assert
     expect(tunnelLabel).toBeTruthy();
-  });
-
-  it("calls handlers when app data passed and buttons clicked", async () => {
-    // Arrange
-    const openAppSettings = jest.fn();
-    const removeAppInstallation = jest.fn();
-    const retryAppInstallation = jest.fn();
-    render(
-      <Component
-        data={{
-          app: activeApp,
-          isExternal: false,
-        }}
-        context={{
-          openAppSettings,
-          removeAppInstallation,
-          retryAppInstallation,
-        }}
-      />,
-    );
-    const user = userEvent.setup();
-    const settingsButton = screen.getByTestId("app-settings-button");
-
-    // Act
-    await user.click(settingsButton);
-
-    // Assert
-    expect(openAppSettings).toHaveBeenCalledWith(activeApp.id);
-    expect(openAppSettings).toHaveBeenCalledTimes(1);
   });
 });

@@ -82,6 +82,11 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     if (externalAuthParamsExist && externalAuthNotPerformed) {
       handleExternalAuthentication(code, state);
     }
+
+    return () => {
+      setRequestedExternalPluginId(null);
+      setFallbackUri(null);
+    };
   }, []);
 
   return (

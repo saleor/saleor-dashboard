@@ -183,7 +183,7 @@ export const OrderUnconfirmedDetails: React.FC<
         <OrderLineDiscountProvider order={order}>
           <OrderDetailsPage
             onOrderReturn={() => navigate(orderReturnUrl(id))}
-            disabled={
+            loading={
               updateMetadataOpts.loading || updatePrivateMetadataOpts.loading
             }
             errors={errors}
