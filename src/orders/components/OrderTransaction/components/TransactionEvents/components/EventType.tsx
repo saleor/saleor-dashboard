@@ -26,13 +26,11 @@ export const EventType = ({ type, message }: EventTypeProps) => {
   const classes = useStyles();
   const mapEventToMessage = transactionEventTypeMap[type];
 
-  let displayType = mapEventToMessage
-    ? intl.formatMessage(mapEventToMessage)
-    : message || type;
-
-  // Capitalise first letter
-  displayType = displayType.charAt(0).toUpperCase() + displayType.slice(1);
-
+  const displayType = capitalize(
+    mapEventToMessage
+      ? intl.formatMessage(mapEventToMessage)
+      : message || type
+    );
   return (
     <Box display="flex" alignItems="center">
       {displayType}
