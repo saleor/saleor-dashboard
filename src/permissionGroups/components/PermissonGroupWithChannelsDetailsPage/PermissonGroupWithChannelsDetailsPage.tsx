@@ -24,7 +24,6 @@ import {
 import { ListActions, SortPage } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
-import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -116,8 +115,6 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
     intl,
   );
 
-  const channelChoices = mapNodeToChoice(channels);
-
   return (
     <Form confirmLeave initial={initialForm} onSubmit={onSubmit}>
       {({ data, change, submit }) => {
@@ -144,7 +141,7 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
           change({
             target: {
               name: "channels",
-              value: hasAllChannels ? channelChoices : [],
+              value: hasAllChannels ? channels.map(chan => chan.id) : [],
             },
           });
         };
@@ -192,7 +189,7 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
                 </Box>
                 <Box overflow="hidden" __maxHeight="50%" height="100%">
                   <ChannelPermission
-                    allChannels={channelsOptions}
+                    allChannels={!isUserAbleToEdit ? channels : channelsOptions}
                     hasAllChannels={data.hasAllChannels}
                     selectedChannels={data.channels}
                     onHasAllChannelsChange={handleHasAllChannelsChange}
