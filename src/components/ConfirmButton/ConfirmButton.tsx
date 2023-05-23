@@ -22,6 +22,9 @@ export interface ConfirmButtonProps extends ButtonProps {
   onTransitionToDefault?: () => void;
 }
 
+// Here you can find original implementation
+// https://github.com/saleor/macaw-ui/blob/canary/legacy/src/ConfirmButton/ConfirmButton.tsx
+
 export const ConfirmButton = ({
   labels,
   noTransition,
@@ -90,6 +93,7 @@ export const ConfirmButton = ({
   const renderContent = () => {
     if (transitionState === "loading") {
       return (
+        // TODO: Replace with new component when it will be ready https://github.com/saleor/macaw-ui/issues/443
         <CircularProgress
           size={20}
           color="inherit"
@@ -103,6 +107,7 @@ export const ConfirmButton = ({
 
     if (transitionState === "success" && isCompleted) {
       return (
+        // TODO: Replace with new component when it will be ready https://github.com/saleor/macaw-ui/issues/443
         <CheckIcon
           data-test-id="button-success"
           className={sprinkles({
