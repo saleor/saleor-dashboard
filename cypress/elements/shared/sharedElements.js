@@ -1,4 +1,5 @@
 export const SHARED_ELEMENTS = {
+  body: "body",
   header: "[data-test-id='page-header']",
   progressBar: '[role="progressbar"]',
   circularProgress: '[class*="CircularProgress-circle"]',
