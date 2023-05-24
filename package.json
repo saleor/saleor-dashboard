@@ -157,7 +157,6 @@
     "env-var": "^7.3.0",
     "esbuild-loader": "^2.18.0",
     "graphql-request": "^3.7.0",
-    "happy-dom": "^9.19.2",
     "identity-obj-proxy": "^3.0.0",
     "is-ci": "^3.0.1",
     "jscodeshift": "^0.13.0",

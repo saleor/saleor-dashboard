@@ -224,7 +224,11 @@ export default defineConfig(({ command, mode }) => {
       },
     },
     test: {
+      // isolate: false,
       globals: true,
+      css: false,
+      useAtomics: true,
+      maxConcurrency: 10,
       environment: "jsdom",
       setupFiles: [path.resolve(__dirname, "./testUtils/setup.ts")],
       exclude: ["**/node_modules/**"],
