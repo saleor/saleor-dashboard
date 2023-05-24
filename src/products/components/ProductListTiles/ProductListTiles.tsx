@@ -29,7 +29,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
   const renderContent = useCallback(() => {
     if (loading) {
       return (
-        <Box display="flex" justifyContent="center" marginY={12}>
+        <Box display="flex" justifyContent="center" marginY="s9">
           <CircularProgress />
         </Box>
       );
@@ -40,8 +40,8 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
         <Box
           display="grid"
           gridTemplateColumns={{ mobile: 3, tablet: 5, desktop: 6 }}
-          gap={9}
-          padding={9}
+          gap="s6"
+          padding="s6"
           __paddingTop={`calc(${vars.space[9]} - ${vars.space[5]}`}
           data-test-id="tile-view"
         >
@@ -57,7 +57,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
     }
 
     return (
-      <Box padding={9} textAlign="center">
+      <Box padding="s6" textAlign="center">
         <Text size="small">{intl.formatMessage(messages.emptyText)}</Text>
       </Box>
     );
@@ -66,7 +66,7 @@ export const ProductListTiles: React.FC<ProductListTilesProps> = ({
   return (
     <>
       {renderContent()}
-      <Box paddingX={9}>
+      <Box paddingX="s6">
         <TablePaginationWithContext
           component="div"
           settings={settings}

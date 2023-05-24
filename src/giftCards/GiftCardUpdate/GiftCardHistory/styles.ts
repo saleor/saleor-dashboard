@@ -5,12 +5,12 @@ const useStyles = makeStyles(
   {
     header: {
       fontWeight: 500,
-      marginBottom: vars.space[1],
+      marginBottom: vars.space.spx,
     },
     root: {
-      marginTop: vars.space[4],
-      paddingLeft: vars.space[9],
-      paddingRight: vars.space[9],
+      marginTop: vars.space["s1.5"],
+      paddingLeft: vars.space.s6,
+      paddingRight: vars.space.s6,
     },
   },
   { name: "GiftCardHistory" },

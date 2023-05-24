@@ -31,7 +31,7 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
 
   if (!data) {
     return (
-      <Box marginX={10}>
+      <Box marginX="s7">
         <Skeleton />
         <div className={classes.hr} />
       </Box>
@@ -39,7 +39,7 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
   }
 
   return (
-    <Box marginX={10}>
+    <Box marginX="s7">
       <div className={classes.appHeaderLinks}>
         <ExternalLink
           className={classes.headerLinkContainer}

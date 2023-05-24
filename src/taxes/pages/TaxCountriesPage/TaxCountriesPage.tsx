@@ -94,7 +94,7 @@ export const TaxCountriesPage: React.FC<TaxCountriesPageProps> = props => {
           <DetailPageLayout gridTemplateColumns={1}>
             <TopNav title={<TaxPageTitle />} />
             <DetailPageLayout.Content>
-              <Box padding={9}>
+              <Box padding="s6">
                 <PageTabs value="countries" onChange={handleTabChange}>
                   <PageTab
                     label={intl.formatMessage(taxesMessages.channelsSection)}

@@ -99,7 +99,7 @@ export const ProductOrganization: React.FC<
           description: "section header",
         })}
       </DashboardCard.Title>
-      <DashboardCard.Content gap={8} display="flex" flexDirection="column">
+      <DashboardCard.Content gap="s5" display="flex" flexDirection="column">
         {canChangeType ? (
           <SingleAutocompleteSelectField
             displayValue={productTypeInputDisplayValue}
@@ -119,7 +119,7 @@ export const ProductOrganization: React.FC<
             {...fetchMoreProductTypes}
           />
         ) : (
-          <Box display="flex" flexDirection="column" gap={6}>
+          <Box display="flex" flexDirection="column" gap="s3">
             <Box display="flex" flexDirection="column">
               <Text variant="bodyEmp">
                 <FormattedMessage id="anK7jD" defaultMessage="Product Type" />

@@ -45,7 +45,7 @@ const useStyles = makeStyles(
     colName: {
       display: "flex",
       alignItems: "center",
-      gap: vars.space[5],
+      gap: vars.space.s2,
     },
     avatarDefault: {
       "& div": {

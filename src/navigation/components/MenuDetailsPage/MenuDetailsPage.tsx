@@ -87,7 +87,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
       {({ change, data, submit }) => (
         <DetailPageLayout gridTemplateColumns={1}>
           <DetailPageLayout.Content>
-            <Box padding={9} margin="auto" height="100vh">
+            <Box padding="s6" margin="auto" height="100vh">
               <Backlink href={menuListUrl()}>
                 {intl.formatMessage(sectionNames.navigation)}
               </Backlink>
