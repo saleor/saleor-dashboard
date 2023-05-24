@@ -13,7 +13,7 @@ interface ChannelPermissionProps {
   description?: string;
   hasAllChannels: boolean;
   disabled: boolean;
-  disabledSelectAllChannls: boolean;
+  disabledSelectAllChannels: boolean;
   onChannelChange: FormChange;
   onHasAllChannelsChange: () => void;
 }
@@ -26,7 +26,7 @@ export const ChannelPermission = ({
   allChannels,
   selectedChannels,
   hasAllChannels,
-  disabledSelectAllChannls,
+  disabledSelectAllChannels,
 }: ChannelPermissionProps) => {
   const intl = useIntl();
 
@@ -44,7 +44,7 @@ export const ChannelPermission = ({
         )}
 
         <Checkbox
-          disabled={disabled || disabledSelectAllChannls}
+          disabled={disabled || disabledSelectAllChannels}
           checked={hasAllChannels}
           onCheckedChange={onHasAllChannelsChange}
           tabIndex={-1}
@@ -67,7 +67,7 @@ export const ChannelPermission = ({
         )}
 
         {!hasAllChannels && (
-          <Box __height="100%">
+          <Box __height="calc(100% - 87px)" overflowY="auto">
             <Multiselect
               data-test-id="channels"
               disabled={disabled}

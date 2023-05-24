@@ -59,7 +59,6 @@ export interface PermissonGroupWithChannelsDetailsPageProps
     SortPage<MembersListUrlSortField> {
   channels: ChannelFragment[];
   disabled: boolean;
-  disabledChannelPermissions: boolean;
   errors: PermissionGroupErrorFragment[];
   members: PermissionGroupDetailsFragment["users"];
   permissionGroup: PermissionGroupWithContextDetailsFragment;
@@ -85,7 +84,6 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
   permissionsExceeded,
   saveButtonBarState,
   channels,
-  disabledChannelPermissions,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -188,8 +186,8 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
                     selectedChannels={data.channels}
                     onHasAllChannelsChange={handleHasAllChannelsChange}
                     onChannelChange={handleChannelChange}
-                    disabled={disabledChannelPermissions || !isUserAbleToEdit}
-                    disabledSelectAllChannls={hasUserRestrictedChannels}
+                    disabled={!isUserAbleToEdit}
+                    disabledSelectAllChannels={hasUserRestrictedChannels}
                   />
                 </Box>
               </Box>
