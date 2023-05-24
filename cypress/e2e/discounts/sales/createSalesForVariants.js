@@ -7,20 +7,13 @@ import { createCheckout } from "../../../support/api/requests/Checkout";
 import { updateSale } from "../../../support/api/requests/Discounts/Sales";
 import { createVariant } from "../../../support/api/requests/Product";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import {
-  createSaleInChannel,
-  deleteSalesStartsWith,
-} from "../../../support/api/utils/discounts/salesUtils";
+import { createSaleInChannel } from "../../../support/api/utils/discounts/salesUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../../support/api/utils/shippingUtils";
+import { createShipping } from "../../../support/api/utils/shippingUtils";
 import {
   getDefaultTaxClass,
   updateTaxConfigurationForChannel,
 } from "../../../support/api/utils/taxesUtils";
-import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
 import {
   createSaleWithNewVariant,
   discountOptions,
@@ -41,10 +34,6 @@ describe("Sales discounts for variant", () => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    deleteSalesStartsWith(startsWith);
-    deleteWarehouseStartsWith(startsWith);
     channelsUtils
       .getDefaultChannel()
       .then(channel => {

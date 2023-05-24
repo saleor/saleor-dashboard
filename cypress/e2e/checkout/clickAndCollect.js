@@ -16,12 +16,8 @@ import { addPayment } from "../../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
+import { createShipping } from "../../support/api/utils/shippingUtils";
 import {
   createWarehouse,
   pickupOptions,
@@ -40,8 +36,6 @@ describe("Warehouses in checkout", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteShippingStartsWith(startsWith);
-    deleteProductsStartsWith(startsWith);
     cy.fixture("addresses")
       .then(addresses => {
         usAddress = addresses.usAddress;

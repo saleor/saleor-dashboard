@@ -6,21 +6,15 @@ import faker from "faker";
 import { DRAFT_ORDERS_LIST_SELECTORS } from "../../elements/orders/draft-orders-list-selectors";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
 import { urlList } from "../../fixtures/urlList";
-import {
-  createCustomer,
-  deleteCustomersStartsWith,
-} from "../../support/api/requests/Customer";
+import { createCustomer } from "../../support/api/requests/Customer";
 import { updateOrdersSettings } from "../../support/api/requests/Order";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
+import { createShipping } from "../../support/api/utils/shippingUtils";
 import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
-xdescribe("Draft orders", () => {
+describe("Draft orders", () => {
   const startsWith = "CyDraftOrders-";
   const randomName = startsWith + faker.datatype.number();
 
@@ -30,10 +24,6 @@ xdescribe("Draft orders", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteCustomersStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    productsUtils.deleteProductsStartsWith(startsWith);
-
     updateOrdersSettings();
     getDefaultChannel()
       .then(channel => {

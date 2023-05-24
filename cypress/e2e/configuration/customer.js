@@ -11,7 +11,6 @@ import { customerDetailsUrl, urlList } from "../../fixtures/urlList";
 import {
   addressCreate,
   createCustomer,
-  deleteCustomersStartsWith,
   getCustomer,
 } from "../../support/api/requests/Customer";
 
@@ -22,7 +21,6 @@ describe("Tests for customer", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteCustomersStartsWith(startsWith);
     cy.fixture("addresses").then(({ usAddress, secondUsAddress }) => {
       address = usAddress;
       secondAddress = secondUsAddress;

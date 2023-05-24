@@ -15,7 +15,7 @@ import {
   selectChannelInPicker,
 } from "../../support/pages/channelsPage";
 
-xdescribe("Channels in draft orders", () => {
+describe("Channels in draft orders", () => {
   const startsWith = "CyChannelInDraftOrders-";
   const randomName = startsWith + faker.datatype.number();
 
@@ -24,7 +24,6 @@ xdescribe("Channels in draft orders", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    channelsUtils.deleteChannelsStartsWith(startsWith);
     channelsUtils
       .getDefaultChannel()
       .then(channel => {

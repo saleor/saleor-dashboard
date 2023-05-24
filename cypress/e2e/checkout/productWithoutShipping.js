@@ -9,16 +9,11 @@ import {
   addShippingMethod,
   createCheckout,
 } from "../../support/api/requests/Checkout";
-import { deleteChannelsStartsWith } from "../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
+import { createShipping } from "../../support/api/utils/shippingUtils";
 
 describe("Products without shipment option", () => {
   const startsWith = "WithoutShipmentCheckout-";
@@ -34,10 +29,6 @@ describe("Products without shipment option", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-
-    deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    deleteChannelsStartsWith(startsWith);
 
     createChannel({
       name,

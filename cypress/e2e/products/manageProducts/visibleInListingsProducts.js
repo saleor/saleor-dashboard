@@ -20,7 +20,6 @@ describe("Products displayed in listings", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProductsStartsWith(startsWith);
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(

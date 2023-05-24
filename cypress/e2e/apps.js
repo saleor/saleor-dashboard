@@ -17,22 +17,17 @@ import {
 } from "../support/api/requests/Checkout";
 import { createVoucher } from "../support/api/requests/Discounts/Vouchers";
 import { createGiftCard } from "../support/api/requests/GiftCard";
-import { deleteAppsStartsWith } from "../support/api/utils/appUtils";
 import { getDefaultChannel } from "../support/api/utils/channelsUtils";
 import { getShippingMethodIdFromCheckout } from "../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
 } from "../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../support/api/utils/shippingUtils";
+import { createShipping } from "../support/api/utils/shippingUtils";
 import { discountOptions } from "../support/pages/discounts/vouchersPage";
 
 describe("As a staff user I want to manage apps", () => {
-  const startsWith = "Apps";
+  const startsWith = "Apps -";
   const name = `${startsWith}${faker.datatype.number()}`;
 
   let createdApp;
@@ -46,9 +41,6 @@ describe("As a staff user I want to manage apps", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteAppsStartsWith(startsWith);
-    deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
 
     createApp(name, "MANAGE_APPS").then(app => {
       createdApp = app;

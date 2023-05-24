@@ -8,19 +8,14 @@ import {
 } from "../../../support/api/requests/Checkout";
 import { getOrder } from "../../../support/api/requests/Order";
 import { confirmThreeDSecure } from "../../../support/api/requests/stripe";
-import { deleteCollectionsStartsWith } from "../../../support/api/utils/catalog/collectionsUtils";
 import {
   addStripePaymentAndGetConfirmationData,
   getShippingMethodIdFromCheckout,
 } from "../../../support/api/utils/ordersUtils";
-import {
-  createProductWithShipping,
-  deleteProductsStartsWith,
-} from "../../../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
+import { createProductWithShipping } from "../../../support/api/utils/products/productsUtils";
 
 describe("Stripe payments", () => {
-  const startsWith = "Stripe-";
+  const startsWith = "Stripe-" + faker.datatype.number();
   const email = `example@example.com`;
 
   let address;
@@ -33,9 +28,6 @@ describe("Stripe payments", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    deleteCollectionsStartsWith(startsWith);
     cy.fixture("cards").then(({ stripe }) => {
       paymentCards = stripe;
       cardData = {

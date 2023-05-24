@@ -12,7 +12,6 @@ import { createWarehouse } from "../../../support/api/requests/Warehouse";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
 import {
   createShippingRate,
@@ -36,8 +35,6 @@ describe("As a staff user I want to create shipping zone and rate", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProductsStartsWith(startsWith);
-    shippingUtils.deleteShippingStartsWith(startsWith);
 
     channelsUtils
       .getDefaultChannel()

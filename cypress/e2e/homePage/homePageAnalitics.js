@@ -6,14 +6,12 @@ import faker from "faker";
 import { HOMEPAGE_SELECTORS } from "../../elements/homePage/homePage-selectors";
 import { urlList } from "../../fixtures/urlList";
 import { createCustomer } from "../../support/api/requests/Customer";
-import { deleteChannelsStartsWith } from "../../support/api/utils/channelsUtils";
 import * as homePageUtils from "../../support/api/utils/homePageUtils";
 import {
   createReadyToFulfillOrder,
   createWaitingForCaptureOrder,
 } from "../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import {
   changeChannel,
   getOrdersReadyForCaptureRegex,
@@ -47,10 +45,6 @@ describe("As an admin I want to see correct information on dashboard home page",
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    deleteChannelsStartsWith(startsWith);
-
     productsUtils
       .createProductWithShipping({
         name: randomName,
