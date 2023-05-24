@@ -1,3 +1,4 @@
+import { createAppsDebug } from "@dashboard/apps/apps-debug";
 import { DashboardEventFactory, Events } from "@saleor/app-sdk/app-bridge";
 import { useEffect, useRef } from "react";
 
@@ -19,6 +20,8 @@ interface Args {
   appToken: string;
   postToExtension: (events: Events) => void;
 }
+
+const debug = createAppsDebug("useUpdateAppToken");
 
 /**
  * Listens on appToken changes and pushes it to the App if changed.
@@ -43,6 +46,7 @@ export const useUpdateAppToken = ({
     }
 
     if (cachedToken !== appToken) {
+      debug("Will send new token to the app");
       /**
        * Ensure running only when token changes. If token changes, send it to app
        */
