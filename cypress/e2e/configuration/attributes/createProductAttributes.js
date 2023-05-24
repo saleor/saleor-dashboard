@@ -23,7 +23,6 @@ describe("As an admin I want to create product attribute", () => {
   const attributesTypes = [
     { type: "DROPDOWN", testCase: "SALEOR_0501" },
     { type: "MULTISELECT", testCase: "SALEOR_0502" },
-    { type: "FILE", testCase: "SALEOR_0503" },
     { type: "RICH_TEXT", testCase: "SALEOR_0504" },
     { type: "BOOLEAN", testCase: "SALEOR_0505" },
     { type: "DATE", testCase: "SALEOR_0523" },
@@ -86,6 +85,28 @@ describe("As an admin I want to create product attribute", () => {
       },
     );
   });
+
+  it(
+    `should be able to create FILE attribute. TC: SALEOR_0503`,
+    { tags: ["@attribute", "@allEnv", "@stable", "@oldRelease", "@critical"] },
+    () => {
+      const attributeName = `${startsWith}${faker.datatype.number()}`;
+
+      createAttributeWithInputType({
+        name: attributeName,
+        attributeType: "FILE",
+      })
+        .then(({ attribute }) => {
+          getAttribute(attribute.id);
+        })
+        .then(attribute => {
+          expectCorrectDataInAttribute(attribute, {
+            attributeName,
+            attributeType: "FILE",
+          });
+        });
+    },
+  );
 
   attributeReferenceType.forEach(entityType => {
     it(
