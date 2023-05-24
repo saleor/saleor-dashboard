@@ -117,7 +117,7 @@ const WebhookDetailsPage: React.FC<WebhookDetailsPageProps> = ({
           <DetailPageLayout gridTemplateColumns={1}>
             <TopNav href={backUrl} title={getHeaderTitle(intl, webhook)} />
             <DetailPageLayout.Content>
-              <Box padding={9}>
+              <Box padding="s6">
                 <WebhookStatus
                   data={data.isActive}
                   disabled={disabled}

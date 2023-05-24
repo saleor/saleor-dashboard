@@ -2,7 +2,7 @@ import { AppLogo } from "@dashboard/apps/types";
 import { Box, GenericAppIcon } from "@saleor/macaw-ui/next";
 import React from "react";
 
-const avatarSize = 11;
+const avatarSize = "s8";
 
 export const AppAvatar: React.FC<{
   logo?: AppLogo | undefined;
@@ -11,7 +11,7 @@ export const AppAvatar: React.FC<{
     return (
       <Box
         __backgroundColor={logo?.color}
-        padding={3}
+        padding="s1"
         width={avatarSize}
         height={avatarSize}
         borderRadius={2}
@@ -26,7 +26,7 @@ export const AppAvatar: React.FC<{
       <Box
         __backgroundColor={logo?.color}
         backgroundColor="surfaceNeutralSubdued"
-        padding={3}
+        padding="s1"
         width={avatarSize}
         height={avatarSize}
         display="flex"

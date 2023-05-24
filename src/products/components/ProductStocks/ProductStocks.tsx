@@ -145,7 +145,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
           />
         </Box>
 
-        <Box paddingY={5} display="grid" gap={5}>
+        <Box paddingY="s2" display="grid" gap="s2">
           <Checkbox
             checked={data.isPreorder}
             name="isPreorder"
@@ -158,7 +158,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
             }}
             disabled={disabled}
           >
-            <Box display="flex" gap={3} paddingY={4}>
+            <Box display="flex" gap="s1" paddingY="s1.5">
               <Text>
                 <FormattedMessage {...messages.variantInPreorder} />
               </Text>
@@ -187,7 +187,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
           )}
 
           {!data.isPreorder && (
-            <Box display="grid" gap={5}>
+            <Box display="grid" gap="s2">
               <Box display="flex" flexDirection="column">
                 <Text>
                   <FormattedMessage {...messages.quantity} />
@@ -233,7 +233,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
           <Table>
             <TableHead>
               <TableRowLink>
-                <TableCell style={{ paddingLeft: vars.space[9] }}>
+                <TableCell style={{ paddingLeft: vars.space.s6 }}>
                   <Text variant="caption" color="textNeutralSubdued">
                     <FormattedMessage {...messages.warehouseName} />
                   </Text>
@@ -260,7 +260,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
 
                 return (
                   <TableRowLink key={stock.id}>
-                    <TableCell style={{ paddingLeft: vars.space[9] }}>
+                    <TableCell style={{ paddingLeft: vars.space.s6 }}>
                       <Text>{stock.label}</Text>
                     </TableCell>
                     <TableCell>
@@ -298,13 +298,13 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                     <TableRowLink className={sprinkles({ cursor: "pointer" })}>
                       <TableCell
                         colSpan={3}
-                        style={{ paddingLeft: vars.space[9] }}
+                        style={{ paddingLeft: vars.space.s6 }}
                       >
                         <Text>
                           <FormattedMessage {...messages.assignWarehouse} />
                         </Text>
                       </TableCell>
-                      <TableCell style={{ paddingRight: vars.space[9] }}>
+                      <TableCell style={{ paddingRight: vars.space.s6 }}>
                         <Button
                           type="button"
                           icon={<PlusIcon />}
@@ -317,7 +317,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                   <Dropdown.Content align="end">
                     <Box>
                       <List
-                        padding={5}
+                        padding="s2"
                         borderRadius={4}
                         boxShadow="overlay"
                         backgroundColor="surfaceNeutralPlain"
@@ -325,8 +325,8 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                         {warehousesToAssign.map(warehouse => (
                           <Dropdown.Item key={warehouse.id}>
                             <List.Item
-                              paddingX={4}
-                              paddingY={5}
+                              paddingX="s1.5"
+                              paddingY="s2"
                               borderRadius={4}
                               onClick={() =>
                                 handleWarehouseStockAdd(warehouse.id)
@@ -346,7 +346,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
         )}
       {data.isPreorder && (
         <DashboardCard.Content>
-          <Box display="grid" gap={5}>
+          <Box display="grid" gap="s2">
             <Text variant="caption">
               <FormattedMessage {...messages.preorderEndDateSetup} />
             </Text>
@@ -393,11 +393,11 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
             </Box>
           </Box>
 
-          <Box display="grid" gap={3} paddingTop={5}>
+          <Box display="grid" gap="s1" paddingTop="s2">
             <Text variant="caption" color="textNeutralSubdued">
               <FormattedMessage {...messages.preorderProductsAvailability} />
             </Text>
-            <Box display="grid" gap={4}>
+            <Box display="grid" gap="s1.5">
               <Box __width="50%">
                 <Input
                   min={0}
@@ -432,7 +432,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
         <Table>
           <TableHead>
             <TableRowLink>
-              <TableCell style={{ paddingLeft: vars.space[9] }}>
+              <TableCell style={{ paddingLeft: vars.space.s6 }}>
                 <Text variant="caption" color="textNeutralSubdued">
                   <FormattedMessage {...sectionNames.channels} />
                 </Text>
@@ -457,7 +457,7 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
 
               return (
                 <TableRowLink key={listing.id}>
-                  <TableCell style={{ paddingLeft: vars.space[9] }}>
+                  <TableCell style={{ paddingLeft: vars.space.s6 }}>
                     <Text>{listing.name}</Text>
                   </TableCell>
                   <TableCell>

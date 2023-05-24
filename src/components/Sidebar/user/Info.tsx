@@ -12,16 +12,16 @@ export const UserInfo = () => {
   return (
     <Box
       display="flex"
-      gap={6}
-      paddingX={6}
-      paddingY={7}
+      gap="s3"
+      paddingX="s3"
+      paddingY="s4"
       alignItems="center"
       borderTopWidth={1}
       borderColor="neutralPlain"
       borderTopStyle="solid"
       justifyContent="space-between"
     >
-      <Box display="flex" gap={6} alignItems="center">
+      <Box display="flex" gap="s3" alignItems="center">
         <UserAvatar initials={getUserInitials(user)} url={user?.avatar?.url} />
         <Box __width={128} className="ellipsis">
           <Text variant="bodyStrong" size="small">
