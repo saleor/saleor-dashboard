@@ -45,7 +45,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
   return (
     <DetailPageLayout gridTemplateColumns={1} withSavebar={false}>
       <DetailPageLayout.Content>
-        <Box paddingY={9}>
+        <Box paddingY="s6">
           <CardSpacer />
           <Card>
             <CardTitle
@@ -127,7 +127,7 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
             </CardContent>
           </Card>
           <CardSpacer />
-          <Box display="flex" justifyContent="space-between" padding={9}>
+          <Box display="flex" justifyContent="space-between" padding="s6">
             <Button variant="secondary" onClick={navigateToAppsList}>
               <FormattedMessage {...buttonMessages.cancel} />
             </Button>

@@ -5,5 +5,10 @@ export const METADATA_FORM = {
     "[data-test-id='metadata-editor'][data-test-is-private='true']",
   addFieldButton: "[data-test-id='add-field']",
   nameInput: "[name*='name']",
-  valueField: "[name*='value']"
+  valueField: "[name*='value']",
+  metaExpandButton: "[data-test-id='expand']",
+  metaDeletedButton: "[data-test-id='delete-field-0']",
+  privateMetaSection: "[data-test-is-private='true']",
+  publicMetaSection: "[data-test-is-private='false']",
+  fulfillmentMetaSection: "[data-test-id='fulfilled-order-section']",
 };

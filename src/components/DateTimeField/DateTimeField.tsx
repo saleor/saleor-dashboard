@@ -29,7 +29,7 @@ export const DateTimeField: React.FC<DateTimeFieldProps> = ({
   const parsedValue = value ? splitDateTime(value) : { date: "", time: "" };
 
   return (
-    <Box display="flex" gap={2}>
+    <Box display="flex" gap="s0.5">
       <TextField
         fullWidth
         disabled={disabled}

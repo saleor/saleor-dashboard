@@ -128,7 +128,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           alignItems="center"
         >
           <Box display="flex">
-            <Box marginX={6} display="flex" alignItems="center">
+            <Box marginX="s3" display="flex" alignItems="center">
               <ChevronRightIcon />
             </Box>
 
@@ -149,7 +149,7 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
             />
           </Box>
 
-          <Box display="flex" alignItems="center" gap={5}>
+          <Box display="flex" alignItems="center" gap="s2">
             {!!onSettingsOpen && (
               <CardMenu
                 className={classes.settings}

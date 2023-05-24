@@ -18,14 +18,14 @@ const AppListCardDescription: React.FC<AppListCardDescriptionProps> = ({
     borderTopRightRadius={3}
     borderColor="neutralPlain"
     borderBottomStyle="none"
-    padding={8}
+    padding="s5"
   >
     <Box
       display="flex"
       flexDirection="row"
       alignItems="center"
-      marginBottom={8}
-      gap={6}
+      marginBottom="s5"
+      gap="s3"
     >
       <AppLogo backgroundColor={app.logo.color}>
         {app.logo.source ? (

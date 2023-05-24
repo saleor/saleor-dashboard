@@ -49,8 +49,8 @@ const useStyles = makeStyles(
       cursor: "pointer",
       /* Table to be replaced with Box */
       "& .MuiTableCell-root": {
-        paddingLeft: `${vars.space[8]} !important`,
-        paddingRight: `${vars.space[8]} !important`,
+        paddingLeft: `${vars.space.s5} !important`,
+        paddingRight: `${vars.space.s5} !important`,
       },
     },
     cardContent: {
