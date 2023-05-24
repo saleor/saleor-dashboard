@@ -7,7 +7,7 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
 import { PermissionWithChannelsData } from "@dashboard/permissionGroups/components/PermissonGroupWithChannelsDetailsPage";
-import React from "react";
+import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import {
@@ -26,7 +26,12 @@ export const PermissionGroupWithChannelsCreate: React.FC = () => {
   const intl = useIntl();
   const shop = useShop();
   const user = useUser();
+  const { availableChannels } = useAppChannel(false);
   const hasUserRestrictedChannels = checkIfUserHasRestictedChannels(user.user);
+  const userAvailableChannels = useMemo(
+    () => getChannelsOptions(availableChannels, user.user),
+    [availableChannels, user.user],
+  );
 
   const [createPermissionGroup, createPermissionGroupResult] =
     usePermissionGroupWithChannelsCreateMutation({
@@ -48,23 +53,27 @@ export const PermissionGroupWithChannelsCreate: React.FC = () => {
 
   const errors =
     createPermissionGroupResult?.data?.permissionGroupCreate?.errors || [];
-  const { availableChannels } = useAppChannel(false);
 
-  const onSubmit = (formData: PermissionGroupWithChannelsCreateFormData) =>
-    extractMutationErrors(
+  const onSubmit = (formData: PermissionGroupWithChannelsCreateFormData) => {
+    const channelChoices = userAvailableChannels.map(channel => channel.id);
+
+    return extractMutationErrors(
       createPermissionGroup({
         variables: {
           input: {
             addPermissions: formData.permissions,
             addUsers: [],
             name: formData.name,
-            addChannels: formData.channels,
+            addChannels: formData.hasAllChannels
+              ? channelChoices
+              : formData.channels,
             restrictedAccessToChannels:
               hasUserRestrictedChannels || !formData.hasAllChannels,
           },
         },
       }),
     );
+  };
 
   const userPermissions = user?.user.userPermissions.map(p => p.code) || [];
 
@@ -91,7 +100,7 @@ export const PermissionGroupWithChannelsCreate: React.FC = () => {
         errors={errors as any}
         disabled={createPermissionGroupResult.loading}
         permissions={permissions}
-        channels={getChannelsOptions(availableChannels, user.user)}
+        channels={userAvailableChannels}
         hasRestrictedChannels={hasUserRestrictedChannels}
         saveButtonBarState={createPermissionGroupResult.status}
         onSubmit={onSubmit}

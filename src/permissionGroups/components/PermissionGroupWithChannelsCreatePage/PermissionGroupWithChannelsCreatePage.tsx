@@ -71,15 +71,12 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
     intl,
   );
 
-  const channelChoices = channels.map(channel => channel.id);
-
   return (
     <Form
       confirmLeave
       initial={{
         ...initialForm,
         hasAllChannels: !hasRestrictedChannels,
-        channels: hasRestrictedChannels ? [] : channelChoices,
       }}
       onSubmit={onSubmit}
       disabled={disabled}
@@ -95,20 +92,10 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
         };
 
         const handleHasAllChannelsChange = () => {
-          const hasAllChannels = !data.hasAllChannels;
-
           change({
             target: {
               name: "hasAllChannels",
-              value: hasAllChannels,
-            },
-          });
-
-          // Reset channels when switching between restricted and full access
-          change({
-            target: {
-              name: "channels",
-              value: hasAllChannels ? channelChoices : [],
+              value: !data.hasAllChannels,
             },
           });
         };

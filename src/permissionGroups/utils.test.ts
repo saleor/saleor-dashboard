@@ -13,7 +13,6 @@ import { PermissionGroupWithChannelsDetailsPageFormData } from "./components/Per
 import {
   arePermissionsExceeded,
   channelsDiff,
-  checkIfPermissionGroupHasRestrictedChannels,
   checkIfUserHasRestictedChannels,
   checkIfUserIsEligibleToEditChannels,
   extractPermissionCodes,
@@ -52,6 +51,7 @@ describe("Permission group utils", () => {
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
+        [],
       );
 
       expect(addChannels).toEqual(["1"]);
@@ -84,6 +84,7 @@ describe("Permission group utils", () => {
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
+        [],
       );
 
       expect(addChannels).toEqual(["55"]);
@@ -112,10 +113,46 @@ describe("Permission group utils", () => {
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
+        [],
       );
 
       expect(addChannels).toEqual([]);
       expect(removeChannels).toEqual(["1"]);
+    });
+
+    it("should return all channels when no restricted channels and allow access all", () => {
+      const formData = {
+        channels: ["2"],
+        hasAllChannels: true,
+      } as PermissionGroupWithChannelsDetailsPageFormData;
+
+      const permissionGroup = {
+        restrictedAccessToChannels: false,
+        accessibleChannels: [
+          {
+            id: "1",
+            name: "channel-1",
+          },
+          {
+            id: "2",
+            name: "channel-2",
+          },
+        ],
+      } as PermissionGroupWithContextDetailsFragment;
+
+      const allChannels = [
+        { id: "12", name: "channel-12" },
+        { id: "22", name: "channel-22" },
+      ] as ChannelFragment[];
+
+      const { addChannels, removeChannels } = channelsDiff(
+        permissionGroup,
+        formData,
+        allChannels,
+      );
+
+      expect(addChannels).toEqual(["12", "22"]);
+      expect(removeChannels).toEqual([]);
     });
   });
 
@@ -357,60 +394,6 @@ describe("Permission group utils", () => {
         { label: "Channel 1", value: "1", disabled: false },
         { label: "Channel 2", value: "2", disabled: false },
       ]);
-    });
-  });
-
-  describe("checkIfPermissionGroupHasRestrictedChannels", () => {
-    it("should return true when restrictedAccessToChannels is true", () => {
-      // Arrange
-      const hasRestrictedChannels = true;
-
-      // Act
-      const restrictedAccessToChannels =
-        checkIfPermissionGroupHasRestrictedChannels(
-          hasRestrictedChannels,
-          [],
-          [],
-        );
-
-      // Assert
-      expect(restrictedAccessToChannels).toBe(true);
-    });
-
-    it("should return true when restrictedAccessToChannels is false but selected channels length not equal all channels length", () => {
-      // Arrange
-      const hasRestrictedChannels = false;
-      const selectedChannels = [1];
-      const allChannels = [1, 2, 3];
-
-      // Act
-      const restrictedAccessToChannels =
-        checkIfPermissionGroupHasRestrictedChannels(
-          hasRestrictedChannels,
-          selectedChannels,
-          allChannels,
-        );
-
-      // Assert
-      expect(restrictedAccessToChannels).toBe(true);
-    });
-
-    it("should return false when restrictedAccessToChannels is false but selected channels length is equal all channels length", () => {
-      // Arrange
-      const hasRestrictedChannels = false;
-      const selectedChannels = [1];
-      const allChannels = [1];
-
-      // Act
-      const restrictedAccessToChannels =
-        checkIfPermissionGroupHasRestrictedChannels(
-          hasRestrictedChannels,
-          selectedChannels,
-          allChannels,
-        );
-
-      // Assert
-      expect(restrictedAccessToChannels).toBe(false);
     });
   });
 

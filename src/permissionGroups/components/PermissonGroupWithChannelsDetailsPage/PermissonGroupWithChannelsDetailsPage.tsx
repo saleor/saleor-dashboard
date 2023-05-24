@@ -102,7 +102,11 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
   const initialForm: PermissionGroupWithChannelsDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
     hasAllChannels: !permissionGroup?.restrictedAccessToChannels ?? false,
-    channels: permissionGroup?.accessibleChannels.map(channel => channel.id),
+    channels:
+      !permissionGroup?.restrictedAccessToChannels &&
+      permissionGroup?.accessibleChannels.length === channels.length
+        ? []
+        : permissionGroup?.accessibleChannels.map(channel => channel.id),
     isActive: false,
     name: permissionGroup?.name || "",
     permissions: extractPermissionCodes(permissionGroup),
@@ -128,20 +132,10 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
         };
 
         const handleHasAllChannelsChange = () => {
-          const hasAllChannels = !data.hasAllChannels;
-
           change({
             target: {
               name: "hasAllChannels",
-              value: hasAllChannels,
-            },
-          });
-
-          // Reset channels when switching between restricted and full access
-          change({
-            target: {
-              name: "channels",
-              value: hasAllChannels ? channels.map(chan => chan.id) : [],
+              value: !data.hasAllChannels,
             },
           });
         };
