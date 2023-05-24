@@ -155,6 +155,17 @@ export function getOrder(orderId) {
         countryArea
         phone
       }
+      fulfillments{
+        id
+        metadata{
+          key
+          value
+        }
+        privateMetadata{
+          key
+          value
+        }
+      }
     }
   }`;
   return cy.sendRequestWithQuery(query).its("body.data.order");
