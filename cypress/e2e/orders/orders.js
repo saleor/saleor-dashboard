@@ -48,7 +48,7 @@ import {
 } from "../../support/pages/";
 
 describe("Orders", () => {
-  const startsWith = "CyOrders-";
+  const startsWith = "Orders-Cy-";
   const randomName = startsWith + faker.datatype.number();
 
   let customer;
@@ -152,7 +152,7 @@ describe("Orders", () => {
 
   it(
     "should create order with selected channel. TC: SALEOR_2104",
-    { tags: ["@orders", "@allEnv", "@stable", "@oldRelease"] },
+    { tags: ["@orders", "@allEnv", "@stable", "@oldRelease", "@critical"] },
     () => {
       cy.visit(urlList.orders).get(ORDERS_SELECTORS.createOrderButton).click();
       selectChannelInPicker(defaultChannel.name);
