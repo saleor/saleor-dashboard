@@ -175,7 +175,7 @@ export const PermissionGroupWithChannelsDetails: React.FC<
         permissions={permissions}
         saveButtonBarState={permissionGroupUpdateResult.status}
         disabled={disabled}
-        disabledChannelPermissions={isLoading}
+        disabledChannelPermissions={loading}
         toggle={toggle}
         toggleAll={toggleAll}
         isChecked={isSelected}

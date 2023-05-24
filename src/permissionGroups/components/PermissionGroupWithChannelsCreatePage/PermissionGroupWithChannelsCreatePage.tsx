@@ -142,7 +142,7 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
                     onChannelChange={handleChannelChange}
                     onHasAllChannelsChange={handleHasAllChannelsChange}
                     hasAllChannels={data.hasAllChannels}
-                    disabled={disabled}
+                    disabled={false}
                     disabledSelectAllChannls={hasRestrictedChannels}
                   />
                 </Box>
