@@ -177,7 +177,7 @@ export const UserWithChannelsFragmentDoc = gql`
   userPermissions {
     ...UserPermission
   }
-  avatar {
+  avatar(size: 128) {
     url
   }
   accessibleChannels {
