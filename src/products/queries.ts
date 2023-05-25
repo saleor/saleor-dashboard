@@ -64,7 +64,6 @@ export const productListQuery = gql`
     $channel: String
     $sort: ProductOrder
     $hasChannel: Boolean!
-    $hasSelectedAttributes: Boolean!
   ) {
     products(
       before: $before
@@ -80,7 +79,7 @@ export const productListQuery = gql`
           ...ProductWithChannelListings
           updatedAt
           description
-          attributes @include(if: $hasSelectedAttributes) {
+          attributes {
             ...ProductListAttribute
           }
         }

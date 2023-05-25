@@ -13338,7 +13338,7 @@ export type InitialProductFilterProductTypesQueryHookResult = ReturnType<typeof 
 export type InitialProductFilterProductTypesLazyQueryHookResult = ReturnType<typeof useInitialProductFilterProductTypesLazyQuery>;
 export type InitialProductFilterProductTypesQueryResult = Apollo.QueryResult<Types.InitialProductFilterProductTypesQuery, Types.InitialProductFilterProductTypesQueryVariables>;
 export const ProductListDocument = gql`
-    query ProductList($first: Int, $after: String, $last: Int, $before: String, $filter: ProductFilterInput, $channel: String, $sort: ProductOrder, $hasChannel: Boolean!, $hasSelectedAttributes: Boolean!) {
+    query ProductList($first: Int, $after: String, $last: Int, $before: String, $filter: ProductFilterInput, $channel: String, $sort: ProductOrder, $hasChannel: Boolean!) {
   products(
     before: $before
     after: $after
@@ -13353,7 +13353,7 @@ export const ProductListDocument = gql`
         ...ProductWithChannelListings
         updatedAt
         description
-        attributes @include(if: $hasSelectedAttributes) {
+        attributes {
           ...ProductListAttribute
         }
       }
@@ -13390,7 +13390,6 @@ ${ProductListAttributeFragmentDoc}`;
  *      channel: // value for 'channel'
  *      sort: // value for 'sort'
  *      hasChannel: // value for 'hasChannel'
- *      hasSelectedAttributes: // value for 'hasSelectedAttributes'
  *   },
  * });
  */

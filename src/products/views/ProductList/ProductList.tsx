@@ -364,7 +364,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     variables: {
       ...queryVariables,
       hasChannel: !!selectedChannel,
-      hasSelectedAttributes: filteredColumnIds.length > 0,
     },
   });
 
