@@ -306,6 +306,10 @@
     "context": "OrderCustomer Fulfillment from Local Warehouse",
     "string": "Fulfill from Local Stock"
   },
+  "/xJSe8": {
+    "context": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
+    "string": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history."
+  },
   "/xXvjF": {
     "context": "section header",
     "string": "Unfulfilled"
@@ -2326,10 +2330,6 @@
   "FA+MRz": {
     "string": "Set plugin as active"
   },
-  "FA0Sxs": {
-    "context": "Email confirmation",
-    "string": "Email confirmation"
-  },
   "FBtqtl": {
     "context": "payment status",
     "string": "Unpaid"
@@ -2607,10 +2607,6 @@
   "GpqEl5": {
     "context": "shipping method description",
     "string": "Description"
-  },
-  "GpyFuP": {
-    "context": "Require an confirmation for newly registered users by using their email.",
-    "string": "Require an confirmation for newly registered users by using their email."
   },
   "Gr1SAu": {
     "string": "Customer Name"
@@ -6696,6 +6692,10 @@
     "context": "option",
     "string": "Gift card product type"
   },
+  "kpRxSA": {
+    "context": "Require email confirmation link",
+    "string": "Require email confirmation link"
+  },
   "kuo4fW": {
     "context": "dialog title",
     "string": "Capture manual transaction"
@@ -7401,6 +7401,10 @@
     "context": "notes about customer header",
     "string": "Notes"
   },
+  "qNeXG1": {
+    "context": "User registration",
+    "string": "User registration"
+  },
   "qT6YYk": {
     "context": "order line total price",
     "string": "Total"
@@ -7558,10 +7562,6 @@
   "rl1t+o": {
     "context": "expires in label",
     "string": "Expires in"
-  },
-  "roWCaz": {
-    "context": "Newly registered users email confirmation",
-    "string": "Newly registered users email confirmation"
   },
   "rpFdD1": {
     "string": "Search Product Type"
