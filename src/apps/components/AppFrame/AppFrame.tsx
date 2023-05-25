@@ -1,4 +1,5 @@
 import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useAppDashboardUpdates";
+import { useUpdateAppToken } from "@dashboard/apps/components/AppFrame/useUpdateAppToken";
 import {
   AppDetailsUrlQueryParams,
   prepareFeatureFlagsList,
@@ -75,6 +76,15 @@ export const AppFrame: React.FC<Props> = ({
   }, [appToken, postToExtension, setHandshakeDone]);
 
   const featureFlags = useMemo(() => prepareFeatureFlagsList(flags), [flags]);
+
+  useUpdateAppToken({
+    postToExtension,
+    appToken,
+    /**
+     * If app is not ready, ignore this flow
+     */
+    enabled: handshakeDone,
+  });
 
   return (
     <>
