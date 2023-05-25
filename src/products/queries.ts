@@ -250,7 +250,7 @@ export const productMediaQuery = gql`
 `;
 
 export const gridAttributes = gql`
-  query GridAttributes($ids: [ID!]!) {
+  query GridAttributes($ids: [ID!]!, $hasAttributes: Boolean!) {
     left: attributes(first: 10) {
       edges {
         node {
@@ -262,7 +262,8 @@ export const gridAttributes = gql`
         ...PageInfo
       }
     }
-    right: attributes(first: 25, filter: { ids: $ids }) {
+    right: attributes(first: 25, filter: { ids: $ids })
+      @include(if: $hasAttributes) {
       edges {
         node {
           id

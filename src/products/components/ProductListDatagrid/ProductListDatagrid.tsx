@@ -172,7 +172,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   // Tracked in https://github.com/saleor/saleor-dashboard/issues/3685
   React.useEffect(() => {
     handlers.onCustomUpdateVisible(prevColumns =>
-      prevColumns.map(column => {
+      prevColumns?.map(column => {
         if (isAttributeColumnValue(column.id)) {
           if (
             getAttributeIdFromColumnValue(column.id) === activeAttributeSortId

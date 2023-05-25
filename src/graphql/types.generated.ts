@@ -9815,6 +9815,7 @@ export type ProductMediaByIdQuery = { __typename: 'Query', product: { __typename
 
 export type GridAttributesQueryVariables = Exact<{
   ids: Array<Scalars['ID']> | Scalars['ID'];
+  hasAttributes: Scalars['Boolean'];
 }>;
 
 

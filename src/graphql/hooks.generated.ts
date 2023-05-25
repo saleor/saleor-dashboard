@@ -13717,7 +13717,7 @@ export type ProductMediaByIdQueryHookResult = ReturnType<typeof useProductMediaB
 export type ProductMediaByIdLazyQueryHookResult = ReturnType<typeof useProductMediaByIdLazyQuery>;
 export type ProductMediaByIdQueryResult = Apollo.QueryResult<Types.ProductMediaByIdQuery, Types.ProductMediaByIdQueryVariables>;
 export const GridAttributesDocument = gql`
-    query GridAttributes($ids: [ID!]!) {
+    query GridAttributes($ids: [ID!]!, $hasAttributes: Boolean!) {
   left: attributes(first: 10) {
     edges {
       node {
@@ -13729,7 +13729,7 @@ export const GridAttributesDocument = gql`
       ...PageInfo
     }
   }
-  right: attributes(first: 25, filter: {ids: $ids}) {
+  right: attributes(first: 25, filter: {ids: $ids}) @include(if: $hasAttributes) {
     edges {
       node {
         id
@@ -13753,6 +13753,7 @@ export const GridAttributesDocument = gql`
  * const { data, loading, error } = useGridAttributesQuery({
  *   variables: {
  *      ids: // value for 'ids'
+ *      hasAttributes: // value for 'hasAttributes'
  *   },
  * });
  */

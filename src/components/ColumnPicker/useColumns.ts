@@ -134,7 +134,7 @@ export const useColumns = ({
     updateDynamicColumns(prevDynamicColumns =>
       uniqBy(
         [
-          ...prevDynamicColumns,
+          ...(prevDynamicColumns ?? []),
           ...columnCategories
             .flatMap(category => category.availableNodes)
             .filter(x => columns.includes(x.id)),

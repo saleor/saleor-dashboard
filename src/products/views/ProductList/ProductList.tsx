@@ -396,7 +396,12 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   useEffect(() => {
     // Fetch this only on initial render
-    gridAttributesQuery({ variables: { ids: filteredColumnIds } });
+    gridAttributesQuery({
+      variables: {
+        ids: filteredColumnIds,
+        hasAttributes: !!filteredColumnIds.length,
+      },
+    });
   }, []);
 
   const {
