@@ -10,6 +10,7 @@ import {
 import React, { useMemo, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import Debounce from "../Debounce";
 import messages from "./messages";
 import { NewColumnPickerPagination } from "./NewColumnPickerPagination";
 import { ColumnCategory } from "./useColumns";
@@ -92,15 +93,30 @@ export const NewColumnPickerCategories: React.FC<
               paddingX={7}
               style={{ boxSizing: "border-box" }}
             >
-              <SearchInput
-                size="small"
-                placeholder={intl.formatMessage(messages.searchForColumns)}
-                value={query}
-                onChange={e => {
-                  setQuery(e.target.value ?? "");
-                  currentCategory.onSearch(e.target.value ?? "");
+              <Debounce
+                debounceFn={(value: string) => currentCategory.onSearch(value)}
+                time={500}
+              >
+                {debounceSearchChange => {
+                  const handleSearchChange = (
+                    event: React.ChangeEvent<any>,
+                  ) => {
+                    const value = event.target.value ?? "";
+                    setQuery(value);
+                    debounceSearchChange(value);
+                  };
+                  return (
+                    <SearchInput
+                      size="small"
+                      placeholder={intl.formatMessage(
+                        messages.searchForColumns,
+                      )}
+                      value={query}
+                      onChange={handleSearchChange}
+                    />
+                  );
                 }}
-              />
+              </Debounce>
             </Box>
             <Box paddingX={8} paddingY={4} flexGrow="1">
               {!currentCategory.availableNodes.length ? (
