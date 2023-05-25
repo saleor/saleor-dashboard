@@ -10,8 +10,8 @@ export const TopNavWrapper: React.FC<{ withoutBorder?: boolean }> = ({
   <Box
     display="flex"
     alignItems="center"
-    paddingX={9}
-    paddingY={8}
+    paddingX="s6"
+    paddingY="s5"
     borderBottomWidth={withoutBorder ? 0 : 1}
     borderBottomStyle="solid"
     borderColor="neutralPlain"

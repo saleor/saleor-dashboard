@@ -45,7 +45,7 @@ export const useStyles = makeStyles(
       justifyContent: "right",
     },
     payments: {
-      paddingRight: vars.space[9],
+      paddingRight: vars.space.s6,
     },
   }),
   { name: "OrderPayment" },

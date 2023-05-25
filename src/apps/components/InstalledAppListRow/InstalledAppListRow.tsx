@@ -1,18 +1,9 @@
-import { useAppListContext } from "@dashboard/apps/context";
 import { appsMessages } from "@dashboard/apps/messages";
 import { InstalledApp } from "@dashboard/apps/types";
 import { AppUrls } from "@dashboard/apps/urls";
 import { isAppInTunnel } from "@dashboard/apps/utils";
 import Link from "@dashboard/components/Link";
-import { TableButtonWrapper } from "@dashboard/components/TableButtonWrapper/TableButtonWrapper";
-import {
-  Box,
-  Button,
-  Chip,
-  List,
-  sprinkles,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { Box, Chip, List, sprinkles, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 import { useLocation } from "react-router";
@@ -25,7 +16,7 @@ import { messages } from "./messages";
 export const InstalledAppListRow: React.FC<InstalledApp> = props => {
   const { app, isExternal, logo } = props;
   const intl = useIntl();
-  const { openAppSettings } = useAppListContext();
+
   const location = useLocation();
 
   return (
@@ -37,18 +28,22 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
       disabled={!app.isActive}
     >
       <List.Item
-        padding={7}
+        padding="s4"
         borderTopStyle="solid"
         borderWidth={1}
         borderColor="neutralPlain"
         justifyContent="space-between"
         flexDirection="row"
         flexWrap="wrap"
-        backgroundColor={!app.isActive ? "surfaceNeutralSubdued" : undefined}
+        transition={"ease"}
+        backgroundColor={{
+          default: !app.isActive ? "surfaceNeutralSubdued" : undefined,
+          hover: "surfaceNeutralSubdued",
+        }}
         cursor={app.isActive ? "pointer" : "not-allowed"}
       >
         <Box
-          gap={5}
+          gap="s2"
           alignItems="center"
           display="grid"
           __gridTemplateColumns="1fr auto"
@@ -56,11 +51,11 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
           <AppAvatar logo={logo} />
           <Box
             display="flex"
-            gap={3}
+            gap="s1"
             flexDirection="column"
             alignItems="flex-start"
           >
-            <Box display="flex" gap={5}>
+            <Box display="flex" gap="s2">
               <Text variant="bodyStrong">{app.name}</Text>
               <Text variant="body" color="textNeutralSubdued">
                 {`v${app.version}`}
@@ -89,12 +84,12 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         </Box>
         <Box
           display="flex"
-          marginTop={{ mobile: 4, desktop: 0 }}
+          marginTop={{ mobile: "s1.5", desktop: "s0" }}
           flexDirection="row"
           justifyContent={{ mobile: "flex-end", desktop: "flex-start" }}
-          gap={6}
+          gap="s3"
         >
-          <Box marginLeft="auto" display="flex" alignItems="center" gap={8}>
+          <Box marginLeft="auto" display="flex" alignItems="center" gap="s5">
             {!app.isActive && (
               <Text variant="caption" color="textNeutralSubdued">
                 <FormattedMessage {...messages.appDisabled} />
@@ -102,15 +97,6 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
             )}
             <AppPermissions permissions={app.permissions} />
           </Box>
-          <TableButtonWrapper>
-            <Button
-              variant="secondary"
-              onClick={() => openAppSettings(app.id)}
-              data-test-id="app-settings-button"
-            >
-              <FormattedMessage {...messages.settings} />
-            </Button>
-          </TableButtonWrapper>
         </Box>
       </List.Item>
     </Link>

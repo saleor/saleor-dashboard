@@ -1,10 +1,10 @@
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import TrashIcon from "@dashboard/icons/Trash";
 import { orderHasTransactions } from "@dashboard/orders/types";
 import { mergeRepeatedOrderLines } from "@dashboard/orders/utils/data";
-import { Card, CardContent } from "@material-ui/core";
+import { CardContent } from "@material-ui/core";
 import { IconButton } from "@saleor/macaw-ui";
+import { Box, Divider } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import OrderCardTitle from "../OrderCardTitle";
@@ -20,6 +20,7 @@ interface OrderFulfilledProductsCardProps {
   onOrderFulfillmentApprove: () => void;
   onOrderFulfillmentCancel: () => void;
   onTrackingCodeAdd: () => void;
+  dataTestId?: string;
 }
 
 const statusesToMergeLines = [
@@ -43,6 +44,7 @@ const OrderFulfilledProductsCard: React.FC<
     onOrderFulfillmentApprove,
     onOrderFulfillmentCancel,
     onTrackingCodeAdd,
+    dataTestId,
   } = props;
   const classes = useStyles(props);
 
@@ -61,17 +63,17 @@ const OrderFulfilledProductsCard: React.FC<
   };
 
   return (
-    <>
-      <Card>
-        <OrderCardTitle
-          withStatus
-          lines={fulfillment?.lines}
-          fulfillmentOrder={fulfillment?.fulfillmentOrder}
-          status={fulfillment?.status}
-          warehouseName={fulfillment?.warehouse?.name}
-          orderNumber={order?.number}
-          toolbar={
-            cancelableStatuses.includes(fulfillment?.status) && (
+    <Box data-test-id={dataTestId}>
+      <OrderCardTitle
+        withStatus
+        lines={fulfillment?.lines}
+        fulfillmentOrder={fulfillment?.fulfillmentOrder}
+        status={fulfillment?.status}
+        warehouseName={fulfillment?.warehouse?.name}
+        orderNumber={order?.number}
+        toolbar={
+          <Box display="flex" alignItems="center" gap={6}>
+            {cancelableStatuses.includes(fulfillment?.status) && (
               <IconButton
                 variant="secondary"
                 className={classes.deleteIcon}
@@ -80,26 +82,27 @@ const OrderFulfilledProductsCard: React.FC<
               >
                 <TrashIcon />
               </IconButton>
-            )
-          }
-        />
-        <CardContent>
-          <OrderDetailsDatagrid lines={getLines()} loading={false} />
-          <ExtraInfoLines fulfillment={fulfillment} />
-          <ActionButtons
-            orderId={order?.id}
-            status={fulfillment?.status}
-            trackingNumber={fulfillment?.trackingNumber}
-            orderIsPaid={order?.isPaid}
-            fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
-            onTrackingCodeAdd={onTrackingCodeAdd}
-            onApprove={onOrderFulfillmentApprove}
-            hasTransactions={orderHasTransactions(order)}
-          />
-        </CardContent>
-      </Card>
-      <CardSpacer />
-    </>
+            )}
+            <ActionButtons
+              orderId={order?.id}
+              status={fulfillment?.status}
+              trackingNumber={fulfillment?.trackingNumber}
+              orderIsPaid={order?.isPaid}
+              fulfillmentAllowUnpaid={fulfillmentAllowUnpaid}
+              onTrackingCodeAdd={onTrackingCodeAdd}
+              onApprove={onOrderFulfillmentApprove}
+              hasTransactions={orderHasTransactions(order)}
+            />
+          </Box>
+        }
+      />
+      <CardContent>
+        <OrderDetailsDatagrid lines={getLines()} loading={false} />
+        <ExtraInfoLines fulfillment={fulfillment} />
+      </CardContent>
+      {props.children}
+      <Divider />
+    </Box>
   );
 };
 

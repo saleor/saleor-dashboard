@@ -1603,6 +1603,7 @@ export const OrderLineFragmentDoc = gql`
 ${TaxedMoneyFragmentDoc}`;
 export const FulfillmentFragmentDoc = gql`
     fragment Fulfillment on Fulfillment {
+  ...Metadata
   id
   lines {
     id
@@ -1619,7 +1620,8 @@ export const FulfillmentFragmentDoc = gql`
     name
   }
 }
-    ${OrderLineFragmentDoc}`;
+    ${MetadataFragmentDoc}
+${OrderLineFragmentDoc}`;
 export const InvoiceFragmentDoc = gql`
     fragment Invoice on Invoice {
   id

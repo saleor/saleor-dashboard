@@ -212,7 +212,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 })}
                 name="hasVariants"
                 onChange={event => onHasVariantsToggle(event.target.value)}
-                className={sprinkles({ paddingLeft: 9 })}
+                className={sprinkles({ paddingLeft: "s6" })}
               />
               {data.hasVariants && (
                 <>

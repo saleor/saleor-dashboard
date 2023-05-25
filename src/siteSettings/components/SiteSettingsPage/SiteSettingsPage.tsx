@@ -136,11 +136,11 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               title={intl.formatMessage(commonMessages.generalInformations)}
             />
             <DetailPageLayout.Content>
-              <Box gap={5}>
+              <Box gap="s2">
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"
-                  paddingLeft={9}
+                  paddingLeft="s6"
                 >
                   <PageSectionHeader
                     title={intl.formatMessage(messages.sectionCheckoutTitle)}
@@ -161,8 +161,8 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"
-                  paddingLeft={9}
-                  paddingBottom={10}
+                  paddingLeft="s6"
+                  paddingBottom="s8"
                 >
                   <PageSectionHeader
                     title={intl.formatMessage(messages.sectionCompanyTitle)}
@@ -191,8 +191,8 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"
-                  paddingLeft={9}
-                  paddingBottom={10}
+                  paddingLeft="s6"
+                  paddingBottom="s8"
                 >
                   <PageSectionHeader
                     title={intl.formatMessage(
