@@ -13,12 +13,17 @@ import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createSaleInChannel,
   createSaleInChannelWithProduct,
+  deleteSalesStartsWith,
 } from "../../../support/api/utils/discounts/salesUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
+  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
-import { createShipping } from "../../../support/api/utils/shippingUtils";
+import {
+  createShipping,
+  deleteShippingStartsWith,
+} from "../../../support/api/utils/shippingUtils";
 import {
   getDefaultTaxClass,
   updateTaxConfigurationForChannel,
@@ -40,9 +45,11 @@ describe("As an admin I want to update sales", () => {
 
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
-    const slug = name + faker.datatype.number();
 
     cy.clearSessionData().loginUserViaRequest();
+    deleteProductsStartsWith(startsWith);
+    deleteShippingStartsWith(startsWith);
+    deleteSalesStartsWith(startsWith);
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
@@ -67,7 +74,6 @@ describe("As an admin I want to update sales", () => {
           address,
           name: startsWith,
           taxClassId: taxClass.id,
-          slug,
         });
       })
       .then(({ warehouse: warehouseResp }) => {
