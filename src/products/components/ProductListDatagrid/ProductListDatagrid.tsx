@@ -126,7 +126,9 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
       activeAttributeSortId,
       sort,
       onSearch: (query: string) =>
-        availableColumnsAttributesOpts[0]({ variables: { search: query } }),
+        availableColumnsAttributesOpts[0]({
+          variables: { search: query, first: 10 },
+        }),
       onNextPage: (query: string) =>
         availableColumnsAttributesOpts[0]({
           variables: {
