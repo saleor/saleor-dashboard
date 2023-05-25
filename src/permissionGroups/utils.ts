@@ -80,8 +80,11 @@ export const usersDiff = (
 export const channelsDiff = (
   permissionGroup: PermissionGroupWithContextDetailsFragment,
   formData: PermissionGroupWithChannelsDetailsPageFormData,
+  allChannels: ChannelFragment[],
 ) => {
-  const newChannels = formData.channels.map(c => c.value);
+  const newChannels = formData.hasAllChannels
+    ? allChannels.map(c => c.id)
+    : formData.channels;
   const oldChannels = permissionGroup?.accessibleChannels.map(c => c.id);
   const hasRestrictedChannels = permissionGroup?.restrictedAccessToChannels;
 
@@ -125,30 +128,6 @@ export const mapAccessibleChannelsToChoice = (
         disabled: isUserAbleToEdit !== undefined ? !isUserAbleToEdit : false,
       } as unknown as MultiAutocompleteChoiceType),
   ) ?? [];
-
-/**
- * Calcualte if restricted access to channels should be enabled.
- */
-export const checkIfPermissionGroupHasRestrictedChannels = (
-  hasUserRestrictedChannels: boolean,
-  selectedChannels: unknown[],
-  allChannels: unknown[],
-) => {
-  // When user has restricted access to channels we know that group has restricted access to channels.
-  if (hasUserRestrictedChannels) {
-    return true;
-  }
-
-  // When user has full access and selected less channel group has restricted access to channels.
-  if (
-    !hasUserRestrictedChannels &&
-    selectedChannels.length !== allChannels.length
-  ) {
-    return true;
-  }
-
-  return false;
-};
 
 /**
  * User is eligible to edit channels when he has access to all channels in permission group.

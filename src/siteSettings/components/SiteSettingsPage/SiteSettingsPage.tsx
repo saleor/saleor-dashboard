@@ -143,7 +143,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               title={intl.formatMessage(commonMessages.generalInformations)}
             />
             <DetailPageLayout.Content>
-              <Box gap={5} paddingLeft={9}>
+              <Box gap="s2" paddingLeft="s6">
                 <Box display="grid" __gridTemplateColumns="1fr 3fr">
                   <PageSectionHeader
                     title={intl.formatMessage(messages.sectionCheckoutTitle)}

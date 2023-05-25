@@ -199,11 +199,11 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
       );
     case AttributeInputTypeEnum.BOOLEAN:
       return (
-        <Box as="li" display="flex" gap={5} alignItems="center" padding={3}>
+        <Box as="li" display="flex" gap="s2" alignItems="center" padding="s1">
           <Box data-test-id="attribute-value">
             <Box
               display="flex"
-              gap={2}
+              gap="s0.5"
               flexDirection="column"
               alignItems="flex-end"
             >
@@ -224,7 +224,7 @@ const AttributeRow: React.FC<AttributeRowProps> = ({
             as="label"
             htmlFor={`attribute:${attribute.label}`}
             display="flex"
-            gap={3}
+            gap="s1"
             cursor="pointer"
           >
             <Text>{attribute.label}</Text>

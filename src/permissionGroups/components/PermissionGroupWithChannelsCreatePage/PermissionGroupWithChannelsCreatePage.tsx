@@ -4,21 +4,18 @@ import { Backlink } from "@dashboard/components/Backlink";
 import { ChannelPermission } from "@dashboard/components/ChannelPermission";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import Savebar from "@dashboard/components/Savebar";
 import {
   ChannelFragment,
   PermissionEnum,
   PermissionGroupErrorFragment,
 } from "@dashboard/graphql";
-import { SubmitPromise } from "@dashboard/hooks/useForm";
+import { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages, sectionNames } from "@dashboard/intl";
 import { permissionGroupListUrl } from "@dashboard/permissionGroups/urls";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
-import createMultiAutocompleteSelectHandler from "@dashboard/utils/handlers/multiAutocompleteSelectChangeHandler";
-import { mapNodeToChoice } from "@dashboard/utils/maps";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -32,7 +29,7 @@ export interface PermissionGroupWithChannelsCreateFormData {
   hasAllChannels: boolean;
   isActive: boolean;
   permissions: PermissionEnum[];
-  channels: MultiAutocompleteChoiceType[];
+  channels: string[];
 }
 
 const initialForm: PermissionGroupWithChannelsCreateFormData = {
@@ -74,42 +71,31 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
     intl,
   );
 
-  const channelChoices = mapNodeToChoice(channels);
-
   return (
     <Form
       confirmLeave
       initial={{
         ...initialForm,
         hasAllChannels: !hasRestrictedChannels,
-        channels: hasRestrictedChannels ? [] : channelChoices,
       }}
       onSubmit={onSubmit}
       disabled={disabled}
     >
-      {({ data, change, submit, isSaveDisabled, toggleValue }) => {
-        const handleChannelChange = createMultiAutocompleteSelectHandler(
-          toggleValue,
-          choice => change({ target: { name: "channels", value: choice } }),
-          data.channels,
-          channelChoices,
-        );
-
-        const handleHasAllChannelsChange = () => {
-          const hasAllChannels = !data.hasAllChannels;
-
-          change({
-            target: {
-              name: "hasAllChannels",
-              value: hasAllChannels,
-            },
-          });
-
-          // Reset channels when switching between restricted and full access
+      {({ data, change, submit, isSaveDisabled }) => {
+        const handleChannelChange: FormChange = event => {
           change({
             target: {
               name: "channels",
-              value: hasAllChannels ? channelChoices : [],
+              value: event.target.value,
+            },
+          });
+        };
+
+        const handleHasAllChannelsChange = () => {
+          change({
+            target: {
+              name: "hasAllChannels",
+              value: !data.hasAllChannels,
             },
           });
         };
@@ -156,8 +142,8 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
                     onChannelChange={handleChannelChange}
                     onHasAllChannelsChange={handleHasAllChannelsChange}
                     hasAllChannels={data.hasAllChannels}
-                    disabled={disabled}
-                    disabledSelectAllChannls={hasRestrictedChannels}
+                    disabled={false}
+                    disabledSelectAllChannels={hasRestrictedChannels}
                   />
                 </Box>
               </Box>

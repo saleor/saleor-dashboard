@@ -21,7 +21,7 @@ const commonThumbnailProps = {
   borderColor: "neutralHighlight",
   borderStyle: "solid",
   borderWidth: 1,
-  marginBottom: 4,
+  marginBottom: "s1.5",
   borderRadius: 3,
   aspectRatio: "1 / 1",
 } as const;
@@ -65,7 +65,7 @@ export const ProductTile: React.FC<ProductTileProps> = ({
       </Box>
     )}
     <Box display="flex" alignItems="center">
-      <Box paddingRight={3}>
+      <Box paddingRight="s1">
         <StatusDot status={getTileStatus(product.channelListings)} />
       </Box>
       <Text
@@ -74,12 +74,12 @@ export const ProductTile: React.FC<ProductTileProps> = ({
         variant="caption"
         size="small"
         alignItems="center"
-        className={sprinkles({ paddingY: 2 })}
+        className={sprinkles({ paddingY: "s0.5" })}
       >
         {product.productType.name}
       </Text>
     </Box>
-    <Box display="flex" justifyContent="space-between" marginTop={2}>
+    <Box display="flex" justifyContent="space-between" marginTop="s0.5">
       <Text ellipsis color="textNeutralDefault" variant="bodyEmp" size="small">
         {product.name}
       </Text>
@@ -87,10 +87,10 @@ export const ProductTile: React.FC<ProductTileProps> = ({
     <Box
       position={"absolute"}
       margin="auto"
-      __right={`calc(${vars.space[8]} / -2)`}
-      __top={`calc(${vars.space[8]} / -2)`}
-      __width={`calc(100% + ${vars.space[8]})`}
-      __height={`calc(100% + ${vars.space[8]})`}
+      __right={`calc(${vars.space.s5} / -2)`}
+      __top={`calc(${vars.space.s5} / -2)`}
+      __width={`calc(100% + ${vars.space.s5})`}
+      __height={`calc(100% + ${vars.space.s5})`}
       __opacity={0.1}
       borderRadius={5}
       backgroundColor={{

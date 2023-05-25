@@ -36,8 +36,6 @@ import {
 import {
   arePermissionsExceeded,
   channelsDiff,
-  checkIfPermissionGroupHasRestrictedChannels,
-  checkIfUserHasRestictedChannels,
   permissionsDiff,
   usersDiff,
 } from "../../utils";
@@ -144,12 +142,8 @@ export const PermissionGroupWithChannelsDetails: React.FC<
 
   const handleSubmit = async (
     formData: PermissionGroupWithChannelsDetailsPageFormData,
-  ) => {
-    const hasUserRestrictedChannels = checkIfUserHasRestictedChannels(
-      user.user,
-    );
-
-    return extractMutationErrors(
+  ) =>
+    extractMutationErrors(
       permissionGroupUpdate({
         variables: {
           id,
@@ -157,18 +151,12 @@ export const PermissionGroupWithChannelsDetails: React.FC<
             name: formData.name,
             ...permissionsDiff(data?.permissionGroup, formData),
             ...usersDiff(data?.permissionGroup, formData),
-            ...channelsDiff(data?.permissionGroup, formData),
-            restrictedAccessToChannels:
-              checkIfPermissionGroupHasRestrictedChannels(
-                hasUserRestrictedChannels,
-                formData.channels,
-                availableChannels,
-              ),
+            ...channelsDiff(data?.permissionGroup, formData, availableChannels),
+            restrictedAccessToChannels: !formData.hasAllChannels,
           },
         },
       }),
     );
-  };
 
   return (
     <>
@@ -187,7 +175,6 @@ export const PermissionGroupWithChannelsDetails: React.FC<
         permissions={permissions}
         saveButtonBarState={permissionGroupUpdateResult.status}
         disabled={disabled}
-        disabledChannelPermissions={isLoading}
         toggle={toggle}
         toggleAll={toggleAll}
         isChecked={isSelected}

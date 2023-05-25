@@ -1,23 +1,19 @@
 import { ChannelFragment } from "@dashboard/graphql";
-import { useChannelsSearch } from "@dashboard/hooks/useChannelsSearch";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
-import { Box, Checkbox, Text } from "@saleor/macaw-ui/next";
+import { Box, Checkbox, Multiselect, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import MultiAutocompleteSelectField, {
-  MultiAutocompleteChoiceType,
-} from "../MultiAutocompleteSelectField";
 import { messages } from "./messages";
 
 interface ChannelPermissionProps {
-  selectedChannels: MultiAutocompleteChoiceType[];
+  selectedChannels: string[];
   allChannels: ChannelFragment[];
   description?: string;
   hasAllChannels: boolean;
   disabled: boolean;
-  disabledSelectAllChannls: boolean;
+  disabledSelectAllChannels: boolean;
   onChannelChange: FormChange;
   onHasAllChannelsChange: () => void;
 }
@@ -30,14 +26,12 @@ export const ChannelPermission = ({
   allChannels,
   selectedChannels,
   hasAllChannels,
-  disabledSelectAllChannls,
+  disabledSelectAllChannels,
 }: ChannelPermissionProps) => {
   const intl = useIntl();
 
-  const { onQueryChange, filteredChannels } = useChannelsSearch(allChannels);
-
   return (
-    <Box height="100%" overflow="hidden" paddingX={9} paddingY={9}>
+    <Box height="100%" paddingX={9} paddingY={9}>
       <Text as="p" variant="bodyEmp" size="large" marginBottom={7}>
         {intl.formatMessage(messages.title)}
       </Text>
@@ -50,7 +44,7 @@ export const ChannelPermission = ({
         )}
 
         <Checkbox
-          disabled={disabled || disabledSelectAllChannls}
+          disabled={disabled || disabledSelectAllChannels}
           checked={hasAllChannels}
           onCheckedChange={onHasAllChannelsChange}
           tabIndex={-1}
@@ -73,20 +67,19 @@ export const ChannelPermission = ({
         )}
 
         {!hasAllChannels && (
-          <Box __height="100%" overflowY="scroll" overflowX="hidden">
-            <MultiAutocompleteSelectField
+          <Box __height="calc(100% - 87px)" overflowY="auto">
+            <Multiselect
+              data-test-id="channels"
               disabled={disabled}
-              choices={mapNodeToChoice(filteredChannels)}
-              displayValues={selectedChannels}
-              fetchChoices={onQueryChange}
-              hasMore={false}
+              options={mapNodeToChoice(allChannels)}
               label={intl.formatMessage(messages.selectChannels)}
-              loading={false}
-              name="channels"
-              onChange={onChannelChange}
+              value={selectedChannels}
               placeholder={intl.formatMessage(messages.searchChannels)}
-              value={selectedChannels.map(channel => channel.value)}
-              testId="channels"
+              onChange={values => {
+                onChannelChange({
+                  target: { name: "channels", value: values },
+                });
+              }}
             />
           </Box>
         )}

@@ -32,7 +32,6 @@ const props: PermissonGroupWithChannelsDetailsPageProps = {
   toggleAll: () => undefined,
   toolbar: null,
   channels,
-  disabledChannelPermissions: false,
 };
 
 export default {

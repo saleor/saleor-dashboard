@@ -9,7 +9,7 @@ import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
-import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
+import { Metadata, MetadataIdSchema } from "@dashboard/components/Metadata";
 import Savebar from "@dashboard/components/Savebar";
 import {
   OrderDetailsFragment,
@@ -22,8 +22,6 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { defaultGraphiQLQuery } from "@dashboard/orders/queries";
 import { orderListUrl } from "@dashboard/orders/urls";
-import { mapMetadataItemToInput } from "@dashboard/utils/maps";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -41,7 +39,12 @@ import { OrderPaymentOrTransaction } from "../OrderPaymentOrTransaction/OrderPay
 import OrderUnfulfilledProductsCard from "../OrderUnfulfilledProductsCard";
 import { messages } from "./messages";
 import Title from "./Title";
-import { filteredConditionalItems, hasAnyItemsReplaceable } from "./utils";
+import {
+  createMetadataHandler,
+  createOrderMetadataIdSchema,
+  filteredConditionalItems,
+  hasAnyItemsReplaceable,
+} from "./utils";
 
 export interface OrderDetailsPageProps {
   order: OrderDetailsFragment | OrderDetailsFragment;
@@ -80,7 +83,7 @@ export interface OrderDetailsPageProps {
   onInvoiceSend(invoiceId: string);
   onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
   onAddManualTransaction();
-  onSubmit(data: MetadataFormData): SubmitPromise;
+  onSubmit(data: MetadataIdSchema): SubmitPromise;
 }
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
@@ -118,13 +121,6 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   const navigate = useNavigator();
   const intl = useIntl();
 
-  const {
-    isMetadataModified,
-    isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler,
-    resetMetadataChanged,
-  } = useMetadataChangeTrigger();
-
   const isOrderUnconfirmed = order?.status === OrderStatus.UNCONFIRMED;
   const canCancel = order?.status !== OrderStatus.CANCELED;
   const canEditAddresses = order?.status !== OrderStatus.CANCELED;
@@ -137,24 +133,12 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
     line => line.quantityToFulfill > 0,
   );
 
-  const handleSubmit = async (data: MetadataFormData) => {
-    const metadata = isMetadataModified ? data.metadata : undefined;
-    const privateMetadata = isPrivateMetadataModified
-      ? data.privateMetadata
-      : undefined;
-
-    const result = await onSubmit({
-      metadata,
-      privateMetadata,
-    });
-    resetMetadataChanged();
+  const handleSubmit = async (data: MetadataIdSchema) => {
+    const result = await onSubmit(data);
     return getMutationErrors(result);
   };
 
-  const initial: MetadataFormData = {
-    metadata: order?.metadata.map(mapMetadataItemToInput),
-    privateMetadata: order?.privateMetadata.map(mapMetadataItemToInput),
-  };
+  const initial = createOrderMetadataIdSchema(order);
 
   const saveLabel = isOrderUnconfirmed
     ? { confirm: intl.formatMessage(messages.confirmOrder) }
@@ -204,9 +188,18 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
   };
 
   return (
-    <Form confirmLeave initial={initial} onSubmit={handleSubmit}>
-      {({ change, data, submit }) => {
-        const changeMetadata = makeMetadataChangeHandler(change);
+    <Form
+      confirmLeave
+      initial={initial}
+      onSubmit={handleSubmit}
+      mergeData={false}
+    >
+      {({ set, triggerChange, data, submit }) => {
+        const handleChangeMetadata = createMetadataHandler(
+          data,
+          set,
+          triggerChange,
+        );
 
         return (
           <DetailPageLayout>
@@ -248,22 +241,28 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 </>
               )}
               {order?.fulfillments?.map(fulfillment => (
-                <React.Fragment key={fulfillment.id}>
-                  <OrderFulfilledProductsCard
-                    fulfillment={fulfillment}
-                    fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
-                    order={order}
-                    onOrderFulfillmentCancel={() =>
-                      onFulfillmentCancel(fulfillment.id)
-                    }
-                    onTrackingCodeAdd={() =>
-                      onFulfillmentTrackingNumberUpdate(fulfillment.id)
-                    }
-                    onOrderFulfillmentApprove={() =>
-                      onFulfillmentApprove(fulfillment.id)
-                    }
+                <OrderFulfilledProductsCard
+                  dataTestId="fulfilled-order-section"
+                  key={fulfillment.id}
+                  fulfillment={fulfillment}
+                  fulfillmentAllowUnpaid={shop?.fulfillmentAllowUnpaid}
+                  order={order}
+                  onOrderFulfillmentCancel={() =>
+                    onFulfillmentCancel(fulfillment.id)
+                  }
+                  onTrackingCodeAdd={() =>
+                    onFulfillmentTrackingNumberUpdate(fulfillment.id)
+                  }
+                  onOrderFulfillmentApprove={() =>
+                    onFulfillmentApprove(fulfillment.id)
+                  }
+                >
+                  <Metadata
+                    isLoading={loading}
+                    data={data[fulfillment.id]}
+                    onChange={x => handleChangeMetadata(x, fulfillment.id)}
                   />
-                </React.Fragment>
+                </OrderFulfilledProductsCard>
               ))}
               <OrderPaymentOrTransaction
                 order={order}
@@ -275,7 +274,11 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
                 onMarkAsPaid={onMarkAsPaid}
                 onAddManualTransaction={onAddManualTransaction}
               />
-              <Metadata data={data} onChange={changeMetadata} />
+              <Metadata
+                isLoading={loading}
+                data={data[order?.id]}
+                onChange={x => handleChangeMetadata(x, order?.id)}
+              />
               <OrderHistory
                 history={order?.events}
                 orderCurrency={order?.total?.gross.currency}

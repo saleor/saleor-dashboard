@@ -31,7 +31,7 @@ export const Menu: React.FC<TopNavMenuProps> = ({ items, dataTestId }) => (
     <Dropdown.Content align="end">
       <Box>
         <List
-          padding={5}
+          padding="s2"
           borderRadius={4}
           boxShadow="overlay"
           backgroundColor="surfaceNeutralPlain"
@@ -40,8 +40,8 @@ export const Menu: React.FC<TopNavMenuProps> = ({ items, dataTestId }) => (
             <Dropdown.Item key={item.label}>
               <List.Item
                 borderRadius={4}
-                paddingX={4}
-                paddingY={5}
+                paddingX="s1.5"
+                paddingY="s2"
                 onClick={item.onSelect}
                 data-test-id={item.testId}
               >
