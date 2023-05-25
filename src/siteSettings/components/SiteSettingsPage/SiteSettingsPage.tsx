@@ -136,8 +136,12 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               title={intl.formatMessage(commonMessages.generalInformations)}
             />
             <DetailPageLayout.Content>
-              <Box gap={5} paddingLeft={9}>
-                <Box display="grid" __gridTemplateColumns="1fr 3fr">
+              <Box gap={5}>
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={9}
+                >
                   <PageSectionHeader
                     title={intl.formatMessage(messages.sectionCheckoutTitle)}
                     description={intl.formatMessage(
@@ -154,7 +158,12 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
 
                 <Divider />
 
-                <Box display="grid" __gridTemplateColumns="1fr 3fr">
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={9}
+                  paddingBottom={10}
+                >
                   <PageSectionHeader
                     title={intl.formatMessage(messages.sectionCompanyTitle)}
                     description={intl.formatMessage(
@@ -179,7 +188,12 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
 
                 <Divider />
 
-                <Box display="grid" __gridTemplateColumns="1fr 3fr">
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={9}
+                  paddingBottom={10}
+                >
                   <PageSectionHeader
                     title={intl.formatMessage(
                       messages.sectionEmailConfirmationTitle,

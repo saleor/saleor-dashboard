@@ -24,14 +24,14 @@ export const messages = defineMessages({
     description: "section description",
   },
   sectionEmailConfirmationTitle: {
-    id: "FA0Sxs",
-    defaultMessage: "Email confirmation",
-    description: "Email confirmation",
+    id: "qNeXG1",
+    defaultMessage: "User registration",
+    description: "User registration",
   },
   sectionEmailConfirmationHeader: {
-    id: "roWCaz",
-    defaultMessage: "Newly registered users email confirmation",
-    description: "Newly registered users email confirmation",
+    id: "kpRxSA",
+    defaultMessage: "Require email confirmation link",
+    description: "Require email confirmation link",
   },
   sectionEmailConfirmationOption: {
     id: "uRfta0",
@@ -39,10 +39,10 @@ export const messages = defineMessages({
     description: "Enable email confirmation",
   },
   sectionEmailConfirmationDescription: {
-    id: "GpyFuP",
+    id: "/xJSe8",
     defaultMessage:
-      "Require an confirmation for newly registered users by using their email.",
+      "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
     description:
-      "Require an confirmation for newly registered users by using their email.",
+      "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
   },
 });
