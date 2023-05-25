@@ -1,5 +1,7 @@
 /// <reference types="cypress"/>
 /// <reference types="../support"/>
+import faker from "faker";
+
 import {
   updateMetadata,
   updatePrivateMetadata,

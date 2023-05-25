@@ -40,6 +40,7 @@ describe("As an admin I want to update sales", () => {
 
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
+    const slug = name + faker.datatype.number();
 
     cy.clearSessionData().loginUserViaRequest();
     getDefaultChannel()
@@ -66,6 +67,7 @@ describe("As an admin I want to update sales", () => {
           address,
           name: startsWith,
           taxClassId: taxClass.id,
+          slug,
         });
       })
       .then(({ warehouse: warehouseResp }) => {

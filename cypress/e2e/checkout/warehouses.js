@@ -1,5 +1,6 @@
 /// <reference types="cypress"/>
 /// <reference types="../../support"/>
+import faker from "faker";
 
 import { createCheckout } from "../../support/api/requests/Checkout";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";

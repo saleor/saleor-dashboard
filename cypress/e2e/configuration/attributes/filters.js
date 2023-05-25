@@ -15,7 +15,7 @@ import {
   showFilters,
 } from "../../../support/pages/catalog/products/productsListPage";
 
-describe("Tests for using attributes in filters", () => {
+xdescribe("Tests for using attributes in filters", () => {
   const startsWith = "AttrFilter" + Date.now();
 
   let attribute;

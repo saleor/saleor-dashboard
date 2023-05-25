@@ -34,8 +34,10 @@ describe("As a staff user I want to create shipping zone and rate", () => {
   let attribute;
 
   before(() => {
+    const productTypeSlug = `${faker.lorem.slug()}slug`;
+    const productSlug = `${faker.lorem.slug()}slug`;
+    const warehouseSlug = `${faker.lorem.slug()}slug`;
     cy.clearSessionData().loginUserViaRequest();
-
     channelsUtils
       .getDefaultChannel()
       .then(channel => {
@@ -46,7 +48,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
       .then(addresses => {
         address = addresses.usAddress;
 
-        createWarehouse({ name, address });
+        createWarehouse({ name, address, slug: warehouseSlug });
       })
       .then(warehouseResp => {
         warehouse = warehouseResp;
@@ -54,6 +56,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
         updateChannelWarehouses(defaultChannel.id, warehouse.id);
         productsUtils.createTypeAttributeAndCategoryForProduct({
           name: startsWith,
+          slug: productTypeSlug,
         });
       })
       .then(
@@ -73,6 +76,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
             warehouseId: warehouse.id,
             quantityInWarehouse: 10,
             price,
+            slug: productSlug,
           });
         },
       )

@@ -27,8 +27,9 @@ import { createShipping } from "../support/api/utils/shippingUtils";
 import { discountOptions } from "../support/pages/discounts/vouchersPage";
 
 describe("As a staff user I want to manage apps", () => {
-  const startsWith = "Apps -";
+  const startsWith = "Apps-";
   const name = `${startsWith}${faker.datatype.number()}`;
+  const productSlug = name + faker.datatype.number();
 
   let createdApp;
   let defaultChannel;
@@ -74,6 +75,7 @@ describe("As a staff user I want to manage apps", () => {
           productTypeId: productType.id,
           attributeId: attribute.id,
           categoryId: category.id,
+          slug: productSlug,
         });
       })
       .then(({ variantsList: variants }) => {

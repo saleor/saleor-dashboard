@@ -95,6 +95,8 @@ describe("Sales discounts for variant", () => {
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
+      const productName = faker.commerce.product();
+      const productSlug = productName + faker.datatype.number();
       const productPriceOnSale = productPrice - discountValue;
 
       let sale;
@@ -107,7 +109,11 @@ describe("Sales discounts for variant", () => {
         channelId: defaultChannel.id,
       }).then(saleResp => (sale = saleResp));
       productsUtils
-        .createProductInChannel(productData)
+        .createProductInChannel({
+          ...productData,
+          name: productName,
+          slug: productSlug,
+        })
         .then(({ product, variantsList }) => {
           variantNotOnSale = variantsList;
 

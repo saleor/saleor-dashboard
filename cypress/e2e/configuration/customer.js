@@ -255,7 +255,7 @@ describe("Tests for customer", () => {
     { tags: ["@customer", "@allEnv", "@stable"] },
     () => {
       const randomName = `${startsWith}${faker.datatype.number()}`;
-      const updatedName = `${startsWith}UpdatedName`;
+      const updatedName = `${randomName}UpdatedName`;
       const email = `${randomName}@example.com`;
 
       createCustomer(email, randomName, address, true).then(({ user }) => {

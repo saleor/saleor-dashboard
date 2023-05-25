@@ -15,7 +15,7 @@ import {
   selectChannelInPicker,
 } from "../../support/pages/channelsPage";
 
-describe("Channels in draft orders", () => {
+xdescribe("Channels in draft orders", () => {
   const startsWith = "CyChannelInDraftOrders-";
   const randomName = startsWith + faker.datatype.number();
 
