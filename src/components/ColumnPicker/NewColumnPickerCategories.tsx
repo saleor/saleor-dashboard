@@ -1,18 +1,11 @@
 import { CircularProgress } from "@material-ui/core";
-import {
-  Box,
-  Button,
-  Checkbox,
-  List,
-  SearchInput,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { Box, Button, Checkbox, List, Text } from "@saleor/macaw-ui/next";
 import React, { useMemo, useState } from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
-import Debounce from "../Debounce";
 import messages from "./messages";
 import { NewColumnPickerPagination } from "./NewColumnPickerPagination";
+import { NewColumnPickerSearch } from "./NewColumnPickerSearch";
 import { ColumnCategory } from "./useColumns";
 import { getExitIcon, getExitOnClick } from "./utils";
 
@@ -31,8 +24,6 @@ export const NewColumnPickerCategories: React.FC<
   onDynamicColumnSelect,
   columnPickerSettings,
 }) => {
-  const intl = useIntl();
-
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [query, setQuery] = useState<string>("");
 
@@ -93,30 +84,11 @@ export const NewColumnPickerCategories: React.FC<
               paddingX={7}
               style={{ boxSizing: "border-box" }}
             >
-              <Debounce
-                debounceFn={(value: string) => currentCategory.onSearch(value)}
-                time={500}
-              >
-                {debounceSearchChange => {
-                  const handleSearchChange = (
-                    event: React.ChangeEvent<any>,
-                  ) => {
-                    const value = event.target.value ?? "";
-                    setQuery(value);
-                    debounceSearchChange(value);
-                  };
-                  return (
-                    <SearchInput
-                      size="small"
-                      placeholder={intl.formatMessage(
-                        messages.searchForColumns,
-                      )}
-                      value={query}
-                      onChange={handleSearchChange}
-                    />
-                  );
-                }}
-              </Debounce>
+              <NewColumnPickerSearch
+                currentCategory={currentCategory}
+                query={query}
+                setQuery={setQuery}
+              />
             </Box>
             <Box paddingX={8} paddingY={4} flexGrow="1">
               {!currentCategory.availableNodes.length ? (
