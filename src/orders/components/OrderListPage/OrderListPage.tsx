@@ -6,8 +6,7 @@ import {
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { ButtonWithSelect } from "@dashboard/components/ButtonWithSelect";
-import CardMenu from "@dashboard/components/CardMenu";
+import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { useDevModeContext } from "@dashboard/components/DevModePanel/hooks";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -29,8 +28,7 @@ import {
 } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import { Box, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -54,18 +52,16 @@ export interface OrderListPageProps
   params: OrderListUrlQueryParams;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (tabIndex: number) => void;
-  columnPickerSettings: string[];
-  setDynamicColumnSettings: (cols: string[]) => void;
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    settings: {
-      marginRight: theme.spacing(2),
-    },
-  }),
-  { name: "OrderListPage" },
-);
+// const useStyles = makeStyles(
+//   theme => ({
+//     settings: {
+//       marginRight: theme.spacing(2),
+//     },
+//   }),
+//   { name: "OrderListPage" },
+// );
 
 const OrderListPage: React.FC<OrderListPageProps> = ({
   initialSearch,
@@ -84,12 +80,9 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
   onAll,
   currentTab,
   hasPresetsChanged,
-  columnPickerSettings,
-  setDynamicColumnSettings,
   ...listProps
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const filterStructure = createFilterStructure(intl, filterOpts);
   const limitsReached = isLimitReached(limits, "orders");
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
@@ -155,9 +148,9 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
 
           <Box display="flex" alignItems="center" gap={5}>
             {!!onSettingsOpen && (
-              <CardMenu
-                className={classes.settings}
-                menuItems={[
+              <TopNav.Menu
+                // className={classes.settings}
+                items={[
                   {
                     label: intl.formatMessage({
                       id: "vEwjub",
@@ -178,18 +171,32 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
                 ]}
               />
             )}
-            <ButtonWithSelect
-              disabled={limitsReached}
-              options={extensionCreateButtonItems}
-              data-test-id="create-order-button"
-              onClick={onAdd}
-            >
-              <FormattedMessage
-                id="LshEVn"
-                defaultMessage="Create order"
-                description="button"
-              />
-            </ButtonWithSelect>
+            {extensionCreateButtonItems.length > 0 ? (
+              <ButtonWithDropdown
+                onClick={onAdd}
+                testId={"create-order-button"}
+                options={extensionCreateButtonItems}
+                disabled={limitsReached}
+              >
+                <FormattedMessage
+                  id="LshEVn"
+                  defaultMessage="Create order"
+                  description="button"
+                />
+              </ButtonWithDropdown>
+            ) : (
+              <Button
+                data-test-id="create-order-button"
+                onClick={onAdd}
+                disabled={limitsReached}
+              >
+                <FormattedMessage
+                  id="LshEVn"
+                  defaultMessage="Create order"
+                  description="button"
+                />
+              </Button>
+            )}
             {hasLimits(limits, "orders") && (
               <LimitsInfo
                 text={intl.formatMessage(
@@ -224,8 +231,6 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           {...listProps}
           hasRowHover={!isFilterPresetOpen}
           rowAnchor={orderUrl}
-          columnPickerSettings={columnPickerSettings}
-          setDynamicColumnSettings={setDynamicColumnSettings}
         />
       </Card>
     </ListPageLayout>

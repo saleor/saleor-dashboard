@@ -26,8 +26,6 @@ interface OrderListDatagridProps
   onRowClick?: (id: string) => void;
   rowAnchor?: (id: string) => string;
   hasRowHover?: boolean;
-  columnPickerSettings: string[];
-  setDynamicColumnSettings: (cols: string[]) => void;
 }
 
 export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
@@ -40,8 +38,6 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   onRowClick,
   hasRowHover,
   rowAnchor,
-  columnPickerSettings,
-  setDynamicColumnSettings,
 }) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
@@ -63,11 +59,8 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   const { handlers, staticColumns, visibleColumns, selectedColumns } =
     useColumns({
       staticColumns: memoizedStaticColumns,
-      columnCategories: [],
       selectedColumns: settings?.columns ?? [],
       onSave: handleColumnChange,
-      setDynamicColumnSettings,
-      columnPickerSettings,
     });
 
   const handleHeaderClick = useCallback(
@@ -137,8 +130,6 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
               staticColumns={staticColumns}
               selectedColumns={selectedColumns}
               onSave={handlers.onChange}
-              columnPickerSettings={columnPickerSettings}
-              onDynamicColumnSelect={handlers.onDynamicColumnSelect}
             />
           )}
           fullScreenTitle={intl.formatMessage(messages.orders)}

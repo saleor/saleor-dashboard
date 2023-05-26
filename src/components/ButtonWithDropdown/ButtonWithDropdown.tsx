@@ -12,6 +12,7 @@ interface ButtonWithDropdownProps {
   onClick: () => void;
   options: Array<{ label: string; testId: string; onSelect: () => void }>;
   testId?: string;
+  disabled?: boolean;
 }
 
 export const ButtonWithDropdown: React.FC<ButtonWithDropdownProps> = ({
@@ -19,10 +20,11 @@ export const ButtonWithDropdown: React.FC<ButtonWithDropdownProps> = ({
   options,
   children,
   testId,
+  disabled = false,
 }) => (
   <Dropdown>
     <Dropdown.Trigger>
-      <Button data-test-id={testId} onClick={onClick}>
+      <Button data-test-id={testId} onClick={onClick} disabled={disabled}>
         {children}
         <ChervonDownIcon />
       </Button>

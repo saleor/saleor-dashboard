@@ -23,9 +23,9 @@ export interface NewColumnPickerProps {
   dynamicColumns?: AvailableColumn[];
   selectedColumns: string[];
   columnCategories?: ColumnCategory[];
-  columnPickerSettings: string[];
+  columnPickerSettings?: string[];
   onSave: (columns: string[]) => void;
-  onDynamicColumnSelect: (columns: string[]) => void;
+  onDynamicColumnSelect?: (columns: string[]) => void;
 }
 
 export const NewColumnPicker: React.FC<NewColumnPickerProps> = ({

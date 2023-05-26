@@ -24,8 +24,8 @@ export interface UseColumnsProps {
   columnCategories?: ColumnCategory[];
   selectedColumns: string[];
   onSave: (columns: string[]) => void;
-  columnPickerSettings: string[];
-  setDynamicColumnSettings: (cols: string[]) => void;
+  columnPickerSettings?: string[];
+  setDynamicColumnSettings?: (cols: string[]) => void;
 }
 
 export const useColumns = ({
@@ -42,7 +42,7 @@ export const useColumns = ({
   React.useEffect(() => {
     if (
       dynamicColumns === null &&
-      columnCategories.every(category => Array.isArray(category.selectedNodes))
+      columnCategories?.every(category => Array.isArray(category.selectedNodes))
     ) {
       updateDynamicColumns(
         columnCategories
@@ -125,8 +125,10 @@ export const useColumns = ({
   const onCustomUpdateVisible = setVisibleColumns;
 
   const onDynamicColumnSelect = (columns: string[]) => {
+    if (typeof setDynamicColumnSettings !== "function") {
+      return;
+    }
     setDynamicColumnSettings(columns);
-
     updateDynamicColumns(prevDynamicColumns =>
       uniqBy(
         [
