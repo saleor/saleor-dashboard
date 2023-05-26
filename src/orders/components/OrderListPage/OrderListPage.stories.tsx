@@ -82,8 +82,6 @@ const props: OrderListPageProps = {
   hasPresetsChanged: false,
   onTabSave: () => undefined,
   onTabUpdate: () => undefined,
-  columnPickerSettings: [],
-  setDynamicColumnSettings: () => undefined,
 };
 
 export default {
