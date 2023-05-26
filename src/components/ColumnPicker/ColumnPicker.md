@@ -51,7 +51,7 @@ The reason why column picker settings object needs to be in the view file and ca
  
  ```tsx
 const { columnPickerSettings, setDynamicColumnsSettings } =
-useDynamicColumnSettings("PRODUCT_LIST");
+useColumnPickerSettings("PRODUCT_LIST");
 
 // Translates columnIDs to api IDs
 const filteredColumnIds = columnPickerSettings

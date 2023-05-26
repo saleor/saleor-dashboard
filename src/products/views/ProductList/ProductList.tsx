@@ -1,7 +1,7 @@
 import { filterable } from "@dashboard/attributes/utils/data";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useDynamicColumnSettings } from "@dashboard/components/ColumnPicker/useColumnPickerSettings";
+import { useColumnPickerSettings } from "@dashboard/components/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
@@ -104,7 +104,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   );
 
   const { columnPickerSettings, setDynamicColumnsSettings } =
-    useDynamicColumnSettings("PRODUCT_LIST");
+    useColumnPickerSettings("PRODUCT_LIST");
   // Keep reference to clear datagrid selection function
   const clearRowSelectionCallback = React.useRef<() => void | null>(null);
   const clearRowSelection = () => {

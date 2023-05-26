@@ -1,6 +1,6 @@
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useDynamicColumnSettings } from "@dashboard/components/ColumnPicker/useColumnPickerSettings";
+import { useColumnPickerSettings } from "@dashboard/components/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
@@ -63,7 +63,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     ListViews.ORDER_LIST,
   );
   const { columnPickerSettings, setDynamicColumnsSettings } =
-    useDynamicColumnSettings("ORDER_LIST");
+    useColumnPickerSettings("ORDER_LIST");
 
   const [tabIndexToDelete, setTabIndexToDelete] = useState<number | null>(null);
 

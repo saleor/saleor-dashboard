@@ -21,7 +21,7 @@ export const defaultDynamicColumns: DynamicColumnSettings = {
   ORDER_DRAFT_DETAILS: [],
 };
 
-export const useDynamicColumnSettings = (view: DatagridViews) => {
+export const useColumnPickerSettings = (view: DatagridViews) => {
   const [config, setConfig] = useLocalStorage(
     COLUMN_PICKER_KEY,
     defaultDynamicColumns,
