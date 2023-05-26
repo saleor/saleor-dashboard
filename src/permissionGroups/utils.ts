@@ -182,10 +182,13 @@ export const checkIfUserHasRestictedChannels = (user?: UserContext["user"]) => {
 /**
  * Get user accessible channels.
  */
-export const getUserAccessibleChannels = (user?: UserContext["user"]) => {
+export const getUserAccessibleChannels = (
+  user?: UserContext["user"],
+  allChannels?: ChannelFragment[],
+) => {
   if (user && "accessibleChannels" in user) {
     return user.accessibleChannels;
   }
 
-  return [];
+  return allChannels ?? [];
 };

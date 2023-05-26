@@ -25,11 +25,7 @@ export const Root: React.FC<PropsWithChildren<TopNavProps>> = ({
   const { availableChannels, channel, isPickerActive, setChannel } =
     useAppChannel(false);
   const user = useUser();
-
-  const channels =
-    "accessibleChannels" in user
-      ? getUserAccessibleChannels(user.user)
-      : availableChannels;
+  const channels = getUserAccessibleChannels(user.user, availableChannels);
 
   return (
     <TopNavWrapper withoutBorder={withoutBorder}>

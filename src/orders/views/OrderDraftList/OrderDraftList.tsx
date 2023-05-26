@@ -104,11 +104,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
 
   const { channel, availableChannels } = useAppChannel(false);
   const user = useUser();
-
-  const channels =
-    "accessibleChannels" in user
-      ? getUserAccessibleChannels(user.user)
-      : availableChannels;
+  const channels = getUserAccessibleChannels(user.user, availableChannels);
 
   const limitOpts = useShopLimitsQuery({
     variables: {

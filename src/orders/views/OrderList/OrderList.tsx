@@ -71,11 +71,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   const intl = useIntl();
   const { channel, availableChannels } = useAppChannel(false);
   const user = useUser();
-
-  const channels =
-    "accessibleChannels" in user
-      ? getUserAccessibleChannels(user.user)
-      : availableChannels;
+  const channels = getUserAccessibleChannels(user.user, availableChannels);
 
   const [createOrder] = useOrderDraftCreateMutation({
     onCompleted: data => {
