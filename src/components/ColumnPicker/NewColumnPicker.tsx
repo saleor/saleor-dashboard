@@ -50,7 +50,7 @@ export const NewColumnPicker: React.FC<NewColumnPickerProps> = ({
       open={pickerOpen}
       onOpenChange={() => {
         setExpanded(false);
-        setPickerOpen(!pickerOpen);
+        setPickerOpen(isPickerOpen => !isPickerOpen);
       }}
     >
       <Popover.Trigger>
