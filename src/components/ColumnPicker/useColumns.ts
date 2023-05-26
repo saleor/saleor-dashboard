@@ -1,6 +1,7 @@
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
+import difference from "lodash/difference";
 import uniqBy from "lodash/uniqBy";
 import React from "react";
 
@@ -115,12 +116,7 @@ export const useColumns = ({
 
   const onChange = (columns: string[]) => {
     // Recently added is used by datagrid to auto-scroll to the column
-    const isColumnAdded = columns.length > selectedColumns.length;
-    if (isColumnAdded) {
-      setRecentlyAddedColumn(columns.find(x => !selectedColumns.includes(x)));
-    } else {
-      setRecentlyAddedColumn(null);
-    }
+    setRecentlyAddedColumn(difference(columns, selectedColumns)[0]);
     // Saves in LS
     onSave(columns);
   };
