@@ -12,6 +12,7 @@ import {
 import { getOrder } from "../../support/api/requests/Order";
 import { updateWarehouse } from "../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
+import { addPayment } from "../../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
@@ -32,6 +33,7 @@ describe("Warehouses in checkout", () => {
   let productData;
   let checkoutData;
   let variantsInOtherWarehouse;
+  const productSku = `${faker.lorem.slug()}slug`;
   const productTypeSlug = `${faker.lorem.slug()}slug`;
   const productSlug = `${faker.lorem.slug()}slug`;
   const warehouseSlug = `${faker.lorem.slug()}slug`;
@@ -79,7 +81,11 @@ describe("Warehouses in checkout", () => {
         productData.warehouseId = warehouseResp.id;
 
         updateWarehouse({ id: productData.warehouseId, isPrivate: false });
-        createProductInChannel({ ...productData, slug: productSlug });
+        createProductInChannel({
+          ...productData,
+          slug: productSlug,
+          sku: productSku,
+        });
       })
       .then(({ variantsList }) => {
         variantsInOtherWarehouse = variantsList;
@@ -234,8 +240,7 @@ describe("Warehouses in checkout", () => {
       );
     },
   );
-  // I need help here - from BE I receive availableCollectionPoints[] as empty array all the time
-  it.skip(
+  it(
     "should create order with warehouse address",
     { tags: ["@checkout", "@allEnv", "@stable"] },
     () => {
