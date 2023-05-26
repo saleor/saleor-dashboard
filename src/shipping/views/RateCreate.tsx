@@ -1,4 +1,3 @@
-import { useUser } from "@dashboard/auth";
 import { createSortedShippingChannels } from "@dashboard/channels/utils";
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -9,7 +8,6 @@ import {
 import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { filterAccessibleChannes } from "@dashboard/misc";
 import ShippingZonePostalCodeRangeDialog from "@dashboard/shipping/components/ShippingZonePostalCodeRangeDialog";
 import ShippingZoneRatesCreatePage from "@dashboard/shipping/components/ShippingZoneRatesCreatePage";
 import { useShippingRateCreator } from "@dashboard/shipping/handlers";
@@ -54,13 +52,9 @@ export const RateCreate: React.FC<RateCreateProps> = ({ id, params }) => {
     });
 
   const { taxClasses, fetchMoreTaxClasses } = useTaxClassFetchMore();
-  const user = useUser();
 
   const allChannels = createSortedShippingChannels(
-    filterAccessibleChannes(
-      shippingZoneData?.shippingZone?.channels as any,
-      user,
-    ),
+    shippingZoneData?.shippingZone?.channels,
   );
 
   const {

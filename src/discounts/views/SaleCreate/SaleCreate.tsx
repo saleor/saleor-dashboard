@@ -1,4 +1,3 @@
-import { useUser } from "@dashboard/auth";
 import { ChannelsAction } from "@dashboard/channels/urls";
 import { createSortedSaleData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
@@ -22,7 +21,6 @@ import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
-import { filterAccessibleChannes } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import React from "react";
@@ -47,11 +45,9 @@ export const SaleCreateView: React.FC<SaleCreateProps> = ({ params }) => {
     SaleCreateUrlQueryParams
   >(navigate, params => saleAddUrl(params), params);
 
-  const user = useUser();
   const { availableChannels } = useAppChannel(false);
-  const allChannels: ChannelSaleFormData[] = createSortedSaleData(
-    filterAccessibleChannes(availableChannels, user),
-  );
+  const allChannels: ChannelSaleFormData[] =
+    createSortedSaleData(availableChannels);
 
   const {
     channelListElements,

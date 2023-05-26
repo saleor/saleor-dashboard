@@ -1,4 +1,3 @@
-import { useUser } from "@dashboard/auth";
 import { ChannelsAction } from "@dashboard/channels/urls";
 import { createCollectionChannels } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
@@ -15,7 +14,7 @@ import useChannels from "@dashboard/hooks/useChannels";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
-import { filterAccessibleChannes, getMutationErrors } from "@dashboard/misc";
+import { getMutationErrors } from "@dashboard/misc";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataCreateHandler from "@dashboard/utils/handlers/metadataCreateHandler";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
@@ -52,12 +51,9 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
   const [updateChannels, updateChannelsOpts] =
     useCollectionChannelListingUpdateMutation({});
   const { availableChannels } = useAppChannel(false);
-  const user = useUser();
 
-  const allChannels = createCollectionChannels(
-    filterAccessibleChannes(availableChannels, user),
-  )?.sort((channel, nextChannel) =>
-    channel.name.localeCompare(nextChannel.name),
+  const allChannels = createCollectionChannels(availableChannels)?.sort(
+    (channel, nextChannel) => channel.name.localeCompare(nextChannel.name),
   );
 
   const {
