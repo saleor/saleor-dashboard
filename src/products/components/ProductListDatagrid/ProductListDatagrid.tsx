@@ -104,6 +104,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [onUpdateListSettings],
   );
 
+  const memoizedStaticColumns = useMemo(
+    () => productListStaticColumnAdapter(intl, sort),
+    [intl, sort],
+  );
+
   const {
     handlers,
     visibleColumns,
@@ -113,7 +118,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     columnCategories,
     recentlyAddedColumn,
   } = useColumns({
-    staticColumns: productListStaticColumnAdapter(intl, sort),
+    staticColumns: memoizedStaticColumns,
     columnCategories: productListDynamicColumnAdapter({
       attributesData:
         // To avoid overfetching we use single query for initial render

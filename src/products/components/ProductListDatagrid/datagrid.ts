@@ -31,19 +31,20 @@ import { IntlShape } from "react-intl";
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
 import { categoryMetaGroups, columnsMessages } from "./messages";
 
-export const productListStaticColumnAdapter = (intl, sort) =>
+export const productListStaticColumnAdapter = (
+  intl: IntlShape,
+  sort: Sort<ProductListUrlSortField>,
+) =>
   [
     {
       id: "name",
       title: intl.formatMessage(commonMessages.product),
       width: 300,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.name),
     },
     {
       id: "productType",
       title: intl.formatMessage(columnsMessages.type),
       width: 200,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.productType),
     },
     {
       id: "description",
@@ -54,19 +55,16 @@ export const productListStaticColumnAdapter = (intl, sort) =>
       id: "availability",
       title: intl.formatMessage(columnsMessages.availability),
       width: 250,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.availability),
     },
     {
       id: "date",
       title: intl.formatMessage(columnsMessages.updatedAt),
       width: 250,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.date),
     },
     {
       id: "price",
       title: intl.formatMessage(columnsMessages.price),
       width: 250,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.price),
     },
   ].map(column => ({
     ...column,

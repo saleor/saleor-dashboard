@@ -12,7 +12,7 @@ import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui/next";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { orderListStaticColumnAdapter, useGetCellContent } from "./datagrid";
@@ -55,9 +55,14 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
   );
 
   const emptyColumn = useEmptyColumn();
+  const memoizedStaticColumns = useMemo(
+    () => orderListStaticColumnAdapter(emptyColumn, intl, sort),
+    [emptyColumn, intl, sort],
+  );
+
   const { handlers, staticColumns, visibleColumns, selectedColumns } =
     useColumns({
-      staticColumns: orderListStaticColumnAdapter(emptyColumn, intl, sort),
+      staticColumns: memoizedStaticColumns,
       columnCategories: [],
       selectedColumns: settings?.columns ?? [],
       onSave: handleColumnChange,

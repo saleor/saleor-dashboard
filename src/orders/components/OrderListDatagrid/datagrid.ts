@@ -15,7 +15,7 @@ import {
   transformPaymentStatus,
 } from "@dashboard/misc";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
-import { RelayToFlat } from "@dashboard/types";
+import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import {
@@ -28,44 +28,47 @@ import { IntlShape, useIntl } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
-export const orderListStaticColumnAdapter = (emptyColumn, intl, sort) => [
-  emptyColumn,
-  {
-    id: "number",
-    title: intl.formatMessage(columnsMessages.number),
-    width: 100,
-    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.number),
-  },
-  {
-    id: "date",
-    title: intl.formatMessage(columnsMessages.date),
-    width: 200,
-    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.date),
-  },
-  {
-    id: "customer",
-    title: intl.formatMessage(columnsMessages.customer),
-    width: 200,
-    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.customer),
-  },
-  {
-    id: "payment",
-    title: intl.formatMessage(columnsMessages.payment),
-    width: 200,
-    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.payment),
-  },
-  {
-    id: "status",
-    title: intl.formatMessage(columnsMessages.status),
-    width: 200,
-    icon: getColumnSortDirectionIcon(sort, OrderListUrlSortField.fulfillment),
-  },
-  {
-    id: "total",
-    title: intl.formatMessage(columnsMessages.total),
-    width: 150,
-  },
-];
+export const orderListStaticColumnAdapter = (
+  emptyColumn: AvailableColumn,
+  intl: IntlShape,
+  sort: Sort<OrderListUrlSortField>,
+) =>
+  [
+    emptyColumn,
+    {
+      id: "number",
+      title: intl.formatMessage(columnsMessages.number),
+      width: 100,
+    },
+    {
+      id: "date",
+      title: intl.formatMessage(columnsMessages.date),
+      width: 200,
+    },
+    {
+      id: "customer",
+      title: intl.formatMessage(columnsMessages.customer),
+      width: 200,
+    },
+    {
+      id: "payment",
+      title: intl.formatMessage(columnsMessages.payment),
+      width: 200,
+    },
+    {
+      id: "status",
+      title: intl.formatMessage(columnsMessages.status),
+      width: 200,
+    },
+    {
+      id: "total",
+      title: intl.formatMessage(columnsMessages.total),
+      width: 150,
+    },
+  ].map(column => ({
+    ...column,
+    icon: getColumnSortDirectionIcon(sort, column.id),
+  }));
 
 interface GetCellContentProps {
   columns: AvailableColumn[];
