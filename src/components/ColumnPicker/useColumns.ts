@@ -10,8 +10,9 @@ import { AvailableColumn } from "../Datagrid/types";
 export interface ColumnCategory {
   name: string;
   prefix: string;
-  availableNodes: AvailableColumn[];
-  selectedNodes: AvailableColumn[];
+  availableNodes: AvailableColumn[] | undefined;
+  selectedNodes: AvailableColumn[] | undefined;
+  initialSearch?: string;
   onSearch?: (query: string) => void;
   hasNextPage: boolean;
   hasPreviousPage: boolean;

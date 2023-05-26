@@ -125,7 +125,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         // and when pagination / search is used we use separate query
         mapEdgesToItems(availableColumnsAttributesOpts[1].data?.attributes) ??
         (availableColumnsAttributesOpts[1].loading
-          ? []
+          ? undefined
           : mapEdgesToItems(gridAttributesOpts.data?.left) ?? []),
       gridAttributesData: mapEdgesToItems(gridAttributesOpts.data?.right),
       activeAttributeSortId,
@@ -134,6 +134,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         availableColumnsAttributesOpts[0]({
           variables: { search: query, first: 10 },
         }),
+      initialSearch: availableColumnsAttributesOpts[1].variables?.search ?? "",
       onNextPage: (query: string) =>
         availableColumnsAttributesOpts[0]({
           variables: {

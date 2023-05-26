@@ -36,6 +36,11 @@ const messages = defineMessages({
     defaultMessage: "Search for columns",
     description: "column picker search input placeholder",
   },
+  noResultsFound: {
+    id: "cPAc45",
+    defaultMessage: "No results found",
+    description: "column picker search no results message",
+  },
 });
 
 export default messages;

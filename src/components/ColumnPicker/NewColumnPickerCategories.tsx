@@ -25,12 +25,13 @@ export const NewColumnPickerCategories: React.FC<
   columnPickerSettings,
 }) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [query, setQuery] = useState<string>("");
 
   const currentCategory = useMemo(
     () => columnCategories.find(category => category.name === selectedCategory),
     [columnCategories, selectedCategory],
   );
+
+  const [query, setQuery] = useState<string>("");
 
   const changeHandler = (column: string) =>
     columnPickerSettings.includes(column)
@@ -45,6 +46,12 @@ export const NewColumnPickerCategories: React.FC<
       setSelectedCategory(columnCategories[0].name);
     }
   }, [columnCategories]);
+
+  React.useEffect(() => {
+    if (currentCategory) {
+      setQuery(currentCategory.initialSearch ?? "");
+    }
+  }, [currentCategory]);
 
   return (
     <Box
@@ -91,7 +98,7 @@ export const NewColumnPickerCategories: React.FC<
               />
             </Box>
             <Box paddingX={8} paddingY={4} flexGrow="1">
-              {!currentCategory.availableNodes.length ? (
+              {currentCategory.availableNodes === undefined ? (
                 <Box
                   width="100%"
                   height="100%"
@@ -101,6 +108,10 @@ export const NewColumnPickerCategories: React.FC<
                 >
                   <CircularProgress />
                 </Box>
+              ) : currentCategory.availableNodes.length === 0 ? (
+                <Text size="small" color="textNeutralSubdued">
+                  <FormattedMessage {...messages.noResultsFound} />
+                </Text>
               ) : (
                 currentCategory.availableNodes.map(node => (
                   <Box
