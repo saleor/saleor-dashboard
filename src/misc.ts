@@ -609,7 +609,7 @@ export const filterAccessibleChannes = (
   { user }: UserContext,
 ): ChannelFragment[] => {
   if (!user) {
-    return availableChannels;
+    return [];
   }
 
   if (
@@ -623,5 +623,5 @@ export const filterAccessibleChannes = (
     return user.accessibleChannels;
   }
 
-  return availableChannels;
+  return [];
 };
