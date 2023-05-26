@@ -2,6 +2,7 @@ import { useUser } from "@dashboard/auth";
 import { ChannelFragment, useBaseChannelsQuery } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import { getById } from "@dashboard/misc";
+import { getUserAccessibleChannels } from "@dashboard/permissionGroups/utils";
 import { useSaleorConfig } from "@saleor/sdk";
 import React from "react";
 
@@ -43,35 +44,18 @@ export const AppChannelProvider: React.FC = ({ children }) => {
 
   const [isPickerActive, setPickerActive] = React.useState(false);
   React.useEffect(() => {
-    if (user && "accessibleChannels" in user) {
-      const accessibleChannelsIds = user.accessibleChannels.map(
-        chan => chan.id,
-      );
-      const accessibleChannels = channelData?.channels?.filter(channel =>
-        accessibleChannelsIds.includes(channel.id),
-      );
+    const userChannels = getUserAccessibleChannels(user);
+    const channels =
+      "accessibleChannels" in user ? userChannels : channelData?.channels;
 
-      if (
-        !isValidChannel(selectedChannel, accessibleChannels) &&
-        channelData?.channels?.length > 0
-      ) {
-        setSelectedChannel(accessibleChannels[0].id);
-      }
-
-      return;
-    }
-
-    if (
-      !isValidChannel(selectedChannel, channelData?.channels) &&
-      channelData?.channels?.length > 0
-    ) {
+    if (!isValidChannel(selectedChannel, channels) && channels?.length > 0) {
       setSelectedChannel(channelData.channels[0].id);
     }
   }, [channelData, selectedChannel, setSelectedChannel, user]);
 
   React.useEffect(() => {
     setChannel(selectedChannel);
-  }, [selectedChannel]);
+  }, [selectedChannel, setChannel]);
 
   const availableChannels = channelData?.channels || [];
 

@@ -21,7 +21,8 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { filterAccessibleChannes, maybe } from "@dashboard/misc";
+import { maybe } from "@dashboard/misc";
+import { getUserAccessibleChannels } from "@dashboard/permissionGroups/utils";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
@@ -103,6 +104,12 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
 
   const { channel, availableChannels } = useAppChannel(false);
   const user = useUser();
+
+  const channels =
+    "accessibleChannels" in user
+      ? getUserAccessibleChannels(user.user)
+      : availableChannels;
+
   const limitOpts = useShopLimitsQuery({
     variables: {
       orders: true,
@@ -256,9 +263,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         tabName={maybe(() => tabs[currentTab - 1].name, "...")}
       />
       <ChannelPickerDialog
-        channelsChoices={mapNodeToChoice(
-          filterAccessibleChannes(availableChannels, user),
-        )}
+        channelsChoices={mapNodeToChoice(channels)}
         confirmButtonState="success"
         defaultChoice={channel?.id}
         open={params.action === "create-order"}

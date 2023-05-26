@@ -19,7 +19,7 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
-import { filterAccessibleChannes } from "@dashboard/misc";
+import { getUserAccessibleChannels } from "@dashboard/permissionGroups/utils";
 import {
   getActiveTabIndexAfterTabDelete,
   getNextUniqueTabName,
@@ -69,7 +69,13 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   usePaginationReset(orderListUrl, params, settings.rowNumber);
 
   const intl = useIntl();
+  const { channel, availableChannels } = useAppChannel(false);
   const user = useUser();
+
+  const channels =
+    "accessibleChannels" in user
+      ? getUserAccessibleChannels(user.user)
+      : availableChannels;
 
   const [createOrder] = useOrderDraftCreateMutation({
     onCompleted: data => {
@@ -84,7 +90,6 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     },
   });
 
-  const { channel, availableChannels } = useAppChannel(false);
   const limitOpts = useShopLimitsQuery({
     variables: {
       orders: true,
@@ -92,9 +97,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   });
 
   const noChannel = !channel && typeof channel !== "undefined";
-  const channelOpts = availableChannels
-    ? mapNodeToChoice(filterAccessibleChannes(availableChannels, user))
-    : null;
+  const channelOpts = availableChannels ? mapNodeToChoice(channels) : null;
 
   const tabs = getFilterTabs();
 
