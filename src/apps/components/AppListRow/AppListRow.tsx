@@ -62,8 +62,8 @@ const AppListRow: React.FC<AppListRowProps> = ({
       gridTemplateColumns={2}
       __gridTemplateRows="repeat(4, auto)"
       gridAutoFlow={isSingleApp ? "column" : "row"}
-      columnGap="s5"
-      padding="s5"
+      columnGap={5}
+      padding={5}
     >
       {appPair.map(app => (
         <AppListCardDescription key={app.name.en + "description"} app={app} />

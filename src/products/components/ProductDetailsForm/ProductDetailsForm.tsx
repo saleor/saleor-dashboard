@@ -38,7 +38,7 @@ export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({
       <DashboardCard.Title>
         {intl.formatMessage(commonMessages.generalInformations)}
       </DashboardCard.Title>
-      <DashboardCard.Content display="grid" gap="s2" paddingX="s5">
+      <DashboardCard.Content display="grid" gap={2} paddingX={5}>
         <Input
           label={intl.formatMessage({
             id: "6AMFki",

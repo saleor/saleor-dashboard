@@ -62,7 +62,7 @@ export const UserControls = () => {
       <Dropdown.Content align="end">
         <Box __minWidth={192}>
           <List
-            padding="s2"
+            padding={2}
             borderRadius={4}
             boxShadow="overlay"
             backgroundColor="surfaceNeutralPlain"
@@ -108,8 +108,8 @@ export const UserControls = () => {
               <List.Item
                 display="flex"
                 alignItems="center"
-                gap="s2"
-                marginTop="s1"
+                gap={2}
+                marginTop={1}
                 onClick={changeTheme}
                 {...listItemStyles}
                 data-test-id="theme-switch"
@@ -125,7 +125,7 @@ export const UserControls = () => {
 };
 
 const listItemStyles = {
-  paddingX: "s1.5",
-  paddingY: "s2",
+  paddingX: 1.5,
+  paddingY: 2,
   borderRadius: 4,
 } as const;

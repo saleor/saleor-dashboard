@@ -28,7 +28,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
       disabled={!app.isActive}
     >
       <List.Item
-        padding="s4"
+        padding={4}
         borderTopStyle="solid"
         borderWidth={1}
         borderColor="neutralPlain"
@@ -43,7 +43,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         cursor={app.isActive ? "pointer" : "not-allowed"}
       >
         <Box
-          gap="s2"
+          gap={2}
           alignItems="center"
           display="grid"
           __gridTemplateColumns="1fr auto"
@@ -51,11 +51,11 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
           <AppAvatar logo={logo} />
           <Box
             display="flex"
-            gap="s1"
+            gap={1}
             flexDirection="column"
             alignItems="flex-start"
           >
-            <Box display="flex" gap="s2">
+            <Box display="flex" gap={2}>
               <Text variant="bodyStrong">{app.name}</Text>
               <Text variant="body" color="textNeutralSubdued">
                 {`v${app.version}`}
@@ -84,12 +84,12 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         </Box>
         <Box
           display="flex"
-          marginTop={{ mobile: "s1.5", desktop: "s0" }}
+          marginTop={{ mobile: 1.5, desktop: 0 }}
           flexDirection="row"
           justifyContent={{ mobile: "flex-end", desktop: "flex-start" }}
-          gap="s3"
+          gap={3}
         >
-          <Box marginLeft="auto" display="flex" alignItems="center" gap="s5">
+          <Box marginLeft="auto" display="flex" alignItems="center" gap={5}>
             {!app.isActive && (
               <Text variant="caption" color="textNeutralSubdued">
                 <FormattedMessage {...messages.appDisabled} />

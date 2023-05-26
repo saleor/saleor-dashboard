@@ -52,7 +52,7 @@ export const themeOverrides: Partial<Theme> = {
     },
     MuiCardHeader: {
       root: {
-        paddingRight: vars.space.s8,
+        paddingRight: vars.spacing[8],
         backgroundColor: vars.colors.background.surfaceNeutralPlain,
       },
       title: {

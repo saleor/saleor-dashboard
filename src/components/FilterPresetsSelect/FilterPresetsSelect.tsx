@@ -118,21 +118,21 @@ export const FilterPresetsSelect = ({
             __minWidth={175}
             __maxHeight={400}
             overflowY="auto"
-            padding="s1"
+            padding={1}
             borderRadius={3}
             boxShadow="overlay"
             borderColor="neutralHighlight"
             borderStyle="solid"
             borderWidth={1}
             width="100%"
-            marginTop="s0.5"
+            marginTop={0.5}
             backgroundColor="surfaceNeutralPlain"
           >
             <Dropdown.Item>
               <List.Item
-                paddingX="s1.5"
-                paddingY="s1"
-                gap="s3"
+                paddingX={1.5}
+                paddingY={1}
+                gap={3}
                 borderRadius={3}
                 onClick={onSelectAll}
               >
@@ -143,14 +143,14 @@ export const FilterPresetsSelect = ({
             </Dropdown.Item>
             {savedPresets.length > 0 && (
               <Box
-                height="spx"
-                marginY="s1"
+                height="px"
+                marginY={1}
                 __backgroundColor={vars.colors.border.neutralHighlight}
                 __marginLeft={-4}
                 __width={getSeparatorWidth("4px")}
               />
             )}
-            <Box display="flex" flexDirection="column" gap="s0.5">
+            <Box display="flex" flexDirection="column" gap={0.5}>
               {savedPresets.map((preset, index) => (
                 <FilterPresetItem
                   isActive={activePreset === index + 1}
@@ -176,7 +176,7 @@ export const FilterPresetsSelect = ({
         <Button
           data-test-id="update-preset-button"
           className={sprinkles({
-            marginLeft: "s3",
+            marginLeft: 3,
           })}
           onClick={() => onUpdate(savedPresets[activePreset - 1])}
           variant="secondary"
@@ -191,7 +191,7 @@ export const FilterPresetsSelect = ({
             <Button
               data-test-id="add-preset-button"
               className={sprinkles({
-                marginLeft: "s3",
+                marginLeft: 3,
               })}
               icon={<PlusIcon />}
               onClick={onSave}
