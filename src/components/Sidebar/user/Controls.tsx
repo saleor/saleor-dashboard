@@ -1,4 +1,5 @@
 import { useUser } from "@dashboard/auth";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { staffMemberDetailsUrl } from "@dashboard/staff/urls";
 import { useTheme } from "@dashboard/theme";
 import { useTheme as useLegacyTheme } from "@saleor/macaw-ui";
@@ -8,12 +9,10 @@ import {
   Dropdown,
   List,
   MoreOptionsIcon,
-  sprinkles,
   Text,
 } from "@saleor/macaw-ui/next";
 import React, { useEffect } from "react";
 import { FormattedMessage } from "react-intl";
-import { Link } from "react-router-dom";
 
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
@@ -48,6 +47,11 @@ export const useLegacyThemeHandler = () => {
 export const UserControls = () => {
   const { user, logout } = useUser();
   const { changeTheme, theme } = useLegacyThemeHandler();
+  const navigate = useNavigator();
+
+  const goToAccountSettings = () => {
+    navigate(staffMemberDetailsUrl(user.id));
+  };
 
   return (
     <Dropdown>
@@ -69,24 +73,16 @@ export const UserControls = () => {
           >
             <Dropdown.Item>
               <List.Item
-                borderRadius={4}
                 data-test-id="account-settings-button"
+                {...listItemStyles}
+                onClick={goToAccountSettings}
               >
-                <Link
-                  to={staffMemberDetailsUrl(user?.id)}
-                  className={sprinkles({
-                    display: "block",
-                    width: "100%",
-                    ...listItemStyles,
-                  })}
-                >
-                  <Text>
-                    <FormattedMessage
-                      id="NQgbYA"
-                      defaultMessage="Account Settings"
-                    />
-                  </Text>
-                </Link>
+                <Text>
+                  <FormattedMessage
+                    id="NQgbYA"
+                    defaultMessage="Account Settings"
+                  />
+                </Text>
               </List.Item>
             </Dropdown.Item>
             <Dropdown.Item>
