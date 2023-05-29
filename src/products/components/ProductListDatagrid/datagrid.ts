@@ -1,3 +1,4 @@
+import { LazyQueryResult, QueryLazyOptions } from "@apollo/client";
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 import { getChannelAvailabilityLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
 import { ColumnCategory } from "@dashboard/components/ColumnPicker/useColumns";
@@ -16,6 +17,9 @@ import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { getMoneyRange } from "@dashboard/components/MoneyRange";
 import {
+  AvailableColumnAttributesQuery,
+  Exact,
+  GridAttributesQuery,
   ProductListQuery,
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
@@ -24,6 +28,7 @@ import { getDatagridRowDataIndex } from "@dashboard/misc";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
@@ -72,8 +77,8 @@ export const productListStaticColumnAdapter = (
   }));
 
 export const productListDynamicColumnAdapter = ({
-  attributesData,
-  gridAttributesData,
+  availableAttributesData,
+  selectedAttributesData,
   activeAttributeSortId,
   sort,
   onSearch,
@@ -88,13 +93,13 @@ export const productListDynamicColumnAdapter = ({
     name: intl.formatMessage(categoryMetaGroups.attribute),
     prefix: "attribute",
     availableNodes: parseAttributesColumns(
-      attributesData,
+      availableAttributesData,
       activeAttributeSortId,
       sort,
       intl,
     ),
     selectedNodes: parseAttributesColumns(
-      gridAttributesData,
+      selectedAttributesData,
       activeAttributeSortId,
       sort,
       intl,
@@ -385,3 +390,99 @@ export function getProductRowsLength(
 
   return 0;
 }
+
+type AvailableAttributesDataQueryResult = LazyQueryResult<
+  AvailableColumnAttributesQuery,
+  Exact<{
+    search: string;
+    before?: string;
+    after?: string;
+    first?: number;
+    last?: number;
+  }>
+>;
+
+type GridAttributesDataQueryResult = LazyQueryResult<
+  GridAttributesQuery,
+  Exact<{
+    ids: string | string[];
+  }>
+>;
+
+type AttributesLazyQuery = (
+  options?: QueryLazyOptions<
+    Exact<{
+      search: string;
+      before?: string;
+      after?: string;
+      first?: number;
+      last?: number;
+    }>
+  >,
+) => void;
+
+/**
+ * To avoid overfetching we use single query for initial render
+ * (gridAttributesOpts) and when pagination / search is used
+ * we use separate query - availableColumnsAttributesData
+ */
+export const getAvailableAttributesData = ({
+  availableColumnsAttributesData,
+  gridAttributesOpts,
+}: {
+  availableColumnsAttributesData: AvailableAttributesDataQueryResult;
+  gridAttributesOpts: GridAttributesDataQueryResult;
+}) =>
+  mapEdgesToItems(availableColumnsAttributesData.data?.attributes) ??
+  (availableColumnsAttributesData.loading
+    ? undefined
+    : mapEdgesToItems(gridAttributesOpts.data?.left) ?? []);
+
+export const getAttributesFetchMoreProps = ({
+  queryAvailableColumnsAttributes,
+  availableColumnsAttributesData,
+  gridAttributesOpts,
+}: {
+  queryAvailableColumnsAttributes: AttributesLazyQuery;
+  availableColumnsAttributesData: AvailableAttributesDataQueryResult;
+  gridAttributesOpts: GridAttributesDataQueryResult;
+}) => {
+  const onNextPage = (query: string) =>
+    queryAvailableColumnsAttributes({
+      variables: {
+        search: query,
+        after:
+          availableColumnsAttributesData.data?.attributes?.pageInfo.endCursor ??
+          gridAttributesOpts.data?.left?.pageInfo.endCursor,
+        first: 10,
+        last: null,
+        before: null,
+      },
+    });
+  const onPreviousPage = (query: string) =>
+    queryAvailableColumnsAttributes({
+      variables: {
+        search: query,
+        before:
+          availableColumnsAttributesData.data?.attributes?.pageInfo.startCursor,
+        last: 10,
+        first: null,
+        after: null,
+      },
+    });
+
+  const hasNextPage =
+    availableColumnsAttributesData.data?.attributes?.pageInfo?.hasNextPage ??
+    gridAttributesOpts.data?.left?.pageInfo?.hasNextPage ??
+    false;
+  const hasPreviousPage =
+    availableColumnsAttributesData.data?.attributes?.pageInfo
+      ?.hasPreviousPage ?? false;
+
+  return {
+    hasNextPage,
+    hasPreviousPage,
+    onNextPage,
+    onPreviousPage,
+  };
+};

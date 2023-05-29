@@ -38,6 +38,8 @@ import {
 } from "../ProductListPage/utils";
 import {
   createGetCellContent,
+  getAttributesFetchMoreProps,
+  getAvailableAttributesData,
   getColumnMetadata,
   getColumnSortIconName,
   getProductRowsLength,
@@ -109,6 +111,9 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
     [intl, sort],
   );
 
+  const [queryAvailableColumnsAttributes, availableColumnsAttributesData] =
+    availableColumnsAttributesOpts;
+
   const {
     handlers,
     visibleColumns,
@@ -120,53 +125,23 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   } = useColumns({
     staticColumns: memoizedStaticColumns,
     columnCategories: productListDynamicColumnAdapter({
-      attributesData:
-        // To avoid overfetching we use single query for initial render
-        // and when pagination / search is used we use separate query
-        mapEdgesToItems(availableColumnsAttributesOpts[1].data?.attributes) ??
-        (availableColumnsAttributesOpts[1].loading
-          ? undefined
-          : mapEdgesToItems(gridAttributesOpts.data?.left) ?? []),
-      gridAttributesData: mapEdgesToItems(gridAttributesOpts.data?.right),
+      availableAttributesData: getAvailableAttributesData({
+        availableColumnsAttributesData,
+        gridAttributesOpts,
+      }),
+      selectedAttributesData: mapEdgesToItems(gridAttributesOpts.data?.right),
       activeAttributeSortId,
       sort,
       onSearch: (query: string) =>
-        availableColumnsAttributesOpts[0]({
+        queryAvailableColumnsAttributes({
           variables: { search: query, first: 10 },
         }),
-      initialSearch: availableColumnsAttributesOpts[1].variables?.search ?? "",
-      onNextPage: (query: string) =>
-        availableColumnsAttributesOpts[0]({
-          variables: {
-            search: query,
-            after:
-              availableColumnsAttributesOpts[1].data?.attributes?.pageInfo
-                .endCursor ?? gridAttributesOpts.data?.left?.pageInfo.endCursor,
-            first: 10,
-            last: null,
-            before: null,
-          },
-        }),
-      onPreviousPage: (query: string) =>
-        availableColumnsAttributesOpts[0]({
-          variables: {
-            search: query,
-            before:
-              availableColumnsAttributesOpts[1].data?.attributes?.pageInfo
-                .startCursor,
-            last: 10,
-            first: null,
-            after: null,
-          },
-        }),
-      hasNextPage:
-        availableColumnsAttributesOpts[1].data?.attributes?.pageInfo
-          ?.hasNextPage ??
-        gridAttributesOpts.data?.left?.pageInfo?.hasNextPage ??
-        false,
-      hasPreviousPage:
-        availableColumnsAttributesOpts[1].data?.attributes?.pageInfo
-          ?.hasPreviousPage ?? false,
+      initialSearch: availableColumnsAttributesData.variables?.search ?? "",
+      ...getAttributesFetchMoreProps({
+        queryAvailableColumnsAttributes,
+        availableColumnsAttributesData,
+        gridAttributesOpts,
+      }),
       intl,
     }),
     selectedColumns: settings.columns,
