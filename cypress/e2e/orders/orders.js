@@ -12,7 +12,6 @@ import {
 import { MESSAGES, ONE_PERMISSION_USERS, urlList } from "../../fixtures";
 import {
   createCustomer,
-  deleteCustomersStartsWith,
   getOrder,
   updateMetadata,
   updateOrdersSettings,
@@ -24,7 +23,6 @@ import {
   createReadyToFulfillOrder,
   createShipping,
   createUnconfirmedOrder,
-  deleteShippingStartsWith,
   getDefaultChannel,
   getDefaultTaxClass,
   productsUtils,
@@ -76,10 +74,6 @@ describe("Orders", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteCustomersStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    productsUtils.deleteProductsStartsWith(startsWith);
-
     updateOrdersSettings();
     getDefaultChannel()
       .then(channel => {

@@ -7,20 +7,13 @@ import { createCheckout } from "../../../support/api/requests/Checkout";
 import { updateSale } from "../../../support/api/requests/Discounts/Sales";
 import { createVariant } from "../../../support/api/requests/Product";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import {
-  createSaleInChannel,
-  deleteSalesStartsWith,
-} from "../../../support/api/utils/discounts/salesUtils";
+import { createSaleInChannel } from "../../../support/api/utils/discounts/salesUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../../support/api/utils/shippingUtils";
+import { createShipping } from "../../../support/api/utils/shippingUtils";
 import {
   getDefaultTaxClass,
   updateTaxConfigurationForChannel,
 } from "../../../support/api/utils/taxesUtils";
-import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
 import {
   createSaleWithNewVariant,
   discountOptions,
@@ -41,10 +34,6 @@ describe("Sales discounts for variant", () => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    deleteSalesStartsWith(startsWith);
-    deleteWarehouseStartsWith(startsWith);
     channelsUtils
       .getDefaultChannel()
       .then(channel => {
@@ -106,6 +95,8 @@ describe("Sales discounts for variant", () => {
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
+      const productName = faker.commerce.product();
+      const productSlug = productName + faker.datatype.number();
       const productPriceOnSale = productPrice - discountValue;
 
       let sale;
@@ -118,7 +109,11 @@ describe("Sales discounts for variant", () => {
         channelId: defaultChannel.id,
       }).then(saleResp => (sale = saleResp));
       productsUtils
-        .createProductInChannel(productData)
+        .createProductInChannel({
+          ...productData,
+          name: productName,
+          slug: productSlug,
+        })
         .then(({ product, variantsList }) => {
           variantNotOnSale = variantsList;
 

@@ -5,22 +5,17 @@ import faker from "faker";
 
 import { DRAFT_ORDERS_LIST_SELECTORS } from "../../elements/orders/draft-orders-list-selectors";
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
+import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { urlList } from "../../fixtures/urlList";
-import {
-  createCustomer,
-  deleteCustomersStartsWith,
-} from "../../support/api/requests/Customer";
+import { createCustomer } from "../../support/api/requests/Customer";
 import { updateOrdersSettings } from "../../support/api/requests/Order";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
+import { createShipping } from "../../support/api/utils/shippingUtils";
 import { selectChannelInPicker } from "../../support/pages/channelsPage";
 import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
 
-xdescribe("Draft orders", () => {
+describe("Draft orders", () => {
   const startsWith = "CyDraftOrders-";
   const randomName = startsWith + faker.datatype.number();
 
@@ -30,10 +25,6 @@ xdescribe("Draft orders", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteCustomersStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    productsUtils.deleteProductsStartsWith(startsWith);
-
     updateOrdersSettings();
     getDefaultChannel()
       .then(channel => {
@@ -89,25 +80,35 @@ xdescribe("Draft orders", () => {
     "should move draft order to orders. TC: SALEOR_2103",
     { tags: ["@orders", "@allEnv"] },
     () => {
+      let draftOrderNumber;
+      cy.addAliasToGraphRequest("OrderDraftFinalize");
+
       cy.visit(urlList.orders);
-      cy.expectSkeletonIsVisible();
       cy.get(ORDERS_SELECTORS.createOrderButton).click();
       selectChannelInPicker(defaultChannel.name);
-      finalizeDraftOrder(randomName, address).then(draftOrderNumber => {
-        cy.visit(urlList.orders);
-        cy.contains(ORDERS_SELECTORS.orderRow, draftOrderNumber).should(
-          $order => {
-            expect($order).to.be.visible;
-          },
-        );
-        cy.visit(urlList.draftOrders);
-        cy.contains(
-          DRAFT_ORDERS_LIST_SELECTORS.draftOrderRow,
-          draftOrderNumber,
-        ).should($draftOrder => {
-          expect($draftOrder).to.not.exist;
+      finalizeDraftOrder(randomName, address)
+        .wait("@OrderDraftFinalize")
+        .then(finalizedDraftOrderResponse => {
+          cy.log(finalizedDraftOrderResponse);
+          draftOrderNumber =
+            finalizedDraftOrderResponse.response.body.data.draftOrderComplete
+              .order.number;
+          cy.get(SHARED_ELEMENTS.pageHeader).should(
+            "contain.text",
+            draftOrderNumber,
+          );
+          cy.addAliasToGraphRequest("OrderList")
+            .get('[data-test-id="app-header-back-button"]')
+            .click()
+            .waitForRequestAndCheckIfNoErrors("@OrderList");
+          cy.visit(urlList.draftOrders).then(() => {
+            cy.get(DRAFT_ORDERS_LIST_SELECTORS.draftOrderRow).should(
+              "have.length.greaterThan",
+              5,
+            );
+            cy.contains(draftOrderNumber).should("not.exist");
+          });
         });
-      });
     },
   );
 });

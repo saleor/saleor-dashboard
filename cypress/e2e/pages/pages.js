@@ -12,8 +12,6 @@ import {
   getPage,
 } from "../../support/api/requests/Page";
 import { createPageType } from "../../support/api/requests/PageType";
-import { deleteAttributesStartsWith } from "../../support/api/utils/attributes/attributeUtils";
-import { deletePageTypesStartsWith } from "../../support/api/utils/pageTypeUtils";
 import { attributesTypes, createPage } from "../../support/pages/pagesPage";
 
 describe("Tests for pages", () => {
@@ -32,9 +30,6 @@ describe("Tests for pages", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteAttributesStartsWith(startsWith);
-    deletePageTypesStartsWith(startsWith);
-
     createAttribute({ name, type: "PAGE_TYPE" })
       .then(attributeResp => {
         attribute = attributeResp;

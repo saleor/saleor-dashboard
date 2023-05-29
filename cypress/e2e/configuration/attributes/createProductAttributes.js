@@ -11,7 +11,6 @@ import {
   createAttribute,
   getAttribute,
 } from "../../../support/api/requests/Attribute";
-import { deleteAttributesStartsWith } from "../../../support/api/utils/attributes/attributeUtils";
 import { expectCorrectDataInAttribute } from "../../../support/api/utils/attributes/checkAttributeData";
 import {
   createAttributeWithInputType,
@@ -19,7 +18,7 @@ import {
 } from "../../../support/pages/attributesPage";
 
 describe("As an admin I want to create product attribute", () => {
-  const startsWith = "AttrCreate";
+  const startsWith = "AttrCreate" + Date.now();
   const attributesTypes = [
     { type: "DROPDOWN", testCase: "SALEOR_0501" },
     { type: "MULTISELECT", testCase: "SALEOR_0502" },
@@ -51,7 +50,6 @@ describe("As an admin I want to create product attribute", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteAttributesStartsWith(startsWith);
   });
 
   beforeEach(() => {

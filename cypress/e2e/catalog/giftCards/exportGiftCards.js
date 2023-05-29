@@ -13,7 +13,6 @@ import {
   activatePlugin,
   updatePlugin,
 } from "../../../support/api/requests/Plugins";
-import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
 import { getMailWithGiftCardExportWithAttachment } from "../../../support/api/utils/users";
 import { enterAndSelectGiftCards } from "../../../support/pages/catalog/giftCardPage";
 
@@ -23,7 +22,6 @@ describe("As an admin I want to export gift card", () => {
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
     activatePlugin({ id: "mirumee.notifications.admin_email" });
-    deleteGiftCardsWithTagStartsWith(startsWith);
   });
 
   beforeEach(() => {

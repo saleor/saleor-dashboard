@@ -13,14 +13,10 @@ import {
 } from "../../../support/api/requests/Channels";
 import { createCheckout } from "../../../support/api/requests/Checkout";
 import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
-import {
-  deleteChannelsStartsWith,
-  getDefaultChannel,
-} from "../../../support/api/utils/channelsUtils";
+import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
 import { isProductVisible } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 
@@ -35,8 +31,6 @@ describe("Tests on inactive channel", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteChannelsStartsWith(channelStartsWith);
-    deleteProductsStartsWith(channelStartsWith);
     cy.fixture("addresses").then(({ plAddress }) => {
       address = plAddress;
     });

@@ -8,15 +8,12 @@ import { ONE_PERMISSION_USERS, urlList } from "../../fixtures";
 import {
   createChannel,
   createCustomer,
-  deleteCustomersStartsWith,
   getOrder,
   updateChannelOrderSettings,
 } from "../../support/api/requests";
 import {
   createOrder,
   createShipping,
-  deleteChannelsStartsWith,
-  deleteShippingStartsWith,
   getDefaultTaxClass,
   productsUtils,
   updateTaxConfigurationForChannel,
@@ -39,11 +36,6 @@ describe("Orders", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteChannelsStartsWith(startsWith);
-    deleteCustomersStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    productsUtils.deleteProductsStartsWith(startsWith);
-
     createChannel({ name: randomName })
       .then(channelResp => {
         channel = channelResp;

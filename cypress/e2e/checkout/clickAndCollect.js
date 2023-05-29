@@ -16,12 +16,8 @@ import { addPayment } from "../../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
 } from "../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../support/api/utils/shippingUtils";
+import { createShipping } from "../../support/api/utils/shippingUtils";
 import {
   createWarehouse,
   pickupOptions,
@@ -37,11 +33,13 @@ describe("Warehouses in checkout", () => {
   let productData;
   let checkoutData;
   let variantsInOtherWarehouse;
+  const productSku = `${faker.lorem.slug()}slug`;
+  const productTypeSlug = `${faker.lorem.slug()}slug`;
+  const productSlug = `${faker.lorem.slug()}slug`;
+  const warehouseSlug = `${faker.lorem.slug()}slug`;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteShippingStartsWith(startsWith);
-    deleteProductsStartsWith(startsWith);
     cy.fixture("addresses")
       .then(addresses => {
         usAddress = addresses.usAddress;
@@ -51,7 +49,10 @@ describe("Warehouses in checkout", () => {
       })
       .then(channelResp => {
         defaultChannel = channelResp;
-        createTypeAttributeAndCategoryForProduct({ name: startsWith });
+        createTypeAttributeAndCategoryForProduct({
+          name: startsWith,
+          slug: productTypeSlug,
+        });
       })
       .then(({ attribute, productType, category }) => {
         productData = {
@@ -72,6 +73,7 @@ describe("Warehouses in checkout", () => {
           channelId: defaultChannel.id,
           name: startsWith,
           address: secondUsAddress,
+          slug: warehouseSlug,
         });
       })
       .then(({ warehouse: warehouseResp }) => {
@@ -79,7 +81,11 @@ describe("Warehouses in checkout", () => {
         productData.warehouseId = warehouseResp.id;
 
         updateWarehouse({ id: productData.warehouseId, isPrivate: false });
-        createProductInChannel(productData);
+        createProductInChannel({
+          ...productData,
+          slug: productSlug,
+          sku: productSku,
+        });
       })
       .then(({ variantsList }) => {
         variantsInOtherWarehouse = variantsList;
@@ -103,6 +109,8 @@ describe("Warehouses in checkout", () => {
     { tags: ["@checkout", "@allEnv", "@stable"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
+      const secondProductSlug = `${faker.lorem.slug()}slug`;
+
       let warehouse;
 
       createShipping({
@@ -116,7 +124,7 @@ describe("Warehouses in checkout", () => {
           productData.warehouseId = warehouse.id;
 
           visitAndEnablePickup(warehouse.id);
-          createProductInChannel(productData);
+          createProductInChannel({ ...productData, slug: secondProductSlug });
         })
         .then(({ variantsList }) => {
           checkoutData.variantsList = variantsList.concat(
@@ -232,23 +240,22 @@ describe("Warehouses in checkout", () => {
       );
     },
   );
-
   it(
     "should create order with warehouse address",
     { tags: ["@checkout", "@allEnv", "@stable"] },
     () => {
-      let checkout;
-
       checkoutData.variantsList = variantsInOtherWarehouse;
 
       createCheckout(checkoutData)
-        .then(({ checkout: checkoutResp }) => {
-          checkout = checkoutResp;
-          const clickAndCollectOption = checkout.availableCollectionPoints[0];
-
-          deliveryMethodUpdate(clickAndCollectOption.id, checkout.token);
-          addPayment(checkout.id);
-          completeCheckout(checkout.id);
+        .then(checkoutResp => {
+          const clickAndCollectOption =
+            checkoutResp.checkout.availableCollectionPoints[0];
+          deliveryMethodUpdate(
+            clickAndCollectOption.id,
+            checkoutResp.checkout.token,
+          );
+          addPayment(checkoutResp.checkout.id);
+          completeCheckout(checkoutResp.checkout.id);
         })
         .then(({ order }) => {
           getOrder(order.id);

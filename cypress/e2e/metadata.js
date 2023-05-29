@@ -12,7 +12,6 @@ import { getDefaultChannel } from "../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
 } from "../support/api/utils/products/productsUtils";
 
 describe("Test for metadata", () => {
@@ -24,7 +23,6 @@ describe("Test for metadata", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteProductsStartsWith(startsWith);
     getDefaultChannel()
       .then(channelResp => {
         channel = channelResp;
