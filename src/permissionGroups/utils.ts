@@ -186,6 +186,10 @@ export const getUserAccessibleChannels = (
   user?: UserContext["user"],
   allChannels?: ChannelFragment[],
 ) => {
+  if (!user) {
+    return [];
+  }
+
   if (user && "accessibleChannels" in user) {
     return user.accessibleChannels;
   }

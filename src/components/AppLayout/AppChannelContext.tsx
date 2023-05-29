@@ -47,7 +47,7 @@ export const AppChannelProvider: React.FC = ({ children }) => {
     const channels = getUserAccessibleChannels(user, channelData?.channels);
 
     if (!isValidChannel(selectedChannel, channels) && channels?.length > 0) {
-      setSelectedChannel(channelData.channels[0].id);
+      setSelectedChannel(channels[0].id);
     }
   }, [channelData, selectedChannel, setSelectedChannel, user]);
 
