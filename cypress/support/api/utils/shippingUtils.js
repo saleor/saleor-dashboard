@@ -10,6 +10,7 @@ export function createShipping({
   price = 1,
   minProductPrice = 0,
   taxClassId,
+  slug,
 }) {
   let shippingMethod;
   let shippingZone;
@@ -19,6 +20,7 @@ export function createShipping({
     .createWarehouse({
       name,
       address,
+      slug,
     })
     .then(warehouseResp => {
       warehouse = warehouseResp;

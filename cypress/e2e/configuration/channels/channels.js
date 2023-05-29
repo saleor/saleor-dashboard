@@ -17,9 +17,6 @@ import {
   getShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
 import { createWarehouse as createWarehouseViaApi } from "../../../support/api/requests/Warehouse";
-import { deleteChannelsStartsWith } from "../../../support/api/utils/channelsUtils";
-import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
-import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
 import { createChannelByView } from "../../../support/pages/channelsPage";
 
 describe("Channels", () => {
@@ -31,9 +28,6 @@ describe("Channels", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteChannelsStartsWith(channelStartsWith);
-    deleteShippingStartsWith(channelStartsWith);
-    deleteWarehouseStartsWith(channelStartsWith);
     createShippingZoneWithoutWarehouse(randomName, "US").then(
       shippingZoneResp => {
         shippingZone = shippingZoneResp;

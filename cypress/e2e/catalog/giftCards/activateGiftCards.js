@@ -9,17 +9,14 @@ import {
 } from "../../../support/api/requests/GiftCard";
 import {
   createCheckoutWithDisabledGiftCard,
-  deleteGiftCardsWithTagStartsWith,
   isGiftCardDataAsExpected,
   purchaseProductWithActiveGiftCard,
 } from "../../../support/api/utils/catalog/giftCardUtils";
-import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import {
   addPayment,
   purchaseProductWithPromoCode,
 } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
 import {
   changeGiftCardActiveStatus,
@@ -44,11 +41,6 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
     cy.clearSessionData().loginUserViaRequest();
-
-    channelsUtils.deleteChannelsStartsWith(startsWith);
-    productsUtils.deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    deleteGiftCardsWithTagStartsWith(startsWith);
 
     productsUtils
       .createProductWithShipping({ name, shippingPrice, productPrice })
