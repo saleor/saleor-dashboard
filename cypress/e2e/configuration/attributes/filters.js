@@ -7,10 +7,7 @@ import {
 } from "../../../elements/shared/sharedElements";
 import { updateAttribute } from "../../../support/api/requests/Attribute";
 import { createProduct } from "../../../support/api/requests/Product";
-import {
-  createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
-} from "../../../support/api/utils/products/productsUtils";
+import { createTypeAttributeAndCategoryForProduct } from "../../../support/api/utils/products/productsUtils";
 import { enterAttributeAndChanegeIsFilterableInDashbord } from "../../../support/pages/attributesPage";
 import {
   enterProductListPage,
@@ -19,13 +16,12 @@ import {
 } from "../../../support/pages/catalog/products/productsListPage";
 
 xdescribe("Tests for using attributes in filters", () => {
-  const startsWith = "AttrFilter";
+  const startsWith = "AttrFilter" + Date.now();
 
   let attribute;
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteProductsStartsWith(startsWith);
     createTypeAttributeAndCategoryForProduct({
       name: startsWith,
       attributeValues: [startsWith],

@@ -12,7 +12,6 @@ import {
   createTypeProduct,
   getProductType,
 } from "../../../support/api/requests/ProductType";
-import { deleteProductsStartsWith } from "../../../support/api/utils/products/productsUtils";
 
 describe("As an admin I want to manage attributes in product types", () => {
   const startsWith = "attrProdType";
@@ -20,7 +19,6 @@ describe("As an admin I want to manage attributes in product types", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteProductsStartsWith(startsWith);
     createAttribute({ name: startsWith }).then(resp => (attribute = resp));
     cy.checkIfDataAreNotNull(attribute);
   });

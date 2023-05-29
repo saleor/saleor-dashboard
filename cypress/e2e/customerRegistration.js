@@ -9,7 +9,6 @@ import { customerDetailsUrl } from "../fixtures/urlList";
 import {
   confirmAccount,
   customerRegistration,
-  deleteCustomersStartsWith,
 } from "../support/api/requests/Customer";
 import { getDefaultChannel } from "../support/api/utils/channelsUtils";
 import { getMailActivationLinkForUser } from "../support/api/utils/users";
@@ -22,7 +21,6 @@ describe("Tests for customer registration", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteCustomersStartsWith(startsWith);
     getDefaultChannel().then(channel => {
       defaultChannel = channel;
       cy.checkIfDataAreNotNull({ defaultChannel });

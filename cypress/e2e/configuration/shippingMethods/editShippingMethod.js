@@ -13,7 +13,6 @@ import {
 } from "../../../support/api/requests/ShippingMethod";
 import { createWarehouse } from "../../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
-import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import {
   fillUpShippingRate,
   saveRateAfterUpdate,
@@ -32,7 +31,6 @@ describe("As a user I should be able to update and delete shipping method", () =
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteShippingStartsWith(startsWith);
 
     getDefaultChannel()
       .then(channel => {
