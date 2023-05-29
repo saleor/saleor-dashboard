@@ -1,4 +1,4 @@
-import { stringify } from "../.././formatData/formatJson";
+import { stringify } from "../../formatData/formatJson";
 import {
   getDataForDescriptionInVariables,
   getValueWithDefault,
@@ -103,6 +103,7 @@ export function createProduct({
   collectionId,
   description,
   taxClassId,
+  slug,
 }) {
   const collection = getValueWithDefault(
     collectionId,
@@ -130,7 +131,7 @@ export function createProduct({
     productCreate(input:{
       ${attributes}
       name:"${name}"
-      slug:"${name}"
+      slug:"${slug ?? name}"
       seo:{title:"${name}" description:""}
       productType:"${productTypeId}"
       ${category}

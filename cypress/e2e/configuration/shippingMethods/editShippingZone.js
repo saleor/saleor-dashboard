@@ -12,7 +12,6 @@ import {
 } from "../../../support/api/requests/ShippingMethod";
 import { createWarehouse } from "../../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
-import { deleteShippingStartsWith } from "../../../support/api/utils/shippingUtils";
 import { fillUpShippingZoneData } from "../../../support/pages/shippingMethodPage";
 import { enterAndSelectShippings } from "../../../support/pages/shippingZones";
 
@@ -27,8 +26,6 @@ describe("As a user I should be able to update and delete shipping zone", () => 
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteShippingStartsWith(startsWith);
-
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
