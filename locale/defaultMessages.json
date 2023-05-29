@@ -5659,6 +5659,10 @@
     "context": "button",
     "string": "Unassign and save"
   },
+  "cPAc45": {
+    "context": "column picker search no results message",
+    "string": "No results found"
+  },
   "cVjewM": {
     "context": "label for radio button",
     "string": "Product prices are entered with tax"
