@@ -7,12 +7,11 @@ import { ATTRIBUTES_DETAILS } from "../../../elements/attribute/attributes_detai
 import { ATTRIBUTES_LIST } from "../../../elements/attribute/attributes_list";
 import { urlList } from "../../../fixtures/urlList";
 import { getAttribute } from "../../../support/api/requests/Attribute";
-import { deleteAttributesStartsWith } from "../../../support/api/utils/attributes/attributeUtils";
 import { expectCorrectDataInAttribute } from "../../../support/api/utils/attributes/checkAttributeData";
 import { createAttributeWithInputType } from "../../../support/pages/attributesPage";
 
 describe("As an admin I want to create content attribute", () => {
-  const startsWith = "AttrCont";
+  const startsWith = "AttrCont" + Date.now();
   const attributesTypes = [
     { type: "DROPDOWN", testCase: "SALEOR_0512" },
     { type: "MULTISELECT", testCase: "SALEOR_0513" },
@@ -45,7 +44,6 @@ describe("As an admin I want to create content attribute", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteAttributesStartsWith(startsWith);
   });
 
   beforeEach(() => {

@@ -16,7 +16,6 @@ import { MESSAGES, TEST_ADMIN_USER, urlList } from "../fixtures";
 import { userDetailsUrl } from "../fixtures/urlList";
 import {
   activatePlugin,
-  deleteStaffMembersStartsWith,
   updatePlugin,
   updateStaffMember,
 } from "../support/api/requests/";
@@ -35,7 +34,7 @@ import {
 } from "../support/pages/";
 
 describe("Staff members", () => {
-  const startsWith = "StaffMembers";
+  const startsWith = "StaffMembers" + Date.now();
   const password = Cypress.env("USER_PASSWORD");
   const lastName = faker.name.lastName();
   const email = `${startsWith}${lastName}@example.com`;
@@ -44,7 +43,6 @@ describe("Staff members", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteStaffMembersStartsWith(startsWith);
     activatePlugin({ id: "mirumee.notifications.admin_email" });
     inviteStaffMemberWithFirstPermission({ email })
       .then(({ user: userResp }) => {

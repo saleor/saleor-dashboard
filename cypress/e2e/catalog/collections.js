@@ -16,10 +16,8 @@ import { updateChannelInProduct } from "../../support/api/requests/Product";
 import { getCollection } from "../../support/api/requests/storeFront/Collections";
 import { getProductDetails } from "../../support/api/requests/storeFront/ProductDetails";
 import { searchInShop } from "../../support/api/requests/storeFront/Search";
-import { deleteCollectionsStartsWith } from "../../support/api/utils/catalog/collectionsUtils";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import {
   assignProductsToCollection,
   createCollection,
@@ -29,7 +27,7 @@ import {
 
 describe("As an admin I want to manage collections.", () => {
   const startsWith = "CyCollections-";
-  const productName = `${startsWith}${faker.datatype.number()}`;
+  const productName = `${startsWith}${Date.now()}`;
 
   let attribute;
   let productType;
@@ -39,10 +37,6 @@ describe("As an admin I want to manage collections.", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProductsStartsWith(startsWith);
-    deleteCollectionsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    channelsUtils.deleteChannelsStartsWith(startsWith);
 
     channelsUtils
       .getDefaultChannel()

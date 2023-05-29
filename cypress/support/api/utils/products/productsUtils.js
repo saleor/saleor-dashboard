@@ -36,6 +36,7 @@ export function createProductInChannel({
   weight = 1,
   sku = name,
   taxClassId,
+  slug,
 }) {
   let product;
   let variantsList;
@@ -51,6 +52,7 @@ export function createProductInChannel({
     collectionId,
     description,
     taxClassId,
+    slug,
   })
     .then(productResp => {
       product = productResp;
@@ -76,6 +78,7 @@ export function createTypeAttributeAndCategoryForProduct({
   name,
   attributeValues,
   kind = "NORMAL",
+  slug,
 }) {
   let attribute;
   let productType;
@@ -84,7 +87,7 @@ export function createTypeAttributeAndCategoryForProduct({
     .createAttribute({ name, attributeValues })
     .then(attributeResp => {
       attribute = attributeResp;
-      createTypeProduct({ name, attributeId: attributeResp.id, kind });
+      createTypeProduct({ name, attributeId: attributeResp.id, kind, slug });
     })
     .then(productTypeResp => {
       productType = productTypeResp;
@@ -93,7 +96,7 @@ export function createTypeAttributeAndCategoryForProduct({
         attributeId: attribute.id,
         variantSelection: true,
       });
-      categoryRequest.createCategory({ name });
+      categoryRequest.createCategory({ name, slug });
     })
     .then(categoryResp => {
       category = categoryResp;
@@ -266,6 +269,7 @@ export function createProductInChannelWithoutVariants({
   collectionId = null,
   description = null,
   taxClassId,
+  slug,
 }) {
   let product;
   return productRequest
@@ -277,6 +281,7 @@ export function createProductInChannelWithoutVariants({
       collectionId,
       description,
       taxClassId,
+      slug,
     })
     .then(productResp => {
       product = productResp;
