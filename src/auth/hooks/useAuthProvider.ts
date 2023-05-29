@@ -86,7 +86,7 @@ export function useAuthProvider({
 
   const userDetails = useUserDetailsQuery({
     client: apolloClient,
-    skip: !authenticated && channelPermissions.enabled,
+    skip: !authenticated || channelPermissions.enabled,
     // Don't change this to 'network-only' - update of intl provider's
     // state will cause an error
     fetchPolicy: "cache-and-network",
@@ -94,7 +94,7 @@ export function useAuthProvider({
 
   const userDetailsWithChannels = useUserDetailsWithChannelsQuery({
     client: apolloClient,
-    skip: !authenticated && !channelPermissions.enabled,
+    skip: !authenticated || !channelPermissions.enabled,
     // Don't change this to 'network-only' - update of intl provider's
     // state will cause an error
     fetchPolicy: "cache-and-network",
