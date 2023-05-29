@@ -6,8 +6,6 @@ import faker from "faker";
 import { urlList } from "../../../fixtures/urlList";
 import { createChannel } from "../../../support/api/requests/Channels";
 import { completeCheckout } from "../../../support/api/requests/Checkout";
-import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import { deleteVouchersStartsWith } from "../../../support/api/utils/discounts/vouchersUtils";
 import {
   addPayment,
   createCheckoutWithVoucher,
@@ -33,8 +31,6 @@ describe("As an admin I want to create voucher", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    channelsUtils.deleteChannelsStartsWith(startsWith);
-    deleteVouchersStartsWith(startsWith);
     productsUtils
       .createProductWithShipping({ name, productPrice, shippingPrice })
       .then(

@@ -21,7 +21,6 @@ describe("Published products", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProductsStartsWith(startsWith);
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(

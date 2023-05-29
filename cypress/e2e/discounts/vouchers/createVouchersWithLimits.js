@@ -4,8 +4,6 @@
 import faker from "faker";
 
 import { completeCheckout } from "../../../support/api/requests/Checkout";
-import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import { deleteVouchersStartsWith } from "../../../support/api/utils/discounts/vouchersUtils";
 import {
   addPayment,
   createCheckoutWithVoucher,
@@ -29,8 +27,6 @@ describe("As an admin I want to create voucher", () => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
     cy.clearSessionData().loginUserViaRequest();
-    channelsUtils.deleteChannelsStartsWith(startsWith);
-    deleteVouchersStartsWith(startsWith);
     productsUtils
       .createProductWithShipping({ name, productPrice, shippingPrice })
       .then(
