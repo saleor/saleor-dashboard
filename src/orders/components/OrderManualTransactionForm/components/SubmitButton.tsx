@@ -14,6 +14,7 @@ export const SubmitButton: React.FC<
   return (
     <ConfirmButton
       {...props}
+      size="large"
       type="submit"
       transitionState={submitState}
       disabled={!amount || disabled}
