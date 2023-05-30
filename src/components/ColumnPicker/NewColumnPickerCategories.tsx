@@ -1,11 +1,10 @@
-import { CircularProgress } from "@material-ui/core";
-import { Box, Button, Checkbox, List, Text } from "@saleor/macaw-ui/next";
+import { Box, Button, List, Text } from "@saleor/macaw-ui/next";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
 import messages from "./messages";
+import { NewColumnPickerAvailableNodes } from "./NewColumnPickerAvailableNodes";
 import { NewColumnPickerPagination } from "./NewColumnPickerPagination";
-import { NewColumnPickerSearch } from "./NewColumnPickerSearch";
 import { ColumnCategory } from "./useColumns";
 import { getExitIcon, getExitOnClick } from "./utils";
 
@@ -85,55 +84,13 @@ export const NewColumnPickerCategories: React.FC<
           </Text>
         </Box>
         {selectedCategory ? (
-          <>
-            <Box
-              display="flex"
-              paddingX={7}
-              style={{ boxSizing: "border-box" }}
-            >
-              <NewColumnPickerSearch
-                currentCategory={currentCategory}
-                query={query}
-                setQuery={setQuery}
-              />
-            </Box>
-            <Box paddingX={8} paddingY={4} flexGrow="1">
-              {currentCategory.availableNodes === undefined ? (
-                <Box
-                  width="100%"
-                  height="100%"
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                >
-                  <CircularProgress />
-                </Box>
-              ) : currentCategory.availableNodes.length === 0 ? (
-                <Text size="small" color="textNeutralSubdued">
-                  <FormattedMessage {...messages.noResultsFound} />
-                </Text>
-              ) : (
-                currentCategory.availableNodes.map(node => (
-                  <Box
-                    display="flex"
-                    alignItems="center"
-                    padding={5}
-                    gap={6}
-                    key={node.id}
-                  >
-                    <Checkbox
-                      onCheckedChange={() => changeHandler(node.id)}
-                      checked={columnPickerSettings.includes(node.id)}
-                    >
-                      <Text size="small" color="textNeutralSubdued">
-                        {node.title}
-                      </Text>
-                    </Checkbox>
-                  </Box>
-                ))
-              )}
-            </Box>
-          </>
+          <NewColumnPickerAvailableNodes
+            currentCategory={currentCategory}
+            columnPickerSettings={columnPickerSettings}
+            query={query}
+            setQuery={setQuery}
+            changeHandler={changeHandler}
+          />
         ) : (
           <List padding={8}>
             {columnCategories.map(category => (
