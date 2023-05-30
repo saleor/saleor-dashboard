@@ -128,7 +128,7 @@ const PageTypeDetailsPage: React.FC<PageTypeDetailsPageProps> = props => {
                   margin: "auto",
                 })}
               >
-                <Box paddingTop="s6">
+                <Box paddingTop={6}>
                   <Typography>
                     {intl.formatMessage(commonMessages.generalInformations)}
                   </Typography>

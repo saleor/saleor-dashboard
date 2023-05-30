@@ -9,7 +9,7 @@ interface LimitsInfoProps {
  * @deprecated use `Text` instead
  */
 export const LimitsInfo: React.FC<LimitsInfoProps> = ({ text }) => (
-  <Box position="absolute" left="s7" bottom="s1">
+  <Box position="absolute" left={7} bottom={1}>
     {text}
   </Box>
 );

@@ -116,7 +116,7 @@ const CustomerAddressListPage: React.FC<
           display="flex"
           justifyContent="center"
           alignItems="center"
-          padding="s6"
+          padding={6}
           flexDirection="column"
         >
           <Typography variant="h5">

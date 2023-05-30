@@ -27,7 +27,7 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
   return (
     <List.Item
       borderRadius={3}
-      paddingX="s2"
+      paddingX={2}
       active={active}
       onClick={handleMenuItemClick}
       data-test-id={`menu-item-label-${menuItem.id}`}
@@ -42,8 +42,8 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
       >
         <Box
           className={sprinkles({
-            paddingY: "s1.5",
-            gap: "s3",
+            paddingY: 1.5,
+            gap: 3,
             display: "flex",
             alignItems: "center",
           })}

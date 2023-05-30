@@ -11,7 +11,7 @@ const useStyles = makeStyles(
   theme => ({
     arrow: {
       transition: theme.transitions.duration.short + "ms",
-      marginBottom: vars.space.s1,
+      marginBottom: vars.spacing[1],
     },
     arrowLeft: {
       marginLeft: -24,

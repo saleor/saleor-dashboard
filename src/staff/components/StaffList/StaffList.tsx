@@ -123,7 +123,7 @@ const StaffList: React.FC<StaffListProps> = props => {
               key={staffMember ? staffMember.id : "skeleton"}
             >
               <TableCell>
-                <Box display="flex" alignItems="center" gap="s2">
+                <Box display="flex" alignItems="center" gap={2}>
                   <UserAvatar
                     url={staffMember?.avatar?.url}
                     initials={getUserInitials(staffMember)}
