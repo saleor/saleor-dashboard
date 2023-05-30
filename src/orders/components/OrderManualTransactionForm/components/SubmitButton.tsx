@@ -1,4 +1,5 @@
-import ConfirmButton, {
+import {
+  ConfirmButton,
   ConfirmButtonProps,
 } from "@dashboard/components/ConfirmButton";
 import React from "react";
@@ -13,6 +14,7 @@ export const SubmitButton: React.FC<
   return (
     <ConfirmButton
       {...props}
+      size="large"
       type="submit"
       transitionState={submitState}
       disabled={!amount || disabled}

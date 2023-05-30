@@ -1,5 +1,5 @@
 import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { ProductMediaFragment } from "@dashboard/graphql";
 import useModalDialogOpen from "@dashboard/hooks/useModalDialogOpen";
 import { buttonMessages } from "@dashboard/intl";

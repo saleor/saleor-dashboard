@@ -1,3 +1,4 @@
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import {
   Dialog,
@@ -6,12 +7,11 @@ import {
   DialogTitle,
   TextField,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import BackButton from "../BackButton";
-import ConfirmButton from "../ConfirmButton";
+import { ConfirmButton } from "../ConfirmButton";
 import Form from "../Form";
 
 export interface SaveFilterTabDialogFormData {
