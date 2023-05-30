@@ -80,15 +80,15 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
         display="flex"
         flexDirection="column"
         alignItems="center"
-        marginY="s5"
+        marginY={5}
       >
-        <Box className={classes.appContent} marginY="s5">
+        <Box className={classes.appContent} marginY={5}>
           {nothingInstalled && (
-            <Box paddingY="s3">
+            <Box paddingY={3}>
               <Text as="h3" variant="heading" color="textNeutralSubdued">
                 {intl.formatMessage(messages.installedApps)}
               </Text>
-              <Box marginTop="s3">
+              <Box marginTop={3}>
                 <Text variant="caption">
                   {intl.formatMessage(messages.nothingInstalledPlaceholder)}
                 </Text>
@@ -97,7 +97,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
           )}
           {sectionsAvailability.installed && (
             <>
-              <Box paddingX="s5" paddingY="s3">
+              <Box paddingX={5} paddingY={3}>
                 <Text as="h3" variant="heading" color="textNeutralSubdued">
                   {intl.formatMessage(messages.installedApps)}
                 </Text>
@@ -113,7 +113,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
           )}
           <MarketplaceAlert error={marketplaceError} />
           {sectionsAvailability.all && !marketplaceError && (
-            <Box marginTop="s7">
+            <Box marginTop={7}>
               <Text
                 as="h3"
                 variant="heading"
@@ -131,7 +131,7 @@ export const AppListPage: React.FC<AppListPageProps> = props => {
             </Box>
           )}
           {sectionsAvailability.comingSoon && !marketplaceError && (
-            <Box marginTop="s7">
+            <Box marginTop={7}>
               <Text
                 as="h3"
                 variant="heading"

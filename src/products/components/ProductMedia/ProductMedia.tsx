@@ -134,7 +134,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
             </Dropdown.Trigger>
             <Dropdown.Content align="end">
               <List
-                padding="s2"
+                padding={2}
                 borderRadius={4}
                 boxShadow="overlay"
                 backgroundColor="surfaceNeutralPlain"
@@ -142,8 +142,8 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
                 <Dropdown.Item>
                   <List.Item
                     borderRadius={4}
-                    paddingX="s1.5"
-                    paddingY="s2"
+                    paddingX={1.5}
+                    paddingY={2}
                     onClick={() => imagesUpload.current.click()}
                     data-test-id="upload-images"
                   >
@@ -153,8 +153,8 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
                 <Dropdown.Item>
                   <List.Item
                     borderRadius={4}
-                    paddingX="s1.5"
-                    paddingY="s2"
+                    paddingX={1.5}
+                    paddingY={2}
                     onClick={openMediaUrlModal}
                     data-test-id="upload-media-url"
                   >
@@ -183,7 +183,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
         </Box>
         <Box position="relative">
           {media === undefined ? (
-            <Box padding="s5">
+            <Box padding={5}>
               <Skeleton />
             </Box>
           ) : media.length > 0 ? (
@@ -212,7 +212,7 @@ const ProductMedia: React.FC<ProductMediaProps> = props => {
                     onSortEnd={onImageReorder}
                     className={sprinkles({
                       display: "grid",
-                      gap: "s5",
+                      gap: 5,
                       gridTemplateColumns: { mobile: 2, tablet: 3, desktop: 4 },
                       opacity: isDragActive ? "0.2" : "1",
                     })}

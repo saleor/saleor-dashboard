@@ -24,8 +24,8 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
       data-test-id={`menu-list-item`}
     >
       <List.ItemGroup.Trigger
-        paddingX="s2"
-        paddingRight="s1"
+        paddingX={2}
+        paddingRight={1}
         borderRadius={3}
         size="small"
         active={isActive}
@@ -43,8 +43,8 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
           <Box
             display="flex"
             alignItems="center"
-            gap="s3"
-            paddingY="s1.5"
+            gap={3}
+            paddingY={1.5}
             borderRadius={3}
           >
             {menuItem.icon}
@@ -59,13 +59,13 @@ export const ItemGroup: React.FC<Props> = ({ menuItem }) => {
           borderLeftWidth={1}
           borderLeftStyle="solid"
           borderColor="neutralPlain"
-          paddingLeft="s4"
-          marginLeft="s4"
+          paddingLeft={4}
+          marginLeft={4}
           display="flex"
           flexDirection="column"
-          marginBottom="s2"
-          marginTop="s1"
-          gap="spx"
+          marginBottom={2}
+          marginTop={1}
+          gap="px"
         >
           {menuItem.children?.map(child => (
             <MenuItem menuItem={child} key={child.id} />

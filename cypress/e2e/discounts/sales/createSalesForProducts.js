@@ -7,12 +7,8 @@ import { urlList } from "../../../fixtures/urlList";
 import { createChannel } from "../../../support/api/requests/Channels";
 import { updateChannelInProduct } from "../../../support/api/requests/Product";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import { deleteSalesStartsWith } from "../../../support/api/utils/discounts/salesUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../../support/api/utils/shippingUtils";
+import { createShipping } from "../../../support/api/utils/shippingUtils";
 import { getProductPrice } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import {
   getDefaultTaxClass,
@@ -41,10 +37,6 @@ describe("As an admin I want to create sale for products", () => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
     cy.clearSessionData().loginUserViaRequest();
-    channelsUtils.deleteChannelsStartsWith(startsWith);
-    deleteSalesStartsWith(startsWith);
-    productsUtils.deleteProductsStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(

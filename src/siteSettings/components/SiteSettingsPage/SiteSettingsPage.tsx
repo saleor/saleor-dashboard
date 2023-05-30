@@ -2,6 +2,7 @@ import { createCountryHandler } from "@dashboard/components/AddressEdit/createCo
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DashboardCard } from "@dashboard/components/Card";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
@@ -15,7 +16,6 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -136,11 +136,11 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               title={intl.formatMessage(commonMessages.generalInformations)}
             />
             <DetailPageLayout.Content>
-              <Box gap="s2">
+              <Box gap={2}>
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"
-                  paddingLeft="s6"
+                  paddingLeft={6}
                 >
                   <PageSectionHeader
                     title={intl.formatMessage(messages.sectionCheckoutTitle)}
@@ -161,8 +161,8 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"
-                  paddingLeft="s6"
-                  paddingBottom="s8"
+                  paddingLeft={6}
+                  paddingBottom={8}
                 >
                   <PageSectionHeader
                     title={intl.formatMessage(messages.sectionCompanyTitle)}
@@ -191,8 +191,8 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                 <Box
                   display="grid"
                   __gridTemplateColumns="1fr 3fr"
-                  paddingLeft="s6"
-                  paddingBottom="s8"
+                  paddingLeft={6}
+                  paddingBottom={8}
                 >
                   <PageSectionHeader
                     title={intl.formatMessage(

@@ -8,16 +8,12 @@ import { ONE_PERMISSION_USERS, urlList } from "../../fixtures";
 import {
   createChannel,
   createCustomer,
-  deleteCustomersStartsWith,
   getOrder,
   updateChannelOrderSettings,
 } from "../../support/api/requests";
 import {
   createOrder,
-  createReadyToFulfillOrder,
   createShipping,
-  deleteChannelsStartsWith,
-  deleteShippingStartsWith,
   getDefaultTaxClass,
   productsUtils,
   updateTaxConfigurationForChannel,
@@ -40,11 +36,6 @@ describe("Orders", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteChannelsStartsWith(startsWith);
-    deleteCustomersStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    productsUtils.deleteProductsStartsWith(startsWith);
-
     createChannel({ name: randomName })
       .then(channelResp => {
         channel = channelResp;
@@ -144,7 +135,8 @@ describe("Orders", () => {
     },
   );
 
-  it(
+  // TODO uncomment when bug: https://github.com/saleor/saleor/issues/12757 if fixed
+  xit(
     "should be able to grant and send refund TC: 3902",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {

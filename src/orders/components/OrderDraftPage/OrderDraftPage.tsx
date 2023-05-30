@@ -1,6 +1,7 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardMenu from "@dashboard/components/CardMenu";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DateTime } from "@dashboard/components/Date";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
@@ -18,7 +19,6 @@ import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSe
 import { orderDraftListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import { Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -84,7 +84,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       <TopNav
         href={orderDraftListUrl()}
         title={
-          <Box display="flex" alignItems="center" gap="s3">
+          <Box display="flex" alignItems="center" gap={3}>
             <span>{order?.number ? "#" + order?.number : undefined}</span>
             <div>
               {order && order.created ? (

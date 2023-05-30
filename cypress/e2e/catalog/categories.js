@@ -15,10 +15,8 @@ import {
   createCategory as createCategoryRequest,
   getCategory,
 } from "../../support/api/requests/Category";
-import { deleteCategoriesStartsWith } from "../../support/api/utils/catalog/categoryUtils";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../support/api/utils/shippingUtils";
 import {
   createCategory,
   updateCategory,
@@ -37,10 +35,6 @@ describe("As an admin I want to manage categories", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProductsStartsWith(startsWith);
-    deleteCategoriesStartsWith(startsWith);
-    deleteShippingStartsWith(startsWith);
-    channelsUtils.deleteChannelsStartsWith(startsWith);
 
     channelsUtils
       .getDefaultChannel()

@@ -1,5 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -27,7 +28,6 @@ import {
 } from "@dashboard/types";
 import { mapMetadataItemToInput } from "@dashboard/utils/maps";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -212,7 +212,7 @@ const ProductTypeDetailsPage: React.FC<ProductTypeDetailsPageProps> = ({
                 })}
                 name="hasVariants"
                 onChange={event => onHasVariantsToggle(event.target.value)}
-                className={sprinkles({ paddingLeft: "s6" })}
+                className={sprinkles({ paddingLeft: 6 })}
               />
               {data.hasVariants && (
                 <>

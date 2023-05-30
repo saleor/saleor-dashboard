@@ -49,7 +49,7 @@ export function useMenuStructure() {
     id: "extensions",
     label: intl.formatMessage(sectionNames.appExtensions),
     type: "divider",
-    paddingY: "s1.5",
+    paddingY: 1.5,
   };
 
   const getAppSection = (): SidebarMenuItem => ({

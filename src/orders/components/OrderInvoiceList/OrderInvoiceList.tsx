@@ -75,7 +75,7 @@ const OrderInvoiceList: React.FC<OrderInvoiceListProps> = props => {
           onInvoiceGenerate && (
             <Button
               onClick={onInvoiceGenerate}
-              className={sprinkles({ marginRight: "s0.5" })}
+              className={sprinkles({ marginRight: 0.5 })}
             >
               <FormattedMessage
                 id="e0RKe+"

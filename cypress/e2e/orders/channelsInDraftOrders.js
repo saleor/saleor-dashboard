@@ -24,7 +24,6 @@ xdescribe("Channels in draft orders", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    channelsUtils.deleteChannelsStartsWith(startsWith);
     channelsUtils
       .getDefaultChannel()
       .then(channel => {

@@ -31,3 +31,12 @@ window.__SALEOR_CONFIG__ = {
 process.env.TZ = "UTC";
 
 configure({ testIdAttribute: "data-test-id" });
+
+/**
+ * https://github.com/inrupt/solid-client-authn-js/issues/1676
+ *
+ * Fixes (hacks) "TextEncoder is not defined" error which is likely bug in jsdom
+ */
+import { TextDecoder, TextEncoder } from "util";
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
