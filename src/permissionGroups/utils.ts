@@ -200,13 +200,8 @@ const getUserAccessibleChannels = (user?: UserContext["user"]) => {
 
 export const getInitialChannels = (
   permissionGroup: PermissionGroupWithContextDetailsFragment,
-  isUserAbleToEdit: boolean,
   allChannelsLength: number,
 ) => {
-  if (!isUserAbleToEdit) {
-    return [];
-  }
-
   if (
     !permissionGroup?.restrictedAccessToChannels &&
     permissionGroup?.accessibleChannels.length === allChannelsLength

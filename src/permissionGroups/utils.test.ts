@@ -660,31 +660,13 @@ describe("Permission group utils", () => {
   });
 
   describe("getInitialChannels", () => {
-    it("should return empty array when user is not eligible to edit", () => {
-      // Arrange
-      const isUserAbleToEdit = false;
-      const allChannelsLength = 10;
-
-      // Act
-      const initialChannels = getInitialChannels(
-        permissionGroupWithChannels,
-        isUserAbleToEdit,
-        allChannelsLength,
-      );
-
-      // Assert
-      expect(initialChannels).toEqual([]);
-    });
-
     it("should return empty array when no restricted channels and accessible channels length is equal all channels length", () => {
       // Arrange
-      const isUserAbleToEdit = true;
       const allChannelsLength = 0;
 
       // Act
       const initialChannels = getInitialChannels(
         permissionGroup,
-        isUserAbleToEdit,
         allChannelsLength,
       );
 
@@ -694,13 +676,11 @@ describe("Permission group utils", () => {
 
     it("should return all accessible channels otherwise", () => {
       // Arrange
-      const isUserAbleToEdit = true;
       const allChannelsLength = 10;
 
       // Act
       const initialChannels = getInitialChannels(
         permissionGroupWithChannels,
-        isUserAbleToEdit,
         allChannelsLength,
       );
 

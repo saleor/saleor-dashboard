@@ -174,6 +174,7 @@ export const PermissionGroupWithChannelsDetails: React.FC<
       <PermissonGroupWithChannelsDetailsPage
         permissionGroup={data?.permissionGroup}
         permissionsExceeded={permissionsExceeded}
+        isUserAbleToEditChannesl={isUserAbleToEdit}
         channels={availableChannels}
         members={membersList || []}
         onAssign={() => openModal("assign")}
