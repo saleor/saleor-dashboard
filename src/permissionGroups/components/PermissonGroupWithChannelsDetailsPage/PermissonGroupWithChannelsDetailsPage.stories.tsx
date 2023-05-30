@@ -15,6 +15,7 @@ import {
 
 const props: PermissonGroupWithChannelsDetailsPageProps = {
   disabled: false,
+  isUserAbleToEditChannesl: true,
   errors: [],
   isChecked: () => false,
   members: users,
@@ -62,6 +63,15 @@ export const Loading = () => (
 export const WithRestrictedChannels = () => (
   <PermissonGroupWithChannelsDetailsPage
     {...props}
+    permissionGroup={permissionGroupWithChannels}
+  />
+);
+
+export const WithRestrictedChannelsAndWithoutAccessToEdit = () => (
+  <PermissonGroupWithChannelsDetailsPage
+    {...props}
+    disabled={true}
+    isUserAbleToEditChannesl={false}
     permissionGroup={permissionGroupWithChannels}
   />
 );
