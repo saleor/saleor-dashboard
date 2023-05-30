@@ -1,4 +1,5 @@
 import CardTitle from "@dashboard/components/CardTitle";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import Hr from "@dashboard/components/Hr";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -13,12 +14,7 @@ import { ListProps } from "@dashboard/types";
 import { OutputData } from "@editorjs/editorjs";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import ArrowIcon from "@material-ui/icons/ArrowDropDown";
-import {
-  Button,
-  ConfirmButtonTransitionState,
-  IconButton,
-  makeStyles,
-} from "@saleor/macaw-ui";
+import { Button, IconButton, makeStyles } from "@saleor/macaw-ui";
 import clsx from "clsx";
 import React from "react";
 import { FormattedMessage } from "react-intl";

@@ -1,4 +1,4 @@
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { act, renderHook } from "@testing-library/react-hooks";
 import { ChangeEvent } from "react";
 

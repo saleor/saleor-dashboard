@@ -1,5 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardTitle from "@dashboard/components/CardTitle";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
@@ -28,7 +29,6 @@ import {
   TextField,
 } from "@material-ui/core";
 import {
-  ConfirmButtonTransitionState,
   List,
   ListHeader,
   ListItem,
