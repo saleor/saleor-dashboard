@@ -33,6 +33,7 @@ import {
   checkIfUserIsEligibleToEditChannels,
   extractPermissionCodes,
   getChannelsOptions,
+  getInitialChannels,
   isGroupFullAccess,
 } from "../../utils";
 import PermissionGroupInfo from "../PermissionGroupInfo";
@@ -100,11 +101,11 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
   const initialForm: PermissionGroupWithChannelsDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
     hasAllChannels: !permissionGroup?.restrictedAccessToChannels ?? false,
-    channels:
-      !permissionGroup?.restrictedAccessToChannels &&
-      permissionGroup?.accessibleChannels.length === channels.length
-        ? []
-        : permissionGroup?.accessibleChannels.map(channel => channel.id),
+    channels: getInitialChannels(
+      permissionGroup,
+      isUserAbleToEdit,
+      channels?.length ?? 0,
+    ),
     isActive: false,
     name: permissionGroup?.name || "",
     permissions: extractPermissionCodes(permissionGroup),

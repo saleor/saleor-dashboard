@@ -81,12 +81,20 @@ export const channelsDiff = (
   permissionGroup: PermissionGroupWithContextDetailsFragment,
   formData: PermissionGroupWithChannelsDetailsPageFormData,
   allChannels: ChannelFragment[],
+  isUserAbleToEdit: boolean,
 ) => {
   const newChannels = formData.hasAllChannels
     ? allChannels.map(c => c.id)
     : formData.channels;
   const oldChannels = permissionGroup?.accessibleChannels.map(c => c.id);
   const hasRestrictedChannels = permissionGroup?.restrictedAccessToChannels;
+
+  if (!isUserAbleToEdit) {
+    return {
+      addChannels: [],
+      removeChannels: [],
+    };
+  }
 
   if (!hasRestrictedChannels) {
     return {
@@ -188,4 +196,23 @@ const getUserAccessibleChannels = (user?: UserContext["user"]) => {
   }
 
   return [];
+};
+
+export const getInitialChannels = (
+  permissionGroup: PermissionGroupWithContextDetailsFragment,
+  isUserAbleToEdit: boolean,
+  allChannelsLength: number,
+) => {
+  if (!isUserAbleToEdit) {
+    return [];
+  }
+
+  if (
+    !permissionGroup?.restrictedAccessToChannels &&
+    permissionGroup?.accessibleChannels.length === allChannelsLength
+  ) {
+    return [];
+  }
+
+  return permissionGroup?.accessibleChannels.map(channel => channel.id);
 };

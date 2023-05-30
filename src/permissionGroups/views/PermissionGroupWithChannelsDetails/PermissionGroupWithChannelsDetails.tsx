@@ -36,6 +36,7 @@ import {
 import {
   arePermissionsExceeded,
   channelsDiff,
+  checkIfUserIsEligibleToEditChannels,
   permissionsDiff,
   usersDiff,
 } from "../../utils";
@@ -125,6 +126,10 @@ export const PermissionGroupWithChannelsDetails: React.FC<
     .map(perm => perm.code);
 
   const userPermissions = user?.user.userPermissions.map(p => p.code) || [];
+  const isUserAbleToEdit = checkIfUserIsEligibleToEditChannels(
+    user.user,
+    data?.permissionGroup?.accessibleChannels ?? [],
+  );
 
   const permissions = (shop?.permissions || []).map(perm => ({
     ...perm,
@@ -151,7 +156,12 @@ export const PermissionGroupWithChannelsDetails: React.FC<
             name: formData.name,
             ...permissionsDiff(data?.permissionGroup, formData),
             ...usersDiff(data?.permissionGroup, formData),
-            ...channelsDiff(data?.permissionGroup, formData, availableChannels),
+            ...channelsDiff(
+              data?.permissionGroup,
+              formData,
+              availableChannels,
+              isUserAbleToEdit,
+            ),
             restrictedAccessToChannels: !formData.hasAllChannels,
           },
         },

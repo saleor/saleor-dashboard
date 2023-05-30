@@ -10,6 +10,7 @@ import { PermissionGroupWithContextDetailsFragment } from "@dashboard/graphql/ty
 
 import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
 import { PermissionGroupWithChannelsDetailsPageFormData } from "./components/PermissonGroupWithChannelsDetailsPage";
+import { permissionGroup, permissionGroupWithChannels } from "./fixtures";
 import {
   arePermissionsExceeded,
   channelsDiff,
@@ -17,6 +18,7 @@ import {
   checkIfUserIsEligibleToEditChannels,
   extractPermissionCodes,
   getChannelsOptions,
+  getInitialChannels,
   isGroupFullAccess,
   mapAccessibleChannelsToChoice,
   permissionsDiff,
@@ -25,7 +27,45 @@ import {
 
 describe("Permission group utils", () => {
   describe("channelDiff", () => {
+    it("should return empty added and removed channels when user is not eligible to edit channels", () => {
+      // Arrange
+      const formData = {
+        channels: [],
+      } as PermissionGroupWithChannelsDetailsPageFormData;
+
+      const permissionGroup = {
+        restrictedAccessToChannels: false,
+        accessibleChannels: [
+          {
+            id: "1",
+            name: "channel-1",
+          },
+          {
+            id: "2",
+            name: "channel-2",
+          },
+          {
+            id: "3",
+            name: "channel-3",
+          },
+        ],
+      } as PermissionGroupWithContextDetailsFragment;
+
+      // Act
+      const { addChannels, removeChannels } = channelsDiff(
+        permissionGroup,
+        formData,
+        [],
+        false,
+      );
+
+      // Assert
+      expect(addChannels).toEqual([]);
+      expect(removeChannels).toEqual([]);
+    });
+
     it("should return  added channel and no removed channels when user had no restricted channels", () => {
+      // Arrange
       const formData = {
         channels: ["1"],
       } as PermissionGroupWithChannelsDetailsPageFormData;
@@ -48,17 +88,21 @@ describe("Permission group utils", () => {
         ],
       } as PermissionGroupWithContextDetailsFragment;
 
+      // Act
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
         [],
+        true,
       );
 
+      // Assert
       expect(addChannels).toEqual(["1"]);
       expect(removeChannels).toEqual([]);
     });
 
     it("should return all added and removed channels", () => {
+      // Arrange
       const formData = {
         channels: ["2", "3", "55"],
       } as PermissionGroupWithChannelsDetailsPageFormData;
@@ -81,17 +125,21 @@ describe("Permission group utils", () => {
         ],
       } as PermissionGroupWithContextDetailsFragment;
 
+      // Act
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
         [],
+        true,
       );
 
+      // Assert
       expect(addChannels).toEqual(["55"]);
       expect(removeChannels).toEqual(["1"]);
     });
 
     it("should only removed channels", () => {
+      // Arrange
       const formData = {
         channels: ["2"],
       } as PermissionGroupWithChannelsDetailsPageFormData;
@@ -110,17 +158,21 @@ describe("Permission group utils", () => {
         ],
       } as PermissionGroupWithContextDetailsFragment;
 
+      // Act
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
         [],
+        true,
       );
 
+      // Assert
       expect(addChannels).toEqual([]);
       expect(removeChannels).toEqual(["1"]);
     });
 
     it("should return all channels when no restricted channels and allow access all", () => {
+      // Arrnage
       const formData = {
         channels: ["2"],
         hasAllChannels: true,
@@ -145,12 +197,15 @@ describe("Permission group utils", () => {
         { id: "22", name: "channel-22" },
       ] as ChannelFragment[];
 
+      // Act
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
         allChannels,
+        true,
       );
 
+      // Assert
       expect(addChannels).toEqual(["12", "22"]);
       expect(removeChannels).toEqual([]);
     });
@@ -158,6 +213,7 @@ describe("Permission group utils", () => {
 
   describe("isGroupFullAccess", () => {
     it("should return true when have all permissions available in shop assigned", () => {
+      // Arrange
       const permissionGroup = {
         permissions: [
           { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
@@ -174,10 +230,12 @@ describe("Permission group utils", () => {
         { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
       ] as Array<Omit<PermissionFragment, "__typename">>;
 
+      // Act & Assert
       expect(isGroupFullAccess(permissionGroup, shopPermissions)).toBe(true);
     });
 
     it("should return false when permission length is different", () => {
+      // Arrange
       const permissionGroup = {
         permissions: [
           { code: PermissionEnum.HANDLE_CHECKOUTS, name: "Handle checkouts" },
@@ -193,10 +251,12 @@ describe("Permission group utils", () => {
         { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
       ] as Array<Omit<PermissionFragment, "__typename">>;
 
+      // Act & Assert
       expect(isGroupFullAccess(permissionGroup, shopPermissions)).toBe(false);
     });
 
     it("should return false when permission does not have all shop permissions", () => {
+      // Arrange
       const permissionGroup = {
         permissions: [
           { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
@@ -214,12 +274,14 @@ describe("Permission group utils", () => {
         { code: PermissionEnum.MANAGE_APPS, name: "Handle apps" },
       ] as Array<Omit<PermissionFragment, "__typename">>;
 
+      // Act & Assert
       expect(isGroupFullAccess(permissionGroup, shopPermissions)).toBe(false);
     });
   });
 
   describe("extractPermissionCodes", () => {
     it("should return list of permission codes", () => {
+      // Arrange
       const permissions = {
         permissions: [
           { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
@@ -229,6 +291,7 @@ describe("Permission group utils", () => {
         ],
       } as PermissionGroupDetailsFragment;
 
+      // Act & Assert
       expect(extractPermissionCodes(permissions)).toEqual([
         PermissionEnum.HANDLE_TAXES,
         PermissionEnum.HANDLE_CHECKOUTS,
@@ -240,6 +303,7 @@ describe("Permission group utils", () => {
 
   describe("permissionsDiff", () => {
     it("should return  added permissions and no removed permissions when user had no permissions", () => {
+      // Arrange
       const formData = {
         permissions: [PermissionEnum.HANDLE_TAXES],
       } as PermissionGroupWithChannelsDetailsPageFormData;
@@ -248,16 +312,19 @@ describe("Permission group utils", () => {
         permissions: [],
       } as PermissionGroupDetailsFragment;
 
+      // Act
       const { addPermissions, removePermissions } = permissionsDiff(
         permissionGroup,
         formData,
       );
 
+      // Assert
       expect(addPermissions).toEqual([PermissionEnum.HANDLE_TAXES]);
       expect(removePermissions).toEqual([]);
     });
 
     it("should return all added and removed permissions", () => {
+      // Arrange
       const formData = {
         permissions: [
           PermissionEnum.HANDLE_TAXES,
@@ -272,11 +339,13 @@ describe("Permission group utils", () => {
         ],
       } as PermissionGroupDetailsFragment;
 
+      // Act
       const { addPermissions, removePermissions } = permissionsDiff(
         permissionGroup,
         formData,
       );
 
+      // Assert
       expect(addPermissions).toEqual([PermissionEnum.HANDLE_CHECKOUTS]);
       expect(removePermissions).toEqual([PermissionEnum.HANDLE_PAYMENTS]);
     });
@@ -284,6 +353,7 @@ describe("Permission group utils", () => {
 
   describe("usersDiff", () => {
     it("should return  added users and no removed users when user had no users", () => {
+      // Arrange
       const formData = {
         users: [
           { id: "1", email: "test1@test.com" },
@@ -295,13 +365,16 @@ describe("Permission group utils", () => {
         users: [],
       } as PermissionGroupDetailsFragment;
 
+      // Act
       const { addUsers, removeUsers } = usersDiff(permissionGroup, formData);
 
+      // Assert
       expect(addUsers).toEqual(["1", "2"]);
       expect(removeUsers).toEqual([]);
     });
 
     it("should return all added and removed users", () => {
+      // Arrange
       const formData = {
         users: [
           { id: "2", email: "test2@test.com" },
@@ -313,8 +386,10 @@ describe("Permission group utils", () => {
         users: [{ id: "1", email: "test1@test.com" }],
       } as PermissionGroupDetailsFragment;
 
+      // Act
       const { addUsers, removeUsers } = usersDiff(permissionGroup, formData);
 
+      // Assert
       expect(addUsers).toEqual(["2", "3"]);
       expect(removeUsers).toEqual(["1"]);
     });
@@ -322,6 +397,7 @@ describe("Permission group utils", () => {
 
   describe("arePermissionsExceeded", () => {
     it("should return false when number of permissions is not exceeded", () => {
+      // Arrange
       const permissions = {
         permissions: [
           { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxes" },
@@ -340,12 +416,15 @@ describe("Permission group utils", () => {
         ],
       } as UserFragment;
 
+      // Act
       const permissionsExceeded = arePermissionsExceeded(permissions, user);
 
+      // Assert
       expect(permissionsExceeded).toBe(false);
     });
 
     it("should return true when number of permissions is  exceeded", () => {
+      // Arrange
       const permissions = {
         permissions: [
           { code: PermissionEnum.HANDLE_TAXES, name: "Handle taxe" },
@@ -363,14 +442,17 @@ describe("Permission group utils", () => {
         ],
       } as UserFragment;
 
+      // Act
       const permissionsExceeded = arePermissionsExceeded(permissions, user);
 
+      // Assert
       expect(permissionsExceeded).toBe(true);
     });
   });
 
   describe("getPermissionGroupAccessibleChannels", () => {
     it("should return all accessible channels ", () => {
+      // Arrange
       const permissionGroup = {
         accessibleChannels: [
           {
@@ -388,8 +470,10 @@ describe("Permission group utils", () => {
         ],
       } as PermissionGroupWithContextDetailsFragment;
 
+      // Act
       const accessibleChannels = mapAccessibleChannelsToChoice(permissionGroup);
 
+      // Assert
       expect(accessibleChannels).toEqual([
         { label: "Channel 1", value: "1", disabled: false },
         { label: "Channel 2", value: "2", disabled: false },
@@ -572,6 +656,58 @@ describe("Permission group utils", () => {
 
       // Assert
       expect(isEligible).toBe(false);
+    });
+  });
+
+  describe("getInitialChannels", () => {
+    it("should return empty array when user is not eligible to edit", () => {
+      // Arrange
+      const isUserAbleToEdit = false;
+      const allChannelsLength = 10;
+
+      // Act
+      const initialChannels = getInitialChannels(
+        permissionGroupWithChannels,
+        isUserAbleToEdit,
+        allChannelsLength,
+      );
+
+      // Assert
+      expect(initialChannels).toEqual([]);
+    });
+
+    it("should return empty array when no restricted channels and accessible channels length is equal all channels length", () => {
+      // Arrange
+      const isUserAbleToEdit = true;
+      const allChannelsLength = 0;
+
+      // Act
+      const initialChannels = getInitialChannels(
+        permissionGroup,
+        isUserAbleToEdit,
+        allChannelsLength,
+      );
+
+      // Assert
+      expect(initialChannels).toEqual([]);
+    });
+
+    it("should return all accessible channels otherwise", () => {
+      // Arrange
+      const isUserAbleToEdit = true;
+      const allChannelsLength = 10;
+
+      // Act
+      const initialChannels = getInitialChannels(
+        permissionGroupWithChannels,
+        isUserAbleToEdit,
+        allChannelsLength,
+      );
+
+      // Assert
+      expect(initialChannels).toEqual([
+        permissionGroupWithChannels.accessibleChannels[0].id,
+      ]);
     });
   });
 });
