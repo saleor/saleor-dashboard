@@ -14,7 +14,6 @@ import {
 } from "../../support/api/requests";
 import {
   createOrder,
-  createReadyToFulfillOrder,
   createShipping,
   deleteChannelsStartsWith,
   deleteShippingStartsWith,
@@ -144,7 +143,8 @@ describe("Orders", () => {
     },
   );
 
-  it(
+  // TODO uncomment when bug: https://github.com/saleor/saleor/issues/12757 if fixed
+  xit(
     "should be able to grant and send refund TC: 3902",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {

@@ -119,8 +119,8 @@ export function getMailWithResetPasswordLink(email, subject, i = 0) {
 
 export function getMailsForUser(email, i = 0) {
   const serverStoredEmail = email.toLowerCase();
-
-  if (i > 5) {
+  const getMailRetries = 9;
+  if (i > getMailRetries) {
     throw new Error(
       `There is no email invitation for user ${serverStoredEmail}`,
     );
