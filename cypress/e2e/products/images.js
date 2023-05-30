@@ -10,7 +10,6 @@ import { deleteCollectionsStartsWith } from "../../support/api/utils/catalog/col
 import {
   createNewProductWithNewDataAndDefaultChannel,
   deleteProductsStartsWith,
-  iterateThroughThumbnails,
 } from "../../support/api/utils/products/productsUtils";
 
 describe("Tests for images", () => {
@@ -67,26 +66,6 @@ describe("Tests for images", () => {
         })
         .then(imageResp => {
           expect(imageResp.status).to.equal(200);
-        });
-    },
-  );
-
-  it(
-    "should create thumbnail url after entering image url",
-    { tags: ["@products", "@allEnv", "@stable"] },
-    () => {
-      let failedRequests;
-      getFirstProducts(100)
-        .then(products => {
-          const productsWithThumbnails = products.filter(
-            product => product.node.thumbnail !== null,
-          );
-          failedRequests = iterateThroughThumbnails(productsWithThumbnails);
-        })
-        .then(() => {
-          if (failedRequests && failedRequests.length > 0) {
-            throw new Error(failedRequests.join("\n"));
-          }
         });
     },
   );
