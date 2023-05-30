@@ -136,37 +136,37 @@ describe("Orders", () => {
   );
 
   // TODO uncomment when bug: https://github.com/saleor/saleor/issues/12757 if fixed
-  // it(
-  //   "should be able to grant and send refund TC: 3902",
-  //   { tags: ["@orders", "@allEnv", "@stable"] },
-  //   () => {
-  //     createReadyToFulfillOrder({
-  //       customerId: customer.id,
-  //       shippingMethod,
-  //       channelId: channel.id,
-  //       variantsList,
-  //       address,
-  //     }).then(({ order: orderResp }) => {
-  //       const orderPrice = orderResp.total.gross.amount;
+  xit(
+    "should be able to grant and send refund TC: 3902",
+    { tags: ["@orders", "@allEnv", "@stable"] },
+    () => {
+      createReadyToFulfillOrder({
+        customerId: customer.id,
+        shippingMethod,
+        channelId: channel.id,
+        variantsList,
+        address,
+      }).then(({ order: orderResp }) => {
+        const orderPrice = orderResp.total.gross.amount;
 
-  //       cy.visit(urlList.orders + `${orderResp.id}`);
-  //       cy.checkIfElementNotExist(ORDERS_SELECTORS.markAsPaidButton);
-  //       transactionsOrderUtils.grantRefundAllProductsAndShippingWithReason(
-  //         "refund reason: wrong size",
-  //         orderPrice,
-  //       );
-  //       transactionsOrderUtils.sendRefundWithDescriptionPSPAndAmount(
-  //         "refund description",
-  //         randomPSPNumber,
-  //         orderPrice,
-  //       );
-  //       getOrder(orderResp.id).then(orderResp => {
-  //         expect(orderResp.paymentStatus).to.be.eq("NOT_CHARGED");
-  //         expect(orderResp.transactions).to.be.not.null;
-  //       });
-  //     });
-  //   },
-  // );
+        cy.visit(urlList.orders + `${orderResp.id}`);
+        cy.checkIfElementNotExist(ORDERS_SELECTORS.markAsPaidButton);
+        transactionsOrderUtils.grantRefundAllProductsAndShippingWithReason(
+          "refund reason: wrong size",
+          orderPrice,
+        );
+        transactionsOrderUtils.sendRefundWithDescriptionPSPAndAmount(
+          "refund description",
+          randomPSPNumber,
+          orderPrice,
+        );
+        getOrder(orderResp.id).then(orderResp => {
+          expect(orderResp.paymentStatus).to.be.eq("NOT_CHARGED");
+          expect(orderResp.transactions).to.be.not.null;
+        });
+      });
+    },
+  );
 
   it(
     "should be able to capture manual transaction that covers partial order price TC: 3903",
