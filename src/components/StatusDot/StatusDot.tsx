@@ -18,8 +18,8 @@ const getStatusColor = (
 
 export const StatusDot: React.FC<StatusDotProps> = ({ status }) => (
   <Box
-    width="s2"
-    height="s2"
+    width={2}
+    height={2}
     borderRadius="50%"
     backgroundColor={getStatusColor(status)}
   />

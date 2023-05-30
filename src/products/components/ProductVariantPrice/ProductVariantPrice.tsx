@@ -96,7 +96,7 @@ export const ProductVariantPrice: React.FC<
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>
-            <TableCell style={{ paddingLeft: vars.space.s6 }}>
+            <TableCell style={{ paddingLeft: vars.spacing[6] }}>
               <Text variant="caption" color="textNeutralSubdued">
                 <FormattedMessage
                   id="c8UT0c"
@@ -140,7 +140,7 @@ export const ProductVariantPrice: React.FC<
 
               return (
                 <TableRowLink key={listing?.id || `skeleton-${index}`}>
-                  <TableCell style={{ paddingLeft: vars.space.s6 }}>
+                  <TableCell style={{ paddingLeft: vars.spacing[6] }}>
                     <Text>{listing?.name || <Skeleton />}</Text>
                   </TableCell>
                   <TableCell>

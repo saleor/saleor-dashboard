@@ -27,7 +27,7 @@ const AllAppList: React.FC<AllAppListProps> = ({
   }
 
   return (
-    <Box display="flex" flexDirection="column" gap="s5" marginTop="s5">
+    <Box display="flex" flexDirection="column" gap={5} marginTop={5}>
       {appsPairs.map(appPair => (
         <AppListRow
           key={appPair[0].name.en}

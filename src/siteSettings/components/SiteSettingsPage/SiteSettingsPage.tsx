@@ -1,6 +1,7 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -15,7 +16,7 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -143,7 +144,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               title={intl.formatMessage(commonMessages.generalInformations)}
             />
             <DetailPageLayout.Content>
-              <Box gap="s2" paddingLeft="s6">
+              <Box gap={2} paddingLeft={6}>
                 <Box display="grid" __gridTemplateColumns="1fr 3fr">
                   <PageSectionHeader
                     title={intl.formatMessage(messages.sectionCheckoutTitle)}
