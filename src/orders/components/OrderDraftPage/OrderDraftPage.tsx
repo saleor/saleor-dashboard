@@ -84,7 +84,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
       <TopNav
         href={orderDraftListUrl()}
         title={
-          <Box display="flex" alignItems="center" gap="s3">
+          <Box display="flex" alignItems="center" gap={3}>
             <span>{order?.number ? "#" + order?.number : undefined}</span>
             <div>
               {order && order.created ? (

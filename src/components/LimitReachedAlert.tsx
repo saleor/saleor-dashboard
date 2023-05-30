@@ -13,7 +13,7 @@ const LimitReachedAlert: React.FC<LimitReachedAlertProps> = props => (
     className={clsx(
       sprinkles({
         gridColumn: "8",
-        marginBottom: "s2",
+        marginBottom: 2,
       }),
       "remove-icon-background",
     )}

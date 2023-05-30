@@ -2244,8 +2244,8 @@ export const variants = [
 ];
 export const prefixes = ["01", "02", "41", "49"];
 export const shippingMethods = [
-  { country: "whole world", id: "s1", name: "DHL", price: {} },
-  { country: "Afghanistan", id: "s2", name: "UPS" },
+  { country: "whole world", id: 1, name: "DHL", price: {} },
+  { country: "Afghanistan", id: 2, name: "UPS" },
 ];
 export const orderLineSearch = (
   placeholderImage: string,

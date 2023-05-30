@@ -262,7 +262,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           )}
         />
 
-        <Box paddingX="s6">
+        <Box paddingX={6}>
           <TablePaginationWithContext
             component="div"
             colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}
