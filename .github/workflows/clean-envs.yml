@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       TOKEN: ${{ secrets.CLOUD_ACCESS_TOKEN }}
-      SNAPSHOT: 8xPmkyoc
+      SNAPSHOT: RL6ZWoTX
     steps:
       - name: Checkout
         uses: actions/checkout@v3
