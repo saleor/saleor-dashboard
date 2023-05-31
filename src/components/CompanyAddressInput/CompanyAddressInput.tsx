@@ -1,38 +1,24 @@
-import { Card, CardContent } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
 import React from "react";
 
-import CardTitle from "../CardTitle";
+import { DashboardCard } from "../Card";
 import CompanyAddressForm, {
   CompanyAddressFormProps,
 } from "./CompanyAddressForm";
 
 interface CompanyAddressInputProps extends CompanyAddressFormProps {
-  className?: string;
   header: string;
 }
 
-const useStyles = makeStyles(
-  {
-    root: {
-      overflow: "visible",
-    },
-  },
-  { name: "CompanyAddressInput" },
-);
-
 const CompanyAddressInput: React.FC<CompanyAddressInputProps> = props => {
-  const { className, header, ...formProps } = props;
-  const classes = useStyles(props);
+  const { header, ...formProps } = props;
 
   return (
-    <Card className={clsx(classes.root, className)}>
-      <CardTitle title={header} />
-      <CardContent>
+    <DashboardCard>
+      <DashboardCard.Title>{header}</DashboardCard.Title>
+      <DashboardCard.Content>
         <CompanyAddressForm {...formProps} />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 CompanyAddressInput.displayName = "CompanyAddressInput";
