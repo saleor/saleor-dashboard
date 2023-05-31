@@ -1,10 +1,10 @@
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import { WarehouseErrorFragment } from "@dashboard/graphql";
 import { FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getWarehouseErrorMessage from "@dashboard/utils/errors/warehouse";
-import { Card, CardContent, TextField } from "@material-ui/core";
+import { TextField } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -26,11 +26,11 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
   const formErrors = getFormErrors(["name"], errors);
 
   return (
-    <Card data-test-id="general-information-section">
-      <CardTitle
-        title={intl.formatMessage(commonMessages.generalInformations)}
-      />
-      <CardContent>
+    <DashboardCard data-test-id="general-information-section" paddingTop={9}>
+      <DashboardCard.Title>
+        {intl.formatMessage(commonMessages.generalInformations)}
+      </DashboardCard.Title>
+      <DashboardCard.Content>
         <TextField
           disabled={disabled}
           error={!!formErrors.name}
@@ -49,8 +49,8 @@ const WarehouseInfo: React.FC<WarehouseInfoProps> = ({
             },
           }}
         />
-      </CardContent>
-    </Card>
+      </DashboardCard.Content>
+    </DashboardCard>
   );
 };
 

@@ -302,6 +302,10 @@
     "context": "OrderCustomer Fulfillment from Local Warehouse",
     "string": "Fulfill from Local Stock"
   },
+  "/xJSe8": {
+    "context": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
+    "string": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history."
+  },
   "/xXvjF": {
     "context": "section header",
     "string": "Unfulfilled"
@@ -6684,6 +6688,10 @@
     "context": "option",
     "string": "Gift card product type"
   },
+  "kpRxSA": {
+    "context": "Require email confirmation link",
+    "string": "Require email confirmation link"
+  },
   "kuo4fW": {
     "context": "dialog title",
     "string": "Capture manual transaction"
@@ -7389,6 +7397,10 @@
     "context": "notes about customer header",
     "string": "Notes"
   },
+  "qNeXG1": {
+    "context": "User registration",
+    "string": "User registration"
+  },
   "qT6YYk": {
     "context": "order line total price",
     "string": "Total"
@@ -7929,6 +7941,10 @@
   "uRTj1Q": {
     "context": "error message",
     "string": "Invoice not found"
+  },
+  "uRfta0": {
+    "context": "Enable email confirmation",
+    "string": "Enable email confirmation"
   },
   "uT5L4h": {
     "context": "cancel button label",
