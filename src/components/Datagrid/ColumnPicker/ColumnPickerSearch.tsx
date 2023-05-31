@@ -1,18 +1,18 @@
+import Debounce from "@dashboard/components/Debounce";
 import { SearchInput } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import Debounce from "../Debounce";
 import messages from "./messages";
 import { ColumnCategory } from "./useColumns";
 
-interface NewColumnPickerSearchProps {
+interface ColumnPickerSearchProps {
   currentCategory: ColumnCategory;
   setQuery: (value: React.SetStateAction<string>) => void;
   query: string;
 }
 
-export const NewColumnPickerSearch: React.FC<NewColumnPickerSearchProps> = ({
+export const ColumnPickerSearch: React.FC<ColumnPickerSearchProps> = ({
   currentCategory,
   setQuery,
   query,

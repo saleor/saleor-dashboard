@@ -1,6 +1,6 @@
 import { LazyQueryResult } from "@apollo/client/react";
-import { NewColumnPicker } from "@dashboard/components/ColumnPicker/NewColumnPicker";
 import { useColumns } from "@dashboard/components/ColumnPicker/useColumns";
+import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
@@ -283,7 +283,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           rowAnchor={handleRowAnchor}
           recentlyAddedColumn={recentlyAddedColumn}
           renderColumnPicker={() => (
-            <NewColumnPicker
+            <ColumnPicker
               staticColumns={staticColumns}
               dynamicColumns={dynamicColumns}
               selectedColumns={selectedColumns}

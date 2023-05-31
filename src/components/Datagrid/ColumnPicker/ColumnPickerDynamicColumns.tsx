@@ -5,15 +5,15 @@ import { FormattedMessage } from "react-intl";
 import { AvailableColumn } from "../Datagrid/types";
 import messages from "./messages";
 
-export interface NewColumnPickerDynamicColumnsProps {
+export interface ColumnPickerDynamicColumnsProps {
   dynamicColumns: AvailableColumn[];
   setExpanded: (value: React.SetStateAction<boolean>) => void;
   handleToggle: (id: string) => void;
   selectedColumns: string[];
 }
 
-export const NewColumnPickerDynamicColumns: React.FC<
-  NewColumnPickerDynamicColumnsProps
+export const ColumnPickerDynamicColumns: React.FC<
+  ColumnPickerDynamicColumnsProps
 > = ({ dynamicColumns, setExpanded, handleToggle, selectedColumns }) => (
   <>
     <Box

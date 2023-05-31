@@ -11,14 +11,14 @@ import {
 import React, { useState } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { AvailableColumn } from "../Datagrid/types";
+import { AvailableColumn } from "../types";
+import { ColumnPickerCategories } from "./ColumnPickerCategories";
+import { ColumnPickerDynamicColumns } from "./ColumnPickerDynamicColumns";
 import messages from "./messages";
-import { NewColumnPickerCategories } from "./NewColumnPickerCategories";
-import { NewColumnPickerDynamicColumns } from "./NewColumnPickerDynamicColumns";
 import { ColumnCategory } from "./useColumns";
 import { filterEmptyColumn, isLastEnabledColumn } from "./utils";
 
-export interface NewColumnPickerProps {
+export interface ColumnPickerProps {
   staticColumns: AvailableColumn[];
   dynamicColumns?: AvailableColumn[];
   selectedColumns: string[];
@@ -28,7 +28,7 @@ export interface NewColumnPickerProps {
   onDynamicColumnSelect?: (columns: string[]) => void;
 }
 
-export const NewColumnPicker: React.FC<NewColumnPickerProps> = ({
+export const ColumnPicker: React.FC<ColumnPickerProps> = ({
   staticColumns,
   selectedColumns,
   columnCategories,
@@ -74,7 +74,7 @@ export const NewColumnPicker: React.FC<NewColumnPickerProps> = ({
           overflow="hidden"
         >
           {expanded && (
-            <NewColumnPickerCategories
+            <ColumnPickerCategories
               columnCategories={columnCategories}
               columnPickerSettings={columnPickerSettings}
               onDynamicColumnSelect={onDynamicColumnSelect}
@@ -107,7 +107,7 @@ export const NewColumnPicker: React.FC<NewColumnPickerProps> = ({
               </Box>
             ))}
             {columnCategories && (
-              <NewColumnPickerDynamicColumns
+              <ColumnPickerDynamicColumns
                 dynamicColumns={dynamicColumns}
                 selectedColumns={selectedColumns}
                 setExpanded={setExpanded}

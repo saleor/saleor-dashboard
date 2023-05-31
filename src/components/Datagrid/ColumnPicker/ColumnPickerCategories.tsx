@@ -2,22 +2,20 @@ import { Box, Button, List, Text } from "@saleor/macaw-ui/next";
 import React, { useMemo, useState } from "react";
 import { FormattedMessage } from "react-intl";
 
+import { ColumnPickerAvailableNodes } from "./ColumnPickerAvailableNodes";
+import { ColumnPickerPagination } from "./ColumnPickerPagination";
 import messages from "./messages";
-import { NewColumnPickerAvailableNodes } from "./NewColumnPickerAvailableNodes";
-import { NewColumnPickerPagination } from "./NewColumnPickerPagination";
 import { ColumnCategory } from "./useColumns";
 import { getExitIcon, getExitOnClick } from "./utils";
 
-export interface NewColumnPickerCategoriesProps {
+export interface ColumnPickerCategoriesProps {
   columnCategories: ColumnCategory[];
   columnPickerSettings: string[];
   onClose: () => void;
   onDynamicColumnSelect: (columns: string[]) => void;
 }
 
-export const NewColumnPickerCategories: React.FC<
-  NewColumnPickerCategoriesProps
-> = ({
+export const ColumnPickerCategories: React.FC<ColumnPickerCategoriesProps> = ({
   columnCategories,
   onClose,
   onDynamicColumnSelect,
@@ -84,7 +82,7 @@ export const NewColumnPickerCategories: React.FC<
           </Text>
         </Box>
         {selectedCategory ? (
-          <NewColumnPickerAvailableNodes
+          <ColumnPickerAvailableNodes
             currentCategory={currentCategory}
             columnPickerSettings={columnPickerSettings}
             query={query}
@@ -107,7 +105,7 @@ export const NewColumnPickerCategories: React.FC<
         )}
       </Box>
       {selectedCategory && (
-        <NewColumnPickerPagination
+        <ColumnPickerPagination
           query={query}
           hasNextPage={currentCategory.hasNextPage}
           hasPreviousPage={currentCategory.hasPreviousPage}

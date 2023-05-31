@@ -6,7 +6,7 @@ import {
 } from "@saleor/macaw-ui/next";
 import React from "react";
 
-export interface NewColumnPickerPagination {
+export interface ColumnPickerPagination {
   query: string;
   onNextPage: (query: string) => void;
   onPreviousPage: (query: string) => void;
@@ -14,13 +14,13 @@ export interface NewColumnPickerPagination {
   hasPreviousPage: boolean;
 }
 
-export const NewColumnPickerPagination = ({
+export const ColumnPickerPagination = ({
   query,
   onNextPage,
   onPreviousPage,
   hasNextPage,
   hasPreviousPage,
-}: NewColumnPickerPagination) => (
+}: ColumnPickerPagination) => (
   <Box display="flex" gap={4} padding={6}>
     <Button
       variant="secondary"

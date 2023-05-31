@@ -1,5 +1,5 @@
-import { NewColumnPicker } from "@dashboard/components/ColumnPicker/NewColumnPicker";
 import { useColumns } from "@dashboard/components/ColumnPicker/useColumns";
+import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
@@ -126,7 +126,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           onColumnResize={handlers.onResize}
           onColumnMoved={handlers.onMove}
           renderColumnPicker={() => (
-            <NewColumnPicker
+            <ColumnPicker
               staticColumns={staticColumns}
               selectedColumns={selectedColumns}
               onSave={handlers.onChange}

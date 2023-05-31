@@ -1,7 +1,7 @@
 import { ArrowLeftIcon, CloseIcon } from "@saleor/macaw-ui/next";
 import React from "react";
 
-import { AvailableColumn } from "../Datagrid/types";
+import { AvailableColumn } from "../types";
 import { ColumnCategory } from "./useColumns";
 
 export const filterEmptyColumn = (column: AvailableColumn) =>

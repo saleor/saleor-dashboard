@@ -3,11 +3,11 @@ import { Box, Checkbox, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
+import { ColumnPickerSearch } from "./ColumnPickerSearch";
 import messages from "./messages";
-import { NewColumnPickerSearch } from "./NewColumnPickerSearch";
 import { ColumnCategory } from "./useColumns";
 
-export interface NewColumnPickerAvailableNodesProps {
+export interface ColumnPickerAvailableNodesProps {
   currentCategory: ColumnCategory;
   columnPickerSettings: string[];
   query: string;
@@ -15,7 +15,7 @@ export interface NewColumnPickerAvailableNodesProps {
   changeHandler: (column: string) => void;
 }
 
-export const NewColumnPickerAvailableNodes = ({
+export const ColumnPickerAvailableNodes = ({
   currentCategory,
   columnPickerSettings,
   query,
@@ -70,7 +70,7 @@ export const NewColumnPickerAvailableNodes = ({
   return (
     <>
       <Box display="flex" paddingX={7} style={{ boxSizing: "border-box" }}>
-        <NewColumnPickerSearch
+        <ColumnPickerSearch
           currentCategory={currentCategory}
           query={query}
           setQuery={setQuery}
