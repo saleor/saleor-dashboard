@@ -20,7 +20,7 @@ const useStyles = makeStyles(
     },
     date: {
       color: theme.typography.caption.color,
-      paddingLeft: 24,
+      marginLeft: "auto",
       whiteSpace: "nowrap",
     },
     elementsContainer: {
