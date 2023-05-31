@@ -90,7 +90,13 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
   };
 
   return (
-    <Box height="100%" overflow="hidden" paddingX={9} paddingY={9}>
+    <Box
+      height="100%"
+      overflow="hidden"
+      paddingX={9}
+      paddingY={9}
+      paddingBottom={0}
+    >
       <Text as="p" variant="bodyEmp" size="large" marginBottom={7}>
         {intl.formatMessage(messages.title)}
       </Text>
