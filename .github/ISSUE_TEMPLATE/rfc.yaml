@@ -1,5 +1,5 @@
 name: RFC
-description: Start gathering informations regarding new functionality
+description: Start gathering information regarding new functionality
 title: "[RFC]: "
 labels: [RFC]
 assignees:
@@ -9,7 +9,7 @@ body:
   - type: textarea
     id: introduction
     attributes:
-      label:  Short description of the feature
+      label: Short description of the feature
       description: Provide short description of the future, its intention, what problem it solves.
       placeholder: |
         - What problem does it solve?
@@ -37,8 +37,8 @@ body:
       description: Define Acceptance Criteria
       placeholder: |
         - As user I should ...
-        - As develoer I can ...
-        - When the user switches X to Y, the Z should be displayed... 
+        - As developer I can ...
+        - When the user switches X to Y, the Z should be displayed...
       render: Markdown
     validations:
       required: true
