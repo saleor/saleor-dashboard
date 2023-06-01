@@ -23,6 +23,8 @@ export type Scalars = {
    * [iso8601](https://en.wikipedia.org/wiki/ISO_8601).
    */
   DateTime: any;
+  /** The `Day` scalar type represents number of days by integer value. */
+  Day: any;
   /**
    * Custom Decimal implementation.
    *
@@ -3366,6 +3368,208 @@ export enum OrderAuthorizeStatusEnum {
   FULL = 'FULL'
 }
 
+export type OrderBulkCreateDeliveryMethodInput = {
+  /** The ID of the warehouse. */
+  warehouseId?: InputMaybe<Scalars['ID']>;
+  /** The name of the warehouse. */
+  warehouseName?: InputMaybe<Scalars['String']>;
+  /** The ID of the shipping method. */
+  shippingMethodId?: InputMaybe<Scalars['ID']>;
+  /** The name of the shipping method. */
+  shippingMethodName?: InputMaybe<Scalars['String']>;
+  /** The price of the shipping. */
+  shippingPrice?: InputMaybe<TaxedMoneyInput>;
+  /** Tax rate of the shipping. */
+  shippingTaxRate?: InputMaybe<Scalars['PositiveDecimal']>;
+  /** The ID of the tax class. */
+  shippingTaxClassId?: InputMaybe<Scalars['ID']>;
+  /** The name of the tax class. */
+  shippingTaxClassName?: InputMaybe<Scalars['String']>;
+  /** Metadata of the tax class. */
+  shippingTaxClassMetadata?: InputMaybe<Array<MetadataInput>>;
+  /** Private metadata of the tax class. */
+  shippingTaxClassPrivateMetadata?: InputMaybe<Array<MetadataInput>>;
+};
+
+/** An enumeration. */
+export enum OrderBulkCreateErrorCode {
+  GRAPHQL_ERROR = 'GRAPHQL_ERROR',
+  REQUIRED = 'REQUIRED',
+  INVALID = 'INVALID',
+  NOT_FOUND = 'NOT_FOUND',
+  UNIQUE = 'UNIQUE',
+  BULK_LIMIT = 'BULK_LIMIT',
+  TOO_MANY_IDENTIFIERS = 'TOO_MANY_IDENTIFIERS',
+  FUTURE_DATE = 'FUTURE_DATE',
+  INVALID_QUANTITY = 'INVALID_QUANTITY',
+  PRICE_ERROR = 'PRICE_ERROR',
+  NOTE_LENGTH = 'NOTE_LENGTH',
+  INSUFFICIENT_STOCK = 'INSUFFICIENT_STOCK',
+  NON_EXISTING_STOCK = 'NON_EXISTING_STOCK',
+  NO_RELATED_ORDER_LINE = 'NO_RELATED_ORDER_LINE',
+  NEGATIVE_INDEX = 'NEGATIVE_INDEX',
+  ORDER_LINE_FULFILLMENT_LINE_MISMATCH = 'ORDER_LINE_FULFILLMENT_LINE_MISMATCH',
+  METADATA_KEY_REQUIRED = 'METADATA_KEY_REQUIRED',
+  INCORRECT_CURRENCY = 'INCORRECT_CURRENCY'
+}
+
+export type OrderBulkCreateFulfillmentInput = {
+  /** Fulfillment's tracking code. */
+  trackingCode?: InputMaybe<Scalars['String']>;
+  /** List of items informing how to fulfill the order. */
+  lines?: InputMaybe<Array<OrderBulkCreateFulfillmentLineInput>>;
+};
+
+export type OrderBulkCreateFulfillmentLineInput = {
+  /** The ID of the product variant. */
+  variantId?: InputMaybe<Scalars['ID']>;
+  /** The SKU of the product variant. */
+  variantSku?: InputMaybe<Scalars['String']>;
+  /** The external ID of the product variant. */
+  variantExternalReference?: InputMaybe<Scalars['String']>;
+  /** The number of line items to be fulfilled from given warehouse. */
+  quantity: Scalars['Int'];
+  /** ID of the warehouse from which the item will be fulfilled. */
+  warehouse: Scalars['ID'];
+  /** 0-based index of order line, which the fulfillment line refers to. */
+  orderLineIndex: Scalars['Int'];
+};
+
+export type OrderBulkCreateInput = {
+  /** External ID of the order. */
+  externalReference?: InputMaybe<Scalars['String']>;
+  /** Slug of the channel associated with the order. */
+  channel: Scalars['String'];
+  /** The date, when the order was inserted to Saleor database. */
+  createdAt: Scalars['DateTime'];
+  /** Status of the order. */
+  status?: InputMaybe<OrderStatus>;
+  /** Customer associated with the order. */
+  user: OrderBulkCreateUserInput;
+  /** Tracking ID of the customer. */
+  trackingClientId?: InputMaybe<Scalars['String']>;
+  /** Billing address of the customer. */
+  billingAddress: AddressInput;
+  /** Shipping address of the customer. */
+  shippingAddress?: InputMaybe<AddressInput>;
+  /** Currency code. */
+  currency: Scalars['String'];
+  /** Metadata of the order. */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /** Private metadata of the order. */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /** Note about customer. */
+  customerNote?: InputMaybe<Scalars['String']>;
+  /** Notes related to the order. */
+  notes?: InputMaybe<Array<OrderBulkCreateNoteInput>>;
+  /** Order language code. */
+  languageCode: LanguageCodeEnum;
+  /** Determines whether checkout prices should include taxes, when displayed in a storefront. */
+  displayGrossPrices?: InputMaybe<Scalars['Boolean']>;
+  /** Weight of the order in kg. */
+  weight?: InputMaybe<Scalars['WeightScalar']>;
+  /** URL of a view, where users should be redirected to see the order details. */
+  redirectUrl?: InputMaybe<Scalars['String']>;
+  /** List of order lines. */
+  lines: Array<OrderBulkCreateOrderLineInput>;
+  /** The delivery method selected for this order. */
+  deliveryMethod?: InputMaybe<OrderBulkCreateDeliveryMethodInput>;
+  /** List of gift card codes associated with the order. */
+  giftCards?: InputMaybe<Array<Scalars['String']>>;
+  /** Code of a voucher associated with the order. */
+  voucher?: InputMaybe<Scalars['String']>;
+  /** List of discounts. */
+  discounts?: InputMaybe<Array<OrderDiscountCommonInput>>;
+  /** Fulfillments of the order. */
+  fulfillments?: InputMaybe<Array<OrderBulkCreateFulfillmentInput>>;
+  /** Transactions related to the order. */
+  transactions?: InputMaybe<Array<TransactionCreateInput>>;
+  /** Invoices related to the order. */
+  invoices?: InputMaybe<Array<OrderBulkCreateInvoiceInput>>;
+};
+
+export type OrderBulkCreateInvoiceInput = {
+  /** The date, when the invoice was created. */
+  createdAt: Scalars['DateTime'];
+  /** Invoice number. */
+  number?: InputMaybe<Scalars['String']>;
+  /** URL of the invoice to download. */
+  url?: InputMaybe<Scalars['String']>;
+  /** Metadata of the invoice. */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /** Private metadata of the invoice. */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
+};
+
+export type OrderBulkCreateNoteInput = {
+  /** Note message. Max characters: 255. */
+  message: Scalars['String'];
+  /** The date associated with the message. */
+  date?: InputMaybe<Scalars['DateTime']>;
+  /** The user ID associated with the message. */
+  userId?: InputMaybe<Scalars['ID']>;
+  /** The user email associated with the message. */
+  userEmail?: InputMaybe<Scalars['ID']>;
+  /** The user external ID associated with the message. */
+  userExternalReference?: InputMaybe<Scalars['ID']>;
+  /** The app ID associated with the message. */
+  appId?: InputMaybe<Scalars['ID']>;
+};
+
+export type OrderBulkCreateOrderLineInput = {
+  /** The ID of the product variant. */
+  variantId?: InputMaybe<Scalars['ID']>;
+  /** The SKU of the product variant. */
+  variantSku?: InputMaybe<Scalars['String']>;
+  /** The external ID of the product variant. */
+  variantExternalReference?: InputMaybe<Scalars['String']>;
+  /** The name of the product variant. */
+  variantName?: InputMaybe<Scalars['String']>;
+  /** The name of the product. */
+  productName?: InputMaybe<Scalars['String']>;
+  /** Translation of the product variant name. */
+  translatedVariantName?: InputMaybe<Scalars['String']>;
+  /** Translation of the product name. */
+  translatedProductName?: InputMaybe<Scalars['String']>;
+  /** The date, when the order line was created. */
+  createdAt: Scalars['DateTime'];
+  /** Determines whether shipping of the order line items is required. */
+  isShippingRequired: Scalars['Boolean'];
+  /** Gift card flag. */
+  isGiftCard: Scalars['Boolean'];
+  /** Number of items in the order line */
+  quantity: Scalars['Int'];
+  /** Price of the order line. */
+  totalPrice: TaxedMoneyInput;
+  /** Price of the order line excluding applied discount. */
+  undiscountedTotalPrice: TaxedMoneyInput;
+  /** The ID of the warehouse, where the line will be allocated. */
+  warehouse: Scalars['ID'];
+  /** Metadata of the order line. */
+  metadata?: InputMaybe<Array<MetadataInput>>;
+  /** Private metadata of the order line. */
+  privateMetadata?: InputMaybe<Array<MetadataInput>>;
+  /** Tax rate of the order line. */
+  taxRate?: InputMaybe<Scalars['PositiveDecimal']>;
+  /** The ID of the tax class. */
+  taxClassId?: InputMaybe<Scalars['ID']>;
+  /** The name of the tax class. */
+  taxClassName?: InputMaybe<Scalars['String']>;
+  /** Metadata of the tax class. */
+  taxClassMetadata?: InputMaybe<Array<MetadataInput>>;
+  /** Private metadata of the tax class. */
+  taxClassPrivateMetadata?: InputMaybe<Array<MetadataInput>>;
+};
+
+export type OrderBulkCreateUserInput = {
+  /** Customer ID associated with the order. */
+  id?: InputMaybe<Scalars['ID']>;
+  /** Customer email associated with the order. */
+  email?: InputMaybe<Scalars['String']>;
+  /** Customer external ID associated with the order. */
+  externalReference?: InputMaybe<Scalars['String']>;
+};
+
 /**
  * Determine the current charge status for the order.
  *
@@ -3635,6 +3839,14 @@ export type OrderLineCreateInput = {
    * Added in Saleor 3.6.
    */
   forceNewLine?: InputMaybe<Scalars['Boolean']>;
+  /**
+   * Custom price of the item.When the line with the same variant will be provided multiple times, the last price will be used.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  price?: InputMaybe<Scalars['PositiveDecimal']>;
 };
 
 export type OrderLineInput = {
@@ -3646,7 +3858,8 @@ export type OrderLineInput = {
 export enum OrderOriginEnum {
   CHECKOUT = 'CHECKOUT',
   DRAFT = 'DRAFT',
-  REISSUE = 'REISSUE'
+  REISSUE = 'REISSUE',
+  BULK_CREATE = 'BULK_CREATE'
 }
 
 export type OrderRefundFulfillmentLineInput = {
@@ -3723,6 +3936,14 @@ export type OrderSettingsInput = {
    * Note: this API is currently in Feature Preview and can be subject to changes at later point.
    */
   expireOrdersAfter?: InputMaybe<Scalars['Minute']>;
+  /**
+   * The time in days after expired orders will be deleted.Allowed range is from 1 to 120.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  deleteExpiredOrdersAfter?: InputMaybe<Scalars['Day']>;
   /**
    * Determine what strategy will be used to mark the order as paid. Based on the chosen option, the proper object will be created and attached to the order when it's manually marked as paid.
    * `PAYMENT_FLOW` - [default option] creates the `Payment` object.
@@ -4115,6 +4336,7 @@ export enum PermissionEnum {
   MANAGE_GIFT_CARD = 'MANAGE_GIFT_CARD',
   MANAGE_MENUS = 'MANAGE_MENUS',
   MANAGE_ORDERS = 'MANAGE_ORDERS',
+  MANAGE_ORDERS_IMPORT = 'MANAGE_ORDERS_IMPORT',
   MANAGE_PAGES = 'MANAGE_PAGES',
   MANAGE_PAGE_TYPES_AND_ATTRIBUTES = 'MANAGE_PAGE_TYPES_AND_ATTRIBUTES',
   HANDLE_PAYMENTS = 'HANDLE_PAYMENTS',
@@ -5596,6 +5818,20 @@ export type StockUpdateInput = {
   quantity: Scalars['Int'];
 };
 
+/**
+ * Determine how stocks should be updated, while processing an order.
+ *
+ *     SKIP - stocks are not checked and not updated.
+ *     UPDATE - only do update, if there is enough stock.
+ *     FORCE - force update, if there is not enough stock.
+ *
+ */
+export enum StockUpdatePolicyEnum {
+  SKIP = 'SKIP',
+  UPDATE = 'UPDATE',
+  FORCE = 'FORCE'
+}
+
 /** Enum representing the type of a payment storage in a gateway. */
 export enum StorePaymentMethodEnum {
   /** On session storage type. The payment is stored only to be reused when the customer is present in the checkout flow. */
@@ -5750,6 +5986,13 @@ export enum TaxExemptionManageErrorCode {
   NOT_FOUND = 'NOT_FOUND',
   NOT_EDITABLE_ORDER = 'NOT_EDITABLE_ORDER'
 }
+
+export type TaxedMoneyInput = {
+  /** Gross value of an item. */
+  gross: Scalars['PositiveDecimal'];
+  /** Net value of an item. */
+  net: Scalars['PositiveDecimal'];
+};
 
 /** An enumeration. */
 export enum ThumbnailFormatEnum {
@@ -6646,6 +6889,14 @@ export enum WebhookEventTypeAsyncEnum {
    * Added in Saleor 3.8.
    */
   ORDER_METADATA_UPDATED = 'ORDER_METADATA_UPDATED',
+  /**
+   * Orders are imported.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
   /** A draft order is created. */
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
   /** A draft order is updated. */
@@ -6977,6 +7228,14 @@ export enum WebhookEventTypeEnum {
    * Added in Saleor 3.8.
    */
   ORDER_METADATA_UPDATED = 'ORDER_METADATA_UPDATED',
+  /**
+   * Orders are imported.
+   *
+   * Added in Saleor 3.14.
+   *
+   * Note: this API is currently in Feature Preview and can be subject to changes at later point.
+   */
+  ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
   /** A draft order is created. */
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
   /** A draft order is updated. */
@@ -7353,6 +7612,7 @@ export enum WebhookSampleEventTypeEnum {
   ORDER_EXPIRED = 'ORDER_EXPIRED',
   ORDER_FULFILLED = 'ORDER_FULFILLED',
   ORDER_METADATA_UPDATED = 'ORDER_METADATA_UPDATED',
+  ORDER_BULK_CREATED = 'ORDER_BULK_CREATED',
   DRAFT_ORDER_CREATED = 'DRAFT_ORDER_CREATED',
   DRAFT_ORDER_UPDATED = 'DRAFT_ORDER_UPDATED',
   DRAFT_ORDER_DELETED = 'DRAFT_ORDER_DELETED',
