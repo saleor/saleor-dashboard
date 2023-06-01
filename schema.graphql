@@ -3582,6 +3582,68 @@ type CheckoutCreate {
   checkout: Checkout
 }
 
+"""
+Create new checkout from existing order.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type CheckoutCreateFromOrder {
+  """Variants that were not attached to the checkout."""
+  unavailableVariants: [CheckoutCreateFromOrderUnavailableVariant!]
+
+  """Created checkout."""
+  checkout: Checkout
+  errors: [CheckoutCreateFromOrderError!]!
+}
+
+type CheckoutCreateFromOrderError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: CheckoutCreateFromOrderErrorCode!
+}
+
+"""An enumeration."""
+enum CheckoutCreateFromOrderErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  ORDER_NOT_FOUND
+  CHANNEL_INACTIVE
+  TAX_ERROR
+}
+
+type CheckoutCreateFromOrderUnavailableVariant {
+  """The error message."""
+  message: String!
+
+  """The error code."""
+  code: CheckoutCreateFromOrderUnavailableVariantErrorCode!
+
+  """Variant ID that is unavailable."""
+  variantId: ID!
+
+  """Order line ID that is unavailable."""
+  lineId: ID!
+}
+
+"""An enumeration."""
+enum CheckoutCreateFromOrderUnavailableVariantErrorCode {
+  NOT_FOUND
+  PRODUCT_UNAVAILABLE_FOR_PURCHASE
+  UNAVAILABLE_VARIANT_IN_CHANNEL
+  PRODUCT_NOT_PUBLISHED
+  QUANTITY_GREATER_THAN_LIMIT
+  INSUFFICIENT_STOCK
+}
+
 input CheckoutCreateInput {
   """Slug of a channel in which to create a checkout."""
   channel: String
@@ -12451,6 +12513,18 @@ type Mutation {
   ): CheckoutCreate
 
   """
+  Create new checkout from existing order.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  checkoutCreateFromOrder(
+    """ID of a order that will be used to create the checkout."""
+    id: ID!
+  ): CheckoutCreateFromOrder
+
+  """
   Sets the customer as the owner of the checkout. 
   
   Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_USER.
@@ -14454,6 +14528,7 @@ type OrderDiscountDelete {
 
 """An enumeration."""
 enum OrderDiscountType {
+  SALE
   VOUCHER
   MANUAL
 }
@@ -23732,6 +23807,15 @@ type Shop {
   staffNotificationRecipients: [StaffNotificationRecipient!]
 
   """
+  Determines if account confirmation by email is enabled.
+  
+  Added in Saleor 3.14.
+  
+  Requires one of the following permissions: MANAGE_SETTINGS.
+  """
+  enableAccountConfirmationByEmail: Boolean
+
+  """
   Resource limitations and current usage if any set for a shop
   
   Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
@@ -23887,6 +23971,13 @@ input ShopSettingsInput {
   Added in Saleor 3.1.
   """
   limitQuantityPerCheckout: Int
+
+  """
+  Enable automatic account confirmation by email.
+  
+  Added in Saleor 3.14.
+  """
+  enableAccountConfirmationByEmail: Boolean
 
   """
   Include taxes in prices. 
