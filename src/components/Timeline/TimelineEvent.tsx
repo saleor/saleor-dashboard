@@ -40,12 +40,7 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
             width: "100%",
           })}
         >
-          <Accordion.Item
-            className={sprinkles({
-              width: "100%",
-            })}
-            value="test"
-          >
+          <Accordion.Item value="accordionItemId">
             <Accordion.Trigger>
               <TimelineEventHeader
                 title={title}
