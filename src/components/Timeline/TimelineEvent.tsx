@@ -20,7 +20,7 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
     <Box
       display="flex"
       alignItems="center"
-      marginBottom={4}
+      marginBottom={5}
       position="relative"
       width="100%"
     >
@@ -32,7 +32,7 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
         __height="7px"
         __width="7px"
         __left="-28px"
-        __top={children ? "12px" : "5px"}
+        __top={children ? "13px" : "5px"}
       />
       {children ? (
         <Accordion
@@ -52,12 +52,12 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
                 date={date}
                 titleElements={titleElements}
                 hasPlainDate={hasPlainDate}
-              />
+              >
+                <Accordion.TriggerButton dataTestId="expand-icon" />
+              </TimelineEventHeader>
             </Accordion.Trigger>
             <Accordion.Content>
-              <Box paddingTop={2}>
-                <Text>{children}</Text>
-              </Box>
+              <Text>{children}</Text>
             </Accordion.Content>
           </Accordion.Item>
         </Accordion>
