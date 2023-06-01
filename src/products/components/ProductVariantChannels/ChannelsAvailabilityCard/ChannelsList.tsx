@@ -21,6 +21,7 @@ export const ChannelsList: React.FC<ChannelListProps> = ({
         <Text variant="caption" size="large">
           {summary}
         </Text>
+        <Accordion.TriggerButton dataTestId="expand-icon" />
       </Accordion.Trigger>
       <Accordion.Content>{children}</Accordion.Content>
     </Accordion.Item>

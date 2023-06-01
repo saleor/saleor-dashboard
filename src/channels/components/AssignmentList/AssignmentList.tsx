@@ -54,6 +54,7 @@ const AssignmentList: React.FC<AssignmentListProps> = props => {
               {`${items.length} ${itemsName.toLowerCase()}`}
             </Typography>
           )}
+          <Accordion.TriggerButton dataTestId="expand-icon" />
         </Accordion.Trigger>
 
         <Accordion.Content>

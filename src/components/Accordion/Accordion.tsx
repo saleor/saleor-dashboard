@@ -45,6 +45,7 @@ const Accordion: React.FC<AccordionProps> = ({
             <Text paddingY={3} variant="body" size="small">
               {title}
             </Text>
+            <AccordionMacaw.TriggerButton dataTestId="expand-icon" />
           </AccordionMacaw.Trigger>
           <AccordionMacaw.Content>
             <Divider />

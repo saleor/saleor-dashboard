@@ -175,6 +175,7 @@ const FilterContent: React.FC<FilterContentProps> = ({
                         }
                       />
                     )}
+                    <Accordion.TriggerButton dataTestId="expand-icon" />
                   </Accordion.Trigger>
                   <Accordion.Content>
                     {currentFilter?.active && (
