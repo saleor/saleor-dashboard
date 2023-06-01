@@ -5,7 +5,6 @@ import {
   sprinkles,
   TableEditIcon,
   Text,
-  Toggle,
   vars,
 } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
@@ -14,9 +13,9 @@ import { FormattedMessage } from "react-intl";
 import { AvailableColumn } from "../types";
 import { ColumnPickerCategories } from "./ColumnPickerCategories";
 import { ColumnPickerDynamicColumns } from "./ColumnPickerDynamicColumns";
+import { ColumnPickerStaticColumns } from "./ColumnPickerStaticColumns";
 import messages from "./messages";
 import { ColumnCategory } from "./useColumns";
-import { filterEmptyColumn, isLastEnabledColumn } from "./utils";
 
 export interface ColumnPickerProps {
   staticColumns: AvailableColumn[];
@@ -87,25 +86,11 @@ export const ColumnPicker: React.FC<ColumnPickerProps> = ({
                 <FormattedMessage {...messages.column} />
               </Text>
             </Box>
-
-            {staticColumns.filter(filterEmptyColumn).map(column => (
-              <Box padding={3} key={column.id}>
-                <Toggle
-                  onPressedChange={() => handleToggle(column.id)}
-                  pressed={selectedColumns.includes(column.id)}
-                  // One static column must always be enabled
-                  disabled={isLastEnabledColumn(
-                    column.id,
-                    staticColumns,
-                    selectedColumns,
-                  )}
-                >
-                  <Text variant="body" size="small" color="textNeutralDefault">
-                    {column.title}
-                  </Text>
-                </Toggle>
-              </Box>
-            ))}
+            <ColumnPickerStaticColumns
+              staticColumns={staticColumns}
+              handleToggle={handleToggle}
+              selectedColumns={selectedColumns}
+            />
             {columnCategories && (
               <ColumnPickerDynamicColumns
                 dynamicColumns={dynamicColumns}

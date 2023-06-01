@@ -1,6 +1,6 @@
 import { act, renderHook } from "@testing-library/react-hooks";
 
-import { AvailableColumn } from "../Datagrid/types";
+import { AvailableColumn } from "../types";
 import { ColumnCategory, useColumns } from "./useColumns";
 
 const mockedColumns: AvailableColumn[] = [

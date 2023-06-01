@@ -2,7 +2,7 @@ import { Box, Button, PlusIcon, Text, Toggle } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { AvailableColumn } from "../Datagrid/types";
+import { AvailableColumn } from "../types";
 import messages from "./messages";
 
 export interface ColumnPickerDynamicColumnsProps {
