@@ -1,7 +1,7 @@
 import { filterable } from "@dashboard/attributes/utils/data";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useColumnPickerSettings } from "@dashboard/components/ColumnPicker/useColumnPickerSettings";
+import { useColumnPickerSettings } from "@dashboard/components/Datagrid/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,

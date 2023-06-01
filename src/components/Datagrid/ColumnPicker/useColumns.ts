@@ -2,10 +2,18 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
 import difference from "lodash/difference";
-import uniqBy from "lodash/uniqBy";
 import React from "react";
 
-import { AvailableColumn } from "../Datagrid/types";
+import { AvailableColumn } from "../types";
+import {
+  areCategoriesLoaded,
+  extractAvailableNodesFromCategories,
+  extractSelectedNodesFromCategories,
+  filterColumns,
+  mergeCurrentDynamicColumnsWithCandidates,
+  mergeSelectedColumns,
+  sortColumns,
+} from "./utils";
 
 export interface ColumnCategory {
   name: string;
@@ -41,27 +49,19 @@ export const useColumns = ({
     React.useState<AvailableColumn[]>(null);
 
   React.useEffect(() => {
-    if (
-      dynamicColumns === null &&
-      columnCategories?.every(category => Array.isArray(category.selectedNodes))
-    ) {
+    if (dynamicColumns === null && areCategoriesLoaded(columnCategories)) {
       updateDynamicColumns(
-        columnCategories
-          .flatMap(category => category.selectedNodes)
-          .sort(
-            (a, b) =>
-              columnPickerSettings.indexOf(a.id) -
-              columnPickerSettings.indexOf(b.id),
-          ),
+        sortColumns(
+          extractSelectedNodesFromCategories(columnCategories),
+          columnPickerSettings,
+        ),
       );
     }
   }, [columnCategories, columnPickerSettings, dynamicColumns]);
 
   const initialColumnsState = React.useMemo(
     () =>
-      [...staticColumns, ...(dynamicColumns ?? [])].filter(
-        column => selectedColumns.includes(column.id) || column.id === "empty",
-      ),
+      mergeSelectedColumns({ staticColumns, dynamicColumns, selectedColumns }),
     [dynamicColumns, staticColumns, selectedColumns],
   );
 
@@ -125,23 +125,25 @@ export const useColumns = ({
   // Should be used only for special cases
   const onCustomUpdateVisible = setVisibleColumns;
 
-  const onDynamicColumnSelect = (columns: string[]) => {
+  const onDynamicColumnSelect = (selected: string[]) => {
     if (typeof setDynamicColumnSettings !== "function") {
       return;
     }
-    setDynamicColumnSettings(columns);
+    setDynamicColumnSettings(selected);
     updateDynamicColumns(prevDynamicColumns =>
-      uniqBy(
-        [
-          ...(prevDynamicColumns ?? []),
-          ...columnCategories
-            .flatMap(category => category.availableNodes)
-            .filter(x => columns.includes(x.id)),
-        ],
-        "id",
-      )
-        .sort((a, b) => columns.indexOf(a.id) - columns.indexOf(b.id))
-        .filter(x => columns.includes(x.id)),
+      filterColumns(
+        sortColumns(
+          mergeCurrentDynamicColumnsWithCandidates(
+            prevDynamicColumns,
+            filterColumns(
+              extractAvailableNodesFromCategories(columnCategories),
+              selected,
+            ),
+          ),
+          selected,
+        ),
+        selected,
+      ),
     );
   };
 
