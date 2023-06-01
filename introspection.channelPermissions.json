@@ -3160,6 +3160,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "brand",
+            "description": "App's brand data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AppBrand",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -3239,6 +3251,85 @@
               "kind": "OBJECT",
               "name": "App",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AppBrand",
+        "description": "Represents the app's brand data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "logo",
+            "description": "App's logos details.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "AppBrandLogo",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AppBrandLogo",
+        "description": "Represents the app's brand logo data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "default",
+            "description": "URL to the default logo image.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "size",
+                "description": "Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "format",
+                "description": "The format of the image. When not provided, format of the original image will be used.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "IconThumbnailFormatEnum",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4733,6 +4824,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "brand",
+            "description": "App's brand data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AppBrand",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -4825,6 +4928,85 @@
             "ofType": null
           }
         ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AppManifestBrand",
+        "description": "Represents the app's manifest brand data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "logo",
+            "description": "App's logos details.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "AppManifestBrandLogo",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AppManifestBrandLogo",
+        "description": "Represents the app's manifest brand data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "default",
+            "description": "Data URL with a base64 encoded logo image.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "size",
+                "description": "Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "format",
+                "description": "The format of the image. When not provided, format of the original image will be used.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "IconThumbnailFormatEnum",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -15988,6 +16170,287 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "CheckoutCreateFromOrder",
+        "description": "Create new checkout from existing order.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "unavailableVariants",
+            "description": "Variants that were not attached to the checkout.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "CheckoutCreateFromOrderUnavailableVariant",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "checkout",
+            "description": "Created checkout.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Checkout",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "CheckoutCreateFromOrderError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CheckoutCreateFromOrderError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "CheckoutCreateFromOrderErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "CheckoutCreateFromOrderErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORDER_NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CHANNEL_INACTIVE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TAX_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CheckoutCreateFromOrderUnavailableVariant",
+        "description": null,
+        "fields": [
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "CheckoutCreateFromOrderUnavailableVariantErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "variantId",
+            "description": "Variant ID that is unavailable.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lineId",
+            "description": "Order line ID that is unavailable.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "CheckoutCreateFromOrderUnavailableVariantErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PRODUCT_UNAVAILABLE_FOR_PURCHASE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UNAVAILABLE_VARIANT_IN_CHANNEL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PRODUCT_NOT_PUBLISHED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "QUANTITY_GREATER_THAN_LIMIT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INSUFFICIENT_STOCK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
         "name": "CheckoutCreateInput",
         "description": null,
@@ -24832,6 +25295,16 @@
         "possibleTypes": null
       },
       {
+        "kind": "SCALAR",
+        "name": "Day",
+        "description": "The `Day` scalar type represents number of days by integer value.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "DeactivateAllUserTokens",
         "description": "Deactivate all JWT tokens of the currently authenticated user. \n\nRequires one of the following permissions: AUTHENTICATED_USER.",
@@ -27792,6 +28265,11 @@
           {
             "kind": "OBJECT",
             "name": "MenuUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "OrderBulkCreated",
             "ofType": null
           },
           {
@@ -35756,6 +36234,29 @@
         "possibleTypes": null
       },
       {
+        "kind": "ENUM",
+        "name": "IconThumbnailFormatEnum",
+        "description": "Thumbnail formats for icon images.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ORIGINAL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "WEBP",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "Image",
         "description": "Represents an image.",
@@ -42307,6 +42808,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "brand",
+            "description": "App's brand data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AppManifestBrand",
               "ofType": null
             },
             "isDeprecated": false,
@@ -50460,7 +50973,7 @@
           },
           {
             "name": "transactionUpdate",
-            "description": "Create transaction for checkout or order.\n\nAdded in Saleor 3.4.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires the following permissions: OWNER and HANDLE_PAYMENTS.",
+            "description": "Update transaction.\n\nAdded in Saleor 3.4.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires the following permissions: OWNER and HANDLE_PAYMENTS for apps, HANDLE_PAYMENTS for staff users. Staff user cannot update a transaction that is owned by the app.",
             "args": [
               {
                 "name": "id",
@@ -50570,7 +51083,7 @@
           },
           {
             "name": "transactionEventReport",
-            "description": "Report the event for the transaction.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires the following permissions: OWNER and HANDLE_PAYMENTS.",
+            "description": "Report the event for the transaction.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires the following permissions: OWNER and HANDLE_PAYMENTS for apps, HANDLE_PAYMENTS for staff users. Staff user cannot update a transaction that is owned by the app.",
             "args": [
               {
                 "name": "amount",
@@ -52789,6 +53302,67 @@
             "type": {
               "kind": "OBJECT",
               "name": "OrderBulkCancel",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "orderBulkCreate",
+            "description": "Creates multiple orders.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_ORDERS_IMPORT.",
+            "args": [
+              {
+                "name": "errorPolicy",
+                "description": "Policies of error handling. DEFAULT: REJECT_EVERYTHING",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "ErrorPolicyEnum",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "orders",
+                "description": "Input list of orders to create. Orders limit: 50.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "OrderBulkCreateInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "stockUpdatePolicy",
+                "description": "Determine how stock should be updated, while processing the order. DEFAULT: UPDATE - Only do update, if there is enough stocks.",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "StockUpdatePolicyEnum",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrderBulkCreate",
               "ofType": null
             },
             "isDeprecated": false,
@@ -55178,6 +55752,35 @@
             "type": {
               "kind": "OBJECT",
               "name": "CheckoutCreate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "checkoutCreateFromOrder",
+            "description": "Create new checkout from existing order.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "id",
+                "description": "ID of a order that will be used to create the checkout.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CheckoutCreateFromOrder",
               "ofType": null
             },
             "isDeprecated": false,
@@ -61424,6 +62027,1619 @@
       },
       {
         "kind": "OBJECT",
+        "name": "OrderBulkCreate",
+        "description": "Creates multiple orders.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_ORDERS_IMPORT.",
+        "fields": [
+          {
+            "name": "count",
+            "description": "Returns how many objects were created.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "results",
+            "description": "List of the created orders.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "OrderBulkCreateResult",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "OrderBulkCreateError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "OrderBulkCreateDeliveryMethodInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "warehouseId",
+            "description": "The ID of the warehouse.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "warehouseName",
+            "description": "The name of the warehouse.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingMethodId",
+            "description": "The ID of the shipping method.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingMethodName",
+            "description": "The name of the shipping method.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingPrice",
+            "description": "The price of the shipping.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "TaxedMoneyInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingTaxRate",
+            "description": "Tax rate of the shipping.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "PositiveDecimal",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingTaxClassId",
+            "description": "The ID of the tax class.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingTaxClassName",
+            "description": "The name of the tax class.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingTaxClassMetadata",
+            "description": "Metadata of the tax class.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingTaxClassPrivateMetadata",
+            "description": "Private metadata of the tax class.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrderBulkCreateError",
+        "description": null,
+        "fields": [
+          {
+            "name": "path",
+            "description": "Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "OrderBulkCreateErrorCode",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "OrderBulkCreateErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REQUIRED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UNIQUE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "BULK_LIMIT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TOO_MANY_IDENTIFIERS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FUTURE_DATE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID_QUANTITY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PRICE_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOTE_LENGTH",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INSUFFICIENT_STOCK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NON_EXISTING_STOCK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NO_RELATED_ORDER_LINE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NEGATIVE_INDEX",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORDER_LINE_FULFILLMENT_LINE_MISMATCH",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "METADATA_KEY_REQUIRED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INCORRECT_CURRENCY",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "OrderBulkCreateFulfillmentInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "trackingCode",
+            "description": "Fulfillment's tracking code.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lines",
+            "description": "List of items informing how to fulfill the order.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "OrderBulkCreateFulfillmentLineInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "OrderBulkCreateFulfillmentLineInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "variantId",
+            "description": "The ID of the product variant.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "variantSku",
+            "description": "The SKU of the product variant.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "variantExternalReference",
+            "description": "The external ID of the product variant.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "quantity",
+            "description": "The number of line items to be fulfilled from given warehouse.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "warehouse",
+            "description": "ID of the warehouse from which the item will be fulfilled.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "orderLineIndex",
+            "description": "0-based index of order line, which the fulfillment line refers to.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "OrderBulkCreateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "externalReference",
+            "description": "External ID of the order.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "channel",
+            "description": "Slug of the channel associated with the order.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "createdAt",
+            "description": "The date, when the order was inserted to Saleor database.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "status",
+            "description": "Status of the order.",
+            "type": {
+              "kind": "ENUM",
+              "name": "OrderStatus",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "user",
+            "description": "Customer associated with the order.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "OrderBulkCreateUserInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "trackingClientId",
+            "description": "Tracking ID of the customer.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "billingAddress",
+            "description": "Billing address of the customer.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "AddressInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "shippingAddress",
+            "description": "Shipping address of the customer.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "AddressInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "currency",
+            "description": "Currency code.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "Metadata of the order.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "Private metadata of the order.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "customerNote",
+            "description": "Note about customer.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "notes",
+            "description": "Notes related to the order.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "OrderBulkCreateNoteInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "languageCode",
+            "description": "Order language code.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "LanguageCodeEnum",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "displayGrossPrices",
+            "description": "Determines whether checkout prices should include taxes, when displayed in a storefront.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "weight",
+            "description": "Weight of the order in kg.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "WeightScalar",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "redirectUrl",
+            "description": "URL of a view, where users should be redirected to see the order details.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lines",
+            "description": "List of order lines.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "OrderBulkCreateOrderLineInput",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "deliveryMethod",
+            "description": "The delivery method selected for this order.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "OrderBulkCreateDeliveryMethodInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "giftCards",
+            "description": "List of gift card codes associated with the order.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "voucher",
+            "description": "Code of a voucher associated with the order.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "discounts",
+            "description": "List of discounts.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "OrderDiscountCommonInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "fulfillments",
+            "description": "Fulfillments of the order.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "OrderBulkCreateFulfillmentInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "transactions",
+            "description": "Transactions related to the order.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "TransactionCreateInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "invoices",
+            "description": "Invoices related to the order.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "OrderBulkCreateInvoiceInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "OrderBulkCreateInvoiceInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "createdAt",
+            "description": "The date, when the invoice was created.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "number",
+            "description": "Invoice number.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "url",
+            "description": "URL of the invoice to download.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "Metadata of the invoice.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "Private metadata of the invoice.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "OrderBulkCreateNoteInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "message",
+            "description": "Note message. Max characters: 255.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "date",
+            "description": "The date associated with the message.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "userId",
+            "description": "The user ID associated with the message.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "userEmail",
+            "description": "The user email associated with the message.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "userExternalReference",
+            "description": "The user external ID associated with the message.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "appId",
+            "description": "The app ID associated with the message.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "OrderBulkCreateOrderLineInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "variantId",
+            "description": "The ID of the product variant.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "variantSku",
+            "description": "The SKU of the product variant.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "variantExternalReference",
+            "description": "The external ID of the product variant.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "variantName",
+            "description": "The name of the product variant.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "productName",
+            "description": "The name of the product.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "translatedVariantName",
+            "description": "Translation of the product variant name.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "translatedProductName",
+            "description": "Translation of the product name.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "createdAt",
+            "description": "The date, when the order line was created.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "DateTime",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isShippingRequired",
+            "description": "Determines whether shipping of the order line items is required.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isGiftCard",
+            "description": "Gift card flag.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "quantity",
+            "description": "Number of items in the order line",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "totalPrice",
+            "description": "Price of the order line.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "TaxedMoneyInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "undiscountedTotalPrice",
+            "description": "Price of the order line excluding applied discount.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "TaxedMoneyInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "warehouse",
+            "description": "The ID of the warehouse, where the line will be allocated.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "Metadata of the order line.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "Private metadata of the order line.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxRate",
+            "description": "Tax rate of the order line.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "PositiveDecimal",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClassId",
+            "description": "The ID of the tax class.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClassName",
+            "description": "The name of the tax class.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClassMetadata",
+            "description": "Metadata of the tax class.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "taxClassPrivateMetadata",
+            "description": "Private metadata of the tax class.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrderBulkCreateResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "order",
+            "description": "Order data.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": "List of errors occurred on create attempt.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "OrderBulkCreateError",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "OrderBulkCreateUserInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "id",
+            "description": "Customer ID associated with the order.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "email",
+            "description": "Customer email associated with the order.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "externalReference",
+            "description": "Customer external ID associated with the order.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrderBulkCreated",
+        "description": "Event sent when orders are imported.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "orders",
+            "description": "The orders the event relates to.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Order",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "OrderCancel",
         "description": "Cancel an order. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
         "fields": [
@@ -62601,6 +64817,12 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
+          {
+            "name": "SALE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "VOUCHER",
             "description": null,
@@ -66178,6 +68400,18 @@
             "defaultValue": "false",
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "price",
+            "description": "Custom price of the item.When the line with the same variant will be provided multiple times, the last price will be used.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "PositiveDecimal",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "interfaces": null,
@@ -66825,6 +69059,12 @@
           },
           {
             "name": "REISSUE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "BULK_CREATE",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -67495,6 +69735,22 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "deleteExpiredOrdersAfter",
+            "description": "The time in days after expired orders will be deleted.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Day",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -67606,6 +69862,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Minute",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "deleteExpiredOrdersAfter",
+            "description": "The time in days after expired orders will be deleted.Allowed range is from 1 to 120.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Day",
               "ofType": null
             },
             "defaultValue": null,
@@ -74789,6 +77057,12 @@
           },
           {
             "name": "MANAGE_ORDERS",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "MANAGE_ORDERS_IMPORT",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -86243,7 +88517,7 @@
       {
         "kind": "OBJECT",
         "name": "ProductVariantChannelListing",
-        "description": "Represents product varaint channel listing.",
+        "description": "Represents product variant channel listing.",
         "fields": [
           {
             "name": "id",
@@ -101178,6 +103452,18 @@
             "deprecationReason": null
           },
           {
+            "name": "enableAccountConfirmationByEmail",
+            "description": "Determines if account confirmation by email is enabled.\n\nAdded in Saleor 3.14.\n\nRequires one of the following permissions: MANAGE_SETTINGS.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "limits",
             "description": "Resource limitations and current usage if any set for a shop\n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER.",
             "args": [],
@@ -101776,6 +104062,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "Int",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "enableAccountConfirmationByEmail",
+            "description": "Enable automatic account confirmation by email.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
               "ofType": null
             },
             "defaultValue": null,
@@ -104251,6 +106549,35 @@
         ],
         "interfaces": null,
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "StockUpdatePolicyEnum",
+        "description": "Determine how stocks should be updated, while processing an order.\n\n    SKIP - stocks are not checked and not updated.\n    UPDATE - only do update, if there is enough stock.\n    FORCE - force update, if there is not enough stock.\n    ",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "SKIP",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UPDATE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "FORCE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -107310,6 +109637,49 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "TaxedMoneyInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "gross",
+            "description": "Gross value of an item.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "PositiveDecimal",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "net",
+            "description": "Net value of an item.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "PositiveDecimal",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "TaxedMoneyRange",
         "description": "Represents a range of monetary values.",
@@ -108724,7 +111094,7 @@
       {
         "kind": "OBJECT",
         "name": "TransactionEventReport",
-        "description": "Report the event for the transaction.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires the following permissions: OWNER and HANDLE_PAYMENTS.",
+        "description": "Report the event for the transaction.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires the following permissions: OWNER and HANDLE_PAYMENTS for apps, HANDLE_PAYMENTS for staff users. Staff user cannot update a transaction that is owned by the app.",
         "fields": [
           {
             "name": "alreadyProcessed",
@@ -110663,7 +113033,7 @@
       {
         "kind": "OBJECT",
         "name": "TransactionUpdate",
-        "description": "Create transaction for checkout or order.\n\nAdded in Saleor 3.4.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires the following permissions: OWNER and HANDLE_PAYMENTS.",
+        "description": "Update transaction.\n\nAdded in Saleor 3.4.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.\n\nRequires the following permissions: OWNER and HANDLE_PAYMENTS for apps, HANDLE_PAYMENTS for staff users. Staff user cannot update a transaction that is owned by the app.",
         "fields": [
           {
             "name": "transaction",
@@ -119653,6 +122023,12 @@
             "deprecationReason": null
           },
           {
+            "name": "ORDER_BULK_CREATED",
+            "description": "Orders are imported.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "DRAFT_ORDER_CREATED",
             "description": "A draft order is created.",
             "isDeprecated": false,
@@ -120368,6 +122744,12 @@
           {
             "name": "ORDER_METADATA_UPDATED",
             "description": "An order metadata is updated.\n\nAdded in Saleor 3.8.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORDER_BULK_CREATED",
+            "description": "Orders are imported.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -121307,6 +123689,12 @@
           },
           {
             "name": "ORDER_METADATA_UPDATED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORDER_BULK_CREATED",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
