@@ -72,7 +72,7 @@ export const ColumnPicker: React.FC<ColumnPickerProps> = ({
           gridTemplateColumns={expanded ? 2 : 1}
           overflow="hidden"
         >
-          {expanded && (
+          {expanded && columnCategories && (
             <ColumnPickerCategories
               columnCategories={columnCategories}
               columnPickerSettings={columnPickerSettings}
