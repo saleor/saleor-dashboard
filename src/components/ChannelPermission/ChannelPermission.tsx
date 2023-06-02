@@ -32,7 +32,7 @@ export const ChannelPermission = ({
 
   return (
     <Box height="100%">
-      <Text as="p" variant="bodyEmp" size="large" marginBottom={7}>
+      <Text as="p" variant="bodyEmp" size="large" marginBottom={5}>
         {intl.formatMessage(messages.title)}
       </Text>
 
@@ -55,19 +55,9 @@ export const ChannelPermission = ({
         </Checkbox>
 
         {!hasAllChannels && (
-          <Box
-            width="100%"
-            borderBottomStyle="solid"
-            borderBottomWidth={1}
-            borderColor="neutralPlain"
-            height={1}
-            marginY={5}
-          />
-        )}
-
-        {!hasAllChannels && (
-          <Box __height="calc(100% - 150px)" overflowY="auto">
+          <Box marginTop={5}>
             <Multiselect
+              size="small"
               data-test-id="channels"
               disabled={disabled}
               options={mapNodeToChoice(allChannels)}
