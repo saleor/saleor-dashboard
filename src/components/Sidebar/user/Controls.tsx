@@ -113,7 +113,10 @@ export const UserControls = () => {
                 alignItems="center"
                 gap="s2"
                 marginTop="s1"
-                onClick={changeTheme}
+                onClick={() => {
+                  changeTheme();
+                  setOpen(false);
+                }}
                 {...listItemStyles}
                 data-test-id="theme-switch"
               >
