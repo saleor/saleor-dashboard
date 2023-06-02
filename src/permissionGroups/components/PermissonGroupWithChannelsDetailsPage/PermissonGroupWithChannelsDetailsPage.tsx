@@ -146,6 +146,23 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
                 onChange={change}
               />
               <FormSpacer />
+              <Box paddingX={9}>
+                <ChannelPermission
+                  allChannels={
+                    // I pass all channels because Multiselect components based on ids,
+                    // and need data that will take information about channel
+                    !isUserAbleToEditChannesl ? channels : channelsOptions
+                  }
+                  hasAllChannels={data.hasAllChannels}
+                  selectedChannels={data.channels}
+                  onHasAllChannelsChange={handleHasAllChannelsChange}
+                  onChannelChange={handleChannelChange}
+                  disabled={!isUserAbleToEditChannesl}
+                  disabledSelectAllChannels={hasUserRestrictedChannels}
+                />
+              </Box>
+
+              <FormSpacer />
               <PermissionGroupMemberList
                 disabled={disabled}
                 {...listProps}
@@ -153,42 +170,21 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
               />
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
-              <Box display="flex" flexDirection="column" height="100%">
-                <Box overflow="hidden" __maxHeight="50%">
-                  <AccountPermissions
-                    permissionsExceeded={permissionsExceeded}
-                    data={data}
-                    disabled={disabled}
-                    permissions={permissions}
-                    onChange={change}
-                    errorMessage={permissionsError}
-                    fullAccessLabel={intl.formatMessage(
-                      buttonMessages.selectAll,
-                    )}
-                    description={intl.formatMessage({
-                      id: "CYZse9",
-                      defaultMessage:
-                        "Expand or restrict group's permissions to access certain part of saleor system.",
-                      description: "card description",
-                    })}
-                  />
-                </Box>
-                <Box overflow="hidden" __maxHeight="50%" height="100%">
-                  <ChannelPermission
-                    allChannels={
-                      // I pass all channels because Multiselect components based on ids,
-                      // and need data that will take information about channel
-                      !isUserAbleToEditChannesl ? channels : channelsOptions
-                    }
-                    hasAllChannels={data.hasAllChannels}
-                    selectedChannels={data.channels}
-                    onHasAllChannelsChange={handleHasAllChannelsChange}
-                    onChannelChange={handleChannelChange}
-                    disabled={!isUserAbleToEditChannesl}
-                    disabledSelectAllChannels={hasUserRestrictedChannels}
-                  />
-                </Box>
-              </Box>
+              <AccountPermissions
+                permissionsExceeded={permissionsExceeded}
+                data={data}
+                disabled={disabled}
+                permissions={permissions}
+                onChange={change}
+                errorMessage={permissionsError}
+                fullAccessLabel={intl.formatMessage(buttonMessages.selectAll)}
+                description={intl.formatMessage({
+                  id: "CYZse9",
+                  defaultMessage:
+                    "Expand or restrict group's permissions to access certain part of saleor system.",
+                  description: "card description",
+                })}
+              />
             </DetailPageLayout.RightSidebar>
             <div>
               <Savebar

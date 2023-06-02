@@ -31,13 +31,7 @@ export const ChannelPermission = ({
   const intl = useIntl();
 
   return (
-    <Box
-      height="100%"
-      paddingX={9}
-      paddingY={9}
-      paddingTop={9}
-      paddingBottom={0}
-    >
+    <Box height="100%">
       <Text as="p" variant="bodyEmp" size="large" marginBottom={7}>
         {intl.formatMessage(messages.title)}
       </Text>
@@ -67,8 +61,7 @@ export const ChannelPermission = ({
             borderBottomWidth={1}
             borderColor="neutralPlain"
             height={1}
-            marginTop={9}
-            marginBottom={9}
+            marginY={5}
           />
         )}
 

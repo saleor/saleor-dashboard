@@ -3,6 +3,7 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
 import { ChannelPermission } from "@dashboard/components/ChannelPermission";
 import Form from "@dashboard/components/Form";
+import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import {
@@ -113,40 +114,35 @@ export const PermissionGroupWithChannelsCreatePage: React.FC<
                 onChange={change}
                 disabled={disabled}
               />
+              <FormSpacer />
+              <Box paddingX={9}>
+                <ChannelPermission
+                  allChannels={channels}
+                  selectedChannels={data.channels}
+                  onChannelChange={handleChannelChange}
+                  onHasAllChannelsChange={handleHasAllChannelsChange}
+                  hasAllChannels={data.hasAllChannels}
+                  disabled={false}
+                  disabledSelectAllChannels={hasRestrictedChannels}
+                />
+              </Box>
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
-              <Box display="flex" flexDirection="column" height="100%">
-                <Box overflow="hidden" __maxHeight="50%">
-                  <AccountPermissions
-                    permissionsExceeded={false}
-                    data={data}
-                    errorMessage={permissionsError}
-                    disabled={disabled}
-                    permissions={permissions}
-                    onChange={change}
-                    fullAccessLabel={intl.formatMessage(
-                      buttonMessages.selectAll,
-                    )}
-                    description={intl.formatMessage({
-                      id: "CYZse9",
-                      defaultMessage:
-                        "Expand or restrict group's permissions to access certain part of saleor system.",
-                      description: "card description",
-                    })}
-                  />
-                </Box>
-                <Box overflow="hidden" __maxHeight="50%" height="100%">
-                  <ChannelPermission
-                    allChannels={channels}
-                    selectedChannels={data.channels}
-                    onChannelChange={handleChannelChange}
-                    onHasAllChannelsChange={handleHasAllChannelsChange}
-                    hasAllChannels={data.hasAllChannels}
-                    disabled={false}
-                    disabledSelectAllChannels={hasRestrictedChannels}
-                  />
-                </Box>
-              </Box>
+              <AccountPermissions
+                permissionsExceeded={false}
+                data={data}
+                errorMessage={permissionsError}
+                disabled={disabled}
+                permissions={permissions}
+                onChange={change}
+                fullAccessLabel={intl.formatMessage(buttonMessages.selectAll)}
+                description={intl.formatMessage({
+                  id: "CYZse9",
+                  defaultMessage:
+                    "Expand or restrict group's permissions to access certain part of saleor system.",
+                  description: "card description",
+                })}
+              />
             </DetailPageLayout.RightSidebar>
             <Savebar
               onCancel={() => navigate(permissionGroupListUrl())}
