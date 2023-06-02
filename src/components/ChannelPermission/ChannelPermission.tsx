@@ -43,16 +43,18 @@ export const ChannelPermission = ({
           </Text>
         )}
 
-        <Checkbox
-          disabled={disabled || disabledSelectAllChannels}
-          checked={hasAllChannels}
-          onCheckedChange={onHasAllChannelsChange}
-          tabIndex={-1}
-        >
-          <Text variant="body">
-            {intl.formatMessage(messages.allowAllChannels)}
-          </Text>
-        </Checkbox>
+        <Box __width="fit-content">
+          <Checkbox
+            disabled={disabled || disabledSelectAllChannels}
+            checked={hasAllChannels}
+            onCheckedChange={onHasAllChannelsChange}
+            tabIndex={-1}
+          >
+            <Text variant="body">
+              {intl.formatMessage(messages.allowAllChannels)}
+            </Text>
+          </Checkbox>
+        </Box>
 
         {!hasAllChannels && (
           <Box marginTop={5}>
