@@ -73,7 +73,7 @@ export const ChannelPermission = ({
         )}
 
         {!hasAllChannels && (
-          <Box __height="calc(100% - 87px)" overflowY="auto">
+          <Box __height="calc(100% - 150px)" overflowY="auto">
             <Multiselect
               data-test-id="channels"
               disabled={disabled}
