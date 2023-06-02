@@ -121,6 +121,13 @@ input AccountInput {
 
   """Shipping address of the customer."""
   defaultShippingAddress: AddressInput
+
+  """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
 }
 
 """Register a new user."""
@@ -3575,6 +3582,68 @@ type CheckoutCreate {
   checkout: Checkout
 }
 
+"""
+Create new checkout from existing order.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type CheckoutCreateFromOrder {
+  """Variants that were not attached to the checkout."""
+  unavailableVariants: [CheckoutCreateFromOrderUnavailableVariant!]
+
+  """Created checkout."""
+  checkout: Checkout
+  errors: [CheckoutCreateFromOrderError!]!
+}
+
+type CheckoutCreateFromOrderError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: CheckoutCreateFromOrderErrorCode!
+}
+
+"""An enumeration."""
+enum CheckoutCreateFromOrderErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  ORDER_NOT_FOUND
+  CHANNEL_INACTIVE
+  TAX_ERROR
+}
+
+type CheckoutCreateFromOrderUnavailableVariant {
+  """The error message."""
+  message: String!
+
+  """The error code."""
+  code: CheckoutCreateFromOrderUnavailableVariantErrorCode!
+
+  """Variant ID that is unavailable."""
+  variantId: ID!
+
+  """Order line ID that is unavailable."""
+  lineId: ID!
+}
+
+"""An enumeration."""
+enum CheckoutCreateFromOrderUnavailableVariantErrorCode {
+  NOT_FOUND
+  PRODUCT_UNAVAILABLE_FOR_PURCHASE
+  UNAVAILABLE_VARIANT_IN_CHANNEL
+  PRODUCT_NOT_PUBLISHED
+  QUANTITY_GREATER_THAN_LIMIT
+  INSUFFICIENT_STOCK
+}
+
 input CheckoutCreateInput {
   """Slug of a channel in which to create a checkout."""
   channel: String
@@ -5320,6 +5389,20 @@ input CustomerInput {
 
   """A note about the user."""
   note: String
+
+  """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the user private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
 
   """User language code."""
   languageCode: LanguageCodeEnum
@@ -7626,6 +7709,24 @@ type Group implements Node {
   True, if the currently authenticated user has rights to manage a group.
   """
   userCanManage: Boolean!
+
+  """
+  List of channels the group has access to.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  accessibleChannels: [Channel!]
+
+  """
+  Determine if the group have restricted access to channels.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  restrictedAccessToChannels: Boolean!
 }
 
 type GroupCountableConnection {
@@ -7749,6 +7850,20 @@ input InvoiceCreateInput {
 
   """URL of an invoice to download."""
   url: String!
+
+  """
+  Fields required to update the invoice metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the invoice private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
 }
 
 """
@@ -9613,7 +9728,7 @@ type Mutation {
   """
   Updates a webhook subscription. 
   
-  Requires one of the following permissions: MANAGE_APPS.
+  Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
   """
   webhookUpdate(
     """ID of a webhook to update."""
@@ -10332,7 +10447,7 @@ type Mutation {
   Requires one of the following permissions: MANAGE_PRODUCTS.
   """
   productBulkCreate(
-    """Policies of error handling."""
+    """Policies of error handling. DEFAULT: REJECT_EVERYTHING"""
     errorPolicy: ErrorPolicyEnum
 
     """Input list of products to create."""
@@ -12398,6 +12513,18 @@ type Mutation {
   ): CheckoutCreate
 
   """
+  Create new checkout from existing order.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  checkoutCreateFromOrder(
+    """ID of a order that will be used to create the checkout."""
+    id: ID!
+  ): CheckoutCreateFromOrder
+
+  """
   Sets the customer as the owner of the checkout. 
   
   Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_USER.
@@ -13148,11 +13275,11 @@ type Mutation {
   ): CreateToken
 
   """
-  Refresh JWT token. Mutation tries to take refreshToken from the input.If it fails it will try to take refreshToken from the http-only cookie -refreshToken. csrfToken is required when refreshToken is provided as a cookie.
+  Refresh JWT token. Mutation tries to take refreshToken from the input. If it fails it will try to take `refreshToken` from the http-only cookie `refreshToken`. `csrfToken` is required when `refreshToken` is provided as a cookie.
   """
   tokenRefresh(
     """
-    CSRF token required to refresh token. This argument is required when refreshToken is provided as a cookie.
+    CSRF token required to refresh token. This argument is required when `refreshToken` is provided as a cookie.
     """
     csrfToken: String
 
@@ -14401,6 +14528,7 @@ type OrderDiscountDelete {
 
 """An enumeration."""
 enum OrderDiscountType {
+  SALE
   VOUCHER
   MANUAL
 }
@@ -14861,6 +14989,30 @@ type OrderFullyPaid implements Event {
 }
 
 """
+The order is fully refunded.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type OrderFullyRefunded implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The order the event relates to."""
+  order: Order
+}
+
+"""
 Adds granted refund to the order.
 
 Added in Saleor 3.13.
@@ -15281,6 +15433,30 @@ enum OrderOriginEnum {
 }
 
 """
+Payment has been made. The order may be partially or fully paid.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type OrderPaid implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The order the event relates to."""
+  order: Order
+}
+
+"""
 Refund an order. 
 
 Requires one of the following permissions: MANAGE_ORDERS.
@@ -15322,6 +15498,30 @@ input OrderRefundProductsInput {
   If true, Saleor will refund shipping costs. If amountToRefund is providedincludeShippingCosts will be ignored.
   """
   includeShippingCosts: Boolean = false
+}
+
+"""
+The order received a refund. The order may be partially or fully refunded.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type OrderRefunded implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The order the event relates to."""
+  order: Order
 }
 
 input OrderReturnFulfillmentLineInput {
@@ -17101,8 +17301,26 @@ input PermissionGroupCreateInput {
   """List of users to assign to this group."""
   addUsers: [ID!]
 
+  """
+  List of channels to assign to this group.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  addChannels: [ID!]
+
   """Group name."""
   name: String!
+
+  """
+  Determine if the group has restricted access to channels.  DEFAULT: False
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  restrictedAccessToChannels: Boolean = false
 }
 
 """
@@ -17177,18 +17395,22 @@ type PermissionGroupError {
 
   """List of user IDs which causes the error."""
   users: [ID!]
+
+  """List of chnnels IDs which causes the error."""
+  channels: [ID!]
 }
 
 """An enumeration."""
 enum PermissionGroupErrorCode {
+  REQUIRED
+  UNIQUE
   ASSIGN_NON_STAFF_MEMBER
   DUPLICATED_INPUT_ITEM
   CANNOT_REMOVE_FROM_LAST_GROUP
   LEFT_NOT_MANAGEABLE_PERMISSION
   OUT_OF_SCOPE_PERMISSION
   OUT_OF_SCOPE_USER
-  REQUIRED
-  UNIQUE
+  OUT_OF_SCOPE_CHANNEL
 }
 
 input PermissionGroupFilterInput {
@@ -17228,6 +17450,15 @@ input PermissionGroupUpdateInput {
   """List of users to assign to this group."""
   addUsers: [ID!]
 
+  """
+  List of channels to assign to this group.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  addChannels: [ID!]
+
   """Group name."""
   name: String
 
@@ -17236,6 +17467,24 @@ input PermissionGroupUpdateInput {
 
   """List of users to unassign from this group."""
   removeUsers: [ID!]
+
+  """
+  List of channels to unassign from this group.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  removeChannels: [ID!]
+
+  """
+  Determine if the group has restricted access to channels.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  restrictedAccessToChannels: Boolean
 }
 
 """
@@ -19572,6 +19821,13 @@ type ProductVariantBulkError {
   """The error code."""
   code: ProductVariantBulkErrorCode!
 
+  """
+  Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  
+  Added in Saleor 3.14.
+  """
+  path: String
+
   """List of attributes IDs which causes the error."""
   attributes: [ID!]
 
@@ -21705,7 +21961,11 @@ type Query {
     cityArea: String
   ): AddressValidationData
 
-  """Look up an address by ID."""
+  """
+  Look up an address by ID.
+  
+  Requires one of the following permissions: MANAGE_USERS, OWNER.
+  """
   address(
     """ID of an address."""
     id: ID!
@@ -21844,7 +22104,7 @@ type ReducedRate {
 }
 
 """
-Refresh JWT token. Mutation tries to take refreshToken from the input.If it fails it will try to take refreshToken from the http-only cookie -refreshToken. csrfToken is required when refreshToken is provided as a cookie.
+Refresh JWT token. Mutation tries to take refreshToken from the input. If it fails it will try to take `refreshToken` from the http-only cookie `refreshToken`. `csrfToken` is required when `refreshToken` is provided as a cookie.
 """
 type RefreshToken {
   """JWT token, required to authenticate."""
@@ -23547,6 +23807,15 @@ type Shop {
   staffNotificationRecipients: [StaffNotificationRecipient!]
 
   """
+  Determines if account confirmation by email is enabled.
+  
+  Added in Saleor 3.14.
+  
+  Requires one of the following permissions: MANAGE_SETTINGS.
+  """
+  enableAccountConfirmationByEmail: Boolean
+
+  """
   Resource limitations and current usage if any set for a shop
   
   Requires one of the following permissions: AUTHENTICATED_STAFF_USER.
@@ -23704,6 +23973,13 @@ input ShopSettingsInput {
   limitQuantityPerCheckout: Int
 
   """
+  Enable automatic account confirmation by email.
+  
+  Added in Saleor 3.14.
+  """
+  enableAccountConfirmationByEmail: Boolean
+
+  """
   Include taxes in prices. 
   
   DEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.
@@ -23810,6 +24086,20 @@ input StaffCreateInput {
 
   """A note about the user."""
   note: String
+
+  """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the user private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
 
   """List of permission group IDs to which user should be assigned."""
   addGroups: [ID!]
@@ -23996,6 +24286,20 @@ input StaffUpdateInput {
 
   """A note about the user."""
   note: String
+
+  """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the user private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
 
   """List of permission group IDs to which user should be assigned."""
   addGroups: [ID!]
@@ -26124,6 +26428,20 @@ input UpdateInvoiceInput {
 
   """URL of an invoice to download."""
   url: String
+
+  """
+  Fields required to update the invoice metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the invoice private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
 }
 
 """
@@ -26321,6 +26639,24 @@ type User implements Node & ObjectWithMetadata {
 
   """List of user's permission groups which user can manage."""
   editableGroups: [Group!]
+
+  """
+  List of channels the user has access to. The sum of channels from all user groups. If at least one group has `restrictedAccessToChannels` set to False - all channels are returned.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  accessibleChannels: [Channel!]
+
+  """
+  Determine if user have restricted access to channels. False if at least one user group has `restrictedAccessToChannels` set to False.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  restrictedAccessToChannels: Boolean!
   avatar(
     """
     Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
@@ -26438,6 +26774,20 @@ input UserCreateInput {
 
   """A note about the user."""
   note: String
+
+  """
+  Fields required to update the user metadata.
+  
+  Added in Saleor 3.14.
+  """
+  metadata: [MetadataInput!]
+
+  """
+  Fields required to update the user private metadata.
+  
+  Added in Saleor 3.14.
+  """
+  privateMetadata: [MetadataInput!]
 
   """User language code."""
   languageCode: LanguageCodeEnum
@@ -27885,8 +28235,35 @@ enum WebhookEventTypeAsyncEnum {
   """
   ORDER_CONFIRMED
 
+  """
+  Payment has been made. The order may be partially or fully paid.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_PAID
+
   """Payment is made and an order is fully paid."""
   ORDER_FULLY_PAID
+
+  """
+  The order received a refund. The order may be partially or fully refunded.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_REFUNDED
+
+  """
+  The order is fully refunded.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_FULLY_REFUNDED
 
   """
   An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED.
@@ -28311,8 +28688,35 @@ enum WebhookEventTypeEnum {
   """
   ORDER_CONFIRMED
 
+  """
+  Payment has been made. The order may be partially or fully paid.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_PAID
+
   """Payment is made and an order is fully paid."""
   ORDER_FULLY_PAID
+
+  """
+  The order received a refund. The order may be partially or fully refunded.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_REFUNDED
+
+  """
+  The order is fully refunded.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  ORDER_FULLY_REFUNDED
 
   """
   An order is updated; triggered for all changes related to an order; covers all other order webhooks, except for ORDER_CREATED.
@@ -28805,7 +29209,10 @@ enum WebhookSampleEventTypeEnum {
   MENU_ITEM_DELETED
   ORDER_CREATED
   ORDER_CONFIRMED
+  ORDER_PAID
   ORDER_FULLY_PAID
+  ORDER_REFUNDED
+  ORDER_FULLY_REFUNDED
   ORDER_UPDATED
   ORDER_CANCELLED
   ORDER_EXPIRED
@@ -28931,7 +29338,7 @@ enum WebhookTriggerErrorCode {
 """
 Updates a webhook subscription. 
 
-Requires one of the following permissions: MANAGE_APPS.
+Requires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.
 """
 type WebhookUpdate {
   webhookErrors: [WebhookError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")

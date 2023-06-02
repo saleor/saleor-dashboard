@@ -1,7 +1,7 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { getStringOrPlaceholder } from "@dashboard/misc";
 import { DialogContentText } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -13,13 +13,9 @@ export interface DeleteShippingRateDialogProps {
   handleConfirm: () => void;
 }
 
-export const DeleteShippingRateDialog: React.FC<DeleteShippingRateDialogProps> = ({
-  confirmButtonState,
-  onClose,
-  handleConfirm,
-  name,
-  open,
-}) => {
+export const DeleteShippingRateDialog: React.FC<
+  DeleteShippingRateDialogProps
+> = ({ confirmButtonState, onClose, handleConfirm, name, open }) => {
   const intl = useIntl();
   return (
     <ActionDialog

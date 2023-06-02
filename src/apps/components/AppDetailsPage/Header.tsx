@@ -19,15 +19,25 @@ const Header: React.FC<HeaderProps> = ({
   onAppDeactivateOpen,
   onAppDeleteOpen,
 }) => {
-  /**
-   * App is null with first render so fallback with HTML-safe fallback
-   */
-  const backButtonTarget = data?.id ? AppUrls.resolveAppUrl(data.id) : "#";
+  const getBackButtonUrl = () => {
+    /**
+     * App is null with first render so fallback with HTML-safe fallback
+     */
+    if (!data?.id) {
+      return "#";
+    }
+
+    const isAppActive = data.isActive;
+
+    return isAppActive
+      ? AppUrls.resolveAppUrl(data.id)
+      : AppUrls.resolveAppListUrl();
+  };
 
   return (
     <>
       <TopNav
-        href={backButtonTarget}
+        href={getBackButtonUrl()}
         title={
           <>
             {data?.name} {!data?.isActive && <DeactivatedText />}

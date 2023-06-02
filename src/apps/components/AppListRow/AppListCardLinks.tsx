@@ -18,13 +18,13 @@ const AppListCardLinks: React.FC<AppListCardLinksProps> = ({ links }) => {
       display="flex"
       flexDirection="row"
       flexWrap="wrap"
-      gap="s4"
+      gap={4}
       borderLeftStyle="solid"
       borderRightStyle="solid"
       borderWidth={1}
       borderColor="neutralPlain"
-      paddingY="s3"
-      paddingX="s5"
+      paddingY={3}
+      paddingX={5}
     >
       {links?.map(link => (
         <Box as="span" key={link.name}>

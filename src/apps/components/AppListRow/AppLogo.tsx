@@ -10,8 +10,8 @@ export const AppLogo: React.FC<AppLogoProps> = ({
   children,
 }) => (
   <Box
-    width="s10"
-    height="s10"
+    width={10}
+    height={10}
     display="flex"
     placeItems="center"
     borderRadius={3}

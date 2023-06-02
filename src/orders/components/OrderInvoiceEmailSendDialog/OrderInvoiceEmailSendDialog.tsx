@@ -1,5 +1,8 @@
 import BackButton from "@dashboard/components/BackButton";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { InvoiceErrorFragment, InvoiceFragment } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -12,7 +15,6 @@ import {
   DialogContentText,
   DialogTitle,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

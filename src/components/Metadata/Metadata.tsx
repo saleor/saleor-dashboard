@@ -68,7 +68,7 @@ export const Metadata: React.FC<MetadataProps> = memo(({ data, onChange }) => {
   };
 
   return (
-    <Box display="grid" gap="s2" paddingBottom="s6">
+    <Box display="grid" gap={2} paddingBottom={6}>
       <MetadataCard
         data={data?.metadata}
         isPrivate={false}

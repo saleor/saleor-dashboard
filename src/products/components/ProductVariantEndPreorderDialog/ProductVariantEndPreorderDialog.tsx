@@ -1,6 +1,6 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DialogContentText } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -14,7 +14,9 @@ export interface ProductVariantEndPreorderDialogProps {
   variantGlobalSoldUnits?: number;
 }
 
-const ProductVariantEndPreorderDialog: React.FC<ProductVariantEndPreorderDialogProps> = ({
+const ProductVariantEndPreorderDialog: React.FC<
+  ProductVariantEndPreorderDialogProps
+> = ({
   confirmButtonState,
   open,
   onClose,

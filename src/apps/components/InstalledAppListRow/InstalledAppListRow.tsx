@@ -1,6 +1,6 @@
 import { appsMessages } from "@dashboard/apps/messages";
 import { InstalledApp } from "@dashboard/apps/types";
-import { AppUrls } from "@dashboard/apps/urls";
+import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import { isAppInTunnel } from "@dashboard/apps/utils";
 import Link from "@dashboard/components/Link";
 import { Box, Chip, List, sprinkles, Text } from "@saleor/macaw-ui/next";
@@ -19,16 +19,23 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
 
   const location = useLocation();
 
+  /**
+   * Active app will redirect to app iframe, but disabled app is likely not going to work - so iframe is blocked.
+   * Link will point to app "manage" screen where app can be enabled or uninstalled
+   */
+  const appUrl = app.isActive
+    ? AppUrls.resolveAppUrl(app.id)
+    : AppPaths.resolveAppDetailsPath(app.id);
+
   return (
     <Link
-      href={AppUrls.resolveAppUrl(app.id)}
+      href={appUrl}
       state={{ from: location.pathname }}
       className={sprinkles({ display: "contents" })}
       inline={false}
-      disabled={!app.isActive}
     >
       <List.Item
-        padding="s4"
+        padding={4}
         borderTopStyle="solid"
         borderWidth={1}
         borderColor="neutralPlain"
@@ -40,10 +47,10 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
           default: !app.isActive ? "surfaceNeutralSubdued" : undefined,
           hover: "surfaceNeutralSubdued",
         }}
-        cursor={app.isActive ? "pointer" : "not-allowed"}
+        cursor={"pointer"}
       >
         <Box
-          gap="s2"
+          gap={2}
           alignItems="center"
           display="grid"
           __gridTemplateColumns="1fr auto"
@@ -51,11 +58,11 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
           <AppAvatar logo={logo} />
           <Box
             display="flex"
-            gap="s1"
+            gap={1}
             flexDirection="column"
             alignItems="flex-start"
           >
-            <Box display="flex" gap="s2">
+            <Box display="flex" gap={2}>
               <Text variant="bodyStrong">{app.name}</Text>
               <Text variant="body" color="textNeutralSubdued">
                 {`v${app.version}`}
@@ -84,12 +91,12 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
         </Box>
         <Box
           display="flex"
-          marginTop={{ mobile: "s1.5", desktop: "s0" }}
+          marginTop={{ mobile: 1.5, desktop: 0 }}
           flexDirection="row"
           justifyContent={{ mobile: "flex-end", desktop: "flex-start" }}
-          gap="s3"
+          gap={3}
         >
-          <Box marginLeft="auto" display="flex" alignItems="center" gap="s5">
+          <Box marginLeft="auto" display="flex" alignItems="center" gap={5}>
             {!app.isActive && (
               <Text variant="caption" color="textNeutralSubdued">
                 <FormattedMessage {...messages.appDisabled} />
