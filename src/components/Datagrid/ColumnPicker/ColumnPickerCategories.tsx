@@ -1,10 +1,13 @@
-import { Box, Button, List, Text } from "@saleor/macaw-ui/next";
-import React, { useMemo, useState } from "react";
+import { Box, Button, Text } from "@saleor/macaw-ui/next";
+import React from "react";
 import { FormattedMessage } from "react-intl";
 
 import { ColumnPickerAvailableNodes } from "./ColumnPickerAvailableNodes";
+import { ColumnPickerCategoryList } from "./ColumnPickerCategoryList";
 import { ColumnPickerPagination } from "./ColumnPickerPagination";
 import messages from "./messages";
+import { useAvailableColumnsQuery } from "./useAvailableColumnsQuery";
+import { useCategorySelection } from "./useCategorySelection";
 import { ColumnCategory } from "./useColumns";
 import { getExitIcon, getExitOnClick } from "./utils";
 
@@ -21,14 +24,9 @@ export const ColumnPickerCategories: React.FC<ColumnPickerCategoriesProps> = ({
   onDynamicColumnSelect,
   columnPickerSettings,
 }) => {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-
-  const currentCategory = useMemo(
-    () => columnCategories.find(category => category.name === selectedCategory),
-    [columnCategories, selectedCategory],
-  );
-
-  const [query, setQuery] = useState<string>("");
+  const { currentCategory, setCurrentCategory } =
+    useCategorySelection(columnCategories);
+  const { query, setQuery } = useAvailableColumnsQuery(currentCategory);
 
   const changeHandler = (column: string) =>
     columnPickerSettings.includes(column)
@@ -36,19 +34,6 @@ export const ColumnPickerCategories: React.FC<ColumnPickerCategoriesProps> = ({
           columnPickerSettings.filter(currentCol => currentCol !== column),
         )
       : onDynamicColumnSelect([...columnPickerSettings, column]);
-
-  React.useEffect(() => {
-    // Preselect category when there is only one
-    if (columnCategories.length === 1) {
-      setSelectedCategory(columnCategories[0].name);
-    }
-  }, [columnCategories]);
-
-  React.useEffect(() => {
-    if (currentCategory) {
-      setQuery(currentCategory.initialSearch ?? "");
-    }
-  }, [currentCategory]);
 
   return (
     <Box
@@ -69,19 +54,21 @@ export const ColumnPickerCategories: React.FC<ColumnPickerCategoriesProps> = ({
           <Button
             variant="tertiary"
             size="small"
-            icon={getExitIcon(columnCategories, selectedCategory)}
+            icon={getExitIcon(columnCategories, currentCategory)}
             onClick={getExitOnClick({
               columnCategories,
-              selectedCategory,
-              setSelectedCategory,
+              currentCategory,
+              setCurrentCategory,
               onClose,
             })}
           />
           <Text size="small">
-            {selectedCategory ?? <FormattedMessage {...messages.categories} />}
+            {currentCategory?.name ?? (
+              <FormattedMessage {...messages.categories} />
+            )}
           </Text>
         </Box>
-        {selectedCategory ? (
+        {currentCategory ? (
           <ColumnPickerAvailableNodes
             currentCategory={currentCategory}
             columnPickerSettings={columnPickerSettings}
@@ -90,21 +77,13 @@ export const ColumnPickerCategories: React.FC<ColumnPickerCategoriesProps> = ({
             changeHandler={changeHandler}
           />
         ) : (
-          <List padding={8}>
-            {columnCategories.map(category => (
-              <List.Item
-                key={category.prefix}
-                padding={4}
-                borderRadius={3}
-                onClick={() => setSelectedCategory(category.name)}
-              >
-                <Text size="small">{category.name}</Text>
-              </List.Item>
-            ))}
-          </List>
+          <ColumnPickerCategoryList
+            columnCategories={columnCategories}
+            setCurrentCategory={setCurrentCategory}
+          />
         )}
       </Box>
-      {selectedCategory && (
+      {currentCategory && (
         <ColumnPickerPagination
           query={query}
           hasNextPage={currentCategory.hasNextPage}

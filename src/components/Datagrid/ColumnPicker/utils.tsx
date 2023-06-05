@@ -10,12 +10,12 @@ export const filterEmptyColumn = (column: AvailableColumn) =>
 
 export const getExitIcon = (
   columnCategories: ColumnCategory[],
-  selectedCategory: string,
+  currentCategory: ColumnCategory,
 ) => {
   if (columnCategories.length === 1) {
     return <CloseIcon />;
   }
-  if (selectedCategory) {
+  if (currentCategory) {
     return <ArrowLeftIcon />;
   }
   return <CloseIcon />;
@@ -23,20 +23,20 @@ export const getExitIcon = (
 
 export const getExitOnClick = ({
   columnCategories,
-  selectedCategory,
-  setSelectedCategory,
+  currentCategory,
+  setCurrentCategory,
   onClose,
 }: {
   columnCategories: ColumnCategory[];
-  selectedCategory: string;
-  setSelectedCategory: (category: string | undefined) => void;
+  currentCategory: ColumnCategory;
+  setCurrentCategory: (category: string | undefined) => void;
   onClose: () => void;
 }) => {
   if (columnCategories.length === 1) {
     return onClose;
   }
-  if (selectedCategory) {
-    return () => setSelectedCategory(undefined);
+  if (currentCategory) {
+    return () => setCurrentCategory(undefined);
   } else {
     return onClose;
   }
