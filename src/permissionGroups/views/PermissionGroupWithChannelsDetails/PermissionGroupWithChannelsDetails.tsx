@@ -146,6 +146,10 @@ export const PermissionGroupWithChannelsDetails: React.FC<
   const disabled =
     isLoading || !isGroupEditable || permissionsExceeded || !isUserAbleToEdit;
 
+  console.log("disabled", disabled);
+  console.log("isGroupEditable", isGroupEditable);
+  console.log("isUserAbleToEdit", isUserAbleToEdit);
+
   const handleSubmit = async (
     formData: PermissionGroupWithChannelsDetailsPageFormData,
   ) =>
