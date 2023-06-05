@@ -181,9 +181,12 @@ export function useAuthProvider({
   };
 
   const handleExternalLogin = async (
-    pluginId: string,
+    pluginId: string | undefined,
     input: ExternalLoginInput,
   ) => {
+    if (!pluginId) {
+      return;
+    }
     try {
       const result = await getExternalAccessToken({
         pluginId,
