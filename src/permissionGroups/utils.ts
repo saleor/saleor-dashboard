@@ -146,16 +146,7 @@ export const checkIfUserIsEligibleToEditChannels = (
 ) => {
   const userChannels = getUserAccessibleChannels(user).map(c => c.id);
 
-  console.log("userChannels", userChannels);
-  console.log(
-    "permissionGroupAccessibleChannels",
-    permissionGroupAccessibleChannels,
-  );
-
-  if (
-    userChannels.length === 0 &&
-    permissionGroupAccessibleChannels.length === 0
-  ) {
+  if (userChannels.length === 0) {
     return true;
   }
 
