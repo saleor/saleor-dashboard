@@ -16,6 +16,7 @@ import { hasPermissionSelected } from "../../utils";
 interface PermissionListProps {
   permissions: PermissionData[];
   selectedPermissions: string[];
+  disabled?: boolean;
   onPermissionChange: (key: string, value: boolean) => void;
 }
 
@@ -23,6 +24,7 @@ export const PermissionList = ({
   permissions,
   onPermissionChange,
   selectedPermissions,
+  disabled,
 }: PermissionListProps) => {
   const intl = useIntl();
 
@@ -34,7 +36,7 @@ export const PermissionList = ({
     return permissions.map(perm => (
       <ListItem
         key={perm.code}
-        disabled={perm.disabled}
+        disabled={disabled || perm.disabled}
         role={undefined}
         dense
         button

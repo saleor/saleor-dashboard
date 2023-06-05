@@ -119,6 +119,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
           />
 
           <PermissionList
+            disabled={disabled}
             permissions={permissions}
             onPermissionChange={handlePermissionChange}
             selectedPermissions={data.permissions}
