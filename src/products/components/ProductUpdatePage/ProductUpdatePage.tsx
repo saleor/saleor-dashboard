@@ -185,7 +185,7 @@ export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({
   );
 
   const [selectedTaxType, setSelectedTaxType] = useStateFromProps(
-    product?.taxType.description,
+    product?.taxType?.description,
   );
 
   const categories = getChoices(categoryChoiceList);

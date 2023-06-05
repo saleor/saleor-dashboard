@@ -201,10 +201,10 @@ export function getProductUpdatePageFormData(
 
   return {
     category: maybe(() => product.category.id, ""),
-    changeTaxCode: !!product?.taxType.taxCode,
-    chargeTaxes: maybe(() => product.chargeTaxes, false),
+    changeTaxCode: !!product?.taxType?.taxCode,
+    chargeTaxes: maybe(() => product?.chargeTaxes, false),
     collections: maybe(
-      () => product.collections.map(collection => collection.id),
+      () => product?.collections?.map(collection => collection.id),
       [],
     ),
     isAvailable: !!product?.isAvailable,
@@ -224,7 +224,7 @@ export function getProductUpdatePageFormData(
       "",
     ),
     slug: product?.slug || "",
-    taxCode: product?.taxType.taxCode,
+    taxCode: product?.taxType?.taxCode,
     trackInventory: !!variant?.trackInventory,
     weight: product?.weight?.value.toString() || "",
     isPreorder: !!variant?.preorder || false,
