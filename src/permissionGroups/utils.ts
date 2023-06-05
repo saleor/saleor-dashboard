@@ -146,6 +146,13 @@ export const checkIfUserIsEligibleToEditChannels = (
 ) => {
   const userChannels = getUserAccessibleChannels(user).map(c => c.id);
 
+  if (
+    userChannels.length === 0 &&
+    permissionGroupAccessibleChannels.length === 0
+  ) {
+    return true;
+  }
+
   return permissionGroupAccessibleChannels.every(permChan =>
     userChannels.includes(permChan.id),
   );
