@@ -10,7 +10,7 @@ export const MountingPoint = () => {
     theme === "defaultLight" ? sideBarDefaultLogo : sideBarDefaultLogoDarkMode;
 
   return (
-    <Box display="flex" gap={6} paddingX={7} paddingY={8} alignItems="center">
+    <Box display="flex" gap={3} paddingX={4} paddingY={5} alignItems="center">
       <Avatar.Store src={logo} scheme="decorative2" size="small" />
       <Text variant="bodyStrong" size="small">
         Saleor Dashboard

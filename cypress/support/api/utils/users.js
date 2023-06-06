@@ -19,7 +19,7 @@ export function inviteStaffMemberWithFirstPermission({
 }
 
 /**
- * Function mhGetMailsByRecipient first get all emails from mailhog with a timeout, and after that it finds email from recipient.
+ * Function mpGetMailsByRecipient first get all emails from mailpit with a timeout, and after that it finds email from recipient.
  * It cloud happened that invite email from saleor has not been received yet, so in this case the action should be retried.
  */
 export function getMailActivationLinkForUser(email, regex, i = 0) {
@@ -31,15 +31,16 @@ export function getMailActivationLinkForUser(email, regex, i = 0) {
       `There is no email invitation for user ${serverStoredEmail}`,
     );
   }
-  return cy.mhGetMailsByRecipient(serverStoredEmail).then(mails => {
+  return cy.mpGetMailsByRecipient(serverStoredEmail).then(mails => {
     if (!mails.length) {
       cy.wait(10000);
       getMailActivationLinkForUser(serverStoredEmail, regex, i + 1);
     } else {
       cy.wrap(mails)
-        .mhFirst()
+        .mpLatest()
         .should("not.eq", undefined)
-        .mhGetBody()
+        .mpGetMailDetails()
+        .its("Text")
         .then(body => {
           const bodyWithoutWhiteSpaces = body.replace(/(\r\n|\n|\r|\s)/gm, "");
           return urlRegex.exec(bodyWithoutWhiteSpaces)[1];
@@ -56,13 +57,13 @@ export function getMailActivationLinkForUserAndSubject(email, subject, i = 0) {
       `There is no email invitation for user ${serverStoredEmail}`,
     );
   }
-  return cy.mhGetMailsByRecipient(serverStoredEmail).then(mails => {
+  return cy.mpGetMailsByRecipient(serverStoredEmail).then(mails => {
     if (!mails.length) {
       cy.wait(10000);
       getMailActivationLinkForUserAndSubject(serverStoredEmail, subject, i + 1);
     } else {
       cy.wrap(mails)
-        .mhGetMailsBySubject(subject)
+        .mpGetMailsBySubject(subject)
         .then(mailsWithSubject => {
           if (!mailsWithSubject.length) {
             cy.wait(10000);
@@ -73,9 +74,10 @@ export function getMailActivationLinkForUserAndSubject(email, subject, i = 0) {
             );
           } else {
             cy.wrap(mailsWithSubject)
-              .mhFirst()
+              .mpLatest()
               .should("not.eq", undefined)
-              .mhGetBody()
+              .mpGetMailDetails()
+              .its("Text")
               .then(body => {
                 const urlRegex = /\[\w*password\w*\]\(([^\)]*)/;
                 const bodyWithoutWhiteSpaces = body.replace(
@@ -98,17 +100,17 @@ export function getMailWithResetPasswordLink(email, subject, i = 0) {
       `There is no email with reset password for user ${serverStoredEmail}`,
     );
   }
-  return cy.mhGetMailsByRecipient(serverStoredEmail).then(mails => {
+  return cy.mpGetMailsByRecipient(serverStoredEmail).then(mails => {
     if (!mails.length) {
       cy.wait(3000);
       getMailWithResetPasswordLink(serverStoredEmail, subject, i + 1);
     } else {
-      cy.mhGetMailsBySubject(subject).then(resetPasswordMails => {
+      cy.mpGetMailsBySubject(subject).then(resetPasswordMails => {
         if (!resetPasswordMails.length) {
           cy.wait(3000);
           getMailWithResetPasswordLink(serverStoredEmail, subject, i + 1);
         } else {
-          cy.wrap(resetPasswordMails);
+          cy.wrap(resetPasswordMails).mpLatest().mpGetMailDetails();
         }
       });
     }
@@ -117,13 +119,13 @@ export function getMailWithResetPasswordLink(email, subject, i = 0) {
 
 export function getMailsForUser(email, i = 0) {
   const serverStoredEmail = email.toLowerCase();
-
-  if (i > 5) {
+  const getMailRetries = 9;
+  if (i > getMailRetries) {
     throw new Error(
       `There is no email invitation for user ${serverStoredEmail}`,
     );
   }
-  return cy.mhGetMailsByRecipient(serverStoredEmail).then(mails => {
+  return cy.mpGetMailsByRecipient(serverStoredEmail).then(mails => {
     if (!mails.length) {
       cy.wait(3000);
       getMailsForUser(serverStoredEmail, i + 1);
@@ -142,7 +144,7 @@ export function getMailWithGiftCardExportWithAttachment(
   if (i > 5) {
     throw new Error(`There is no email Gift Card export for user ${email}`);
   }
-  return cy.mhGetMailsByRecipient(email).then(mails => {
+  return cy.mpGetMailsByRecipient(email).then(mails => {
     if (!mails.length) {
       cy.wait(3000);
       getMailWithGiftCardExportWithAttachment(
@@ -152,7 +154,7 @@ export function getMailWithGiftCardExportWithAttachment(
         i + 1,
       );
     } else {
-      cy.mhGetMailsBySubject(subject).then(mailsWithSubject => {
+      cy.mpGetMailsBySubject(subject).then(mailsWithSubject => {
         if (!mailsWithSubject.length) {
           cy.wait(10000);
           getMailWithGiftCardExportWithAttachment(
@@ -163,10 +165,10 @@ export function getMailWithGiftCardExportWithAttachment(
           );
         } else {
           cy.wrap(mailsWithSubject)
-            .mhFirst()
+            .mpLatest()
+            .mpGetMailDetails()
             .should("not.eq", undefined)
-            .mhGetBody()
-            .then(body => body);
+            .its("Text");
         }
       });
     }

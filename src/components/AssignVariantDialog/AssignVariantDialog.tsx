@@ -1,4 +1,7 @@
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import Money from "@dashboard/components/Money";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
@@ -19,7 +22,6 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { FormattedMessage, useIntl } from "react-intl";

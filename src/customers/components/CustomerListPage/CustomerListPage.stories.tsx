@@ -6,12 +6,11 @@ import {
   sortPageProps,
   tabPageProps,
 } from "@dashboard/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { MockedUserProvider } from "@dashboard/storybook/MockedUserProvider";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
+import { MockedUserProvider } from "../../../../.storybook/helpers";
 import { customerList } from "../../fixtures";
 import { CustomerListUrlSortField } from "../../urls";
 import CustomerListPageComponent, {
@@ -55,11 +54,40 @@ const CustomerListPage = props => (
   </MockedUserProvider>
 );
 
-storiesOf("Customers / Customer list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <CustomerListPage {...props} />)
-  .add("loading", () => (
-    <CustomerListPage {...props} disabled={true} customers={undefined} />
-  ))
-  .add("no data", () => <CustomerListPage {...props} customers={[]} />);
+const meta: Meta<typeof CustomerListPage> = {
+  title: "Customers / Customer list",
+  decorators: [PaginatorContextDecorator],
+  component: CustomerListPage,
+};
+export default meta;
+type Story = StoryObj<typeof CustomerListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    ...props,
+    customers: undefined,
+    disabled: true,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoData: Story = {
+  args: {
+    ...props,
+    customers: [],
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

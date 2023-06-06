@@ -10,13 +10,11 @@ import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { updateVariantWarehouse } from "../../../support/api/requests/Product";
 import { createTypeProduct } from "../../../support/api/requests/ProductType";
-import { deleteChannelsStartsWith } from "../../../support/api/utils/channelsUtils";
 import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
 import * as productUtils from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { getProductVariants } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
 import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
-import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
 import {
   fillUpPriceList,
   priceInputLists,
@@ -46,11 +44,6 @@ describe("Creating variants", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    shippingUtils.deleteShippingStartsWith(startsWith);
-    productUtils.deleteProductsStartsWith(startsWith);
-    deleteChannelsStartsWith(startsWith);
-    deleteWarehouseStartsWith(startsWith);
-
     const name = `${startsWith}${faker.datatype.number()}`;
     const simpleProductTypeName = `${startsWith}${faker.datatype.number()}`;
 
@@ -150,13 +143,13 @@ describe("Creating variants", () => {
           getProductVariants(createdProduct.id, defaultChannel.slug);
         })
         .then(([firstVariant, secondVariant]) => {
-          expect(firstVariant).to.have.property("price", variants[0].price);
-          expect(secondVariant).to.have.property("name", name);
-          expect(secondVariant).to.have.property("price", variants[1].price);
+          expect(secondVariant).to.have.property("price", variants[0].price);
+          expect(firstVariant).to.have.property("name", name);
+          expect(firstVariant).to.have.property("price", variants[1].price);
           createWaitingForCaptureOrder({
             channelSlug: defaultChannel.slug,
             email: "example@example.com",
-            variantsList: [secondVariant],
+            variantsList: [firstVariant],
             shippingMethodName: shippingMethod.name,
             address,
           });

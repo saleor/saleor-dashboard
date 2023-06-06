@@ -1,27 +1,18 @@
 import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
 import CardSpacer from "@dashboard/components/CardSpacer";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import PriceField from "@dashboard/components/PriceField";
 import RadioGroupField from "@dashboard/components/RadioGroupField";
 import { DiscountValueTypeEnum, MoneyFragment } from "@dashboard/graphql";
 import { useUpdateEffect } from "@dashboard/hooks/useUpdateEffect";
 import { buttonMessages } from "@dashboard/intl";
-import {
-  Card,
-  CardContent,
-  Popper,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { PopperPlacementType } from "@material-ui/core/Popper";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import React, {
-  ChangeEvent,
-  MutableRefObject,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { toFixed } from "@dashboard/utils/toFixed";
+import { Card, CardContent, TextField, Typography } from "@material-ui/core";
+import { makeStyles } from "@saleor/macaw-ui";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { defineMessages, useIntl } from "react-intl";
 
 import ModalTitle from "./ModalTitle";
@@ -31,16 +22,10 @@ import {
   OrderDiscountType,
 } from "./types";
 
-const fullNumbersRegex = /^[0-9]*$/;
 const numbersRegex = /([0-9]+\.?[0-9]*)$/;
-const PERMIL = 0.01;
 
 const useStyles = makeStyles(
   theme => ({
-    container: {
-      zIndex: 1000,
-      marginTop: theme.spacing(1),
-    },
     removeButton: {
       "&:hover": {
         backgroundColor: theme.palette.error.main,
@@ -98,6 +83,16 @@ const messages = defineMessages({
     defaultMessage: "Invalid value",
     description: "value input helper text",
   },
+  valueBiggerThatPrice: {
+    defaultMessage: "Cannot be higher than the price",
+    id: "VIdXPy",
+    description: "value input helper text",
+  },
+  valueBiggerThat100: {
+    defaultMessage: "Cannot be higher than 100%",
+    id: "zHx85l",
+    description: "value input helper text",
+  },
   discountValueLabel: {
     id: "GAmGog",
     defaultMessage: "Discount value",
@@ -116,10 +111,7 @@ export interface OrderDiscountCommonModalProps {
   onClose: () => void;
   onRemove: () => void;
   modalType: OrderDiscountType;
-  anchorRef: MutableRefObject<any>;
   existingDiscount: OrderDiscountCommonInput;
-  dialogPlacement: PopperPlacementType;
-  isOpen: boolean;
   confirmStatus: ConfirmButtonTransitionState;
   removeStatus: ConfirmButtonTransitionState;
 }
@@ -128,12 +120,9 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   maxPrice = { amount: null, currency: "" },
   onConfirm,
   modalType,
-  anchorRef,
   onClose,
   onRemove,
   existingDiscount,
-  dialogPlacement,
-  isOpen,
   confirmStatus,
   removeStatus,
 }) => {
@@ -147,7 +136,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     const stringifiedValue = existingDiscount.value.toString();
 
     if (calculationMode === DiscountValueTypeEnum.FIXED) {
-      return parseFloat(stringifiedValue).toFixed(2);
+      return parseFloat(stringifiedValue).toString();
     }
 
     return stringifiedValue;
@@ -166,7 +155,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
 
   const initialData = getInitialData();
 
-  const [isValueError, setValueError] = useState<boolean>(false);
+  const [valueErrorMsg, setValueErrorMsg] = useState<string | null>(null);
   const [reason, setReason] = useState<string>(initialData.reason);
   const [value, setValue] = useState<string>(initialData.value);
   const [calculationMode, setCalculationMode] = useState<DiscountValueTypeEnum>(
@@ -196,24 +185,36 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
   ) => {
     const value = event.target.value;
 
-    handleSetError(value);
+    setValueErrorMsg(getErrorMessage(value));
     setValue(value);
   };
 
   const getParsedDiscountValue = () => parseFloat(value) || 0;
 
-  const isAmountTooLarge = () => {
+  const isAmountTooLarge = (value?: string) => {
     const topAmount = isDiscountTypePercentage ? 100 : maxAmount;
+
+    if (value) {
+      return (parseFloat(value) || 0) > topAmount;
+    }
 
     return getParsedDiscountValue() > topAmount;
   };
 
-  const handleSetError = (value: string) => {
-    const regexToCheck = isDiscountTypePercentage
-      ? fullNumbersRegex
-      : numbersRegex;
+  const getErrorMessage = (value: string): string | null => {
+    if (isAmountTooLarge(value)) {
+      if (calculationMode === DiscountValueTypeEnum.PERCENTAGE) {
+        return intl.formatMessage(messages.valueBiggerThat100);
+      }
 
-    setValueError(!regexToCheck.test(value));
+      return intl.formatMessage(messages.valueBiggerThatPrice);
+    }
+
+    if (!numbersRegex.test(value)) {
+      return intl.formatMessage(messages.invalidValue);
+    }
+
+    return null;
   };
 
   const handleConfirm = () => {
@@ -228,7 +229,7 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     setReason(initialData.reason);
     setValue(initialData.value);
     setCalculationMode(initialData.calculationMode);
-    setValueError(false);
+    setValueErrorMsg(null);
   };
 
   useEffect(setDefaultValues, [
@@ -246,21 +247,22 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
       calculationMode === DiscountValueTypeEnum.FIXED;
 
     const recalculatedValueFromPercentageToFixed = (
-      getParsedDiscountValue() *
-      PERMIL *
-      maxPrice.amount
-    ).toFixed(2);
+      (getParsedDiscountValue() * maxPrice.amount) /
+      100
+    ).toString();
 
-    const recalculatedValueFromFixedToPercentage = Math.round(
-      (getParsedDiscountValue() * (1 / PERMIL)) / maxPrice.amount,
+    const recalculatedValueFromFixedToPercentage = (
+      (getParsedDiscountValue() / maxPrice.amount) *
+      100
     ).toString();
 
     const recalculatedValue = changedFromPercentageToFixed
       ? recalculatedValueFromPercentageToFixed
       : recalculatedValueFromFixedToPercentage;
 
-    handleSetError(recalculatedValue);
+    setValueErrorMsg(getErrorMessage(recalculatedValue));
     setValue(recalculatedValue);
+    previousCalculationMode.current = calculationMode;
   };
 
   useUpdateEffect(handleValueConversion, [calculationMode]);
@@ -274,70 +276,64 @@ const OrderDiscountCommonModal: React.FC<OrderDiscountCommonModalProps> = ({
     calculationMode === DiscountValueTypeEnum.FIXED ? currency : "%";
 
   const isSubmitDisabled =
-    !getParsedDiscountValue() || isValueError || isAmountTooLarge();
+    !getParsedDiscountValue() || !!valueErrorMsg || isAmountTooLarge();
 
   return (
-    <Popper
-      open={isOpen}
-      anchorEl={anchorRef.current}
-      className={classes.container}
-      placement={dialogPlacement}
-    >
-      <Card>
-        <ModalTitle title={intl.formatMessage(dialogTitle)} onClose={onClose} />
-        <CardContent>
-          <RadioGroupField
-            innerContainerClassName={classes.radioContainer}
-            choices={discountTypeChoices}
-            name="discountType"
-            variant="inlineJustify"
-            value={calculationMode}
-            onChange={event => setCalculationMode(event.target.value)}
-          />
-          <CardSpacer />
-          <PriceField
-            label={intl.formatMessage(messages.discountValueLabel)}
-            error={isValueError}
-            hint={isValueError && intl.formatMessage(messages.invalidValue)}
-            value={value}
-            onChange={handleSetDiscountValue}
-            currencySymbol={valueFieldSymbol}
-          />
-          <CardSpacer />
-          <Typography>
-            {intl.formatMessage(messages.discountReasonLabel)}
-          </Typography>
-          <TextField
-            className={classes.reasonInput}
-            label={intl.formatMessage(messages.discountReasonLabel)}
-            value={reason}
-            onChange={(event: ChangeEvent<HTMLInputElement>) =>
-              setReason(event.target.value)
-            }
-          />
-        </CardContent>
-        <DialogButtons
-          onConfirm={handleConfirm}
-          onClose={onClose}
-          disabled={isSubmitDisabled}
-          showBackButton={false}
-          confirmButtonState={confirmStatus}
-        >
-          {existingDiscount && (
-            <div className={classes.buttonWrapper}>
-              <ConfirmButton
-                data-test-id="button-remove"
-                onClick={onRemove}
-                className={classes.removeButton}
-                transitionState={removeStatus}
-              >
-                {intl.formatMessage(buttonMessages.remove)}
-              </ConfirmButton>
-            </div>
-          )}
-        </DialogButtons>
-      </Card>
-    </Popper>
+    <Card>
+      <ModalTitle title={intl.formatMessage(dialogTitle)} onClose={onClose} />
+      <CardContent>
+        <RadioGroupField
+          innerContainerClassName={classes.radioContainer}
+          choices={discountTypeChoices}
+          name="discountType"
+          variant="inlineJustify"
+          value={calculationMode}
+          onChange={event => setCalculationMode(event.target.value)}
+        />
+        <CardSpacer />
+        <PriceField
+          label={intl.formatMessage(messages.discountValueLabel)}
+          error={!!valueErrorMsg}
+          hint={valueErrorMsg}
+          value={toFixed(value, 2)}
+          onChange={handleSetDiscountValue}
+          currencySymbol={valueFieldSymbol}
+        />
+        <CardSpacer />
+        <Typography>
+          {intl.formatMessage(messages.discountReasonLabel)}
+        </Typography>
+        <TextField
+          className={classes.reasonInput}
+          label={intl.formatMessage(messages.discountReasonLabel)}
+          value={reason}
+          data-test-id="discount-reason"
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            setReason(event.target.value)
+          }
+        />
+      </CardContent>
+      <DialogButtons
+        onConfirm={handleConfirm}
+        onClose={onClose}
+        disabled={isSubmitDisabled}
+        showBackButton={false}
+        confirmButtonState={confirmStatus}
+      >
+        {existingDiscount && (
+          <div className={classes.buttonWrapper}>
+            <ConfirmButton
+              data-test-id="button-remove"
+              onClick={onRemove}
+              className={classes.removeButton}
+              transitionState={removeStatus}
+            >
+              {intl.formatMessage(buttonMessages.remove)}
+            </ConfirmButton>
+          </div>
+        )}
+      </DialogButtons>
+    </Card>
   );
 };
 

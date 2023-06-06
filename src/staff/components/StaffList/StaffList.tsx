@@ -123,7 +123,7 @@ const StaffList: React.FC<StaffListProps> = props => {
               key={staffMember ? staffMember.id : "skeleton"}
             >
               <TableCell>
-                <Box display="flex" alignItems="center" gap={5}>
+                <Box display="flex" alignItems="center" gap={2}>
                   <UserAvatar
                     url={staffMember?.avatar?.url}
                     initials={getUserInitials(staffMember)}
@@ -143,7 +143,9 @@ const StaffList: React.FC<StaffListProps> = props => {
                 </Box>
               </TableCell>
               <TableCell>
-                <Text size="small">{staffMember?.email}</Text>
+                <Text size="small" data-test-id="user-mail">
+                  {staffMember?.email}
+                </Text>
               </TableCell>
             </TableRowLink>
           ),

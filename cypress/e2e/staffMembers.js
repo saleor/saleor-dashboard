@@ -3,36 +3,38 @@
 
 import faker from "faker";
 
-import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
-import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
-import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
-import { INVITE_STAFF_MEMBER_FORM_SELECTORS } from "../elements/staffMembers/inviteStaffMemberForm";
-import { STAFF_MEMBER_DETAILS_SELECTORS } from "../elements/staffMembers/staffMemberDetails";
-import { STAFF_MEMBERS_LIST_SELECTORS } from "../elements/staffMembers/staffMembersList";
-import { urlList, userDetailsUrl } from "../fixtures/urlList";
-import { TEST_ADMIN_USER } from "../fixtures/users";
-import { activatePlugin, updatePlugin } from "../support/api/requests/Plugins";
 import {
-  deleteStaffMembersStartsWith,
+  BUTTON_SELECTORS,
+  HOMEPAGE_SELECTORS,
+  INVITE_STAFF_MEMBER_FORM_SELECTORS,
+  SHARED_ELEMENTS,
+  STAFF_MEMBER_DETAILS_SELECTORS,
+  STAFF_MEMBERS_LIST_SELECTORS,
+} from "../elements/";
+import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
+import { MESSAGES, TEST_ADMIN_USER, urlList } from "../fixtures";
+import { userDetailsUrl } from "../fixtures/urlList";
+import {
+  activatePlugin,
+  updatePlugin,
   updateStaffMember,
-} from "../support/api/requests/StaffMembers";
+} from "../support/api/requests/";
 import {
   getMailActivationLinkForUser,
   getMailActivationLinkForUserAndSubject,
   inviteStaffMemberWithFirstPermission,
-} from "../support/api/utils/users";
-import { expectWelcomeMessageIncludes } from "../support/pages/homePage";
-import { getDisplayedSelectors } from "../support/pages/permissionsPage";
+} from "../support/api/utils/";
 import {
+  expectMainMenuAvailableSections,
+  expectWelcomeMessageIncludes,
   fillUpOnlyUserDetails,
   fillUpSetPassword,
   fillUpUserDetailsAndAddFirstPermission,
   updateUserActiveFlag,
-} from "../support/pages/userPage";
+} from "../support/pages/";
 
 describe("Staff members", () => {
-  const startsWith = "StaffMembers";
+  const startsWith = "StaffMembers" + Date.now();
   const password = Cypress.env("USER_PASSWORD");
   const lastName = faker.name.lastName();
   const email = `${startsWith}${lastName}@example.com`;
@@ -41,9 +43,7 @@ describe("Staff members", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteStaffMembersStartsWith(startsWith);
     activatePlugin({ id: "mirumee.notifications.admin_email" });
-
     inviteStaffMemberWithFirstPermission({ email })
       .then(({ user: userResp }) => {
         user = userResp;
@@ -63,7 +63,7 @@ describe("Staff members", () => {
 
   it(
     "should be able to invite staff user. TC: SALEOR_3501",
-    { tags: ["@staffMembers", "@allEnv"] },
+    { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const firstName = faker.name.firstName();
       const emailInvite = `${startsWith}${firstName}@example.com`;
@@ -102,7 +102,7 @@ describe("Staff members", () => {
 
   it(
     "should activate user. TC: SALEOR_3503",
-    { tags: ["@staffMembers", "@allEnv"] },
+    { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const serverStoredEmail = email.toLowerCase();
 
@@ -133,18 +133,15 @@ describe("Staff members", () => {
         .loginUserViaRequest("auth", { email, password })
         .visit(urlList.homePage);
       expectWelcomeMessageIncludes(serverStoredEmail);
-      getDisplayedSelectors().then(displayedSelectors => {
-        expect(Object.values(displayedSelectors)).to.have.length(1);
-        expect(Object.values(displayedSelectors)[0]).to.eq(
-          LEFT_MENU_SELECTORS.home,
-        );
-      });
+      expectMainMenuAvailableSections(1);
+      cy.get(HOMEPAGE_SELECTORS.activity).should("not.exist");
+      cy.get(HOMEPAGE_SELECTORS.topProducts).should("not.exist");
     },
   );
 
   it(
     "should reset password. TC: SALEOR_3505",
-    { tags: ["@staffMembers", "@allEnv"] },
+    { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const newPassword = faker.random.alphaNumeric(8);
       updatePlugin(
@@ -180,7 +177,7 @@ describe("Staff members", () => {
 
   it(
     "should not be able to create staff member with not unique email. TC: SALEOR_3508",
-    { tags: ["@staffMembers", "@allEnv"] },
+    { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const firstName = faker.name.firstName();
       const emailInvite = TEST_ADMIN_USER.email;
@@ -201,18 +198,14 @@ describe("Staff members", () => {
     "should not be able to update staff member with not unique email. TC: SALEOR_3509",
     { tags: ["@staffMembers", "@allEnv"] },
     () => {
+      cy.addAliasToGraphRequest("StaffList");
       cy.visit(urlList.staffMembers)
-        .expectSkeletonIsVisible()
+        .waitForRequestAndCheckIfNoErrors("@StaffList")
         .get(SHARED_ELEMENTS.searchInput)
-        .type(`${email} {enter}`);
-      cy.waitForProgressBarToNotExist();
-      cy.get(STAFF_MEMBERS_LIST_SELECTORS.staffAvatar)
-        .first()
-        .should("be.visible");
-      cy.waitForProgressBarToNotExist()
-        .get(STAFF_MEMBERS_LIST_SELECTORS.staffStatusText)
-        .first()
-        .should("be.visible")
+        .type(`${email} {enter}`)
+        .waitForRequestAndCheckIfNoErrors("@StaffList");
+      cy.get(STAFF_MEMBERS_LIST_SELECTORS.usersEmails)
+        .should("contain.text", email.toLowerCase())
         .click();
       cy.get(STAFF_MEMBER_DETAILS_SELECTORS.staffEmail)
         .click()
@@ -221,6 +214,7 @@ describe("Staff members", () => {
         .get(BUTTON_SELECTORS.confirm)
         .click()
         .confirmationErrorMessageShouldAppear();
+      cy.contains(MESSAGES.invalidEmailAddress).should("be.visible");
     },
   );
 
@@ -276,7 +270,7 @@ describe("Staff members", () => {
 
   it(
     "should create new user and successfully change password. TC: SALEOR_3510",
-    { tags: ["@staffMembers", "@allEnv"] },
+    { tags: ["@staffMembers", "@allEnv", "@critical"] },
     () => {
       const newPass = "newTestPass";
       const newLastName = faker.name.lastName();
@@ -300,6 +294,11 @@ describe("Staff members", () => {
 
       cy.visit(urlList.staffMembers).get(LOGIN_SELECTORS.userMenu).click();
       cy.get(LOGIN_SELECTORS.accountSettings).click();
+      cy.get(STAFF_MEMBER_DETAILS_SELECTORS.changePasswordBtn).should(
+        "be.visible",
+      );
+      // there is small bug which keep control panel opens and block any interaction via cypress - it does not affect real user - click on body can be removed when this pr is done https://github.com/saleor/saleor-dashboard/issues/3675
+      cy.get(SHARED_ELEMENTS.body).click({ force: true });
       cy.get(STAFF_MEMBER_DETAILS_SELECTORS.changePasswordBtn).click();
       cy.get(
         STAFF_MEMBER_DETAILS_SELECTORS.changePasswordModal.oldPassword,
@@ -307,13 +306,21 @@ describe("Staff members", () => {
       cy.get(
         STAFF_MEMBER_DETAILS_SELECTORS.changePasswordModal.newPassword,
       ).type(newPass);
-      cy.get(BUTTON_SELECTORS.submit).click().confirmationMessageShouldAppear();
+      cy.addAliasToGraphRequest("ChangeUserPassword")
+        .get(BUTTON_SELECTORS.submit)
+        .click()
+        .confirmationMessageShouldAppear()
+        .waitForRequestAndCheckIfNoErrors("@ChangeUserPassword");
 
       cy.clearSessionData().loginUserViaRequest("auth", {
         email: newEmail,
         password: newPass,
       });
-      cy.visit(urlList.staffMembers).expectSkeletonIsVisible();
+      cy.visit(urlList.homePage)
+        .get(HOMEPAGE_SELECTORS.welcomeMessage)
+        .should("be.visible");
+      cy.get(HOMEPAGE_SELECTORS.activity).should("be.visible");
+      cy.get(HOMEPAGE_SELECTORS.topProducts).should("be.visible");
     },
   );
 });

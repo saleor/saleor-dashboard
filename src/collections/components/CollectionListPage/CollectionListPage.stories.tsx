@@ -1,9 +1,7 @@
 import { CollectionListUrlSortField } from "@dashboard/collections/urls";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import CollectionListPage, {
   CollectionListPageProps,
 } from "../../../collections/components/CollectionListPage";
@@ -34,11 +32,41 @@ const props: CollectionListPageProps = {
   filterOpts: collectionListFilterOpts,
 };
 
-storiesOf("Collections / Collection list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <CollectionListPage {...props} />)
-  .add("loading", () => (
-    <CollectionListPage {...props} collections={undefined} disabled={true} />
-  ))
-  .add("no data", () => <CollectionListPage {...props} collections={[]} />);
+const meta: Meta<typeof CollectionListPage> = {
+  title: "Collections / Collection list",
+  decorators: [PaginatorContextDecorator],
+  component: CollectionListPage,
+};
+
+export default meta;
+type Story = StoryObj<typeof CollectionListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    ...props,
+    collections: undefined,
+    disabled: true,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoData: Story = {
+  args: {
+    ...props,
+    collections: [],
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

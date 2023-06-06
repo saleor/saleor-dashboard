@@ -1,6 +1,4 @@
 import { permissions } from "@dashboard/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import { errorsOfPermissionGroupCreate } from "../../fixtures";
@@ -16,15 +14,19 @@ const props: PermissionGroupCreatePageProps = {
   saveButtonBarState: undefined,
 };
 
-storiesOf("Permission Groups / Permission Group Create", module)
-  .addDecorator(Decorator)
-  .add("default", () => <PermissionGroupCreatePage {...props} />)
-  .add("loading", () => (
-    <PermissionGroupCreatePage {...props} disabled={true} />
-  ))
-  .add("errors", () => (
-    <PermissionGroupCreatePage
-      {...props}
-      errors={errorsOfPermissionGroupCreate}
-    />
-  ));
+export default {
+  title: "Permission Groups / Permission Group Create",
+};
+
+export const Default = () => <PermissionGroupCreatePage {...props} />;
+
+export const Loading = () => (
+  <PermissionGroupCreatePage {...props} disabled={true} />
+);
+
+export const Errors = () => (
+  <PermissionGroupCreatePage
+    {...props}
+    errors={errorsOfPermissionGroupCreate}
+  />
+);

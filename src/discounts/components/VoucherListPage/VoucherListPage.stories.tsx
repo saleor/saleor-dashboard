@@ -9,11 +9,9 @@ import {
   tabPageProps,
 } from "@dashboard/fixtures";
 import { DiscountStatusEnum, VoucherDiscountType } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import VoucherListPage, { VoucherListPageProps } from "./VoucherListPage";
 
 const props: VoucherListPageProps = {
@@ -65,19 +63,43 @@ const props: VoucherListPageProps = {
   vouchers: voucherList,
 };
 
-storiesOf("Discounts / Voucher list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <VoucherListPage {...props} />)
-  .add("loading", () => <VoucherListPage {...props} vouchers={undefined} />)
-  .add("no data", () => <VoucherListPage {...props} vouchers={[]} />)
-  .add("no channels", () => (
-    <VoucherListPage
-      {...props}
-      selectedChannelId=""
-      vouchers={voucherList.map(voucher => ({
-        ...voucher,
-        channelListings: [],
-      }))}
-    />
-  ));
+const meta: Meta<typeof VoucherListPage> = {
+  title: "Discounts / Voucher list",
+  decorators: [PaginatorContextDecorator],
+  component: VoucherListPage,
+};
+export default meta;
+type Story = StoryObj<typeof VoucherListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    ...props,
+    vouchers: undefined,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoChannels: Story = {
+  args: {
+    ...props,
+    selectedChannelId: "",
+    vouchers: voucherList.map(voucher => ({
+      ...voucher,
+      channelListings: [],
+    })),
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

@@ -1,6 +1,4 @@
 import { AccountErrorCode } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
 import CustomerCreatePage, {
@@ -19,14 +17,19 @@ const props: Omit<CustomerCreatePageProps, "classes"> = {
   saveButtonBar: "default",
 };
 
-storiesOf("Customers / Create customer", module)
-  .addDecorator(Decorator)
-  .add("default", () => <CustomerCreatePage {...props} />)
-  .add("loading", () => <CustomerCreatePage {...props} disabled={true} />)
-  .add("form errors", () => (
-    <CustomerCreatePage
-      {...props}
-      errors={([
+export default {
+  title: "Customers / Create customer",
+};
+
+export const Default = () => <CustomerCreatePage {...props} />;
+
+export const Loading = () => <CustomerCreatePage {...props} disabled={true} />;
+
+export const FormErrors = () => (
+  <CustomerCreatePage
+    {...props}
+    errors={(
+      [
         "city",
         "cityArea",
         "companyName",
@@ -40,12 +43,13 @@ storiesOf("Customers / Create customer", module)
         "postalCode",
         "streetAddress1",
         "streetAddress2",
-      ] as Array<keyof CustomerCreatePageFormData>).map(field => ({
-        __typename: "AccountError",
-        code: AccountErrorCode.INVALID,
-        field,
-        addressType: null,
-        message: "Account invalid error",
-      }))}
-    />
-  ));
+      ] as Array<keyof CustomerCreatePageFormData>
+    ).map(field => ({
+      __typename: "AccountError",
+      code: AccountErrorCode.INVALID,
+      field,
+      addressType: null,
+      message: "Account invalid error",
+    }))}
+  />
+);

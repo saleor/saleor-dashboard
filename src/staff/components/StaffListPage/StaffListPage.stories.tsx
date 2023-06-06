@@ -10,11 +10,9 @@ import {
 import { StaffMemberStatus } from "@dashboard/graphql";
 import { staffMembers } from "@dashboard/staff/fixtures";
 import { StaffListUrlSortField } from "@dashboard/staff/urls";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import StaffListPage, { StaffListPageProps } from "./StaffListPage";
 
 const props: StaffListPageProps = {
@@ -38,14 +36,50 @@ const props: StaffListPageProps = {
   staffMembers,
 };
 
-storiesOf("Staff / Staff members", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <StaffListPage {...props} />)
-  .add("when loading", () => (
-    <StaffListPage {...props} disabled={true} staffMembers={undefined} />
-  ))
-  .add("no limits", () => <StaffListPage {...props} limits={undefined} />)
-  .add("limits reached", () => (
-    <StaffListPage {...props} limits={limitsReached} />
-  ));
+const meta: Meta<typeof StaffListPage> = {
+  title: "Staff / Staff members",
+  decorators: [PaginatorContextDecorator],
+  component: StaffListPage,
+};
+export default meta;
+type Story = StoryObj<typeof StaffListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const WhenLoading: Story = {
+  args: {
+    ...props,
+    disabled: true,
+    staffMembers: undefined,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoLimits: Story = {
+  args: {
+    ...props,
+    limits: undefined,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const LimitsReached: Story = {
+  args: {
+    ...props,
+    limits: limitsReached,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

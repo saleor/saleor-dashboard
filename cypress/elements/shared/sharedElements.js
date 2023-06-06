@@ -1,4 +1,5 @@
 export const SHARED_ELEMENTS = {
+  body: "body",
   header: "[data-test-id='page-header']",
   progressBar: '[role="progressbar"]',
   circularProgress: '[class*="CircularProgress-circle"]',
@@ -16,6 +17,7 @@ export const SHARED_ELEMENTS = {
   selectOption: '[data-test-id*="select-field-option"]',
   svgImage: "svg",
   fileInput: 'input[type="file"]',
+  pageHeader: '[data-test-id="page-header"]',
   urlInput: 'input[type="url"]',
   richTextEditor: {
     loader: '[class*="codex-editor__loader"]',

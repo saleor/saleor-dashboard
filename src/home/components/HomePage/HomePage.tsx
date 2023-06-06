@@ -55,7 +55,7 @@ const HomePage: React.FC<HomePageProps> = props => {
     <DetailPageLayout withSavebar={false}>
       <TopNav title={<HomeHeader userName={userName} />} />
       <DetailPageLayout.Content>
-        <Box paddingLeft={9} paddingRight={11}>
+        <Box paddingLeft={6} paddingRight={8}>
           <CardSpacer />
           <RequirePermissions
             requiredPermissions={[PermissionEnum.MANAGE_ORDERS]}
@@ -63,8 +63,8 @@ const HomePage: React.FC<HomePageProps> = props => {
             <Box
               display="grid"
               __gridTemplateColumns="repeat(2, 1fr)"
-              gap={8}
-              marginBottom={8}
+              gap={5}
+              marginBottom={5}
             >
               <HomeAnalyticsCard
                 title={intl.formatMessage(homePageMessages.salesCardTitle)}

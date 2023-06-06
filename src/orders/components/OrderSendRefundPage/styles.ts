@@ -73,6 +73,7 @@ export const useManualRefundCardStyles = makeStyles(
       gap: theme.spacing(1),
       width: "100%",
       flexDirection: "column",
+      alignItems: "center",
       [theme.breakpoints.up("sm")]: {
         flexDirection: "row",
         flexWrap: "wrap",

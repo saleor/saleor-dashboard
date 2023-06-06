@@ -78,11 +78,11 @@ export function useColumnsDefault(
 
   const columnChoices = useMemo(
     () =>
-      applyFilters(columns).map(({ id, title }) => ({
+      applyFilters(columns, availableColumns).map(({ id, title }) => ({
         label: title,
         value: id,
       })),
-    [columns],
+    [columns, availableColumns],
   );
   const availableColumnsChoices = useMemo(
     () =>
@@ -113,22 +113,27 @@ export function useColumnsDefault(
   };
 }
 
-function applyFilters(columns: readonly AvailableColumn[]) {
-  return columns.filter(byNoEmptyColumn).filter(byNotFirstColumn);
+function applyFilters(
+  columns: readonly AvailableColumn[],
+  availableColumns?: readonly AvailableColumn[],
+) {
+  return columns
+    .filter(byNoEmptyColumn)
+    .filter(byNotFirstColumn(availableColumns));
 }
 
 function byNoEmptyColumn(column: AvailableColumn) {
   return column.id !== "empty";
 }
 
-function byNotFirstColumn(
-  _: AvailableColumn,
-  index: number,
-  array: AvailableColumn[],
-) {
-  if (array.some(col => col.id === "empty")) {
-    return index > 1;
-  }
+function byNotFirstColumn(availableColumns?: readonly AvailableColumn[]) {
+  return (column: AvailableColumn, index: number, array: AvailableColumn[]) => {
+    // Check not first column base on available columns to prevent base on columns that order can change
+    if (availableColumns) {
+      const colIndex = availableColumns.findIndex(col => col.id === column.id);
+      return availableColumns[0]?.id === "empty" ? colIndex > 1 : colIndex > 0;
+    }
 
-  return index > 0;
+    return array[0]?.id === "empty" ? index > 1 : index > 0;
+  };
 }

@@ -19,10 +19,10 @@ export const FilterPresetItem = ({
   return (
     <Dropdown.Item>
       <List.Item
-        paddingLeft={4}
-        paddingRight={11}
-        paddingY={3}
-        gap={6}
+        paddingLeft={1.5}
+        paddingRight={8}
+        paddingY={1}
+        gap={3}
         borderRadius={2}
         position="relative"
         display="flex"
@@ -40,7 +40,7 @@ export const FilterPresetItem = ({
             zIndex="2"
             position="absolute"
             __top="50%"
-            right={4}
+            right={1.5}
             __transform="translateY(-50%)"
             onClick={onRemove}
             display="flex"

@@ -27,7 +27,7 @@ const useStyles = makeStyles(
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
-        padding: vars.space[4],
+        padding: vars.spacing[1.5],
       },
       columnPicker: {
         display: "flex",
@@ -40,7 +40,7 @@ const useStyles = makeStyles(
       },
       ghostIcon: {
         color: vars.colors.foreground.iconNeutralPlain,
-        padding: vars.space["3"],
+        padding: vars.spacing[1],
       },
       portal: {
         "& input::-webkit-outer-spin-button, input::-webkit-inner-spin-button":
@@ -66,7 +66,7 @@ const useStyles = makeStyles(
           boxShadow: "none !important",
           padding: "0 !important",
         },
-        "& input, & textarea": {
+        "& input:not([class*='MuiInputBase']), & textarea": {
           appearance: "none",
           background: "none",
           border: "none",
@@ -74,10 +74,10 @@ const useStyles = makeStyles(
           letterSpacing: vars.letterSpacing.bodyStrongSmall,
           lineHeight: vars.lineHeight.bodyEmpMedium,
           fontWeight: vars.fontWeight.bodySmall,
-          padding: vars.space[3],
+          padding: vars.spacing[1],
           outline: 0,
         },
-        '& input[type="number"]': {
+        "& input[type='number']:not([class*='MuiInputBase'])": {
           textAlign: "right",
           width: "100%",
         },

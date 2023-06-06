@@ -1,5 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardTitle from "@dashboard/components/CardTitle";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -23,7 +24,6 @@ import { isLastElement } from "@dashboard/taxes/utils/utils";
 import { Card, CardContent, Divider } from "@material-ui/core";
 import {
   Button,
-  ConfirmButtonTransitionState,
   List,
   ListHeader,
   ListItem,
@@ -163,7 +163,7 @@ export const TaxChannelsPage: React.FC<TaxChannelsPageProps> = props => {
           <DetailPageLayout gridTemplateColumns={1}>
             <TopNav title={<TaxPageTitle />} />
             <DetailPageLayout.Content>
-              <Box padding={9}>
+              <Box padding={6}>
                 <PageTabs value="channels" onChange={handleTabChange}>
                   <PageTab
                     label={intl.formatMessage(taxesMessages.channelsSection)}

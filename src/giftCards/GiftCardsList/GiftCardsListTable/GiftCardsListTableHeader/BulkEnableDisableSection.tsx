@@ -1,4 +1,4 @@
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { IMessage } from "@dashboard/components/messages";
 import {
   useGiftCardBulkActivateMutation,
@@ -35,65 +35,61 @@ const BulkEnableDisableSection: React.FC = () => {
     .filter(getByIds(ids))
     .every(({ isActive }) => !isActive);
 
-  const [
-    activateGiftCards,
-    activateGiftCardsOpts,
-  ] = useGiftCardBulkActivateMutation({
-    onCompleted: data => {
-      const { errors, count } = data?.giftCardBulkActivate;
+  const [activateGiftCards, activateGiftCardsOpts] =
+    useGiftCardBulkActivateMutation({
+      onCompleted: data => {
+        const { errors, count } = data?.giftCardBulkActivate;
 
-      const notifierData: IMessage = !!errors?.length
-        ? {
-            status: "error",
-            text: intl.formatMessage(messages.errorActivateAlertText, {
-              count,
-            }),
-          }
-        : {
-            status: "success",
-            text: intl.formatMessage(messages.successActivateAlertText, {
-              count,
-            }),
-          };
+        const notifierData: IMessage = !!errors?.length
+          ? {
+              status: "error",
+              text: intl.formatMessage(messages.errorActivateAlertText, {
+                count,
+              }),
+            }
+          : {
+              status: "success",
+              text: intl.formatMessage(messages.successActivateAlertText, {
+                count,
+              }),
+            };
 
-      notify(notifierData);
+        notify(notifierData);
 
-      if (!errors.length) {
-        reset();
-      }
-    },
-    refetchQueries: [GIFT_CARD_LIST_QUERY],
-  });
+        if (!errors.length) {
+          reset();
+        }
+      },
+      refetchQueries: [GIFT_CARD_LIST_QUERY],
+    });
 
-  const [
-    deactivateGiftCards,
-    deactivateGiftCardsOpts,
-  ] = useGiftCardBulkDeactivateMutation({
-    onCompleted: data => {
-      const { errors, count } = data?.giftCardBulkDeactivate;
+  const [deactivateGiftCards, deactivateGiftCardsOpts] =
+    useGiftCardBulkDeactivateMutation({
+      onCompleted: data => {
+        const { errors, count } = data?.giftCardBulkDeactivate;
 
-      const notifierData: IMessage = !!errors?.length
-        ? {
-            status: "error",
-            text: intl.formatMessage(messages.errorDeactivateAlertText, {
-              count,
-            }),
-          }
-        : {
-            status: "success",
-            text: intl.formatMessage(messages.successDeactivateAlertText, {
-              count,
-            }),
-          };
+        const notifierData: IMessage = !!errors?.length
+          ? {
+              status: "error",
+              text: intl.formatMessage(messages.errorDeactivateAlertText, {
+                count,
+              }),
+            }
+          : {
+              status: "success",
+              text: intl.formatMessage(messages.successDeactivateAlertText, {
+                count,
+              }),
+            };
 
-      notify(notifierData);
+        notify(notifierData);
 
-      if (!errors.length) {
-        reset();
-      }
-    },
-    refetchQueries: [GIFT_CARD_LIST_QUERY],
-  });
+        if (!errors.length) {
+          reset();
+        }
+      },
+      refetchQueries: [GIFT_CARD_LIST_QUERY],
+    });
 
   const handleActivateGiftCards = () =>
     activateGiftCards({ variables: { ids } });

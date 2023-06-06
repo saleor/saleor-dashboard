@@ -59,6 +59,7 @@ const Link: React.FC<LinkProps> = props => {
     href,
     target,
     rel,
+    state,
     ...linkProps
   } = props;
 
@@ -104,7 +105,7 @@ const Link: React.FC<LinkProps> = props => {
                   pathname: urlObject.pathname,
                   search: urlObject.search,
                   hash: urlObject.hash,
-                  state: props.state,
+                  state,
                 }
           }
           {...commonLinkProps}

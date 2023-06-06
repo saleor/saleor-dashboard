@@ -200,13 +200,35 @@ export function createOrder({
       orderRequest.addShippingMethod(order.id, shippingMethod);
     })
     .then(() => orderRequest.completeOrder(order.id))
-    .then(() => order);
+    .then(resp => (order = resp.order));
 }
 
 function assignVariantsToOrder(order, variantsList) {
   variantsList.forEach(variantElement => {
     orderRequest.addProductToOrder(order.id, variantElement.id);
   });
+}
+export function createUnconfirmedOrder({
+  customerId,
+  shippingMethod,
+  channelId,
+  variantsList,
+  address,
+}) {
+  let order;
+  return orderRequest
+    .createDraftOrder({ customerId, channelId, address })
+    .then(orderResp => {
+      order = orderResp;
+      assignVariantsToOrder(order, variantsList);
+    })
+    .then(orderResp => {
+      shippingMethod = getShippingMethodIdFromCheckout(
+        orderResp.order,
+        shippingMethod.name,
+      );
+      orderRequest.addShippingMethod(order.id, shippingMethod);
+    });
 }
 
 export function addPayment(checkoutId) {

@@ -46,13 +46,9 @@ export interface OrderChangeWarehouseDialogProps {
   onClose();
 }
 
-export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProps> = ({
-  open,
-  line,
-  currentWarehouseId,
-  onConfirm,
-  onClose,
-}) => {
+export const OrderChangeWarehouseDialog: React.FC<
+  OrderChangeWarehouseDialogProps
+> = ({ open, line, currentWarehouseId, onConfirm, onClose }) => {
   const classes = useStyles();
   const intl = useIntl();
 
@@ -71,7 +67,11 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
     }
   }, [currentWarehouseId]);
 
-  const { result: warehousesOpts, loadMore, search } = useWarehouseSearch({
+  const {
+    result: warehousesOpts,
+    loadMore,
+    search,
+  } = useWarehouseSearch({
     variables: {
       after: null,
       first: 20,
@@ -158,10 +158,8 @@ export const OrderChangeWarehouseDialog: React.FC<OrderChangeWarehouseDialogProp
             className={classes.tableBody}
           >
             {filteredWarehouses.map(warehouse => {
-              const lineQuantityInWarehouse = getLineAvailableQuantityInWarehouse(
-                line,
-                warehouse,
-              );
+              const lineQuantityInWarehouse =
+                getLineAvailableQuantityInWarehouse(line, warehouse);
               return (
                 <TableRowLink key={warehouse.id}>
                   <TableCell className={classes.tableCell}>

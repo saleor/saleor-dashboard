@@ -16,8 +16,8 @@ export const useStyles = makeStyles(
     },
     root: {
       marginTop: theme.spacing(4),
-      paddingRight: vars.space[9],
-      paddingLeft: vars.space[9],
+      paddingRight: vars.spacing[6],
+      paddingLeft: vars.spacing[6],
     },
     user: {
       marginBottom: theme.spacing(1),

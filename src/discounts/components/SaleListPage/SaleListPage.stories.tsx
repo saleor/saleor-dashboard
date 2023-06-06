@@ -8,11 +8,9 @@ import {
   tabPageProps,
 } from "@dashboard/fixtures";
 import { DiscountStatusEnum, DiscountValueTypeEnum } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import SaleListPage, { SaleListPageProps } from "./SaleListPage";
 
 const props: SaleListPageProps = {
@@ -56,16 +54,50 @@ const props: SaleListPageProps = {
   },
 };
 
-storiesOf("Discounts / Sale list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <SaleListPage {...props} />)
-  .add("loading", () => <SaleListPage {...props} sales={undefined} />)
-  .add("no data", () => <SaleListPage {...props} sales={[]} />)
-  .add("no channels", () => (
-    <SaleListPage
-      {...props}
-      sales={saleList.map(sale => ({ ...sale, channelListings: [] }))}
-      selectedChannelId=""
-    />
-  ));
+const meta: Meta<typeof SaleListPage> = {
+  title: "Discounts / Sale list",
+  decorators: [PaginatorContextDecorator],
+  component: SaleListPage,
+};
+export default meta;
+type Story = StoryObj<typeof SaleListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    ...props,
+    sales: undefined,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoData: Story = {
+  args: {
+    ...props,
+    sales: [],
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoChannels: Story = {
+  args: {
+    ...props,
+    sales: saleList.map(sale => ({ ...sale, channelListings: [] })),
+    selectedChannelId: "",
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

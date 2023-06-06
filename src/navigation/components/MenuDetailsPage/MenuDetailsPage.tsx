@@ -1,5 +1,6 @@
 import { Backlink } from "@dashboard/components/Backlink";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import Grid from "@dashboard/components/Grid";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -10,7 +11,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { menuListUrl } from "@dashboard/navigation/urls";
 import { Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -87,7 +87,7 @@ const MenuDetailsPage: React.FC<MenuDetailsPageProps> = ({
       {({ change, data, submit }) => (
         <DetailPageLayout gridTemplateColumns={1}>
           <DetailPageLayout.Content>
-            <Box padding={9} margin="auto" height="100vh">
+            <Box padding={6} margin="auto" height="100vh">
               <Backlink href={menuListUrl()}>
                 {intl.formatMessage(sectionNames.navigation)}
               </Backlink>

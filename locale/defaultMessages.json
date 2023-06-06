@@ -35,10 +35,6 @@
     "context": "order shipping method name",
     "string": "Shipping"
   },
-  "+FWlRD": {
-    "context": "button",
-    "string": "Open app"
-  },
   "+HuipK": {
     "context": "variant sku",
     "string": "SKU {sku}"
@@ -305,6 +301,10 @@
   "/w919H": {
     "context": "OrderCustomer Fulfillment from Local Warehouse",
     "string": "Fulfill from Local Stock"
+  },
+  "/xJSe8": {
+    "context": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
+    "string": "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history."
   },
   "/xXvjF": {
     "context": "section header",
@@ -1812,10 +1812,6 @@
     "context": "header",
     "string": "Activity"
   },
-  "BYGJ/j": {
-    "context": "button label",
-    "string": "Settings"
-  },
   "BYTvv/": {
     "context": "Dry run events unavailable",
     "string": "The following events from provided query are currently not available for dry run:"
@@ -2133,6 +2129,9 @@
   "Dgp38J": {
     "context": "checkbox label",
     "string": "Restrict order value"
+  },
+  "DhFqJF": {
+    "string": "Edit discount"
   },
   "Dhherd": {
     "context": "dialog header, title",
@@ -3234,6 +3233,9 @@
     "context": "cancelled fulfillment, section header",
     "string": "Refunded and Returned"
   },
+  "LKD6fB": {
+    "string": "Remove product"
+  },
   "LKoIB1": {
     "string": "Add search engine title and description to make this product easier to find"
   },
@@ -3288,6 +3290,10 @@
   "LshEVn": {
     "context": "button",
     "string": "Create order"
+  },
+  "LwX0Ug": {
+    "context": "Button with Manage app label",
+    "string": "Manage app"
   },
   "Lx1ima": {
     "context": "button",
@@ -3644,10 +3650,6 @@
     "context": "input label",
     "string": "Stock reservation for authenticated user (in minutes)"
   },
-  "Oad+ES": {
-    "context": "alert message",
-    "string": "This product is not published in this channel."
-  },
   "ObRk1O": {
     "string": "If this option is disabled, discount will be counted for every eligible product"
   },
@@ -3920,6 +3922,10 @@
   "QJG+d/": {
     "context": "staff added type order discount",
     "string": "Staff added"
+  },
+  "QL4a0Z": {
+    "context": "alert message",
+    "string": "Not published in this channel"
   },
   "QLVddq": {
     "context": "button",
@@ -4425,9 +4431,6 @@
     "context": "searchbar placeholder",
     "string": "Country"
   },
-  "UD7/q8": {
-    "string": "No Products added to Order"
-  },
   "UJnqdm": {
     "context": "dialog header",
     "string": "Unassign Attribute From Product Type"
@@ -4614,6 +4617,10 @@
   "VIABHy": {
     "context": "error message",
     "string": "Default shipping zone already exists"
+  },
+  "VIdXPy": {
+    "context": "value input helper text",
+    "string": "Cannot be higher than the price"
   },
   "VKWPBf": {
     "context": "dialog header",
@@ -5146,6 +5153,9 @@
   "Yy/yDL": {
     "string": "Reset password"
   },
+  "YzLUXA": {
+    "string": "Ensure this value is greater than 0."
+  },
   "Z/7hyu": {
     "context": "card balance label",
     "string": "Card Balance"
@@ -5187,6 +5197,10 @@
   },
   "ZIc5lM": {
     "string": "Product Name"
+  },
+  "ZJOX8n": {
+    "context": "alert message",
+    "string": "Product no longer exists"
   },
   "ZJPYFl": {
     "context": "accepted header names",
@@ -5725,6 +5739,10 @@
   "d9UqaJ": {
     "context": "error message",
     "string": "Cannot change the quantity because of insufficient stock"
+  },
+  "dDCLFW": {
+    "context": "alert message",
+    "string": "Not available for sale this channel"
   },
   "dEUZg2": {
     "context": "header",
@@ -6472,6 +6490,9 @@
     "context": "VariantDetailsChannelsAvailabilityCard no items available",
     "string": "This variant is not available at any of the channels"
   },
+  "jrBxCQ": {
+    "string": "Bulk product delete"
+  },
   "jswILH": {
     "context": "add attribute as column in product list table",
     "string": "Add to Column Options"
@@ -6655,6 +6676,10 @@
   "kp2IYP": {
     "context": "option",
     "string": "Gift card product type"
+  },
+  "kpRxSA": {
+    "context": "Require email confirmation link",
+    "string": "Require email confirmation link"
   },
   "kuo4fW": {
     "context": "dialog title",
@@ -7207,10 +7232,6 @@
     "context": "gift card history message",
     "string": "Gift card was activated"
   },
-  "pEMxyy": {
-    "context": "alert message",
-    "string": "This product does no longer exist."
-  },
   "pFVX6g": {
     "string": "Variant with these attributes already exists"
   },
@@ -7364,6 +7385,10 @@
   "qNcoRY": {
     "context": "notes about customer header",
     "string": "Notes"
+  },
+  "qNeXG1": {
+    "context": "User registration",
+    "string": "User registration"
   },
   "qT6YYk": {
     "context": "order line total price",
@@ -7561,9 +7586,6 @@
   "rzhcpD": {
     "context": "set expiry date selected label",
     "string": "Set gift card expiry date"
-  },
-  "s/sTT6": {
-    "string": "If empty, the preview shows what will be autogenerated."
   },
   "s17U7u": {
     "context": "discount type",
@@ -7901,6 +7923,10 @@
   "uRTj1Q": {
     "context": "error message",
     "string": "Invoice not found"
+  },
+  "uRfta0": {
+    "context": "Enable email confirmation",
+    "string": "Enable email confirmation"
   },
   "uT5L4h": {
     "context": "cancel button label",
@@ -8536,6 +8562,10 @@
     "context": "modal header",
     "string": "Media from the URL you supply will be shown in the media gallery. You will be able to define the order of the gallery."
   },
+  "zHx85l": {
+    "context": "value input helper text",
+    "string": "Cannot be higher than 100%"
+  },
   "zKOGkU": {
     "context": "time during discount is active, header",
     "string": "Active Dates"
@@ -8543,10 +8573,6 @@
   "zLtb4N": {
     "context": "gift card removed success alert message",
     "string": "{selectedItemsCount,plural,one{Successfully deleted gift card} other{Successfully deleted gift cards}}"
-  },
-  "zO+l0L": {
-    "context": "alert message",
-    "string": "This product is not available for sale in this channel."
   },
   "zQX6xO": {
     "context": "dialog header",

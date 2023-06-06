@@ -7,7 +7,7 @@ export const useAlertStyles = makeStyles(
       marginBottom: theme.spacing(3),
       "& .MuiCardContent-root": {
         backgroundColor: "unset",
-        paddingRight: vars.space[11],
+        paddingRight: vars.spacing[8],
       },
     },
   }),

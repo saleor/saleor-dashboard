@@ -17,6 +17,7 @@ import {
   useAuth,
   useAuthState,
 } from "@saleor/sdk";
+import isEmpty from "lodash/isEmpty";
 import { useEffect, useRef, useState } from "react";
 import { IntlShape } from "react-intl";
 import urlJoin from "url-join";
@@ -140,10 +141,16 @@ export function useAuthProvider({
         includeDetails: false,
       });
 
+      if (isEmpty(result.data?.tokenCreate.user.userPermissions)) {
+        setErrors(["noPermissionsError"]);
+        await handleLogout();
+      }
+
       if (result && !result.data.tokenCreate.errors.length) {
         if (DEMO_MODE) {
           displayDemoMessage(intl, notify);
         }
+
         saveCredentials(result.data.tokenCreate.user, password);
       } else {
         setErrors(["loginError"]);
@@ -182,6 +189,13 @@ export function useAuthProvider({
         pluginId,
         input: JSON.stringify(input),
       });
+
+      if (
+        isEmpty(result.data?.externalObtainAccessTokens.user.userPermissions)
+      ) {
+        setErrors(["noPermissionsError"]);
+        await handleLogout();
+      }
 
       if (result && !result.data?.externalObtainAccessTokens.errors.length) {
         if (DEMO_MODE) {
@@ -223,7 +237,7 @@ export function useAuthProvider({
     loginByExternalPlugin: handleExternalLogin,
     logout: handleLogout,
     authenticating: authenticating && !errors.length,
-    authenticated: authenticated && user?.isStaff,
+    authenticated: authenticated && !!user?.isStaff && !errors.length,
     user: userDetails.data?.me,
     errors,
   };

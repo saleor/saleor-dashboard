@@ -13,12 +13,10 @@ import { products as productListFixture } from "@dashboard/products/fixtures";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { productListFilterOpts } from "@dashboard/products/views/ProductList/fixtures";
 import { attributes } from "@dashboard/productTypes/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
 import { ListViews } from "@dashboard/types";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import ProductListPage, { ProductListPageProps } from "./ProductListPage";
 
 const products = productListFixture(placeholderImage);
@@ -34,6 +32,8 @@ const props: ProductListPageProps = {
       ...sortPageProps.sort,
       sort: ProductListUrlSortField.name,
     },
+    onProductsDelete: () => undefined,
+    onSelectProductIds: () => undefined,
     channels: [],
     columnQuery: "",
     currentTab: 0,
@@ -53,34 +53,93 @@ const props: ProductListPageProps = {
   products,
   selectedChannelId: "123",
   selectedProductIds: ["123"],
+  setBulkDeleteButtonRef: () => undefined,
+  clearRowSelection: () => undefined,
   settings: {
     ...pageListProps.default.settings,
     columns: ["availability", "productType", "price"],
   },
 };
 
-storiesOf("Products / Product list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <ProductListPage {...props} />)
-  .add("loading", () => (
-    <ProductListPage
-      {...props}
-      products={undefined}
-      currentTab={undefined}
-      disabled={true}
-    />
-  ))
-  .add("with data", () => <ProductListPage {...props} products={products} />)
-  .add("no data", () => <ProductListPage {...props} products={[]} />)
-  .add("no channels", () => (
-    <ProductListPage
-      {...props}
-      selectedChannelId={""}
-      products={products.map(product => ({ ...product, channelListings: [] }))}
-    />
-  ))
-  .add("no limits", () => <ProductListPage {...props} limits={undefined} />)
-  .add("limits reached", () => (
-    <ProductListPage {...props} limits={limitsReached} />
-  ));
+const meta: Meta<typeof ProductListPage> = {
+  title: "Products / Product list",
+  decorators: [PaginatorContextDecorator],
+  component: ProductListPage,
+};
+export default meta;
+type Story = StoryObj<typeof ProductListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    ...props,
+    products: undefined,
+    currentTab: undefined,
+    disabled: true,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.9, pauseAnimationAtEnd: true },
+  },
+};
+
+export const WithData: Story = {
+  args: {
+    ...props,
+    products,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoData: Story = {
+  args: {
+    ...props,
+    products: [],
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoChannels: Story = {
+  args: {
+    ...props,
+    selectedChannelId: "",
+    products: products.map(product => ({
+      ...product,
+      channelListings: [],
+    })),
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoLimits: Story = {
+  args: {
+    ...props,
+    limits: undefined,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const LimitsReached: Story = {
+  args: {
+    ...props,
+    limits: limitsReached,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

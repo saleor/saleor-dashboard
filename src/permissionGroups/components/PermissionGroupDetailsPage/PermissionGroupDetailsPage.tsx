@@ -1,5 +1,6 @@
 import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -23,7 +24,6 @@ import {
 import { ListActions, SortPage } from "@dashboard/types";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

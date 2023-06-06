@@ -17,12 +17,12 @@ const HomeAnalyticsCard: React.FC<HomeAnalyticsCardProps> = props => {
       borderStyle="solid"
       borderColor="neutralPlain"
       borderRadius={3}
-      padding={8}
+      padding={5}
       display="flex"
       justifyContent="space-between"
       data-test-id={testId}
     >
-      <Box display="flex" flexDirection="column" gap={2}>
+      <Box display="flex" flexDirection="column" gap={0.5}>
         <Text size="large" variant="body">
           {title}
         </Text>

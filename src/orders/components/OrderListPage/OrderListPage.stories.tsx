@@ -9,11 +9,9 @@ import {
 import { OrderStatusFilter, PaymentChargeStatusEnum } from "@dashboard/graphql";
 import { orders } from "@dashboard/orders/fixtures";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import { OrderFilterGiftCard } from "./filters";
 import OrderListPage, { OrderListPageProps } from "./OrderListPage";
 
@@ -86,20 +84,61 @@ const props: OrderListPageProps = {
   onTabUpdate: () => undefined,
 };
 
-storiesOf("Orders / Order list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <OrderListPage {...props} />)
-  .add("loading", () => (
-    <OrderListPage
-      {...props}
-      orders={undefined}
-      currentTab={undefined}
-      disabled={true}
-    />
-  ))
-  .add("when no data", () => <OrderListPage {...props} orders={[]} />)
-  .add("no limits", () => <OrderListPage {...props} limits={undefined} />)
-  .add("limits reached", () => (
-    <OrderListPage {...props} limits={limitsReached} />
-  ));
+const meta: Meta<typeof OrderListPage> = {
+  title: "Orders / Order list",
+  decorators: [PaginatorContextDecorator],
+  component: OrderListPage,
+};
+export default meta;
+type Story = StoryObj<typeof OrderListPage>;
+
+export const Default: Story = {
+  args: {
+    ...props,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    ...props,
+    orders: undefined,
+    currentTab: undefined,
+    disabled: true,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.9, pauseAnimationAtEnd: true },
+  },
+};
+
+export const WhenNoData: Story = {
+  args: {
+    ...props,
+    orders: [],
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const NoLimits: Story = {
+  args: {
+    ...props,
+    limits: undefined,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const LimitsReached: Story = {
+  args: {
+    ...props,
+    limits: limitsReached,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

@@ -7,11 +7,9 @@ import {
   sortPageProps,
   tabPageProps,
 } from "@dashboard/fixtures";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
-import React from "react";
+import { Meta, StoryObj } from "@storybook/react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import CategoryListPage, { CategoryTableProps } from "./CategoryListPage";
 
 const categoryTableProps: CategoryTableProps = {
@@ -28,13 +26,39 @@ const categoryTableProps: CategoryTableProps = {
   },
 };
 
-storiesOf("Categories / Category list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <CategoryListPage {...categoryTableProps} />)
-  .add("loading", () => (
-    <CategoryListPage {...categoryTableProps} categories={undefined} />
-  ))
-  .add("empty", () => (
-    <CategoryListPage {...categoryTableProps} categories={[]} />
-  ));
+const meta: Meta<typeof CategoryListPage> = {
+  title: "Categories / Category list",
+  decorators: [PaginatorContextDecorator],
+  component: CategoryListPage,
+};
+export default meta;
+type Story = StoryObj<typeof CategoryListPage>;
+
+export const Default: Story = {
+  args: {
+    ...categoryTableProps,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const Loading: Story = {
+  args: {
+    ...categoryTableProps,
+    categories: undefined,
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};
+
+export const Empty: Story = {
+  args: {
+    ...categoryTableProps,
+    categories: [],
+  },
+  parameters: {
+    chromatic: { diffThreshold: 0.85 },
+  },
+};

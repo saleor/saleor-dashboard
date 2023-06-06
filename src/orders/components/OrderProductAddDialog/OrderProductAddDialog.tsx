@@ -1,6 +1,9 @@
 import BackButton from "@dashboard/components/BackButton";
 import Checkbox from "@dashboard/components/Checkbox";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
@@ -28,7 +31,6 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import { Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
@@ -169,12 +171,12 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
           scrollableTarget={scrollableTargetId}
         >
           <ResponsiveTable key="table">
-            <TableBody>
+            <TableBody data-test-id="add-products-table">
               {renderCollection(
                 productChoicesWithValidVariants,
                 (product, productIndex) => (
                   <React.Fragment key={product ? product.id : "skeleton"}>
-                    <TableRowLink>
+                    <TableRowLink data-test-id="product">
                       <TableCell
                         padding="checkbox"
                         className={classes.productCheckboxCell}
@@ -199,14 +201,18 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                         className={classes.avatar}
                         thumbnail={maybe(() => product.thumbnail.url)}
                       />
-                      <TableCell className={classes.colName} colSpan={2}>
+                      <TableCell
+                        className={classes.colName}
+                        colSpan={2}
+                        data-test-id="product-name"
+                      >
                         {maybe(() => product.name)}
                       </TableCell>
                     </TableRowLink>
                     {maybe(() => product.variants, [])
                       .filter(isValidVariant)
                       .map((variant, variantIndex) => (
-                        <TableRowLink key={variant.id}>
+                        <TableRowLink key={variant.id} data-test-id="variant">
                           <TableCell />
                           <TableCell className={classes.colVariantCheckbox}>
                             <Checkbox
@@ -242,7 +248,10 @@ const OrderProductAddDialog: React.FC<OrderProductAddDialogProps> = props => {
                               </div>
                             )}
                           </TableCell>
-                          <TableCell className={classes.textRight}>
+                          <TableCell
+                            className={classes.textRight}
+                            data-test-id="variant-price"
+                          >
                             <OrderPriceLabel pricing={variant.pricing} />
                           </TableCell>
                         </TableRowLink>

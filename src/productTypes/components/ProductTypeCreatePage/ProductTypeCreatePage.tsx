@@ -1,5 +1,6 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata, MetadataFormData } from "@dashboard/components/Metadata";
@@ -19,7 +20,6 @@ import {
 import { productTypeListUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps, UserError } from "@dashboard/types";
 import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 
 import ProductTypeDetails from "../ProductTypeDetails/ProductTypeDetails";

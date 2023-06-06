@@ -38,7 +38,7 @@ const PermissionAlert: React.FC<PermissionAlertProps> = ({ query }) => {
           close={false}
           className="remove-icon-background"
         >
-          <Box display="flex" gap={5}>
+          <Box display="flex" gap={2}>
             {permissions.map(permission => (
               <Chip size="small" key={permission}>
                 <Text variant="caption" size="small">

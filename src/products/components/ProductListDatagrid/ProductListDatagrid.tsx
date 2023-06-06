@@ -56,6 +56,7 @@ interface ProductListDatagridProps
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
   onColumnQueryChange: (query: string) => void;
+  onSelectProductIds: (rowsIndex: number[], clearSelection: () => void) => void;
   isAttributeLoading?: boolean;
   hasRowHover?: boolean;
 }
@@ -80,6 +81,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   onColumnQueryChange,
   activeAttributeSortId,
   filterDependency,
+  onSelectProductIds,
   hasRowHover,
   rowAnchor,
 }) => {
@@ -103,22 +105,6 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 
   const handleColumnMoved = useCallback(
     (startIndex: number, endIndex: number): void => {
-      // Keep empty column always at beginning
-      if (startIndex === 0) {
-        return setColumns(prevColumns => [...prevColumns]);
-      }
-
-      // Keep empty column always at beginning
-      if (endIndex === 0) {
-        return setColumns(old =>
-          addAtIndex(
-            old[startIndex],
-            removeAtIndex(old, startIndex),
-            endIndex + 1,
-          ),
-        );
-      }
-
       setColumns(old =>
         addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
       );
@@ -243,13 +229,12 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         <Datagrid
           readonly
           loading={loading}
-          rowMarkers="none"
+          rowMarkers="checkbox"
           columnSelect="single"
-          freezeColumns={2}
           hasRowHover={hasRowHover}
           onColumnMoved={handleColumnMoved}
           onColumnResize={handleColumnResize}
-          verticalBorder={col => (col > 1 ? true : false)}
+          verticalBorder={col => col > 0}
           getColumnTooltipContent={handleGetColumnTooltipContent}
           availableColumns={columns}
           onHeaderClicked={handleHeaderClicked}
@@ -258,6 +243,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           getCellError={() => false}
           menuItems={() => []}
           rows={productsLength}
+          onRowSelectionChange={onSelectProductIds}
           selectionActions={() => null}
           fullScreenTitle={intl.formatMessage(messages.products)}
           onRowClick={handleRowClick}
@@ -276,7 +262,7 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           )}
         />
 
-        <Box paddingX={9}>
+        <Box paddingX={6}>
           <TablePaginationWithContext
             component="div"
             colSpan={(products?.length === 0 ? 1 : 2) + settings.columns.length}

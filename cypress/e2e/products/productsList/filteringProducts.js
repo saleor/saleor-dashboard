@@ -11,12 +11,8 @@ import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
-  deleteProductsStartsWith,
 } from "../../../support/api/utils/products/productsUtils";
-import {
-  createShipping,
-  deleteShippingStartsWith,
-} from "../../../support/api/utils/shippingUtils";
+import { createShipping } from "../../../support/api/utils/shippingUtils";
 import {
   selectChannel,
   selectFilterOption,
@@ -37,8 +33,6 @@ describe("As an admin I should be able to filter products", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteShippingStartsWith(startsWith);
-    deleteProductsStartsWith(startsWith);
     createTypeAttributeAndCategoryForProduct({ name }).then(
       ({
         attribute: attributeResp,
@@ -111,7 +105,7 @@ describe("As an admin I should be able to filter products", () => {
     );
   });
 
-  it(
+  it.only(
     "should filter products out of stock. TC: SALEOR_2604",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {

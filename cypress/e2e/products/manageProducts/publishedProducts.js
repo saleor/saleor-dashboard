@@ -21,7 +21,6 @@ describe("Published products", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    productsUtils.deleteProductsStartsWith(startsWith);
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(
@@ -73,7 +72,8 @@ describe("Published products", () => {
         .then(({ product: productResp }) => {
           const product = productResp;
           const productUrl = productDetailsUrl(product.id);
-          updateProductPublish(productUrl, true);
+          cy.visit(productUrl);
+          updateProductPublish(true);
           getProductDetails(product.id, defaultChannel.slug);
         })
         .then(resp => {
@@ -101,7 +101,8 @@ describe("Published products", () => {
         .then(({ product: productResp }) => {
           product = productResp;
           const productUrl = productDetailsUrl(product.id);
-          updateProductPublish(productUrl, false);
+          cy.visit(productUrl);
+          updateProductPublish(false);
           getProductDetails(product.id, defaultChannel.slug);
         })
         .then(resp => {

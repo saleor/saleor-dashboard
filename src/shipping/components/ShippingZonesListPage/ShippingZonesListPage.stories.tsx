@@ -4,11 +4,9 @@ import {
   pageListProps,
 } from "@dashboard/fixtures";
 import { WeightUnitsEnum } from "@dashboard/graphql";
-import Decorator from "@dashboard/storybook/Decorator";
-import { PaginatorContextDecorator } from "@dashboard/storybook/PaginatorContextDecorator";
-import { storiesOf } from "@storybook/react";
 import React from "react";
 
+import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import { shippingZones } from "../../fixtures";
 import ShippingZonesListPage, {
   ShippingZonesListPageProps,
@@ -24,18 +22,21 @@ const props: ShippingZonesListPageProps = {
   userPermissions: adminUserPermissions,
 };
 
-storiesOf("Shipping / Shipping zones list", module)
-  .addDecorator(Decorator)
-  .addDecorator(PaginatorContextDecorator)
-  .add("default", () => <ShippingZonesListPage {...props} />)
-  .add("loading", () => (
-    <ShippingZonesListPage
-      {...props}
-      disabled={true}
-      shippingZones={undefined}
-    />
-  ))
-  .add("no data", () => <ShippingZonesListPage {...props} shippingZones={[]} />)
-  .add("no site settings permissions", () => (
-    <ShippingZonesListPage {...props} userPermissions={[]} />
-  ));
+export default {
+  title: "Shipping / Shipping zones list",
+  decorators: [PaginatorContextDecorator],
+};
+
+export const Default = () => <ShippingZonesListPage {...props} />;
+
+export const Loading = () => (
+  <ShippingZonesListPage {...props} disabled={true} shippingZones={undefined} />
+);
+
+export const NoData = () => (
+  <ShippingZonesListPage {...props} shippingZones={[]} />
+);
+
+export const NoSiteSettingsPermissions = () => (
+  <ShippingZonesListPage {...props} userPermissions={[]} />
+);

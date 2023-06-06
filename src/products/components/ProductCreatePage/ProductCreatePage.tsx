@@ -9,6 +9,7 @@ import AssignAttributeValueDialog from "@dashboard/components/AssignAttributeVal
 import { AttributeInput, Attributes } from "@dashboard/components/Attributes";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import ChannelsAvailabilityCard from "@dashboard/components/ChannelsAvailabilityCard";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { Metadata } from "@dashboard/components/Metadata";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
@@ -36,7 +37,6 @@ import {
   productListUrl,
 } from "@dashboard/products/urls";
 import { getChoices } from "@dashboard/products/utils/data";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 

@@ -683,6 +683,26 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "Fields required to update the user metadata.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "interfaces": null,
@@ -15968,6 +15988,287 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "CheckoutCreateFromOrder",
+        "description": "Create new checkout from existing order.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "unavailableVariants",
+            "description": "Variants that were not attached to the checkout.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "CheckoutCreateFromOrderUnavailableVariant",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "checkout",
+            "description": "Created checkout.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Checkout",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "CheckoutCreateFromOrderError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CheckoutCreateFromOrderError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "CheckoutCreateFromOrderErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "CheckoutCreateFromOrderErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORDER_NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "CHANNEL_INACTIVE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "TAX_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "CheckoutCreateFromOrderUnavailableVariant",
+        "description": null,
+        "fields": [
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "CheckoutCreateFromOrderUnavailableVariantErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "variantId",
+            "description": "Variant ID that is unavailable.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lineId",
+            "description": "Order line ID that is unavailable.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "CheckoutCreateFromOrderUnavailableVariantErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PRODUCT_UNAVAILABLE_FOR_PURCHASE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UNAVAILABLE_VARIANT_IN_CHANNEL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "PRODUCT_NOT_PUBLISHED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "QUANTITY_GREATER_THAN_LIMIT",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INSUFFICIENT_STOCK",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "INPUT_OBJECT",
         "name": "CheckoutCreateInput",
         "description": null,
@@ -24428,6 +24729,46 @@
             "deprecationReason": null
           },
           {
+            "name": "metadata",
+            "description": "Fields required to update the user metadata.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "Fields required to update the user private metadata.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "languageCode",
             "description": "User language code.",
             "type": {
@@ -27771,7 +28112,22 @@
           },
           {
             "kind": "OBJECT",
+            "name": "OrderFullyRefunded",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
             "name": "OrderMetadataUpdated",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "OrderPaid",
+            "ofType": null
+          },
+          {
+            "kind": "OBJECT",
+            "name": "OrderRefunded",
             "ofType": null
           },
           {
@@ -35525,6 +35881,42 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "accessibleChannels",
+            "description": "List of channels the group has access to.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Channel",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "restrictedAccessToChannels",
+            "description": "Determine if the group have restricted access to channels.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -36144,6 +36536,46 @@
                 "kind": "SCALAR",
                 "name": "String",
                 "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "Fields required to update the invoice metadata.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "Fields required to update the invoice private metadata.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
               }
             },
             "defaultValue": null,
@@ -45969,7 +46401,7 @@
           },
           {
             "name": "webhookUpdate",
-            "description": "Updates a webhook subscription. \n\nRequires one of the following permissions: MANAGE_APPS.",
+            "description": "Updates a webhook subscription. \n\nRequires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.",
             "args": [
               {
                 "name": "id",
@@ -48294,7 +48726,7 @@
             "args": [
               {
                 "name": "errorPolicy",
-                "description": "Policies of error handling.",
+                "description": "Policies of error handling. DEFAULT: REJECT_EVERYTHING",
                 "type": {
                   "kind": "ENUM",
                   "name": "ErrorPolicyEnum",
@@ -55033,6 +55465,35 @@
             "deprecationReason": null
           },
           {
+            "name": "checkoutCreateFromOrder",
+            "description": "Create new checkout from existing order.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "id",
+                "description": "ID of a order that will be used to create the checkout.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "CheckoutCreateFromOrder",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "checkoutCustomerAttach",
             "description": "Sets the customer as the owner of the checkout. \n\nRequires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_USER.",
             "args": [
@@ -57114,11 +57575,11 @@
           },
           {
             "name": "tokenRefresh",
-            "description": "Refresh JWT token. Mutation tries to take refreshToken from the input.If it fails it will try to take refreshToken from the http-only cookie -refreshToken. csrfToken is required when refreshToken is provided as a cookie.",
+            "description": "Refresh JWT token. Mutation tries to take refreshToken from the input. If it fails it will try to take `refreshToken` from the http-only cookie `refreshToken`. `csrfToken` is required when `refreshToken` is provided as a cookie.",
             "args": [
               {
                 "name": "csrfToken",
-                "description": "CSRF token required to refresh token. This argument is required when refreshToken is provided as a cookie.",
+                "description": "CSRF token required to refresh token. This argument is required when `refreshToken` is provided as a cookie.",
                 "type": {
                   "kind": "SCALAR",
                   "name": "String",
@@ -62451,6 +62912,12 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "SALE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "VOUCHER",
             "description": null,
             "isDeprecated": false,
@@ -64799,6 +65266,83 @@
       },
       {
         "kind": "OBJECT",
+        "name": "OrderFullyRefunded",
+        "description": "The order is fully refunded.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "order",
+            "description": "The order the event relates to.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "OrderGrantRefundCreate",
         "description": "Adds granted refund to the order.\n\nAdded in Saleor 3.13.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
         "fields": [
@@ -66606,6 +67150,83 @@
       },
       {
         "kind": "OBJECT",
+        "name": "OrderPaid",
+        "description": "Payment has been made. The order may be partially or fully paid.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "order",
+            "description": "The order the event relates to.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "OrderRefund",
         "description": "Refund an order. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
         "fields": [
@@ -66833,6 +67454,83 @@
           }
         ],
         "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrderRefunded",
+        "description": "The order received a refund. The order may be partially or fully refunded.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "issuedAt",
+            "description": "Time of the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "version",
+            "description": "Saleor version that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "issuingPrincipal",
+            "description": "The user or application that triggered the event.",
+            "args": [],
+            "type": {
+              "kind": "UNION",
+              "name": "IssuingPrincipal",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "recipient",
+            "description": "The application receiving the webhook.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "App",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "order",
+            "description": "The order the event relates to.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [
+          {
+            "kind": "INTERFACE",
+            "name": "Event",
+            "ofType": null
+          }
+        ],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -74586,6 +75284,26 @@
             "deprecationReason": null
           },
           {
+            "name": "addChannels",
+            "description": "List of channels to assign to this group.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "name",
             "description": "Group name.",
             "type": {
@@ -74598,6 +75316,18 @@
               }
             },
             "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "restrictedAccessToChannels",
+            "description": "Determine if the group has restricted access to channels.  DEFAULT: False\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": "false",
             "isDeprecated": false,
             "deprecationReason": null
           }
@@ -74915,6 +75645,26 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "channels",
+            "description": "List of chnnels IDs which causes the error.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -74930,6 +75680,18 @@
         "inputFields": null,
         "interfaces": null,
         "enumValues": [
+          {
+            "name": "REQUIRED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "UNIQUE",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
           {
             "name": "ASSIGN_NON_STAFF_MEMBER",
             "description": null,
@@ -74967,13 +75729,7 @@
             "deprecationReason": null
           },
           {
-            "name": "REQUIRED",
-            "description": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "UNIQUE",
+            "name": "OUT_OF_SCOPE_CHANNEL",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -75202,6 +75958,26 @@
             "deprecationReason": null
           },
           {
+            "name": "addChannels",
+            "description": "List of channels to assign to this group.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "name",
             "description": "Group name.",
             "type": {
@@ -75248,6 +76024,38 @@
                   "ofType": null
                 }
               }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "removeChannels",
+            "description": "List of channels to unassign from this group.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "restrictedAccessToChannels",
+            "description": "Determine if the group has restricted access to channels.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -85215,6 +86023,18 @@
             "deprecationReason": null
           },
           {
+            "name": "path",
+            "description": "Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.\n\nAdded in Saleor 3.14.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "attributes",
             "description": "List of attributes IDs which causes the error.",
             "args": [],
@@ -92549,7 +93369,7 @@
           },
           {
             "name": "address",
-            "description": "Look up an address by ID.",
+            "description": "Look up an address by ID.\n\nRequires one of the following permissions: MANAGE_USERS, OWNER.",
             "args": [
               {
                 "name": "id",
@@ -93018,7 +93838,7 @@
       {
         "kind": "OBJECT",
         "name": "RefreshToken",
-        "description": "Refresh JWT token. Mutation tries to take refreshToken from the input.If it fails it will try to take refreshToken from the http-only cookie -refreshToken. csrfToken is required when refreshToken is provided as a cookie.",
+        "description": "Refresh JWT token. Mutation tries to take refreshToken from the input. If it fails it will try to take `refreshToken` from the http-only cookie `refreshToken`. `csrfToken` is required when `refreshToken` is provided as a cookie.",
         "fields": [
           {
             "name": "token",
@@ -100674,6 +101494,18 @@
             "deprecationReason": null
           },
           {
+            "name": "enableAccountConfirmationByEmail",
+            "description": "Determines if account confirmation by email is enabled.\n\nAdded in Saleor 3.14.\n\nRequires one of the following permissions: MANAGE_SETTINGS.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "limits",
             "description": "Resource limitations and current usage if any set for a shop\n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER.",
             "args": [],
@@ -101279,6 +102111,18 @@
             "deprecationReason": null
           },
           {
+            "name": "enableAccountConfirmationByEmail",
+            "description": "Enable automatic account confirmation by email.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "includeTaxesInPrices",
             "description": "Include taxes in prices. \n\nDEPRECATED: this field will be removed in Saleor 4.0. Use `taxConfigurationUpdate` mutation to configure this setting per channel or country.",
             "type": {
@@ -101819,6 +102663,46 @@
               "kind": "SCALAR",
               "name": "String",
               "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "Fields required to update the user metadata.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "Fields required to update the user private metadata.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -102693,6 +103577,46 @@
               "kind": "SCALAR",
               "name": "String",
               "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "Fields required to update the user metadata.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "Fields required to update the user private metadata.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -111089,6 +112013,46 @@
             "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "Fields required to update the invoice metadata.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "Fields required to update the invoice private metadata.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "interfaces": null,
@@ -111958,6 +112922,42 @@
             "deprecationReason": null
           },
           {
+            "name": "accessibleChannels",
+            "description": "List of channels the user has access to. The sum of channels from all user groups. If at least one group has `restrictedAccessToChannels` set to False - all channels are returned.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Channel",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "restrictedAccessToChannels",
+            "description": "Determine if user have restricted access to channels. False if at least one user group has `restrictedAccessToChannels` set to False.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "avatar",
             "description": null,
             "args": [
@@ -112568,6 +113568,46 @@
               "kind": "SCALAR",
               "name": "String",
               "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "metadata",
+            "description": "Fields required to update the user metadata.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "privateMetadata",
+            "description": "Fields required to update the user private metadata.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataInput",
+                  "ofType": null
+                }
+              }
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -118899,8 +119939,26 @@
             "deprecationReason": null
           },
           {
+            "name": "ORDER_PAID",
+            "description": "Payment has been made. The order may be partially or fully paid.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ORDER_FULLY_PAID",
             "description": "Payment is made and an order is fully paid.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORDER_REFUNDED",
+            "description": "The order received a refund. The order may be partially or fully refunded.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORDER_FULLY_REFUNDED",
+            "description": "The order is fully refunded.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -119600,8 +120658,26 @@
             "deprecationReason": null
           },
           {
+            "name": "ORDER_PAID",
+            "description": "Payment has been made. The order may be partially or fully paid.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ORDER_FULLY_PAID",
             "description": "Payment is made and an order is fully paid.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORDER_REFUNDED",
+            "description": "The order received a refund. The order may be partially or fully refunded.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORDER_FULLY_REFUNDED",
+            "description": "The order is fully refunded.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -120522,7 +121598,25 @@
             "deprecationReason": null
           },
           {
+            "name": "ORDER_PAID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "ORDER_FULLY_PAID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORDER_REFUNDED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ORDER_FULLY_REFUNDED",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -121176,7 +122270,7 @@
       {
         "kind": "OBJECT",
         "name": "WebhookUpdate",
-        "description": "Updates a webhook subscription. \n\nRequires one of the following permissions: MANAGE_APPS.",
+        "description": "Updates a webhook subscription. \n\nRequires one of the following permissions: MANAGE_APPS, AUTHENTICATED_APP.",
         "fields": [
           {
             "name": "webhookErrors",

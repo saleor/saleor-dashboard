@@ -8,6 +8,7 @@ export const BUTTON_SELECTORS = {
   selectOption: "[data-test-id*='select-option']",
   notSelectedOption: ":not([aria-selected])",
   deleteButton: '[data-test-id="button-bar-delete"]',
+  deleteProductsButton: '[data-test-id="delete-products-button"]',
   deleteItemsButton: '[data-test-id="button-delete-items"]',
   confirmDeleteButton: '[data-test-id="confirm-delete"]',
   expandIcon: '[data-test-id="expand-icon"]',
