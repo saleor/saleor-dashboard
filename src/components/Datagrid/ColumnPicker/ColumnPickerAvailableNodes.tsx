@@ -21,7 +21,7 @@ export const ColumnPickerAvailableNodes = ({
   query,
   setQuery,
   changeHandler,
-}) => {
+}: ColumnPickerAvailableNodesProps) => {
   const areNodesLoading = currentCategory.availableNodes === undefined;
   const areNodesEmpty = currentCategory.availableNodes?.length === 0;
 

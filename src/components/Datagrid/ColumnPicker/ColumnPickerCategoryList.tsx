@@ -10,7 +10,7 @@ export interface ColumnPickerCategoryListProps {
 export const ColumnPickerCategoryList = ({
   columnCategories,
   setCurrentCategory,
-}) => (
+}: ColumnPickerCategoryListProps) => (
   <List padding={8}>
     {columnCategories.map(category => (
       <List.Item

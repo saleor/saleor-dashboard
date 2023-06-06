@@ -12,9 +12,12 @@ export interface ColumnPickerDynamicColumnsProps {
   selectedColumns: string[];
 }
 
-export const ColumnPickerDynamicColumns: React.FC<
-  ColumnPickerDynamicColumnsProps
-> = ({ dynamicColumns, setExpanded, handleToggle, selectedColumns }) => (
+export const ColumnPickerDynamicColumns = ({
+  dynamicColumns,
+  setExpanded,
+  handleToggle,
+  selectedColumns,
+}: ColumnPickerDynamicColumnsProps) => (
   <>
     <Box
       display="flex"

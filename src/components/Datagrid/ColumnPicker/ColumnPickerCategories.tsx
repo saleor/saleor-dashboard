@@ -18,12 +18,12 @@ export interface ColumnPickerCategoriesProps {
   onDynamicColumnSelect: (columns: string[]) => void;
 }
 
-export const ColumnPickerCategories: React.FC<ColumnPickerCategoriesProps> = ({
+export const ColumnPickerCategories = ({
   columnCategories,
   onClose,
   onDynamicColumnSelect,
   columnPickerSettings,
-}) => {
+}: ColumnPickerCategoriesProps) => {
   const { currentCategory, setCurrentCategory } =
     useCategorySelection(columnCategories);
   const { query, setQuery } = useAvailableColumnsQuery(currentCategory);

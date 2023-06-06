@@ -27,7 +27,7 @@ export interface ColumnPickerProps {
   onDynamicColumnSelect?: (columns: string[]) => void;
 }
 
-export const ColumnPicker: React.FC<ColumnPickerProps> = ({
+export const ColumnPicker = ({
   staticColumns,
   selectedColumns,
   columnCategories,
@@ -35,7 +35,7 @@ export const ColumnPicker: React.FC<ColumnPickerProps> = ({
   columnPickerSettings,
   onDynamicColumnSelect,
   onSave,
-}) => {
+}: ColumnPickerProps) => {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
