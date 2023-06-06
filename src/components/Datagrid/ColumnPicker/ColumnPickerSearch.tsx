@@ -18,6 +18,7 @@ export const ColumnPickerSearch: React.FC<ColumnPickerSearchProps> = ({
   query,
 }: ColumnPickerSearchProps) => {
   const intl = useIntl();
+
   return (
     <Debounce
       debounceFn={(value: string) => currentCategory.onSearch(value)}

@@ -129,6 +129,7 @@ export const useColumns = ({
     if (typeof setDynamicColumnSettings !== "function") {
       return;
     }
+
     setDynamicColumnSettings(selected);
     updateDynamicColumns(prevDynamicColumns =>
       filterColumns(
