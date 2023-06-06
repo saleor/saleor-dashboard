@@ -15,7 +15,10 @@ interface HomeActivityCardProps {
   testId?: string;
 }
 
-const HomeActivityCard = ({ activities, testId }: HomeActivityCardProps) => {
+export const HomeActivityCard = ({
+  activities,
+  testId,
+}: HomeActivityCardProps) => {
   const intl = useIntl();
   const { themeValues } = useTheme();
 
@@ -80,5 +83,3 @@ const HomeActivityCard = ({ activities, testId }: HomeActivityCardProps) => {
     </DashboardCard>
   );
 };
-HomeActivityCard.displayName = "HomeActivityCard";
-export default HomeActivityCard;

@@ -10,11 +10,11 @@ import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import HomeActivityCard from "../HomeActivityCard";
-import HomeAnalyticsCard from "../HomeAnalyticsCard";
-import HomeHeader from "../HomeHeader";
-import HomeNotificationTable from "../HomeNotificationTable/HomeNotificationTable";
-import HomeProductListCard from "../HomeProductListCard";
+import { HomeActivityCard } from "../HomeActivityCard";
+import { HomeAnalyticsCard } from "../HomeAnalyticsCard";
+import { HomeHeader } from "../HomeHeader";
+import { HomeNotificationList } from "../HomeNotificationList";
+import { HomeProductList } from "../HomeProductList";
 import { homePageMessages } from "./messages";
 
 export interface HomePageProps {
@@ -92,7 +92,7 @@ const HomePage: React.FC<HomePageProps> = props => {
               </HomeAnalyticsCard>
             </Box>
           </RequirePermissions>
-          <HomeNotificationTable
+          <HomeNotificationList
             createNewChannelHref={createNewChannelHref}
             ordersToFulfillHref={ordersToFulfillHref}
             ordersToCaptureHref={ordersToCaptureHref}
@@ -110,7 +110,7 @@ const HomePage: React.FC<HomePageProps> = props => {
                 PermissionEnum.MANAGE_PRODUCTS,
               ]}
             >
-              <HomeProductListCard
+              <HomeProductList
                 testId="top-products"
                 topProducts={topProducts}
               />
