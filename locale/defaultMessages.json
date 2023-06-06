@@ -3085,9 +3085,6 @@
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
   },
-  "K+ROF8": {
-    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
-  },
   "K+vjtE": {
     "string": "Search Variants"
   },
@@ -4691,10 +4688,6 @@
     "context": "header",
     "string": "Order settings"
   },
-  "VvA7ai": {
-    "context": "info text",
-    "string": "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency"
-  },
   "VvFJ/T": {
     "context": "PageTypeDeleteWarningDialog single no assigned items description",
     "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created pages."
@@ -5690,10 +5683,6 @@
   },
   "cdxwA8": {
     "string": "{amount, plural,one {One product out of stock}other {{amount} products out of stock}}"
-  },
-  "cehiWu": {
-    "context": "channels sale info",
-    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
   },
   "cfQf0w": {
     "context": "button",
@@ -7440,9 +7429,6 @@
     "context": "bulk delete label",
     "string": "Delete"
   },
-  "qnPzX7": {
-    "string": "Channels that don’t have assigned discounts will use their parent channel to define the value. Value will be converted to channel’s currency"
-  },
   "qov29K": {
     "context": "dialog content",
     "string": "Select one of customer addresses or add a new address:"
@@ -7898,10 +7884,6 @@
   "u3sYPH": {
     "context": "independent of any particular day, eg. 11:35",
     "string": "Time"
-  },
-  "u5c/tR": {
-    "context": "channels discount info",
-    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
   },
   "u9/vj9": {
     "context": "webhook input label",
