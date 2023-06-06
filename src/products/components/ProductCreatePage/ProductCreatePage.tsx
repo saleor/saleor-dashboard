@@ -31,6 +31,7 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
+import { ProductOrganization } from "@dashboard/products/components/ProductOrganization/ProductOrganization";
 import { ProductVariantPrice } from "@dashboard/products/components/ProductVariantPrice";
 import {
   ProductCreateUrlQueryParams,
@@ -42,7 +43,6 @@ import { useIntl } from "react-intl";
 
 import { FetchMoreProps, RelayToFlat } from "../../../types";
 import { ProductDetailsForm } from "../ProductDetailsForm";
-import { ProductOrganization } from "../ProductOrganization";
 import { ProductShipping } from "../ProductShipping";
 import { ProductStocks } from "../ProductStocks";
 import ProductTaxes from "../ProductTaxes";
