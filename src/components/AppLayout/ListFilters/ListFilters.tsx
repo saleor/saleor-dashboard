@@ -1,60 +1,68 @@
 import { FilterErrorMessages, IFilter } from "@dashboard/components/Filter";
-import { FilterProps, SearchPageProps } from "@dashboard/types";
 import { Box } from "@saleor/macaw-ui/next";
-import React, { ReactNode } from "react";
-
-import { FiltersSelect } from "./components/FiltersSelect";
+import React, { ReactNode, useState } from "react";
 import SearchInput from "./components/SearchInput";
+import { _ExperimentalFilters } from "@saleor/macaw-ui/next"
+import { parse, stringify } from "qs";
+import { ConditionalFilters } from "@dashboard/components/ConditionalFilter";
 
-export interface ListFiltersProps<TKeys extends string = string>
-  extends FilterProps<TKeys>,
-    SearchPageProps {
+export interface ListFiltersProps<TKeys extends string = string> {
   searchPlaceholder: string;
   errorMessages?: FilterErrorMessages<TKeys>;
-  filterStructure: IFilter<TKeys>;
   actions?: ReactNode;
 }
 
+
+const STATIC_CONDITIONS = {
+  category: [
+    { value: "combobox", label: "is" },
+  ],
+  price: [
+    { value: "input", label: "is" },
+    { value: "range", label: "between" },
+  ],
+  discount: [
+    { value: "input", label: "is" },
+    { value: "range", label: "between" },
+  ],
+  rating: [
+    { value: "combobox", label: "is" }
+  ]
+}
+
+
+
 export const ListFilters = ({
-  currencySymbol,
-  filterStructure,
-  initialSearch,
   searchPlaceholder,
-  onSearchChange,
-  onFilterChange,
-  onFilterAttributeFocus,
   errorMessages,
   actions,
-}: ListFiltersProps) => (
-  <>
-    <Box
-      display="grid"
-      gridTemplateColumns={2}
-      gap={4}
-      paddingBottom={2}
-      paddingX={6}
-    >
-      <Box display="flex" alignItems="center" gap={4}>
-        <FiltersSelect
-          errorMessages={errorMessages}
-          menu={filterStructure}
-          currencySymbol={currencySymbol}
-          onFilterAdd={onFilterChange}
-          onFilterAttributeFocus={onFilterAttributeFocus}
-        />
+}: ListFiltersProps) => {
 
-        <Box __width="320px">
-          <SearchInput
-            initialSearch={initialSearch}
-            placeholder={searchPlaceholder}
-            onSearchChange={onSearchChange}
-          />
+
+  return (
+    <>
+      <Box
+        display="grid"
+        gridTemplateColumns={2}
+        gap={4}
+        paddingBottom={2}
+        paddingX={6}
+      >
+        <Box display="flex" alignItems="center" gap={4}>
+          <ConditionalFilters />
+          <Box __width="320px">
+            <SearchInput
+              initialSearch={""}
+              placeholder={searchPlaceholder}
+              onSearchChange={() => {}}
+            />
+          </Box>
+        </Box>
+        <Box display="flex" justifyContent="flex-end">
+          {actions}
         </Box>
       </Box>
-      <Box display="flex" justifyContent="flex-end">
-        {actions}
-      </Box>
-    </Box>
-  </>
-);
+    </>
+  )
+};
 ListFilters.displayName = "FilterBar";

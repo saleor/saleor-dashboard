@@ -50,7 +50,7 @@ export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     Omit<
       FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
-      "onTabDelete"
+      "onTabDelete" | "onFilterChange" | "onFilterAttributeFocus" | "onAll" | "onSearchChange" | "filterOpts"
     >,
     FetchMoreProps,
     SortPage<ProductListUrlSortField>,
@@ -60,7 +60,6 @@ export interface ProductListPageProps
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >;
   columnQuery: string;
-  currencySymbol: string;
   gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   limits: RefreshLimitsQuery["shop"]["limits"];
   products: RelayToFlat<ProductListQuery["products"]>;
@@ -83,12 +82,10 @@ const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
     columnQuery,
-    currencySymbol,
     defaultSettings,
     gridAttributes,
     limits,
     availableInGridAttributes,
-    filterOpts,
     hasMore,
     initialSearch,
     loading,
@@ -97,16 +94,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     onColumnQueryChange,
     onExport,
     onFetchMore,
-    onFilterChange,
-    onFilterAttributeFocus,
-    onSearchChange,
     onUpdateListSettings,
     selectedChannelId,
     activeAttributeSortId,
     onTabChange,
     onTabDelete,
     onTabSave,
-    onAll,
     currentTab,
     tabs,
     onTabUpdate,
@@ -119,11 +112,9 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   } = props;
   const intl = useIntl();
   const navigate = useNavigator();
-  const filterStructure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
-  const filterDependency = filterStructure.find(getByName("channel"));
-
+  const filterDependency = { label: "Channel" }
   const limitReached = isLimitReached(limits, "productVariants");
   const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } =
     useExtensions(extensionMountPoints.PRODUCT_LIST);
@@ -167,7 +158,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               onUpdate={onTabUpdate}
               savedPresets={tabs}
               activePreset={currentTab}
-              onSelectAll={onAll}
+              onSelectAll={() => {}}
               onSave={onTabSave}
               isOpen={isFilterPresetOpen}
               onOpenChange={setFilterPresetOpen}
@@ -256,12 +247,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           justifyContent="space-between"
         >
           <ListFilters
-            currencySymbol={currencySymbol}
-            initialSearch={initialSearch}
-            onFilterChange={onFilterChange}
-            onFilterAttributeFocus={onFilterAttributeFocus}
-            onSearchChange={onSearchChange}
-            filterStructure={filterStructure}
             searchPlaceholder={intl.formatMessage({
               id: "kIvvax",
               defaultMessage: "Search Products...",
