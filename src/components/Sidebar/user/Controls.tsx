@@ -51,7 +51,12 @@ export const UserControls = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Dropdown open={open} onOpenChange={value => !value}>
+    <Dropdown
+      open={open}
+      onOpenChange={value => {
+        setOpen(value);
+      }}
+    >
       <Dropdown.Trigger>
         <Button
           variant="tertiary"
