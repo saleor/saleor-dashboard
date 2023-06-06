@@ -29,7 +29,7 @@ export interface LoginCardProps {
   onSubmit?: (event: LoginFormData) => SubmitPromise;
 }
 
-const LoginCard: React.FC<LoginCardProps> = props => {
+const LoginPage: React.FC<LoginCardProps> = props => {
   const {
     errors,
     disabled,
@@ -179,5 +179,5 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     </LoginForm>
   );
 };
-LoginCard.displayName = "LoginCard";
-export default LoginCard;
+LoginPage.displayName = "LoginPage";
+export default LoginPage;

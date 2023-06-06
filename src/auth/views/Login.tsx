@@ -63,15 +63,13 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
   };
 
   const handleExternalAuthentication = async (code: string, state: string) => {
-    const result = await loginByExternalPlugin(requestedExternalPluginId, {
+    await loginByExternalPlugin(requestedExternalPluginId, {
       code,
       state,
     });
     setRequestedExternalPluginId(null);
-    if (result && !result?.errors?.length) {
-      navigate(fallbackUri);
-      setFallbackUri(null);
-    }
+    navigate(fallbackUri);
+    setFallbackUri(null);
   };
 
   useEffect(() => {
