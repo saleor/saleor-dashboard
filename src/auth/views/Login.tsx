@@ -1,4 +1,4 @@
-import { useAvailableExternalAuthenticationsQuery } from "@dashboard/graphql";
+import { useAvailableExternalAuthenticationsLazyQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import React, { useEffect } from "react";
@@ -23,16 +23,12 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     requestLoginByExternalPlugin,
     loginByExternalPlugin,
     authenticating,
-    authenticated,
     errors,
   } = useUser();
-  const {
-    data: externalAuthentications,
-    loading: externalAuthenticationsLoading,
-  } = useAvailableExternalAuthenticationsQuery({
-    skip: authenticating || authenticated,
-  });
-
+  const [
+    queryExternalAuthentications,
+    { data: externalAuthentications, loading: externalAuthenticationsLoading },
+  ] = useAvailableExternalAuthenticationsLazyQuery();
   const {
     fallbackUri,
     requestedExternalPluginId,
@@ -74,6 +70,15 @@ const LoginView: React.FC<LoginViewProps> = ({ params }) => {
     navigate(fallbackUri);
     setFallbackUri(null);
   };
+
+  useEffect(() => {
+    const { code, state } = params;
+    const externalAuthParamsExist = code && state && isCallbackPath;
+
+    if (!externalAuthParamsExist) {
+      queryExternalAuthentications();
+    }
+  }, [isCallbackPath, params, queryExternalAuthentications]);
 
   useEffect(() => {
     const { code, state } = params;
