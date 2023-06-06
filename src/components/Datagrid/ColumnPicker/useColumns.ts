@@ -48,6 +48,9 @@ export const useColumns = ({
   const [dynamicColumns, updateDynamicColumns] =
     React.useState<AvailableColumn[]>(null);
 
+  // Dynamic columns are loaded from the API, thus they need to be updated
+  // after query resolves with data. Then we also sort them by order of addition
+  // by the user, which is saved in LS (columnPickerSettings).
   React.useEffect(() => {
     if (dynamicColumns === null && areCategoriesLoaded(columnCategories)) {
       updateDynamicColumns(
@@ -130,6 +133,8 @@ export const useColumns = ({
       return;
     }
 
+    // This is optimistic update - dynamic columns are only synced
+    // with the API on the initial render
     setDynamicColumnSettings(selected);
     updateDynamicColumns(prevDynamicColumns =>
       filterColumns(
