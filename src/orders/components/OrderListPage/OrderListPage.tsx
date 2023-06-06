@@ -54,15 +54,6 @@ export interface OrderListPageProps
   onTabDelete: (tabIndex: number) => void;
 }
 
-// const useStyles = makeStyles(
-//   theme => ({
-//     settings: {
-//       marginRight: theme.spacing(2),
-//     },
-//   }),
-//   { name: "OrderListPage" },
-// );
-
 const OrderListPage: React.FC<OrderListPageProps> = ({
   initialSearch,
   filterOpts,
@@ -149,7 +140,6 @@ const OrderListPage: React.FC<OrderListPageProps> = ({
           <Box display="flex" alignItems="center" gap={5}>
             {!!onSettingsOpen && (
               <TopNav.Menu
-                // className={classes.settings}
                 items={[
                   {
                     label: intl.formatMessage({
