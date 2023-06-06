@@ -39,6 +39,7 @@ export const ColumnPickerAvailableNodes = ({
         </Box>
       );
     }
+
     if (areNodesEmpty) {
       return (
         <Text size="small" color="textNeutralSubdued">
@@ -46,6 +47,7 @@ export const ColumnPickerAvailableNodes = ({
         </Text>
       );
     }
+
     return currentCategory.availableNodes.map(node => (
       <Box display="flex" alignItems="center" padding={5} gap={6} key={node.id}>
         <Checkbox
