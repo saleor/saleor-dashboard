@@ -6,7 +6,6 @@ import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import TextFieldWithChoice from "@dashboard/components/TextFieldWithChoice";
 import { ChannelInput } from "@dashboard/discounts/handlers";
 import { DiscountTypeEnum } from "@dashboard/discounts/types";
 import { DiscountErrorFragment } from "@dashboard/graphql";
@@ -20,6 +19,7 @@ import {
   TableCell,
   Typography,
 } from "@material-ui/core";
+import { Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -99,22 +99,21 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                   return (
                     <TableRowLink key={listing?.id || `skeleton-${index}`}>
                       <TableCell>
-                        <Typography>{listing?.name || <Skeleton />}</Typography>
+                        <Text>{listing?.name || <Skeleton />}</Text>
                       </TableCell>
                       <TableCell className={classes.colPrice}>
                         {listing ? (
-                          <TextFieldWithChoice
+                          <Input
                             disabled={disabled}
                             error={!!error?.length}
-                            ChoiceProps={{
-                              label:
-                                data.discountType ===
+                            endAdornment={
+                              <Text variant="caption">
+                                {data.discountType ===
                                 DiscountTypeEnum.VALUE_FIXED
                                   ? listing.currency
-                                  : "%",
-                              name: "discountType" as keyof FormData,
-                              values: null,
-                            }}
+                                  : "%"}
+                              </Text>
+                            }
                             helperText={
                               error
                                 ? getDiscountErrorMessage(
@@ -135,10 +134,6 @@ const VoucherValue: React.FC<VoucherValueProps> = props => {
                             })}
                             value={listing.discountValue || ""}
                             type="number"
-                            fullWidth
-                            inputProps={{
-                              min: 0,
-                            }}
                           />
                         ) : (
                           <Skeleton />
