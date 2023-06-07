@@ -7,7 +7,8 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
-import { TrashBinIcon } from "@saleor/macaw-ui/next";
+import useNavigator from "@dashboard/hooks/useNavigator";
+import { productVariantEditUrl } from "@dashboard/products/urls";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
@@ -30,6 +31,7 @@ export const OrderDraftDetailsDatagrid = ({
   onOrderLineRemove,
 }: OrderDraftDetailsDatagridProps) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const datagrid = useDatagridChangeState();
 
   const { availableColumns } = useColumns();
@@ -55,13 +57,23 @@ export const OrderDraftDetailsDatagrid = ({
     index => [
       {
         label: intl.formatMessage(messages.deleteOrder),
-        Icon: <TrashBinIcon />,
         onSelect: () => {
           onOrderLineRemove(lines[index].id);
         },
       },
+      {
+        label: intl.formatMessage(messages.productDetails),
+        onSelect: () => {
+          navigate(
+            productVariantEditUrl(
+              lines[index].variant.product.id,
+              lines[index].variant.id,
+            ),
+          );
+        },
+      },
     ],
-    [intl, lines, onOrderLineRemove],
+    [intl, lines, navigate, onOrderLineRemove],
   );
 
   const handleDatagridChange = useCallback(

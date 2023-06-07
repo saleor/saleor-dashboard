@@ -27,3 +27,10 @@ export const columnsMessages = defineMessages({
     description: "order line total price",
   },
 });
+
+export const messages = defineMessages({
+  productDetails: {
+    id: "VYK2nN",
+    defaultMessage: "Product details",
+  },
+});
