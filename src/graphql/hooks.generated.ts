@@ -1547,6 +1547,7 @@ export const OrderLineFragmentDoc = gql`
   }
   variant {
     id
+    name
     quantityAvailable
     preorder {
       endDate

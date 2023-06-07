@@ -10,6 +10,10 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Quantity",
     description: "quantity of ordered products",
   },
+  variantName: {
+    id: "OK5+Fh",
+    defaultMessage: "Variant",
+  },
   price: {
     id: "32dfzI",
     defaultMessage: "Price",
