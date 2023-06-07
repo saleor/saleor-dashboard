@@ -1037,9 +1037,6 @@
     "context": "vat not included in order price",
     "string": "does not apply"
   },
-  "5LRkEs": {
-    "string": "The new dashboard and the GraphQL API are preview-quality software."
-  },
   "5ObBlW": {
     "string": "Dark Mode"
   },
@@ -1181,10 +1178,6 @@
   "6JlXeD": {
     "context": "button",
     "string": "Create page type"
-  },
-  "6L6Fy2": {
-    "context": "header",
-    "string": "Disclaimer"
   },
   "6QjMei": {
     "string": "Preorder end time needs to be set in the future"
@@ -2486,9 +2479,6 @@
   "G5NKx6": {
     "context": "tooltip",
     "string": "Checkout reservation time threshold is enabled in settings."
-  },
-  "G7mu0y": {
-    "string": "The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
   },
   "GAmGog": {
     "context": "value input label",
