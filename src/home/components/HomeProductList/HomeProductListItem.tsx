@@ -17,7 +17,7 @@ export const HomeProductListItem = ({
     borderColor="neutralPlain"
     borderWidth={1}
     paddingX={5}
-    paddingY={4}
+    paddingY={3}
     borderBottomStyle="solid"
     data-test-id={dataTestId}
   >

@@ -1,56 +1,14 @@
-import { DashboardCard } from "@dashboard/components/Card";
 import Money from "@dashboard/components/Money";
 import Skeleton from "@dashboard/components/Skeleton";
 import { HomeQuery } from "@dashboard/graphql";
 import { productVariantEditUrl } from "@dashboard/products/urls";
 import { RelayToFlat } from "@dashboard/types";
-import { Avatar, Box, Text } from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { renderCollection } from "../../../misc";
 import { HomeProductListItem } from "./HomeProductListItem";
-
-// const useStyles = makeStyles(
-//   theme => ({
-//     avatarProps: {
-//       height: 64,
-//       width: 64,
-//     },
-//     colAvatar: {
-//       paddingBottom: theme.spacing(2),
-//       paddingRight: theme.spacing(),
-//       paddingTop: theme.spacing(2),
-//       width: 112,
-//     },
-//     colName: {
-//       width: "auto",
-//     },
-//     label: {
-//       paddingLeft: 0,
-//     },
-//     noProducts: {
-//       paddingBottom: 20,
-//       paddingTop: 20,
-//       paddingLeft: "0 !important",
-//     },
-//     tableRow: {
-//       cursor: "pointer",
-//       /* Table to be replaced with Box */
-//       "& .MuiTableCell-root": {
-//         paddingLeft: `${vars.spacing[5]} !important`,
-//         paddingRight: `${vars.spacing[5]} !important`,
-//       },
-//     },
-//     cardContent: {
-//       padding: 0,
-//     },
-//     cardTitle: {
-//       padding: 0,
-//     },
-//   }),
-//   { name: "HomeProductListCard" },
-// );
 
 interface HomeProductListProps {
   testId?: string;
@@ -64,15 +22,15 @@ export const HomeProductList = ({
   const intl = useIntl();
 
   return (
-    <DashboardCard data-test-id={testId}>
-      <DashboardCard.Title>
+    <Box data-test-id={testId}>
+      <Text variant="heading" display="block" marginBottom={4}>
         {intl.formatMessage({
           id: "rr8fyf",
           defaultMessage: "Top Products",
           description: "header",
         })}
-      </DashboardCard.Title>
-      <DashboardCard.Content>
+      </Text>
+      <Box>
         {renderCollection(
           topProducts,
           variant => (
@@ -82,22 +40,30 @@ export const HomeProductList = ({
             >
               {variant ? (
                 <>
-                  <Box display="flex" gap={4} alignItems="center">
-                    <Avatar.User
-                      size="medium"
-                      src={variant.product.thumbnail.url}
+                  <Box display="flex" gap={6} alignItems="center">
+                    <Box
+                      borderColor="neutralHighlight"
+                      borderStyle="solid"
+                      borderWidth={1}
+                      borderRadius={3}
+                      as="img"
+                      width={16}
+                      height={16}
+                      alt={variant.product.name}
+                      objectFit="scale-down"
+                      src={variant.product.thumbnail?.url}
                     />
 
                     <Box display="flex" flexDirection="column">
-                      <Text>{variant.product.name}</Text>
+                      <Text size="small">{variant.product.name}</Text>
 
-                      <Text>
+                      <Text size="small" color="textNeutralSubdued">
                         {variant.attributes
                           .map(attribute => attribute.values[0].name)
                           .join(" / ")}
                       </Text>
 
-                      <Text>
+                      <Text size="small" color="textNeutralSubdued">
                         <FormattedMessage
                           id="0opVvi"
                           defaultMessage="{amount, plural,one {One ordered}other {{amount} Ordered}}"
@@ -110,7 +76,7 @@ export const HomeProductList = ({
                     </Box>
                   </Box>
 
-                  <Text textAlign="right">
+                  <Text textAlign="right" size="small">
                     <Money money={variant.revenue.gross} />
                   </Text>
                 </>
@@ -120,8 +86,13 @@ export const HomeProductList = ({
             </HomeProductListItem>
           ),
           () => (
-            <Box>
-              <Text>
+            <Box
+              borderColor="neutralPlain"
+              borderWidth={1}
+              paddingY={5}
+              borderBottomStyle="solid"
+            >
+              <Text size="small">
                 <FormattedMessage
                   id="Q1Uzbb"
                   defaultMessage="No products found"
@@ -130,8 +101,8 @@ export const HomeProductList = ({
             </Box>
           ),
         )}
-      </DashboardCard.Content>
-    </DashboardCard>
+      </Box>
+    </Box>
   );
 };
 
