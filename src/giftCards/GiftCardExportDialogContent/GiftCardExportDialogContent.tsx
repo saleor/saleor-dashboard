@@ -1,4 +1,4 @@
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   useExportGiftCardsMutation,

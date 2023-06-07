@@ -68,7 +68,7 @@ const GiftCardSettingsPage: React.FC = () => {
         <Form initial={initialData} onSubmit={handleSubmit}>
           {({ data: formData, submit, change }) => (
             <>
-              <Box padding={9} margin="auto" height="100vh">
+              <Box padding={6} margin="auto" height="100vh">
                 <Grid variant="inverted">
                   <div>
                     <Typography>

@@ -1,5 +1,5 @@
 import CardSpacer from "@dashboard/components/CardSpacer";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { CardContent } from "@material-ui/core";

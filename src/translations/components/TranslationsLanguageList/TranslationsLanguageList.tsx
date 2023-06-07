@@ -29,7 +29,7 @@ const useStyles = makeStyles(
     },
     rowLink: {
       "& .MuiTableCell-root": {
-        paddingLeft: `${vars.space[9]} !important`,
+        paddingLeft: `${vars.spacing[6]} !important`,
       },
     },
   },

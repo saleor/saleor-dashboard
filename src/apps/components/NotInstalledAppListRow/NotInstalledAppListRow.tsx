@@ -32,7 +32,7 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
 
   return (
     <List.Item
-      padding={7}
+      padding={4}
       borderTopStyle="solid"
       borderWidth={1}
       borderColor="neutralPlain"
@@ -42,7 +42,7 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
     >
       <Box
         display="flex"
-        gap={5}
+        gap={2}
         alignItems="center"
         justifyContent={{ mobile: "space-between", desktop: "flex-start" }}
       >
@@ -75,7 +75,7 @@ export const NotInstalledAppListRow: React.FC<AppInstallation> = props => {
           <>
             <Tooltip>
               <Tooltip.Trigger>
-                <Box display="flex" placeItems="center" gap={3} marginX={3}>
+                <Box display="flex" placeItems="center" gap={1} marginX={1}>
                   <WarningIcon size="small" color="iconCriticalSubdued" />
                   <Text
                     variant="caption"

@@ -25,7 +25,7 @@ const ExtraInfoLines: React.FC<ExtraInfoLinesProps> = ({ fulfillment }) => {
 
   return (
     <Box
-      paddingY={7}
+      paddingY={4}
       borderColor="neutralHighlight"
       borderBottomStyle={"solid"}
       borderBottomWidth={1}

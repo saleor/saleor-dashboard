@@ -11,7 +11,6 @@ import {
   addChannelToShippingMethod,
   addChannelToShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
-import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
 import { selectChannelInHeader } from "../../../support/pages/channelsPage";
 import {
@@ -25,8 +24,6 @@ describe("As a staff user I want have different shipping method prices for each 
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    shippingUtils.deleteShippingStartsWith(startsWith);
-    channelsUtils.deleteChannelsStartsWith(startsWith);
   });
 
   it(

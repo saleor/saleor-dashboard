@@ -1,3 +1,4 @@
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import useSearchQuery from "@dashboard/hooks/useSearchQuery";
@@ -13,13 +14,12 @@ import {
   TableCell,
   TextField,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import BackButton from "../BackButton";
 import Checkbox from "../Checkbox";
-import ConfirmButton from "../ConfirmButton";
+import { ConfirmButton } from "../ConfirmButton";
 import { useStyles } from "./styles";
 
 export interface AssignContainerDialogFormData {

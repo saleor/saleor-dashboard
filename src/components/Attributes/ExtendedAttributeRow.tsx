@@ -18,7 +18,7 @@ const ExtendedAttributeRow: React.FC<ExtendedAttributeRowProps> = props => {
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        paddingY={3}
+        paddingY={6}
       >
         <Text data-test-id="attribute-label">{label}</Text>
         <Button

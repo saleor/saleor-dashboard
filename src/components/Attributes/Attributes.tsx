@@ -76,7 +76,7 @@ export const Attributes: React.FC<AttributesProps> = ({
         {title || intl.formatMessage(messages.header)}
       </DashboardCard.Title>
       <DashboardCard.Content>
-        <Box display="flex" flexDirection="column" gap={5}>
+        <Box display="flex" flexDirection="column" gap={2}>
           <Accordion defaultValue="attributes-accordion">
             <Accordion.Item value="attributes-accordion">
               <Accordion.Trigger buttonDataTestId="attributes-expand">

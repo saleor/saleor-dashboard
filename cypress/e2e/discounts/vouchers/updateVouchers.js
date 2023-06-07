@@ -6,10 +6,7 @@ import faker from "faker";
 import { VOUCHERS_SELECTORS } from "../../../elements/discounts/vouchers";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { voucherDetailsUrl } from "../../../fixtures/urlList";
-import {
-  createVoucherInChannel,
-  deleteVouchersStartsWith,
-} from "../../../support/api/utils/discounts/vouchersUtils";
+import { createVoucherInChannel } from "../../../support/api/utils/discounts/vouchersUtils";
 import { createCheckoutWithVoucher } from "../../../support/api/utils/ordersUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
@@ -30,7 +27,6 @@ describe("As an admin I want to update vouchers", () => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
     cy.clearSessionData().loginUserViaRequest();
-    deleteVouchersStartsWith(startsWith);
     productsUtils
       .createProductWithShipping({ name, productPrice, shippingPrice })
       .then(

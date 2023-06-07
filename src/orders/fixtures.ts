@@ -1207,6 +1207,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       __typename: "Fulfillment",
       fulfillmentOrder: 2,
       id: "RnVsZmlsbG1lbnQ6MjQ=",
+      metadata: [],
+      privateMetadata: [],
       lines: [
         {
           __typename: "FulfillmentLine",
@@ -1331,6 +1333,8 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
       __typename: "Fulfillment",
       fulfillmentOrder: 1,
       id: "RnVsZmlsbG1lbnQ6OQ==",
+      metadata: [],
+      privateMetadata: [],
       lines: [
         {
           __typename: "FulfillmentLine",
@@ -2240,8 +2244,8 @@ export const variants = [
 ];
 export const prefixes = ["01", "02", "41", "49"];
 export const shippingMethods = [
-  { country: "whole world", id: "s1", name: "DHL", price: {} },
-  { country: "Afghanistan", id: "s2", name: "UPS" },
+  { country: "whole world", id: 1, name: "DHL", price: {} },
+  { country: "Afghanistan", id: 2, name: "UPS" },
 ];
 export const orderLineSearch = (
   placeholderImage: string,

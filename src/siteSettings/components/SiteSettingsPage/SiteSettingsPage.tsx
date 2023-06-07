@@ -1,8 +1,9 @@
 import { createCountryHandler } from "@dashboard/components/AddressEdit/createCountryHandler";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { DashboardCard } from "@dashboard/components/Card";
 import CompanyAddressInput from "@dashboard/components/CompanyAddressInput";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
-import Hr from "@dashboard/components/Hr";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import PageSectionHeader from "@dashboard/components/PageSectionHeader";
 import Savebar from "@dashboard/components/Savebar";
@@ -15,8 +16,7 @@ import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { commonMessages } from "@dashboard/intl";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { mapCountriesToChoices } from "@dashboard/utils/maps";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, Checkbox, Divider, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -40,6 +40,7 @@ export interface SiteSettingsPageFormData
   reserveStockDurationAnonymousUser: number;
   reserveStockDurationAuthenticatedUser: number;
   limitQuantityPerCheckout: number;
+  emailConfirmation: boolean;
 }
 
 export interface SiteSettingsPageProps {
@@ -68,22 +69,8 @@ export function areAddressInputFieldsModified(
     .some(field => field !== "");
 }
 
-const useStyles = makeStyles(
-  theme => ({
-    hr: {
-      gridColumnEnd: "span 2",
-      margin: theme.spacing(1, 0),
-    },
-  }),
-  {
-    name: "SiteSettingsPage",
-  },
-);
-
 const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
   const { disabled, errors, saveButtonBarState, shop, onSubmit } = props;
-
-  const classes = useStyles(props);
   const intl = useIntl();
   const navigate = useNavigator();
 
@@ -104,6 +91,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     streetAddress1: shop?.companyAddress?.streetAddress1 || "",
     streetAddress2: shop?.companyAddress?.streetAddress2 || "",
   };
+
   const initialForm: SiteSettingsPageFormData = {
     ...initialFormAddress,
     description: shop?.description || "",
@@ -112,6 +100,7 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
     reserveStockDurationAuthenticatedUser:
       shop?.reserveStockDurationAuthenticatedUser ?? 0,
     limitQuantityPerCheckout: shop?.limitQuantityPerCheckout ?? 0,
+    emailConfirmation: shop?.enableAccountConfirmationByEmail ?? false,
   };
 
   return (
@@ -136,6 +125,10 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
 
         const handleCountrySelect = createCountryHandler(countrySelect, set);
 
+        const handleEmailConfirmationChange = isEnabled => {
+          change({ target: { name: "emailConfirmation", value: isEnabled } });
+        };
+
         return (
           <DetailPageLayout gridTemplateColumns={1}>
             <TopNav
@@ -143,8 +136,12 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
               title={intl.formatMessage(commonMessages.generalInformations)}
             />
             <DetailPageLayout.Content>
-              <Box gap={5} paddingLeft={9}>
-                <Box display="grid" __gridTemplateColumns="1fr 3fr">
+              <Box gap={2}>
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={6}
+                >
                   <PageSectionHeader
                     title={intl.formatMessage(messages.sectionCheckoutTitle)}
                     description={intl.formatMessage(
@@ -159,9 +156,14 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                   />
                 </Box>
 
-                <Hr className={classes.hr} />
+                <Divider />
 
-                <Box display="grid" __gridTemplateColumns="1fr 3fr">
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={6}
+                  paddingBottom={8}
+                >
                   <PageSectionHeader
                     title={intl.formatMessage(messages.sectionCompanyTitle)}
                     description={intl.formatMessage(
@@ -182,6 +184,43 @@ const SiteSettingsPage: React.FC<SiteSettingsPageProps> = props => {
                     onChange={change}
                     onCountryChange={handleCountrySelect}
                   />
+                </Box>
+
+                <Divider />
+
+                <Box
+                  display="grid"
+                  __gridTemplateColumns="1fr 3fr"
+                  paddingLeft={6}
+                  paddingBottom={8}
+                >
+                  <PageSectionHeader
+                    title={intl.formatMessage(
+                      messages.sectionEmailConfirmationTitle,
+                    )}
+                    description={intl.formatMessage(
+                      messages.sectionEmailConfirmationDescription,
+                    )}
+                  />
+                  <DashboardCard>
+                    <DashboardCard.Title>
+                      {intl.formatMessage(
+                        messages.sectionEmailConfirmationHeader,
+                      )}
+                    </DashboardCard.Title>
+                    <DashboardCard.Content>
+                      <Checkbox
+                        checked={data.emailConfirmation}
+                        onCheckedChange={handleEmailConfirmationChange}
+                      >
+                        <Text variant="body">
+                          {intl.formatMessage(
+                            messages.sectionEmailConfirmationHeader,
+                          )}
+                        </Text>
+                      </Checkbox>
+                    </DashboardCard.Content>
+                  </DashboardCard>
                 </Box>
               </Box>
 

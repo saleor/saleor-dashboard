@@ -6,7 +6,7 @@ export const TopNavLink: React.FC<{
   to: string;
   variant?: "secondary" | "tertiary";
 }> = ({ to, variant = "secondary" }) => (
-  <Link to={to} className={sprinkles({ marginRight: 5 })}>
+  <Link to={to} className={sprinkles({ marginRight: 2 })}>
     <Button
       icon={<ArrowLeftIcon />}
       variant={variant}

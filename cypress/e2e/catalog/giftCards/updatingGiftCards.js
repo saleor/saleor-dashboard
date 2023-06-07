@@ -12,7 +12,6 @@ import {
   createGiftCard,
   getGiftCardWithId,
 } from "../../../support/api/requests/GiftCard";
-import { deleteGiftCardsWithTagStartsWith } from "../../../support/api/utils/catalog/giftCardUtils";
 import { formatDate } from "../../../support/formatData/formatDate";
 import { enterAndSelectGiftCards } from "../../../support/pages/catalog/giftCardPage";
 
@@ -21,7 +20,6 @@ describe("As an admin I want to update gift card", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteGiftCardsWithTagStartsWith(startsWith);
   });
 
   beforeEach(() => {

@@ -5,7 +5,6 @@ import faker from "faker";
 
 import { urlList } from "../../../fixtures/urlList";
 import { getProductType } from "../../../support/api/requests/ProductType";
-import { deleteProductsStartsWith } from "../../../support/api/utils/products/productsUtils";
 import { createProductType } from "../../../support/pages/productTypePage";
 
 describe("As an admin I want to create product types", () => {
@@ -13,7 +12,6 @@ describe("As an admin I want to create product types", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteProductsStartsWith(startsWith);
   });
 
   beforeEach(() => {
@@ -25,7 +23,9 @@ describe("As an admin I want to create product types", () => {
 
   it(
     "should be able to create product type without shipping required. TC: SALEOR_1501",
-    { tags: ["@productType", "@allEnv", "@stable", "@oldRelease"] },
+    {
+      tags: ["@productType", "@allEnv", "@stable", "@oldRelease", "@critical"],
+    },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 
@@ -43,7 +43,7 @@ describe("As an admin I want to create product types", () => {
 
   it(
     "should be able to create product type with shipping required. TC: SALEOR_1502",
-    { tags: ["@productType", "@allEnv", "@stable"] },
+    { tags: ["@productType", "@allEnv", "@stable", "@critical"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
       const shippingWeight = 10;
@@ -63,7 +63,7 @@ describe("As an admin I want to create product types", () => {
 
   it(
     "should be able to create product type with gift card kind. TC: SALEOR_1510",
-    { tags: ["@productType", "@allEnv", "@stable"] },
+    { tags: ["@productType", "@allEnv", "@stable", "@critical"] },
     () => {
       const name = `${startsWith}${faker.datatype.number()}`;
 

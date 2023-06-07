@@ -22,14 +22,14 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
       display="flex"
       flexDirection="row"
       flexWrap="wrap"
-      gap={8}
+      gap={5}
       margin={0}
       borderColor="neutralPlain"
       borderLeftStyle="solid"
       borderRightStyle="solid"
       borderWidth={1}
-      paddingY={5}
-      paddingX={8}
+      paddingY={2}
+      paddingX={5}
       alignItems="start"
     >
       {integrations.map(integration => (
@@ -37,7 +37,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
           as="li"
           display="flex"
           alignItems="center"
-          gap={4}
+          gap={1.5}
           key={integration.name}
         >
           <Box
@@ -47,7 +47,7 @@ const AppListCardIntegrations: React.FC<AppListCardIntegrationsProps> = ({
             borderStyle="solid"
             borderColor="neutralPlain"
             borderWidth={1}
-            padding={3}
+            padding={1}
             display="flex"
             placeItems="center"
           >

@@ -19,3 +19,10 @@ export interface MetadataFormData {
   metadata: MetadataInput[];
   privateMetadata: MetadataInput[];
 }
+
+export interface MetadataIdSchema {
+  [key: string]: {
+    metadata: MetadataInput[];
+    privateMetadata: MetadataInput[];
+  };
+}

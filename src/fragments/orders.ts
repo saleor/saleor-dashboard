@@ -156,6 +156,7 @@ export const fragmentRefundOrderLine = gql`
 
 export const fulfillmentFragment = gql`
   fragment Fulfillment on Fulfillment {
+    ...Metadata
     id
     lines {
       id
