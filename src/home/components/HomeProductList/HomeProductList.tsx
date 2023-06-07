@@ -23,7 +23,7 @@ export const HomeProductList = ({
 
   return (
     <Box data-test-id={testId}>
-      <Text variant="heading" display="block" marginBottom={4}>
+      <Text variant="heading" display="block" paddingTop={7}>
         {intl.formatMessage({
           id: "rr8fyf",
           defaultMessage: "Top Products",
