@@ -156,7 +156,7 @@ jobs:
               case 'workflow_dispatch':
                 return browser
               case 'schedule':
-                return 'all'
+                return 'chrome'
               default:
                 return 'chrome'
             }
