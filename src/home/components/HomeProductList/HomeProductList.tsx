@@ -49,6 +49,7 @@ export const HomeProductList = ({
                       as="img"
                       width={16}
                       height={16}
+                      padding={0.5}
                       alt={variant.product.name}
                       objectFit="scale-down"
                       src={variant.product.thumbnail?.url}
@@ -76,7 +77,7 @@ export const HomeProductList = ({
                     </Box>
                   </Box>
 
-                  <Text textAlign="right" size="small">
+                  <Text textAlign="right">
                     <Money money={variant.revenue.gross} />
                   </Text>
                 </>
