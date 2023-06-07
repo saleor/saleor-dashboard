@@ -69,7 +69,6 @@ export const OrderDetailsDatagrid = ({
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
-        readonly
         showEmptyDatagrid
         rowMarkers="none"
         columnSelect="single"

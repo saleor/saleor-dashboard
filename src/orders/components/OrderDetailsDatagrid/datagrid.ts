@@ -82,6 +82,7 @@ export const useGetCellContent = ({
           return thumbnailCell(
             rowData?.productName ?? "",
             rowData.thumbnail?.url ?? "",
+            readonyOptions,
           );
         case "sku":
           return readonlyTextCell(rowData.productSku ?? "", false);
@@ -91,12 +92,14 @@ export const useGetCellContent = ({
           return moneyCell(
             rowData.unitPrice.gross.amount,
             rowData.unitPrice.gross.currency,
+            readonyOptions,
           );
 
         case "total":
           return moneyCell(
             rowData.totalPrice.gross.amount,
             rowData.totalPrice.gross.currency,
+            readonyOptions,
           );
 
         default:
@@ -107,4 +110,9 @@ export const useGetCellContent = ({
   );
 
   return getCellContent;
+};
+
+const readonyOptions: Partial<GridCell> = {
+  allowOverlay: false,
+  readonly: true,
 };
