@@ -18,10 +18,6 @@ const GiftCardUpdateDetailsBalanceSection: React.FC = () => {
     giftCard: { currentBalance, initialBalance },
   } = useGiftCardDetails();
 
-  const progressBarWidth = !!currentBalance.amount
-    ? Math.floor((currentBalance.amount / initialBalance.amount) * 100)
-    : 0;
-
   return (
     <>
       <div className={clsx(classes.labelsContainer, classes.wideContainer)}>
@@ -37,12 +33,6 @@ const GiftCardUpdateDetailsBalanceSection: React.FC = () => {
         </Typography>
       </div>
       <CardSpacer />
-      <div className={classes.balanceBar}>
-        <div
-          style={{ width: `${progressBarWidth}%` }}
-          className={classes.balanceBarProgress}
-        />
-      </div>
     </>
   );
 };
