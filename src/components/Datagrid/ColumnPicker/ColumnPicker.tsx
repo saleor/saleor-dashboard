@@ -66,7 +66,7 @@ export const ColumnPicker = ({
           }
         />
       </Popover.Trigger>
-      <Popover.Content className={sprinkles({ margin: 4 })}>
+      <Popover.Content className={sprinkles({ margin: 1.5 })}>
         <Box
           display="grid"
           gridTemplateColumns={expanded ? 2 : 1}
@@ -80,8 +80,8 @@ export const ColumnPicker = ({
               onClose={() => setExpanded(false)}
             />
           )}
-          <Box __minWidth="320px" backgroundColor="plain" padding={7}>
-            <Box marginBottom={6}>
+          <Box __minWidth="320px" backgroundColor="plain" padding={4}>
+            <Box marginBottom={3}>
               <Text variant="caption" size="small" color="textNeutralSubdued">
                 <FormattedMessage {...messages.column} />
               </Text>

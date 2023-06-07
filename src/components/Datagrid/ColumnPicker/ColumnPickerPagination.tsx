@@ -21,7 +21,7 @@ export const ColumnPickerPagination = ({
   hasNextPage,
   hasPreviousPage,
 }: ColumnPickerPagination) => (
-  <Box display="flex" gap={4} padding={6}>
+  <Box display="flex" gap={1.5} padding={3}>
     <Button
       variant="secondary"
       size="small"

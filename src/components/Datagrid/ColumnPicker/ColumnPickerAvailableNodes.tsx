@@ -49,7 +49,7 @@ export const ColumnPickerAvailableNodes = ({
     }
 
     return currentCategory.availableNodes.map(node => (
-      <Box display="flex" alignItems="center" padding={5} gap={6} key={node.id}>
+      <Box display="flex" alignItems="center" padding={2} gap={3} key={node.id}>
         <Checkbox
           onCheckedChange={() => changeHandler(node.id)}
           checked={columnPickerSettings.includes(node.id)}
@@ -64,14 +64,14 @@ export const ColumnPickerAvailableNodes = ({
 
   return (
     <>
-      <Box display="flex" paddingX={7} style={{ boxSizing: "border-box" }}>
+      <Box display="flex" paddingX={4} style={{ boxSizing: "border-box" }}>
         <ColumnPickerSearch
           currentCategory={currentCategory}
           query={query}
           setQuery={setQuery}
         />
       </Box>
-      <Box paddingX={8} paddingY={4} flexGrow="1">
+      <Box paddingX={5} paddingY={1.5} flexGrow="1">
         {renderNodes()}
       </Box>
     </>

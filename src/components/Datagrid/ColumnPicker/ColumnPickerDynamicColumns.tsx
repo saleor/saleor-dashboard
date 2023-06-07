@@ -23,7 +23,7 @@ export const ColumnPickerDynamicColumns = ({
       display="flex"
       justifyContent="space-between"
       alignItems="center"
-      marginTop={6}
+      marginTop={3}
     >
       <Text variant="caption" size="small" color="textNeutralSubdued">
         <FormattedMessage {...messages.custom} />
@@ -36,7 +36,7 @@ export const ColumnPickerDynamicColumns = ({
       />
     </Box>
     {dynamicColumns?.map(column => (
-      <Box padding={3} key={column.id}>
+      <Box padding={1} key={column.id}>
         <Toggle
           onPressedChange={() => handleToggle(column.id)}
           pressed={selectedColumns.includes(column.id)}

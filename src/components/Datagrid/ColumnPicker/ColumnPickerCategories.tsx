@@ -46,9 +46,9 @@ export const ColumnPickerCategories = ({
       <Box display="flex" flexDirection="column" height="100%">
         <Box
           display="flex"
-          paddingX={7}
-          paddingY={5}
-          gap={5}
+          paddingX={4}
+          paddingY={2}
+          gap={2}
           alignItems="center"
         >
           <Button

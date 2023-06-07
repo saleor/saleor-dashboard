@@ -15,7 +15,7 @@ export const ColumnPickerCategoryList = ({
     {columnCategories.map(category => (
       <List.Item
         key={category.prefix}
-        padding={4}
+        padding={1.5}
         borderRadius={3}
         onClick={() => setCurrentCategory(category.name)}
       >

@@ -17,7 +17,7 @@ export const ColumnPickerStaticColumns = ({
 }: ColumnPickerStaticColumnsProps) => (
   <>
     {staticColumns.filter(filterEmptyColumn).map(column => (
-      <Box padding={3} key={column.id}>
+      <Box padding={1} key={column.id}>
         <Toggle
           onPressedChange={() => handleToggle(column.id)}
           pressed={selectedColumns.includes(column.id)}
