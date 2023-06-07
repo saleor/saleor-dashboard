@@ -31,7 +31,7 @@ export const HomeHeader: React.FC<HomeHeaderProps> = ({
         <Skeleton style={{ width: "10em" }} />
       )}
     </Text>
-    <Text size="small" color="textNeutralSubdued">
+    <Text variant="caption" size="large">
       {userName ? (
         <FormattedMessage
           id="aCX8rl"
