@@ -17,7 +17,7 @@ export const HomeNotificationListItem = ({
   <List.Item
     borderColor="neutralPlain"
     borderWidth={1}
-    paddingX={5}
+    paddingX={3}
     paddingY={4}
     borderBottomStyle="solid"
     data-test-id={dataTestId}
