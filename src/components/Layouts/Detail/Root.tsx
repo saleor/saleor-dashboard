@@ -4,7 +4,7 @@ import {
   savebarHeight,
 } from "@dashboard/components/AppLayout/consts";
 import { useMediaQuery } from "@dashboard/hooks/useMediaQuery";
-import { Box, Sprinkles } from "@saleor/macaw-ui/next";
+import { Box, desktopMediaQuery, Sprinkles } from "@saleor/macaw-ui/next";
 import React, { useMemo } from "react";
 
 interface DetailPageLayoutProps {
@@ -21,7 +21,7 @@ export const RootLayout: React.FC<DetailPageLayoutProps> = ({
   gridTemplateColumns = 12,
   withSavebar = true,
 }) => {
-  const matches = useMediaQuery("(min-width: 1024px)");
+  const matches = useMediaQuery(desktopMediaQuery);
 
   const gridTemplateColumnsValue =
     useMemo((): Sprinkles["gridTemplateColumns"] => {
