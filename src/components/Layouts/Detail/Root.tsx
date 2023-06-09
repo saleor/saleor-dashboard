@@ -23,12 +23,18 @@ export const RootLayout: React.FC<DetailPageLayoutProps> = ({
   <Box
     display="grid"
     margin="auto"
-    gridTemplateColumns={gridTemplateColumns}
+    gridTemplateColumns={{
+      mobile: 1,
+      desktop: gridTemplateColumns as any,
+    }}
     __gridTemplateRows="auto 1fr"
     __maxWidth={contentMaxWidth}
-    __height={
-      withSavebar ? contentWithSidebarHeight : contentWithoutSidebarHeight
-    }
+    __height={{
+      mobile: "auto",
+      desktop: withSavebar
+        ? contentWithSidebarHeight
+        : contentWithoutSidebarHeight,
+    }}
   >
     {children}
   </Box>
