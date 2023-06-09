@@ -3,8 +3,9 @@ import {
   contentMaxWidth,
   savebarHeight,
 } from "@dashboard/components/AppLayout/consts";
+import { useMediaQuery } from "@dashboard/hooks/useMediaQuery";
 import { Box, Sprinkles } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { useMemo } from "react";
 
 interface DetailPageLayoutProps {
   children: React.ReactNode;
@@ -19,23 +20,44 @@ export const RootLayout: React.FC<DetailPageLayoutProps> = ({
   children,
   gridTemplateColumns = 12,
   withSavebar = true,
-}) => (
-  <Box
-    display="grid"
-    margin="auto"
-    gridTemplateColumns={{
-      mobile: 1,
-      desktop: gridTemplateColumns as any,
-    }}
-    __gridTemplateRows="auto 1fr"
-    __maxWidth={contentMaxWidth}
-    __height={{
-      mobile: "auto",
-      desktop: withSavebar
+}) => {
+  const matches = useMediaQuery("(min-width: 1024px)");
+
+  const gridTemplateColumnsValue =
+    useMemo((): Sprinkles["gridTemplateColumns"] => {
+      if (gridTemplateColumns instanceof Object) {
+        return {
+          mobile: gridTemplateColumns.mobile ?? 1,
+          ...gridTemplateColumns,
+        };
+      }
+
+      return {
+        mobile: 1,
+        desktop: gridTemplateColumns,
+      };
+    }, [gridTemplateColumns]);
+
+  const heightValue = useMemo(() => {
+    if (matches) {
+      return withSavebar
         ? contentWithSidebarHeight
-        : contentWithoutSidebarHeight,
-    }}
-  >
-    {children}
-  </Box>
-);
+        : contentWithoutSidebarHeight;
+    }
+
+    return "auto";
+  }, [matches, withSavebar]);
+
+  return (
+    <Box
+      display="grid"
+      margin="auto"
+      gridTemplateColumns={gridTemplateColumnsValue}
+      __gridTemplateRows="auto 1fr"
+      __maxWidth={contentMaxWidth}
+      __height={heightValue}
+    >
+      {children}
+    </Box>
+  );
+};
