@@ -69,7 +69,7 @@ export const OrderDraftDetailsDatagrid = ({
             className={sprinkles({
               display: "flex",
               alignItems: "center",
-              gap: 1,
+              gap: 2,
             })}
           >
             <ExternalLinkIcon />
@@ -87,7 +87,7 @@ export const OrderDraftDetailsDatagrid = ({
             display="flex"
             alignItems="center"
             __marginLeft="-2px"
-            gap={0.5}
+            gap={2}
           >
             <TrashBinIcon />
             {intl.formatMessage(messages.deleteOrder)}
