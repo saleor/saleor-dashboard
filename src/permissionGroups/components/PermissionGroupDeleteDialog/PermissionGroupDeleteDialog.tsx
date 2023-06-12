@@ -1,11 +1,11 @@
 import ActionDialog from "@dashboard/components/ActionDialog";
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import {
   PermissionGroupErrorCode,
   PermissionGroupErrorFragment,
 } from "@dashboard/graphql";
 import getPermissionGroupErrorMessage from "@dashboard/utils/errors/permissionGroups";
 import { DialogContentText, Typography } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

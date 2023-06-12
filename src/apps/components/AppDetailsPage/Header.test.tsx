@@ -6,17 +6,10 @@ import Header from "./Header";
 
 const mockHeaderOptions = jest.fn();
 const mockTopNav = jest.fn();
-const mockButton = jest.fn();
 
 jest.mock("@dashboard/components/AppLayout/TopNav", () => ({
   TopNav: props => {
     mockTopNav(props);
-    return <>{props.children}</>;
-  },
-}));
-jest.mock("@saleor/macaw-ui/next", () => ({
-  Button: props => {
-    mockButton(props);
     return <>{props.children}</>;
   },
 }));
@@ -36,13 +29,11 @@ jest.mock("./HeaderOptions", () => props => {
 beforeEach(() => {
   mockHeaderOptions.mockClear();
   mockTopNav.mockClear();
-  mockButton.mockClear();
 });
 
 describe("Apps AppDetailsPage Header", () => {
   it("displays app details options when active app data passed", () => {
     // Arrange
-    const navigateToApp = jest.fn();
     const onAppActivateOpen = jest.fn();
     const onAppDeactivateOpen = jest.fn();
     const onAppDeleteOpen = jest.fn();
@@ -51,7 +42,6 @@ describe("Apps AppDetailsPage Header", () => {
     render(
       <Header
         data={appDetails}
-        navigateToApp={navigateToApp}
         onAppActivateOpen={onAppActivateOpen}
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
@@ -66,18 +56,12 @@ describe("Apps AppDetailsPage Header", () => {
       onAppDeactivateOpen,
       onAppDeleteOpen,
     });
-    expect(mockButton).toHaveBeenCalledWith(
-      expect.objectContaining({
-        onClick: navigateToApp,
-      }),
-    );
     expect(mockTopNav).toHaveBeenCalled();
     expect(title.container).toHaveTextContent(appDetails.name as string);
   });
 
   it("displays app details options when inactive app data passed", () => {
     // Arrange
-    const navigateToApp = jest.fn();
     const onAppActivateOpen = jest.fn();
     const onAppDeactivateOpen = jest.fn();
     const onAppDeleteOpen = jest.fn();
@@ -86,7 +70,6 @@ describe("Apps AppDetailsPage Header", () => {
     render(
       <Header
         data={{ ...appDetails, isActive: false }}
-        navigateToApp={navigateToApp}
         onAppActivateOpen={onAppActivateOpen}
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
@@ -101,11 +84,6 @@ describe("Apps AppDetailsPage Header", () => {
       onAppDeactivateOpen,
       onAppDeleteOpen,
     });
-    expect(mockButton).toHaveBeenCalledWith(
-      expect.objectContaining({
-        onClick: navigateToApp,
-      }),
-    );
     expect(mockTopNav).toHaveBeenCalled();
     expect(title.container).toHaveTextContent(`${appDetails.name} deactivated`);
   });

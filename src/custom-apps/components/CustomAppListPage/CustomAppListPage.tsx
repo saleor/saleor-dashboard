@@ -46,8 +46,8 @@ const CustomAppListPage: React.FC<CustomAppListPageProps> = ({
           />
         </Button>
       </TopNav>
-      <Box padding={9}>
-        <Box marginBottom={4}>
+      <Box padding={6}>
+        <Box marginBottom={1.5}>
           <Text as="p">
             <FormattedMessage
               defaultMessage="Local apps are custom webhooks & token pairs that can be used to

@@ -60,7 +60,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
       data-test-id="metadata-editor"
       data-test-is-private={isPrivate}
       data-test-expanded={expanded}
-      gap={3}
+      gap={1}
     >
       <DashboardCard.Title>
         <Box
@@ -124,7 +124,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                 <Table>
                   <TableHead>
                     <TableRowLink>
-                      <TableCell style={{ paddingLeft: vars.space[9] }}>
+                      <TableCell style={{ paddingLeft: vars.spacing[6] }}>
                         <Text variant="caption" color="textNeutralSubdued">
                           <FormattedMessage
                             id="nudPsY"
@@ -133,7 +133,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                           />
                         </Text>
                       </TableCell>
-                      <TableCell style={{ paddingLeft: vars.space[11] }}>
+                      <TableCell style={{ paddingLeft: vars.spacing[8] }}>
                         <Text variant="caption" color="textNeutralSubdued">
                           <FormattedMessage
                             id="LkuDEb"
@@ -145,7 +145,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                       <TableCell
                         style={{
                           textAlign: "end",
-                          paddingRight: vars.space[9],
+                          paddingRight: vars.spacing[6],
                         }}
                       >
                         <Text variant="caption" color="textNeutralSubdued">
@@ -161,7 +161,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                   <TableBody>
                     {data.map((field, fieldIndex) => (
                       <TableRowLink data-test-id="field" key={fieldIndex}>
-                        <TableCell style={{ paddingLeft: vars.space[9] }}>
+                        <TableCell style={{ paddingLeft: vars.spacing[6] }}>
                           <TextField
                             InputProps={{
                               classes: {
@@ -194,7 +194,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                             value={field.value}
                           />
                         </TableCell>
-                        <TableCell style={{ paddingRight: vars.space[9] }}>
+                        <TableCell style={{ paddingRight: vars.spacing[6] }}>
                           <Box display="flex" justifyContent="flex-end">
                             <Button
                               variant="secondary"
@@ -217,7 +217,7 @@ export const MetadataCard: React.FC<MetadataCardProps> = ({
                   </TableBody>
                 </Table>
               )}
-              <DashboardCard.Content marginTop={5} paddingLeft={9}>
+              <DashboardCard.Content marginTop={2} paddingLeft={6}>
                 <Button
                   variant="secondary"
                   data-test-id="add-field"

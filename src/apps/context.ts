@@ -4,7 +4,6 @@ import React from "react";
 export interface AppListContextValues {
   removeAppInstallation: (installationId: string) => void;
   retryAppInstallation: (installationId: string) => void;
-  openAppSettings: (appId: string) => void;
 }
 
 export const AppListContext = React.createContext<

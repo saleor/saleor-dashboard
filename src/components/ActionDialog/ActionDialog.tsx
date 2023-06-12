@@ -1,6 +1,6 @@
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DialogProps } from "@dashboard/types";
 import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 
 import DialogButtons from "./DialogButtons";

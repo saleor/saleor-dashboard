@@ -133,7 +133,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
           rowAnchor={handleRowAnchor}
         />
 
-        <Box paddingX={9}>
+        <Box paddingX={6}>
           <TablePaginationWithContext
             component="div"
             settings={settings}

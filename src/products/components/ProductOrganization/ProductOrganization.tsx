@@ -12,7 +12,6 @@ import {
   ProductErrorFragment,
 } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { commonMessages } from "@dashboard/intl";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
@@ -99,7 +98,7 @@ export const ProductOrganization: React.FC<
           description: "section header",
         })}
       </DashboardCard.Title>
-      <DashboardCard.Content gap={8} display="flex" flexDirection="column">
+      <DashboardCard.Content gap={5} display="flex" flexDirection="column">
         {canChangeType ? (
           <SingleAutocompleteSelectField
             displayValue={productTypeInputDisplayValue}
@@ -119,7 +118,7 @@ export const ProductOrganization: React.FC<
             {...fetchMoreProductTypes}
           />
         ) : (
-          <Box display="flex" flexDirection="column" gap={6}>
+          <Box display="flex" flexDirection="column" gap={3}>
             <Box display="flex" flexDirection="column">
               <Text variant="bodyEmp">
                 <FormattedMessage id="anK7jD" defaultMessage="Product Type" />
@@ -131,17 +130,6 @@ export const ProductOrganization: React.FC<
                 >
                   {productType?.name ?? "..."}
                 </Link>
-              </Text>
-            </Box>
-
-            <Box display="flex" flexDirection="column">
-              <Text variant="bodyEmp">
-                <FormattedMessage id="Be+J13" defaultMessage="Configurable" />
-              </Text>
-              <Text variant="caption">
-                {productType?.hasVariants
-                  ? intl.formatMessage(commonMessages.yes)
-                  : intl.formatMessage(commonMessages.no)}
               </Text>
             </Box>
           </Box>

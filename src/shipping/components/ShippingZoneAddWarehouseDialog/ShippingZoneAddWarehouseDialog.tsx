@@ -1,6 +1,9 @@
 import BackButton from "@dashboard/components/BackButton";
 import CompanyAddressForm from "@dashboard/components/CompanyAddressInput/CompanyAddressForm";
-import ConfirmButton from "@dashboard/components/ConfirmButton";
+import {
+  ConfirmButton,
+  ConfirmButtonTransitionState,
+} from "@dashboard/components/ConfirmButton";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Hr from "@dashboard/components/Hr";
@@ -25,7 +28,7 @@ import {
   DialogTitle,
   TextField,
 } from "@material-ui/core";
-import { ConfirmButtonTransitionState, makeStyles } from "@saleor/macaw-ui";
+import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 

@@ -14,8 +14,6 @@ import {
 import { updateShopWeightUnit } from "../../../../support/api/requests/ShopSettings";
 import { createWarehouse } from "../../../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../../../support/api/utils/channelsUtils";
-import { deleteProductsStartsWith } from "../../../../support/api/utils/products/productsUtils";
-import { deleteShippingStartsWith } from "../../../../support/api/utils/shippingUtils";
 import { changeWeightUnit } from "../../../../support/pages/shippingMethodPage";
 
 describe("As a staff user I want to change shop default weight unit", () => {
@@ -29,9 +27,6 @@ describe("As a staff user I want to change shop default weight unit", () => {
 
   before(() => {
     cy.clearSessionData().loginUserViaRequest();
-    deleteShippingStartsWith(startsWith);
-    deleteProductsStartsWith(startsWith);
-
     updateShopWeightUnit("KG")
       .then(() => {
         getDefaultChannel().then(channel => {

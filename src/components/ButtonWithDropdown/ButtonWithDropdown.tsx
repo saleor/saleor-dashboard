@@ -30,7 +30,7 @@ export const ButtonWithDropdown: React.FC<ButtonWithDropdownProps> = ({
     <Dropdown.Content align="end">
       <Box>
         <List
-          padding={5}
+          padding={2}
           borderRadius={4}
           boxShadow="overlay"
           backgroundColor="surfaceNeutralPlain"
@@ -39,8 +39,8 @@ export const ButtonWithDropdown: React.FC<ButtonWithDropdownProps> = ({
             <Dropdown.Item>
               <List.Item
                 borderRadius={4}
-                paddingX={4}
-                paddingY={5}
+                paddingX={1.5}
+                paddingY={2}
                 onClick={item.onSelect}
                 data-test-id={item.testId}
               >

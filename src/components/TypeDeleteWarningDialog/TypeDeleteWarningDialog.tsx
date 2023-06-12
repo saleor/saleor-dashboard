@@ -1,7 +1,7 @@
+import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { getById } from "@dashboard/misc";
 import ModalTitle from "@dashboard/orders/components/OrderDiscountCommonModal/ModalTitle";
 import { Card, CardContent, CircularProgress, Modal } from "@material-ui/core";
-import { ConfirmButtonTransitionState } from "@saleor/macaw-ui";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -87,8 +87,9 @@ function TypeDeleteWarningDialog<T extends TypeBaseData>({
 
   const singleItemSelectedId = typesToDelete[0];
 
-  const singleItemSelectedName = typesData.find(getById(singleItemSelectedId))
-    ?.name;
+  const singleItemSelectedName = typesData.find(
+    getById(singleItemSelectedId),
+  )?.name;
 
   return (
     <Modal open={isOpen}>

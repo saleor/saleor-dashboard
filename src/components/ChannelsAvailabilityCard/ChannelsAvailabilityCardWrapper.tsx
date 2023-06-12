@@ -42,7 +42,7 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
     <DashboardCard>
       <DashboardCard.Title>
         <Box display="flex" justifyContent="space-between" alignItems="center">
-          <Box display={"flex"} flexDirection={"column"} gap={3}>
+          <Box display={"flex"} flexDirection={"column"} gap={1}>
             <div>
               {intl.formatMessage({
                 id: "5A6/2C",
@@ -70,8 +70,8 @@ export const ChannelsAvailabilityCardWrapper: React.FC<
           </RequirePermissions>
         </Box>
       </DashboardCard.Title>
-      <DashboardCard.Content gap={3} display="flex" flexDirection="column">
-        <Box display="flex" flexDirection="column" gap={8}>
+      <DashboardCard.Content gap={1} display="flex" flexDirection="column">
+        <Box display="flex" flexDirection="column" gap={5}>
           {children}
         </Box>
       </DashboardCard.Content>

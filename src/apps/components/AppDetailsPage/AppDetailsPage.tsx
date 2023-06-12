@@ -10,7 +10,6 @@ import PermissionsCard from "./PermissionsCard";
 export interface AppDetailsPageProps {
   loading: boolean;
   data: AppQuery["app"];
-  navigateToApp: () => void;
   onAppActivateOpen: () => void;
   onAppDeactivateOpen: () => void;
   onAppDeleteOpen: () => void;
@@ -19,7 +18,6 @@ export interface AppDetailsPageProps {
 export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   data,
   loading,
-  navigateToApp,
   onAppActivateOpen,
   onAppDeactivateOpen,
   onAppDeleteOpen,
@@ -27,7 +25,6 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   <>
     <Header
       data={data}
-      navigateToApp={navigateToApp}
       onAppActivateOpen={onAppActivateOpen}
       onAppDeactivateOpen={onAppDeactivateOpen}
       onAppDeleteOpen={onAppDeleteOpen}

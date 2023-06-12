@@ -30,11 +30,11 @@ export const ListFilters = ({
     <Box
       display="grid"
       gridTemplateColumns={2}
-      gap={7}
-      paddingBottom={5}
-      paddingX={9}
+      gap={4}
+      paddingBottom={2}
+      paddingX={6}
     >
-      <Box display="flex" alignItems="center" gap={7}>
+      <Box display="flex" alignItems="center" gap={4}>
         <FiltersSelect
           errorMessages={errorMessages}
           menu={filterStructure}

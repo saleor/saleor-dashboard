@@ -1,6 +1,5 @@
-import { Button } from "@dashboard/components/Button";
 import { buttonMessages } from "@dashboard/intl";
-import { ButtonProps } from "@saleor/macaw-ui";
+import { Button, ButtonProps } from "@saleor/macaw-ui/next";
 import React, { ReactNode } from "react";
 import { FormattedMessage } from "react-intl";
 
@@ -9,7 +8,7 @@ interface BackButtonProps extends ButtonProps {
 }
 
 const BackButton: React.FC<BackButtonProps> = ({ children, ...props }) => (
-  <Button data-test-id="back" variant="secondary" color="text" {...props}>
+  <Button data-test-id="back" variant="secondary" {...props}>
     {children ?? <FormattedMessage {...buttonMessages.back} />}
   </Button>
 );

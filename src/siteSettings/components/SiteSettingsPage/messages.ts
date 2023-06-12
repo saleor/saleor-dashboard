@@ -23,4 +23,26 @@ export const messages = defineMessages({
       "This address will be used to generate invoices and calculate shipping rates. Email address you provide here will be used as a contact address for your customers.",
     description: "section description",
   },
+  sectionEmailConfirmationTitle: {
+    id: "qNeXG1",
+    defaultMessage: "User registration",
+    description: "User registration",
+  },
+  sectionEmailConfirmationHeader: {
+    id: "kpRxSA",
+    defaultMessage: "Require email confirmation link",
+    description: "Require email confirmation link",
+  },
+  sectionEmailConfirmationOption: {
+    id: "uRfta0",
+    defaultMessage: "Enable email confirmation",
+    description: "Enable email confirmation",
+  },
+  sectionEmailConfirmationDescription: {
+    id: "/xJSe8",
+    defaultMessage:
+      "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
+    description:
+      "When users confirm their email account, all previous anonymous orders placed under the same email would be added to their order history.",
+  },
 });

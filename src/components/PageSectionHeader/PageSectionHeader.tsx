@@ -12,7 +12,7 @@ const PageSectionHeader: React.FC<PageSectionHeaderProps> = props => {
   const { title, description } = props;
 
   return (
-    <Box paddingTop={9}>
+    <Box paddingTop={6}>
       {title && <Typography variant="h5">{title}</Typography>}
       {title && description && <VerticalSpacer />}
       {description && <Typography variant="body2">{description}</Typography>}

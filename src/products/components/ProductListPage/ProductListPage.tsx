@@ -156,7 +156,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           alignItems="center"
         >
           <Box display="flex">
-            <Box marginX={6} display="flex" alignItems="center">
+            <Box marginX={3} display="flex" alignItems="center">
               <ChevronRightIcon />
             </Box>
 
@@ -178,7 +178,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               })}
             />
           </Box>
-          <Box display="flex" alignItems="center" gap={5}>
+          <Box display="flex" alignItems="center" gap={2}>
             {hasLimits(limits, "productVariants") && (
               <Text variant="caption">
                 {intl.formatMessage(
@@ -267,7 +267,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               defaultMessage: "Search Products...",
             })}
             actions={
-              <Box display="flex" gap={7}>
+              <Box display="flex" gap={4}>
                 <ProductListDeleteButton
                   ref={setBulkDeleteButtonRef}
                   onClick={onProductsDelete}

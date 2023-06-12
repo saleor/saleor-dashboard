@@ -226,7 +226,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             onChange={onDefaultCountryChange}
           />
           <FormSpacer />
-          <Box display="flex" gap={4} alignItems="center">
+          <Box display="flex" gap={1.5} alignItems="center">
             <ControlledSwitch
               data-test-id="order-settings-mark-as-paid"
               disabled={disabled}
