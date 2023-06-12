@@ -54,6 +54,11 @@ export const AppFragmentDoc = gql`
   supportUrl
   version
   accessToken
+  brand {
+    logo {
+      default
+    }
+  }
   privateMetadata {
     key
     value
@@ -79,6 +84,11 @@ export const AppInstallationFragmentDoc = gql`
   appName
   manifestUrl
   id
+  brand {
+    logo {
+      default
+    }
+  }
 }
     `;
 export const AppPermissionFragmentDoc = gql`
@@ -96,6 +106,11 @@ export const AppListItemFragmentDoc = gql`
   appUrl
   manifestUrl
   version
+  brand {
+    logo {
+      default
+    }
+  }
   permissions {
     ...AppPermission
   }
