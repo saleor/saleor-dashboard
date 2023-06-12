@@ -18,10 +18,10 @@ const useStyles = makeStyles(
   theme => ({
     table: {
       "&& td": {
-        paddingLeft: vars.space[4],
-        paddingRight: vars.space[4],
+        paddingLeft: vars.spacing[4],
+        paddingRight: vars.spacing[4],
         "&:first-child": {
-          paddingLeft: vars.space[9],
+          paddingLeft: vars.spacing[9],
         },
       },
     },

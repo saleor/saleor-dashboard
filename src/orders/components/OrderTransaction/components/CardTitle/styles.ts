@@ -16,7 +16,7 @@ export const useStyles = makeStyles(
     },
     dataDisplay: {
       display: "flex",
-      gap: vars.space[7],
+      gap: vars.spacing[7],
       alignItems: "center",
     },
   }),
