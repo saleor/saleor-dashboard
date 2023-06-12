@@ -30,6 +30,7 @@ export const AppPage: React.FC<AppPageProps> = ({
       supportUrl={data?.supportUrl}
       homepageUrl={data?.homepageUrl}
       author={data?.author}
+      appLogoUrl={data?.brand?.logo.default}
     />
     <DetailPageLayout.Content>
       <Box

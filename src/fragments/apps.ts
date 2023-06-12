@@ -17,6 +17,11 @@ export const appManifestFragment = gql`
       code
       name
     }
+    brand {
+      logo {
+        default
+      }
+    }
   }
 `;
 
@@ -34,6 +39,11 @@ export const appFragment = gql`
     supportUrl
     version
     accessToken
+    brand {
+      logo {
+        default
+      }
+    }
     privateMetadata {
       key
       value
@@ -60,6 +70,11 @@ export const appInstallationFragment = gql`
     appName
     manifestUrl
     id
+    brand {
+      logo {
+        default
+      }
+    }
   }
 `;
 
@@ -72,6 +87,11 @@ export const appListItemFragment = gql`
     appUrl
     manifestUrl
     version
+    brand {
+      logo {
+        default
+      }
+    }
     permissions {
       ...AppPermission
     }

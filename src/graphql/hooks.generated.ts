@@ -22,6 +22,11 @@ export const AppManifestFragmentDoc = gql`
     code
     name
   }
+  brand {
+    logo {
+      default
+    }
+  }
 }
     `;
 export const WebhookFragmentDoc = gql`
@@ -3668,6 +3673,11 @@ export const AppDocument = gql`
     }
     dataPrivacy
     dataPrivacyUrl
+    brand {
+      logo {
+        default
+      }
+    }
   }
 }
     ${AppFragmentDoc}`;

@@ -72,7 +72,11 @@ export const AppInstallPage: React.FC<AppInstallPageProps> = ({
                   </div>
                   <img src={plusIcon} alt="" />
                   <div className={classes.installIcon}>
-                    <GenericAppIcon />
+                    {data.brand?.logo.default ? ( // todo sizing
+                      <img src={data.brand?.logo.default} />
+                    ) : (
+                      <GenericAppIcon />
+                    )}
                   </div>
                 </div>
               )}
