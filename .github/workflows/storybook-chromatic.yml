@@ -41,6 +41,7 @@ jobs:
         uses: chromaui/action@a89b674adf766dbde41ad9ea2b2b60b91188a0f0 # v6.17.4
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
+          ignoreLastBuildOnBranch: "${{ github.ref_name }}"
 
       - name: Publish to Chromatic and auto accept changes
         if: github.ref == 'refs/heads/main'
