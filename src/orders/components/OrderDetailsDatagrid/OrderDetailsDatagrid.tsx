@@ -6,11 +6,11 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderLineFragment } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { productVariantEditUrl } from "@dashboard/products/urls";
-import { EditIcon } from "@saleor/macaw-ui/next";
+import { productPath } from "@dashboard/products/urls";
+import { ExternalLinkIcon } from "@saleor/macaw-ui/next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import { messages as orderMessages } from "../OrderListDatagrid/messages";
 import { useColumns, useGetCellContent } from "./datagrid";
@@ -27,7 +27,6 @@ export const OrderDetailsDatagrid = ({
 }: OrderDetailsDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
-  const navigate = useNavigator();
 
   const availableColumns = useColumns();
 
@@ -52,18 +51,18 @@ export const OrderDetailsDatagrid = ({
     index => [
       {
         label: intl.formatMessage(messages.productDetails),
-        Icon: <EditIcon />,
-        onSelect: () => {
-          navigate(
-            productVariantEditUrl(
-              lines[index].variant.product.id,
-              lines[index].variant.id,
-            ),
-          );
-        },
+        Icon: (
+          <Link
+            to={productPath(lines[index].variant.product.id)}
+            target="_blank"
+          >
+            <ExternalLinkIcon />
+          </Link>
+        ),
+        onSelect: () => false,
       },
     ],
-    [intl, lines, navigate],
+    [intl, lines],
   );
 
   return (
