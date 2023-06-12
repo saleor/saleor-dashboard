@@ -1,6 +1,6 @@
 import { appsMessages } from "@dashboard/apps/messages";
 import { InstalledApp } from "@dashboard/apps/types";
-import { AppUrls } from "@dashboard/apps/urls";
+import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import { isAppInTunnel } from "@dashboard/apps/utils";
 import Link from "@dashboard/components/Link";
 import { Box, Chip, List, sprinkles, Text } from "@saleor/macaw-ui/next";
@@ -19,13 +19,20 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
 
   const location = useLocation();
 
+  /**
+   * Active app will redirect to app iframe, but disabled app is likely not going to work - so iframe is blocked.
+   * Link will point to app "manage" screen where app can be enabled or uninstalled
+   */
+  const appUrl = app.isActive
+    ? AppUrls.resolveAppUrl(app.id)
+    : AppPaths.resolveAppDetailsPath(app.id);
+
   return (
     <Link
-      href={AppUrls.resolveAppUrl(app.id)}
+      href={appUrl}
       state={{ from: location.pathname }}
       className={sprinkles({ display: "contents" })}
       inline={false}
-      disabled={!app.isActive}
     >
       <List.Item
         padding={4}
@@ -40,7 +47,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
           default: !app.isActive ? "surfaceNeutralSubdued" : undefined,
           hover: "surfaceNeutralSubdued",
         }}
-        cursor={app.isActive ? "pointer" : "not-allowed"}
+        cursor={"pointer"}
       >
         <Box
           gap={2}

@@ -77,7 +77,7 @@ describe("As an admin I want to manage plugins", () => {
 
   it(
     "should change admin email plugin. TC: SALEOR_3602",
-    { tags: ["@plugins", "@allEnv", "@stable"] },
+    { tags: ["@plugins", "@allEnv", "@stable"], browser: "chrome" },
     () => {
       const adminName = `Admin${randomName}`;
 
