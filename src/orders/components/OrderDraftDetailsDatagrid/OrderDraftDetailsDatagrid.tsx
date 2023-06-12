@@ -8,7 +8,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { productVariantEditUrl } from "@dashboard/products/urls";
+import { productUrl } from "@dashboard/products/urls";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 
@@ -64,12 +64,7 @@ export const OrderDraftDetailsDatagrid = ({
       {
         label: intl.formatMessage(messages.productDetails),
         onSelect: () => {
-          navigate(
-            productVariantEditUrl(
-              lines[index].variant.product.id,
-              lines[index].variant.id,
-            ),
-          );
+          window.open(productUrl(lines[index].variant.product.id), "_blank");
         },
       },
     ],
