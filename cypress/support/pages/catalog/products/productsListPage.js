@@ -108,8 +108,7 @@ export function selectChannel(channelSlug) {
 }
 
 export function submitFilters() {
-  cy.addAliasToGraphRequest("ProductList")
-    .get(BUTTON_SELECTORS.submit)
+  cy.get(BUTTON_SELECTORS.submit)
     .scrollIntoView()
     .should("be.visible")
     .click()
