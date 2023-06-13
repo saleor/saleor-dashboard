@@ -104,10 +104,6 @@ export const useColumnPickerColumns = (
     () =>
       [
         {
-          value: "product",
-          label: intl.formatMessage(columnsMessages.product),
-        },
-        {
           value: "sku",
           label: "SKU",
         },
@@ -185,6 +181,7 @@ export const useDatagridColumns = ({
 
   const [columns, setColumns] = useState<AvailableColumn[]>([
     initialColumns.current[0],
+    initialColumns.current[1],
     ...initialColumns.current.filter(col =>
       settings.columns.includes(col.id as OrderDraftListColumns),
     ),
@@ -196,6 +193,8 @@ export const useDatagridColumns = ({
     );
 
     setColumns(prevColumns => [
+      prevColumns[0],
+      prevColumns[1],
       ...prevColumns
         .filter(byColumnsInSettingsOrStaticColumns(settings))
         .map(toCurrentColumnData(attributeColumns)),
@@ -393,8 +392,8 @@ function byColumnsInSettingsOrStaticColumns(
   settings: ListSettings<OrderDraftListColumns>,
 ) {
   return (column: AvailableColumn) =>
-    settings.columns.includes(column.id as OrderDraftListColumns) ||
-    ["name"].includes(column.id);
+    settings.columns.includes(column.id as OrderDraftListColumns) &&
+    !["name", "empty"].includes(column.id);
 }
 
 function toCurrentColumnData(attributeColumns: AvailableColumn[]) {
