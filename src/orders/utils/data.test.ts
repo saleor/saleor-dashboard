@@ -539,6 +539,7 @@ describe("Get the total value of all replaced products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
+          attributes: [],
           preorder: null,
           __typename: "ProductVariant",
           product: {
@@ -649,6 +650,7 @@ describe("Get the total value of all replaced products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
           preorder: null,
+          attributes: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -758,6 +760,7 @@ describe("Get the total value of all replaced products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           quantityAvailable: 50,
           preorder: null,
+          attributes: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -873,6 +876,7 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            attributes: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -987,6 +991,7 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            attributes: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1101,6 +1106,7 @@ describe("Get the total value of all replaced products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
             preorder: null,
+            attributes: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -1214,6 +1220,7 @@ describe("Get the total value of all replaced products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
+            attributes: [],
             preorder: null,
             stocks: [
               {
@@ -1328,6 +1335,7 @@ describe("Get the total value of all replaced products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
+            attributes: [],
             preorder: null,
             stocks: [
               {
@@ -1577,6 +1585,7 @@ describe("Get the total value of all selected products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
           preorder: null,
+          attributes: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -1686,6 +1695,7 @@ describe("Get the total value of all selected products", () => {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
           quantityAvailable: 50,
           preorder: null,
+          attributes: [],
           stocks: [
             {
               id: "stock_test_id1",
@@ -1794,6 +1804,7 @@ describe("Get the total value of all selected products", () => {
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
           quantityAvailable: 50,
+          attributes: [],
           preorder: null,
           stocks: [
             {
@@ -1910,6 +1921,7 @@ describe("Get the total value of all selected products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            attributes: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2024,6 +2036,7 @@ describe("Get the total value of all selected products", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            attributes: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2137,6 +2150,7 @@ describe("Get the total value of all selected products", () => {
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
+            attributes: [],
             preorder: null,
             stocks: [
               {
@@ -2380,6 +2394,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            attributes: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2494,6 +2509,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
             quantityAvailable: 50,
             preorder: null,
+            attributes: [],
             stocks: [
               {
                 id: "stock_test_id1",
@@ -2608,6 +2624,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
             quantityAvailable: 50,
             preorder: null,
+            attributes: [],
             stocks: [
               {
                 id: "stock_test_id1",

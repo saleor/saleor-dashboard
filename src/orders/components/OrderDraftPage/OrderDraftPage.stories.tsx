@@ -64,6 +64,15 @@ const props: Omit<OrderDraftPageProps, "classes"> = {
   errors: [],
   users: clients,
   usersLoading: false,
+  availableInGridAttributes: {
+    data: [],
+    loading: false,
+    hasMore: false,
+    loadMore: () => false,
+    query: "",
+    search: () => false,
+  },
+  gridAttributes: [],
 };
 
 const DiscountsDecorator = getDiscountsProvidersWrapper(order);

@@ -1291,6 +1291,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               id: "dsfsfuhb",
               quantityAvailable: 10,
               preorder: null,
+              attributes: [],
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1417,6 +1418,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
               id: "dsfsfuhb",
               quantityAvailable: 10,
               preorder: null,
+              attributes: [],
               product: {
                 __typename: "Product",
                 id: "UHJvZHVjdDo1",
@@ -1548,6 +1550,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
+        attributes: [],
         preorder: null,
         product: {
           __typename: "Product",
@@ -1657,6 +1660,7 @@ export const order = (placeholder: string): OrderDetailsFragment => ({
         __typename: "ProductVariant",
         id: "dsfsfuhb",
         quantityAvailable: 10,
+        attributes: [],
         preorder: null,
         product: {
           __typename: "Product",
@@ -1930,6 +1934,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
+        attributes: [],
         quantityAvailable: 10,
         preorder: null,
         product: {
@@ -2039,6 +2044,7 @@ export const draftOrder = (placeholder: string): OrderDetailsFragment => ({
       variant: {
         __typename: "ProductVariant",
         id: "dsfsfuhb",
+        attributes: [],
         quantityAvailable: 10,
         preorder: null,
         product: {

@@ -229,6 +229,16 @@ const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {
               ) : (
                 <>
                   <OrderDraftDetails
+                    // TODO: add implmentation
+                    availableInGridAttributes={{
+                      data: [],
+                      loading: false,
+                      hasMore: false,
+                      loadMore: () => false,
+                      query: "",
+                      search: () => false,
+                    }}
+                    gridAttributes={[]}
                     order={order}
                     errors={errors}
                     loading={loading}
