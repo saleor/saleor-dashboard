@@ -6,7 +6,7 @@ import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import { useFilterContainer } from "./useFilterContainer";
 import { useLeftOperands } from "./useLeftOperands";
 import useRouter from "use-react-router";
-import { UrlValueProvider, useUrlValueProvider } from "./FilterValueProvider";
+import { useUrlValueProvider } from "./ValueProvider/useUrlValueProvider";
 
 
 const demoValue = [
@@ -125,7 +125,7 @@ export const ConditionalFilters = () => {
   } = useFilterContainer(provider)
 
   const handleStateChange = (event) => {
-    if (event.type === "add") {
+    if (event.type === "row.add") {
       addEmpty()
     }
 
@@ -133,15 +133,15 @@ export const ConditionalFilters = () => {
       removeAt(event.path)
     }
 
-    if (event.type === "update.leftOperator") {
-      updateLeftOperator(event.path.split('.')[0], event.value)
+    if (event.type === "leftOperator.onChange") {
+      updateLeftOperator(event.path, event.value)
     }
 
-    if (event.type === "update.conditon") {
+    if (event.type === "conditon.onChange") {
       updateCondition(event.path.split('.')[0], event.value)
     }
 
-    if (event.type === "update.rightOperator") {
+    if (event.type === "rightOperator.onChange") {
       updateRightOperator(event.path.split('.')[0], event.value)
     }
 

@@ -1,3 +1,4 @@
+import { CONTROL_DEFAULTS } from "./controlsType"
 import { STATIC_CONDITIONS } from "./staticConditions"
 
 interface ConditionOption {
@@ -13,10 +14,30 @@ interface ConditionSelected {
 }
 
 class Condition {
-  constructor(
+  private constructor(
     public options: ConditionOption[],
     public selected: ConditionSelected,
   ) {}
+
+  public static emptyFromName (operandName: string) {
+    const staticOptions = STATIC_CONDITIONS[operandName]
+    const firstOption = staticOptions[0]
+    const defaults = CONTROL_DEFAULTS[firstOption.type]
+    const selected: ConditionSelected = {
+      conditionValue: firstOption.value,
+      value: defaults.value
+    }
+
+    if (defaults.options) {
+      selected.options = [
+        { value: "electronics", label: "Electronics" },
+        { value: "clothing", label: "Clothing" },
+      ]
+      // selected.options = defaults.options
+    }
+
+    return new Condition(staticOptions, selected)
+  }
 }
 
 
@@ -32,15 +53,7 @@ export class FilterElement {
   public updateLeftOperator (leftOperator: string) {
     this.value = leftOperator
     this.type = 1
-    this.condition.options = STATIC_CONDITIONS[leftOperator]
-    this.condition.selected = {
-      conditionValue: this.condition.options[0].value,
-      value: [],
-      options: [
-        { value: "electronics", label: "Electronics" },
-        { value: "clothing", label: "Clothing" },
-      ]
-    }
+    this.condition = Condition.emptyFromName(leftOperator)    
   }
 
   public updateCondition (conditionValue: string) {

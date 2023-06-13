@@ -3,14 +3,13 @@ export const STATIC_CONDITIONS = {
     { type: "combobox", label: "is", value: "input-1" },
   ],
   price: [
-    { type: "input", label: "is", value: "input-1" },
-    { type: "range", label: "between", value: "input-2" },
+    { type: "input.number", label: "is", value: "input-2" },
+    { type: "range", label: "between", value: "input-3" },
   ],
-  discount: [
-    { type: "input", label: "is", value: "input-1" },
-    { type: "range", label: "between", value: "input-2" },
+  collections: [
+    { type: "multiselect", label: "is", value: "input-4" },
   ],
-  rating: [
-    { type: "combobox", label: "is", value: "input-1" }
+  channel: [
+    { type: "select", label: "is", value: "input-5" }
   ]
 }

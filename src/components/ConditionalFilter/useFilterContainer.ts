@@ -3,7 +3,7 @@ import { FilterElement } from "./FilterElement"
 import { FilterValueProvider } from "./FilterValueProvider"
 
 export const useFilterContainer = (valueProvider: FilterValueProvider) => {
-  const [value, setValue] = useState(valueProvider.read())
+  const [value, setValue] = useState(valueProvider.value)
 
   const addEmpty = () => {
     const newValue = []
