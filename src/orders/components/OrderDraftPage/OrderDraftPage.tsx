@@ -11,6 +11,7 @@ import {
   OrderDetailsFragment,
   OrderErrorFragment,
   OrderLineInput,
+  SearchAvailableInGridAttributesQuery,
   SearchCustomersQuery,
 } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
@@ -49,6 +50,14 @@ export interface OrderDraftPageProps extends FetchMoreProps {
   onShippingAddressEdit: () => void;
   onShippingMethodEdit: () => void;
   onProfileView: () => void;
+  availableInGridAttributes: {
+    data: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>;
+    loading: boolean;
+    hasMore: boolean;
+    query: string;
+    search: (query: string) => void;
+    loadMore: () => void;
+  };
 }
 
 const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
@@ -74,6 +83,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     users,
     usersLoading,
     errors,
+    availableInGridAttributes,
   } = props;
   const navigate = useNavigator();
 
@@ -125,6 +135,7 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           onOrderLineChange={onOrderLineChange}
           onOrderLineRemove={onOrderLineRemove}
           onShippingMethodEdit={onShippingMethodEdit}
+          availableInGridAttributes={availableInGridAttributes}
         />
         <OrderHistory
           history={order?.events}

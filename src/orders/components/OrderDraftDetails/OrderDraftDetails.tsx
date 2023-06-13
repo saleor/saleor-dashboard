@@ -5,11 +5,13 @@ import {
   OrderDetailsFragment,
   OrderErrorFragment,
   OrderLineInput,
+  SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
 import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps,
 } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
+import { RelayToFlat } from "@dashboard/types";
 import { Card, CardContent } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -27,6 +29,14 @@ interface OrderDraftDetailsProps {
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
   onShippingMethodEdit: () => void;
+  availableInGridAttributes: {
+    data: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>;
+    loading: boolean;
+    hasMore: boolean;
+    query: string;
+    search: (query: string) => void;
+    loadMore: () => void;
+  };
 }
 
 const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
@@ -38,6 +48,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   onOrderLineChange,
   onOrderLineRemove,
   onShippingMethodEdit,
+  availableInGridAttributes,
 }) => {
   const intl = useIntl();
 
@@ -75,6 +86,7 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         loading={loading}
         onOrderLineChange={onOrderLineChange}
         onOrderLineRemove={onOrderLineRemove}
+        availableInGridAttributes={availableInGridAttributes}
       />
       {maybe(() => order.lines.length) !== 0 && (
         <CardContent>

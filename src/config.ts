@@ -38,6 +38,14 @@ export type ProductListColumns =
   | "price"
   | "date";
 
+export type OrderDraftListColumns =
+  | "product"
+  | "sku"
+  | "quantity"
+  | "price"
+  | "total"
+  | "status";
+
 export interface AppListViewSettings {
   [ListViews.APPS_LIST]: ListSettings;
   [ListViews.ATTRIBUTE_VALUE_LIST]: ListSettings;
@@ -59,6 +67,7 @@ export interface AppListViewSettings {
   [ListViews.WEBHOOK_LIST]: ListSettings;
   [ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST]: ListSettings;
   [ListViews.GIFT_CARD_LIST]: ListSettings;
+  [ListViews.ORDER_DRAFT_DETAILS]: ListSettings;
 }
 
 export const defaultListSettings: AppListViewSettings = {
@@ -94,6 +103,10 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.PRODUCT_LIST]: {
     columns: ["availability", "description", "price", "productType", "date"],
+    rowNumber: PAGINATE_BY,
+  },
+  [ListViews.ORDER_DRAFT_DETAILS]: {
+    columns: ["product", "sku", "quantity", "price", "total", "status"],
     rowNumber: PAGINATE_BY,
   },
   [ListViews.SALES_LIST]: {

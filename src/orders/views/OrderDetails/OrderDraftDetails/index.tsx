@@ -10,6 +10,7 @@ import {
   OrderDraftUpdateMutationVariables,
   OrderLineUpdateMutation,
   OrderLineUpdateMutationVariables,
+  SearchAvailableInGridAttributesQuery,
   StockAvailability,
   useChannelUsabilityDataQuery,
   useCustomerAddressesQuery,
@@ -30,7 +31,7 @@ import { OrderDiscountProvider } from "@dashboard/products/components/OrderDisco
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
-import { PartialMutationProviderOutput } from "@dashboard/types";
+import { PartialMutationProviderOutput, RelayToFlat } from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -77,6 +78,14 @@ interface OrderDraftDetailsProps {
     OrderDraftFinalizeMutation,
     OrderDraftFinalizeMutationVariables
   >;
+  availableInGridAttributes: {
+    data: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>;
+    loading: boolean;
+    hasMore: boolean;
+    query: string;
+    search: (query: string) => void;
+    loadMore: () => void;
+  };
   openModal: (action: OrderUrlDialog, newParams?: OrderUrlQueryParams) => void;
   closeModal: any;
 }
@@ -96,6 +105,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   orderDraftFinalize,
   openModal,
   closeModal,
+  availableInGridAttributes,
 }) => {
   const order = data.order;
   const navigate = useNavigator();
@@ -221,6 +231,7 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                 }),
               )
             }
+            availableInGridAttributes={availableInGridAttributes}
             users={mapEdgesToItems(users?.data?.search)}
             hasMore={users?.data?.search?.pageInfo?.hasNextPage || false}
             onFetchMore={loadMoreCustomers}

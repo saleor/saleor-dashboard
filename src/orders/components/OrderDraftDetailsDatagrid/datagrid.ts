@@ -9,7 +9,13 @@ import {
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { useEmptyColumn } from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
+import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
+import { OrderDraftListColumns } from "@dashboard/config";
+import {
+  OrderDetailsFragment,
+  OrderErrorFragment,
+  SearchAvailableInGridAttributesQuery,
+} from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import {
   getDatagridRowDataIndex,
@@ -17,6 +23,7 @@ import {
   isFirstColumn,
 } from "@dashboard/misc";
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import { ListSettings, RelayToFlat } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { DefaultTheme, useTheme } from "@saleor/macaw-ui/next";
@@ -69,6 +76,76 @@ export const useColumns = () => {
 
   return {
     availableColumns,
+  };
+};
+
+export const useColumnPickerColumns = (
+  gridAttributes: RelayToFlat<
+    SearchAvailableInGridAttributesQuery["availableInGrid"]
+  >,
+  settings: ListSettings<OrderDraftListColumns>,
+  defaultColumns: OrderDraftListColumns[],
+) => {
+  const intl = useIntl();
+
+  const staticColumns = useMemo(
+    () =>
+      [
+        {
+          value: "product",
+          label: intl.formatMessage(columnsMessages.product),
+        },
+        {
+          value: "sku",
+          label: "SKU",
+        },
+        {
+          value: "quantity",
+          label: intl.formatMessage(columnsMessages.quantity),
+        },
+        {
+          value: "price",
+          label: intl.formatMessage(columnsMessages.price),
+        },
+        {
+          value: "total",
+          label: intl.formatMessage(columnsMessages.total),
+        },
+        {
+          value: "status",
+          label: "Status",
+        },
+      ] as const,
+    [intl],
+  );
+
+  const initialColumns = useMemo(() => {
+    const selectedStaticColumns = staticColumns.filter(column =>
+      (settings.columns || []).includes(column.value),
+    );
+    // const selectedAttributeColumns = gridAttributes.map(attribute => ({
+    //   label: attribute.name,
+    //   value: getAttributeColumnValue(attribute.id),
+    // }));
+
+    return [...selectedStaticColumns];
+  }, [settings.columns, staticColumns]);
+
+  const availableColumns: MultiAutocompleteChoiceType[] = [
+    ...staticColumns,
+    ...gridAttributes.map(
+      attribute =>
+        ({
+          label: attribute.name,
+          value: attribute.id,
+        } as MultiAutocompleteChoiceType),
+    ),
+  ];
+
+  return {
+    availableColumns,
+    initialColumns,
+    defaultColumns,
   };
 };
 

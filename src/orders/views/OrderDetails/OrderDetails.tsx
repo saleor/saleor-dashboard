@@ -1,6 +1,7 @@
 import { useApolloClient } from "@apollo/client";
 import { MetadataIdSchema } from "@dashboard/components/Metadata";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
+import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
@@ -16,9 +17,11 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { createOrderMetadataIdSchema } from "@dashboard/orders/components/OrderDetailsPage/utils";
+import useAvailableInGridAttributesSearch from "@dashboard/searches/useAvailableInGridAttributesSearch";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -73,6 +76,13 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
   const { data, loading } = useOrderDetailsQuery({
     displayLoader: true,
     variables: { id },
+  });
+
+  const availableInGridAttributesOpts = useAvailableInGridAttributesSearch({
+    variables: {
+      ...DEFAULT_INITIAL_SEARCH_DATA,
+      first: 5,
+    },
   });
 
   const order = data?.order;
@@ -219,6 +229,20 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   params={params}
                   loading={loading}
                   data={data}
+                  availableInGridAttributes={{
+                    data:
+                      mapEdgesToItems(
+                        availableInGridAttributesOpts.result?.data
+                          ?.availableInGrid,
+                      ) || [],
+                    loading: availableInGridAttributesOpts.result.loading,
+                    hasMore:
+                      availableInGridAttributesOpts.result?.data
+                        ?.availableInGrid.pageInfo.hasNextPage,
+                    search: availableInGridAttributesOpts.search,
+                    loadMore: availableInGridAttributesOpts.loadMore,
+                    query: availableInGridAttributesOpts.query,
+                  }}
                   orderAddNote={orderAddNote}
                   orderLineUpdate={orderLineUpdate}
                   orderLineDelete={orderLineDelete}
