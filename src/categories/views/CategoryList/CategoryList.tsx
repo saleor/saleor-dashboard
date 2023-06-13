@@ -18,12 +18,14 @@ import usePaginator, {
 } from "@dashboard/hooks/usePaginator";
 import { maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
+import { prepareQs } from "@dashboard/utils/filters/qs";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import { stringify } from "qs";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -131,18 +133,28 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     }
   };
 
-  const [
-    categoryBulkDelete,
-    categoryBulkDeleteOpts,
-  ] = useCategoryBulkDeleteMutation({
-    onCompleted: handleCategoryBulkDelete,
-  });
+  const hasPresetsChanged = () => {
+    const activeTab = tabs[currentTab - 1];
+    const { paresedQs } = prepareQs(location.search);
+
+    return (
+      activeTab?.data !== stringify(paresedQs) &&
+      location.search !== "" &&
+      stringify(paresedQs) !== ""
+    );
+  };
+
+  const [categoryBulkDelete, categoryBulkDeleteOpts] =
+    useCategoryBulkDeleteMutation({
+      onCompleted: handleCategoryBulkDelete,
+    });
 
   const handleSort = createSortHandler(navigate, categoryListUrl, params);
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <CategoryListPage
+        hasPresetsChanged={hasPresetsChanged()}
         categories={mapEdgesToItems(data?.categories)}
         currentTab={currentTab}
         initialSearch={params.query || ""}
