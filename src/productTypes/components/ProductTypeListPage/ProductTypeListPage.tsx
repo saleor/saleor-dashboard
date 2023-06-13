@@ -4,6 +4,7 @@ import FilterBar from "@dashboard/components/FilterBar";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { ProductTypeFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
+import ProductTypeList from "@dashboard/productTypes/components/ProductTypeList/ProductTypeList";
 import {
   productTypeAddUrl,
   ProductTypeListUrlSortField,
@@ -19,7 +20,6 @@ import {
   SortPage,
   TabPageProps,
 } from "../../../types";
-import ProductTypeList from "../ProductTypeList";
 import {
   createFilterStructure,
   ProductTypeFilterKeys,

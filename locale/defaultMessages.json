@@ -1502,6 +1502,10 @@
   "9OtpHt": {
     "string": "Order line deleted"
   },
+  "9QtKvB": {
+    "context": "Product type is shippable",
+    "string": "Shippable"
+  },
   "9RCuN3": {
     "string": "Payment successfully captured"
   },
@@ -1617,10 +1621,6 @@
   "AD1PlC": {
     "context": "channels availability text",
     "string": "In {selectedChannelsCount} out of {allChannelsCount, plural, one {# channel} other {# channels}}"
-  },
-  "ADTNND": {
-    "context": "product type",
-    "string": "Physical"
   },
   "AHK0K9": {
     "context": "dialog content",
@@ -1827,9 +1827,6 @@
   "BbP+k3": {
     "context": "variant availability in channel",
     "string": "Available"
-  },
-  "Be+J13": {
-    "string": "Configurable"
   },
   "BfJGij": {
     "context": "header",
@@ -2789,6 +2786,10 @@
     "context": "switch button",
     "string": "Is this product shippable?"
   },
+  "ICeshC": {
+    "context": "product type",
+    "string": "Shippable"
+  },
   "IEpmGQ": {
     "context": "description",
     "string": "Use Saleor Cloud to access Saleor Apps"
@@ -3084,9 +3085,6 @@
   "JyQoES": {
     "context": "delete attribute value",
     "string": "Are you sure you want to delete \"{name}\" value?"
-  },
-  "K+ROF8": {
-    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
   },
   "K+vjtE": {
     "string": "Search Variants"
@@ -4691,10 +4689,6 @@
     "context": "header",
     "string": "Order settings"
   },
-  "VvA7ai": {
-    "context": "info text",
-    "string": "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency"
-  },
   "VvFJ/T": {
     "context": "PageTypeDeleteWarningDialog single no assigned items description",
     "string": "Are you sure you want to delete <b>{typeName}</b>? If you remove it you won’t be able to assign it to created pages."
@@ -5417,10 +5411,6 @@
     "context": "order history message",
     "string": "Fulfillment confirmation was sent to customer"
   },
-  "asdvmK": {
-    "context": "product type",
-    "string": "Digital"
-  },
   "auxEP1": {
     "context": "input placeholder",
     "string": "Search by attribute name"
@@ -5690,10 +5680,6 @@
   },
   "cdxwA8": {
     "string": "{amount, plural,one {One product out of stock}other {{amount} products out of stock}}"
-  },
-  "cehiWu": {
-    "context": "channels sale info",
-    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
   },
   "cfQf0w": {
     "context": "button",
@@ -6524,10 +6510,6 @@
   "jxoMLL": {
     "context": "product field",
     "string": "Collections"
-  },
-  "jyTwDR": {
-    "context": "product type is either simple or configurable",
-    "string": "Type"
   },
   "jyaAlB": {
     "context": "button",
@@ -7440,9 +7422,6 @@
     "context": "bulk delete label",
     "string": "Delete"
   },
-  "qnPzX7": {
-    "string": "Channels that don’t have assigned discounts will use their parent channel to define the value. Value will be converted to channel’s currency"
-  },
   "qov29K": {
     "context": "dialog content",
     "string": "Select one of customer addresses or add a new address:"
@@ -7899,10 +7878,6 @@
     "context": "independent of any particular day, eg. 11:35",
     "string": "Time"
   },
-  "u5c/tR": {
-    "context": "channels discount info",
-    "string": "Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
-  },
   "u9/vj9": {
     "context": "webhook input label",
     "string": "Target URL"
@@ -8136,6 +8111,10 @@
   },
   "vcwrgW": {
     "string": "No translatable entities found"
+  },
+  "vdk01u": {
+    "context": "product type",
+    "string": "Not shippable"
   },
   "ve/Sph": {
     "context": "there are more elements of list that are hidden",
@@ -8473,10 +8452,6 @@
   "yMi8I8": {
     "context": "dialog header",
     "string": "Dectivate App"
-  },
-  "yNb+dT": {
-    "context": "product type",
-    "string": "Simple product"
   },
   "yOaNWB": {
     "context": "delete shipping method",
