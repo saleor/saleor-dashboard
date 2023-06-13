@@ -1,10 +1,12 @@
 import Skeleton from "@dashboard/components/Skeleton";
+import { OrderDraftListColumns } from "@dashboard/config";
 import {
+  GridAttributesQuery,
   OrderDetailsFragment,
   OrderErrorFragment,
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { ListProps, RelayToFlat } from "@dashboard/types";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
 
@@ -22,12 +24,17 @@ const useStyles = makeStyles(
   { name: "OrderDraftDetailsProducts" },
 );
 
-interface OrderDraftDetailsProductsProps {
+interface OrderDraftDetailsProductsProps
+  extends Pick<
+    ListProps<OrderDraftListColumns>,
+    "settings" | "onUpdateListSettings"
+  > {
   order?: OrderDetailsFragment;
   errors: OrderErrorFragment[];
   loading: boolean;
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   availableInGridAttributes: {
     data: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>;
     loading: boolean;
@@ -45,6 +52,9 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = ({
   onOrderLineChange,
   onOrderLineRemove,
   availableInGridAttributes,
+  gridAttributes,
+  settings,
+  onUpdateListSettings,
 }) => {
   const classes = useStyles();
 
@@ -62,6 +72,9 @@ const OrderDraftDetailsProducts: React.FC<OrderDraftDetailsProductsProps> = ({
       onOrderLineRemove={onOrderLineRemove}
       onOrderLineChange={onOrderLineChange}
       errors={formErrors}
+      settings={settings}
+      onUpdateListSettings={onUpdateListSettings}
+      gridAttributes={gridAttributes}
       availableInGridAttributes={availableInGridAttributes}
     />
   );

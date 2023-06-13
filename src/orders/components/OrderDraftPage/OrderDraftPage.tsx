@@ -6,8 +6,10 @@ import { DateTime } from "@dashboard/components/Date";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import Savebar from "@dashboard/components/Savebar";
 import Skeleton from "@dashboard/components/Skeleton";
+import { OrderDraftListColumns } from "@dashboard/config";
 import {
   ChannelUsabilityDataQuery,
+  GridAttributesQuery,
   OrderDetailsFragment,
   OrderErrorFragment,
   OrderLineInput,
@@ -18,7 +20,7 @@ import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import OrderChannelSectionCard from "@dashboard/orders/components/OrderChannelSectionCard";
 import { orderDraftListUrl } from "@dashboard/orders/urls";
-import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
+import { FetchMoreProps, ListProps, RelayToFlat } from "@dashboard/types";
 import { Typography } from "@material-ui/core";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
@@ -29,7 +31,12 @@ import OrderDraftDetails from "../OrderDraftDetails/OrderDraftDetails";
 import OrderHistory, { FormData as HistoryFormData } from "../OrderHistory";
 import OrderDraftAlert from "./OrderDraftAlert";
 
-export interface OrderDraftPageProps extends FetchMoreProps {
+export interface OrderDraftPageProps
+  extends FetchMoreProps,
+    Pick<
+      ListProps<OrderDraftListColumns>,
+      "settings" | "onUpdateListSettings"
+    > {
   disabled: boolean;
   order?: OrderDetailsFragment;
   channelUsabilityData?: ChannelUsabilityDataQuery;
@@ -50,6 +57,7 @@ export interface OrderDraftPageProps extends FetchMoreProps {
   onShippingAddressEdit: () => void;
   onShippingMethodEdit: () => void;
   onProfileView: () => void;
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   availableInGridAttributes: {
     data: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>;
     loading: boolean;
@@ -84,6 +92,9 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
     usersLoading,
     errors,
     availableInGridAttributes,
+    gridAttributes,
+    settings,
+    onUpdateListSettings,
   } = props;
   const navigate = useNavigator();
 
@@ -135,7 +146,10 @@ const OrderDraftPage: React.FC<OrderDraftPageProps> = props => {
           onOrderLineChange={onOrderLineChange}
           onOrderLineRemove={onOrderLineRemove}
           onShippingMethodEdit={onShippingMethodEdit}
+          gridAttributes={gridAttributes}
           availableInGridAttributes={availableInGridAttributes}
+          settings={settings}
+          onUpdateListSettings={onUpdateListSettings}
         />
         <OrderHistory
           history={order?.events}

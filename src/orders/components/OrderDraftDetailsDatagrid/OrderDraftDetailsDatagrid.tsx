@@ -1,6 +1,5 @@
 import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
-import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
 import {
   DatagridChangeOpts,
   DatagridChangeStateContext,
@@ -8,30 +7,38 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { defaultListSettings, OrderDraftListColumns } from "@dashboard/config";
 import {
+  GridAttributesQuery,
   OrderDetailsFragment,
   OrderErrorFragment,
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
-import useListSettings from "@dashboard/hooks/useListSettings";
-import { ListViews, RelayToFlat } from "@dashboard/types";
+import { isAttributeColumnValue } from "@dashboard/products/components/ProductListPage/utils";
+import { ListProps, ListViews, RelayToFlat } from "@dashboard/types";
+import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
+import { GridColumn } from "@glideapps/glide-data-grid";
 import { TrashBinIcon } from "@saleor/macaw-ui/next";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { FormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import {
   useColumnPickerColumns,
-  useColumns,
+  useDatagridColumns,
   useGetCellContent,
 } from "./datagrid";
 import { messages } from "./messages";
 
-interface OrderDraftDetailsDatagridProps {
+interface OrderDraftDetailsDatagridProps
+  extends Pick<
+    ListProps<OrderDraftListColumns>,
+    "settings" | "onUpdateListSettings"
+  > {
   loading: boolean;
   lines: OrderDetailsFragment["lines"];
   errors: OrderErrorFragment[];
   onOrderLineChange: (id: string, data: FormData) => void;
   onOrderLineRemove: (id: string) => void;
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   availableInGridAttributes: {
     data: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>;
     loading: boolean;
@@ -48,19 +55,52 @@ export const OrderDraftDetailsDatagrid = ({
   onOrderLineChange,
   onOrderLineRemove,
   availableInGridAttributes,
+  gridAttributes,
+  settings,
+  onUpdateListSettings,
 }: OrderDraftDetailsDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
 
-  const { availableColumns } = useColumns();
+  const gridAttributesFromSettings = useMemo(
+    () => settings.columns.filter(isAttributeColumnValue),
+    [settings.columns],
+  );
 
-  const { updateListSettings, settings } =
-    useListSettings<OrderDraftListColumns>(ListViews.ORDER_DRAFT_DETAILS);
+  const { columns, setColumns } = useDatagridColumns({
+    gridAttributes,
+    gridAttributesFromSettings,
+    settings,
+  });
 
-  const { columns, onColumnMoved, onColumnResize } =
-    useColumnsDefault(availableColumns);
+  const handleColumnMoved = useCallback(
+    (startIndex: number, endIndex: number): void => {
+      setColumns(old =>
+        addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
+      );
+    },
+    [setColumns],
+  );
+
+  const handleColumnResize = useCallback(
+    (column: GridColumn, newSize: number) => {
+      if (column.id === "empty") {
+        return;
+      }
+
+      setColumns(prevColumns =>
+        prevColumns.map(prevColumn =>
+          prevColumn.id === column.id
+            ? { ...prevColumn, width: newSize }
+            : prevColumn,
+        ),
+      );
+    },
+    [setColumns],
+  );
 
   const columnPickerColumns = useColumnPickerColumns(
+    gridAttributes,
     availableInGridAttributes.data,
     settings,
     defaultListSettings[ListViews.ORDER_DRAFT_DETAILS].columns as any,
@@ -108,9 +148,9 @@ export const OrderDraftDetailsDatagrid = ({
 
   const handleColumnChange = useCallback(
     (picked: OrderDraftListColumns[]) => {
-      updateListSettings("columns", picked);
+      onUpdateListSettings("columns", picked);
     },
-    [updateListSettings],
+    [onUpdateListSettings],
   );
 
   return (
@@ -127,8 +167,8 @@ export const OrderDraftDetailsDatagrid = ({
         menuItems={getMenuItems}
         rows={lines.length}
         selectionActions={() => null}
-        onColumnResize={onColumnResize}
-        onColumnMoved={onColumnMoved}
+        onColumnResize={handleColumnResize}
+        onColumnMoved={handleColumnMoved}
         renderColumnPicker={defaultProps => (
           <ColumnPicker
             {...defaultProps}

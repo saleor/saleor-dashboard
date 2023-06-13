@@ -1,6 +1,10 @@
 import { WindowTitle } from "@dashboard/components/WindowTitle";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import {
+  DEFAULT_INITIAL_SEARCH_DATA,
+  OrderDraftListColumns,
+} from "@dashboard/config";
+import {
+  GridAttributesQuery,
   OrderDetailsQueryResult,
   OrderDraftCancelMutation,
   OrderDraftCancelMutationVariables,
@@ -31,7 +35,11 @@ import { OrderDiscountProvider } from "@dashboard/products/components/OrderDisco
 import { OrderLineDiscountProvider } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import { useOrderVariantSearch } from "@dashboard/searches/useOrderVariantSearch";
-import { PartialMutationProviderOutput, RelayToFlat } from "@dashboard/types";
+import {
+  ListProps,
+  PartialMutationProviderOutput,
+  RelayToFlat,
+} from "@dashboard/types";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -53,7 +61,11 @@ import {
   OrderUrlQueryParams,
 } from "../../../urls";
 
-interface OrderDraftDetailsProps {
+interface OrderDraftDetailsProps
+  extends Pick<
+    ListProps<OrderDraftListColumns>,
+    "settings" | "onUpdateListSettings"
+  > {
   id: string;
   params: OrderUrlQueryParams;
   loading: any;
@@ -78,6 +90,7 @@ interface OrderDraftDetailsProps {
     OrderDraftFinalizeMutation,
     OrderDraftFinalizeMutationVariables
   >;
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   availableInGridAttributes: {
     data: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>;
     loading: boolean;
@@ -105,7 +118,10 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   orderDraftFinalize,
   openModal,
   closeModal,
+  settings,
+  onUpdateListSettings,
   availableInGridAttributes,
+  gridAttributes,
 }) => {
   const order = data.order;
   const navigate = useNavigator();
@@ -231,6 +247,9 @@ export const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
                 }),
               )
             }
+            settings={settings}
+            onUpdateListSettings={onUpdateListSettings}
+            gridAttributes={gridAttributes}
             availableInGridAttributes={availableInGridAttributes}
             users={mapEdgesToItems(users?.data?.search)}
             hasMore={users?.data?.search?.pageInfo?.hasNextPage || false}

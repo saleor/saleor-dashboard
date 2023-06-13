@@ -95,6 +95,16 @@ export const fragmentOrderLine = gql`
         id
         isAvailableForPurchase
       }
+      attributes {
+        attribute {
+          id
+          slug
+          name
+        }
+        values {
+          ...AttributeValueDetails
+        }
+      }
     }
     productName
     productSku

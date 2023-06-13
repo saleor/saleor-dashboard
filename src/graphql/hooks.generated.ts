@@ -1523,6 +1523,34 @@ export const StockFragmentDoc = gql`
   }
 }
     ${WarehouseFragmentDoc}`;
+export const FileFragmentDoc = gql`
+    fragment File on File {
+  url
+  contentType
+}
+    `;
+export const AttributeValueFragmentDoc = gql`
+    fragment AttributeValue on AttributeValue {
+  id
+  name
+  slug
+  file {
+    ...File
+  }
+  reference
+  boolean
+  date
+  dateTime
+  value
+}
+    ${FileFragmentDoc}`;
+export const AttributeValueDetailsFragmentDoc = gql`
+    fragment AttributeValueDetails on AttributeValue {
+  ...AttributeValue
+  plainText
+  richText
+}
+    ${AttributeValueFragmentDoc}`;
 export const TaxedMoneyFragmentDoc = gql`
     fragment TaxedMoney on TaxedMoney {
   net {
@@ -1557,6 +1585,16 @@ export const OrderLineFragmentDoc = gql`
     product {
       id
       isAvailableForPurchase
+    }
+    attributes {
+      attribute {
+        id
+        slug
+        name
+      }
+      values {
+        ...AttributeValueDetails
+      }
     }
   }
   productName
@@ -1600,6 +1638,7 @@ export const OrderLineFragmentDoc = gql`
   }
 }
     ${StockFragmentDoc}
+${AttributeValueDetailsFragmentDoc}
 ${TaxedMoneyFragmentDoc}`;
 export const FulfillmentFragmentDoc = gql`
     fragment Fulfillment on Fulfillment {
@@ -1960,34 +1999,6 @@ export const PageFragmentDoc = gql`
   isPublished
 }
     `;
-export const FileFragmentDoc = gql`
-    fragment File on File {
-  url
-  contentType
-}
-    `;
-export const AttributeValueFragmentDoc = gql`
-    fragment AttributeValue on AttributeValue {
-  id
-  name
-  slug
-  file {
-    ...File
-  }
-  reference
-  boolean
-  date
-  dateTime
-  value
-}
-    ${FileFragmentDoc}`;
-export const AttributeValueDetailsFragmentDoc = gql`
-    fragment AttributeValueDetails on AttributeValue {
-  ...AttributeValue
-  plainText
-  richText
-}
-    ${AttributeValueFragmentDoc}`;
 export const AttributeValueListFragmentDoc = gql`
     fragment AttributeValueList on AttributeValueCountableConnection {
   pageInfo {

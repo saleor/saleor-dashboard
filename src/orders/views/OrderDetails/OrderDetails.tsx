@@ -1,23 +1,33 @@
 import { useApolloClient } from "@apollo/client";
 import { MetadataIdSchema } from "@dashboard/components/Metadata";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
-import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
+import {
+  DEFAULT_INITIAL_SEARCH_DATA,
+  OrderDraftListColumns,
+} from "@dashboard/config";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   JobStatusEnum,
   OrderDetailsDocument,
   OrderStatus,
+  useGridAttributesQuery,
   useOrderConfirmMutation,
   useOrderDetailsQuery,
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
+import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { commonMessages } from "@dashboard/intl";
 import { createOrderMetadataIdSchema } from "@dashboard/orders/components/OrderDetailsPage/utils";
+import {
+  getAttributeIdFromColumnValue,
+  isAttributeColumnValue,
+} from "@dashboard/products/components/ProductListPage/utils";
 import useAvailableInGridAttributesSearch from "@dashboard/searches/useAvailableInGridAttributesSearch";
+import { ListViews } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
@@ -58,6 +68,13 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
     OrderUrlQueryParams
   >(navigate, params => orderUrl(id, params), params, ["type"]);
 
+  const { settings, updateListSettings } =
+    useListSettings<OrderDraftListColumns>(ListViews.ORDER_DRAFT_DETAILS);
+
+  const filteredColumnIds = settings.columns
+    .filter(isAttributeColumnValue)
+    .map(getAttributeIdFromColumnValue);
+
   const handleBack = () => navigate(orderListUrl());
 
   const [orderConfirm] = useOrderConfirmMutation({
@@ -83,6 +100,11 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 5,
     },
+  });
+
+  const gridAttributes = useGridAttributesQuery({
+    variables: { ids: filteredColumnIds },
+    skip: filteredColumnIds.length === 0,
   });
 
   const order = data?.order;
@@ -229,13 +251,20 @@ export const OrderDetails: React.FC<OrderDetailsProps> = ({ id, params }) => {
                   params={params}
                   loading={loading}
                   data={data}
+                  settings={settings}
+                  onUpdateListSettings={updateListSettings}
+                  gridAttributes={
+                    mapEdgesToItems(gridAttributes?.data?.grid) || []
+                  }
                   availableInGridAttributes={{
                     data:
                       mapEdgesToItems(
                         availableInGridAttributesOpts.result?.data
                           ?.availableInGrid,
                       ) || [],
-                    loading: availableInGridAttributesOpts.result.loading,
+                    loading:
+                      availableInGridAttributesOpts.result.loading ||
+                      gridAttributes.loading,
                     hasMore:
                       availableInGridAttributesOpts.result?.data
                         ?.availableInGrid.pageInfo.hasNextPage,

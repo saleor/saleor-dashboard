@@ -1,7 +1,9 @@
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
+import { OrderDraftListColumns } from "@dashboard/config";
 import {
   ChannelUsabilityDataQuery,
+  GridAttributesQuery,
   OrderDetailsFragment,
   OrderErrorFragment,
   OrderLineInput,
@@ -11,7 +13,7 @@ import {
   OrderDiscountContext,
   OrderDiscountContextConsumerProps,
 } from "@dashboard/products/components/OrderDiscountProviders/OrderDiscountProvider";
-import { RelayToFlat } from "@dashboard/types";
+import { ListProps, RelayToFlat } from "@dashboard/types";
 import { Card, CardContent } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -20,7 +22,11 @@ import { maybe } from "../../../misc";
 import OrderDraftDetailsProducts from "../OrderDraftDetailsProducts";
 import OrderDraftDetailsSummary from "../OrderDraftDetailsSummary";
 
-interface OrderDraftDetailsProps {
+interface OrderDraftDetailsProps
+  extends Pick<
+    ListProps<OrderDraftListColumns>,
+    "settings" | "onUpdateListSettings"
+  > {
   order: OrderDetailsFragment;
   channelUsabilityData?: ChannelUsabilityDataQuery;
   errors: OrderErrorFragment[];
@@ -29,6 +35,7 @@ interface OrderDraftDetailsProps {
   onOrderLineChange: (id: string, data: OrderLineInput) => void;
   onOrderLineRemove: (id: string) => void;
   onShippingMethodEdit: () => void;
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   availableInGridAttributes: {
     data: RelayToFlat<SearchAvailableInGridAttributesQuery["availableInGrid"]>;
     loading: boolean;
@@ -49,6 +56,9 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
   onOrderLineRemove,
   onShippingMethodEdit,
   availableInGridAttributes,
+  gridAttributes,
+  settings,
+  onUpdateListSettings,
 }) => {
   const intl = useIntl();
 
@@ -86,7 +96,10 @@ const OrderDraftDetails: React.FC<OrderDraftDetailsProps> = ({
         loading={loading}
         onOrderLineChange={onOrderLineChange}
         onOrderLineRemove={onOrderLineRemove}
+        gridAttributes={gridAttributes}
         availableInGridAttributes={availableInGridAttributes}
+        settings={settings}
+        onUpdateListSettings={onUpdateListSettings}
       />
       {maybe(() => order.lines.length) !== 0 && (
         <CardContent>

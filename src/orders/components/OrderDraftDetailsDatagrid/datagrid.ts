@@ -12,8 +12,10 @@ import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { OrderDraftListColumns } from "@dashboard/config";
 import {
+  GridAttributesQuery,
   OrderDetailsFragment,
   OrderErrorFragment,
+  OrderLineFragment,
   SearchAvailableInGridAttributesQuery,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
@@ -23,64 +25,74 @@ import {
   isFirstColumn,
 } from "@dashboard/misc";
 import { useOrderLineDiscountContext } from "@dashboard/products/components/OrderDiscountProviders/OrderLineDiscountProvider";
+import {
+  getAttributeColumnValue,
+  getAttributeIdFromColumnValue,
+} from "@dashboard/products/components/ProductListPage/utils";
 import { ListSettings, RelayToFlat } from "@dashboard/types";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { DefaultTheme, useTheme } from "@saleor/macaw-ui/next";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { IntlShape, useIntl } from "react-intl";
 
 import { lineAlertMessages } from "../OrderDraftDetailsProducts/messages";
 import { columnsMessages } from "./messages";
 
-export const useColumns = () => {
-  const emptyColumn = useEmptyColumn();
-  const intl = useIntl();
-
-  const availableColumns = useMemo(
-    () => [
-      emptyColumn,
-      {
-        id: "product",
-        title: intl.formatMessage(columnsMessages.product),
-        width: 300,
-      },
-      {
-        id: "sku",
-        title: "SKU",
-        width: 150,
-      },
-      {
-        id: "quantity",
-        title: intl.formatMessage(columnsMessages.quantity),
-        width: 80,
-      },
-      {
-        id: "price",
-        title: intl.formatMessage(columnsMessages.price),
-        width: 150,
-      },
-      {
-        id: "total",
-        title: intl.formatMessage(columnsMessages.total),
-        width: 150,
-      },
-      {
-        id: "status",
-        title: "Status",
-        width: 250,
-      },
-    ],
-    [emptyColumn, intl],
-  );
-
-  return {
-    availableColumns,
-  };
-};
+export const getColumns = ({
+  emptyColumn,
+  intl,
+  gridAttributes,
+  gridAttributesFromSettings,
+}: {
+  emptyColumn: AvailableColumn;
+  intl: IntlShape;
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
+  gridAttributesFromSettings: OrderDraftListColumns[];
+}) => [
+  emptyColumn,
+  {
+    id: "product",
+    title: intl.formatMessage(columnsMessages.product),
+    width: 300,
+  },
+  {
+    id: "sku",
+    title: "SKU",
+    width: 150,
+  },
+  {
+    id: "quantity",
+    title: intl.formatMessage(columnsMessages.quantity),
+    width: 80,
+  },
+  {
+    id: "price",
+    title: intl.formatMessage(columnsMessages.price),
+    width: 150,
+  },
+  {
+    id: "total",
+    title: intl.formatMessage(columnsMessages.total),
+    width: 150,
+  },
+  {
+    id: "status",
+    title: "Status",
+    width: 250,
+  },
+  ...gridAttributesFromSettings.map(attributeId => ({
+    id: attributeId,
+    title:
+      gridAttributes.find(gridAttribute => attributeId === gridAttribute.id)
+        ?.name ?? "",
+    width: 200,
+  })),
+];
 
 export const useColumnPickerColumns = (
-  gridAttributes: RelayToFlat<
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>,
+  availableInGridAttributes: RelayToFlat<
     SearchAvailableInGridAttributesQuery["availableInGrid"]
   >,
   settings: ListSettings<OrderDraftListColumns>,
@@ -123,30 +135,79 @@ export const useColumnPickerColumns = (
     const selectedStaticColumns = staticColumns.filter(column =>
       (settings.columns || []).includes(column.value),
     );
-    // const selectedAttributeColumns = gridAttributes.map(attribute => ({
-    //   label: attribute.name,
-    //   value: getAttributeColumnValue(attribute.id),
-    // }));
+    const selectedAttributeColumns = gridAttributes.map(attribute => ({
+      label: attribute.name,
+      value: getAttributeColumnValue(attribute.id),
+    }));
 
-    return [...selectedStaticColumns];
-  }, [settings.columns, staticColumns]);
+    return [...selectedStaticColumns, ...selectedAttributeColumns];
+  }, [gridAttributes, settings.columns, staticColumns]);
 
   const availableColumns: MultiAutocompleteChoiceType[] = [
     ...staticColumns,
-    ...gridAttributes.map(
+    ...availableInGridAttributes.map(
       attribute =>
         ({
           label: attribute.name,
-          value: attribute.id,
+          value: getAttributeColumnValue(attribute.id),
         } as MultiAutocompleteChoiceType),
     ),
   ];
-
   return {
     availableColumns,
     initialColumns,
     defaultColumns,
   };
+};
+
+interface UseDatagridColumnsProps {
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
+  gridAttributesFromSettings: OrderDraftListColumns[];
+  settings: ListSettings<OrderDraftListColumns>;
+}
+
+export const useDatagridColumns = ({
+  gridAttributes,
+  gridAttributesFromSettings,
+  settings,
+}: UseDatagridColumnsProps) => {
+  const emptyColumn = useEmptyColumn();
+  const intl = useIntl();
+
+  const initialColumns = useRef(
+    getColumns({
+      intl,
+      emptyColumn,
+      gridAttributes,
+      gridAttributesFromSettings,
+    }),
+  );
+
+  const [columns, setColumns] = useState<AvailableColumn[]>([
+    initialColumns.current[0],
+    ...initialColumns.current.filter(col =>
+      settings.columns.includes(col.id as OrderDraftListColumns),
+    ),
+  ]);
+
+  useEffect(() => {
+    const attributeColumns = gridAttributesFromSettings.map(
+      toAttributeColumnData(gridAttributes),
+    );
+
+    setColumns(prevColumns => [
+      ...prevColumns
+        .filter(byColumnsInSettingsOrStaticColumns(settings))
+        .map(toCurrentColumnData(attributeColumns)),
+      ...settings.columns
+        .filter(byNewAddedColumns(prevColumns))
+        .map(
+          toNewAddedColumData([...initialColumns.current, ...attributeColumns]),
+        ),
+    ]);
+  }, [gridAttributes, gridAttributesFromSettings, settings]);
+
+  return { columns, setColumns };
 };
 
 interface GetCellContentProps {
@@ -186,6 +247,10 @@ export const useGetCellContent = ({
     const { unitUndiscountedPrice, unitDiscountedPrice } = getValues(
       rowData.id,
     );
+
+    if (columnId.startsWith("attribute")) {
+      return getAttributeCellContent(columnId, rowData);
+    }
 
     switch (columnId) {
       case "product":
@@ -242,6 +307,32 @@ export const useGetCellContent = ({
   };
 };
 
+function getAttributeCellContent(columnId: string, rowData: OrderLineFragment) {
+  const attributeId = getAttributeIdFromColumnValue(columnId);
+  const productAttribute = rowData?.variant.attributes.find(
+    attribute => attribute.attribute.id === attributeId,
+  );
+
+  if (productAttribute) {
+    if (productAttribute.values.length) {
+      if (productAttribute.values[0].date) {
+        return readonlyTextCell(productAttribute.values[0].date);
+      }
+      if (productAttribute.values[0].dateTime) {
+        return readonlyTextCell(productAttribute.values[0].dateTime);
+      }
+    }
+
+    const textValue = productAttribute.values
+      .map(value => value.name)
+      .join(", ");
+
+    return readonlyTextCell(textValue);
+  }
+
+  return readonlyTextCell("");
+}
+
 function toTagValue(currentTheme: DefaultTheme) {
   return ({ status, type }: OrderStatus) => ({
     color: getStatusColor(type, currentTheme),
@@ -291,4 +382,52 @@ const getOrderLineStatus = (
 
 function getOrderErrors(errors: OrderErrorFragment[], id: string) {
   return errors.find(error => error.orderLines?.some(lineId => lineId === id));
+}
+
+function byNewAddedColumns(currentColumns: AvailableColumn[]) {
+  return (column: OrderDraftListColumns) =>
+    !currentColumns.find(c => c.id === column);
+}
+
+function byColumnsInSettingsOrStaticColumns(
+  settings: ListSettings<OrderDraftListColumns>,
+) {
+  return (column: AvailableColumn) =>
+    settings.columns.includes(column.id as OrderDraftListColumns) ||
+    ["name"].includes(column.id);
+}
+
+function toCurrentColumnData(attributeColumns: AvailableColumn[]) {
+  return (column: AvailableColumn) => {
+    // Take newest attibutes data from attributeColumns
+    if (column.id.startsWith("attribute")) {
+      return attributeColumns.find(ac => ac.id === column.id);
+    }
+
+    return column;
+  };
+}
+
+function toNewAddedColumData(columnSource: AvailableColumn[]) {
+  return (column: OrderDraftListColumns) => ({
+    ...columnSource.find(ac => ac.id === column),
+  });
+}
+
+export function toAttributeColumnData(
+  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>,
+) {
+  return (attribute: OrderDraftListColumns) => {
+    const attributeId = getAttributeIdFromColumnValue(attribute);
+
+    const title =
+      gridAttributes.find(gridAttribute => attributeId === gridAttribute.id)
+        ?.name ?? "";
+
+    return {
+      id: attribute,
+      title,
+      width: 200,
+    };
+  };
 }
