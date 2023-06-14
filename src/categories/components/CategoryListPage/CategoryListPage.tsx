@@ -16,16 +16,11 @@ import {
   TabPageProps,
 } from "@dashboard/types";
 import { Card } from "@material-ui/core";
-import {
-  Box,
-  Button as MacawButton,
-  ChevronRightIcon,
-  Tooltip,
-  TrashBinIcon,
-} from "@saleor/macaw-ui/next";
+import { Box, ChevronRightIcon } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { CategoryDeleteButton } from "../CategoryDeleteButton";
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
 
 export interface CategoryTableProps
@@ -130,24 +125,15 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
             />
           </Box>
           {selectedCategoriesIds.length > 0 && (
-            <Tooltip>
-              <Tooltip.Trigger>
-                <MacawButton
-                  ref={setBulkDeleteButtonRef}
-                  onClick={onCategoriesDelete}
-                  icon={<TrashBinIcon />}
-                  variant="secondary"
-                  data-test-id="delete-products-button"
-                />
-              </Tooltip.Trigger>
-              <Tooltip.Content side="bottom">
-                <Tooltip.Arrow />
-                <FormattedMessage
-                  defaultMessage="Bulk category delete"
-                  id="qU/z0Q"
-                />
-              </Tooltip.Content>
-            </Tooltip>
+            <CategoryDeleteButton
+              onClick={onCategoriesDelete}
+              ref={setBulkDeleteButtonRef}
+            >
+              <FormattedMessage
+                defaultMessage="Bulk category delete"
+                id="qU/z0Q"
+              />
+            </CategoryDeleteButton>
           )}
         </Box>
         <CategoryListDatagrid

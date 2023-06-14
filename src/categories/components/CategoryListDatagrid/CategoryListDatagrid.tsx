@@ -19,7 +19,7 @@ import { useIntl } from "react-intl";
 import { createGetCellContent, getColumns } from "./datagrid";
 
 interface CategoryListDatagridProps
-  extends SortPage<CategoryListUrlSortField>,
+  extends Partial<SortPage<CategoryListUrlSortField>>,
     PageListProps {
   categories?: CategoryFragment[];
   disabled: boolean;
@@ -49,9 +49,11 @@ export const CategoryListDatagrid = ({
 
   const handleHeaderClick = useCallback(
     (col: number) => {
-      onSort(columns[col].id as CategoryListUrlSortField);
+      if (sort !== undefined) {
+        onSort(columns[col].id as CategoryListUrlSortField);
+      }
     },
-    [columns, onSort],
+    [columns, onSort, sort],
   );
 
   const handleRowAnchor = useCallback(
@@ -72,7 +74,10 @@ export const CategoryListDatagrid = ({
         rows={categories?.length ?? 0}
         getCellContent={getCellContent}
         getCellError={() => false}
-        emptyText="Empty"
+        emptyText={intl.formatMessage({
+          defaultMessage: "No categories found",
+          id: "dM86a2",
+        })}
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
         menuItems={() => []}

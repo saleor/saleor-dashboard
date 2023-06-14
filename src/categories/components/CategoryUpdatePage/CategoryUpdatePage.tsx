@@ -17,15 +17,16 @@ import { CategoryDetailsQuery, ProductErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Card } from "@material-ui/core";
-import { sprinkles } from "@saleor/macaw-ui/next";
+import { Box, sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
 import { RelayToFlat, TabListActions } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
-import CategoryList from "../../components/CategoryList";
 import CategoryBackground from "../CategoryBackground";
+import { CategoryDeleteButton } from "../CategoryDeleteButton";
+import { CategoryListDatagrid } from "../CategoryListDatagrid";
 import CategoryProducts from "../CategoryProducts";
 import CategoryUpdateForm, { CategoryUpdateData } from "./form";
 
@@ -35,7 +36,7 @@ export enum CategoryPageTab {
 }
 
 export interface CategoryUpdatePageProps
-  extends TabListActions<"productListToolbar" | "subcategoryListToolbar"> {
+  extends TabListActions<"productListToolbar"> {
   categoryId: string;
   changeTab: (index: CategoryPageTab) => void;
   currentTab: CategoryPageTab;
@@ -48,6 +49,10 @@ export interface CategoryUpdatePageProps
   addProductHref: string;
   onImageDelete: () => void;
   onSubmit: (data: CategoryUpdateData) => SubmitPromise;
+  selectedCategoriesIds: string[];
+  onCategoriesDelete: () => void;
+  onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
+  setBulkDeleteButtonRef: (ref: HTMLButtonElement) => void;
   onImageUpload(file: File);
   onDelete();
 }
@@ -72,9 +77,12 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   isChecked,
   productListToolbar,
   selected,
-  subcategoryListToolbar,
   toggle,
   toggleAll,
+  onSelectCategoriesIds,
+  setBulkDeleteButtonRef,
+  onCategoriesDelete,
+  selectedCategoriesIds,
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -174,18 +182,26 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                     </Button>
                   }
                 />
-                <CategoryList
-                  categories={subcategories}
-                  disabled={disabled}
-                  isChecked={isChecked}
-                  isRoot={false}
-                  selected={selected}
-                  sort={undefined}
-                  toggle={toggle}
-                  toggleAll={toggleAll}
-                  toolbar={subcategoryListToolbar}
-                  onSort={() => undefined}
-                />
+                <Box position="relative">
+                  <Box position="absolute" top={1} right={6} zIndex="2">
+                    {selectedCategoriesIds.length > 0 && (
+                      <CategoryDeleteButton
+                        ref={setBulkDeleteButtonRef}
+                        onClick={onCategoriesDelete}
+                      >
+                        <FormattedMessage
+                          defaultMessage="Bulk category delete"
+                          id="qU/z0Q"
+                        />
+                      </CategoryDeleteButton>
+                    )}
+                  </Box>
+                  <CategoryListDatagrid
+                    categories={subcategories}
+                    disabled={disabled}
+                    onSelectCategoriesIds={onSelectCategoriesIds}
+                  />
+                </Box>
               </Card>
             )}
             {currentTab === CategoryPageTab.products && (

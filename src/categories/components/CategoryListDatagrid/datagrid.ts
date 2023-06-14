@@ -19,25 +19,28 @@ export const getColumns = (
     id: "name",
     title: intl.formatMessage(columnsMessages.categoryName),
     width: 350,
-    icon: getColumnSortDirectionIcon(sort, CategoryListUrlSortField.name),
+    icon: sort
+      ? getColumnSortDirectionIcon(sort, CategoryListUrlSortField.name)
+      : undefined,
   },
   {
     id: "subcategories",
     title: intl.formatMessage(columnsMessages.subcategories),
     width: 300,
-    icon: getColumnSortDirectionIcon(
-      sort,
-      CategoryListUrlSortField.subcategoryCount,
-    ),
+    icon: sort
+      ? getColumnSortDirectionIcon(
+          sort,
+          CategoryListUrlSortField.subcategoryCount,
+        )
+      : undefined,
   },
   {
     id: "products",
     title: intl.formatMessage(columnsMessages.numberOfProducts),
     width: 300,
-    icon: getColumnSortDirectionIcon(
-      sort,
-      CategoryListUrlSortField.productCount,
-    ),
+    icon: sort
+      ? getColumnSortDirectionIcon(sort, CategoryListUrlSortField.productCount)
+      : undefined,
   },
 ];
 

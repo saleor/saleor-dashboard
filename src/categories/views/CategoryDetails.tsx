@@ -28,7 +28,8 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import { DialogContentText } from "@material-ui/core";
 import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React, { useState } from "react";
+import isEqual from "lodash/isEqual";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";
@@ -70,6 +71,27 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
+  const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<string[]>(
+    [],
+  );
+  const deleteButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Keep reference to clear datagrid selection function
+  const clearRowSelectionCallback = React.useRef<() => void | null>(null);
+  const clearRowSelection = () => {
+    setSelectedCategoriesIds([]);
+    if (clearRowSelectionCallback.current) {
+      clearRowSelectionCallback.current();
+    }
+  };
+
+  // Remove focus from delete button after delete action
+  useEffect(() => {
+    if (!params.action && deleteButtonRef.current) {
+      deleteButtonRef.current.blur();
+    }
+  }, [params.action]);
+
   const [activeTab, setActiveTab] = useState<CategoryPageTab>(
     CategoryPageTab.categories,
   );
@@ -89,6 +111,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   });
 
   const category = data?.category;
+  const subcategories = mapEdgesToItems(data?.category?.children);
 
   const handleCategoryDelete = (data: CategoryDeleteMutation) => {
     if (data.categoryDelete.errors.length === 0) {
@@ -99,6 +122,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           defaultMessage: "Category deleted",
         }),
       });
+      clearRowSelection();
       navigate(categoryListUrl());
     }
   };
@@ -108,6 +132,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   });
 
   const handleCategoryUpdate = (data: CategoryUpdateMutation) => {
+    clearRowSelection();
     if (data.categoryUpdate.errors.length > 0) {
       const backgroundImageError = data.categoryUpdate.errors.find(
         error => error.field === ("backgroundImage" as keyof CategoryInput),
@@ -134,6 +159,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   const handleBulkCategoryDelete = (data: CategoryBulkDeleteMutation) => {
     if (data.categoryBulkDelete.errors.length === 0) {
       closeModal();
+      clearRowSelection();
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
@@ -142,29 +168,25 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     }
   };
 
-  const [
-    categoryBulkDelete,
-    categoryBulkDeleteOpts,
-  ] = useCategoryBulkDeleteMutation({
-    onCompleted: handleBulkCategoryDelete,
-  });
+  const [categoryBulkDelete, categoryBulkDeleteOpts] =
+    useCategoryBulkDeleteMutation({
+      onCompleted: handleBulkCategoryDelete,
+    });
 
-  const [
-    productBulkDelete,
-    productBulkDeleteOpts,
-  ] = useProductBulkDeleteMutation({
-    onCompleted: data => {
-      if (data.productBulkDelete.errors.length === 0) {
-        closeModal();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        refetch();
-        reset();
-      }
-    },
-  });
+  const [productBulkDelete, productBulkDeleteOpts] =
+    useProductBulkDeleteMutation({
+      onCompleted: data => {
+        if (data.productBulkDelete.errors.length === 0) {
+          closeModal();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          refetch();
+          reset();
+        }
+      },
+    });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     CategoryUrlDialog,
@@ -196,6 +218,24 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         },
       }),
     );
+
+  const handleSetSelectedCategoryIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!subcategories) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => subcategories[row].id);
+      const haveSaveValues = isEqual(rowsIds, selectedCategoriesIds);
+
+      if (!haveSaveValues) {
+        setSelectedCategoriesIds(rowsIds);
+      }
+
+      clearRowSelectionCallback.current = clearSelection;
+    },
+    [selectedCategoriesIds, subcategories],
+  );
 
   const handleSubmit = createMetadataUpdateHandler(
     data?.category,
@@ -243,21 +283,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         onSubmit={handleSubmit}
         products={mapEdgesToItems(data?.category?.products)}
         saveButtonBarState={updateResult.status}
-        subcategories={mapEdgesToItems(data?.category?.children)}
-        subcategoryListToolbar={
-          <IconButton
-            data-test-id="delete-icon"
-            variant="secondary"
-            color="primary"
-            onClick={() =>
-              openModal("delete-categories", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
+        subcategories={subcategories}
         productListToolbar={
           <IconButton
             data-test-id="delete-icon"
@@ -275,7 +301,16 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         selected={listElements.length}
         toggle={toggle}
         toggleAll={toggleAll}
+        selectedCategoriesIds={selectedCategoriesIds}
+        onSelectCategoriesIds={handleSetSelectedCategoryIds}
+        onCategoriesDelete={() => {
+          openModal("delete-categories");
+        }}
+        setBulkDeleteButtonRef={(ref: HTMLButtonElement) => {
+          deleteButtonRef.current = ref;
+        }}
       />
+
       <ActionDialog
         confirmButtonState={deleteResult.status}
         onClose={closeModal}
@@ -306,16 +341,14 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           />
         </DialogContentText>
       </ActionDialog>
+
       <ActionDialog
-        open={
-          params.action === "delete-categories" &&
-          maybe(() => params.ids.length > 0)
-        }
+        open={params.action === "delete-categories"}
         confirmButtonState={categoryBulkDeleteOpts.status}
         onClose={closeModal}
         onConfirm={() =>
           categoryBulkDelete({
-            variables: { ids: params.ids },
+            variables: { ids: selectedCategoriesIds },
           }).then(() => refetch())
         }
         title={intl.formatMessage({
@@ -344,6 +377,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           />
         </DialogContentText>
       </ActionDialog>
+
       <ActionDialog
         open={params.action === "delete-products"}
         confirmButtonState={productBulkDeleteOpts.status}
