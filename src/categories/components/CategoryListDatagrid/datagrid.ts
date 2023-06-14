@@ -22,7 +22,7 @@ export const getColumns = (
     icon: getColumnSortDirectionIcon(sort, CategoryListUrlSortField.name),
   },
   {
-    id: "subcategoryCount",
+    id: "subcategories",
     title: intl.formatMessage(columnsMessages.subcategories),
     width: 300,
     icon: getColumnSortDirectionIcon(
@@ -31,7 +31,7 @@ export const getColumns = (
     ),
   },
   {
-    id: "productCount",
+    id: "products",
     title: intl.formatMessage(columnsMessages.numberOfProducts),
     width: 300,
     icon: getColumnSortDirectionIcon(
@@ -61,13 +61,15 @@ export const createGetCellContent =
     switch (columnId) {
       case "name":
         return readonlyTextCell(change ?? rowData?.name ?? "");
-      case "subcategoryCount":
+      case "subcategories":
         return readonlyTextCell(
           change ?? "" + rowData?.children?.totalCount ?? "",
         );
-      case "productCount":
+      case "products":
         return readonlyTextCell(
           change ?? "" + rowData?.products?.totalCount ?? "",
         );
+      default:
+        return readonlyTextCell("", false);
     }
   };

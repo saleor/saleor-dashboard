@@ -8,7 +8,6 @@ import {
   useCategoryBulkDeleteMutation,
   useRootCategoriesQuery,
 } from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
@@ -24,9 +23,9 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
+import isEqual from "lodash/isEqual";
 import { stringify } from "qs";
-import React from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
@@ -52,17 +51,38 @@ interface CategoryListProps {
 
 export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const navigate = useNavigator();
+  const intl = useIntl();
 
-  const { isSelected, listElements, toggle, toggleAll, reset } = useBulkActions(
-    params.ids,
+  const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<string[]>(
+    [],
   );
+  const deleteButtonRef = useRef<HTMLButtonElement>(null);
+
+  // Keep reference to clear datagrid selection function
+  const clearRowSelectionCallback = React.useRef<() => void | null>(null);
+  const clearRowSelection = () => {
+    setSelectedCategoriesIds([]);
+    if (clearRowSelectionCallback.current) {
+      clearRowSelectionCallback.current();
+    }
+  };
+
+  // Whenever pagination change we need to clear datagrid selection
+  useEffect(() => {
+    clearRowSelection();
+  }, [params.after, params.before]);
+
+  // Remove focus from delete button after delete action
+  useEffect(() => {
+    if (!params.action && deleteButtonRef.current) {
+      deleteButtonRef.current.blur();
+    }
+  }, [params.action]);
+
   const { updateListSettings, settings } = useListSettings(
     ListViews.CATEGORY_LIST,
   );
-
   usePaginationReset(categoryListUrl, params, settings.rowNumber);
-
-  const intl = useIntl();
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
@@ -78,12 +98,14 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     variables: queryVariables,
   });
 
+  const categories = mapEdgesToItems(data?.categories);
+
   const tabs = getFilterTabs();
 
   const currentTab = getFiltersCurrentTab(params, tabs);
 
   const changeFilterField = (filter: CategoryListUrlFilters) => {
-    reset();
+    clearRowSelection();
     navigate(
       categoryListUrl({
         ...getActiveFilters(params),
@@ -98,8 +120,14 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     CategoryListUrlQueryParams
   >(navigate, categoryListUrl, params);
 
+  const paginationValues = usePaginator({
+    pageInfo: maybe(() => data.categories.pageInfo),
+    paginationState,
+    queryString: params,
+  });
+
   const handleTabChange = (tab: number) => {
-    reset();
+    clearRowSelection();
     navigate(
       categoryListUrl({
         activeTab: tab.toString(),
@@ -110,8 +138,8 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
 
   const handleTabDelete = () => {
     deleteFilterTab(currentTab);
-    reset();
     navigate(categoryListUrl());
+    clearRowSelection();
   };
 
   const handleTabSave = (data: SaveFilterTabDialogFormData) => {
@@ -119,17 +147,11 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     handleTabChange(tabs.length + 1);
   };
 
-  const paginationValues = usePaginator({
-    pageInfo: maybe(() => data.categories.pageInfo),
-    paginationState,
-    queryString: params,
-  });
-
   const handleCategoryBulkDelete = (data: CategoryBulkDeleteMutation) => {
     if (data.categoryBulkDelete.errors.length === 0) {
       navigate(categoryListUrl(), { replace: true });
       refetch();
-      reset();
+      clearRowSelection();
     }
   };
 
@@ -143,6 +165,24 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
       stringify(paresedQs) !== ""
     );
   };
+
+  const handleSetSelectedCategoryIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!categories) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => categories[row].id);
+      const haveSaveValues = isEqual(rowsIds, selectedCategoriesIds);
+
+      if (!haveSaveValues) {
+        setSelectedCategoriesIds(rowsIds);
+      }
+
+      clearRowSelectionCallback.current = clearSelection;
+    },
+    [categories, selectedCategoriesIds],
+  );
 
   const [categoryBulkDelete, categoryBulkDeleteOpts] =
     useCategoryBulkDeleteMutation({
@@ -168,26 +208,18 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         sort={getSortParams(params)}
         onSort={handleSort}
         disabled={loading}
-        onUpdateListSettings={updateListSettings}
-        isChecked={isSelected}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
-        toolbar={
-          <IconButton
-            variant="secondary"
-            color="primary"
-            data-test-id="delete-icon"
-            onClick={() =>
-              openModal("delete", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
+        onUpdateListSettings={(...props) => {
+          clearRowSelection();
+          updateListSettings(...props);
+        }}
+        selectedCategoriesIds={selectedCategoriesIds}
+        onSelectCategoriesIds={handleSetSelectedCategoryIds}
+        onCategoriesDelete={() => openModal("delete")}
+        setBulkDeleteButtonRef={(ref: HTMLButtonElement) => {
+          deleteButtonRef.current = ref;
+        }}
       />
+
       <ActionDialog
         confirmButtonState={categoryBulkDeleteOpts.status}
         onClose={() =>
@@ -202,7 +234,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         onConfirm={() =>
           categoryBulkDelete({
             variables: {
-              ids: params.ids,
+              ids: selectedCategoriesIds,
             },
           })
         }
@@ -233,12 +265,14 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
           />
         </DialogContentText>
       </ActionDialog>
+
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabSave}
       />
+
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"

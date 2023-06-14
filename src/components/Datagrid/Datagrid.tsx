@@ -14,6 +14,7 @@ import DataEditor, {
   GridSelection,
   HeaderClickedEventArgs,
   Item,
+  Theme,
 } from "@glideapps/glide-data-grid";
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
 import { Card, CardContent, CircularProgress } from "@material-ui/core";
@@ -254,7 +255,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const handleRowHover = useCallback(
     (args: GridMouseEventArgs) => {
       if (hasRowHover) {
-        setHoverRow(args.kind !== "cell" ? undefined : args.location[1]);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const [_, row] = args.location;
+        setHoverRow(args.kind !== "cell" ? undefined : row);
       }
 
       // the code below is responsible for adding native <a> element when hovering over rows in the datagrid
@@ -318,12 +321,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
         return undefined;
       }
 
-      const overrideTheme = {
+      const overrideTheme: Partial<Theme> = {
         bgCell:
           themeValues.colors.background.interactiveNeutralSecondaryHovering,
         bgCellMedium:
           themeValues.colors.background.interactiveNeutralSecondaryHovering,
-        accentLight: undefined as string | undefined,
       };
 
       if (readonly) {

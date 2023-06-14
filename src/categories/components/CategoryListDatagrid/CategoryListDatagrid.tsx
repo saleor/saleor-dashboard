@@ -18,12 +18,16 @@ import { createGetCellContent, getColumns } from "./datagrid";
 
 interface CategoryListDatagridProps extends SortPage<CategoryListUrlSortField> {
   categories?: CategoryFragment[];
+  disabled: boolean;
+  onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
 }
 
 export const CategoryListDatagrid = ({
   sort,
   onSort,
   categories,
+  disabled,
+  onSelectCategoriesIds,
 }: CategoryListDatagridProps) => {
   const datagridState = useDatagridChangeState();
   const intl = useIntl();
@@ -52,10 +56,11 @@ export const CategoryListDatagrid = ({
   return (
     <DatagridChangeStateContext.Provider value={datagridState}>
       <Datagrid
-        loading={false}
+        hasRowHover
+        readonly
+        loading={disabled}
         columnSelect="single"
-        verticalBorder={col => (col > 0 ? true : false)}
-        freezeColumns={1}
+        verticalBorder={col => col > 0}
         rowMarkers="checkbox"
         availableColumns={columns}
         rows={categories?.length ?? 0}
@@ -68,6 +73,7 @@ export const CategoryListDatagrid = ({
         selectionActions={() => null}
         onColumnResize={onColumnResize}
         onColumnMoved={onColumnMoved}
+        onRowSelectionChange={onSelectCategoriesIds}
       />
     </DatagridChangeStateContext.Provider>
   );

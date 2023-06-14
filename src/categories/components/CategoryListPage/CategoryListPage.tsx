@@ -2,6 +2,7 @@ import {
   categoryAddUrl,
   CategoryListUrlSortField,
 } from "@dashboard/categories/urls";
+import SearchInput from "@dashboard/components/AppLayout/ListFilters/components/SearchInput";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
@@ -9,14 +10,19 @@ import { ListPageLayout } from "@dashboard/components/Layouts";
 import { CategoryFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import {
-  ListActions,
   PageListProps,
   SearchPageProps,
   SortPage,
   TabPageProps,
 } from "@dashboard/types";
 import { Card } from "@material-ui/core";
-import { Box, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import {
+  Box,
+  Button as MacawButton,
+  ChevronRightIcon,
+  Tooltip,
+  TrashBinIcon,
+} from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -24,12 +30,15 @@ import { CategoryListDatagrid } from "../CategoryListDatagrid";
 
 export interface CategoryTableProps
   extends PageListProps,
-    ListActions,
     SearchPageProps,
     SortPage<CategoryListUrlSortField>,
     TabPageProps {
   categories: CategoryFragment[];
   hasPresetsChanged: boolean;
+  selectedCategoriesIds: string[];
+  onCategoriesDelete: () => void;
+  onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
+  setBulkDeleteButtonRef: (ref: HTMLButtonElement) => void;
 }
 
 export const CategoryListPage: React.FC<CategoryTableProps> = ({
@@ -37,20 +46,16 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   currentTab,
   disabled,
   initialSearch,
-  isChecked,
-  selected,
-  settings,
   tabs,
-  toggle,
-  toggleAll,
-  toolbar,
   onAll,
   onSearchChange,
   onTabChange,
   onTabDelete,
   onTabSave,
-  onUpdateListSettings,
   hasPresetsChanged,
+  onCategoriesDelete,
+  setBulkDeleteButtonRef,
+  selectedCategoriesIds,
   ...listProps
 }) => {
   const intl = useIntl();
@@ -61,6 +66,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
       <TopNav
         title={intl.formatMessage(sectionNames.categories)}
         isAlignToRight={false}
+        withoutBorder
       >
         <Box
           __flex={1}
@@ -106,24 +112,49 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
         </Box>
       </TopNav>
       <Card>
+        <Box
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
+          paddingX={6}
+          marginBottom={2}
+        >
+          <Box __width="320px">
+            <SearchInput
+              initialSearch={initialSearch}
+              placeholder={intl.formatMessage({
+                id: "T83iU7",
+                defaultMessage: "Search categories...",
+              })}
+              onSearchChange={onSearchChange}
+            />
+          </Box>
+          {selectedCategoriesIds.length > 0 && (
+            <Tooltip>
+              <Tooltip.Trigger>
+                <MacawButton
+                  ref={setBulkDeleteButtonRef}
+                  onClick={onCategoriesDelete}
+                  icon={<TrashBinIcon />}
+                  variant="secondary"
+                  data-test-id="delete-products-button"
+                />
+              </Tooltip.Trigger>
+              <Tooltip.Content side="bottom">
+                <Tooltip.Arrow />
+                <FormattedMessage
+                  defaultMessage="Bulk category delete"
+                  id="qU/z0Q"
+                />
+              </Tooltip.Content>
+            </Tooltip>
+          )}
+        </Box>
         <CategoryListDatagrid
-          categories={categories}
-          onSort={listProps.onSort}
-          sort={listProps.sort}
-        />
-        {/* <CategoryList
-          categories={categories}
           disabled={disabled}
-          isChecked={isChecked}
-          isRoot={true}
-          selected={selected}
-          settings={settings}
-          toggle={toggle}
-          toggleAll={toggleAll}
-          toolbar={toolbar}
-          onUpdateListSettings={onUpdateListSettings}
+          categories={categories}
           {...listProps}
-        /> */}
+        />
       </Card>
     </ListPageLayout>
   );
