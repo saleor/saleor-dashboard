@@ -24,6 +24,11 @@ const categoryTableProps: CategoryTableProps = {
     ...sortPageProps.sort,
     sort: CategoryListUrlSortField.name,
   },
+  onCategoriesDelete: () => undefined,
+  onSelectCategoriesIds: () => undefined,
+  selectedCategoriesIds: [],
+  setBulkDeleteButtonRef: () => undefined,
+  hasPresetsChanged: false,
 };
 
 const meta: Meta<typeof CategoryListPage> = {

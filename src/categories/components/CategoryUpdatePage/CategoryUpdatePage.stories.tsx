@@ -25,11 +25,16 @@ const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
   onSubmit: () => undefined,
-  productListToolbar: null,
   products: mapEdgesToItems(category.products),
   saveButtonBarState: "default",
   subcategories: mapEdgesToItems(category.children),
-  subcategoryListToolbar: null,
+  onCategoriesDelete: () => undefined,
+  onProductsDelete: () => undefined,
+  onSelectCategoriesIds: () => undefined,
+  onSelectProductsIds: () => undefined,
+  selectedCategoriesIds: [],
+  selectedProductsIds: [],
+  setBulkDeleteButtonRef: () => undefined,
   ...listActionsProps,
 };
 
