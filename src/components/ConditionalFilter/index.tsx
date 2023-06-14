@@ -145,7 +145,6 @@ export const ConditionalFilters = () => {
       updateRightOperator(event.path.split('.')[0], event.value)
     }
 
-
     console.log(event)
   }
 
