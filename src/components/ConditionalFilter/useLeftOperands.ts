@@ -1,4 +1,5 @@
-import { useState } from "react"
+import { use_GetInitialDynamicLeftOperandsQuery } from "@dashboard/graphql";
+import { useState } from "react";
 
 const STATIC_OPTIONS = [
   { value: "price", label: "Price", type: 1 },
@@ -8,8 +9,19 @@ const STATIC_OPTIONS = [
 ];
 
 export const useLeftOperands = () => {
-  const [operands, setOperands] = useState(STATIC_OPTIONS)
+  const [operands, setOperands] = useState(STATIC_OPTIONS);
 
+  const { data } = use_GetInitialDynamicLeftOperandsQuery({
+    variables: {},
+  });
 
-  return operands
-}
+  const dynamic =
+    data?.attributes.edges.map(({ node }) => ({
+      label: node.name,
+      value: node.id,
+      type: 2,
+      slug: node.slug,
+    })) ?? [];
+
+  return [...operands, ...dynamic];
+};

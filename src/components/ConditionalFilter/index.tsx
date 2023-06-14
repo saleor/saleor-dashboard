@@ -1,13 +1,9 @@
-import { Box, _ExperimentalFilters } from "@saleor/macaw-ui/next"
-import { parse, stringify } from "qs";
-import React, { useEffect, useState } from "react";
-import { useAttributeListLazyQuery, useCategoryDetailsLazyQuery, useCategoryDetailsQuery } from "@dashboard/graphql";
-import useCategorySearch from "@dashboard/searches/useCategorySearch";
+import { _ExperimentalFilters, Box } from "@saleor/macaw-ui/next";
+import React from "react";
+
 import { useFilterContainer } from "./useFilterContainer";
 import { useLeftOperands } from "./useLeftOperands";
-import useRouter from "use-react-router";
 import { useUrlValueProvider } from "./ValueProvider/useUrlValueProvider";
-
 
 const demoValue = [
   {
@@ -92,28 +88,27 @@ const demoValue = [
   },
 ];
 
-
-
 // const useFilterCollection = () => {
 
 //   const [load, result] = useAttributeListLazyQuery()
-  
+
 //   useEffect(() => {
 //     load({
 //       variables: {
 //         first: 100
 //       }
 //     })
-  
+
 //   }, [])
-  
+
 //   console.log(result.data)
 
 // }
 
 export const ConditionalFilters = () => {
-  const provider = useUrlValueProvider()
-  const leftOptions = useLeftOperands()
+  const provider = useUrlValueProvider();
+  const leftOptions = useLeftOperands();
+
   const {
     value,
     persist,
@@ -121,47 +116,48 @@ export const ConditionalFilters = () => {
     removeAt,
     updateLeftOperator,
     updateRightOperator,
-    updateCondition
-  } = useFilterContainer(provider)
+    updateCondition,
+  } = useFilterContainer(provider);
 
-  const handleStateChange = (event) => {
+  const handleStateChange = event => {
     if (event.type === "row.add") {
-      addEmpty()
+      addEmpty();
     }
 
     if (event.type === "remove") {
-      removeAt(event.path)
+      removeAt(event.path);
     }
 
     if (event.type === "leftOperator.onChange") {
-      updateLeftOperator(event.path, event.value)
+      updateLeftOperator(event.path, event.value);
     }
 
     if (event.type === "conditon.onChange") {
-      updateCondition(event.path.split('.')[0], event.value)
+      updateCondition(event.path.split(".")[0], event.value);
     }
 
     if (event.type === "rightOperator.onChange") {
-      updateRightOperator(event.path.split('.')[0], event.value)
+      updateRightOperator(event.path.split(".")[0], event.value);
     }
 
-    console.log(event)
-  }
+    console.log(event);
+  };
 
   const handleConfirm = () => {
-    console.log("handleConfirm")
-    persist()
-  }
+    console.log("handleConfirm");
+    persist();
+  };
 
-  console.log("Render with:", value)
+  console.log("Render with:", value);
 
   return (
     <Box __height={500}>
       <_ExperimentalFilters
         leftOptions={leftOptions}
         value={value}
-        onChange={handleStateChange} />
+        onChange={handleStateChange}
+      />
       <button onClick={handleConfirm}>Confirm</button>
     </Box>
-  )
-}
+  );
+};
