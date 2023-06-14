@@ -1,3 +1,4 @@
+import { AppUrls } from "@dashboard/apps/urls";
 import {
   borderHeight,
   topBarHeight,
@@ -25,6 +26,7 @@ export const AppPage: React.FC<AppPageProps> = ({
 }) => (
   <DetailPageLayout gridTemplateColumns={1} withSavebar={false}>
     <AppPageNav
+      goBackUrl={AppUrls.resolveAppListUrl()}
       appId={data.id}
       name={data?.name}
       supportUrl={data?.supportUrl}
