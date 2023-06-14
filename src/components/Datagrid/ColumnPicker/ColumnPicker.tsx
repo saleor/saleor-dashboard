@@ -80,7 +80,14 @@ export const ColumnPicker = ({
               onClose={() => setExpanded(false)}
             />
           )}
-          <Box __minWidth="320px" backgroundColor="plain" padding={4}>
+          <Box
+            __minWidth="320px"
+            __maxHeight="70vh"
+            __minHeight={expanded ? "502px" : undefined}
+            backgroundColor="plain"
+            padding={4}
+            overflow="scroll"
+          >
             <Box marginBottom={3}>
               <Text variant="caption" size="small" color="textNeutralSubdued">
                 <FormattedMessage {...messages.column} />
