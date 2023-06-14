@@ -22,12 +22,12 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
-import { RelayToFlat, TabListActions } from "../../../types";
+import { RelayToFlat } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 import CategoryBackground from "../CategoryBackground";
 import { CategoryDeleteButton } from "../CategoryDeleteButton";
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
-import CategoryProducts from "../CategoryProducts";
+import { CategoryProductListDatagrid } from "../CategoryProductListDatagrid";
 import CategoryUpdateForm, { CategoryUpdateData } from "./form";
 
 export enum CategoryPageTab {
@@ -35,8 +35,7 @@ export enum CategoryPageTab {
   products = "products",
 }
 
-export interface CategoryUpdatePageProps
-  extends TabListActions<"productListToolbar"> {
+export interface CategoryUpdatePageProps {
   categoryId: string;
   changeTab: (index: CategoryPageTab) => void;
   currentTab: CategoryPageTab;
@@ -50,7 +49,10 @@ export interface CategoryUpdatePageProps
   onImageDelete: () => void;
   onSubmit: (data: CategoryUpdateData) => SubmitPromise;
   selectedCategoriesIds: string[];
+  selectedProductsIds: string[];
   onCategoriesDelete: () => void;
+  onProductsDelete: () => void;
+  onSelectProductsIds: (ids: number[], clearSelection: () => void) => void;
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
   setBulkDeleteButtonRef: (ref: HTMLButtonElement) => void;
   onImageUpload(file: File);
@@ -74,15 +76,13 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   onSubmit,
   onImageDelete,
   onImageUpload,
-  isChecked,
-  productListToolbar,
-  selected,
-  toggle,
-  toggleAll,
   onSelectCategoriesIds,
   setBulkDeleteButtonRef,
   onCategoriesDelete,
   selectedCategoriesIds,
+  onProductsDelete,
+  onSelectProductsIds,
+  selectedProductsIds,
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -190,8 +190,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                         onClick={onCategoriesDelete}
                       >
                         <FormattedMessage
-                          defaultMessage="Bulk category delete"
-                          id="qU/z0Q"
+                          defaultMessage="Bulk categories delete"
+                          id="ZN5IZl"
                         />
                       </CategoryDeleteButton>
                     )}
@@ -205,17 +205,26 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
               </Card>
             )}
             {currentTab === CategoryPageTab.products && (
-              <CategoryProducts
-                categoryId={category?.id}
-                categoryName={category?.name}
-                products={products}
-                disabled={disabled}
-                toggle={toggle}
-                toggleAll={toggleAll}
-                selected={selected}
-                isChecked={isChecked}
-                toolbar={productListToolbar}
-              />
+              <Box position="relative">
+                <Box position="absolute" top={1} right={6} zIndex="2">
+                  {selectedProductsIds.length > 0 && (
+                    <CategoryDeleteButton
+                      ref={setBulkDeleteButtonRef}
+                      onClick={onProductsDelete}
+                    >
+                      <FormattedMessage
+                        defaultMessage="Bulk products delete"
+                        id="cxOmce"
+                      />
+                    </CategoryDeleteButton>
+                  )}
+                </Box>
+                <CategoryProductListDatagrid
+                  products={products}
+                  disabled={disabled}
+                  onSelectProductsIds={onSelectProductsIds}
+                />
+              </Box>
             )}
             <Savebar
               onCancel={() => navigate(backHref)}

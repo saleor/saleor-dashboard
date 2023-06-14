@@ -1,7 +1,3 @@
-import {
-  CategoryListUrlSortField,
-  categoryUrl,
-} from "@dashboard/categories/urls";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
 import {
@@ -9,8 +5,9 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import { CategoryFragment } from "@dashboard/graphql";
-import { PageListProps, SortPage } from "@dashboard/types";
+import { CategoryDetailsQuery } from "@dashboard/graphql";
+import { productUrl } from "@dashboard/products/urls";
+import { PageListProps, RelayToFlat } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
@@ -18,47 +15,34 @@ import { useIntl } from "react-intl";
 
 import { createGetCellContent, getColumns } from "./datagrid";
 
-interface CategoryListDatagridProps
-  extends Partial<SortPage<CategoryListUrlSortField>>,
-    PageListProps {
-  categories?: CategoryFragment[];
+interface CategoryListDatagridProps extends PageListProps {
+  products?: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
   disabled: boolean;
-  onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
+  onSelectProductsIds: (ids: number[], clearSelection: () => void) => void;
 }
 
-export const CategoryListDatagrid = ({
-  sort,
-  onSort,
-  categories,
+export const CategoryProductListDatagrid = ({
+  products,
   disabled,
-  onSelectCategoriesIds,
+  onSelectProductsIds,
   settings,
   onUpdateListSettings,
 }: CategoryListDatagridProps) => {
   const datagridState = useDatagridChangeState();
   const intl = useIntl();
-  const availableColumns = useMemo(() => getColumns(intl, sort), [intl, sort]);
+  const availableColumns = useMemo(() => getColumns(intl), [intl]);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const getCellContent = useCallback(
-    createGetCellContent(categories, availableColumns),
-    [categories, availableColumns],
+    createGetCellContent(products, availableColumns),
+    [products, availableColumns],
   );
 
   const { columns, onColumnMoved, onColumnResize } =
     useColumnsDefault(availableColumns);
 
-  const handleHeaderClick = useCallback(
-    (col: number) => {
-      if (sort !== undefined) {
-        onSort(columns[col].id as CategoryListUrlSortField);
-      }
-    },
-    [columns, onSort, sort],
-  );
-
   const handleRowAnchor = useCallback(
-    ([, row]: Item) => categoryUrl(categories[row].id),
-    [categories],
+    ([, row]: Item) => productUrl(products[row].id),
+    [products],
   );
 
   return (
@@ -67,24 +51,22 @@ export const CategoryListDatagrid = ({
         hasRowHover
         readonly
         loading={disabled}
-        columnSelect={sort !== undefined ? "single" : undefined}
-        verticalBorder={col => col > 0}
+        verticalBorder={false}
         rowMarkers="checkbox"
         availableColumns={columns}
-        rows={categories?.length ?? 0}
+        rows={products?.length ?? 0}
         getCellContent={getCellContent}
         getCellError={() => false}
         emptyText={intl.formatMessage({
           defaultMessage: "No categories found",
           id: "dM86a2",
         })}
-        onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
         menuItems={() => []}
         selectionActions={() => null}
         onColumnResize={onColumnResize}
         onColumnMoved={onColumnMoved}
-        onRowSelectionChange={onSelectCategoriesIds}
+        onRowSelectionChange={onSelectProductsIds}
       />
 
       <Box paddingX={6}>

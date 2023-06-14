@@ -14,7 +14,6 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useLocalPaginator, {
   useSectionLocalPaginationState,
 } from "@dashboard/hooks/useLocalPaginator";
@@ -27,7 +26,6 @@ import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdat
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
 import isEqual from "lodash/isEqual";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -64,9 +62,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
 }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
   const intl = useIntl();
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
@@ -74,6 +69,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<string[]>(
     [],
   );
+  const [selectedProductsIds, setSelectedProductsIds] = useState<string[]>([]);
   const deleteButtonRef = useRef<HTMLButtonElement>(null);
 
   // Keep reference to clear datagrid selection function
@@ -101,7 +97,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   );
   const paginate = useLocalPaginator(setPaginationState);
   const changeTab = (tab: CategoryPageTab) => {
-    reset();
     setActiveTab(tab);
   };
 
@@ -112,6 +107,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
 
   const category = data?.category;
   const subcategories = mapEdgesToItems(data?.category?.children);
+  const products = mapEdgesToItems(data?.category?.products);
 
   const handleCategoryDelete = (data: CategoryDeleteMutation) => {
     if (data.categoryDelete.errors.length === 0) {
@@ -164,7 +160,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
       });
-      reset();
     }
   };
 
@@ -183,7 +178,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             text: intl.formatMessage(commonMessages.savedChanges),
           });
           refetch();
-          reset();
         }
       },
     });
@@ -237,6 +231,24 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     [selectedCategoriesIds, subcategories],
   );
 
+  const handleSetSelectedPrductIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!products) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => products[row].id);
+      const haveSaveValues = isEqual(rowsIds, selectedProductsIds);
+
+      if (!haveSaveValues) {
+        setSelectedProductsIds(rowsIds);
+      }
+
+      clearRowSelectionCallback.current = clearSelection;
+    },
+    [products, selectedProductsIds],
+  );
+
   const handleSubmit = createMetadataUpdateHandler(
     data?.category,
     handleUpdate,
@@ -281,30 +293,18 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           })
         }
         onSubmit={handleSubmit}
-        products={mapEdgesToItems(data?.category?.products)}
+        products={products}
         saveButtonBarState={updateResult.status}
         subcategories={subcategories}
-        productListToolbar={
-          <IconButton
-            data-test-id="delete-icon"
-            color="primary"
-            onClick={() =>
-              openModal("delete-products", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
-        isChecked={isSelected}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
         selectedCategoriesIds={selectedCategoriesIds}
+        selectedProductsIds={selectedProductsIds}
         onSelectCategoriesIds={handleSetSelectedCategoryIds}
+        onSelectProductsIds={handleSetSelectedPrductIds}
         onCategoriesDelete={() => {
           openModal("delete-categories");
+        }}
+        onProductsDelete={() => {
+          openModal("delete-products");
         }}
         setBulkDeleteButtonRef={(ref: HTMLButtonElement) => {
           deleteButtonRef.current = ref;
