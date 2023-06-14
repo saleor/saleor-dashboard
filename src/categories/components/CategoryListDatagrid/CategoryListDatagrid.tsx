@@ -8,15 +8,19 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { CategoryFragment } from "@dashboard/graphql";
-import { SortPage } from "@dashboard/types";
+import { PageListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
+import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { createGetCellContent, getColumns } from "./datagrid";
 
-interface CategoryListDatagridProps extends SortPage<CategoryListUrlSortField> {
+interface CategoryListDatagridProps
+  extends SortPage<CategoryListUrlSortField>,
+    PageListProps {
   categories?: CategoryFragment[];
   disabled: boolean;
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
@@ -28,6 +32,8 @@ export const CategoryListDatagrid = ({
   categories,
   disabled,
   onSelectCategoriesIds,
+  settings,
+  onUpdateListSettings,
 }: CategoryListDatagridProps) => {
   const datagridState = useDatagridChangeState();
   const intl = useIntl();
@@ -75,6 +81,16 @@ export const CategoryListDatagrid = ({
         onColumnMoved={onColumnMoved}
         onRowSelectionChange={onSelectCategoriesIds}
       />
+
+      <Box paddingX={6}>
+        <TablePaginationWithContext
+          component="div"
+          colSpan={1}
+          settings={settings}
+          disabled={disabled}
+          onUpdateListSettings={onUpdateListSettings}
+        />
+      </Box>
     </DatagridChangeStateContext.Provider>
   );
 };
