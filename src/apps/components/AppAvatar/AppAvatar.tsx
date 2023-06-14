@@ -25,6 +25,9 @@ export const AppAvatar: React.FC<{
       display="flex"
       placeItems="center"
       borderRadius={2}
+      borderWidth={1}
+      borderColor={"neutralPlain"}
+      borderStyle={"solid"}
     >
       <GenericAppIcon size="large" color="iconNeutralSubdued" />
     </Box>
