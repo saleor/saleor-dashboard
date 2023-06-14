@@ -49,7 +49,7 @@ export const ColumnPickerAvailableNodes = ({
     }
 
     return currentCategory.availableNodes.map(node => (
-      <Box display="flex" alignItems="center" padding={2} gap={3} key={node.id}>
+      <Box padding={2} gap={3} key={node.id}>
         <Checkbox
           onCheckedChange={() => changeHandler(node.id)}
           checked={columnPickerSettings.includes(node.id)}
