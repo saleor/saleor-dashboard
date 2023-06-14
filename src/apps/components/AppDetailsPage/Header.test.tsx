@@ -1,6 +1,8 @@
 import { appDetails } from "@dashboard/apps/fixtures";
+import Wrapper from "@test/wrapper";
 import { render } from "@testing-library/react";
 import React from "react";
+import { MemoryRouter as Router } from "react-router-dom";
 
 import Header from "./Header";
 
@@ -40,12 +42,16 @@ describe("Apps AppDetailsPage Header", () => {
 
     // Act
     render(
-      <Header
-        data={appDetails}
-        onAppActivateOpen={onAppActivateOpen}
-        onAppDeactivateOpen={onAppDeactivateOpen}
-        onAppDeleteOpen={onAppDeleteOpen}
-      />,
+      <Wrapper>
+        <Router>
+          <Header
+            data={appDetails}
+            onAppActivateOpen={onAppActivateOpen}
+            onAppDeactivateOpen={onAppDeactivateOpen}
+            onAppDeleteOpen={onAppDeleteOpen}
+          />
+        </Router>
+      </Wrapper>,
     );
     const title = render(mockTopNav.mock.calls[0][0].title);
 
@@ -68,12 +74,16 @@ describe("Apps AppDetailsPage Header", () => {
 
     // Act
     render(
-      <Header
-        data={{ ...appDetails, isActive: false }}
-        onAppActivateOpen={onAppActivateOpen}
-        onAppDeactivateOpen={onAppDeactivateOpen}
-        onAppDeleteOpen={onAppDeleteOpen}
-      />,
+      <Wrapper>
+        <Router>
+          <Header
+            data={{ ...appDetails, isActive: false }}
+            onAppActivateOpen={onAppActivateOpen}
+            onAppDeactivateOpen={onAppDeactivateOpen}
+            onAppDeleteOpen={onAppDeleteOpen}
+          />
+        </Router>
+      </Wrapper>,
     );
     const title = render(mockTopNav.mock.calls[0][0].title);
 
