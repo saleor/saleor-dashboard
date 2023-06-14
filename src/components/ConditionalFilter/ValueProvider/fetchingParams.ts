@@ -16,7 +16,12 @@ const emptyFetchingParams: FetchingParams = {
   attribute: {}
 }
 
+const unique = <T>(array: Iterable<T>) => {
+  return Array.from(new Set(array))
+}
+
 const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
+  console.log(p.category)
   if (!c.isAttribute() && !p[c.name]) {
     p[c.name] = []
   }
@@ -25,13 +30,14 @@ const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
     p.attribute[c.name] = []
   }
 
+
   if (c.isAttribute()) {
-    p.attribute[c.name] = p.attribute[c.name].concat(c.value)
+    p.attribute[c.name] = unique(p.attribute[c.name].concat(c.value))
 
     return p
   }
 
-  p[c.name] = p[c.name].concat(c.value)
+  p[c.name] = unique(p[c.name].concat(c.value))
 
   return p
 }

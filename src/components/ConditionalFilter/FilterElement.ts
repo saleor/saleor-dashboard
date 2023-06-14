@@ -1,3 +1,4 @@
+import { UrlToken } from "./ValueProvider/UrlToken"
 import { CONTROL_DEFAULTS } from "./controlsType"
 import { STATIC_CONDITIONS } from "./staticConditions"
 
@@ -38,6 +39,21 @@ class Condition {
 
     return new Condition(staticOptions, selected)
   }
+
+  public static fromUrlToken (token: UrlToken, response: unknown) {
+    if (!token.isStatic()) return null
+
+    const staticOptions = STATIC_CONDITIONS[token.name]
+    const selectedOption = staticOptions.find(el => el.label === token.conditionKind)
+
+    const selected: ConditionSelected = {
+      conditionValue: selectedOption.value,
+      value: token.value,
+      options: [] // response
+    }
+
+    return new Condition(staticOptions, selected)
+  }
 }
 
 
@@ -45,7 +61,7 @@ class Condition {
 export class FilterElement {
   private constructor(
     public value: string,
-    public type: number,
+    public type: number | string,
     public condition: Condition
   ) {}
 
@@ -84,7 +100,6 @@ export class FilterElement {
     )
   }
 
-
   public static createEmpty () {
     const emptyCondition = {
       options: [],
@@ -97,6 +112,14 @@ export class FilterElement {
       "",
       0,
       emptyCondition
+    )
+  }
+
+  public static fromUrlToken (token: UrlToken, response: unknown) {
+    return new FilterElement(
+      token.name,
+      token.type,
+      Condition.fromUrlToken(token, response)
     )
   }
 }
