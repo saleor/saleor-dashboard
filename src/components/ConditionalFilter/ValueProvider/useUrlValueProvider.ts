@@ -1,12 +1,10 @@
 import useRouter from "use-react-router";
 
+import { useInitialAPIState } from "../API/getInitalAPIState";
 import { FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { obtainFetchingParams } from "./fetchingParams";
 import { TokenArray, tokenizeUrl } from "./tokenize";
-
-const REAL_DATA_URL =
-  "0[s0.collection]=featured-products&1=o&2[a2.abv][0]=XR0cmlidXRlVmFsdWU6Njg=";
 
 const mapUrlTokensToFilterValues = (urlTokens: TokenArray, response) =>
   urlTokens.map(el => {
@@ -32,6 +30,15 @@ export const useUrlValueProvider = (): FilterValueProvider => {
   console.log("tokenized", tokenizedUrl);
   console.log("flatenated", fetchingParams);
   console.log("result", result);
+
+  const dataFromAPI = useInitialAPIState({
+    collection: ["featured-products"],
+    attribute: {
+      abv: ["QXR0cmlidXRlVmFsdWU6Njg="],
+    },
+  });
+
+  console.log("dataFromAPI", dataFromAPI);
 
   // const structure = [
   //   { "s0.category": "cat1"},
