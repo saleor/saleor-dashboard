@@ -105,6 +105,7 @@ export interface DatagridProps {
   columnSelect?: DataEditorProps["columnSelect"];
   showEmptyDatagrid?: boolean;
   rowAnchor?: (item: Item) => string;
+  actionButtonPosition?: "left" | "right";
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -135,9 +136,10 @@ export const Datagrid: React.FC<DatagridProps> = ({
   rowAnchor,
   hasRowHover = false,
   onRowSelectionChange,
+  actionButtonPosition = "left",
   ...datagridProps
 }): ReactElement => {
-  const classes = useStyles();
+  const classes = useStyles({ actionButtonPosition });
   const { themeValues } = useTheme();
   const datagridTheme = useDatagridTheme(readonly, readonly);
   const editor = useRef<DataEditorRef | null>(null);
@@ -466,11 +468,13 @@ export const Datagrid: React.FC<DatagridProps> = ({
         <CardContent classes={{ root: classes.cardContentRoot }}>
           {rowsTotal > 0 || showEmptyDatagrid ? (
             <>
-              {selection?.rows && selection?.rows.length > 0 && (
-                <div className={classes.actionBtnBar}>
-                  {selectionActionsComponent}
-                </div>
-              )}
+              {selection?.rows &&
+                selection?.rows.length > 0 &&
+                selectionActionsComponent && (
+                  <div className={classes.actionBtnBar}>
+                    {selectionActionsComponent}
+                  </div>
+                )}
               <div className={classes.editorContainer}>
                 <Box
                   backgroundColor="plain"

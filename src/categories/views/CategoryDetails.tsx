@@ -296,8 +296,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         products={products}
         saveButtonBarState={updateResult.status}
         subcategories={subcategories}
-        selectedCategoriesIds={selectedCategoriesIds}
-        selectedProductsIds={selectedProductsIds}
         onSelectCategoriesIds={handleSetSelectedCategoryIds}
         onSelectProductsIds={handleSetSelectedPrductIds}
         onCategoriesDelete={() => {

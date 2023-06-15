@@ -13,7 +13,7 @@ import { CategoryFragment } from "@dashboard/graphql";
 import { PageListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui/next";
-import React, { useCallback, useMemo } from "react";
+import React, { ReactNode, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { createGetCellContent, getColumns } from "./datagrid";
@@ -24,6 +24,7 @@ interface CategoryListDatagridProps
   categories?: CategoryFragment[];
   disabled: boolean;
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
+  selectionActionButton?: ReactNode | null;
 }
 
 export const CategoryListDatagrid = ({
@@ -34,6 +35,7 @@ export const CategoryListDatagrid = ({
   onSelectCategoriesIds,
   settings,
   onUpdateListSettings,
+  selectionActionButton = null,
 }: CategoryListDatagridProps) => {
   const datagridState = useDatagridChangeState();
   const intl = useIntl();
@@ -81,7 +83,8 @@ export const CategoryListDatagrid = ({
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
         menuItems={() => []}
-        selectionActions={() => null}
+        actionButtonPosition="right"
+        selectionActions={() => selectionActionButton}
         onColumnResize={onColumnResize}
         onColumnMoved={onColumnMoved}
         onRowSelectionChange={onSelectCategoriesIds}

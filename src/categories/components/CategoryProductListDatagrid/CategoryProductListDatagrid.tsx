@@ -10,7 +10,7 @@ import { productUrl } from "@dashboard/products/urls";
 import { PageListProps, RelayToFlat } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui/next";
-import React, { useCallback, useMemo } from "react";
+import React, { ReactNode, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { createGetCellContent, getColumns } from "./datagrid";
@@ -18,6 +18,7 @@ import { createGetCellContent, getColumns } from "./datagrid";
 interface CategoryListDatagridProps extends PageListProps {
   products?: RelayToFlat<CategoryDetailsQuery["category"]["products"]>;
   disabled: boolean;
+  selectionActionButton?: ReactNode | null;
   onSelectProductsIds: (ids: number[], clearSelection: () => void) => void;
 }
 
@@ -27,6 +28,7 @@ export const CategoryProductListDatagrid = ({
   onSelectProductsIds,
   settings,
   onUpdateListSettings,
+  selectionActionButton = null,
 }: CategoryListDatagridProps) => {
   const datagridState = useDatagridChangeState();
   const intl = useIntl();
@@ -50,6 +52,7 @@ export const CategoryProductListDatagrid = ({
       <Datagrid
         hasRowHover
         readonly
+        actionButtonPosition="right"
         loading={disabled}
         verticalBorder={false}
         rowMarkers="checkbox"
@@ -58,12 +61,12 @@ export const CategoryProductListDatagrid = ({
         getCellContent={getCellContent}
         getCellError={() => false}
         emptyText={intl.formatMessage({
-          defaultMessage: "No categories found",
-          id: "dM86a2",
+          defaultMessage: "No products found",
+          id: "Q1Uzbb",
         })}
         rowAnchor={handleRowAnchor}
         menuItems={() => []}
-        selectionActions={() => null}
+        selectionActions={() => selectionActionButton}
         onColumnResize={onColumnResize}
         onColumnMoved={onColumnMoved}
         onRowSelectionChange={onSelectProductsIds}

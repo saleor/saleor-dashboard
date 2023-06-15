@@ -17,7 +17,7 @@ import { CategoryDetailsQuery, ProductErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Card } from "@material-ui/core";
-import { Box, sprinkles } from "@saleor/macaw-ui/next";
+import { sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -48,8 +48,6 @@ export interface CategoryUpdatePageProps {
   addProductHref: string;
   onImageDelete: () => void;
   onSubmit: (data: CategoryUpdateData) => SubmitPromise;
-  selectedCategoriesIds: string[];
-  selectedProductsIds: string[];
   onCategoriesDelete: () => void;
   onProductsDelete: () => void;
   onSelectProductsIds: (ids: number[], clearSelection: () => void) => void;
@@ -79,10 +77,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   onSelectCategoriesIds,
   setBulkDeleteButtonRef,
   onCategoriesDelete,
-  selectedCategoriesIds,
   onProductsDelete,
   onSelectProductsIds,
-  selectedProductsIds,
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -182,49 +178,42 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                     </Button>
                   }
                 />
-                <Box position="relative">
-                  <Box position="absolute" top={1} right={6} zIndex="2">
-                    {selectedCategoriesIds.length > 0 && (
-                      <CategoryDeleteButton
-                        ref={setBulkDeleteButtonRef}
-                        onClick={onCategoriesDelete}
-                      >
-                        <FormattedMessage
-                          defaultMessage="Bulk categories delete"
-                          id="ZN5IZl"
-                        />
-                      </CategoryDeleteButton>
-                    )}
-                  </Box>
-                  <CategoryListDatagrid
-                    categories={subcategories}
-                    disabled={disabled}
-                    onSelectCategoriesIds={onSelectCategoriesIds}
-                  />
-                </Box>
+
+                <CategoryListDatagrid
+                  categories={subcategories}
+                  disabled={disabled}
+                  onSelectCategoriesIds={onSelectCategoriesIds}
+                  selectionActionButton={
+                    <CategoryDeleteButton
+                      ref={setBulkDeleteButtonRef}
+                      onClick={onCategoriesDelete}
+                    >
+                      <FormattedMessage
+                        defaultMessage="Bulk categories delete"
+                        id="ZN5IZl"
+                      />
+                    </CategoryDeleteButton>
+                  }
+                />
               </Card>
             )}
             {currentTab === CategoryPageTab.products && (
-              <Box position="relative">
-                <Box position="absolute" top={1} right={6} zIndex="2">
-                  {selectedProductsIds.length > 0 && (
-                    <CategoryDeleteButton
-                      ref={setBulkDeleteButtonRef}
-                      onClick={onProductsDelete}
-                    >
-                      <FormattedMessage
-                        defaultMessage="Bulk products delete"
-                        id="cxOmce"
-                      />
-                    </CategoryDeleteButton>
-                  )}
-                </Box>
-                <CategoryProductListDatagrid
-                  products={products}
-                  disabled={disabled}
-                  onSelectProductsIds={onSelectProductsIds}
-                />
-              </Box>
+              <CategoryProductListDatagrid
+                products={products}
+                disabled={disabled}
+                onSelectProductsIds={onSelectProductsIds}
+                selectionActionButton={
+                  <CategoryDeleteButton
+                    ref={setBulkDeleteButtonRef}
+                    onClick={onProductsDelete}
+                  >
+                    <FormattedMessage
+                      defaultMessage="Bulk products delete"
+                      id="cxOmce"
+                    />
+                  </CategoryDeleteButton>
+                }
+              />
             )}
             <Savebar
               onCancel={() => navigate(backHref)}
