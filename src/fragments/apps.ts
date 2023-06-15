@@ -19,7 +19,7 @@ export const appManifestFragment = gql`
     }
     brand {
       logo {
-        default(format: WEBP, size: 48)
+        default(format: WEBP, size: 64)
       }
     }
   }
