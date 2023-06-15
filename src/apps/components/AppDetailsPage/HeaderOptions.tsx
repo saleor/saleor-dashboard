@@ -1,4 +1,3 @@
-import ExternalLink from "@dashboard/components/ExternalLink";
 import Skeleton from "@dashboard/components/Skeleton";
 import { AppQuery } from "@dashboard/graphql";
 import { buttonMessages } from "@dashboard/intl";
@@ -10,8 +9,6 @@ import { FormattedMessage } from "react-intl";
 
 import activateIcon from "../../../../assets/images/activate-icon.svg";
 import deleteIcon from "../../../../assets/images/delete.svg";
-import supportIcon from "../../../../assets/images/support-icon.svg";
-import messages from "./messages";
 import { useStyles } from "./styles";
 
 interface HeaderOptionsProps {
@@ -41,14 +38,6 @@ const HeaderOptions: React.FC<HeaderOptionsProps> = ({
   return (
     <Box marginX={7}>
       <div className={classes.appHeaderLinks}>
-        <ExternalLink
-          className={classes.headerLinkContainer}
-          href={data.supportUrl || ""}
-          target="_blank"
-        >
-          <SVG src={supportIcon} />
-          <FormattedMessage {...messages.supportLink} />
-        </ExternalLink>
         <ButtonBase
           className={classes.headerLinkContainer}
           disableRipple
