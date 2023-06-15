@@ -46,6 +46,7 @@ export const ColumnPicker = ({
 
   return (
     <Popover
+      modal
       open={pickerOpen}
       onOpenChange={() => {
         setExpanded(false);
