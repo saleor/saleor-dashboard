@@ -11,6 +11,7 @@ const STATIC_TO_LOAD = [
   "category",
   "collection",
   "channel",
+  "producttype"
 ]
 
 type TokenType = "a" | "s"

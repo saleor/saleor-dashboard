@@ -10,7 +10,7 @@ interface Props {
   category?: string[];
   collection?: string[];
   channel?: string[];
-  productType?: string[];
+  producttype?: string[];
   attribute?: {
     [attribute: string]: string[];
   };
@@ -19,7 +19,7 @@ interface Props {
 export const useInitialAPIState = ({
   category = [],
   collection = [],
-  productType = [],
+  producttype = [],
   channel = [],
   attribute = {},
 }: Props) => {
@@ -45,10 +45,10 @@ export const useInitialAPIState = ({
 
   const { data: productTypesData } = use_SearchProductTypesOperandsQuery({
     variables: {
-      productTypesSlugs: productType,
-      first: productType.length,
+      productTypesSlugs: producttype,
+      first: producttype.length,
     },
-    skip: productType.length === 0,
+    skip: producttype.length === 0,
   });
 
   const { data: attributesData } = use_SearchAttributeOperandsQuery({
@@ -69,18 +69,21 @@ export const useInitialAPIState = ({
     collectionsData?.search.edges.map(({ node }) => ({
       label: node?.name,
       value: node?.id,
+      slug: node?.slug
     })) ?? [];
 
   const categoryPicks =
     categoriesData?.search.edges.map(({ node }) => ({
       label: node?.name,
       value: node?.id,
+      slug: node?.slug
     })) ?? [];
 
   const productTypePicks =
     productTypesData?.search.edges.map(({ node }) => ({
       label: node?.name,
       value: node?.id,
+      slug: node?.slug
     })) ?? [];
 
   const attributePicks = attributesData?.search.edges.reduce(
@@ -90,16 +93,17 @@ export const useInitialAPIState = ({
         label: node?.name,
         value: node?.id,
         inputType: node?.inputType,
+        slug: node?.slug
       })),
     }),
     {},
   );
 
   return {
-    collections: collectionPicks,
-    categories: categoryPicks,
-    productTypes: productTypePicks,
-    attributes: attributePicks,
-    channels: channelPicks,
+    collection: collectionPicks,
+    category: categoryPicks,
+    producttype: productTypePicks,
+    attribute: attributePicks,
+    channel: channelPicks,
   };
 };

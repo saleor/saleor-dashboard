@@ -5,6 +5,7 @@ import { FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { obtainFetchingParams } from "./fetchingParams";
 import { TokenArray, tokenizeUrl } from "./tokenize";
+import { stringify } from "qs";
 
 const mapUrlTokensToFilterValues = (urlTokens: TokenArray, response) =>
   urlTokens.map(el => {
@@ -22,39 +23,33 @@ const mapUrlTokensToFilterValues = (urlTokens: TokenArray, response) =>
 export const useUrlValueProvider = (): FilterValueProvider => {
   const router = useRouter();
   const tokenizedUrl = tokenizeUrl(
-    "0[s0.category]=cat1&1=o&2[a2.color][0]=red&2[a2.color][1]=green&3=a&4[a2.size][0]=m&4[a2.size][1]=xl&5=a&6[s4.price]=123&7=a&8[0][s2.category][0]=cat2&8[0][s2.category][1]=cat3&8[1]=o&8[2][s3.price][0]=1&8[2][s3.price][1]=103",
+    "0%5Bs2.category%5D%5B0%5D=accessories&0%5Bs2.category%5D%5B1%5D=groceries&1=o&2%5Ba2.abv%5D%5B0%5D=QXR0cmlidXRlVmFsdWU6Njg%3D&3=a&4%5Bs2.collection%5D%5B0%5D=featured-products&5=a&6%5Bs2.producttype%5D%5B0%5D=beer&7=a&8%5B0%5D%5Bs2.category%5D%5B0%5D=apparel&8%5B1%5D=o&8%5B2%5D%5Ba2.bottle-size%5D%5B0%5D=QXR0cmlidXRlVmFsdWU6NDY%3D&8%5B2%5D%5Ba2.bottle-size%5D%5B1%5D=QXR0cmlidXRlVmFsdWU6NDc%3D",
   );
   const fetchingParams = obtainFetchingParams(tokenizedUrl);
-  const result = mapUrlTokensToFilterValues(tokenizedUrl, {});
-
-  console.log("tokenized", tokenizedUrl);
-  console.log("flatenated", fetchingParams);
+  
+  // console.log("tokenized", tokenizedUrl);
+  // console.log("flatenated", fetchingParams);
+  
+  const dataFromAPI = useInitialAPIState(fetchingParams);
+  
+  // console.log("dataFromAPI", dataFromAPI);
+  const result = mapUrlTokensToFilterValues(tokenizedUrl, dataFromAPI);
   console.log("result", result);
 
-  const dataFromAPI = useInitialAPIState({
-    collection: ["featured-products"],
-    attribute: {
-      abv: ["QXR0cmlidXRlVmFsdWU6Njg="],
-    },
-  });
-
-  console.log("dataFromAPI", dataFromAPI);
-
   // const structure = [
-  //   { "s0.category": "cat1"},
+  //   { "s2.category": ["accessories", "groceries"]},
   //   "o",
-  //   { "a2.color": ["red", "green"]},
+  //   { "a2.abv": ["QXR0cmlidXRlVmFsdWU6Njg="]},
   //   "a",
-  //   { "a2.size": ["m", "xl"]},
+  //   { "s2.collecion": ["featured-products"]},
   //   "a",
-  //   { "s4.price": 123},
+  //   { "s2.producttype": ["value"]},
   //   "a",
   //   [
-  //     { "s2.category": ["cat2", "cat3"]},
+  //     { "s2.category": ["apparel"]},
   //     "o",
-  //     { "s3.price": [1, 103]},
+  //     { "a2.bottle-size": ["QXR0cmlidXRlVmFsdWU6NDY=", "QXR0cmlidXRlVmFsdWU6NDc="]},
   //   ],
-  // { "d5.abv": "51"}
   // ]
 
   // console.log(

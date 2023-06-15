@@ -18,7 +18,30 @@ class Condition {
   private constructor(
     public options: ConditionOption[],
     public selected: ConditionSelected,
+    private loading: boolean
   ) {}
+
+  public enableLoading () {
+    this.loading = true
+  }
+
+  public disableLoading () {
+    this.loading = false
+  }
+
+
+  public isLoading () {
+    return this.loading
+  }
+
+  public static createEmpty () {
+    const selected = {
+      value: "",
+      conditionValue: ""
+    }
+
+    return new Condition([], selected, false)
+  }
 
   public static emptyFromName (operandName: string) {
     const staticOptions = STATIC_CONDITIONS[operandName]
@@ -37,10 +60,12 @@ class Condition {
       // selected.options = defaults.options
     }
 
-    return new Condition(staticOptions, selected)
+    return new Condition(staticOptions, selected, false)
   }
 
   public static fromUrlToken (token: UrlToken, response: unknown) {
+    return null
+
     if (!token.isStatic()) return null
 
     const staticOptions = STATIC_CONDITIONS[token.name]
@@ -52,23 +77,39 @@ class Condition {
       options: [] // response
     }
 
-    return new Condition(staticOptions, selected)
+    return new Condition(staticOptions, selected, false)
   }
 }
 
+interface ExpressionValue {
+  value: string,
+  label: string,
+  type: string
+}
 
 
 export class FilterElement {
   private constructor(
-    public value: string,
-    public type: number | string,
-    public condition: Condition
+    public value: ExpressionValue,
+    public condition: Condition,
+    private loading: boolean
   ) {}
 
+  public enableLoading () {
+    this.loading = true
+  }
+
+  public disableLoading () {
+    this.loading = false
+  }
+
+
+  public isLoading () {
+    return this.loading
+  }
 
   public updateLeftOperator (leftOperator: string) {
-    this.value = leftOperator
-    this.type = 1
+    this.value = { value: leftOperator, label: leftOperator, type: "s" }
     this.condition = Condition.emptyFromName(leftOperator)    
   }
 
@@ -81,45 +122,49 @@ export class FilterElement {
   }
   
   public isEmpty () {
-    return this.type === 0
+    return this.value.type === "e"
   }
 
   public isStatic () {
-    return this.type === 1
+    return this.value.type === "s"
   }
 
   public isAttribute () {
-    return this.type === 2
+    return this.value.type === "a"
   }
 
   public static fromValueEntry (valueEntry: any) {
     return new FilterElement(
       valueEntry.value,
-      valueEntry.type,
-      valueEntry.condition
+      valueEntry.condition,
+      false
     )
   }
 
   public static createEmpty () {
-    const emptyCondition = {
-      options: [],
-      selected: {
-        value: "",
-        conditionValue: ""
-      }
-    }
     return new FilterElement(
-      "",
-      0,
-      emptyCondition
+      { value: "", label: "", type: "s" },
+      Condition.createEmpty(),
+      false
     )
   }
 
   public static fromUrlToken (token: UrlToken, response: unknown) {
+    if (token.isStatic()) {
+      console.log("fromUrlToken", token, response[token.name])
+
+      return new FilterElement(
+        { value: token.name, label: response[token.name].label, type: "s" },
+        Condition.fromUrlToken(token, response),
+        false,
+      )
+    }
+
+    return null
     return new FilterElement(
-      token.name,
-      token.type,
-      Condition.fromUrlToken(token, response)
+      { value: token.name, label: token.name, type: "s" },
+      Condition.fromUrlToken(token, response),
+      false
     )
   }
 }

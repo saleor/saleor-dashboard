@@ -6,6 +6,7 @@ interface FetchingParams {
   category: string[]
   collection: string[]
   channel: string[]
+  producttype: [],
   attribute: Record<string, string[]>
 }
 
@@ -13,6 +14,7 @@ const emptyFetchingParams: FetchingParams = {
   category: [],
   collection: [],
   channel: [],
+  producttype: [],
   attribute: {}
 }
 
@@ -21,7 +23,6 @@ const unique = <T>(array: Iterable<T>) => {
 }
 
 const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
-  console.log(p.category)
   if (!c.isAttribute() && !p[c.name]) {
     p[c.name] = []
   }
