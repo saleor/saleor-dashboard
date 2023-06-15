@@ -86,13 +86,13 @@ export const initialDynamicRightOperands = gql`
           id
           name
           slug
+          inputType
           choices(first: 5, filter: { ids: $choicesIds }) {
             edges {
               node {
                 id
                 name
                 slug
-                inputType
               }
             }
           }

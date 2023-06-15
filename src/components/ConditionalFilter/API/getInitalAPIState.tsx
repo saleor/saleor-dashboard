@@ -93,12 +93,12 @@ export const useInitialAPIState = ({
         choices: node?.choices.edges.map(({ node }) => ({
           label: node?.name,
           value: node?.id,
-          inputType: node?.inputType,
           slug: node?.slug,
         })),
         slug: node?.slug,
         value: node?.id,
         label: node?.name,
+        inputType: node?.inputType,
       },
     }),
     {},
