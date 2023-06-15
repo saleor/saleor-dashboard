@@ -17,8 +17,7 @@ const useStyles = makeStyles<{ actionButtonPosition: "left" | "right" }>(
       actionBtnBar: {
         position: "absolute",
         left: props => (props.actionButtonPosition === "left" ? 0 : "auto"),
-        right: props =>
-          props.actionButtonPosition === "right" ? vars.spacing[6] : "auto",
+        right: props => (props.actionButtonPosition === "right" ? 0 : "auto"),
         zIndex: 1,
         background: vars.colors.background.plain,
         borderRadius: vars.borderRadius[4],
@@ -30,8 +29,7 @@ const useStyles = makeStyles<{ actionButtonPosition: "left" | "right" }>(
         display: "flex",
         alignItems: "center",
         justifyContent: "flex-end",
-        padding: props =>
-          props.actionButtonPosition === "left" ? vars.spacing[1.5] : 0,
+        padding: vars.spacing[1.5],
       },
       columnPicker: {
         display: "flex",

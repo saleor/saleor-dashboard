@@ -47,7 +47,8 @@ export const FilterPresetsSelect = ({
 }: FilterPresetsSelectProps) => {
   const intl = useIntl();
   const showUpdateButton =
-    presetsChanged && savedPresets.length > 0 && activePreset;
+    presetsChanged && savedPresets.length > 0 && activePreset > 0;
+
   const showSaveButton = presetsChanged;
 
   const getLabel = () => {

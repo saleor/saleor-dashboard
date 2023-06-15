@@ -2,6 +2,7 @@ import {
   CategoryListUrlSortField,
   categoryUrl,
 } from "@dashboard/categories/urls";
+import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
 import {
@@ -46,8 +47,16 @@ export const CategoryListDatagrid = ({
     [categories, availableColumns],
   );
 
-  const { columns, onColumnMoved, onColumnResize } =
-    useColumnsDefault(availableColumns);
+  const {
+    availableColumnsChoices,
+    columnChoices,
+    columns,
+    defaultColumns,
+    onColumnMoved,
+    onColumnResize,
+    onColumnsChange,
+    picker,
+  } = useColumnsDefault(availableColumns);
 
   const handleHeaderClick = useCallback(
     (col: number) => {
@@ -88,6 +97,20 @@ export const CategoryListDatagrid = ({
         onColumnResize={onColumnResize}
         onColumnMoved={onColumnMoved}
         onRowSelectionChange={onSelectCategoriesIds}
+        renderColumnPicker={defaultProps => (
+          <ColumnPicker
+            {...defaultProps}
+            availableColumns={availableColumnsChoices}
+            initialColumns={columnChoices}
+            defaultColumns={defaultColumns}
+            onSave={onColumnsChange}
+            hasMore={false}
+            loading={false}
+            onFetchMore={() => undefined}
+            onQueryChange={picker.setQuery}
+            query={picker.query}
+          />
+        )}
       />
 
       <Box paddingX={6}>

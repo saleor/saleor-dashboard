@@ -17,7 +17,7 @@ import { CategoryDetailsQuery, ProductErrorFragment } from "@dashboard/graphql";
 import { SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Card } from "@material-ui/core";
-import { sprinkles } from "@saleor/macaw-ui/next";
+import { Box, sprinkles } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -184,15 +184,17 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                   disabled={disabled}
                   onSelectCategoriesIds={onSelectCategoriesIds}
                   selectionActionButton={
-                    <CategoryDeleteButton
-                      ref={setBulkDeleteButtonRef}
-                      onClick={onCategoriesDelete}
-                    >
-                      <FormattedMessage
-                        defaultMessage="Bulk categories delete"
-                        id="ZN5IZl"
-                      />
-                    </CategoryDeleteButton>
+                    <Box paddingRight={5}>
+                      <CategoryDeleteButton
+                        ref={setBulkDeleteButtonRef}
+                        onClick={onCategoriesDelete}
+                      >
+                        <FormattedMessage
+                          defaultMessage="Bulk categories delete"
+                          id="ZN5IZl"
+                        />
+                      </CategoryDeleteButton>
+                    </Box>
                   }
                 />
               </Card>
@@ -203,15 +205,17 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
                 disabled={disabled}
                 onSelectProductsIds={onSelectProductsIds}
                 selectionActionButton={
-                  <CategoryDeleteButton
-                    ref={setBulkDeleteButtonRef}
-                    onClick={onProductsDelete}
-                  >
-                    <FormattedMessage
-                      defaultMessage="Bulk products delete"
-                      id="cxOmce"
-                    />
-                  </CategoryDeleteButton>
+                  <Box paddingRight={5}>
+                    <CategoryDeleteButton
+                      ref={setBulkDeleteButtonRef}
+                      onClick={onProductsDelete}
+                    >
+                      <FormattedMessage
+                        defaultMessage="Bulk products delete"
+                        id="cxOmce"
+                      />
+                    </CategoryDeleteButton>
+                  </Box>
                 }
               />
             )}
