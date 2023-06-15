@@ -22,6 +22,7 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryDeleteButton } from "../CategoryDeleteButton";
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
+import { messages } from "./messages";
 
 export interface CategoryTableProps
   extends PageListProps,
@@ -35,7 +36,6 @@ export interface CategoryTableProps
   onTabUpdate: (tabName: string) => void;
   onCategoriesDelete: () => void;
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
-  setBulkDeleteButtonRef: (ref: HTMLButtonElement) => void;
 }
 
 export const CategoryListPage: React.FC<CategoryTableProps> = ({
@@ -52,7 +52,6 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   onTabUpdate,
   hasPresetsChanged,
   onCategoriesDelete,
-  setBulkDeleteButtonRef,
   selectedCategoriesIds,
   ...listProps
 }) => {
@@ -88,10 +87,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
               onSave={onTabSave}
               isOpen={isFilterPresetOpen}
               onOpenChange={setFilterPresetOpen}
-              selectAllLabel={intl.formatMessage({
-                id: "1X6HtI",
-                defaultMessage: "All Categories",
-              })}
+              selectAllLabel={intl.formatMessage(messages.allCategories)}
             />
           </Box>
 
@@ -100,11 +96,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
             href={categoryAddUrl()}
             data-test-id="create-category"
           >
-            <FormattedMessage
-              id="vof5TR"
-              defaultMessage="Create category"
-              description="button"
-            />
+            <FormattedMessage {...messages.createCategory} />
           </Button>
         </Box>
       </TopNav>
@@ -119,28 +111,20 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
           <Box __width="320px">
             <SearchInput
               initialSearch={initialSearch}
-              placeholder={intl.formatMessage({
-                id: "T83iU7",
-                defaultMessage: "Search categories...",
-              })}
+              placeholder={intl.formatMessage(messages.searchCategory)}
               onSearchChange={onSearchChange}
             />
           </Box>
           {selectedCategoriesIds.length > 0 && (
-            <CategoryDeleteButton
-              onClick={onCategoriesDelete}
-              ref={setBulkDeleteButtonRef}
-            >
-              <FormattedMessage
-                defaultMessage="Bulk category delete"
-                id="qU/z0Q"
-              />
+            <CategoryDeleteButton onClick={onCategoriesDelete}>
+              <FormattedMessage {...messages.bulkCategoryDelete} />
             </CategoryDeleteButton>
           )}
         </Box>
         <CategoryListDatagrid
           disabled={disabled}
           categories={categories}
+          hasRowHover={!isFilterPresetOpen}
           {...listProps}
         />
       </Card>

@@ -27,7 +27,6 @@ const categoryTableProps: CategoryTableProps = {
   onCategoriesDelete: () => undefined,
   onSelectCategoriesIds: () => undefined,
   selectedCategoriesIds: [],
-  setBulkDeleteButtonRef: () => undefined,
   hasPresetsChanged: false,
   onTabUpdate: () => undefined,
 };

@@ -26,6 +26,7 @@ interface CategoryListDatagridProps
   disabled: boolean;
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
   selectionActionButton?: ReactNode | null;
+  hasRowHover?: boolean;
 }
 
 export const CategoryListDatagrid = ({
@@ -37,15 +38,11 @@ export const CategoryListDatagrid = ({
   settings,
   onUpdateListSettings,
   selectionActionButton = null,
+  hasRowHover = true,
 }: CategoryListDatagridProps) => {
   const datagridState = useDatagridChangeState();
   const intl = useIntl();
   const availableColumns = useMemo(() => getColumns(intl, sort), [intl, sort]);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getCellContent = useCallback(
-    createGetCellContent(categories, availableColumns),
-    [categories, availableColumns],
-  );
 
   const {
     availableColumnsChoices,
@@ -57,6 +54,12 @@ export const CategoryListDatagrid = ({
     onColumnsChange,
     picker,
   } = useColumnsDefault(availableColumns);
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const getCellContent = useCallback(
+    createGetCellContent(categories, columns),
+    [categories, columns],
+  );
 
   const handleHeaderClick = useCallback(
     (col: number) => {
@@ -75,8 +78,8 @@ export const CategoryListDatagrid = ({
   return (
     <DatagridChangeStateContext.Provider value={datagridState}>
       <Datagrid
-        hasRowHover
         readonly
+        hasRowHover={hasRowHover}
         loading={disabled}
         columnSelect={sort !== undefined ? "single" : undefined}
         verticalBorder={col => col > 0}
