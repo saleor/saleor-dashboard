@@ -51,6 +51,7 @@ export const Default: Story = {
 export const Loading: Story = {
   args: {
     ...categoryTableProps,
+    disabled: true,
     categories: undefined,
   },
   parameters: {
