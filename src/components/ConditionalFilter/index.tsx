@@ -124,7 +124,7 @@ export const ConditionalFilters = () => {
       addEmpty();
     }
 
-    if (event.type === "remove") {
+    if (event.type === "row.remove") {
       removeAt(event.path);
     }
 

@@ -1,6 +1,6 @@
 import { UrlToken } from "./ValueProvider/UrlToken"
 import { CONTROL_DEFAULTS } from "./controlsType"
-import { STATIC_CONDITIONS } from "./staticConditions"
+import { ATTRIBUTE_INPUT_TYPE_CONDITIONS, STATIC_CONDITIONS } from "./staticConditions"
 
 interface ConditionOption {
   type: string
@@ -64,20 +64,31 @@ class Condition {
   }
 
   public static fromUrlToken (token: UrlToken, response: unknown) {
-    return null
+    if (token.isStatic()) {
+      const staticOptions = STATIC_CONDITIONS[token.name]
+      const selectedOption = staticOptions.find(el => el.label === token.conditionKind)
 
-    if (!token.isStatic()) return null
-
-    const staticOptions = STATIC_CONDITIONS[token.name]
-    const selectedOption = staticOptions.find(el => el.label === token.conditionKind)
-
-    const selected: ConditionSelected = {
-      conditionValue: selectedOption.value,
-      value: token.value,
-      options: [] // response
+      const options = response[token.name].filter(({ slug }) => token.value.includes(slug))
+      const selected: ConditionSelected = {
+        conditionValue: selectedOption.value,
+        value: token.value,
+        options
+      }
+  
+      return new Condition(staticOptions, selected, false)
     }
 
-    return new Condition(staticOptions, selected, false)
+    if (token.isAttribute() && response.attribute) {
+      const attr = response.attribute[token.name]
+      const options = ATTRIBUTE_INPUT_TYPE_CONDITIONS[attr.inputType]
+      console.log("attribute handling", attr)
+
+      // return new Condition(staticOptions, selected, false)
+
+    }
+ 
+
+    return null
   }
 }
 
@@ -102,7 +113,6 @@ export class FilterElement {
   public disableLoading () {
     this.loading = false
   }
-
 
   public isLoading () {
     return this.loading
@@ -151,14 +161,21 @@ export class FilterElement {
 
   public static fromUrlToken (token: UrlToken, response: unknown) {
     if (token.isStatic()) {
-      console.log("fromUrlToken", token, response[token.name])
-
       return new FilterElement(
-        { value: token.name, label: response[token.name].label, type: "s" },
+        { value: token.name, label: token.name, type: "s" },
         Condition.fromUrlToken(token, response),
         false,
       )
     }
+
+    if (token.isAttribute()) {
+      return new FilterElement(
+        { value: token.name, label: "from api", type: "a" },
+        Condition.fromUrlToken(token, response),
+        false,
+      )
+    }
+
 
     return null
     return new FilterElement(
