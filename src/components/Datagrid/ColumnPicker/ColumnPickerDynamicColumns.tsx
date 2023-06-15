@@ -41,10 +41,15 @@ export const ColumnPickerDynamicColumns = ({
           onPressedChange={() => handleToggle(column.id)}
           pressed={selectedColumns.includes(column.id)}
         >
-          <Text variant="body" size="small" color="textNeutralSubdued">
+          <Text
+            variant="body"
+            size="small"
+            color="textNeutralSubdued"
+            whiteSpace="nowrap"
+          >
             {`${column.metaGroup} /`}
           </Text>
-          <Text variant="body" size="small" color="textNeutralDefault">
+          <Text variant="body" size="small" color="textNeutralDefault" ellipsis>
             {column.title}
           </Text>
         </Toggle>

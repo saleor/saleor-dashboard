@@ -81,7 +81,7 @@ export const ColumnPicker = ({
             />
           )}
           <Box
-            __minWidth="320px"
+            __width="320px"
             __maxHeight="70vh"
             __minHeight={expanded ? "502px" : undefined}
             backgroundColor="plain"

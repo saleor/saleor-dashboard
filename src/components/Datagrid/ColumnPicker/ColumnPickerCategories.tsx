@@ -42,6 +42,7 @@ export const ColumnPickerCategories = ({
       flexDirection="column"
       justifyContent="space-between"
       __minHeight="502px"
+      __width="320px"
     >
       <Box display="flex" flexDirection="column" height="100%">
         <Box

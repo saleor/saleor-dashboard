@@ -49,12 +49,12 @@ export const ColumnPickerAvailableNodes = ({
     }
 
     return currentCategory.availableNodes.map(node => (
-      <Box padding={2} gap={3} key={node.id}>
+      <Box padding={2} key={node.id}>
         <Checkbox
           onCheckedChange={() => changeHandler(node.id)}
           checked={columnPickerSettings.includes(node.id)}
         >
-          <Text size="small" color="textNeutralSubdued">
+          <Text size="small" color="textNeutralSubdued" ellipsis>
             {node.title}
           </Text>
         </Checkbox>
