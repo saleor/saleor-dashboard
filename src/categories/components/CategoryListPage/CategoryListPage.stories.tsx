@@ -29,6 +29,7 @@ const categoryTableProps: CategoryTableProps = {
   selectedCategoriesIds: [],
   setBulkDeleteButtonRef: () => undefined,
   hasPresetsChanged: false,
+  onTabUpdate: () => undefined,
 };
 
 const meta: Meta<typeof CategoryListPage> = {

@@ -16,6 +16,10 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { maybe } from "@dashboard/misc";
+import {
+  getActiveTabIndexAfterTabDelete,
+  getNextUniqueTabName,
+} from "@dashboard/products/views/ProductList/utils";
 import { ListViews } from "@dashboard/types";
 import { prepareQs } from "@dashboard/utils/filters/qs";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -38,10 +42,10 @@ import {
 import {
   deleteFilterTab,
   getActiveFilters,
-  getFiltersCurrentTab,
   getFilterTabs,
   getFilterVariables,
   saveFilterTab,
+  updateFilterTab,
 } from "./filter";
 import { getSortQueryVariables } from "./sort";
 
@@ -53,6 +57,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const navigate = useNavigator();
   const intl = useIntl();
 
+  const [tabIndexToDelete, setTabIndexToDelete] = useState<number | null>(null);
   const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<string[]>(
     [],
   );
@@ -102,7 +107,8 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
 
   const tabs = getFilterTabs();
 
-  const currentTab = getFiltersCurrentTab(params, tabs);
+  const currentTab =
+    params.activeTab !== undefined ? parseInt(params.activeTab, 10) : undefined;
 
   const changeFilterField = (filter: CategoryListUrlFilters) => {
     clearRowSelection();
@@ -110,7 +116,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
       categoryListUrl({
         ...getActiveFilters(params),
         ...filter,
-        activeTab: undefined,
+        activeTab: currentTab.toString(),
       }),
     );
   };
@@ -128,23 +134,51 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
 
   const handleTabChange = (tab: number) => {
     clearRowSelection();
-    navigate(
-      categoryListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data,
-      }),
-    );
+
+    const qs = new URLSearchParams(getFilterTabs()[tab - 1]?.data ?? "");
+    qs.append("activeTab", tab.toString());
+
+    navigate(categoryListUrl() + qs.toString());
   };
 
   const handleTabDelete = () => {
-    deleteFilterTab(currentTab);
-    navigate(categoryListUrl());
+    deleteFilterTab(tabIndexToDelete);
     clearRowSelection();
+
+    // When deleting the current tab, navigate to the All products
+    if (tabIndexToDelete === currentTab) {
+      navigate(categoryListUrl());
+    } else {
+      const currentParams = { ...params };
+      // When deleting a tab that is not the current one, only remove the action param from the query
+      delete currentParams.action;
+      // When deleting a tab that is before the current one, decrease the activeTab param by 1
+      currentParams.activeTab = getActiveTabIndexAfterTabDelete(
+        currentTab,
+        tabIndexToDelete,
+      );
+      navigate(categoryListUrl() + stringify(currentParams));
+    }
   };
 
   const handleTabSave = (data: SaveFilterTabDialogFormData) => {
-    saveFilterTab(data.name, getActiveFilters(params));
+    const { paresedQs } = prepareQs(location.search);
+
+    saveFilterTab(
+      getNextUniqueTabName(
+        data.name,
+        tabs.map(tab => tab.name),
+      ),
+      stringify(paresedQs),
+    );
     handleTabChange(tabs.length + 1);
+  };
+
+  const handleTabUpdate = (tabName: string) => {
+    const { paresedQs } = prepareQs(location.search);
+
+    updateFilterTab(tabName, stringify(paresedQs));
+    handleTabChange(tabs.findIndex(tab => tab.name === tabName) + 1);
   };
 
   const handleCategoryBulkDelete = (data: CategoryBulkDeleteMutation) => {
@@ -201,7 +235,11 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         onSearchChange={query => changeFilterField({ query })}
         onAll={() => navigate(categoryListUrl())}
         onTabChange={handleTabChange}
-        onTabDelete={() => openModal("delete-search")}
+        onTabDelete={(tabIndex: number) => {
+          setTabIndexToDelete(tabIndex);
+          openModal("delete-search");
+        }}
+        onTabUpdate={handleTabUpdate}
         onTabSave={() => openModal("save-search")}
         tabs={tabs.map(tab => tab.name)}
         settings={settings}
@@ -278,7 +316,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={handleTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+        tabName={tabs[tabIndexToDelete - 1]?.name ?? "..."}
       />
     </PaginatorContext.Provider>
   );

@@ -27,10 +27,12 @@ export interface CategoryTableProps
   extends PageListProps,
     SearchPageProps,
     SortPage<CategoryListUrlSortField>,
-    TabPageProps {
+    Omit<TabPageProps, "onTabDelete"> {
   categories: CategoryFragment[];
   hasPresetsChanged: boolean;
   selectedCategoriesIds: string[];
+  onTabDelete: (tabIndex: number) => void;
+  onTabUpdate: (tabName: string) => void;
   onCategoriesDelete: () => void;
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
   setBulkDeleteButtonRef: (ref: HTMLButtonElement) => void;
@@ -47,6 +49,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
   onTabChange,
   onTabDelete,
   onTabSave,
+  onTabUpdate,
   hasPresetsChanged,
   onCategoriesDelete,
   setBulkDeleteButtonRef,
@@ -78,7 +81,7 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
               presetsChanged={hasPresetsChanged}
               onSelect={onTabChange}
               onRemove={onTabDelete}
-              onUpdate={onSearchChange}
+              onUpdate={onTabUpdate}
               savedPresets={tabs}
               activePreset={currentTab}
               onSelectAll={onAll}
@@ -86,9 +89,8 @@ export const CategoryListPage: React.FC<CategoryTableProps> = ({
               isOpen={isFilterPresetOpen}
               onOpenChange={setFilterPresetOpen}
               selectAllLabel={intl.formatMessage({
-                id: "vy7fjd",
+                id: "1X6HtI",
                 defaultMessage: "All Categories",
-                description: "tab name",
               })}
             />
           </Box>

@@ -24,12 +24,10 @@ export const {
   deleteFilterTab,
   getFilterTabs,
   saveFilterTab,
-} = createFilterTabUtils<CategoryListUrlFilters>(CATEGORY_FILTERS_KEY);
+  updateFilterTab,
+} = createFilterTabUtils<string>(CATEGORY_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<CategoryListUrlQueryParams, CategoryListUrlFilters>(
-  CategoryListUrlFiltersEnum,
-);
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
+  createFilterUtils<CategoryListUrlQueryParams, CategoryListUrlFilters>(
+    CategoryListUrlFiltersEnum,
+  );
