@@ -1,7 +1,7 @@
 import { Pagination } from "@dashboard/types";
 import { useEffect, useRef, useState } from "react";
 
-export const useRowSelection = (paginationParams: Pagination) => {
+export const useRowSelection = (paginationParams?: Pagination) => {
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
   // Keep reference to clear datagrid selection function
@@ -21,7 +21,7 @@ export const useRowSelection = (paginationParams: Pagination) => {
   // Whenever pagination change we need to clear datagrid selection
   useEffect(() => {
     clearRowSelection();
-  }, [paginationParams.after, paginationParams.before]);
+  }, [paginationParams?.after, paginationParams?.before]);
 
   return {
     selectedRowIds,

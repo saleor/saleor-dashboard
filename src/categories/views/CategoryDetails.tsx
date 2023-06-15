@@ -20,6 +20,7 @@ import useLocalPaginator, {
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
+import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { commonMessages, errorMessages } from "@dashboard/intl";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
@@ -27,7 +28,7 @@ import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getParsedDataForJsonStringField } from "@dashboard/utils/richText/misc";
 import { DialogContentText } from "@material-ui/core";
 import isEqual from "lodash/isEqual";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { PAGINATE_BY } from "../../config";
@@ -66,27 +67,21 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const [selectedCategoriesIds, setSelectedCategoriesIds] = useState<string[]>(
-    [],
-  );
-  const [selectedProductsIds, setSelectedProductsIds] = useState<string[]>([]);
-  const deleteButtonRef = useRef<HTMLButtonElement>(null);
+  const {
+    clearRowSelection: clearProductRowSelection,
+    selectedRowIds: selectedProductRowIds,
+    setClearDatagridRowSelectionCallback:
+      setClearProductDatagridRowSelectionCallback,
+    setSelectedRowIds: setSelectedProductRowIds,
+  } = useRowSelection();
 
-  // Keep reference to clear datagrid selection function
-  const clearRowSelectionCallback = React.useRef<() => void | null>(null);
-  const clearRowSelection = () => {
-    setSelectedCategoriesIds([]);
-    if (clearRowSelectionCallback.current) {
-      clearRowSelectionCallback.current();
-    }
-  };
-
-  // Remove focus from delete button after delete action
-  useEffect(() => {
-    if (!params.action && deleteButtonRef.current) {
-      deleteButtonRef.current.blur();
-    }
-  }, [params.action]);
+  const {
+    clearRowSelection: clearCategryRowSelection,
+    selectedRowIds: selectedCategoryRowIds,
+    setClearDatagridRowSelectionCallback:
+      setClearCategoryDatagridRowSelectionCallback,
+    setSelectedRowIds: setSelectedCategoryRowIds,
+  } = useRowSelection();
 
   const [activeTab, setActiveTab] = useState<CategoryPageTab>(
     CategoryPageTab.categories,
@@ -118,7 +113,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
           defaultMessage: "Category deleted",
         }),
       });
-      clearRowSelection();
+      clearProductRowSelection();
       navigate(categoryListUrl());
     }
   };
@@ -128,7 +123,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   });
 
   const handleCategoryUpdate = (data: CategoryUpdateMutation) => {
-    clearRowSelection();
+    clearProductRowSelection();
     if (data.categoryUpdate.errors.length > 0) {
       const backgroundImageError = data.categoryUpdate.errors.find(
         error => error.field === ("backgroundImage" as keyof CategoryInput),
@@ -153,9 +148,10 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   });
 
   const handleBulkCategoryDelete = (data: CategoryBulkDeleteMutation) => {
+    clearCategryRowSelection();
     if (data.categoryBulkDelete.errors.length === 0) {
       closeModal();
-      clearRowSelection();
+      clearProductRowSelection();
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
@@ -171,6 +167,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   const [productBulkDelete, productBulkDeleteOpts] =
     useProductBulkDeleteMutation({
       onCompleted: data => {
+        clearProductRowSelection();
         if (data.productBulkDelete.errors.length === 0) {
           closeModal();
           notify({
@@ -220,15 +217,20 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       }
 
       const rowsIds = rows.map(row => subcategories[row].id);
-      const haveSaveValues = isEqual(rowsIds, selectedCategoriesIds);
+      const haveSaveValues = isEqual(rowsIds, selectedCategoryRowIds);
 
       if (!haveSaveValues) {
-        setSelectedCategoriesIds(rowsIds);
+        setSelectedCategoryRowIds(rowsIds);
       }
 
-      clearRowSelectionCallback.current = clearSelection;
+      setClearCategoryDatagridRowSelectionCallback(clearSelection);
     },
-    [selectedCategoriesIds, subcategories],
+    [
+      selectedCategoryRowIds,
+      setClearCategoryDatagridRowSelectionCallback,
+      setSelectedCategoryRowIds,
+      subcategories,
+    ],
   );
 
   const handleSetSelectedPrductIds = useCallback(
@@ -238,15 +240,20 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       }
 
       const rowsIds = rows.map(row => products[row].id);
-      const haveSaveValues = isEqual(rowsIds, selectedProductsIds);
+      const haveSaveValues = isEqual(rowsIds, selectedProductRowIds);
 
       if (!haveSaveValues) {
-        setSelectedProductsIds(rowsIds);
+        setSelectedProductRowIds(rowsIds);
       }
 
-      clearRowSelectionCallback.current = clearSelection;
+      setClearProductDatagridRowSelectionCallback(clearSelection);
     },
-    [products, selectedProductsIds],
+    [
+      products,
+      selectedProductRowIds,
+      setClearProductDatagridRowSelectionCallback,
+      setSelectedProductRowIds,
+    ],
   );
 
   const handleSubmit = createMetadataUpdateHandler(
@@ -304,9 +311,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         onProductsDelete={() => {
           openModal("delete-products");
         }}
-        setBulkDeleteButtonRef={(ref: HTMLButtonElement) => {
-          deleteButtonRef.current = ref;
-        }}
       />
 
       <ActionDialog
@@ -346,7 +350,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         onClose={closeModal}
         onConfirm={() =>
           categoryBulkDelete({
-            variables: { ids: selectedCategoriesIds },
+            variables: { ids: selectedCategoryRowIds },
           }).then(() => refetch())
         }
         title={intl.formatMessage({
