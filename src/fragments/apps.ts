@@ -19,7 +19,7 @@ export const appManifestFragment = gql`
     }
     brand {
       logo {
-        default
+        default(format: WEBP, size: 48)
       }
     }
   }
@@ -41,7 +41,7 @@ export const appFragment = gql`
     accessToken
     brand {
       logo {
-        default
+        default(format: WEBP, size: 24)
       }
     }
     privateMetadata {
@@ -72,7 +72,7 @@ export const appInstallationFragment = gql`
     id
     brand {
       logo {
-        default
+        default(format: WEBP, size: 32)
       }
     }
   }
@@ -89,7 +89,7 @@ export const appListItemFragment = gql`
     version
     brand {
       logo {
-        default
+        default(format: WEBP, size: 32)
       }
     }
     permissions {

@@ -55,7 +55,7 @@ export const appDetails = gql`
       dataPrivacyUrl
       brand {
         logo {
-          default
+          default(size: 24, format: WEBP)
         }
       }
     }

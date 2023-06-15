@@ -184,7 +184,6 @@ export enum AddressTypeEnum {
  *     within the channel
  *
  *     PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
- *
  */
 export enum AllocationStrategyEnum {
   PRIORITIZE_SORTING_ORDER = 'PRIORITIZE_SORTING_ORDER',
@@ -239,7 +238,6 @@ export enum AppExtensionMountEnum {
  *
  *     POPUP - app's extension will be mounted as a popup window
  *     APP_PAGE - redirect to app's page
- *
  */
 export enum AppExtensionTargetEnum {
   POPUP = 'POPUP',
@@ -1057,7 +1055,6 @@ export type CheckoutAddressValidationRules = {
  *     NONE - the funds are not authorized
  *     PARTIAL - the cover funds don't cover fully the checkout's total
  *     FULL - the cover funds covers the checkout's total
- *
  */
 export enum CheckoutAuthorizeStatusEnum {
   NONE = 'NONE',
@@ -1080,7 +1077,6 @@ export enum CheckoutAuthorizeStatusEnum {
  *     PARTIAL - the funds that are charged don't cover the checkout's total
  *     FULL - the funds that are charged fully cover the checkout's total
  *     OVERCHARGED - the charged funds are bigger than checkout's total
- *
  */
 export enum CheckoutChargeStatusEnum {
   NONE = 'NONE',
@@ -3208,8 +3204,6 @@ export enum LanguageCodeEnum {
  *
  *     PAYMENT_FLOW - new orders marked as paid will receive a
  *     `Payment` object, that will cover the `order.total`.
- *
- *
  */
 export enum MarkAsPaidStrategyEnum {
   TRANSACTION_FLOW = 'TRANSACTION_FLOW',
@@ -3463,7 +3457,6 @@ export type OrderAddNoteInput = {
  *     `order.total`-`order.totalGrantedRefund`
  *     FULL - the funds that are authorized and charged fully cover the
  *     `order.total`-`order.totalGrantedRefund`
- *
  */
 export enum OrderAuthorizeStatusEnum {
   NONE = 'NONE',
@@ -3692,7 +3685,6 @@ export type OrderBulkCreateUserInput = {
  *     `order.total`-`order.totalGrantedRefund`
  *     OVERCHARGED - the charged funds are bigger than the
  *     `order.total`-`order.totalGrantedRefund`
- *
  */
 export enum OrderChargeStatusEnum {
   NONE = 'NONE',
@@ -3799,7 +3791,7 @@ export enum OrderEventsEmailsEnum {
   DIGITAL_LINKS = 'DIGITAL_LINKS'
 }
 
-/** The different order event types.  */
+/** The different order event types. */
 export enum OrderEventsEnum {
   DRAFT_CREATED = 'DRAFT_CREATED',
   DRAFT_CREATED_FROM_REPLACE = 'DRAFT_CREATED_FROM_REPLACE',
@@ -5974,7 +5966,6 @@ export type StockUpdateInput = {
  *     SKIP - stocks are not checked and not updated.
  *     UPDATE - only do update, if there is enough stock.
  *     FORCE - force update, if there is not enough stock.
- *
  */
 export enum StockUpdatePolicyEnum {
   SKIP = 'SKIP',
@@ -6175,7 +6166,6 @@ export enum TimePeriodTypeEnum {
  *     VOID - Represents a void action. This field will be removed
  *     in Saleor 3.14 (Preview Feature). Use `CANCEL` instead.
  *     CANCEL - Represents a cancel action. Added in Saleor 3.12.
- *
  */
 export enum TransactionActionEnum {
   CHARGE = 'CHARGE',
@@ -6331,7 +6321,6 @@ export enum TransactionEventReportErrorCode {
  *     CANCEL_FAILURE - represents failure cancel.
  *     CANCEL_REQUEST - represents cancel request.
  *     INFO - represents info event.
- *
  */
 export enum TransactionEventTypeEnum {
   AUTHORIZATION_SUCCESS = 'AUTHORIZATION_SUCCESS',
@@ -6359,7 +6348,6 @@ export enum TransactionEventTypeEnum {
  *
  *     AUTHORIZATION - the processed transaction should be only authorized
  *     CHARGE - the processed transaction should be charged.
- *
  */
 export enum TransactionFlowStrategyEnum {
   AUTHORIZATION = 'AUTHORIZATION',
@@ -6412,7 +6400,6 @@ export enum TransactionRequestActionErrorCode {
  *     SUCCESS - Represents a sucess action.
  *     FAILURE - Represents a failure action.
  *     PENDING - Represents a pending action.
- *
  */
 export enum TransactionStatus {
   PENDING = 'PENDING',

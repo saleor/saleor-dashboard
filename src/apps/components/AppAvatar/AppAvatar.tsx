@@ -14,7 +14,7 @@ export const AppAvatar: React.FC<{
       placeItems="center"
       borderRadius={2}
     >
-      <Box as="img" src={logo.source} />
+      <Box as="img" src={logo.source} width={"100%"} />
     </Box>
   ) : (
     <Box
