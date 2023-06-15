@@ -22,6 +22,11 @@ export const AppManifestFragmentDoc = gql`
     code
     name
   }
+  brand {
+    logo {
+      default(format: WEBP, size: 64)
+    }
+  }
 }
     `;
 export const WebhookFragmentDoc = gql`
@@ -49,6 +54,11 @@ export const AppFragmentDoc = gql`
   supportUrl
   version
   accessToken
+  brand {
+    logo {
+      default(format: WEBP, size: 24)
+    }
+  }
   privateMetadata {
     key
     value
@@ -74,6 +84,11 @@ export const AppInstallationFragmentDoc = gql`
   appName
   manifestUrl
   id
+  brand {
+    logo {
+      default(format: WEBP, size: 32)
+    }
+  }
 }
     `;
 export const AppPermissionFragmentDoc = gql`
@@ -91,6 +106,11 @@ export const AppListItemFragmentDoc = gql`
   appUrl
   manifestUrl
   version
+  brand {
+    logo {
+      default(format: WEBP, size: 32)
+    }
+  }
   permissions {
     ...AppPermission
   }
@@ -3668,6 +3688,11 @@ export const AppDocument = gql`
     }
     dataPrivacy
     dataPrivacyUrl
+    brand {
+      logo {
+        default(size: 24, format: WEBP)
+      }
+    }
   }
 }
     ${AppFragmentDoc}`;
