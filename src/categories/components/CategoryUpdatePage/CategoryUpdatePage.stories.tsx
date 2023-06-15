@@ -32,7 +32,6 @@ const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   onProductsDelete: () => undefined,
   onSelectCategoriesIds: () => undefined,
   onSelectProductsIds: () => undefined,
-  setBulkDeleteButtonRef: () => undefined,
   ...listActionsProps,
 };
 
