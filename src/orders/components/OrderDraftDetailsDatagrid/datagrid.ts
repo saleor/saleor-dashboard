@@ -1,9 +1,9 @@
 import {
   moneyCell,
   moneyDiscountedCell,
+  numberCell,
   readonlyTextCell,
   tagsCell,
-  textCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
@@ -126,7 +126,7 @@ export const useGetCellContent = ({
           },
         );
       case "quantity":
-        return textCell(change || rowData.quantity.toString());
+        return numberCell(change?.value || rowData.quantity);
       case "price":
         return moneyDiscountedCell(
           {

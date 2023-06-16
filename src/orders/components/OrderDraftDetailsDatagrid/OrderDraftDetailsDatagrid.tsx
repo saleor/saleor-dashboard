@@ -110,8 +110,8 @@ export const OrderDraftDetailsDatagrid = ({
         updates.map(({ data, column, row }) => {
           const orderId = lines[row].id;
 
-          if (column === "quantity" && data !== "") {
-            return onOrderLineChange(orderId, { quantity: data });
+          if (column === "quantity" && data.value !== "") {
+            return onOrderLineChange(orderId, { quantity: data.value });
           }
         }),
       );
