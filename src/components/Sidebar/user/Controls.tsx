@@ -11,7 +11,7 @@ import {
   sprinkles,
   Text,
 } from "@saleor/macaw-ui/next";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { FormattedMessage } from "react-intl";
 import { Link } from "react-router-dom";
 
@@ -48,15 +48,22 @@ export const useLegacyThemeHandler = () => {
 export const UserControls = () => {
   const { user, logout } = useUser();
   const { changeTheme, theme } = useLegacyThemeHandler();
+  const [open, setOpen] = useState(false);
 
   return (
-    <Dropdown>
+    <Dropdown
+      open={open}
+      onOpenChange={value => {
+        setOpen(value);
+      }}
+    >
       <Dropdown.Trigger>
         <Button
           variant="tertiary"
           icon={<MoreOptionsIcon />}
           data-test-id="userMenu"
           size="medium"
+          onClick={() => setOpen(true)}
         />
       </Dropdown.Trigger>
       <Dropdown.Content align="end">
@@ -71,6 +78,7 @@ export const UserControls = () => {
               <List.Item
                 borderRadius={4}
                 data-test-id="account-settings-button"
+                onClick={() => setOpen(false)}
               >
                 <Link
                   to={staffMemberDetailsUrl(user?.id)}
@@ -110,7 +118,10 @@ export const UserControls = () => {
                 alignItems="center"
                 gap={2}
                 marginTop={1}
-                onClick={changeTheme}
+                onClick={() => {
+                  changeTheme();
+                  setOpen(false);
+                }}
                 {...listItemStyles}
                 data-test-id="theme-switch"
               >

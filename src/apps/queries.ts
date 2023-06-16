@@ -53,6 +53,11 @@ export const appDetails = gql`
       }
       dataPrivacy
       dataPrivacyUrl
+      brand {
+        logo {
+          default(size: 24, format: WEBP)
+        }
+      }
     }
   }
 `;
