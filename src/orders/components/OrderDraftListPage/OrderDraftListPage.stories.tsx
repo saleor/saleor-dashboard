@@ -44,6 +44,11 @@ const props: OrderDraftListPageProps = {
     ...sortPageProps.sort,
     sort: OrderDraftListUrlSortField.number,
   },
+  onDraftOrdersDelete: () => undefined,
+  onSelectOrderDraftIds: () => undefined,
+  selectedOrderDraftIds: [],
+  hasPresetsChanged: () => false,
+  onTabUpdate: () => undefined,
 };
 
 const meta: Meta<typeof OrderDraftListPage> = {
