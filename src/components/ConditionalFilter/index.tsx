@@ -7,16 +7,13 @@ import { useUrlValueProvider } from "./ValueProvider/useUrlValueProvider";
 
 const demoValue = [
   {
-    value: { value: "price", label: "Price", type: 1 },
-    loading: true,
+    value: { value: "price", label: "Price", type: "1" },
     condition: {
-      loading: true,
       options: [
         { type: "number", label: "is", value: "input-1", min: 0, max: 10 },
         { type: "multiselect", label: "has", value: "input-2" },
       ],
       selected: {
-        loading: true,
         value: "3.13",
         conditionValue: { type: "number", label: "is", value: "input-1" },
       },
@@ -24,7 +21,7 @@ const demoValue = [
   },
   "AND",
   {
-    value: { value: "category", label: "Category", type: 2 },
+    value: { value: "category", label: "Category", type: "2" },
     condition: {
       options: [{ value: "input-1", label: "are", type: "multiselect" }],
       selected: {
@@ -39,7 +36,7 @@ const demoValue = [
   },
   "OR",
   {
-    value: { value: "rating", label: "Rating", type: 3 },
+    value: { value: "rating", label: "Rating", type: "3" },
     condition: {
       options: [{ value: "input-1", label: "is", type: "combobox" }],
       selected: {
@@ -54,7 +51,7 @@ const demoValue = [
   },
   "AND",
   {
-    value: { value: "discount", label: "Discount", type: 4 },
+    value: { value: "discount", label: "Discount", type: "4" },
     condition: {
       options: [{ value: "input-1", label: "is", type: "select" }],
       selected: {
@@ -69,7 +66,7 @@ const demoValue = [
   },
   "OR",
   {
-    value: { value: "discount", label: "Discount", type: 4 },
+    value: { value: "discount", label: "Discount", type: "4" },
     condition: {
       options: [{ value: "input-1", label: "between", type: "number.range" }],
       selected: {
@@ -106,7 +103,7 @@ const demoValue = [
 
 export const ConditionalFilters = () => {
   const provider = useUrlValueProvider();
-  
+
   const {
     value,
     persist,
@@ -118,7 +115,7 @@ export const ConditionalFilters = () => {
   } = useFilterContainer(provider);
 
   const leftOptions = useLeftOperands();
-  
+
   const handleStateChange = event => {
     if (event.type === "row.add") {
       addEmpty();
@@ -132,7 +129,7 @@ export const ConditionalFilters = () => {
       updateLeftOperator(event.path, event.value);
     }
 
-    if (event.type === "conditon.onChange") {
+    if (event.type === "condition.onChange") {
       updateCondition(event.path.split(".")[0], event.value);
     }
 
@@ -140,7 +137,7 @@ export const ConditionalFilters = () => {
       updateRightOperator(event.path.split(".")[0], event.value);
     }
 
-    console.log(event);
+    // console.log(event);
   };
 
   const handleConfirm = () => {

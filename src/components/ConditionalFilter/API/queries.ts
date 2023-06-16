@@ -8,13 +8,14 @@ export const initialDynamicLeftOperands = gql`
           id
           name
           slug
+          inputType
         }
       }
     }
   }
 `;
 
-export const initialDynamicRightOperands = gql`
+export const initialDynamicOperands = gql`
   query _GetChannelOperands {
     channels {
       id
@@ -101,3 +102,5 @@ export const initialDynamicRightOperands = gql`
     }
   }
 `;
+
+export const dynamicOperandChangeQueries = gql``;

@@ -1,69 +1,78 @@
-import { useState } from "react"
-import { FilterElement } from "./FilterElement"
-import { FilterValueProvider } from "./FilterValueProvider"
+import { useState } from "react";
+
+import { FilterElement } from "./FilterElement";
+import { FilterValueProvider } from "./FilterValueProvider";
 
 export const useFilterContainer = (valueProvider: FilterValueProvider) => {
-  const [value, setValue] = useState(valueProvider.value)
+  const [value, setValue] = useState(valueProvider.value);
 
   const addEmpty = () => {
-    const newValue = []
+    const newValue = [];
     if (value.length > 0) {
-      newValue.push("OR")
+      newValue.push("OR");
     }
 
-    newValue.push(FilterElement.createEmpty())
+    newValue.push(FilterElement.createEmpty());
 
-    setValue(v => v.concat(newValue))
-  }
+    setValue(v => v.concat(newValue));
+  };
 
   const removeAt = (position: string) => {
-    const index = parseInt(position)
+    const index = parseInt(position);
 
     if (value.length > 0) {
-      setValue(v => v.filter((_, elIndex) => ![index - 1, index].includes(elIndex)))
-      return
+      setValue(v =>
+        v.filter((_, elIndex) => ![index - 1, index].includes(elIndex)),
+      );
+      return;
     }
 
-    setValue(v => v.filter((_, elIndex) => ![index].includes(elIndex)))
-  }
+    setValue(v => v.filter((_, elIndex) => ![index].includes(elIndex)));
+  };
 
   const updateLeftOperator = (position: string, leftOperator: any) => {
-    const index = parseInt(position)
-    setValue(v => v.map((el, elIndex) => {
-      if (elIndex === index && typeof el != "string") {
-        el.updateLeftOperator(leftOperator)
-      }
+    const index = parseInt(position, 10);
+    setValue(v =>
+      v.map((el, elIndex) => {
+        if (elIndex === index && typeof el != "string") {
+          el.updateLeftOperator(leftOperator);
+        }
 
-      return el
-    }))
-  }
+        return el;
+      }),
+    );
+  };
 
   const updateRightOperator = (position: string, leftOperator: any) => {
-    const index = parseInt(position)
-    setValue(v => v.map((el, elIndex) => {
-      if (elIndex === index && typeof el != "string") {
-        el.updateRightOperator(leftOperator)
-      }
+    const index = parseInt(position, 10);
+    setValue(v =>
+      v.map((el, elIndex) => {
+        if (elIndex === index && typeof el != "string") {
+          el.updateRightOperator(leftOperator);
+        }
 
-      return el
-    }))
-  }
+        return el;
+      }),
+    );
+  };
 
   const updateCondition = (position: string, conditionValue: any) => {
-    const index = parseInt(position)
+    const index = parseInt(position, 10);
 
-    setValue(v => v.map((el, elIndex) => {
-      if (elIndex === index && typeof el != "string") {
-        el.updateCondition(conditionValue)
-      }
+    setValue(v =>
+      v.map((el, elIndex) => {
+        if (elIndex === index && typeof el != "string") {
+          el.updateCondition(conditionValue);
+        }
 
-      return el
-    }))
-  }
+        return el;
+      }),
+    );
+  };
 
   const persist = () => {
-    valueProvider.persist(value)
-  }
+    valueProvider.persist(value);
+  };
 
   return {
     value,
@@ -72,6 +81,6 @@ export const useFilterContainer = (valueProvider: FilterValueProvider) => {
     removeAt,
     updateLeftOperator,
     updateRightOperator,
-    updateCondition
-  }
-}
+    updateCondition,
+  };
+};

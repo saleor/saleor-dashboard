@@ -5399,6 +5399,7 @@ export const _GetInitialDynamicLeftOperandsDocument = gql`
         id
         name
         slug
+        inputType
       }
     }
   }

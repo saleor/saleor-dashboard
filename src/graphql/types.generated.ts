@@ -7929,7 +7929,7 @@ export type AddressValidationRulesQuery = { __typename: 'Query', addressValidati
 export type _GetInitialDynamicLeftOperandsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type _GetInitialDynamicLeftOperandsQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null } }> } | null };
+export type _GetInitialDynamicLeftOperandsQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null } }> } | null };
 
 export type _GetChannelOperandsQueryVariables = Exact<{ [key: string]: never; }>;
 
