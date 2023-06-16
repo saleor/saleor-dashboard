@@ -5,11 +5,13 @@ import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
+import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { OrderDraftListQuery } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
+import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -24,6 +26,7 @@ interface OrderDraftListDatagridProps
   hasRowHover?: boolean;
   onRowClick?: (id: string) => void;
   rowAnchor?: (id: string) => string;
+  onSelectOrderDraftIds;
 }
 
 export const OrderDraftListDatagrid = ({
@@ -34,6 +37,9 @@ export const OrderDraftListDatagrid = ({
   hasRowHover,
   onRowClick,
   rowAnchor,
+  settings,
+  onUpdateListSettings,
+  onSelectOrderDraftIds,
 }: OrderDraftListDatagridProps) => {
   const intl = useIntl();
   const { locale } = useLocale();
@@ -108,6 +114,7 @@ export const OrderDraftListDatagrid = ({
         emptyText={intl.formatMessage(messages.emptyText)}
         rows={orders?.length ?? 0}
         selectionActions={() => null}
+        onRowSelectionChange={onSelectOrderDraftIds}
         onColumnMoved={onColumnMoved}
         onColumnResize={onColumnResize}
         onHeaderClicked={handleHeaderClick}
@@ -132,6 +139,16 @@ export const OrderDraftListDatagrid = ({
           />
         )}
       />
+
+      <Box paddingX={6}>
+        <TablePaginationWithContext
+          component="div"
+          colSpan={1}
+          settings={settings}
+          disabled={disabled}
+          onUpdateListSettings={onUpdateListSettings}
+        />
+      </Box>
     </DatagridChangeStateContext.Provider>
   );
 };

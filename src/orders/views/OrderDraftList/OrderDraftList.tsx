@@ -2,16 +2,13 @@ import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDia
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
+import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
   useOrderDraftBulkCancelMutation,
   useOrderDraftCreateMutation,
   useOrderDraftListQuery,
 } from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -20,6 +17,7 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
+import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -28,8 +26,8 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React from "react";
+import isEqual from "lodash/isEqual";
+import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import OrderDraftListPage from "../../components/OrderDraftListPage";
@@ -40,16 +38,12 @@ import {
   orderUrl,
 } from "../../urls";
 import {
-  deleteFilterTab,
-  getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
-  getFiltersCurrentTab,
-  getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
+import { useTabs } from "./useTabs";
 
 interface OrderDraftListProps {
   params: OrderDraftListUrlQueryParams;
@@ -58,36 +52,38 @@ interface OrderDraftListProps {
 export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
+  const intl = useIntl();
+
   const { updateListSettings, settings } = useListSettings(
     ListViews.DRAFT_LIST,
   );
 
   usePaginationReset(orderDraftListUrl, params, settings.rowNumber);
 
-  const intl = useIntl();
+  const {
+    clearRowSelection,
+    selectedRowIds,
+    setClearDatagridRowSelectionCallback,
+    setSelectedRowIds,
+  } = useRowSelection(params);
 
-  const [
-    orderDraftBulkDelete,
-    orderDraftBulkDeleteOpts,
-  ] = useOrderDraftBulkCancelMutation({
-    onCompleted: data => {
-      if (data.draftOrderBulkDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "ra2O4j",
-            defaultMessage: "Deleted draft orders",
-          }),
-        });
-        refetch();
-        reset();
-        closeModal();
-      }
-    },
-  });
+  const [orderDraftBulkDelete, orderDraftBulkDeleteOpts] =
+    useOrderDraftBulkCancelMutation({
+      onCompleted: data => {
+        if (data.draftOrderBulkDelete.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage({
+              id: "ra2O4j",
+              defaultMessage: "Deleted draft orders",
+            }),
+          });
+          refetch();
+          clearRowSelection();
+          closeModal();
+        }
+      },
+    });
 
   const [createOrder] = useOrderDraftCreateMutation({
     onCompleted: data => {
@@ -109,61 +105,48 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
     },
   });
 
-  const tabs = getFilterTabs();
-
-  const currentTab = getFiltersCurrentTab(params, tabs);
-
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    cleanupFn: reset,
-    createUrl: orderDraftListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      cleanupFn: clearRowSelection,
+      createUrl: orderDraftListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+    });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderDraftListUrlDialog,
     OrderDraftListUrlQueryParams
   >(navigate, orderDraftListUrl, params);
 
-  const handleTabChange = (tab: number) => {
-    reset();
-    navigate(
-      orderDraftListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data,
-      }),
-    );
-  };
-
-  const handleTabDelete = () => {
-    deleteFilterTab(currentTab);
-    reset();
-    navigate(orderDraftListUrl());
-  };
-
-  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
-    saveFilterTab(data.name, getActiveFilters(params));
-    handleTabChange(tabs.length + 1);
-  };
+  const {
+    currentTab,
+    tabs,
+    hasTabChanged,
+    onTabChange,
+    onTabDelete,
+    onTabSave,
+    onTabUpdate,
+    setTabIndexToDelete,
+    tabIndexToDelete,
+  } = useTabs({ params, reset: clearRowSelection });
 
   const paginationState = createPaginationState(settings.rowNumber, params);
+
   const queryVariables = React.useMemo(
     () => ({
       ...paginationState,
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber],
+    [paginationState, params],
   );
   const { data, loading, refetch } = useOrderDraftListQuery({
     displayLoader: true,
     variables: queryVariables,
   });
+
+  const orderDrafts = mapEdgesToItems(data?.draftOrders);
 
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.draftOrders.pageInfo),
@@ -176,9 +159,32 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   const onOrderDraftBulkDelete = () =>
     orderDraftBulkDelete({
       variables: {
-        ids: params.ids,
+        ids: selectedRowIds,
       },
     });
+
+  const handleSetSelectedOrderDraftIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!orderDrafts) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => orderDrafts[row].id);
+      const haveSaveValues = isEqual(rowsIds, selectedRowIds);
+
+      if (!haveSaveValues) {
+        setSelectedRowIds(rowsIds);
+      }
+
+      setClearDatagridRowSelectionCallback(clearSelection);
+    },
+    [
+      orderDrafts,
+      selectedRowIds,
+      setClearDatagridRowSelectionCallback,
+      setSelectedRowIds,
+    ],
+  );
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
@@ -190,34 +196,33 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}
         onAll={resetFilters}
-        onTabChange={handleTabChange}
-        onTabDelete={() => openModal("delete-search")}
+        onTabChange={onTabChange}
+        onTabDelete={(tabIndex: number) => {
+          setTabIndexToDelete(tabIndex);
+          openModal("delete-search");
+        }}
+        onTabUpdate={onTabUpdate}
         onTabSave={() => openModal("save-search")}
         tabs={tabs.map(tab => tab.name)}
         disabled={loading}
         settings={settings}
-        orders={mapEdgesToItems(data?.draftOrders)}
+        orders={orderDrafts}
         onAdd={() => openModal("create-order")}
         onSort={handleSort}
-        onUpdateListSettings={updateListSettings}
-        isChecked={isSelected}
-        selected={listElements.length}
         sort={getSortParams(params)}
-        toggle={toggle}
-        toggleAll={toggleAll}
-        toolbar={
-          <IconButton
-            variant="secondary"
-            color="primary"
-            onClick={() =>
-              openModal("remove", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
+        currencySymbol={channel?.currencyCode}
+        hasPresetsChanged={hasTabChanged}
+        onDraftOrdersDelete={() =>
+          openModal("remove", {
+            ids: selectedRowIds,
+          })
         }
+        onUpdateListSettings={(...props) => {
+          clearRowSelection();
+          updateListSettings(...props);
+        }}
+        selectedOrderDraftIds={selectedRowIds}
+        onSelectOrderDraftIds={handleSetSelectedOrderDraftIds}
       />
       <ActionDialog
         confirmButtonState={orderDraftBulkDeleteOpts.status}
@@ -237,9 +242,9 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
             defaultMessage="{counter,plural,one{Are you sure you want to delete this order draft?} other{Are you sure you want to delete {displayQuantity} order drafts?}}"
             description="dialog content"
             values={{
-              counter: maybe(() => params.ids.length),
+              counter: maybe(() => selectedRowIds.length),
               displayQuantity: (
-                <strong>{maybe(() => params.ids.length)}</strong>
+                <strong>{maybe(() => selectedRowIds.length)}</strong>
               ),
             }}
           />
@@ -249,14 +254,14 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabSave}
+        onSubmit={onTabSave}
       />
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+        onSubmit={onTabDelete}
+        tabName={tabs[tabIndexToDelete - 1]?.name ?? "..."}
       />
       <ChannelPickerDialog
         channelsChoices={mapNodeToChoice(availableChannels)}

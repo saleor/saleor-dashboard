@@ -83,12 +83,10 @@ export const {
   deleteFilterTab,
   getFilterTabs,
   saveFilterTab,
-} = createFilterTabUtils<OrderDraftListUrlFilters>(ORDER_DRAFT_FILTERS_KEY);
+  updateFilterTab,
+} = createFilterTabUtils<string>(ORDER_DRAFT_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<OrderDraftListUrlQueryParams, OrderDraftListUrlFilters>(
-  OrderDraftListUrlFiltersEnum,
-);
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
+  createFilterUtils<OrderDraftListUrlQueryParams, OrderDraftListUrlFilters>(
+    OrderDraftListUrlFiltersEnum,
+  );
