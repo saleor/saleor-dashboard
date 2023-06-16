@@ -8,7 +8,7 @@ import {
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { OrderDraftListQuery } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
-import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
+import { OrderDraftListUrlSortField, orderUrl } from "@dashboard/orders/urls";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui/next";
@@ -25,7 +25,6 @@ interface OrderDraftListDatagridProps
   orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
   hasRowHover?: boolean;
   onRowClick?: (id: string) => void;
-  rowAnchor?: (id: string) => string;
   onSelectOrderDraftIds;
 }
 
@@ -36,7 +35,6 @@ export const OrderDraftListDatagrid = ({
   onSort,
   hasRowHover,
   onRowClick,
-  rowAnchor,
   settings,
   onUpdateListSettings,
   onSelectOrderDraftIds,
@@ -88,13 +86,10 @@ export const OrderDraftListDatagrid = ({
 
   const handleRowAnchor = useCallback(
     ([, row]: Item) => {
-      if (!rowAnchor) {
-        return;
-      }
       const rowData = orders[row];
-      return rowAnchor(rowData.id);
+      return orderUrl(rowData.id);
     },
-    [rowAnchor, orders],
+    [orders],
   );
 
   return (
