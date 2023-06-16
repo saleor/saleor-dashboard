@@ -18,7 +18,7 @@ import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import OrderDraftList from "../OrderDraftList";
+import { OrderDraftListDatagrid } from "../OrderDraftListDatagrid";
 import OrderLimitReached from "../OrderLimitReached";
 import {
   createFilterStructure,
@@ -111,7 +111,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
           onTabDelete={onTabDelete}
           onTabSave={onTabSave}
         />
-        <OrderDraftList disabled={disabled} {...listProps} />
+        <OrderDraftListDatagrid disabled={disabled} {...listProps} />
       </Card>
     </>
   );
