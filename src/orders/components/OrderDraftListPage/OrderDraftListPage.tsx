@@ -106,8 +106,8 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
             onSearchChange={onSearchChange}
             filterStructure={filterStructure}
             searchPlaceholder={intl.formatMessage({
-              id: "kIvvax",
-              defaultMessage: "Search Products...",
+              id: "IzECoP",
+              defaultMessage: "Search draft orders...",
             })}
             actions={
               <Box display="flex" gap={4}>

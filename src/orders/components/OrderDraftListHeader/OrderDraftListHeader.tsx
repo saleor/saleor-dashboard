@@ -68,8 +68,8 @@ export const OrderDraftListHeader = ({
             isOpen={isFilterPresetOpen}
             onOpenChange={setFilterPresetOpen}
             selectAllLabel={intl.formatMessage({
-              id: "tCLTCb",
-              defaultMessage: "All products",
+              id: "nJ0tek",
+              defaultMessage: "All draft orders",
               description: "tab name",
             })}
           />
