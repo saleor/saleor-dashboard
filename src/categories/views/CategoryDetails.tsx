@@ -92,6 +92,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
   );
   const paginate = useLocalPaginator(setPaginationState);
   const changeTab = (tab: CategoryPageTab) => {
+    clearProductRowSelection();
+    clearCategryRowSelection();
     setActiveTab(tab);
   };
 
@@ -151,7 +153,6 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     clearCategryRowSelection();
     if (data.categoryBulkDelete.errors.length === 0) {
       closeModal();
-      clearProductRowSelection();
       notify({
         status: "success",
         text: intl.formatMessage(commonMessages.savedChanges),
@@ -365,9 +366,9 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             id="Pp/7T7"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this category?} other{Are you sure you want to delete {displayQuantity} categories?}}"
             values={{
-              counter: maybe(() => params.ids.length),
+              counter: maybe(() => selectedCategoryRowIds.length),
               displayQuantity: (
-                <strong>{maybe(() => params.ids.length)}</strong>
+                <strong>{maybe(() => selectedCategoryRowIds.length)}</strong>
               ),
             }}
           />
@@ -386,7 +387,7 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
         onClose={closeModal}
         onConfirm={() =>
           productBulkDelete({
-            variables: { ids: params.ids },
+            variables: { ids: selectedProductRowIds },
           }).then(() => refetch())
         }
         title={intl.formatMessage({
@@ -401,9 +402,9 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
             id="7l5Bh9"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
             values={{
-              counter: maybe(() => params.ids.length),
+              counter: maybe(() => selectedProductRowIds.length),
               displayQuantity: (
-                <strong>{maybe(() => params.ids.length)}</strong>
+                <strong>{maybe(() => selectedProductRowIds.length)}</strong>
               ),
             }}
           />

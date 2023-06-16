@@ -106,7 +106,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
       categoryListUrl({
         ...getActiveFilters(params),
         ...filter,
-        activeTab: currentTab?.toString(),
+        activeTab: !filter.query?.length ? undefined : params.activeTab,
       }),
     );
   };

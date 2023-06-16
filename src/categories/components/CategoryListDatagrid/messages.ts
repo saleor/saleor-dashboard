@@ -14,3 +14,10 @@ export const columnsMessages = defineMessages({
     id: "cLcy6F",
   },
 });
+
+export const messages = defineMessages({
+  noData: {
+    defaultMessage: "No categories found",
+    id: "dM86a2",
+  },
+});

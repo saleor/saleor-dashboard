@@ -14,7 +14,7 @@ export const getColumns = (intl: IntlShape): AvailableColumn[] => [
   {
     id: "name",
     title: intl.formatMessage(columnsMessages.name),
-    width: 350,
+    width: 500,
   },
 ];
 

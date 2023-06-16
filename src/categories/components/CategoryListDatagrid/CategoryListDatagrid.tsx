@@ -18,6 +18,7 @@ import React, { ReactNode, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { createGetCellContent, getColumns } from "./datagrid";
+import { messages } from "./messages";
 
 interface CategoryListDatagridProps
   extends Partial<SortPage<CategoryListUrlSortField>>,
@@ -88,10 +89,7 @@ export const CategoryListDatagrid = ({
         rows={categories?.length ?? 0}
         getCellContent={getCellContent}
         getCellError={() => false}
-        emptyText={intl.formatMessage({
-          defaultMessage: "No categories found",
-          id: "dM86a2",
-        })}
+        emptyText={intl.formatMessage(messages.noData)}
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
         menuItems={() => []}
