@@ -22,6 +22,10 @@ export class ConditionOptions extends Array<ConditionItem> {
     return this.find(f => f.label === label);
   }
 
+  public first () {
+    return this[0]
+  }
+
   public static empty() {
     return new ConditionOptions([]);
   }

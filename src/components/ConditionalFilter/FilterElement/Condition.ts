@@ -72,9 +72,13 @@ export class Condition {
     if (token.isAttribute()) {
       const attribute = response.attributeByName(token.name)
       const options = ConditionOptions.fromAtributeType(attribute.inputType)
-      console.log("attribute handling", attribute);
+      const selected: ConditionSelected = {
+        conditionValue: options.first(),
+        value: token.value,
+        options: attribute.choices
+      };
 
-      // return new Condition(staticOptions, selected, false)
+      return new Condition(options, selected, false)
     }
 
     return null;

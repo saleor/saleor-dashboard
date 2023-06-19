@@ -78,7 +78,7 @@ export class FilterElement {
   public static fromUrlToken(token: UrlToken, response: InitialStateResponse) {
     if (token.isStatic()) {
       return new FilterElement(
-        { value: token.name, label: token.name, type: "s" },
+        { value: token.name, label: token.name, type: token.name },
         Condition.fromUrlToken(token, response),
         false,
       );
@@ -86,13 +86,9 @@ export class FilterElement {
 
     if (token.isAttribute()) {
       const attribute = response.attributeByName(token.name);
-      // const label = response.attribute && response.attribute[token.name].label
-
-      console.log("test", attribute);
-      // if (!label) return null
 
       return new FilterElement(
-        { value: token.name, label: "load from api", type: "a" },
+        { value: token.name, label: attribute.label, type: attribute.inputType },
         Condition.fromUrlToken(token, response),
         false,
       );
