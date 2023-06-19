@@ -1,6 +1,5 @@
 import { SaveFilterTabDialogFormData } from "@dashboard/components/SaveFilterTabDialog";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { orderDraftListUrl } from "@dashboard/orders/urls";
 import {
   getActiveTabIndexAfterTabDelete,
   getNextUniqueTabName,
@@ -22,6 +21,7 @@ export const useFilterPresets = ({
   storageUtils: StorageUtils<string>;
 }) => {
   const navigate = useNavigator();
+  const baseUrl = getUrl();
   const [presetIdToDelete, setPresetIdToDelete] = useState<number | null>(null);
 
   const presets = storageUtils.getFilterTabs();
@@ -31,14 +31,16 @@ export const useFilterPresets = ({
       ? parseInt(params.activeTab, 10)
       : undefined;
 
-  const onPresetChange = (tab: number) => {
+  const onPresetChange = (index: number) => {
     reset();
-    const url = getUrl();
-    const qs = new URLSearchParams(presets[tab - 1]?.data ?? "");
-    qs.append("activeTab", tab.toString());
+    const currentPresets = storageUtils.getFilterTabs();
+    const qs = new URLSearchParams(currentPresets[index - 1]?.data ?? "");
+    qs.append("activeTab", index.toString());
 
     navigate(
-      url.endsWith("?") ? url + qs.toString() : url + "?" + qs.toString(),
+      baseUrl.endsWith("?")
+        ? baseUrl + qs.toString()
+        : baseUrl + "?" + qs.toString(),
     );
   };
 
@@ -48,7 +50,7 @@ export const useFilterPresets = ({
 
     // When deleting the current tab, navigate to the All products
     if (presetIdToDelete === selectedPreset) {
-      navigate(orderDraftListUrl());
+      navigate(baseUrl);
     } else {
       const currentParams = { ...params };
       // When deleting a tab that is not the current one, only remove the action param from the query
@@ -58,7 +60,11 @@ export const useFilterPresets = ({
         selectedPreset,
         presetIdToDelete,
       );
-      navigate(orderDraftListUrl() + "?" + stringify(currentParams));
+      navigate(
+        baseUrl.endsWith("?")
+          ? baseUrl + stringify(currentParams)
+          : baseUrl + "?" + stringify(currentParams),
+      );
     }
   };
 

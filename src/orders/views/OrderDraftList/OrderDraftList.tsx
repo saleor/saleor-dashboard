@@ -9,7 +9,7 @@ import {
   useOrderDraftCreateMutation,
   useOrderDraftListQuery,
 } from "@dashboard/graphql";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -113,6 +113,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
       getFilterQueryParam,
       navigate,
       params,
+      keepActiveTab: true,
     });
 
   const [openModal, closeModal] = createDialogActionHandlers<
