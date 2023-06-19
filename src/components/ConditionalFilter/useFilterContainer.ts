@@ -44,6 +44,19 @@ export const useFilterContainer = (
     );
   };
 
+  const updateLeftLoadingState = (position: string, loading: boolean) => {
+    const index = parseInt(position, 10);
+    setValue(v =>
+      v.map((el, elIndex) => {
+        if (elIndex === index && typeof el != "string") {
+          el.updateLeftLoadingState(loading);
+        }
+
+        return el;
+      }),
+    );
+  };
+
   const updateRightOperator = (position: string, leftOperator: any) => {
     const index = parseInt(position, 10);
     setValue(v =>
@@ -63,6 +76,19 @@ export const useFilterContainer = (
       v.map((el, elIndex) => {
         if (elIndex === index && typeof el != "string") {
           el.updateRightOptions(options);
+        }
+
+        return el;
+      }),
+    );
+  };
+
+  const updateRightLoadingState = (position: string, loading: boolean) => {
+    const index = parseInt(position, 10);
+    setValue(v =>
+      v.map((el, elIndex) => {
+        if (elIndex === index && typeof el != "string") {
+          el.updateRightLoadingState(loading);
         }
 
         return el;
@@ -92,5 +118,7 @@ export const useFilterContainer = (
     updateRightOperator,
     updateCondition,
     updateRightOptions,
+    updateRightLoadingState,
+    updateLeftLoadingState,
   };
 };

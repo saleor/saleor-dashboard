@@ -59,6 +59,10 @@ export class FilterElement {
     this.condition = Condition.emptyFromLeftOperand(leftOperand);
   }
 
+  public updateLeftLoadingState(loading: boolean) {
+    this.loading = loading;
+  }
+
   public updateCondition(conditionValue: ConditionItem) {
     this.condition.selected.conditionValue = conditionValue;
   }
@@ -71,16 +75,20 @@ export class FilterElement {
     this.condition.selected.options = options;
   }
 
+  public updateRightLoadingState(loading: boolean) {
+    this.condition.selected.loading = loading;
+  }
+
   public isEmpty() {
     return this.value.type === "e";
   }
 
   public isStatic() {
-    return ConditionOptions.isStaticName(this.value.type)
+    return ConditionOptions.isStaticName(this.value.type);
   }
 
   public isAttribute() {
-    return ConditionOptions.isAttributeInputType(this.value.type)
+    return ConditionOptions.isAttributeInputType(this.value.type);
   }
 
   public asUrlEntry(): UrlEntry {
@@ -123,7 +131,11 @@ export class FilterElement {
       const attribute = response.attributeByName(token.name);
 
       return new FilterElement(
-        { value: token.name, label: attribute.label, type: attribute.inputType },
+        {
+          value: token.name,
+          label: attribute.label,
+          type: attribute.inputType,
+        },
         Condition.fromUrlToken(token, response),
         false,
       );

@@ -1,25 +1,21 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { CONTROL_DEFAULTS } from "./../controlsType";
-import {
-  ConditionItem,
-  ConditionOptions,
-} from "./../staticConditions";
+import { ConditionItem, ConditionOptions } from "./../staticConditions";
 import { LeftOperand } from "./../useLeftOperands";
 import { UrlToken } from "./../ValueProvider/UrlToken";
 
-
 export interface ConditionSelectedValue {
-  label: string
-  value: string
-  slug: string
+  label: string;
+  value: string;
+  slug: string;
 }
-
 
 export interface ConditionSelected {
   value: string | ConditionSelectedValue | ConditionSelectedValue[];
   conditionValue: ConditionItem;
   options?: Array<{ value: string; label: string }>;
+  loading?: boolean;
 }
 
 export class Condition {
@@ -51,7 +47,7 @@ export class Condition {
   }
 
   public static emptyFromLeftOperand(operand: LeftOperand) {
-    const options = ConditionOptions.fromName(operand.type)
+    const options = ConditionOptions.fromName(operand.type);
     const firstOption = options[0];
     const defaults = CONTROL_DEFAULTS[firstOption.type];
     const selected: ConditionSelected = {
@@ -64,9 +60,9 @@ export class Condition {
 
   public static fromUrlToken(token: UrlToken, response: InitialStateResponse) {
     if (ConditionOptions.isStaticName(token.name)) {
-      const staticOptions = ConditionOptions.fromStaticElementName(token.name)
-      const selectedOption = staticOptions.findByLabel(token.conditionKind)
-      const value = response.filterByUrlToken(token)
+      const staticOptions = ConditionOptions.fromStaticElementName(token.name);
+      const selectedOption = staticOptions.findByLabel(token.conditionKind);
+      const value = response.filterByUrlToken(token);
       const selected: ConditionSelected = {
         conditionValue: selectedOption,
         value,
@@ -77,17 +73,16 @@ export class Condition {
     }
 
     if (token.isAttribute()) {
-      const attribute = response.attributeByName(token.name)
-      const options = ConditionOptions.fromAtributeType(attribute.inputType)
-      const value = response.filterByUrlToken(token)
+      const attribute = response.attributeByName(token.name);
+      const options = ConditionOptions.fromAtributeType(attribute.inputType);
+      const value = response.filterByUrlToken(token);
       const selected: ConditionSelected = {
         conditionValue: options.first(),
         value,
-        options: []
+        options: [],
       };
 
-
-      return new Condition(options, selected, false)
+      return new Condition(options, selected, false);
     }
 
     return null;

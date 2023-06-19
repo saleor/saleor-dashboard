@@ -28,19 +28,10 @@ const isFilterElementAttribute = (FilterElement: FilterElement) => {
   return allowedInputTypes.includes(FilterElement.value.type);
 };
 
-const getOptions = (edge: any[]) =>
-  edge.map(({ node }: any) => ({
-    label: node.name,
-    value: node.id,
-  }));
-
 export const useAPIOptions = (value: Array<string | FilterElement>) => {
   const client = useApolloClient();
 
-  const getInitialRightOperatorOptions = async (
-    position: string,
-    updater: any,
-  ) => {
+  const getInitialRightOperatorOptions = async (position: string) => {
     const index = parseInt(position, 10);
     const filterElement = getFilterElement(value, index);
 
@@ -53,9 +44,10 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
           query: "",
         },
       });
-
-      const options = getOptions(data.attribute.choices.edges);
-      updater(position, options);
+      return data.attribute.choices.edges.map(({ node }) => ({
+        label: node.name,
+        value: node.id,
+      }));
     }
 
     if (filterElement.value.value === "collection") {
@@ -67,8 +59,10 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
         },
       });
 
-      const options = getOptions(data.collections.edges);
-      updater(position, options);
+      return data.collections.edges.map(({ node }) => ({
+        label: node.name,
+        value: node.id,
+      }));
     }
 
     if (filterElement.value.value === "category") {
@@ -80,8 +74,10 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
         },
       });
 
-      const options = getOptions(data.categories.edges);
-      updater(position, options);
+      return data.categories.edges.map(({ node }) => ({
+        label: node.name,
+        value: node.id,
+      }));
     }
 
     if (filterElement.value.value === "producttype") {
@@ -93,8 +89,10 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
         },
       });
 
-      const options = getOptions(data.productTypes.edges);
-      updater(position, options);
+      return data.productTypes.edges.map(({ node }) => ({
+        label: node.name,
+        value: node.id,
+      }));
     }
 
     if (filterElement.value.value === "channel") {
@@ -102,18 +100,16 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
         query: _GetChannelOperandsDocument,
       });
 
-      const options = data.channels.map(({ id, name }: any) => ({
+      return data.channels.map(({ id, name }: any) => ({
         label: name,
         value: id,
       }));
-      updater(position, options);
     }
   };
 
   const getRightOperatorOptionsByQuery = async (
     position: string,
     inputValue: string,
-    updater: any,
   ) => {
     const index = parseInt(position, 10);
     const filterElement = getFilterElement(value, index);
@@ -127,9 +123,10 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
           query: inputValue,
         },
       });
-
-      const options = getOptions(data.attribute.choices.edges);
-      updater(position, options);
+      return data.attribute.choices.edges.map(({ node }) => ({
+        label: node.name,
+        value: node.id,
+      }));
     }
 
     if (filterElement.value.value === "collection") {
@@ -141,8 +138,10 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
         },
       });
 
-      const options = getOptions(data.collections.edges);
-      updater(position, options);
+      return data.collections.edges.map(({ node }) => ({
+        label: node.name,
+        value: node.id,
+      }));
     }
 
     if (filterElement.value.value === "category") {
@@ -154,8 +153,10 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
         },
       });
 
-      const options = getOptions(data.categories.edges);
-      updater(position, options);
+      return data.categories.edges.map(({ node }) => ({
+        label: node.name,
+        value: node.id,
+      }));
     }
 
     if (filterElement.value.value === "producttype") {
@@ -167,30 +168,14 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
         },
       });
 
-      const options = getOptions(data.productTypes.edges);
-      updater(position, options);
-    }
-
-    if (filterElement.value.value === "channel") {
-      const { data } = await client.query({
-        query: _GetChannelOperandsDocument,
-      });
-
-      const options = data.channels.map(({ id, name }: any) => ({
-        label: name,
-        value: id,
+      return data.productTypes.edges.map(({ node }) => ({
+        label: node.name,
+        value: node.id,
       }));
-      const filteredOptions = options.filter(({ label }) =>
-        label.toLowerCase().includes(inputValue.toLowerCase()),
-      );
-      updater(position, filteredOptions);
     }
   };
 
-  const getLeftOperatorOptionsByQuery = async (
-    inputValue: string,
-    updater: any,
-  ) => {
+  const getLeftOperatorOptionsByQuery = async (inputValue: string) => {
     const { data } = await client.query({
       query: _GetDynamicLeftOperandsDocument,
       variables: {
@@ -203,7 +188,8 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
       value: node.id,
       type: node.inputType,
     }));
-    updater(options);
+
+    return options;
   };
 
   return {

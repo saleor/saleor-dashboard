@@ -94,6 +94,8 @@ const FiltersArea = ({ provider, onConfirm }) => {
     updateRightOperator,
     updateCondition,
     updateRightOptions,
+    updateRightLoadingState,
+    updateLeftLoadingState,
   } = useFilterContainer(provider);
 
   const {
@@ -104,7 +106,7 @@ const FiltersArea = ({ provider, onConfirm }) => {
 
   const { operands, setOperands } = useLeftOperands();
 
-  const handleStateChange = event => {
+  const handleStateChange = async event => {
     if (event.type === "row.add") {
       addEmpty();
     }
@@ -127,22 +129,29 @@ const FiltersArea = ({ provider, onConfirm }) => {
     }
 
     if (event.type === "rightOperator.onFocus") {
-      getInitialRightOperatorOptions(
-        event.path.split(".")[0],
-        updateRightOptions,
-      );
+      const path = event.path.split(".")[0];
+      updateRightLoadingState(path, true);
+      const options = await getInitialRightOperatorOptions(path);
+      updateRightOptions(path, options);
+      updateRightLoadingState(path, false);
     }
 
     if (event.type === "rightOperator.onInputValueChange") {
-      getRightOperatorOptionsByQuery(
+      const path = event.path.split(".")[0];
+      updateRightLoadingState(path, true);
+      const options = getRightOperatorOptionsByQuery(
         event.path.split(".")[0],
         event.value,
-        updateRightOptions,
       );
+      updateRightOptions(path, options);
+      updateRightLoadingState(path, false);
     }
 
     if (event.type === "leftOperator.onInputValueChange") {
-      getLeftOperatorOptionsByQuery(event.value, setOperands);
+      updateLeftLoadingState(event.path, true);
+      const options = await getLeftOperatorOptionsByQuery(event.value);
+      setOperands(options ?? []);
+      updateLeftLoadingState(event.path, false);
     }
 
     // console.log(event);
