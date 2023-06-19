@@ -116,7 +116,8 @@ export const ConditionalFilters = () => {
     updateRightOptions,
   } = useFilterContainer(provider);
 
-  const { getInitialRightOperatorOptions } = useAPIOptions(value);
+  const { getInitialRightOperatorOptions, getRightOperatorOptionsByQuery } =
+    useAPIOptions(value);
 
   const leftOptions = useLeftOperands();
 
@@ -144,6 +145,14 @@ export const ConditionalFilters = () => {
     if (event.type === "rightOperator.onFocus") {
       getInitialRightOperatorOptions(
         event.path.split(".")[0],
+        updateRightOptions,
+      );
+    }
+
+    if (event.type === "rightOperator.onInputValueChange") {
+      getRightOperatorOptionsByQuery(
+        event.path.split(".")[0],
+        event.value,
         updateRightOptions,
       );
     }

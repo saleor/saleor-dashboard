@@ -5658,9 +5658,9 @@ export type _SearchAttributeOperandsQueryHookResult = ReturnType<typeof use_Sear
 export type _SearchAttributeOperandsLazyQueryHookResult = ReturnType<typeof use_SearchAttributeOperandsLazyQuery>;
 export type _SearchAttributeOperandsQueryResult = Apollo.QueryResult<Types._SearchAttributeOperandsQuery, Types._SearchAttributeOperandsQueryVariables>;
 export const _GetAttributeChoicesDocument = gql`
-    query _GetAttributeChoices($attributeId: ID!, $first: Int!) {
+    query _GetAttributeChoices($attributeId: ID!, $first: Int!, $query: String!) {
   attribute(id: $attributeId) {
-    choices(first: $first) {
+    choices(first: $first, filter: {search: $query}) {
       edges {
         node {
           id
@@ -5686,6 +5686,7 @@ export const _GetAttributeChoicesDocument = gql`
  *   variables: {
  *      attributeId: // value for 'attributeId'
  *      first: // value for 'first'
+ *      query: // value for 'query'
  *   },
  * });
  */
@@ -5701,8 +5702,8 @@ export type _GetAttributeChoicesQueryHookResult = ReturnType<typeof use_GetAttri
 export type _GetAttributeChoicesLazyQueryHookResult = ReturnType<typeof use_GetAttributeChoicesLazyQuery>;
 export type _GetAttributeChoicesQueryResult = Apollo.QueryResult<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>;
 export const _GetCollectionsChoicesDocument = gql`
-    query _GetCollectionsChoices($first: Int!) {
-  collections(first: $first) {
+    query _GetCollectionsChoices($first: Int!, $query: String!) {
+  collections(first: $first, filter: {search: $query}) {
     edges {
       node {
         id
@@ -5726,6 +5727,7 @@ export const _GetCollectionsChoicesDocument = gql`
  * const { data, loading, error } = use_GetCollectionsChoicesQuery({
  *   variables: {
  *      first: // value for 'first'
+ *      query: // value for 'query'
  *   },
  * });
  */
@@ -5741,8 +5743,8 @@ export type _GetCollectionsChoicesQueryHookResult = ReturnType<typeof use_GetCol
 export type _GetCollectionsChoicesLazyQueryHookResult = ReturnType<typeof use_GetCollectionsChoicesLazyQuery>;
 export type _GetCollectionsChoicesQueryResult = Apollo.QueryResult<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>;
 export const _GetCategoriesChoicesDocument = gql`
-    query _GetCategoriesChoices($first: Int!) {
-  categories(first: $first) {
+    query _GetCategoriesChoices($first: Int!, $query: String!) {
+  categories(first: $first, filter: {search: $query}) {
     edges {
       node {
         id
@@ -5766,6 +5768,7 @@ export const _GetCategoriesChoicesDocument = gql`
  * const { data, loading, error } = use_GetCategoriesChoicesQuery({
  *   variables: {
  *      first: // value for 'first'
+ *      query: // value for 'query'
  *   },
  * });
  */
@@ -5781,8 +5784,8 @@ export type _GetCategoriesChoicesQueryHookResult = ReturnType<typeof use_GetCate
 export type _GetCategoriesChoicesLazyQueryHookResult = ReturnType<typeof use_GetCategoriesChoicesLazyQuery>;
 export type _GetCategoriesChoicesQueryResult = Apollo.QueryResult<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>;
 export const _GetProductTypesChoicesDocument = gql`
-    query _GetProductTypesChoices($first: Int!) {
-  productTypes(first: $first) {
+    query _GetProductTypesChoices($first: Int!, $query: String!) {
+  productTypes(first: $first, filter: {search: $query}) {
     edges {
       node {
         id
@@ -5806,6 +5809,7 @@ export const _GetProductTypesChoicesDocument = gql`
  * const { data, loading, error } = use_GetProductTypesChoicesQuery({
  *   variables: {
  *      first: // value for 'first'
+ *      query: // value for 'query'
  *   },
  * });
  */

@@ -6,6 +6,7 @@ import {
   _GetCollectionsChoicesDocument,
   _GetProductTypesChoicesDocument,
 } from "@dashboard/graphql";
+import { debounce } from "lodash";
 
 import { FilterElement } from "../FilterElement";
 import { ATTRIBUTE_INPUT_TYPE_CONDITIONS } from "../staticConditions";
@@ -42,6 +43,7 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
           variables: {
             attributeId: filterElement.value.value,
             first: 5,
+            query: "",
           },
         });
 
@@ -54,6 +56,7 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
           query: _GetCollectionsChoicesDocument,
           variables: {
             first: 5,
+            query: "",
           },
         });
 
@@ -66,6 +69,7 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
           query: _GetCategoriesChoicesDocument,
           variables: {
             first: 5,
+            query: "",
           },
         });
 
@@ -78,6 +82,7 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
           query: _GetProductTypesChoicesDocument,
           variables: {
             first: 5,
+            query: "",
           },
         });
 
@@ -99,7 +104,90 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
     }
   };
 
+  const getRightOperatorOptionsByQuery = async (
+    position: string,
+    inputValue: string,
+    updater: any,
+  ) => {
+    const index = parseInt(position, 10);
+    const filterElement = value[index];
+
+    if (isFilterElement(filterElement)) {
+      if (isFilterElementAttribute(filterElement)) {
+        const { data } = await client.query({
+          query: _GetAttributeChoicesDocument,
+          variables: {
+            attributeId: filterElement.value.value,
+            first: 5,
+            query: inputValue,
+          },
+        });
+
+        const options = getOptions(data.attribute.choices.edges);
+        updater(position, options);
+      }
+
+      if (filterElement.value.value === "collection") {
+        const { data } = await client.query({
+          query: _GetCollectionsChoicesDocument,
+          variables: {
+            first: 5,
+            query: inputValue,
+          },
+        });
+
+        const options = getOptions(data.collections.edges);
+        updater(position, options);
+      }
+
+      if (filterElement.value.value === "category") {
+        const { data } = await client.query({
+          query: _GetCategoriesChoicesDocument,
+          variables: {
+            first: 5,
+            query: inputValue,
+          },
+        });
+
+        const options = getOptions(data.categories.edges);
+        updater(position, options);
+      }
+
+      if (filterElement.value.value === "producttype") {
+        const { data } = await client.query({
+          query: _GetProductTypesChoicesDocument,
+          variables: {
+            first: 5,
+            query: inputValue,
+          },
+        });
+
+        const options = getOptions(data.productTypes.edges);
+        updater(position, options);
+      }
+
+      if (filterElement.value.value === "channel") {
+        const { data } = await client.query({
+          query: _GetChannelOperandsDocument,
+        });
+
+        const options = data.channels.map(({ id, name }: any) => ({
+          label: name,
+          value: id,
+        }));
+        const filteredOptions = options.filter(({ label }) =>
+          label.toLowerCase().includes(inputValue.toLowerCase()),
+        );
+        updater(position, filteredOptions);
+      }
+    }
+  };
+
   return {
     getInitialRightOperatorOptions,
+    getRightOperatorOptionsByQuery: debounce(
+      getRightOperatorOptionsByQuery,
+      500,
+    ),
   };
 };

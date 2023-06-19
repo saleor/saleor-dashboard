@@ -31,7 +31,6 @@ export const useUrlValueProvider = (): FilterValueProvider => {
 
   const dataFromAPI = useInitialAPIState(fetchingParams);
 
-  
   console.log("dataFromAPI", dataFromAPI);
   const result = mapUrlTokensToFilterValues(tokenizedUrl, dataFromAPI);
   console.log("result", result);

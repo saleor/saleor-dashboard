@@ -7974,6 +7974,7 @@ export type _SearchAttributeOperandsQuery = { __typename: 'Query', search: { __t
 export type _GetAttributeChoicesQueryVariables = Exact<{
   attributeId: Scalars['ID'];
   first: Scalars['Int'];
+  query: Scalars['String'];
 }>;
 
 
@@ -7981,6 +7982,7 @@ export type _GetAttributeChoicesQuery = { __typename: 'Query', attribute: { __ty
 
 export type _GetCollectionsChoicesQueryVariables = Exact<{
   first: Scalars['Int'];
+  query: Scalars['String'];
 }>;
 
 
@@ -7988,6 +7990,7 @@ export type _GetCollectionsChoicesQuery = { __typename: 'Query', collections: { 
 
 export type _GetCategoriesChoicesQueryVariables = Exact<{
   first: Scalars['Int'];
+  query: Scalars['String'];
 }>;
 
 
@@ -7995,6 +7998,7 @@ export type _GetCategoriesChoicesQuery = { __typename: 'Query', categories: { __
 
 export type _GetProductTypesChoicesQueryVariables = Exact<{
   first: Scalars['Int'];
+  query: Scalars['String'];
 }>;
 
 

@@ -103,10 +103,10 @@ export const initialDynamicOperands = gql`
   }
 `;
 
-export const dynamicOperandFocusQueries = gql`
-  query _GetAttributeChoices($attributeId: ID!, $first: Int!) {
+export const dynamicOperandsQueries = gql`
+  query _GetAttributeChoices($attributeId: ID!, $first: Int!, $query: String!) {
     attribute(id: $attributeId) {
-      choices(first: $first) {
+      choices(first: $first, filter: { search: $query }) {
         edges {
           node {
             id
@@ -117,8 +117,8 @@ export const dynamicOperandFocusQueries = gql`
     }
   }
 
-  query _GetCollectionsChoices($first: Int!) {
-    collections(first: $first) {
+  query _GetCollectionsChoices($first: Int!, $query: String!) {
+    collections(first: $first, filter: { search: $query }) {
       edges {
         node {
           id
@@ -128,8 +128,8 @@ export const dynamicOperandFocusQueries = gql`
     }
   }
 
-  query _GetCategoriesChoices($first: Int!) {
-    categories(first: $first) {
+  query _GetCategoriesChoices($first: Int!, $query: String!) {
+    categories(first: $first, filter: { search: $query }) {
       edges {
         node {
           id
@@ -139,8 +139,8 @@ export const dynamicOperandFocusQueries = gql`
     }
   }
 
-  query _GetProductTypesChoices($first: Int!) {
-    productTypes(first: $first) {
+  query _GetProductTypesChoices($first: Int!, $query: String!) {
+    productTypes(first: $first, filter: { search: $query }) {
       edges {
         node {
           id
