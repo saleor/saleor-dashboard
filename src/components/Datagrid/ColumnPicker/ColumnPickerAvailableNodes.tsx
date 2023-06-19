@@ -53,6 +53,7 @@ export const ColumnPickerAvailableNodes = ({
         <Checkbox
           onCheckedChange={() => changeHandler(node.id)}
           checked={columnPickerSettings.includes(node.id)}
+          data-test-id={`search-dynamic-${node.id}`}
         >
           <Text size="small" color="textNeutralSubdued" ellipsis>
             {node.title}
@@ -64,7 +65,12 @@ export const ColumnPickerAvailableNodes = ({
 
   return (
     <>
-      <Box display="flex" paddingX={4} style={{ boxSizing: "border-box" }}>
+      <Box
+        display="flex"
+        paddingX={4}
+        style={{ boxSizing: "border-box" }}
+        data-test-id="search-container"
+      >
         <ColumnPickerSearch
           currentCategory={currentCategory}
           query={query}

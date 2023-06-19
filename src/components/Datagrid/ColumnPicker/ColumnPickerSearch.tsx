@@ -36,6 +36,7 @@ export const ColumnPickerSearch: React.FC<ColumnPickerSearchProps> = ({
             placeholder={intl.formatMessage(messages.searchForColumns)}
             value={query}
             onChange={handleSearchChange}
+            data-test-id="search-columns"
           />
         );
       }}

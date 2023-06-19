@@ -28,6 +28,7 @@ export const ColumnPickerPagination = ({
       icon={<ChevronLeftIcon size="small" />}
       onClick={() => onPreviousPage(query)}
       disabled={!hasPreviousPage}
+      data-test-id="pagination-back"
     />
     <Button
       variant="secondary"
@@ -35,6 +36,7 @@ export const ColumnPickerPagination = ({
       icon={<ChevronRightIcon size="small" />}
       onClick={() => onNextPage(query)}
       disabled={!hasNextPage}
+      data-test-id="pagination-forward"
     />
   </Box>
 );

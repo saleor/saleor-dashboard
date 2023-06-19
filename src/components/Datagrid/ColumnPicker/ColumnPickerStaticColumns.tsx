@@ -15,10 +15,11 @@ export const ColumnPickerStaticColumns = ({
   handleToggle,
   selectedColumns,
 }: ColumnPickerStaticColumnsProps) => (
-  <>
+  <Box data-test-id="static-col-container">
     {staticColumns.filter(filterEmptyColumn).map(column => (
       <Box padding={1} key={column.id}>
         <Toggle
+          data-test-id={`stat-col-${column.id}`}
           onPressedChange={() => handleToggle(column.id)}
           pressed={selectedColumns.includes(column.id)}
           // One static column must always be enabled
@@ -34,5 +35,5 @@ export const ColumnPickerStaticColumns = ({
         </Toggle>
       </Box>
     ))}
-  </>
+  </Box>
 );

@@ -18,7 +18,7 @@ export const ColumnPickerDynamicColumns = ({
   handleToggle,
   selectedColumns,
 }: ColumnPickerDynamicColumnsProps) => (
-  <>
+  <Box data-test-id="dynamic-col-container">
     <Box
       display="flex"
       justifyContent="space-between"
@@ -33,6 +33,7 @@ export const ColumnPickerDynamicColumns = ({
         size="small"
         icon={<PlusIcon size="small" />}
         onClick={() => setExpanded(true)}
+        data-test-id="open-dynamic-search"
       />
     </Box>
     {dynamicColumns?.map(column => (
@@ -40,6 +41,7 @@ export const ColumnPickerDynamicColumns = ({
         <Toggle
           onPressedChange={() => handleToggle(column.id)}
           pressed={selectedColumns.includes(column.id)}
+          data-test-id={`dynamic-col-${column.id}`}
         >
           <Text
             variant="body"
@@ -55,5 +57,5 @@ export const ColumnPickerDynamicColumns = ({
         </Toggle>
       </Box>
     ))}
-  </>
+  </Box>
 );
