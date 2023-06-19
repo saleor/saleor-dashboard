@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/member-ordering */
+import { InitialStateResponse } from "../API/InitialStateResponse";
 import { CONTROL_DEFAULTS } from "./../controlsType";
 import {
   ConditionItem,
@@ -54,14 +55,11 @@ export class Condition {
     return new Condition(options, selected, false);
   }
 
-  public static fromUrlToken(token: UrlToken, response: unknown) {
+  public static fromUrlToken(token: UrlToken, response: InitialStateResponse) {
     if (ConditionOptions.isStaticName(token.name)) {
       const staticOptions = ConditionOptions.fromStaticElementName(token.name)
       const selectedOption = staticOptions.findByLabel(token.conditionKind)
-      
-      const options = response[token.name].filter(({ slug }) =>
-        token.value.includes(slug),
-      );
+      const options = response.filterByUrlToken(token)
       const selected: ConditionSelected = {
         conditionValue: selectedOption,
         value: token.value,
@@ -71,10 +69,10 @@ export class Condition {
       return new Condition(staticOptions, selected, false);
     }
 
-    if (token.isAttribute() && response.attribute) {
-      const attr = response.attribute[token.name];
-      const options = ConditionOptions.fromAtributeType(attr.inputType)
-      console.log("attribute handling", attr);
+    if (token.isAttribute()) {
+      const attribute = response.attributeByName(token.name)
+      const options = ConditionOptions.fromAtributeType(attribute.inputType)
+      console.log("attribute handling", attribute);
 
       // return new Condition(staticOptions, selected, false)
     }

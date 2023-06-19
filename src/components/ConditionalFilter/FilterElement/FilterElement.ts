@@ -3,6 +3,7 @@ import { Condition } from "./Condition";
 import { ConditionItem } from "./../staticConditions";
 import { LeftOperand } from "./../useLeftOperands";
 import { UrlToken } from "./../ValueProvider/UrlToken";
+import { InitialStateResponse } from "../API/InitialStateResponse";
 
 interface ExpressionValue {
   value: string;
@@ -70,7 +71,7 @@ export class FilterElement {
     );
   }
 
-  public static fromUrlToken(token: UrlToken, response: unknown) {
+  public static fromUrlToken(token: UrlToken, response: InitialStateResponse) {
     if (token.isStatic()) {
       return new FilterElement(
         { value: token.name, label: token.name, type: "s" },
@@ -80,13 +81,14 @@ export class FilterElement {
     }
 
     if (token.isAttribute()) {
-      const label = response.attribute && response.attribute[token.name].label
+      const attribute = response.attributeByName(token.name)
+      // const label = response.attribute && response.attribute[token.name].label
       
-      console.log("test", label)
+      console.log("test", attribute)
       // if (!label) return null
 
       return new FilterElement(
-        { value: token.name, label, type: "a" },
+        { value: token.name, label: "load from api", type: "a" },
         Condition.fromUrlToken(token, response),
         false,
       );
