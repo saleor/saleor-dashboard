@@ -114,6 +114,7 @@ export const ConditionalFilters = () => {
     updateRightOperator,
     updateCondition,
     updateRightOptions,
+    loading,
   } = useFilterContainer(provider);
 
   const { getInitialRightOperatorOptions, getRightOperatorOptionsByQuery } =
@@ -170,7 +171,7 @@ export const ConditionalFilters = () => {
 
   return (
     <Box __height={500}>
-      {provider.loading ? (
+      {loading ? (
         <Text>Loading...</Text>
       ) : (
         <>

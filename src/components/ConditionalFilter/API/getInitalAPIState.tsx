@@ -8,6 +8,8 @@ import {
 } from "@dashboard/graphql";
 import { useEffect, useState } from "react";
 
+import { InitialStateResponse } from "./InitialStateResponse";
+
 interface Props {
   category?: string[];
   collection?: string[];
@@ -162,11 +164,13 @@ export const useInitialAPIState = ({
     ) ?? {};
 
   return {
-    collection: collectionPicks,
-    category: categoryPicks,
-    producttype: productTypePicks,
-    attribute: attributePicks,
-    channel: channelPicks,
+    data: new InitialStateResponse(
+      categoryPicks,
+      attributePicks,
+      channelPicks,
+      collectionPicks,
+      productTypePicks,
+    ),
     loading,
   };
 };

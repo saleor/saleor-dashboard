@@ -37,6 +37,7 @@ export const useAPIOptions = (value: Array<string | FilterElement>) => {
     const filterElement = value[index];
 
     if (isFilterElement(filterElement)) {
+      debugger;
       if (isFilterElementAttribute(filterElement)) {
         const { data } = await client.query({
           query: _GetAttributeChoicesDocument,
