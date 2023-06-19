@@ -3,33 +3,31 @@ import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { RefreshLimitsQuery } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
-import { TabPageProps } from "@dashboard/types";
+import { FilterPresetsProps } from "@dashboard/types";
 import { hasLimits, isLimitReached } from "@dashboard/utils/limits";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 export interface OrderDraftListHeaderProps
-  extends Omit<TabPageProps, "onTabDelete"> {
+  extends Omit<FilterPresetsProps, "onTabDelete"> {
   limits: RefreshLimitsQuery["shop"]["limits"];
   hasPresetsChanged: boolean;
   isFilterPresetOpen: boolean;
   disabled: boolean;
   onAdd: () => void;
-  onTabUpdate: (tabName: string) => void;
-  onTabDelete: (tabIndex: number) => void;
   setFilterPresetOpen: (open: boolean) => void;
 }
 
 export const OrderDraftListHeader = ({
   hasPresetsChanged,
-  onTabChange,
-  onTabDelete,
-  onTabUpdate,
-  tabs,
-  currentTab,
-  onAll,
-  onTabSave,
+  onFilterPresetChange,
+  onFilterPresetDelete,
+  onFilterPresetUpdate,
+  onFilterPresetPresetSave,
+  filterPresets,
+  selectedFilterPreset,
+  onFilterPresetsAll,
   isFilterPresetOpen,
   setFilterPresetOpen,
   disabled,
@@ -58,13 +56,13 @@ export const OrderDraftListHeader = ({
 
           <FilterPresetsSelect
             presetsChanged={hasPresetsChanged}
-            onSelect={onTabChange}
-            onRemove={onTabDelete}
-            onUpdate={onTabUpdate}
-            savedPresets={tabs}
-            activePreset={currentTab}
-            onSelectAll={onAll}
-            onSave={onTabSave}
+            onSelect={onFilterPresetChange}
+            onRemove={onFilterPresetDelete}
+            onUpdate={onFilterPresetUpdate}
+            savedPresets={filterPresets}
+            activePreset={selectedFilterPreset}
+            onSelectAll={onFilterPresetsAll}
+            onSave={onFilterPresetPresetSave}
             isOpen={isFilterPresetOpen}
             onOpenChange={setFilterPresetOpen}
             selectAllLabel={intl.formatMessage({

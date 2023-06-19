@@ -2,11 +2,10 @@ import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
 import {
-  FilterPageProps,
+  FilterPagePropsWithPresets,
   PageListProps,
   RelayToFlat,
   SortPage,
-  TabPageProps,
 } from "@dashboard/types";
 import { isLimitReached } from "@dashboard/utils/limits";
 import { Card } from "@material-ui/core";
@@ -26,38 +25,32 @@ import {
 
 export interface OrderDraftListPageProps
   extends PageListProps,
-    Omit<
-      FilterPageProps<OrderDraftFilterKeys, OrderDraftListFilterOpts>,
-      "onTabDelete"
-    >,
-    SortPage<OrderDraftListUrlSortField>,
-    Omit<TabPageProps, "onTabDelete"> {
+    FilterPagePropsWithPresets<OrderDraftFilterKeys, OrderDraftListFilterOpts>,
+    SortPage<OrderDraftListUrlSortField> {
   limits: RefreshLimitsQuery["shop"]["limits"];
   orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
   selectedOrderDraftIds: string[];
   hasPresetsChanged: () => boolean;
   onAdd: () => void;
-  onTabUpdate: (tabName: string) => void;
-  onTabDelete: (tabIndex: number) => void;
   onDraftOrdersDelete: () => void;
   onSelectOrderDraftIds: (ids: number[], clearSelection: () => void) => void;
 }
 
 const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
-  currentTab,
+  selectedFilterPreset,
   disabled,
   filterOpts,
   initialSearch,
   limits,
   onAdd,
-  onAll,
+  onFilterPresetsAll,
   onFilterChange,
   onSearchChange,
-  onTabChange,
-  onTabDelete,
-  onTabUpdate,
-  onTabSave,
-  tabs,
+  onFilterPresetChange,
+  onFilterPresetDelete,
+  onFilterPresetUpdate,
+  onFilterPresetPresetSave,
+  filterPresets,
   hasPresetsChanged,
   onDraftOrdersDelete,
   onFilterAttributeFocus,
@@ -74,18 +67,18 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
     <>
       <OrderDraftListHeader
         disabled={disabled}
-        currentTab={currentTab}
+        selectedFilterPreset={selectedFilterPreset}
         hasPresetsChanged={hasPresetsChanged()}
         isFilterPresetOpen={isFilterPresetOpen}
         setFilterPresetOpen={setFilterPresetOpen}
         limits={limits}
         onAdd={onAdd}
-        onAll={onAll}
-        onTabChange={onTabChange}
-        onTabDelete={onTabDelete}
-        onTabSave={onTabSave}
-        onTabUpdate={onTabUpdate}
-        tabs={tabs}
+        onFilterPresetsAll={onFilterPresetsAll}
+        onFilterPresetDelete={onFilterPresetDelete}
+        onFilterPresetChange={onFilterPresetChange}
+        onFilterPresetPresetSave={onFilterPresetPresetSave}
+        onFilterPresetUpdate={onFilterPresetUpdate}
+        filterPresets={filterPresets}
       />
 
       {limitsReached && <OrderLimitReached />}

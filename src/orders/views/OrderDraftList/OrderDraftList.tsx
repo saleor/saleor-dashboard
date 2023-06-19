@@ -9,6 +9,7 @@ import {
   useOrderDraftCreateMutation,
   useOrderDraftListQuery,
 } from "@dashboard/graphql";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -41,9 +42,9 @@ import {
   getFilterOpts,
   getFilterQueryParam,
   getFilterVariables,
+  storageUtils,
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
-import { useTabs } from "./useTabs";
 
 interface OrderDraftListProps {
   params: OrderDraftListUrlQueryParams;
@@ -120,16 +121,21 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   >(navigate, orderDraftListUrl, params);
 
   const {
-    currentTab,
-    tabs,
-    hasTabChanged,
-    onTabChange,
-    onTabDelete,
-    onTabSave,
-    onTabUpdate,
-    setTabIndexToDelete,
-    tabIndexToDelete,
-  } = useTabs({ params, reset: clearRowSelection });
+    selectedPreset,
+    presets,
+    hasPresetsChange,
+    onPresetChange,
+    onPresetDelete,
+    onPresetSave,
+    onPresetUpdate,
+    setPresetIdToDelete,
+    presetIdToDelete,
+  } = useFilterPresets({
+    params,
+    reset: clearRowSelection,
+    getUrl: orderDraftListUrl,
+    storageUtils,
+  });
 
   const paginationState = createPaginationState(settings.rowNumber, params);
 
@@ -189,21 +195,21 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <OrderDraftListPage
-        currentTab={currentTab}
+        selectedFilterPreset={selectedPreset}
         filterOpts={getFilterOpts(params)}
         limits={limitOpts.data?.shop.limits}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}
-        onAll={resetFilters}
-        onTabChange={onTabChange}
-        onTabDelete={(tabIndex: number) => {
-          setTabIndexToDelete(tabIndex);
+        onFilterPresetsAll={resetFilters}
+        onFilterPresetChange={onPresetChange}
+        onFilterPresetDelete={(id: number) => {
+          setPresetIdToDelete(id);
           openModal("delete-search");
         }}
-        onTabUpdate={onTabUpdate}
-        onTabSave={() => openModal("save-search")}
-        tabs={tabs.map(tab => tab.name)}
+        onFilterPresetUpdate={onPresetUpdate}
+        onFilterPresetPresetSave={() => openModal("save-search")}
+        filterPresets={presets.map(tab => tab.name)}
         disabled={loading}
         settings={settings}
         orders={orderDrafts}
@@ -211,7 +217,7 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         onSort={handleSort}
         sort={getSortParams(params)}
         currencySymbol={channel?.currencyCode}
-        hasPresetsChanged={hasTabChanged}
+        hasPresetsChanged={hasPresetsChange}
         onDraftOrdersDelete={() =>
           openModal("remove", {
             ids: selectedRowIds,
@@ -254,14 +260,14 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={onTabSave}
+        onSubmit={onPresetSave}
       />
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={onTabDelete}
-        tabName={tabs[tabIndexToDelete - 1]?.name ?? "..."}
+        onSubmit={onPresetDelete}
+        tabName={presets[presetIdToDelete - 1]?.name ?? "..."}
       />
       <ChannelPickerDialog
         channelsChoices={mapNodeToChoice(availableChannels)}
