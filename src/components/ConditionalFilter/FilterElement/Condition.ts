@@ -9,13 +9,14 @@ import { LeftOperand } from "./../useLeftOperands";
 import { UrlToken } from "./../ValueProvider/UrlToken";
 
 
-interface ConditionSelectedValue {
+export interface ConditionSelectedValue {
   label: string
   value: string
+  slug: string
 }
 
 
-interface ConditionSelected {
+export interface ConditionSelected {
   value: string | ConditionSelectedValue | ConditionSelectedValue[];
   conditionValue: ConditionItem;
   options?: Array<{ value: string; label: string }>;

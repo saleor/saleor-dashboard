@@ -1,4 +1,6 @@
-const CONDITIONS = [
+import { FilterElement } from "../FilterElement"
+
+export const CONDITIONS = [
   "is",
   "equals",
   "in",
@@ -16,6 +18,14 @@ const STATIC_TO_LOAD = [
 
 type TokenType = "a" | "s"
 
+// export type UrlEntry = Record<string, string | string[]>
+
+export class UrlEntry {
+  constructor (key: string, value: string | string[]) {
+    this[key] = value
+  }
+}
+
 export class UrlToken {
   private constructor(
     public name: string,
@@ -24,7 +34,7 @@ export class UrlToken {
     public conditionKind: string
   ) {}
 
-  public static fromUrlEntry (entry: Record<string, unknown>) {
+  public static fromUrlEntry (entry: UrlEntry) {
     const [key, value] = Object.entries(entry)[0] as [string, string | string[]]
     const [identifier, entryName] = key.split(".")
     const [type, control] = identifier.split("") as [TokenType, string]

@@ -148,6 +148,10 @@ const FiltersArea = ({ provider, onConfirm }) => {
     // console.log(event);
   };
 
+  const handleConfirm = () => {
+    onConfirm(value)
+  }
+
   console.log("Render with:", value);
 
   return (
@@ -157,7 +161,7 @@ const FiltersArea = ({ provider, onConfirm }) => {
         value={value}
         onChange={handleStateChange}
       />
-      <button onClick={onConfirm}>Confirm</button>
+      <button onClick={handleConfirm}>Confirm</button>
     </Box>
   );
 };
@@ -165,16 +169,12 @@ const FiltersArea = ({ provider, onConfirm }) => {
 export const ConditionalFilters = () => {
   const provider = useUrlValueProvider();
 
-  const handleConfirm = () => {
-    console.log("handleConfirm");
-  };
-
   return (
     <Box __height={500}>
       {provider.loading ? (
         <Text>Loading...</Text>
       ) : (
-        <FiltersArea provider={provider.value} onConfirm={handleConfirm} />
+        <FiltersArea provider={provider.value} onConfirm={provider.persist} />
       )}
     </Box>
   );

@@ -14,8 +14,13 @@ export interface ConditionItem {
 }
 
 export class ConditionOptions extends Array<ConditionItem> {
-  private constructor(public options: ConditionItem[]) {
-    super(...options);
+  private constructor(options: ConditionItem[] | number) {
+    if (Array.isArray(options)) {
+      super(...options);
+      return
+    }
+
+    super(options)
   }
 
   public findByLabel(label: string) {
