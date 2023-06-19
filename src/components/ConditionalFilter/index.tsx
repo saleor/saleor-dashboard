@@ -131,6 +131,7 @@ export const ConditionalFilters = () => {
     }
 
     if (event.type === "leftOperator.onChange") {
+      console.log("leftOperator.onChange", event.value)
       updateLeftOperator(event.path, event.value);
     }
 
