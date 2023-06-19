@@ -39,7 +39,7 @@ export const useTabs = ({
     const qs = new URLSearchParams(getFilterTabs()[tab - 1]?.data ?? "");
     qs.append("activeTab", tab.toString());
 
-    navigate(orderDraftListUrl() + qs.toString());
+    navigate(orderDraftListUrl() + "?" + qs.toString());
   };
 
   const onTabDelete = () => {
@@ -58,7 +58,7 @@ export const useTabs = ({
         currentTab,
         tabIndexToDelete,
       );
-      navigate(orderDraftListUrl() + stringify(currentParams));
+      navigate(orderDraftListUrl() + "?" + stringify(currentParams));
     }
   };
 
