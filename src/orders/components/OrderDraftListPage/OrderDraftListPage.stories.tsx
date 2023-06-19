@@ -1,5 +1,6 @@
 import {
   filterPageProps,
+  filterPresetsProps,
   limits,
   limitsReached,
   listActionsProps,
@@ -21,6 +22,7 @@ const props: OrderDraftListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
   ...searchPageProps,
+  ...filterPresetsProps,
   ...sortPageProps,
   ...tabPageProps,
   ...filterPageProps,
@@ -48,7 +50,6 @@ const props: OrderDraftListPageProps = {
   onSelectOrderDraftIds: () => undefined,
   selectedOrderDraftIds: [],
   hasPresetsChanged: () => false,
-  onTabUpdate: () => undefined,
 };
 
 const meta: Meta<typeof OrderDraftListPage> = {
