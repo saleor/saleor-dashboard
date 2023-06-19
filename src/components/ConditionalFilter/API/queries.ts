@@ -1,8 +1,8 @@
 import { gql } from "@apollo/client";
 
 export const initialDynamicLeftOperands = gql`
-  query _GetInitialDynamicLeftOperands {
-    attributes(first: 100, filter: { type: PRODUCT_TYPE }) {
+  query _GetDynamicLeftOperands($first: Int!, $query: String!) {
+    attributes(first: $first, filter: { type: PRODUCT_TYPE, search: $query }) {
       edges {
         node {
           id

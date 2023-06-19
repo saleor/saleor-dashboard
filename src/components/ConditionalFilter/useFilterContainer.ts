@@ -1,7 +1,10 @@
 import { useState } from "react";
+
 import { FilterElement } from "./FilterElement";
 
-export const useFilterContainer = (initialValue: Array<string | FilterElement>) => {
+export const useFilterContainer = (
+  initialValue: Array<string | FilterElement>,
+) => {
   const [value, setValue] = useState(initialValue);
 
   const addEmpty = () => {
@@ -81,7 +84,6 @@ export const useFilterContainer = (initialValue: Array<string | FilterElement>) 
     );
   };
 
-
   return {
     value,
     addEmpty,
@@ -89,6 +91,6 @@ export const useFilterContainer = (initialValue: Array<string | FilterElement>) 
     updateLeftOperator,
     updateRightOperator,
     updateCondition,
-    updateRightOptions
+    updateRightOptions,
   };
 };

@@ -96,10 +96,13 @@ const FiltersArea = ({ provider, onConfirm }) => {
     updateRightOptions,
   } = useFilterContainer(provider);
 
-  const { getInitialRightOperatorOptions, getRightOperatorOptionsByQuery } =
-    useAPIOptions(value);
+  const {
+    getInitialRightOperatorOptions,
+    getRightOperatorOptionsByQuery,
+    getLeftOperatorOptionsByQuery,
+  } = useAPIOptions(value);
 
-  const leftOptions = useLeftOperands();
+  const { operands, setOperands } = useLeftOperands();
 
   const handleStateChange = event => {
     if (event.type === "row.add") {
@@ -138,24 +141,26 @@ const FiltersArea = ({ provider, onConfirm }) => {
       );
     }
 
+    if (event.type === "leftOperator.onInputValueChange") {
+      getLeftOperatorOptionsByQuery(event.value, setOperands);
+    }
+
     // console.log(event);
   };
-
 
   console.log("Render with:", value);
 
   return (
     <Box __height={500}>
       <_ExperimentalFilters
-        leftOptions={leftOptions}
+        leftOptions={operands}
         value={value}
         onChange={handleStateChange}
       />
       <button onClick={onConfirm}>Confirm</button>
     </Box>
   );
-}
-
+};
 
 export const ConditionalFilters = () => {
   const provider = useUrlValueProvider();

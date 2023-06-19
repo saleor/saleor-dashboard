@@ -5391,9 +5391,9 @@ export function useAddressValidationRulesLazyQuery(baseOptions?: ApolloReactHook
 export type AddressValidationRulesQueryHookResult = ReturnType<typeof useAddressValidationRulesQuery>;
 export type AddressValidationRulesLazyQueryHookResult = ReturnType<typeof useAddressValidationRulesLazyQuery>;
 export type AddressValidationRulesQueryResult = Apollo.QueryResult<Types.AddressValidationRulesQuery, Types.AddressValidationRulesQueryVariables>;
-export const _GetInitialDynamicLeftOperandsDocument = gql`
-    query _GetInitialDynamicLeftOperands {
-  attributes(first: 100, filter: {type: PRODUCT_TYPE}) {
+export const _GetDynamicLeftOperandsDocument = gql`
+    query _GetDynamicLeftOperands($first: Int!, $query: String!) {
+  attributes(first: $first, filter: {type: PRODUCT_TYPE, search: $query}) {
     edges {
       node {
         id
@@ -5407,31 +5407,33 @@ export const _GetInitialDynamicLeftOperandsDocument = gql`
     `;
 
 /**
- * __use_GetInitialDynamicLeftOperandsQuery__
+ * __use_GetDynamicLeftOperandsQuery__
  *
- * To run a query within a React component, call `use_GetInitialDynamicLeftOperandsQuery` and pass it any options that fit your needs.
- * When your component renders, `use_GetInitialDynamicLeftOperandsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `use_GetDynamicLeftOperandsQuery` and pass it any options that fit your needs.
+ * When your component renders, `use_GetDynamicLeftOperandsQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = use_GetInitialDynamicLeftOperandsQuery({
+ * const { data, loading, error } = use_GetDynamicLeftOperandsQuery({
  *   variables: {
+ *      first: // value for 'first'
+ *      query: // value for 'query'
  *   },
  * });
  */
-export function use_GetInitialDynamicLeftOperandsQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types._GetInitialDynamicLeftOperandsQuery, Types._GetInitialDynamicLeftOperandsQueryVariables>) {
+export function use_GetDynamicLeftOperandsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetDynamicLeftOperandsQuery, Types._GetDynamicLeftOperandsQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types._GetInitialDynamicLeftOperandsQuery, Types._GetInitialDynamicLeftOperandsQueryVariables>(_GetInitialDynamicLeftOperandsDocument, options);
+        return ApolloReactHooks.useQuery<Types._GetDynamicLeftOperandsQuery, Types._GetDynamicLeftOperandsQueryVariables>(_GetDynamicLeftOperandsDocument, options);
       }
-export function use_GetInitialDynamicLeftOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetInitialDynamicLeftOperandsQuery, Types._GetInitialDynamicLeftOperandsQueryVariables>) {
+export function use_GetDynamicLeftOperandsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetDynamicLeftOperandsQuery, Types._GetDynamicLeftOperandsQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types._GetInitialDynamicLeftOperandsQuery, Types._GetInitialDynamicLeftOperandsQueryVariables>(_GetInitialDynamicLeftOperandsDocument, options);
+          return ApolloReactHooks.useLazyQuery<Types._GetDynamicLeftOperandsQuery, Types._GetDynamicLeftOperandsQueryVariables>(_GetDynamicLeftOperandsDocument, options);
         }
-export type _GetInitialDynamicLeftOperandsQueryHookResult = ReturnType<typeof use_GetInitialDynamicLeftOperandsQuery>;
-export type _GetInitialDynamicLeftOperandsLazyQueryHookResult = ReturnType<typeof use_GetInitialDynamicLeftOperandsLazyQuery>;
-export type _GetInitialDynamicLeftOperandsQueryResult = Apollo.QueryResult<Types._GetInitialDynamicLeftOperandsQuery, Types._GetInitialDynamicLeftOperandsQueryVariables>;
+export type _GetDynamicLeftOperandsQueryHookResult = ReturnType<typeof use_GetDynamicLeftOperandsQuery>;
+export type _GetDynamicLeftOperandsLazyQueryHookResult = ReturnType<typeof use_GetDynamicLeftOperandsLazyQuery>;
+export type _GetDynamicLeftOperandsQueryResult = Apollo.QueryResult<Types._GetDynamicLeftOperandsQuery, Types._GetDynamicLeftOperandsQueryVariables>;
 export const _GetChannelOperandsDocument = gql`
     query _GetChannelOperands {
   channels {
