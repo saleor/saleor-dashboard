@@ -1,13 +1,8 @@
-import { useApolloClient } from "@apollo/client";
 import { useState } from "react";
-
 import { FilterElement } from "./FilterElement";
-import { FilterValueProvider } from "./FilterValueProvider";
 
-export const useFilterContainer = (valueProvider: FilterValueProvider) => {
-  const [value, setValue] = useState(valueProvider.value);
-
-  const client = useApolloClient();
+export const useFilterContainer = (initialValue: Array<string | FilterElement>) => {
+  const [value, setValue] = useState(initialValue);
 
   const addEmpty = () => {
     const newValue = [];
@@ -86,19 +81,14 @@ export const useFilterContainer = (valueProvider: FilterValueProvider) => {
     );
   };
 
-  const persist = () => {
-    valueProvider.persist(value);
-  };
 
   return {
     value,
-    persist,
     addEmpty,
     removeAt,
     updateLeftOperator,
     updateRightOperator,
     updateCondition,
-    updateRightOptions,
-    loading: valueProvider.loading,
+    updateRightOptions
   };
 };

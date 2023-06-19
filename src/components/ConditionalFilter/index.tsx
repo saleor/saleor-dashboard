@@ -85,36 +85,15 @@ const demoValue = [
   },
 ];
 
-// const useFilterCollection = () => {
-
-//   const [load, result] = useAttributeListLazyQuery()
-
-//   useEffect(() => {
-//     load({
-//       variables: {
-//         first: 100
-//       }
-//     })
-
-//   }, [])
-
-//   console.log(result.data)
-
-// }
-
-export const ConditionalFilters = () => {
-  const provider = useUrlValueProvider();
-
+const FiltersArea = ({ provider, onConfirm }) => {
   const {
     value,
-    persist,
     addEmpty,
     removeAt,
     updateLeftOperator,
     updateRightOperator,
     updateCondition,
     updateRightOptions,
-    loading,
   } = useFilterContainer(provider);
 
   const { getInitialRightOperatorOptions, getRightOperatorOptionsByQuery } =
@@ -162,26 +141,35 @@ export const ConditionalFilters = () => {
     // console.log(event);
   };
 
-  const handleConfirm = () => {
-    console.log("handleConfirm");
-    persist();
-  };
 
   console.log("Render with:", value);
 
   return (
     <Box __height={500}>
-      {loading ? (
+      <_ExperimentalFilters
+        leftOptions={leftOptions}
+        value={value}
+        onChange={handleStateChange}
+      />
+      <button onClick={onConfirm}>Confirm</button>
+    </Box>
+  );
+}
+
+
+export const ConditionalFilters = () => {
+  const provider = useUrlValueProvider();
+
+  const handleConfirm = () => {
+    console.log("handleConfirm");
+  };
+
+  return (
+    <Box __height={500}>
+      {provider.loading ? (
         <Text>Loading...</Text>
       ) : (
-        <>
-          <_ExperimentalFilters
-            leftOptions={leftOptions}
-            value={value}
-            onChange={handleStateChange}
-          />
-          <button onClick={handleConfirm}>Confirm</button>
-        </>
+        <FiltersArea provider={provider.value} onConfirm={handleConfirm} />
       )}
     </Box>
   );
