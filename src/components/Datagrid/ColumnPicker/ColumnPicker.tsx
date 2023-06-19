@@ -57,6 +57,7 @@ export const ColumnPicker = ({
         <Button
           variant="tertiary"
           icon={<TableEditIcon />}
+          pointerEvents={pickerOpen ? "none" : undefined}
           __backgroundColor={
             pickerOpen
               ? vars.colors.background.interactiveNeutralSecondaryPressing
