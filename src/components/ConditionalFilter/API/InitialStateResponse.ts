@@ -23,6 +23,10 @@ export class InitialStateResponse {
   }
 
   public filterByUrlToken (token: UrlToken) {
+    if (token.isAttribute()) {
+      return this.attribute[token.name].choices.filter(({ value }) => token.value.includes(value));
+    }
+  
     return this[token.name].filter(({ slug }) => token.value.includes(slug));
   }
 }

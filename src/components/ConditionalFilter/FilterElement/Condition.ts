@@ -9,8 +9,14 @@ import { LeftOperand } from "./../useLeftOperands";
 import { UrlToken } from "./../ValueProvider/UrlToken";
 
 
+interface ConditionSelectedValue {
+  label: string
+  value: string
+}
+
+
 interface ConditionSelected {
-  value: string | string[];
+  value: string | ConditionSelectedValue | ConditionSelectedValue[];
   conditionValue: ConditionItem;
   options?: Array<{ value: string; label: string }>;
 }
@@ -59,11 +65,11 @@ export class Condition {
     if (ConditionOptions.isStaticName(token.name)) {
       const staticOptions = ConditionOptions.fromStaticElementName(token.name)
       const selectedOption = staticOptions.findByLabel(token.conditionKind)
-      const options = response.filterByUrlToken(token)
+      const value = response.filterByUrlToken(token)
       const selected: ConditionSelected = {
         conditionValue: selectedOption,
-        value: token.value,
-        options,
+        value,
+        options: [],
       };
 
       return new Condition(staticOptions, selected, false);
@@ -72,11 +78,13 @@ export class Condition {
     if (token.isAttribute()) {
       const attribute = response.attributeByName(token.name)
       const options = ConditionOptions.fromAtributeType(attribute.inputType)
+      const value = response.filterByUrlToken(token)
       const selected: ConditionSelected = {
         conditionValue: options.first(),
-        value: token.value,
-        options: attribute.choices
+        value,
+        options: []
       };
+
 
       return new Condition(options, selected, false)
     }
