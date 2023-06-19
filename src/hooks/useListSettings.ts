@@ -1,5 +1,4 @@
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import merge from "lodash/merge";
 
 import { AppListViewSettings, defaultListSettings } from "./../config";
 import { ListSettings, ListViews } from "./../types";
@@ -22,7 +21,7 @@ export default function useListSettings<TColumns extends string = string>(
         return defaultListSettings;
       }
 
-      return merge({}, defaultListSettings, storedListSettings);
+      return { ...defaultListSettings, ...storedListSettings };
     },
   );
 
