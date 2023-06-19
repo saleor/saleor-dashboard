@@ -1,7 +1,7 @@
 import { FilterElement } from "./FilterElement";
 
 export interface FilterValueProvider {
-  value: (string | FilterElement)[],
-  persist: (newValue: (string | FilterElement)[]) => void
+  value: Array<string | FilterElement>;
+  loading: boolean;
+  persist: (newValue: Array<string | FilterElement>) => void;
 }
-

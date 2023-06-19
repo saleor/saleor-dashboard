@@ -8,8 +8,8 @@ import {
 } from "@dashboard/graphql";
 import { debounce } from "lodash";
 
+import { ATTRIBUTE_INPUT_TYPE_CONDITIONS } from "../constants";
 import { FilterElement } from "../FilterElement";
-import { ATTRIBUTE_INPUT_TYPE_CONDITIONS } from "../staticConditions";
 
 const isFilterElement = (value: any): value is FilterElement =>
   typeof value != "string";

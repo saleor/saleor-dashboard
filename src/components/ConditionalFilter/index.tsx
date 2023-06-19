@@ -1,4 +1,4 @@
-import { _ExperimentalFilters, Box } from "@saleor/macaw-ui/next";
+import { _ExperimentalFilters, Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { useAPIOptions } from "./API/getAPIOptions";
@@ -131,7 +131,7 @@ export const ConditionalFilters = () => {
     }
 
     if (event.type === "leftOperator.onChange") {
-      console.log("leftOperator.onChange", event.value)
+      console.log("leftOperator.onChange", event.value);
       updateLeftOperator(event.path, event.value);
     }
 
@@ -166,16 +166,22 @@ export const ConditionalFilters = () => {
     persist();
   };
 
-  console.log("Render with:", value);
+  // console.log("Render with:", value);
 
   return (
     <Box __height={500}>
-      <_ExperimentalFilters
-        leftOptions={leftOptions}
-        value={value}
-        onChange={handleStateChange}
-      />
-      <button onClick={handleConfirm}>Confirm</button>
+      {provider.loading ? (
+        <Text>Loading...</Text>
+      ) : (
+        <>
+          <_ExperimentalFilters
+            leftOptions={leftOptions}
+            value={value}
+            onChange={handleStateChange}
+          />
+          <button onClick={handleConfirm}>Confirm</button>
+        </>
+      )}
     </Box>
   );
 };

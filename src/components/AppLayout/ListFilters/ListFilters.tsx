@@ -1,10 +1,9 @@
-import { FilterErrorMessages, IFilter } from "@dashboard/components/Filter";
-import { Box } from "@saleor/macaw-ui/next";
-import React, { ReactNode, useState } from "react";
-import SearchInput from "./components/SearchInput";
-import { _ExperimentalFilters } from "@saleor/macaw-ui/next"
-import { parse, stringify } from "qs";
 import { ConditionalFilters } from "@dashboard/components/ConditionalFilter";
+import { FilterErrorMessages } from "@dashboard/components/Filter";
+import { Box, Button } from "@saleor/macaw-ui/next";
+import React, { ReactNode, useState } from "react";
+
+import SearchInput from "./components/SearchInput";
 
 export interface ListFiltersProps<TKeys extends string = string> {
   searchPlaceholder: string;
@@ -12,11 +11,8 @@ export interface ListFiltersProps<TKeys extends string = string> {
   actions?: ReactNode;
 }
 
-
 const STATIC_CONDITIONS = {
-  category: [
-    { value: "combobox", label: "is" },
-  ],
+  category: [{ value: "combobox", label: "is" }],
   price: [
     { value: "input", label: "is" },
     { value: "range", label: "between" },
@@ -25,19 +21,15 @@ const STATIC_CONDITIONS = {
     { value: "input", label: "is" },
     { value: "range", label: "between" },
   ],
-  rating: [
-    { value: "combobox", label: "is" }
-  ]
-}
-
-
+  rating: [{ value: "combobox", label: "is" }],
+};
 
 export const ListFilters = ({
   searchPlaceholder,
   errorMessages,
   actions,
 }: ListFiltersProps) => {
-
+  const [showFilters, setShowFilters] = useState(false);
 
   return (
     <>
@@ -49,7 +41,10 @@ export const ListFilters = ({
         paddingX={6}
       >
         <Box display="flex" alignItems="center" gap={4}>
-          <ConditionalFilters />
+          {showFilters && <ConditionalFilters />}
+          <Button onClick={() => setShowFilters(prev => !prev)}>
+            Show filters
+          </Button>
           <Box __width="320px">
             <SearchInput
               initialSearch={""}
@@ -63,6 +58,6 @@ export const ListFilters = ({
         </Box>
       </Box>
     </>
-  )
+  );
 };
 ListFilters.displayName = "FilterBar";

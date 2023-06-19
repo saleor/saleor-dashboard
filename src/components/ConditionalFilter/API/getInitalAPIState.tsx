@@ -1,10 +1,12 @@
+import { useApolloClient } from "@apollo/client";
 import {
-  use_GetChannelOperandsQuery,
-  use_SearchAttributeOperandsQuery,
-  use_SearchCategoriesOperandsQuery,
-  use_SearchCollectionsOperandsQuery,
-  use_SearchProductTypesOperandsQuery,
+  _GetChannelOperandsDocument,
+  _SearchAttributeOperandsDocument,
+  _SearchCategoriesOperandsDocument,
+  _SearchCollectionsOperandsDocument,
+  _SearchProductTypesOperandsDocument,
 } from "@dashboard/graphql";
+import { useEffect, useState } from "react";
 
 interface Props {
   category?: string[];
@@ -23,86 +25,141 @@ export const useInitialAPIState = ({
   channel = [],
   attribute = {},
 }: Props) => {
-  const { data: channelsData } = use_GetChannelOperandsQuery({
-    skip: channel.length === 0,
-  });
+  const client = useApolloClient();
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const { data: collectionsData } = use_SearchCollectionsOperandsQuery({
-    variables: {
-      collectionsSlugs: collection,
-      first: collection.length,
-    },
-    skip: collection.length === 0,
-  });
+  useEffect(() => {
+    const queriesToRun = [];
 
-  const { data: categoriesData } = use_SearchCategoriesOperandsQuery({
-    variables: {
-      categoriesSlugs: category,
-      first: category.length,
-    },
-    skip: category.length === 0,
-  });
+    const fetchQueries = async () => {
+      const data = await Promise.all(queriesToRun);
+      setData(data);
+      setLoading(false);
+    };
 
-  const { data: productTypesData } = use_SearchProductTypesOperandsQuery({
-    variables: {
-      productTypesSlugs: producttype,
-      first: producttype.length,
-    },
-    skip: producttype.length === 0,
-  });
+    if (channel.length > 0) {
+      queriesToRun.push(
+        client.query({
+          query: _GetChannelOperandsDocument,
+        }),
+      );
+    } else {
+      queriesToRun.push({});
+    }
 
-  const { data: attributesData } = use_SearchAttributeOperandsQuery({
-    variables: {
-      attributesSlugs: Object.keys(attribute),
-      choicesIds: Object.values(attribute).flat(),
-      first: Object.keys(attribute).length,
-    },
-    skip: Object.keys(attribute).length === 0,
-  });
+    if (collection.length > 0) {
+      queriesToRun.push(
+        client.query({
+          query: _SearchCollectionsOperandsDocument,
+          variables: {
+            collectionsSlugs: collection,
+            first: collection.length,
+          },
+        }),
+      );
+    } else {
+      queriesToRun.push({});
+    }
+
+    if (category.length > 0) {
+      queriesToRun.push(
+        client.query({
+          query: _SearchCategoriesOperandsDocument,
+          variables: {
+            categoriesSlugs: category,
+            first: category.length,
+          },
+        }),
+      );
+    } else {
+      queriesToRun.push({});
+    }
+
+    if (producttype.length > 0) {
+      queriesToRun.push(
+        client.query({
+          query: _SearchProductTypesOperandsDocument,
+          variables: {
+            productTypesSlugs: producttype,
+            first: producttype.length,
+          },
+        }),
+      );
+    } else {
+      queriesToRun.push({});
+    }
+
+    if (Object.keys(attribute).length > 0) {
+      queriesToRun.push(
+        client.query({
+          query: _SearchAttributeOperandsDocument,
+          variables: {
+            attributesSlugs: Object.keys(attribute),
+            choicesIds: Object.values(attribute).flat(),
+            first: Object.keys(attribute).length,
+          },
+        }),
+      );
+    } else {
+      queriesToRun.push({});
+    }
+
+    fetchQueries();
+  }, []);
+
+  const [
+    channelData,
+    collectionData,
+    categoryData,
+    productTypesData,
+    attributesData,
+  ] = data;
 
   const channelPicks =
-    channelsData?.channels
-      .filter(({ slug }) => channel.includes(slug))
+    channelData?.data?.channels
+      ?.filter(({ slug }) => channel.includes(slug))
       .map(({ id, name }) => ({ label: name, value: id })) ?? [];
 
   const collectionPicks =
-    collectionsData?.search.edges.map(({ node }) => ({
+    collectionData?.data?.search?.edges.map(({ node }) => ({
       label: node?.name,
       value: node?.id,
       slug: node?.slug,
     })) ?? [];
 
   const categoryPicks =
-    categoriesData?.search.edges.map(({ node }) => ({
+    categoryData?.data?.search?.edges.map(({ node }) => ({
       label: node?.name,
       value: node?.id,
       slug: node?.slug,
     })) ?? [];
 
   const productTypePicks =
-    productTypesData?.search.edges.map(({ node }) => ({
+    productTypesData?.data?.search?.edges.map(({ node }) => ({
       label: node?.name,
       value: node?.id,
       slug: node?.slug,
     })) ?? [];
 
-  const attributePicks = attributesData?.search.edges.reduce(
-    (acc, { node }) => ({
-      ...acc,
-      [node?.slug]: {
-        choices: node?.choices.edges.map(({ node }) => ({
-          label: node?.name,
-          value: node?.id,
+  const attributePicks =
+    attributesData?.data?.search?.edges.reduce(
+      (acc, { node }) => ({
+        ...acc,
+        [node?.slug]: {
+          choices: node?.choices.edges.map(({ node }) => ({
+            label: node?.name,
+            value: node?.id,
+            slug: node?.slug,
+          })),
           slug: node?.slug,
-        })),
-        slug: node?.slug,
-        value: node?.id,
-        label: node?.name,
-        inputType: node?.inputType,
-      },
-    }),
-    {},
-  );
+          value: node?.id,
+          label: node?.name,
+          inputType: node?.inputType,
+        },
+      }),
+      {},
+    ) ?? {};
 
   return {
     collection: collectionPicks,
@@ -110,5 +167,6 @@ export const useInitialAPIState = ({
     producttype: productTypePicks,
     attribute: attributePicks,
     channel: channelPicks,
+    loading,
   };
 };
