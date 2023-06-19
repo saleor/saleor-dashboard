@@ -136,6 +136,10 @@ export class FilterElement {
     this.condition.selected.value = value;
   }
 
+  public updateRightOptions(options: any) {
+    this.condition.selected.options = options;
+  }
+
   public isEmpty() {
     return this.value.type === "e";
   }

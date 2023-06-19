@@ -103,4 +103,50 @@ export const initialDynamicOperands = gql`
   }
 `;
 
-export const dynamicOperandChangeQueries = gql``;
+export const dynamicOperandFocusQueries = gql`
+  query _GetAttributeChoices($attributeId: ID!, $first: Int!) {
+    attribute(id: $attributeId) {
+      choices(first: $first) {
+        edges {
+          node {
+            id
+            name
+          }
+        }
+      }
+    }
+  }
+
+  query _GetCollectionsChoices($first: Int!) {
+    collections(first: $first) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+
+  query _GetCategoriesChoices($first: Int!) {
+    categories(first: $first) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+
+  query _GetProductTypesChoices($first: Int!) {
+    productTypes(first: $first) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+`;

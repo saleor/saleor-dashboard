@@ -1,6 +1,7 @@
 import { _ExperimentalFilters, Box } from "@saleor/macaw-ui/next";
 import React from "react";
 
+import { useAPIOptions } from "./API/getAPIOptions";
 import { useFilterContainer } from "./useFilterContainer";
 import { useLeftOperands } from "./useLeftOperands";
 import { useUrlValueProvider } from "./ValueProvider/useUrlValueProvider";
@@ -112,7 +113,10 @@ export const ConditionalFilters = () => {
     updateLeftOperator,
     updateRightOperator,
     updateCondition,
+    updateRightOptions,
   } = useFilterContainer(provider);
+
+  const { getInitialRightOperatorOptions } = useAPIOptions(value);
 
   const leftOptions = useLeftOperands();
 
@@ -135,6 +139,13 @@ export const ConditionalFilters = () => {
 
     if (event.type === "rightOperator.onChange") {
       updateRightOperator(event.path.split(".")[0], event.value);
+    }
+
+    if (event.type === "rightOperator.onFocus") {
+      getInitialRightOperatorOptions(
+        event.path.split(".")[0],
+        updateRightOptions,
+      );
     }
 
     // console.log(event);

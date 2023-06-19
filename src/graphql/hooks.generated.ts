@@ -5657,6 +5657,169 @@ export function use_SearchAttributeOperandsLazyQuery(baseOptions?: ApolloReactHo
 export type _SearchAttributeOperandsQueryHookResult = ReturnType<typeof use_SearchAttributeOperandsQuery>;
 export type _SearchAttributeOperandsLazyQueryHookResult = ReturnType<typeof use_SearchAttributeOperandsLazyQuery>;
 export type _SearchAttributeOperandsQueryResult = Apollo.QueryResult<Types._SearchAttributeOperandsQuery, Types._SearchAttributeOperandsQueryVariables>;
+export const _GetAttributeChoicesDocument = gql`
+    query _GetAttributeChoices($attributeId: ID!, $first: Int!) {
+  attribute(id: $attributeId) {
+    choices(first: $first) {
+      edges {
+        node {
+          id
+          name
+        }
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __use_GetAttributeChoicesQuery__
+ *
+ * To run a query within a React component, call `use_GetAttributeChoicesQuery` and pass it any options that fit your needs.
+ * When your component renders, `use_GetAttributeChoicesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = use_GetAttributeChoicesQuery({
+ *   variables: {
+ *      attributeId: // value for 'attributeId'
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function use_GetAttributeChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>(_GetAttributeChoicesDocument, options);
+      }
+export function use_GetAttributeChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>(_GetAttributeChoicesDocument, options);
+        }
+export type _GetAttributeChoicesQueryHookResult = ReturnType<typeof use_GetAttributeChoicesQuery>;
+export type _GetAttributeChoicesLazyQueryHookResult = ReturnType<typeof use_GetAttributeChoicesLazyQuery>;
+export type _GetAttributeChoicesQueryResult = Apollo.QueryResult<Types._GetAttributeChoicesQuery, Types._GetAttributeChoicesQueryVariables>;
+export const _GetCollectionsChoicesDocument = gql`
+    query _GetCollectionsChoices($first: Int!) {
+  collections(first: $first) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __use_GetCollectionsChoicesQuery__
+ *
+ * To run a query within a React component, call `use_GetCollectionsChoicesQuery` and pass it any options that fit your needs.
+ * When your component renders, `use_GetCollectionsChoicesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = use_GetCollectionsChoicesQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function use_GetCollectionsChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>(_GetCollectionsChoicesDocument, options);
+      }
+export function use_GetCollectionsChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>(_GetCollectionsChoicesDocument, options);
+        }
+export type _GetCollectionsChoicesQueryHookResult = ReturnType<typeof use_GetCollectionsChoicesQuery>;
+export type _GetCollectionsChoicesLazyQueryHookResult = ReturnType<typeof use_GetCollectionsChoicesLazyQuery>;
+export type _GetCollectionsChoicesQueryResult = Apollo.QueryResult<Types._GetCollectionsChoicesQuery, Types._GetCollectionsChoicesQueryVariables>;
+export const _GetCategoriesChoicesDocument = gql`
+    query _GetCategoriesChoices($first: Int!) {
+  categories(first: $first) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __use_GetCategoriesChoicesQuery__
+ *
+ * To run a query within a React component, call `use_GetCategoriesChoicesQuery` and pass it any options that fit your needs.
+ * When your component renders, `use_GetCategoriesChoicesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = use_GetCategoriesChoicesQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function use_GetCategoriesChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>(_GetCategoriesChoicesDocument, options);
+      }
+export function use_GetCategoriesChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>(_GetCategoriesChoicesDocument, options);
+        }
+export type _GetCategoriesChoicesQueryHookResult = ReturnType<typeof use_GetCategoriesChoicesQuery>;
+export type _GetCategoriesChoicesLazyQueryHookResult = ReturnType<typeof use_GetCategoriesChoicesLazyQuery>;
+export type _GetCategoriesChoicesQueryResult = Apollo.QueryResult<Types._GetCategoriesChoicesQuery, Types._GetCategoriesChoicesQueryVariables>;
+export const _GetProductTypesChoicesDocument = gql`
+    query _GetProductTypesChoices($first: Int!) {
+  productTypes(first: $first) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __use_GetProductTypesChoicesQuery__
+ *
+ * To run a query within a React component, call `use_GetProductTypesChoicesQuery` and pass it any options that fit your needs.
+ * When your component renders, `use_GetProductTypesChoicesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = use_GetProductTypesChoicesQuery({
+ *   variables: {
+ *      first: // value for 'first'
+ *   },
+ * });
+ */
+export function use_GetProductTypesChoicesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>(_GetProductTypesChoicesDocument, options);
+      }
+export function use_GetProductTypesChoicesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>(_GetProductTypesChoicesDocument, options);
+        }
+export type _GetProductTypesChoicesQueryHookResult = ReturnType<typeof use_GetProductTypesChoicesQuery>;
+export type _GetProductTypesChoicesLazyQueryHookResult = ReturnType<typeof use_GetProductTypesChoicesLazyQuery>;
+export type _GetProductTypesChoicesQueryResult = Apollo.QueryResult<Types._GetProductTypesChoicesQuery, Types._GetProductTypesChoicesQueryVariables>;
 export const TriggerWebhookDryRunDocument = gql`
     mutation TriggerWebhookDryRun($objectId: ID!, $query: String!) {
   webhookDryRun(objectId: $objectId, query: $query) {
