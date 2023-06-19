@@ -167,7 +167,7 @@ export const ConditionalFilters = () => {
     persist();
   };
 
-  // console.log("Render with:", value);
+  console.log("Render with:", value);
 
   return (
     <Box __height={500}>

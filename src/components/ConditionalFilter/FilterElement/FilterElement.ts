@@ -48,7 +48,7 @@ export class FilterElement {
   }
 
   public updateRightOptions(options: any) {
-    this.condition.options = options;
+    this.condition.selected.options = options;
   }
 
   public isEmpty() {
