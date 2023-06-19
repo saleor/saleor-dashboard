@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/member-ordering */
-import { Condition } from "./Condition";
+import { InitialStateResponse } from "../API/InitialStateResponse";
 import { ConditionItem } from "./../staticConditions";
 import { LeftOperand } from "./../useLeftOperands";
 import { UrlToken } from "./../ValueProvider/UrlToken";
-import { InitialStateResponse } from "../API/InitialStateResponse";
+import { Condition } from "./Condition";
 
 interface ExpressionValue {
   value: string;
@@ -47,6 +47,10 @@ export class FilterElement {
     this.condition.selected.value = value;
   }
 
+  public updateRightOptions(options: any) {
+    this.condition.options = options;
+  }
+
   public isEmpty() {
     return this.value.type === "e";
   }
@@ -81,10 +85,10 @@ export class FilterElement {
     }
 
     if (token.isAttribute()) {
-      const attribute = response.attributeByName(token.name)
+      const attribute = response.attributeByName(token.name);
       // const label = response.attribute && response.attribute[token.name].label
-      
-      console.log("test", attribute)
+
+      console.log("test", attribute);
       // if (!label) return null
 
       return new FilterElement(
