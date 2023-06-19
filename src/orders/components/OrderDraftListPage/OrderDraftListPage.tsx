@@ -124,7 +124,11 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
           />
         </Box>
 
-        <OrderDraftListDatagrid disabled={disabled} {...listProps} />
+        <OrderDraftListDatagrid
+          disabled={disabled}
+          hasRowHover={!isFilterPresetOpen}
+          {...listProps}
+        />
       </Card>
     </>
   );
