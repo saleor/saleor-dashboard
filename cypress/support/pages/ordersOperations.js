@@ -1,5 +1,6 @@
 import {
   ADD_PRODUCT_TO_ORDER_DIALOG,
+  BUTTON_SELECTORS,
   CHANNEL_FORM_SELECTORS,
   DRAFT_ORDER_SELECTORS,
   ORDERS_SELECTORS,
@@ -45,9 +46,10 @@ export function changeQuantityOfProducts() {
 export function deleteProductFromGridTableOnIndex(trIndex = 0) {
   cy.get(ORDERS_SELECTORS.dataGridTable).should("be.visible");
   cy.addAliasToGraphRequest("OrderLineDelete")
-    .get(ORDERS_SELECTORS.productDeleteFromRowButton)
+    .get(BUTTON_SELECTORS.showMoreButton)
     .eq(trIndex)
     .click()
+    .get(ORDERS_SELECTORS.productDeleteFromRowButton)
     .wait("@OrderLineDelete");
 }
 export function addNewProductToOrder(productIndex = 0, variantIndex = 0) {

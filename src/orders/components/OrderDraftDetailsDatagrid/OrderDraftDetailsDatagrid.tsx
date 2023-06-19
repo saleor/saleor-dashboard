@@ -82,6 +82,7 @@ export const OrderDraftDetailsDatagrid = ({
         label: "",
         Icon: (
           <Box
+            data-test-id="delete-order-line"
             as="span"
             color="iconCriticalDefault"
             display="flex"
