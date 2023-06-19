@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
-import { ConditionItem } from "./../staticConditions";
+import { ConditionItem, ConditionOptions } from "./../staticConditions";
 import { LeftOperand } from "./../useLeftOperands";
 import { UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
@@ -56,11 +56,11 @@ export class FilterElement {
   }
 
   public isStatic() {
-    return this.value.type === "s";
+    return ConditionOptions.isStaticName(this.value.type)
   }
 
   public isAttribute() {
-    return this.value.type === "a";
+    return ConditionOptions.isAttributeInputType(this.value.type)
   }
 
   public static fromValueEntry(valueEntry: any) {
