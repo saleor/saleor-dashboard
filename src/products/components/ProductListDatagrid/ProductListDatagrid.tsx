@@ -129,7 +129,9 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         availableColumnsAttributesData,
         gridAttributesOpts,
       }),
-      selectedAttributesData: mapEdgesToItems(gridAttributesOpts.data?.right),
+      selectedAttributesData: mapEdgesToItems(
+        gridAttributesOpts.data?.selectedAttributes,
+      ),
       activeAttributeSortId,
       sort,
       onSearch: (query: string) =>

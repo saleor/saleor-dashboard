@@ -3850,7 +3850,7 @@ export const productTypesList: Array<
 
 export const gridAttributesResult: GridAttributesQuery = {
   __typename: "Query",
-  left: {
+  availableAttributes: {
     __typename: "AttributeCountableConnection",
     edges: [
       {
@@ -3942,7 +3942,7 @@ export const gridAttributesResult: GridAttributesQuery = {
       startCursor: "WyIwIiwgImFidiJd",
     },
   },
-  right: {
+  selectedAttributes: {
     __typename: "AttributeCountableConnection",
     edges: [
       {

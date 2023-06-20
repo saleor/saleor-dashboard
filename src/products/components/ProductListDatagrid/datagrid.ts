@@ -436,7 +436,7 @@ export const getAvailableAttributesData = ({
   mapEdgesToItems(availableColumnsAttributesData.data?.attributes) ??
   (availableColumnsAttributesData.loading
     ? undefined
-    : mapEdgesToItems(gridAttributesOpts.data?.left) ?? []);
+    : mapEdgesToItems(gridAttributesOpts.data?.availableAttributes) ?? []);
 
 export const getAttributesFetchMoreProps = ({
   queryAvailableColumnsAttributes,
@@ -453,7 +453,7 @@ export const getAttributesFetchMoreProps = ({
         search: query,
         after:
           availableColumnsAttributesData.data?.attributes?.pageInfo.endCursor ??
-          gridAttributesOpts.data?.left?.pageInfo.endCursor,
+          gridAttributesOpts.data?.availableAttributes?.pageInfo.endCursor,
         first: 10,
         last: null,
         before: null,
@@ -473,7 +473,7 @@ export const getAttributesFetchMoreProps = ({
 
   const hasNextPage =
     availableColumnsAttributesData.data?.attributes?.pageInfo?.hasNextPage ??
-    gridAttributesOpts.data?.left?.pageInfo?.hasNextPage ??
+    gridAttributesOpts.data?.availableAttributes?.pageInfo?.hasNextPage ??
     false;
   const hasPreviousPage =
     availableColumnsAttributesData.data?.attributes?.pageInfo
