@@ -1,9 +1,9 @@
 // @ts-strict-ignore
+import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { useAppListContext } from "@dashboard/apps/context";
-import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
 import {
   getAppDetails,
-  resolveInstallationOfMarketplaceApp,
+  resolveInstallationOfAppstoreApp,
 } from "@dashboard/apps/utils";
 import { AppInstallationFragment } from "@dashboard/graphql";
 import { Box } from "@saleor/macaw-ui/next";
@@ -16,7 +16,7 @@ import AppListCardIntegrations from "./AppListCardIntegrations";
 import AppListCardLinks from "./AppListCardLinks";
 
 interface AppListRowProps {
-  appPair: GetV2SaleorAppsResponse.SaleorApp[];
+  appPair: AppstoreApi.SaleorApp[];
   appInstallationList?: AppInstallationFragment[];
   navigateToAppInstallPage?: (manifestUrl: string) => void;
   navigateToGithubForkPage?: (githubForkUrl: string) => void;
@@ -34,11 +34,11 @@ const AppListRow: React.FC<AppListRowProps> = ({
   const isSingleApp = appPair.length === 1;
 
   const appDetails = React.useCallback(
-    (app: GetV2SaleorAppsResponse.SaleorApp) =>
+    (app: AppstoreApi.SaleorApp) =>
       getAppDetails({
         intl,
         app,
-        appInstallation: resolveInstallationOfMarketplaceApp(
+        appInstallation: resolveInstallationOfAppstoreApp(
           app,
           appInstallationList,
         ),

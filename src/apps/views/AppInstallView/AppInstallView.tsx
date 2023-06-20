@@ -18,13 +18,11 @@ import { RouteComponentProps } from "react-router-dom";
 
 import { messages } from "./messages";
 
-interface InstallAppCreateProps extends RouteComponentProps {
+interface Props extends RouteComponentProps {
   params: AppInstallUrlQueryParams;
 }
 
-export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
-  params,
-}) => {
+export const AppInstallView: React.FC<Props> = ({ params }) => {
   const [, setActiveInstallations] = useLocalStorage<
     Array<Record<"id" | "name", string>>
   >("activeInstallations", []);
@@ -114,5 +112,3 @@ export const InstallAppCreate: React.FC<InstallAppCreateProps> = ({
     </>
   );
 };
-
-export default InstallAppCreate;

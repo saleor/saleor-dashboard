@@ -1,10 +1,10 @@
+import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import {
   appsInProgress,
   comingSoonApp,
   installedAppsList,
   releasedApp,
 } from "@dashboard/apps/fixtures";
-import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
 import {
   AppListItemFragment,
   AppTypeEnum,
@@ -213,27 +213,26 @@ describe("App List verified installed apps util", () => {
         brand: null,
       },
     ];
-    const installableMarketplaceApps: GetV2SaleorAppsResponse.ReleasedSaleorApp[] =
-      [
-        {
-          name: {
-            en: "Test app",
-          },
-          description: {
-            en: "Test app description",
-          },
-          logo: {
-            source: "https://www.example.com/logo",
-            color: "#000000",
-          },
-          integrations: [],
-          manifestUrl: "https://www.example.com/manifest",
-          privacyUrl: "https://www.example.com/privacy",
-          supportUrl: "https://www.example.com/support",
-          repositoryUrl: "https://www.example.com/repository",
-          githubForkUrl: "https://www.example.com/repository/fork",
+    const installableMarketplaceApps: AppstoreApi.ReleasedSaleorApp[] = [
+      {
+        name: {
+          en: "Test app",
         },
-      ];
+        description: {
+          en: "Test app description",
+        },
+        logo: {
+          source: "https://www.example.com/logo",
+          color: "#000000",
+        },
+        integrations: [],
+        manifestUrl: "https://www.example.com/manifest",
+        privacyUrl: "https://www.example.com/privacy",
+        supportUrl: "https://www.example.com/support",
+        repositoryUrl: "https://www.example.com/repository",
+        githubForkUrl: "https://www.example.com/repository/fork",
+      },
+    ];
 
     // Act
     const verifiedInstalledApps = getVerifiedInstalledApps(
@@ -303,45 +302,44 @@ describe("App List verified installable marketplace apps util", () => {
         brand: null,
       },
     ];
-    const installableMarketplaceApps: GetV2SaleorAppsResponse.ReleasedSaleorApp[] =
-      [
-        {
-          name: {
-            en: "Test app",
-          },
-          description: {
-            en: "Test app description",
-          },
-          logo: {
-            source: "https://www.example.com/logo",
-            color: "#000000",
-          },
-          integrations: [],
-          manifestUrl: "https://www.example.com/manifest",
-          privacyUrl: "https://www.example.com/privacy",
-          supportUrl: "https://www.example.com/support",
-          repositoryUrl: "https://www.example.com/repository",
-          githubForkUrl: "https://www.example.com/repository/fork",
+    const installableMarketplaceApps: AppstoreApi.ReleasedSaleorApp[] = [
+      {
+        name: {
+          en: "Test app",
         },
-        {
-          name: {
-            en: "Test app",
-          },
-          description: {
-            en: "Test app description",
-          },
-          logo: {
-            source: "https://www.example-2.com/logo",
-            color: "#000000",
-          },
-          integrations: [],
-          manifestUrl: "https://www.example-2.com/manifest",
-          privacyUrl: "https://www.example-2.com/privacy",
-          supportUrl: "https://www.example-2.com/support",
-          repositoryUrl: "https://www.example-2.com/repository",
-          githubForkUrl: "https://www.example-2.com/repository/fork",
+        description: {
+          en: "Test app description",
         },
-      ];
+        logo: {
+          source: "https://www.example.com/logo",
+          color: "#000000",
+        },
+        integrations: [],
+        manifestUrl: "https://www.example.com/manifest",
+        privacyUrl: "https://www.example.com/privacy",
+        supportUrl: "https://www.example.com/support",
+        repositoryUrl: "https://www.example.com/repository",
+        githubForkUrl: "https://www.example.com/repository/fork",
+      },
+      {
+        name: {
+          en: "Test app",
+        },
+        description: {
+          en: "Test app description",
+        },
+        logo: {
+          source: "https://www.example-2.com/logo",
+          color: "#000000",
+        },
+        integrations: [],
+        manifestUrl: "https://www.example-2.com/manifest",
+        privacyUrl: "https://www.example-2.com/privacy",
+        supportUrl: "https://www.example-2.com/support",
+        repositoryUrl: "https://www.example-2.com/repository",
+        githubForkUrl: "https://www.example-2.com/repository/fork",
+      },
+    ];
 
     // Act
     const verifiedInstallableMarketplaceApps =
