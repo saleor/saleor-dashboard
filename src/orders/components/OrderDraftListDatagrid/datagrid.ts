@@ -81,14 +81,12 @@ export const createGetCellContent =
 function getCustomerName(
   rowData: RelayToFlat<OrderDraftListQuery["draftOrders"]>[number],
 ) {
+  // CORE when sort by customer they sort
+  // by billingAdress.firstName and billingAdress.lastName
   if (rowData.billingAddress) {
     return (
       rowData.billingAddress.firstName + " " + rowData.billingAddress.lastName
     );
-  }
-
-  if (rowData.userEmail) {
-    return rowData.userEmail;
   }
 
   return "";
