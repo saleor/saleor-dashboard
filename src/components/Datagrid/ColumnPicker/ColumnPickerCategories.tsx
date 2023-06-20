@@ -9,7 +9,7 @@ import messages from "./messages";
 import { useAvailableColumnsQuery } from "./useAvailableColumnsQuery";
 import { useCategorySelection } from "./useCategorySelection";
 import { ColumnCategory } from "./useColumns";
-import { getExitDataTestId, getExitIcon, getExitOnClick } from "./utils";
+import { getExitIcon, getExitOnClick } from "./utils";
 
 export interface ColumnPickerCategoriesProps {
   columnCategories: ColumnCategory[];
@@ -62,7 +62,7 @@ export const ColumnPickerCategories = ({
               setCurrentCategory,
               onClose,
             })}
-            data-test-id={getExitDataTestId(columnCategories, currentCategory)}
+            data-test-id="close-search"
           />
           <Text size="small">
             {currentCategory?.name ?? (

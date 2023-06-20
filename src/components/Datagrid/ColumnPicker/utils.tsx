@@ -42,19 +42,6 @@ export const getExitOnClick = ({
   }
 };
 
-export const getExitDataTestId = (
-  columnCategories: ColumnCategory[],
-  currentCategory: ColumnCategory,
-) => {
-  if (columnCategories.length === 1) {
-    return "close-search";
-  }
-  if (currentCategory) {
-    return "back-search";
-  }
-  return "close-search";
-};
-
 export const isLastEnabledColumn = (
   columnIdToCheck: string,
   targetArray: AvailableColumn[],
