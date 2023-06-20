@@ -1,4 +1,5 @@
 import { useApolloClient } from "@apollo/client";
+import useDebounce from "@dashboard/hooks/useDebounce";
 import { _ExperimentalFilters, Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
@@ -107,6 +108,41 @@ const FiltersArea = ({ provider, onConfirm }) => {
 
   const { operands, setOperands } = useLeftOperands();
 
+  const handleLeftOperatorInputValueChange = (event: any) => {
+    const fetchAPI = async () => {
+      const options = await getLeftOperatorOptions(client, event.value);
+      setOperands(options);
+    };
+    updateLeftLoadingState(event.path, true);
+    fetchAPI();
+    updateLeftLoadingState(event.path, false);
+  };
+
+  const handleLeftOperatorInputValueChangeDebounced = useDebounce(
+    handleLeftOperatorInputValueChange,
+    500,
+  );
+
+  const handleRightOperatorInputValueChange = (event: any) => {
+    const fetchAPI = async () => {
+      const options = await getRightOperatorOptionsByQuery(
+        client,
+        event.path.split(".")[0],
+        value,
+        event.value,
+      );
+      updateRightOptions(event.path.split(".")[0], options);
+    };
+    updateRightLoadingState(event.path.split(".")[0], true);
+    fetchAPI();
+    updateRightLoadingState(event.path.split(".")[0], false);
+  };
+
+  const handleRightOperatorInputValueChangeDebounced = useDebounce(
+    handleRightOperatorInputValueChange,
+    500,
+  );
+
   const handleStateChange = async event => {
     if (event.type === "row.add") {
       addEmpty();
@@ -137,23 +173,11 @@ const FiltersArea = ({ provider, onConfirm }) => {
     }
 
     if (event.type === "rightOperator.onInputValueChange") {
-      const path = event.path.split(".")[0];
-      updateRightLoadingState(path, true);
-      const options = await getRightOperatorOptionsByQuery(
-        client,
-        event.path.split(".")[0],
-        value,
-        event.value,
-      );
-      updateRightOptions(path, options);
-      updateRightLoadingState(path, false);
+      handleRightOperatorInputValueChangeDebounced(event);
     }
 
     if (event.type === "leftOperator.onInputValueChange") {
-      updateLeftLoadingState(event.path, true);
-      const options = await getLeftOperatorOptions(client, event.value);
-      setOperands(options);
-      updateLeftLoadingState(event.path, false);
+      handleLeftOperatorInputValueChangeDebounced(event);
     }
 
     // console.log(event);
