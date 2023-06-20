@@ -30,6 +30,11 @@ export const useColumns = (): AvailableColumn[] => {
         width: 150,
       },
       {
+        id: "variantName",
+        title: intl.formatMessage(columnsMessages.variantName),
+        width: 150,
+      },
+      {
         id: "quantity",
         title: intl.formatMessage(columnsMessages.quantity),
         width: 80,
@@ -82,21 +87,26 @@ export const useGetCellContent = ({
           return thumbnailCell(
             rowData?.productName ?? "",
             rowData.thumbnail?.url ?? "",
+            readonyOptions,
           );
         case "sku":
           return readonlyTextCell(rowData.productSku ?? "", false);
+        case "variantName":
+          return readonlyTextCell(rowData.variant.name ?? "", false);
         case "quantity":
           return readonlyTextCell(rowData.quantity.toString(), false);
         case "price":
           return moneyCell(
             rowData.unitPrice.gross.amount,
             rowData.unitPrice.gross.currency,
+            readonyOptions,
           );
 
         case "total":
           return moneyCell(
             rowData.totalPrice.gross.amount,
             rowData.totalPrice.gross.currency,
+            readonyOptions,
           );
 
         default:
@@ -107,4 +117,9 @@ export const useGetCellContent = ({
   );
 
   return getCellContent;
+};
+
+const readonyOptions: Partial<GridCell> = {
+  allowOverlay: false,
+  readonly: true,
 };

@@ -91,7 +91,7 @@ describe("Tests for pages", () => {
       `should create page with ${attributeType} attribute`,
       { tags: ["@pages", "@allEnv", "@stable"] },
       () => {
-        const randomName = `${startsWith}${faker.datatype.number()}`;
+        const randomName = `AAA-${startsWith}${faker.datatype.number()}`;
         const attributeValues = [attributeValuesOnPage[attributeType]];
         createAttribute({
           name: randomName,

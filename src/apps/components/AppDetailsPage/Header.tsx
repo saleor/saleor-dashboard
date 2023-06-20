@@ -1,9 +1,8 @@
+import { AppPageNav } from "@dashboard/apps/components/AppPage/AppPageNav";
 import { AppUrls } from "@dashboard/apps/urls";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { AppQuery } from "@dashboard/graphql";
 import React from "react";
 
-import DeactivatedText from "../DeactivatedText";
 import HeaderOptions from "./HeaderOptions";
 
 interface HeaderProps {
@@ -36,14 +35,17 @@ const Header: React.FC<HeaderProps> = ({
 
   return (
     <>
-      <TopNav
-        href={getBackButtonUrl()}
-        title={
-          <>
-            {data?.name} {!data?.isActive && <DeactivatedText />}
-          </>
-        }
+      <AppPageNav
+        name={data.name}
+        supportUrl={data.supportUrl}
+        homepageUrl={data.homepageUrl}
+        author={data.author}
+        appLogoUrl={data.brand?.logo.default}
+        appId={data.id}
+        goBackUrl={getBackButtonUrl()}
+        showMangeAppButton={false}
       />
+
       <HeaderOptions
         data={data}
         onAppActivateOpen={onAppActivateOpen}
