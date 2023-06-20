@@ -8,7 +8,6 @@ import {
   _GetProductTypesChoicesDocument,
 } from "@dashboard/graphql";
 
-import { ATTRIBUTE_INPUT_TYPE_CONDITIONS } from "../constants";
 import { FilterElement } from "../FilterElement";
 
 const getFilterElement = (
@@ -21,12 +20,6 @@ const getFilterElement = (
     : null;
 };
 
-const isFilterElementAttribute = (FilterElement: FilterElement) => {
-  const allowedInputTypes = Object.keys(ATTRIBUTE_INPUT_TYPE_CONDITIONS);
-
-  return allowedInputTypes.includes(FilterElement.value.type);
-};
-
 export const getInitialRightOperatorOptions = async (
   client: ApolloClient<any>,
   position: string,
@@ -35,7 +28,7 @@ export const getInitialRightOperatorOptions = async (
   const index = parseInt(position, 10);
   const filterElement = getFilterElement(value, index);
 
-  if (isFilterElementAttribute(filterElement)) {
+  if (filterElement.isAttribute()) {
     const { data } = await client.query({
       query: _GetAttributeChoicesDocument,
       variables: {
@@ -50,7 +43,7 @@ export const getInitialRightOperatorOptions = async (
     }));
   }
 
-  if (filterElement.value.value === "collection") {
+  if (filterElement.isCollection()) {
     const { data } = await client.query({
       query: _GetCollectionsChoicesDocument,
       variables: {
@@ -65,7 +58,7 @@ export const getInitialRightOperatorOptions = async (
     }));
   }
 
-  if (filterElement.value.value === "category") {
+  if (filterElement.isCategory()) {
     const { data } = await client.query({
       query: _GetCategoriesChoicesDocument,
       variables: {
@@ -80,7 +73,7 @@ export const getInitialRightOperatorOptions = async (
     }));
   }
 
-  if (filterElement.value.value === "producttype") {
+  if (filterElement.isProductType()) {
     const { data } = await client.query({
       query: _GetProductTypesChoicesDocument,
       variables: {
@@ -95,12 +88,12 @@ export const getInitialRightOperatorOptions = async (
     }));
   }
 
-  if (filterElement.value.value === "channel") {
+  if (filterElement.isChannel()) {
     const { data } = await client.query({
       query: _GetChannelOperandsDocument,
     });
 
-    return data.channels.map(({ id, name }: any) => ({
+    return data.channels.map(({ id, name }) => ({
       label: name,
       value: id,
     }));
@@ -116,7 +109,7 @@ export const getRightOperatorOptionsByQuery = async (
   const index = parseInt(position, 10);
   const filterElement = getFilterElement(value, index);
 
-  if (isFilterElementAttribute(filterElement)) {
+  if (filterElement.isAttribute()) {
     const { data } = await client.query({
       query: _GetAttributeChoicesDocument,
       variables: {
@@ -131,7 +124,7 @@ export const getRightOperatorOptionsByQuery = async (
     }));
   }
 
-  if (filterElement.value.value === "collection") {
+  if (filterElement.isCollection()) {
     const { data } = await client.query({
       query: _GetCollectionsChoicesDocument,
       variables: {
@@ -146,7 +139,7 @@ export const getRightOperatorOptionsByQuery = async (
     }));
   }
 
-  if (filterElement.value.value === "category") {
+  if (filterElement.isCategory()) {
     const { data } = await client.query({
       query: _GetCategoriesChoicesDocument,
       variables: {
@@ -161,7 +154,7 @@ export const getRightOperatorOptionsByQuery = async (
     }));
   }
 
-  if (filterElement.value.value === "producttype") {
+  if (filterElement.isProductType()) {
     const { data } = await client.query({
       query: _GetProductTypesChoicesDocument,
       variables: {
@@ -174,6 +167,20 @@ export const getRightOperatorOptionsByQuery = async (
       label: node.name,
       value: node.id,
     }));
+  }
+
+  if (filterElement.isChannel()) {
+    const { data } = await client.query({
+      query: _GetChannelOperandsDocument,
+    });
+    const options = data.channels.map(({ id, name }) => ({
+      label: name,
+      value: id,
+    }));
+
+    return options.filter(({ label }) =>
+      label.toLowerCase().includes(inputValue.toLowerCase()),
+    );
   }
 };
 
