@@ -1,8 +1,6 @@
-import { UrlToken } from "./UrlToken"
-import { flatenate } from "./flatenate"
-import { TokenArray } from "./tokenize"
+import { UrlToken } from "../UrlToken"
 
-interface FetchingParams {
+export interface FetchingParams {
   category: string[]
   collection: string[]
   channel: string[]
@@ -10,7 +8,7 @@ interface FetchingParams {
   attribute: Record<string, string[]>
 }
 
-const emptyFetchingParams: FetchingParams = {
+export const emptyFetchingParams: FetchingParams = {
   category: [],
   collection: [],
   channel: [],
@@ -22,7 +20,7 @@ const unique = <T>(array: Iterable<T>) => {
   return Array.from(new Set(array))
 }
 
-const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
+export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
   if (!c.isAttribute() && !p[c.name]) {
     p[c.name] = []
   }
@@ -43,8 +41,3 @@ const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
   return p
 }
 
-export const obtainFetchingParams = (tokens: TokenArray): FetchingParams => {
- return flatenate(tokens)
-  .filter(token => token.isLoadable())
-  .reduce<FetchingParams>(toFetchingParams, emptyFetchingParams)
-}

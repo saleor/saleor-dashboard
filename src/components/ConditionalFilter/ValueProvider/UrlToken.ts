@@ -1,4 +1,6 @@
+import { InitialStateResponse } from "../API/InitialStateResponse"
 import { FilterElement } from "../FilterElement"
+import { TokenArray } from "./tokenize"
 
 export const CONDITIONS = [
   "is",
