@@ -4,6 +4,7 @@ import { FetchingParams, emptyFetchingParams, toFetchingParams } from "./fetchin
 import { FilterElement } from "../../FilterElement";
 import { ParsedQs, parse } from "qs";
 import { useRef } from "react";
+import { FilterContainer } from "../../useFilterContainer";
 
 const toFlatUrlTokens = (p: UrlToken[], c: TokenArray[number]) => {
   if (typeof c == "string") return p
@@ -19,7 +20,7 @@ const flatenate = (tokens: TokenArray): UrlToken[] => {
   return tokens.reduce<UrlToken[]>(toFlatUrlTokens, [])
 }
 
-const mapToTokens = (urlEntries: (ParsedQs | string)[]): TokenArray => 
+const mapToTokens = (urlEntries: (ParsedQs | string)[]): TokenArray =>
   urlEntries.map(entry => {
     if (typeof entry === "string") return entry
 
@@ -65,7 +66,7 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
     return flatenate(this)
   }
 
-  public asFilterValuesFromResponse(response: InitialStateResponse) {
+  public asFilterValuesFromResponse(response: InitialStateResponse): FilterContainer {
     return this.map(el => {
       if (typeof el === "string") {
         return el;
@@ -81,7 +82,7 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
 }
 
 export const useTokenArray = (url: string) => {
-  const instance = useRef(null)
+  const instance = useRef<TokenArray>(null)
 
   if (!instance.current) {
     instance.current = new TokenArray(url)

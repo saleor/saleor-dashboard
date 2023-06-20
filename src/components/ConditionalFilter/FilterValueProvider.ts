@@ -1,7 +1,7 @@
-import { FilterElement } from "./FilterElement";
+import { FilterContainer } from "./useFilterContainer";
 
 export interface FilterValueProvider {
-  value: Array<string | FilterElement>;
+  value: FilterContainer;
   loading: boolean;
-  persist: (newValue: Array<string | FilterElement>) => void;
+  persist: (newValue: FilterContainer) => void;
 }
