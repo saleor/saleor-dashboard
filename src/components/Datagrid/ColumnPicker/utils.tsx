@@ -44,10 +44,10 @@ export const getExitOnClick = ({
 
 export const isLastEnabledColumn = (
   columnIdToCheck: string,
-  targetArray: AvailableColumn[],
+  columnsToCheck: AvailableColumn[],
   selectedColumns: string[],
 ): boolean => {
-  const enabledColumns = targetArray.filter(column =>
+  const enabledColumns = columnsToCheck.filter(column =>
     selectedColumns.includes(column.id),
   );
   return (
