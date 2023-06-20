@@ -35,6 +35,8 @@ export interface CardMenuProps {
   outlined?: boolean;
   Icon?: React.ElementType<{}>;
   IconButtonProps?: IconButtonProps;
+  autoFocusItem?: boolean;
+  showMenuIcon?: boolean;
 }
 
 const useStyles = makeStyles(
@@ -77,6 +79,8 @@ const CardMenu: React.FC<CardMenuProps> = props => {
     outlined,
     Icon: icon,
     IconButtonProps = {},
+    autoFocusItem = true,
+    showMenuIcon = false,
     ...rest
   } = props;
   const classes = useStyles(props);
@@ -171,7 +175,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
             <Paper className={classes.paper} elevation={8}>
               <ClickAwayListener onClickAway={handleClose}>
                 <MenuList
-                  autoFocusItem={open}
+                  autoFocusItem={autoFocusItem && open}
                   id="menu-list-grow"
                   onKeyDown={handleListKeyDown}
                 >
@@ -198,7 +202,9 @@ const CardMenu: React.FC<CardMenuProps> = props => {
                             <CircularProgress size={24} />
                           </>
                         ) : (
-                          <Typography>{menuItem.label}</Typography>
+                          <Typography>
+                            {showMenuIcon && menuItem.Icon} {menuItem.label}
+                          </Typography>
                         )}
                       </div>
                     </MenuItem>

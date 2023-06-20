@@ -10,6 +10,10 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Quantity",
     description: "quantity of ordered products",
   },
+  variantName: {
+    id: "OK5+Fh",
+    defaultMessage: "Variant",
+  },
   price: {
     id: "32dfzI",
     defaultMessage: "Price",
@@ -26,6 +30,10 @@ export const messages = defineMessages({
   emptyText: {
     id: "Q1Uzbb",
     defaultMessage: "No products found",
+  },
+  productDetails: {
+    id: "VYK2nN",
+    defaultMessage: "Product details",
   },
   deleteOrder: {
     id: "LKD6fB",
