@@ -33,13 +33,20 @@ export function applyFixedLineDiscountForProduct(
     .waitForRequestAndCheckIfNoErrors("@OrderLineDiscountUpdate");
 }
 export function changeQuantityOfProducts() {
+  cy.addAliasToGraphRequest("OrderLineUpdate");
   cy.get(ORDERS_SELECTORS.dataGridTable).should("be.visible");
   cy.get(ORDERS_SELECTORS.quantityCellFirstRowOrderDetails)
-    .dblclick({ force: true })
-    .type("2", { force: true });
-  cy.addAliasToGraphRequest("OrderLineUpdate")
-    // grid expects focus to be dismissed from cell - because of that extra action needed which blur focus from cell (other more elegant build in actions was not working)
-    .get(SHARED_ELEMENTS.pageHeader)
+    .click({ force: true })
+    .wait(200)
+    .click({ force: true })
+    .wait(1000);
+  cy.get(ORDERS_SELECTORS.gridClip)
+    .find("input")
+    .clear({ force: true })
+    .type("2");
+
+  // grid expects focus to be dismissed from cell - because of that extra action needed which blur focus from cell (other more elegant build in actions was not working)
+  cy.get(SHARED_ELEMENTS.pageHeader)
     .click()
     .waitForRequestAndCheckIfNoErrors("@OrderLineUpdate");
 }
@@ -50,6 +57,7 @@ export function deleteProductFromGridTableOnIndex(trIndex = 0) {
     .eq(trIndex)
     .click()
     .get(ORDERS_SELECTORS.productDeleteFromRowButton)
+    .click()
     .wait("@OrderLineDelete");
 }
 export function addNewProductToOrder(productIndex = 0, variantIndex = 0) {
