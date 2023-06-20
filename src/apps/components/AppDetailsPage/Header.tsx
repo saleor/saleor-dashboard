@@ -33,6 +33,10 @@ const Header: React.FC<HeaderProps> = ({
       : AppUrls.resolveAppListUrl();
   };
 
+  if (!data) {
+    return null;
+  }
+
   return (
     <>
       <AppPageNav
@@ -47,7 +51,7 @@ const Header: React.FC<HeaderProps> = ({
       />
 
       <HeaderOptions
-        data={data}
+        isActive={data.isActive}
         onAppActivateOpen={onAppActivateOpen}
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
