@@ -13,6 +13,14 @@ export interface UseListSettings<TColumns extends string = string> {
   ) => void;
 }
 
+/**
+ * This customizer is used to keep state of the columns field
+ * consistent in the list settings. Deep merge is used to update
+ * settigns with defaults when they are missing in the LS, but
+ * we want to avoid updating columns array to default when
+ * they are explicitly set by a user to array which doesn't
+ * contain all default values.
+ */
 const mergeCustomizer = (objValue: unknown, srcValue: unknown) => {
   if (Array.isArray(objValue) && Array.isArray(srcValue)) {
     return srcValue;
