@@ -9,7 +9,7 @@ import {
   areCategoriesLoaded,
   extractAvailableNodesFromCategories,
   extractSelectedNodesFromCategories,
-  filterColumns,
+  filterSelectedColumns,
   mergeCurrentDynamicColumnsWithCandidates,
   mergeSelectedColumns,
   sortColumns,
@@ -137,11 +137,11 @@ export const useColumns = ({
     // with the API on the initial render
     setDynamicColumnSettings(selected);
     updateDynamicColumns(prevDynamicColumns =>
-      filterColumns(
+      filterSelectedColumns(
         sortColumns(
           mergeCurrentDynamicColumnsWithCandidates(
             prevDynamicColumns,
-            filterColumns(
+            filterSelectedColumns(
               extractAvailableNodesFromCategories(columnCategories),
               selected,
             ),
