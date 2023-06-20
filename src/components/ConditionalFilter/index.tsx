@@ -1,7 +1,12 @@
+import { useApolloClient } from "@apollo/client";
 import { _ExperimentalFilters, Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
-import { useAPIOptions } from "./API/getAPIOptions";
+import {
+  getInitialRightOperatorOptions,
+  getLeftOperatorOptions,
+  getRightOperatorOptionsByQuery,
+} from "./API/getAPIOptions";
 import { useFilterContainer } from "./useFilterContainer";
 import { useLeftOperands } from "./useLeftOperands";
 import { useUrlValueProvider } from "./ValueProvider/useUrlValueProvider";
@@ -86,6 +91,8 @@ const demoValue = [
 ];
 
 const FiltersArea = ({ provider, onConfirm }) => {
+  const client = useApolloClient();
+
   const {
     value,
     addEmpty,
@@ -97,12 +104,6 @@ const FiltersArea = ({ provider, onConfirm }) => {
     updateRightLoadingState,
     updateLeftLoadingState,
   } = useFilterContainer(provider);
-
-  const {
-    getInitialRightOperatorOptions,
-    getRightOperatorOptionsByQuery,
-    getLeftOperatorOptionsByQuery,
-  } = useAPIOptions(value);
 
   const { operands, setOperands } = useLeftOperands();
 
@@ -116,7 +117,6 @@ const FiltersArea = ({ provider, onConfirm }) => {
     }
 
     if (event.type === "leftOperator.onChange") {
-      console.log("leftOperator.onChange", event.value);
       updateLeftOperator(event.path, event.value);
     }
 
@@ -131,7 +131,7 @@ const FiltersArea = ({ provider, onConfirm }) => {
     if (event.type === "rightOperator.onFocus") {
       const path = event.path.split(".")[0];
       updateRightLoadingState(path, true);
-      const options = await getInitialRightOperatorOptions(path);
+      const options = await getInitialRightOperatorOptions(client, path, value);
       updateRightOptions(path, options);
       updateRightLoadingState(path, false);
     }
@@ -139,8 +139,10 @@ const FiltersArea = ({ provider, onConfirm }) => {
     if (event.type === "rightOperator.onInputValueChange") {
       const path = event.path.split(".")[0];
       updateRightLoadingState(path, true);
-      const options = getRightOperatorOptionsByQuery(
+      const options = await getRightOperatorOptionsByQuery(
+        client,
         event.path.split(".")[0],
+        value,
         event.value,
       );
       updateRightOptions(path, options);
@@ -149,8 +151,8 @@ const FiltersArea = ({ provider, onConfirm }) => {
 
     if (event.type === "leftOperator.onInputValueChange") {
       updateLeftLoadingState(event.path, true);
-      const options = await getLeftOperatorOptionsByQuery(event.value);
-      setOperands(options ?? []);
+      const options = await getLeftOperatorOptions(client, event.value);
+      setOperands(options);
       updateLeftLoadingState(event.path, false);
     }
 
@@ -158,8 +160,8 @@ const FiltersArea = ({ provider, onConfirm }) => {
   };
 
   const handleConfirm = () => {
-    onConfirm(value)
-  }
+    onConfirm(value);
+  };
 
   console.log("Render with:", value);
 
