@@ -37,6 +37,8 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
       ) : (
         <CardMenu
           disabled={disabled}
+          autoFocusItem={false}
+          showMenuIcon={true}
           Icon={MoreHorizontalIcon}
           IconButtonProps={{
             className: classes.ghostIcon,

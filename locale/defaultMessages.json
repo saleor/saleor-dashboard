@@ -3632,6 +3632,9 @@
     "context": "button",
     "string": "Create Channel"
   },
+  "OK5+Fh": {
+    "string": "Variant"
+  },
   "OKGd/k": {
     "context": "order history message",
     "string": "Order was created from draft"
@@ -4651,6 +4654,9 @@
   "VTq2gn": {
     "context": "section header",
     "string": "Coming Soon"
+  },
+  "VYK2nN": {
+    "string": "Product details"
   },
   "VZsE96": {
     "string": "Collection Name"
