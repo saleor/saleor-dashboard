@@ -318,7 +318,9 @@ const Routes: React.FC = () => {
       ) : homePageLoading ? (
         <LoginLoading />
       ) : (
-        <Auth />
+        <React.Suspense fallback={<LoginLoading />}>
+          <Auth />
+        </React.Suspense>
       )}
     </>
   );
