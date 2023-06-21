@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { getErrorMessage } from "@dashboard/components/Attributes/utils";
 import {
   PageErrorWithAttributesFragment,

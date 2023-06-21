@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AppUrls } from "@dashboard/apps/urls";
 import {
   AppAvatarFragment,

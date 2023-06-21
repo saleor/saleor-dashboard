@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import "graphiql/graphiql.min.css";
 
 import CardTitle from "@dashboard/components/CardTitle";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { getGiftCardErrorMessage } from "@dashboard/giftCards/GiftCardUpdate/messages";
 import {
   DeleteGiftCardMutation,

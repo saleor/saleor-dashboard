@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { hasOneOfPermissions } from "@dashboard/components/RequirePermissions";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
@@ -12,10 +13,8 @@ export const useWarehouses = () => {
     PermissionEnum.MANAGE_PRODUCTS,
   ]);
 
-  const {
-    data: warehousesCountData,
-    loading: warehousesCountLoading,
-  } = useWarehousesCountQuery({ skip: !canLoadWarehouses });
+  const { data: warehousesCountData, loading: warehousesCountLoading } =
+    useWarehousesCountQuery({ skip: !canLoadWarehouses });
 
   const {
     loadMore: fetchMoreWarehouses,

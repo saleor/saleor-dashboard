@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { isExternalURL } from "@dashboard/utils/urls";
 import { Typography } from "@material-ui/core";
 import { TypographyProps } from "@material-ui/core/Typography";

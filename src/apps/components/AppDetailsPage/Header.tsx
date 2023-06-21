@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AppPageNav } from "@dashboard/apps/components/AppPage/AppPageNav";
 import { AppUrls } from "@dashboard/apps/urls";
 import { AppQuery } from "@dashboard/graphql";

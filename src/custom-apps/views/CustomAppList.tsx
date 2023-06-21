@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
 import AppDeleteDialog from "@dashboard/apps/components/AppDeleteDialog";
 import { EXTENSION_LIST_QUERY } from "@dashboard/apps/queries";

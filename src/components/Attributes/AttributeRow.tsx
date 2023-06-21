@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
 import ExtendedAttributeRow from "@dashboard/components/Attributes/ExtendedAttributeRow";

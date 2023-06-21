@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import DiscountedPrice from "@dashboard/components/DiscountedPrice/DiscountedPrice";
 import Money from "@dashboard/components/Money";
 import { SearchOrderVariantQuery } from "@dashboard/graphql";

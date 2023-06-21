@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Pill } from "@dashboard/components/Pill";
 import { TransactionEventStatus } from "@dashboard/orders/types";
 import React from "react";

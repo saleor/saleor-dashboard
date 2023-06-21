@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { getAppMountUri } from "@dashboard/config";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";
 import { useEffect } from "react";

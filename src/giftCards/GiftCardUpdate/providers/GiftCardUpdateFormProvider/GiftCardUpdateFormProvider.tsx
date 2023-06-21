@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { giftCardUpdateFormMessages } from "@dashboard/giftCards/GiftCardsList/messages";
 import {
@@ -44,14 +45,11 @@ export interface GiftCardUpdateFormErrors {
   handlers: { changeMetadata: FormChange };
 }
 
-export type GiftCardUpdateFormConsumerProps = UseFormResult<
-  GiftCardUpdateFormData
-> &
-  GiftCardUpdateFormConsumerData;
+export type GiftCardUpdateFormConsumerProps =
+  UseFormResult<GiftCardUpdateFormData> & GiftCardUpdateFormConsumerData;
 
-export const GiftCardUpdateFormContext = createContext<
-  GiftCardUpdateFormConsumerProps
->(null);
+export const GiftCardUpdateFormContext =
+  createContext<GiftCardUpdateFormConsumerProps>(null);
 
 const getGiftCardTagsAddRemoveData = (
   initTags: string[],

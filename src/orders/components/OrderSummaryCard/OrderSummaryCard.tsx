@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import { OrderDetailsFragment, OrderDiscountType } from "@dashboard/graphql";
 import { Card, CardContent } from "@material-ui/core";

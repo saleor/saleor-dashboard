@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import React, { useContext, useRef } from "react";
 
 import { ExitFormDialogContext } from "./ExitFormDialogProvider";

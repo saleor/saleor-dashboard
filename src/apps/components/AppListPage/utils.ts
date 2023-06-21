@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
 import { AppInstallation, InstalledApp } from "@dashboard/apps/types";
 import {

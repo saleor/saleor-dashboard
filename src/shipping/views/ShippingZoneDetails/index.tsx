@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
@@ -67,24 +68,24 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   const intl = useIntl();
   const shop = useShop();
 
-  const {
-    data: restWorldCountries,
-    refetch: refetchRestWorldCountries,
-  } = useShopCountriesQuery({
-    variables: {
-      filter: {
-        attachedToShippingZones: false,
+  const { data: restWorldCountries, refetch: refetchRestWorldCountries } =
+    useShopCountriesQuery({
+      variables: {
+        filter: {
+          attachedToShippingZones: false,
+        },
       },
-    },
-  });
+    });
 
   const [paginationState] = useLocalPaginationState(PAGINATE_BY);
 
-  const { result: searchWarehousesOpts, loadMore, search } = useWarehouseSearch(
-    {
-      variables: DEFAULT_INITIAL_SEARCH_DATA,
-    },
-  );
+  const {
+    result: searchWarehousesOpts,
+    loadMore,
+    search,
+  } = useWarehouseSearch({
+    variables: DEFAULT_INITIAL_SEARCH_DATA,
+  });
 
   const { data, loading } = useShippingZoneQuery({
     displayLoader: true,
@@ -98,51 +99,45 @@ const ShippingZoneDetails: React.FC<ShippingZoneDetailsProps> = ({
   >(navigate, params => shippingZoneUrl(id, params), params);
   const rate = data?.shippingZone?.shippingMethods?.find(getById(params.id));
 
-  const [
-    deleteShippingRate,
-    deleteShippingRateOpts,
-  ] = useDeleteShippingRateMutation({
-    onCompleted: data => {
-      if (data.shippingPriceDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        closeModal();
-      }
-    },
-  });
+  const [deleteShippingRate, deleteShippingRateOpts] =
+    useDeleteShippingRateMutation({
+      onCompleted: data => {
+        if (data.shippingPriceDelete.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          closeModal();
+        }
+      },
+    });
 
-  const [
-    deleteShippingZone,
-    deleteShippingZoneOpts,
-  ] = useDeleteShippingZoneMutation({
-    onCompleted: data => {
-      if (data.shippingZoneDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate(shippingZonesListUrl(), { replace: true });
-      }
-    },
-  });
+  const [deleteShippingZone, deleteShippingZoneOpts] =
+    useDeleteShippingZoneMutation({
+      onCompleted: data => {
+        if (data.shippingZoneDelete.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          navigate(shippingZonesListUrl(), { replace: true });
+        }
+      },
+    });
 
-  const [
-    updateShippingZone,
-    updateShippingZoneOpts,
-  ] = useUpdateShippingZoneMutation({
-    onCompleted: data => {
-      if (data.shippingZoneUpdate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        closeModal();
-        refetchRestWorldCountries();
-      }
-    },
-  });
+  const [updateShippingZone, updateShippingZoneOpts] =
+    useUpdateShippingZoneMutation({
+      onCompleted: data => {
+        if (data.shippingZoneUpdate.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          closeModal();
+          refetchRestWorldCountries();
+        }
+      },
+    });
 
   const [createWarehouse, createWarehouseOpts] = useWarehouseCreateMutation({
     onCompleted: data => {
