@@ -15,68 +15,69 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import AppsSection from "./apps";
 import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
 import { AppSections } from "./apps/urls";
-import AttributeSection from "./attributes";
 import { attributeSection } from "./attributes/urls";
-import Auth from "./auth";
 import AuthProvider from "./auth/AuthProvider";
 import LoginLoading from "./auth/components/LoginLoading/LoginLoading";
 import SectionRoute from "./auth/components/SectionRoute";
 import { useAuthRedirection } from "./auth/hooks/useAuthRedirection";
-import CategorySection from "./categories";
-import ChannelsSection from "./channels";
 import { channelsSection } from "./channels/urls";
-import CollectionSection from "./collections";
 import AppLayout from "./components/AppLayout";
 import useAppChannel, {
   AppChannelProvider,
 } from "./components/AppLayout/AppChannelContext";
 import { DateProvider } from "./components/Date";
 import { DevModeProvider } from "./components/DevModePanel/DevModeProvider";
-import ErrorPage from "./components/ErrorPage";
 import ExitFormDialogProvider from "./components/Form/ExitFormDialogProvider";
 import { LocaleProvider } from "./components/Locale";
 import MessageManagerProvider from "./components/messages";
 import { ShopProvider } from "./components/Shop";
 import { WindowTitle } from "./components/WindowTitle";
 import { DEMO_MODE, getAppMountUri, GTM_ID } from "./config";
-import ConfigurationSection from "./configuration";
 import { getConfigMenuItemsPermissions } from "./configuration/utils";
 import AppStateProvider from "./containers/AppState";
 import BackgroundTasksProvider from "./containers/BackgroundTasks";
 import ServiceWorker from "./containers/ServiceWorker/ServiceWorker";
-import CustomAppsSection from "./custom-apps";
 import { CustomAppSections } from "./custom-apps/urls";
-import { CustomerSection } from "./customers";
-import DiscountSection from "./discounts";
-import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
-import HomePage from "./home";
 import { FlagsServiceProvider } from "./hooks/useFlags/flagsService";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
-import NavigationSection from "./navigation";
 import { navigationSection } from "./navigation/urls";
-import { NotFound } from "./NotFound";
-import OrdersSection from "./orders";
-import PageSection from "./pages";
-import PageTypesSection from "./pageTypes";
-import PermissionGroupSection from "./permissionGroups";
-import PluginsSection from "./plugins";
-import ProductSection from "./products";
-import ProductTypesSection from "./productTypes";
 import errorTracker from "./services/errorTracking";
-import ShippingSection from "./shipping";
-import SiteSettingsSection from "./siteSettings";
-import StaffSection from "./staff";
-import TaxesSection from "./taxes";
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
-import TranslationsSection from "./translations";
-import WarehouseSection from "./warehouses";
 import { warehouseSection } from "./warehouses/urls";
+
+const HomePage = React.lazy(() => import("./home"));
+const CategorySection = React.lazy(() => import("./categories"));
+const CollectionSection = React.lazy(() => import("./collections"));
+const CustomerSection = React.lazy(() => import("./customers"));
+const GiftCardSection = React.lazy(() => import("./giftCards"));
+const DiscountSection = React.lazy(() => import("./discounts"));
+const PageSection = React.lazy(() => import("./pages"));
+const PageTypesSection = React.lazy(() => import("./pageTypes"));
+const PluginsSection = React.lazy(() => import("./plugins"));
+const OrdersSection = React.lazy(() => import("./orders"));
+const ProductSection = React.lazy(() => import("./products"));
+const ProductTypesSection = React.lazy(() => import("./productTypes"));
+const PermissionGroupSection = React.lazy(() => import("./permissionGroups"));
+const SiteSettingsSection = React.lazy(() => import("./siteSettings"));
+const ShippingSection = React.lazy(() => import("./shipping"));
+const TranslationsSection = React.lazy(() => import("./translations"));
+const NavigationSection = React.lazy(() => import("./navigation"));
+const AttributeSection = React.lazy(() => import("./attributes"));
+const AppsSection = React.lazy(() => import("./apps"));
+const WarehouseSection = React.lazy(() => import("./warehouses"));
+const ChannelsSection = React.lazy(() => import("./channels"));
+const ConfigurationSection = React.lazy(() => import("./configuration"));
+const CustomAppsSection = React.lazy(() => import("./custom-apps"));
+const NotFound = React.lazy(() => import("./NotFound"));
+const Auth = React.lazy(() => import("./auth"));
+const ErrorPage = React.lazy(() => import("./components/ErrorPage"));
+const StaffSection = React.lazy(() => import("./staff"));
+const TaxesSection = React.lazy(() => import("./taxes"));
 
 if (process.env.GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
@@ -183,133 +184,135 @@ const Routes: React.FC = () => {
               />
             )}
           >
-            <Switch>
-              <SectionRoute exact path="/" component={HomePage} />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                path="/categories"
-                component={CategorySection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                path="/collections"
-                component={CollectionSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_USERS]}
-                path="/customers"
-                component={CustomerSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_GIFT_CARD]}
-                path={giftCardsSectionUrlName}
-                component={GiftCardSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_DISCOUNTS]}
-                path="/discounts"
-                component={DiscountSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PAGES]}
-                path="/pages"
-                component={PageSection}
-              />
-              <SectionRoute
-                permissions={[
-                  PermissionEnum.MANAGE_PAGES,
-                  PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
-                ]}
-                path="/page-types"
-                component={PageTypesSection}
-                matchPermission="any"
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PLUGINS]}
-                path="/plugins"
-                component={PluginsSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_ORDERS]}
-                path="/orders"
-                component={OrdersSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                path="/products"
-                component={ProductSection}
-              />
-              <SectionRoute
-                permissions={[
-                  PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
-                ]}
-                path="/product-types"
-                component={ProductTypesSection}
-              />
-              <SectionRoute path="/staff" component={StaffSection} />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_STAFF]}
-                path="/permission-groups"
-                component={PermissionGroupSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_SETTINGS]}
-                path="/site-settings"
-                component={SiteSettingsSection}
-              />
-              <SectionRoute path="/taxes" component={TaxesSection} />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_SHIPPING]}
-                path="/shipping"
-                component={ShippingSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_TRANSLATIONS]}
-                path="/translations"
-                component={TranslationsSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_MENUS]}
-                path={navigationSection}
-                component={NavigationSection}
-              />
-              <SectionRoute
-                permissions={[
-                  PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
-                  PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
-                ]}
-                path={attributeSection}
-                component={AttributeSection}
-                matchPermission="any"
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_APPS]}
-                path={AppSections.appsSection}
-                component={AppsSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_PRODUCTS]}
-                path={warehouseSection}
-                component={WarehouseSection}
-              />
-              <SectionRoute
-                permissions={[PermissionEnum.MANAGE_CHANNELS]}
-                path={channelsSection}
-                component={ChannelsSection}
-              />
-              <SectionRoute
-                matchPermission="any"
-                permissions={getConfigMenuItemsPermissions(intl)}
-                exact
-                path="/configuration"
-                component={ConfigurationSection}
-              />
-              <SectionRoute
-                path={CustomAppSections.appsSection}
-                component={CustomAppsSection}
-              />
-              <Route component={NotFound} />
-            </Switch>
+            <React.Suspense fallback={<LoginLoading />}>
+              <Switch>
+                <SectionRoute exact path="/" component={HomePage} />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                  path="/categories"
+                  component={CategorySection}
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                  path="/collections"
+                  component={CollectionSection}
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_USERS]}
+                  path="/customers"
+                  component={CustomerSection}
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_GIFT_CARD]}
+                  path={giftCardsSectionUrlName}
+                  component={GiftCardSection}
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_DISCOUNTS]}
+                  path="/discounts"
+                  component={DiscountSection}
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_PAGES]}
+                  path="/pages"
+                  component={PageSection}
+                />
+                <SectionRoute
+                  permissions={[
+                    PermissionEnum.MANAGE_PAGES,
+                    PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+                  ]}
+                  path="/page-types"
+                  component={PageTypesSection}
+                  matchPermission="any"
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_PLUGINS]}
+                  path="/plugins"
+                  component={PluginsSection}
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_ORDERS]}
+                  path="/orders"
+                  component={OrdersSection}
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                  path="/products"
+                  component={ProductSection}
+                />
+                <SectionRoute
+                  permissions={[
+                    PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+                  ]}
+                  path="/product-types"
+                  component={ProductTypesSection}
+                />
+                <SectionRoute path="/staff" component={StaffSection} />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_STAFF]}
+                  path="/permission-groups"
+                  component={PermissionGroupSection}
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_SETTINGS]}
+                  path="/site-settings"
+                  component={SiteSettingsSection}
+                />
+                <SectionRoute path="/taxes" component={TaxesSection} />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_SHIPPING]}
+                  path="/shipping"
+                  component={ShippingSection}
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_TRANSLATIONS]}
+                  path="/translations"
+                  component={TranslationsSection}
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_MENUS]}
+                  path={navigationSection}
+                  component={NavigationSection}
+                />
+                <SectionRoute
+                  permissions={[
+                    PermissionEnum.MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES,
+                    PermissionEnum.MANAGE_PAGE_TYPES_AND_ATTRIBUTES,
+                  ]}
+                  path={attributeSection}
+                  component={AttributeSection}
+                  matchPermission="any"
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_APPS]}
+                  path={AppSections.appsSection}
+                  component={AppsSection}
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_PRODUCTS]}
+                  path={warehouseSection}
+                  component={WarehouseSection}
+                />
+                <SectionRoute
+                  permissions={[PermissionEnum.MANAGE_CHANNELS]}
+                  path={channelsSection}
+                  component={ChannelsSection}
+                />
+                <SectionRoute
+                  matchPermission="any"
+                  permissions={getConfigMenuItemsPermissions(intl)}
+                  exact
+                  path="/configuration"
+                  component={ConfigurationSection}
+                />
+                <SectionRoute
+                  path={CustomAppSections.appsSection}
+                  component={CustomAppsSection}
+                />
+                <Route component={NotFound} />
+              </Switch>
+            </React.Suspense>
           </ErrorBoundary>
         </AppLayout>
       ) : homePageLoading ? (
