@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import DialogButtons from "@dashboard/components/ActionDialog/DialogButtons";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";

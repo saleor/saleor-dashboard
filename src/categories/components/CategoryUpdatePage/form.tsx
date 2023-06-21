@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useExitFormDialog } from "@dashboard/components/Form/useExitFormDialog";
 import { MetadataFormData } from "@dashboard/components/Metadata";
 import { CategoryDetailsFragment } from "@dashboard/graphql";

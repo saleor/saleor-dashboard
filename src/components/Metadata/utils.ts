@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 
 import { EventData, EventDataAction, EventDataField } from "./types";

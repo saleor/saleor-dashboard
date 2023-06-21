@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { CheckIfOrderExistsQuery } from "@dashboard/graphql";
 import { UseNavigatorResult } from "@dashboard/hooks/useNavigator";
 import { maybe, transformOrderStatus } from "@dashboard/misc";

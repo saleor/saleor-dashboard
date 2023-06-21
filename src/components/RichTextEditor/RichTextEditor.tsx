@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { LogLevels } from "@editorjs/editorjs";
 import { FormControl, FormHelperText, InputLabel } from "@material-ui/core";
 import { useId } from "@reach/auto-id";

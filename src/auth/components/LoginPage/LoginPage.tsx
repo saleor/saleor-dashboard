@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { UserContextError } from "@dashboard/auth/types";
 import { passwordResetUrl } from "@dashboard/auth/urls";
 import { Button } from "@dashboard/components/Button";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import AddressEdit from "@dashboard/components/AddressEdit";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import FormSpacer from "@dashboard/components/FormSpacer";
@@ -37,7 +38,9 @@ export interface OrderCustomerAddressEditProps {
   showCard?: boolean;
 }
 
-const OrderCustomerAddressEdit: React.FC<OrderCustomerAddressEditProps> = props => {
+const OrderCustomerAddressEdit: React.FC<
+  OrderCustomerAddressEditProps
+> = props => {
   const {
     loading,
     customerAddresses,

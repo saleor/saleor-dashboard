@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useAppDashboardUpdates";
 import {
   AppDetailsUrlQueryParams,

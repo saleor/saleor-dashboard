@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { channelsList } from "@dashboard/channels/fixtures";
 import { createCollectionChannels } from "@dashboard/channels/utils";
 import { CollectionErrorCode } from "@dashboard/graphql";

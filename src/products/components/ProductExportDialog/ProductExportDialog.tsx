@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import {
   ConfirmButton,

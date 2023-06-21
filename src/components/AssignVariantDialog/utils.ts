@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { SearchProductsQuery } from "@dashboard/graphql";
 import { getById, getByUnmatchingId } from "@dashboard/misc";
 import { RelayToFlat } from "@dashboard/types";

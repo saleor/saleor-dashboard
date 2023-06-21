@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { triangle } from "@dashboard/styles/mixins";
 import { Grow, Paper, Popper } from "@material-ui/core";
 import { IconButtonProps } from "@material-ui/core/IconButton";

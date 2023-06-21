@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { getAppsConfig } from "@dashboard/config";
 import { AppInstallationFragment, JobStatusEnum } from "@dashboard/graphql";
 import { IntlShape } from "react-intl";

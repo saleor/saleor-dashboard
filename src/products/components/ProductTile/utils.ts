@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { StatusDotProps } from "@dashboard/components/StatusDot/StatusDot";
 import { ProductFragment } from "@dashboard/graphql";
 

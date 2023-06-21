@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";
 import { createFilterStructure } from "@dashboard/products/components/ProductListPage";
 import { ProductListUrlFilters } from "@dashboard/products/urls";

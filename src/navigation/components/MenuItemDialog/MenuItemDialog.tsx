@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import AutocompleteSelectMenu from "@dashboard/components/AutocompleteSelectMenu";
 import BackButton from "@dashboard/components/BackButton";
 import {

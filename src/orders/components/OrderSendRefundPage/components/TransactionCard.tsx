@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import PriceField from "@dashboard/components/PriceField";
 import {
