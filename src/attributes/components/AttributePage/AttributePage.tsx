@@ -24,7 +24,6 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import { maybe } from "@dashboard/misc";
 import { ListSettings, ReorderAction } from "@dashboard/types";
 import { mapEdgesToItems, mapMetadataItemToInput } from "@dashboard/utils/maps";
-import useMetadataChangeTrigger from "@dashboard/utils/metadata/useMetadataChangeTrigger";
 import React from "react";
 import { useIntl } from "react-intl";
 import slugify from "slugify";
@@ -96,12 +95,6 @@ const AttributePage: React.FC<AttributePageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const {
-    isMetadataModified,
-    isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
-
   const initialForm: AttributePageFormData = !attribute
     ? {
         availableInGrid: true,
@@ -137,15 +130,10 @@ const AttributePage: React.FC<AttributePageProps> = ({
       };
 
   const handleSubmit = (data: AttributePageFormData) => {
-    const metadata = !attribute || isMetadataModified ? data.metadata : [];
     const type = attribute === null ? data.type : undefined;
-    const privateMetadata =
-      !attribute || isPrivateMetadataModified ? data.privateMetadata : [];
 
     return onSubmit({
       ...data,
-      metadata,
-      privateMetadata,
       slug: data.slug || slugify(data.name).toLowerCase(),
       type,
     });
@@ -167,87 +155,83 @@ const AttributePage: React.FC<AttributePageProps> = ({
         errors,
         setError,
         clearErrors,
-      }) => {
-        const changeMetadata = makeMetadataChangeHandler(change);
-
-        return (
-          <>
-            <DetailPageLayout>
-              <TopNav
-                href={attributeListUrl()}
-                title={
-                  attribute === null
-                    ? intl.formatMessage({
-                        id: "8cUEPV",
-                        defaultMessage: "Create New Attribute",
-                        description: "page title",
-                      })
-                    : maybe(() => attribute.name)
-                }
+      }) => (
+        <>
+          <DetailPageLayout>
+            <TopNav
+              href={attributeListUrl()}
+              title={
+                attribute === null
+                  ? intl.formatMessage({
+                      id: "8cUEPV",
+                      defaultMessage: "Create New Attribute",
+                      description: "page title",
+                    })
+                  : maybe(() => attribute.name)
+              }
+            />
+            <DetailPageLayout.Content>
+              <AttributeDetails
+                canChangeType={attribute === null}
+                data={data}
+                disabled={disabled}
+                apiErrors={apiErrors}
+                onChange={change}
+                set={set}
+                errors={errors}
+                setError={setError}
+                clearErrors={clearErrors}
               />
-              <DetailPageLayout.Content>
-                <AttributeDetails
-                  canChangeType={attribute === null}
-                  data={data}
-                  disabled={disabled}
-                  apiErrors={apiErrors}
-                  onChange={change}
-                  set={set}
-                  errors={errors}
-                  setError={setError}
-                  clearErrors={clearErrors}
-                />
-                {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(
-                  data.inputType,
-                ) && (
-                  <>
-                    <CardSpacer />
-                    <AttributeValues
-                      inputType={data.inputType}
-                      disabled={disabled}
-                      values={mapEdgesToItems(values)}
-                      onValueAdd={onValueAdd}
-                      onValueDelete={onValueDelete}
-                      onValueReorder={onValueReorder}
-                      onValueUpdate={onValueUpdate}
-                      settings={settings}
-                      onUpdateListSettings={onUpdateListSettings}
-                      pageInfo={pageInfo}
-                      onNextPage={onNextPage}
-                      onPreviousPage={onPreviousPage}
-                    />
-                  </>
-                )}
-                <CardSpacer />
-                <Metadata data={data} onChange={changeMetadata} />
-              </DetailPageLayout.Content>
-              <DetailPageLayout.RightSidebar>
-                <AttributeOrganization
-                  canChangeType={attribute === null}
-                  data={data}
-                  disabled={disabled}
-                  onChange={change}
-                />
-                <CardSpacer />
-                <AttributeProperties
-                  data={data}
-                  errors={apiErrors}
-                  disabled={disabled}
-                  onChange={change}
-                />
-              </DetailPageLayout.RightSidebar>
-              <Savebar
-                disabled={!!isSaveDisabled}
-                state={saveButtonBarState}
-                onCancel={() => navigate(attributeListUrl())}
-                onSubmit={submit}
-                onDelete={attribute === null ? undefined : onDelete}
+              {ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES.includes(
+                data.inputType,
+              ) && (
+                <>
+                  <CardSpacer />
+                  <AttributeValues
+                    inputType={data.inputType}
+                    disabled={disabled}
+                    values={mapEdgesToItems(values)}
+                    onValueAdd={onValueAdd}
+                    onValueDelete={onValueDelete}
+                    onValueReorder={onValueReorder}
+                    onValueUpdate={onValueUpdate}
+                    settings={settings}
+                    onUpdateListSettings={onUpdateListSettings}
+                    pageInfo={pageInfo}
+                    onNextPage={onNextPage}
+                    onPreviousPage={onPreviousPage}
+                  />
+                </>
+              )}
+              <CardSpacer />
+              <Metadata data={data} isLoading={disabled} onChange={change} />
+            </DetailPageLayout.Content>
+            <DetailPageLayout.RightSidebar>
+              <AttributeOrganization
+                canChangeType={attribute === null}
+                data={data}
+                disabled={disabled}
+                onChange={change}
               />
-            </DetailPageLayout>
-            {children(data)}
-          </>
-        );
-      }}
+              <CardSpacer />
+              <AttributeProperties
+                data={data}
+                errors={apiErrors}
+                disabled={disabled}
+                onChange={change}
+              />
+            </DetailPageLayout.RightSidebar>
+            <Savebar
+              disabled={!!isSaveDisabled}
+              state={saveButtonBarState}
+              onCancel={() => navigate(attributeListUrl())}
+              onSubmit={submit}
+              onDelete={attribute === null ? undefined : onDelete}
+            />
+          </DetailPageLayout>
+          {children(data)}
+        </>
+      )}
     </Form>
   );
 };
