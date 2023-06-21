@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { StatusDot } from "@dashboard/components/StatusDot/StatusDot";
 import { ProductListQuery } from "@dashboard/graphql";
 import { RelayToFlat } from "@dashboard/types";

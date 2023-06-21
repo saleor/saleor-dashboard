@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Form from "@dashboard/components/Form";
 import Hr from "@dashboard/components/Hr";
 import Skeleton from "@dashboard/components/Skeleton";

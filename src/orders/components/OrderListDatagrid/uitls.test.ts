@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { OrderListQuery } from "@dashboard/graphql";
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat } from "@dashboard/types";

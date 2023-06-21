@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { GIFT_CARD_LIST_QUERY } from "@dashboard/giftCards/GiftCardsList/queries";
 import useGiftCardDetails from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/hooks/useGiftCardDetails";
 import { DialogProps } from "@dashboard/types";
@@ -10,11 +11,9 @@ type GiftCardUpdatePageDeleteDialogProps = DialogProps & {
   onDelete: () => void;
 };
 
-const GiftCardUpdatePageDeleteDialog: React.FC<GiftCardUpdatePageDeleteDialogProps> = ({
-  onClose,
-  open,
-  onDelete,
-}) => {
+const GiftCardUpdatePageDeleteDialog: React.FC<
+  GiftCardUpdatePageDeleteDialogProps
+> = ({ onClose, open, onDelete }) => {
   const { giftCard } = useGiftCardDetails();
 
   const { onDeleteGiftCard, deleteGiftCardOpts } = useGiftCardSingleDelete({

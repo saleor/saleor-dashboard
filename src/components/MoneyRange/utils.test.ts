@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { IMoney } from "@dashboard/utils/intl";
 import { IntlShape } from "react-intl";
 

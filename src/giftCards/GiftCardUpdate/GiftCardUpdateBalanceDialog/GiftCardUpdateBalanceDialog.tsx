@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { IMessage } from "@dashboard/components/messages";
@@ -40,30 +41,28 @@ const GiftCardUpdateBalanceDialog: React.FC<DialogProps> = ({
     balanceAmount: amount,
   };
 
-  const [
-    updateGiftCardBalance,
-    updateGiftCardBalanceOpts,
-  ] = useGiftCardUpdateMutation({
-    onCompleted: data => {
-      const errors = data?.giftCardUpdate?.errors;
+  const [updateGiftCardBalance, updateGiftCardBalanceOpts] =
+    useGiftCardUpdateMutation({
+      onCompleted: data => {
+        const errors = data?.giftCardUpdate?.errors;
 
-      const notifierData: IMessage = !!errors?.length
-        ? {
-            status: "error",
-            text: intl.formatMessage(commonErrorMessages.unknownError),
-          }
-        : {
-            status: "success",
-            text: intl.formatMessage(messages.updatedSuccessAlertTitle),
-          };
+        const notifierData: IMessage = !!errors?.length
+          ? {
+              status: "error",
+              text: intl.formatMessage(commonErrorMessages.unknownError),
+            }
+          : {
+              status: "success",
+              text: intl.formatMessage(messages.updatedSuccessAlertTitle),
+            };
 
-      notify(notifierData);
+        notify(notifierData);
 
-      if (!errors.length) {
-        onClose();
-      }
-    },
-  });
+        if (!errors.length) {
+          onClose();
+        }
+      },
+    });
 
   const handleSubmit = async ({
     balanceAmount,

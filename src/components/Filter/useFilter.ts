@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useEffect, useReducer } from "react";
 
 import reduceFilter, { FilterReducerAction } from "./reducer";

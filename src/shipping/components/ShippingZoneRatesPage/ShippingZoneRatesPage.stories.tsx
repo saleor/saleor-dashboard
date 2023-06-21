@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ShippingMethodTypeEnum } from "@dashboard/graphql";
 import { shippingZone } from "@dashboard/shipping/fixtures";
 import { taxClasses } from "@dashboard/taxes/fixtures";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { CustomAppUrls } from "@dashboard/custom-apps/urls";
 import { AppCreateMutation, useAppCreateMutation } from "@dashboard/graphql";

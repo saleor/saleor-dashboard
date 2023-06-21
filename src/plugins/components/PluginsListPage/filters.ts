@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { IFilter } from "@dashboard/components/Filter";
 import { PluginConfigurationType } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AccountErrorCode } from "@dashboard/graphql";
 import React from "react";
 

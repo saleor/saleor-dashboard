@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelsAction } from "@dashboard/channels/urls";
 import { createSortedSaleData } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";

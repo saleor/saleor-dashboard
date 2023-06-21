@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
@@ -36,12 +37,8 @@ const PageInfo: React.FC<PageInfoProps> = props => {
   const classes = useStyles(props);
   const intl = useIntl();
 
-  const {
-    defaultValue,
-    editorRef,
-    isReadyForMount,
-    handleChange,
-  } = useRichTextContext();
+  const { defaultValue, editorRef, isReadyForMount, handleChange } =
+    useRichTextContext();
   const formErrors = getFormErrors(["title", "content"], errors);
 
   return (

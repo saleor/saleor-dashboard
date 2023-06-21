@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { channelsList } from "@dashboard/channels/fixtures";
 import { createVoucherChannels } from "@dashboard/channels/utils";
 import { DiscountErrorCode } from "@dashboard/graphql";

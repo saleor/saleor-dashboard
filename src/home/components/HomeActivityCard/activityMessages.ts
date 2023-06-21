@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { HomeQuery, OrderEventsEnum } from "@dashboard/graphql";
 import { defineMessages, IntlShape } from "react-intl";
 

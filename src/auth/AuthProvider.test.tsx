@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
 import { useUserDetailsQuery } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";

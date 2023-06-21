@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FormData } from "@dashboard/channels/components/ChannelForm/ChannelForm";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { DateTime } from "@dashboard/components/Date";
 import Money from "@dashboard/components/Money";
 import { Pill } from "@dashboard/components/Pill";

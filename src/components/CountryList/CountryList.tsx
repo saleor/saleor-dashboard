@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";

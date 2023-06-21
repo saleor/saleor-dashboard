@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   useOrderSettingsQuery,
   useOrderSettingsUpdateMutation,
@@ -17,25 +18,23 @@ export const OrderSettings: React.FC = () => {
 
   const { data, loading } = useOrderSettingsQuery({});
 
-  const [
-    orderSettingsUpdate,
-    orderSettingsUpdateOpts,
-  ] = useOrderSettingsUpdateMutation({
-    onCompleted: ({ orderSettingsUpdate: { errors } }) => {
-      if (!errors.length) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        return;
-      }
+  const [orderSettingsUpdate, orderSettingsUpdateOpts] =
+    useOrderSettingsUpdateMutation({
+      onCompleted: ({ orderSettingsUpdate: { errors } }) => {
+        if (!errors.length) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          return;
+        }
 
-      notify({
-        status: "error",
-        text: intl.formatMessage(commonMessages.somethingWentWrong),
-      });
-    },
-  });
+        notify({
+          status: "error",
+          text: intl.formatMessage(commonMessages.somethingWentWrong),
+        });
+      },
+    });
 
   const handleSubmit = async ({
     automaticallyConfirmAllNewOrders,

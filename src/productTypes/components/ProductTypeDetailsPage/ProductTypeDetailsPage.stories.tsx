@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { listActionsProps } from "@dashboard/fixtures";
 import { WeightUnitsEnum } from "@dashboard/graphql";
 import { taxClasses } from "@dashboard/taxes/fixtures";

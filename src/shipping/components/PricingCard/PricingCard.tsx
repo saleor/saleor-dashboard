@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelShippingData } from "@dashboard/channels/utils";
 import CardTitle from "@dashboard/components/CardTitle";
 import PriceField from "@dashboard/components/PriceField";
