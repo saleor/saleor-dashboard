@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ApolloError } from "@apollo/client";
 import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
 import { getExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/utils";
@@ -58,9 +59,8 @@ export interface GiftCardsListConsumerProps
   selectedItemsCount: number;
 }
 
-export const GiftCardsListContext = createContext<GiftCardsListConsumerProps>(
-  null,
-);
+export const GiftCardsListContext =
+  createContext<GiftCardsListConsumerProps>(null);
 
 export const useGiftCardList = () => useContext(GiftCardsListContext);
 
@@ -75,9 +75,8 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     [],
   );
 
-  const { updateListSettings, settings } = useListSettings<
-    GiftCardListColummns
-  >(ListViews.GIFT_CARD_LIST);
+  const { updateListSettings, settings } =
+    useListSettings<GiftCardListColummns>(ListViews.GIFT_CARD_LIST);
 
   usePaginationReset(giftCardListUrl, params, settings.rowNumber);
 

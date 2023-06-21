@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FilterDateTimeField } from "@dashboard/components/Filter/FilterContent/FilterDateTimeField";
 import { FilterNumericField } from "@dashboard/components/Filter/FilterContent/FilterNumericField";
 import { FilterSingleSelectField } from "@dashboard/components/Filter/FilterContent/FilterSingleSelectField";

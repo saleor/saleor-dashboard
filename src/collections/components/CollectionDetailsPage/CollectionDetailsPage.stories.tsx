@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import placeholderCollectionImage from "@assets/images/block1.jpg";
 import placeholderProductImage from "@assets/images/placeholder60x60.png";
 import { createCollectionChannelsData } from "@dashboard/channels/utils";

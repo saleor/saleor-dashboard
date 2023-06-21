@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { commonMessages } from "@dashboard/intl";
 import { ConfirmButton } from "@saleor/macaw-ui";
 import React from "react";
@@ -14,13 +15,10 @@ const GiftCardEnableDisableSection: React.FC = () => {
     giftCard: { id, isActive, isExpired },
   } = useGiftCardDetails();
 
-  const {
-    giftCardActivate,
-    giftCardDeactivate,
-    currentOpts,
-  } = useGiftCardActivateToggle({
-    isActive,
-  });
+  const { giftCardActivate, giftCardDeactivate, currentOpts } =
+    useGiftCardActivateToggle({
+      isActive,
+    });
 
   const handleClick = () =>
     isActive

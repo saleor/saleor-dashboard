@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { gql } from "@apollo/client";
 import { FieldNode, parse, SelectionNode, visit } from "graphql";
 

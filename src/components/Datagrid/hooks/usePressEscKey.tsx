@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useEffect } from "react";
 
 export const usePressEscKey = (callback?: () => void) => {

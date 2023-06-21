@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -142,29 +143,25 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     }
   };
 
-  const [
-    categoryBulkDelete,
-    categoryBulkDeleteOpts,
-  ] = useCategoryBulkDeleteMutation({
-    onCompleted: handleBulkCategoryDelete,
-  });
+  const [categoryBulkDelete, categoryBulkDeleteOpts] =
+    useCategoryBulkDeleteMutation({
+      onCompleted: handleBulkCategoryDelete,
+    });
 
-  const [
-    productBulkDelete,
-    productBulkDeleteOpts,
-  ] = useProductBulkDeleteMutation({
-    onCompleted: data => {
-      if (data.productBulkDelete.errors.length === 0) {
-        closeModal();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        refetch();
-        reset();
-      }
-    },
-  });
+  const [productBulkDelete, productBulkDeleteOpts] =
+    useProductBulkDeleteMutation({
+      onCompleted: data => {
+        if (data.productBulkDelete.errors.length === 0) {
+          closeModal();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          refetch();
+          reset();
+        }
+      },
+    });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     CategoryUrlDialog,

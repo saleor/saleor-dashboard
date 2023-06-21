@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   getAttributesAfterFileAttributesUpdate,
   mergeAttributeValueDeleteErrors,
@@ -93,10 +94,8 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
 
   const [pageUpdate, pageUpdateOpts] = usePageUpdateMutation({});
 
-  const [
-    deleteAttributeValue,
-    deleteAttributeValueOpts,
-  ] = useAttributeValueDeleteMutation({});
+  const [deleteAttributeValue, deleteAttributeValueOpts] =
+    useAttributeValueDeleteMutation({});
 
   const [pageRemove, pageRemoveOpts] = usePageRemoveMutation({
     onCompleted: data => {
@@ -128,11 +127,12 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
       variables => uploadFile({ variables }),
     );
 
-    const deleteAttributeValuesResult = await handleDeleteMultipleAttributeValues(
-      data.attributesWithNewFileValue,
-      pageDetails?.data?.page?.attributes,
-      variables => deleteAttributeValue({ variables }),
-    );
+    const deleteAttributeValuesResult =
+      await handleDeleteMultipleAttributeValues(
+        data.attributesWithNewFileValue,
+        pageDetails?.data?.page?.attributes,
+        variables => deleteAttributeValue({ variables }),
+      );
 
     const updatedFileAttributes = getAttributesAfterFileAttributesUpdate(
       data.attributesWithNewFileValue,
@@ -203,8 +203,9 @@ export const PageDetails: React.FC<PageDetailsProps> = ({ id, params }) => {
     onFetchMore: loadMoreProducts,
   };
   const fetchMoreAttributeValues = {
-    hasMore: !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
-      ?.hasNextPage,
+    hasMore:
+      !!searchAttributeValuesOpts.data?.attribute?.choices?.pageInfo
+        ?.hasNextPage,
     loading: !!searchAttributeValuesOpts.loading,
     onFetchMore: loadMoreAttributeValues,
   };

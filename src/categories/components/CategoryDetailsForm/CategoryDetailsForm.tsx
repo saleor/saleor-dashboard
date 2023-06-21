@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
@@ -28,12 +29,8 @@ export const CategoryDetailsForm: React.FC<CategoryDetailsFormProps> = ({
   errors,
 }) => {
   const intl = useIntl();
-  const {
-    defaultValue,
-    editorRef,
-    isReadyForMount,
-    handleChange,
-  } = useRichTextContext();
+  const { defaultValue, editorRef, isReadyForMount, handleChange } =
+    useRichTextContext();
 
   const formErrors = getFormErrors(["name", "description"], errors);
 

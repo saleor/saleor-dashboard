@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 export const extractQueryParams = (queryString: string) => {
   const urlSearchParams = new URLSearchParams(queryString);
   const queryParams = {};

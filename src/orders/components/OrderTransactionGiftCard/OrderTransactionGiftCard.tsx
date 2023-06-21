@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderDetailsFragment,

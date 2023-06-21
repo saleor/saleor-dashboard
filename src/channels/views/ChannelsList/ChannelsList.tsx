@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { getChannelsCurrencyChoices } from "@dashboard/channels/utils";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {

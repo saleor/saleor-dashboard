@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   AppAvatarFragment,
   ChannelUsabilityDataQuery,

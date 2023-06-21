@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import "@saleor/macaw-ui/next/style";
 import "./index.css";
 

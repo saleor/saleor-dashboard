@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
 import { Pill } from "@dashboard/components/Pill";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
