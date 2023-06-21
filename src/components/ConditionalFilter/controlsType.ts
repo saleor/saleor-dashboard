@@ -1,9 +1,16 @@
+import { ConditionOption } from "./FilterElement/ConditionSelected";
+
+
 export const CONTROL_DEFAULTS = {
-  text: { value: "" },
-  number: { value: "" },
-  range: { value: [] },
-  "number.range": { value: { start: "", end: "" } },
-  multiselect: { value: [], options: [] },
-  select: { value: "", options: [] },
-  combobox: { value: "", options: [] },
+  text: "",
+  number: "",
+  "number.range": [] as unknown as [string, string],
+  multiselect: [] as ConditionOption[],
+  select: "",
+  combobox: "",
 };
+
+
+export const getDefaultByControlName = (name: string): ConditionOption => {
+  return CONTROL_DEFAULTS[name]
+}

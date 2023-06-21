@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
-import { ConditionItem, ConditionOptions } from "./../staticConditions";
+import { ConditionItem, ConditionOptions } from "./ConditionOptions";
 import { LeftOperand } from "./../useLeftOperands";
 import { CONDITIONS, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
-import { Condition, ConditionSelectedValue } from "./Condition";
+import { Condition } from "./Condition";
+import { ConditionOption, ConditionSelected } from "./ConditionSelected";
 
 interface ExpressionValue {
   value: string;
@@ -12,7 +13,7 @@ interface ExpressionValue {
 }
 
 const createStaticEntry = (
-  rawEntry: string | ConditionSelectedValue | ConditionSelectedValue[],
+  rawEntry: ConditionOption,
 ) => {
   if (typeof rawEntry === "string") {
     return rawEntry;
@@ -26,7 +27,7 @@ const createStaticEntry = (
 };
 
 const createAttributeEntry = (
-  rawEntry: string | ConditionSelectedValue | ConditionSelectedValue[],
+  rawEntry: ConditionOption,
 ) => {
   if (typeof rawEntry === "string") {
     return rawEntry;
@@ -72,19 +73,24 @@ export class FilterElement {
   }
 
   public updateCondition(conditionValue: ConditionItem) {
-    this.condition.selected.conditionValue = conditionValue;
+    this.condition.selected = ConditionSelected.fromConditionItem(conditionValue)
   }
 
-  public updateRightOperator(value: string | string[]) {
-    this.condition.selected.value = value;
+  public updateRightOperator(value: ConditionOption) {
+    this.condition.selected.setValue(value)
   }
 
-  public updateRightOptions(options: any) {
-    this.condition.selected.options = options;
+  public updateRightOptions(options: ConditionOption[]) {
+    this.condition.selected.setOptions(options)
   }
 
   public updateRightLoadingState(loading: boolean) {
-    this.condition.selected.loading = loading;
+    if (loading) {
+      this.condition.selected.enableLoading()
+      return
+    }
+
+    this.condition.selected.disableLoading()
   }
 
   public isEmpty() {

@@ -1,8 +1,5 @@
-/* eslint-disable @typescript-eslint/member-ordering */
-import {
-  ATTRIBUTE_INPUT_TYPE_CONDITIONS,
-  STATIC_CONDITIONS,
-} from "./constants";
+import { ATTRIBUTE_INPUT_TYPE_CONDITIONS, STATIC_CONDITIONS } from "../constants";
+
 
 export type StaticElementName = keyof typeof STATIC_CONDITIONS;
 export type AttributeInputType = keyof typeof ATTRIBUTE_INPUT_TYPE_CONDITIONS;
