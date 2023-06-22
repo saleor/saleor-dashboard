@@ -371,7 +371,6 @@ export const ProductStocks: React.FC<ProductStocksProps> = ({
                 />
               </Box>
             )}
-            {/* @ts-expect-error */}
             <Box __alignSelf="end">
               <Button
                 name="hasPreorderEndDate"
