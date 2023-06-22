@@ -33,6 +33,9 @@
     }
   ],
   "rules": {
+    "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
+    "@typescript-eslint/semi": ["off"],
+    "@typescript-eslint/quotes": ["off", "double"],
     "react-refresh/only-export-components": "warn",
     "react-hooks/rules-of-hooks": "error",
     "chai-friendly/no-unused-expressions": "error",
