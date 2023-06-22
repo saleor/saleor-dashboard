@@ -8,7 +8,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { productPath } from "@dashboard/products/urls";
-import { ExternalLinkIcon, Tooltip } from "@saleor/macaw-ui/next";
+import { ExternalLinkIcon } from "@saleor/macaw-ui/next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -51,6 +51,7 @@ export const OrderDetailsDatagrid = ({
   const getMenuItems = useCallback(
     index => [
       {
+        disabled: lines[index]?.variant?.product.id ? false : true,
         label: intl.formatMessage(messages.productDetails),
         Icon: lines[index]?.variant?.product.id ? (
           <Link
@@ -60,14 +61,7 @@ export const OrderDetailsDatagrid = ({
             <ExternalLinkIcon />
           </Link>
         ) : (
-          <Tooltip>
-            <Tooltip.Trigger>
-              <ExternalLinkIcon color="iconNeutralDisabled" />
-            </Tooltip.Trigger>
-            <Tooltip.Content>
-              {intl.formatMessage(messages.noProduct)}
-            </Tooltip.Content>
-          </Tooltip>
+          <ExternalLinkIcon />
         ),
         onSelect: () => false,
       },
