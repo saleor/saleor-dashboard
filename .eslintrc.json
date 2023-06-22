@@ -3,7 +3,7 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["standard-with-typescript", "plugin:react/recommended"],
+  "extends": ["standard-with-typescript", "plugin:react/recommended", "prettier"],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",
@@ -34,7 +34,6 @@
     }
   ],
   "rules": {
-    "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
     "@typescript-eslint/semi": ["off"],
     "@typescript-eslint/quotes": ["off", "double"],
     "import/no-duplicates": "error",
