@@ -12,8 +12,8 @@ const ErrorExclamationCircle = createSvgIcon(
     >
       <circle cx="12" cy="12" r="12" fill="#FE6D76" />
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M12.75 6H11.25V15H12.75V6ZM12.75 16.5H11.25V18H12.75V16.5Z"
         fill="white"
       />

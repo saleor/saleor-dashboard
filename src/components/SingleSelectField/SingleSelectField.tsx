@@ -81,7 +81,7 @@ export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {
   } = props;
   const classes = useStyles(props);
 
-  const choicesByKey: { [key: string]: string } =
+  const choicesByKey: Record<string, string> =
     choices === undefined
       ? {}
       : choices.reduce((prev, curr) => {

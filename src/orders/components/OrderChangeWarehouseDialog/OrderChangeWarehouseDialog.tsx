@@ -54,8 +54,8 @@ export const OrderChangeWarehouseDialog: React.FC<
   const intl = useIntl();
 
   const { anchor, position, setAnchor } = useElementScroll();
-  const topShadow = isScrolledToTop(anchor, position, 20) === false;
-  const bottomShadow = isScrolledToBottom(anchor, position, 20) === false;
+  const topShadow = !isScrolledToTop(anchor, position, 20);
+  const bottomShadow = !isScrolledToBottom(anchor, position, 20);
 
   const [query, setQuery] = React.useState<string>("");
   const [selectedWarehouseId, setSelectedWarehouseId] = React.useState<

@@ -35,7 +35,7 @@ const useStyles = makeStyles(
   { name: "FilterKeyValueField" },
 );
 
-const getUpdateArrayFn = <T,>(key: "key" | "value") => (
+const getUpdateArrayFn = <T>(key: "key" | "value") => (
   array: T[],
   index: number,
   value: string,

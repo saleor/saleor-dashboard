@@ -343,7 +343,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<
             className={clsx(classes.arrowInnerContainer, {
               // Needs to be explicitely compared to false because
               // scrolledToBottom can be either true, false or undefined
-              [classes.hide]: scrolledToBottom !== false,
+              [classes.hide]: scrolledToBottom,
             })}
           >
             <SVG src={chevronDown} />

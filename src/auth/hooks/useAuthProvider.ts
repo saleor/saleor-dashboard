@@ -131,7 +131,7 @@ export function useAuthProvider({
       }
     }
 
-    return;
+    
   };
 
   const handleLogin = async (email: string, password: string) => {

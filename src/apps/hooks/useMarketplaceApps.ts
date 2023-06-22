@@ -6,9 +6,7 @@ interface State {
   error?: Error;
 }
 
-interface Cache {
-  [url: string]: GetV2SaleorAppsResponse.SaleorApp[];
-}
+type Cache = Record<string, GetV2SaleorAppsResponse.SaleorApp[]>;
 
 // discriminated union type
 type Action =

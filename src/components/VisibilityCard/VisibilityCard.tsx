@@ -181,7 +181,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               type="date"
               fullWidth={true}
               helperText={getFieldError(errors, "publicationDate")?.message}
-              value={publicationDate ? publicationDate : ""}
+              value={publicationDate || ""}
               onChange={onChange}
               className={classes.date}
               InputLabelProps={{
@@ -250,7 +250,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                   type="date"
                   fullWidth={true}
                   helperText={getFieldError(errors, "startDate")?.message}
-                  value={availableForPurchase ? availableForPurchase : ""}
+                  value={availableForPurchase || ""}
                   onChange={onChange}
                   className={classes.date}
                   InputLabelProps={{
