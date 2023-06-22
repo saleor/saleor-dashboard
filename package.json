@@ -96,6 +96,8 @@
     "use-react-router": "^1.0.7"
   },
   "devDependencies": {
+    "@changesets/changelog-github": "^0.4.8",
+    "@changesets/cli": "^2.26.1",
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.7.7",
     "@babel/plugin-proposal-class-properties": "^7.5.0",
@@ -324,10 +326,12 @@
     "postbuild": "node scripts/removeSourcemaps.js",
     "postinstall": "node scripts/patchReactVirtualized.js",
     "predev": "npm run build-types",
-    "release": "release-it",
+    "release": "changeset tag && git push --follow-tags",
     "prepare": "is-ci || husky install",
     "dep-status": "depcruise --config .dependency-cruiser.js src",
-    "chromatic": "chromatic --exit-zero-on-changes"
+    "chromatic": "chromatic --exit-zero-on-changes",
+    "change:add": "changeset add",
+    "release:prepare-main": "./scripts/prepare-main-after-release.sh"
   },
   "description": "![Saleor Dashboard](https://user-images.githubusercontent.com/44495184/185379472-2a204c0b-9b7a-4a3e-93c0-2cb85205ed5e.png)"
 }
