@@ -1,6 +1,8 @@
 import { AppUrls } from "@dashboard/apps/urls";
+import { APP_VERSION } from "@dashboard/config";
 import { AppExtensionTargetEnum } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
+import useShop from "@dashboard/hooks/useShop";
 import React from "react";
 
 import { AppDialog } from "../AppDialog";
@@ -10,6 +12,11 @@ import { AppData, ExternalAppContext } from "./context";
 export const ExternalAppProvider: React.FC = ({ children }) => {
   const [open, setOpen] = React.useState(false);
   const [appData, setAppData] = React.useState<AppData | undefined>();
+  const shop = useShop();
+
+  if (!shop?.version) {
+    return null;
+  }
 
   const handleClose = () => {
     setOpen(false);
@@ -26,6 +33,8 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
             appToken={appData.appToken}
             appId={appData.id}
             params={appData.params}
+            dashboardVersion={APP_VERSION}
+            coreVersion={shop.version}
           />
         )}
       </AppDialog>
