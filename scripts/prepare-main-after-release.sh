@@ -4,5 +4,5 @@
 
 set -e
 
-git diff --name-only origin/"$1" .changeset/ | xargs git rm
-npm version preminor --preid "dev" --git-tag-version false
+git diff --name-only origin/"$1" .changeset/ | xargs git rm --
+npm version preminor --preid dev --git-tag-version false
