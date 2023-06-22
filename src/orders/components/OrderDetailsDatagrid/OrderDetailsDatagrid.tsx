@@ -8,7 +8,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderLineFragment } from "@dashboard/graphql";
 import { productPath } from "@dashboard/products/urls";
-import { ExternalLinkIcon } from "@saleor/macaw-ui/next";
+import { ExternalLinkIcon, Tooltip } from "@saleor/macaw-ui/next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
@@ -52,13 +52,22 @@ export const OrderDetailsDatagrid = ({
     index => [
       {
         label: intl.formatMessage(messages.productDetails),
-        Icon: (
+        Icon: lines[index]?.variant?.product.id ? (
           <Link
             to={productPath(lines[index].variant.product.id)}
             target="_blank"
           >
             <ExternalLinkIcon />
           </Link>
+        ) : (
+          <Tooltip>
+            <Tooltip.Trigger>
+              <ExternalLinkIcon color="iconNeutralDisabled" />
+            </Tooltip.Trigger>
+            <Tooltip.Content>
+              {intl.formatMessage(messages.noProduct)}
+            </Tooltip.Content>
+          </Tooltip>
         ),
         onSelect: () => false,
       },
