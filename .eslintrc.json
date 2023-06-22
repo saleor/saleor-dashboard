@@ -3,7 +3,7 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["standard-with-typescript", "plugin:react/recommended", "plugin:import/recommended"],
+  "extends": ["standard-with-typescript", "plugin:react/recommended"],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",
@@ -22,7 +22,8 @@
     "chai-friendly",
     "formatjs",
     "react-refresh",
-    "react-hooks"
+    "react-hooks",
+    "simple-import-sort"
   ],
   "overrides": [
     {
@@ -36,6 +37,12 @@
     "@typescript-eslint/comma-dangle": ["error", "always-multiline"],
     "@typescript-eslint/semi": ["off"],
     "@typescript-eslint/quotes": ["off", "double"],
+    "import/no-duplicates": "error",
+    "import/no-extraneous-dependencies": "off", // imports are handled by simple-import-sort/sort
+    "import/no-internal-modules": "off", // imports are handled by simple-import-sort/sort
+    "import/order": "off", // imports are handled by simple-import-sort/sort
+    "sort-imports": "off", // imports are handled by simple-import-sort/sort
+    "simple-import-sort/sort": ["error"],
     "react-refresh/only-export-components": "warn",
     "react-hooks/rules-of-hooks": "error",
     "chai-friendly/no-unused-expressions": "error",
