@@ -34,8 +34,8 @@ const useStyles = makeStyles(
   }),
   { name: "FilterKeyValueField" },
 );
-
-const getUpdateArrayFn = <T>(key: "key" | "value") => (
+// @eslint-ignore-next-line
+const getUpdateArrayFn = <T,>(key: "key" | "value") => ( // eslint-disable-line
   array: T[],
   index: number,
   value: string,
