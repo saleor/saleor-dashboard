@@ -3,7 +3,11 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["standard-with-typescript", "plugin:react/recommended", "prettier"],
+  "extends": [
+    "standard-with-typescript",
+    "plugin:react/recommended",
+    "prettier"
+  ],
   "parserOptions": {
     "ecmaVersion": "latest",
     "sourceType": "module",
@@ -65,7 +69,7 @@
     "@typescript-eslint/no-confusing-void-expression": "off", // TODO: autofix
     "@typescript-eslint/no-unnecessary-type-assertion": "off", // TODO: autofix
     "@typescript-eslint/prefer-reduce-type-parameter": "off", // TODO: autofix
-    "@typescript-eslint/promise-function-async": "off", // TODO: autofix 
+    "@typescript-eslint/promise-function-async": "off", // TODO: autofix
     "@typescript-eslint/return-await": "off", // TODO: autofix
     "@typescript-eslint/space-before-function-paren": "off", // TODO: autofix
     "@typescript-eslint/strict-boolean-expressions": "off", // TODO: autofix
