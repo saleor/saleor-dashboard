@@ -58,7 +58,20 @@
       {
         "paths": ["lodash", "@material-ui/icons/Delete", "classnames"]
       }
-    ]
+    ],
+    "@typescript-eslint/consistent-type-imports": "off", // TODO: autofix
+    "@typescript-eslint/indent": "off", // TODO: autofix
+    "@typescript-eslint/member-delimiter-style": "off", // TODO: autofix
+    "@typescript-eslint/method-signature-style": "off", // TODO: autofix
+    "@typescript-eslint/no-confusing-void-expression": "off", // TODO: autofix
+    "@typescript-eslint/no-unnecessary-type-assertion": "off", // TODO: autofix
+    "@typescript-eslint/prefer-reduce-type-parameter": "off", // TODO: autofix
+    "@typescript-eslint/promise-function-async": "off", // TODO: autofix 
+    "@typescript-eslint/return-await": "off", // TODO: autofix
+    "@typescript-eslint/space-before-function-paren": "off", // TODO: autofix
+    "@typescript-eslint/strict-boolean-expressions": "off", // TODO: autofix
+    "multiline-ternary": "off", // TODO: autofix
+    "no-extra-boolean-cast": "off" // TODO: autofix
   },
   "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts"]
 }
