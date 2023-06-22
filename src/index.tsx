@@ -9,7 +9,7 @@ import useAppState from "@dashboard/hooks/useAppState";
 import { ThemeProvider } from "@dashboard/theme";
 import { ThemeProvider as LegacyThemeProvider } from "@saleor/macaw-ui";
 import { SaleorProvider } from "@saleor/sdk";
-import React from "react";
+import React, { useEffect } from "react";
 import { render } from "react-dom";
 import { ErrorBoundary } from "react-error-boundary";
 import TagManager from "react-gtm-module";
@@ -51,34 +51,48 @@ import errorTracker from "./services/errorTracking";
 import { paletteOverrides, themeOverrides } from "./themeOverrides";
 import { warehouseSection } from "./warehouses/urls";
 
-const HomePage = React.lazy(() => import("./home"));
-const CategorySection = React.lazy(() => import("./categories"));
-const CollectionSection = React.lazy(() => import("./collections"));
-const CustomerSection = React.lazy(() => import("./customers"));
-const GiftCardSection = React.lazy(() => import("./giftCards"));
-const DiscountSection = React.lazy(() => import("./discounts"));
-const PageSection = React.lazy(() => import("./pages"));
-const PageTypesSection = React.lazy(() => import("./pageTypes"));
-const PluginsSection = React.lazy(() => import("./plugins"));
-const OrdersSection = React.lazy(() => import("./orders"));
-const ProductSection = React.lazy(() => import("./products"));
-const ProductTypesSection = React.lazy(() => import("./productTypes"));
-const PermissionGroupSection = React.lazy(() => import("./permissionGroups"));
-const SiteSettingsSection = React.lazy(() => import("./siteSettings"));
-const ShippingSection = React.lazy(() => import("./shipping"));
-const TranslationsSection = React.lazy(() => import("./translations"));
-const NavigationSection = React.lazy(() => import("./navigation"));
-const AttributeSection = React.lazy(() => import("./attributes"));
-const AppsSection = React.lazy(() => import("./apps"));
-const WarehouseSection = React.lazy(() => import("./warehouses"));
-const ChannelsSection = React.lazy(() => import("./channels"));
-const ConfigurationSection = React.lazy(() => import("./configuration"));
-const CustomAppsSection = React.lazy(() => import("./custom-apps"));
-const NotFound = React.lazy(() => import("./NotFound"));
-const Auth = React.lazy(() => import("./auth"));
-const ErrorPage = React.lazy(() => import("./components/ErrorPage"));
-const StaffSection = React.lazy(() => import("./staff"));
-const TaxesSection = React.lazy(() => import("./taxes"));
+interface PreloadableComponent extends React.ExoticComponent<any> {
+  preload: () => Promise<{ default: React.ComponentType<any> }>;
+}
+
+const ReactLazyPreload = (
+  importStatement: () => Promise<{ default: React.ComponentType<any> }>,
+): PreloadableComponent => {
+  const Component = React.lazy(importStatement) as any as PreloadableComponent;
+  Component.preload = importStatement;
+  return Component;
+};
+
+const HomePage = ReactLazyPreload(() => import("./home"));
+const CategorySection = ReactLazyPreload(() => import("./categories"));
+const CollectionSection = ReactLazyPreload(() => import("./collections"));
+const CustomerSection = ReactLazyPreload(() => import("./customers"));
+const GiftCardSection = ReactLazyPreload(() => import("./giftCards"));
+const DiscountSection = ReactLazyPreload(() => import("./discounts"));
+const PageSection = ReactLazyPreload(() => import("./pages"));
+const PageTypesSection = ReactLazyPreload(() => import("./pageTypes"));
+const PluginsSection = ReactLazyPreload(() => import("./plugins"));
+const OrdersSection = ReactLazyPreload(() => import("./orders"));
+export const ProductSection = ReactLazyPreload(() => import("./products"));
+const ProductTypesSection = ReactLazyPreload(() => import("./productTypes"));
+const PermissionGroupSection = ReactLazyPreload(
+  () => import("./permissionGroups"),
+);
+const SiteSettingsSection = ReactLazyPreload(() => import("./siteSettings"));
+const ShippingSection = ReactLazyPreload(() => import("./shipping"));
+const TranslationsSection = ReactLazyPreload(() => import("./translations"));
+const NavigationSection = ReactLazyPreload(() => import("./navigation"));
+const AttributeSection = ReactLazyPreload(() => import("./attributes"));
+const AppsSection = ReactLazyPreload(() => import("./apps"));
+const WarehouseSection = ReactLazyPreload(() => import("./warehouses"));
+const ChannelsSection = ReactLazyPreload(() => import("./channels"));
+const ConfigurationSection = ReactLazyPreload(() => import("./configuration"));
+const CustomAppsSection = ReactLazyPreload(() => import("./custom-apps"));
+const NotFound = ReactLazyPreload(() => import("./NotFound"));
+const Auth = ReactLazyPreload(() => import("./auth"));
+const ErrorPage = ReactLazyPreload(() => import("./components/ErrorPage"));
+const StaffSection = ReactLazyPreload(() => import("./staff"));
+const TaxesSection = ReactLazyPreload(() => import("./taxes"));
 
 if (process.env.GTM_ID) {
   TagManager.initialize({ gtmId: GTM_ID });
@@ -103,47 +117,79 @@ const handleLegacyTheming = () => {
 
 handleLegacyTheming();
 
-const App: React.FC = () => (
-  <SaleorProvider client={saleorClient}>
-    <ApolloProvider client={apolloClient}>
-      <BrowserRouter basename={getAppMountUri()}>
-        <LegacyThemeProvider
-          overrides={themeOverrides}
-          palettes={paletteOverrides}
-        >
-          <ThemeProvider>
-            <DateProvider>
-              <LocaleProvider>
-                <MessageManagerProvider>
-                  <ServiceWorker />
-                  <BackgroundTasksProvider>
-                    <AppStateProvider>
-                      <FlagsServiceProvider>
-                        <AuthProvider>
-                          <ShopProvider>
-                            <AppChannelProvider>
-                              <ExternalAppProvider>
-                                <ExitFormDialogProvider>
-                                  <DevModeProvider>
-                                    <Routes />
-                                  </DevModeProvider>
-                                </ExitFormDialogProvider>
-                              </ExternalAppProvider>
-                            </AppChannelProvider>
-                          </ShopProvider>
-                        </AuthProvider>
-                      </FlagsServiceProvider>
-                    </AppStateProvider>
-                  </BackgroundTasksProvider>
-                </MessageManagerProvider>
-              </LocaleProvider>
-            </DateProvider>
-          </ThemeProvider>
-        </LegacyThemeProvider>
-      </BrowserRouter>
-    </ApolloProvider>
-  </SaleorProvider>
-);
+const App: React.FC = () => {
+  useEffect(() => {
+    HomePage.preload();
+    CategorySection.preload();
+    CollectionSection.preload();
+    CustomerSection.preload();
+    DiscountSection.preload();
+    GiftCardSection.preload();
+    OrdersSection.preload();
+    PageSection.preload();
+    PageTypesSection.preload();
+    PluginsSection.preload();
+    ProductSection.preload();
+    ProductTypesSection.preload();
+    PermissionGroupSection.preload();
+    SiteSettingsSection.preload();
+    ShippingSection.preload();
+    TranslationsSection.preload();
+    NavigationSection.preload();
+    AttributeSection.preload();
+    AppsSection.preload();
+    WarehouseSection.preload();
+    ChannelsSection.preload();
+    ConfigurationSection.preload();
+    CustomAppsSection.preload();
+    NotFound.preload();
+    Auth.preload();
+    StaffSection.preload();
+    TaxesSection.preload();
+  }, []);
+
+  return (
+    <SaleorProvider client={saleorClient}>
+      <ApolloProvider client={apolloClient}>
+        <BrowserRouter basename={getAppMountUri()}>
+          <LegacyThemeProvider
+            overrides={themeOverrides}
+            palettes={paletteOverrides}
+          >
+            <ThemeProvider>
+              <DateProvider>
+                <LocaleProvider>
+                  <MessageManagerProvider>
+                    <ServiceWorker />
+                    <BackgroundTasksProvider>
+                      <AppStateProvider>
+                        <FlagsServiceProvider>
+                          <AuthProvider>
+                            <ShopProvider>
+                              <AppChannelProvider>
+                                <ExternalAppProvider>
+                                  <ExitFormDialogProvider>
+                                    <DevModeProvider>
+                                      <Routes />
+                                    </DevModeProvider>
+                                  </ExitFormDialogProvider>
+                                </ExternalAppProvider>
+                              </AppChannelProvider>
+                            </ShopProvider>
+                          </AuthProvider>
+                        </FlagsServiceProvider>
+                      </AppStateProvider>
+                    </BackgroundTasksProvider>
+                  </MessageManagerProvider>
+                </LocaleProvider>
+              </DateProvider>
+            </ThemeProvider>
+          </LegacyThemeProvider>
+        </BrowserRouter>
+      </ApolloProvider>
+    </SaleorProvider>
+  );
+};
 
 const Routes: React.FC = () => {
   const intl = useIntl();
