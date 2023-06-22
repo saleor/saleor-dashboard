@@ -111,7 +111,7 @@ const CardMenu: React.FC<CardMenuProps> = props => {
 
   const prevOpen = useRef(open);
   useEffect(() => {
-    if (prevOpen.current === true && open === false) {
+    if (prevOpen.current && !open) {
       anchorRef.current!.focus();
     }
 

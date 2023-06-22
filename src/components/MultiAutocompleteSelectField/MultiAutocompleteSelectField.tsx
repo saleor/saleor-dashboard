@@ -110,7 +110,7 @@ const MultiAutocompleteSelectFieldComponent: React.FC<
             // this is to prevent unwanted state updates when the dropdown is closed with an empty value,
             // which downshift interprets as the value being updated with an empty string, causing side-effects
             stateReducer={(state, changes) => {
-              if (changes.isOpen === false && state.inputValue === "") {
+              if (!changes.isOpen && state.inputValue === "") {
                 delete changes.inputValue;
               }
               return changes;

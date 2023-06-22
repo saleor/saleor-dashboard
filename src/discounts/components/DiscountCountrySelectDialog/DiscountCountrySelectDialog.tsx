@@ -95,7 +95,7 @@ const DiscountCountrySelectDialog: React.FC<
                   name="query"
                   value={data.query}
                   onChange={event =>
-                    change(event /* TO BE CHECKED: () => fetch(data.query)*/)
+                    change(event /* TO BE CHECKED: () => fetch(data.query) */)
                   }
                   label={intl.formatMessage({
                     id: "8EGagh",
