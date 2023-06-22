@@ -71,7 +71,41 @@
     "@typescript-eslint/space-before-function-paren": "off", // TODO: autofix
     "@typescript-eslint/strict-boolean-expressions": "off", // TODO: autofix
     "multiline-ternary": "off", // TODO: autofix
-    "no-extra-boolean-cast": "off" // TODO: autofix
+    "no-extra-boolean-cast": "off", // TODO: autofix
+    "@typescript-eslint/await-thenable": "warn", // TODO: refactor
+    "@typescript-eslint/ban-ts-comment": "warn", // TODO: refactor
+    "@typescript-eslint/ban-types": "warn", // TODO: refactor
+    "@typescript-eslint/consistent-type-assertions": "warn", // TODO: refactor
+    "@typescript-eslint/explicit-function-return-type": "warn", // TODO: refactor
+    "@typescript-eslint/naming-convention": "warn", // TODO: refactor
+    "@typescript-eslint/no-base-to-string": "warn", // TODO: refactor
+    "@typescript-eslint/no-dynamic-delete": "warn", // TODO: refactor
+    "@typescript-eslint/no-floating-promises": "warn", // TODO: refactor
+    "@typescript-eslint/no-invalid-void-type": "warn", // TODO: refactor
+    "@typescript-eslint/no-misused-promises": "warn", // TODO: refactor
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "warn", // TODO: refactor
+    "@typescript-eslint/no-non-null-assertion": "warn", // TODO: refactor
+    "@typescript-eslint/no-redeclare": "warn", // TODO: refactor
+    "@typescript-eslint/prefer-nullish-coalescing": "warn", // TODO: refactor
+    "@typescript-eslint/prefer-optional-chain": "warn", // TODO: refactor
+    "@typescript-eslint/restrict-plus-operands": "warn", // TODO: refactor
+    "@typescript-eslint/restrict-template-expressions": "warn", // TODO: refactor
+    "array-callback-return": "warn", // TODO: refactor
+    "import/export": "warn", // TODO: refactor
+    "n/no-callback-literal": "warn", // TODO: refactor
+    "no-case-declarations": "warn", // TODO: refactor
+    "no-empty-pattern": "warn", // TODO: refactor
+    "no-fallthrough": "warn", // TODO: refactor
+    "no-new": "warn", // TODO: refactor
+    "no-prototype-builtins": "warn", // TODO: refactor
+    "no-unreachable": "warn", // TODO: refactor
+    "no-useless-catch": "warn", // TODO: refactor
+    "no-useless-escape": "warn", // TODO: refactor
+    "prefer-promise-reject-errors": "warn", // TODO: refactor
+    "react/display-name": "warn", // TODO: refactor
+    "react/jsx-key": "warn", // TODO: refactor
+    "react/prop-types": "warn", // TODO: refactor
+    "symbol-description": "warn" // TODO: refactor
   },
   "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts"]
 }
