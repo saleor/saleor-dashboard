@@ -37,8 +37,4 @@ export const messages = defineMessages({
     id: "VYK2nN",
     defaultMessage: "Product details",
   },
-  noProduct: {
-    id: "absnu1",
-    defaultMessage: "Product no longer exists",
-  },
 });
