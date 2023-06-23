@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   Node,
   ProductFragment,
@@ -42,7 +43,7 @@ function areVariantsEqual(a: Node, b: Node) {
 }
 
 export function createVariantReorderHandler<
-  T extends { id: string; variants: any[] }
+  T extends { id: string; variants: any[] },
 >(product: T, reorderProductVariants: ProductVariantReorderMutationFn) {
   return ({ newIndex, oldIndex }: ReorderEvent) => {
     const oldVariantOrder = [...product.variants];

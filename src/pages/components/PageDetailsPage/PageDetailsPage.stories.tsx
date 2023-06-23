@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { fetchMoreProps } from "@dashboard/fixtures";
 import { PageErrorCode } from "@dashboard/graphql";
 import { PageData } from "@dashboard/pages/components/PageDetailsPage/form";

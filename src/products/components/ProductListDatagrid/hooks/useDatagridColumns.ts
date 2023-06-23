@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { ProductListColumns } from "@dashboard/config";
 import { GridAttributesQuery } from "@dashboard/graphql";

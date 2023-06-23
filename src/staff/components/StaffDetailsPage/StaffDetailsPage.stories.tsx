@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { userPermissionGroups } from "@dashboard/permissionGroups/fixtures";
 import { staffMember } from "@dashboard/staff/fixtures";
 import React from "react";

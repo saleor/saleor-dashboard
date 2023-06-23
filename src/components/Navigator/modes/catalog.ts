@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { categoryUrl } from "@dashboard/categories/urls";
 import { collectionUrl } from "@dashboard/collections/urls";
 import { SearchCatalogQuery } from "@dashboard/graphql";

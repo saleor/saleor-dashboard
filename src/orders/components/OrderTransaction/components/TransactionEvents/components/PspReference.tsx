@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import OverflowTooltip from "@dashboard/components/OverflowTooltip";
 import useClipboard from "@dashboard/hooks/useClipboard";
 import { commonMessages } from "@dashboard/intl";

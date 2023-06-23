@@ -27,7 +27,11 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
           key={appInstallation.id}
           appInstallation={appInstallation}
           isExternal={isExternal}
-          logo={logo}
+          logo={
+            appInstallation.brand?.logo.default
+              ? { source: appInstallation.brand.logo.default }
+              : logo
+          }
         />
       ))}
       {appList.map(({ app, isExternal, logo }) => (
@@ -35,7 +39,9 @@ const InstalledAppList: React.FC<InstalledAppListProps> = ({
           key={app.id}
           app={app}
           isExternal={isExternal}
-          logo={logo}
+          logo={
+            app.brand?.logo.default ? { source: app.brand?.logo.default } : logo
+          }
         />
       ))}
     </List>

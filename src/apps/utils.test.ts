@@ -134,6 +134,7 @@ describe("App utils app details", () => {
       status: JobStatusEnum.PENDING,
       message: "Test message",
       manifestUrl: "https://www.example.com/manifest",
+      brand: null,
     };
 
     // Act
@@ -200,6 +201,7 @@ describe("App utils app details", () => {
       status: JobStatusEnum.FAILED,
       message: "Test message",
       manifestUrl: "https://www.example.com/manifest",
+      brand: null,
     };
 
     // Act
@@ -249,6 +251,7 @@ describe("App utils app details", () => {
         status: JobStatusEnum.PENDING,
         message: "Test message",
         manifestUrl: releasedApp.manifestUrl as string,
+        brand: null,
       };
       const appInstallationList: AppInstallationFragment[] = [
         releasedAppInstallation,

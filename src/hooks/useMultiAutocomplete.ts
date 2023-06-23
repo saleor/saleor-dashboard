@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import { maybe } from "@dashboard/misc";
 

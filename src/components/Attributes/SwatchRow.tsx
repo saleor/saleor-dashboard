@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { BasicAttributeRow } from "@dashboard/components/Attributes/BasicAttributeRow";
 import {
   getErrorMessage,

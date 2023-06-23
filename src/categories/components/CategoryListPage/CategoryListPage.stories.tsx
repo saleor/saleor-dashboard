@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { categories } from "@dashboard/categories/fixtures";
 import { CategoryListUrlSortField } from "@dashboard/categories/urls";
 import {

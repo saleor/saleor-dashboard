@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { commonMessages } from "@dashboard/intl";
 import { DateTime, joinDateTime, splitDateTime } from "@dashboard/misc";
 import { TextField } from "@material-ui/core";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useAppListContext } from "@dashboard/apps/context";
 import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
 import {

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { attributeListUrl } from "@dashboard/attributes/urls";
 import { useUser } from "@dashboard/auth";
 import { channelsListUrl } from "@dashboard/channels/urls";

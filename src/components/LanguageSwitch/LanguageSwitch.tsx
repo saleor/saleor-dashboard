@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { LanguageCodeEnum, LanguageFragment } from "@dashboard/graphql";
 import {
   Card,

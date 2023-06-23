@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { Button } from "@dashboard/components/Button";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
@@ -61,7 +62,11 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     data?.permissionGroup.users,
   );
 
-  const { search, result: searchResult, loadMore } = useStaffMemberSearch({
+  const {
+    search,
+    result: searchResult,
+    loadMore,
+  } = useStaffMemberSearch({
     variables: DEFAULT_INITIAL_SEARCH_DATA,
   });
 
@@ -69,25 +74,23 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     params.ids,
   );
 
-  const [
-    permissionGroupUpdate,
-    permissionGroupUpdateResult,
-  ] = usePermissionGroupUpdateMutation({
-    onCompleted: data => {
-      if (data.permissionGroupUpdate.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        refetch();
-        closeModal();
-      } else if (
-        data.permissionGroupUpdate.errors.some(e => e.field === "removeUsers")
-      ) {
-        openModal("unassignError");
-      }
-    },
-  });
+  const [permissionGroupUpdate, permissionGroupUpdateResult] =
+    usePermissionGroupUpdateMutation({
+      onCompleted: data => {
+        if (data.permissionGroupUpdate.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          refetch();
+          closeModal();
+        } else if (
+          data.permissionGroupUpdate.errors.some(e => e.field === "removeUsers")
+        ) {
+          openModal("unassignError");
+        }
+      },
+    });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     PermissionGroupDetailsUrlDialog,
