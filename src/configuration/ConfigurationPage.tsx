@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
 import { UserFragment } from "@dashboard/graphql";

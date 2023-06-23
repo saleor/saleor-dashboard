@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FilterElement } from "@dashboard/components/Filter";
 import { OrderDraftFilterInput } from "@dashboard/graphql";
 import { maybe } from "@dashboard/misc";

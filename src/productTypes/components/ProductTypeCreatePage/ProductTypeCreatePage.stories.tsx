@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ProductTypeKindEnum, WeightUnitsEnum } from "@dashboard/graphql";
 import { taxClasses } from "@dashboard/taxes/fixtures";
 import React from "react";

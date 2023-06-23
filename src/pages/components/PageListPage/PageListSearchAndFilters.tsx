@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import FilterBar from "@dashboard/components/FilterBar";
 import SaveFilterTabDialog, {

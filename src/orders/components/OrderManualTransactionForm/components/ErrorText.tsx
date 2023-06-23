@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Typography, TypographyProps } from "@material-ui/core";
 import React from "react";
 

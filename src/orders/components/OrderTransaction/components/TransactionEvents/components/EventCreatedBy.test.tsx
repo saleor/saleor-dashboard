@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { appAvatar } from "@dashboard/apps/fixtures";
 import { AppPaths } from "@dashboard/apps/urls";
 import { staffMemberAvatar } from "@dashboard/staff/fixtures";

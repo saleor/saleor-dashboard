@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";

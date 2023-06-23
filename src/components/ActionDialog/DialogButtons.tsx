@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import { DialogActions } from "@material-ui/core";

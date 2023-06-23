@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useFilterHandlers } from "./useFilterHandlers";

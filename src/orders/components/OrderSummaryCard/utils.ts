@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { subtractMoney } from "@dashboard/components/Money";
 import { GiftCardEventsEnum, OrderDetailsFragment } from "@dashboard/graphql";
 import { getOrderCharged } from "@dashboard/orders/utils/data";

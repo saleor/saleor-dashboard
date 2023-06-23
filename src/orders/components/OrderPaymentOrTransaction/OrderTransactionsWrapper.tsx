@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardSpacer from "@dashboard/components/CardSpacer";
 import {
   OrderDetailsFragment,

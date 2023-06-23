@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { channelsListUrl } from "@dashboard/channels/urls";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";

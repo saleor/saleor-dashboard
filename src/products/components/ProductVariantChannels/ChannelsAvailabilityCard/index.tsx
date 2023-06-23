@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import React from "react";
 
 import { Channel, Product, Variant } from "./../types";
@@ -34,10 +35,9 @@ const Wrapper: React.FC<WrapperProps> = ({ item, children }) => {
   return children({ channels });
 };
 
-export const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChannelsAvailabilityCardProps> = ({
-  variant,
-  onManageClick,
-}) => (
+export const VariantDetailsChannelsAvailabilityCard: React.FC<
+  VariantDetailsChannelsAvailabilityCardProps
+> = ({ variant, onManageClick }) => (
   <Wrapper item={variant}>
     {({ channels }) => (
       <AvailabilityCard
@@ -51,10 +51,9 @@ export const VariantDetailsChannelsAvailabilityCard: React.FC<VariantDetailsChan
   </Wrapper>
 );
 
-export const ProductDetailsChannelsAvailabilityCard: React.FC<ProductDetailsChannelsAvailabilityCardProps> = ({
-  product,
-  onManageClick,
-}) => (
+export const ProductDetailsChannelsAvailabilityCard: React.FC<
+  ProductDetailsChannelsAvailabilityCardProps
+> = ({ product, onManageClick }) => (
   <Wrapper item={product}>
     {({ channels }) => (
       <AvailabilityCard

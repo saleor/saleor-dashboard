@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { products } from "@dashboard/products/fixtures";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";

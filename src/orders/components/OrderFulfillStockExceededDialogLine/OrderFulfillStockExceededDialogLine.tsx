@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
 import TableRowLink from "@dashboard/components/TableRowLink";
 import {
@@ -21,7 +22,9 @@ export interface OrderFulfillStockExceededDialogLineProps {
   formsetData: OrderFulfillStockFormsetData;
 }
 
-const OrderFulfillStockExceededDialogLine: React.FC<OrderFulfillStockExceededDialogLineProps> = props => {
+const OrderFulfillStockExceededDialogLine: React.FC<
+  OrderFulfillStockExceededDialogLineProps
+> = props => {
   const { line: genericLine, warehouseId, formsetData } = props;
 
   const classes = useStyles(props);

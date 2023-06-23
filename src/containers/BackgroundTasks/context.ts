@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { createContext } from "react";
 
 import { BackgroundTasksContextType } from "./types";

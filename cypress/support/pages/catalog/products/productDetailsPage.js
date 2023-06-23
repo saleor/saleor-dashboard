@@ -84,7 +84,7 @@ export function fillUpAllCommonFieldsInCreateAndUpdate({
 export function fillUpProductGeneralInfo({ name, description, rating }) {
   return cy
     .get(PRODUCT_DETAILS.productNameInput)
-    .click()
+    .click({ force: true })
     .clearAndType(name)
     .get(PRODUCT_DETAILS.descriptionInput)
     .clearAndType(description)

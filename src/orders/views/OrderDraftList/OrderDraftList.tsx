@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
