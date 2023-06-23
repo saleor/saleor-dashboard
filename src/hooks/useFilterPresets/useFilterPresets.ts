@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { SaveFilterTabDialogFormData } from "@dashboard/components/SaveFilterTabDialog";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {

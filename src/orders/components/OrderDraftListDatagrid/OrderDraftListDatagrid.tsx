@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ColumnPicker from "@dashboard/components/ColumnPicker/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
