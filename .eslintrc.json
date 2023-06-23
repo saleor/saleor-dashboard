@@ -23,7 +23,6 @@
     "import",
     "local-rules",
     "cypress",
-    "chai-friendly",
     "formatjs",
     "react-refresh",
     "react-hooks",
@@ -49,7 +48,6 @@
     "simple-import-sort/exports": "error",
     "react-refresh/only-export-components": "warn",
     "react-hooks/rules-of-hooks": "error",
-    "chai-friendly/no-unused-expressions": "error",
     "formatjs/enforce-id": [
       "error",
       {
