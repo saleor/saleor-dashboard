@@ -66,6 +66,7 @@ export const OrderDraftDetailsDatagrid = ({
         Icon: (
           <Link
             to={productUrl(lines[index]?.variant.product.id)}
+            data-test-id="open-product-details"
             target="_blank"
             className={sprinkles({
               display: "flex",
