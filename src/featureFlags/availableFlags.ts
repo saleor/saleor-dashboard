@@ -25,7 +25,7 @@ const toFlagContent = (p: FlagList, c: Entry) => {
 };
 
 export const isSupported = (name: string): name is Name =>
-  AVAILABLE_FLAGS.some(e => e.name === name);
+  AVAILABLE_FLAGS.some(e => e.name === name || `FF_${e.name}` === name);
 
 export const asFlagContent = () =>
   AVAILABLE_FLAGS.reduce(toFlagContent, {} as FlagList);
