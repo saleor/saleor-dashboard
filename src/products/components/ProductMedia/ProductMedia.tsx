@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";

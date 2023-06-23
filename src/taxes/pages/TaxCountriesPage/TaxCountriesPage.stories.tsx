@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { taxCountryConfigurations } from "@dashboard/taxes/fixtures";
 import React from "react";
 

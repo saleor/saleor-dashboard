@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useEffect, useRef, useState } from "react";
 
 function useClipboard(): [boolean, (text: string) => void] {

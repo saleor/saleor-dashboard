@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { MarkAsPaidStrategyEnum } from "@dashboard/graphql";
 import {
   order as orderFixture,

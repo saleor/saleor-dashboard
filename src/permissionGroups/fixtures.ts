@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import avatarImg from "@assets/images/avatars/avatar.png";
 import {
   PermissionEnum,

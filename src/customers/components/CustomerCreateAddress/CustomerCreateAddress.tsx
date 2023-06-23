@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import AddressEdit from "@dashboard/components/AddressEdit";
 import CardTitle from "@dashboard/components/CardTitle";
 import { FormSpacer } from "@dashboard/components/FormSpacer";

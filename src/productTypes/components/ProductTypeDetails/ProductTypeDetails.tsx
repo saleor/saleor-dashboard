@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import PreviewPill from "@dashboard/components/PreviewPill";
 import RadioGroupField from "@dashboard/components/RadioGroupField";

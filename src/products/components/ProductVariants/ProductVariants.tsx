@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid, {

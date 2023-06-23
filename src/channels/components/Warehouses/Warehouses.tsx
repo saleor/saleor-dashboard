@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelWarehouses } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import CardTitle from "@dashboard/components/CardTitle";
 import { SearchWarehousesQuery } from "@dashboard/graphql";

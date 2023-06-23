@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Card, CardContent, CardHeader } from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import { IconButton } from "@saleor/macaw-ui";

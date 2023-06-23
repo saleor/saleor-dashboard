@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AddressTypeInput } from "@dashboard/customers/types";
 import { AccountErrorFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";

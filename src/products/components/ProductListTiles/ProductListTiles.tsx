@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { ProductListColumns } from "@dashboard/config";
 import { ProductListQuery } from "@dashboard/graphql";

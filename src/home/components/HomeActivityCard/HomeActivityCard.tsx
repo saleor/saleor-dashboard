@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
 import Skeleton from "@dashboard/components/Skeleton";

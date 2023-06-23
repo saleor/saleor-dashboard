@@ -20,7 +20,7 @@ To get an overview of the project, read the [README](../README.md). Here are som
 
 #### Create a new issue
 
-If you spot a problem with the docs, search if an issue already exists. If a related issue doesn't exist, you can open a new issue using a relevant issue form.
+If you spot a problem with the dashboard, search if an issue already exists. If a related issue doesn't exist, you can open a new issue using a relevant issue form.
 
 #### Solve an issue
 

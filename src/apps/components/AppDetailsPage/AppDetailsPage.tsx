@@ -21,22 +21,31 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   onAppActivateOpen,
   onAppDeactivateOpen,
   onAppDeleteOpen,
-}) => (
-  <>
-    <Header
-      data={data}
-      onAppActivateOpen={onAppActivateOpen}
-      onAppDeactivateOpen={onAppDeactivateOpen}
-      onAppDeleteOpen={onAppDeleteOpen}
-    />
-    <AboutCard aboutApp={data?.aboutApp} loading={loading} />
-    <CardSpacer />
-    <PermissionsCard permissions={data?.permissions} loading={loading} />
-    <CardSpacer />
-    <DataPrivacyCard dataPrivacyUrl={data?.dataPrivacyUrl} loading={loading} />
-    <CardSpacer />
-  </>
-);
+}) => {
+  if (!data) {
+    return null;
+  }
+
+  return (
+    <>
+      <Header
+        data={data}
+        onAppActivateOpen={onAppActivateOpen}
+        onAppDeactivateOpen={onAppDeactivateOpen}
+        onAppDeleteOpen={onAppDeleteOpen}
+      />
+      <AboutCard aboutApp={data?.aboutApp} loading={loading} />
+      <CardSpacer />
+      <PermissionsCard permissions={data?.permissions} loading={loading} />
+      <CardSpacer />
+      <DataPrivacyCard
+        dataPrivacyUrl={data?.dataPrivacyUrl}
+        loading={loading}
+      />
+      <CardSpacer />
+    </>
+  );
+};
 
 AppDetailsPage.displayName = "AppDetailsPage";
 export default AppDetailsPage;

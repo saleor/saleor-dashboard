@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CollectionWithDividers from "@dashboard/components/CollectionWithDividers";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { makeStyles, Paper, Typography } from "@material-ui/core";

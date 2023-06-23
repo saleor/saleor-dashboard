@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
@@ -6,11 +7,15 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderLineFragment } from "@dashboard/graphql";
-import React from "react";
+import { productPath } from "@dashboard/products/urls";
+import { ExternalLinkIcon } from "@saleor/macaw-ui/next";
+import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
-import { messages } from "../OrderListDatagrid/messages";
+import { messages as orderMessages } from "../OrderListDatagrid/messages";
 import { useColumns, useGetCellContent } from "./datagrid";
+import { messages } from "./messages";
 
 interface OrderDetailsDatagridProps {
   lines: OrderLineFragment[];
@@ -43,19 +48,36 @@ export const OrderDetailsDatagrid = ({
     loading,
   });
 
+  const getMenuItems = useCallback(
+    index => [
+      {
+        label: intl.formatMessage(messages.productDetails),
+        Icon: (
+          <Link
+            to={productPath(lines[index].variant.product.id)}
+            target="_blank"
+          >
+            <ExternalLinkIcon />
+          </Link>
+        ),
+        onSelect: () => false,
+      },
+    ],
+    [intl, lines],
+  );
+
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
       <Datagrid
-        readonly
         showEmptyDatagrid
         rowMarkers="none"
         columnSelect="single"
         freezeColumns={1}
         availableColumns={columns}
-        emptyText={intl.formatMessage(messages.emptyText)}
+        emptyText={intl.formatMessage(orderMessages.emptyText)}
         getCellContent={getCellContent}
         getCellError={() => false}
-        menuItems={() => []}
+        menuItems={getMenuItems}
         rows={loading ? 1 : lines.length}
         selectionActions={() => null}
         onColumnResize={onColumnResize}

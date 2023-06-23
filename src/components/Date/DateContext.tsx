@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import React from "react";
 
 export const DateContext = React.createContext<number>(undefined);

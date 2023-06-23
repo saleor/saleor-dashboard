@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { IMessage } from "@dashboard/components/messages";
 import {

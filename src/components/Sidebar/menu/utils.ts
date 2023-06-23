@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Extension } from "@dashboard/apps/hooks/useExtensions";
 import { AppUrls } from "@dashboard/apps/urls";
 import { AppExtensionMountEnum } from "@dashboard/graphql";

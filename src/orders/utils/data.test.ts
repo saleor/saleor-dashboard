@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   FulfillmentStatus,
   OrderDetailsFragment,
@@ -538,6 +539,7 @@ describe("Get the total value of all replaced products", () => {
         ],
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+          name: "Milk 1",
           quantityAvailable: 50,
           preorder: null,
           __typename: "ProductVariant",
@@ -647,6 +649,7 @@ describe("Get the total value of all replaced products", () => {
         ],
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+          name: "Milk 1",
           quantityAvailable: 50,
           preorder: null,
           stocks: [
@@ -756,6 +759,7 @@ describe("Get the total value of all replaced products", () => {
         ],
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
+          name: "Milk 2",
           quantityAvailable: 50,
           preorder: null,
           stocks: [
@@ -871,6 +875,7 @@ describe("Get the total value of all replaced products", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+            name: "Milk 1",
             quantityAvailable: 50,
             preorder: null,
             stocks: [
@@ -985,6 +990,7 @@ describe("Get the total value of all replaced products", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+            name: "Milk 1",
             quantityAvailable: 50,
             preorder: null,
             stocks: [
@@ -1099,6 +1105,7 @@ describe("Get the total value of all replaced products", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
+            name: "Milk 2",
             quantityAvailable: 50,
             preorder: null,
             stocks: [
@@ -1213,6 +1220,7 @@ describe("Get the total value of all replaced products", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+            name: "Milk 3",
             quantityAvailable: 50,
             preorder: null,
             stocks: [
@@ -1327,6 +1335,7 @@ describe("Get the total value of all replaced products", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+            name: "Milk 3",
             quantityAvailable: 50,
             preorder: null,
             stocks: [
@@ -1575,6 +1584,7 @@ describe("Get the total value of all selected products", () => {
         ],
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+          name: "Digital Book",
           quantityAvailable: 50,
           preorder: null,
           stocks: [
@@ -1684,6 +1694,7 @@ describe("Get the total value of all selected products", () => {
         ],
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+          name: "Digital Book",
           quantityAvailable: 50,
           preorder: null,
           stocks: [
@@ -1793,6 +1804,7 @@ describe("Get the total value of all selected products", () => {
         ],
         variant: {
           id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
+          name: "Digital Book",
           quantityAvailable: 50,
           preorder: null,
           stocks: [
@@ -1908,6 +1920,7 @@ describe("Get the total value of all selected products", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+            name: "Digital Book",
             quantityAvailable: 50,
             preorder: null,
             stocks: [
@@ -2022,6 +2035,7 @@ describe("Get the total value of all selected products", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+            name: "Digital Book",
             quantityAvailable: 50,
             preorder: null,
             stocks: [
@@ -2136,6 +2150,7 @@ describe("Get the total value of all selected products", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
+            name: "Digital Book",
             quantityAvailable: 50,
             preorder: null,
             stocks: [
@@ -2378,6 +2393,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+            name: "Saleor Demo Product",
             quantityAvailable: 50,
             preorder: null,
             stocks: [
@@ -2492,6 +2508,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6MzE3",
+            name: "Saleor Demo Product",
             quantityAvailable: 50,
             preorder: null,
             stocks: [
@@ -2606,6 +2623,7 @@ describe("Merge repeated order lines of fulfillment lines", () => {
           ],
           variant: {
             id: "UHJvZHVjdFZhcmlhbnQ6Mjg2",
+            name: "Saleor Demo Product",
             quantityAvailable: 50,
             preorder: null,
             stocks: [

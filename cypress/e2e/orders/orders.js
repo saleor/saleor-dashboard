@@ -287,7 +287,7 @@ describe("Orders", () => {
         address,
       }).then(unconfirmedOrderResponse => {
         cy.visit(urlList.orders + `${unconfirmedOrderResponse.order.id}`);
-        deleteProductFromGridTableOnIndex(0);
+        deleteProductFromGridTableOnIndex(1);
         cy.contains(MESSAGES.noProductFound).should("be.visible");
         cy.get(ORDERS_SELECTORS.productDeleteFromRowButton).should("not.exist");
       });

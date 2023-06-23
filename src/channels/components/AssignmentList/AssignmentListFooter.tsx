@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import SingleAutocompleteSelectField from "@dashboard/components/SingleAutocompleteSelectField";
 import CardAddItemsFooter from "@dashboard/products/components/ProductStocks/CardAddItemsFooter";
 import { mapNodeToChoice } from "@dashboard/utils/maps";
