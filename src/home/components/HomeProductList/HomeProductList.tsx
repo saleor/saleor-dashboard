@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Money from "@dashboard/components/Money";
 import Skeleton from "@dashboard/components/Skeleton";
 import { HomeQuery } from "@dashboard/graphql";
