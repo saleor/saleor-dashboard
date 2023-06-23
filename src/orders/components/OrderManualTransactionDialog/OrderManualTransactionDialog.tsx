@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import { commonMessages } from "@dashboard/intl";
 import { DialogProps } from "@dashboard/types";

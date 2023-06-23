@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { ProductErrorCode } from "@dashboard/graphql";
 import { warehouseList } from "@dashboard/warehouses/fixtures";

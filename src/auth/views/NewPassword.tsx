@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { SetPasswordData, useAuth } from "@saleor/sdk";
 import { parse as parseQs } from "qs";

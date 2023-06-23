@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { MenuErrorCode } from "@dashboard/graphql";
 import { menu } from "@dashboard/navigation/fixtures";
 import React from "react";

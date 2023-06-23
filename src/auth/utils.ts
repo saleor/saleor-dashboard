@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ApolloError, ServerError } from "@apollo/client/core";
 import { IMessage, IMessageContext } from "@dashboard/components/messages";
 import { UseNotifierResult } from "@dashboard/hooks/useNotifier";

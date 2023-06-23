@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ProductListColumns } from "@dashboard/config";
 import {
   GridAttributesQuery,

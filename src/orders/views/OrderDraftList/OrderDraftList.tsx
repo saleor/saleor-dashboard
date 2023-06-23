@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ChannelPickerDialog from "@dashboard/channels/components/ChannelPickerDialog";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
@@ -69,25 +70,23 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
 
   const intl = useIntl();
 
-  const [
-    orderDraftBulkDelete,
-    orderDraftBulkDeleteOpts,
-  ] = useOrderDraftBulkCancelMutation({
-    onCompleted: data => {
-      if (data.draftOrderBulkDelete.errors.length === 0) {
-        notify({
-          status: "success",
-          text: intl.formatMessage({
-            id: "ra2O4j",
-            defaultMessage: "Deleted draft orders",
-          }),
-        });
-        refetch();
-        reset();
-        closeModal();
-      }
-    },
-  });
+  const [orderDraftBulkDelete, orderDraftBulkDeleteOpts] =
+    useOrderDraftBulkCancelMutation({
+      onCompleted: data => {
+        if (data.draftOrderBulkDelete.errors.length === 0) {
+          notify({
+            status: "success",
+            text: intl.formatMessage({
+              id: "ra2O4j",
+              defaultMessage: "Deleted draft orders",
+            }),
+          });
+          refetch();
+          reset();
+          closeModal();
+        }
+      },
+    });
 
   const [createOrder] = useOrderDraftCreateMutation({
     onCompleted: data => {
@@ -113,17 +112,14 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
 
   const currentTab = getFiltersCurrentTab(params, tabs);
 
-  const [
-    changeFilters,
-    resetFilters,
-    handleSearchChange,
-  ] = createFilterHandlers({
-    cleanupFn: reset,
-    createUrl: orderDraftListUrl,
-    getFilterQueryParam,
-    navigate,
-    params,
-  });
+  const [changeFilters, resetFilters, handleSearchChange] =
+    createFilterHandlers({
+      cleanupFn: reset,
+      createUrl: orderDraftListUrl,
+      getFilterQueryParam,
+      navigate,
+      params,
+    });
 
   const [openModal, closeModal] = createDialogActionHandlers<
     OrderDraftListUrlDialog,

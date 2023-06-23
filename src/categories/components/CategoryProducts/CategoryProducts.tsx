@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { InternalLink } from "@dashboard/components/InternalLink";
 import { CategoryDetailsQuery } from "@dashboard/graphql";

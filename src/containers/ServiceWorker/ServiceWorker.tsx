@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { SW_INTERVAL } from "@dashboard/config";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import React from "react";

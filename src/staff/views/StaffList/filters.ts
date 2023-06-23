@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   FilterElement,
   FilterElementRegular,
@@ -59,16 +60,10 @@ export function getFilterQueryParam(
   }
 }
 
-export const {
-  deleteFilterTab,
-  getFilterTabs,
-  saveFilterTab,
-} = createFilterTabUtils<StaffListUrlFilters>(STAFF_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<StaffListUrlFilters>(STAFF_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<StaffListUrlQueryParams, StaffListUrlFilters>(
-  StaffListUrlFiltersEnum,
-);
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
+  createFilterUtils<StaffListUrlQueryParams, StaffListUrlFilters>(
+    StaffListUrlFiltersEnum,
+  );

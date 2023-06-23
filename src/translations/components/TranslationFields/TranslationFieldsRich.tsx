@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import RichTextEditorContent from "@dashboard/components/RichTextEditor/RichTextEditorContent";

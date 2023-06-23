@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
 import { MetadataIdSchema } from "@dashboard/components/Metadata";
 import NotFoundPage from "@dashboard/components/NotFoundPage";

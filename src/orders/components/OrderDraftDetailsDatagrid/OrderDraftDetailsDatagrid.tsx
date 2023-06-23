@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
@@ -7,9 +8,16 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
-import { TrashBinIcon } from "@saleor/macaw-ui/next";
+import { productUrl } from "@dashboard/products/urls";
+import {
+  Box,
+  ExternalLinkIcon,
+  sprinkles,
+  TrashBinIcon,
+} from "@saleor/macaw-ui/next";
 import React, { useCallback } from "react";
 import { useIntl } from "react-intl";
+import { Link } from "react-router-dom";
 
 import { FormData } from "../OrderDraftDetailsProducts/OrderDraftDetailsProducts";
 import { useColumns, useGetCellContent } from "./datagrid";
@@ -54,8 +62,39 @@ export const OrderDraftDetailsDatagrid = ({
   const getMenuItems = useCallback(
     index => [
       {
-        label: intl.formatMessage(messages.deleteOrder),
-        Icon: <TrashBinIcon />,
+        label: "",
+        Icon: (
+          <Link
+            to={productUrl(lines[index]?.variant.product.id)}
+            target="_blank"
+            className={sprinkles({
+              display: "flex",
+              alignItems: "center",
+              gap: 2,
+            })}
+          >
+            <ExternalLinkIcon />
+            {intl.formatMessage(messages.productDetails)}
+          </Link>
+        ),
+        onSelect: () => false,
+      },
+      {
+        label: "",
+        Icon: (
+          <Box
+            data-test-id="delete-order-line"
+            as="span"
+            color="iconCriticalDefault"
+            display="flex"
+            alignItems="center"
+            __marginLeft="-2px"
+            gap={2}
+          >
+            <TrashBinIcon />
+            {intl.formatMessage(messages.deleteOrder)}
+          </Box>
+        ),
         onSelect: () => {
           onOrderLineRemove(lines[index].id);
         },
@@ -73,8 +112,8 @@ export const OrderDraftDetailsDatagrid = ({
         updates.map(({ data, column, row }) => {
           const orderId = lines[row].id;
 
-          if (column === "quantity" && data !== "") {
-            return onOrderLineChange(orderId, { quantity: data });
+          if (column === "quantity" && data.value !== "") {
+            return onOrderLineChange(orderId, { quantity: data.value });
           }
         }),
       );

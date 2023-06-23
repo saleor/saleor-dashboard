@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { OrderDetailsFragment } from "@dashboard/graphql";
 import { FormsetData } from "@dashboard/hooks/useFormset";
 import { OrderRefundSharedType } from "@dashboard/orders/types";

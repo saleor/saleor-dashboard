@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import placeholder from "@assets/images/placeholder1080x1080.png";
 import { ProductMediaType } from "@dashboard/graphql";
 import React from "react";

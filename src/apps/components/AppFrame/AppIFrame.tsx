@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AppDetailsUrlQueryParams, AppUrls } from "@dashboard/apps/urls";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import { useTheme } from "@saleor/macaw-ui";

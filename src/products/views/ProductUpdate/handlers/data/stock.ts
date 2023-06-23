@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { numberCellEmptyValue } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { DatagridChange } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import {

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { RecursiveMenuItem } from "@dashboard/navigation/types";
 
 import { TreeOperation } from "../MenuItems";

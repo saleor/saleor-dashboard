@@ -125,7 +125,6 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
         border: `1px solid ${vars.colors.border.neutralHighlight}`,
         borderLeft: "none",
         borderRight: "none",
-        cursor: "pointer",
         color: vars.colors.foreground.iconNeutralPlain,
         marginLeft: -1,
         display: "flex",

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { category as categoryFixture } from "@dashboard/categories/fixtures";
 import { listActionsProps } from "@dashboard/fixtures";

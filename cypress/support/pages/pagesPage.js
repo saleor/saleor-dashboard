@@ -61,6 +61,7 @@ export function addBooleanAttributeValue() {
 export function addNumericAttributeValue(attributeValue) {
   cy.get(PAGE_DETAILS_SELECTORS.numericAttributeValueInput).type(
     attributeValue,
+    { force: true },
   );
 }
 

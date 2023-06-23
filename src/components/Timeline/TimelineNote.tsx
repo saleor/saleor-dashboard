@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { getUserInitials } from "@dashboard/misc";
 import { Card, CardContent, Typography } from "@material-ui/core";

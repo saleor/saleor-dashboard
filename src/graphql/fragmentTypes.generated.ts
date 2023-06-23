@@ -67,6 +67,7 @@
       "MenuItemDeleted",
       "MenuItemUpdated",
       "MenuUpdated",
+      "OrderBulkCreated",
       "OrderCancelled",
       "OrderConfirmed",
       "OrderCreated",

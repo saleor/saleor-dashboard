@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import moment from "moment";
 
 import { ExtendedGiftCard, GiftCardBase } from "./types";
