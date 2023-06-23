@@ -2,7 +2,7 @@ import { createContext, useContext } from "react";
 
 import { FlagList } from "./availableFlags";
 
-const FeatureFlagsContext = createContext<FlagList>(undefined);
+const FeatureFlagsContext = createContext<FlagList | undefined>(undefined);
 
 export const Provider = FeatureFlagsContext.Provider;
 

@@ -1,24 +1,31 @@
 import { useRef } from "react";
 
-import { FlagList } from "./availableFlags";
+import * as AvailableFlags from "./availableFlags";
 import { FlagContent } from "./FlagContent";
 import { AvailableStrategies } from "./strategies";
 import { DefaultsStrategy } from "./strategies/DefaultsStrategy";
 import { Strategy } from "./Strategy";
 
-const byNotEmpty = (p: FlagList) => Object.keys(p).length > 0;
+const byNotEmpty = (p: AvailableFlags.FlagList) => Object.keys(p).length > 0;
 
 const toFlagEntries = (
   p: Array<[string, FlagContent]>,
-  c: FlagList,
+  c: AvailableFlags.FlagList,
 ): Array<[string, FlagContent]> => [...p, ...Object.entries(c)];
 
-const toWithoutPrefixes = ([name, content]) => [
-  name.replace("FF_", ""),
-  content,
-];
+const toWithoutPrefixes = ([name, content]: [string, FlagContent]): [
+  string,
+  FlagContent,
+] => [name.replace("FF_", ""), content];
 
-const toSingleObject = (p: FlagList, [name, content]) => {
+const toSingleObject = (
+  p: AvailableFlags.FlagList,
+  [name, content]: [string, FlagContent],
+) => {
+  if (!AvailableFlags.isSupported(name)) {
+    return p;
+  }
+
   if (!p[name]) {
     p[name] = content;
   }
@@ -27,10 +34,11 @@ const toSingleObject = (p: FlagList, [name, content]) => {
 };
 
 export class FlagsResolver {
-  private results: Promise<FlagList[]>;
+  private results: Promise<AvailableFlags.FlagList[]>;
   private strategies: Strategy[];
 
   constructor(strategies: Strategy[]) {
+    this.results = Promise.resolve([]);
     this.strategies = [...strategies, new DefaultsStrategy()];
   }
 
@@ -41,14 +49,14 @@ export class FlagsResolver {
     return this;
   }
 
-  public async combineWithPriorities(): Promise<FlagList> {
+  public async combineWithPriorities(): Promise<AvailableFlags.FlagList> {
     const list = await this.results;
 
     return list
       .filter(byNotEmpty)
       .reduce(toFlagEntries, [])
       .map(toWithoutPrefixes)
-      .reduce(toSingleObject, {} as FlagList);
+      .reduce(toSingleObject, {} as AvailableFlags.FlagList);
   }
 
   public getResult() {
@@ -60,11 +68,9 @@ const createInstances = (strategies: AvailableStrategies[]) =>
   strategies.map(Constrctor => new Constrctor());
 
 export const useFlagsResolver = (strategies: AvailableStrategies[]) => {
-  const resolver = useRef<FlagsResolver>(null);
-
-  if (!resolver.current) {
-    resolver.current = new FlagsResolver(createInstances(strategies));
-  }
+  const resolver = useRef<FlagsResolver>(
+    new FlagsResolver(createInstances(strategies)),
+  );
 
   return resolver.current;
 };

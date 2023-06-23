@@ -24,6 +24,9 @@ const toFlagContent = (p: FlagList, c: Entry) => {
   return p;
 };
 
+export const isSupported = (name: string): name is Name =>
+  AVAILABLE_FLAGS.some(e => e.name === name);
+
 export const asFlagContent = () =>
   AVAILABLE_FLAGS.reduce(toFlagContent, {} as FlagList);
 
