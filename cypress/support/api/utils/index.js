@@ -5,6 +5,9 @@ export {
   updateTaxConfigurationForChannel,
 } from "./taxesUtils";
 export * as productsUtils from "./products/productsUtils";
+export * as ordersUtils from "./ordersUtils";
+export * as shippingUtils from "./shippingUtils";
+export * as storeFrontProductsUtils from "./storeFront/storeFrontProductUtils";
 
 export {
   createFulfilledOrder,
