@@ -32,3 +32,8 @@ export {
   expectMainMenuAvailableSections,
   expectMainMenuSectionsToBeVisible,
 } from "./mainMenuPage";
+export * as productListPage from "./catalog/products/productsListPage";
+export * as productDetailsPage from "./catalog/products/productDetailsPage";
+export * as priceListComponent from "./catalog/products/priceListComponent";
+export * as variantsPage from "./catalog/products/VariantsPage";
+export * as channelsPage from "./channelsPage";
