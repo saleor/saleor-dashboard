@@ -125,7 +125,6 @@ jobs:
     outputs:
       tags: ${{steps.get_tags.outputs.result}}
       containers: ${{ steps.get_containers.outputs.result}}
-
     steps:
       - name: Get tags
         id: get_tags
@@ -165,11 +164,38 @@ jobs:
               for(let i=1; i<=numberOfContainers[1]; i++){
                 containers.push(i)
               }
+            echo ${{Array.from(containers.keys())}}
             return {"containers": containers}
 
       - name: echo-tags
         run: |
           echo ${{steps.get_tags.outputs.result}}
+
+  testmo-report-preparation:
+    needs: prepare-tests
+    runs-on: ubuntu-latest
+    outputs:
+      testmo-run-id: ${{ steps.run-tests.outputs.testmo-run-id }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+          cache: npm
+      - run: npm ci
+      - run: |
+          npx testmo automation:run:create \
+            --instance "$TESTMO_URL" \
+            --project-id 1 \
+            --name "Deployment tests" \
+            --resources resources.json \
+            --source "unit-tests" > testmo-run-id.txt
+          ID=$(cat testmo-run-id.txt)
+          echo "testmo-run-id=$ID" >> $GITHUB_OUTPUT
+        env:
+          TESTMO_URL: ${{ secrets.TESTMO_URL }}
+          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
+        id: run-tests
 
   cypress-run-selected:
     runs-on: ubuntu-latest
@@ -213,7 +239,17 @@ jobs:
       - name: Install Dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: NODE_OPTIONS=--max_old_space_size=4096 npm install
-
+      - name: Testmo reports threads init
+        run: | 
+            npx testmo automation:run:submit-thread \
+            --instance "$TESTMO_URL" \
+            --run-id "${{ needs.test-setup.outputs.testmo-run-id }}" \
+            --results results/*.xml
+        env:
+          CI_TOTAL: ${{ matrix }}
+          CI_INDEX: ${{ steps.get_containers.outputs.containerIndexes }}
+          TESTMO_URL: ${{ secrets.TESTMO_URL }}
+          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
       - name: Cypress run critical
         uses: cypress-io/github-action@v4
         env:
@@ -233,3 +269,22 @@ jobs:
           group: "UI - Chrome"
           record: true
           tag: Critical, ${{github.event.action}}
+  test-complete:
+    needs: [testmo-report-preparation, cypress-run-selected]
+    if: always()
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+          cache: npm
+      - run: npm ci
+      - run: |
+          npx testmo automation:run:complete \
+            --instance "$TESTMO_URL" \
+            --run-id "${{ needs.test-setup.outputs.testmo-run-id }}"
+        env:
+          TESTMO_URL: ${{ secrets.TESTMO_URL }}
+          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
