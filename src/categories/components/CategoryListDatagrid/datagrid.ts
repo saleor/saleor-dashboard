@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { CategoryListUrlSortField } from "@dashboard/categories/urls";
 import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";

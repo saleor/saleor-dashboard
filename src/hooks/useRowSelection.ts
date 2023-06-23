@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Pagination } from "@dashboard/types";
 import { useEffect, useRef, useState } from "react";
 

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
 import {
