@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { AppDetailsUrlQueryParams, AppUrls } from "@dashboard/apps/urls";
-import { FlagList } from "@dashboard/featureFlags/Strategy";
+import { FlagList } from "@dashboard/featureFlags";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import { useTheme } from "@saleor/macaw-ui";
 import isEqualWith from "lodash/isEqualWith";
