@@ -63,7 +63,7 @@ export const OrderDraftDetailsDatagrid = ({
     index => [
       {
         label: "",
-        disabled: !!lines[index]?.variant?.product.id ?? true,
+        disabled: !lines[index]?.variant?.product.id,
         Icon: lines[index]?.variant?.product.id ? (
           <Link
             to={productUrl(lines[index]?.variant.product.id)}

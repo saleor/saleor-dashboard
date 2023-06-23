@@ -51,7 +51,7 @@ export const OrderDetailsDatagrid = ({
   const getMenuItems = useCallback(
     index => [
       {
-        disabled: lines[index]?.variant?.product.id ? false : true,
+        disabled: !lines[index]?.variant?.product.id,
         label: intl.formatMessage(messages.productDetails),
         Icon: lines[index]?.variant?.product.id ? (
           <Link
