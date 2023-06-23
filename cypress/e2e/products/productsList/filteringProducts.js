@@ -105,6 +105,7 @@ describe("As an admin I should be able to filter products", () => {
       `should filter products by ${filterBy.type}. TC: ${filterBy.testCase}`,
       { tags: ["@productsList", "@allEnv", "@stable"] },
       () => {
+        cy.addAliasToGraphRequest("ProductList");
         selectFilterOption(filterBy.type, name);
         cy.get(SHARED_ELEMENTS.dataGridTable).contains(name).should("exist");
       },
@@ -116,6 +117,8 @@ describe("As an admin I should be able to filter products", () => {
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       const productOutOfStock = `${startsWith}${faker.datatype.number()}`;
+      cy.addAliasToGraphRequest("ProductList");
+
       createProductInChannel({
         name: productOutOfStock,
         channelId: channel.id,

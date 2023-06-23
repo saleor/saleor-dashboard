@@ -127,6 +127,7 @@ const StaffList: React.FC<StaffListProps> = props => {
                   <UserAvatar
                     url={staffMember?.avatar?.url}
                     initials={getUserInitials(staffMember)}
+                    data-test-id="staffAvatar"
                   />
                   <Box display="flex" flexDirection="column">
                     <Text>{getUserName(staffMember) || <Skeleton />}</Text>

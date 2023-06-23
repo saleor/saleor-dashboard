@@ -3,8 +3,8 @@
 
 import faker from "faker";
 
-import { LEFT_MENU_SELECTORS } from "../elements/account/left-menu/left-menu-selectors";
 import { LOGIN_SELECTORS } from "../elements/account/login-selectors";
+import { HOMEPAGE_SELECTORS } from "../elements/homePage/homePage-selectors";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
 import { INVITE_STAFF_MEMBER_FORM_SELECTORS } from "../elements/staffMembers/inviteStaffMemberForm";
@@ -23,7 +23,6 @@ import {
   inviteStaffMemberWithFirstPermission,
 } from "../support/api/utils/users";
 import { expectWelcomeMessageIncludes } from "../support/pages/homePage";
-import { getDisplayedSelectors } from "../support/pages/permissionsPage";
 import {
   fillUpOnlyUserDetails,
   fillUpSetPassword,
@@ -133,12 +132,8 @@ describe("Staff members", () => {
         .loginUserViaRequest("auth", { email, password })
         .visit(urlList.homePage);
       expectWelcomeMessageIncludes(serverStoredEmail);
-      getDisplayedSelectors().then(displayedSelectors => {
-        expect(Object.values(displayedSelectors)).to.have.length(1);
-        expect(Object.values(displayedSelectors)[0]).to.eq(
-          LEFT_MENU_SELECTORS.home,
-        );
-      });
+      cy.get(HOMEPAGE_SELECTORS.activity).should("not.exist");
+      cy.get(HOMEPAGE_SELECTORS.topProducts).should("not.exist");
     },
   );
 
@@ -300,6 +295,8 @@ describe("Staff members", () => {
 
       cy.visit(urlList.staffMembers).get(LOGIN_SELECTORS.userMenu).click();
       cy.get(LOGIN_SELECTORS.accountSettings).click();
+      // there is small bug which keep control panel opens and block any interaction via cypress - it does not affect real user - click on body can be removed when this pr is done https://github.com/saleor/saleor-dashboard/issues/3675
+      cy.get("body").click({ force: true });
       cy.get(STAFF_MEMBER_DETAILS_SELECTORS.changePasswordBtn).click();
       cy.get(
         STAFF_MEMBER_DETAILS_SELECTORS.changePasswordModal.oldPassword,
