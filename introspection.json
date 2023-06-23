@@ -2684,7 +2684,7 @@
       {
         "kind": "ENUM",
         "name": "AllocationStrategyEnum",
-        "description": "Determine the allocation strategy for the channel.\n\n    PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order\n    within the channel\n\n    PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock",
+        "description": "Determine the allocation strategy for the channel.\n\n    PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order\n    within the channel\n\n    PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3317,7 +3317,7 @@
                   "name": "IconThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -4393,7 +4393,7 @@
       {
         "kind": "ENUM",
         "name": "AppExtensionTargetEnum",
-        "description": "All available ways of opening an app extension.\n\n    POPUP - app's extension will be mounted as a popup window\n    APP_PAGE - redirect to app's page",
+        "description": "All available ways of opening an app extension.\n\n    POPUP - app's extension will be mounted as a popup window\n    APP_PAGE - redirect to app's page\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4987,7 +4987,7 @@
                   "name": "IconThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -5970,7 +5970,19 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "SQ_MM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "SQ_CM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SQ_DM",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -12632,7 +12644,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -13921,6 +13933,97 @@
             "ofType": null
           }
         ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "CategoryWhereInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "metadata",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataFilter",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ids",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "AND",
+            "description": "List of conditions that must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CategoryWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "OR",
+            "description": "A list of conditions of which at least one must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CategoryWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -16339,7 +16442,7 @@
       {
         "kind": "ENUM",
         "name": "CheckoutAuthorizeStatusEnum",
-        "description": "Determine a current authorize status for checkout.\n\n    We treat the checkout as fully authorized when the sum of authorized and charged\n    funds cover the checkout.total.\n    We treat the checkout as partially authorized when the sum of authorized and charged\n    funds covers only part of the checkout.total\n    We treat the checkout as not authorized when the sum of authorized and charged funds\n    is 0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the cover funds don't cover fully the checkout's total\n    FULL - the cover funds covers the checkout's total",
+        "description": "Determine a current authorize status for checkout.\n\n    We treat the checkout as fully authorized when the sum of authorized and charged\n    funds cover the checkout.total.\n    We treat the checkout as partially authorized when the sum of authorized and charged\n    funds covers only part of the checkout.total\n    We treat the checkout as not authorized when the sum of authorized and charged funds\n    is 0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the cover funds don't cover fully the checkout's total\n    FULL - the cover funds covers the checkout's total\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -16439,7 +16542,7 @@
       {
         "kind": "ENUM",
         "name": "CheckoutChargeStatusEnum",
-        "description": "Determine the current charge status for the checkout.\n\n    The checkout is considered overcharged when the sum of the transactionItem's charge\n    amounts exceeds the value of `checkout.total`.\n    If the sum of the transactionItem's charge amounts equals\n    `checkout.total`, we consider the checkout to be fully charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `checkout.total`, we treat the checkout as partially charged.\n\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the checkout's total\n    FULL - the funds that are charged fully cover the checkout's total\n    OVERCHARGED - the charged funds are bigger than checkout's total",
+        "description": "Determine the current charge status for the checkout.\n\n    The checkout is considered overcharged when the sum of the transactionItem's charge\n    amounts exceeds the value of `checkout.total`.\n    If the sum of the transactionItem's charge amounts equals\n    `checkout.total`, we consider the checkout to be fully charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `checkout.total`, we treat the checkout as partially charged.\n\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the checkout's total\n    FULL - the funds that are charged fully cover the checkout's total\n    OVERCHARGED - the charged funds are bigger than checkout's total\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -19982,7 +20085,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -22329,6 +22432,97 @@
             "ofType": null
           }
         ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "CollectionWhereInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "metadata",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataFilter",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ids",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "AND",
+            "description": "List of conditions that must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CollectionWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "OR",
+            "description": "A list of conditions of which at least one must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CollectionWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -27529,7 +27723,19 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "MM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DM",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -43604,7 +43810,7 @@
       {
         "kind": "ENUM",
         "name": "MarkAsPaidStrategyEnum",
-        "description": "Determine the mark as paid strategy for the channel.\n\n    TRANSACTION_FLOW - new orders marked as paid will receive a\n    `TransactionItem` object, that will cover the `order.total`.\n\n    PAYMENT_FLOW - new orders marked as paid will receive a\n    `Payment` object, that will cover the `order.total`.",
+        "description": "Determine the mark as paid strategy for the channel.\n\n    TRANSACTION_FLOW - new orders marked as paid will receive a\n    `TransactionItem` object, that will cover the `order.total`.\n\n    PAYMENT_FLOW - new orders marked as paid will receive a\n    `Payment` object, that will cover the `order.total`.\n\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -43633,7 +43839,19 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "MM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DM",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -43669,7 +43887,19 @@
             "deprecationReason": null
           },
           {
+            "name": "SQ_MM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "SQ_CM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SQ_DM",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -48230,7 +48460,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0."
+            "deprecationReason": "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0."
           },
           {
             "name": "shopSettingsTranslate",
@@ -48329,7 +48559,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead."
+            "deprecationReason": "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead."
           },
           {
             "name": "giftCardSettingsUpdate",
@@ -62174,7 +62404,7 @@
           },
           {
             "name": "totalCaptured",
-            "description": "Amount captured for the order.",
+            "description": "Amount captured for the order. ",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -62757,7 +62987,7 @@
       {
         "kind": "ENUM",
         "name": "OrderAuthorizeStatusEnum",
-        "description": "Determine a current authorize status for order.\n\n    We treat the order as fully authorized when the sum of authorized and charged funds\n    cover the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as partially authorized when the sum of authorized and charged\n    funds covers only part of the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as not authorized when the sum of authorized and charged funds is\n    0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the funds that are authorized and charged don't cover fully the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are authorized and charged fully cover the\n    `order.total`-`order.totalGrantedRefund`",
+        "description": "Determine a current authorize status for order.\n\n    We treat the order as fully authorized when the sum of authorized and charged funds\n    cover the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as partially authorized when the sum of authorized and charged\n    funds covers only part of the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as not authorized when the sum of authorized and charged funds is\n    0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the funds that are authorized and charged don't cover fully the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are authorized and charged fully cover the\n    `order.total`-`order.totalGrantedRefund`\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -64693,7 +64923,7 @@
       {
         "kind": "ENUM",
         "name": "OrderChargeStatusEnum",
-        "description": "Determine the current charge status for the order.\n\n    An order is considered overcharged when the sum of the\n    transactionItem's charge amounts exceeds the value of\n    `order.total` - `order.totalGrantedRefund`.\n    If the sum of the transactionItem's charge amounts equals\n    `order.total` - `order.totalGrantedRefund`, we consider the order to be fully\n    charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `order.total` - `order.totalGrantedRefund`, we treat the order as partially charged.\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are charged fully cover the\n    `order.total`-`order.totalGrantedRefund`\n    OVERCHARGED - the charged funds are bigger than the\n    `order.total`-`order.totalGrantedRefund`",
+        "description": "Determine the current charge status for the order.\n\n    An order is considered overcharged when the sum of the\n    transactionItem's charge amounts exceeds the value of\n    `order.total` - `order.totalGrantedRefund`.\n    If the sum of the transactionItem's charge amounts equals\n    `order.total` - `order.totalGrantedRefund`, we consider the order to be fully\n    charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `order.total` - `order.totalGrantedRefund`, we treat the order as partially charged.\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are charged fully cover the\n    `order.total`-`order.totalGrantedRefund`\n    OVERCHARGED - the charged funds are bigger than the\n    `order.total`-`order.totalGrantedRefund`\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -66828,7 +67058,7 @@
       {
         "kind": "ENUM",
         "name": "OrderEventsEnum",
-        "description": "The different order event types.",
+        "description": "The different order event types. ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -68910,7 +69140,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -77205,7 +77435,7 @@
               "name": "StorePaymentMethodEnum",
               "ofType": null
             },
-            "defaultValue": "NONE",
+            "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -80250,7 +80480,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -83831,7 +84061,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -84354,7 +84584,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -91829,6 +92059,97 @@
       },
       {
         "kind": "INPUT_OBJECT",
+        "name": "ProductVariantWhereInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "metadata",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataFilter",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ids",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "AND",
+            "description": "List of conditions that must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductVariantWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "OR",
+            "description": "A list of conditions of which at least one must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductVariantWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
         "name": "ProductWhereInput",
         "description": null,
         "fields": null,
@@ -92791,7 +93112,7 @@
           },
           {
             "name": "taxCountryConfigurations",
-            "description": "\\n\\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.",
+            "description": "\n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -93188,6 +93509,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "where",
+                "description": "Where filtering options.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CategoryWhereInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "sortBy",
                 "description": "Sort categories.",
                 "type": {
@@ -93364,6 +93697,18 @@
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "CollectionFilterInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "Where filtering options.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CollectionWhereInput",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -93850,6 +94195,18 @@
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "ProductVariantFilterInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "Where filtering options.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductVariantWhereInput",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -107738,7 +108095,7 @@
       {
         "kind": "ENUM",
         "name": "StockUpdatePolicyEnum",
-        "description": "Determine how stocks should be updated, while processing an order.\n\n    SKIP - stocks are not checked and not updated.\n    UPDATE - only do update, if there is enough stock.\n    FORCE - force update, if there is not enough stock.",
+        "description": "Determine how stocks should be updated, while processing an order.\n\n    SKIP - stocks are not checked and not updated.\n    UPDATE - only do update, if there is enough stock.\n    FORCE - force update, if there is not enough stock.\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -111356,7 +111713,7 @@
       {
         "kind": "ENUM",
         "name": "TransactionActionEnum",
-        "description": "Represents possible actions on payment transaction.\n\n    The following actions are possible:\n    CHARGE - Represents the charge action.\n    REFUND - Represents a refund action.\n    VOID - Represents a void action. This field will be removed\n    in Saleor 3.14 (Preview Feature). Use `CANCEL` instead.\n    CANCEL - Represents a cancel action. Added in Saleor 3.12.",
+        "description": "Represents possible actions on payment transaction.\n\n    The following actions are possible:\n    CHARGE - Represents the charge action.\n    REFUND - Represents a refund action.\n    VOID - Represents a void action. This field will be removed\n    in Saleor 3.14 (Preview Feature). Use `CANCEL` instead.\n    CANCEL - Represents a cancel action. Added in Saleor 3.12.\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -112441,7 +112798,7 @@
       {
         "kind": "ENUM",
         "name": "TransactionEventTypeEnum",
-        "description": "Represents possible event types.\n\n    Added in Saleor 3.12.\n\n    The following types are possible:\n    AUTHORIZATION_SUCCESS - represents success authorization.\n    AUTHORIZATION_FAILURE - represents failure authorization.\n    AUTHORIZATION_ADJUSTMENT - represents authorization adjustment.\n    AUTHORIZATION_REQUEST - represents authorization request.\n    AUTHORIZATION_ACTION_REQUIRED - represents authorization that needs\n    additional actions from the customer.\n    CHARGE_ACTION_REQUIRED - represents charge that needs\n    additional actions from the customer.\n    CHARGE_SUCCESS - represents success charge.\n    CHARGE_FAILURE - represents failure charge.\n    CHARGE_BACK - represents chargeback.\n    CHARGE_REQUEST - represents charge request.\n    REFUND_SUCCESS - represents success refund.\n    REFUND_FAILURE - represents failure refund.\n    REFUND_REVERSE - represents reverse refund.\n    REFUND_REQUEST - represents refund request.\n    CANCEL_SUCCESS - represents success cancel.\n    CANCEL_FAILURE - represents failure cancel.\n    CANCEL_REQUEST - represents cancel request.\n    INFO - represents info event.",
+        "description": "Represents possible event types.\n\n    Added in Saleor 3.12.\n\n    The following types are possible:\n    AUTHORIZATION_SUCCESS - represents success authorization.\n    AUTHORIZATION_FAILURE - represents failure authorization.\n    AUTHORIZATION_ADJUSTMENT - represents authorization adjustment.\n    AUTHORIZATION_REQUEST - represents authorization request.\n    AUTHORIZATION_ACTION_REQUIRED - represents authorization that needs\n    additional actions from the customer.\n    CHARGE_ACTION_REQUIRED - represents charge that needs\n    additional actions from the customer.\n    CHARGE_SUCCESS - represents success charge.\n    CHARGE_FAILURE - represents failure charge.\n    CHARGE_BACK - represents chargeback.\n    CHARGE_REQUEST - represents charge request.\n    REFUND_SUCCESS - represents success refund.\n    REFUND_FAILURE - represents failure refund.\n    REFUND_REVERSE - represents reverse refund.\n    REFUND_REQUEST - represents refund request.\n    CANCEL_SUCCESS - represents success cancel.\n    CANCEL_FAILURE - represents failure cancel.\n    CANCEL_REQUEST - represents cancel request.\n    INFO - represents info event.\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -112560,7 +112917,7 @@
       {
         "kind": "ENUM",
         "name": "TransactionFlowStrategyEnum",
-        "description": "Determine the transaction flow strategy.\n\n    AUTHORIZATION - the processed transaction should be only authorized\n    CHARGE - the processed transaction should be charged.",
+        "description": "Determine the transaction flow strategy.\n\n    AUTHORIZATION - the processed transaction should be only authorized\n    CHARGE - the processed transaction should be charged.\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -114188,7 +114545,7 @@
       {
         "kind": "ENUM",
         "name": "TransactionStatus",
-        "description": "Represents a status of payment transaction.\n\n    The following statuses are possible:\n    SUCCESS - Represents a sucess action.\n    FAILURE - Represents a failure action.\n    PENDING - Represents a pending action.",
+        "description": "Represents a status of payment transaction.\n\n    The following statuses are possible:\n    SUCCESS - Represents a sucess action.\n    FAILURE - Represents a failure action.\n    PENDING - Represents a pending action.\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -116195,7 +116552,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -126853,7 +127210,11 @@
         "name": "include",
         "description": "Directs the executor to include this field or fragment only when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -126877,7 +127238,11 @@
         "name": "skip",
         "description": "Directs the executor to skip this field or fragment when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
+        "locations": [
+          "FIELD",
+          "FRAGMENT_SPREAD",
+          "INLINE_FRAGMENT"
+        ],
         "args": [
           {
             "name": "if",
@@ -126926,7 +127291,9 @@
         "name": "specifiedBy",
         "description": "Exposes a URL that specifies the behaviour of this scalar.",
         "isRepeatable": false,
-        "locations": ["SCALAR"],
+        "locations": [
+          "SCALAR"
+        ],
         "args": [
           {
             "name": "url",

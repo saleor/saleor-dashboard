@@ -488,6 +488,7 @@ Determine the allocation strategy for the channel.
     within the channel
 
     PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
+    
 """
 enum AllocationStrategyEnum {
   PRIORITIZE_SORTING_ORDER
@@ -690,7 +691,7 @@ type AppBrandLogo {
     
     Note: this API is currently in Feature Preview and can be subject to changes at later point.
     """
-    format: IconThumbnailFormatEnum = ORIGINAL
+    format: IconThumbnailFormatEnum
   ): String!
 }
 
@@ -882,6 +883,7 @@ All available ways of opening an app extension.
 
     POPUP - app's extension will be mounted as a popup window
     APP_PAGE - redirect to app's page
+    
 """
 enum AppExtensionTargetEnum {
   POPUP
@@ -1032,7 +1034,7 @@ type AppManifestBrandLogo {
     
     Note: this API is currently in Feature Preview and can be subject to changes at later point.
     """
-    format: IconThumbnailFormatEnum = ORIGINAL
+    format: IconThumbnailFormatEnum
   ): String!
 }
 
@@ -1238,7 +1240,9 @@ type AppUpdated implements Event {
 
 """An enumeration."""
 enum AreaUnitsEnum {
+  SQ_MM
   SQ_CM
+  SQ_DM
   SQ_M
   SQ_KM
   SQ_FT
@@ -2877,7 +2881,7 @@ type Category implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): Image
 
   """Returns translated category fields for the given language code."""
@@ -3149,6 +3153,17 @@ type CategoryUpdated implements Event {
 
   """The category the event relates to."""
   category: Category
+}
+
+input CategoryWhereInput {
+  metadata: [MetadataFilter!]
+  ids: [ID!]
+
+  """List of conditions that must be met."""
+  AND: [CategoryWhereInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [CategoryWhereInput!]
 }
 
 """Represents channel."""
@@ -3768,6 +3783,7 @@ Determine a current authorize status for checkout.
     NONE - the funds are not authorized
     PARTIAL - the cover funds don't cover fully the checkout's total
     FULL - the cover funds covers the checkout's total
+    
 """
 enum CheckoutAuthorizeStatusEnum {
   NONE
@@ -3798,6 +3814,7 @@ Determine the current charge status for the checkout.
     PARTIAL - the funds that are charged don't cover the checkout's total
     FULL - the funds that are charged fully cover the checkout's total
     OVERCHARGED - the charged funds are bigger than checkout's total
+    
 """
 enum CheckoutChargeStatusEnum {
   NONE
@@ -4555,7 +4572,7 @@ type Collection implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): Image
 
   """Returns translated collection fields for the given language code."""
@@ -5080,6 +5097,17 @@ type CollectionUpdated implements Event {
     """Slug of a channel for which the data should be returned."""
     channel: String
   ): Collection
+}
+
+input CollectionWhereInput {
+  metadata: [MetadataFilter!]
+  ids: [ID!]
+
+  """List of conditions that must be met."""
+  AND: [CollectionWhereInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [CollectionWhereInput!]
 }
 
 """Stores information about a single configuration field."""
@@ -6104,7 +6132,9 @@ enum DiscountValueTypeEnum {
 
 """An enumeration."""
 enum DistanceUnitsEnum {
+  MM
   CM
+  DM
   M
   KM
   FT
@@ -9274,6 +9304,8 @@ Determine the mark as paid strategy for the channel.
 
     PAYMENT_FLOW - new orders marked as paid will receive a
     `Payment` object, that will cover the `order.total`.
+
+    
 """
 enum MarkAsPaidStrategyEnum {
   TRANSACTION_FLOW
@@ -9282,13 +9314,17 @@ enum MarkAsPaidStrategyEnum {
 
 """An enumeration."""
 enum MeasurementUnitsEnum {
+  MM
   CM
+  DM
   M
   KM
   FT
   YD
   INCH
+  SQ_MM
   SQ_CM
+  SQ_DM
   SQ_M
   SQ_KM
   SQ_FT
@@ -10350,7 +10386,7 @@ type Mutation {
   
   Requires one of the following permissions: MANAGE_SETTINGS.
   """
-  shopFetchTaxRates: ShopFetchTaxRates @deprecated(reason: "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0.")
+  shopFetchTaxRates: ShopFetchTaxRates @deprecated(reason: "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0.")
 
   """
   Creates/updates translations for shop settings. 
@@ -10383,7 +10419,7 @@ type Mutation {
   orderSettingsUpdate(
     """Fields required to update shop order settings."""
     input: OrderSettingsUpdateInput!
-  ): OrderSettingsUpdate @deprecated(reason: "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead.")
+  ): OrderSettingsUpdate @deprecated(reason: "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead.")
 
   """
   Update gift card settings. 
@@ -14419,7 +14455,7 @@ type Order implements Node & ObjectWithMetadata {
   """Amount authorized for the order."""
   totalAuthorized: Money!
 
-  """Amount captured for the order."""
+  """Amount captured for the order. """
   totalCaptured: Money! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `totalCharged` instead.")
 
   """
@@ -14637,6 +14673,7 @@ Determine a current authorize status for order.
     `order.total`-`order.totalGrantedRefund`
     FULL - the funds that are authorized and charged fully cover the
     `order.total`-`order.totalGrantedRefund`
+    
 """
 enum OrderAuthorizeStatusEnum {
   NONE
@@ -15060,6 +15097,7 @@ Determine the current charge status for the order.
     `order.total`-`order.totalGrantedRefund`
     OVERCHARGED - the charged funds are bigger than the
     `order.total`-`order.totalGrantedRefund`
+    
 """
 enum OrderChargeStatusEnum {
   NONE
@@ -15489,7 +15527,7 @@ enum OrderEventsEmailsEnum {
   DIGITAL_LINKS
 }
 
-"""The different order event types."""
+"""The different order event types. """
 enum OrderEventsEnum {
   DRAFT_CREATED
   DRAFT_CREATED_FROM_REPLACE
@@ -15946,7 +15984,7 @@ type OrderLine implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): Image
 
   """Price of the single item in the order line."""
@@ -17859,7 +17897,7 @@ input PaymentInput {
   
   Added in Saleor 3.1.
   """
-  storePaymentMethod: StorePaymentMethodEnum = NONE
+  storePaymentMethod: StorePaymentMethodEnum
 
   """
   User public metadata.
@@ -18542,7 +18580,7 @@ type Product implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): Image
 
   """
@@ -19377,7 +19415,7 @@ type ProductImage {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): String!
 }
 
@@ -19530,7 +19568,7 @@ type ProductMedia implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): String!
 
   """
@@ -21273,6 +21311,17 @@ type ProductVariantUpdated implements Event {
   ): ProductVariant
 }
 
+input ProductVariantWhereInput {
+  metadata: [MetadataFilter!]
+  ids: [ID!]
+
+  """List of conditions that must be met."""
+  AND: [ProductVariantWhereInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [ProductVariantWhereInput!]
+}
+
 input ProductWhereInput {
   metadata: [MetadataFilter!]
   ids: [ID!]
@@ -21563,7 +21612,9 @@ type Query {
   ): TaxCountryConfiguration
 
   """
-  \n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+  
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
   """
   taxCountryConfigurations: [TaxCountryConfiguration!]
 
@@ -21699,6 +21750,15 @@ type Query {
     """Filtering options for categories."""
     filter: CategoryFilterInput
 
+    """
+    Where filtering options.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    where: CategoryWhereInput
+
     """Sort categories."""
     sortBy: CategorySortingInput
 
@@ -21751,6 +21811,15 @@ type Query {
   collections(
     """Filtering options for collections."""
     filter: CollectionFilterInput
+
+    """
+    Where filtering options.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    where: CollectionWhereInput
 
     """Sort collections."""
     sortBy: CollectionSortingInput
@@ -21906,6 +21975,15 @@ type Query {
 
     """Filtering options for product variant."""
     filter: ProductVariantFilterInput
+
+    """
+    Where filtering options.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    where: ProductVariantWhereInput
 
     """Sort products variants."""
     sortBy: ProductVariantSortingInput
@@ -25359,6 +25437,7 @@ Determine how stocks should be updated, while processing an order.
     SKIP - stocks are not checked and not updated.
     UPDATE - only do update, if there is enough stock.
     FORCE - force update, if there is not enough stock.
+    
 """
 enum StockUpdatePolicyEnum {
   SKIP
@@ -26196,6 +26275,7 @@ Represents possible actions on payment transaction.
     VOID - Represents a void action. This field will be removed
     in Saleor 3.14 (Preview Feature). Use `CANCEL` instead.
     CANCEL - Represents a cancel action. Added in Saleor 3.12.
+    
 """
 enum TransactionActionEnum {
   CHARGE
@@ -26571,6 +26651,7 @@ Represents possible event types.
     CANCEL_FAILURE - represents failure cancel.
     CANCEL_REQUEST - represents cancel request.
     INFO - represents info event.
+    
 """
 enum TransactionEventTypeEnum {
   AUTHORIZATION_SUCCESS
@@ -26598,6 +26679,7 @@ Determine the transaction flow strategy.
 
     AUTHORIZATION - the processed transaction should be only authorized
     CHARGE - the processed transaction should be charged.
+    
 """
 enum TransactionFlowStrategyEnum {
   AUTHORIZATION
@@ -27037,6 +27119,7 @@ Represents a status of payment transaction.
     SUCCESS - Represents a sucess action.
     FAILURE - Represents a failure action.
     PENDING - Represents a pending action.
+    
 """
 enum TransactionStatus {
   PENDING
@@ -27525,7 +27608,7 @@ type User implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): Image
 
   """
