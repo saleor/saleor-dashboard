@@ -18,6 +18,7 @@ export {
   applyFixedLineDiscountForProduct,
   changeQuantityOfProducts,
   deleteProductFromGridTableOnIndex,
+  openVariantDetailsOptions,
 } from "./ordersOperations";
 export { expectWelcomeMessageIncludes } from "./homePage";
 export { getDisplayedSelectors } from "./permissionsPage";
