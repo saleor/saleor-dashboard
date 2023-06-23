@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -8,7 +9,6 @@ import { getFormErrors } from "@dashboard/utils/errors";
 import getDiscountErrorMessage from "@dashboard/utils/errors/discounts";
 import {
   Card,
-  CardContent,
   TableBody,
   TableCell,
   TableHead,
@@ -51,15 +51,6 @@ const SaleValue: React.FC<SaleValueProps> = ({
           description: "sale value, header",
         })}
       />
-      <CardContent className={classes.card}>
-        <Typography variant="caption" className={classes.info}>
-          <FormattedMessage
-            id="cehiWu"
-            defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
-            description="channels sale info"
-          />
-        </Typography>
-      </CardContent>
       <ResponsiveTable className={classes.table}>
         <colgroup>
           <col />

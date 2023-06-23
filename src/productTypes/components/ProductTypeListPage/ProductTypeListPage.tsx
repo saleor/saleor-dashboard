@@ -1,9 +1,11 @@
+// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import FilterBar from "@dashboard/components/FilterBar";
 import { configurationMenuUrl } from "@dashboard/configuration";
 import { ProductTypeFragment } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
+import ProductTypeList from "@dashboard/productTypes/components/ProductTypeList/ProductTypeList";
 import {
   productTypeAddUrl,
   ProductTypeListUrlSortField,
@@ -19,7 +21,6 @@ import {
   SortPage,
   TabPageProps,
 } from "../../../types";
-import ProductTypeList from "../ProductTypeList";
 import {
   createFilterStructure,
   ProductTypeFilterKeys,

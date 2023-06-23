@@ -187,6 +187,7 @@ describe("App List verified installed apps util", () => {
             name: "Manage customers.",
           },
         ],
+        brand: null,
       },
       {
         __typename: "App",
@@ -209,6 +210,7 @@ describe("App List verified installed apps util", () => {
             name: "Manage customers.",
           },
         ],
+        brand: null,
       },
     ];
     const installableMarketplaceApps: GetV2SaleorAppsResponse.ReleasedSaleorApp[] =
@@ -244,10 +246,6 @@ describe("App List verified installed apps util", () => {
       {
         app: installedApps[0],
         isExternal: false,
-        logo: {
-          source: "https://www.example.com/logo",
-          color: "#000000",
-        },
       },
       {
         app: installedApps[1],
@@ -279,6 +277,7 @@ describe("App List verified installable marketplace apps util", () => {
             name: "Manage customers.",
           },
         ],
+        brand: null,
       },
       {
         __typename: "App",
@@ -301,6 +300,7 @@ describe("App List verified installable marketplace apps util", () => {
             name: "Manage customers.",
           },
         ],
+        brand: null,
       },
     ];
     const installableMarketplaceApps: GetV2SaleorAppsResponse.ReleasedSaleorApp[] =

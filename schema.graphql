@@ -488,7 +488,6 @@ Determine the allocation strategy for the channel.
     within the channel
 
     PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
-    
 """
 enum AllocationStrategyEnum {
   PRIORITIZE_SORTING_ORDER
@@ -623,6 +622,15 @@ type App implements Node & ObjectWithMetadata {
   Added in Saleor 3.1.
   """
   extensions: [AppExtension!]!
+
+  """
+  App's brand data.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  brand: AppBrand
 }
 
 """
@@ -634,6 +642,56 @@ type AppActivate {
   appErrors: [AppError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [AppError!]!
   app: App
+}
+
+"""
+Represents the app's brand data.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type AppBrand {
+  """
+  App's logos details.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  logo: AppBrandLogo!
+}
+
+"""
+Represents the app's brand logo data.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type AppBrandLogo {
+  """
+  URL to the default logo image.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  default(
+    """
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    """
+    size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    format: IconThumbnailFormatEnum = ORIGINAL
+  ): String!
 }
 
 type AppCountableConnection {
@@ -824,7 +882,6 @@ All available ways of opening an app extension.
 
     POPUP - app's extension will be mounted as a popup window
     APP_PAGE - redirect to app's page
-    
 """
 enum AppExtensionTargetEnum {
   POPUP
@@ -896,6 +953,15 @@ type AppInstallation implements Node & Job {
   message: String
   appName: String!
   manifestUrl: String!
+
+  """
+  App's brand data.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  brand: AppBrand
 }
 
 """
@@ -918,6 +984,56 @@ type AppInstalled implements Event {
 
   """The application the event relates to."""
   app: App
+}
+
+"""
+Represents the app's manifest brand data.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type AppManifestBrand {
+  """
+  App's logos details.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  logo: AppManifestBrandLogo!
+}
+
+"""
+Represents the app's manifest brand data.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type AppManifestBrandLogo {
+  """
+  Data URL with a base64 encoded logo image.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  default(
+    """
+    Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
+    """
+    size: Int
+
+    """
+    The format of the image. When not provided, format of the original image will be used.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    format: IconThumbnailFormatEnum = ORIGINAL
+  ): String!
 }
 
 type AppManifestExtension {
@@ -1345,6 +1461,59 @@ type AttributeBulkDelete {
   errors: [AttributeError!]!
 }
 
+"""
+Creates/updates translations for attributes.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_TRANSLATIONS.
+"""
+type AttributeBulkTranslate {
+  """Returns how many translations were created/updated."""
+  count: Int!
+
+  """List of the translations."""
+  results: [AttributeBulkTranslateResult!]!
+  errors: [AttributeBulkTranslateError!]!
+}
+
+type AttributeBulkTranslateError {
+  """
+  Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  path: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: AttributeTranslateErrorCode!
+}
+
+input AttributeBulkTranslateInput {
+  """Attribute ID."""
+  id: ID
+
+  """External reference of an attribute."""
+  externalReference: String
+
+  """Translation language code."""
+  languageCode: LanguageCodeEnum!
+
+  """Translation fields."""
+  translationFields: NameTranslationInput!
+}
+
+type AttributeBulkTranslateResult {
+  """Attribute translation data."""
+  translation: AttributeTranslation
+
+  """List of errors occurred on translation attempt."""
+  errors: [AttributeBulkTranslateError!]
+}
+
 enum AttributeChoicesSortField {
   """Sort attribute choice by name."""
   NAME
@@ -1685,6 +1854,14 @@ type AttributeTranslate {
   attribute: Attribute
 }
 
+"""An enumeration."""
+enum AttributeTranslateErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  REQUIRED
+}
+
 type AttributeTranslation implements Node {
   id: ID!
 
@@ -1868,6 +2045,59 @@ type AttributeValueBulkDelete {
   errors: [AttributeError!]!
 }
 
+"""
+Creates/updates translations for attributes values.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_TRANSLATIONS.
+"""
+type AttributeValueBulkTranslate {
+  """Returns how many translations were created/updated."""
+  count: Int!
+
+  """List of the translations."""
+  results: [AttributeValueBulkTranslateResult!]!
+  errors: [AttributeValueBulkTranslateError!]!
+}
+
+type AttributeValueBulkTranslateError {
+  """
+  Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  path: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: AttributeValueTranslateErrorCode!
+}
+
+input AttributeValueBulkTranslateInput {
+  """Attribute value ID."""
+  id: ID
+
+  """External reference of an attribute value."""
+  externalReference: String
+
+  """Translation language code."""
+  languageCode: LanguageCodeEnum!
+
+  """Translation fields."""
+  translationFields: AttributeValueTranslationInput!
+}
+
+type AttributeValueBulkTranslateResult {
+  """Attribute value translation data."""
+  translation: AttributeValueTranslation
+
+  """List of errors occurred on translation attempt."""
+  errors: [AttributeValueBulkTranslateError!]
+}
+
 type AttributeValueCountableConnection {
   """Pagination data for this connection."""
   pageInfo: PageInfo!
@@ -2004,26 +2234,33 @@ input AttributeValueInput {
   id: ID
 
   """
+  External ID of this attribute.
+  
+  Added in Saleor 3.14.
+  """
+  externalReference: String
+
+  """
   The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. This field will be removed in Saleor 4.0.
   """
   values: [String!]
 
   """
-  Attribute value ID.
+  Attribute value ID or external reference.
   
   Added in Saleor 3.9.
   """
   dropdown: AttributeValueSelectableTypeInput
 
   """
-  Attribute value ID.
+  Attribute value ID or external reference.
   
   Added in Saleor 3.9.
   """
   swatch: AttributeValueSelectableTypeInput
 
   """
-  List of attribute value IDs.
+  List of attribute value IDs or external references.
   
   Added in Saleor 3.9.
   """
@@ -2062,13 +2299,24 @@ input AttributeValueInput {
 }
 
 """
-Represents attribute value. If no ID provided, value will be resolved. 
+Represents attribute value.
+1. If ID is provided, then attribute value will be resolved by ID.
+2. If externalReference is provided, then attribute value will be resolved by external reference.
+3. If value is provided, then attribute value will be resolved by value. If this attribute value doesn't exist, then it will be created.
+4. If externalReference and value is provided then new attribute value will be created.
 
 Added in Saleor 3.9.
 """
 input AttributeValueSelectableTypeInput {
   """ID of an attribute value."""
   id: ID
+
+  """
+  External reference of an attribute value.
+  
+  Added in Saleor 3.14.
+  """
+  externalReference: String
 
   """
   The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.
@@ -2116,6 +2364,14 @@ type AttributeValueTranslate {
   translationErrors: [TranslationError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [TranslationError!]!
   attributeValue: AttributeValue
+}
+
+"""An enumeration."""
+enum AttributeValueTranslateErrorCode {
+  GRAPHQL_ERROR
+  INVALID
+  NOT_FOUND
+  REQUIRED
 }
 
 type AttributeValueTranslation implements Node {
@@ -2257,6 +2513,13 @@ input AttributeWhereInput {
 input BulkAttributeValueInput {
   """ID of the selected attribute."""
   id: ID
+
+  """
+  External ID of this attribute.
+  
+  Added in Saleor 3.14.
+  """
+  externalReference: String
 
   """
   The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created.This field will be removed in Saleor 4.0.
@@ -2550,6 +2813,15 @@ type Category implements Node & ObjectWithMetadata {
     filter: ProductFilterInput
 
     """
+    Filtering options for products.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    where: ProductWhereInput
+
+    """
     Sort products.
     
     Added in Saleor 3.10.
@@ -2605,7 +2877,7 @@ type Category implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum
+    format: ThumbnailFormatEnum = ORIGINAL
   ): Image
 
   """Returns translated category fields for the given language code."""
@@ -3496,7 +3768,6 @@ Determine a current authorize status for checkout.
     NONE - the funds are not authorized
     PARTIAL - the cover funds don't cover fully the checkout's total
     FULL - the cover funds covers the checkout's total
-    
 """
 enum CheckoutAuthorizeStatusEnum {
   NONE
@@ -3527,7 +3798,6 @@ Determine the current charge status for the checkout.
     PARTIAL - the funds that are charged don't cover the checkout's total
     FULL - the funds that are charged fully cover the checkout's total
     OVERCHARGED - the charged funds are bigger than checkout's total
-    
 """
 enum CheckoutChargeStatusEnum {
   NONE
@@ -4246,6 +4516,15 @@ type Collection implements Node & ObjectWithMetadata {
     """Filtering options for products."""
     filter: ProductFilterInput
 
+    """
+    Filtering options for products.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    where: ProductWhereInput
+
     """Sort products."""
     sortBy: ProductOrder
 
@@ -4276,7 +4555,7 @@ type Collection implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum
+    format: ThumbnailFormatEnum = ORIGINAL
   ): Image
 
   """Returns translated collection fields for the given language code."""
@@ -5520,6 +5799,32 @@ Returns Decimal as a float in the API,
 parses float to the Decimal on the way back.
 """
 scalar Decimal
+
+"""
+Define the filtering options for decimal fields.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+input DecimalFilterInput {
+  """The value equal to."""
+  eq: Decimal
+
+  """The value included in."""
+  oneOf: [Decimal!]
+
+  """The value in range."""
+  range: DecimalRangeInput
+}
+
+input DecimalRangeInput {
+  """Decimal value greater than or equal to."""
+  gte: Decimal
+
+  """Decimal value less than or equal to."""
+  lte: Decimal
+}
 
 """
 Delete metadata of an object. To use it, you need to have access to the modified object.
@@ -6936,7 +7241,7 @@ type GiftCard implements Node & ObjectWithMetadata {
   
   Added in Saleor 3.1.
   """
-  usedBy: User
+  usedBy: User @deprecated(reason: "This field will be removed in Saleor 4.0.")
 
   """
   Email address of the user who bought or issued gift card.
@@ -6952,7 +7257,7 @@ type GiftCard implements Node & ObjectWithMetadata {
   
   Added in Saleor 3.1.
   """
-  usedByEmail: String
+  usedByEmail: String @deprecated(reason: "This field will be removed in Saleor 4.0.")
   lastUsedOn: DateTime
   expiryDate: Date
 
@@ -7693,6 +7998,21 @@ type GiftCardUpdated implements Event {
   giftCard: GiftCard
 }
 
+"""
+Define the filtering options for foreign key fields.
+
+Added in Saleor 3.14.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+input GlobalIDFilterInput {
+  """The value equal to."""
+  eq: ID
+
+  """The value included in."""
+  oneOf: [ID!]
+}
+
 """Represents permission group data."""
 type Group implements Node {
   id: ID!
@@ -7747,6 +8067,12 @@ type GroupCountableEdge {
 
   """A cursor for use in pagination."""
   cursor: String!
+}
+
+"""Thumbnail formats for icon images."""
+enum IconThumbnailFormatEnum {
+  ORIGINAL
+  WEBP
 }
 
 """Represents an image."""
@@ -8924,6 +9250,15 @@ type Manifest {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   author: String
+
+  """
+  App's brand data.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  brand: AppManifestBrand
 }
 
 type Margin {
@@ -8939,8 +9274,6 @@ Determine the mark as paid strategy for the channel.
 
     PAYMENT_FLOW - new orders marked as paid will receive a
     `Payment` object, that will cover the `order.total`.
-
-    
 """
 enum MarkAsPaidStrategyEnum {
   TRANSACTION_FLOW
@@ -10017,7 +10350,7 @@ type Mutation {
   
   Requires one of the following permissions: MANAGE_SETTINGS.
   """
-  shopFetchTaxRates: ShopFetchTaxRates @deprecated(reason: "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0.")
+  shopFetchTaxRates: ShopFetchTaxRates @deprecated(reason: "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0.")
 
   """
   Creates/updates translations for shop settings. 
@@ -10050,7 +10383,7 @@ type Mutation {
   orderSettingsUpdate(
     """Fields required to update shop order settings."""
     input: OrderSettingsUpdateInput!
-  ): OrderSettingsUpdate @deprecated(reason: "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead.")
+  ): OrderSettingsUpdate @deprecated(reason: "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead.")
 
   """
   Update gift card settings. 
@@ -13072,6 +13405,23 @@ type Mutation {
   ): AttributeTranslate
 
   """
+  Creates/updates translations for attributes.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  attributeBulkTranslate(
+    """Policies of error handling. DEFAULT: REJECT_EVERYTHING"""
+    errorPolicy: ErrorPolicyEnum
+
+    """List of attributes translations."""
+    translations: [AttributeBulkTranslateInput!]!
+  ): AttributeBulkTranslate
+
+  """
   Deletes attributes. 
   
   Requires one of the following permissions: MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
@@ -13140,6 +13490,23 @@ type Mutation {
     """Fields required to update an AttributeValue."""
     input: AttributeValueUpdateInput!
   ): AttributeValueUpdate
+
+  """
+  Creates/updates translations for attributes values.
+  
+  Added in Saleor 3.14.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_TRANSLATIONS.
+  """
+  attributeValueBulkTranslate(
+    """Policies of error handling. DEFAULT: REJECT_EVERYTHING"""
+    errorPolicy: ErrorPolicyEnum
+
+    """List of attribute values translations."""
+    translations: [AttributeValueBulkTranslateInput!]!
+  ): AttributeValueBulkTranslate
 
   """
   Creates/updates translations for an attribute value. 
@@ -14052,7 +14419,7 @@ type Order implements Node & ObjectWithMetadata {
   """Amount authorized for the order."""
   totalAuthorized: Money!
 
-  """Amount captured for the order. """
+  """Amount captured for the order."""
   totalCaptured: Money! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `totalCharged` instead.")
 
   """
@@ -14270,7 +14637,6 @@ Determine a current authorize status for order.
     `order.total`-`order.totalGrantedRefund`
     FULL - the funds that are authorized and charged fully cover the
     `order.total`-`order.totalGrantedRefund`
-    
 """
 enum OrderAuthorizeStatusEnum {
   NONE
@@ -14694,7 +15060,6 @@ Determine the current charge status for the order.
     `order.total`-`order.totalGrantedRefund`
     OVERCHARGED - the charged funds are bigger than the
     `order.total`-`order.totalGrantedRefund`
-    
 """
 enum OrderChargeStatusEnum {
   NONE
@@ -15051,7 +15416,7 @@ type OrderEvent implements Node {
   discount: OrderEventDiscountObject
 
   """The status of payment's transaction."""
-  status: TransactionStatus @deprecated(reason: "This field will be removed in Saleor 3.14 (Preview Feature).Use `TransactionEvent` to track the status of `TransactionItem`.")
+  status: TransactionStatus @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature).Use `TransactionEvent` to track the status of `TransactionItem`.")
 
   """The reference of payment's transaction."""
   reference: String
@@ -15124,7 +15489,7 @@ enum OrderEventsEmailsEnum {
   DIGITAL_LINKS
 }
 
-"""The different order event types. """
+"""The different order event types."""
 enum OrderEventsEnum {
   DRAFT_CREATED
   DRAFT_CREATED_FROM_REPLACE
@@ -15159,13 +15524,13 @@ enum OrderEventsEnum {
   TRANSACTION_CHARGE_REQUESTED
 
   """
-  This field will be removed in Saleor 3.14 (Preview Feature). Use `TRANSACTION_CHARGE_REQUESTED` instead.
+  This field will be removed in Saleor 3.15 (Preview Feature). Use `TRANSACTION_CHARGE_REQUESTED` instead.
   """
   TRANSACTION_CAPTURE_REQUESTED
   TRANSACTION_REFUND_REQUESTED
 
   """
-  This field will be removed in Saleor 3.14 (Preview Feature). Use `TRANSACTION_CANCEL_REQUESTED` instead.
+  This field will be removed in Saleor 3.15 (Preview Feature). Use `TRANSACTION_CANCEL_REQUESTED` instead.
   """
   TRANSACTION_VOID_REQUESTED
   TRANSACTION_CANCEL_REQUESTED
@@ -15581,7 +15946,7 @@ type OrderLine implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum
+    format: ThumbnailFormatEnum = ORIGINAL
   ): Image
 
   """Price of the single item in the order line."""
@@ -17494,7 +17859,7 @@ input PaymentInput {
   
   Added in Saleor 3.1.
   """
-  storePaymentMethod: StorePaymentMethodEnum
+  storePaymentMethod: StorePaymentMethodEnum = NONE
 
   """
   User public metadata.
@@ -18177,7 +18542,7 @@ type Product implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum
+    format: ThumbnailFormatEnum = ORIGINAL
   ): Image
 
   """
@@ -19012,7 +19377,7 @@ type ProductImage {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum
+    format: ThumbnailFormatEnum = ORIGINAL
   ): String!
 }
 
@@ -19165,7 +19530,7 @@ type ProductMedia implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum
+    format: ThumbnailFormatEnum = ORIGINAL
   ): String!
 
   """
@@ -20908,6 +21273,74 @@ type ProductVariantUpdated implements Event {
   ): ProductVariant
 }
 
+input ProductWhereInput {
+  metadata: [MetadataFilter!]
+  ids: [ID!]
+
+  """Filter by product name."""
+  name: StringFilterInput
+
+  """Filter by product slug."""
+  slug: StringFilterInput
+
+  """Filter by product type."""
+  productType: GlobalIDFilterInput
+
+  """Filter by product category."""
+  category: GlobalIDFilterInput
+
+  """Filter by collection."""
+  collection: GlobalIDFilterInput
+
+  """Filter by availability for purchase."""
+  isAvailable: Boolean
+
+  """Filter by public visibility."""
+  isPublished: Boolean
+
+  """Filter by visibility on the channel."""
+  isVisibleInListing: Boolean
+
+  """Filter by the publication date."""
+  publishedFrom: DateTime
+
+  """Filter by the date of availability for purchase."""
+  availableFrom: DateTime
+
+  """Filter by product with category assigned."""
+  hasCategory: Boolean
+
+  """Filter by product variant price."""
+  price: DecimalFilterInput
+
+  """Filter by the lowest variant price after discounts."""
+  minimalPrice: DecimalFilterInput
+
+  """Filter by attributes associated with the product."""
+  attributes: [AttributeInput!]
+
+  """Filter by variants having specific stock status."""
+  stockAvailability: StockAvailability
+
+  """Filter by stock of the product variant."""
+  stocks: ProductStockFilterInput
+
+  """Filter on whether product is a gift card or not."""
+  giftCard: Boolean
+
+  """Filter by product with preordered variants."""
+  hasPreorderedVariants: Boolean
+
+  """Filter by when was the most recent update."""
+  updatedAt: DateTimeRangeInput
+
+  """List of conditions that must be met."""
+  AND: [ProductWhereInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [ProductWhereInput!]
+}
+
 input PublishableChannelListingInput {
   """ID of a channel."""
   channelId: ID!
@@ -21130,9 +21563,7 @@ type Query {
   ): TaxCountryConfiguration
 
   """
-  
-  
-  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+  \n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
   """
   taxCountryConfigurations: [TaxCountryConfiguration!]
 
@@ -21372,8 +21803,24 @@ type Query {
     """Filtering options for products."""
     filter: ProductFilterInput
 
+    """
+    Where filtering options.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    where: ProductWhereInput
+
     """Sort products."""
     sortBy: ProductOrder
+
+    """
+    Search products.
+    
+    Added in Saleor 3.14.
+    """
+    search: String
 
     """Slug of a channel for which the data should be returned."""
     channel: String
@@ -24912,7 +25359,6 @@ Determine how stocks should be updated, while processing an order.
     SKIP - stocks are not checked and not updated.
     UPDATE - only do update, if there is enough stock.
     FORCE - force update, if there is not enough stock.
-    
 """
 enum StockUpdatePolicyEnum {
   SKIP
@@ -25750,7 +26196,6 @@ Represents possible actions on payment transaction.
     VOID - Represents a void action. This field will be removed
     in Saleor 3.14 (Preview Feature). Use `CANCEL` instead.
     CANCEL - Represents a cancel action. Added in Saleor 3.12.
-    
 """
 enum TransactionActionEnum {
   CHARGE
@@ -25881,14 +26326,14 @@ input TransactionCreateInput {
   """
   Status of the transaction.
   
-  DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.
   """
   status: String
 
   """
   Payment type used for this transaction.
   
-  DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `name` and `message` instead.
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `name` and `message` instead.
   """
   type: String
 
@@ -25909,7 +26354,7 @@ input TransactionCreateInput {
   """
   Reference of the transaction. 
   
-  DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `pspReference` instead.
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `pspReference` instead.
   """
   reference: String
 
@@ -25935,7 +26380,7 @@ input TransactionCreateInput {
   """
   Amount voided by this transaction.
   
-  DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `amountCanceled` instead.
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `amountCanceled` instead.
   """
   amountVoided: MoneyInput
 
@@ -25967,10 +26412,10 @@ type TransactionEvent implements Node {
   createdAt: DateTime!
 
   """Status of transaction's event."""
-  status: TransactionStatus @deprecated(reason: "This field will be removed in Saleor 3.14 (Preview Feature). Use `type` instead.")
+  status: TransactionStatus @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature). Use `type` instead.")
 
   """Reference of transaction's event."""
-  reference: String! @deprecated(reason: "This field will be removed in Saleor 3.14 (Preview Feature).Use `pspReference` instead.")
+  reference: String! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature).Use `pspReference` instead.")
 
   """
   PSP reference of transaction.
@@ -25980,7 +26425,7 @@ type TransactionEvent implements Node {
   pspReference: String!
 
   """Name of the transaction's event."""
-  name: String @deprecated(reason: "This field will be removed in Saleor 3.14 (Preview Feature). Use `message` instead.")
+  name: String @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature). Use `message` instead.")
 
   """
   Message related to the transaction's event.
@@ -26022,14 +26467,14 @@ input TransactionEventInput {
   """
   Current status of the payment transaction.
   
-  DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Status will be calculated by Saleor.
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Status will be calculated by Saleor.
   """
   status: TransactionStatus
 
   """
   Reference of the transaction. 
   
-  DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `pspReference` instead.
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `pspReference` instead.
   """
   reference: String
 
@@ -26043,7 +26488,7 @@ input TransactionEventInput {
   """
   Name of the transaction.
   
-  DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `message` instead. `name` field will be added to `message`.
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `message` instead. `name` field will be added to `message`.
   """
   name: String
 
@@ -26126,7 +26571,6 @@ Represents possible event types.
     CANCEL_FAILURE - represents failure cancel.
     CANCEL_REQUEST - represents cancel request.
     INFO - represents info event.
-    
 """
 enum TransactionEventTypeEnum {
   AUTHORIZATION_SUCCESS
@@ -26154,7 +26598,6 @@ Determine the transaction flow strategy.
 
     AUTHORIZATION - the processed transaction should be only authorized
     CHARGE - the processed transaction should be charged.
-    
 """
 enum TransactionFlowStrategyEnum {
   AUTHORIZATION
@@ -26321,7 +26764,7 @@ type TransactionItem implements Node & ObjectWithMetadata {
   refundPendingAmount: Money!
 
   """Total amount voided for this payment."""
-  voidedAmount: Money! @deprecated(reason: "This field will be removed in Saleor 3.14 (Preview Feature).Use `canceledAmount` instead.")
+  voidedAmount: Money! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature).Use `canceledAmount` instead.")
 
   """
   Total amount canceled for this payment.
@@ -26348,10 +26791,10 @@ type TransactionItem implements Node & ObjectWithMetadata {
   chargePendingAmount: Money!
 
   """Status of transaction."""
-  status: String! @deprecated(reason: "This field will be removed in Saleor 3.14 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.")
+  status: String! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.")
 
   """Type of transaction."""
-  type: String! @deprecated(reason: "This field will be removed in Saleor 3.14 (Preview Feature). Use `name` or `message` instead.")
+  type: String! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature). Use `name` or `message` instead.")
 
   """
   Name of the transaction.
@@ -26368,7 +26811,7 @@ type TransactionItem implements Node & ObjectWithMetadata {
   message: String!
 
   """Reference of transaction."""
-  reference: String! @deprecated(reason: "This field will be removed in Saleor 3.14 (Preview Feature).Use `pspReference` instead.")
+  reference: String! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature).Use `pspReference` instead.")
 
   """
   PSP reference of transaction.
@@ -26594,7 +27037,6 @@ Represents a status of payment transaction.
     SUCCESS - Represents a sucess action.
     FAILURE - Represents a failure action.
     PENDING - Represents a pending action.
-    
 """
 enum TransactionStatus {
   PENDING
@@ -26643,14 +27085,14 @@ input TransactionUpdateInput {
   """
   Status of the transaction.
   
-  DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.
   """
   status: String
 
   """
   Payment type used for this transaction.
   
-  DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `name` and `message` instead.
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `name` and `message` instead.
   """
   type: String
 
@@ -26671,7 +27113,7 @@ input TransactionUpdateInput {
   """
   Reference of the transaction. 
   
-  DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `pspReference` instead.
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `pspReference` instead.
   """
   reference: String
 
@@ -26697,7 +27139,7 @@ input TransactionUpdateInput {
   """
   Amount voided by this transaction.
   
-  DEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `amountCanceled` instead.
+  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `amountCanceled` instead.
   """
   amountVoided: MoneyInput
 
@@ -27083,7 +27525,7 @@ type User implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum
+    format: ThumbnailFormatEnum = ORIGINAL
   ): Image
 
   """

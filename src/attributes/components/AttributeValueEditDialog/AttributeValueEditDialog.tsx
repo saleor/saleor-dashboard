@@ -117,6 +117,7 @@ const AttributeValueEditDialog: React.FC<AttributeValueEditDialogProps> = ({
               <ConfirmButton
                 data-test-id="submit"
                 transitionState={confirmButtonState}
+                disabled={data.name === ""}
                 onClick={submit}
               >
                 <FormattedMessage {...buttonMessages.save} />

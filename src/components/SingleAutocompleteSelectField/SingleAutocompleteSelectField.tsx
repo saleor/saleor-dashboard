@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ExtendedFormHelperTextProps } from "@dashboard/channels/components/ChannelForm/types";
 import { FetchMoreProps } from "@dashboard/types";
 import {

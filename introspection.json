@@ -2684,7 +2684,7 @@
       {
         "kind": "ENUM",
         "name": "AllocationStrategyEnum",
-        "description": "Determine the allocation strategy for the channel.\n\n    PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order\n    within the channel\n\n    PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock\n    ",
+        "description": "Determine the allocation strategy for the channel.\n\n    PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order\n    within the channel\n\n    PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -3160,6 +3160,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "brand",
+            "description": "App's brand data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AppBrand",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -3239,6 +3251,85 @@
               "kind": "OBJECT",
               "name": "App",
               "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AppBrand",
+        "description": "Represents the app's brand data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "logo",
+            "description": "App's logos details.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "AppBrandLogo",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AppBrandLogo",
+        "description": "Represents the app's brand logo data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "default",
+            "description": "URL to the default logo image.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "size",
+                "description": "Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "format",
+                "description": "The format of the image. When not provided, format of the original image will be used.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "IconThumbnailFormatEnum",
+                  "ofType": null
+                },
+                "defaultValue": "ORIGINAL",
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
             },
             "isDeprecated": false,
             "deprecationReason": null
@@ -4302,7 +4393,7 @@
       {
         "kind": "ENUM",
         "name": "AppExtensionTargetEnum",
-        "description": "All available ways of opening an app extension.\n\n    POPUP - app's extension will be mounted as a popup window\n    APP_PAGE - redirect to app's page\n    ",
+        "description": "All available ways of opening an app extension.\n\n    POPUP - app's extension will be mounted as a popup window\n    APP_PAGE - redirect to app's page",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4733,6 +4824,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "brand",
+            "description": "App's brand data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AppBrand",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -4825,6 +4928,85 @@
             "ofType": null
           }
         ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AppManifestBrand",
+        "description": "Represents the app's manifest brand data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "logo",
+            "description": "App's logos details.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "OBJECT",
+                "name": "AppManifestBrandLogo",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AppManifestBrandLogo",
+        "description": "Represents the app's manifest brand data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": [
+          {
+            "name": "default",
+            "description": "Data URL with a base64 encoded logo image.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [
+              {
+                "name": "size",
+                "description": "Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "format",
+                "description": "The format of the image. When not provided, format of the original image will be used.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "IconThumbnailFormatEnum",
+                  "ofType": null
+                },
+                "defaultValue": "ORIGINAL",
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
         "enumValues": null,
         "possibleTypes": null
       },
@@ -6666,6 +6848,242 @@
         "possibleTypes": null
       },
       {
+        "kind": "OBJECT",
+        "name": "AttributeBulkTranslate",
+        "description": "Creates/updates translations for attributes.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TRANSLATIONS.",
+        "fields": [
+          {
+            "name": "count",
+            "description": "Returns how many translations were created/updated.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "results",
+            "description": "List of the translations.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "AttributeBulkTranslateResult",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "AttributeBulkTranslateError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AttributeBulkTranslateError",
+        "description": null,
+        "fields": [
+          {
+            "name": "path",
+            "description": "Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "AttributeTranslateErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "AttributeBulkTranslateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "id",
+            "description": "Attribute ID.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "externalReference",
+            "description": "External reference of an attribute.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "languageCode",
+            "description": "Translation language code.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "LanguageCodeEnum",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "translationFields",
+            "description": "Translation fields.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "NameTranslationInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AttributeBulkTranslateResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "translation",
+            "description": "Attribute translation data.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AttributeTranslation",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": "List of errors occurred on translation attempt.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "AttributeBulkTranslateError",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "ENUM",
         "name": "AttributeChoicesSortField",
         "description": null,
@@ -8269,6 +8687,41 @@
         "possibleTypes": null
       },
       {
+        "kind": "ENUM",
+        "name": "AttributeTranslateErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REQUIRED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "AttributeTranslation",
         "description": null,
@@ -9013,6 +9466,242 @@
       },
       {
         "kind": "OBJECT",
+        "name": "AttributeValueBulkTranslate",
+        "description": "Creates/updates translations for attributes values.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TRANSLATIONS.",
+        "fields": [
+          {
+            "name": "count",
+            "description": "Returns how many translations were created/updated.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "results",
+            "description": "List of the translations.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "AttributeValueBulkTranslateResult",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "AttributeValueBulkTranslateError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AttributeValueBulkTranslateError",
+        "description": null,
+        "fields": [
+          {
+            "name": "path",
+            "description": "Path to field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "AttributeValueTranslateErrorCode",
+                "ofType": null
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "AttributeValueBulkTranslateInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "id",
+            "description": "Attribute value ID.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "externalReference",
+            "description": "External reference of an attribute value.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "languageCode",
+            "description": "Translation language code.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "ENUM",
+                "name": "LanguageCodeEnum",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "translationFields",
+            "description": "Translation fields.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "INPUT_OBJECT",
+                "name": "AttributeValueTranslationInput",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "AttributeValueBulkTranslateResult",
+        "description": null,
+        "fields": [
+          {
+            "name": "translation",
+            "description": "Attribute value translation data.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AttributeValueTranslation",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": "List of errors occurred on translation attempt.",
+            "args": [],
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "AttributeValueBulkTranslateError",
+                  "ofType": null
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
         "name": "AttributeValueCountableConnection",
         "description": null,
         "fields": [
@@ -9598,6 +10287,18 @@
             "deprecationReason": null
           },
           {
+            "name": "externalReference",
+            "description": "External ID of this attribute.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "values",
             "description": "The value or slug of an attribute to resolve. If the passed value is non-existent, it will be created. This field will be removed in Saleor 4.0.",
             "type": {
@@ -9619,7 +10320,7 @@
           },
           {
             "name": "dropdown",
-            "description": "Attribute value ID.\n\nAdded in Saleor 3.9.",
+            "description": "Attribute value ID or external reference.\n\nAdded in Saleor 3.9.",
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "AttributeValueSelectableTypeInput",
@@ -9631,7 +10332,7 @@
           },
           {
             "name": "swatch",
-            "description": "Attribute value ID.\n\nAdded in Saleor 3.9.",
+            "description": "Attribute value ID or external reference.\n\nAdded in Saleor 3.9.",
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "AttributeValueSelectableTypeInput",
@@ -9643,7 +10344,7 @@
           },
           {
             "name": "multiselect",
-            "description": "List of attribute value IDs.\n\nAdded in Saleor 3.9.",
+            "description": "List of attribute value IDs or external references.\n\nAdded in Saleor 3.9.",
             "type": {
               "kind": "LIST",
               "name": null,
@@ -9785,7 +10486,7 @@
       {
         "kind": "INPUT_OBJECT",
         "name": "AttributeValueSelectableTypeInput",
-        "description": "Represents attribute value. If no ID provided, value will be resolved. \n\nAdded in Saleor 3.9.",
+        "description": "Represents attribute value.\n1. If ID is provided, then attribute value will be resolved by ID.\n2. If externalReference is provided, then attribute value will be resolved by external reference.\n3. If value is provided, then attribute value will be resolved by value. If this attribute value doesn't exist, then it will be created.\n4. If externalReference and value is provided then new attribute value will be created.\n\nAdded in Saleor 3.9.",
         "fields": null,
         "inputFields": [
           {
@@ -9794,6 +10495,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "externalReference",
+            "description": "External reference of an attribute value.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "defaultValue": null,
@@ -10012,6 +10725,41 @@
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "AttributeValueTranslateErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "INVALID",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REQUIRED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -10652,6 +11400,18 @@
             "type": {
               "kind": "SCALAR",
               "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "externalReference",
+            "description": "External ID of this attribute.\n\nAdded in Saleor 3.14.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
               "ofType": null
             },
             "defaultValue": null,
@@ -11695,6 +12455,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "where",
+                "description": "Filtering options for products.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductWhereInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "sortBy",
                 "description": "Sort products.\n\nAdded in Saleor 3.10.",
                 "type": {
@@ -11860,7 +12632,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": null,
+                "defaultValue": "ORIGINAL",
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -15567,7 +16339,7 @@
       {
         "kind": "ENUM",
         "name": "CheckoutAuthorizeStatusEnum",
-        "description": "Determine a current authorize status for checkout.\n\n    We treat the checkout as fully authorized when the sum of authorized and charged\n    funds cover the checkout.total.\n    We treat the checkout as partially authorized when the sum of authorized and charged\n    funds covers only part of the checkout.total\n    We treat the checkout as not authorized when the sum of authorized and charged funds\n    is 0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the cover funds don't cover fully the checkout's total\n    FULL - the cover funds covers the checkout's total\n    ",
+        "description": "Determine a current authorize status for checkout.\n\n    We treat the checkout as fully authorized when the sum of authorized and charged\n    funds cover the checkout.total.\n    We treat the checkout as partially authorized when the sum of authorized and charged\n    funds covers only part of the checkout.total\n    We treat the checkout as not authorized when the sum of authorized and charged funds\n    is 0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the cover funds don't cover fully the checkout's total\n    FULL - the cover funds covers the checkout's total",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -15667,7 +16439,7 @@
       {
         "kind": "ENUM",
         "name": "CheckoutChargeStatusEnum",
-        "description": "Determine the current charge status for the checkout.\n\n    The checkout is considered overcharged when the sum of the transactionItem's charge\n    amounts exceeds the value of `checkout.total`.\n    If the sum of the transactionItem's charge amounts equals\n    `checkout.total`, we consider the checkout to be fully charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `checkout.total`, we treat the checkout as partially charged.\n\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the checkout's total\n    FULL - the funds that are charged fully cover the checkout's total\n    OVERCHARGED - the charged funds are bigger than checkout's total\n    ",
+        "description": "Determine the current charge status for the checkout.\n\n    The checkout is considered overcharged when the sum of the transactionItem's charge\n    amounts exceeds the value of `checkout.total`.\n    If the sum of the transactionItem's charge amounts equals\n    `checkout.total`, we consider the checkout to be fully charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `checkout.total`, we treat the checkout as partially charged.\n\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the checkout's total\n    FULL - the funds that are charged fully cover the checkout's total\n    OVERCHARGED - the charged funds are bigger than checkout's total",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -19106,6 +19878,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "where",
+                "description": "Filtering options for products.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductWhereInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "sortBy",
                 "description": "Sort products.",
                 "type": {
@@ -19198,7 +19982,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": null,
+                "defaultValue": "ORIGINAL",
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -25187,6 +25971,96 @@
         "description": "Custom Decimal implementation.\n\nReturns Decimal as a float in the API,\nparses float to the Decimal on the way back.",
         "fields": null,
         "inputFields": null,
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "DecimalFilterInput",
+        "description": "Define the filtering options for decimal fields.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "eq",
+            "description": "The value equal to.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Decimal",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "oneOf",
+            "description": "The value included in.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Decimal",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "range",
+            "description": "The value in range.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "DecimalRangeInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "DecimalRangeInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "gte",
+            "description": "Decimal value greater than or equal to.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Decimal",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "lte",
+            "description": "Decimal value less than or equal to.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Decimal",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
@@ -32688,8 +33562,8 @@
               "name": "User",
               "ofType": null
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "This field will be removed in Saleor 4.0."
           },
           {
             "name": "createdByEmail",
@@ -32712,8 +33586,8 @@
               "name": "String",
               "ofType": null
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "This field will be removed in Saleor 4.0."
           },
           {
             "name": "lastUsedOn",
@@ -35805,6 +36679,49 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "GlobalIDFilterInput",
+        "description": "Define the filtering options for foreign key fields.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "eq",
+            "description": "The value equal to.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "ID",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "oneOf",
+            "description": "The value included in.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "Group",
         "description": "Represents permission group data.",
@@ -36049,6 +36966,29 @@
         "inputFields": null,
         "interfaces": [],
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "IconThumbnailFormatEnum",
+        "description": "Thumbnail formats for icon images.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "ORIGINAL",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "WEBP",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -42607,6 +43547,18 @@
             },
             "isDeprecated": false,
             "deprecationReason": null
+          },
+          {
+            "name": "brand",
+            "description": "App's brand data.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AppManifestBrand",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
           }
         ],
         "inputFields": null,
@@ -42652,7 +43604,7 @@
       {
         "kind": "ENUM",
         "name": "MarkAsPaidStrategyEnum",
-        "description": "Determine the mark as paid strategy for the channel.\n\n    TRANSACTION_FLOW - new orders marked as paid will receive a\n    `TransactionItem` object, that will cover the `order.total`.\n\n    PAYMENT_FLOW - new orders marked as paid will receive a\n    `Payment` object, that will cover the `order.total`.\n\n    ",
+        "description": "Determine the mark as paid strategy for the channel.\n\n    TRANSACTION_FLOW - new orders marked as paid will receive a\n    `TransactionItem` object, that will cover the `order.total`.\n\n    PAYMENT_FLOW - new orders marked as paid will receive a\n    `Payment` object, that will cover the `order.total`.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -47278,7 +48230,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0."
+            "deprecationReason": "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0."
           },
           {
             "name": "shopSettingsTranslate",
@@ -47377,7 +48329,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead."
+            "deprecationReason": "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead."
           },
           {
             "name": "giftCardSettingsUpdate",
@@ -56894,6 +57846,55 @@
             "deprecationReason": null
           },
           {
+            "name": "attributeBulkTranslate",
+            "description": "Creates/updates translations for attributes.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TRANSLATIONS.",
+            "args": [
+              {
+                "name": "errorPolicy",
+                "description": "Policies of error handling. DEFAULT: REJECT_EVERYTHING",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "ErrorPolicyEnum",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "translations",
+                "description": "List of attributes translations.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "AttributeBulkTranslateInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AttributeBulkTranslate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "attributeBulkDelete",
             "description": "Deletes attributes. \n\nRequires one of the following permissions: MANAGE_PAGE_TYPES_AND_ATTRIBUTES.",
             "args": [
@@ -57097,6 +58098,55 @@
             "type": {
               "kind": "OBJECT",
               "name": "AttributeValueUpdate",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "attributeValueBulkTranslate",
+            "description": "Creates/updates translations for attributes values.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_TRANSLATIONS.",
+            "args": [
+              {
+                "name": "errorPolicy",
+                "description": "Policies of error handling. DEFAULT: REJECT_EVERYTHING",
+                "type": {
+                  "kind": "ENUM",
+                  "name": "ErrorPolicyEnum",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "translations",
+                "description": "List of attribute values translations.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "LIST",
+                    "name": null,
+                    "ofType": {
+                      "kind": "NON_NULL",
+                      "name": null,
+                      "ofType": {
+                        "kind": "INPUT_OBJECT",
+                        "name": "AttributeValueBulkTranslateInput",
+                        "ofType": null
+                      }
+                    }
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "AttributeValueBulkTranslate",
               "ofType": null
             },
             "isDeprecated": false,
@@ -61124,7 +62174,7 @@
           },
           {
             "name": "totalCaptured",
-            "description": "Amount captured for the order. ",
+            "description": "Amount captured for the order.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -61707,7 +62757,7 @@
       {
         "kind": "ENUM",
         "name": "OrderAuthorizeStatusEnum",
-        "description": "Determine a current authorize status for order.\n\n    We treat the order as fully authorized when the sum of authorized and charged funds\n    cover the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as partially authorized when the sum of authorized and charged\n    funds covers only part of the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as not authorized when the sum of authorized and charged funds is\n    0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the funds that are authorized and charged don't cover fully the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are authorized and charged fully cover the\n    `order.total`-`order.totalGrantedRefund`\n    ",
+        "description": "Determine a current authorize status for order.\n\n    We treat the order as fully authorized when the sum of authorized and charged funds\n    cover the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as partially authorized when the sum of authorized and charged\n    funds covers only part of the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as not authorized when the sum of authorized and charged funds is\n    0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the funds that are authorized and charged don't cover fully the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are authorized and charged fully cover the\n    `order.total`-`order.totalGrantedRefund`",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -63643,7 +64693,7 @@
       {
         "kind": "ENUM",
         "name": "OrderChargeStatusEnum",
-        "description": "Determine the current charge status for the order.\n\n    An order is considered overcharged when the sum of the\n    transactionItem's charge amounts exceeds the value of\n    `order.total` - `order.totalGrantedRefund`.\n    If the sum of the transactionItem's charge amounts equals\n    `order.total` - `order.totalGrantedRefund`, we consider the order to be fully\n    charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `order.total` - `order.totalGrantedRefund`, we treat the order as partially charged.\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are charged fully cover the\n    `order.total`-`order.totalGrantedRefund`\n    OVERCHARGED - the charged funds are bigger than the\n    `order.total`-`order.totalGrantedRefund`\n    ",
+        "description": "Determine the current charge status for the order.\n\n    An order is considered overcharged when the sum of the\n    transactionItem's charge amounts exceeds the value of\n    `order.total` - `order.totalGrantedRefund`.\n    If the sum of the transactionItem's charge amounts equals\n    `order.total` - `order.totalGrantedRefund`, we consider the order to be fully\n    charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `order.total` - `order.totalGrantedRefund`, we treat the order as partially charged.\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are charged fully cover the\n    `order.total`-`order.totalGrantedRefund`\n    OVERCHARGED - the charged funds are bigger than the\n    `order.total`-`order.totalGrantedRefund`",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -65416,7 +66466,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 3.14 (Preview Feature).Use `TransactionEvent` to track the status of `TransactionItem`."
+            "deprecationReason": "This field will be removed in Saleor 3.15 (Preview Feature).Use `TransactionEvent` to track the status of `TransactionItem`."
           },
           {
             "name": "reference",
@@ -65778,7 +66828,7 @@
       {
         "kind": "ENUM",
         "name": "OrderEventsEnum",
-        "description": "The different order event types. ",
+        "description": "The different order event types.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -65971,7 +67021,7 @@
           },
           {
             "name": "TRANSACTION_CAPTURE_REQUESTED",
-            "description": "This field will be removed in Saleor 3.14 (Preview Feature). Use `TRANSACTION_CHARGE_REQUESTED` instead.",
+            "description": "This field will be removed in Saleor 3.15 (Preview Feature). Use `TRANSACTION_CHARGE_REQUESTED` instead.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -65983,7 +67033,7 @@
           },
           {
             "name": "TRANSACTION_VOID_REQUESTED",
-            "description": "This field will be removed in Saleor 3.14 (Preview Feature). Use `TRANSACTION_CANCEL_REQUESTED` instead.",
+            "description": "This field will be removed in Saleor 3.15 (Preview Feature). Use `TRANSACTION_CANCEL_REQUESTED` instead.",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -67860,7 +68910,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": null,
+                "defaultValue": "ORIGINAL",
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -76155,7 +77205,7 @@
               "name": "StorePaymentMethodEnum",
               "ofType": null
             },
-            "defaultValue": null,
+            "defaultValue": "NONE",
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -79200,7 +80250,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": null,
+                "defaultValue": "ORIGINAL",
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -82781,7 +83831,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": null,
+                "defaultValue": "ORIGINAL",
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -83304,7 +84354,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": null,
+                "defaultValue": "ORIGINAL",
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -90779,6 +91829,333 @@
       },
       {
         "kind": "INPUT_OBJECT",
+        "name": "ProductWhereInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "metadata",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataFilter",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ids",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "name",
+            "description": "Filter by product name.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "StringFilterInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "slug",
+            "description": "Filter by product slug.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "StringFilterInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "productType",
+            "description": "Filter by product type.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "GlobalIDFilterInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "category",
+            "description": "Filter by product category.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "GlobalIDFilterInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "collection",
+            "description": "Filter by collection.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "GlobalIDFilterInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isAvailable",
+            "description": "Filter by availability for purchase.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isPublished",
+            "description": "Filter by public visibility.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "isVisibleInListing",
+            "description": "Filter by visibility on the channel.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "publishedFrom",
+            "description": "Filter by the publication date.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "availableFrom",
+            "description": "Filter by the date of availability for purchase.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "DateTime",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "hasCategory",
+            "description": "Filter by product with category assigned.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "price",
+            "description": "Filter by product variant price.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "DecimalFilterInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "minimalPrice",
+            "description": "Filter by the lowest variant price after discounts.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "DecimalFilterInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "attributes",
+            "description": "Filter by attributes associated with the product.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "AttributeInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "stockAvailability",
+            "description": "Filter by variants having specific stock status.",
+            "type": {
+              "kind": "ENUM",
+              "name": "StockAvailability",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "stocks",
+            "description": "Filter by stock of the product variant.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "ProductStockFilterInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "giftCard",
+            "description": "Filter on whether product is a gift card or not.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "hasPreorderedVariants",
+            "description": "Filter by product with preordered variants.",
+            "type": {
+              "kind": "SCALAR",
+              "name": "Boolean",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "updatedAt",
+            "description": "Filter by when was the most recent update.",
+            "type": {
+              "kind": "INPUT_OBJECT",
+              "name": "DateTimeRangeInput",
+              "ofType": null
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "AND",
+            "description": "List of conditions that must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "OR",
+            "description": "A list of conditions of which at least one must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
         "name": "PublishableChannelListingInput",
         "description": null,
         "fields": null,
@@ -91414,7 +92791,7 @@
           },
           {
             "name": "taxCountryConfigurations",
-            "description": "\n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.",
+            "description": "\\n\\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -92152,11 +93529,35 @@
                 "deprecationReason": null
               },
               {
+                "name": "where",
+                "description": "Where filtering options.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductWhereInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "sortBy",
                 "description": "Sort products.",
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "ProductOrder",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "search",
+                "description": "Search products.\n\nAdded in Saleor 3.14.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -106337,7 +107738,7 @@
       {
         "kind": "ENUM",
         "name": "StockUpdatePolicyEnum",
-        "description": "Determine how stocks should be updated, while processing an order.\n\n    SKIP - stocks are not checked and not updated.\n    UPDATE - only do update, if there is enough stock.\n    FORCE - force update, if there is not enough stock.\n    ",
+        "description": "Determine how stocks should be updated, while processing an order.\n\n    SKIP - stocks are not checked and not updated.\n    UPDATE - only do update, if there is enough stock.\n    FORCE - force update, if there is not enough stock.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -109955,7 +111356,7 @@
       {
         "kind": "ENUM",
         "name": "TransactionActionEnum",
-        "description": "Represents possible actions on payment transaction.\n\n    The following actions are possible:\n    CHARGE - Represents the charge action.\n    REFUND - Represents a refund action.\n    VOID - Represents a void action. This field will be removed\n    in Saleor 3.14 (Preview Feature). Use `CANCEL` instead.\n    CANCEL - Represents a cancel action. Added in Saleor 3.12.\n    ",
+        "description": "Represents possible actions on payment transaction.\n\n    The following actions are possible:\n    CHARGE - Represents the charge action.\n    REFUND - Represents a refund action.\n    VOID - Represents a void action. This field will be removed\n    in Saleor 3.14 (Preview Feature). Use `CANCEL` instead.\n    CANCEL - Represents a cancel action. Added in Saleor 3.12.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -110419,7 +111820,7 @@
         "inputFields": [
           {
             "name": "status",
-            "description": "Status of the transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.",
+            "description": "Status of the transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -110431,7 +111832,7 @@
           },
           {
             "name": "type",
-            "description": "Payment type used for this transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `name` and `message` instead.",
+            "description": "Payment type used for this transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `name` and `message` instead.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -110467,7 +111868,7 @@
           },
           {
             "name": "reference",
-            "description": "Reference of the transaction. \n\nDEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `pspReference` instead.",
+            "description": "Reference of the transaction. \n\nDEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `pspReference` instead.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -110547,7 +111948,7 @@
           },
           {
             "name": "amountVoided",
-            "description": "Amount voided by this transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `amountCanceled` instead.",
+            "description": "Amount voided by this transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `amountCanceled` instead.",
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "MoneyInput",
@@ -110673,7 +112074,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 3.14 (Preview Feature). Use `type` instead."
+            "deprecationReason": "This field will be removed in Saleor 3.15 (Preview Feature). Use `type` instead."
           },
           {
             "name": "reference",
@@ -110689,7 +112090,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 3.14 (Preview Feature).Use `pspReference` instead."
+            "deprecationReason": "This field will be removed in Saleor 3.15 (Preview Feature).Use `pspReference` instead."
           },
           {
             "name": "pspReference",
@@ -110717,7 +112118,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 3.14 (Preview Feature). Use `message` instead."
+            "deprecationReason": "This field will be removed in Saleor 3.15 (Preview Feature). Use `message` instead."
           },
           {
             "name": "message",
@@ -110811,7 +112212,7 @@
         "inputFields": [
           {
             "name": "status",
-            "description": "Current status of the payment transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Status will be calculated by Saleor.",
+            "description": "Current status of the payment transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Status will be calculated by Saleor.",
             "type": {
               "kind": "ENUM",
               "name": "TransactionStatus",
@@ -110823,7 +112224,7 @@
           },
           {
             "name": "reference",
-            "description": "Reference of the transaction. \n\nDEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `pspReference` instead.",
+            "description": "Reference of the transaction. \n\nDEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `pspReference` instead.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -110847,7 +112248,7 @@
           },
           {
             "name": "name",
-            "description": "Name of the transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `message` instead. `name` field will be added to `message`.",
+            "description": "Name of the transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `message` instead. `name` field will be added to `message`.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -111040,7 +112441,7 @@
       {
         "kind": "ENUM",
         "name": "TransactionEventTypeEnum",
-        "description": "Represents possible event types.\n\n    Added in Saleor 3.12.\n\n    The following types are possible:\n    AUTHORIZATION_SUCCESS - represents success authorization.\n    AUTHORIZATION_FAILURE - represents failure authorization.\n    AUTHORIZATION_ADJUSTMENT - represents authorization adjustment.\n    AUTHORIZATION_REQUEST - represents authorization request.\n    AUTHORIZATION_ACTION_REQUIRED - represents authorization that needs\n    additional actions from the customer.\n    CHARGE_ACTION_REQUIRED - represents charge that needs\n    additional actions from the customer.\n    CHARGE_SUCCESS - represents success charge.\n    CHARGE_FAILURE - represents failure charge.\n    CHARGE_BACK - represents chargeback.\n    CHARGE_REQUEST - represents charge request.\n    REFUND_SUCCESS - represents success refund.\n    REFUND_FAILURE - represents failure refund.\n    REFUND_REVERSE - represents reverse refund.\n    REFUND_REQUEST - represents refund request.\n    CANCEL_SUCCESS - represents success cancel.\n    CANCEL_FAILURE - represents failure cancel.\n    CANCEL_REQUEST - represents cancel request.\n    INFO - represents info event.\n    ",
+        "description": "Represents possible event types.\n\n    Added in Saleor 3.12.\n\n    The following types are possible:\n    AUTHORIZATION_SUCCESS - represents success authorization.\n    AUTHORIZATION_FAILURE - represents failure authorization.\n    AUTHORIZATION_ADJUSTMENT - represents authorization adjustment.\n    AUTHORIZATION_REQUEST - represents authorization request.\n    AUTHORIZATION_ACTION_REQUIRED - represents authorization that needs\n    additional actions from the customer.\n    CHARGE_ACTION_REQUIRED - represents charge that needs\n    additional actions from the customer.\n    CHARGE_SUCCESS - represents success charge.\n    CHARGE_FAILURE - represents failure charge.\n    CHARGE_BACK - represents chargeback.\n    CHARGE_REQUEST - represents charge request.\n    REFUND_SUCCESS - represents success refund.\n    REFUND_FAILURE - represents failure refund.\n    REFUND_REVERSE - represents reverse refund.\n    REFUND_REQUEST - represents refund request.\n    CANCEL_SUCCESS - represents success cancel.\n    CANCEL_FAILURE - represents failure cancel.\n    CANCEL_REQUEST - represents cancel request.\n    INFO - represents info event.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -111159,7 +112560,7 @@
       {
         "kind": "ENUM",
         "name": "TransactionFlowStrategyEnum",
-        "description": "Determine the transaction flow strategy.\n\n    AUTHORIZATION - the processed transaction should be only authorized\n    CHARGE - the processed transaction should be charged.\n    ",
+        "description": "Determine the transaction flow strategy.\n\n    AUTHORIZATION - the processed transaction should be only authorized\n    CHARGE - the processed transaction should be charged.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -111798,7 +113199,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 3.14 (Preview Feature).Use `canceledAmount` instead."
+            "deprecationReason": "This field will be removed in Saleor 3.15 (Preview Feature).Use `canceledAmount` instead."
           },
           {
             "name": "canceledAmount",
@@ -111878,7 +113279,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 3.14 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions."
+            "deprecationReason": "This field will be removed in Saleor 3.15 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions."
           },
           {
             "name": "type",
@@ -111894,7 +113295,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 3.14 (Preview Feature). Use `name` or `message` instead."
+            "deprecationReason": "This field will be removed in Saleor 3.15 (Preview Feature). Use `name` or `message` instead."
           },
           {
             "name": "name",
@@ -111942,7 +113343,7 @@
               }
             },
             "isDeprecated": true,
-            "deprecationReason": "This field will be removed in Saleor 3.14 (Preview Feature).Use `pspReference` instead."
+            "deprecationReason": "This field will be removed in Saleor 3.15 (Preview Feature).Use `pspReference` instead."
           },
           {
             "name": "pspReference",
@@ -112787,7 +114188,7 @@
       {
         "kind": "ENUM",
         "name": "TransactionStatus",
-        "description": "Represents a status of payment transaction.\n\n    The following statuses are possible:\n    SUCCESS - Represents a sucess action.\n    FAILURE - Represents a failure action.\n    PENDING - Represents a pending action.\n    ",
+        "description": "Represents a status of payment transaction.\n\n    The following statuses are possible:\n    SUCCESS - Represents a sucess action.\n    FAILURE - Represents a failure action.\n    PENDING - Represents a pending action.",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -112966,7 +114367,7 @@
         "inputFields": [
           {
             "name": "status",
-            "description": "Status of the transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.",
+            "description": "Status of the transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -112978,7 +114379,7 @@
           },
           {
             "name": "type",
-            "description": "Payment type used for this transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `name` and `message` instead.",
+            "description": "Payment type used for this transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `name` and `message` instead.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -113014,7 +114415,7 @@
           },
           {
             "name": "reference",
-            "description": "Reference of the transaction. \n\nDEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `pspReference` instead.",
+            "description": "Reference of the transaction. \n\nDEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `pspReference` instead.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -113094,7 +114495,7 @@
           },
           {
             "name": "amountVoided",
-            "description": "Amount voided by this transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.14 (Preview Feature). Use `amountCanceled` instead.",
+            "description": "Amount voided by this transaction.\n\nDEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `amountCanceled` instead.",
             "type": {
               "kind": "INPUT_OBJECT",
               "name": "MoneyInput",
@@ -114794,7 +116195,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": null,
+                "defaultValue": "ORIGINAL",
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -125452,11 +126853,7 @@
         "name": "include",
         "description": "Directs the executor to include this field or fragment only when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": [
-          "FIELD",
-          "FRAGMENT_SPREAD",
-          "INLINE_FRAGMENT"
-        ],
+        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
         "args": [
           {
             "name": "if",
@@ -125480,11 +126877,7 @@
         "name": "skip",
         "description": "Directs the executor to skip this field or fragment when the `if` argument is true.",
         "isRepeatable": false,
-        "locations": [
-          "FIELD",
-          "FRAGMENT_SPREAD",
-          "INLINE_FRAGMENT"
-        ],
+        "locations": ["FIELD", "FRAGMENT_SPREAD", "INLINE_FRAGMENT"],
         "args": [
           {
             "name": "if",
@@ -125533,9 +126926,7 @@
         "name": "specifiedBy",
         "description": "Exposes a URL that specifies the behaviour of this scalar.",
         "isRepeatable": false,
-        "locations": [
-          "SCALAR"
-        ],
+        "locations": ["SCALAR"],
         "args": [
           {
             "name": "url",

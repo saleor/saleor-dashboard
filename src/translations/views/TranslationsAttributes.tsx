@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   LanguageCodeEnum,
   useAttributeTranslationDetailsQuery,
@@ -47,10 +48,8 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
   const { updateListSettings, settings } = useListSettings(
     ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST,
   );
-  const [
-    valuesPaginationState,
-    setValuesPaginationState,
-  ] = useLocalPaginationState(settings?.rowNumber);
+  const [valuesPaginationState, setValuesPaginationState] =
+    useLocalPaginationState(settings?.rowNumber);
 
   const attributeTranslations = useAttributeTranslationDetailsQuery({
     variables: {
@@ -74,21 +73,19 @@ const TranslationsAttributes: React.FC<TranslationsAttributesProps> = ({
     valuesPaginationState,
   );
 
-  const [
-    updateAttributeTranslations,
-    updateAttributeTranslationsOpts,
-  ] = useUpdateAttributeTranslationsMutation({
-    onCompleted: data => {
-      if (data.attributeTranslate.errors.length === 0) {
-        attributeTranslations.refetch();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate("?", { replace: true });
-      }
-    },
-  });
+  const [updateAttributeTranslations, updateAttributeTranslationsOpts] =
+    useUpdateAttributeTranslationsMutation({
+      onCompleted: data => {
+        if (data.attributeTranslate.errors.length === 0) {
+          attributeTranslations.refetch();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          navigate("?", { replace: true });
+        }
+      },
+    });
 
   const [
     updateAttributeValueTranslations,

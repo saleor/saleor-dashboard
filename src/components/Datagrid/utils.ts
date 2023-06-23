@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { DataEditorProps } from "@glideapps/glide-data-grid";
 
 import { ColumnPickerProps } from "../ColumnPicker";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import chevronDown from "@assets/images/ChevronDown.svg";
 import useElementScroll, {
   isScrolledToBottom,

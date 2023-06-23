@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { fetchMoreProps, searchPageProps } from "@dashboard/fixtures";
 import { ShippingErrorCode } from "@dashboard/graphql";
 import { warehouseList } from "@dashboard/warehouses/fixtures";

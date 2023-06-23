@@ -1,9 +1,9 @@
+// @ts-strict-ignore
+import { AppPageNav } from "@dashboard/apps/components/AppPage/AppPageNav";
 import { AppUrls } from "@dashboard/apps/urls";
-import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { AppQuery } from "@dashboard/graphql";
 import React from "react";
 
-import DeactivatedText from "../DeactivatedText";
 import HeaderOptions from "./HeaderOptions";
 
 interface HeaderProps {
@@ -19,23 +19,40 @@ const Header: React.FC<HeaderProps> = ({
   onAppDeactivateOpen,
   onAppDeleteOpen,
 }) => {
-  /**
-   * App is null with first render so fallback with HTML-safe fallback
-   */
-  const backButtonTarget = data?.id ? AppUrls.resolveAppUrl(data.id) : "#";
+  const getBackButtonUrl = () => {
+    /**
+     * App is null with first render so fallback with HTML-safe fallback
+     */
+    if (!data?.id) {
+      return "#";
+    }
+
+    const isAppActive = data.isActive;
+
+    return isAppActive
+      ? AppUrls.resolveAppUrl(data.id)
+      : AppUrls.resolveAppListUrl();
+  };
+
+  if (!data) {
+    return null;
+  }
 
   return (
     <>
-      <TopNav
-        href={backButtonTarget}
-        title={
-          <>
-            {data?.name} {!data?.isActive && <DeactivatedText />}
-          </>
-        }
+      <AppPageNav
+        name={data.name}
+        supportUrl={data.supportUrl}
+        homepageUrl={data.homepageUrl}
+        author={data.author}
+        appLogoUrl={data.brand?.logo.default}
+        appId={data.id}
+        goBackUrl={getBackButtonUrl()}
+        showMangeAppButton={false}
       />
+
       <HeaderOptions
-        data={data}
+        isActive={data.isActive}
         onAppActivateOpen={onAppActivateOpen}
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { getById } from "@dashboard/misc";
 import ModalTitle from "@dashboard/orders/components/OrderDiscountCommonModal/ModalTitle";

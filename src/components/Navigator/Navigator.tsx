@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { Divider, Fade, Modal, Paper } from "@material-ui/core";

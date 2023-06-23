@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
 import DeleteIconButton from "@dashboard/components/DeleteIconButton";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";

@@ -1,9 +1,10 @@
+// @ts-strict-ignore
 import {
   moneyCell,
   moneyDiscountedCell,
+  numberCell,
   readonlyTextCell,
   tagsCell,
-  textCell,
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
@@ -41,6 +42,11 @@ export const useColumns = () => {
       {
         id: "sku",
         title: "SKU",
+        width: 150,
+      },
+      {
+        id: "variantName",
+        title: intl.formatMessage(columnsMessages.variantName),
         width: 150,
       },
       {
@@ -121,7 +127,7 @@ export const useGetCellContent = ({
           },
         );
       case "quantity":
-        return textCell(change || rowData.quantity.toString());
+        return numberCell(change?.value || rowData.quantity);
       case "price":
         return moneyDiscountedCell(
           {
@@ -149,6 +155,8 @@ export const useGetCellContent = ({
         );
       case "sku":
         return readonlyTextCell(rowData?.productSku ?? "", false);
+      case "variantName":
+        return readonlyTextCell(rowData.variant.name ?? "", false);
       case "total":
         return moneyCell(
           rowData.totalPrice.gross.amount,

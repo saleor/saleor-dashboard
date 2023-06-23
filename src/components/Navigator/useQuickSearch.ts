@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { useOrderDraftCreateMutation } from "@dashboard/graphql";
 import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";

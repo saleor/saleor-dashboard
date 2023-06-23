@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useDashboardTheme } from "@dashboard/components/GraphiQL/styles";
 import { createGraphiQLFetcher } from "@graphiql/toolkit";
 import { Dialog, DialogContent } from "@material-ui/core";

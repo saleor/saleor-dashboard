@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelShippingData } from "@dashboard/channels/utils";
 import CardTitle from "@dashboard/components/CardTitle";
 import PriceField from "@dashboard/components/PriceField";
@@ -57,14 +58,6 @@ export const PricingCard: React.FC<PricingCardProps> = ({
         })}
       />
       <CardContent className={classes.pricingContent}>
-        <Typography variant="caption" className={classes.caption}>
-          {intl.formatMessage({
-            id: "VvA7ai",
-            defaultMessage:
-              "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency",
-            description: "info text",
-          })}
-        </Typography>
         <ResponsiveTable className={classes.table}>
           <TableHead colSpan={numberOfColumns} disabled={disabled} items={[]}>
             <TableCell className={classes.colName}>
