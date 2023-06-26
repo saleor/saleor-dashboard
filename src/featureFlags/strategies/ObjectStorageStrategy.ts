@@ -13,7 +13,7 @@ const toFlagList = (p: FlagList, [name, content]: [string, string]) => {
   return p;
 };
 
-export class ObjectStorageStrategy implements Strategy {
+export abstract class ObjectStorageStrategy implements Strategy {
   sourceObject: Record<string, string> = {};
 
   fetchAll(): Promise<FlagList> {
