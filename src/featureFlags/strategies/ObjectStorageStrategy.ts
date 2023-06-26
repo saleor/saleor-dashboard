@@ -1,11 +1,11 @@
-import { FlagList } from "../availableFlags";
+import { FlagList, GeneralFlagList } from "../availableFlags";
 import { FlagContent } from "../FlagContent";
 import { Strategy } from "../Strategy";
 import * as AvailableFlags from "./../availableFlags";
 
 const byFlagPrefix = ([key, _]: [string, string]) => key.startsWith("FF");
 
-const toFlagList = (p: FlagList, [name, content]: [string, string]) => {
+const toFlagList = (p: GeneralFlagList, [name, content]: [string, string]) => {
   if (AvailableFlags.isSupported(name)) {
     p[name] = FlagContent.fromString(content);
   }

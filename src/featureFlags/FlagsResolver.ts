@@ -6,11 +6,12 @@ import { AvailableStrategies } from "./strategies";
 import { DefaultsStrategy } from "./strategies/DefaultsStrategy";
 import { Strategy } from "./Strategy";
 
-const byNotEmpty = (p: AvailableFlags.FlagList) => Object.keys(p).length > 0;
+const byNotEmpty = (p: AvailableFlags.GeneralFlagList) =>
+  Object.keys(p).length > 0;
 
 const toFlagEntries = (
   p: Array<[string, FlagContent]>,
-  c: AvailableFlags.FlagList,
+  c: AvailableFlags.GeneralFlagList,
 ): Array<[string, FlagContent]> => [...p, ...Object.entries(c)];
 
 const toWithoutPrefixes = ([name, content]: [string, FlagContent]): [
@@ -19,7 +20,7 @@ const toWithoutPrefixes = ([name, content]: [string, FlagContent]): [
 ] => [name.replace("FF_", ""), content];
 
 const toSingleObject = (
-  p: AvailableFlags.FlagList,
+  p: AvailableFlags.GeneralFlagList,
   [name, content]: [string, FlagContent],
 ) => {
   if (!AvailableFlags.isSupported(name)) {

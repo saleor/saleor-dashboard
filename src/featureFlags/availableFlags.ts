@@ -22,6 +22,7 @@ const AVAILABLE_FLAGS = [
     content: { enabled: false, value: "default" },
   } as const,
   */
+
   {
     name: "flag1",
     displayName: "Flag 1",
@@ -31,14 +32,15 @@ const AVAILABLE_FLAGS = [
 ] satisfies FlagDefinition[];
 
 type TypedEntry = (typeof AVAILABLE_FLAGS)[number];
-
-export type Entry = TypedEntry extends never ? FlagDefinition : TypedEntry;
-export type Name = TypedEntry extends never ? string : TypedEntry["name"];
-export type FlagList = Name extends never
+type GeneralEntry = TypedEntry extends never ? FlagDefinition : TypedEntry;
+export type Entry = TypedEntry;
+export type Name = TypedEntry["name"];
+export type FlagList = Record<Name, FlagContent>;
+export type GeneralFlagList = TypedEntry extends never
   ? Record<string, FlagContent>
-  : Record<Name, FlagContent>;
+  : FlagList;
 
-const toFlagContent = (p: FlagList, c: Entry) => {
+const toFlagContent = (p: GeneralFlagList, c: GeneralEntry) => {
   p[c.name] = new FlagContent(c.content.enabled, c.content.value);
   return p;
 };
@@ -51,8 +53,8 @@ export const isSupported = (name: string): name is Name =>
 export const asFlagContent = () =>
   AVAILABLE_FLAGS.reduce(toFlagContent, {} as FlagList);
 
-export const asFlagInfoArray = (list: FlagList) =>
-  AVAILABLE_FLAGS.map((el: Entry) => ({
+export const asFlagInfoArray = (list: GeneralFlagList) =>
+  AVAILABLE_FLAGS.map((el: GeneralEntry) => ({
     ...el,
     content: list[el.name],
   }));
