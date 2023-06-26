@@ -96,6 +96,7 @@ const mockedCategories: ColumnCategory[] = [
     hasPreviousPage: false,
     onNextPage: () => undefined,
     onPreviousPage: () => undefined,
+    onSearch: () => undefined,
   },
 ];
 

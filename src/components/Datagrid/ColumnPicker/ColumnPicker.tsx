@@ -39,6 +39,11 @@ export const ColumnPicker = ({
   const [pickerOpen, setPickerOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
 
+  const renderCategories =
+    columnCategories &&
+    typeof onDynamicColumnSelect === "function" &&
+    columnPickerSettings;
+
   const handleToggle = (id: string) =>
     selectedColumns.includes(id)
       ? onSave(selectedColumns.filter(currentId => currentId !== id))
@@ -74,7 +79,7 @@ export const ColumnPicker = ({
           gridTemplateColumns={expanded ? 2 : 1}
           overflow="hidden"
         >
-          {expanded && columnCategories && (
+          {expanded && renderCategories && (
             <ColumnPickerCategories
               columnCategories={columnCategories}
               columnPickerSettings={columnPickerSettings}
@@ -100,7 +105,7 @@ export const ColumnPicker = ({
               handleToggle={handleToggle}
               selectedColumns={selectedColumns}
             />
-            {columnCategories && (
+            {dynamicColumns && (
               <ColumnPickerDynamicColumns
                 dynamicColumns={dynamicColumns}
                 selectedColumns={selectedColumns}

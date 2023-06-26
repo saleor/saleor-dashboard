@@ -48,7 +48,7 @@ export const ColumnPickerAvailableNodes = ({
       );
     }
 
-    return currentCategory.availableNodes.map(node => (
+    return currentCategory.availableNodes!.map(node => (
       <Box padding={2} key={node.id}>
         <Checkbox
           onCheckedChange={() => changeHandler(node.id)}

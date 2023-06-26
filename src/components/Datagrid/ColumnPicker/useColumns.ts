@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
@@ -21,7 +22,7 @@ export interface ColumnCategory {
   availableNodes: AvailableColumn[] | undefined;
   selectedNodes: AvailableColumn[] | undefined;
   initialSearch?: string;
-  onSearch?: (query: string) => void;
+  onSearch: (query: string) => void;
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   onNextPage: (query: string) => void;
@@ -45,8 +46,9 @@ export const useColumns = ({
   columnPickerSettings,
   setDynamicColumnSettings,
 }: UseColumnsProps) => {
-  const [dynamicColumns, updateDynamicColumns] =
-    React.useState<AvailableColumn[]>(null);
+  const [dynamicColumns, updateDynamicColumns] = React.useState<
+    AvailableColumn[] | null | undefined
+  >(null);
 
   // Dynamic columns are loaded from the API, thus they need to be updated
   // after query resolves with data. Then we also sort them by order of addition

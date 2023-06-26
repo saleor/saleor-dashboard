@@ -5,7 +5,7 @@ import { ColumnCategory } from "./useColumns";
 
 export interface ColumnPickerCategoryListProps {
   columnCategories: ColumnCategory[];
-  setCurrentCategory: React.Dispatch<React.SetStateAction<string>>;
+  setCurrentCategory: React.Dispatch<React.SetStateAction<string | null>>;
 }
 export const ColumnPickerCategoryList = ({
   columnCategories,

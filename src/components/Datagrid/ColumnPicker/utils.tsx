@@ -1,6 +1,6 @@
 import { ArrowLeftIcon, CloseIcon } from "@saleor/macaw-ui/next";
 import uniqBy from "lodash/uniqBy";
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 
 import { AvailableColumn } from "../types";
 import { ColumnCategory } from "./useColumns";
@@ -10,7 +10,7 @@ export const filterEmptyColumn = (column: AvailableColumn) =>
 
 export const getExitIcon = (
   columnCategories: ColumnCategory[],
-  currentCategory: ColumnCategory,
+  currentCategory: ColumnCategory | undefined,
 ) => {
   if (columnCategories.length === 1) {
     return <CloseIcon />;
@@ -28,15 +28,15 @@ export const getExitOnClick = ({
   onClose,
 }: {
   columnCategories: ColumnCategory[];
-  currentCategory: ColumnCategory;
-  setCurrentCategory: (category: string | undefined) => void;
+  currentCategory: ColumnCategory | undefined;
+  setCurrentCategory: Dispatch<SetStateAction<string | null>>;
   onClose: () => void;
 }) => {
-  if (columnCategories.length === 1) {
+  if (columnCategories?.length === 1) {
     return onClose;
   }
   if (currentCategory) {
-    return () => setCurrentCategory(undefined);
+    return () => setCurrentCategory(null);
   } else {
     return onClose;
   }
@@ -55,24 +55,26 @@ export const isLastEnabledColumn = (
   );
 };
 
-export const sortColumns = (columns: AvailableColumn[], order: string[]) =>
-  columns.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
+export const sortColumns = (
+  columns: AvailableColumn[] | undefined,
+  order: string[],
+) => columns?.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
 
 export const filterSelectedColumns = (
-  columns: AvailableColumn[],
+  columns: AvailableColumn[] | undefined,
   selected: string[],
-) => columns.filter(column => selected.includes(column.id));
+) => columns?.filter(column => selected.includes(column.id));
 
 export const areCategoriesLoaded = (categories: ColumnCategory[] | undefined) =>
   categories?.every(category => Array.isArray(category.selectedNodes));
 
 export const extractSelectedNodesFromCategories = (
   categories: ColumnCategory[] | undefined,
-) => categories.flatMap(category => category.selectedNodes);
+) => categories?.flatMap(category => category.selectedNodes);
 
 export const extractAvailableNodesFromCategories = (
   categories: ColumnCategory[] | undefined,
-) => categories.flatMap(category => category.availableNodes);
+) => categories?.flatMap(category => category.availableNodes);
 
 export const mergeSelectedColumns = ({
   staticColumns,
