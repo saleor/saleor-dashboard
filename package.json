@@ -124,6 +124,7 @@
     "@percy/cypress": "^3.1.2",
     "@release-it/bumper": "^2.0.0",
     "@saleor/app-sdk": "0.39.1",
+    "@swc/jest": "^0.2.26",
     "@types/apollo-upload-client": "^17.0.2",
     "@types/color-convert": "^2.0.0",
     "@types/debug": "^4.1.7",
@@ -253,7 +254,7 @@
     ],
     "testEnvironment": "jest-environment-jsdom",
     "transform": {
-      "^.+\\.(jsx?|tsx?)$": "babel-jest",
+      "^.+\\.(jsx?|tsx?)$": "@swc/jest",
       "^.+\\.(png|svg|jpe?g)$": "jest-file"
     },
     "testRegex": ".*\\.test\\.tsx?$",

@@ -17,6 +17,14 @@ import ProductUpdatePage, { ProductUpdatePageProps } from "./ProductUpdatePage";
 
 const product = productFixture(placeholderImage);
 
+jest.mock("@dashboard/hooks/useNavigator", () => {
+  const actualModule = jest.requireActual("@dashboard/hooks/useNavigator");
+  return {
+    __esModule: true,
+    ...actualModule,
+  };
+});
+
 const onSubmit = jest.fn();
 const useNavigator = jest.spyOn(_useNavigator, "default");
 jest.mock("@dashboard/components/RichTextEditor/RichTextEditor");
