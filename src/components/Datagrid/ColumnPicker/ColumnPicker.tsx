@@ -105,7 +105,7 @@ export const ColumnPicker = ({
               handleToggle={handleToggle}
               selectedColumns={selectedColumns}
             />
-            {dynamicColumns && (
+            {columnCategories && (
               <ColumnPickerDynamicColumns
                 dynamicColumns={dynamicColumns}
                 selectedColumns={selectedColumns}
