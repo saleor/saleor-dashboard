@@ -22,13 +22,6 @@ const AVAILABLE_FLAGS = [
     content: { enabled: false, value: "default" },
   } as const,
   */
-
-  {
-    name: "flag1",
-    displayName: "Flag 1",
-    description: "some description",
-    content: { enabled: false, value: "default" },
-  } as const,
 ] satisfies FlagDefinition[];
 
 type TypedEntry = (typeof AVAILABLE_FLAGS)[number];
