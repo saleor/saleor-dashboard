@@ -2,6 +2,7 @@
 import { filterable } from "@dashboard/attributes/utils/data";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useColumnPickerSettings } from "@dashboard/components/Datagrid/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
@@ -16,7 +17,8 @@ import {
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
   ProductListQueryVariables,
-  useGridAttributesQuery,
+  useAvailableColumnAttributesLazyQuery,
+  useGridAttributesLazyQuery,
   useInitialProductFilterAttributesQuery,
   useInitialProductFilterCategoriesQuery,
   useInitialProductFilterCollectionsQuery,
@@ -38,7 +40,6 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { commonMessages } from "@dashboard/intl";
-import { maybe } from "@dashboard/misc";
 import ProductExportDialog from "@dashboard/products/components/ProductExportDialog";
 import {
   getAttributeIdFromColumnValue,
@@ -54,7 +55,6 @@ import {
 } from "@dashboard/products/urls";
 import useAttributeSearch from "@dashboard/searches/useAttributeSearch";
 import useAttributeValueSearch from "@dashboard/searches/useAttributeValueSearch";
-import useAvailableInGridAttributesSearch from "@dashboard/searches/useAvailableInGridAttributesSearch";
 import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
@@ -104,6 +104,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ListViews.PRODUCT_LIST,
   );
 
+  const { columnPickerSettings, setDynamicColumnsSettings } =
+    useColumnPickerSettings("PRODUCT_LIST");
   // Keep reference to clear datagrid selection function
   const clearRowSelectionCallback = React.useRef<() => void | null>(null);
   const clearRowSelection = () => {
@@ -354,7 +356,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     [params, settings.rowNumber],
   );
 
-  const filteredColumnIds = settings.columns
+  const filteredColumnIds = (columnPickerSettings ?? [])
     .filter(isAttributeColumnValue)
     .map(getAttributeIdFromColumnValue);
 
@@ -363,7 +365,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     variables: {
       ...queryVariables,
       hasChannel: !!selectedChannel,
-      hasSelectedAttributes: filteredColumnIds.length > 0,
     },
   });
 
@@ -387,16 +388,21 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     [products, selectedProductIds],
   );
 
-  const availableInGridAttributesOpts = useAvailableInGridAttributesSearch({
-    variables: {
-      ...DEFAULT_INITIAL_SEARCH_DATA,
-      first: 5,
-    },
-  });
-  const gridAttributes = useGridAttributesQuery({
-    variables: { ids: filteredColumnIds },
-    skip: filteredColumnIds.length === 0,
-  });
+  const availableColumnsAttributesOpts =
+    useAvailableColumnAttributesLazyQuery();
+
+  const [gridAttributesQuery, gridAttributesOpts] =
+    useGridAttributesLazyQuery();
+
+  useEffect(() => {
+    // Fetch this only on initial render
+    gridAttributesQuery({
+      variables: {
+        ids: filteredColumnIds,
+        hasAttributes: !!filteredColumnIds.length,
+      },
+    });
+  }, []);
 
   const {
     loadMore: loadMoreDialogProductTypes,
@@ -460,31 +466,16 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           sort: params.sort,
         }}
         onSort={handleSort}
-        availableInGridAttributes={
-          mapEdgesToItems(
-            availableInGridAttributesOpts.result?.data?.availableInGrid,
-          ) || []
-        }
         currencySymbol={selectedChannel?.currencyCode || ""}
         currentTab={currentTab}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
-        gridAttributes={mapEdgesToItems(gridAttributes?.data?.grid) || []}
+        gridAttributesOpts={gridAttributesOpts}
         settings={settings}
-        loading={
-          availableInGridAttributesOpts.result.loading || gridAttributes.loading
-        }
-        hasMore={maybe(
-          () =>
-            availableInGridAttributesOpts.result.data.availableInGrid.pageInfo
-              .hasNextPage,
-          false,
-        )}
+        availableColumnsAttributesOpts={availableColumnsAttributesOpts}
         disabled={loading}
         limits={limitOpts.data?.shop.limits}
         products={products}
-        onColumnQueryChange={availableInGridAttributesOpts.search}
-        onFetchMore={availableInGridAttributesOpts.loadMore}
         onUpdateListSettings={(...props) => {
           clearRowSelection();
           updateListSettings(...props);
@@ -507,9 +498,10 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         tabs={tabs.map(tab => tab.name)}
         onExport={() => openModal("export")}
         selectedChannelId={selectedChannel?.id}
+        columnPickerSettings={columnPickerSettings}
+        setDynamicColumnSettings={setDynamicColumnsSettings}
         selectedProductIds={selectedProductIds}
         onSelectProductIds={handleSetSelectedProductIds}
-        columnQuery={availableInGridAttributesOpts.query}
         clearRowSelection={clearRowSelection}
         setBulkDeleteButtonRef={(ref: HTMLButtonElement) => {
           deleteButtonRef.current = ref;

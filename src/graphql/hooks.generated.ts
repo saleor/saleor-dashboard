@@ -13367,7 +13367,7 @@ export type InitialProductFilterProductTypesQueryHookResult = ReturnType<typeof 
 export type InitialProductFilterProductTypesLazyQueryHookResult = ReturnType<typeof useInitialProductFilterProductTypesLazyQuery>;
 export type InitialProductFilterProductTypesQueryResult = Apollo.QueryResult<Types.InitialProductFilterProductTypesQuery, Types.InitialProductFilterProductTypesQueryVariables>;
 export const ProductListDocument = gql`
-    query ProductList($first: Int, $after: String, $last: Int, $before: String, $filter: ProductFilterInput, $channel: String, $sort: ProductOrder, $hasChannel: Boolean!, $hasSelectedAttributes: Boolean!) {
+    query ProductList($first: Int, $after: String, $last: Int, $before: String, $filter: ProductFilterInput, $channel: String, $sort: ProductOrder, $hasChannel: Boolean!) {
   products(
     before: $before
     after: $after
@@ -13382,7 +13382,7 @@ export const ProductListDocument = gql`
         ...ProductWithChannelListings
         updatedAt
         description
-        attributes @include(if: $hasSelectedAttributes) {
+        attributes {
           ...ProductListAttribute
         }
       }
@@ -13419,7 +13419,6 @@ ${ProductListAttributeFragmentDoc}`;
  *      channel: // value for 'channel'
  *      sort: // value for 'sort'
  *      hasChannel: // value for 'hasChannel'
- *      hasSelectedAttributes: // value for 'hasSelectedAttributes'
  *   },
  * });
  */
@@ -13746,8 +13745,19 @@ export type ProductMediaByIdQueryHookResult = ReturnType<typeof useProductMediaB
 export type ProductMediaByIdLazyQueryHookResult = ReturnType<typeof useProductMediaByIdLazyQuery>;
 export type ProductMediaByIdQueryResult = Apollo.QueryResult<Types.ProductMediaByIdQuery, Types.ProductMediaByIdQueryVariables>;
 export const GridAttributesDocument = gql`
-    query GridAttributes($ids: [ID!]!) {
-  grid: attributes(first: 25, filter: {ids: $ids}) {
+    query GridAttributes($ids: [ID!]!, $hasAttributes: Boolean!) {
+  availableAttributes: attributes(first: 10) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+  selectedAttributes: attributes(first: 25, filter: {ids: $ids}) @include(if: $hasAttributes) {
     edges {
       node {
         id
@@ -13756,7 +13766,7 @@ export const GridAttributesDocument = gql`
     }
   }
 }
-    `;
+    ${PageInfoFragmentDoc}`;
 
 /**
  * __useGridAttributesQuery__
@@ -13771,6 +13781,7 @@ export const GridAttributesDocument = gql`
  * const { data, loading, error } = useGridAttributesQuery({
  *   variables: {
  *      ids: // value for 'ids'
+ *      hasAttributes: // value for 'hasAttributes'
  *   },
  * });
  */
@@ -13785,6 +13796,59 @@ export function useGridAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQu
 export type GridAttributesQueryHookResult = ReturnType<typeof useGridAttributesQuery>;
 export type GridAttributesLazyQueryHookResult = ReturnType<typeof useGridAttributesLazyQuery>;
 export type GridAttributesQueryResult = Apollo.QueryResult<Types.GridAttributesQuery, Types.GridAttributesQueryVariables>;
+export const AvailableColumnAttributesDocument = gql`
+    query AvailableColumnAttributes($search: String!, $before: String, $after: String, $first: Int, $last: Int) {
+  attributes(
+    filter: {search: $search}
+    before: $before
+    after: $after
+    first: $first
+    last: $last
+  ) {
+    edges {
+      node {
+        id
+        name
+      }
+    }
+    pageInfo {
+      ...PageInfo
+    }
+  }
+}
+    ${PageInfoFragmentDoc}`;
+
+/**
+ * __useAvailableColumnAttributesQuery__
+ *
+ * To run a query within a React component, call `useAvailableColumnAttributesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAvailableColumnAttributesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAvailableColumnAttributesQuery({
+ *   variables: {
+ *      search: // value for 'search'
+ *      before: // value for 'before'
+ *      after: // value for 'after'
+ *      first: // value for 'first'
+ *      last: // value for 'last'
+ *   },
+ * });
+ */
+export function useAvailableColumnAttributesQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>(AvailableColumnAttributesDocument, options);
+      }
+export function useAvailableColumnAttributesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>(AvailableColumnAttributesDocument, options);
+        }
+export type AvailableColumnAttributesQueryHookResult = ReturnType<typeof useAvailableColumnAttributesQuery>;
+export type AvailableColumnAttributesLazyQueryHookResult = ReturnType<typeof useAvailableColumnAttributesLazyQuery>;
+export type AvailableColumnAttributesQueryResult = Apollo.QueryResult<Types.AvailableColumnAttributesQuery, Types.AvailableColumnAttributesQueryVariables>;
 export const SearchAttributesDocument = gql`
     query SearchAttributes($after: String, $first: Int!, $query: String!) {
   search: attributes(after: $after, first: $first, filter: {search: $query}) {
