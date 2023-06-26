@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { createPaginationState } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ReorderAction } from "@dashboard/types";
 import { TableBody } from "@material-ui/core";
 import { TableBodyProps } from "@material-ui/core/TableBody";
@@ -29,10 +30,9 @@ const useStyles = makeStyles(
   { name: "SortableTableBody" },
 );
 
-const SortableTableBody: React.FC<Omit<
-  TableBodyProps & SortableTableBodyProps,
-  "ref"
->> = props => {
+const SortableTableBody: React.FC<
+  Omit<TableBodyProps & SortableTableBodyProps, "ref">
+> = props => {
   const classes = useStyles({});
 
   return (

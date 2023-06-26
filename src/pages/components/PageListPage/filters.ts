@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FilterElement, IFilter } from "@dashboard/components/Filter";
 import { SearchWithFetchMoreProps } from "@dashboard/giftCards/GiftCardsList/GiftCardListSearchAndFilters/types";
 import { SearchPageTypesQuery } from "@dashboard/graphql";
@@ -112,16 +113,10 @@ export type PageListUrlQueryParams = Pagination &
   ActiveTab &
   Search;
 
-export const {
-  deleteFilterTab,
-  getFilterTabs,
-  saveFilterTab,
-} = createFilterTabUtils<PageListUrlFilters>(PAGES_FILTERS_KEY);
+export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
+  createFilterTabUtils<PageListUrlFilters>(PAGES_FILTERS_KEY);
 
-export const {
-  areFiltersApplied,
-  getActiveFilters,
-  getFiltersCurrentTab,
-} = createFilterUtils<PageListUrlQueryParams, PageListUrlFilters>(
-  PageListUrlFiltersWithMultipleValues,
-);
+export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
+  createFilterUtils<PageListUrlQueryParams, PageListUrlFilters>(
+    PageListUrlFiltersWithMultipleValues,
+  );

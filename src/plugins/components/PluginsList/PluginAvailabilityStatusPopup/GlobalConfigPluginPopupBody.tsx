@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { Pill } from "@dashboard/components/Pill";
 import { PluginBaseFragment } from "@dashboard/graphql";

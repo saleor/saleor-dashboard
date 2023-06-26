@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Card, Popper } from "@material-ui/core";
 import React from "react";
 import { useIntl } from "react-intl";

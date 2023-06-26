@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FormData } from "@dashboard/channels/components/ChannelForm";
 import { SearchData } from "@dashboard/hooks/makeTopLevelSearch";
 import { getParsedSearchData } from "@dashboard/hooks/makeTopLevelSearch/utils";

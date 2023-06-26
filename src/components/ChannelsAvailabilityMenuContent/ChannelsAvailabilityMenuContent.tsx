@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import { CollectionFragment } from "@dashboard/graphql";
 import ScrollableContent from "@dashboard/plugins/components/PluginsList/PluginAvailabilityStatusPopup/ScrollableContent";

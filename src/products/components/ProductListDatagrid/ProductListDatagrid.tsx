@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { LazyQueryResult } from "@apollo/client/react";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";

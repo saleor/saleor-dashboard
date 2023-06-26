@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { LazyQueryResult, QueryLazyOptions } from "@apollo/client";
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 import { getChannelAvailabilityLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { inputTypeMessages } from "@dashboard/attributes/components/AttributeDetails/messages";
 import { AttributeValueEditDialogFormData } from "@dashboard/attributes/utils/data";
 import { ColorPicker } from "@dashboard/components/ColorPicker";

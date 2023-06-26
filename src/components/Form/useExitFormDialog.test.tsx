@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useForm, { SubmitPromise } from "@dashboard/hooks/useForm";
 import { act, renderHook } from "@testing-library/react-hooks";
 import React from "react";

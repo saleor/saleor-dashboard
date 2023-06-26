@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { buttonMessages } from "@dashboard/intl";

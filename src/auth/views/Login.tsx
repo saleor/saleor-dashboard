@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useAvailableExternalAuthenticationsLazyQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { getAppMountUriForRedirect } from "@dashboard/utils/urls";

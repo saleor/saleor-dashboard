@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import Form from "@dashboard/components/Form";
 import FormSpacer from "@dashboard/components/FormSpacer";

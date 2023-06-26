@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Channel } from "@dashboard/channels/utils";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";

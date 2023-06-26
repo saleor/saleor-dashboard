@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { updateAtIndex } from "@dashboard/utils/lists";
 import { EditableGridCell, Item } from "@glideapps/glide-data-grid";
 import {

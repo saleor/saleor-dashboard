@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FulfillmentStatus, OrderDetailsFragment } from "@dashboard/graphql";
 import TrashIcon from "@dashboard/icons/Trash";
 import { orderHasTransactions } from "@dashboard/orders/types";

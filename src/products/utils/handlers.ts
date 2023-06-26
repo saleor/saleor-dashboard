@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FetchResult } from "@apollo/client";
 import {
   ChannelData,
@@ -140,36 +141,37 @@ export const getAvailabilityVariables = (
     };
   });
 
-export const createPreorderEndDateChangeHandler = (
-  form: UseFormResult<{ preorderEndDateTime?: string }>,
-  triggerChange: () => void,
-  preorderPastDateErrorMessage: string,
-): FormChange => event => {
-  form.change(event);
-  if (moment(event.target.value).isSameOrBefore(Date.now())) {
-    form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
-  } else {
-    form.clearErrors("preorderEndDateTime");
-  }
-  triggerChange();
-};
+export const createPreorderEndDateChangeHandler =
+  (
+    form: UseFormResult<{ preorderEndDateTime?: string }>,
+    triggerChange: () => void,
+    preorderPastDateErrorMessage: string,
+  ): FormChange =>
+  event => {
+    form.change(event);
+    if (moment(event.target.value).isSameOrBefore(Date.now())) {
+      form.setError("preorderEndDateTime", preorderPastDateErrorMessage);
+    } else {
+      form.clearErrors("preorderEndDateTime");
+    }
+    triggerChange();
+  };
 
-export const createMediaChangeHandler = (
-  form: UseFormResult<{ media: string[] }>,
-  triggerChange: () => void,
-) => (ids: string[]) => {
-  form.change({
-    target: {
-      name: "media",
-      value: ids,
-    },
-  });
+export const createMediaChangeHandler =
+  (form: UseFormResult<{ media: string[] }>, triggerChange: () => void) =>
+  (ids: string[]) => {
+    form.change({
+      target: {
+        name: "media",
+        value: ids,
+      },
+    });
 
-  triggerChange();
-};
+    triggerChange();
+  };
 
 export const handleAssignMedia = async <
-  T extends Pick<ProductVariantFragment, "id" | "media">
+  T extends Pick<ProductVariantFragment, "id" | "media">,
 >(
   media: string[],
   variant: T,

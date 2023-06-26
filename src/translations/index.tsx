@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { LanguageCodeEnum } from "@dashboard/graphql";
 import { sectionNames } from "@dashboard/intl";
 import { parse as parseQs } from "qs";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { ProductMediaFragment } from "@dashboard/graphql";

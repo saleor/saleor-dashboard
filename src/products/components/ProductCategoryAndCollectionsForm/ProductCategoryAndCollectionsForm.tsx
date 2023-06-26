@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import MultiSelectField from "@dashboard/components/MultiSelectField";

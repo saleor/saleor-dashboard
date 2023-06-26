@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Debounce from "@dashboard/components/Debounce";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";

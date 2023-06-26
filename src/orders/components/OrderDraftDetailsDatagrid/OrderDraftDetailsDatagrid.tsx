@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ColumnPicker from "@dashboard/components/ColumnPicker";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
@@ -65,6 +66,7 @@ export const OrderDraftDetailsDatagrid = ({
         Icon: (
           <Link
             to={productUrl(lines[index]?.variant.product.id)}
+            data-test-id="open-product-details"
             target="_blank"
             className={sprinkles({
               display: "flex",

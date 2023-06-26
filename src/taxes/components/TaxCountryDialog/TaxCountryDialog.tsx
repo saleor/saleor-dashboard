@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { CountryFragment } from "@dashboard/graphql";
 import { useLocalSearch } from "@dashboard/hooks/useLocalSearch";

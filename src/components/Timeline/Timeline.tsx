@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { Button } from "@dashboard/components/Button";
 import { getUserInitials } from "@dashboard/misc";
