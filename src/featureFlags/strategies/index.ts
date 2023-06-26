@@ -3,6 +3,4 @@ import { LocalStorageStrategy } from "./LocalStorageStrategy";
 
 export { EnvVarsStrategy, LocalStorageStrategy };
 
-export type AvailableStrategies =
-  | typeof EnvVarsStrategy
-  | typeof LocalStorageStrategy;
+export type AvailableStrategies = EnvVarsStrategy | LocalStorageStrategy;

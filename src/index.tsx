@@ -122,7 +122,10 @@ const App: React.FC = () => (
                   <BackgroundTasksProvider>
                     <AppStateProvider>
                       <FeatureFlagsProvider
-                        strategies={[LocalStorageStrategy, EnvVarsStrategy]}
+                        strategies={[
+                          new LocalStorageStrategy(),
+                          new EnvVarsStrategy(),
+                        ]}
                       >
                         <AuthProvider>
                           <ShopProvider>

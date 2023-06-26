@@ -67,13 +67,8 @@ export class FlagsResolver {
   }
 }
 
-const createInstances = (strategies: AvailableStrategies[]) =>
-  strategies.map(Constrctor => new Constrctor());
-
 export const useFlagsResolver = (strategies: AvailableStrategies[]) => {
-  const resolver = useRef<FlagsResolver>(
-    new FlagsResolver(createInstances(strategies)),
-  );
+  const resolver = useRef<FlagsResolver>(new FlagsResolver(strategies));
 
   return resolver.current;
 };
