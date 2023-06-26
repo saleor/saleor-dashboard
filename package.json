@@ -162,7 +162,7 @@
     "eslint-config-standard-with-typescript": "^35.0.0",
     "eslint-nibble": "^8.1.0",
     "eslint-plugin-cypress": "^2.11.2",
-    "eslint-plugin-formatjs": "^2.18.0",
+    "eslint-plugin-formatjs": "^4.10.3",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-local-rules": "^0.1.1",
     "eslint-plugin-n": "^15.7.0",
