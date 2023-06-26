@@ -1,0 +1,35 @@
+name: Open release
+
+on:
+  push:
+    branches:
+      # Matches release branches
+      - "[0-9]+.[0-9]+"
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
+jobs:
+  release:
+    name: Prepare release with Changesets
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+      - name: Install Dependencies
+        run: npm ci
+      - name: Create Release Pull Request
+        uses: changesets/action@d89c1de63c7f28ac47ec85ed395f5f1d045d4697 # v1.4.4
+        id: changesets
+        with:
+          title: "Prepare release ${{ github.ref_name }}"
+          commit: "Release ${{ github.ref_name }}"
+          publish: "npm run release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
