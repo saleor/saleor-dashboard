@@ -9,7 +9,7 @@ import {
   PermissionEnum,
 } from "@dashboard/graphql";
 
-import { GetV2SaleorAppsResponse } from "./marketplace.types";
+import { AppstoreApi } from "./appstore.types";
 
 export const activeApp: AppListItemFragment = {
   __typename: "App",
@@ -166,7 +166,7 @@ export const appAvatar: AppAvatarFragment = {
   __typename: "App",
 };
 
-export const releasedApp: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
+export const releasedApp: AppstoreApi.ReleasedSaleorApp = {
   name: {
     en: "Test released app",
   },
@@ -212,7 +212,7 @@ export const releasedApp: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
   ],
 };
 
-export const comingSoonApp: GetV2SaleorAppsResponse.ComingSoonSaleorApp = {
+export const comingSoonApp: AppstoreApi.ComingSoonSaleorApp = {
   name: {
     en: "Test coming soon app",
   },

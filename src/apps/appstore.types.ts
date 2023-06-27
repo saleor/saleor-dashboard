@@ -1,5 +1,8 @@
+/**
+ * Interfaces for shapes of data fetched from AppStore API.
+ */
 // eslint-disable-next-line @typescript-eslint/no-namespace
-export namespace GetV2SaleorAppsResponse {
+export namespace AppstoreApi {
   export interface SaleorAppBase {
     name: {
       en: string;
