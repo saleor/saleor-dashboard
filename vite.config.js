@@ -45,7 +45,6 @@ export default defineConfig(({ command, mode }) => {
     DEMO_MODE,
     CUSTOM_VERSION,
     FLAGS_SERVICE_ENABLED,
-    FLAGSMITH_ID,
   } = env;
 
   const base = STATIC_URL ?? "/";
@@ -132,7 +131,6 @@ export default defineConfig(({ command, mode }) => {
     */
     ...(isDev ? { global: {} } : {}),
     FLAGS_SERVICE_ENABLED: FLAGS_SERVICE_ENABLED === "true",
-    FLAGSMITH_ID: JSON.stringify(FLAGSMITH_ID),
     // Keep all feature flags from env in global variable
     FLAGS: JSON.stringify(featureFlagsEnvs),
   };
