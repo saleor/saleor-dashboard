@@ -1,12 +1,10 @@
 import { useState } from "react";
+
 import { FilterElement } from "./FilterElement";
 
-export type FilterContainer = (string | FilterElement | FilterContainer)[]
+export type FilterContainer = Array<string | FilterElement | FilterContainer>;
 
-
-export const useFilterContainer = (
-  initialValue: FilterContainer,
-) => {
+export const useFilterContainer = (initialValue: FilterContainer) => {
   const [value, setValue] = useState(initialValue);
 
   const addEmpty = () => {

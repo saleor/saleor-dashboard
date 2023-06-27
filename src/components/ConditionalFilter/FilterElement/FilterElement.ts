@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
-import { ConditionItem, ConditionOptions } from "./ConditionOptions";
 import { LeftOperand } from "./../useLeftOperands";
 import { CONDITIONS, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
+import { ConditionItem, ConditionOptions } from "./ConditionOptions";
 import { ConditionOption, ConditionSelected } from "./ConditionSelected";
 
 interface ExpressionValue {
@@ -12,9 +12,7 @@ interface ExpressionValue {
   type: string;
 }
 
-const createStaticEntry = (
-  rawEntry: ConditionOption,
-) => {
+const createStaticEntry = (rawEntry: ConditionOption) => {
   if (typeof rawEntry === "string") {
     return rawEntry;
   }
@@ -26,9 +24,7 @@ const createStaticEntry = (
   return rawEntry.slug;
 };
 
-const createAttributeEntry = (
-  rawEntry: ConditionOption,
-) => {
+const createAttributeEntry = (rawEntry: ConditionOption) => {
   if (typeof rawEntry === "string") {
     return rawEntry;
   }
@@ -73,24 +69,25 @@ export class FilterElement {
   }
 
   public updateCondition(conditionValue: ConditionItem) {
-    this.condition.selected = ConditionSelected.fromConditionItem(conditionValue)
+    this.condition.selected =
+      ConditionSelected.fromConditionItem(conditionValue);
   }
 
   public updateRightOperator(value: ConditionOption) {
-    this.condition.selected.setValue(value)
+    this.condition.selected.setValue(value);
   }
 
   public updateRightOptions(options: ConditionOption[]) {
-    this.condition.selected.setOptions(options)
+    this.condition.selected.setOptions(options);
   }
 
   public updateRightLoadingState(loading: boolean) {
     if (loading) {
-      this.condition.selected.enableLoading()
-      return
+      this.condition.selected.enableLoading();
+      return;
     }
 
-    this.condition.selected.disableLoading()
+    this.condition.selected.disableLoading();
   }
 
   public isEmpty() {
@@ -146,11 +143,7 @@ export class FilterElement {
   }
 
   public static createEmpty() {
-    return new FilterElement(
-      { value: "", label: "", type: "s" },
-      Condition.createEmpty(),
-      false,
-    );
+    return new FilterElement({ value: "", label: "", type: "s" }, null, false);
   }
 
   public static fromUrlToken(token: UrlToken, response: InitialStateResponse) {
