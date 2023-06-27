@@ -1,27 +1,22 @@
-import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
+import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { useEffect, useReducer, useRef } from "react";
 
 interface State {
-  data?: GetV2SaleorAppsResponse.SaleorApp[];
+  data?: AppstoreApi.SaleorApp[];
   error?: Error;
 }
 
 interface Cache {
-  [url: string]: GetV2SaleorAppsResponse.SaleorApp[];
+  [url: string]: AppstoreApi.SaleorApp[];
 }
 
 // discriminated union type
 type Action =
   | { type: "loading" }
-  | { type: "fetched"; payload: GetV2SaleorAppsResponse.SaleorApp[] }
+  | { type: "fetched"; payload: AppstoreApi.SaleorApp[] }
   | { type: "error"; payload: Error };
 
-/**
- * Hook used to fetch apps list available under given marketplace url.
- * @param marketplaceUrl - url from which fetch data with apps list
- * @returns state object containing data with apps list or fetch error
- */
-function useMarketplaceApps(marketplaceUrl?: string): State {
+function useAppstoreApps(appstoreUrl?: string): State {
   const cache = useRef<Cache>({});
 
   // Used to prevent state update if the component is unmounted
@@ -54,7 +49,7 @@ function useMarketplaceApps(marketplaceUrl?: string): State {
 
   useEffect(() => {
     // Do nothing if the url is not given
-    if (!marketplaceUrl) {
+    if (!appstoreUrl) {
       return;
     }
 
@@ -64,20 +59,19 @@ function useMarketplaceApps(marketplaceUrl?: string): State {
       dispatch({ type: "loading" });
 
       // If a cache exists for this url, return it
-      if (cache.current[marketplaceUrl]) {
-        dispatch({ type: "fetched", payload: cache.current[marketplaceUrl] });
+      if (cache.current[appstoreUrl]) {
+        dispatch({ type: "fetched", payload: cache.current[appstoreUrl] });
         return;
       }
 
       try {
-        const response = await fetch(marketplaceUrl);
+        const response = await fetch(appstoreUrl);
         if (!response.ok) {
           throw new Error(response.statusText);
         }
 
-        const data =
-          (await response.json()) as GetV2SaleorAppsResponse.SaleorApp[];
-        cache.current[marketplaceUrl] = data;
+        const data = (await response.json()) as AppstoreApi.SaleorApp[];
+        cache.current[appstoreUrl] = data;
         if (cancelRequest.current) {
           return;
         }
@@ -100,9 +94,9 @@ function useMarketplaceApps(marketplaceUrl?: string): State {
       cancelRequest.current = true;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [marketplaceUrl]);
+  }, [appstoreUrl]);
 
   return state;
 }
 
-export default useMarketplaceApps;
+export default useAppstoreApps;

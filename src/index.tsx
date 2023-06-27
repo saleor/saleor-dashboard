@@ -16,7 +16,7 @@ import TagManager from "react-gtm-module";
 import { useIntl } from "react-intl";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import AppsSection from "./apps";
+import { AppsSectionRoot } from "./apps";
 import { ExternalAppProvider } from "./apps/components/ExternalAppContext";
 import { AppSections } from "./apps/urls";
 import AttributeSection from "./attributes";
@@ -286,7 +286,7 @@ const Routes: React.FC = () => {
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_APPS]}
                 path={AppSections.appsSection}
-                component={AppsSection}
+                component={AppsSectionRoot}
               />
               <SectionRoute
                 permissions={[PermissionEnum.MANAGE_PRODUCTS]}
