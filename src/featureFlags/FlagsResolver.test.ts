@@ -7,7 +7,7 @@ jest.mock("./availableFlags", () => ({
 
 describe("featureFlags/FlagsResolver", () => {
   it("fetches flags data in given order", async () => {
-    // ARRANGE
+    // Arrange
     const strategy1 = {
       fetchAll: () => ({
         flag1: { enabled: true, payload: "test1" },
@@ -28,10 +28,10 @@ describe("featureFlags/FlagsResolver", () => {
 
     const resolver = new FlagsResolver([strategy1, strategy2], defaultStrategy);
 
-    // ACT
+    // Act
     const results = await resolver.fetchAll().getResult();
 
-    // ASSERT
+    // Assert
     expect(results).toEqual([
       { flag1: { enabled: true, payload: "test1" } },
       { flag1: { enabled: true, payload: "test2" } },
@@ -39,7 +39,7 @@ describe("featureFlags/FlagsResolver", () => {
     ]);
   });
 
-  // ARRANGE
+  // Arrange
   it.each([
     {
       strategies: [
@@ -92,10 +92,10 @@ describe("featureFlags/FlagsResolver", () => {
 
       const resolver = new FlagsResolver(strategies, defaultStrategy);
 
-      // ACT
+      // Act
       const results = await resolver.fetchAll().combineWithPriorities();
 
-      // ASSERT
+      // Assert
       expect(results).toEqual(expected);
     },
   );

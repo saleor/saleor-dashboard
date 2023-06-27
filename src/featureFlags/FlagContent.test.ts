@@ -2,26 +2,26 @@ import { FlagValue } from "./FlagContent";
 
 describe("featureFlags/FlagValue", () => {
   it("creates from string", async () => {
-    // ARRANGE
+    // Arrange
     const stringValue = `{ "enabled": true, "payload": "test" }`;
 
-    // ACT
+    // Act
     const instance = FlagValue.fromString(stringValue);
 
-    // ASSERT
+    // Assert
     expect(instance).toEqual({ enabled: true, payload: "test" });
   });
 
   it("creates empty", async () => {
-    // ACT
+    // Act
     const instance = FlagValue.empty();
 
-    // ASSERT
+    // Arrange
     expect(instance).toEqual({ enabled: false, payload: "" });
   });
 
   it("returns a JSON string", async () => {
-    // ARRANGE
+    // Arrange
     const instance = new FlagValue(true, "some value");
 
     const jsonString = instance.asString();
