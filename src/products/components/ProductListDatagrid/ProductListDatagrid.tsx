@@ -1,5 +1,7 @@
 // @ts-strict-ignore
-import ColumnPicker from "@dashboard/components/ColumnPicker";
+import { LazyQueryResult } from "@apollo/client/react";
+import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
+import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
 import {
   DatagridChangeStateContext,
@@ -9,9 +11,10 @@ import { TablePaginationWithContext } from "@dashboard/components/TablePaginatio
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { ProductListColumns } from "@dashboard/config";
 import {
+  Exact,
   GridAttributesQuery,
   ProductListQuery,
-  SearchAvailableInGridAttributesQuery,
+  useAvailableColumnAttributesLazyQuery,
 } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
@@ -19,47 +22,56 @@ import { canBeSorted } from "@dashboard/products/views/ProductList/sort";
 import { useSearchProductTypes } from "@dashboard/searches/useProductTypeSearch";
 import {
   ChannelProps,
-  FetchMoreProps,
   ListProps,
   PageListProps,
   RelayToFlat,
   SortPage,
 } from "@dashboard/types";
-import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
-import { GridColumn, Item } from "@glideapps/glide-data-grid";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { isAttributeColumnValue } from "../ProductListPage/utils";
-import { useColumnPickerColumns } from "./hooks/useColumnPickerColumns";
-import { useDatagridColumns } from "./hooks/useDatagridColumns";
-import { messages } from "./messages";
+import {
+  getAttributeIdFromColumnValue,
+  isAttributeColumnValue,
+} from "../ProductListPage/utils";
 import {
   createGetCellContent,
+  getAttributesFetchMoreProps,
+  getAvailableAttributesData,
   getColumnMetadata,
+  getColumnSortIconName,
   getProductRowsLength,
-} from "./utils";
+  productListDynamicColumnAdapter,
+  productListStaticColumnAdapter,
+} from "./datagrid";
+import { messages } from "./messages";
 
 interface ProductListDatagridProps
   extends ListProps<ProductListColumns>,
     PageListProps<ProductListColumns>,
     SortPage<ProductListUrlSortField>,
-    FetchMoreProps,
     ChannelProps {
   activeAttributeSortId: string;
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
-  products: RelayToFlat<ProductListQuery["products"]>;
-  onRowClick?: (id: string) => void;
-  rowAnchor?: (id: string) => string;
-  columnQuery: string;
-  availableInGridAttributes: RelayToFlat<
-    SearchAvailableInGridAttributesQuery["availableInGrid"]
+  gridAttributesOpts: LazyQueryResult<
+    GridAttributesQuery,
+    Exact<{
+      ids: string | string[];
+    }>
   >;
-  onColumnQueryChange: (query: string) => void;
+  products: RelayToFlat<ProductListQuery["products"]>;
+  onRowClick: (id: string) => void;
+  rowAnchor?: (id: string) => string;
+  availableColumnsAttributesOpts: ReturnType<
+    typeof useAvailableColumnAttributesLazyQuery
+  >;
   onSelectProductIds: (rowsIndex: number[], clearSelection: () => void) => void;
-  isAttributeLoading?: boolean;
   hasRowHover?: boolean;
+  columnPickerSettings: string[];
+  setDynamicColumnSettings: (cols: string[]) => void;
+  loading: boolean;
 }
 
 export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
@@ -72,104 +84,114 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
   onSort,
   sort,
   loading,
-  gridAttributes,
-  hasMore,
-  isAttributeLoading,
-  onFetchMore,
-  columnQuery,
-  defaultSettings,
-  availableInGridAttributes,
-  onColumnQueryChange,
+  gridAttributesOpts,
+  availableColumnsAttributesOpts,
   activeAttributeSortId,
   filterDependency,
   onSelectProductIds,
   hasRowHover,
   rowAnchor,
+  columnPickerSettings,
+  setDynamicColumnSettings,
 }) => {
   const intl = useIntl();
   const searchProductType = useSearchProductTypes();
   const datagrid = useDatagridChangeState();
   const { locale } = useLocale();
   const productsLength = getProductRowsLength(disabled, products, disabled);
-  const gridAttributesFromSettings = useMemo(
-    () => settings.columns.filter(isAttributeColumnValue),
-    [settings.columns],
+
+  const handleColumnChange = useCallback(
+    (picked: ProductListColumns[]) => {
+      onUpdateListSettings("columns", picked.filter(Boolean));
+    },
+    [onUpdateListSettings],
   );
 
-  const { columns, setColumns } = useDatagridColumns({
-    activeAttributeSortId,
-    gridAttributes,
-    gridAttributesFromSettings,
-    settings,
-    sort,
+  const memoizedStaticColumns = useMemo(
+    () => productListStaticColumnAdapter(intl, sort),
+    [intl, sort],
+  );
+
+  const [queryAvailableColumnsAttributes, availableColumnsAttributesData] =
+    availableColumnsAttributesOpts;
+
+  const {
+    handlers,
+    visibleColumns,
+    staticColumns,
+    dynamicColumns,
+    selectedColumns,
+    columnCategories,
+    recentlyAddedColumn,
+  } = useColumns({
+    staticColumns: memoizedStaticColumns,
+    columnCategories: productListDynamicColumnAdapter({
+      availableAttributesData: getAvailableAttributesData({
+        availableColumnsAttributesData,
+        gridAttributesOpts,
+      }),
+      selectedAttributesData: mapEdgesToItems(
+        gridAttributesOpts.data?.selectedAttributes,
+      ),
+      activeAttributeSortId,
+      sort,
+      onSearch: (query: string) =>
+        queryAvailableColumnsAttributes({
+          variables: { search: query, first: 10 },
+        }),
+      initialSearch: availableColumnsAttributesData.variables?.search ?? "",
+      ...getAttributesFetchMoreProps({
+        queryAvailableColumnsAttributes,
+        availableColumnsAttributesData,
+        gridAttributesOpts,
+      }),
+      intl,
+    }),
+    selectedColumns: settings.columns,
+    onSave: handleColumnChange,
+    columnPickerSettings,
+    setDynamicColumnSettings,
   });
 
-  const handleColumnMoved = useCallback(
-    (startIndex: number, endIndex: number): void => {
-      setColumns(old =>
-        addAtIndex(old[startIndex], removeAtIndex(old, startIndex), endIndex),
-      );
-    },
-    [setColumns],
-  );
-
-  const handleColumnResize = useCallback(
-    (column: GridColumn, newSize: number) => {
-      if (column.id === "empty") {
-        return;
-      }
-
-      setColumns(prevColumns =>
-        prevColumns.map(prevColumn =>
-          prevColumn.id === column.id
-            ? { ...prevColumn, width: newSize }
-            : prevColumn,
-        ),
-      );
-    },
-    [setColumns],
-  );
-
-  const columnPickerColumns = useColumnPickerColumns(
-    gridAttributes,
-    availableInGridAttributes,
-    settings,
-    defaultSettings.columns,
-  );
-
-  const getCellContent = useMemo(
-    () =>
-      createGetCellContent({
-        columns,
-        products,
-        intl,
-        getProductTypes: searchProductType,
-        locale,
-        gridAttributes,
-        gridAttributesFromSettings,
-        selectedChannelId,
+  // Logic for updating sort icon in dynamic columns
+  // This is workaround before sorting is abstracted into useColumns
+  // Tracked in https://github.com/saleor/saleor-dashboard/issues/3685
+  React.useEffect(() => {
+    handlers.onCustomUpdateVisible(prevColumns =>
+      prevColumns?.map(column => {
+        if (isAttributeColumnValue(column.id)) {
+          if (
+            getAttributeIdFromColumnValue(column.id) === activeAttributeSortId
+          ) {
+            return {
+              ...column,
+              icon: getColumnSortIconName(
+                sort,
+                ProductListUrlSortField.attribute,
+              ),
+            };
+          }
+          return {
+            ...column,
+            icon: undefined,
+          };
+        }
+        return column;
       }),
-    [
-      columns,
-      gridAttributes,
-      gridAttributesFromSettings,
-      intl,
-      locale,
-      products,
-      searchProductType,
-      selectedChannelId,
-    ],
-  );
+    );
+  }, [activeAttributeSortId, sort]);
 
   const handleHeaderClicked = useCallback(
     (col: number) => {
-      const { columnName, columnId } = getColumnMetadata(columns[col].id);
+      const { columnName, columnId } = getColumnMetadata(
+        visibleColumns[col].id,
+      );
 
       if (canBeSorted(columnName, !!selectedChannelId)) {
         onSort(columnName, columnId);
       }
     },
-    [columns, onSort, selectedChannelId],
+    [visibleColumns, onSort, selectedChannelId],
   );
 
   const handleRowClick = useCallback(
@@ -196,11 +218,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
 
   const handleGetColumnTooltipContent = useCallback(
     (colIndex: number): string => {
-      const { columnName } = getColumnMetadata(columns[colIndex].id);
+      const { columnName } = getColumnMetadata(visibleColumns[colIndex].id);
       // Sortable column or empty
       if (
         canBeSorted(columnName, !!selectedChannelId) ||
-        columns[colIndex].id === "empty"
+        visibleColumns[colIndex].id === "empty"
       ) {
         return "";
       }
@@ -214,14 +236,27 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
         filterName: filterDependency.label,
       });
     },
-    [columns, filterDependency.label, intl, selectedChannelId],
+    [visibleColumns, filterDependency.label, intl, selectedChannelId],
   );
 
-  const handleColumnChange = useCallback(
-    (picked: ProductListColumns[]) => {
-      onUpdateListSettings("columns", picked);
-    },
-    [onUpdateListSettings],
+  const getCellContent = useMemo(
+    () =>
+      createGetCellContent({
+        columns: visibleColumns,
+        products,
+        intl,
+        getProductTypes: searchProductType,
+        locale,
+        selectedChannelId,
+      }),
+    [
+      visibleColumns,
+      products,
+      intl,
+      searchProductType,
+      locale,
+      selectedChannelId,
+    ],
   );
 
   return (
@@ -233,11 +268,11 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           rowMarkers="checkbox"
           columnSelect="single"
           hasRowHover={hasRowHover}
-          onColumnMoved={handleColumnMoved}
-          onColumnResize={handleColumnResize}
+          onColumnMoved={handlers.onMove}
+          onColumnResize={handlers.onResize}
           verticalBorder={col => col > 0}
           getColumnTooltipContent={handleGetColumnTooltipContent}
-          availableColumns={columns}
+          availableColumns={visibleColumns}
           onHeaderClicked={handleHeaderClicked}
           emptyText={intl.formatMessage(messages.emptyText)}
           getCellContent={getCellContent}
@@ -249,16 +284,16 @@ export const ProductListDatagrid: React.FC<ProductListDatagridProps> = ({
           fullScreenTitle={intl.formatMessage(messages.products)}
           onRowClick={handleRowClick}
           rowAnchor={handleRowAnchor}
-          renderColumnPicker={defaultProps => (
+          recentlyAddedColumn={recentlyAddedColumn}
+          renderColumnPicker={() => (
             <ColumnPicker
-              {...defaultProps}
-              {...columnPickerColumns}
-              hasMore={hasMore}
-              loading={isAttributeLoading}
-              onFetchMore={onFetchMore}
-              query={columnQuery}
-              onQueryChange={onColumnQueryChange}
-              onSave={handleColumnChange}
+              staticColumns={staticColumns}
+              dynamicColumns={dynamicColumns}
+              selectedColumns={selectedColumns}
+              columnCategories={columnCategories}
+              onDynamicColumnSelect={handlers.onDynamicColumnSelect}
+              columnPickerSettings={columnPickerSettings}
+              onSave={handlers.onChange}
             />
           )}
         />

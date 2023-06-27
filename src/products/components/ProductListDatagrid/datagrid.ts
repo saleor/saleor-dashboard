@@ -1,6 +1,8 @@
 // @ts-strict-ignore
+import { LazyQueryResult, QueryLazyOptions } from "@apollo/client";
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 import { getChannelAvailabilityLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
+import { ColumnCategory } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import {
   dropdownCell,
   readonlyTextCell,
@@ -15,47 +17,40 @@ import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
 import { getMoneyRange } from "@dashboard/components/MoneyRange";
-import { ProductListColumns } from "@dashboard/config";
-import { GridAttributesQuery, ProductListQuery } from "@dashboard/graphql";
+import {
+  AvailableColumnAttributesQuery,
+  Exact,
+  GridAttributesQuery,
+  ProductListQuery,
+  SearchAvailableInGridAttributesQuery,
+} from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
 import { getDatagridRowDataIndex } from "@dashboard/misc";
 import { ProductListUrlSortField } from "@dashboard/products/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
+import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { Item } from "@glideapps/glide-data-grid";
 import moment from "moment-timezone";
 import { IntlShape } from "react-intl";
 
 import { getAttributeIdFromColumnValue } from "../ProductListPage/utils";
-import { columnsMessages } from "./messages";
+import { categoryMetaGroups, columnsMessages } from "./messages";
 
-interface GetColumnsProps {
-  intl: IntlShape;
-  sort: Sort<ProductListUrlSortField>;
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
-  gridAttributesFromSettings: ProductListColumns[];
-  activeAttributeSortId: string;
-}
-
-export function getColumns({
-  intl,
-  sort,
-  gridAttributes,
-  gridAttributesFromSettings,
-  activeAttributeSortId,
-}: GetColumnsProps): AvailableColumn[] {
-  return [
+export const productListStaticColumnAdapter = (
+  intl: IntlShape,
+  sort: Sort<ProductListUrlSortField>,
+) =>
+  [
     {
       id: "name",
       title: intl.formatMessage(commonMessages.product),
       width: 300,
-      icon: getColumnSortDirectionIcon(sort, ProductListUrlSortField.name),
     },
     {
       id: "productType",
       title: intl.formatMessage(columnsMessages.type),
       width: 200,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.productType),
     },
     {
       id: "description",
@@ -66,50 +61,79 @@ export function getColumns({
       id: "availability",
       title: intl.formatMessage(columnsMessages.availability),
       width: 250,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.availability),
     },
     {
       id: "date",
       title: intl.formatMessage(columnsMessages.updatedAt),
       width: 250,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.date),
     },
     {
       id: "price",
       title: intl.formatMessage(columnsMessages.price),
       width: 250,
-      icon: getColumnSortIconName(sort, ProductListUrlSortField.price),
     },
-    ...gridAttributesFromSettings.map(
-      toAttributeColumnData(gridAttributes, activeAttributeSortId, sort),
-    ),
-  ];
-}
+  ].map(column => ({
+    ...column,
+    icon: getColumnSortDirectionIcon(sort, column.id),
+  }));
 
-export function toAttributeColumnData(
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>,
+export const productListDynamicColumnAdapter = ({
+  availableAttributesData,
+  selectedAttributesData,
+  activeAttributeSortId,
+  sort,
+  onSearch,
+  initialSearch,
+  hasNextPage,
+  hasPreviousPage,
+  onNextPage,
+  onPreviousPage,
+  intl,
+}): ColumnCategory[] => [
+  {
+    name: intl.formatMessage(categoryMetaGroups.attribute),
+    prefix: "attribute",
+    availableNodes: parseAttributesColumns(
+      availableAttributesData,
+      activeAttributeSortId,
+      sort,
+      intl,
+    ),
+    selectedNodes: parseAttributesColumns(
+      selectedAttributesData,
+      activeAttributeSortId,
+      sort,
+      intl,
+    ),
+    onSearch,
+    initialSearch,
+    hasNextPage,
+    hasPreviousPage,
+    onNextPage,
+    onPreviousPage,
+  },
+];
+
+export const parseAttributesColumns = (
+  attributes: RelayToFlat<
+    SearchAvailableInGridAttributesQuery["availableInGrid"]
+  >,
   activeAttributeSortId: string,
   sort: Sort<ProductListUrlSortField>,
-) {
-  return (attribute: ProductListColumns) => {
-    const attributeId = getAttributeIdFromColumnValue(attribute);
+  intl: IntlShape,
+) =>
+  attributes?.map(attribute => ({
+    id: `attribute:${attribute.id}`,
+    title: attribute.name,
+    metaGroup: intl.formatMessage(categoryMetaGroups.attribute),
+    width: 200,
+    icon:
+      attribute.id === activeAttributeSortId
+        ? getColumnSortIconName(sort, ProductListUrlSortField.attribute)
+        : undefined,
+  }));
 
-    const title =
-      gridAttributes.find(gridAttribute => attributeId === gridAttribute.id)
-        ?.name ?? "";
-
-    return {
-      id: attribute,
-      title,
-      width: 200,
-      icon:
-        attributeId === activeAttributeSortId &&
-        getColumnSortDirectionIcon(sort, ProductListUrlSortField.attribute),
-    };
-  };
-}
-
-function getColumnSortIconName(
+export function getColumnSortIconName(
   { sort, asc }: Sort<ProductListUrlSortField>,
   columnName: ProductListUrlSortField,
 ) {
@@ -130,8 +154,6 @@ interface GetCellContentProps {
   intl: IntlShape;
   getProductTypes: (query: string) => Promise<DropdownChoice[]>;
   locale: Locale;
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
-  gridAttributesFromSettings: ProductListColumns[];
   selectedChannelId?: string;
 }
 
@@ -369,3 +391,99 @@ export function getProductRowsLength(
 
   return 0;
 }
+
+type AvailableAttributesDataQueryResult = LazyQueryResult<
+  AvailableColumnAttributesQuery,
+  Exact<{
+    search: string;
+    before?: string;
+    after?: string;
+    first?: number;
+    last?: number;
+  }>
+>;
+
+type GridAttributesDataQueryResult = LazyQueryResult<
+  GridAttributesQuery,
+  Exact<{
+    ids: string | string[];
+  }>
+>;
+
+type AttributesLazyQuery = (
+  options?: QueryLazyOptions<
+    Exact<{
+      search: string;
+      before?: string;
+      after?: string;
+      first?: number;
+      last?: number;
+    }>
+  >,
+) => void;
+
+/**
+ * To avoid overfetching we use single query for initial render
+ * (gridAttributesOpts) and when pagination / search is used
+ * we use separate query - availableColumnsAttributesData
+ */
+export const getAvailableAttributesData = ({
+  availableColumnsAttributesData,
+  gridAttributesOpts,
+}: {
+  availableColumnsAttributesData: AvailableAttributesDataQueryResult;
+  gridAttributesOpts: GridAttributesDataQueryResult;
+}) =>
+  mapEdgesToItems(availableColumnsAttributesData.data?.attributes) ??
+  (availableColumnsAttributesData.loading
+    ? undefined
+    : mapEdgesToItems(gridAttributesOpts.data?.availableAttributes) ?? []);
+
+export const getAttributesFetchMoreProps = ({
+  queryAvailableColumnsAttributes,
+  availableColumnsAttributesData,
+  gridAttributesOpts,
+}: {
+  queryAvailableColumnsAttributes: AttributesLazyQuery;
+  availableColumnsAttributesData: AvailableAttributesDataQueryResult;
+  gridAttributesOpts: GridAttributesDataQueryResult;
+}) => {
+  const onNextPage = (query: string) =>
+    queryAvailableColumnsAttributes({
+      variables: {
+        search: query,
+        after:
+          availableColumnsAttributesData.data?.attributes?.pageInfo.endCursor ??
+          gridAttributesOpts.data?.availableAttributes?.pageInfo.endCursor,
+        first: 10,
+        last: null,
+        before: null,
+      },
+    });
+  const onPreviousPage = (query: string) =>
+    queryAvailableColumnsAttributes({
+      variables: {
+        search: query,
+        before:
+          availableColumnsAttributesData.data?.attributes?.pageInfo.startCursor,
+        last: 10,
+        first: null,
+        after: null,
+      },
+    });
+
+  const hasNextPage =
+    availableColumnsAttributesData.data?.attributes?.pageInfo?.hasNextPage ??
+    gridAttributesOpts.data?.availableAttributes?.pageInfo?.hasNextPage ??
+    false;
+  const hasPreviousPage =
+    availableColumnsAttributesData.data?.attributes?.pageInfo
+      ?.hasPreviousPage ?? false;
+
+  return {
+    hasNextPage,
+    hasPreviousPage,
+    onNextPage,
+    onPreviousPage,
+  };
+};

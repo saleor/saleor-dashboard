@@ -1,16 +1,12 @@
 name: QA
 
 on:
-  push:
-    branches-ignore:
-      # Matches release branches
-      - "[0-9]+.[0-9]+"
-    tags-ignore:
-      # Matches release tags
-      - "*"
+  pull_request:
+    types: [edited, labeled]
 
 jobs:
-  chromatic-storybook:
+  chromatic-storybook-branch:
+    if: ${{ contains(github.event.pull_request.labels.*.name, 'run chromatic') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -37,15 +33,7 @@ jobs:
         run: npm ci
 
       - name: Publish to Chromatic
-        if: github.ref != 'refs/heads/main'
         uses: chromaui/action@a89b674adf766dbde41ad9ea2b2b60b91188a0f0 # v6.17.4
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           ignoreLastBuildOnBranch: "${{ github.ref_name }}"
-
-      - name: Publish to Chromatic and auto accept changes
-        if: github.ref == 'refs/heads/main'
-        uses: chromaui/action@a89b674adf766dbde41ad9ea2b2b60b91188a0f0 # v6.17.4
-        with:
-          projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          autoAcceptChanges: true

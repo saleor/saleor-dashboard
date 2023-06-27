@@ -63,9 +63,11 @@ export const OrderDraftDetailsDatagrid = ({
     index => [
       {
         label: "",
-        Icon: (
+        disabled: !lines[index]?.variant?.product.id,
+        Icon: lines[index]?.variant?.product.id ? (
           <Link
             to={productUrl(lines[index]?.variant.product.id)}
+            data-test-id="open-product-details"
             target="_blank"
             className={sprinkles({
               display: "flex",
@@ -76,6 +78,11 @@ export const OrderDraftDetailsDatagrid = ({
             <ExternalLinkIcon />
             {intl.formatMessage(messages.productDetails)}
           </Link>
+        ) : (
+          <Box display="flex" alignItems="center" gap={2}>
+            <ExternalLinkIcon />
+            {intl.formatMessage(messages.productDetails)}
+          </Box>
         ),
         onSelect: () => false,
       },

@@ -1,6 +1,8 @@
 import { useTheme } from "@saleor/macaw-ui/next";
 
-export const useEmptyColumn = () => {
+import { AvailableColumn } from "../types";
+
+export const useEmptyColumn = (): AvailableColumn => {
   const { themeValues } = useTheme();
 
   return {

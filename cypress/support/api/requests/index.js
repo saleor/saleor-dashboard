@@ -8,3 +8,5 @@ export {
   deleteStaffMembersStartsWith,
   updateStaffMember,
 } from "./StaffMembers";
+export * as productsRequests from "./Product";
+export * as productsTypeRequests from "./ProductType";

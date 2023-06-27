@@ -2,18 +2,18 @@
 import { renderHook } from "@testing-library/react-hooks";
 
 import { comingSoonApp, releasedApp } from "../fixtures";
-import useMarketplaceApps from "./useMarketplaceApps";
+import useAppstoreApps from "./useAppstoreApps";
 
 const mockApps = [releasedApp, comingSoonApp];
 
 global.fetch = jest.fn(url => {
-  if (url === "https://marketplace.com/apps") {
+  if (url === "https://apps.saleor.io/apps") {
     return Promise.resolve({
       ok: true,
       json: jest.fn(() => Promise.resolve(mockApps)),
     } as unknown as Response);
   }
-  if (url === "https://marketplace.com/failing-apps-endpoint") {
+  if (url === "https://apps.saleor.io/failing-apps-endpoint") {
     return Promise.resolve({
       ok: false,
       statusText: "API error",
@@ -22,14 +22,14 @@ global.fetch = jest.fn(url => {
   return Promise.reject(new Error("API is down"));
 });
 
-describe("apps hooks useMarketplaceApps", () => {
-  it("should return apps when request to proper marketplace url returns apps", async () => {
+describe("apps hooks useAppstoreApps", () => {
+  it("should return apps when request to proper appstore url returns apps", async () => {
     // Arrange
-    const marketplaceUrl = "https://marketplace.com/apps";
+    const appstoreUrl = "https://apps.saleor.io/apps";
 
     // Act
     const { result, waitForNextUpdate } = renderHook(() =>
-      useMarketplaceApps(marketplaceUrl),
+      useAppstoreApps(appstoreUrl),
     );
     await waitForNextUpdate();
 
@@ -37,13 +37,13 @@ describe("apps hooks useMarketplaceApps", () => {
     expect(result.current).toEqual({ data: mockApps });
   });
 
-  it("should return error when request to proper marketplace url returns error", async () => {
+  it("should return error when request to proper appstore url returns error", async () => {
     // Arrange
-    const marketplaceUrl = "https://marketplace.com/failing-apps-endpoint";
+    const appstoreUrl = "https://apps.saleor.io/failing-apps-endpoint";
 
     // Act
     const { result, waitForNextUpdate } = renderHook(() =>
-      useMarketplaceApps(marketplaceUrl),
+      useAppstoreApps(appstoreUrl),
     );
     await waitForNextUpdate();
 
@@ -51,13 +51,13 @@ describe("apps hooks useMarketplaceApps", () => {
     expect(result.current).toEqual({ error: Error("API error") });
   });
 
-  it("should return error when request to wrong marketplace url fails", async () => {
+  it("should return error when request to wrong appstore url fails", async () => {
     // Arrange
-    const marketplaceUrl = "https://wrong-marketplace.com";
+    const appstoreUrl = "https://wrong-appstore.com";
 
     // Act
     const { result, waitForNextUpdate } = renderHook(() =>
-      useMarketplaceApps(marketplaceUrl),
+      useAppstoreApps(appstoreUrl),
     );
     await waitForNextUpdate();
 
