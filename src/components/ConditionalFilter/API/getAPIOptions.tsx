@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ApolloClient } from "@apollo/client";
 import {
   _GetAttributeChoicesDocument,

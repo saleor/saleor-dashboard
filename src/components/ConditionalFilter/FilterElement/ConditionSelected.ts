@@ -1,25 +1,45 @@
 import { getDefaultByControlName } from "../controlsType";
 import { ConditionItem } from "./ConditionOptions";
 
-interface ItemOption {
+export interface ItemOption {
   label: string;
   value: string;
-  slug: string;
+  slug?: string;
 }
 
 export type ConditionOption =
- | ItemOption
- | ItemOption[]
- | string
- | [string, string]
+  | ItemOption
+  | ItemOption[]
+  | string
+  | [string, string];
 
 export class ConditionSelected {
   private constructor(
     public value: ConditionOption,
-    public conditionValue: ConditionItem,
+    public conditionValue: ConditionItem | null,
     public options: ConditionOption[],
     public loading: boolean,
   ) {}
+
+  public static empty() {
+    return new ConditionSelected("", null, [], false);
+  }
+
+  public static fromConditionItem(conditionItem: ConditionItem) {
+    return new ConditionSelected(
+      getDefaultByControlName(conditionItem.type),
+      conditionItem,
+      [],
+      false,
+    );
+  }
+
+  public static fromConditionItemAndValue(
+    conditionItem: ConditionItem,
+    value: ConditionOption,
+  ) {
+    return new ConditionSelected(value, conditionItem, [], false);
+  }
 
   public enableLoading() {
     this.loading = true;
@@ -33,34 +53,15 @@ export class ConditionSelected {
     return this.loading;
   }
 
-  public setValue (value: ConditionOption) {
-    this.value = value
+  public setValue(value: ConditionOption) {
+    this.value = value;
   }
 
-  public setOptions (options: ConditionOption[]) {
-    this.options = options
-    this.value = getDefaultByControlName(this.conditionValue.type)
-  }
+  public setOptions(options: ConditionOption[]) {
+    this.options = options;
 
-  public static empty () {
-    return new ConditionSelected("", null, [], false)
-  }
-
-  public static fromConditionItem (conditionItem: ConditionItem) {
-    return new ConditionSelected(
-      getDefaultByControlName(conditionItem.type),
-      conditionItem,
-      [],
-      false
-    )
-  }
-
-  public static fromConditionItemAndValue (conditionItem: ConditionItem, value: ConditionOption) {
-    return new ConditionSelected(
-      value,
-      conditionItem,
-      [],
-      false
-    )
+    if (this.conditionValue) {
+      this.value = getDefaultByControlName(this.conditionValue.type);
+    }
   }
 }

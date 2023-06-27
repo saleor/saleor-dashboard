@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
 import {
   _GetChannelOperandsDocument,

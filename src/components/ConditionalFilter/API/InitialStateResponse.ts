@@ -1,32 +1,52 @@
+import { AttributeInputType } from "../FilterElement/ConditionOptions";
+import { ItemOption } from "../FilterElement/ConditionSelected";
 import { UrlToken } from "../ValueProvider/UrlToken";
-import { AttributeInputType } from "../staticConditions";
 
 interface AttributeDTO {
-  choices: { label: string, value: string, slug: string}[]
-  inputType: AttributeInputType
-  label: string
-  slug: string
-  value: string
+  choices: Array<{ label: string; value: string; slug: string }>;
+  inputType: AttributeInputType;
+  label: string;
+  slug: string;
+  value: string;
 }
 
 export class InitialStateResponse {
-  constructor (
-    public category: any,
+  constructor(
+    public category: ItemOption[],
     public attribute: Record<string, AttributeDTO>,
-    public channel: any,
-    public collection: any,
-    public producttype: any,
+    public channel: ItemOption[],
+    public collection: ItemOption[],
+    public producttype: ItemOption[],
   ) {}
 
-  public attributeByName (name: string) {
-    return this.attribute[name]
+  public attributeByName(name: string) {
+    return this.attribute[name];
   }
 
-  public filterByUrlToken (token: UrlToken) {
+  public filterByUrlToken(token: UrlToken) {
     if (token.isAttribute()) {
-      return this.attribute[token.name].choices.filter(({ value }) => token.value.includes(value));
+      return this.attribute[token.name].choices.filter(({ value }) =>
+        token.value.includes(value),
+      );
     }
-  
-    return this[token.name].filter(({ slug }) => token.value.includes(slug));
+
+    return this.getEntryByname(token.name).filter(
+      ({ slug }) => slug && token.value.includes(slug),
+    );
+  }
+
+  private getEntryByname(name: string) {
+    switch (name) {
+      case "category":
+        return this.category;
+      case "collection":
+        return this.collection;
+      case "producttype":
+        return this.producttype;
+      case "channel":
+        return this.channel;
+      default:
+        return [];
+    }
   }
 }

@@ -1,6 +1,9 @@
 import { useState } from "react";
 
-import { AttributeInputType, StaticElementName } from "./staticConditions";
+import {
+  AttributeInputType,
+  StaticElementName,
+} from "./FilterElement/ConditionOptions";
 
 export interface LeftOperand {
   type: AttributeInputType | StaticElementName;

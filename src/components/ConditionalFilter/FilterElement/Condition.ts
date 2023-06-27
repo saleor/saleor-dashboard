@@ -1,10 +1,9 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
-import { ConditionOptions } from "./ConditionOptions";
 import { LeftOperand } from "./../useLeftOperands";
 import { UrlToken } from "./../ValueProvider/UrlToken";
+import { ConditionOptions } from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
-
 
 export class Condition {
   private constructor(
@@ -29,7 +28,7 @@ export class Condition {
     return new Condition(
       ConditionOptions.empty(),
       ConditionSelected.empty(),
-      false
+      false,
     );
   }
 
@@ -39,7 +38,7 @@ export class Condition {
     return new Condition(
       options,
       ConditionSelected.fromConditionItem(options.first()),
-      false
+      false,
     );
   }
 
@@ -49,10 +48,14 @@ export class Condition {
       const selectedOption = staticOptions.findByLabel(token.conditionKind);
       const value = response.filterByUrlToken(token);
 
+      if (!selectedOption) {
+        return Condition.createEmpty();
+      }
+
       return new Condition(
         staticOptions,
         ConditionSelected.fromConditionItemAndValue(selectedOption, value),
-        false
+        false,
       );
     }
 
@@ -64,10 +67,10 @@ export class Condition {
       return new Condition(
         options,
         ConditionSelected.fromConditionItemAndValue(options.first(), value),
-        false
+        false,
       );
     }
 
-    return null;
+    return Condition.createEmpty();
   }
 }

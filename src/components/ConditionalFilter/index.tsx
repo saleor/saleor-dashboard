@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
 import useDebounce from "@dashboard/hooks/useDebounce";
 import { _ExperimentalFilters, Box, Text } from "@saleor/macaw-ui/next";
@@ -12,86 +13,7 @@ import { useFilterContainer } from "./useFilterContainer";
 import { useLeftOperands } from "./useLeftOperands";
 import { useUrlValueProvider } from "./ValueProvider/useUrlValueProvider";
 
-const demoValue = [
-  {
-    value: { value: "price", label: "Price", type: "1" },
-    condition: {
-      options: [
-        { type: "number", label: "is", value: "input-1", min: 0, max: 10 },
-        { type: "multiselect", label: "has", value: "input-2" },
-      ],
-      selected: {
-        value: "3.13",
-        conditionValue: { type: "number", label: "is", value: "input-1" },
-      },
-    },
-  },
-  "AND",
-  {
-    value: { value: "category", label: "Category", type: "2" },
-    condition: {
-      options: [{ value: "input-1", label: "are", type: "multiselect" }],
-      selected: {
-        conditionValue: { value: "input-1", label: "are", type: "multiselect" },
-        value: [],
-        options: [
-          { value: "electronics", label: "Electronics" },
-          { value: "clothing", label: "Clothing" },
-        ],
-      },
-    },
-  },
-  "OR",
-  {
-    value: { value: "rating", label: "Rating", type: "3" },
-    condition: {
-      options: [{ value: "input-1", label: "is", type: "combobox" }],
-      selected: {
-        conditionValue: { value: "input-1", label: "is", type: "combobox" },
-        value: null,
-        options: [
-          { value: "1", label: "1" },
-          { value: "2", label: "2" },
-        ],
-      },
-    },
-  },
-  "AND",
-  {
-    value: { value: "discount", label: "Discount", type: "4" },
-    condition: {
-      options: [{ value: "input-1", label: "is", type: "select" }],
-      selected: {
-        conditionValue: { value: "input-1", label: "is", type: "select" },
-        value: "",
-        options: [
-          { value: "100%", label: "100%" },
-          { value: "50%", label: "50%" },
-        ],
-      },
-    },
-  },
-  "OR",
-  {
-    value: { value: "discount", label: "Discount", type: "4" },
-    condition: {
-      options: [{ value: "input-1", label: "between", type: "number.range" }],
-      selected: {
-        conditionValue: {
-          value: "input-1",
-          label: "between",
-          type: "number.range",
-        },
-        value: {
-          start: "0",
-          end: "1",
-        },
-      },
-    },
-  },
-];
-
-const FiltersArea = ({ provider, onConfirm }) => {
+const FiltersArea = ({ provider }) => {
   const client = useApolloClient();
 
   const {
@@ -179,15 +101,7 @@ const FiltersArea = ({ provider, onConfirm }) => {
     if (event.type === "leftOperator.onInputValueChange") {
       handleLeftOperatorInputValueChangeDebounced(event);
     }
-
-    // console.log(event);
   };
-
-  const handleConfirm = () => {
-    onConfirm(value);
-  };
-
-  console.log("Render with:", value);
 
   return (
     <Box>

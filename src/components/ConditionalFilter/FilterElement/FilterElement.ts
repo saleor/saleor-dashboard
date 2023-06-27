@@ -18,7 +18,7 @@ const createStaticEntry = (rawEntry: ConditionOption) => {
   }
 
   if (Array.isArray(rawEntry)) {
-    return rawEntry.map(el => el.slug);
+    return rawEntry.map(el => (typeof el === "string" ? el : el.slug));
   }
 
   return rawEntry.slug;
@@ -30,7 +30,7 @@ const createAttributeEntry = (rawEntry: ConditionOption) => {
   }
 
   if (Array.isArray(rawEntry)) {
-    return rawEntry.map(el => el.value);
+    return rawEntry.map(el => (typeof el === "string" ? el : el.value));
   }
 
   return rawEntry.slug;
@@ -119,8 +119,9 @@ export class FilterElement {
   }
 
   public asUrlEntry(): UrlEntry {
+    const { conditionValue } = this.condition.selected;
     const conditionIndex = CONDITIONS.findIndex(
-      el => el === this.condition.selected.conditionValue.label,
+      el => conditionValue && el === conditionValue.label,
     );
 
     if (this.isAttribute()) {
@@ -143,7 +144,11 @@ export class FilterElement {
   }
 
   public static createEmpty() {
-    return new FilterElement({ value: "", label: "", type: "s" }, null, false);
+    return new FilterElement(
+      { value: "", label: "", type: "s" },
+      Condition.createEmpty(),
+      false,
+    );
   }
 
   public static fromUrlToken(token: UrlToken, response: InitialStateResponse) {

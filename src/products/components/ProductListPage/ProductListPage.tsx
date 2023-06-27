@@ -9,6 +9,7 @@ import {
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
@@ -41,22 +42,22 @@ import { ProductListDatagrid } from "../ProductListDatagrid";
 import { ProductListDeleteButton } from "../ProductListDeleteButton";
 import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import { ProductListViewSwitch } from "../ProductListViewSwitch";
-import { ProductFilterKeys, ProductListFilterOpts } from "./filters";
+import {
+  createFilterStructure,
+  ProductFilterKeys,
+  ProductListFilterOpts,
+} from "./filters";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     Omit<
       FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
-      | "onTabDelete"
-      | "onFilterChange"
-      | "onFilterAttributeFocus"
-      | "onAll"
-      | "onSearchChange"
-      | "filterOpts"
+      "onTabDelete"
     >,
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
+  currencySymbol: string;
   gridAttributesOpts: LazyQueryResult<
     GridAttributesQuery,
     Exact<{
@@ -87,19 +88,26 @@ const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
+    currencySymbol,
     defaultSettings,
     gridAttributesOpts,
     limits,
     availableColumnsAttributesOpts,
+    filterOpts,
+    initialSearch,
     settings,
     onAdd,
     onExport,
+    onFilterChange,
+    onFilterAttributeFocus,
+    onSearchChange,
     onUpdateListSettings,
     selectedChannelId,
     activeAttributeSortId,
     onTabChange,
     onTabDelete,
     onTabSave,
+    onAll,
     currentTab,
     tabs,
     onTabUpdate,
@@ -114,9 +122,11 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   } = props;
   const intl = useIntl();
   const navigate = useNavigator();
+  const filterStructure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
-  const filterDependency = { label: "Channel" };
+  const filterDependency = filterStructure.find(getByName("channel"));
+
   const limitReached = isLimitReached(limits, "productVariants");
   const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } =
     useExtensions(extensionMountPoints.PRODUCT_LIST);
@@ -160,7 +170,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               onUpdate={onTabUpdate}
               savedPresets={tabs}
               activePreset={currentTab}
-              onSelectAll={() => ({})}
+              onSelectAll={onAll}
               onSave={onTabSave}
               isOpen={isFilterPresetOpen}
               onOpenChange={setFilterPresetOpen}
@@ -249,6 +259,12 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
           justifyContent="space-between"
         >
           <ListFilters
+            currencySymbol={currencySymbol}
+            initialSearch={initialSearch}
+            onFilterChange={onFilterChange}
+            onFilterAttributeFocus={onFilterAttributeFocus}
+            onSearchChange={onSearchChange}
+            filterStructure={filterStructure}
             searchPlaceholder={intl.formatMessage({
               id: "kIvvax",
               defaultMessage: "Search Products...",

@@ -1,5 +1,7 @@
-import { ATTRIBUTE_INPUT_TYPE_CONDITIONS, STATIC_CONDITIONS } from "../constants";
-
+import {
+  ATTRIBUTE_INPUT_TYPE_CONDITIONS,
+  STATIC_CONDITIONS,
+} from "../constants";
 
 export type StaticElementName = keyof typeof STATIC_CONDITIONS;
 export type AttributeInputType = keyof typeof ATTRIBUTE_INPUT_TYPE_CONDITIONS;
@@ -14,30 +16,18 @@ export class ConditionOptions extends Array<ConditionItem> {
   private constructor(options: ConditionItem[] | number) {
     if (Array.isArray(options)) {
       super(...options);
-      return
+      return;
     }
 
-    super(options)
-  }
-
-  public findByLabel(label: string) {
-    return this.find(f => f.label === label);
-  }
-
-  public first () {
-    return this[0]
-  }
-
-  public static empty() {
-    return new ConditionOptions([]);
+    super(options);
   }
 
   public static isStaticName(name: string): name is StaticElementName {
-    return !!STATIC_CONDITIONS[name];
+    return name in STATIC_CONDITIONS;
   }
 
   public static isAttributeInputType(name: string): name is AttributeInputType {
-    return !!ATTRIBUTE_INPUT_TYPE_CONDITIONS[name];
+    return name in ATTRIBUTE_INPUT_TYPE_CONDITIONS;
   }
 
   public static fromAtributeType(inputType: AttributeInputType) {
@@ -60,8 +50,9 @@ export class ConditionOptions extends Array<ConditionItem> {
   }
 
   public static fromName(name: AttributeInputType | StaticElementName) {
-    const optionsStatic = STATIC_CONDITIONS[name];
-    const optionsAttribute = ATTRIBUTE_INPUT_TYPE_CONDITIONS[name];
+    const optionsStatic = this.isStaticName(name) && STATIC_CONDITIONS[name];
+    const optionsAttribute =
+      this.isAttributeInputType(name) && ATTRIBUTE_INPUT_TYPE_CONDITIONS[name];
 
     if (optionsStatic) {
       return new ConditionOptions(optionsStatic);
@@ -72,5 +63,17 @@ export class ConditionOptions extends Array<ConditionItem> {
     }
 
     throw new Error(`Unsupported condition element "${name}"`);
+  }
+
+  public static empty() {
+    return new ConditionOptions([]);
+  }
+
+  public findByLabel(label: string) {
+    return this.find(f => f.label === label);
+  }
+
+  public first() {
+    return this[0];
   }
 }

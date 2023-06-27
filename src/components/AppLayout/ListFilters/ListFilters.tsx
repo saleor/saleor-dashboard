@@ -1,31 +1,29 @@
-import { ConditionalFilters } from "@dashboard/components/ConditionalFilter";
-import { FilterErrorMessages } from "@dashboard/components/Filter";
-import { Box, Button, Popover } from "@saleor/macaw-ui/next";
+import { FilterErrorMessages, IFilter } from "@dashboard/components/Filter";
+import { FilterProps, SearchPageProps } from "@dashboard/types";
+import { Box } from "@saleor/macaw-ui/next";
 import React, { ReactNode } from "react";
 
+import { ExpressionFilters } from "./components/ExpressionFilters";
+import { FiltersSelect } from "./components/FiltersSelect";
 import SearchInput from "./components/SearchInput";
 
-export interface ListFiltersProps<TKeys extends string = string> {
+export interface ListFiltersProps<TKeys extends string = string>
+  extends FilterProps<TKeys>,
+    SearchPageProps {
   searchPlaceholder: string;
   errorMessages?: FilterErrorMessages<TKeys>;
+  filterStructure: IFilter<TKeys>;
   actions?: ReactNode;
 }
 
-const STATIC_CONDITIONS = {
-  category: [{ value: "combobox", label: "is" }],
-  price: [
-    { value: "input", label: "is" },
-    { value: "range", label: "between" },
-  ],
-  discount: [
-    { value: "input", label: "is" },
-    { value: "range", label: "between" },
-  ],
-  rating: [{ value: "combobox", label: "is" }],
-};
-
 export const ListFilters = ({
+  currencySymbol,
+  filterStructure,
+  initialSearch,
   searchPlaceholder,
+  onSearchChange,
+  onFilterChange,
+  onFilterAttributeFocus,
   errorMessages,
   actions,
 }: ListFiltersProps) => (
@@ -38,27 +36,20 @@ export const ListFilters = ({
       paddingX={6}
     >
       <Box display="flex" alignItems="center" gap={4}>
-        <Popover>
-          <Popover.Trigger>
-            <Button>Show filters</Button>
-          </Popover.Trigger>
-          <Popover.Content>
-            <Box
-              __minWidth="200px"
-              __minHeight="100px"
-              paddingX={4}
-              paddingY={3}
-            >
-              <Popover.Arrow />
-              <ConditionalFilters />
-            </Box>
-          </Popover.Content>
-        </Popover>
+        <ExpressionFilters />
+        <FiltersSelect
+          errorMessages={errorMessages}
+          menu={filterStructure}
+          currencySymbol={currencySymbol}
+          onFilterAdd={onFilterChange}
+          onFilterAttributeFocus={onFilterAttributeFocus}
+        />
+
         <Box __width="320px">
           <SearchInput
-            initialSearch={""}
+            initialSearch={initialSearch}
             placeholder={searchPlaceholder}
-            onSearchChange={() => {}}
+            onSearchChange={onSearchChange}
           />
         </Box>
       </Box>
