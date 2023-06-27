@@ -10,19 +10,19 @@ describe("featureFlags/FlagsResolver", () => {
     // ARRANGE
     const strategy1 = {
       fetchAll: () => ({
-        flag1: { enabled: true, value: "test1" },
+        flag1: { enabled: true, payload: "test1" },
       }),
     } as unknown as Strategy;
 
     const strategy2 = {
       fetchAll: () => ({
-        flag1: { enabled: true, value: "test2" },
+        flag1: { enabled: true, payload: "test2" },
       }),
     } as unknown as Strategy;
 
     const defaultStrategy = {
       fetchAll: () => ({
-        flag1: { enabled: true, value: "default" },
+        flag1: { enabled: true, payload: "default" },
       }),
     } as unknown as Strategy;
 
@@ -33,9 +33,9 @@ describe("featureFlags/FlagsResolver", () => {
 
     // ASSERT
     expect(results).toEqual([
-      { flag1: { enabled: true, value: "test1" } },
-      { flag1: { enabled: true, value: "test2" } },
-      { flag1: { enabled: true, value: "default" } },
+      { flag1: { enabled: true, payload: "test1" } },
+      { flag1: { enabled: true, payload: "test2" } },
+      { flag1: { enabled: true, payload: "default" } },
     ]);
   });
 
@@ -45,39 +45,39 @@ describe("featureFlags/FlagsResolver", () => {
       strategies: [
         {
           fetchAll: () => ({
-            flag1: { enabled: true, value: "test1" },
+            flag1: { enabled: true, payload: "test1" },
           }),
         } as unknown as Strategy,
       ],
       expected: {
-        flag1: { enabled: true, value: "test1" },
-        flagD: { enabled: true, value: "some default" },
+        flag1: { enabled: true, payload: "test1" },
+        flagD: { enabled: true, payload: "some default" },
       },
     },
     {
       strategies: [
         {
           fetchAll: () => ({
-            flag1: { enabled: true, value: "test1-a" },
+            flag1: { enabled: true, payload: "test1-a" },
           }),
         } as unknown as Strategy,
         {
           fetchAll: () => ({
-            flag1: { enabled: true, value: "test1-b" },
-            flag2: { enabled: true, value: "test2-b" },
+            flag1: { enabled: true, payload: "test1-b" },
+            flag2: { enabled: true, payload: "test2-b" },
           }),
         } as unknown as Strategy,
         {
           fetchAll: () => ({
-            flag1: { enabled: true, value: "test1-c" },
-            flag2: { enabled: true, value: "test2-c" },
+            flag1: { enabled: true, payload: "test1-c" },
+            flag2: { enabled: true, payload: "test2-c" },
           }),
         } as unknown as Strategy,
       ],
       expected: {
-        flag1: { enabled: true, value: "test1-a" },
-        flag2: { enabled: true, value: "test2-b" },
-        flagD: { enabled: true, value: "some default" },
+        flag1: { enabled: true, payload: "test1-a" },
+        flag2: { enabled: true, payload: "test2-b" },
+        flagD: { enabled: true, payload: "some default" },
       },
     },
   ])(
@@ -85,8 +85,8 @@ describe("featureFlags/FlagsResolver", () => {
     async ({ strategies, expected }) => {
       const defaultStrategy = {
         fetchAll: () => ({
-          flag1: { enabled: true, value: "default" },
-          flagD: { enabled: true, value: "some default" },
+          flag1: { enabled: true, payload: "default" },
+          flagD: { enabled: true, payload: "some default" },
         }),
       } as unknown as Strategy;
 
