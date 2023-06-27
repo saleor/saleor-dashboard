@@ -84,6 +84,7 @@ export const fragmentOrderLine = gql`
     }
     variant {
       id
+      name
       quantityAvailable
       preorder {
         endDate

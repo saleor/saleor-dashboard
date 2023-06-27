@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import * as React from "react";
 import { UserContext } from "../../src/auth";
 import { adminUserPermissions } from "../../src/fixtures";

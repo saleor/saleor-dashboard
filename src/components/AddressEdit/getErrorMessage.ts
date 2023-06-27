@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AccountErrorFragment, OrderErrorFragment } from "@dashboard/graphql";
 import getAccountErrorMessage from "@dashboard/utils/errors/account";
 import getOrderErrorMessage from "@dashboard/utils/errors/order";

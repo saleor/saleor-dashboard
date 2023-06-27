@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Grid from "@dashboard/components/Grid";
 import { useStyles } from "@dashboard/custom-apps/components/WebhookEvents/styles";
 import {

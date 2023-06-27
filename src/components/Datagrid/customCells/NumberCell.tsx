@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   CustomCell,
   CustomRenderer,
@@ -16,6 +17,8 @@ interface NumberCellProps {
 }
 
 export type NumberCell = CustomCell<NumberCellProps>;
+
+const onlyDigitsRegExp = /^\d+$/;
 
 const NumberCellEdit: ReturnType<ProvideEditorCallback<NumberCell>> = ({
   value: cell,
@@ -69,8 +72,14 @@ export const numberCellRenderer = (
       },
     }),
   }),
-  onPaste: (value, data) => ({
-    ...data,
-    value: value ? parseFloat(value) : numberCellEmptyValue,
-  }),
+  onPaste: (value, data) => {
+    if (!onlyDigitsRegExp.test(value)) {
+      return undefined;
+    }
+
+    return {
+      ...data,
+      value: value ? parseFloat(value) : numberCellEmptyValue,
+    };
+  },
 });

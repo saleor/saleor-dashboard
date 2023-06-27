@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardSpacer from "@dashboard/components/CardSpacer";
 import CardTitle from "@dashboard/components/CardTitle";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
@@ -72,12 +73,8 @@ const ShippingRateInfo: React.FC<ShippingRateInfoProps> = props => {
   const intl = useIntl();
   const classes = useStyles(props);
 
-  const {
-    defaultValue,
-    editorRef,
-    isReadyForMount,
-    handleChange,
-  } = useRichTextContext();
+  const { defaultValue, editorRef, isReadyForMount, handleChange } =
+    useRichTextContext();
 
   const formErrors = getFormErrors(
     ["name", "description", "minDays", "maxDays"],

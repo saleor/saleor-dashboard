@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { getAppDefaultUri, getAppMountUri } from "@dashboard/config";
 import { stringify } from "qs";
 

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import React from "react";
 
 import { order as orderFixture, prepareMoney } from "../../fixtures";

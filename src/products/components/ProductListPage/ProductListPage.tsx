@@ -1,3 +1,5 @@
+// @ts-strict-ignore
+import { LazyQueryResult } from "@apollo/client/react";
 import {
   extensionMountPoints,
   mapToMenuItems,
@@ -7,23 +9,22 @@ import {
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
-import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { ProductListColumns } from "@dashboard/config";
 import {
+  Exact,
   GridAttributesQuery,
   ProductListQuery,
   RefreshLimitsQuery,
-  SearchAvailableInGridAttributesQuery,
+  useAvailableColumnAttributesLazyQuery,
 } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   ChannelProps,
-  FetchMoreProps,
   FilterPageProps,
   PageListProps,
   RelayToFlat,
@@ -40,36 +41,41 @@ import { ProductListDatagrid } from "../ProductListDatagrid";
 import { ProductListDeleteButton } from "../ProductListDeleteButton";
 import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import { ProductListViewSwitch } from "../ProductListViewSwitch";
-import {
-  createFilterStructure,
-  ProductFilterKeys,
-  ProductListFilterOpts,
-} from "./filters";
+import { ProductFilterKeys, ProductListFilterOpts } from "./filters";
 
 export interface ProductListPageProps
   extends PageListProps<ProductListColumns>,
     Omit<
       FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
-      "onTabDelete" | "onFilterChange" | "onFilterAttributeFocus" | "onAll" | "onSearchChange" | "filterOpts"
+      | "onTabDelete"
+      | "onFilterChange"
+      | "onFilterAttributeFocus"
+      | "onAll"
+      | "onSearchChange"
+      | "filterOpts"
     >,
-    FetchMoreProps,
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
-  availableInGridAttributes: RelayToFlat<
-    SearchAvailableInGridAttributesQuery["availableInGrid"]
+  gridAttributesOpts: LazyQueryResult<
+    GridAttributesQuery,
+    Exact<{
+      ids: string | string[];
+    }>
   >;
-  columnQuery: string;
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
   limits: RefreshLimitsQuery["shop"]["limits"];
   products: RelayToFlat<ProductListQuery["products"]>;
   selectedProductIds: string[];
   hasPresetsChanged: boolean;
   onAdd: () => void;
   onExport: () => void;
-  onColumnQueryChange: (query: string) => void;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (tabIndex: number) => void;
+  columnPickerSettings: string[];
+  setDynamicColumnSettings: (cols: string[]) => void;
+  availableColumnsAttributesOpts: ReturnType<
+    typeof useAvailableColumnAttributesLazyQuery
+  >;
   onProductsDelete: () => void;
   onSelectProductIds: (ids: number[], clearSelection: () => void) => void;
   clearRowSelection: () => void;
@@ -81,19 +87,13 @@ const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
-    columnQuery,
     defaultSettings,
-    gridAttributes,
+    gridAttributesOpts,
     limits,
-    availableInGridAttributes,
-    hasMore,
-    initialSearch,
-    loading,
+    availableColumnsAttributesOpts,
     settings,
     onAdd,
-    onColumnQueryChange,
     onExport,
-    onFetchMore,
     onUpdateListSettings,
     selectedChannelId,
     activeAttributeSortId,
@@ -104,6 +104,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     tabs,
     onTabUpdate,
     hasPresetsChanged,
+    columnPickerSettings,
+    setDynamicColumnSettings,
     selectedProductIds,
     onProductsDelete,
     clearRowSelection,
@@ -114,7 +116,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const navigate = useNavigator();
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
-  const filterDependency = { label: "Channel" }
+  const filterDependency = { label: "Channel" };
   const limitReached = isLimitReached(limits, "productVariants");
   const { PRODUCT_OVERVIEW_CREATE, PRODUCT_OVERVIEW_MORE_ACTIONS } =
     useExtensions(extensionMountPoints.PRODUCT_LIST);
@@ -158,7 +160,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
               onUpdate={onTabUpdate}
               savedPresets={tabs}
               activePreset={currentTab}
-              onSelectAll={() => {}}
+              onSelectAll={() => ({})}
               onSave={onTabSave}
               isOpen={isFilterPresetOpen}
               onOpenChange={setFilterPresetOpen}
@@ -275,20 +277,20 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             hasRowHover={!isFilterPresetOpen}
             filterDependency={filterDependency}
             activeAttributeSortId={activeAttributeSortId}
-            columnQuery={columnQuery}
             defaultSettings={defaultSettings}
-            availableInGridAttributes={availableInGridAttributes}
-            isAttributeLoading={loading}
+            availableColumnsAttributesOpts={availableColumnsAttributesOpts}
             loading={listProps.disabled}
-            hasMore={hasMore}
-            gridAttributes={gridAttributes}
-            onColumnQueryChange={onColumnQueryChange}
-            onFetchMore={onFetchMore}
+            gridAttributesOpts={gridAttributesOpts}
             products={listProps.products}
             settings={settings}
             selectedChannelId={selectedChannelId}
             onUpdateListSettings={onUpdateListSettings}
             rowAnchor={productUrl}
+            onRowClick={id => {
+              navigate(productUrl(id));
+            }}
+            columnPickerSettings={columnPickerSettings}
+            setDynamicColumnSettings={setDynamicColumnSettings}
           />
         ) : (
           <ProductListTiles

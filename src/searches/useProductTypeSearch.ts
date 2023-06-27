@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { gql, useApolloClient } from "@apollo/client";
 import {
   SearchProductTypesDocument,

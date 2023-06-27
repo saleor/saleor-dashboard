@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { GiftCardSortField } from "@dashboard/graphql";
 import { createGetSortQueryVariables } from "@dashboard/utils/sort";
 
@@ -18,6 +19,5 @@ export const getSortQueryField = (
   }
 };
 
-export const getSortQueryVariables = createGetSortQueryVariables(
-  getSortQueryField,
-);
+export const getSortQueryVariables =
+  createGetSortQueryVariables(getSortQueryField);

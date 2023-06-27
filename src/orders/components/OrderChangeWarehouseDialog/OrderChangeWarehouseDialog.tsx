@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Debounce from "@dashboard/components/Debounce";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableRowLink from "@dashboard/components/TableRowLink";
@@ -150,7 +151,7 @@ export const OrderChangeWarehouseDialog: React.FC<
         </DialogContent>
       </ScrollShadow>
 
-      <DialogTable ref={setAnchor}>
+      <DialogTable ref={setAnchor} css>
         {filteredWarehouses ? (
           <RadioGroup
             value={selectedWarehouseId}

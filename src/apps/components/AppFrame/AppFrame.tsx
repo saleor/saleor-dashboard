@@ -1,13 +1,11 @@
+// @ts-strict-ignore
 import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useAppDashboardUpdates";
 import { useUpdateAppToken } from "@dashboard/apps/components/AppFrame/useUpdateAppToken";
-import {
-  AppDetailsUrlQueryParams,
-  prepareFeatureFlagsList,
-} from "@dashboard/apps/urls";
-import { useAllFlags } from "@dashboard/hooks/useFlags";
+import { AppDetailsUrlQueryParams } from "@dashboard/apps/urls";
+import { useAllFlags } from "@dashboard/featureFlags";
 import { CircularProgress } from "@material-ui/core";
 import clsx from "clsx";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 
 import { AppIFrame } from "./AppIFrame";
 import { useStyles } from "./styles";
@@ -75,8 +73,6 @@ export const AppFrame: React.FC<Props> = ({
     setHandshakeDone(true);
   }, [appToken, postToExtension, setHandshakeDone]);
 
-  const featureFlags = useMemo(() => prepareFeatureFlagsList(flags), [flags]);
-
   useUpdateAppToken({
     postToExtension,
     appToken,
@@ -97,7 +93,7 @@ export const AppFrame: React.FC<Props> = ({
         ref={frameRef}
         src={src}
         appId={appId}
-        featureFlags={featureFlags}
+        featureFlags={flags}
         params={params}
         onLoad={handleLoad}
         onError={onError}

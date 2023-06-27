@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { PluginErrorCode } from "@dashboard/graphql";
 import React from "react";
 

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Pill } from "@dashboard/components/Pill";
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";

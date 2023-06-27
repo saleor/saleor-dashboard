@@ -5,7 +5,6 @@ import {
 
 export interface AppLogo {
   source: string | null;
-  color: string;
 }
 
 export interface InstalledApp {

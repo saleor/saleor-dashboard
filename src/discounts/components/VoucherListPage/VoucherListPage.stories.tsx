@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { voucherList } from "@dashboard/discounts/fixtures";
 import { VoucherListUrlSortField } from "@dashboard/discounts/urls";
 import {

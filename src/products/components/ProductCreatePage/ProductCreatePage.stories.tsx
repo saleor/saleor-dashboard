@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { channelsList } from "@dashboard/channels/fixtures";
 import { createChannelsData } from "@dashboard/channels/utils";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";

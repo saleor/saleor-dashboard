@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { ProductErrorFragment } from "@dashboard/graphql";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";

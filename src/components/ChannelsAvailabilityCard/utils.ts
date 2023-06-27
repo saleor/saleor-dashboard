@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import { LocalizeDate } from "@dashboard/hooks/useDateLocalize";
 import { IntlShape } from "react-intl";

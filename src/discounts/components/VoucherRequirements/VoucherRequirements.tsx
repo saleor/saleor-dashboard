@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import { FormSpacer } from "@dashboard/components/FormSpacer";
 import PriceField from "@dashboard/components/PriceField";

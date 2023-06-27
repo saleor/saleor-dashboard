@@ -11,7 +11,8 @@ export const useAuthParameters = () => {
   );
 
   return {
-    requestedExternalPluginId,
+    requestedExternalPluginId:
+      requestedExternalPluginId === "null" ? null : requestedExternalPluginId,
     fallbackUri: fallbackUri === "null" || !fallbackUri ? "/" : fallbackUri,
     isCallbackPath: location.pathname.includes(loginCallbackPath),
     setRequestedExternalPluginId,

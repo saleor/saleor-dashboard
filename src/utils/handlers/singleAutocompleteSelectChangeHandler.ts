@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { FormChange } from "@dashboard/hooks/useForm";
 

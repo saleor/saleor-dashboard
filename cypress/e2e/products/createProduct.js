@@ -121,7 +121,7 @@ describe("As an admin I should be able to create product", () => {
       fillUpPriceList(prices.sellingPrice);
       fillUpPriceList(prices.costPrice, priceInputLists.costPrice);
       cy.get(PRODUCT_DETAILS.skuInput)
-        .type(randomName)
+        .type(randomName, { force: true })
         .addAliasToGraphRequest("ProductDetails")
         .get(BUTTON_SELECTORS.confirm)
         .click()

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   ProductVariantFragment,
   useProductChannelListingUpdateMutation,
@@ -51,10 +52,8 @@ const createVariantUpdateListingInput = (data: Product) =>
 
 export const useSubmitChannels = () => {
   const [updateChannelListing] = useProductChannelListingUpdateMutation();
-  const [
-    updateChannels,
-    updateChannelsOpts,
-  ] = useProductVariantChannelListingUpdateMutation();
+  const [updateChannels, updateChannelsOpts] =
+    useProductVariantChannelListingUpdateMutation();
 
   const handleSubmitChannels = async (data: Product, variant: Variant) => {
     const channelsHaveChanged = isFormDataChanged(data, variant);

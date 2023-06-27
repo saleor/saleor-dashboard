@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { IFilter } from "@dashboard/components/Filter";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import { AttributeInputTypeEnum, StockAvailability } from "@dashboard/graphql";

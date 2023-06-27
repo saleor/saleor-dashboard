@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { PluginBaseFragment } from "@dashboard/graphql";
 import { isPluginGlobal } from "@dashboard/plugins/views/utils";
 import { TableCell } from "@material-ui/core";
@@ -10,9 +11,9 @@ interface PluginChannelConfigurationCellProps {
   plugin: PluginBaseFragment;
 }
 
-const PluginChannelConfigurationCell: React.FC<PluginChannelConfigurationCellProps> = ({
-  plugin,
-}) => {
+const PluginChannelConfigurationCell: React.FC<
+  PluginChannelConfigurationCellProps
+> = ({ plugin }) => {
   const message = isPluginGlobal(plugin.globalConfiguration)
     ? messages.globalLabel
     : messages.channelLabel;

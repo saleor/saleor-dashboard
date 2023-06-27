@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FormChange } from "@dashboard/hooks/useForm";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { FetchMoreProps } from "@dashboard/types";

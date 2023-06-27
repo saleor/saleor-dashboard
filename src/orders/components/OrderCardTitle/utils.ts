@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import camelCase from "lodash/camelCase";
 
 import { orderTitleMessages } from "./messages";

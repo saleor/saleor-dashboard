@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelShippingZones } from "@dashboard/channels/pages/ChannelDetailsPage/types";
 import CardTitle from "@dashboard/components/CardTitle";
 import { SearchShippingZonesQuery } from "@dashboard/graphql";

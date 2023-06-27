@@ -1,5 +1,6 @@
 import {
   ADD_PRODUCT_TO_ORDER_DIALOG,
+  BUTTON_SELECTORS,
   CHANNEL_FORM_SELECTORS,
   DRAFT_ORDER_SELECTORS,
   ORDERS_SELECTORS,
@@ -32,24 +33,38 @@ export function applyFixedLineDiscountForProduct(
     .waitForRequestAndCheckIfNoErrors("@OrderLineDiscountUpdate");
 }
 export function changeQuantityOfProducts() {
+  cy.addAliasToGraphRequest("OrderLineUpdate");
   cy.get(ORDERS_SELECTORS.dataGridTable).should("be.visible");
   cy.get(ORDERS_SELECTORS.quantityCellFirstRowOrderDetails)
-    .dblclick({ force: true })
-    .type("2", { force: true });
-  cy.addAliasToGraphRequest("OrderLineUpdate")
-    // grid expects focus to be dismissed from cell - because of that extra action needed which blur focus from cell (other more elegant build in actions was not working)
-    .get(SHARED_ELEMENTS.pageHeader)
+    .click({ force: true })
+    .wait(200)
+    .click({ force: true })
+    .wait(1000);
+  cy.get(ORDERS_SELECTORS.gridClip)
+    .find("input")
+    .clear({ force: true })
+    .type("2");
+
+  // grid expects focus to be dismissed from cell - because of that extra action needed which blur focus from cell (other more elegant build in actions was not working)
+  cy.get(SHARED_ELEMENTS.pageHeader)
     .click()
     .waitForRequestAndCheckIfNoErrors("@OrderLineUpdate");
 }
 export function deleteProductFromGridTableOnIndex(trIndex = 0) {
   cy.get(ORDERS_SELECTORS.dataGridTable).should("be.visible");
   cy.addAliasToGraphRequest("OrderLineDelete")
-    .get(ORDERS_SELECTORS.productDeleteFromRowButton)
+    .get(BUTTON_SELECTORS.showMoreButton)
     .eq(trIndex)
+    .click()
+    .get(ORDERS_SELECTORS.productDeleteFromRowButton)
     .click()
     .wait("@OrderLineDelete");
 }
+
+export function openVariantDetailsOptions(variantIndex = 1) {
+  return cy.get(BUTTON_SELECTORS.showMoreButton).eq(variantIndex).click();
+}
+
 export function addNewProductToOrder(productIndex = 0, variantIndex = 0) {
   cy.get(DRAFT_ORDER_SELECTORS.addProducts).click();
   return cy

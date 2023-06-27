@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import placeholderImage from "@assets/images/placeholder60x60.png";
 import { adminUserPermissions } from "@dashboard/fixtures";
 import { PermissionEnum } from "@dashboard/graphql";
