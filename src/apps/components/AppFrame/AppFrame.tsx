@@ -21,7 +21,7 @@ interface Props {
   params?: AppDetailsUrlQueryParams;
   refetch?: () => void;
   dashboardVersion: string;
-  coreVersion: string;
+  coreVersion?: string;
   onError?(): void;
 }
 

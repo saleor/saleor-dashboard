@@ -15,10 +15,6 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
 
   const shop = useShop();
 
-  if (!shop?.version) {
-    return null;
-  }
-
   const handleClose = () => {
     setOpen(false);
     setAppData(undefined);
@@ -35,7 +31,7 @@ export const ExternalAppProvider: React.FC = ({ children }) => {
             appId={appData.id}
             params={appData.params}
             dashboardVersion={APP_VERSION}
-            coreVersion={shop.version}
+            coreVersion={shop?.version}
           />
         )}
       </AppDialog>
