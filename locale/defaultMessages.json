@@ -893,6 +893,10 @@
     "context": "order status",
     "string": "Returned"
   },
+  "4ELCCk": {
+    "context": "column picker section default header",
+    "string": "Categories"
+  },
   "4IgzXs": {
     "context": "label",
     "string": "App Manifest URL"
@@ -2566,6 +2570,10 @@
   "GhXwO/": {
     "context": "dialog header",
     "string": "delete Staff User"
+  },
+  "GhY+pm": {
+    "context": "dynamic column description",
+    "string": "Attributes"
   },
   "GhcypC": {
     "context": "header",
@@ -4993,6 +5001,10 @@
     "context": "product pricing, section header",
     "string": "Pricing"
   },
+  "Xsh2Pa": {
+    "context": "column picker search input placeholder",
+    "string": "Search for columns"
+  },
   "Xtd0AT": {
     "string": "Original String"
   },
@@ -5650,6 +5662,10 @@
   "cNSLLO": {
     "context": "button",
     "string": "Unassign and save"
+  },
+  "cPAc45": {
+    "context": "column picker search no results message",
+    "string": "No results found"
   },
   "cVjewM": {
     "context": "label for radio button",
@@ -7490,6 +7506,10 @@
     "context": "page header",
     "string": "Return & replace products"
   },
+  "rHQmCt": {
+    "context": "column picker section header",
+    "string": "Custom"
+  },
   "rHoRbE": {
     "context": "Status label when object is unpublished in a channel",
     "string": "Unpublished"
@@ -7998,6 +8018,10 @@
   },
   "uoKAmI": {
     "string": "Add new order"
+  },
+  "uqxjSR": {
+    "context": "column picker section header",
+    "string": "Columns"
   },
   "usSkzP": {
     "context": "navigator order mode description",

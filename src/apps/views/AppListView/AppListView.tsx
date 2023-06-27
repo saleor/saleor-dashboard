@@ -2,7 +2,7 @@ import AppInProgressDeleteDialog from "@dashboard/apps/components/AppInProgressD
 import AppListPage from "@dashboard/apps/components/AppListPage/AppListPage";
 import { AppListContext, AppListContextValues } from "@dashboard/apps/context";
 import useActiveAppsInstallations from "@dashboard/apps/hooks/useActiveAppsInstallations";
-import useMarketplaceApps from "@dashboard/apps/hooks/useMarketplaceApps";
+import useAppstoreApps from "@dashboard/apps/hooks/useAppstoreApps";
 import {
   AppListUrlDialog,
   AppListUrlQueryParams,
@@ -10,7 +10,7 @@ import {
 } from "@dashboard/apps/urls";
 import {
   getAppInProgressName,
-  getMarketplaceAppsLists,
+  getAppstoreAppsLists,
 } from "@dashboard/apps/utils";
 import { getAppsConfig } from "@dashboard/config";
 import {
@@ -36,11 +36,11 @@ import { useIntl } from "react-intl";
 
 import { messages } from "./messages";
 
-interface AppsListProps {
+interface Props {
   params: AppListUrlQueryParams;
 }
 
-export const AppsList: React.FC<AppsListProps> = ({ params }) => {
+export const AppListView: React.FC<Props> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -139,12 +139,12 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     [navigate, openModal],
   );
 
-  const { data: marketplaceAppList, error } = useMarketplaceApps(
+  const { data: marketplaceAppList, error } = useAppstoreApps(
     AppsConfig.marketplaceApiUri,
   );
 
   const { installableMarketplaceApps, comingSoonMarketplaceApps } =
-    getMarketplaceAppsLists(!!AppsConfig.marketplaceApiUri, marketplaceAppList);
+    getAppstoreAppsLists(!!AppsConfig.marketplaceApiUri, marketplaceAppList);
   const appsInstallations = appsInProgressData?.appsInstallations;
   const installedApps = mapEdgesToItems(installedAppsData?.apps);
 
@@ -175,4 +175,3 @@ export const AppsList: React.FC<AppsListProps> = ({ params }) => {
     </AppListContext.Provider>
   );
 };
-export default AppsList;

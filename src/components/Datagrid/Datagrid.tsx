@@ -106,6 +106,7 @@ export interface DatagridProps {
   showEmptyDatagrid?: boolean;
   rowAnchor?: (item: Item) => string;
   actionButtonPosition?: "left" | "right";
+  recentlyAddedColumn?: string; // Enables scroll to recently added column
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({
@@ -137,6 +138,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   hasRowHover = false,
   onRowSelectionChange,
   actionButtonPosition = "left",
+  recentlyAddedColumn,
   ...datagridProps
 }): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -172,6 +174,16 @@ export const Datagrid: React.FC<DatagridProps> = ({
       });
     }
   }, [onRowSelectionChange, selection]);
+
+  useEffect(() => {
+    if (recentlyAddedColumn && editor.current) {
+      const columnIndex = availableColumns.findIndex(
+        column => column.id === recentlyAddedColumn,
+      );
+      const datagridScroll = editor.current.scrollTo;
+      datagridScroll(columnIndex, 0, "horizontal", 0, 0, { hAlign: "start" });
+    }
+  }, [recentlyAddedColumn, availableColumns, editor]);
 
   usePortalClasses({ className: classes.portal });
   usePreventHistoryBack(scroller);

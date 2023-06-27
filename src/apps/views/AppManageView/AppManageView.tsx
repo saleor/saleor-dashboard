@@ -27,12 +27,12 @@ import {
 } from "../../urls";
 import { messages } from "./messages";
 
-interface AppDetailsProps {
+interface Props {
   id: string;
   params: AppDetailsUrlQueryParams;
 }
 
-export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
+export const AppManageView: React.FC<Props> = ({ id, params }) => {
   const client = useApolloClient();
   const { data, loading, refetch } = useAppQuery({
     displayLoader: true,
@@ -161,5 +161,3 @@ export const AppDetails: React.FC<AppDetailsProps> = ({ id, params }) => {
     </>
   );
 };
-
-export default AppDetails;

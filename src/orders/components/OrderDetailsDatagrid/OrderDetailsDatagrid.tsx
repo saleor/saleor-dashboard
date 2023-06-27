@@ -51,14 +51,17 @@ export const OrderDetailsDatagrid = ({
   const getMenuItems = useCallback(
     index => [
       {
+        disabled: !lines[index]?.variant?.product.id,
         label: intl.formatMessage(messages.productDetails),
-        Icon: (
+        Icon: lines[index]?.variant?.product.id ? (
           <Link
             to={productPath(lines[index].variant.product.id)}
             target="_blank"
           >
             <ExternalLinkIcon />
           </Link>
+        ) : (
+          <ExternalLinkIcon />
         ),
         onSelect: () => false,
       },

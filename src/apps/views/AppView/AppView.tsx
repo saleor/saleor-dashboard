@@ -58,4 +58,3 @@ export const AppView: React.FC<AppProps> = ({ id }) => {
     />
   );
 };
-export default AppView;
