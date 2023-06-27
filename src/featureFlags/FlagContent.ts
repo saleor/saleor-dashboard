@@ -1,18 +1,18 @@
-export class FlagContent {
-  constructor(public enabled: boolean, public value?: string) {}
+export class FlagValue {
+  constructor(public enabled: boolean, public payload?: string) {}
 
-  public static fromString(content: string) {
+  public static fromString(value: string) {
     try {
-      const { enabled, value } = JSON.parse(content);
+      const { enabled, payload } = JSON.parse(value);
 
-      return new FlagContent(enabled, value);
+      return new FlagValue(enabled, payload);
     } catch (e) {
-      return FlagContent.empty();
+      return FlagValue.empty();
     }
   }
 
   public static empty() {
-    return new FlagContent(false, "");
+    return new FlagValue(false, "");
   }
 
   public asString() {

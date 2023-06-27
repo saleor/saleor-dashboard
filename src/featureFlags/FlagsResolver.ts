@@ -1,7 +1,7 @@
 import { useRef } from "react";
 
 import * as AvailableFlags from "./availableFlags";
-import { FlagContent } from "./FlagContent";
+import { FlagValue } from "./FlagContent";
 import { AvailableStrategies } from "./strategies";
 import { DefaultsStrategy } from "./strategies/DefaultsStrategy";
 import { Strategy } from "./Strategy";
@@ -10,25 +10,25 @@ const byNotEmpty = (p: AvailableFlags.GeneralFlagList) =>
   Object.keys(p).length > 0;
 
 const toFlagEntries = (
-  p: Array<[string, FlagContent]>,
+  p: Array<[string, FlagValue]>,
   c: AvailableFlags.GeneralFlagList,
-): Array<[string, FlagContent]> => [...p, ...Object.entries(c)];
+): Array<[string, FlagValue]> => [...p, ...Object.entries(c)];
 
-const toWithoutPrefixes = ([name, content]: [string, FlagContent]): [
+const toWithoutPrefixes = ([name, value]: [string, FlagValue]): [
   string,
-  FlagContent,
-] => [name.replace("FF_", ""), content];
+  FlagValue,
+] => [name.replace("FF_", ""), value];
 
 const toSingleObject = (
   p: AvailableFlags.GeneralFlagList,
-  [name, content]: [string, FlagContent],
+  [name, value]: [string, FlagValue],
 ) => {
   if (!AvailableFlags.isSupported(name)) {
     return p;
   }
 
   if (!p[name]) {
-    p[name] = content;
+    p[name] = value;
   }
 
   return p;

@@ -1,4 +1,4 @@
-import { FlagContent } from "./FlagContent";
+import { FlagValue } from "./FlagContent";
 
 interface FlagDefinition {
   name: string;
@@ -6,7 +6,7 @@ interface FlagDefinition {
   description: string;
   content: {
     enabled: boolean;
-    value?: string;
+    payload?: string;
   };
 }
 
@@ -22,19 +22,32 @@ const AVAILABLE_FLAGS = [
     content: { enabled: false, value: "default" },
   } as const,
   */
+
+  {
+    name: "flag1",
+    displayName: "Flag 1",
+    description: "some description",
+    content: { enabled: false, payload: "default" },
+  } as const,
+  {
+    name: "flag2",
+    displayName: "Flag 2",
+    description: "some description 2",
+    content: { enabled: false, payload: "default2" },
+  } as const,
 ] satisfies FlagDefinition[];
 
 type TypedEntry = (typeof AVAILABLE_FLAGS)[number];
 type GeneralEntry = TypedEntry extends never ? FlagDefinition : TypedEntry;
 export type Entry = TypedEntry;
 export type Name = TypedEntry["name"];
-export type FlagList = Record<Name, FlagContent>;
+export type FlagList = Record<Name, FlagValue>;
 export type GeneralFlagList = TypedEntry extends never
-  ? Record<string, FlagContent>
+  ? Record<string, FlagValue>
   : FlagList;
 
-const toFlagContent = (p: GeneralFlagList, c: GeneralEntry) => {
-  p[c.name] = new FlagContent(c.content.enabled, c.content.value);
+const toFlagValue = (p: GeneralFlagList, c: GeneralEntry) => {
+  p[c.name] = new FlagValue(c.content.enabled, c.content.payload);
   return p;
 };
 
@@ -43,8 +56,8 @@ export const isSupported = (name: string): name is Name =>
     (e: FlagDefinition) => e.name === name || `FF_${e.name}` === name,
   );
 
-export const asFlagContent = () =>
-  AVAILABLE_FLAGS.reduce(toFlagContent, {} as FlagList);
+export const asFlagValue = () =>
+  AVAILABLE_FLAGS.reduce(toFlagValue, {} as FlagList);
 
 export const asFlagInfoArray = (list: GeneralFlagList) =>
   AVAILABLE_FLAGS.map((el: GeneralEntry) => ({
