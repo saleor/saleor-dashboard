@@ -124,7 +124,7 @@
     "@graphql-codegen/typescript-react-apollo": "^3.2.5",
     "@percy/cli": "^1.21.0",
     "@percy/cypress": "^3.1.2",
-    "@saleor/app-sdk": "0.39.1",
+    "@saleor/app-sdk": "0.41.0",
     "@swc/jest": "^0.2.26",
     "@types/apollo-upload-client": "^17.0.2",
     "@types/color-convert": "^2.0.0",
