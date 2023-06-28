@@ -29,15 +29,18 @@ export const AppPage: React.FC<AppPageProps> = ({
 }) => {
   const shop = useShop();
 
+  /**
+   * TODO Make some loading state
+   */
   if (!shop?.version) {
-    return null; // loading?
+    return null;
   }
 
   return (
     <DetailPageLayout gridTemplateColumns={1} withSavebar={false}>
       <AppPageNav
         goBackUrl={AppUrls.resolveAppListUrl()}
-        appId={data.id}
+        appId={data?.id}
         name={data?.name}
         supportUrl={data?.supportUrl}
         homepageUrl={data?.homepageUrl}
