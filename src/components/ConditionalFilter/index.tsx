@@ -111,7 +111,6 @@ const FiltersArea = ({ provider }) => {
         value={value}
         onChange={handleStateChange}
       />
-      {/* <button onClick={handleConfirm}>Confirm</button> */}
     </Box>
   );
 };
