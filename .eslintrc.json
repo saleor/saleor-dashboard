@@ -61,53 +61,55 @@
         "paths": ["lodash", "@material-ui/icons/Delete", "classnames"]
       }
     ],
-    "@typescript-eslint/consistent-type-imports": "off", // TODO: autofix
-    "@typescript-eslint/indent": "off", // TODO: autofix
-    "@typescript-eslint/member-delimiter-style": "off", // TODO: autofix
-    "@typescript-eslint/method-signature-style": "off", // TODO: autofix
-    "@typescript-eslint/no-confusing-void-expression": "off", // TODO: autofix
-    "@typescript-eslint/no-unnecessary-type-assertion": "off", // TODO: autofix
-    "@typescript-eslint/prefer-reduce-type-parameter": "off", // TODO: autofix
-    "@typescript-eslint/promise-function-async": "off", // TODO: autofix
-    "@typescript-eslint/return-await": "off", // TODO: autofix
-    "@typescript-eslint/space-before-function-paren": "off", // TODO: autofix
-    "@typescript-eslint/strict-boolean-expressions": "off", // TODO: autofix
-    "multiline-ternary": "off", // TODO: autofix
-    "no-extra-boolean-cast": "off", // TODO: autofix
-    "@typescript-eslint/await-thenable": "warn", // TODO: refactor
-    "@typescript-eslint/ban-ts-comment": "warn", // TODO: refactor
-    "@typescript-eslint/ban-types": "warn", // TODO: refactor
-    "@typescript-eslint/consistent-type-assertions": "warn", // TODO: refactor
-    "@typescript-eslint/explicit-function-return-type": "warn", // TODO: refactor
-    "@typescript-eslint/naming-convention": "warn", // TODO: refactor
-    "@typescript-eslint/no-base-to-string": "warn", // TODO: refactor
-    "@typescript-eslint/no-dynamic-delete": "warn", // TODO: refactor
-    "@typescript-eslint/no-floating-promises": "warn", // TODO: refactor
-    "@typescript-eslint/no-invalid-void-type": "warn", // TODO: refactor
-    "@typescript-eslint/no-misused-promises": "warn", // TODO: refactor
-    "@typescript-eslint/no-non-null-asserted-optional-chain": "warn", // TODO: refactor
-    "@typescript-eslint/no-non-null-assertion": "warn", // TODO: refactor
-    "@typescript-eslint/no-redeclare": "warn", // TODO: refactor
-    "@typescript-eslint/prefer-nullish-coalescing": "warn", // TODO: refactor
-    "@typescript-eslint/prefer-optional-chain": "warn", // TODO: refactor
-    "@typescript-eslint/restrict-plus-operands": "warn", // TODO: refactor
-    "@typescript-eslint/restrict-template-expressions": "warn", // TODO: refactor
-    "array-callback-return": "warn", // TODO: refactor
-    "import/export": "warn", // TODO: refactor
-    "n/no-callback-literal": "warn", // TODO: refactor
-    "no-case-declarations": "warn", // TODO: refactor
-    "no-empty-pattern": "warn", // TODO: refactor
-    "no-fallthrough": "warn", // TODO: refactor
-    "no-new": "warn", // TODO: refactor
-    "no-prototype-builtins": "warn", // TODO: refactor
-    "no-unreachable": "warn", // TODO: refactor
-    "no-useless-catch": "warn", // TODO: refactor
-    "no-useless-escape": "warn", // TODO: refactor
-    "prefer-promise-reject-errors": "warn", // TODO: refactor
-    "react/display-name": "warn", // TODO: refactor
-    "react/jsx-key": "warn", // TODO: refactor
-    "react/prop-types": "warn", // TODO: refactor
-    "symbol-description": "warn" // TODO: refactor
+    // These rules should be reviewed - tracked in
+    // Tracked in https://github.com/saleor/saleor-dashboard/issues/3813
+    "@typescript-eslint/consistent-type-imports": "off",
+    "@typescript-eslint/indent": "off",
+    "@typescript-eslint/member-delimiter-style": "off",
+    "@typescript-eslint/method-signature-style": "off",
+    "@typescript-eslint/no-confusing-void-expression": "off",
+    "@typescript-eslint/no-unnecessary-type-assertion": "off",
+    "@typescript-eslint/prefer-reduce-type-parameter": "off",
+    "@typescript-eslint/promise-function-async": "off",
+    "@typescript-eslint/return-await": "off",
+    "@typescript-eslint/space-before-function-paren": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "multiline-ternary": "off",
+    "no-extra-boolean-cast": "off",
+    "@typescript-eslint/await-thenable": "warn",
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "@typescript-eslint/ban-types": "warn",
+    "@typescript-eslint/consistent-type-assertions": "warn",
+    "@typescript-eslint/explicit-function-return-type": "warn",
+    "@typescript-eslint/naming-convention": "warn",
+    "@typescript-eslint/no-base-to-string": "warn",
+    "@typescript-eslint/no-dynamic-delete": "warn",
+    "@typescript-eslint/no-floating-promises": "warn",
+    "@typescript-eslint/no-invalid-void-type": "warn",
+    "@typescript-eslint/no-misused-promises": "warn",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
+    "@typescript-eslint/no-non-null-assertion": "warn",
+    "@typescript-eslint/no-redeclare": "warn",
+    "@typescript-eslint/prefer-nullish-coalescing": "warn",
+    "@typescript-eslint/prefer-optional-chain": "warn",
+    "@typescript-eslint/restrict-plus-operands": "warn",
+    "@typescript-eslint/restrict-template-expressions": "warn",
+    "array-callback-return": "warn",
+    "import/export": "warn",
+    "n/no-callback-literal": "warn",
+    "no-case-declarations": "warn",
+    "no-empty-pattern": "warn",
+    "no-fallthrough": "warn",
+    "no-new": "warn",
+    "no-prototype-builtins": "warn",
+    "no-unreachable": "warn",
+    "no-useless-catch": "warn",
+    "no-useless-escape": "warn",
+    "prefer-promise-reject-errors": "warn",
+    "react/display-name": "warn",
+    "react/jsx-key": "warn",
+    "react/prop-types": "warn",
+    "symbol-description": "warn"
   },
   "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts"]
 }
