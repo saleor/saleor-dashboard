@@ -6,6 +6,7 @@ import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import {
+  DashboardEventFactory,
   DispatchResponseEvent,
   NotificationAction,
   NotifyReady,
@@ -185,6 +186,10 @@ const useNotifyReadyAction = (
   frameEl: HTMLIFrameElement | null,
   appOrigin: string,
   appToken: string,
+  versions: {
+    core: string;
+    dashboard: string;
+  },
 ) => {
   const postToExtension = usePostToExtension(frameEl, appOrigin);
 
@@ -192,13 +197,12 @@ const useNotifyReadyAction = (
 
   return {
     handle(action: NotifyReady) {
-      postToExtension({
-        type: "handshake",
-        payload: {
-          token: appToken,
-          version: 1,
-        },
-      });
+      postToExtension(
+        DashboardEventFactory.createHandshakeEvent(appToken, 1, {
+          core: versions.core,
+          dashboard: versions.dashboard,
+        }),
+      );
       return createResponseStatus(action.payload.actionId, true);
     },
   };
