@@ -35,6 +35,7 @@ export const useUrlValueProvider = (): FilterValueProvider => {
   const { data, loading } = useInitialAPIState(fetchingParams);
   const value = loading ? [] : tokenizedUrl.asFilterValuesFromResponse(data);
 
+
   const persist = (filterValue: FilterContainer) => {
     router.history.replace({
       pathname: router.location.pathname,

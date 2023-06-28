@@ -13,7 +13,7 @@ import { useFilterContainer } from "./useFilterContainer";
 import { useLeftOperands } from "./useLeftOperands";
 import { useUrlValueProvider } from "./ValueProvider/useUrlValueProvider";
 
-const FiltersArea = ({ provider }) => {
+const FiltersArea = ({ provider, onConfirm }) => {
   const client = useApolloClient();
 
   const {
@@ -103,6 +103,10 @@ const FiltersArea = ({ provider }) => {
     }
   };
 
+  const handleConfirm = () => onConfirm(value)
+  
+  console.log(value)
+
   return (
     <Box>
       <_ExperimentalFilters
@@ -110,13 +114,21 @@ const FiltersArea = ({ provider }) => {
         // @ts-ignore
         value={value}
         onChange={handleStateChange}
-      />
+      
+      >
+        <_ExperimentalFilters.Footer>
+          <_ExperimentalFilters.AddRowButton>Add new row</_ExperimentalFilters.AddRowButton>
+          <_ExperimentalFilters.ConfirmButton onClick={handleConfirm}>Confirm</_ExperimentalFilters.ConfirmButton>
+        </_ExperimentalFilters.Footer>
+      </_ExperimentalFilters>
     </Box>
   );
 };
 
 export const ConditionalFilters = () => {
   const provider = useUrlValueProvider();
+
+  
 
   return (
     <Box>
