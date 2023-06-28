@@ -21,7 +21,7 @@ const createStaticEntry = (rawEntry: ConditionOption) => {
     return rawEntry.map(el => (typeof el === "string" ? el : el.slug));
   }
 
-  return rawEntry.slug
+  return rawEntry.slug;
 };
 
 const createAttributeEntry = (rawEntry: ConditionOption) => {
@@ -30,7 +30,7 @@ const createAttributeEntry = (rawEntry: ConditionOption) => {
   }
 
   if (Array.isArray(rawEntry)) {
-    return rawEntry.map(el => (typeof el === "string" ? el : el.slug ?? el.value));
+    return rawEntry.map(el => (typeof el === "string" ? el : el.slug));
   }
 
   return rawEntry.slug;

@@ -46,7 +46,11 @@ export class Condition {
     if (ConditionOptions.isStaticName(token.name)) {
       const staticOptions = ConditionOptions.fromStaticElementName(token.name);
       const selectedOption = staticOptions.findByLabel(token.conditionKind);
-      const value = response.filterByUrlToken(token);
+      const valueItems = response.filterByUrlToken(token);
+      const value =
+        selectedOption?.type === "combobox" && valueItems.length > 0
+          ? valueItems[0]
+          : valueItems;
 
       if (!selectedOption) {
         return Condition.createEmpty();
