@@ -2,6 +2,7 @@ import { SALES_SELECTORS } from "../../../elements/discounts/sales";
 import { ASSIGN_ELEMENTS_SELECTORS } from "../../../elements/shared/assign-elements-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { urlList } from "../../../fixtures/urlList";
+import { shouldVariantBeOnSale } from "../../../support/api/utils/discounts/salesUtils";
 import { formatDate } from "../../../support/formatData/formatDate";
 import { getVariant } from "../../api/requests/Product";
 import { createProductInChannel } from "../../api/utils/products/productsUtils";
@@ -150,6 +151,7 @@ export function createSaleWithNewVariant({
       discountOption,
     });
     assignVariants(product.name, variant.name);
+    shouldVariantBeOnSale(variant.id, channel.slug, true);
     return getVariant(variant.id, channel.slug, "token");
   });
 }
