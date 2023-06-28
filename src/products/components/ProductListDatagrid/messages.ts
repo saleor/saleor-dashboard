@@ -41,3 +41,11 @@ export const columnsMessages = defineMessages({
     description: "product updated at",
   },
 });
+
+export const categoryMetaGroups = defineMessages({
+  attribute: {
+    id: "GhY+pm",
+    defaultMessage: "Attributes",
+    description: "dynamic column description",
+  },
+});

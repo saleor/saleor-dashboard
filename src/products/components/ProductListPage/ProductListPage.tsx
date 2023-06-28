@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { LazyQueryResult } from "@apollo/client/react";
 import {
   extensionMountPoints,
   mapToMenuItems,
@@ -14,17 +15,17 @@ import { ListPageLayout } from "@dashboard/components/Layouts";
 import LimitReachedAlert from "@dashboard/components/LimitReachedAlert";
 import { ProductListColumns } from "@dashboard/config";
 import {
+  Exact,
   GridAttributesQuery,
   ProductListQuery,
   RefreshLimitsQuery,
-  SearchAvailableInGridAttributesQuery,
+  useAvailableColumnAttributesLazyQuery,
 } from "@dashboard/graphql";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   ChannelProps,
-  FetchMoreProps,
   FilterPageProps,
   PageListProps,
   RelayToFlat,
@@ -53,25 +54,29 @@ export interface ProductListPageProps
       FilterPageProps<ProductFilterKeys, ProductListFilterOpts>,
       "onTabDelete"
     >,
-    FetchMoreProps,
     SortPage<ProductListUrlSortField>,
     ChannelProps {
   activeAttributeSortId: string;
-  availableInGridAttributes: RelayToFlat<
-    SearchAvailableInGridAttributesQuery["availableInGrid"]
-  >;
-  columnQuery: string;
   currencySymbol: string;
-  gridAttributes: RelayToFlat<GridAttributesQuery["grid"]>;
+  gridAttributesOpts: LazyQueryResult<
+    GridAttributesQuery,
+    Exact<{
+      ids: string | string[];
+    }>
+  >;
   limits: RefreshLimitsQuery["shop"]["limits"];
   products: RelayToFlat<ProductListQuery["products"]>;
   selectedProductIds: string[];
   hasPresetsChanged: boolean;
   onAdd: () => void;
   onExport: () => void;
-  onColumnQueryChange: (query: string) => void;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (tabIndex: number) => void;
+  columnPickerSettings: string[];
+  setDynamicColumnSettings: (cols: string[]) => void;
+  availableColumnsAttributesOpts: ReturnType<
+    typeof useAvailableColumnAttributesLazyQuery
+  >;
   onProductsDelete: () => void;
   onSelectProductIds: (ids: number[], clearSelection: () => void) => void;
   clearRowSelection: () => void;
@@ -83,21 +88,16 @@ const DEFAULT_PRODUCT_LIST_VIEW_TYPE: ProductListViewType = "datagrid";
 
 export const ProductListPage: React.FC<ProductListPageProps> = props => {
   const {
-    columnQuery,
     currencySymbol,
     defaultSettings,
-    gridAttributes,
+    gridAttributesOpts,
     limits,
-    availableInGridAttributes,
+    availableColumnsAttributesOpts,
     filterOpts,
-    hasMore,
     initialSearch,
-    loading,
     settings,
     onAdd,
-    onColumnQueryChange,
     onExport,
-    onFetchMore,
     onFilterChange,
     onFilterAttributeFocus,
     onSearchChange,
@@ -112,6 +112,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     tabs,
     onTabUpdate,
     hasPresetsChanged,
+    columnPickerSettings,
+    setDynamicColumnSettings,
     selectedProductIds,
     onProductsDelete,
     clearRowSelection,
@@ -291,20 +293,20 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             hasRowHover={!isFilterPresetOpen}
             filterDependency={filterDependency}
             activeAttributeSortId={activeAttributeSortId}
-            columnQuery={columnQuery}
             defaultSettings={defaultSettings}
-            availableInGridAttributes={availableInGridAttributes}
-            isAttributeLoading={loading}
+            availableColumnsAttributesOpts={availableColumnsAttributesOpts}
             loading={listProps.disabled}
-            hasMore={hasMore}
-            gridAttributes={gridAttributes}
-            onColumnQueryChange={onColumnQueryChange}
-            onFetchMore={onFetchMore}
+            gridAttributesOpts={gridAttributesOpts}
             products={listProps.products}
             settings={settings}
             selectedChannelId={selectedChannelId}
             onUpdateListSettings={onUpdateListSettings}
             rowAnchor={productUrl}
+            onRowClick={id => {
+              navigate(productUrl(id));
+            }}
+            columnPickerSettings={columnPickerSettings}
+            setDynamicColumnSettings={setDynamicColumnSettings}
           />
         ) : (
           <ProductListTiles

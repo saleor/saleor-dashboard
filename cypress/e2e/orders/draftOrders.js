@@ -3,17 +3,23 @@
 
 import faker from "faker";
 
-import { DRAFT_ORDERS_LIST_SELECTORS } from "../../elements/orders/draft-orders-list-selectors";
-import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
-import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
+import {
+  BUTTON_SELECTORS,
+  DRAFT_ORDERS_LIST_SELECTORS,
+  ORDERS_SELECTORS,
+  SHARED_ELEMENTS,
+} from "../../elements/";
 import { urlList } from "../../fixtures/urlList";
-import { createCustomer } from "../../support/api/requests/Customer";
-import { updateOrdersSettings } from "../../support/api/requests/Order";
-import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
+import {
+  createCustomer,
+  updateOrdersSettings,
+} from "../../support/api/requests/";
+import { createShipping, getDefaultChannel } from "../../support/api/utils/";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
-import { createShipping } from "../../support/api/utils/shippingUtils";
-import { selectChannelInPicker } from "../../support/pages/channelsPage";
-import { finalizeDraftOrder } from "../../support/pages/draftOrderPage";
+import {
+  finalizeDraftOrder,
+  selectChannelInPicker,
+} from "../../support/pages/";
 
 describe("Draft orders", () => {
   const startsWith = "CyDraftOrders-";
@@ -82,6 +88,7 @@ describe("Draft orders", () => {
     () => {
       let draftOrderNumber;
       cy.addAliasToGraphRequest("OrderDraftFinalize");
+      cy.addAliasToGraphRequest("OrderList");
 
       cy.visit(urlList.orders);
       cy.get(ORDERS_SELECTORS.createOrderButton).click();
@@ -97,8 +104,7 @@ describe("Draft orders", () => {
             "contain.text",
             draftOrderNumber,
           );
-          cy.addAliasToGraphRequest("OrderList")
-            .get('[data-test-id="app-header-back-button"]')
+          cy.get(BUTTON_SELECTORS.back)
             .click()
             .waitForRequestAndCheckIfNoErrors("@OrderList");
           cy.visit(urlList.draftOrders).then(() => {

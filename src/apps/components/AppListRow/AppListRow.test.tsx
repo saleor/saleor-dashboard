@@ -1,3 +1,4 @@
+import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import * as context from "@dashboard/apps/context";
 import {
   comingSoonApp,
@@ -5,7 +6,6 @@ import {
   pendingAppInProgress,
   releasedApp,
 } from "@dashboard/apps/fixtures";
-import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
 import { appInstallationStatusMessages } from "@dashboard/apps/messages";
 import Wrapper from "@test/wrapper";
 import { render, screen, within } from "@testing-library/react";
@@ -127,7 +127,7 @@ describe("Apps AppListRow", () => {
 
   it("displays placeholder initial when no released app logo passed", () => {
     // Arrange
-    const app: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
+    const app: AppstoreApi.ReleasedSaleorApp = {
       ...releasedApp,
       logo: {
         ...releasedApp.logo,
@@ -153,7 +153,7 @@ describe("Apps AppListRow", () => {
 
   it("displays placeholder initial when no coming soon app logo passed", () => {
     // Arrange
-    const app: GetV2SaleorAppsResponse.ComingSoonSaleorApp = {
+    const app: AppstoreApi.ComingSoonSaleorApp = {
       ...comingSoonApp,
       logo: {
         ...comingSoonApp.logo,
