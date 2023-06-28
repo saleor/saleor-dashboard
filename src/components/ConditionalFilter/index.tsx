@@ -103,9 +103,7 @@ const FiltersArea = ({ provider, onConfirm }) => {
     }
   };
 
-  const handleConfirm = () => onConfirm(value)
-  
-  console.log(value)
+  const handleConfirm = () => onConfirm(value);
 
   return (
     <Box>
@@ -114,11 +112,14 @@ const FiltersArea = ({ provider, onConfirm }) => {
         // @ts-ignore
         value={value}
         onChange={handleStateChange}
-      
       >
         <_ExperimentalFilters.Footer>
-          <_ExperimentalFilters.AddRowButton>Add new row</_ExperimentalFilters.AddRowButton>
-          <_ExperimentalFilters.ConfirmButton onClick={handleConfirm}>Confirm</_ExperimentalFilters.ConfirmButton>
+          <_ExperimentalFilters.AddRowButton>
+            Add new row
+          </_ExperimentalFilters.AddRowButton>
+          <_ExperimentalFilters.ConfirmButton onClick={handleConfirm}>
+            Confirm
+          </_ExperimentalFilters.ConfirmButton>
         </_ExperimentalFilters.Footer>
       </_ExperimentalFilters>
     </Box>
@@ -127,8 +128,6 @@ const FiltersArea = ({ provider, onConfirm }) => {
 
 export const ConditionalFilters = () => {
   const provider = useUrlValueProvider();
-
-  
 
   return (
     <Box>

@@ -206,5 +206,6 @@ export const getLeftOperatorOptions = async (
     label: node.name,
     value: node.id,
     type: node.inputType,
+    slug: node.slug,
   }));
 };

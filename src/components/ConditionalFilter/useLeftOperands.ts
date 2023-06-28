@@ -9,13 +9,19 @@ export interface LeftOperand {
   type: AttributeInputType | StaticElementName;
   label: string;
   value: string;
+  slug?: string;
 }
 
 const STATIC_OPTIONS: LeftOperand[] = [
-  { value: "price", label: "Price", type: "price" },
-  { value: "category", label: "Category", type: "category" },
-  { value: "collection", label: "Collection", type: "collection" },
-  { value: "channel", label: "Channel", type: "channel" },
+  { value: "price", label: "Price", type: "price", slug: "price" },
+  { value: "category", label: "Category", type: "category", slug: "category" },
+  {
+    value: "collection",
+    label: "Collection",
+    type: "collection",
+    slug: "collection",
+  },
+  { value: "channel", label: "Channel", type: "channel", slug: "channel" },
 ];
 
 export const useLeftOperands = () => {
