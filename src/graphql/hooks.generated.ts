@@ -5693,6 +5693,7 @@ export const _GetAttributeChoicesDocument = gql`
         node {
           id
           name
+          slug
         }
       }
     }
@@ -5778,6 +5779,7 @@ export const _GetCategoriesChoicesDocument = gql`
       node {
         id
         name
+        slug
       }
     }
   }
@@ -5819,6 +5821,7 @@ export const _GetProductTypesChoicesDocument = gql`
       node {
         id
         name
+        slug
       }
     }
   }

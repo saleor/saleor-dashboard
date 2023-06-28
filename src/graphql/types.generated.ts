@@ -8378,7 +8378,7 @@ export type _GetAttributeChoicesQueryVariables = Exact<{
 }>;
 
 
-export type _GetAttributeChoicesQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null } }> } | null } | null };
+export type _GetAttributeChoicesQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null, slug: string | null } }> } | null } | null };
 
 export type _GetCollectionsChoicesQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -8394,7 +8394,7 @@ export type _GetCategoriesChoicesQueryVariables = Exact<{
 }>;
 
 
-export type _GetCategoriesChoicesQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string } }> } | null };
+export type _GetCategoriesChoicesQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, slug: string } }> } | null };
 
 export type _GetProductTypesChoicesQueryVariables = Exact<{
   first: Scalars['Int'];
@@ -8402,7 +8402,7 @@ export type _GetProductTypesChoicesQueryVariables = Exact<{
 }>;
 
 
-export type _GetProductTypesChoicesQuery = { __typename: 'Query', productTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string } }> } | null };
+export type _GetProductTypesChoicesQuery = { __typename: 'Query', productTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string, slug: string } }> } | null };
 
 export type TriggerWebhookDryRunMutationVariables = Exact<{
   objectId: Scalars['ID'];

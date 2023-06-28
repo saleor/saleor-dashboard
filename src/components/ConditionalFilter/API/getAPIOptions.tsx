@@ -39,6 +39,7 @@ export const getInitialRightOperatorOptions = async (
     return data.attribute.choices.edges.map(({ node }) => ({
       label: node.name,
       value: node.id,
+      slug: node.slug,
     }));
   }
 
@@ -54,6 +55,7 @@ export const getInitialRightOperatorOptions = async (
     return data.collections.edges.map(({ node }) => ({
       label: node.name,
       value: node.id,
+      slug: node.slug,
     }));
   }
 
@@ -69,6 +71,7 @@ export const getInitialRightOperatorOptions = async (
     return data.categories.edges.map(({ node }) => ({
       label: node.name,
       value: node.id,
+      slug: node.slug,
     }));
   }
 
@@ -84,6 +87,7 @@ export const getInitialRightOperatorOptions = async (
     return data.productTypes.edges.map(({ node }) => ({
       label: node.name,
       value: node.id,
+      slug: node.slug,
     }));
   }
 
@@ -92,9 +96,10 @@ export const getInitialRightOperatorOptions = async (
       query: _GetChannelOperandsDocument,
     });
 
-    return data.channels.map(({ id, name }) => ({
+    return data.channels.map(({ id, name, slug }) => ({
       label: name,
       value: id,
+      slug,
     }));
   }
 };

@@ -111,6 +111,7 @@ export const dynamicOperandsQueries = gql`
           node {
             id
             name
+            slug
           }
         }
       }
@@ -135,6 +136,7 @@ export const dynamicOperandsQueries = gql`
         node {
           id
           name
+          slug
         }
       }
     }
@@ -146,6 +148,7 @@ export const dynamicOperandsQueries = gql`
         node {
           id
           name
+          slug
         }
       }
     }
