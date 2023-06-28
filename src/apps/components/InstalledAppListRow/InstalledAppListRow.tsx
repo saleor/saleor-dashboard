@@ -33,6 +33,7 @@ export const InstalledAppListRow: React.FC<InstalledApp> = props => {
       state={{ from: location.pathname }}
       className={sprinkles({ display: "contents" })}
       inline={false}
+      data-testid={"apps:installed-app-row"}
     >
       <List.Item
         padding={4}
