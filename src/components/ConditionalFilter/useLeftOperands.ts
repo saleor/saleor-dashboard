@@ -9,7 +9,7 @@ export interface LeftOperand {
   type: AttributeInputType | StaticElementName;
   label: string;
   value: string;
-  slug?: string;
+  slug: string;
 }
 
 const STATIC_OPTIONS: LeftOperand[] = [

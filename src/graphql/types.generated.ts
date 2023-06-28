@@ -8369,16 +8369,16 @@ export type _SearchAttributeOperandsQueryVariables = Exact<{
 }>;
 
 
-export type _SearchAttributeOperandsQuery = { __typename: 'Query', search: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null, slug: string | null } }> } | null } }> } | null };
+export type _SearchAttributeOperandsQuery = { __typename: 'Query', search: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null, slug: string } }> } | null } }> } | null };
 
 export type _GetAttributeChoicesQueryVariables = Exact<{
-  attributeId: Scalars['ID'];
+  slug: Scalars['String'];
   first: Scalars['Int'];
   query: Scalars['String'];
 }>;
 
 
-export type _GetAttributeChoicesQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null, slug: string | null } }> } | null } | null };
+export type _GetAttributeChoicesQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null, slug: string } }> } | null } | null };
 
 export type _GetCollectionsChoicesQueryVariables = Exact<{
   first: Scalars['Int'];

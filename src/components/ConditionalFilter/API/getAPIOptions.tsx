@@ -31,7 +31,7 @@ export const getInitialRightOperatorOptions = async (
     const { data } = await client.query({
       query: _GetAttributeChoicesDocument,
       variables: {
-        attributeId: filterElement.value.value,
+        slug: filterElement.value.value,
         first: 5,
         query: "",
       },
@@ -117,7 +117,7 @@ export const getRightOperatorOptionsByQuery = async (
     const { data } = await client.query({
       query: _GetAttributeChoicesDocument,
       variables: {
-        attributeId: filterElement.value.value,
+        slug: filterElement.value.value,
         first: 5,
         query: inputValue,
       },

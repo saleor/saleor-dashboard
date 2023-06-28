@@ -91,9 +91,9 @@ export const initialDynamicOperands = gql`
           choices(first: 5, filter: { ids: $choicesIds }) {
             edges {
               node {
+                slug: id
                 id
                 name
-                slug
               }
             }
           }
@@ -104,14 +104,14 @@ export const initialDynamicOperands = gql`
 `;
 
 export const dynamicOperandsQueries = gql`
-  query _GetAttributeChoices($attributeId: ID!, $first: Int!, $query: String!) {
-    attribute(id: $attributeId) {
+  query _GetAttributeChoices($slug: String!, $first: Int!, $query: String!) {
+    attribute(slug: $slug) {
       choices(first: $first, filter: { search: $query }) {
         edges {
           node {
+            slug: id
             id
             name
-            slug
           }
         }
       }

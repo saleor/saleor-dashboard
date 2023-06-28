@@ -57,7 +57,7 @@ export class FilterElement {
 
   public updateLeftOperator(leftOperand: LeftOperand) {
     this.value = {
-      value: leftOperand.value,
+      value: leftOperand.slug,
       label: leftOperand.label,
       type: leftOperand.type,
     };

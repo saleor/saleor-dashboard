@@ -5644,9 +5644,9 @@ export const _SearchAttributeOperandsDocument = gql`
         choices(first: 5, filter: {ids: $choicesIds}) {
           edges {
             node {
+              slug: id
               id
               name
-              slug
             }
           }
         }
@@ -5686,14 +5686,14 @@ export type _SearchAttributeOperandsQueryHookResult = ReturnType<typeof use_Sear
 export type _SearchAttributeOperandsLazyQueryHookResult = ReturnType<typeof use_SearchAttributeOperandsLazyQuery>;
 export type _SearchAttributeOperandsQueryResult = Apollo.QueryResult<Types._SearchAttributeOperandsQuery, Types._SearchAttributeOperandsQueryVariables>;
 export const _GetAttributeChoicesDocument = gql`
-    query _GetAttributeChoices($attributeId: ID!, $first: Int!, $query: String!) {
-  attribute(id: $attributeId) {
+    query _GetAttributeChoices($slug: String!, $first: Int!, $query: String!) {
+  attribute(slug: $slug) {
     choices(first: $first, filter: {search: $query}) {
       edges {
         node {
+          slug: id
           id
           name
-          slug
         }
       }
     }
@@ -5713,7 +5713,7 @@ export const _GetAttributeChoicesDocument = gql`
  * @example
  * const { data, loading, error } = use_GetAttributeChoicesQuery({
  *   variables: {
- *      attributeId: // value for 'attributeId'
+ *      slug: // value for 'slug'
  *      first: // value for 'first'
  *      query: // value for 'query'
  *   },
