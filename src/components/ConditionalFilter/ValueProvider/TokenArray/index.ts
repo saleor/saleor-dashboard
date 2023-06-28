@@ -1,43 +1,57 @@
-import { InitialStateResponse } from "../../API/InitialStateResponse";
-import { UrlToken } from "../UrlToken";
-import { FetchingParams, emptyFetchingParams, toFetchingParams } from "./fetchingParams";
-import { FilterElement } from "../../FilterElement";
-import { ParsedQs, parse } from "qs";
+// @ts-strict-ignore
+
+import { parse, ParsedQs } from "qs";
 import { useRef } from "react";
+
+import { InitialStateResponse } from "../../API/InitialStateResponse";
+import { FilterElement } from "../../FilterElement";
 import { FilterContainer } from "../../useFilterContainer";
+import { UrlToken } from "../UrlToken";
+import {
+  emptyFetchingParams,
+  FetchingParams,
+  toFetchingParams,
+} from "./fetchingParams";
 
 const toFlatUrlTokens = (p: UrlToken[], c: TokenArray[number]) => {
-  if (typeof c == "string") return p
-
-  if (Array.isArray(c)) {
-    return p.concat(flatenate(c))
+  if (typeof c == "string") {
+    return p;
   }
 
-  return p.concat(c)
-}
+  if (Array.isArray(c)) {
+    return p.concat(flatenate(c));
+  }
 
-const flatenate = (tokens: TokenArray): UrlToken[] => {
-  return tokens.reduce<UrlToken[]>(toFlatUrlTokens, [])
-}
+  return p.concat(c);
+};
 
-const mapToTokens = (urlEntries: (ParsedQs | string)[]): TokenArray =>
+const flatenate = (tokens: TokenArray): UrlToken[] =>
+  tokens.reduce<UrlToken[]>(toFlatUrlTokens, []);
+
+const mapToTokens = (urlEntries: Array<ParsedQs | string>): TokenArray =>
   urlEntries.map(entry => {
-    if (typeof entry === "string") return entry
+    if (typeof entry === "string") {
+      return entry;
+    }
 
-    if (Array.isArray(entry)) return mapToTokens(entry)
+    if (Array.isArray(entry)) {
+      return mapToTokens(entry);
+    }
 
-    return UrlToken.fromUrlEntry(entry)
-  }) as TokenArray
-
+    return UrlToken.fromUrlEntry(entry);
+  }) as TokenArray;
 
 const tokenizeUrl = (urlParams: string) => {
-  const parsedUrl = Object.values(parse(urlParams)) as (ParsedQs | string)[]
+  const parsedUrl = Object.values(parse(urlParams)) as Array<ParsedQs | string>;
 
-  return mapToTokens(parsedUrl)
-}
+  return mapToTokens(parsedUrl);
+};
 
-const mapUrlTokensToFilterValues = (urlTokens: TokenArray, response: InitialStateResponse) => {
-  return urlTokens.map(el => {
+const mapUrlTokensToFilterValues = (
+  urlTokens: TokenArray,
+  response: InitialStateResponse,
+) =>
+  urlTokens.map(el => {
     if (typeof el === "string") {
       return el;
     }
@@ -48,25 +62,25 @@ const mapUrlTokensToFilterValues = (urlTokens: TokenArray, response: InitialStat
 
     return FilterElement.fromUrlToken(el, response);
   });
-}
-
 
 export class TokenArray extends Array<string | UrlToken | TokenArray> {
   constructor(url: string) {
-    super(...tokenizeUrl(url))
+    super(...tokenizeUrl(url));
   }
 
   public getFetchingParams() {
     return this.asFlatArray()
       .filter(token => token.isLoadable())
-      .reduce<FetchingParams>(toFetchingParams, emptyFetchingParams)
+      .reduce<FetchingParams>(toFetchingParams, emptyFetchingParams);
   }
 
   public asFlatArray() {
-    return flatenate(this)
+    return flatenate(this);
   }
 
-  public asFilterValuesFromResponse(response: InitialStateResponse): FilterContainer {
+  public asFilterValuesFromResponse(
+    response: InitialStateResponse,
+  ): FilterContainer {
     return this.map(el => {
       if (typeof el === "string") {
         return el;
@@ -82,11 +96,11 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
 }
 
 export const useTokenArray = (url: string) => {
-  const instance = useRef<TokenArray>(null)
+  const instance = useRef<TokenArray>(null);
 
   if (!instance.current) {
-    instance.current = new TokenArray(url)
+    instance.current = new TokenArray(url);
   }
 
-  return instance.current
-}
+  return instance.current;
+};

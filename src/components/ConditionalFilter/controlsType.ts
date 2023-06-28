@@ -1,5 +1,5 @@
+// @ts-strict-ignore
 import { ConditionOption } from "./FilterElement/ConditionSelected";
-
 
 export const CONTROL_DEFAULTS = {
   text: "",
@@ -10,7 +10,5 @@ export const CONTROL_DEFAULTS = {
   combobox: "",
 };
 
-
-export const getDefaultByControlName = (name: string): ConditionOption => {
-  return CONTROL_DEFAULTS[name]
-}
+export const getDefaultByControlName = (name: string): ConditionOption =>
+  CONTROL_DEFAULTS[name];

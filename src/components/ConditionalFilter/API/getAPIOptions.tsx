@@ -10,11 +10,9 @@ import {
 } from "@dashboard/graphql";
 
 import { FilterElement } from "../FilterElement";
+import { FilterContainer } from "../useFilterContainer";
 
-const getFilterElement = (
-  value: Array<string | FilterElement>,
-  index: number,
-): FilterElement => {
+const getFilterElement = (value: any, index: number): FilterElement => {
   const possibleFilterElement = value[index];
   return typeof possibleFilterElement != "string"
     ? possibleFilterElement
@@ -24,7 +22,7 @@ const getFilterElement = (
 export const getInitialRightOperatorOptions = async (
   client: ApolloClient<any>,
   position: string,
-  value: Array<string | FilterElement>,
+  value: FilterContainer,
 ) => {
   const index = parseInt(position, 10);
   const filterElement = getFilterElement(value, index);
@@ -104,7 +102,7 @@ export const getInitialRightOperatorOptions = async (
 export const getRightOperatorOptionsByQuery = async (
   client: ApolloClient<any>,
   position: string,
-  value: Array<string | FilterElement>,
+  value: FilterContainer,
   inputValue: string,
 ) => {
   const index = parseInt(position, 10);

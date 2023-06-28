@@ -107,6 +107,7 @@ const FiltersArea = ({ provider }) => {
     <Box>
       <_ExperimentalFilters
         leftOptions={operands}
+        // @ts-ignore
         value={value}
         onChange={handleStateChange}
       />
@@ -123,6 +124,7 @@ export const ConditionalFilters = () => {
       {provider.loading ? (
         <Text>Loading...</Text>
       ) : (
+        // @ts-ignore
         <FiltersArea provider={provider.value} onConfirm={provider.persist} />
       )}
     </Box>

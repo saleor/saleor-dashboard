@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useState } from "react";
 
 import { FilterElement } from "./FilterElement";
@@ -19,7 +20,7 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
   };
 
   const removeAt = (position: string) => {
-    const index = parseInt(position);
+    const index = parseInt(position, 10);
 
     if (value.length > 0) {
       setValue(v =>

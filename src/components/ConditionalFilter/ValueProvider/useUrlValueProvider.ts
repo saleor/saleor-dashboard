@@ -1,10 +1,12 @@
+// @ts-strict-ignore
+
 import { stringify } from "qs";
 import useRouter from "use-react-router";
+
 import { useInitialAPIState } from "../API/getInitalAPIState";
 import { FilterValueProvider } from "../FilterValueProvider";
-import { useTokenArray } from "./TokenArray";
 import { FilterContainer } from "../useFilterContainer";
-
+import { useTokenArray } from "./TokenArray";
 
 const prepareStructure = filterValue =>
   filterValue.map(f => {
@@ -24,14 +26,14 @@ const prepareStructure = filterValue =>
 */
 export const useUrlValueProvider = (): FilterValueProvider => {
   const router = useRouter();
-  const params = new URLSearchParams(router.location.search)
-  params.delete("asc")
-  params.delete("sort")
+  const params = new URLSearchParams(router.location.search);
+  params.delete("asc");
+  params.delete("sort");
 
-  const tokenizedUrl = useTokenArray(params.toString())
-  const fetchingParams = tokenizedUrl.getFetchingParams()
+  const tokenizedUrl = useTokenArray(params.toString());
+  const fetchingParams = tokenizedUrl.getFetchingParams();
   const { data, loading } = useInitialAPIState(fetchingParams);
-  const value = loading ? [] : tokenizedUrl.asFilterValuesFromResponse(data)
+  const value = loading ? [] : tokenizedUrl.asFilterValuesFromResponse(data);
 
   const persist = (filterValue: FilterContainer) => {
     router.history.replace({
