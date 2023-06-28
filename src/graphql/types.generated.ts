@@ -8386,7 +8386,7 @@ export type _GetCollectionsChoicesQueryVariables = Exact<{
 }>;
 
 
-export type _GetCollectionsChoicesQuery = { __typename: 'Query', collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string } }> } | null };
+export type _GetCollectionsChoicesQuery = { __typename: 'Query', collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, slug: string } }> } | null };
 
 export type _GetCategoriesChoicesQueryVariables = Exact<{
   first: Scalars['Int'];

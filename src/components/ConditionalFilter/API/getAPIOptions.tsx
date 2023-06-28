@@ -135,7 +135,7 @@ export const getRightOperatorOptionsByQuery = async (
     return data.collections.edges.map(({ node }) => ({
       label: node.name,
       value: node.id,
-      slug: node.slug
+      slug: node.slug,
     }));
   }
 
@@ -151,7 +151,7 @@ export const getRightOperatorOptionsByQuery = async (
     return data.categories.edges.map(({ node }) => ({
       label: node.name,
       value: node.id,
-      slug: node.slug
+      slug: node.slug,
     }));
   }
 
@@ -177,7 +177,7 @@ export const getRightOperatorOptionsByQuery = async (
     const options = data.channels.map(({ id, name, slug }) => ({
       label: name,
       value: id,
-      slug: slug
+      slug,
     }));
 
     return options.filter(({ label }) =>

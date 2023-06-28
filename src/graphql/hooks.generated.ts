@@ -5736,6 +5736,7 @@ export const _GetCollectionsChoicesDocument = gql`
       node {
         id
         name
+        slug
       }
     }
   }
