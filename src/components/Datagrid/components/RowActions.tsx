@@ -27,7 +27,7 @@ export const RowActions = ({ menuItems, disabled }: RowActionsProps) => {
       {hasSingleMenuItem && firstMenuItem.Icon ? (
         <IconButton
           data-test-id="row-action-button"
-          disabled={disabled}
+          disabled={disabled || firstMenuItem.disabled}
           onClick={handleIconClick}
           className={classes.ghostIcon}
           variant="ghost"
