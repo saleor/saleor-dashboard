@@ -192,7 +192,6 @@ jobs:
             --instance "$TESTMO_URL" \
             --project-id 1 \
             --name "Deployment tests" \
-            --resources ../../resources.json \
             --source unit-tests > testmo-run-id.txt
           ID=$(cat testmo-run-id.txt)
           echo "testmo-run-id=$ID" >> $GITHUB_OUTPUT
