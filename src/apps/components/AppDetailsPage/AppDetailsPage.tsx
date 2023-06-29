@@ -1,11 +1,10 @@
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { AppQuery } from "@dashboard/graphql";
 import React from "react";
 
-import AboutCard from "./AboutCard";
-import DataPrivacyCard from "./DataPrivacyCard";
+import { AboutCard } from "./AboutCard";
+import { DataPrivacyCard } from "./DataPrivacyCard";
 import Header from "./Header";
-import PermissionsCard from "./PermissionsCard";
+import { PermissionsCard } from "./PermissionsCard";
 
 export interface AppDetailsPageProps {
   loading: boolean;
@@ -34,18 +33,19 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
       />
-      <AboutCard aboutApp={data?.aboutApp} loading={loading} />
-      <CardSpacer />
-      <PermissionsCard permissions={data?.permissions} loading={loading} />
-      <CardSpacer />
+      <AboutCard margin={6} aboutApp={data?.aboutApp} loading={loading} />
+      <PermissionsCard
+        margin={6}
+        permissions={data?.permissions}
+        loading={loading}
+      />
       <DataPrivacyCard
+        margin={6}
         dataPrivacyUrl={data?.dataPrivacyUrl}
         loading={loading}
       />
-      <CardSpacer />
     </>
   );
 };
 
 AppDetailsPage.displayName = "AppDetailsPage";
-export default AppDetailsPage;

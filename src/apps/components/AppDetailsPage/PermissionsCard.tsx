@@ -1,48 +1,54 @@
 // @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
 import Skeleton from "@dashboard/components/Skeleton";
 import { AppQuery } from "@dashboard/graphql";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { Box, BoxProps, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
-import { useStyles } from "./styles";
 
-interface PermissionsCardProps {
+type PermissionsCardProps = {
   permissions?: AppQuery["app"]["permissions"];
   loading: boolean;
-}
+} & BoxProps;
 
-const PermissionsCard: React.FC<PermissionsCardProps> = ({
+export const PermissionsCard: React.FC<PermissionsCardProps> = ({
   permissions,
   loading,
+  ...boxProps
 }) => {
-  const classes = useStyles();
   const intl = useIntl();
 
+  const noPermissions = (
+    <Text>{intl.formatMessage(messages.appNoPermissions)}</Text>
+  );
+
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(messages.appPermissionsTitle)} />
-      <CardContent>
+    <Box {...boxProps}>
+      <Text variant={"heading"} marginBottom={4} as={"h2"}>
+        {intl.formatMessage(messages.appPermissionsTitle)}
+      </Text>
+      <Box>
         {!loading ? (
           <>
-            <Typography>
+            <Text as={"p"} marginBottom={4}>
               <FormattedMessage {...messages.appPermissionsDescription} />
-            </Typography>
-            {!!permissions?.length && (
-              <ul className={classes.permissionsContainer}>
+            </Text>
+            {permissions.length === 0 && noPermissions}
+            {permissions?.length && (
+              <Box as={"ul"}>
                 {permissions?.map(perm => (
-                  <li key={perm.code}>{perm.name}</li>
+                  <Box as={"li"} paddingX={4} paddingY={2} key={perm.code}>
+                    <Text>{perm.name}</Text>
+                  </Box>
                 ))}
-              </ul>
+              </Box>
             )}
           </>
         ) : (
           <Skeleton />
         )}
-      </CardContent>
-    </Card>
+      </Box>
+    </Box>
   );
 };
-export default PermissionsCard;
