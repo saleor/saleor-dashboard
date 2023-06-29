@@ -2,4 +2,4 @@
 "saleor-dashboard": patch
 ---
 
-Fix sending attributeValue.value for all attribute input type
+Fix unability to save attribute value when the attribute value is invalid (attribute value should be only send when attribute input type is swatch)
