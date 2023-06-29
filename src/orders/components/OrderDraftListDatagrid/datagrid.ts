@@ -79,16 +79,16 @@ export const createGetCellContent =
     }
   };
 
-function getCustomerName(
+export function getCustomerName(
   rowData: RelayToFlat<OrderDraftListQuery["draftOrders"]>[number],
 ) {
-  // CORE when sort by customer they sort
-  // by billingAdress.firstName and billingAdress.lastName
-  if (rowData.billingAddress) {
-    return (
-      rowData.billingAddress.firstName + " " + rowData.billingAddress.lastName
-    );
+  if (rowData?.billingAddress?.firstName && rowData?.billingAddress?.lastName) {
+    return `${rowData.billingAddress.firstName} ${rowData.billingAddress.lastName}`;
   }
 
-  return "";
+  if (rowData.userEmail) {
+    return rowData.userEmail;
+  }
+
+  return "-";
 }
