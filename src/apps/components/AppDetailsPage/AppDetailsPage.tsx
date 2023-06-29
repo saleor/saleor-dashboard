@@ -1,5 +1,8 @@
 import { AppQuery } from "@dashboard/graphql";
+import errorTracker from "@dashboard/services/errorTracking";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
 import { AboutCard } from "./AboutCard";
 import { DataPrivacyCard } from "./DataPrivacyCard";
@@ -26,7 +29,14 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   }
 
   return (
-    <>
+    <ErrorBoundary
+      onError={errorTracker.captureException}
+      fallbackRender={() => (
+        <Box padding={4}>
+          <Text>Error, please refresh the page</Text>
+        </Box>
+      )}
+    >
       <Header
         data={data}
         onAppActivateOpen={onAppActivateOpen}
@@ -44,7 +54,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
         dataPrivacyUrl={data?.dataPrivacyUrl}
         loading={loading}
       />
-    </>
+    </ErrorBoundary>
   );
 };
 
