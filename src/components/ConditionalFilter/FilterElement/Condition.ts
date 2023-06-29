@@ -48,9 +48,9 @@ export class Condition {
       const selectedOption = staticOptions.findByLabel(token.conditionKind);
       const valueItems = response.filterByUrlToken(token);
       const value =
-        selectedOption?.type === "combobox" && valueItems.length > 0
-          ? valueItems[0]
-          : valueItems;
+        selectedOption?.type === "multiselect" && valueItems.length > 0
+          ? valueItems
+          : valueItems[0];
 
       if (!selectedOption) {
         return Condition.createEmpty();

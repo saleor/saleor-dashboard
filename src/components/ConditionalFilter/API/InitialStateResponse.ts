@@ -30,6 +30,10 @@ export class InitialStateResponse {
       );
     }
 
+    if (!token.isLoadable()) {
+      return [token.value] as string[];
+    }
+
     return this.getEntryByname(token.name).filter(
       ({ slug }) => slug && token.value.includes(slug),
     );

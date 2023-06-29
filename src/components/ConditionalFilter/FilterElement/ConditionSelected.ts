@@ -11,6 +11,7 @@ export type ConditionOption =
   | ItemOption
   | ItemOption[]
   | string
+  | string[]
   | [string, string];
 
 export class ConditionSelected {
