@@ -181,8 +181,12 @@ jobs:
         with:
           node-version-file: ".nvmrc"
           cache: npm
-      - run: npm ci
-      - run: |
+      - name: install dependencies
+        run: npm ci
+        working-directory: /.github/workflows
+      - name: create testmo run
+        working-directory: /.github/workflows
+        run: |
           npx testmo automation:run:create \
             --instance "$TESTMO_URL" \
             --project-id 1 \
@@ -239,6 +243,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: NODE_OPTIONS=--max_old_space_size=4096 npm install
       - name: Testmo reports threads init
+        working-directory: /.github/workflows
         run: | 
             npx testmo automation:run:submit-thread \
             --instance "$TESTMO_URL" \
@@ -279,7 +284,10 @@ jobs:
           node-version-file: ".nvmrc"
           cache: npm
       - run: npm ci
-      - run: |
+        working-directory: /.github/workflows
+      - name: complete testmo report 
+        working-directory: /.github/workflows
+        run: |
           npx testmo automation:run:complete \
             --instance "$TESTMO_URL" \
             --run-id "${{ needs.test-setup.outputs.testmo-run-id }}"
