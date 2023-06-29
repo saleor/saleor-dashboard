@@ -6,7 +6,7 @@ on: [pull_request]
 jobs:
   deploy:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       base_URL: ${{ steps.set-domain.outputs.domain }}
     steps:
@@ -121,7 +121,7 @@ jobs:
           deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
 
   prepare-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       tags: ${{steps.get_tags.outputs.result}}
       containers: ${{ steps.get_containers.outputs.result}}
@@ -164,7 +164,6 @@ jobs:
               for(let i=1; i<=numberOfContainers[1]; i++){
                 containers.push(i)
               }
-            echo ${{Array.from(containers.keys())}}
             return {"containers": containers}
 
       - name: echo-tags
@@ -173,14 +172,14 @@ jobs:
 
   testmo-report-preparation:
     needs: prepare-tests
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       testmo-run-id: ${{ steps.run-tests.outputs.testmo-run-id }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 19
+          node-version-file: ".nvmrc"
           cache: npm
       - run: npm ci
       - run: |
@@ -189,7 +188,7 @@ jobs:
             --project-id 1 \
             --name "Deployment tests" \
             --resources resources.json \
-            --source "unit-tests" > testmo-run-id.txt
+            --source unit-tests > testmo-run-id.txt
           ID=$(cat testmo-run-id.txt)
           echo "testmo-run-id=$ID" >> $GITHUB_OUTPUT
         env:
@@ -198,8 +197,8 @@ jobs:
         id: run-tests
 
   cypress-run-selected:
-    runs-on: ubuntu-latest
-    needs: [prepare-tests, deploy]
+    runs-on: ubuntu-22.04
+    needs: [prepare-tests, deploy, testmo-report-preparation, testmo-report-preparation]
     container: cypress/browsers:node18.12.0-chrome106-ff106
     strategy:
       fail-fast: false
@@ -246,8 +245,8 @@ jobs:
             --run-id "${{ needs.test-setup.outputs.testmo-run-id }}" \
             --results results/*.xml
         env:
-          CI_TOTAL: ${{ matrix }}
-          CI_INDEX: ${{ steps.get_containers.outputs.containerIndexes }}
+          CI_TOTAL: ${{ strategy.job-total }}
+          CI_INDEX: ${{ matrix}}
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
       - name: Cypress run critical
@@ -272,13 +271,12 @@ jobs:
   test-complete:
     needs: [testmo-report-preparation, cypress-run-selected]
     if: always()
-    runs-on: ubuntu-latest
-
+    runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
-          node-version: 19
+          node-version-file: ".nvmrc"
           cache: npm
       - run: npm ci
       - run: |
