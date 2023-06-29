@@ -122,6 +122,7 @@ jobs:
 
   prepare-tests:
     runs-on: ubuntu-22.04
+    needs: deploy
     outputs:
       tags: ${{steps.get_tags.outputs.result}}
       containers: ${{ steps.get_containers.outputs.result}}
