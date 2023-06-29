@@ -9,6 +9,8 @@ export const useStyles = makeStyles(
     },
     colPrice: {
       minWidth: 300,
+      paddingTop: 12,
+      paddingBottom: 12,
     },
     colType: {
       fontSize: 14,
