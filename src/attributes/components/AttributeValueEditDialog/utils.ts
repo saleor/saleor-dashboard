@@ -11,6 +11,7 @@ export const getAttributeValueFields = (
     };
   }
 
+  // Value should be only use when input type is swatch
   if (attributeValue?.value && isSwatch) {
     return { value: attributeValue?.value ?? "" };
   }
