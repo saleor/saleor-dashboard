@@ -183,14 +183,16 @@ jobs:
           node-version-file: ".nvmrc"
           cache: npm
       - name: install dependencies
+        working-directory: .github/workflows
         run: npm ci
       - name: create testmo run
+        working-directory: .github/workflows
         run: |
           npx testmo automation:run:create \
             --instance "$TESTMO_URL" \
             --project-id 1 \
             --name "Deployment tests" \
-            --resources resources.json \
+            --resources ../../resources.json \
             --source unit-tests > testmo-run-id.txt
           ID=$(cat testmo-run-id.txt)
           echo "testmo-run-id=$ID" >> $GITHUB_OUTPUT
@@ -282,7 +284,9 @@ jobs:
           node-version-file: ".nvmrc"
           cache: npm
       - run: npm ci
+        working-directory: .github/workflows
       - name: complete testmo report 
+        working-directory: .github/workflows
         run: |
           npx testmo automation:run:complete \
             --instance "$TESTMO_URL" \
