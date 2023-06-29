@@ -128,7 +128,7 @@ export function getDateCellContent(
 export function getCustomerCellContent(
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
 ) {
-  if (rowData.billingAddress) {
+  if (rowData?.billingAddress?.firstName && rowData?.billingAddress?.lastName) {
     return readonlyTextCell(
       `${rowData.billingAddress.firstName} ${rowData.billingAddress.lastName}`,
     );
