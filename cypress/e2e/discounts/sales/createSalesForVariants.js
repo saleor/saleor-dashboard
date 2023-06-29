@@ -9,7 +9,7 @@ import { createVariant } from "../../../support/api/requests/Product";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
 import {
   createSaleInChannel,
-  shouldVariantBeOnSale,
+  getVariantWithSaleStatus,
 } from "../../../support/api/utils/discounts/salesUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { createShipping } from "../../../support/api/utils/shippingUtils";
@@ -137,7 +137,11 @@ describe("Sales discounts for variant", () => {
         })
         .then(variantsList => {
           updateSale({ saleId: sale.id, variants: variantsList });
-          shouldVariantBeOnSale(variantsList[0].id, defaultChannel.slug, true);
+          getVariantWithSaleStatus(
+            variantsList[0].id,
+            defaultChannel.slug,
+            true,
+          );
           createCheckout({
             channelSlug: defaultChannel.slug,
             email: "example@example.com",

@@ -30,7 +30,7 @@ export function createSaleInChannel({
     })
     .then(() => sale);
 }
-export function shouldVariantBeOnSale(
+export function getVariantWithSaleStatus(
   variantId,
   channelSlug,
   shouldBeSales,
@@ -45,7 +45,12 @@ export function shouldVariantBeOnSale(
       );
     } else {
       cy.wait(5000);
-      shouldVariantBeOnSale(variantId, channelSlug, shouldBeSales, retries + 1);
+      getVariantWithSaleStatus(
+        variantId,
+        channelSlug,
+        shouldBeSales,
+        retries + 1,
+      );
     }
   });
 }

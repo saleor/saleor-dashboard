@@ -13,7 +13,7 @@ import {
   createSaleInChannel,
   createSaleInChannelWithProduct,
   deleteSalesStartsWith,
-  shouldVariantBeOnSale,
+  getVariantWithSaleStatus,
 } from "../../../support/api/utils/discounts/salesUtils";
 import {
   createProductInChannel,
@@ -134,7 +134,7 @@ describe("As an admin I want to update sales", () => {
           });
         })
         .then(saleResp => {
-          shouldVariantBeOnSale(variants[0].id, defaultChannel.slug, true)
+          getVariantWithSaleStatus(variants[0].id, defaultChannel.slug, true)
             .its("pricing")
             .its("price.gross.amount")
             .should("eq", productPriceOnSale);
@@ -145,7 +145,7 @@ describe("As an admin I want to update sales", () => {
             .get(BUTTON_SELECTORS.submit)
             .click()
             .wait("@SaleDelete");
-          shouldVariantBeOnSale(variants[0].id, defaultChannel.slug, false)
+          getVariantWithSaleStatus(variants[0].id, defaultChannel.slug, false)
             .its("pricing")
             .its("price.gross.amount")
             .should("eq", productPrice);
@@ -172,7 +172,7 @@ describe("As an admin I want to update sales", () => {
             saleId: sale.id,
             variants,
           });
-          shouldVariantBeOnSale(variants[0].id, defaultChannel.slug, true)
+          getVariantWithSaleStatus(variants[0].id, defaultChannel.slug, true)
             .its("pricing")
             .its("price.gross.amount")
             .should("eq", productPriceOnSale);
@@ -186,7 +186,7 @@ describe("As an admin I want to update sales", () => {
             .get(BUTTON_SELECTORS.submit)
             .click()
             .wait("@SaleCataloguesRemove");
-          shouldVariantBeOnSale(variants[0].id, defaultChannel.slug, false)
+          getVariantWithSaleStatus(variants[0].id, defaultChannel.slug, false)
             .its("pricing")
             .its("price.gross.amount")
             .should("eq", productPrice);
