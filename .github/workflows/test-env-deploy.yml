@@ -260,7 +260,10 @@ jobs:
           parallel: true
           group: "UI - Chrome"
           record: true
-          tag: Critical, ${{github.event.action}}     
+          tag: Critical, ${{github.event.action}}    
+      - name: Install dependencies
+        working-directory: .github/workflows
+        run: npm ci 
       - name: Testmo threads submit
         working-directory: .github/workflows
         run: | 
