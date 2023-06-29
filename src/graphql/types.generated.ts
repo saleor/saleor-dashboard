@@ -8323,6 +8323,87 @@ export type AddressValidationRulesQueryVariables = Exact<{
 
 export type AddressValidationRulesQuery = { __typename: 'Query', addressValidationRules: { __typename: 'AddressValidationData', allowedFields: Array<string>, countryAreaChoices: Array<{ __typename: 'ChoiceValue', raw: string | null, verbose: string | null }> } | null };
 
+export type _GetDynamicLeftOperandsQueryVariables = Exact<{
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type _GetDynamicLeftOperandsQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null } }> } | null };
+
+export type _GetChannelOperandsQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type _GetChannelOperandsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, name: string, slug: string }> | null };
+
+export type _SearchCollectionsOperandsQueryVariables = Exact<{
+  first: Scalars['Int'];
+  collectionsSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+}>;
+
+
+export type _SearchCollectionsOperandsQuery = { __typename: 'Query', search: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, slug: string } }> } | null };
+
+export type _SearchCategoriesOperandsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  categoriesSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+}>;
+
+
+export type _SearchCategoriesOperandsQuery = { __typename: 'Query', search: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, slug: string } }> } | null };
+
+export type _SearchProductTypesOperandsQueryVariables = Exact<{
+  after?: InputMaybe<Scalars['String']>;
+  first: Scalars['Int'];
+  productTypesSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+}>;
+
+
+export type _SearchProductTypesOperandsQuery = { __typename: 'Query', search: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string, slug: string } }> } | null };
+
+export type _SearchAttributeOperandsQueryVariables = Exact<{
+  attributesSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
+  choicesIds?: InputMaybe<Array<Scalars['ID']> | Scalars['ID']>;
+  first: Scalars['Int'];
+}>;
+
+
+export type _SearchAttributeOperandsQuery = { __typename: 'Query', search: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null, slug: string } }> } | null } }> } | null };
+
+export type _GetAttributeChoicesQueryVariables = Exact<{
+  slug: Scalars['String'];
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type _GetAttributeChoicesQuery = { __typename: 'Query', attribute: { __typename: 'Attribute', choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null, slug: string } }> } | null } | null };
+
+export type _GetCollectionsChoicesQueryVariables = Exact<{
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type _GetCollectionsChoicesQuery = { __typename: 'Query', collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, slug: string } }> } | null };
+
+export type _GetCategoriesChoicesQueryVariables = Exact<{
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type _GetCategoriesChoicesQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, slug: string } }> } | null };
+
+export type _GetProductTypesChoicesQueryVariables = Exact<{
+  first: Scalars['Int'];
+  query: Scalars['String'];
+}>;
+
+
+export type _GetProductTypesChoicesQuery = { __typename: 'Query', productTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string, slug: string } }> } | null };
+
 export type TriggerWebhookDryRunMutationVariables = Exact<{
   objectId: Scalars['ID'];
   query: Scalars['String'];

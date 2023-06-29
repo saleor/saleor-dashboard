@@ -24,16 +24,10 @@ const AVAILABLE_FLAGS = [
   */
 
   {
-    name: "flag1",
-    displayName: "Flag 1",
-    description: "some description",
-    content: { enabled: false, payload: "default" },
-  } as const,
-  {
-    name: "flag2",
-    displayName: "Flag 2",
-    description: "some description 2",
-    content: { enabled: false, payload: "default2" },
+    name: "product_filters",
+    displayName: "Product filters",
+    description: "New filters on product listing page",
+    content: { enabled: false, payload: "" },
   } as const,
 ] satisfies FlagDefinition[];
 
