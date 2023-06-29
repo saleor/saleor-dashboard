@@ -151,7 +151,11 @@ export function createSaleWithNewVariant({
       discountOption,
     });
     assignVariants(product.name, variant.name);
-    getVariantWithSaleStatus(variant.id, channel.slug, true);
+    getVariantWithSaleStatus({
+      channelSlug: channel.slug,
+      variantId: variant.id,
+      onSaleStatus: true,
+    });
     return getVariant(variant.id, channel.slug, "token");
   });
 }

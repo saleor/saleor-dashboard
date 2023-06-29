@@ -134,7 +134,11 @@ describe("As an admin I want to update sales", () => {
           });
         })
         .then(saleResp => {
-          getVariantWithSaleStatus(variants[0].id, defaultChannel.slug, true)
+          getVariantWithSaleStatus({
+            channelSlug: defaultChannel.slug,
+            variantId: variants[0].id,
+            onSaleStatus: true,
+          })
             .its("pricing")
             .its("price.gross.amount")
             .should("eq", productPriceOnSale);
@@ -145,7 +149,11 @@ describe("As an admin I want to update sales", () => {
             .get(BUTTON_SELECTORS.submit)
             .click()
             .wait("@SaleDelete");
-          getVariantWithSaleStatus(variants[0].id, defaultChannel.slug, false)
+          getVariantWithSaleStatus({
+            channelSlug: defaultChannel.slug,
+            variantId: variants[0].id,
+            onSaleStatus: false,
+          })
             .its("pricing")
             .its("price.gross.amount")
             .should("eq", productPrice);
@@ -172,7 +180,11 @@ describe("As an admin I want to update sales", () => {
             saleId: sale.id,
             variants,
           });
-          getVariantWithSaleStatus(variants[0].id, defaultChannel.slug, true)
+          getVariantWithSaleStatus({
+            channelSlug: defaultChannel.slug,
+            variantId: variants[0].id,
+            onSaleStatus: true,
+          })
             .its("pricing")
             .its("price.gross.amount")
             .should("eq", productPriceOnSale);
@@ -186,7 +198,11 @@ describe("As an admin I want to update sales", () => {
             .get(BUTTON_SELECTORS.submit)
             .click()
             .wait("@SaleCataloguesRemove");
-          getVariantWithSaleStatus(variants[0].id, defaultChannel.slug, false)
+          getVariantWithSaleStatus({
+            channelSlug: defaultChannel.slug,
+            variantId: variants[0].id,
+            onSaleStatus: false,
+          })
             .its("pricing")
             .its("price.gross.amount")
             .should("eq", productPrice);

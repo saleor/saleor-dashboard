@@ -137,11 +137,11 @@ describe("Sales discounts for variant", () => {
         })
         .then(variantsList => {
           updateSale({ saleId: sale.id, variants: variantsList });
-          getVariantWithSaleStatus(
-            variantsList[0].id,
-            defaultChannel.slug,
-            true,
-          );
+          getVariantWithSaleStatus({
+            channelSlug: defaultChannel.slug,
+            variantId: variantsList[0].id,
+            onSaleStatus: true,
+          });
           createCheckout({
             channelSlug: defaultChannel.slug,
             email: "example@example.com",

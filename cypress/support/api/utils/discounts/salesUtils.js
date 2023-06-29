@@ -31,24 +31,20 @@ export function createSaleInChannel({
     .then(() => sale);
 }
 export function getVariantWithSaleStatus(
-  variantId,
-  channelSlug,
-  shouldBeSales,
+  { variantId, channelSlug, onSaleStatus },
   retries = 0,
 ) {
   return getVariant(variantId, channelSlug).then(salesResponse => {
-    if (salesResponse.pricing.onSale === shouldBeSales) {
+    if (salesResponse.pricing.onSale === onSaleStatus) {
       return;
     } else if (retries > 4) {
       throw new Error(
-        `Variant field onSale should have value: ${shouldBeSales} but has opposite. Retried for ${retries} times`,
+        `Variant field onSale should have value: ${onSaleStatus} but has opposite. Retried for ${retries} times`,
       );
     } else {
       cy.wait(5000);
       getVariantWithSaleStatus(
-        variantId,
-        channelSlug,
-        shouldBeSales,
+        { variantId, channelSlug, onSaleStatus },
         retries + 1,
       );
     }
