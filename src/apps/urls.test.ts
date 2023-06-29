@@ -2,6 +2,14 @@ import { AppUrls } from "@dashboard/apps/urls";
 import * as config from "@dashboard/config";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 
+jest.mock("@dashboard/config", () => {
+  const actualModule = jest.requireActual("@dashboard/config");
+  return {
+    __esModule: true,
+    ...actualModule,
+  };
+});
+
 describe("AppUrls (apps/urls.ts)", () => {
   describe("isAppDeepUrlChange", () => {
     it("Returns true if only nested app path changes", () => {

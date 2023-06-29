@@ -52,11 +52,15 @@ import CustomAppsSection from "./custom-apps";
 import { CustomAppSections } from "./custom-apps/urls";
 import { CustomerSection } from "./customers";
 import DiscountSection from "./discounts";
+import {
+  EnvVarsStrategy,
+  FeatureFlagsProvider,
+  LocalStorageStrategy,
+} from "./featureFlags";
 import GiftCardSection from "./giftCards";
 import { giftCardsSectionUrlName } from "./giftCards/urls";
 import { apolloClient, saleorClient } from "./graphql/client";
 import HomePage from "./home";
-import { FlagsServiceProvider } from "./hooks/useFlags/flagsService";
 import { useLocationState } from "./hooks/useLocationState";
 import { commonMessages } from "./intl";
 import NavigationSection from "./navigation";
@@ -117,7 +121,12 @@ const App: React.FC = () => (
                   <ServiceWorker />
                   <BackgroundTasksProvider>
                     <AppStateProvider>
-                      <FlagsServiceProvider>
+                      <FeatureFlagsProvider
+                        strategies={[
+                          new LocalStorageStrategy(),
+                          new EnvVarsStrategy(),
+                        ]}
+                      >
                         <AuthProvider>
                           <ShopProvider>
                             <AppChannelProvider>
@@ -131,7 +140,7 @@ const App: React.FC = () => (
                             </AppChannelProvider>
                           </ShopProvider>
                         </AuthProvider>
-                      </FlagsServiceProvider>
+                      </FeatureFlagsProvider>
                     </AppStateProvider>
                   </BackgroundTasksProvider>
                 </MessageManagerProvider>
