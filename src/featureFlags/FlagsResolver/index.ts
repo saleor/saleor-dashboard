@@ -8,7 +8,7 @@ import { reduceFlagListArray } from "./reduceFlagListArray";
 
 export class FlagsResolver {
   private results: Promise<AvailableFlags.FlagList[]>;
-  private strategies: Strategy[];
+  private readonly strategies: Strategy[];
 
   constructor(
     strategies: Strategy[],
