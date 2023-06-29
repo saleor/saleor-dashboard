@@ -242,18 +242,6 @@ jobs:
       - name: Install Dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: NODE_OPTIONS=--max_old_space_size=4096 npm install
-      - name: Testmo reports threads init
-        working-directory: .github/workflows
-        run: | 
-            npx testmo automation:run:submit-thread \
-            --instance "$TESTMO_URL" \
-            --run-id "${{ needs.test-setup.outputs.testmo-run-id }}" \
-            --results ../../results/*.xml
-        env:
-          CI_TOTAL: ${{ strategy.job-total }}
-          CI_INDEX: ${{ matrix}}
-          TESTMO_URL: ${{ secrets.TESTMO_URL }}
-          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
       - name: Cypress run critical
         uses: cypress-io/github-action@v4
         env:
@@ -272,7 +260,17 @@ jobs:
           parallel: true
           group: "UI - Chrome"
           record: true
-          tag: Critical, ${{github.event.action}}
+          tag: Critical, ${{github.event.action}}     
+      - name: Testmo threads submit
+        working-directory: .github/workflows
+        run: | 
+            npx testmo automation:run:submit-thread \
+            --instance "$TESTMO_URL" \
+            --run-id "${{ needs.test-setup.outputs.testmo-run-id }}" \
+            --results ../../results/*.xml
+        env:
+          TESTMO_URL: ${{ secrets.TESTMO_URL }}
+          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
   test-complete:
     needs: [testmo-report-preparation, cypress-run-selected]
     if: always()
