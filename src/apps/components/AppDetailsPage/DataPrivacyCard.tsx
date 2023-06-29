@@ -33,11 +33,13 @@ export const DataPrivacyCard: React.FC<DataPrivacyCardProps> = ({
           <FormattedMessage {...messages.dataPrivacyDescription} />
         </ExternalLink>
       );
-    } else {
+    }
+
+    if (!dataPrivacyUrl) {
       return <Text>{intl.formatMessage(messages.noDataPrivacyPage)}</Text>;
     }
 
-    throw new Error("Leaking switch statement");
+    throw new Error('Leaking "if" statement, should never happen');
   };
 
   return (

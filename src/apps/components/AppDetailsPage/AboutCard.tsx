@@ -24,10 +24,14 @@ export const AboutCard: React.FC<AboutCardProps> = ({
     }
 
     if (aboutApp) {
-      return <ReactMarkdown source={aboutApp ?? ""} />;
-    } else {
+      return <ReactMarkdown source={aboutApp} />;
+    }
+
+    if (!aboutApp) {
       return <Text>{intl.formatMessage(messages.noAboutApp)}</Text>;
     }
+
+    throw new Error('Leaking "if" statement, should never happen');
   };
 
   return (

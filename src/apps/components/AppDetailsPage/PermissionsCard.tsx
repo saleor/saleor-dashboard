@@ -1,6 +1,5 @@
-// @ts-strict-ignore
 import Skeleton from "@dashboard/components/Skeleton";
-import { AppQuery } from "@dashboard/graphql";
+import { PermissionEnum } from "@dashboard/graphql";
 import { Box, BoxProps, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -8,7 +7,10 @@ import { FormattedMessage, useIntl } from "react-intl";
 import messages from "./messages";
 
 type PermissionsCardProps = {
-  permissions?: AppQuery["app"]["permissions"];
+  permissions: Array<{
+    name: string;
+    code: PermissionEnum;
+  }> | null;
   loading: boolean;
 } & BoxProps;
 
@@ -19,36 +21,41 @@ export const PermissionsCard: React.FC<PermissionsCardProps> = ({
 }) => {
   const intl = useIntl();
 
-  const noPermissions = (
-    <Text>{intl.formatMessage(messages.appNoPermissions)}</Text>
-  );
+  const renderContent = () => {
+    if (loading) {
+      return <Skeleton />;
+    }
+
+    if (permissions && permissions.length === 0) {
+      return <Text>{intl.formatMessage(messages.appNoPermissions)}</Text>;
+    }
+
+    if (permissions && permissions.length > 0) {
+      return (
+        <>
+          <Text as={"p"} marginBottom={4}>
+            <FormattedMessage {...messages.appPermissionsDescription} />
+          </Text>
+          <Box as={"ul"}>
+            {permissions?.map(perm => (
+              <Box as={"li"} paddingX={4} paddingY={2} key={perm.code}>
+                <Text>{perm.name}</Text>
+              </Box>
+            ))}
+          </Box>
+        </>
+      );
+    }
+
+    throw new Error('Leaking "if" statement, should never happen');
+  };
 
   return (
     <Box {...boxProps}>
       <Text variant={"heading"} marginBottom={4} as={"h2"}>
         {intl.formatMessage(messages.appPermissionsTitle)}
       </Text>
-      <Box>
-        {!loading ? (
-          <>
-            <Text as={"p"} marginBottom={4}>
-              <FormattedMessage {...messages.appPermissionsDescription} />
-            </Text>
-            {permissions.length === 0 && noPermissions}
-            {permissions?.length && (
-              <Box as={"ul"}>
-                {permissions?.map(perm => (
-                  <Box as={"li"} paddingX={4} paddingY={2} key={perm.code}>
-                    <Text>{perm.name}</Text>
-                  </Box>
-                ))}
-              </Box>
-            )}
-          </>
-        ) : (
-          <Skeleton />
-        )}
-      </Box>
+      <Box>{renderContent()}</Box>
     </Box>
   );
 };
