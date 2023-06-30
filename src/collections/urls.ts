@@ -25,7 +25,7 @@ export type CollectionListUrlDialog = "remove" | TabActionDialog;
 export enum CollectionListUrlSortField {
   name = "name",
   available = "available",
-  productCount = "products",
+  productCount = "productCount",
 }
 export type CollectionListUrlSort = Sort<CollectionListUrlSortField>;
 export type CollectionListUrlQueryParams = ActiveTab &

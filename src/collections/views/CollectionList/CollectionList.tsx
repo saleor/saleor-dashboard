@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useColumnPickerSettings } from "@dashboard/components/Datagrid/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog, {
   SaveFilterTabDialogFormData,
@@ -27,8 +28,8 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React, { useEffect } from "react";
+import isEqual from "lodash/isEqual";
+import React, { useCallback, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
@@ -57,12 +58,16 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
+  const { reset } = useBulkActions(params.ids);
   const { updateListSettings, settings } = useListSettings(
     ListViews.COLLECTION_LIST,
   );
+  const { columnPickerSettings } = useColumnPickerSettings("COLLECTION_LIST");
+  // const [tabIndexToDelete, setTabIndexToDelete] = useState<number | null>(null);
+  const [selectedCollectionIds, setSelectedCollectionIds] = useState<string[]>(
+    [],
+  );
+  // const deleteButtonRef = useRef<HTMLButtonElement>(null);
 
   usePaginationReset(collectionListUrl, params, settings.rowNumber);
 
@@ -97,6 +102,26 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     displayLoader: true,
     variables: queryVariables,
   });
+
+  const collections = mapEdgesToItems(data?.collections);
+
+  const handleSetSelectedProductIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!collections) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => collections[row].id);
+      const haveSaveValues = isEqual(rowsIds, selectedCollectionIds);
+
+      if (!haveSaveValues) {
+        setSelectedCollectionIds(rowsIds);
+      }
+
+      // clearRowSelectionCallback.current = clearSelection;
+    },
+    [data, selectedCollectionIds],
+  );
 
   const [collectionBulkDelete, collectionBulkDeleteOpts] =
     useCollectionBulkDeleteMutation({
@@ -174,33 +199,19 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onTabDelete={() => openModal("delete-search")}
         onTabSave={() => openModal("save-search")}
         tabs={tabs.map(tab => tab.name)}
+        loading={loading}
         disabled={loading}
-        collections={mapEdgesToItems(data?.collections)}
+        columnPickerSettings={columnPickerSettings}
+        collections={collections}
         settings={settings}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
-        toolbar={
-          <IconButton
-            variant="secondary"
-            color="primary"
-            data-test-id="delete-icon"
-            onClick={() =>
-              openModal("remove", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
-        isChecked={isSelected}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
         selectedChannelId={selectedChannel?.id}
         filterOpts={filterOpts}
         onFilterChange={changeFilters}
+        selectedCollectionIds={selectedCollectionIds}
+        onSelectCollectionIds={handleSetSelectedProductIds}
       />
       <ActionDialog
         open={params.action === "remove" && maybe(() => params.ids.length > 0)}

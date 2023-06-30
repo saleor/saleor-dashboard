@@ -1,24 +1,30 @@
 // @ts-strict-ignore
-import { collectionAddUrl } from "@dashboard/collections/urls";
+import {
+  collectionAddUrl,
+  CollectionListUrlSortField,
+  collectionUrl,
+} from "@dashboard/collections/urls";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Button } from "@dashboard/components/Button";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
+import { CollectionListQuery } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   FilterPageProps,
   PageListProps,
+  RelayToFlat,
   SearchPageProps,
+  SortPage,
   TabPageProps,
 } from "@dashboard/types";
 import { Card } from "@material-ui/core";
-import React from "react";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import CollectionList, {
-  CollectionListProps,
-} from "../CollectionList/CollectionList";
+import { CollectionListDatagrid } from "../CollectionListDatagrid";
 import {
   CollectionFilterKeys,
   CollectionListFilterOpts,
@@ -29,7 +35,14 @@ export interface CollectionListPageProps
     SearchPageProps,
     TabPageProps,
     FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>,
-    CollectionListProps {}
+    SortPage<CollectionListUrlSortField> {
+  selectedChannelId: string;
+  columnPickerSettings: string[];
+  collections: RelayToFlat<CollectionListQuery["collections"]>;
+  loading: boolean;
+  selectedCollectionIds: string[];
+  onSelectCollectionIds: (rows: number[], clearSelection: () => void) => void;
+}
 
 const CollectionListPage: React.FC<CollectionListPageProps> = ({
   currentTab,
@@ -48,7 +61,9 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+  const navigate = useNavigator();
   const filterStructure = createFilterStructure(intl, filterOpts);
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   const filterDependency = filterStructure.find(getByName("channel"));
 
@@ -91,10 +106,14 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           })}
           tabs={tabs}
         />
-        <CollectionList
+        <CollectionListDatagrid
           disabled={disabled}
           selectedChannelId={selectedChannelId}
           filterDependency={filterDependency}
+          onRowClick={id => {
+            navigate(collectionUrl(id));
+          }}
+          hasRowHover={!isFilterPresetOpen}
           {...listProps}
         />
       </Card>
