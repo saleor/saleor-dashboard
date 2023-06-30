@@ -188,7 +188,7 @@ jobs:
       - name: create testmo run
         working-directory: .github/workflows
         run: |
-          npm run testmo:run:create \
+          npm run testmo:run:create -- \
             --instance "$TESTMO_URL" \
             --project-id 1 \
             --name "Deployment tests" \
@@ -267,7 +267,7 @@ jobs:
       - name: Testmo threads submit
         working-directory: .github/workflows
         run: | 
-            npm run testmo:submit:thread \
+            npm run testmo:submit:thread -- \
             --instance "$TESTMO_URL" \
             --run-id "${{ needs.testmo-report-preparation.outputs.testmo-run-id }}" \
             --results ../../results/*.xml
@@ -289,7 +289,7 @@ jobs:
       - name: complete testmo report 
         working-directory: .github/workflows
         run: |
-          npm run testmo:run:complete \
+          npm run testmo:run:complete -- \
             --instance "$TESTMO_URL" \
             --run-id "${{ needs.testmo-report-preparation.outputs.testmo-run-id }}"
         env:
