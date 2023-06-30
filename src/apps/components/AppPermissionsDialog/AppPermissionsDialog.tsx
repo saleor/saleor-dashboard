@@ -1,17 +1,23 @@
+import { AppPermissionsDialogConfirmation } from "@dashboard/apps/components/AppPermissionsDialog/AppPermissionsDialogConfirmation";
 import { AppPermissionsDialogPermissionPicker } from "@dashboard/apps/components/AppPermissionsDialog/AppPermissionsDialogPermissionPicker";
 import { useAppPermissionsDialogState } from "@dashboard/apps/components/AppPermissionsDialog/AppPermissionsDialogState";
 import { useGetAvailableAppPermissions } from "@dashboard/apps/components/AppPermissionsDialog/useGetAvailableAppPermissions";
-import { PermissionEnum } from "@dashboard/graphql";
+import {
+  PermissionEnum,
+  useAppQuery,
+  useAppUpdatePermissionsMutation,
+} from "@dashboard/graphql";
 import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
-import { Box, Button, Text } from "@saleor/macaw-ui/next";
-import React from "react";
+import { Skeleton } from "@material-ui/lab";
+import { Box, Text } from "@saleor/macaw-ui/next";
+import React, { useEffect } from "react";
 
 export const AppPermissionsDialog: React.FC<{
   onClose: () => void;
   assignedPermissions: PermissionEnum[];
-}> = ({ assignedPermissions, onClose }) => {
-  const { availablePermissions, mapCodesToNames } =
-    useGetAvailableAppPermissions();
+  appId: string;
+}> = ({ assignedPermissions, onClose, appId }) => {
+  const { availablePermissions } = useGetAvailableAppPermissions();
 
   const {
     updateSelected,
@@ -19,7 +25,40 @@ export const AppPermissionsDialog: React.FC<{
     state,
     onBackFromConfirmation,
     selectedPermissions,
+    onMutationError,
+    onApprove,
   } = useAppPermissionsDialogState(assignedPermissions);
+
+  const { refetch } = useAppQuery({ variables: { id: appId }, skip: true });
+
+  const [mutate] = useAppUpdatePermissionsMutation({
+    onError(err) {
+      onMutationError(err.message);
+    },
+    onCompleted(data) {
+      if (data.appUpdate?.errors.length) {
+        onMutationError(data.appUpdate?.errors[0].message ?? "Fail");
+
+        return;
+      }
+
+      refetch().then(onClose);
+
+      // todo notification
+      // todo re-fetch app
+    },
+  });
+
+  useEffect(() => {
+    if (state.type === "saving") {
+      mutate({
+        variables: {
+          permissions: state.selected,
+          id: appId,
+        },
+      });
+    }
+  }, [state.type, appId]);
 
   const renderDialogContent = () => {
     switch (state.type) {
@@ -35,60 +74,30 @@ export const AppPermissionsDialog: React.FC<{
         );
       case "confirm-permissions":
         return (
-          <Box>
-            <Text marginBottom={2} as={"p"}>
-              You are going to
+          <AppPermissionsDialogConfirmation
+            addedPermissions={state.addedPermissions}
+            removedPermissions={state.removedPermissions}
+            onApprove={onApprove}
+            onBack={onBackFromConfirmation}
+          />
+        );
+
+      // todo what loading should I use
+      case "saving":
+        return <Skeleton />;
+      case "error":
+        return (
+          <Box padding={4}>
+            <Text as={"p"} color={"textCriticalDefault"}>
+              {state.error}
             </Text>
-            {state.hasRemoved && (
-              <Box marginBottom={4}>
-                <Text variant={"bodyStrong"}>
-                  Remove following permissions:
-                </Text>
-                {mapCodesToNames(state.removedPermissions).map(perm => (
-                  <Text as={"p"} key={perm}>
-                    {perm}
-                  </Text>
-                ))}
-              </Box>
-            )}
-            {state.hasAdded && (
-              <Box>
-                <Text variant={"bodyStrong"}>Add following permissions:</Text>
-                {mapCodesToNames(state.addedPermissions).map(perm => (
-                  <Text as={"p"} key={perm}>
-                    {perm}
-                  </Text>
-                ))}
-              </Box>
-            )}
-            <Box
-              display={"flex"}
-              justifyContent={"flex-end"}
-              gap={2}
-              marginTop={6}
-            >
-              <Button
-                variant={"tertiary"}
-                onClick={() => {
-                  onBackFromConfirmation();
-                }}
-              >
-                Go back
-              </Button>
-              <Button>I know what I'm doing - confirm</Button>
-            </Box>
           </Box>
         );
-      case "saving":
-        return <div>Loading</div>;
-      case "error":
-        return <div>error</div>;
     }
   };
 
   /**
    * TODO
-   * - add mutation
    * - extract i18n
    * - extract and test
    */

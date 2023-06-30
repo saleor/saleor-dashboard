@@ -12,8 +12,6 @@ type State =
       selected: PermissionEnum[];
       addedPermissions: PermissionEnum[];
       removedPermissions: PermissionEnum[];
-      hasAdded: boolean;
-      hasRemoved: boolean;
     }
   | {
       selected: PermissionEnum[];
@@ -59,8 +57,6 @@ export const useAppPermissionsDialogState = (
         selected: state.selected,
         addedPermissions: diff.added,
         removedPermissions: diff.removed,
-        hasAdded: diff.added.length > 0,
-        hasRemoved: diff.removed.length > 0,
       });
     },
     onApprove() {
@@ -76,6 +72,13 @@ export const useAppPermissionsDialogState = (
     onBackFromConfirmation() {
       setState({
         type: "pick-permissions",
+        selected: state.selected,
+      });
+    },
+    onMutationError(message: string) {
+      setState({
+        type: "error",
+        error: message,
         selected: state.selected,
       });
     },

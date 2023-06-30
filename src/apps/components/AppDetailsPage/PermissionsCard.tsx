@@ -13,11 +13,13 @@ type PermissionsCardProps = {
     code: PermissionEnum;
   }> | null;
   loading: boolean;
+  appId: string; // todo wrap with App Context
 } & BoxProps;
 
 export const PermissionsCard: React.FC<PermissionsCardProps> = ({
   permissions,
   loading,
+  appId,
   ...boxProps
 }) => {
   const [editPermissionDialogOpen, setEditPermissionDialogOpen] =
@@ -74,6 +76,7 @@ export const PermissionsCard: React.FC<PermissionsCardProps> = ({
     <>
       {editPermissionDialogOpen && (
         <AppPermissionsDialog
+          appId={appId}
           onClose={() => setEditPermissionDialogOpen(false)}
           assignedPermissions={permissions?.map(p => p.code) ?? []}
         />
