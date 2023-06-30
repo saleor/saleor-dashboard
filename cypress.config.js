@@ -16,7 +16,7 @@ module.exports = defineConfig({
   },
   reporter: "junit",
   reporterOptions: {
-    mochaFile: "results/my-test-output-[hash].xml",
+    mochaFile: "results/test-output-[hash].xml",
     jenkinsMode: true,
     outputs: true,
     testCaseSwitchClassnameAndName: true,
