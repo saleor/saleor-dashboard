@@ -26,7 +26,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
