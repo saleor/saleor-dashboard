@@ -30,6 +30,16 @@ const props: CollectionListPageProps = {
   collections,
   selectedChannelId: "123",
   filterOpts: collectionListFilterOpts,
+  columnPickerSettings: ["name"],
+  selectedCollectionIds: [],
+  hasPresetsChanged: () => false,
+  onAll: () => undefined,
+  onCollectionsDelete: () => undefined,
+  onFilterChange: () => undefined,
+  loading: false,
+  onSort: () => undefined,
+  onTabUpdate: () => undefined,
+  onSelectCollectionIds: () => undefined,
 };
 
 const meta: Meta<typeof CollectionListPage> = {
