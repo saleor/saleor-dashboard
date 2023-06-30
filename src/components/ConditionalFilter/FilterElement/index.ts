@@ -1,2 +1,2 @@
-export { FilterElement } from "./FilterElement"
 export { Condition } from "./Condition"
+export { FilterElement } from "./FilterElement"

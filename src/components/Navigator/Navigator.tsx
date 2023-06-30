@@ -93,7 +93,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
           },
           {
             keyboardShortcut:
-              navigator.platform.toLowerCase().indexOf("mac") >= 0
+              navigator.platform.toLowerCase().includes("mac")
                 ? "⌘+K"
                 : "Ctrl+K",
           },

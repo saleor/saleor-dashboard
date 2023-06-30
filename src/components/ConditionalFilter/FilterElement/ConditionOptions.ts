@@ -39,6 +39,7 @@ export class ConditionOptions extends Array<ConditionItem> {
 
     return new ConditionOptions(options);
   }
+
   public static fromStaticElementName(name: StaticElementName) {
     const options = STATIC_CONDITIONS[name];
 
