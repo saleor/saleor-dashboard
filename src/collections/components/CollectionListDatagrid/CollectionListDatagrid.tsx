@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { CollectionListUrlSortField } from "@dashboard/collections/urls";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";

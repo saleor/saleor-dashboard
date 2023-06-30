@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { CollectionListUrlSortField } from "@dashboard/collections/urls";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { RelayToFlat, Sort } from "@dashboard/types";
