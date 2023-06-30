@@ -4,6 +4,7 @@ import { useUpdateAppToken } from "@dashboard/apps/components/AppFrame/useUpdate
 import { AppDetailsUrlQueryParams } from "@dashboard/apps/urls";
 import { useAllFlags } from "@dashboard/featureFlags";
 import { CircularProgress } from "@material-ui/core";
+import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import clsx from "clsx";
 import React, { useCallback } from "react";
 
@@ -19,6 +20,8 @@ interface Props {
   className?: string;
   params?: AppDetailsUrlQueryParams;
   refetch?: () => void;
+  dashboardVersion: string;
+  coreVersion?: string;
   onError?(): void;
 }
 
@@ -32,6 +35,8 @@ export const AppFrame: React.FC<Props> = ({
   params,
   onError,
   refetch,
+  dashboardVersion,
+  coreVersion,
 }) => {
   const frameRef = React.useRef<HTMLIFrameElement | null>(null);
   const classes = useStyles();
@@ -46,6 +51,10 @@ export const AppFrame: React.FC<Props> = ({
     appOrigin,
     appId,
     appToken,
+    {
+      core: coreVersion,
+      dashboard: dashboardVersion,
+    },
   );
 
   /**
@@ -62,13 +71,12 @@ export const AppFrame: React.FC<Props> = ({
      * Move handshake to notifyReady, so app is requesting token after it's ready to receive it
      * Currently handshake it 2 times, for compatibility
      */
-    postToExtension({
-      type: "handshake",
-      payload: {
-        token: appToken,
-        version: 1,
-      },
-    });
+    postToExtension(
+      DashboardEventFactory.createHandshakeEvent(appToken, 1, {
+        core: coreVersion,
+        dashboard: dashboardVersion,
+      }),
+    );
 
     setHandshakeDone(true);
   }, [appToken, postToExtension, setHandshakeDone]);
