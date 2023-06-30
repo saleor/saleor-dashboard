@@ -1,6 +1,9 @@
 import { VOUCHERS_SELECTORS } from "../../../elements/discounts/vouchers";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
-import { urlList, voucherDetailsUrl } from "../../../fixtures/urlList";
+import {
+  urlList,
+  voucherDetailsUrl,
+} from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createCheckoutWithVoucher } from "../../api/utils/ordersUtils";
 import { selectChannelInDetailsPages } from "../channelsPage";
@@ -29,7 +32,9 @@ export function createVoucher({
     .get(discountOption)
     .click();
   if (discountOption !== discountOptions.SHIPPING) {
-    cy.get(VOUCHERS_SELECTORS.discountValueInputs).type(voucherValue);
+    cy.get(VOUCHERS_SELECTORS.discountValueInputs).type(voucherValue, {
+      force: true,
+    });
   }
   if (usageLimit) {
     cy.get(VOUCHERS_SELECTORS.limits.usageLimitCheckbox)
@@ -54,9 +59,7 @@ export function createVoucher({
       .get(VOUCHERS_SELECTORS.requirements.minCheckoutItemsQuantityInput)
       .type(minAmountOfItems);
   }
-  cy.get(BUTTON_SELECTORS.confirm)
-    .click()
-    .confirmationMessageShouldAppear();
+  cy.get(BUTTON_SELECTORS.confirm).click().confirmationMessageShouldAppear();
 }
 
 export function setVoucherDate({
