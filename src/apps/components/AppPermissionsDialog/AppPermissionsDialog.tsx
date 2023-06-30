@@ -114,28 +114,30 @@ export const AppPermissionsDialog: React.FC<{
     <Dialog open={true} onClose={onClose} fullWidth maxWidth={"sm"}>
       <DialogTitle disableTypography>Edit permissions</DialogTitle>
       <DialogContent>
-        <Text as={"p"}>Manually change permission for the app.</Text>
-        <Box
-          borderRadius={2}
-          marginBottom={6}
-          marginTop={4}
-          padding={4}
-          backgroundColor={"surfaceCriticalSubdued"}
-        >
-          <Text
-            marginBottom={2}
-            as={"p"}
-            color={"textCriticalDefault"}
-            variant={"bodyStrong"}
+        <Box display={"grid"} gridAutoFlow={"row"}>
+          <Text as={"p"}>Manually change permission for the app.</Text>
+          <Box
+            borderRadius={2}
+            marginBottom={6}
+            marginTop={4}
+            padding={4}
+            backgroundColor={"surfaceCriticalSubdued"}
           >
-            Warning
-          </Text>
-          <Text as={"p"}>
-            Adding permission allows app to have more access to your data.
-          </Text>
-          <Text as={"p"}>Removing permissions may cause app to break.</Text>
+            <Text
+              marginBottom={2}
+              as={"p"}
+              color={"textCriticalDefault"}
+              variant={"bodyStrong"}
+            >
+              Warning
+            </Text>
+            <Text as={"p"}>
+              Adding permission allows app to have more access to your data.
+            </Text>
+            <Text as={"p"}>Removing permissions may cause app to break.</Text>
+          </Box>
+          {renderDialogContent()}
         </Box>
-        {renderDialogContent()}
       </DialogContent>
     </Dialog>
   );
