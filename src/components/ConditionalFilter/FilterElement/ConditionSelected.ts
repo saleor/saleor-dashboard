@@ -60,9 +60,5 @@ export class ConditionSelected {
 
   public setOptions(options: ConditionOption[]) {
     this.options = options;
-
-    if (this.conditionValue) {
-      this.value = getDefaultByControlName(this.conditionValue.type);
-    }
   }
 }
