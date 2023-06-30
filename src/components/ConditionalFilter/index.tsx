@@ -134,7 +134,6 @@ export const ConditionalFilters = () => {
       {provider.loading ? (
         <Text>Loading...</Text>
       ) : (
-        // @ts-expect-error
         <FiltersArea provider={provider.value} onConfirm={provider.persist} />
       )}
     </Box>
