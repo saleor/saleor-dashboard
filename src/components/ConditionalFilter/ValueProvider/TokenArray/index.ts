@@ -14,7 +14,7 @@ import {
 } from "./fetchingParams";
 
 const toFlatUrlTokens = (p: UrlToken[], c: TokenArray[number]) => {
-  if (typeof c == "string") {
+  if (typeof c === "string") {
     return p;
   }
 

@@ -16,9 +16,7 @@ interface Props {
   collection?: string[];
   channel?: string[];
   producttype?: string[];
-  attribute?: {
-    [attribute: string]: string[];
-  };
+  attribute?: Record<string, string[]>;
 }
 
 export const useInitialAPIState = ({

@@ -36,7 +36,7 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
     const index = parseInt(position, 10);
     setValue(v =>
       v.map((el, elIndex) => {
-        if (elIndex === index && typeof el != "string" && !Array.isArray(el)) {
+        if (elIndex === index && typeof el !== "string" && !Array.isArray(el)) {
           el.updateLeftOperator(leftOperator);
         }
 
@@ -49,7 +49,7 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
     const index = parseInt(position, 10);
     setValue(v =>
       v.map((el, elIndex) => {
-        if (elIndex === index && typeof el != "string" && !Array.isArray(el)) {
+        if (elIndex === index && typeof el !== "string" && !Array.isArray(el)) {
           el.updateLeftLoadingState(loading);
         }
 
@@ -62,7 +62,7 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
     const index = parseInt(position, 10);
     setValue(v =>
       v.map((el, elIndex) => {
-        if (elIndex === index && typeof el != "string" && !Array.isArray(el)) {
+        if (elIndex === index && typeof el !== "string" && !Array.isArray(el)) {
           el.updateRightOperator(leftOperator);
         }
 
@@ -75,7 +75,7 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
     const index = parseInt(position, 10);
     setValue(v =>
       v.map((el, elIndex) => {
-        if (elIndex === index && typeof el != "string" && !Array.isArray(el)) {
+        if (elIndex === index && typeof el !== "string" && !Array.isArray(el)) {
           el.updateRightOptions(options);
         }
 
@@ -88,7 +88,7 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
     const index = parseInt(position, 10);
     setValue(v =>
       v.map((el, elIndex) => {
-        if (elIndex === index && typeof el != "string" && !Array.isArray(el)) {
+        if (elIndex === index && typeof el !== "string" && !Array.isArray(el)) {
           el.updateRightLoadingState(loading);
         }
 
@@ -102,7 +102,7 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
 
     setValue(v =>
       v.map((el, elIndex) => {
-        if (elIndex === index && typeof el != "string" && !Array.isArray(el)) {
+        if (elIndex === index && typeof el !== "string" && !Array.isArray(el)) {
           el.updateCondition(conditionValue);
         }
 
