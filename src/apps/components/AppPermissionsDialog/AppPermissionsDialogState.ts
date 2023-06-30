@@ -70,12 +70,20 @@ export const useAppPermissionsDialogState = (
       });
     },
     onBackFromConfirmation() {
+      if (state.type !== "confirm-permissions") {
+        throw new Error("Invalid state");
+      }
+
       setState({
         type: "pick-permissions",
         selected: state.selected,
       });
     },
     onMutationError(message: string) {
+      if (state.type !== "saving") {
+        throw new Error("Invalid state");
+      }
+
       setState({
         type: "error",
         error: message,

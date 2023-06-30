@@ -7,6 +7,7 @@ import {
   useAppQuery,
   useAppUpdatePermissionsMutation,
 } from "@dashboard/graphql";
+import useNotifier from "@dashboard/hooks/useNotifier";
 import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { Box, Text } from "@saleor/macaw-ui/next";
@@ -31,12 +32,15 @@ export const AppPermissionsDialog: React.FC<{
 
   const { refetch } = useAppQuery({ variables: { id: appId }, skip: true });
 
+  const notify = useNotifier();
+
   const [mutate] = useAppUpdatePermissionsMutation({
     onError(err) {
       onMutationError(err.message);
     },
     onCompleted(data) {
       if (data.appUpdate?.errors.length) {
+        // todo translate
         onMutationError(data.appUpdate?.errors[0].message ?? "Fail");
 
         return;
@@ -44,8 +48,13 @@ export const AppPermissionsDialog: React.FC<{
 
       refetch().then(onClose);
 
-      // todo notification
-      // todo re-fetch app
+      // todo translate
+      notify({
+        status: "success",
+        title: "Success",
+        autohide: 1000,
+        text: "Updated app permissions",
+      });
     },
   });
 
