@@ -10,38 +10,72 @@ export const AppPermissionsDialog: React.FC<{
   onClose: () => void;
   assignedPermissions: PermissionEnum[];
 }> = ({ assignedPermissions, onClose }) => {
-  const permissions = useGetAvailableAppPermissions();
+  const { availablePermissions, mapCodesToNames } =
+    useGetAvailableAppPermissions();
 
-  const { updateSelected, onConfirmSelection, stateType, selectedPermissions } =
-    useAppPermissionsDialogState(assignedPermissions);
+  const {
+    updateSelected,
+    onConfirmSelection,
+    state,
+    onBackFromConfirmation,
+    selectedPermissions,
+  } = useAppPermissionsDialogState(assignedPermissions);
 
   const renderDialogContent = () => {
-    switch (stateType) {
+    switch (state.type) {
       case "pick-permissions":
         return (
           <AppPermissionsDialogPermissionPicker
             onClose={onClose}
             onChange={updateSelected}
             onSubmit={onConfirmSelection}
-            allPermissions={permissions}
+            allPermissions={availablePermissions}
             selected={selectedPermissions}
           />
         );
       case "confirm-permissions":
         return (
           <Box>
-            <Text variant={"bodyStrong"}>You are going to:</Text>
-            <Box>
-              <Text>Remove following permissions:</Text>
-              <Text>TODO</Text>
-            </Box>
-            <Box>
-              <Text>Add following permissions:</Text>
-              <Text>TODO</Text>
-            </Box>
-            <Box display={"flex"} justifyContent={"flex-end"} gap={2}>
-              <Button variant={"tertiary"}>Go back</Button>
-              <Button>Confirm</Button>
+            <Text marginBottom={2} as={"p"}>
+              You are going to
+            </Text>
+            {state.hasRemoved && (
+              <Box marginBottom={4}>
+                <Text variant={"bodyStrong"}>
+                  Remove following permissions:
+                </Text>
+                {mapCodesToNames(state.removedPermissions).map(perm => (
+                  <Text as={"p"} key={perm}>
+                    {perm}
+                  </Text>
+                ))}
+              </Box>
+            )}
+            {state.hasAdded && (
+              <Box>
+                <Text variant={"bodyStrong"}>Add following permissions:</Text>
+                {mapCodesToNames(state.addedPermissions).map(perm => (
+                  <Text as={"p"} key={perm}>
+                    {perm}
+                  </Text>
+                ))}
+              </Box>
+            )}
+            <Box
+              display={"flex"}
+              justifyContent={"flex-end"}
+              gap={2}
+              marginTop={6}
+            >
+              <Button
+                variant={"tertiary"}
+                onClick={() => {
+                  onBackFromConfirmation();
+                }}
+              >
+                Go back
+              </Button>
+              <Button>I know what I'm doing - confirm</Button>
             </Box>
           </Box>
         );
@@ -63,9 +97,26 @@ export const AppPermissionsDialog: React.FC<{
       <DialogTitle disableTypography>Edit permissions</DialogTitle>
       <DialogContent>
         <Text as={"p"}>Manually change permission for the app.</Text>
-        <Text as={"p"} color={"textCriticalDefault"} marginBottom={6}>
-          Be careful - App can break!
-        </Text>
+        <Box
+          borderRadius={2}
+          marginBottom={6}
+          marginTop={4}
+          padding={4}
+          backgroundColor={"surfaceCriticalSubdued"}
+        >
+          <Text
+            marginBottom={2}
+            as={"p"}
+            color={"textCriticalDefault"}
+            variant={"bodyStrong"}
+          >
+            Warning
+          </Text>
+          <Text as={"p"}>
+            Adding permission allows app to have more access to your data.
+          </Text>
+          <Text as={"p"}>Removing permissions may cause app to break.</Text>
+        </Box>
         {renderDialogContent()}
       </DialogContent>
     </Dialog>

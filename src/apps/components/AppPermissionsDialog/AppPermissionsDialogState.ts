@@ -1,3 +1,4 @@
+import { getPermissionsDiff } from "@dashboard/apps/components/AppPermissionsDialog/getPermissionsDiff";
 import { PermissionEnum } from "@dashboard/graphql";
 import { useState } from "react";
 
@@ -9,6 +10,10 @@ type State =
   | {
       type: "confirm-permissions";
       selected: PermissionEnum[];
+      addedPermissions: PermissionEnum[];
+      removedPermissions: PermissionEnum[];
+      hasAdded: boolean;
+      hasRemoved: boolean;
     }
   | {
       selected: PermissionEnum[];
@@ -47,9 +52,15 @@ export const useAppPermissionsDialogState = (
         throw new Error("Invalid state");
       }
 
+      const diff = getPermissionsDiff(initialPermissions, state.selected);
+
       setState({
         type: "confirm-permissions",
         selected: state.selected,
+        addedPermissions: diff.added,
+        removedPermissions: diff.removed,
+        hasAdded: diff.added.length > 0,
+        hasRemoved: diff.removed.length > 0,
       });
     },
     onApprove() {
@@ -59,6 +70,12 @@ export const useAppPermissionsDialogState = (
 
       setState({
         type: "saving",
+        selected: state.selected,
+      });
+    },
+    onBackFromConfirmation() {
+      setState({
+        type: "pick-permissions",
         selected: state.selected,
       });
     },
