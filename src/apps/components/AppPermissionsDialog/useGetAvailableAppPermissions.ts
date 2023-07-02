@@ -14,15 +14,15 @@ export const useGetAvailableAppPermissions = () => {
       name: p.name,
     }));
 
-  const mapCodesToNames = (codes: PermissionEnum[]) =>
-    codes.map(c => {
-      if (!shopData.permissions) {
-        return c;
-      }
+  const mapCodesToNames = (codes: PermissionEnum[]) => {
+    if (!shopData?.permissions) {
+      throw new Error(
+        "Shop data from useShop hook is not available. mapCodesToNames method must be used after query resolves",
+      );
+    }
 
-      // @ts-ignore todo
-      return shopData.permissions.find(p => p.code === c).name;
-    });
+    return codes.map(c => shopData.permissions.find(p => p.code === c).name);
+  };
 
   return {
     availablePermissions,
