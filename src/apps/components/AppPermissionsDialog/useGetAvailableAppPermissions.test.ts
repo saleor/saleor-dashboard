@@ -14,21 +14,21 @@ const getMockUseShopHookResult = () => {
     {
       __typename: "Permission",
       name: "Manage Orders",
-      code: "MANAGE_ORDERS",
+      code: PermissionEnum.MANAGE_ORDERS,
     },
     {
       __typename: "Permission",
-      code: "HANDLE_TAXES",
+      code: PermissionEnum.HANDLE_TAXES,
       name: "Handle Taxes",
     },
     {
       __typename: "Permission",
-      code: "MANAGE_CHANNELS",
+      code: PermissionEnum.MANAGE_CHANNELS,
       name: "Manage Channels",
     },
     {
       __typename: "Permission",
-      code: "MANAGE_APPS",
+      code: PermissionEnum.MANAGE_APPS,
       name: "Manage Apps",
     },
   ];
@@ -51,14 +51,14 @@ describe("useGetAvailableAppPermissions", () => {
     expect(hookResult.result.current.availablePermissions).toEqual([
       {
         name: "Manage Orders",
-        code: "MANAGE_ORDERS",
+        code: PermissionEnum.MANAGE_ORDERS,
       },
       {
-        code: "HANDLE_TAXES",
         name: "Handle Taxes",
+        code: PermissionEnum.HANDLE_TAXES,
       },
       {
-        code: "MANAGE_CHANNELS",
+        code: PermissionEnum.MANAGE_CHANNELS,
         name: "Manage Channels",
       },
     ]);
@@ -80,8 +80,8 @@ describe("useGetAvailableAppPermissions", () => {
       const hookResult = renderHook(() => useGetAvailableAppPermissions());
 
       const resultNames = hookResult.result.current.mapCodesToNames([
-        "MANAGE_ORDERS",
-        "HANDLE_TAXES",
+        PermissionEnum.MANAGE_ORDERS,
+        PermissionEnum.HANDLE_TAXES,
       ]);
 
       expect(resultNames).toEqual(["Manage Orders", "Handle Taxes"]);
@@ -94,7 +94,9 @@ describe("useGetAvailableAppPermissions", () => {
       const hookResult = renderHook(() => useGetAvailableAppPermissions());
 
       expect(() =>
-        hookResult.result.current.mapCodesToNames(["MANAGE_ORDERS"]),
+        hookResult.result.current.mapCodesToNames([
+          PermissionEnum.MANAGE_ORDERS,
+        ]),
       ).toThrow();
     });
   });

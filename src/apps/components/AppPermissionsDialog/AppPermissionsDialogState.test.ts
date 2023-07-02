@@ -1,4 +1,5 @@
 import { useAppPermissionsDialogState } from "@dashboard/apps/components/AppPermissionsDialog/AppPermissionsDialogState";
+import { PermissionEnum } from "@dashboard/graphql";
 import { renderHook } from "@testing-library/react-hooks";
 
 describe("useAppPermissionsDialogState", () => {
@@ -15,7 +16,10 @@ describe("useAppPermissionsDialogState", () => {
     const {
       result: { current },
     } = renderHook(() =>
-      useAppPermissionsDialogState(["MANAGE_CHANNELS", "MANAGE_ORDERS"]),
+      useAppPermissionsDialogState([
+        PermissionEnum.MANAGE_CHANNELS,
+        PermissionEnum.MANAGE_ORDERS,
+      ]),
     );
 
     expect(current.state.type).toEqual("pick-permissions");
@@ -31,13 +35,16 @@ describe("useAppPermissionsDialogState", () => {
         result: { current },
         waitFor,
       } = renderHook(() =>
-        useAppPermissionsDialogState(["MANAGE_CHANNELS", "MANAGE_ORDERS"]),
+        useAppPermissionsDialogState([
+          PermissionEnum.MANAGE_CHANNELS,
+          PermissionEnum.MANAGE_ORDERS,
+        ]),
       );
 
       current.updateSelected([
-        "MANAGE_CHANNELS",
-        "MANAGE_ORDERS",
-        "HANDLE_CHECKOUTS",
+        PermissionEnum.MANAGE_CHANNELS,
+        PermissionEnum.MANAGE_ORDERS,
+        PermissionEnum.HANDLE_CHECKOUTS,
       ]);
 
       current.onConfirmSelection();
@@ -59,10 +66,13 @@ describe("useAppPermissionsDialogState", () => {
         result: { current },
         waitFor,
       } = renderHook(() =>
-        useAppPermissionsDialogState(["MANAGE_CHANNELS", "MANAGE_ORDERS"]),
+        useAppPermissionsDialogState([
+          PermissionEnum.MANAGE_CHANNELS,
+          PermissionEnum.MANAGE_ORDERS,
+        ]),
       );
 
-      current.updateSelected(["MANAGE_CHANNELS"]);
+      current.updateSelected([PermissionEnum.MANAGE_CHANNELS]);
 
       current.onConfirmSelection();
 
@@ -83,10 +93,16 @@ describe("useAppPermissionsDialogState", () => {
         result: { current },
         waitFor,
       } = renderHook(() =>
-        useAppPermissionsDialogState(["MANAGE_CHANNELS", "MANAGE_ORDERS"]),
+        useAppPermissionsDialogState([
+          PermissionEnum.MANAGE_CHANNELS,
+          PermissionEnum.MANAGE_ORDERS,
+        ]),
       );
 
-      current.updateSelected(["MANAGE_CHANNELS", "HANDLE_CHECKOUTS"]);
+      current.updateSelected([
+        PermissionEnum.MANAGE_CHANNELS,
+        PermissionEnum.MANAGE_CHECKOUTS,
+      ]);
 
       current.onConfirmSelection();
 

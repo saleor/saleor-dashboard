@@ -21,6 +21,7 @@ export const useGetAvailableAppPermissions = () => {
       );
     }
 
+    // @ts-ignore - wtf
     return codes.map(c => shopData.permissions.find(p => p.code === c).name);
   };
 
