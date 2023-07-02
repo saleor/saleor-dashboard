@@ -3820,6 +3820,9 @@
     "context": "description",
     "string": "No results found"
   },
+  "PlAdWI": {
+    "string": "You are going to"
+  },
   "Pnj+JH": {
     "context": "key-value field input",
     "string": "Value"
@@ -4233,6 +4236,9 @@
   "SZt9kC": {
     "context": "export filtered items to csv file",
     "string": "Current search ({number})"
+  },
+  "SceSNp": {
+    "string": "Remove following permissions:"
   },
   "Sjd7wm": {
     "context": "product filter label",
@@ -5666,6 +5672,9 @@
     "context": "column picker search no results message",
     "string": "No results found"
   },
+  "cS1wAx": {
+    "string": "I know what I'm doing - confirm"
+  },
   "cVjewM": {
     "context": "label for radio button",
     "string": "Product prices are entered with tax"
@@ -6535,6 +6544,9 @@
   "jvKNMP": {
     "string": "Discount Code"
   },
+  "jvo0vs": {
+    "string": "Save"
+  },
   "jxoMLL": {
     "context": "product field",
     "string": "Collections"
@@ -7190,6 +7202,9 @@
   "oYGfnY": {
     "string": "ZIP / Postal code"
   },
+  "oboeOT": {
+    "string": "Add following permissions"
+  },
   "of/+iV": {
     "context": "transaction event type, refund was reversed, funds are back to store account",
     "string": "Refund reversed"
@@ -7205,6 +7220,9 @@
   "opIDox": {
     "context": "unassign product from sale and save, button",
     "string": "Unassign and save"
+  },
+  "orvpWh": {
+    "string": "Go back"
   },
   "osPBn1": {
     "context": "currency filter label",
@@ -7549,6 +7567,9 @@
   "rbkmfG": {
     "context": "button",
     "string": "Delete variant"
+  },
+  "rbrahO": {
+    "string": "Close"
   },
   "reP5Uf": {
     "context": "global config plugin status popup description",

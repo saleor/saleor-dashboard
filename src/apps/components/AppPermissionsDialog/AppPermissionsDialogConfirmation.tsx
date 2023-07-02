@@ -1,7 +1,11 @@
+import { AppPermissionsDialogMessages } from "@dashboard/apps/components/AppPermissionsDialog/messages";
 import { useGetAvailableAppPermissions } from "@dashboard/apps/components/AppPermissionsDialog/useGetAvailableAppPermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import { Box, Button, Text } from "@saleor/macaw-ui/next";
 import React from "react";
+import { useIntl } from "react-intl";
+
+const messages = AppPermissionsDialogMessages.confirmation;
 
 interface Props {
   removedPermissions: PermissionEnum[];
@@ -18,17 +22,20 @@ export const AppPermissionsDialogConfirmation = ({
 }: Props) => {
   const hasAdded = addedPermissions.length > 0;
   const hasRemoved = removedPermissions.length > 0;
+  const intl = useIntl();
 
   const { mapCodesToNames } = useGetAvailableAppPermissions();
 
   return (
     <Box>
       <Text marginBottom={2} as={"p"}>
-        You are going to
+        {intl.formatMessage(messages.summaryText)}
       </Text>
       {hasRemoved && (
         <Box marginBottom={4}>
-          <Text variant={"bodyStrong"}>Remove following permissions:</Text>
+          <Text variant={"bodyStrong"}>
+            {intl.formatMessage(messages.removePermissions)}
+          </Text>
           {mapCodesToNames(removedPermissions).map(perm => (
             <Text as={"p"} key={perm}>
               {perm}
@@ -38,7 +45,9 @@ export const AppPermissionsDialogConfirmation = ({
       )}
       {hasAdded && (
         <Box>
-          <Text variant={"bodyStrong"}>Add following permissions:</Text>
+          <Text variant={"bodyStrong"}>
+            {intl.formatMessage(messages.addPermissions)}
+          </Text>
           {mapCodesToNames(addedPermissions).map(perm => (
             <Text as={"p"} key={perm}>
               {perm}
@@ -53,14 +62,14 @@ export const AppPermissionsDialogConfirmation = ({
             onBack();
           }}
         >
-          Go back
+          {intl.formatMessage(messages.backButton)}
         </Button>
         <Button
           onClick={() => {
             onApprove();
           }}
         >
-          I know what I'm doing - confirm
+          {intl.formatMessage(messages.confirmButton)}
         </Button>
       </Box>
     </Box>

@@ -1,7 +1,11 @@
+import { AppPermissionsDialogMessages } from "@dashboard/apps/components/AppPermissionsDialog/messages";
 import { AppPermission } from "@dashboard/apps/components/AppPermissionsDialog/types";
 import { PermissionEnum } from "@dashboard/graphql";
 import { Box, Button, Checkbox, List, Text } from "@saleor/macaw-ui/next";
 import React from "react";
+import { useIntl } from "react-intl";
+
+const messages = AppPermissionsDialogMessages.permissionsPicker;
 
 interface Props {
   allPermissions: AppPermission[];
@@ -17,54 +21,60 @@ export const AppPermissionsDialogPermissionPicker = ({
   allPermissions,
   selected,
   onClose,
-}: Props) => (
-  <form
-    onSubmit={e => {
-      e.preventDefault();
-      onSubmit();
-    }}
-    onChange={e => {
-      const formdata = new FormData(e.currentTarget);
+}: Props) => {
+  const intl = useIntl();
 
-      // @ts-ignore - todo why TS doesnt get it?
-      const values = Array.from(formdata.keys()) as PermissionEnum[];
+  return (
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        onSubmit();
+      }}
+      onChange={e => {
+        const formdata = new FormData(e.currentTarget);
 
-      onChange(values);
-    }}
-  >
-    <List>
-      {allPermissions.map(perm => {
-        const isAssigned = Boolean(selected.find(p => p === perm.code));
+        // @ts-ignore - todo why TS doesnt get it?
+        const values = Array.from(formdata.keys()) as PermissionEnum[];
 
-        return (
-          <List.Item
-            key={perm.code}
-            paddingY={1}
-            paddingX={2}
-            display={"flex"}
-            alignItems={"center"}
-            as={"label"}
-            backgroundColor={
-              isAssigned ? "decorativeSurfaceSubdued3" : undefined
-            }
-          >
-            <Checkbox
-              name={perm.code}
-              defaultChecked={isAssigned}
-              marginRight={4}
-            />
-            <Text variant={isAssigned ? "bodyStrong" : "body"}>
-              {perm.name}
-            </Text>
-          </List.Item>
-        );
-      })}
-    </List>
-    <Box display={"flex"} justifyContent={"flex-end"} gap={2}>
-      <Button onClick={onClose} type={"button"} variant={"tertiary"}>
-        Close
-      </Button>
-      <Button type={"submit"}>Save</Button>
-    </Box>
-  </form>
-);
+        onChange(values);
+      }}
+    >
+      <List>
+        {allPermissions.map(perm => {
+          const isAssigned = Boolean(selected.find(p => p === perm.code));
+
+          return (
+            <List.Item
+              key={perm.code}
+              paddingY={1}
+              paddingX={2}
+              display={"flex"}
+              alignItems={"center"}
+              as={"label"}
+              backgroundColor={
+                isAssigned ? "decorativeSurfaceSubdued3" : undefined
+              }
+            >
+              <Checkbox
+                name={perm.code}
+                defaultChecked={isAssigned}
+                marginRight={4}
+              />
+              <Text variant={isAssigned ? "bodyStrong" : "body"}>
+                {perm.name}
+              </Text>
+            </List.Item>
+          );
+        })}
+      </List>
+      <Box display={"flex"} justifyContent={"flex-end"} gap={2}>
+        <Button onClick={onClose} type={"button"} variant={"tertiary"}>
+          {intl.formatMessage(messages.closeButton)}
+        </Button>
+        <Button type={"submit"}>
+          {intl.formatMessage(messages.saveButton)}
+        </Button>
+      </Box>
+    </form>
+  );
+};
