@@ -770,6 +770,9 @@
   "3PVGWj": {
     "string": "Filter preset"
   },
+  "3SVI5p": {
+    "string": "Warning"
+  },
   "3Sz1/t": {
     "context": "dialog header",
     "string": "Delete Pages"
@@ -869,6 +872,9 @@
   "45zP+r": {
     "context": "voucher discount",
     "string": "Specific products"
+  },
+  "47hJzu": {
+    "string": "Updated app permissions"
   },
   "483Xnh": {
     "context": "open full-screen",
@@ -1249,6 +1255,9 @@
   },
   "6udlH+": {
     "string": "Order draft successfully created"
+  },
+  "6uy2gU": {
+    "string": "Manually change permission for the app."
   },
   "6xC/Ls": {
     "context": "informations about product seo, header",
@@ -3820,6 +3829,9 @@
     "context": "description",
     "string": "No results found"
   },
+  "PlAdWI": {
+    "string": "You are going to"
+  },
   "Pnj+JH": {
     "context": "key-value field input",
     "string": "Value"
@@ -4233,6 +4245,9 @@
   "SZt9kC": {
     "context": "export filtered items to csv file",
     "string": "Current search ({number})"
+  },
+  "SceSNp": {
+    "string": "Remove following permissions:"
   },
   "Sjd7wm": {
     "context": "product filter label",
@@ -5400,6 +5415,9 @@
     "context": "error message",
     "string": "Email address is not set"
   },
+  "abpvEI": {
+    "string": "Removing permissions may cause app to break."
+  },
   "ac+Y98": {
     "context": "app settings error",
     "string": "Failed to fetch app settings"
@@ -5440,6 +5458,9 @@
   "axFFaD": {
     "context": "range input label",
     "string": "Postal codes (end)"
+  },
+  "azj0kR": {
+    "string": "Adding permission allows app to have more access to your data."
   },
   "b+jcaN": {
     "string": "There are still fulfillments created for this order. Cancel the fulfillments first before you cancel the order."
@@ -5665,6 +5686,9 @@
   "cPAc45": {
     "context": "column picker search no results message",
     "string": "No results found"
+  },
+  "cS1wAx": {
+    "string": "I know what I'm doing - confirm"
   },
   "cVjewM": {
     "context": "label for radio button",
@@ -6201,6 +6225,9 @@
     "context": "voucher",
     "string": "Times used"
   },
+  "hAoqp6": {
+    "string": "Failed to save permissions. Refresh the page and try again."
+  },
   "hHOI7D": {
     "context": "product type name",
     "string": "Type Name"
@@ -6534,6 +6561,9 @@
   },
   "jvKNMP": {
     "string": "Discount Code"
+  },
+  "jvo0vs": {
+    "string": "Save"
   },
   "jxoMLL": {
     "context": "product field",
@@ -7190,6 +7220,9 @@
   "oYGfnY": {
     "string": "ZIP / Postal code"
   },
+  "oboeOT": {
+    "string": "Add following permissions"
+  },
   "of/+iV": {
     "context": "transaction event type, refund was reversed, funds are back to store account",
     "string": "Refund reversed"
@@ -7205,6 +7238,9 @@
   "opIDox": {
     "context": "unassign product from sale and save, button",
     "string": "Unassign and save"
+  },
+  "orvpWh": {
+    "string": "Go back"
   },
   "osPBn1": {
     "context": "currency filter label",
@@ -7323,6 +7359,9 @@
   "ps+h1G": {
     "context": "checkbox label description",
     "string": "Expiration date will be automatically set, once gift card is issued"
+  },
+  "psmnv9": {
+    "string": "Edit permissions"
   },
   "ptPPVk": {
     "string": "No languages found"
@@ -7549,6 +7588,9 @@
   "rbkmfG": {
     "context": "button",
     "string": "Delete variant"
+  },
+  "rbrahO": {
+    "string": "Close"
   },
   "reP5Uf": {
     "context": "global config plugin status popup description",
@@ -8420,6 +8462,9 @@
   "xqXYF+": {
     "context": "section header",
     "string": "Eligible Products"
+  },
+  "xrKHS6": {
+    "string": "Success"
   },
   "xrPv2K": {
     "context": "by preposition",

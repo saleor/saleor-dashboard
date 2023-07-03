@@ -43,4 +43,8 @@ export default defineMessages({
     id: "b088Xv",
     defaultMessage: "App doesn't provide a description.",
   },
+  editPermissionsButton: {
+    defaultMessage: "Edit permissions",
+    id: "psmnv9",
+  },
 });
