@@ -9,9 +9,32 @@ import {
   getLeftOperatorOptions,
   getRightOperatorOptionsByQuery,
 } from "./API/getAPIOptions";
+import { ConditionOption } from "./FilterElement/ConditionSelected";
 import { useFilterContainer } from "./useFilterContainer";
 import { useLeftOperands } from "./useLeftOperands";
 import { useUrlValueProvider } from "./ValueProvider/useUrlValueProvider";
+
+interface FilterEvent {
+  type:
+    | "leftOperator.onChange"
+    | "leftOperator.onInputValueChange"
+    | "leftOperator.onFocus"
+    | "leftOperator.onBlur"
+    | "condition.onChange"
+    | "condition.onScrollEnd"
+    | "condition.onFocus"
+    | "condition.onBlur"
+    | "rightOperator.onChange"
+    | "rightOperator.onInputValueChange"
+    | "rightOperator.onScrollEnd"
+    | "rightOperator.onFocus"
+    | "rightOperator.onBlur"
+    | "row.remove"
+    | "row.add";
+  value?: ConditionOption;
+  path?: string;
+  rowType?: string;
+}
 
 const FiltersArea = ({ provider, onConfirm }) => {
   const client = useApolloClient();
@@ -65,7 +88,7 @@ const FiltersArea = ({ provider, onConfirm }) => {
     500,
   );
 
-  const handleStateChange = async event => {
+  const handleStateChange = async (event: FilterEvent) => {
     if (event.type === "row.add") {
       addEmpty();
     }
