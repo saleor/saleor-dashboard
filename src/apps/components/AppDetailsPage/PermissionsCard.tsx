@@ -1,7 +1,8 @@
+import { AppPermissionsDialog } from "@dashboard/apps/components/AppPermissionsDialog";
 import Skeleton from "@dashboard/components/Skeleton";
 import { PermissionEnum } from "@dashboard/graphql";
-import { Box, BoxProps, Text } from "@saleor/macaw-ui/next";
-import React from "react";
+import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui/next";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
@@ -12,14 +13,27 @@ type PermissionsCardProps = {
     code: PermissionEnum;
   }> | null;
   loading: boolean;
+  appId: string; // todo wrap with App Context
 } & BoxProps;
 
 export const PermissionsCard: React.FC<PermissionsCardProps> = ({
   permissions,
   loading,
+  appId,
   ...boxProps
 }) => {
+  const [editPermissionDialogOpen, setEditPermissionDialogOpen] =
+    useState(false);
   const intl = useIntl();
+
+  const editPermissionsButton = (
+    <Button
+      variant={"secondary"}
+      onClick={() => setEditPermissionDialogOpen(true)}
+    >
+      {intl.formatMessage(messages.editPermissionsButton)}
+    </Button>
+  );
 
   const renderContent = () => {
     if (loading) {
@@ -27,7 +41,14 @@ export const PermissionsCard: React.FC<PermissionsCardProps> = ({
     }
 
     if (permissions && permissions.length === 0) {
-      return <Text>{intl.formatMessage(messages.appNoPermissions)}</Text>;
+      return (
+        <>
+          <Text marginBottom={4} as={"p"}>
+            {intl.formatMessage(messages.appNoPermissions)}
+          </Text>
+          {editPermissionsButton}
+        </>
+      );
     }
 
     if (permissions && permissions.length > 0) {
@@ -43,6 +64,7 @@ export const PermissionsCard: React.FC<PermissionsCardProps> = ({
               </Box>
             ))}
           </Box>
+          {editPermissionsButton}
         </>
       );
     }
@@ -51,11 +73,20 @@ export const PermissionsCard: React.FC<PermissionsCardProps> = ({
   };
 
   return (
-    <Box {...boxProps}>
-      <Text variant={"heading"} marginBottom={4} as={"h2"}>
-        {intl.formatMessage(messages.appPermissionsTitle)}
-      </Text>
-      <Box>{renderContent()}</Box>
-    </Box>
+    <>
+      {editPermissionDialogOpen && (
+        <AppPermissionsDialog
+          appId={appId}
+          onClose={() => setEditPermissionDialogOpen(false)}
+          assignedPermissions={permissions?.map(p => p.code) ?? []}
+        />
+      )}
+      <Box {...boxProps}>
+        <Text variant={"heading"} marginBottom={4} as={"h2"}>
+          {intl.formatMessage(messages.appPermissionsTitle)}
+        </Text>
+        <Box>{renderContent()}</Box>
+      </Box>
+    </>
   );
 };

@@ -2,12 +2,11 @@ import Skeleton from "@dashboard/components/Skeleton";
 import { Box, BoxProps, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
-import ReactMarkdown from "react-markdown";
 
 import messages from "./messages";
 
 type AboutCardProps = {
-  aboutApp?: string | null;
+  aboutApp: string | null;
   loading: boolean;
 } & BoxProps;
 
@@ -24,7 +23,7 @@ export const AboutCard: React.FC<AboutCardProps> = ({
     }
 
     if (aboutApp) {
-      return <ReactMarkdown source={aboutApp} />;
+      return <Text>{aboutApp}</Text>;
     }
 
     if (!aboutApp) {
