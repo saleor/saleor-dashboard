@@ -33,9 +33,9 @@ import {
   CategoryListUrlFilters,
   CategoryListUrlQueryParams,
 } from "../../urls";
-import { getActiveFilters, getFilterVariables } from "./filter";
+import { getActiveFilters, getFilterVariables, storageUtils } from "./filter";
 import { getSortQueryVariables } from "./sort";
-import { useTabs } from "./useTabs";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 
 interface CategoryListProps {
   params: CategoryListUrlQueryParams;
@@ -59,17 +59,19 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   } = useRowSelection(params);
 
   const {
-    currentTab,
-    tabs,
-    hasTabChanged,
-    onTabDelete,
-    onTabSave,
-    onTabUpdate,
-    onTabChange,
-    tabIndexToDelete,
-    setTabIndexToDelete,
-  } = useTabs({
+    hasPresetsChange,
+    onPresetChange,
+    onPresetDelete,
+    onPresetSave,
+    onPresetUpdate,
+    presetIdToDelete,
+    presets,
+    selectedPreset,
+    setPresetIdToDelete,
+  } = useFilterPresets({
     params,
+    storageUtils,
+    getUrl: categoryListUrl,
     reset: clearRowSelection,
   });
 
@@ -151,20 +153,20 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <CategoryListPage
-        hasPresetsChanged={hasTabChanged()}
+        hasPresetsChanged={hasPresetsChange()}
         categories={mapEdgesToItems(data?.categories)}
-        currentTab={currentTab}
+        currentTab={selectedPreset}
         initialSearch={params.query || ""}
         onSearchChange={query => changeFilterField({ query })}
         onAll={() => navigate(categoryListUrl())}
-        onTabChange={onTabChange}
+        onTabChange={onPresetChange}
         onTabDelete={(tabIndex: number) => {
-          setTabIndexToDelete(tabIndex);
+          setPresetIdToDelete(tabIndex);
           openModal("delete-search");
         }}
-        onTabUpdate={onTabUpdate}
+        onTabUpdate={onPresetUpdate}
         onTabSave={() => openModal("save-search")}
-        tabs={tabs.map(tab => tab.name)}
+        tabs={presets.map(tab => tab.name)}
         settings={settings}
         sort={getSortParams(params)}
         onSort={handleSort}
@@ -228,15 +230,15 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={onTabSave}
+        onSubmit={onPresetSave}
       />
 
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={onTabDelete}
-        tabName={tabs[tabIndexToDelete - 1]?.name ?? "..."}
+        onSubmit={onPresetDelete}
+        tabName={presets[presetIdToDelete - 1]?.name ?? "..."}
       />
     </PaginatorContext.Provider>
   );
