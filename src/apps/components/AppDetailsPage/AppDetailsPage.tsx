@@ -45,6 +45,7 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
       />
       <AboutCard margin={6} aboutApp={data?.aboutApp} loading={loading} />
       <PermissionsCard
+        appId={data.id}
         margin={6}
         permissions={data?.permissions}
         loading={loading}
