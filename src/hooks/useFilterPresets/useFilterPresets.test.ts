@@ -102,7 +102,7 @@ describe("useFilterPresets", () => {
     );
   });
 
-  it("should handle prset delete and navigate to base url when active preset is equal deleting preset", () => {
+  it("should handle preset delete and navigate to base url when active preset is equal deleting preset", () => {
     // Arrange
     const mockDeleteStorage = jest.fn();
     const mockReset = jest.fn();
@@ -134,7 +134,7 @@ describe("useFilterPresets", () => {
     expect(mockNavigate).toHaveBeenCalledWith(baseUrl);
   });
 
-  it("should handle prset delete and navigate to active preset when preset to delete is different that preset to delete", () => {
+  it("should handle preset delete and navigate to active preset when preset to delete is different that preset to delete", () => {
     // Arrange
     const mockDeleteStorage = jest.fn();
     const mockReset = jest.fn();

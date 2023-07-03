@@ -73,38 +73,38 @@ export const useFilterPresets = ({
   };
 
   const onPresetSave = (data: SaveFilterTabDialogFormData) => {
-    const { paresedQs } = prepareQs(location.search);
+    const { parsedQs } = prepareQs(location.search);
 
     storageUtils.saveFilterTab(
       getNextUniqueTabName(
         data.name,
         presets.map(tab => tab.name),
       ),
-      stringify(paresedQs),
+      stringify(parsedQs),
     );
     onPresetChange(presets.length + 1);
   };
 
   const onPresetUpdate = (tabName: string) => {
-    const { paresedQs } = prepareQs(location.search);
+    const { parsedQs } = prepareQs(location.search);
 
-    storageUtils.updateFilterTab(tabName, stringify(paresedQs));
+    storageUtils.updateFilterTab(tabName, stringify(parsedQs));
     onPresetChange(presets.findIndex(tab => tab.name === tabName) + 1);
   };
 
   const hasPresetsChange = () => {
-    const { paresedQs } = prepareQs(location.search);
+    const { parsedQs } = prepareQs(location.search);
 
     if (!selectedPreset) {
-      return location.search !== "" && stringify(paresedQs) !== "";
+      return location.search !== "" && stringify(parsedQs) !== "";
     }
 
     const activeTab = presets[selectedPreset - 1];
 
     return (
-      activeTab?.data !== stringify(paresedQs) &&
+      activeTab?.data !== stringify(parsedQs) &&
       location.search !== "" &&
-      stringify(paresedQs) !== ""
+      stringify(parsedQs) !== ""
     );
   };
 
