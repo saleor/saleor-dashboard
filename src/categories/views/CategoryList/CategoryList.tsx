@@ -7,6 +7,7 @@ import {
   useCategoryBulkDeleteMutation,
   useRootCategoriesQuery,
 } from "@dashboard/graphql";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
@@ -35,7 +36,6 @@ import {
 } from "../../urls";
 import { getActiveFilters, getFilterVariables, storageUtils } from "./filter";
 import { getSortQueryVariables } from "./sort";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 
 interface CategoryListProps {
   params: CategoryListUrlQueryParams;
