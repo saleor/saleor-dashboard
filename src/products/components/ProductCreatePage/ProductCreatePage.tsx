@@ -225,7 +225,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         attributeRichTextGetters,
       }) => {
         // Comparing explicitly to false because `hasVariants` can be undefined
-        const isSimpleProduct = data.productType?.hasVariants === false;
+        const isSimpleProduct = !(data.productType?.hasVariants);
 
         const errors = [...apiErrors, ...validationErrors];
 

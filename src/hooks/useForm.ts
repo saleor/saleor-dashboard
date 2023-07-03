@@ -166,7 +166,6 @@ function useForm<T extends FormData, TErrors>(
 
     if (!(name in data)) {
       console.error(`Unknown form field: ${name}`);
-      return;
     } else {
       if (data[name] !== value) {
         handleSetChanged(true);

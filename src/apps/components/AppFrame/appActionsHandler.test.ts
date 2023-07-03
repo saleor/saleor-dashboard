@@ -7,6 +7,27 @@ import { renderHook } from "@testing-library/react-hooks";
 import * as ReactIntl from "react-intl";
 import { IntlShape } from "react-intl";
 
+jest.mock("@dashboard/config", () => {
+  const actualModule = jest.requireActual("@dashboard/config");
+  return {
+    __esModule: true,
+    ...actualModule,
+  };
+});
+
+jest.mock(
+  "@dashboard/apps/components/ExternalAppContext/ExternalAppContext",
+  () => {
+    const actualModule = jest.requireActual(
+      "@dashboard/apps/components/ExternalAppContext/ExternalAppContext",
+    );
+    return {
+      __esModule: true,
+      ...actualModule,
+    };
+  },
+);
+
 const mockNotify = jest.fn();
 const mockCloseExternalApp = jest.fn();
 
@@ -27,7 +48,7 @@ jest
   .mockImplementation(() => "http://localhost:3000");
 
 jest.spyOn(ReactIntl, "useIntl").mockImplementation(
-  // @ts-ignore - only mock required method
+  // @ts-expect-error - only mock required method
   (): Pick<IntlShape, "formatMessage"> => ({
     formatMessage: jest.fn(),
   }),
@@ -51,7 +72,7 @@ describe("AppActionsHandler", function () {
    */
   beforeEach((): void => {
     delete window.location;
-    // @ts-ignore
+    // @ts-expect-error
     window.location = {
       href: "http://localhost:3000",
       hostname: "localhost",

@@ -83,7 +83,7 @@ const ProductVariantMediaSelectDialog: React.FC<
                     classes.imageContainer,
                     {
                       [classes.selectedImageContainer]:
-                        selectedMedia.indexOf(mediaObj.id) !== -1,
+                        selectedMedia.includes(mediaObj.id),
                     },
                   ])}
                   onClick={() => handleMediaSelect(mediaObj.id)}

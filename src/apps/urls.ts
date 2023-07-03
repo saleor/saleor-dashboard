@@ -1,5 +1,5 @@
 import { getApiUrl } from "@dashboard/config";
-import { FlagWithName } from "@dashboard/hooks/useFlags/types";
+import { FlagList } from "@dashboard/featureFlags";
 import { stringifyQs } from "@dashboard/utils/urls";
 import { ThemeType } from "@saleor/app-sdk/app-bridge";
 import urlJoin from "url-join";
@@ -24,7 +24,7 @@ export interface AppDetailsUrlMountQueryParams {
 }
 
 interface FeatureFlagsQueryParams {
-  featureFlags?: Record<string, string>;
+  featureFlags?: FlagList;
 }
 export interface AppDetailsCommonParams {
   theme: ThemeType;
@@ -35,16 +35,6 @@ export type AppDetailsUrlQueryParams = Dialog<AppDetailsUrlDialog> &
   FeatureFlagsQueryParams;
 
 export type AppInstallUrlQueryParams = Partial<{ [MANIFEST_ATTR]: string }>;
-
-export const prepareFeatureFlagsList = (
-  flags: FlagWithName[],
-): Record<string, string> =>
-  flags.reduce<Record<string, string>>((acc, flag) => {
-    if (flag.enabled) {
-      acc[flag.name] = `${flag.value || true}`;
-    }
-    return acc;
-  }, {});
 
 export const AppSections = {
   appsSection: "/apps/",

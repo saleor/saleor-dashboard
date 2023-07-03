@@ -1,48 +1,61 @@
-// @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
 import Skeleton from "@dashboard/components/Skeleton";
-import { AppQuery } from "@dashboard/graphql";
-import { Card, CardContent, Typography } from "@material-ui/core";
+import { PermissionEnum } from "@dashboard/graphql";
+import { Box, BoxProps, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
-import { useStyles } from "./styles";
 
-interface PermissionsCardProps {
-  permissions?: AppQuery["app"]["permissions"];
+type PermissionsCardProps = {
+  permissions: Array<{
+    name: string;
+    code: PermissionEnum;
+  }> | null;
   loading: boolean;
-}
+} & BoxProps;
 
-const PermissionsCard: React.FC<PermissionsCardProps> = ({
+export const PermissionsCard: React.FC<PermissionsCardProps> = ({
   permissions,
   loading,
+  ...boxProps
 }) => {
-  const classes = useStyles();
   const intl = useIntl();
 
+  const renderContent = () => {
+    if (loading) {
+      return <Skeleton />;
+    }
+
+    if (permissions && permissions.length === 0) {
+      return <Text>{intl.formatMessage(messages.appNoPermissions)}</Text>;
+    }
+
+    if (permissions && permissions.length > 0) {
+      return (
+        <>
+          <Text as={"p"} marginBottom={4}>
+            <FormattedMessage {...messages.appPermissionsDescription} />
+          </Text>
+          <Box as={"ul"}>
+            {permissions?.map(perm => (
+              <Box as={"li"} paddingX={4} paddingY={2} key={perm.code}>
+                <Text>{perm.name}</Text>
+              </Box>
+            ))}
+          </Box>
+        </>
+      );
+    }
+
+    throw new Error('Leaking "if" statement, should never happen');
+  };
+
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(messages.appPermissionsTitle)} />
-      <CardContent>
-        {!loading ? (
-          <>
-            <Typography>
-              <FormattedMessage {...messages.appPermissionsDescription} />
-            </Typography>
-            {!!permissions?.length && (
-              <ul className={classes.permissionsContainer}>
-                {permissions?.map(perm => (
-                  <li key={perm.code}>{perm.name}</li>
-                ))}
-              </ul>
-            )}
-          </>
-        ) : (
-          <Skeleton />
-        )}
-      </CardContent>
-    </Card>
+    <Box {...boxProps}>
+      <Text variant={"heading"} marginBottom={4} as={"h2"}>
+        {intl.formatMessage(messages.appPermissionsTitle)}
+      </Text>
+      <Box>{renderContent()}</Box>
+    </Box>
   );
 };
-export default PermissionsCard;
