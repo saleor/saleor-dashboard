@@ -52,7 +52,7 @@ const createAPIHandler = (
 };
 
 export const getInitialRightOperatorOptions = async (
-  client: ApolloClient<object>,
+  client: ApolloClient<unknown>,
   position: string,
   value: FilterContainer,
 ) => {
@@ -64,7 +64,7 @@ export const getInitialRightOperatorOptions = async (
 };
 
 export const getRightOperatorOptionsByQuery = async (
-  client: ApolloClient<object>,
+  client: ApolloClient<unknown>,
   position: string,
   value: FilterContainer,
   inputValue: string,
@@ -77,7 +77,7 @@ export const getRightOperatorOptionsByQuery = async (
 };
 
 export const getLeftOperatorOptions = async (
-  client: ApolloClient<object>,
+  client: ApolloClient<unknown>,
   inputValue: string,
 ) => {
   const handler = new AttributesHandler(client, inputValue);
