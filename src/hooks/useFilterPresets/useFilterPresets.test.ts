@@ -8,7 +8,7 @@ jest.mock("@dashboard/hooks/useNavigator", () => () => mockNavigate);
 const baseUrl = "http://localhost";
 
 describe("useFilterPresets", () => {
-  let originalWindowLocation = window.location;
+  const originalWindowLocation = window.location;
 
   beforeEach(() => {
     Object.defineProperty(window, "location", {
