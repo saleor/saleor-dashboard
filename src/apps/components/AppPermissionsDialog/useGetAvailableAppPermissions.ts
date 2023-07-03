@@ -21,7 +21,7 @@ export const useGetAvailableAppPermissions = () => {
       );
     }
 
-    // @ts-ignore - wtf
+    // @ts-expect-error - even when "if" was set before, TS still thinks this can be undefined, todo
     return codes.map(c => shopData.permissions.find(p => p.code === c).name);
   };
 

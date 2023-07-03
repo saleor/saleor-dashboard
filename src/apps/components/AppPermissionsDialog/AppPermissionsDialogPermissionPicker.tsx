@@ -33,7 +33,7 @@ export const AppPermissionsDialogPermissionPicker = ({
       onChange={e => {
         const formdata = new FormData(e.currentTarget);
 
-        // @ts-ignore - for some reason TS doesnt see keys, values, entries methods on formdata. TODO
+        // @ts-expect-error - for some reason TS doesnt see keys, values, entries methods on formdata. TODO
         const values = Array.from(formdata.keys()) as PermissionEnum[];
 
         onChange(values);
