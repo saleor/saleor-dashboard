@@ -2,6 +2,7 @@
 import { useState } from "react";
 
 import { FilterElement } from "./FilterElement";
+import { ConditionValue, ItemOption } from "./FilterElement/ConditionSelected";
 
 export type FilterContainer = Array<string | FilterElement | FilterContainer>;
 
@@ -58,12 +59,12 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
     );
   };
 
-  const updateRightOperator = (position: string, leftOperator: any) => {
+  const updateRightOperator = (position: string, rightOperator: ConditionValue) => {
     const index = parseInt(position, 10);
     setValue(v =>
       v.map((el, elIndex) => {
         if (elIndex === index && typeof el !== "string" && !Array.isArray(el)) {
-          el.updateRightOperator(leftOperator);
+          el.updateRightOperator(rightOperator);
         }
 
         return el;
@@ -71,7 +72,7 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
     );
   };
 
-  const updateRightOptions = (position: string, options: any) => {
+  const updateRightOptions = (position: string, options: ItemOption[]) => {
     const index = parseInt(position, 10);
     setValue(v =>
       v.map((el, elIndex) => {
