@@ -5266,10 +5266,6 @@
     "context": "header",
     "string": "Password"
   },
-  "ZhaXLU": {
-    "context": "button",
-    "string": "Copy"
-  },
   "ZhqH8J": {
     "context": "button",
     "string": "Copy headers"
@@ -5903,6 +5899,10 @@
   "egBBQ/": {
     "context": "all captured amount from transactions in order",
     "string": "Captured"
+  },
+  "eqEyWz": {
+    "context": "order expiration card description",
+    "string": "The time in days after expired orders will be deleted. Allowed rangeis between 1 and 120."
   },
   "erC44f": {
     "context": "filters error messages dependencies missing",
@@ -6639,6 +6639,10 @@
   },
   "kTr2o8": {
     "string": "Attribute name"
+  },
+  "kVKTwC": {
+    "context": "order expiration card title",
+    "string": "Order expiration"
   },
   "kVOslW": {
     "context": "reason for discount label",

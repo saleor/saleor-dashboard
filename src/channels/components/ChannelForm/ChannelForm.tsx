@@ -3,8 +3,6 @@ import {
   ChannelShippingZones,
   ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Link from "@dashboard/components/Link";
@@ -23,19 +21,13 @@ import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import {
-  Card,
-  CardContent,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, Button, CopyIcon, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from "../styles";
 import { ExtendedFormHelperTextProps } from "./types";
+import { DashboardCard } from "@dashboard/components/Card";
+import { messages } from "./messages";
 
 export interface FormData extends StockSettingsInput {
   name: string;
@@ -49,6 +41,7 @@ export interface FormData extends StockSettingsInput {
   warehousesToDisplay: ChannelWarehouses;
   defaultCountry: CountryCode;
   markAsPaidStrategy: MarkAsPaidStrategyEnum;
+  deleteExpiredOrdersAfter: number;
 }
 
 export interface ChannelFormProps {
@@ -79,91 +72,59 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   onMarkAsPaidStrategyChange,
 }) => {
   const intl = useIntl();
-  const [copied, copy] = useClipboard();
+  const [, copy] = useClipboard();
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
-    ["name", "slug", "currencyCode", "defaultCountry"],
+    [
+      "name",
+      "slug",
+      "currencyCode",
+      "defaultCountry",
+      "deleteExpiredOrdersAfter",
+    ],
     errors,
   );
-  const classes = useStyles();
 
   return (
     <>
-      <Card>
-        <CardTitle
-          title={intl.formatMessage(commonMessages.generalInformations)}
-        />
-        <CardContent>
-          <TextField
+      <DashboardCard>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+        <DashboardCard.Content>
+          <Input
             error={!!formErrors.name}
             helperText={getChannelsErrorMessage(formErrors?.name, intl)}
             disabled={disabled}
-            fullWidth
-            label={intl.formatMessage({
-              id: "UymotP",
-              defaultMessage: "Channel name",
-              description: "channel name",
-            })}
+            label={intl.formatMessage(messages.channelName)}
             name="name"
             value={data.name}
             onChange={onChange}
           />
           <FormSpacer />
-          <TextField
+          <Input
             error={!!formErrors.slug}
             helperText={getChannelsErrorMessage(formErrors?.slug, intl)}
             disabled={disabled}
-            fullWidth
-            FormHelperTextProps={
-              {
-                "data-test-id": "slug-text-input-helper-text",
-              } as ExtendedFormHelperTextProps
-            }
-            label={intl.formatMessage({
-              id: "74Zo/H",
-              defaultMessage: "Slug",
-              description: "channel slug",
-            })}
+            label={intl.formatMessage(messages.channelSlug)}
             name="slug"
             value={data.slug}
             onChange={onChange}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment
-                  className={classes.copyBtn}
-                  position="end"
-                  disableTypography
-                  onClick={() => copy(data.slug)}
-                >
-                  {copied ? (
-                    <FormattedMessage
-                      id="r86alc"
-                      defaultMessage="Copied"
-                      description="button"
-                    />
-                  ) : (
-                    <FormattedMessage
-                      id="ZhaXLU"
-                      defaultMessage="Copy"
-                      description="button"
-                    />
-                  )}
-                </InputAdornment>
-              ),
-            }}
+            endAdornment={
+              <Button
+                variant="tertiary"
+                onClick={() => copy(data.slug)}
+                textTransform="uppercase"
+                icon={<CopyIcon />}
+              />
+            }
           />
-          <FormSpacer />
-        </CardContent>
-      </Card>
-      <CardSpacer />
-      <Card>
-        <CardTitle
-          title={intl.formatMessage({
-            id: "3y4r+z",
-            defaultMessage: "Channel Settings",
-            description: "channel settings",
-          })}
-        />
-        <CardContent>
+        </DashboardCard.Content>
+      </DashboardCard>
+      <DashboardCard>
+        <DashboardCard.Title>
+          <FormattedMessage {...messages.channelSettings} />
+        </DashboardCard.Title>
+        <DashboardCard.Content>
           {currencyCodes ? (
             <SingleAutocompleteSelectField
               data-test-id="channel-currency-select-input"
@@ -179,11 +140,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
                 intl,
               )}
               disabled={disabled}
-              label={intl.formatMessage({
-                id: "9Sz0By",
-                defaultMessage: "Currency",
-                description: "channel currency",
-              })}
+              label={intl.formatMessage(messages.channelCurrency)}
               choices={currencyCodes}
               name="currencyCode"
               displayValue={selectedCurrencyCode}
@@ -191,16 +148,12 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               onChange={onCurrencyCodeChange}
             />
           ) : (
-            <>
-              <Typography variant="caption" className={classes.label}>
-                <FormattedMessage
-                  id="39yi8w"
-                  defaultMessage="Selected currency"
-                  description="selected currency"
-                />
-              </Typography>
-              <Typography>{data.currencyCode}</Typography>
-            </>
+            <Box display="flex" flexDirection="column">
+              <Text variant="caption">
+                <FormattedMessage {...messages.selectedCurrency} />
+              </Text>
+              <Text>{data.currencyCode}</Text>
+            </Box>
           )}
           <FormSpacer />
           <SingleAutocompleteSelectField
@@ -216,10 +169,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               intl,
             )}
             disabled={disabled}
-            label={intl.formatMessage({
-              id: "tV+Dcm",
-              defaultMessage: "Default country",
-            })}
+            label={intl.formatMessage(messages.defaultCountry)}
             choices={countries}
             name="defaultCountry"
             displayValue={selectedCountryDisplayName}
@@ -281,8 +231,28 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             />
             <PreviewPill />
           </Box>
-        </CardContent>
-      </Card>
+        </DashboardCard.Content>
+      </DashboardCard>
+      <DashboardCard>
+        <DashboardCard.Title>
+          <FormattedMessage {...messages.orderExpiration} />
+        </DashboardCard.Title>
+        <DashboardCard.Content>
+          <Text variant="caption" marginBottom={12}>
+            <FormattedMessage {...messages.orderExpirationDescription} />
+          </Text>
+          <Input
+            name="deleteExpiredOrdersAfter"
+            value={data.deleteExpiredOrdersAfter}
+            error={!!formErrors.deleteExpiredOrdersAfter}
+            type="number"
+            label="TTL"
+            onChange={onChange}
+            min={0}
+            max={120}
+          />
+        </DashboardCard.Content>
+      </DashboardCard>
     </>
   );
 };
