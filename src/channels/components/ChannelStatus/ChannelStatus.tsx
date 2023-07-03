@@ -1,4 +1,4 @@
-import { Button } from "@dashboard/components/Button";
+import { Button } from "@saleor/macaw-ui/next";
 import CardTitle from "@dashboard/components/CardTitle";
 import { Card, CardContent, Typography } from "@material-ui/core";
 import React from "react";
@@ -53,9 +53,10 @@ export const ChannelStatus: React.FC<ChannelStatusProps> = ({
           )}
         </Typography>
         <Button
-          className={classes.activeBtn}
+          variant="secondary"
           disabled={disabled}
           onClick={() => updateChannelStatus()}
+          marginTop={2}
         >
           {isActive ? (
             <FormattedMessage
