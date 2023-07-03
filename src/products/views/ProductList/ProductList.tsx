@@ -174,13 +174,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ProductListUrlDialog,
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
+  console.log(params);
 
   const {
     clearRowSelection,
     selectedRowIds,
     setClearDatagridRowSelectionCallback,
     setSelectedRowIds,
-  } = useRowSelection();
+  } = useRowSelection(params);
 
   const {
     hasPresetsChange,
