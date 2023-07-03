@@ -9,13 +9,15 @@ import { prepareQs } from "@dashboard/utils/filters/qs";
 import { stringify } from "qs";
 import { useState } from "react";
 
-export const useFilterPresets = ({
+export const useFilterPresets = <
+  T extends { activeTab?: string; action?: string },
+>({
   params,
   reset,
   storageUtils,
   getUrl,
 }: {
-  params: Record<string, unknown>;
+  params: T;
   reset: () => void;
   getUrl: () => string;
   storageUtils: StorageUtils<string>;
