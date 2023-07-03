@@ -1,6 +1,7 @@
 import { AppPermissionsDialogConfirmation } from "@dashboard/apps/components/AppPermissionsDialog/AppPermissionsDialogConfirmation";
 import { AppPermissionsDialogPermissionPicker } from "@dashboard/apps/components/AppPermissionsDialog/AppPermissionsDialogPermissionPicker";
 import { useAppPermissionsDialogState } from "@dashboard/apps/components/AppPermissionsDialog/AppPermissionsDialogState";
+import { AppPermissionsDialogMessages } from "@dashboard/apps/components/AppPermissionsDialog/messages";
 import { useGetAvailableAppPermissions } from "@dashboard/apps/components/AppPermissionsDialog/useGetAvailableAppPermissions";
 import {
   PermissionEnum,
@@ -12,14 +13,23 @@ import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
 import { Skeleton } from "@material-ui/lab";
 import { Box, Text } from "@saleor/macaw-ui/next";
 import React, { useEffect } from "react";
+import { useIntl } from "react-intl";
 
-export const AppPermissionsDialog: React.FC<{
+const messages = AppPermissionsDialogMessages.dialogRoot;
+
+interface OuterProps {
   onClose: () => void;
   assignedPermissions: PermissionEnum[];
   appId: string;
-}> = ({ assignedPermissions, onClose, appId }) => {
-  const { availablePermissions } = useGetAvailableAppPermissions();
+}
 
+export const AppPermissionsDialog = ({
+  assignedPermissions,
+  onClose,
+  appId,
+}: OuterProps) => {
+  const { availablePermissions } = useGetAvailableAppPermissions();
+  const { formatMessage } = useIntl();
   const {
     updateSelected,
     onConfirmSelection,
@@ -40,20 +50,21 @@ export const AppPermissionsDialog: React.FC<{
     },
     onCompleted(data) {
       if (data.appUpdate?.errors.length) {
-        // todo translate
-        onMutationError(data.appUpdate?.errors[0].message ?? "Fail");
+        onMutationError(
+          data.appUpdate?.errors[0].message ??
+            formatMessage(messages.fallbackErrorText),
+        );
 
         return;
       }
 
       refetch().then(onClose);
 
-      // todo translate
       notify({
         status: "success",
-        title: "Success",
+        title: formatMessage(messages.successNotificationTitle),
         autohide: 1000,
-        text: "Updated app permissions",
+        text: formatMessage(messages.successNotificationBody),
       });
     },
   });
@@ -91,7 +102,6 @@ export const AppPermissionsDialog: React.FC<{
           />
         );
 
-      // todo what loading should I use
       case "saving":
         return <Skeleton />;
       case "error":
@@ -105,17 +115,14 @@ export const AppPermissionsDialog: React.FC<{
     }
   };
 
-  /**
-   * TODO
-   * - extract i18n
-   * - extract and test
-   */
   return (
     <Dialog open={true} onClose={onClose} fullWidth maxWidth={"sm"}>
-      <DialogTitle disableTypography>Edit permissions</DialogTitle>
+      <DialogTitle disableTypography>
+        {formatMessage(messages.heading)}
+      </DialogTitle>
       <DialogContent>
         <Box display={"grid"} gridAutoFlow={"row"}>
-          <Text as={"p"}>Manually change permission for the app.</Text>
+          <Text as={"p"}>{formatMessage(messages.info)}</Text>
           <Box
             borderRadius={2}
             marginBottom={6}
@@ -129,12 +136,10 @@ export const AppPermissionsDialog: React.FC<{
               color={"textCriticalDefault"}
               variant={"bodyStrong"}
             >
-              Warning
+              {formatMessage(messages.warningHeading)}
             </Text>
-            <Text as={"p"}>
-              Adding permission allows app to have more access to your data.
-            </Text>
-            <Text as={"p"}>Removing permissions may cause app to break.</Text>
+            <Text as={"p"}>{formatMessage(messages.warningParagraph1)}</Text>
+            <Text as={"p"}>{formatMessage(messages.warningParagraph2)}</Text>
           </Box>
           {renderDialogContent()}
         </Box>

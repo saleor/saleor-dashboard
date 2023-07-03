@@ -1,6 +1,6 @@
 import { defineMessages } from "react-intl";
 
-export const confirmation = defineMessages({
+const confirmation = defineMessages({
   summaryText: {
     defaultMessage: "You are going to",
     id: "PlAdWI",
@@ -23,7 +23,7 @@ export const confirmation = defineMessages({
   },
 });
 
-export const permissionsPicker = defineMessages({
+const permissionsPicker = defineMessages({
   closeButton: {
     defaultMessage: "Close",
     id: "rbrahO",
@@ -34,7 +34,45 @@ export const permissionsPicker = defineMessages({
   },
 });
 
+const dialogRoot = defineMessages({
+  heading: {
+    defaultMessage: "Edit permissions",
+    id: "psmnv9",
+  },
+  info: {
+    defaultMessage: "Manually change permission for the app.",
+    id: "6uy2gU",
+  },
+  warningHeading: {
+    defaultMessage: "Warning",
+    id: "3SVI5p",
+  },
+  warningParagraph1: {
+    defaultMessage:
+      "Adding permission allows app to have more access to your data.",
+    id: "azj0kR",
+  },
+  warningParagraph2: {
+    defaultMessage: "Removing permissions may cause app to break.",
+    id: "abpvEI",
+  },
+  successNotificationTitle: {
+    defaultMessage: "Success",
+    id: "xrKHS6",
+  },
+  successNotificationBody: {
+    defaultMessage: "Updated app permissions",
+    id: "47hJzu",
+  },
+  fallbackErrorText: {
+    defaultMessage:
+      "Failed to save permissions. Refresh the page and try again.",
+    id: "hAoqp6",
+  },
+});
+
 export const AppPermissionsDialogMessages = {
   confirmation,
   permissionsPicker,
+  dialogRoot,
 };
