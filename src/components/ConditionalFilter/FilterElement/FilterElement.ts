@@ -4,7 +4,7 @@ import { LeftOperand } from "./../useLeftOperands";
 import { CONDITIONS, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
 import { ConditionItem, ConditionOptions } from "./ConditionOptions";
-import { ConditionValue, ConditionSelected, ItemOption } from "./ConditionSelected";
+import { ConditionSelected, ConditionValue, ItemOption } from "./ConditionSelected";
 
 interface ExpressionValue {
   value: string;
