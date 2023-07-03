@@ -59,8 +59,16 @@ function deleteFilterTab(id: number, key: string) {
     JSON.stringify([...userFilters.slice(0, id - 1), ...userFilters.slice(id)]),
   );
 }
+export interface StorageUtils<TUrlFilters> {
+  getFilterTabs: () => GetFilterTabsOutput<TUrlFilters>;
+  deleteFilterTab: (id: number) => void;
+  saveFilterTab: (name: string, data: TUrlFilters) => void;
+  updateFilterTab: (name: string, data: TUrlFilters) => void;
+}
 
-function createFilterTabUtils<TUrlFilters>(key: string) {
+function createFilterTabUtils<TUrlFilters>(
+  key: string,
+): StorageUtils<TUrlFilters> {
   return {
     deleteFilterTab: (id: number) => deleteFilterTab(id, key),
     getFilterTabs: () => getFilterTabs<TUrlFilters>(key),
