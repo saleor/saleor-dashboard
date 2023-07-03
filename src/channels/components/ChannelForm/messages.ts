@@ -31,14 +31,14 @@ export const messages = defineMessages({
     defaultMessage: "Default country",
   },
   orderExpiration: {
-    id: 'kVKTwC',
+    id: "kVKTwC",
     defaultMessage: "Order expiration",
     description: "order expiration card title",
   },
   orderExpirationDescription: {
-    id: 'eqEyWz',
+    id: 'U+79k0',
     defaultMessage:
-      "The time in days after expired orders will be deleted. Allowed rangeis between 1 and 120.",
+      "The time in days after expired orders will be deleted. Allowed range between 1 and 120.",
     description: "order expiration card description",
   },
 });

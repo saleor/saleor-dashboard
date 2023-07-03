@@ -3,6 +3,7 @@ import {
   ChannelShippingZones,
   ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
+import { DashboardCard } from "@dashboard/components/Card";
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Link from "@dashboard/components/Link";
@@ -25,9 +26,8 @@ import { Box, Button, CopyIcon, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { ExtendedFormHelperTextProps } from "./types";
-import { DashboardCard } from "@dashboard/components/Card";
 import { messages } from "./messages";
+import { ExtendedFormHelperTextProps } from "./types";
 
 export interface FormData extends StockSettingsInput {
   name: string;

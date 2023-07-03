@@ -4406,6 +4406,10 @@
     "context": "page header, edit view",
     "string": "Edit grant refund"
   },
+  "U+79k0": {
+    "context": "order expiration card description",
+    "string": "The time in days after expired orders will be deleted. Allowed range between 1 and 120."
+  },
   "U1eJIw": {
     "context": "order history message",
     "string": "Products were added to an order"
@@ -5899,10 +5903,6 @@
   "egBBQ/": {
     "context": "all captured amount from transactions in order",
     "string": "Captured"
-  },
-  "eqEyWz": {
-    "context": "order expiration card description",
-    "string": "The time in days after expired orders will be deleted. Allowed rangeis between 1 and 120."
   },
   "erC44f": {
     "context": "filters error messages dependencies missing",
