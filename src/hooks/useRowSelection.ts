@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { Pagination } from "@dashboard/types";
 import { useEffect, useRef, useState } from "react";
 
@@ -6,7 +5,7 @@ export const useRowSelection = (paginationParams?: Pagination) => {
   const [selectedRowIds, setSelectedRowIds] = useState<string[]>([]);
 
   // Keep reference to clear datagrid selection function
-  const clearDatagridRowSelectionCallback = useRef<() => void | null>(null);
+  const clearDatagridRowSelectionCallback = useRef<(() => void) | null>(null);
 
   const clearRowSelection = () => {
     setSelectedRowIds([]);

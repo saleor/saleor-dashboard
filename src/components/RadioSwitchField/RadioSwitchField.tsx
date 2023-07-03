@@ -65,7 +65,7 @@ export const RadioSwitchField: React.FC<RadioSwitchFieldProps> = props => {
     onChange({
       target: {
         name: event.target.name,
-        value: event.target.value === "true" ? true : false,
+        value: event.target.value === "true",
       },
     } as any);
   };

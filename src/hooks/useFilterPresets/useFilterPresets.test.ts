@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useFilterPresets } from "./useFilterPresets";
@@ -8,11 +7,28 @@ jest.mock("@dashboard/hooks/useNavigator", () => () => mockNavigate);
 
 const baseUrl = "http://localhost";
 
-afterEach(() => {
-  jest.clearAllMocks();
-});
-
 describe("useFilterPresets", () => {
+  const originalWindowLocation = window.location;
+
+  beforeEach(() => {
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      enumerable: true,
+      value: new URL(window.location.href),
+    });
+  });
+
+  afterEach(() => {
+    Object.defineProperty(window, "location", {
+      configurable: true,
+      enumerable: true,
+      value: originalWindowLocation,
+    });
+  });
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it("should return saved filter presets from storage", () => {
     // Arrange && Act
     const presets = [
@@ -86,7 +102,7 @@ describe("useFilterPresets", () => {
     );
   });
 
-  it("should handle prset delete and navigate to base url when active preset is equal deleting preset", () => {
+  it("should handle preset delete and navigate to base url when active preset is equal deleting preset", () => {
     // Arrange
     const mockDeleteStorage = jest.fn();
     const mockReset = jest.fn();
@@ -118,7 +134,7 @@ describe("useFilterPresets", () => {
     expect(mockNavigate).toHaveBeenCalledWith(baseUrl);
   });
 
-  it("should handle prset delete and navigate to active preset when preset to delete is different that preset to delete", () => {
+  it("should handle preset delete and navigate to active preset when preset to delete is different that preset to delete", () => {
     // Arrange
     const mockDeleteStorage = jest.fn();
     const mockReset = jest.fn();
@@ -153,11 +169,7 @@ describe("useFilterPresets", () => {
   it("should handle save new filter preset", () => {
     // Arrange
     const mockSaveStorage = jest.fn();
-
-    delete window.location;
-    window.location = {
-      search: "?query=John",
-    } as Location;
+    window.location.search = "?query=John";
 
     const { result } = renderHook(() =>
       useFilterPresets({
@@ -184,11 +196,7 @@ describe("useFilterPresets", () => {
   it("should handle update existing filter preset", () => {
     // Arrange
     const mockUpdateStorage = jest.fn();
-
-    delete window.location;
-    window.location = {
-      search: "?query=JoeDoe",
-    } as Location;
+    window.location.search = "?query=JoeDoe";
 
     const { result } = renderHook(() =>
       useFilterPresets({

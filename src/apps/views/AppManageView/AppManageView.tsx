@@ -18,7 +18,7 @@ import { useIntl } from "react-intl";
 
 import AppActivateDialog from "../../components/AppActivateDialog";
 import AppDeactivateDialog from "../../components/AppDeactivateDialog";
-import AppDetailsPage from "../../components/AppDetailsPage";
+import { AppDetailsPage } from "../../components/AppDetailsPage";
 import {
   AppDetailsUrlDialog,
   AppDetailsUrlQueryParams,

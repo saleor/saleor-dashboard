@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { SaveFilterTabDialogFormData } from "@dashboard/components/SaveFilterTabDialog";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {
@@ -10,13 +9,15 @@ import { prepareQs } from "@dashboard/utils/filters/qs";
 import { stringify } from "qs";
 import { useState } from "react";
 
-export const useFilterPresets = ({
+export const useFilterPresets = <
+  T extends { activeTab?: string; action?: string },
+>({
   params,
   reset,
   storageUtils,
   getUrl,
 }: {
-  params: Record<string, unknown>;
+  params: T;
   reset: () => void;
   getUrl: () => string;
   storageUtils: StorageUtils<string>;
@@ -46,11 +47,15 @@ export const useFilterPresets = ({
   };
 
   const onPresetDelete = () => {
+    if (!presetIdToDelete) {
+      return;
+    }
+
     storageUtils.deleteFilterTab(presetIdToDelete);
     reset();
 
     // When deleting the current tab, navigate to the All products
-    if (presetIdToDelete === selectedPreset) {
+    if (presetIdToDelete === selectedPreset || !selectedPreset) {
       navigate(baseUrl);
     } else {
       const currentParams = { ...params };
@@ -70,33 +75,38 @@ export const useFilterPresets = ({
   };
 
   const onPresetSave = (data: SaveFilterTabDialogFormData) => {
-    const { paresedQs } = prepareQs(location.search);
+    const { parsedQs } = prepareQs(location.search);
 
     storageUtils.saveFilterTab(
       getNextUniqueTabName(
         data.name,
         presets.map(tab => tab.name),
       ),
-      stringify(paresedQs),
+      stringify(parsedQs),
     );
     onPresetChange(presets.length + 1);
   };
 
   const onPresetUpdate = (tabName: string) => {
-    const { paresedQs } = prepareQs(location.search);
+    const { parsedQs } = prepareQs(location.search);
 
-    storageUtils.updateFilterTab(tabName, stringify(paresedQs));
+    storageUtils.updateFilterTab(tabName, stringify(parsedQs));
     onPresetChange(presets.findIndex(tab => tab.name === tabName) + 1);
   };
 
   const hasPresetsChange = () => {
+    const { parsedQs } = prepareQs(location.search);
+
+    if (!selectedPreset) {
+      return location.search !== "" && stringify(parsedQs) !== "";
+    }
+
     const activeTab = presets[selectedPreset - 1];
-    const { paresedQs } = prepareQs(location.search);
 
     return (
-      activeTab?.data !== stringify(paresedQs) &&
+      activeTab?.data !== stringify(parsedQs) &&
       location.search !== "" &&
-      stringify(paresedQs) !== ""
+      stringify(parsedQs) !== ""
     );
   };
 
