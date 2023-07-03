@@ -17,7 +17,7 @@ import { useIntl } from "react-intl";
 
 const messages = AppPermissionsDialogMessages.dialogRoot;
 
-interface OuterProps {
+interface AppPermissionsDialogProps {
   onClose: () => void;
   assignedPermissions: PermissionEnum[];
   appId: string;
@@ -27,7 +27,7 @@ export const AppPermissionsDialog = ({
   assignedPermissions,
   onClose,
   appId,
-}: OuterProps) => {
+}: AppPermissionsDialogProps) => {
   const { availablePermissions } = useGetAvailableAppPermissions();
   const { formatMessage } = useIntl();
   const {

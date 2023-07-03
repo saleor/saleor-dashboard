@@ -7,7 +7,7 @@ import { useIntl } from "react-intl";
 
 const messages = AppPermissionsDialogMessages.permissionsPicker;
 
-interface Props {
+interface AppPermissionsDialogPermissionPickerProps {
   allPermissions: AppPermission[];
   selected: PermissionEnum[];
   onSubmit(): void;
@@ -21,7 +21,7 @@ export const AppPermissionsDialogPermissionPicker = ({
   allPermissions,
   selected,
   onClose,
-}: Props) => {
+}: AppPermissionsDialogPermissionPickerProps) => {
   const intl = useIntl();
 
   return (

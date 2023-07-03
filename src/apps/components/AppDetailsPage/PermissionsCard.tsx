@@ -31,7 +31,7 @@ export const PermissionsCard: React.FC<PermissionsCardProps> = ({
       variant={"secondary"}
       onClick={() => setEditPermissionDialogOpen(true)}
     >
-      Edit permissions
+      {intl.formatMessage(messages.editPermissionsButton)}
     </Button>
   );
 

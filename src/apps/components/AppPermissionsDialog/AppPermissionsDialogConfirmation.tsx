@@ -20,8 +20,8 @@ export const AppPermissionsDialogConfirmation = ({
   onBack,
   onApprove,
 }: Props) => {
-  const hasAdded = addedPermissions.length > 0;
-  const hasRemoved = removedPermissions.length > 0;
+  const isPermissionsAdded = addedPermissions.length > 0;
+  const isPermissionsRemoved = removedPermissions.length > 0;
   const intl = useIntl();
 
   const { mapCodesToNames } = useGetAvailableAppPermissions();
@@ -31,7 +31,7 @@ export const AppPermissionsDialogConfirmation = ({
       <Text marginBottom={2} as={"p"}>
         {intl.formatMessage(messages.summaryText)}
       </Text>
-      {hasRemoved && (
+      {isPermissionsRemoved && (
         <Box marginBottom={4}>
           <Text variant={"bodyStrong"}>
             {intl.formatMessage(messages.removePermissions)}
@@ -43,7 +43,7 @@ export const AppPermissionsDialogConfirmation = ({
           ))}
         </Box>
       )}
-      {hasAdded && (
+      {isPermissionsAdded && (
         <Box>
           <Text variant={"bodyStrong"}>
             {intl.formatMessage(messages.addPermissions)}
