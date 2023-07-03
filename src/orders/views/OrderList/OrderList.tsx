@@ -9,6 +9,7 @@ import {
   useOrderListQuery,
 } from "@dashboard/graphql";
 import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -36,11 +37,10 @@ import {
 import {
   getFilterOpts,
   getFilterQueryParam,
-  storageUtils,
   getFilterVariables,
+  storageUtils,
 } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 
 interface OrderListProps {
   params: OrderListUrlQueryParams;
