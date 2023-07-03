@@ -21,7 +21,7 @@ const getFilterElement = (value: any, index: number): FilterElement => {
 
 const createAPIHandler = (
   selectedRow: FilterElement,
-  client: ApolloClient<any>,
+  client: ApolloClient<unknown>,
   inputValue: string,
 ): Handler => {
   if (selectedRow.isAttribute()) {
@@ -47,6 +47,8 @@ const createAPIHandler = (
   if (selectedRow.isChannel()) {
     return new ChannelHandler(client, inputValue);
   }
+
+  throw new Error("Unknown filter element");
 };
 
 export const getInitialRightOperatorOptions = async (

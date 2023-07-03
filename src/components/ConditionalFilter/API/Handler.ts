@@ -27,24 +27,24 @@ interface OptionDTO {
 }
 
 export interface Handler {
-  client: ApolloClient<object>;
+  client: ApolloClient<unknown>;
   query: string;
   fetch: () => Promise<OptionDTO[]>;
 }
 
 const createOptionsFromAPI = (
   // TODO: try to use type from graphql
-  data: Array<{ node: { name: string; id: string; slug: string } }>,
+  data: Array<{ node: { name: string | null; id: string; slug: string } }>,
 ): OptionDTO[] =>
   data.map(({ node }) => ({
-    label: node.name,
+    label: node.name ?? "",
     value: node.id,
     slug: node.slug,
   }));
 
 export class AttributeChoicesHandler implements Handler {
   constructor(
-    public client: ApolloClient<object>,
+    public client: ApolloClient<unknown>,
     public attributeSlug: string,
     public query: string,
   ) {}
@@ -62,12 +62,12 @@ export class AttributeChoicesHandler implements Handler {
         query,
       },
     });
-    return createOptionsFromAPI(data.attribute.choices.edges);
+    return createOptionsFromAPI(data.attribute?.choices?.edges ?? []);
   };
 }
 
 export class CollectionHandler implements Handler {
-  constructor(public client: ApolloClient<object>, public query: string) {}
+  constructor(public client: ApolloClient<unknown>, public query: string) {}
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -81,12 +81,12 @@ export class CollectionHandler implements Handler {
       },
     });
 
-    return createOptionsFromAPI(data.collections.edges);
+    return createOptionsFromAPI(data.collections?.edges ?? []);
   };
 }
 
 export class CategoryHandler implements Handler {
-  constructor(public client: ApolloClient<object>, public query: string) {}
+  constructor(public client: ApolloClient<unknown>, public query: string) {}
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -100,12 +100,12 @@ export class CategoryHandler implements Handler {
       },
     });
 
-    return createOptionsFromAPI(data.categories.edges);
+    return createOptionsFromAPI(data.categories?.edges ?? []);
   };
 }
 
 export class ProductTypeHandler implements Handler {
-  constructor(public client: ApolloClient<object>, public query: string) {}
+  constructor(public client: ApolloClient<unknown>, public query: string) {}
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -119,12 +119,12 @@ export class ProductTypeHandler implements Handler {
       },
     });
 
-    return createOptionsFromAPI(data.productTypes.edges);
+    return createOptionsFromAPI(data.productTypes?.edges ?? []);
   };
 }
 
 export class ChannelHandler implements Handler {
-  constructor(public client: ApolloClient<object>, public query: string) {}
+  constructor(public client: ApolloClient<unknown>, public query: string) {}
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -133,11 +133,12 @@ export class ChannelHandler implements Handler {
     >({
       query: _GetChannelOperandsDocument,
     });
-    const options = data.channels.map(({ id, name, slug }) => ({
-      label: name,
-      value: id,
-      slug,
-    }));
+    const options =
+      data.channels?.map(({ id, name, slug }) => ({
+        label: name,
+        value: id,
+        slug,
+      })) ?? [];
 
     return options.filter(({ label }) =>
       label.toLowerCase().includes(this.query.toLowerCase()),
@@ -146,7 +147,7 @@ export class ChannelHandler implements Handler {
 }
 
 export class AttributesHandler implements Handler {
-  constructor(public client: ApolloClient<object>, public query: string) {}
+  constructor(public client: ApolloClient<unknown>, public query: string) {}
 
   fetch = async () => {
     const { data } = await this.client.query<
@@ -159,11 +160,13 @@ export class AttributesHandler implements Handler {
         query: this.query,
       },
     });
-    return data.attributes.edges.map(({ node }) => ({
-      label: node.name,
-      value: node.id,
-      type: node.inputType,
-      slug: node.slug,
-    }));
+    return (
+      data.attributes?.edges.map(({ node }) => ({
+        label: node.name ?? "",
+        value: node.id,
+        type: node.inputType,
+        slug: node.slug ?? "",
+      })) ?? []
+    );
   };
 }
