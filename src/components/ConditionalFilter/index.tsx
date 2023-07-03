@@ -173,7 +173,7 @@ const FiltersArea = ({ provider, onConfirm }) => {
         // @ts-ignore
         value={value}
         // TODO: add proper types in Macaw UI
-        // @ts-ignore
+        // @ts-expect-error
         onChange={handleStateChange}
       >
         <_ExperimentalFilters.Footer>
