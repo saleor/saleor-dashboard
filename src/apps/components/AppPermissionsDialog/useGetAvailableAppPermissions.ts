@@ -15,14 +15,27 @@ export const useGetAvailableAppPermissions = () => {
     }));
 
   const mapCodesToNames = (codes: PermissionEnum[]) => {
-    if (!shopData?.permissions) {
+    const permissions = shopData?.permissions;
+
+    if (!permissions) {
       throw new Error(
         "Shop data from useShop hook is not available. mapCodesToNames method must be used after query resolves",
       );
     }
 
-    // @ts-expect-error - even when "if" was set before, TS still thinks this can be undefined, todo
-    return codes.map(c => shopData.permissions.find(p => p.code === c).name);
+    return codes.map(c => {
+      const relatedPermission = permissions.find(p => {
+        return p.code === c;
+      });
+
+      if (!relatedPermission) {
+        throw new Error(
+          "Trying to match permission enum from app that doesnt match available permissions from API",
+        );
+      }
+
+      return relatedPermission.name;
+    });
   };
 
   return {
