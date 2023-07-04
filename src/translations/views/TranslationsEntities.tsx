@@ -31,7 +31,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
   const navigate = useNavigator();
   const shop = useShop();
 
-  if (Object.keys(TranslatableEntities).indexOf(params.tab) === -1) {
+  if (!Object.keys(TranslatableEntities).includes(params.tab)) {
     navigate(
       "?" +
         stringifyQs({

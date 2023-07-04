@@ -16,6 +16,10 @@ export default defineMessages({
     defaultMessage: "App permissions",
     description: "section header",
   },
+  appNoPermissions: {
+    defaultMessage: "App doesn't have any permissions granted.",
+    id: "wDYozn",
+  },
   appPermissionsDescription: {
     id: "7oQUMG",
     defaultMessage: "This app has permissions to:",
@@ -27,8 +31,20 @@ export default defineMessages({
     description: "section header",
   },
   dataPrivacyDescription: {
-    id: "Go50v2",
-    defaultMessage: "View this app’s privacy policy",
+    id: "CHoZ8S",
+    defaultMessage: "View this app’s privacy policy.",
     description: "app privacy policy link",
+  },
+  noDataPrivacyPage: {
+    id: "f3hf+w",
+    defaultMessage: "App doesn't provide a privacy policy.",
+  },
+  noAboutApp: {
+    id: "b088Xv",
+    defaultMessage: "App doesn't provide a description.",
+  },
+  editPermissionsButton: {
+    defaultMessage: "Edit permissions",
+    id: "psmnv9",
   },
 });

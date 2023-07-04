@@ -1,11 +1,13 @@
-import CardSpacer from "@dashboard/components/CardSpacer";
 import { AppQuery } from "@dashboard/graphql";
+import errorTracker from "@dashboard/services/errorTracking";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
+import { ErrorBoundary } from "react-error-boundary";
 
-import AboutCard from "./AboutCard";
-import DataPrivacyCard from "./DataPrivacyCard";
+import { AboutCard } from "./AboutCard";
+import { DataPrivacyCard } from "./DataPrivacyCard";
 import Header from "./Header";
-import PermissionsCard from "./PermissionsCard";
+import { PermissionsCard } from "./PermissionsCard";
 
 export interface AppDetailsPageProps {
   loading: boolean;
@@ -27,25 +29,34 @@ export const AppDetailsPage: React.FC<AppDetailsPageProps> = ({
   }
 
   return (
-    <>
+    <ErrorBoundary
+      onError={errorTracker.captureException}
+      fallbackRender={() => (
+        <Box padding={4}>
+          <Text>Error, please refresh the page</Text>
+        </Box>
+      )}
+    >
       <Header
         data={data}
         onAppActivateOpen={onAppActivateOpen}
         onAppDeactivateOpen={onAppDeactivateOpen}
         onAppDeleteOpen={onAppDeleteOpen}
       />
-      <AboutCard aboutApp={data?.aboutApp} loading={loading} />
-      <CardSpacer />
-      <PermissionsCard permissions={data?.permissions} loading={loading} />
-      <CardSpacer />
+      <AboutCard margin={6} aboutApp={data?.aboutApp} loading={loading} />
+      <PermissionsCard
+        appId={data.id}
+        margin={6}
+        permissions={data?.permissions}
+        loading={loading}
+      />
       <DataPrivacyCard
+        margin={6}
         dataPrivacyUrl={data?.dataPrivacyUrl}
         loading={loading}
       />
-      <CardSpacer />
-    </>
+    </ErrorBoundary>
   );
 };
 
 AppDetailsPage.displayName = "AppDetailsPage";
-export default AppDetailsPage;

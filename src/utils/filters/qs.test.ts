@@ -7,7 +7,7 @@ describe("Filters: preapreQS", () => {
     );
     expect(qs).toEqual({
       activeTab: "1",
-      paresedQs: {
+      parsedQs: {
         category: "1",
         channel: "usa",
       },

@@ -149,7 +149,7 @@ export function GraphiQL({
       variables={variables}
     >
       <GraphiQLInterface
-        showPersistHeadersSettings={shouldPersistHeaders !== false}
+        showPersistHeadersSettings={shouldPersistHeaders}
         {...props}
       />
     </GraphiQLProvider>

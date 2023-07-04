@@ -1,47 +1,53 @@
-// @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
 import ExternalLink from "@dashboard/components/ExternalLink";
 import Skeleton from "@dashboard/components/Skeleton";
-import { Card, CardContent } from "@material-ui/core";
+import { Box, BoxProps, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
-import { useStyles } from "./styles";
 
-interface DataPrivacyCardProps {
+type DataPrivacyCardProps = {
   dataPrivacyUrl?: string | null;
   loading: boolean;
-}
+} & BoxProps;
 
-const DataPrivacyCard: React.FC<DataPrivacyCardProps> = ({
+export const DataPrivacyCard: React.FC<DataPrivacyCardProps> = ({
   dataPrivacyUrl,
   loading,
+  ...boxProps
 }) => {
-  const classes = useStyles();
   const intl = useIntl();
 
   if (!dataPrivacyUrl && !loading) {
     return null;
   }
 
+  const renderContent = () => {
+    if (loading) {
+      return <Skeleton />;
+    }
+
+    if (dataPrivacyUrl) {
+      return (
+        <ExternalLink href={dataPrivacyUrl} target="_blank">
+          <FormattedMessage {...messages.dataPrivacyDescription} />
+        </ExternalLink>
+      );
+    }
+
+    if (!dataPrivacyUrl) {
+      return <Text>{intl.formatMessage(messages.noDataPrivacyPage)}</Text>;
+    }
+
+    throw new Error('Leaking "if" statement, should never happen');
+  };
+
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(messages.dataPrivacyTitle)} />
-      <CardContent>
-        {!loading ? (
-          <ExternalLink
-            className={classes.linkContainer}
-            href={dataPrivacyUrl}
-            target="_blank"
-          >
-            <FormattedMessage {...messages.dataPrivacyDescription} />
-          </ExternalLink>
-        ) : (
-          <Skeleton />
-        )}
-      </CardContent>
-    </Card>
+    <Box {...boxProps}>
+      <Text variant={"heading"} marginBottom={4} as={"h2"}>
+        {intl.formatMessage(messages.dataPrivacyTitle)}
+      </Text>
+      <Box>{renderContent()}</Box>
+    </Box>
   );
 };
-export default DataPrivacyCard;

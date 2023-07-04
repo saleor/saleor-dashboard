@@ -130,8 +130,6 @@ export function useAuthProvider({
         navigate("/");
       }
     }
-
-    return;
   };
 
   const handleLogin = async (email: string, password: string) => {

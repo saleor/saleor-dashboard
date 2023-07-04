@@ -1,2 +1,2 @@
-export * from "../makeQuery";
 export * from "../makeMutation";
+export * from "../makeQuery";
