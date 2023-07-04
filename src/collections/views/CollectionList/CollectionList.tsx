@@ -9,6 +9,7 @@ import {
   useCollectionListQuery,
 } from "@dashboard/graphql";
 import useBulkActions from "@dashboard/hooks/useBulkActions";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -17,6 +18,7 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
+import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { commonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
@@ -26,6 +28,7 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
+import isEqual from "lodash/isEqual";
 import React, { useCallback, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
@@ -36,15 +39,12 @@ import {
   CollectionListUrlQueryParams,
 } from "../../urls";
 import {
-  storageUtils,
   getFilterOpts,
   getFilterQueryParam,
   getFilterVariables,
+  storageUtils,
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
-import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
-import isEqual from "lodash/isEqual";
-import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 
 interface CollectionListProps {
   params: CollectionListUrlQueryParams;
@@ -70,6 +70,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
       getFilterQueryParam,
       navigate,
       params,
+      keepActiveTab: true,
     });
 
   const { availableChannels } = useAppChannel(false);
