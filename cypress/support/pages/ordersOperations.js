@@ -60,6 +60,11 @@ export function deleteProductFromGridTableOnIndex(trIndex = 0) {
     .click()
     .wait("@OrderLineDelete");
 }
+
+export function openVariantDetailsOptions(variantIndex = 1) {
+  return cy.get(BUTTON_SELECTORS.showMoreButton).eq(variantIndex).click();
+}
+
 export function addNewProductToOrder(productIndex = 0, variantIndex = 0) {
   cy.get(DRAFT_ORDER_SELECTORS.addProducts).click();
   return cy

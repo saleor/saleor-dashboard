@@ -10,6 +10,7 @@ export const ORDERS_SELECTORS = {
   refundButton: '[data-test-id="refund-button"]',
   fulfillMenuButton: '[data-test-id="fulfill-menu"]',
   priceCellFirstRowOrderDetails: "[id='glide-cell-5-0']",
+  productNameOrderDetailsRow: "'[id='glide-cell-0-0']'",
   productNameSecondRowOrderDetails: "[id='glide-cell-1-1']",
   quantityCellFirstRowOrderDetails: "[id='glide-cell-4-0']",
   gridClip: "[class='clip-region']",
@@ -24,6 +25,8 @@ export const ORDERS_SELECTORS = {
   grantRefundButton: '[data-test-id="grantRefundButton"]',
   transactionReferenceInput: '[data-test-id="transaction-reference-input"]',
   orderTransactionsList: '[data-test-id="orderTransactionsList"]',
+  openProductDetailsButton: '[data-test-id="open-product-details"]',
+  rowActionButton: '[data-test-id="row-action-button"]',
   captureManualTransactionButton:
     '[data-test-id="captureManualTransactionButton"]',
 };

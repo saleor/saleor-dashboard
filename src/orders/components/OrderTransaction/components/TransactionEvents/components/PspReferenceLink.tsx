@@ -26,7 +26,7 @@ export const PspReferenceLink: React.FC<PspRerefenceLinkProps> = ({
       <a
         href={href}
         target="_blank"
-        rel="noopener noreferer"
+        rel="noopener noreferrer"
         className={classes.link}
       >
         {children}

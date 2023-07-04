@@ -7,7 +7,10 @@ import { createCheckout } from "../../../support/api/requests/Checkout";
 import { updateSale } from "../../../support/api/requests/Discounts/Sales";
 import { createVariant } from "../../../support/api/requests/Product";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import { createSaleInChannel } from "../../../support/api/utils/discounts/salesUtils";
+import {
+  createSaleInChannel,
+  getVariantWithSaleStatus,
+} from "../../../support/api/utils/discounts/salesUtils";
 import * as productsUtils from "../../../support/api/utils/products/productsUtils";
 import { createShipping } from "../../../support/api/utils/shippingUtils";
 import {
@@ -95,6 +98,8 @@ describe("Sales discounts for variant", () => {
     { tags: ["@sales", "@allEnv", "@stable"] },
     () => {
       const saleName = `${startsWith}${faker.datatype.number()}`;
+      const variantSku = `${startsWith}${faker.datatype.number()}`;
+      const productSku = `${startsWith}${faker.datatype.number()}`;
       const productName = faker.commerce.product();
       const productSlug = productName + faker.datatype.number();
       const productPriceOnSale = productPrice - discountValue;
@@ -113,13 +118,14 @@ describe("Sales discounts for variant", () => {
           ...productData,
           name: productName,
           slug: productSlug,
+          sku: productSku,
         })
         .then(({ product, variantsList }) => {
           variantNotOnSale = variantsList;
 
           createVariant({
             productId: product.id,
-            sku: saleName,
+            sku: variantSku,
             attributeId: productData.attributeId,
             attributeName: "value2",
             warehouseId: warehouse.id,
@@ -131,6 +137,11 @@ describe("Sales discounts for variant", () => {
         })
         .then(variantsList => {
           updateSale({ saleId: sale.id, variants: variantsList });
+          getVariantWithSaleStatus({
+            channelSlug: defaultChannel.slug,
+            variantId: variantsList[0].id,
+            onSaleStatus: true,
+          });
           createCheckout({
             channelSlug: defaultChannel.slug,
             email: "example@example.com",

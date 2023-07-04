@@ -1,48 +1,92 @@
-// @ts-strict-ignore
-import CardTitle from "@dashboard/components/CardTitle";
+import { AppPermissionsDialog } from "@dashboard/apps/components/AppPermissionsDialog";
 import Skeleton from "@dashboard/components/Skeleton";
-import { AppQuery } from "@dashboard/graphql";
-import { Card, CardContent, Typography } from "@material-ui/core";
-import React from "react";
+import { PermissionEnum } from "@dashboard/graphql";
+import { Box, BoxProps, Button, Text } from "@saleor/macaw-ui/next";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import messages from "./messages";
-import { useStyles } from "./styles";
 
-interface PermissionsCardProps {
-  permissions?: AppQuery["app"]["permissions"];
+type PermissionsCardProps = {
+  permissions: Array<{
+    name: string;
+    code: PermissionEnum;
+  }> | null;
   loading: boolean;
-}
+  appId: string; // todo wrap with App Context
+} & BoxProps;
 
-const PermissionsCard: React.FC<PermissionsCardProps> = ({
+export const PermissionsCard: React.FC<PermissionsCardProps> = ({
   permissions,
   loading,
+  appId,
+  ...boxProps
 }) => {
-  const classes = useStyles();
+  const [editPermissionDialogOpen, setEditPermissionDialogOpen] =
+    useState(false);
   const intl = useIntl();
 
+  const editPermissionsButton = (
+    <Button
+      variant={"secondary"}
+      onClick={() => setEditPermissionDialogOpen(true)}
+    >
+      {intl.formatMessage(messages.editPermissionsButton)}
+    </Button>
+  );
+
+  const renderContent = () => {
+    if (loading) {
+      return <Skeleton />;
+    }
+
+    if (permissions && permissions.length === 0) {
+      return (
+        <>
+          <Text marginBottom={4} as={"p"}>
+            {intl.formatMessage(messages.appNoPermissions)}
+          </Text>
+          {editPermissionsButton}
+        </>
+      );
+    }
+
+    if (permissions && permissions.length > 0) {
+      return (
+        <>
+          <Text as={"p"} marginBottom={4}>
+            <FormattedMessage {...messages.appPermissionsDescription} />
+          </Text>
+          <Box as={"ul"}>
+            {permissions?.map(perm => (
+              <Box as={"li"} paddingX={4} paddingY={2} key={perm.code}>
+                <Text>{perm.name}</Text>
+              </Box>
+            ))}
+          </Box>
+          {editPermissionsButton}
+        </>
+      );
+    }
+
+    throw new Error('Leaking "if" statement, should never happen');
+  };
+
   return (
-    <Card>
-      <CardTitle title={intl.formatMessage(messages.appPermissionsTitle)} />
-      <CardContent>
-        {!loading ? (
-          <>
-            <Typography>
-              <FormattedMessage {...messages.appPermissionsDescription} />
-            </Typography>
-            {!!permissions?.length && (
-              <ul className={classes.permissionsContainer}>
-                {permissions?.map(perm => (
-                  <li key={perm.code}>{perm.name}</li>
-                ))}
-              </ul>
-            )}
-          </>
-        ) : (
-          <Skeleton />
-        )}
-      </CardContent>
-    </Card>
+    <>
+      {editPermissionDialogOpen && (
+        <AppPermissionsDialog
+          appId={appId}
+          onClose={() => setEditPermissionDialogOpen(false)}
+          assignedPermissions={permissions?.map(p => p.code) ?? []}
+        />
+      )}
+      <Box {...boxProps}>
+        <Text variant={"heading"} marginBottom={4} as={"h2"}>
+          {intl.formatMessage(messages.appPermissionsTitle)}
+        </Text>
+        <Box>{renderContent()}</Box>
+      </Box>
+    </>
   );
 };
-export default PermissionsCard;

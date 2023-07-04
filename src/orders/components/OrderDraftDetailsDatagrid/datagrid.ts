@@ -156,7 +156,7 @@ export const useGetCellContent = ({
       case "sku":
         return readonlyTextCell(rowData?.productSku ?? "", false);
       case "variantName":
-        return readonlyTextCell(rowData.variant.name ?? "", false);
+        return readonlyTextCell(rowData?.variant?.name ?? "", false);
       case "total":
         return moneyCell(
           rowData.totalPrice.gross.amount,

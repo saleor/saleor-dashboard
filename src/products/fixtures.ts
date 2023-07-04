@@ -2,6 +2,7 @@
 import { channelsList } from "@dashboard/channels/fixtures";
 import {
   AttributeInputTypeEnum,
+  GridAttributesQuery,
   ProductFragment,
   ProductListQuery,
   ProductMediaType,
@@ -3847,3 +3848,152 @@ export const productTypesList: Array<
     name: "Mushroom",
   },
 ];
+
+export const gridAttributesResult: GridAttributesQuery = {
+  __typename: "Query",
+  availableAttributes: {
+    __typename: "AttributeCountableConnection",
+    edges: [
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjIx",
+          name: "ABV",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjI3",
+          name: "Author",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjE1",
+          name: "Bottle Size",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjE4",
+          name: "Bucket Size",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjE0",
+          name: "Color",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjIy",
+          name: "Cushion Size",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjY3Nw==",
+          name: "CyCreateProduct-33370",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjY3Ng==",
+          name: "CyCreateProduct-66614",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjY3OQ==",
+          name: "CyCreateVariants-18905",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjY4MA==",
+          name: "CyCreateVariants-9040",
+        },
+      },
+    ],
+    pageInfo: {
+      __typename: "PageInfo",
+      endCursor: "WyIwIiwgImN5Y3JlYXRldmFyaWFudHMtOTA0MCJd",
+      hasNextPage: true,
+      hasPreviousPage: false,
+      startCursor: "WyIwIiwgImFidiJd",
+    },
+  },
+  selectedAttributes: {
+    __typename: "AttributeCountableConnection",
+    edges: [
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjIx",
+          name: "ABV",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjI3",
+          name: "Author",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjE1",
+          name: "Bottle Size",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjMw",
+          name: "Details",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjI1",
+          name: "Format",
+        },
+      },
+      {
+        __typename: "AttributeCountableEdge",
+        node: {
+          __typename: "Attribute",
+          id: "QXR0cmlidXRlOjI2",
+          name: "Publisher",
+        },
+      },
+    ],
+  },
+};

@@ -3,17 +3,17 @@ import { parse } from "qs";
 const paramsToRemove = ["activeTab", "action", "sort", "asc"];
 
 export const prepareQs = (searchQuery: string) => {
-  const paresedQs = parse(
+  const parsedQs = parse(
     searchQuery.startsWith("?") ? searchQuery.slice(1) : searchQuery,
   );
-  const activeTab = paresedQs.activeTab;
+  const activeTab = parsedQs.activeTab;
 
   paramsToRemove.forEach(param => {
-    delete paresedQs[param];
+    delete parsedQs[param];
   });
 
   return {
     activeTab,
-    paresedQs,
+    parsedQs,
   };
 };
