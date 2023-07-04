@@ -66,8 +66,8 @@ export interface OrderShippingMethodEditDialogProps {
   open: boolean;
   shippingMethod: string;
   shippingMethods?: OrderDetailsFragment["shippingMethods"];
-  onClose();
-  onSubmit?(data: FormData);
+  onClose: () => any;
+  onSubmit?: (data: FormData) => any;
 }
 
 const OrderShippingMethodEditDialog: React.FC<

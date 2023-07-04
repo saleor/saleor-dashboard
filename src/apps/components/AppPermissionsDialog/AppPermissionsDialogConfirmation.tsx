@@ -10,8 +10,8 @@ const messages = AppPermissionsDialogMessages.confirmation;
 interface Props {
   removedPermissions: PermissionEnum[];
   addedPermissions: PermissionEnum[];
-  onBack(): void;
-  onApprove(): void;
+  onBack: () => void;
+  onApprove: () => void;
 }
 
 export const AppPermissionsDialogConfirmation = ({

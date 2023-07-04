@@ -25,7 +25,7 @@ import { useStyles } from "./styles";
 export interface OrderCustomerChangeDialogProps {
   open: boolean;
   onConfirm: (data: OrderCustomerChangeData) => void;
-  onClose();
+  onClose: () => any;
 }
 
 const OrderCustomerChangeDialog: React.FC<
