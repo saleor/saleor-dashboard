@@ -1,15 +1,15 @@
-// @ts-strict-ignore
 import { CollectionListUrlSortField } from "@dashboard/collections/urls";
+import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
+import { getChannelAvailabilityLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
+import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
+import { CollectionListQuery } from "@dashboard/graphql";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
+import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
-import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
-import { CollectionListQuery } from "@dashboard/graphql";
-import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 
 export const collectionListStaticColumnsAdapter = (
   intl: IntlShape,
@@ -41,10 +41,12 @@ export const createGetCellContent =
     collections,
     columns,
     intl,
+    selectedChannelId,
   }: {
     collections: RelayToFlat<CollectionListQuery["collections"]>;
     columns: AvailableColumn[];
     intl: IntlShape;
+    selectedChannelId: string;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData = collections[row];
@@ -54,12 +56,22 @@ export const createGetCellContent =
       return readonlyTextCell("");
     }
 
+    const channel = rowData?.channelListings?.find(
+      listing => listing.channel.id === selectedChannelId,
+    );
+
     switch (columnId) {
       case "name":
         return readonlyTextCell(rowData.name);
       case "productCount":
         return readonlyTextCell(rowData.products.totalCount.toString());
       case "available":
+        if (!!channel) {
+          return readonlyTextCell(
+            intl.formatMessage(getChannelAvailabilityLabel(channel)),
+          );
+        }
+
         return readonlyTextCell(
           rowData?.channelListings?.length
             ? intl.formatMessage(messages.dropdownLabel, {

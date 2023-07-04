@@ -1,5 +1,5 @@
-// @ts-strict-ignore
 import { CollectionListUrlSortField } from "@dashboard/collections/urls";
+import { canBeSorted } from "@dashboard/collections/views/CollectionList/sort";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
 import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
@@ -52,6 +52,7 @@ export const CollectionListDatagrid = ({
   onSelectCollectionIds,
   onSort,
   filterDependency,
+  selectedChannelId,
 }: CollectionListDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
@@ -93,7 +94,8 @@ export const CollectionListDatagrid = ({
     (col: number) => {
       const columnName = collectionListStaticColumns[col]
         .id as CollectionListUrlSortField;
-      if (columnName !== CollectionListUrlSortField.available) {
+
+      if (canBeSorted(columnName, !!selectedChannelId)) {
         onSort(columnName);
       }
     },
@@ -105,7 +107,7 @@ export const CollectionListDatagrid = ({
       const columnName = collectionListStaticColumns[col]
         .id as CollectionListUrlSortField;
 
-      if (columnName !== CollectionListUrlSortField.available) {
+      if (canBeSorted(columnName, !!selectedChannelId)) {
         return "";
       }
 
@@ -136,6 +138,7 @@ export const CollectionListDatagrid = ({
       collections,
       intl,
       columns: visibleColumns,
+      selectedChannelId,
     }),
     [collections, intl, visibleColumns],
   );
