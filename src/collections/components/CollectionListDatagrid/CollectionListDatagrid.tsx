@@ -8,6 +8,7 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
+import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { CollectionListQuery } from "@dashboard/graphql";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
@@ -50,6 +51,7 @@ export const CollectionListDatagrid = ({
   columnPickerSettings,
   onSelectCollectionIds,
   onSort,
+  filterDependency,
 }: CollectionListDatagridProps) => {
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
@@ -98,6 +100,23 @@ export const CollectionListDatagrid = ({
     [collectionListStaticColumns, onSort],
   );
 
+  const handleGetColumnTooltipContent = useCallback(
+    (col: number): string => {
+      const columnName = collectionListStaticColumns[col]
+        .id as CollectionListUrlSortField;
+
+      if (columnName !== CollectionListUrlSortField.available) {
+        return "";
+      }
+
+      // Sortable but requrie selected channel
+      return intl.formatMessage(commonTooltipMessages.noFilterSelected, {
+        filterName: filterDependency.label,
+      });
+    },
+    [filterDependency.label, intl],
+  );
+
   const {
     handlers,
     visibleColumns,
@@ -143,6 +162,7 @@ export const CollectionListDatagrid = ({
         onRowClick={handleRowClick}
         onHeaderClicked={handleHeaderClick}
         rowAnchor={handleRowAnchor}
+        getColumnTooltipContent={handleGetColumnTooltipContent}
         recentlyAddedColumn={recentlyAddedColumn}
         renderColumnPicker={() => (
           <ColumnPicker
