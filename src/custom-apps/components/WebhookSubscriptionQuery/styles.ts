@@ -16,6 +16,12 @@ export const useStyles = makeStyles(
     cardTitle: {
       paddingLeft: 0,
     },
+    error: {
+      color: theme.palette.error.main,
+      "& .MuiTypography-colorTextSecondary": {
+        color: theme.palette.error.main,
+      }
+    }
   }),
   { name: "WebhookSubscriptionQuery" },
 );
