@@ -75,7 +75,7 @@ export const AppPermissionsDialogPermissionPicker = ({
           })}
         </List>
       </Box>
-      <Box display={"flex"} justifyContent={"flex-end"} gap={2}>
+      <Box display={"flex"} justifyContent={"flex-end"} gap={2} marginTop={2}>
         <Button onClick={onClose} type={"button"} variant={"tertiary"}>
           {intl.formatMessage(messages.closeButton)}
         </Button>
