@@ -10,10 +10,5 @@
     "graphql": "^16.6.0",
     "graphql-request": "^5.0.0",
     "node-fetch": "^2.6.7"
-  },
-  "scripts": {
-    "testmo:run:create": "testmo automation:run:create",
-    "testmo:submit:thread": "testmo automation:run:submit-thread",
-    "testmo:run:complete": "testmo automation:run:complete"
   }
 }
