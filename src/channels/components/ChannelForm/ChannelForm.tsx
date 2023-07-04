@@ -120,11 +120,14 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
           />
         </DashboardCard.Content>
       </DashboardCard>
-      <DashboardCard>
-        <DashboardCard.Title>
+      <Box display="grid" __gridTemplateColumns="2fr 1fr" rowGap={2}>
+        <Text variant="heading" margin={6}>
           <FormattedMessage {...messages.channelSettings} />
-        </DashboardCard.Title>
-        <DashboardCard.Content>
+        </Text>
+        <Text variant="heading" margin={6}>
+          <FormattedMessage {...messages.orderExpiration} />
+        </Text>
+        <Box paddingX={6}>
           {currencyCodes ? (
             <SingleAutocompleteSelectField
               data-test-id="channel-currency-select-input"
@@ -155,7 +158,11 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               <Text>{data.currencyCode}</Text>
             </Box>
           )}
-          <FormSpacer />
+        </Box>
+        <Text variant="caption" paddingX={6}>
+          <FormattedMessage {...messages.orderExpirationDescription} />
+        </Text>
+        <Box paddingX={6}>
           <SingleAutocompleteSelectField
             data-test-id="country-select-input"
             error={!!formErrors.defaultCountry}
@@ -176,71 +183,8 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             value={data.defaultCountry}
             onChange={onDefaultCountryChange}
           />
-          <FormSpacer />
-          <Box display="flex" gap={1.5} alignItems="center">
-            <ControlledSwitch
-              data-test-id="order-settings-mark-as-paid"
-              disabled={disabled}
-              checked={
-                data.markAsPaidStrategy ===
-                MarkAsPaidStrategyEnum.TRANSACTION_FLOW
-              }
-              onChange={onMarkAsPaidStrategyChange}
-              name="markAsPaidStrategy"
-              label={
-                <span>
-                  <FormattedMessage
-                    defaultMessage='"Mark as paid" feature creates a'
-                    id="MDOw8D"
-                  />{" "}
-                  <Link
-                    href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
-                    target="_blank"
-                    rel="noopener noreferer"
-                  >
-                    <FormattedMessage
-                      defaultMessage="Transaction"
-                      id="1+ROfp"
-                    />
-                  </Link>{" "}
-                  <FormattedMessage
-                    defaultMessage="- used by Payment Apps"
-                    id="Fqe4aB"
-                  />
-                </span>
-              }
-              secondLabel={
-                <span>
-                  <FormattedMessage
-                    defaultMessage="If left unchecked it creates a"
-                    id="hHv0ih"
-                  />{" "}
-                  <Link
-                    href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
-                    target="_blank"
-                    rel="noopener noreferer"
-                  >
-                    <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
-                  </Link>{" "}
-                  <FormattedMessage
-                    defaultMessage="- used by Payment Plugins"
-                    id="50lR2F"
-                  />
-                </span>
-              }
-            />
-            <PreviewPill />
-          </Box>
-        </DashboardCard.Content>
-      </DashboardCard>
-      <DashboardCard>
-        <DashboardCard.Title>
-          <FormattedMessage {...messages.orderExpiration} />
-        </DashboardCard.Title>
-        <DashboardCard.Content>
-          <Text variant="caption" marginBottom={12}>
-            <FormattedMessage {...messages.orderExpirationDescription} />
-          </Text>
+        </Box>
+        <Box paddingX={6}>
           <Input
             name="deleteExpiredOrdersAfter"
             value={data.deleteExpiredOrdersAfter}
@@ -251,8 +195,59 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             min={0}
             max={120}
           />
-        </DashboardCard.Content>
-      </DashboardCard>
+        </Box>
+        <Box display="flex" gap={1.5} alignItems="center" paddingX={6}>
+          <ControlledSwitch
+            data-test-id="order-settings-mark-as-paid"
+            disabled={disabled}
+            checked={
+              data.markAsPaidStrategy ===
+              MarkAsPaidStrategyEnum.TRANSACTION_FLOW
+            }
+            onChange={onMarkAsPaidStrategyChange}
+            name="markAsPaidStrategy"
+            label={
+              <span>
+                <FormattedMessage
+                  defaultMessage='"Mark as paid" feature creates a'
+                  id="MDOw8D"
+                />{" "}
+                <Link
+                  href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
+                  target="_blank"
+                  rel="noopener noreferer"
+                >
+                  <FormattedMessage defaultMessage="Transaction" id="1+ROfp" />
+                </Link>{" "}
+                <FormattedMessage
+                  defaultMessage="- used by Payment Apps"
+                  id="Fqe4aB"
+                />
+              </span>
+            }
+            secondLabel={
+              <span>
+                <FormattedMessage
+                  defaultMessage="If left unchecked it creates a"
+                  id="hHv0ih"
+                />{" "}
+                <Link
+                  href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
+                  target="_blank"
+                  rel="noopener noreferer"
+                >
+                  <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
+                </Link>{" "}
+                <FormattedMessage
+                  defaultMessage="- used by Payment Plugins"
+                  id="50lR2F"
+                />
+              </span>
+            }
+          />
+          <PreviewPill />
+        </Box>
+      </Box>
     </>
   );
 };
