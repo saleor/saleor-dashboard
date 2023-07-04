@@ -16,6 +16,7 @@ export const urlList = {
   navigation: "navigation/",
   orders: "orders/",
   pages: "pages/",
+  addPageType: "pages/add?page-type-id=",
   pageTypes: "page-types/",
   permissionsGroups: "permission-groups/",
   plugins: "plugins/",
