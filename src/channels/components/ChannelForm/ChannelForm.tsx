@@ -194,6 +194,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             onChange={onChange}
             min={0}
             max={120}
+            __height={12.5}
           />
         </Box>
         <Box display="flex" gap={1.5} alignItems="center" paddingX={6}>
