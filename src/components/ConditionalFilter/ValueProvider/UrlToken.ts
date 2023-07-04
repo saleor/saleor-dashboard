@@ -13,6 +13,7 @@ export class UrlEntry {
   constructor(key: string, value: string | string[]) {
     this[key] = value;
   }
+
 }
 
 export class UrlToken {

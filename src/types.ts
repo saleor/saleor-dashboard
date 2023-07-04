@@ -107,10 +107,29 @@ export interface FilterPageProps<TKeys extends string, TOpts extends {}>
   filterOpts: TOpts;
 }
 
+export interface FilterPagePropsWithPresets<
+  TKeys extends string,
+  TOpts extends {},
+> extends FilterProps<TKeys>,
+    SearchPageProps,
+    FilterPresetsProps {
+  filterOpts: TOpts;
+}
+
 export interface FilterProps<TKeys extends string> {
   currencySymbol?: string;
   onFilterChange: (filter: IFilter<TKeys>) => void;
   onFilterAttributeFocus?: (id?: string) => void;
+}
+
+export interface FilterPresetsProps {
+  selectedFilterPreset: number;
+  filterPresets: string[];
+  onFilterPresetsAll: () => void;
+  onFilterPresetChange: (id: number) => void;
+  onFilterPresetUpdate: (name: string) => void;
+  onFilterPresetDelete: (id: number) => void;
+  onFilterPresetPresetSave: () => void;
 }
 
 export interface TabPageProps {

@@ -1,15 +1,13 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
+import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import {
   CategoryBulkDeleteMutation,
   useCategoryBulkDeleteMutation,
   useRootCategoriesQuery,
 } from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { usePaginationReset } from "@dashboard/hooks/usePaginationReset";
@@ -17,6 +15,7 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
+import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
@@ -24,8 +23,8 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React from "react";
+import isEqual from "lodash/isEqual";
+import React, { useCallback } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CategoryListPage } from "../../components/CategoryListPage/CategoryListPage";
@@ -35,14 +34,7 @@ import {
   CategoryListUrlFilters,
   CategoryListUrlQueryParams,
 } from "../../urls";
-import {
-  deleteFilterTab,
-  getActiveFilters,
-  getFiltersCurrentTab,
-  getFilterTabs,
-  getFilterVariables,
-  saveFilterTab,
-} from "./filter";
+import { getActiveFilters, getFilterVariables, storageUtils } from "./filter";
 import { getSortQueryVariables } from "./sort";
 
 interface CategoryListProps {
@@ -51,18 +43,44 @@ interface CategoryListProps {
 
 export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
   const navigate = useNavigator();
+  const intl = useIntl();
 
-  const { isSelected, listElements, toggle, toggleAll, reset } = useBulkActions(
-    params.ids,
-  );
   const { updateListSettings, settings } = useListSettings(
     ListViews.CATEGORY_LIST,
   );
 
+  const handleSort = createSortHandler(navigate, categoryListUrl, params);
+
+  const {
+    selectedRowIds,
+    setSelectedRowIds,
+    clearRowSelection,
+    setClearDatagridRowSelectionCallback,
+  } = useRowSelection(params);
+
+  const {
+    hasPresetsChange,
+    onPresetChange,
+    onPresetDelete,
+    onPresetSave,
+    onPresetUpdate,
+    presetIdToDelete,
+    presets,
+    selectedPreset,
+    setPresetIdToDelete,
+  } = useFilterPresets({
+    params,
+    storageUtils,
+    getUrl: categoryListUrl,
+    reset: clearRowSelection,
+  });
+
+  const [openModal, closeModal] = createDialogActionHandlers<
+    CategoryListUrlDialog,
+    CategoryListUrlQueryParams
+  >(navigate, categoryListUrl, params);
+
   usePaginationReset(categoryListUrl, params, settings.rowNumber);
-
-  const intl = useIntl();
-
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
     () => ({
@@ -70,111 +88,98 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
       filter: getFilterVariables(params),
       sort: getSortQueryVariables(params),
     }),
-    [params, settings.rowNumber],
+    [paginationState, params],
   );
+
   const { data, loading, refetch } = useRootCategoriesQuery({
     displayLoader: true,
     variables: queryVariables,
   });
+  const categories = mapEdgesToItems(data?.categories);
 
-  const tabs = getFilterTabs();
-
-  const currentTab = getFiltersCurrentTab(params, tabs);
+  const paginationValues = usePaginator({
+    pageInfo: data?.categories?.pageInfo,
+    paginationState,
+    queryString: params,
+  });
 
   const changeFilterField = (filter: CategoryListUrlFilters) => {
-    reset();
+    clearRowSelection();
     navigate(
       categoryListUrl({
         ...getActiveFilters(params),
         ...filter,
-        activeTab: undefined,
+        activeTab: !filter.query?.length ? undefined : params.activeTab,
       }),
     );
   };
-
-  const [openModal, closeModal] = createDialogActionHandlers<
-    CategoryListUrlDialog,
-    CategoryListUrlQueryParams
-  >(navigate, categoryListUrl, params);
-
-  const handleTabChange = (tab: number) => {
-    reset();
-    navigate(
-      categoryListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data,
-      }),
-    );
-  };
-
-  const handleTabDelete = () => {
-    deleteFilterTab(currentTab);
-    reset();
-    navigate(categoryListUrl());
-  };
-
-  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
-    saveFilterTab(data.name, getActiveFilters(params));
-    handleTabChange(tabs.length + 1);
-  };
-
-  const paginationValues = usePaginator({
-    pageInfo: maybe(() => data.categories.pageInfo),
-    paginationState,
-    queryString: params,
-  });
 
   const handleCategoryBulkDelete = (data: CategoryBulkDeleteMutation) => {
     if (data.categoryBulkDelete.errors.length === 0) {
       navigate(categoryListUrl(), { replace: true });
       refetch();
-      reset();
+      clearRowSelection();
     }
   };
+
+  const handleSetSelectedCategoryIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!categories) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => categories[row].id);
+      const haveSaveValues = isEqual(rowsIds, selectedRowIds);
+
+      if (!haveSaveValues) {
+        setSelectedRowIds(rowsIds);
+      }
+
+      setClearDatagridRowSelectionCallback(clearSelection);
+    },
+    [
+      categories,
+      setClearDatagridRowSelectionCallback,
+      selectedRowIds,
+      setSelectedRowIds,
+    ],
+  );
 
   const [categoryBulkDelete, categoryBulkDeleteOpts] =
     useCategoryBulkDeleteMutation({
       onCompleted: handleCategoryBulkDelete,
     });
 
-  const handleSort = createSortHandler(navigate, categoryListUrl, params);
-
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <CategoryListPage
+        hasPresetsChanged={hasPresetsChange()}
         categories={mapEdgesToItems(data?.categories)}
-        currentTab={currentTab}
+        currentTab={selectedPreset}
         initialSearch={params.query || ""}
         onSearchChange={query => changeFilterField({ query })}
         onAll={() => navigate(categoryListUrl())}
-        onTabChange={handleTabChange}
-        onTabDelete={() => openModal("delete-search")}
+        onTabChange={onPresetChange}
+        onTabDelete={(tabIndex: number) => {
+          setPresetIdToDelete(tabIndex);
+          openModal("delete-search");
+        }}
+        onTabUpdate={onPresetUpdate}
         onTabSave={() => openModal("save-search")}
-        tabs={tabs.map(tab => tab.name)}
+        tabs={presets.map(tab => tab.name)}
         settings={settings}
         sort={getSortParams(params)}
         onSort={handleSort}
         disabled={loading}
-        onUpdateListSettings={updateListSettings}
-        isChecked={isSelected}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
-        toolbar={
-          <IconButton
-            variant="secondary"
-            color="primary"
-            data-test-id="delete-icon"
-            onClick={() =>
-              openModal("delete", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
+        onUpdateListSettings={(...props) => {
+          clearRowSelection();
+          updateListSettings(...props);
+        }}
+        selectedCategoriesIds={selectedRowIds}
+        onSelectCategoriesIds={handleSetSelectedCategoryIds}
+        onCategoriesDelete={() => openModal("delete")}
       />
+
       <ActionDialog
         confirmButtonState={categoryBulkDeleteOpts.status}
         onClose={() =>
@@ -189,7 +194,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
         onConfirm={() =>
           categoryBulkDelete({
             variables: {
-              ids: params.ids,
+              ids: selectedRowIds,
             },
           })
         }
@@ -220,18 +225,20 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
           />
         </DialogContentText>
       </ActionDialog>
+
       <SaveFilterTabDialog
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabSave}
+        onSubmit={onPresetSave}
       />
+
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+        onSubmit={onPresetDelete}
+        tabName={presets[presetIdToDelete - 1]?.name ?? "..."}
       />
     </PaginatorContext.Provider>
   );
