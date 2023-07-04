@@ -14,6 +14,7 @@ import DataEditor, {
   GridSelection,
   HeaderClickedEventArgs,
   Item,
+  Theme,
 } from "@glideapps/glide-data-grid";
 import { GetRowThemeCallback } from "@glideapps/glide-data-grid/dist/ts/data-grid/data-grid-render";
 import { Card, CardContent, CircularProgress } from "@material-ui/core";
@@ -104,6 +105,7 @@ export interface DatagridProps {
   columnSelect?: DataEditorProps["columnSelect"];
   showEmptyDatagrid?: boolean;
   rowAnchor?: (item: Item) => string;
+  actionButtonPosition?: "left" | "right";
   recentlyAddedColumn?: string; // Enables scroll to recently added column
 }
 
@@ -135,10 +137,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
   rowAnchor,
   hasRowHover = false,
   onRowSelectionChange,
+  actionButtonPosition = "left",
   recentlyAddedColumn,
   ...datagridProps
 }): ReactElement => {
-  const classes = useStyles();
+  const classes = useStyles({ actionButtonPosition });
   const { themeValues } = useTheme();
   const datagridTheme = useDatagridTheme(readonly, readonly);
   const editor = useRef<DataEditorRef | null>(null);
@@ -266,7 +269,9 @@ export const Datagrid: React.FC<DatagridProps> = ({
   const handleRowHover = useCallback(
     (args: GridMouseEventArgs) => {
       if (hasRowHover) {
-        setHoverRow(args.kind !== "cell" ? undefined : args.location[1]);
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const [_, row] = args.location;
+        setHoverRow(args.kind !== "cell" ? undefined : row);
       }
 
       // the code below is responsible for adding native <a> element when hovering over rows in the datagrid
@@ -330,12 +335,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
         return undefined;
       }
 
-      const overrideTheme = {
+      const overrideTheme: Partial<Theme> = {
         bgCell:
           themeValues.colors.background.interactiveNeutralSecondaryHovering,
         bgCellMedium:
           themeValues.colors.background.interactiveNeutralSecondaryHovering,
-        accentLight: undefined as string | undefined,
       };
 
       if (readonly) {
@@ -476,11 +480,13 @@ export const Datagrid: React.FC<DatagridProps> = ({
         <CardContent classes={{ root: classes.cardContentRoot }}>
           {rowsTotal > 0 || showEmptyDatagrid ? (
             <>
-              {selection?.rows && selection?.rows.length > 0 && (
-                <div className={classes.actionBtnBar}>
-                  {selectionActionsComponent}
-                </div>
-              )}
+              {selection?.rows &&
+                selection?.rows.length > 0 &&
+                selectionActionsComponent && (
+                  <div className={classes.actionBtnBar}>
+                    {selectionActionsComponent}
+                  </div>
+                )}
               <div className={classes.editorContainer}>
                 <Box
                   backgroundColor="plain"

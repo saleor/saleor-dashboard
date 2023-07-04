@@ -105,6 +105,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
     params,
     defaultSortField: DEFAULT_SORT_KEY,
     hasSortWithRank: true,
+    keepActiveTab: true,
   });
 
   const [openModal, closeModal] = createDialogActionHandlers<
