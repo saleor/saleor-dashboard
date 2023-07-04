@@ -1330,10 +1330,6 @@
     "context": "staff member status",
     "string": "Inactive"
   },
-  "7a1S4K": {
-    "context": "tab name",
-    "string": "All Drafts"
-  },
   "7dhhzL": {
     "context": "bulk issue gift cards dialog title",
     "string": "Bulk Issue Gift Cards"
@@ -2929,6 +2925,9 @@
     "context": "all authorized amount from transactions in order",
     "string": "Authorized"
   },
+  "IzECoP": {
+    "string": "Search draft orders..."
+  },
   "IzEVek": {
     "context": "bulk disable label",
     "string": "Deactivate"
@@ -3137,9 +3136,6 @@
   },
   "KHZlmi": {
     "string": "Discount Type"
-  },
-  "KIh25E": {
-    "string": "No draft orders found"
   },
   "KKQUMK": {
     "context": "edit menu item, header",
@@ -3485,9 +3481,6 @@
   },
   "NGc9kE": {
     "string": "Page type deleted"
-  },
-  "NJEe12": {
-    "string": "Search Draft"
   },
   "NJbzcP": {
     "context": "dialog header",
@@ -5102,6 +5095,9 @@
   "YI6Fhj": {
     "context": "no address is set in draft order",
     "string": "Not set"
+  },
+  "YJ2uRR": {
+    "string": "Bulk delete draft orders"
   },
   "YJ4TXc": {
     "context": "tab name",
@@ -7060,6 +7056,10 @@
   "nIrjSR": {
     "context": "section header",
     "string": "Ongoing Installations"
+  },
+  "nJ0tek": {
+    "context": "tab name",
+    "string": "All draft orders"
   },
   "nKjLjT": {
     "context": "error message",

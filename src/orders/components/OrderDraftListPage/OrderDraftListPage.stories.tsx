@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import {
   filterPageProps,
+  filterPresetsProps,
   limits,
   limitsReached,
   listActionsProps,
@@ -22,6 +23,7 @@ const props: OrderDraftListPageProps = {
   ...listActionsProps,
   ...pageListProps.default,
   ...searchPageProps,
+  ...filterPresetsProps,
   ...sortPageProps,
   ...tabPageProps,
   ...filterPageProps,
@@ -45,6 +47,10 @@ const props: OrderDraftListPageProps = {
     ...sortPageProps.sort,
     sort: OrderDraftListUrlSortField.number,
   },
+  onDraftOrdersDelete: () => undefined,
+  onSelectOrderDraftIds: () => undefined,
+  selectedOrderDraftIds: [],
+  hasPresetsChanged: () => false,
 };
 
 const meta: Meta<typeof OrderDraftListPage> = {
