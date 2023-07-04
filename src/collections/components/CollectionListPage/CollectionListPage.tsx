@@ -4,13 +4,14 @@ import {
   CollectionListUrlSortField,
   collectionUrl,
 } from "@dashboard/collections/urls";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { getByName } from "@dashboard/components/Filter/utils";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import { CollectionListQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { Button } from "@saleor/macaw-ui/next";
 import {
   FilterPageProps,
   PageListProps,
@@ -19,19 +20,17 @@ import {
   SortPage,
 } from "@dashboard/types";
 import { Card } from "@material-ui/core";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CollectionListDatagrid } from "../CollectionListDatagrid";
+import { CollectionListDeleteButton } from "../CollectionListDeleteButton";
 import {
   CollectionFilterKeys,
   CollectionListFilterOpts,
   createFilterStructure,
 } from "./filters";
-import { Box, ChevronRightIcon } from "@saleor/macaw-ui/next";
-import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
-import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
-import { CollectionListDeleteButton } from "../CollectionListDeleteButton";
 export interface CollectionListPageProps
   extends PageListProps,
     SearchPageProps,
@@ -120,7 +119,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
             <Button
               disabled={disabled}
               variant="primary"
-              href={collectionAddUrl()}
+              onClick={() => navigate(collectionAddUrl())}
               data-test-id="create-collection"
             >
               <FormattedMessage
@@ -142,7 +141,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           onSearchChange={onSearchChange}
           filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
-            id: "kIvvax",
+            id: "YIWrkh",
             defaultMessage: "Search Collection...",
           })}
           actions={
@@ -151,7 +150,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
                 <CollectionListDeleteButton onClick={onCollectionsDelete}>
                   <FormattedMessage
                     defaultMessage="Bulk collections delete"
-                    id="jrBxCQ"
+                    id="hMPyP0"
                   />
                 </CollectionListDeleteButton>
               )}
