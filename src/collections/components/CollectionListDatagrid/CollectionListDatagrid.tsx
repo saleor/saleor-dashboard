@@ -12,7 +12,7 @@ import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHea
 import { CollectionListQuery } from "@dashboard/graphql";
 import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, useTheme } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -55,6 +55,7 @@ export const CollectionListDatagrid = ({
   selectedChannelId,
 }: CollectionListDatagridProps) => {
   const intl = useIntl();
+  const { theme: currentTheme, themeValues } = useTheme();
   const datagrid = useDatagridChangeState();
   const collectionListStaticColumns = useMemo(
     () => collectionListStaticColumnsAdapter(intl, sort),
@@ -116,7 +117,7 @@ export const CollectionListDatagrid = ({
         filterName: filterDependency.label,
       });
     },
-    [filterDependency.label, intl],
+    [filterDependency.label, intl, selectedChannelId],
   );
 
   const {
@@ -139,8 +140,17 @@ export const CollectionListDatagrid = ({
       intl,
       columns: visibleColumns,
       selectedChannelId,
+      currentTheme,
+      theme: themeValues,
     }),
-    [collections, intl, visibleColumns],
+    [
+      collections,
+      intl,
+      visibleColumns,
+      selectedChannelId,
+      currentTheme,
+      themeValues,
+    ],
   );
 
   return (

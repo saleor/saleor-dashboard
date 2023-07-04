@@ -563,8 +563,8 @@ export const getByUnmatchingId =
 export const findById = <T extends Node>(id: string, list?: T[]) =>
   list?.find(getById(id));
 
-const COLOR_WARNING = "#FBE5AC";
-const COLOR_WARNING_DARK = "#3E2F0A";
+export const COLOR_WARNING = "#FBE5AC";
+export const COLOR_WARNING_DARK = "#3E2F0A";
 type CustomWarningColor = typeof COLOR_WARNING | typeof COLOR_WARNING_DARK;
 
 export const getStatusColor = (

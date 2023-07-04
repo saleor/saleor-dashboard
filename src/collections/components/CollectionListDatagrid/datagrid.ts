@@ -1,12 +1,22 @@
 import { CollectionListUrlSortField } from "@dashboard/collections/urls";
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
-import { getChannelAvailabilityLabel } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
-import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
+import {
+  CollectionChannels,
+  getChannelAvailabilityColor,
+  getChannelAvailabilityLabel,
+  getDropdownColor,
+} from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
+import {
+  readonlyTextCell,
+  tagsCell,
+} from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { CollectionListQuery } from "@dashboard/graphql";
+import { getStatusColor } from "@dashboard/misc";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
+import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui/next";
 import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
@@ -19,7 +29,7 @@ export const collectionListStaticColumnsAdapter = (
     {
       id: "name",
       title: intl.formatMessage(columnsMessages.name),
-      width: 200,
+      width: 350,
     },
     {
       id: "productCount",
@@ -42,11 +52,15 @@ export const createGetCellContent =
     columns,
     intl,
     selectedChannelId,
+    theme,
+    currentTheme,
   }: {
     collections: RelayToFlat<CollectionListQuery["collections"]>;
     columns: AvailableColumn[];
     intl: IntlShape;
     selectedChannelId: string;
+    theme: ThemeTokensValues;
+    currentTheme: DefaultTheme;
   }) =>
   ([column, row]: Item): GridCell => {
     const rowData = collections[row];
@@ -66,18 +80,79 @@ export const createGetCellContent =
       case "productCount":
         return readonlyTextCell(rowData.products.totalCount.toString());
       case "available":
-        if (!!channel) {
-          return readonlyTextCell(
-            intl.formatMessage(getChannelAvailabilityLabel(channel)),
-          );
-        }
+        // eslint-disable-next-line no-case-declarations
+        const { label, color } = !!channel
+          ? getAvailablilityLabelWhenSelectedChannel(
+              channel,
+              intl,
+              currentTheme,
+              theme,
+            )
+          : getAvailablilityLabel(rowData, intl, currentTheme, theme);
 
-        return readonlyTextCell(
-          rowData?.channelListings?.length
-            ? intl.formatMessage(messages.dropdownLabel, {
-                channelCount: rowData?.channelListings?.length,
-              })
-            : intl.formatMessage(messages.noChannels),
+        return tagsCell(
+          [
+            {
+              tag: label,
+              color,
+            },
+          ],
+          [label],
+          {
+            readonly: true,
+            allowOverlay: false,
+          },
         );
     }
   };
+
+export function getAvailablilityLabelWhenSelectedChannel(
+  channel: CollectionChannels,
+  intl: IntlShape,
+  currentTheme: DefaultTheme,
+  theme: ThemeTokensValues,
+) {
+  const color = getStatusColor(
+    getChannelAvailabilityColor(channel),
+    currentTheme,
+  );
+
+  return {
+    label: intl.formatMessage(getChannelAvailabilityLabel(channel)),
+    color: getTagCellColor(color, theme),
+  };
+}
+
+export function getAvailablilityLabel(
+  rowData: RelayToFlat<CollectionListQuery["collections"]>[number],
+  intl: IntlShape,
+  currentTheme: DefaultTheme,
+  theme: ThemeTokensValues,
+) {
+  const availablilityLabel = rowData?.channelListings?.length
+    ? intl.formatMessage(messages.dropdownLabel, {
+        channelCount: rowData?.channelListings?.length,
+      })
+    : intl.formatMessage(messages.noChannels);
+
+  const availablilityLabelColor = getStatusColor(
+    getDropdownColor(rowData?.channelListings || []),
+    currentTheme,
+  );
+
+  return {
+    label: availablilityLabel,
+    color: getTagCellColor(availablilityLabelColor, theme),
+  };
+}
+
+function getTagCellColor(
+  color: string,
+  currentTheme: ThemeTokensValues,
+): string {
+  if (color.startsWith("#")) {
+    return color;
+  }
+
+  return currentTheme.colors.background[color];
+}
