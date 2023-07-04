@@ -166,6 +166,7 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
             navigate(collectionUrl(id));
           }}
           hasRowHover={!isFilterPresetOpen}
+          rowAnchor={collectionUrl}
           {...listProps}
         />
       </Card>
