@@ -114,12 +114,12 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
 
   const hasPresetsChanged = () => {
     const activeTab = tabs[currentTab - 1];
-    const { paresedQs } = prepareQs(location.search);
+    const { parsedQs } = prepareQs(location.search);
 
     return (
-      activeTab?.data !== stringify(paresedQs) &&
+      activeTab?.data !== stringify(parsedQs) &&
       location.search !== "" &&
-      stringify(paresedQs) !== ""
+      stringify(parsedQs) !== ""
     );
   };
 
@@ -150,23 +150,23 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   };
 
   const hanleFilterTabUpdate = (tabName: string) => {
-    const { paresedQs, activeTab } = prepareQs(location.search);
+    const { parsedQs, activeTab } = prepareQs(location.search);
 
-    updateFilterTab(tabName, stringify(paresedQs));
-    paresedQs.activeTab = activeTab;
+    updateFilterTab(tabName, stringify(parsedQs));
+    parsedQs.activeTab = activeTab;
 
-    navigate(orderListUrl() + "?" + stringify(paresedQs));
+    navigate(orderListUrl() + "?" + stringify(parsedQs));
   };
 
   const handleFilterTabSave = (data: SaveFilterTabDialogFormData) => {
-    const { paresedQs } = prepareQs(location.search);
+    const { parsedQs } = prepareQs(location.search);
 
     saveFilterTab(
       getNextUniqueTabName(
         data.name,
         tabs.map(tab => tab.name),
       ),
-      stringify(paresedQs),
+      stringify(parsedQs),
     );
     handleTabChange(tabs.length + 1);
   };

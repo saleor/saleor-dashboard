@@ -257,5 +257,5 @@ export const getSelectedMedia = <
   selectedMediaIds: string[],
 ) =>
   media
-    .filter(image => selectedMediaIds.indexOf(image.id) !== -1)
+    .filter(image => selectedMediaIds.includes(image.id))
     .sort((prev, next) => (prev.sortOrder > next.sortOrder ? 1 : -1));
