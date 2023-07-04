@@ -14,17 +14,16 @@ export function updateCategory({ name, description }) {
 
 export function fillUpCategoryGeneralInfo({ name, description }) {
   return cy
+    .get(CATEGORY_DETAILS_SELECTORS.nameInput)
+    .clearAndType(name)
     .get(CATEGORY_DETAILS_SELECTORS.descriptionInput)
     .find(SHARED_ELEMENTS.contentEditable)
     .should("be.visible")
+
     .get(CATEGORY_DETAILS_SELECTORS.descriptionInput)
     .click()
     .get(CATEGORY_DETAILS_SELECTORS.descriptionInput)
-    .find(SHARED_ELEMENTS.contentEditable)
-    .get(CATEGORY_DETAILS_SELECTORS.descriptionInput)
-    .clearAndType(description)
-    .get(CATEGORY_DETAILS_SELECTORS.nameInput)
-    .clearAndType(name);
+    .clearAndType(description);
 }
 
 export function saveCategory(alias = "CategoryCreate") {

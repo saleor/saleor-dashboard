@@ -545,6 +545,9 @@
     "context": "product variants, title",
     "string": "Variants"
   },
+  "1X6HtI": {
+    "string": "All Categories"
+  },
   "1div9r": {
     "string": "Search Attribute"
   },
@@ -1327,10 +1330,6 @@
     "context": "staff member status",
     "string": "Inactive"
   },
-  "7a1S4K": {
-    "context": "tab name",
-    "string": "All Drafts"
-  },
   "7dhhzL": {
     "context": "bulk issue gift cards dialog title",
     "string": "Bulk Issue Gift Cards"
@@ -1783,10 +1782,6 @@
   "BFR6CF": {
     "context": "webhooks and events section name",
     "string": "Webhooks & Events"
-  },
-  "BHQrgz": {
-    "context": "number of subcategories",
-    "string": "Subcategories"
   },
   "BJtUQI": {
     "context": "button",
@@ -2328,6 +2323,9 @@
   "F6LHyk": {
     "context": "Webhook details objects",
     "string": "Objects"
+  },
+  "F7DxHw": {
+    "string": "Subcategories"
   },
   "F8gsds": {
     "context": "unpublish page, button",
@@ -2927,6 +2925,9 @@
     "context": "all authorized amount from transactions in order",
     "string": "Authorized"
   },
+  "IzECoP": {
+    "string": "Search draft orders..."
+  },
   "IzEVek": {
     "context": "bulk disable label",
     "string": "Deactivate"
@@ -3057,9 +3058,6 @@
     "context": "dialog search placeholder",
     "string": "Search by collection name, etc..."
   },
-  "JiXNEV": {
-    "string": "Search Category"
-  },
   "Jj0de8": {
     "context": "voucher status",
     "string": "Scheduled"
@@ -3138,9 +3136,6 @@
   },
   "KHZlmi": {
     "string": "Discount Type"
-  },
-  "KIh25E": {
-    "string": "No draft orders found"
   },
   "KKQUMK": {
     "context": "edit menu item, header",
@@ -3486,9 +3481,6 @@
   },
   "NGc9kE": {
     "string": "Page type deleted"
-  },
-  "NJEe12": {
-    "string": "Search Draft"
   },
   "NJbzcP": {
     "context": "dialog header",
@@ -4306,6 +4298,9 @@
     "context": "header",
     "string": "Create Variant"
   },
+  "T83iU7": {
+    "string": "Search categories..."
+  },
   "T8rvXs": {
     "context": "order subtotal price",
     "string": "Subtotal"
@@ -4658,10 +4653,6 @@
   },
   "VOiUXQ": {
     "string": "Used to calculate rates for shipping for products of this product type, when specific weight is not given"
-  },
-  "VQLIXd": {
-    "context": "product",
-    "string": "Name"
   },
   "VSj89H": {
     "context": "fulfill button label",
@@ -5105,6 +5096,9 @@
     "context": "no address is set in draft order",
     "string": "Not set"
   },
+  "YJ2uRR": {
+    "string": "Bulk delete draft orders"
+  },
   "YJ4TXc": {
     "context": "tab name",
     "string": "All Staff Members"
@@ -5246,6 +5240,9 @@
   },
   "ZMy18J": {
     "string": "You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
+  },
+  "ZN5IZl": {
+    "string": "Bulk categories delete"
   },
   "ZPOyI1": {
     "context": "fulfilled fulfillment, section header",
@@ -5671,6 +5668,9 @@
     "context": "product attribute type",
     "string": "Multiple Select"
   },
+  "cLcy6F": {
+    "string": "Number of products"
+  },
   "cMFlOp": {
     "context": "input label",
     "string": "New Password"
@@ -5773,6 +5773,9 @@
   "cwoN25": {
     "context": "config type section title",
     "string": "Configuration Type"
+  },
+  "cxOmce": {
+    "string": "Bulk products delete"
   },
   "cy8sV7": {
     "context": "volume units types",
@@ -6607,10 +6610,6 @@
     "context": "tooltip content when product is in preorder",
     "string": "This product is still in preorder. You will be able to fulfill it after it reaches it’s release date"
   },
-  "k8ZJ5L": {
-    "context": "number of products",
-    "string": "No. of Products"
-  },
   "k8bltk": {
     "string": "No Results"
   },
@@ -6711,6 +6710,9 @@
   "kcMVsB": {
     "context": "balance amound missing error message",
     "string": "Balance amount is missing"
+  },
+  "kgVqk1": {
+    "string": "Category name"
   },
   "ki7Mr8": {
     "context": "product export to csv file, header",
@@ -7054,6 +7056,10 @@
   "nIrjSR": {
     "context": "section header",
     "string": "Ongoing Installations"
+  },
+  "nJ0tek": {
+    "context": "tab name",
+    "string": "All draft orders"
   },
   "nKjLjT": {
     "context": "error message",
@@ -7454,6 +7460,9 @@
     "context": "order line total price",
     "string": "Total"
   },
+  "qU/z0Q": {
+    "string": "Bulk category delete"
+  },
   "qZHHed": {
     "context": "stock exceeded dialog title",
     "string": "Not enough stock"
@@ -7625,9 +7634,6 @@
   "rr8fyf": {
     "context": "header",
     "string": "Top Products"
-  },
-  "rrbzZt": {
-    "string": "No subcategories found"
   },
   "rs815i": {
     "context": "text field label",
@@ -8233,10 +8239,6 @@
   "vwMO04": {
     "context": "draft order",
     "string": "Created"
-  },
-  "vy7fjd": {
-    "context": "tab name",
-    "string": "All Categories"
   },
   "vzce9B": {
     "context": "customer gift cards card subtitle",
