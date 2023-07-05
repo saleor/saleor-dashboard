@@ -16,6 +16,9 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
   const { children, date, secondaryTitle, title, titleElements, hasPlainDate } =
     props;
 
+  const hasChildren =
+    children && React.Children.toArray(children).filter(Boolean).length > 0;
+
   return (
     <Box
       display="flex"
@@ -32,9 +35,9 @@ export const TimelineEvent: React.FC<TimelineEventProps> = props => {
         __height="7px"
         __width="7px"
         __left="-28px"
-        __top={children ? "13px" : "5px"}
+        __top={hasChildren ? "13px" : "5px"}
       />
-      {children ? (
+      {hasChildren ? (
         <Accordion
           className={sprinkles({
             width: "100%",
