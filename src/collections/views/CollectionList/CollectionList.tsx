@@ -8,7 +8,6 @@ import {
   useCollectionBulkDeleteMutation,
   useCollectionListQuery,
 } from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
 import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
@@ -54,7 +53,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const notify = useNotifier();
-  const { reset } = useBulkActions(params.ids);
   const { updateListSettings, settings } = useListSettings(
     ListViews.COLLECTION_LIST,
   );
@@ -63,9 +61,16 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   usePaginationReset(collectionListUrl, params, settings.rowNumber);
   const { channel } = useAppChannel(false);
 
+  const {
+    clearRowSelection,
+    selectedRowIds,
+    setClearDatagridRowSelectionCallback,
+    setSelectedRowIds,
+  } = useRowSelection(params);
+
   const [changeFilters, resetFilters, handleSearchChange] =
     createFilterHandlers({
-      cleanupFn: reset,
+      cleanupFn: clearRowSelection,
       createUrl: collectionListUrl,
       getFilterQueryParam,
       navigate,
@@ -80,13 +85,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const selectedChannel = availableChannels.find(
     channel => channel.slug === params.channel,
   );
-
-  const {
-    clearRowSelection,
-    selectedRowIds,
-    setClearDatagridRowSelectionCallback,
-    setSelectedRowIds,
-  } = useRowSelection(params);
 
   const {
     selectedPreset,
@@ -131,7 +129,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
             text: intl.formatMessage(commonMessages.savedChanges),
           });
           refetch();
-          reset();
+          clearRowSelection();
           closeModal();
         }
       },
