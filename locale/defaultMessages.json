@@ -5096,6 +5096,9 @@
     "context": "no address is set in draft order",
     "string": "Not set"
   },
+  "YIWrkh": {
+    "string": "Search Collection..."
+  },
   "YJ2uRR": {
     "string": "Bulk delete draft orders"
   },
@@ -6252,6 +6255,9 @@
   "hLUYBt": {
     "context": "payment status",
     "string": "Pending"
+  },
+  "hMPyP0": {
+    "string": "Bulk collections delete"
   },
   "hMRP6J": {
     "string": "Default Address"
