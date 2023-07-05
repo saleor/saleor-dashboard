@@ -27,10 +27,10 @@ import {
   Button,
   DialogHeader,
   DialogTable,
-  ScrollShadow,
-  SearchIcon,
   isScrolledToBottom,
   isScrolledToTop,
+  ScrollShadow,
+  SearchIcon,
   useElementScroll,
 } from "@saleor/macaw-ui";
 import React from "react";
@@ -151,7 +151,7 @@ export const OrderChangeWarehouseDialog: React.FC<
         </DialogContent>
       </ScrollShadow>
 
-      <DialogTable ref={setAnchor}>
+      <DialogTable ref={setAnchor} css>
         {filteredWarehouses ? (
           <RadioGroup
             value={selectedWarehouseId}
