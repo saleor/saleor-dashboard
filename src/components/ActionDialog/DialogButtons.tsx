@@ -18,7 +18,7 @@ interface DialogButtonsProps {
   children?: React.ReactNode;
   showBackButton?: boolean;
   backButtonText?: string;
-  onConfirm();
+  onConfirm: () => any;
 }
 
 const DialogButtons: React.FC<DialogButtonsProps> = props => {

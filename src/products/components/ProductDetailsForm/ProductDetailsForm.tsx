@@ -20,7 +20,7 @@ interface ProductDetailsFormProps {
   disabled?: boolean;
   errors: ProductErrorFragment[];
 
-  onChange(event: any);
+  onChange: (event: any) => any;
 }
 
 export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({

@@ -54,8 +54,8 @@ interface SeoFormProps {
   slug: string;
   slugPlaceholder?: string;
   titlePlaceholder: string;
-  onChange(event: any);
-  onClick?();
+  onChange: (event: any) => any;
+  onClick?: () => any;
 }
 
 export const SeoForm: React.FC<SeoFormProps> = props => {

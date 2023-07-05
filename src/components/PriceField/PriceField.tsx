@@ -43,7 +43,7 @@ export interface PriceFieldProps {
   inputProps?: InputProps["inputProps"];
   InputLabelProps?: InputLabelProps;
   required?: boolean;
-  onChange(event: any);
+  onChange: (event: any) => any;
 }
 
 export const PriceField: React.FC<PriceFieldProps> = props => {

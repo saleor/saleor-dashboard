@@ -64,10 +64,10 @@ export interface OrderCustomerAddressesEditDialogProps {
   customerAddresses?: AddressFragment[];
   defaultShippingAddress?: Node;
   defaultBillingAddress?: Node;
-  onClose();
-  onConfirm(
+  onClose: () => any;
+  onConfirm: (
     data: Partial<OrderCustomerAddressesEditDialogOutput>,
-  ): SubmitPromise<any[]>;
+  ) => SubmitPromise<any[]>;
 }
 
 const defaultSearchState: OrderCustomerSearchAddressState = {

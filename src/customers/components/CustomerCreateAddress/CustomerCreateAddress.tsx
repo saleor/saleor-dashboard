@@ -26,8 +26,8 @@ export interface CustomerCreateAddressProps {
   data: AddressTypeInput;
   disabled: boolean;
   errors: AccountErrorFragment[];
-  onChange(event: React.ChangeEvent<any>);
-  onCountryChange(event: React.ChangeEvent<any>);
+  onChange: (event: React.ChangeEvent<any>) => any;
+  onCountryChange: (event: React.ChangeEvent<any>) => any;
 }
 
 const CustomerCreateAddress: React.FC<CustomerCreateAddressProps> = props => {

@@ -44,7 +44,7 @@ interface OrderReturnRefundLinesCardProps {
   itemsSelections: FormsetReplacementData;
   itemsQuantities: FormsetQuantityData;
   onChangeSelected: FormsetChange<boolean>;
-  onSetMaxQuantity();
+  onSetMaxQuantity: () => any;
 }
 
 export const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({

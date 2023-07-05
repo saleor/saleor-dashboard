@@ -22,7 +22,7 @@ interface Props {
   refetch?: () => void;
   dashboardVersion: string;
   coreVersion?: string;
-  onError?(): void;
+  onError?: () => void;
 }
 
 const getOrigin = (url: string) => new URL(url).origin;
