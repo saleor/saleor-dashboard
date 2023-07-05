@@ -4,8 +4,8 @@ import { stringify } from "qs";
 import useRouter from "use-react-router";
 
 import { useInitialAPIState } from "../API/initialState/useInitalAPIState";
+import { FilterContainer } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
-import { FilterContainer } from "../useFilterContainer";
 import { useTokenArray } from "./TokenArray";
 
 const prepareStructure = filterValue =>

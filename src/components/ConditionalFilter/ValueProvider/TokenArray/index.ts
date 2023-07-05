@@ -4,8 +4,7 @@ import { parse, ParsedQs } from "qs";
 import { useRef } from "react";
 
 import { InitialStateResponse } from "../../API/InitialStateResponse";
-import { FilterElement } from "../../FilterElement";
-import { FilterContainer } from "../../useFilterContainer";
+import { FilterContainer, FilterElement } from "../../FilterElement";
 import { UrlEntry, UrlToken } from "../UrlToken";
 import {
   emptyFetchingParams,

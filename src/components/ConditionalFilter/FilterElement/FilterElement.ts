@@ -164,3 +164,6 @@ export class FilterElement {
     return null;
   }
 }
+
+
+export type FilterContainer = Array<string | FilterElement | FilterContainer>;

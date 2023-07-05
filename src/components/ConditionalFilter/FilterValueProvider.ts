@@ -1,4 +1,4 @@
-import { FilterContainer } from "./useFilterContainer";
+import { FilterContainer } from "./FilterElement";
 
 export interface FilterValueProvider {
   value: FilterContainer;
