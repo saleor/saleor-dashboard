@@ -9,9 +9,70 @@ import {
   getLeftOperatorOptions,
   getRightOperatorOptionsByQuery,
 } from "./API/getAPIOptions";
+import { ConditionOption } from "./FilterElement/ConditionSelected";
 import { useFilterContainer } from "./useFilterContainer";
 import { useLeftOperands } from "./useLeftOperands";
 import { useUrlValueProvider } from "./ValueProvider/useUrlValueProvider";
+
+type FilterEvent =
+  | {
+      type: "row.add";
+      rowType: string;
+    }
+  | {
+      type: "row.remove";
+      path: string;
+    }
+  | {
+      type: "leftOperator.onChange";
+      path: string;
+      value: { label: string; value: string; type: string };
+      rowType: string;
+    }
+  | {
+      type: "leftOperator.onFocus";
+      path: string;
+    }
+  | {
+      type: "leftOperator.onBlur";
+      path: string;
+    }
+  | {
+      type: "leftOperator.onInputValueChange";
+      path: string;
+      value: string;
+    }
+  | {
+      type: "condition.onChange";
+      path: string;
+      value: { label: string; value: string; type: string };
+    }
+  | {
+      type: "condition.onFocus";
+      path: string;
+    }
+  | {
+      type: "condition.onBlur";
+      path: string;
+    }
+  | {
+      type: "rightOperator.onChange";
+      path: string;
+      value: ConditionOption;
+    }
+  | {
+      type: "rightOperator.onFocus";
+      path: string;
+    }
+  | {
+      type: "rightOperator.onBlur";
+      path: string;
+    }
+  | {
+      type: "rightOperator.onInputValueChange";
+      path: string;
+      value: string;
+    };
 
 const FiltersArea = ({ provider, onConfirm }) => {
   const client = useApolloClient();
@@ -65,7 +126,7 @@ const FiltersArea = ({ provider, onConfirm }) => {
     500,
   );
 
-  const handleStateChange = async event => {
+  const handleStateChange = async (event: FilterEvent) => {
     if (event.type === "row.add") {
       addEmpty();
     }
@@ -111,6 +172,8 @@ const FiltersArea = ({ provider, onConfirm }) => {
         leftOptions={operands}
         // @ts-expect-error
         value={value}
+        // TODO: add proper types in Macaw UI
+        // @ts-expect-error
         onChange={handleStateChange}
       >
         <_ExperimentalFilters.Footer>
