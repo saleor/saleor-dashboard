@@ -1,7 +1,7 @@
 export interface ItemOption {
   label: string;
   value: string;
-  slug: string;
+  slug?: string;
 }
 
 export type ConditionValue =
@@ -11,8 +11,9 @@ export type ConditionValue =
   | string[]
   | [string, string];
 
-
-export const slugFromConditionValue = (rawEntry: ConditionValue): string | string[] => {
+export const slugFromConditionValue = (
+  rawEntry: ConditionValue,
+): string | string[] => {
   if (typeof rawEntry === "string") {
     return rawEntry;
   }
