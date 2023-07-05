@@ -37,7 +37,7 @@ export const collectionListStaticColumnsAdapter = (
       width: 200,
     },
     {
-      id: "available",
+      id: "availability",
       title: intl.formatMessage(columnsMessages.availability),
       width: 200,
     },
@@ -81,7 +81,7 @@ export const createGetCellContent =
         return readonlyTextCell(
           rowData?.products?.totalCount?.toString() ?? "",
         );
-      case "available":
+      case "availability":
         const { label, color } = !!channel
           ? getAvailablilityLabelWhenSelectedChannel(
               channel,

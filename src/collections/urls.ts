@@ -24,7 +24,7 @@ export type CollectionListUrlFilters = Filters<CollectionListUrlFiltersEnum>;
 export type CollectionListUrlDialog = "remove" | TabActionDialog;
 export enum CollectionListUrlSortField {
   name = "name",
-  available = "available",
+  availability = "availability",
   productCount = "productCount",
 }
 export type CollectionListUrlSort = Sort<CollectionListUrlSortField>;
