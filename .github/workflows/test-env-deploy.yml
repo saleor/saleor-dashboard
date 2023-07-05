@@ -202,7 +202,7 @@ jobs:
 
   cypress-run-selected:
     runs-on: ubuntu-22.04
-    needs: [prepare-tests, deploy, testmo-report-preparation, testmo-report-preparation]
+    needs: [prepare-tests, deploy, testmo-report-preparation]
     container: cypress/browsers:node18.12.0-chrome106-ff106
     strategy:
       fail-fast: false
@@ -243,6 +243,7 @@ jobs:
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: NODE_OPTIONS=--max_old_space_size=4096 npm install
       - name: Cypress run critical
+        id: run-critical
         uses: cypress-io/github-action@v4
         env:
           API_URI: ${{ steps.api_uri.outputs.custom_api_uri }}
@@ -261,12 +262,11 @@ jobs:
           group: "UI - Chrome"
           record: true
           tag: Critical, ${{github.event.action}}    
-      - name: Install dependencies
-        working-directory: .github/workflows
-        run: npm ci 
       - name: Testmo threads submit
+        if: success() || steps.run-critical.conclusion == 'failure'
         working-directory: .github/workflows
         run: | 
+            npm ci \
             npx testmo automation:run:submit-thread \
             --instance "$TESTMO_URL" \
             --run-id "${{ needs.testmo-report-preparation.outputs.testmo-run-id }}" \
@@ -276,7 +276,7 @@ jobs:
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
   test-complete:
     needs: [testmo-report-preparation, cypress-run-selected]
-    if: always()
+    if: '!cancelled()'
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
