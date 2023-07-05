@@ -1,7 +1,6 @@
 import { ApolloClient } from "@apollo/client";
 
-import { FilterElement } from "../FilterElement";
-import { FilterContainer } from "../useFilterContainer";
+import { FilterContainer, FilterElement } from "../FilterElement";
 import {
   AttributeChoicesHandler,
   AttributesHandler,
