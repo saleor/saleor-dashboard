@@ -20,6 +20,7 @@ import { useEffect, useState } from "react";
 
 import { FetchingParams } from "../../ValueProvider/TokenArray/fetchingParams";
 import { createOptionsFromAPI } from "../Handler";
+import { InitialState } from "../InitialStateResponse";
 import { InitialAPIResponse } from "./types";
 
 const isChannelQuery = (
@@ -51,12 +52,12 @@ export const createInitialStateFromData = (
   data: InitialAPIResponse[],
   channel: string[],
 ) =>
-  data.reduce(
+  data.reduce<InitialState>(
     (acc, query) => {
       if (isChannelQuery(query)) {
         return {
           ...acc,
-          channel: query.data.channels
+          channel: (query.data?.channels ?? [])
             .filter(({ slug }) => channel.includes(slug))
             .map(({ id, name, slug }) => ({ label: name, value: id, slug })),
         };
@@ -65,40 +66,45 @@ export const createInitialStateFromData = (
       if (isCollectionQuery(query)) {
         return {
           ...acc,
-          collection: createOptionsFromAPI(query.data.collections.edges),
+          collection: createOptionsFromAPI(
+            query.data?.collections?.edges ?? [],
+          ),
         };
       }
 
       if (isCategoryQuery(query)) {
         return {
           ...acc,
-          category: createOptionsFromAPI(query.data.categories.edges),
+          category: createOptionsFromAPI(query.data?.categories?.edges ?? []),
         };
       }
 
       if (isProductTypeQuery(query)) {
         return {
           ...acc,
-          producttype: createOptionsFromAPI(query.data.productTypes.edges),
+          producttype: createOptionsFromAPI(
+            query.data?.productTypes?.edges ?? [],
+          ),
         };
       }
 
       if (isAttributeQuery(query)) {
         return {
           ...acc,
-          attribute: query.data.attributes.edges.reduce(
-            (acc, { node }) => ({
-              ...acc,
-              [node.slug]: {
-                choices: createOptionsFromAPI(node.choices.edges),
-                slug: node?.slug,
-                value: node?.id,
-                label: node?.name,
-                inputType: node?.inputType,
-              },
-            }),
-            {},
-          ),
+          attribute:
+            query.data?.attributes?.edges.reduce(
+              (acc, { node }) => ({
+                ...acc,
+                [node.slug ?? ""]: {
+                  choices: createOptionsFromAPI(node.choices?.edges ?? []),
+                  slug: node?.slug,
+                  value: node?.id,
+                  label: node?.name,
+                  inputType: node?.inputType,
+                },
+              }),
+              {},
+            ) ?? {},
         };
       }
 
