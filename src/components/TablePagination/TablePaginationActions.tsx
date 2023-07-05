@@ -58,8 +58,8 @@ export interface TablePaginationActionsProps {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   nextIconButtonProps?: any;
-  onNextPage(event);
-  onPreviousPage(event);
+  onNextPage: (event) => any;
+  onPreviousPage: (event) => any;
 }
 
 export const TablePaginationActions: React.FC<

@@ -44,7 +44,7 @@ export interface OrderChangeWarehouseDialogProps {
   line: OrderFulfillLineFragment;
   currentWarehouseId: string;
   onConfirm: (warehouse: WarehouseFragment) => void;
-  onClose();
+  onClose: () => any;
 }
 
 export const OrderChangeWarehouseDialog: React.FC<

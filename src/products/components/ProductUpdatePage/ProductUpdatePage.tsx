@@ -113,11 +113,11 @@ export interface ProductUpdatePageProps {
   onSubmit: (data: ProductUpdateSubmitData) => SubmitPromise;
   onVariantShow: (id: string) => void;
   onAttributeSelectBlur: () => void;
-  onDelete();
-  onImageReorder?(event: { oldIndex: number; newIndex: number });
-  onImageUpload(file: File);
-  onMediaUrlUpload(mediaUrl: string);
-  onSeoClick?();
+  onDelete: () => any;
+  onImageReorder?: (event: { oldIndex: number; newIndex: number }) => any;
+  onImageUpload: (file: File) => any;
+  onMediaUrlUpload: (mediaUrl: string) => any;
+  onSeoClick?: () => any;
 }
 
 export const ProductUpdatePage: React.FC<ProductUpdatePageProps> = ({

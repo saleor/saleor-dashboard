@@ -10,9 +10,9 @@ const messages = AppPermissionsDialogMessages.permissionsPicker;
 interface AppPermissionsDialogPermissionPickerProps {
   allPermissions: AppPermission[];
   selected: PermissionEnum[];
-  onSubmit(): void;
-  onChange(codes: PermissionEnum[]): void;
-  onClose(): void;
+  onSubmit: () => void;
+  onChange: (codes: PermissionEnum[]) => void;
+  onClose: () => void;
 }
 
 /**

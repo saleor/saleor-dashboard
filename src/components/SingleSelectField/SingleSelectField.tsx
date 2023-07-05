@@ -60,7 +60,7 @@ interface SingleSelectFieldProps {
   placeholder?: string;
   value?: string;
   InputProps?: OutlinedInputProps;
-  onChange(event: any);
+  onChange: (event: any) => any;
 }
 
 export const SingleSelectField: React.FC<SingleSelectFieldProps> = props => {

@@ -35,7 +35,7 @@ export interface OrderCustomerAddressesSearchProps {
   customerAddresses: AddressFragment[];
   onChangeCustomerShippingAddress: (customerAddress: AddressFragment) => void;
   onChangeCustomerBillingAddress: (customerAddress: AddressFragment) => void;
-  exitSearch();
+  exitSearch: () => any;
 }
 
 const OrderCustomerAddressesSearch: React.FC<
