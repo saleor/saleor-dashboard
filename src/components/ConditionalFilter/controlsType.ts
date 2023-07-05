@@ -1,5 +1,6 @@
 // @ts-strict-ignore
-import { ConditionValue } from "./FilterElement/ConditionSelected";
+
+import { ConditionValue } from "./FilterElement/ConditionValue";
 
 export const CONTROL_DEFAULTS = {
   text: "",

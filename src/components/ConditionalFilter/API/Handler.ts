@@ -20,7 +20,8 @@ import {
   _GetProductTypesChoicesQueryVariables,
 } from "@dashboard/graphql";
 
-import { ItemOption } from "../FilterElement/ConditionSelected";
+import { ItemOption } from "../FilterElement/ConditionValue";
+
 
 export interface Handler {
   client: ApolloClient<unknown>;
