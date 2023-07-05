@@ -11,8 +11,9 @@ export type ConditionValue =
   | string[]
   | [string, string];
 
-
-export const slugFromConditionValue = (rawEntry: ConditionValue): string | string[] => {
+export const slugFromConditionValue = (
+  rawEntry: ConditionValue,
+): string | string[] => {
   if (typeof rawEntry === "string") {
     return rawEntry;
   }

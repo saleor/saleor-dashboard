@@ -5540,7 +5540,7 @@ export type _GetChannelOperandsLazyQueryHookResult = ReturnType<typeof use_GetCh
 export type _GetChannelOperandsQueryResult = Apollo.QueryResult<Types._GetChannelOperandsQuery, Types._GetChannelOperandsQueryVariables>;
 export const _SearchCollectionsOperandsDocument = gql`
     query _SearchCollectionsOperands($first: Int!, $collectionsSlugs: [String!]) {
-  search: collections(first: $first, filter: {slugs: $collectionsSlugs}) {
+  collections(first: $first, filter: {slugs: $collectionsSlugs}) {
     edges {
       node {
         id
@@ -5582,11 +5582,7 @@ export type _SearchCollectionsOperandsLazyQueryHookResult = ReturnType<typeof us
 export type _SearchCollectionsOperandsQueryResult = Apollo.QueryResult<Types._SearchCollectionsOperandsQuery, Types._SearchCollectionsOperandsQueryVariables>;
 export const _SearchCategoriesOperandsDocument = gql`
     query _SearchCategoriesOperands($after: String, $first: Int!, $categoriesSlugs: [String!]) {
-  search: categories(
-    after: $after
-    first: $first
-    filter: {slugs: $categoriesSlugs}
-  ) {
+  categories(after: $after, first: $first, filter: {slugs: $categoriesSlugs}) {
     edges {
       node {
         id
@@ -5629,11 +5625,7 @@ export type _SearchCategoriesOperandsLazyQueryHookResult = ReturnType<typeof use
 export type _SearchCategoriesOperandsQueryResult = Apollo.QueryResult<Types._SearchCategoriesOperandsQuery, Types._SearchCategoriesOperandsQueryVariables>;
 export const _SearchProductTypesOperandsDocument = gql`
     query _SearchProductTypesOperands($after: String, $first: Int!, $productTypesSlugs: [String!]) {
-  search: productTypes(
-    after: $after
-    first: $first
-    filter: {slugs: $productTypesSlugs}
-  ) {
+  productTypes(after: $after, first: $first, filter: {slugs: $productTypesSlugs}) {
     edges {
       node {
         id
@@ -5676,7 +5668,7 @@ export type _SearchProductTypesOperandsLazyQueryHookResult = ReturnType<typeof u
 export type _SearchProductTypesOperandsQueryResult = Apollo.QueryResult<Types._SearchProductTypesOperandsQuery, Types._SearchProductTypesOperandsQueryVariables>;
 export const _SearchAttributeOperandsDocument = gql`
     query _SearchAttributeOperands($attributesSlugs: [String!], $choicesIds: [ID!], $first: Int!) {
-  search: attributes(first: $first, filter: {slugs: $attributesSlugs}) {
+  attributes(first: $first, filter: {slugs: $attributesSlugs}) {
     edges {
       node {
         id
