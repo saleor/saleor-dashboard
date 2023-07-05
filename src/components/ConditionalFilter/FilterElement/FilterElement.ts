@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { LeftOperand } from "./../useLeftOperands";
-import { UrlEntry, UrlToken, TokenType } from "./../ValueProvider/UrlToken";
+import { TokenType, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
 import { ConditionItem, ConditionOptions } from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
