@@ -93,12 +93,12 @@ const FiltersArea = ({ provider, onConfirm }) => {
 
   const handleLeftOperatorInputValueChange = (event: any) => {
     const fetchAPI = async () => {
+      updateLeftLoadingState(event.path, true);
       const options = await getLeftOperatorOptions(client, event.value);
-      setOperands(options);
+      updateLeftLoadingState(event.path, false);
+      setOperands(prev => [...prev, ...options]);
     };
-    updateLeftLoadingState(event.path, true);
     fetchAPI();
-    updateLeftLoadingState(event.path, false);
   };
 
   const handleLeftOperatorInputValueChangeDebounced = useDebounce(
@@ -108,17 +108,17 @@ const FiltersArea = ({ provider, onConfirm }) => {
 
   const handleRightOperatorInputValueChange = (event: any) => {
     const fetchAPI = async () => {
+      updateRightLoadingState(event.path.split(".")[0], true);
       const options = await getRightOperatorOptionsByQuery(
         client,
         event.path.split(".")[0],
         value,
         event.value,
       );
+      updateRightLoadingState(event.path.split(".")[0], false);
       updateRightOptions(event.path.split(".")[0], options);
     };
-    updateRightLoadingState(event.path.split(".")[0], true);
     fetchAPI();
-    updateRightLoadingState(event.path.split(".")[0], false);
   };
 
   const handleRightOperatorInputValueChangeDebounced = useDebounce(
