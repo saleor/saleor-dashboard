@@ -57,18 +57,53 @@ export const CollectionListDatagrid = ({
   const intl = useIntl();
   const { theme: currentTheme, themeValues } = useTheme();
   const datagrid = useDatagridChangeState();
+  const columnsLength = settings?.columns?.length ?? 0;
+
   const collectionListStaticColumns = useMemo(
     () => collectionListStaticColumnsAdapter(intl, sort),
     [intl, sort],
   );
 
-  const handleColumnChange = useCallback(
+  const onColumnChange = useCallback(
     (picked: string[]) => {
       if (onUpdateListSettings) {
         onUpdateListSettings("columns", picked.filter(Boolean));
       }
     },
     [onUpdateListSettings],
+  );
+
+  const {
+    handlers,
+    visibleColumns,
+    staticColumns,
+    dynamicColumns,
+    selectedColumns,
+    columnCategories,
+    recentlyAddedColumn,
+  } = useColumns({
+    staticColumns: collectionListStaticColumns,
+    selectedColumns: settings?.columns ?? [],
+    onSave: onColumnChange,
+  });
+
+  const getCellContent = useCallback(
+    createGetCellContent({
+      collections,
+      intl,
+      columns: visibleColumns,
+      selectedChannelId,
+      currentTheme,
+      theme: themeValues,
+    }),
+    [
+      collections,
+      intl,
+      visibleColumns,
+      selectedChannelId,
+      currentTheme,
+      themeValues,
+    ],
   );
 
   const handleRowClick = useCallback(
@@ -93,18 +128,6 @@ export const CollectionListDatagrid = ({
     [rowAnchor, collections],
   );
 
-  const handleHeaderClick = useCallback(
-    (col: number) => {
-      const columnName = collectionListStaticColumns[col]
-        .id as CollectionListUrlSortField;
-
-      if (canBeSorted(columnName, !!selectedChannelId)) {
-        onSort(columnName);
-      }
-    },
-    [collectionListStaticColumns, onSort],
-  );
-
   const handleGetColumnTooltipContent = useCallback(
     (col: number): string => {
       const columnName = collectionListStaticColumns[col]
@@ -122,40 +145,16 @@ export const CollectionListDatagrid = ({
     [filterDependency, intl, selectedChannelId],
   );
 
-  const {
-    handlers,
-    visibleColumns,
-    staticColumns,
-    dynamicColumns,
-    selectedColumns,
-    columnCategories,
-    recentlyAddedColumn,
-  } = useColumns({
-    staticColumns: collectionListStaticColumns,
-    selectedColumns: settings?.columns ?? [],
-    onSave: handleColumnChange,
-  });
+  const handleHeaderClick = useCallback(
+    (col: number) => {
+      const columnName = visibleColumns[col].id as CollectionListUrlSortField;
 
-  const getCellContent = useCallback(
-    createGetCellContent({
-      collections,
-      intl,
-      columns: visibleColumns,
-      selectedChannelId,
-      currentTheme,
-      theme: themeValues,
-    }),
-    [
-      collections,
-      intl,
-      visibleColumns,
-      selectedChannelId,
-      currentTheme,
-      themeValues,
-    ],
+      if (canBeSorted(columnName, !!selectedChannelId)) {
+        onSort(columnName);
+      }
+    },
+    [visibleColumns, onSort],
   );
-
-  const columnsLength = settings?.columns?.length ?? 0;
 
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
