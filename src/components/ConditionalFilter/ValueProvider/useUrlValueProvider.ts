@@ -3,8 +3,8 @@
 import { stringify } from "qs";
 import useRouter from "use-react-router";
 
-import { FilterContainer } from "../FilterElement";
 import { useInitialAPIState } from "../API/initialState/useInitalAPIState";
+import { FilterContainer } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { useTokenArray } from "./TokenArray";
 
