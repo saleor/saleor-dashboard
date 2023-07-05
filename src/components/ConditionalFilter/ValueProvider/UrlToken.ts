@@ -1,5 +1,4 @@
 import { ParsedQs } from "qs";
-
 import { ConditionSelected } from "../FilterElement/ConditionSelected";
 import { slugFromConditionValue } from "../FilterElement/ConditionValue";
 
@@ -53,14 +52,17 @@ export class UrlEntry {
     tokenSlug: TokenTypeValue
   ) {
     const { conditionValue } = condition;
+    const slug = slugFromConditionValue(condition.value)
+
+    if (!conditionValue) {
+      return new UrlEntry(tokenSlug, slug)
+    }
+
     const conditionIndex = CONDITIONS.findIndex(
-      el => conditionValue && el === conditionValue.label,
+      el => el === conditionValue.label,
     );
     
-    return new UrlEntry(
-      `${tokenSlug}${conditionIndex}.${paramName}`,
-      slugFromConditionValue(condition.value)
-    )
+    return new UrlEntry(`${tokenSlug}${conditionIndex}.${paramName}`, slug)
   }
 }
 
