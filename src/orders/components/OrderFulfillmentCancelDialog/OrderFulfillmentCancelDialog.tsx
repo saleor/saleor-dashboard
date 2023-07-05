@@ -46,8 +46,8 @@ export interface OrderFulfillmentCancelDialogProps {
   errors: OrderErrorFragment[];
   open: boolean;
   warehouses: WarehouseFragment[];
-  onClose();
-  onConfirm(data: OrderFulfillmentCancelDialogFormData);
+  onClose: () => any;
+  onConfirm: (data: OrderFulfillmentCancelDialogFormData) => any;
 }
 
 const OrderFulfillmentCancelDialog: React.FC<

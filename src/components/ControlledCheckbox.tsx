@@ -11,7 +11,7 @@ export interface ControlledCheckboxProps {
   disabled?: boolean;
   checkedIcon?: React.ReactNode;
   testId?: string;
-  onChange(event: any);
+  onChange: (event: any) => any;
 }
 
 export const ControlledCheckbox: React.FC<ControlledCheckboxProps> = ({

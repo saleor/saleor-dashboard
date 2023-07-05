@@ -45,8 +45,8 @@ export interface CategoryUpdatePageProps {
   onProductsDelete: () => void;
   onSelectProductsIds: (ids: number[], clearSelection: () => void) => void;
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
-  onImageUpload(file: File);
-  onDelete();
+  onImageUpload: (file: File) => any;
+  onDelete: () => any;
 }
 
 const CategoriesTab = Tab(CategoryPageTab.categories);

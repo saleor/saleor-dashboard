@@ -1,40 +1,17 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { LeftOperand } from "./../useLeftOperands";
-import { CONDITIONS, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
+import { UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
 import { ConditionItem, ConditionOptions } from "./ConditionOptions";
-import { ConditionSelected, ConditionValue, ItemOption } from "./ConditionSelected";
+import { ConditionSelected } from "./ConditionSelected";
+import { ConditionValue, ItemOption } from "./ConditionValue";
 
 interface ExpressionValue {
   value: string;
   label: string;
   type: string;
 }
-
-const createStaticEntry = (rawEntry: ConditionValue) => {
-  if (typeof rawEntry === "string") {
-    return rawEntry;
-  }
-
-  if (Array.isArray(rawEntry)) {
-    return rawEntry.map(el => (typeof el === "string" ? el : el.slug));
-  }
-
-  return rawEntry.slug;
-};
-
-const createAttributeEntry = (rawEntry: ConditionValue) => {
-  if (typeof rawEntry === "string") {
-    return rawEntry;
-  }
-
-  if (Array.isArray(rawEntry)) {
-    return rawEntry.map(el => (typeof el === "string" ? el : el.slug));
-  }
-
-  return rawEntry.slug;
-};
 
 export class FilterElement {
   private constructor(
@@ -119,24 +96,11 @@ export class FilterElement {
   }
 
   public asUrlEntry(): UrlEntry {
-    const { conditionValue } = this.condition.selected;
-    const conditionIndex = CONDITIONS.findIndex(
-      el => conditionValue && el === conditionValue.label,
-    );
-
     if (this.isAttribute()) {
-      return {
-        [`a${conditionIndex}.${this.value.value}`]: createAttributeEntry(
-          this.condition.selected.value,
-        ),
-      };
+      return UrlEntry.forAttribute(this.condition.selected, this.value.value)
     }
 
-    return {
-      [`s${conditionIndex}.${this.value.value}`]: createStaticEntry(
-        this.condition.selected.value,
-      ),
-    };
+    return UrlEntry.forStatic(this.condition.selected, this.value.value)
   }
 
   public static fromValueEntry(valueEntry: any) {
