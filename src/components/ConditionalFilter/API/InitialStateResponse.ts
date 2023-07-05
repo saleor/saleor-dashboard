@@ -1,5 +1,5 @@
 import { AttributeInputType } from "../FilterElement/ConditionOptions";
-import { ItemOption } from "../FilterElement/ConditionSelected";
+import { ItemOption } from "../FilterElement/ConditionValue";
 import { UrlToken } from "../ValueProvider/UrlToken";
 
 interface AttributeDTO {

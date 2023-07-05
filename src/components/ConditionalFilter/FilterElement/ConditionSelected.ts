@@ -1,18 +1,6 @@
 import { getDefaultByControlName } from "../controlsType";
 import { ConditionItem } from "./ConditionOptions";
-
-export interface ItemOption {
-  label: string;
-  value: string;
-  slug: string;
-}
-
-export type ConditionValue =
-  | ItemOption
-  | ItemOption[]
-  | string
-  | string[]
-  | [string, string];
+import { ConditionValue } from "./ConditionValue";
 
 
 export class ConditionSelected {

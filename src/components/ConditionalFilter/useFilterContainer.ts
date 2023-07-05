@@ -2,7 +2,7 @@
 import { useState } from "react";
 
 import { FilterElement } from "./FilterElement";
-import { ConditionValue, ItemOption } from "./FilterElement/ConditionSelected";
+import { ConditionValue, ItemOption } from "./FilterElement/ConditionValue";
 
 export type FilterContainer = Array<string | FilterElement | FilterContainer>;
 
