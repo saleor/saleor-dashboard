@@ -10,8 +10,8 @@ const messages = AppPermissionsDialogMessages.confirmation;
 interface Props {
   removedPermissions: PermissionEnum[];
   addedPermissions: PermissionEnum[];
-  onBack(): void;
-  onApprove(): void;
+  onBack: () => void;
+  onApprove: () => void;
 }
 
 export const AppPermissionsDialogConfirmation = ({
@@ -27,7 +27,7 @@ export const AppPermissionsDialogConfirmation = ({
   const { mapCodesToNames } = useGetAvailableAppPermissions();
 
   return (
-    <Box>
+    <Box __maxHeight={"50vh"} overflow={"auto"}>
       <Text marginBottom={2} as={"p"}>
         {intl.formatMessage(messages.summaryText)}
       </Text>

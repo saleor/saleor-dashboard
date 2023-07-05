@@ -200,12 +200,7 @@ export function getFilterQueryParam(
   }
 }
 
-export const {
-  deleteFilterTab,
-  getFilterTabs,
-  saveFilterTab,
-  updateFilterTab,
-} = createFilterTabUtils<string>(ORDER_FILTERS_KEY);
+export const storageUtils = createFilterTabUtils<string>(ORDER_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
   createFilterUtils<OrderListUrlQueryParams, OrderListUrlFilters>({

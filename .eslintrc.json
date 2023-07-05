@@ -64,9 +64,6 @@
     // These rules should be reviewed - tracked in
     // Tracked in https://github.com/saleor/saleor-dashboard/issues/3813
     "@typescript-eslint/consistent-type-imports": "off",
-    "@typescript-eslint/indent": "off",
-    "@typescript-eslint/member-delimiter-style": "off",
-    "@typescript-eslint/method-signature-style": "off",
     "@typescript-eslint/no-confusing-void-expression": "off",
     "@typescript-eslint/no-unnecessary-type-assertion": "off",
     "@typescript-eslint/prefer-reduce-type-parameter": "off",

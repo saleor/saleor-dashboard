@@ -4,9 +4,7 @@ import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { useColumnPickerSettings } from "@dashboard/components/Datagrid/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
+import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
 import {
   DEFAULT_INITIAL_PAGINATION_DATA,
@@ -31,6 +29,7 @@ import {
 } from "@dashboard/graphql";
 import useBackgroundTask from "@dashboard/hooks/useBackgroundTask";
 import { useFilterHandlers } from "@dashboard/hooks/useFilterHandlers";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -39,6 +38,7 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
+import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { commonMessages } from "@dashboard/intl";
 import ProductExportDialog from "@dashboard/products/components/ProductExportDialog";
 import {
@@ -59,33 +59,23 @@ import useCategorySearch from "@dashboard/searches/useCategorySearch";
 import useCollectionSearch from "@dashboard/searches/useCollectionSearch";
 import useProductTypeSearch from "@dashboard/searches/useProductTypeSearch";
 import { ListViews } from "@dashboard/types";
-import { prepareQs } from "@dashboard/utils/filters/qs";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortUrlVariables } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
 import isEqual from "lodash/isEqual";
-import { stringify } from "qs";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage from "../../components/ProductListPage";
 import {
-  deleteFilterTab,
   getFilterOpts,
   getFilterQueryParam,
-  getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
-  updateFilterTab,
+  storageUtils,
 } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
-import {
-  getActiveTabIndexAfterTabDelete,
-  getAvailableProductKinds,
-  getNextUniqueTabName,
-  getProductKindOpts,
-} from "./utils";
+import { getAvailableProductKinds, getProductKindOpts } from "./utils";
 
 interface ProductListProps {
   params: ProductListUrlQueryParams;
@@ -96,36 +86,12 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
 
-  const [tabIndexToDelete, setTabIndexToDelete] = useState<number | null>(null);
-  const [selectedProductIds, setSelectedProductIds] = useState<string[]>([]);
-  const deleteButtonRef = useRef<HTMLButtonElement>(null);
-
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
   );
 
   const { columnPickerSettings, setDynamicColumnsSettings } =
     useColumnPickerSettings("PRODUCT_LIST");
-  // Keep reference to clear datagrid selection function
-  const clearRowSelectionCallback = React.useRef<() => void | null>(null);
-  const clearRowSelection = () => {
-    setSelectedProductIds([]);
-    if (clearRowSelectionCallback.current) {
-      clearRowSelectionCallback.current();
-    }
-  };
-
-  // Whenever pagination change we need to clear datagrid selection
-  useEffect(() => {
-    clearRowSelection();
-  }, [params.after, params.before]);
-
-  // Remove focus from delete button after delete action
-  useEffect(() => {
-    if (!params.action && deleteButtonRef.current) {
-      deleteButtonRef.current.blur();
-    }
-  }, [params.action]);
 
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
@@ -208,11 +174,31 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ProductListUrlDialog,
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
+  console.log(params);
 
-  const tabs = getFilterTabs();
+  const {
+    clearRowSelection,
+    selectedRowIds,
+    setClearDatagridRowSelectionCallback,
+    setSelectedRowIds,
+  } = useRowSelection(params);
 
-  const currentTab =
-    params.activeTab !== undefined ? parseInt(params.activeTab, 10) : undefined;
+  const {
+    hasPresetsChange,
+    onPresetChange,
+    onPresetDelete,
+    onPresetSave,
+    onPresetUpdate,
+    presetIdToDelete,
+    presets,
+    selectedPreset,
+    setPresetIdToDelete,
+  } = useFilterPresets({
+    params,
+    getUrl: productListUrl,
+    storageUtils,
+    reset: clearRowSelection,
+  });
 
   const countAllProducts = useProductCountQuery({
     skip: params.action !== "export",
@@ -268,57 +254,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     hasSortWithRank: true,
   });
 
-  const handleTabChange = (tab: number) => {
-    clearRowSelection();
-
-    const qs = new URLSearchParams(getFilterTabs()[tab - 1]?.data ?? "");
-    qs.append("activeTab", tab.toString());
-
-    navigate(productListUrl() + qs.toString());
-  };
-
-  const handleFilterTabDelete = () => {
-    deleteFilterTab(tabIndexToDelete);
-    clearRowSelection();
-
-    // When deleting the current tab, navigate to the All products
-    if (tabIndexToDelete === currentTab) {
-      navigate(productListUrl());
-    } else {
-      const currentParams = { ...params };
-      // When deleting a tab that is not the current one, only remove the action param from the query
-      delete currentParams.action;
-      // When deleting a tab that is before the current one, decrease the activeTab param by 1
-      currentParams.activeTab = getActiveTabIndexAfterTabDelete(
-        currentTab,
-        tabIndexToDelete,
-      );
-      navigate(productListUrl() + stringify(currentParams));
-    }
-  };
-
-  const handleFilterTabSave = (data: SaveFilterTabDialogFormData) => {
-    const { parsedQs } = prepareQs(location.search);
-
-    saveFilterTab(
-      getNextUniqueTabName(
-        data.name,
-        tabs.map(tab => tab.name),
-      ),
-      stringify(parsedQs),
-    );
-    handleTabChange(tabs.length + 1);
-  };
-
-  const hanleFilterTabUpdate = (tabName: string) => {
-    const { parsedQs, activeTab } = prepareQs(location.search);
-
-    updateFilterTab(tabName, stringify(parsedQs));
-    parsedQs.activeTab = activeTab;
-
-    navigate(productListUrl() + stringify(parsedQs));
-  };
-
   const handleSort = (field: ProductListUrlSortField, attributeId?: string) =>
     navigate(
       productListUrl({
@@ -331,9 +266,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const handleSubmitBulkDelete = () => {
     productBulkDelete({
-      variables: { ids: selectedProductIds },
+      variables: { ids: selectedRowIds },
     });
-    deleteButtonRef.current.blur();
     clearRowSelection();
   };
 
@@ -377,15 +311,15 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       }
 
       const rowsIds = rows.map(row => products[row].id);
-      const haveSaveValues = isEqual(rowsIds, selectedProductIds);
+      const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {
-        setSelectedProductIds(rowsIds);
+        setSelectedRowIds(rowsIds);
       }
 
-      clearRowSelectionCallback.current = clearSelection;
+      setClearDatagridRowSelectionCallback(clearSelection);
     },
-    [products, selectedProductIds],
+    [products, selectedRowIds],
   );
 
   const availableColumnsAttributesOpts =
@@ -440,17 +374,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     channelOpts,
   );
 
-  const hasPresetsChanged = () => {
-    const activeTab = tabs[currentTab - 1];
-    const { parsedQs } = prepareQs(location.search);
-
-    return (
-      activeTab?.data !== stringify(parsedQs) &&
-      location.search !== "" &&
-      stringify(parsedQs) !== ""
-    );
-  };
-
   const paginationValues = usePaginator({
     pageInfo: data?.products?.pageInfo,
     paginationState,
@@ -467,7 +390,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         }}
         onSort={handleSort}
         currencySymbol={selectedChannel?.currencyCode || ""}
-        currentTab={currentTab}
+        currentTab={selectedPreset}
         defaultSettings={defaultListSettings[ListViews.PRODUCT_LIST]}
         filterOpts={filterOpts}
         gridAttributesOpts={gridAttributesOpts}
@@ -486,26 +409,23 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         onFilterChange={changeFilters}
         onFilterAttributeFocus={setFocusedAttribute}
         onTabSave={() => openModal("save-search")}
-        onTabUpdate={hanleFilterTabUpdate}
+        onTabUpdate={onPresetUpdate}
         onTabDelete={(tabIndex: number) => {
-          setTabIndexToDelete(tabIndex);
+          setPresetIdToDelete(tabIndex);
           openModal("delete-search");
         }}
         onProductsDelete={() => openModal("delete")}
-        onTabChange={handleTabChange}
-        hasPresetsChanged={hasPresetsChanged()}
+        onTabChange={onPresetChange}
+        hasPresetsChanged={hasPresetsChange()}
         initialSearch={params.query || ""}
-        tabs={tabs.map(tab => tab.name)}
+        tabs={presets.map(tab => tab.name)}
         onExport={() => openModal("export")}
         selectedChannelId={selectedChannel?.id}
         columnPickerSettings={columnPickerSettings}
         setDynamicColumnSettings={setDynamicColumnsSettings}
-        selectedProductIds={selectedProductIds}
+        selectedProductIds={selectedRowIds}
         onSelectProductIds={handleSetSelectedProductIds}
         clearRowSelection={clearRowSelection}
-        setBulkDeleteButtonRef={(ref: HTMLButtonElement) => {
-          deleteButtonRef.current = ref;
-        }}
       />
       <ActionDialog
         open={params.action === "delete"}
@@ -525,8 +445,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             defaultMessage="{counter,plural,one{Are you sure you want to delete this product?} other{Are you sure you want to delete {displayQuantity} products?}}"
             description="dialog content"
             values={{
-              counter: selectedProductIds.length,
-              displayQuantity: <strong>{selectedProductIds.length}</strong>,
+              counter: selectedRowIds.length,
+              displayQuantity: <strong>{selectedRowIds.length}</strong>,
             }}
           />
         </DialogContentText>
@@ -550,7 +470,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
           all: countAllProducts.data?.products?.totalCount,
           filter: data?.products?.totalCount,
         }}
-        selectedProducts={selectedProductIds.length}
+        selectedProducts={selectedRowIds.length}
         warehouses={mapEdgesToItems(warehouses?.data?.warehouses) || []}
         channels={availableChannels}
         onClose={closeModal}
@@ -560,7 +480,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
               input: {
                 ...data,
                 filter,
-                ids: selectedProductIds,
+                ids: selectedRowIds,
               },
             },
           })
@@ -570,14 +490,14 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleFilterTabSave}
+        onSubmit={onPresetSave}
       />
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleFilterTabDelete}
-        tabName={tabs[tabIndexToDelete - 1]?.name ?? "..."}
+        onSubmit={onPresetDelete}
+        tabName={presets[presetIdToDelete - 1]?.name ?? "..."}
       />
       <ProductTypePickerDialog
         confirmButtonState="success"

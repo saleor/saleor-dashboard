@@ -95,7 +95,7 @@ interface ProductCreatePageProps {
   onAttributeSelectBlur: () => void;
   onCloseDialog: (currentParams?: ProductCreateUrlQueryParams) => void;
   onSelectProductType: (productTypeId: string) => void;
-  onSubmit?(data: ProductCreateData);
+  onSubmit?: (data: ProductCreateData) => any;
 }
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({

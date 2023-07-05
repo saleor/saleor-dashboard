@@ -9,7 +9,7 @@ import { messages } from "./messages";
 import { useStyles } from "./styles";
 
 interface InstallWithManifestFormButtonProps {
-  onSubmitted(manifestUrl: string): void;
+  onSubmitted: (manifestUrl: string) => void;
 }
 
 export const InstallWithManifestFormButton: React.FC<

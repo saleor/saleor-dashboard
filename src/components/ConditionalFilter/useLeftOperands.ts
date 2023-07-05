@@ -1,12 +1,10 @@
+import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { useState } from "react";
 
-import {
-  AttributeInputType,
-  StaticElementName,
-} from "./FilterElement/ConditionOptions";
+import { StaticElementName } from "./FilterElement/ConditionOptions";
 
 export interface LeftOperand {
-  type: AttributeInputType | StaticElementName;
+  type: AttributeInputTypeEnum | StaticElementName;
   label: string;
   value: string;
   slug: string;
