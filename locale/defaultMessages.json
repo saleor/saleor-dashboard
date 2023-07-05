@@ -5096,9 +5096,6 @@
     "context": "no address is set in draft order",
     "string": "Not set"
   },
-  "YIWrkh": {
-    "string": "Search Collection..."
-  },
   "YJ2uRR": {
     "string": "Bulk delete draft orders"
   },
@@ -5916,6 +5913,9 @@
   "eOrLzG": {
     "context": "button",
     "string": "Done"
+  },
+  "eRqx44": {
+    "string": "Search collections..."
   },
   "eUjFjW": {
     "string": "Permission group created"

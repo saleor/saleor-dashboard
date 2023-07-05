@@ -140,8 +140,8 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           onSearchChange={onSearchChange}
           filterStructure={filterStructure}
           searchPlaceholder={intl.formatMessage({
-            id: "YIWrkh",
-            defaultMessage: "Search Collection...",
+            id: "eRqx44",
+            defaultMessage: "Search collections...",
           })}
           actions={
             <Box display="flex" gap={4}>
