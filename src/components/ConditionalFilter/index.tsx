@@ -88,6 +88,7 @@ const FiltersArea = ({ provider, onConfirm }) => {
     }
 
     if (event.type === "rightOperator.onChange") {
+      // @ts-expect-error slug in missing in MacawUI
       updateRightOperator(event.path.split(".")[0], event.value);
     }
 

@@ -1,7 +1,7 @@
 export interface ItemOption {
   label: string;
   value: string;
-  slug?: string;
+  slug: string;
 }
 
 export type ConditionValue =
