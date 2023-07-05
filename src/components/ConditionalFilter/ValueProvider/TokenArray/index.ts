@@ -6,7 +6,7 @@ import { useRef } from "react";
 import { InitialStateResponse } from "../../API/InitialStateResponse";
 import { FilterElement } from "../../FilterElement";
 import { FilterContainer } from "../../useFilterContainer";
-import { UrlToken } from "../UrlToken";
+import { UrlEntry, UrlToken } from "../UrlToken";
 import {
   emptyFetchingParams,
   FetchingParams,
@@ -38,7 +38,9 @@ const mapToTokens = (urlEntries: Array<ParsedQs | string>): TokenArray =>
       return mapToTokens(entry);
     }
 
-    return UrlToken.fromUrlEntry(entry);
+    return UrlToken.fromUrlEntry(
+      UrlEntry.fromQs(entry)
+    );
   }) as TokenArray;
 
 const tokenizeUrl = (urlParams: string) => {
