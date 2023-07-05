@@ -36,6 +36,20 @@ export function createPage({
   attributesTypes[attributeType](attributeValue);
   return savePage();
 }
+export function createPageWithAttribute({
+  pageName,
+  pageTypeName,
+  isPublished = false,
+  attributeType = "DROPDOWN",
+  attributeValue,
+}) {
+  cy.get(PAGE_DETAILS_SELECTORS.nameInput).type(pageName);
+  if (!isPublished) {
+    cy.get(PAGE_DETAILS_SELECTORS.isNotPublishedCheckbox).click();
+  }
+  attributesTypes[attributeType](attributeValue);
+  return savePage();
+}
 
 export function addSelectAttributeValue(attributeValue) {
   cy.fillAutocompleteSelect(
@@ -81,7 +95,7 @@ function openCreatePageAndFillUpGeneralFields({
   }
 }
 
-function savePage() {
+export function savePage() {
   return cy
     .addAliasToGraphRequest("PageCreate")
     .get(BUTTON_SELECTORS.confirm)
@@ -89,4 +103,14 @@ function savePage() {
     .confirmationMessageShouldDisappear()
     .waitForRequestAndCheckIfNoErrors("@PageCreate")
     .its("response.body.data.pageCreate.page");
+}
+export function openCreatePageDialog() {
+  return cy.get(PAGES_LIST_SELECTORS.createPageButton).click();
+}
+export function selectPageTypeOnIndex(index) {
+  cy.get(PAGES_LIST_SELECTORS.dialogPageTypeInput).click();
+  return cy
+    .get(PAGES_LIST_SELECTORS.dialogPageTypeInputOptions)
+    .eq(index)
+    .click();
 }
