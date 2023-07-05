@@ -142,8 +142,8 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
               {selectedCollectionIds.length > 0 && (
                 <CollectionListDeleteButton onClick={onCollectionsDelete}>
                   <FormattedMessage
-                    defaultMessage="Bulk collections delete"
-                    id="hMPyP0"
+                    defaultMessage="Delete collections"
+                    id="FTYkgw"
                   />
                 </CollectionListDeleteButton>
               )}

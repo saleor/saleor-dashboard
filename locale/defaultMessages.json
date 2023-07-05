@@ -2381,6 +2381,9 @@
     "context": "option title",
     "string": "Prioritize warehouses by sorting order"
   },
+  "FTYkgw": {
+    "string": "Delete collections"
+  },
   "FWbv/u": {
     "context": "page header",
     "string": "Create Discount"
@@ -6243,9 +6246,6 @@
   "hLUYBt": {
     "context": "payment status",
     "string": "Pending"
-  },
-  "hMPyP0": {
-    "string": "Bulk collections delete"
   },
   "hMRP6J": {
     "string": "Default Address"
