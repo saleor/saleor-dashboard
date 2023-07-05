@@ -1,5 +1,5 @@
 ---
-"saleor-dashboard": minor
+"saleor-dashboard": patch
 ---
 
-Experimental filters: fix types and refator inital api state
+Experimental filters: fix types and refactor initial api state
