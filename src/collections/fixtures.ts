@@ -1,13 +1,12 @@
 // @ts-strict-ignore
 import {
   CollectionDetailsQuery,
-  CollectionListQuery,
   CollectionPublished,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
 
 import * as richTextEditorFixtures from "../components/RichTextEditor/fixtures.json";
 import { CollectionListFilterOpts } from "./components/CollectionListPage";
+import { Collections } from "./types";
 
 const content = richTextEditorFixtures.richTextEditor;
 
@@ -28,7 +27,7 @@ export const collectionListFilterOpts: CollectionListFilterOpts = {
   },
 };
 
-export const collections: RelayToFlat<CollectionListQuery["collections"]> = [
+export const collections: Collections = [
   {
     __typename: "Collection",
     channelListings: [
