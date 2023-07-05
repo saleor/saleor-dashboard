@@ -82,7 +82,6 @@ export const createGetCellContent =
           rowData?.products?.totalCount?.toString() ?? "",
         );
       case "available":
-        // eslint-disable-next-line no-case-declarations
         const { label, color } = !!channel
           ? getAvailablilityLabelWhenSelectedChannel(
               channel,

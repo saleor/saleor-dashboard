@@ -12,12 +12,7 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import {
-  FilterPageProps,
-  PageListProps,
-  SearchPageProps,
-  SortPage,
-} from "@dashboard/types";
+import { FilterPageProps, PageListProps, SortPage } from "@dashboard/types";
 import { Card } from "@material-ui/core";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
@@ -32,7 +27,6 @@ import {
 } from "./filters";
 export interface CollectionListPageProps
   extends PageListProps,
-    SearchPageProps,
     Omit<
       FilterPageProps<CollectionFilterKeys, CollectionListFilterOpts>,
       "onTabDelete"

@@ -57,7 +57,6 @@ export const CollectionListDatagrid = ({
   const intl = useIntl();
   const { theme: currentTheme, themeValues } = useTheme();
   const datagrid = useDatagridChangeState();
-  const columnsLength = settings?.columns?.length ?? 0;
 
   const collectionListStaticColumns = useMemo(
     () => collectionListStaticColumnsAdapter(intl, sort),
@@ -130,8 +129,7 @@ export const CollectionListDatagrid = ({
 
   const handleGetColumnTooltipContent = useCallback(
     (col: number): string => {
-      const columnName = collectionListStaticColumns[col]
-        .id as CollectionListUrlSortField;
+      const columnName = visibleColumns[col].id as CollectionListUrlSortField;
 
       if (canBeSorted(columnName, !!selectedChannelId)) {
         return "";
@@ -142,7 +140,7 @@ export const CollectionListDatagrid = ({
         filterName: filterDependency?.label ?? "",
       });
     },
-    [filterDependency, intl, selectedChannelId],
+    [filterDependency, intl, selectedChannelId, visibleColumns],
   );
 
   const handleHeaderClick = useCallback(
@@ -196,7 +194,6 @@ export const CollectionListDatagrid = ({
       <Box paddingX={6}>
         <TablePaginationWithContext
           component="div"
-          colSpan={(collections?.length === 0 ? 1 : 2) + columnsLength}
           settings={settings}
           disabled={disabled}
           onUpdateListSettings={onUpdateListSettings}
