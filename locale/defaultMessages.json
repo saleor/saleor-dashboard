@@ -2401,10 +2401,6 @@
     "context": "postal codes, header",
     "string": "Postal codes"
   },
-  "FcVEpe": {
-    "context": "collection publication date",
-    "string": "Unpublished"
-  },
   "FemBUF": {
     "context": "header",
     "string": "Translations to {language}"
@@ -3393,10 +3389,6 @@
   "McN+wq": {
     "context": "customers section name",
     "string": "Customers"
-  },
-  "Mee46w": {
-    "context": "collection publication date",
-    "string": "Becomes published on {date}"
   },
   "MewrtN": {
     "context": "section header",
@@ -5851,10 +5843,6 @@
   },
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
-  },
-  "dpY94C": {
-    "context": "collection publication date",
-    "string": "Published on {date}"
   },
   "dsJ+Wv": {
     "context": "note on export gift cards",
