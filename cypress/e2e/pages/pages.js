@@ -58,11 +58,13 @@ describe("Tests for pages", () => {
     "should create not published page",
     { tags: ["@pages", "@allEnv", "@stable"] },
     () => {
+      cy.addAliasToGraphRequest("PageType");
       const pageName = `${startsWith}${faker.datatype.number()}`;
       cy.visit(urlList.pages);
       pagesPage.openCreatePageDialog();
       pagesPage.selectPageTypeOnIndex(0);
       cy.clickSubmitButton();
+      cy.waitForRequestAndCheckIfNoErrors("@PageType");
       pageDetailsPage.typePageName(pageName);
       cy.get(PAGE_DETAILS_SELECTORS.isNotPublishedCheckbox).click();
       pagesPage.savePage().then(page => {
