@@ -1,8 +1,6 @@
-/* eslint-disable @typescript-eslint/consistent-type-assertions */
+import { Collection } from "@dashboard/collections/types";
 import { CollectionChannels } from "@dashboard/components/ChannelsAvailabilityDropdown/utils";
-import { CollectionListQuery } from "@dashboard/graphql";
 import { COLOR_WARNING } from "@dashboard/misc";
-import { RelayToFlat } from "@dashboard/types";
 import { ThemeTokensValues } from "@saleor/macaw-ui/next";
 import { IntlShape } from "react-intl";
 
@@ -119,9 +117,7 @@ describe("getAvailablilityLabel", () => {
     // Arrange
     const collection = {
       channelListings: [],
-    } as unknown as RelayToFlat<
-      NonNullable<CollectionListQuery["collections"]>
-    >[number];
+    } as unknown as Collection;
 
     // Act
     const result = getAvailablilityLabel(collection, intl, currentTheme, theme);
@@ -148,9 +144,7 @@ describe("getAvailablilityLabel", () => {
           publicationDate: null,
         },
       ],
-    } as unknown as RelayToFlat<
-      NonNullable<CollectionListQuery["collections"]>
-    >[number];
+    } as unknown as Collection;
 
     // Act
     const result = getAvailablilityLabel(collection, intl, currentTheme, theme);
@@ -178,9 +172,7 @@ describe("getAvailablilityLabel", () => {
           publicationDate: null,
         },
       ],
-    } as unknown as RelayToFlat<
-      NonNullable<CollectionListQuery["collections"]>
-    >[number];
+    } as unknown as Collection;
 
     // Act
     const result = getAvailablilityLabel(collection, intl, currentTheme, theme);

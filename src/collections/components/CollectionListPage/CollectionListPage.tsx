@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { Collections } from "@dashboard/collections/types";
 import {
   collectionAddUrl,
   CollectionListUrlSortField,
@@ -9,13 +10,11 @@ import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
-import { CollectionListQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import {
   FilterPageProps,
   PageListProps,
-  RelayToFlat,
   SearchPageProps,
   SortPage,
 } from "@dashboard/types";
@@ -42,7 +41,7 @@ export interface CollectionListPageProps
   onTabUpdate: (tabName: string) => void;
   selectedChannelId: string;
   columnPickerSettings: string[];
-  collections: RelayToFlat<CollectionListQuery["collections"]>;
+  collections: Collections;
   loading: boolean;
   selectedCollectionIds: string[];
   hasPresetsChanged: () => boolean;

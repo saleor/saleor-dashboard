@@ -1,3 +1,4 @@
+import { Collection, Collections } from "@dashboard/collections/types";
 import { CollectionListUrlSortField } from "@dashboard/collections/urls";
 import { canBeSorted } from "@dashboard/collections/views/CollectionList/sort";
 import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
@@ -9,8 +10,7 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
-import { CollectionListQuery } from "@dashboard/graphql";
-import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
+import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
@@ -25,7 +25,7 @@ import { messages } from "./messages";
 interface CollectionListDatagridProps
   extends ListProps,
     SortPage<CollectionListUrlSortField> {
-  collections: RelayToFlat<NonNullable<CollectionListQuery["collections"]>>;
+  collections: Collections;
   loading: boolean;
   columnPickerSettings: string[];
   selectedChannelId: string;
@@ -76,9 +76,7 @@ export const CollectionListDatagrid = ({
       if (!onRowClick) {
         return;
       }
-      const rowData: RelayToFlat<
-        NonNullable<CollectionListQuery["collections"]>
-      >[number] = collections[row];
+      const rowData: Collection = collections[row];
       onRowClick(rowData.id);
     },
     [onRowClick, collections],
@@ -89,9 +87,7 @@ export const CollectionListDatagrid = ({
       if (!rowAnchor) {
         return "";
       }
-      const rowData: RelayToFlat<
-        NonNullable<CollectionListQuery["collections"]>
-      >[number] = collections[row];
+      const rowData: Collection = collections[row];
       return rowAnchor(rowData.id);
     },
     [rowAnchor, collections],

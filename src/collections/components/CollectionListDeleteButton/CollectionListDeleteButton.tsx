@@ -36,3 +36,5 @@ export const CollectionListDeleteButton = forwardRef<
     </Tooltip>
   );
 });
+
+CollectionListDeleteButton.displayName = "CollectionListDeleteButton";

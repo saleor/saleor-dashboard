@@ -1,3 +1,4 @@
+import { Collection, Collections } from "@dashboard/collections/types";
 import { CollectionListUrlSortField } from "@dashboard/collections/urls";
 import { messages } from "@dashboard/components/ChannelsAvailabilityDropdown/messages";
 import {
@@ -11,9 +12,8 @@ import {
   tagsCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
-import { CollectionListQuery } from "@dashboard/graphql";
 import { getStatusColor } from "@dashboard/misc";
-import { RelayToFlat, Sort } from "@dashboard/types";
+import { Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import { DefaultTheme, ThemeTokensValues } from "@saleor/macaw-ui/next";
@@ -55,7 +55,7 @@ export const createGetCellContent =
     theme,
     currentTheme,
   }: {
-    collections: RelayToFlat<NonNullable<CollectionListQuery["collections"]>>;
+    collections: Collections;
     columns: AvailableColumn[];
     intl: IntlShape;
     selectedChannelId: string;
@@ -128,7 +128,7 @@ export function getAvailablilityLabelWhenSelectedChannel(
 }
 
 export function getAvailablilityLabel(
-  rowData: RelayToFlat<NonNullable<CollectionListQuery["collections"]>>[number],
+  rowData: Collection,
   intl: IntlShape,
   currentTheme: DefaultTheme,
   theme: ThemeTokensValues,
