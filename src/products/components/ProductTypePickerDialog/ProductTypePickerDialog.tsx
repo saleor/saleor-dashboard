@@ -43,6 +43,7 @@ const ProductTypePickerDialog: React.FC<ProductTypePickerDialogProps> = ({
       fetchProductTypes("");
     },
   });
+  console.log(productTypeDisplayValue, choice);
 
   return (
     <ActionDialog

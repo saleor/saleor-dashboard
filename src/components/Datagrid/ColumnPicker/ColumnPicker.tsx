@@ -19,7 +19,7 @@ import { ColumnCategory } from "./useColumns";
 
 export interface ColumnPickerProps {
   staticColumns: AvailableColumn[];
-  dynamicColumns?: AvailableColumn[];
+  dynamicColumns?: AvailableColumn[] | null | undefined;
   selectedColumns: string[];
   columnCategories?: ColumnCategory[];
   columnPickerSettings?: string[];

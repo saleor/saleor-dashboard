@@ -119,7 +119,9 @@ describe("getAvailablilityLabel", () => {
     // Arrange
     const collection = {
       channelListings: [],
-    } as RelayToFlat<CollectionListQuery["collections"]>[number];
+    } as unknown as RelayToFlat<
+      NonNullable<CollectionListQuery["collections"]>
+    >[number];
 
     // Act
     const result = getAvailablilityLabel(collection, intl, currentTheme, theme);
@@ -146,7 +148,9 @@ describe("getAvailablilityLabel", () => {
           publicationDate: null,
         },
       ],
-    } as RelayToFlat<CollectionListQuery["collections"]>[number];
+    } as unknown as RelayToFlat<
+      NonNullable<CollectionListQuery["collections"]>
+    >[number];
 
     // Act
     const result = getAvailablilityLabel(collection, intl, currentTheme, theme);
@@ -174,7 +178,9 @@ describe("getAvailablilityLabel", () => {
           publicationDate: null,
         },
       ],
-    } as RelayToFlat<CollectionListQuery["collections"]>[number];
+    } as unknown as RelayToFlat<
+      NonNullable<CollectionListQuery["collections"]>
+    >[number];
 
     // Act
     const result = getAvailablilityLabel(collection, intl, currentTheme, theme);

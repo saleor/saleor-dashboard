@@ -25,7 +25,7 @@ import { messages } from "./messages";
 interface CollectionListDatagridProps
   extends ListProps,
     SortPage<CollectionListUrlSortField> {
-  collections: RelayToFlat<CollectionListQuery["collections"]>;
+  collections: RelayToFlat<NonNullable<CollectionListQuery["collections"]>>;
   loading: boolean;
   columnPickerSettings: string[];
   selectedChannelId: string;
@@ -64,7 +64,9 @@ export const CollectionListDatagrid = ({
 
   const handleColumnChange = useCallback(
     (picked: string[]) => {
-      onUpdateListSettings("columns", picked.filter(Boolean));
+      if (onUpdateListSettings) {
+        onUpdateListSettings("columns", picked.filter(Boolean));
+      }
     },
     [onUpdateListSettings],
   );
@@ -74,7 +76,9 @@ export const CollectionListDatagrid = ({
       if (!onRowClick) {
         return;
       }
-      const rowData = collections[row];
+      const rowData: RelayToFlat<
+        NonNullable<CollectionListQuery["collections"]>
+      >[number] = collections[row];
       onRowClick(rowData.id);
     },
     [onRowClick, collections],
@@ -83,9 +87,11 @@ export const CollectionListDatagrid = ({
   const handleRowAnchor = useCallback(
     ([, row]: Item) => {
       if (!rowAnchor) {
-        return;
+        return "";
       }
-      const rowData = collections[row];
+      const rowData: RelayToFlat<
+        NonNullable<CollectionListQuery["collections"]>
+      >[number] = collections[row];
       return rowAnchor(rowData.id);
     },
     [rowAnchor, collections],
@@ -114,10 +120,10 @@ export const CollectionListDatagrid = ({
 
       // Sortable but requrie selected channel
       return intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-        filterName: filterDependency.label,
+        filterName: filterDependency?.label ?? "",
       });
     },
-    [filterDependency.label, intl, selectedChannelId],
+    [filterDependency, intl, selectedChannelId],
   );
 
   const {
@@ -130,7 +136,7 @@ export const CollectionListDatagrid = ({
     recentlyAddedColumn,
   } = useColumns({
     staticColumns: collectionListStaticColumns,
-    selectedColumns: settings.columns,
+    selectedColumns: settings?.columns ?? [],
     onSave: handleColumnChange,
   });
 
@@ -152,6 +158,8 @@ export const CollectionListDatagrid = ({
       themeValues,
     ],
   );
+
+  const columnsLength = settings?.columns?.length ?? 0;
 
   return (
     <DatagridChangeStateContext.Provider value={datagrid}>
@@ -193,9 +201,7 @@ export const CollectionListDatagrid = ({
       <Box paddingX={6}>
         <TablePaginationWithContext
           component="div"
-          colSpan={
-            (collections?.length === 0 ? 1 : 2) + settings.columns.length
-          }
+          colSpan={(collections?.length === 0 ? 1 : 2) + columnsLength}
           settings={settings}
           disabled={disabled}
           onUpdateListSettings={onUpdateListSettings}

@@ -55,7 +55,7 @@ export const createGetCellContent =
     theme,
     currentTheme,
   }: {
-    collections: RelayToFlat<CollectionListQuery["collections"]>;
+    collections: RelayToFlat<NonNullable<CollectionListQuery["collections"]>>;
     columns: AvailableColumn[];
     intl: IntlShape;
     selectedChannelId: string;
@@ -66,19 +66,21 @@ export const createGetCellContent =
     const rowData = collections[row];
     const columnId = columns[column]?.id;
 
-    if (!columnId) {
+    if (!columnId || !rowData) {
       return readonlyTextCell("");
     }
 
-    const channel = rowData?.channelListings?.find(
-      listing => listing.channel.id === selectedChannelId,
+    const channel = rowData.channelListings?.find(
+      (listing: CollectionChannels) => listing.channel.id === selectedChannelId,
     );
 
     switch (columnId) {
       case "name":
         return readonlyTextCell(rowData.name);
       case "productCount":
-        return readonlyTextCell(rowData.products.totalCount.toString());
+        return readonlyTextCell(
+          rowData?.products?.totalCount?.toString() ?? "",
+        );
       case "available":
         // eslint-disable-next-line no-case-declarations
         const { label, color } = !!channel
@@ -103,6 +105,8 @@ export const createGetCellContent =
             allowOverlay: false,
           },
         );
+      default:
+        return readonlyTextCell("");
     }
   };
 
@@ -124,7 +128,7 @@ export function getAvailablilityLabelWhenSelectedChannel(
 }
 
 export function getAvailablilityLabel(
-  rowData: RelayToFlat<CollectionListQuery["collections"]>[number],
+  rowData: RelayToFlat<NonNullable<CollectionListQuery["collections"]>>[number],
   intl: IntlShape,
   currentTheme: DefaultTheme,
   theme: ThemeTokensValues,
@@ -154,5 +158,7 @@ function getTagCellColor(
     return color;
   }
 
-  return currentTheme.colors.background[color];
+  return currentTheme.colors.background[
+    color as keyof ThemeTokensValues["colors"]["background"]
+  ];
 }
