@@ -48,7 +48,7 @@ jest
   .mockImplementation(() => "http://localhost:3000");
 
 jest.spyOn(ReactIntl, "useIntl").mockImplementation(
-  // @ts-ignore - only mock required method
+  // @ts-expect-error - only mock required method
   (): Pick<IntlShape, "formatMessage"> => ({
     formatMessage: jest.fn(),
   }),
@@ -72,7 +72,7 @@ describe("AppActionsHandler", function () {
    */
   beforeEach((): void => {
     delete window.location;
-    // @ts-ignore
+    // @ts-expect-error
     window.location = {
       href: "http://localhost:3000",
       hostname: "localhost",

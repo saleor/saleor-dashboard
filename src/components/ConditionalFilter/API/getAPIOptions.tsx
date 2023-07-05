@@ -14,7 +14,7 @@ import {
 
 const getFilterElement = (value: any, index: number): FilterElement => {
   const possibleFilterElement = value[index];
-  return typeof possibleFilterElement != "string"
+  return typeof possibleFilterElement !== "string"
     ? possibleFilterElement
     : null;
 };

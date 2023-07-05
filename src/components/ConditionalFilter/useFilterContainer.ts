@@ -2,6 +2,7 @@
 import { useState } from "react";
 
 import { FilterElement } from "./FilterElement";
+import { ConditionValue, ItemOption } from "./FilterElement/ConditionSelected";
 
 export type FilterContainer = Array<string | FilterElement | FilterContainer>;
 
@@ -36,7 +37,7 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
     const index = parseInt(position, 10);
     setValue(v =>
       v.map((el, elIndex) => {
-        if (elIndex === index && typeof el != "string" && !Array.isArray(el)) {
+        if (elIndex === index && typeof el !== "string" && !Array.isArray(el)) {
           el.updateLeftOperator(leftOperator);
         }
 
@@ -49,7 +50,7 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
     const index = parseInt(position, 10);
     setValue(v =>
       v.map((el, elIndex) => {
-        if (elIndex === index && typeof el != "string" && !Array.isArray(el)) {
+        if (elIndex === index && typeof el !== "string" && !Array.isArray(el)) {
           el.updateLeftLoadingState(loading);
         }
 
@@ -58,12 +59,12 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
     );
   };
 
-  const updateRightOperator = (position: string, leftOperator: any) => {
+  const updateRightOperator = (position: string, rightOperator: ConditionValue) => {
     const index = parseInt(position, 10);
     setValue(v =>
       v.map((el, elIndex) => {
-        if (elIndex === index && typeof el != "string" && !Array.isArray(el)) {
-          el.updateRightOperator(leftOperator);
+        if (elIndex === index && typeof el !== "string" && !Array.isArray(el)) {
+          el.updateRightOperator(rightOperator);
         }
 
         return el;
@@ -71,11 +72,11 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
     );
   };
 
-  const updateRightOptions = (position: string, options: any) => {
+  const updateRightOptions = (position: string, options: ItemOption[]) => {
     const index = parseInt(position, 10);
     setValue(v =>
       v.map((el, elIndex) => {
-        if (elIndex === index && typeof el != "string" && !Array.isArray(el)) {
+        if (elIndex === index && typeof el !== "string" && !Array.isArray(el)) {
           el.updateRightOptions(options);
         }
 
@@ -88,7 +89,7 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
     const index = parseInt(position, 10);
     setValue(v =>
       v.map((el, elIndex) => {
-        if (elIndex === index && typeof el != "string" && !Array.isArray(el)) {
+        if (elIndex === index && typeof el !== "string" && !Array.isArray(el)) {
           el.updateRightLoadingState(loading);
         }
 
@@ -102,7 +103,7 @@ export const useFilterContainer = (initialValue: FilterContainer) => {
 
     setValue(v =>
       v.map((el, elIndex) => {
-        if (elIndex === index && typeof el != "string" && !Array.isArray(el)) {
+        if (elIndex === index && typeof el !== "string" && !Array.isArray(el)) {
           el.updateCondition(conditionValue);
         }
 

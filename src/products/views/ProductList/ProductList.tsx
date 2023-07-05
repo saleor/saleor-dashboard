@@ -298,25 +298,25 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   };
 
   const handleFilterTabSave = (data: SaveFilterTabDialogFormData) => {
-    const { paresedQs } = prepareQs(location.search);
+    const { parsedQs } = prepareQs(location.search);
 
     saveFilterTab(
       getNextUniqueTabName(
         data.name,
         tabs.map(tab => tab.name),
       ),
-      stringify(paresedQs),
+      stringify(parsedQs),
     );
     handleTabChange(tabs.length + 1);
   };
 
   const hanleFilterTabUpdate = (tabName: string) => {
-    const { paresedQs, activeTab } = prepareQs(location.search);
+    const { parsedQs, activeTab } = prepareQs(location.search);
 
-    updateFilterTab(tabName, stringify(paresedQs));
-    paresedQs.activeTab = activeTab;
+    updateFilterTab(tabName, stringify(parsedQs));
+    parsedQs.activeTab = activeTab;
 
-    navigate(productListUrl() + stringify(paresedQs));
+    navigate(productListUrl() + stringify(parsedQs));
   };
 
   const handleSort = (field: ProductListUrlSortField, attributeId?: string) =>
@@ -442,12 +442,12 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const hasPresetsChanged = () => {
     const activeTab = tabs[currentTab - 1];
-    const { paresedQs } = prepareQs(location.search);
+    const { parsedQs } = prepareQs(location.search);
 
     return (
-      activeTab?.data !== stringify(paresedQs) &&
+      activeTab?.data !== stringify(parsedQs) &&
       location.search !== "" &&
-      stringify(paresedQs) !== ""
+      stringify(parsedQs) !== ""
     );
   };
 

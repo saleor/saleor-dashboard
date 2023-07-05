@@ -8,10 +8,12 @@ type TokenType = "a" | "s";
 
 // export type UrlEntry = Record<string, string | string[]>
 
+// eslint-disable-next-line @typescript-eslint/no-extraneous-class
 export class UrlEntry {
   constructor(key: string, value: string | string[]) {
     this[key] = value;
   }
+
 }
 
 export class UrlToken {

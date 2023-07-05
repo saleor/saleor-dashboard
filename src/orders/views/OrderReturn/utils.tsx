@@ -13,9 +13,9 @@ import {
 } from "@dashboard/orders/components/OrderReturnPage/form";
 
 class ReturnFormDataParser {
-  private order: OrderDetailsFragment;
-  private formData: OrderReturnFormData;
-  private refundsEnabled: boolean;
+  private readonly order: OrderDetailsFragment;
+  private readonly formData: OrderReturnFormData;
+  private readonly refundsEnabled: boolean;
 
   constructor(data: {
     order: OrderDetailsFragment;
@@ -71,13 +71,13 @@ class ReturnFormDataParser {
     };
   };
 
-  private getAmountToRefund = (): number | undefined =>
+  private readonly getAmountToRefund = (): number | undefined =>
     this.formData.amountCalculationMode ===
     OrderRefundAmountCalculationMode.MANUAL
       ? this.formData.amount
       : undefined;
 
-  private getParsedLineData = <
+  private readonly getParsedLineData = <
     T extends OrderReturnFulfillmentLineInput | OrderReturnLineInput,
   >(
     itemsQuantities: FormsetQuantityData,
@@ -99,7 +99,7 @@ class ReturnFormDataParser {
     }, []);
   };
 
-  private getShouldRefund = (
+  private readonly getShouldRefund = (
     orderLines: OrderReturnLineInput[],
     fulfillmentLines: OrderReturnFulfillmentLineInput[],
   ) => {
@@ -122,7 +122,7 @@ class ReturnFormDataParser {
   };
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  private static isLineRefundable = function <
+  private static readonly isLineRefundable = function <
     T extends OrderReturnLineInput | OrderReturnFulfillmentLineInput,
   >({ replace }: T) {
     return !replace;

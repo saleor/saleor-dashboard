@@ -4,7 +4,7 @@ import { LeftOperand } from "./../useLeftOperands";
 import { CONDITIONS, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
 import { ConditionItem, ConditionOptions } from "./ConditionOptions";
-import { ConditionOption, ConditionSelected } from "./ConditionSelected";
+import { ConditionSelected, ConditionValue, ItemOption } from "./ConditionSelected";
 
 interface ExpressionValue {
   value: string;
@@ -12,7 +12,7 @@ interface ExpressionValue {
   type: string;
 }
 
-const createStaticEntry = (rawEntry: ConditionOption) => {
+const createStaticEntry = (rawEntry: ConditionValue) => {
   if (typeof rawEntry === "string") {
     return rawEntry;
   }
@@ -24,7 +24,7 @@ const createStaticEntry = (rawEntry: ConditionOption) => {
   return rawEntry.slug;
 };
 
-const createAttributeEntry = (rawEntry: ConditionOption) => {
+const createAttributeEntry = (rawEntry: ConditionValue) => {
   if (typeof rawEntry === "string") {
     return rawEntry;
   }
@@ -73,11 +73,11 @@ export class FilterElement {
       ConditionSelected.fromConditionItem(conditionValue);
   }
 
-  public updateRightOperator(value: ConditionOption) {
+  public updateRightOperator(value: ConditionValue) {
     this.condition.selected.setValue(value);
   }
 
-  public updateRightOptions(options: ConditionOption[]) {
+  public updateRightOptions(options: ItemOption[]) {
     this.condition.selected.setOptions(options);
   }
 

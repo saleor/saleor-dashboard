@@ -62,7 +62,7 @@ export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
           ) : (
             label
           )}
-          <div>{secondLabel ? secondLabel : null}</div>
+          <div>{secondLabel || null}</div>
         </div>
       }
       disabled={disabled}
