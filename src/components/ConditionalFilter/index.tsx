@@ -9,7 +9,7 @@ import {
   getLeftOperatorOptions,
   getRightOperatorOptionsByQuery,
 } from "./API/getAPIOptions";
-import { ConditionOption } from "./FilterElement/ConditionSelected";
+import { ConditionValue } from "./FilterElement/ConditionSelected";
 import { useFilterContainer } from "./useFilterContainer";
 import { useLeftOperands } from "./useLeftOperands";
 import { useUrlValueProvider } from "./ValueProvider/useUrlValueProvider";
@@ -58,7 +58,7 @@ type FilterEvent =
   | {
       type: "rightOperator.onChange";
       path: string;
-      value: ConditionOption;
+      value: ConditionValue;
     }
   | {
       type: "rightOperator.onFocus";
