@@ -8350,7 +8350,7 @@ export type _SearchCollectionsOperandsQueryVariables = Exact<{
 }>;
 
 
-export type _SearchCollectionsOperandsQuery = { __typename: 'Query', search: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, slug: string } }> } | null };
+export type _SearchCollectionsOperandsQuery = { __typename: 'Query', collections: { __typename: 'CollectionCountableConnection', edges: Array<{ __typename: 'CollectionCountableEdge', node: { __typename: 'Collection', id: string, name: string, slug: string } }> } | null };
 
 export type _SearchCategoriesOperandsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
@@ -8359,7 +8359,7 @@ export type _SearchCategoriesOperandsQueryVariables = Exact<{
 }>;
 
 
-export type _SearchCategoriesOperandsQuery = { __typename: 'Query', search: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, slug: string } }> } | null };
+export type _SearchCategoriesOperandsQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, slug: string } }> } | null };
 
 export type _SearchProductTypesOperandsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;
@@ -8368,7 +8368,7 @@ export type _SearchProductTypesOperandsQueryVariables = Exact<{
 }>;
 
 
-export type _SearchProductTypesOperandsQuery = { __typename: 'Query', search: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string, slug: string } }> } | null };
+export type _SearchProductTypesOperandsQuery = { __typename: 'Query', productTypes: { __typename: 'ProductTypeCountableConnection', edges: Array<{ __typename: 'ProductTypeCountableEdge', node: { __typename: 'ProductType', id: string, name: string, slug: string } }> } | null };
 
 export type _SearchAttributeOperandsQueryVariables = Exact<{
   attributesSlugs?: InputMaybe<Array<Scalars['String']> | Scalars['String']>;
@@ -8377,7 +8377,7 @@ export type _SearchAttributeOperandsQueryVariables = Exact<{
 }>;
 
 
-export type _SearchAttributeOperandsQuery = { __typename: 'Query', search: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null, slug: string } }> } | null } }> } | null };
+export type _SearchAttributeOperandsQuery = { __typename: 'Query', attributes: { __typename: 'AttributeCountableConnection', edges: Array<{ __typename: 'AttributeCountableEdge', node: { __typename: 'Attribute', id: string, name: string | null, slug: string | null, inputType: AttributeInputTypeEnum | null, choices: { __typename: 'AttributeValueCountableConnection', edges: Array<{ __typename: 'AttributeValueCountableEdge', node: { __typename: 'AttributeValue', id: string, name: string | null, slug: string } }> } | null } }> } | null };
 
 export type _GetAttributeChoicesQueryVariables = Exact<{
   slug: Scalars['String'];

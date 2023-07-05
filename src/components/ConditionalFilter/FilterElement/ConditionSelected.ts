@@ -4,7 +4,7 @@ import { ConditionItem } from "./ConditionOptions";
 export interface ItemOption {
   label: string;
   value: string;
-  slug: string;
+  slug?: string;
 }
 
 export type ConditionValue =
@@ -13,7 +13,6 @@ export type ConditionValue =
   | string
   | string[]
   | [string, string];
-
 
 export class ConditionSelected {
   private constructor(

@@ -25,7 +25,7 @@ export const initialDynamicOperands = gql`
   }
 
   query _SearchCollectionsOperands($first: Int!, $collectionsSlugs: [String!]) {
-    search: collections(first: $first, filter: { slugs: $collectionsSlugs }) {
+    collections(first: $first, filter: { slugs: $collectionsSlugs }) {
       edges {
         node {
           id
@@ -41,7 +41,7 @@ export const initialDynamicOperands = gql`
     $first: Int!
     $categoriesSlugs: [String!]
   ) {
-    search: categories(
+    categories(
       after: $after
       first: $first
       filter: { slugs: $categoriesSlugs }
@@ -61,7 +61,7 @@ export const initialDynamicOperands = gql`
     $first: Int!
     $productTypesSlugs: [String!]
   ) {
-    search: productTypes(
+    productTypes(
       after: $after
       first: $first
       filter: { slugs: $productTypesSlugs }
@@ -81,7 +81,7 @@ export const initialDynamicOperands = gql`
     $choicesIds: [ID!]
     $first: Int!
   ) {
-    search: attributes(first: $first, filter: { slugs: $attributesSlugs }) {
+    attributes(first: $first, filter: { slugs: $attributesSlugs }) {
       edges {
         node {
           id
