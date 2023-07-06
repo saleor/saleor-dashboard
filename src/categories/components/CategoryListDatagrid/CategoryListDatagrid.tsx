@@ -24,10 +24,9 @@ import {
 import { messages } from "./messages";
 
 interface CategoryListDatagridProps
-  extends Partial<SortPage<CategoryListUrlSortField>>,
-    PageListProps {
+  extends PageListProps,
+    SortPage<CategoryListUrlSortField> {
   categories: CategoryFragment[];
-  disabled: boolean;
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
   selectionActionButton?: ReactNode | null;
   hasRowHover?: boolean;
@@ -46,6 +45,7 @@ export const CategoryListDatagrid = ({
 }: CategoryListDatagridProps) => {
   const datagridState = useDatagridChangeState();
   const intl = useIntl();
+
   const memoizedStaticColumns = useMemo(
     () => categoryListStaticColumnsAdapter(intl, sort),
     [intl, sort],
