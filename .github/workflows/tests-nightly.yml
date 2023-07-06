@@ -379,7 +379,7 @@ jobs:
       - name: Notify Slack
         env:
           JOB_DEPLOYMENT_KIND: staging
-          JOB_STATUS: ${{ job.status }}
+          JOB_STATUS: 'Failure'
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_RELEASES_WEBHOOK_URL }}
           JOB_TITLE: "Test release workflow - ${{github.event.client_payload.project}} ${{github.event.client_payload.version}}"
           JOB_KIND: "release tests"
@@ -422,7 +422,7 @@ jobs:
         if: steps.get-tests-results.outputs.testStatus == 'true'
         env:
           JOB_DEPLOYMENT_KIND: ${{ needs.run-tests-in-parallel.outputs.environment }}
-          JOB_STATUS: ${{ job.status }}
+          JOB_STATUS: 'Failure'
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_SALEOR_QA_WEBHOOK_URL }}
           JOB_TITLE: "A lot of tests failed, something is probably broken - ${{ needs.run-tests-in-parallel.outputs.dashboard_url }}"
           JOB_KIND: "Tests"
