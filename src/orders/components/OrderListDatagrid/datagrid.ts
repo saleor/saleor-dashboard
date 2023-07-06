@@ -20,7 +20,7 @@ import {
 import { OrderListUrlSortField } from "@dashboard/orders/urls";
 import { RelayToFlat, Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
-import { GridCell, Item } from "@glideapps/glide-data-grid";
+import { GridCell, Item, TextCell } from "@glideapps/glide-data-grid";
 import {
   DefaultTheme,
   ThemeTokensValues,
@@ -144,8 +144,8 @@ export function getDateCellContent(
 
 export function getCustomerCellContent(
   rowData: RelayToFlat<OrderListQuery["orders"]>[number],
-) {
-  if (rowData.billingAddress) {
+): TextCell {
+  if (rowData?.billingAddress?.firstName && rowData?.billingAddress?.lastName) {
     return readonlyTextCell(
       `${rowData.billingAddress.firstName} ${rowData.billingAddress.lastName}`,
     );
