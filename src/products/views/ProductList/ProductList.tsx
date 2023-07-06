@@ -174,7 +174,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ProductListUrlDialog,
     ProductListUrlQueryParams
   >(navigate, productListUrl, params);
-  console.log(params);
 
   const {
     clearRowSelection,
