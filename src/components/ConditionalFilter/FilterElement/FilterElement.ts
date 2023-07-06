@@ -161,7 +161,7 @@ export class FilterElement {
       );
     }
 
-    return null;
+    return FilterElement.createEmpty();
   }
 }
 
