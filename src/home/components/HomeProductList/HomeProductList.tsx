@@ -26,8 +26,8 @@ export const HomeProductList = ({
     <Box data-test-id={testId}>
       <Text variant="heading" display="block" paddingTop={7} marginBottom={2}>
         {intl.formatMessage({
-          id: "rr8fyf",
-          defaultMessage: "Top Products",
+          id: "e08xWz",
+          defaultMessage: "Top products",
           description: "header",
         })}
       </Text>
@@ -67,8 +67,8 @@ export const HomeProductList = ({
 
                       <Text size="small" color="textNeutralSubdued">
                         <FormattedMessage
-                          id="0opVvi"
-                          defaultMessage="{amount, plural,one {One ordered}other {{amount} Ordered}}"
+                          id="nII/qB"
+                          defaultMessage="{amount, plural,one {One ordered}other {{amount} ordered}}"
                           description="number of ordered products"
                           values={{
                             amount: variant.quantityOrdered,

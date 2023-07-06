@@ -1,5 +1,4 @@
 import RequirePermissions from "@dashboard/components/RequirePermissions";
-import Skeleton from "@dashboard/components/Skeleton";
 import { PermissionEnum } from "@dashboard/graphql";
 import { List } from "@saleor/macaw-ui/next";
 import React from "react";
@@ -7,6 +6,11 @@ import { useIntl } from "react-intl";
 
 import { HomeNotificationListItem } from "./HomeNotificationListItem";
 import { homeNotificationTableMessages as messages } from "./messages";
+import {
+  getOrdersToCaptureText,
+  getOrderTpFullfillText,
+  getProductsOutOfStockText,
+} from "./utils";
 
 interface HomeNotificationTableProps {
   ordersToCapture: number;
@@ -31,48 +35,6 @@ export const HomeNotificationList = ({
 }: HomeNotificationTableProps) => {
   const intl = useIntl();
 
-  const getOrderTpFullfillText = () => {
-    if (ordersToFulfill === undefined) {
-      return <Skeleton />;
-    }
-
-    if (ordersToFulfill === 0) {
-      return intl.formatMessage(messages.noOrders);
-    }
-
-    return intl.formatMessage(messages.orderReady, {
-      amount: <strong>{ordersToFulfill}</strong>,
-    });
-  };
-
-  const getOrdersToCaptureText = () => {
-    if (ordersToCapture === undefined) {
-      return <Skeleton />;
-    }
-
-    if (ordersToCapture === 0) {
-      return intl.formatMessage(messages.noPaymentWaiting);
-    }
-
-    return intl.formatMessage(messages.paymentCapture, {
-      amount: <strong>{ordersToCapture}</strong>,
-    });
-  };
-
-  const getProductsOutOfStockText = () => {
-    if (productsOutOfStock === undefined) {
-      return <Skeleton />;
-    }
-
-    if (productsOutOfStock === 0) {
-      return intl.formatMessage(messages.noProductsOut);
-    }
-
-    return intl.formatMessage(messages.productOut, {
-      amount: <strong>{productsOutOfStock}</strong>,
-    });
-  };
-
   return (
     <List>
       {noChannel && (
@@ -90,14 +52,14 @@ export const HomeNotificationList = ({
           linkUrl={ordersToFulfillHref}
           dataTestId="orders-to-fulfill"
         >
-          {getOrderTpFullfillText()}
+          {getOrderTpFullfillText(ordersToFulfill, intl)}
         </HomeNotificationListItem>
 
         <HomeNotificationListItem
           linkUrl={ordersToCaptureHref}
           dataTestId="orders-to-capture"
         >
-          {getOrdersToCaptureText()}
+          {getOrdersToCaptureText(ordersToCapture, intl)}
         </HomeNotificationListItem>
       </RequirePermissions>
 
@@ -108,7 +70,7 @@ export const HomeNotificationList = ({
           linkUrl={productsOutOfStockHref}
           dataTestId="products-out-of-stock"
         >
-          {getProductsOutOfStockText()}
+          {getProductsOutOfStockText(productsOutOfStock, intl)}
         </HomeNotificationListItem>
       </RequirePermissions>
     </List>

@@ -3,9 +3,9 @@ import {
   contentMaxWidth,
   savebarHeight,
 } from "@dashboard/components/AppLayout/consts";
-import { useMediaQuery } from "@dashboard/hooks/useMediaQuery";
 import { Box, desktopMediaQuery, Sprinkles } from "@saleor/macaw-ui/next";
 import React, { useMemo } from "react";
+import { useMediaQuery } from "usehooks-ts";
 
 interface DetailPageLayoutProps {
   children: React.ReactNode;
