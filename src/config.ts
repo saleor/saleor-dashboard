@@ -72,6 +72,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.CATEGORY_LIST]: {
     rowNumber: PAGINATE_BY,
+    columns: ["name", "products", "subcategories"],
   },
   [ListViews.COLLECTION_LIST]: {
     rowNumber: PAGINATE_BY,

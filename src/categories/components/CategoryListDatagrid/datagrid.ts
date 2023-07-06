@@ -10,38 +10,30 @@ import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
-export const getColumns = (
+export const categoryListStaticColumnsAdapter = (
   intl: IntlShape,
   sort?: Sort<CategoryListUrlSortField>,
-): AvailableColumn[] => [
-  {
-    id: "name",
-    title: intl.formatMessage(columnsMessages.categoryName),
-    width: 350,
-    icon: sort
-      ? getColumnSortDirectionIcon(sort, CategoryListUrlSortField.name)
-      : undefined,
-  },
-  {
-    id: "subcategories",
-    title: intl.formatMessage(columnsMessages.subcategories),
-    width: 300,
-    icon: sort
-      ? getColumnSortDirectionIcon(
-          sort,
-          CategoryListUrlSortField.subcategoryCount,
-        )
-      : undefined,
-  },
-  {
-    id: "products",
-    title: intl.formatMessage(columnsMessages.numberOfProducts),
-    width: 300,
-    icon: sort
-      ? getColumnSortDirectionIcon(sort, CategoryListUrlSortField.productCount)
-      : undefined,
-  },
-];
+): AvailableColumn[] =>
+  [
+    {
+      id: "name",
+      title: intl.formatMessage(columnsMessages.categoryName),
+      width: 350,
+    },
+    {
+      id: "subcategories",
+      title: intl.formatMessage(columnsMessages.subcategories),
+      width: 300,
+    },
+    {
+      id: "products",
+      title: intl.formatMessage(columnsMessages.numberOfProducts),
+      width: 300,
+    },
+  ].map(column => ({
+    ...column,
+    icon: sort ? getColumnSortDirectionIcon(sort, column.id) : undefined,
+  }));
 
 export const createGetCellContent =
   (categories: CategoryFragment[], columns: AvailableColumn[]) =>
