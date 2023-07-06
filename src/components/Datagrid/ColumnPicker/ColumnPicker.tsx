@@ -22,9 +22,7 @@ export interface ColumnPickerProps {
   dynamicColumns?: AvailableColumn[];
   selectedColumns: string[];
   columnCategories?: ColumnCategory[];
-  columnPickerSettings?: string[];
-  onSave: (columns: string[]) => void;
-  onDynamicColumnSelect?: (columns: string[]) => void;
+  onToggle: (columnId: string) => void;
 }
 
 export const ColumnPicker = ({
@@ -32,22 +30,10 @@ export const ColumnPicker = ({
   selectedColumns,
   columnCategories,
   dynamicColumns,
-  columnPickerSettings,
-  onDynamicColumnSelect,
-  onSave,
+  onToggle,
 }: ColumnPickerProps) => {
   const [pickerOpen, setPickerOpen] = useState(false);
   const [expanded, setExpanded] = useState(false);
-
-  const renderCategories =
-    columnCategories &&
-    typeof onDynamicColumnSelect === "function" &&
-    columnPickerSettings;
-
-  const handleToggle = (id: string) =>
-    selectedColumns.includes(id)
-      ? onSave(selectedColumns.filter(currentId => currentId !== id))
-      : onSave([...selectedColumns, id]);
 
   return (
     <Popover
@@ -79,11 +65,11 @@ export const ColumnPicker = ({
           gridTemplateColumns={expanded ? 2 : 1}
           overflow="hidden"
         >
-          {expanded && renderCategories && (
+          {expanded && columnCategories && (
             <ColumnPickerCategories
               columnCategories={columnCategories}
-              columnPickerSettings={columnPickerSettings}
-              onDynamicColumnSelect={onDynamicColumnSelect}
+              selectedColumns={selectedColumns}
+              onToggle={onToggle}
               onClose={() => setExpanded(false)}
             />
           )}
@@ -102,15 +88,14 @@ export const ColumnPicker = ({
             </Box>
             <ColumnPickerStaticColumns
               staticColumns={staticColumns}
-              handleToggle={handleToggle}
+              handleToggle={onToggle}
               selectedColumns={selectedColumns}
             />
             {columnCategories && (
               <ColumnPickerDynamicColumns
                 dynamicColumns={dynamicColumns}
-                selectedColumns={selectedColumns}
                 setExpanded={setExpanded}
-                handleToggle={handleToggle}
+                onToggle={onToggle}
               />
             )}
           </Box>

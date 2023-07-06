@@ -13,27 +13,20 @@ import { getExitIcon, getExitOnClick } from "./utils";
 
 export interface ColumnPickerCategoriesProps {
   columnCategories: ColumnCategory[];
-  columnPickerSettings: string[];
+  selectedColumns: string[];
   onClose: () => void;
-  onDynamicColumnSelect: (columns: string[]) => void;
+  onToggle: (columnId: string) => void;
 }
 
 export const ColumnPickerCategories = ({
   columnCategories,
   onClose,
-  onDynamicColumnSelect,
-  columnPickerSettings,
+  onToggle,
+  selectedColumns,
 }: ColumnPickerCategoriesProps) => {
   const { currentCategory, setCurrentCategory } =
     useCategorySelection(columnCategories);
   const { query, setQuery } = useAvailableColumnsQuery(currentCategory);
-
-  const changeHandler = (column: string) =>
-    columnPickerSettings.includes(column)
-      ? onDynamicColumnSelect(
-          columnPickerSettings.filter(currentCol => currentCol !== column),
-        )
-      : onDynamicColumnSelect([...columnPickerSettings, column]);
 
   return (
     <Box
@@ -73,10 +66,10 @@ export const ColumnPickerCategories = ({
         {currentCategory ? (
           <ColumnPickerAvailableNodes
             currentCategory={currentCategory}
-            columnPickerSettings={columnPickerSettings}
+            selectedColumns={selectedColumns}
             query={query}
             setQuery={setQuery}
-            changeHandler={changeHandler}
+            onToggle={onToggle}
           />
         ) : (
           <ColumnPickerCategoryList
