@@ -24,6 +24,7 @@ import { Card, CardContent, Typography } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { orderListUrl } from "@dashboard/orders/urls";
 import { customerUrl } from "../../../customers/urls";
 import { maybe } from "../../../misc";
 import { AddressTextError } from "./AddrssTextError";
@@ -168,7 +169,23 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
               <FormattedMessage id="Qovenh" defaultMessage="Anonymous user" />
             </Typography>
           ) : (
-            <Typography className={classes.userEmail}>{userEmail}</Typography>
+            <>
+              <Typography className={classes.userEmail}>{userEmail}</Typography>
+              <div>
+                <Link
+                  underline={false}
+                  href={orderListUrl({
+                    customer: userEmail,
+                  })}
+                >
+                  <FormattedMessage
+                    id="J4NBVR"
+                    defaultMessage="View Orders"
+                    description="link"
+                  />
+                </Link>
+              </div>
+            </>
           )
         ) : (
           <>
