@@ -1133,7 +1133,7 @@
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": "The ID of the address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1321,7 +1321,7 @@
           },
           {
             "name": "firstName",
-            "description": null,
+            "description": "The given name of the address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1337,7 +1337,7 @@
           },
           {
             "name": "lastName",
-            "description": null,
+            "description": "The family name of the address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1353,7 +1353,7 @@
           },
           {
             "name": "companyName",
-            "description": null,
+            "description": "Company or organization name.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1369,7 +1369,7 @@
           },
           {
             "name": "streetAddress1",
-            "description": null,
+            "description": "The first line of the address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1385,7 +1385,7 @@
           },
           {
             "name": "streetAddress2",
-            "description": null,
+            "description": "The second line of the address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1401,7 +1401,7 @@
           },
           {
             "name": "city",
-            "description": null,
+            "description": "The city of the address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1417,7 +1417,7 @@
           },
           {
             "name": "cityArea",
-            "description": null,
+            "description": "The district of the address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1433,7 +1433,7 @@
           },
           {
             "name": "postalCode",
-            "description": null,
+            "description": "The postal code of the address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1449,7 +1449,7 @@
           },
           {
             "name": "country",
-            "description": "Shop's default country.",
+            "description": "The country of the address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1465,7 +1465,7 @@
           },
           {
             "name": "countryArea",
-            "description": null,
+            "description": "The country area of the address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -1481,7 +1481,7 @@
           },
           {
             "name": "phone",
-            "description": null,
+            "description": "The phone number assigned the address.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -1990,7 +1990,7 @@
           },
           {
             "name": "phone",
-            "description": "Phone number.",
+            "description": "Phone number.\n\nPhone numbers are validated with Google's [libphonenumber](https://github.com/google/libphonenumber) library.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -2266,7 +2266,7 @@
         "fields": [
           {
             "name": "countryCode",
-            "description": null,
+            "description": "The country code of the address validation rule.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2282,7 +2282,7 @@
           },
           {
             "name": "countryName",
-            "description": null,
+            "description": "The country name of the address validation rule.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2298,7 +2298,7 @@
           },
           {
             "name": "addressFormat",
-            "description": null,
+            "description": "The address format of the address validation rule.\n\nMany fields in the JSON refer to address fields by one-letter abbreviations. These are defined as follows:\n\n- `N`: Name\n- `O`: Organisation\n- `A`: Street Address Line(s)\n- `D`: Dependent locality (may be an inner-city district or a suburb)\n- `C`: City or Locality\n- `S`: Administrative area such as a state, province, island etc\n- `Z`: Zip or postal code\n- `X`: Sorting code\n\n[Click here for more information.](https://github.com/google/libaddressinput/wiki/AddressValidationMetadata)",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2314,7 +2314,7 @@
           },
           {
             "name": "addressLatinFormat",
-            "description": null,
+            "description": "The latin address format of the address validation rule.\n\nMany fields in the JSON refer to address fields by one-letter abbreviations. These are defined as follows:\n\n- `N`: Name\n- `O`: Organisation\n- `A`: Street Address Line(s)\n- `D`: Dependent locality (may be an inner-city district or a suburb)\n- `C`: City or Locality\n- `S`: Administrative area such as a state, province, island etc\n- `Z`: Zip or postal code\n- `X`: Sorting code\n\n[Click here for more information.](https://github.com/google/libaddressinput/wiki/AddressValidationMetadata)",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2330,7 +2330,7 @@
           },
           {
             "name": "allowedFields",
-            "description": null,
+            "description": "The allowed fields to use in address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2354,7 +2354,7 @@
           },
           {
             "name": "requiredFields",
-            "description": null,
+            "description": "The required fields to create a valid address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2378,7 +2378,7 @@
           },
           {
             "name": "upperFields",
-            "description": null,
+            "description": "The list of fields that should be in upper case for address validation rule.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2402,7 +2402,7 @@
           },
           {
             "name": "countryAreaType",
-            "description": null,
+            "description": "The formal name of the county area of the address validation rule.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2418,7 +2418,7 @@
           },
           {
             "name": "countryAreaChoices",
-            "description": null,
+            "description": "The available choices for the country area of the address validation rule.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2442,7 +2442,7 @@
           },
           {
             "name": "cityType",
-            "description": null,
+            "description": "The formal name of the city of the address validation rule.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2458,7 +2458,7 @@
           },
           {
             "name": "cityChoices",
-            "description": null,
+            "description": "The available choices for the city of the address validation rule.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2482,7 +2482,7 @@
           },
           {
             "name": "cityAreaType",
-            "description": null,
+            "description": "The formal name of the city area of the address validation rule.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2498,7 +2498,7 @@
           },
           {
             "name": "cityAreaChoices",
-            "description": null,
+            "description": "The available choices for the city area of the address validation rule.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2522,7 +2522,7 @@
           },
           {
             "name": "postalCodeType",
-            "description": null,
+            "description": "The formal name of the postal code of the address validation rule.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2538,7 +2538,7 @@
           },
           {
             "name": "postalCodeMatchers",
-            "description": null,
+            "description": "The regular expression for postal code validation.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2562,7 +2562,7 @@
           },
           {
             "name": "postalCodeExamples",
-            "description": null,
+            "description": "The example postal code of the address validation rule.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2586,7 +2586,7 @@
           },
           {
             "name": "postalCodePrefix",
-            "description": null,
+            "description": "The postal code prefix of the address validation rule.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -2684,7 +2684,7 @@
       {
         "kind": "ENUM",
         "name": "AllocationStrategyEnum",
-        "description": "Determine the allocation strategy for the channel.\n\n    PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order\n    within the channel\n\n    PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock",
+        "description": "Determine the allocation strategy for the channel.\n\n    PRIORITIZE_SORTING_ORDER - allocate stocks according to the warehouses' order\n    within the channel\n\n    PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -2711,7 +2711,7 @@
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": "The ID of the app.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -3317,7 +3317,7 @@
                   "name": "IconThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -3998,7 +3998,7 @@
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": "The ID of the app extension.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4102,7 +4102,7 @@
           },
           {
             "name": "app",
-            "description": null,
+            "description": "The app assigned to app extension.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4118,7 +4118,7 @@
           },
           {
             "name": "accessToken",
-            "description": "JWT token used to authenticate by thridparty app extension.",
+            "description": "JWT token used to authenticate by third-party app extension.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -4393,7 +4393,7 @@
       {
         "kind": "ENUM",
         "name": "AppExtensionTargetEnum",
-        "description": "All available ways of opening an app extension.\n\n    POPUP - app's extension will be mounted as a popup window\n    APP_PAGE - redirect to app's page",
+        "description": "All available ways of opening an app extension.\n\n    POPUP - app's extension will be mounted as a popup window\n    APP_PAGE - redirect to app's page\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -4420,7 +4420,7 @@
         "fields": [
           {
             "name": "manifest",
-            "description": null,
+            "description": "The validated manifest.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -4665,7 +4665,7 @@
           },
           {
             "name": "manifestUrl",
-            "description": "Url to app's manifest in JSON format.",
+            "description": "URL to app's manifest in JSON format.",
             "type": {
               "kind": "SCALAR",
               "name": "String",
@@ -4719,7 +4719,7 @@
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": "The ID of the app installation.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4795,7 +4795,7 @@
           },
           {
             "name": "appName",
-            "description": null,
+            "description": "The name of the app installation.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4811,7 +4811,7 @@
           },
           {
             "name": "manifestUrl",
-            "description": null,
+            "description": "The URL address of manifest for the app installation.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -4987,7 +4987,7 @@
                   "name": "IconThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -5472,7 +5472,7 @@
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": "The ID of the app token.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -5970,7 +5970,19 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "SQ_MM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "SQ_CM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SQ_DM",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -12632,7 +12644,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -13925,13 +13937,104 @@
         "possibleTypes": null
       },
       {
+        "kind": "INPUT_OBJECT",
+        "name": "CategoryWhereInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "metadata",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataFilter",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ids",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "AND",
+            "description": "List of conditions that must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CategoryWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "OR",
+            "description": "A list of conditions of which at least one must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CategoryWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
         "kind": "OBJECT",
         "name": "Channel",
         "description": "Represents channel.",
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": "The ID of the channel.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -14320,7 +14423,7 @@
         "inputFields": [
           {
             "name": "isActive",
-            "description": "isActive flag.",
+            "description": "Determine if channel will be set active or not.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -15208,7 +15311,7 @@
         "inputFields": [
           {
             "name": "isActive",
-            "description": "isActive flag.",
+            "description": "Determine if channel will be set active or not.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -15999,7 +16102,7 @@
           },
           {
             "name": "shippingPrice",
-            "description": "The price of the shipping, with all the taxes included.",
+            "description": "The price of the shipping, with all the taxes included. Set to 0 when no delivery method is selected.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -16339,7 +16442,7 @@
       {
         "kind": "ENUM",
         "name": "CheckoutAuthorizeStatusEnum",
-        "description": "Determine a current authorize status for checkout.\n\n    We treat the checkout as fully authorized when the sum of authorized and charged\n    funds cover the checkout.total.\n    We treat the checkout as partially authorized when the sum of authorized and charged\n    funds covers only part of the checkout.total\n    We treat the checkout as not authorized when the sum of authorized and charged funds\n    is 0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the cover funds don't cover fully the checkout's total\n    FULL - the cover funds covers the checkout's total",
+        "description": "Determine a current authorize status for checkout.\n\n    We treat the checkout as fully authorized when the sum of authorized and charged\n    funds cover the checkout.total.\n    We treat the checkout as partially authorized when the sum of authorized and charged\n    funds covers only part of the checkout.total\n    We treat the checkout as not authorized when the sum of authorized and charged funds\n    is 0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the cover funds don't cover fully the checkout's total\n    FULL - the cover funds covers the checkout's total\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -16439,7 +16542,7 @@
       {
         "kind": "ENUM",
         "name": "CheckoutChargeStatusEnum",
-        "description": "Determine the current charge status for the checkout.\n\n    The checkout is considered overcharged when the sum of the transactionItem's charge\n    amounts exceeds the value of `checkout.total`.\n    If the sum of the transactionItem's charge amounts equals\n    `checkout.total`, we consider the checkout to be fully charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `checkout.total`, we treat the checkout as partially charged.\n\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the checkout's total\n    FULL - the funds that are charged fully cover the checkout's total\n    OVERCHARGED - the charged funds are bigger than checkout's total",
+        "description": "Determine the current charge status for the checkout.\n\n    The checkout is considered overcharged when the sum of the transactionItem's charge\n    amounts exceeds the value of `checkout.total`.\n    If the sum of the transactionItem's charge amounts equals\n    `checkout.total`, we consider the checkout to be fully charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `checkout.total`, we treat the checkout as partially charged.\n\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the checkout's total\n    FULL - the funds that are charged fully cover the checkout's total\n    OVERCHARGED - the charged funds are bigger than checkout's total\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -19548,7 +19651,7 @@
         "fields": [
           {
             "name": "raw",
-            "description": null,
+            "description": "The raw name of the choice.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -19560,7 +19663,7 @@
           },
           {
             "name": "verbose",
-            "description": null,
+            "description": "The verbose name of the choice.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -19982,7 +20085,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -22329,6 +22432,97 @@
             "ofType": null
           }
         ],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "CollectionWhereInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "metadata",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataFilter",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ids",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "AND",
+            "description": "List of conditions that must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CollectionWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "OR",
+            "description": "A list of conditions of which at least one must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CollectionWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
         "enumValues": null,
         "possibleTypes": null
       },
@@ -25088,7 +25282,7 @@
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": "The ID of the customer event.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -27529,7 +27723,19 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "MM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DM",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -36728,7 +36934,7 @@
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": "The ID of the group.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -36744,7 +36950,7 @@
           },
           {
             "name": "name",
-            "description": null,
+            "description": "The name of the group.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -43302,7 +43508,7 @@
         "fields": [
           {
             "name": "identifier",
-            "description": null,
+            "description": "The identifier of the manifest for the app.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -43318,7 +43524,7 @@
           },
           {
             "name": "version",
-            "description": null,
+            "description": "The version of the manifest for the app.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -43334,7 +43540,7 @@
           },
           {
             "name": "name",
-            "description": null,
+            "description": "The name of the manifest for the app .",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -43350,7 +43556,7 @@
           },
           {
             "name": "about",
-            "description": null,
+            "description": "Description of the app displayed in the dashboard.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -43362,7 +43568,7 @@
           },
           {
             "name": "permissions",
-            "description": null,
+            "description": "The array permissions required for the app.",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -43382,7 +43588,7 @@
           },
           {
             "name": "appUrl",
-            "description": null,
+            "description": "App website rendered in the dashboard.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -43406,7 +43612,7 @@
           },
           {
             "name": "tokenTargetUrl",
-            "description": null,
+            "description": "Endpoint used during process of app installation, [see installing an app.](https://docs.saleor.io/docs/3.x/developer/extending/apps/installing-apps#installing-an-app)",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -43430,7 +43636,7 @@
           },
           {
             "name": "dataPrivacyUrl",
-            "description": null,
+            "description": "URL to the full privacy policy.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -43442,7 +43648,7 @@
           },
           {
             "name": "homepageUrl",
-            "description": null,
+            "description": "External URL to the app homepage.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -43454,7 +43660,7 @@
           },
           {
             "name": "supportUrl",
-            "description": null,
+            "description": "External URL to the page where app users can find support.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -43466,7 +43672,7 @@
           },
           {
             "name": "extensions",
-            "description": null,
+            "description": "List of extensions that will be mounted in Saleor's dashboard. For details, please [see the extension section.](https://docs.saleor.io/docs/3.x/developer/extending/apps/extending-dashboard-with-apps#key-concepts)",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -43604,7 +43810,7 @@
       {
         "kind": "ENUM",
         "name": "MarkAsPaidStrategyEnum",
-        "description": "Determine the mark as paid strategy for the channel.\n\n    TRANSACTION_FLOW - new orders marked as paid will receive a\n    `TransactionItem` object, that will cover the `order.total`.\n\n    PAYMENT_FLOW - new orders marked as paid will receive a\n    `Payment` object, that will cover the `order.total`.",
+        "description": "Determine the mark as paid strategy for the channel.\n\n    TRANSACTION_FLOW - new orders marked as paid will receive a\n    `TransactionItem` object, that will cover the `order.total`.\n\n    PAYMENT_FLOW - new orders marked as paid will receive a\n    `Payment` object, that will cover the `order.total`.\n\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -43633,7 +43839,19 @@
         "interfaces": null,
         "enumValues": [
           {
+            "name": "MM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "CM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "DM",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -43669,7 +43887,19 @@
             "deprecationReason": null
           },
           {
+            "name": "SQ_MM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "SQ_CM",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "SQ_DM",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -48230,7 +48460,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0."
+            "deprecationReason": "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0."
           },
           {
             "name": "shopSettingsTranslate",
@@ -48329,7 +48559,7 @@
               "ofType": null
             },
             "isDeprecated": true,
-            "deprecationReason": "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead."
+            "deprecationReason": "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead."
           },
           {
             "name": "giftCardSettingsUpdate",
@@ -52962,7 +53192,7 @@
           },
           {
             "name": "orderAddNote",
-            "description": "Adds note to the order. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+            "description": "Adds note to the order.\n\nDEPRECATED: this mutation will be removed in Saleor 4.0. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
             "args": [
               {
                 "name": "order",
@@ -53002,8 +53232,8 @@
               "name": "OrderAddNote",
               "ofType": null
             },
-            "isDeprecated": false,
-            "deprecationReason": null
+            "isDeprecated": true,
+            "deprecationReason": "This field will be removed in Saleor 4.0. Use `orderNoteAdd` instead."
           },
           {
             "name": "orderCancel",
@@ -53787,6 +54017,96 @@
             "type": {
               "kind": "OBJECT",
               "name": "OrderLineDiscountRemove",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "orderNoteAdd",
+            "description": "Adds note to the order.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+            "args": [
+              {
+                "name": "order",
+                "description": "ID of the order to add a note for.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "input",
+                "description": "Fields required to create a note for the order.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "OrderNoteInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrderNoteAdd",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "orderNoteUpdate",
+            "description": "Updates note of an order.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+            "args": [
+              {
+                "name": "note",
+                "description": "ID of the note.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "input",
+                "description": "Fields required to create a note for the order.",
+                "type": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "OrderNoteInput",
+                    "ofType": null
+                  }
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              }
+            ],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrderNoteUpdate",
               "ofType": null
             },
             "isDeprecated": false,
@@ -58561,7 +58881,7 @@
             "args": [
               {
                 "name": "manifestUrl",
-                "description": null,
+                "description": "URL to app's manifest in JSON format.",
                 "type": {
                   "kind": "NON_NULL",
                   "name": null,
@@ -61434,7 +61754,7 @@
           },
           {
             "name": "trackingClientId",
-            "description": null,
+            "description": "Google Analytics tracking client ID. This field will be removed in Saleor 4.0.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -62174,7 +62494,7 @@
           },
           {
             "name": "totalCaptured",
-            "description": "Amount captured for the order.",
+            "description": "Amount captured for the order. ",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -62647,7 +62967,7 @@
       {
         "kind": "OBJECT",
         "name": "OrderAddNote",
-        "description": "Adds note to the order. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+        "description": "Adds note to the order.\n\nDEPRECATED: this mutation will be removed in Saleor 4.0. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
         "fields": [
           {
             "name": "order",
@@ -62735,7 +63055,7 @@
         "inputFields": [
           {
             "name": "message",
-            "description": "Note message.",
+            "description": "Note message.\n\nDEPRECATED: this field will be removed in Saleor 4.0.",
             "type": {
               "kind": "NON_NULL",
               "name": null,
@@ -62757,7 +63077,7 @@
       {
         "kind": "ENUM",
         "name": "OrderAuthorizeStatusEnum",
-        "description": "Determine a current authorize status for order.\n\n    We treat the order as fully authorized when the sum of authorized and charged funds\n    cover the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as partially authorized when the sum of authorized and charged\n    funds covers only part of the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as not authorized when the sum of authorized and charged funds is\n    0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the funds that are authorized and charged don't cover fully the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are authorized and charged fully cover the\n    `order.total`-`order.totalGrantedRefund`",
+        "description": "Determine a current authorize status for order.\n\n    We treat the order as fully authorized when the sum of authorized and charged funds\n    cover the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as partially authorized when the sum of authorized and charged\n    funds covers only part of the `order.total`-`order.totalGrantedRefund`.\n    We treat the order as not authorized when the sum of authorized and charged funds is\n    0.\n\n    NONE - the funds are not authorized\n    PARTIAL - the funds that are authorized and charged don't cover fully the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are authorized and charged fully cover the\n    `order.total`-`order.totalGrantedRefund`\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -63457,18 +63777,6 @@
                 "name": "OrderBulkCreateUserInput",
                 "ofType": null
               }
-            },
-            "defaultValue": null,
-            "isDeprecated": false,
-            "deprecationReason": null
-          },
-          {
-            "name": "trackingClientId",
-            "description": "Tracking ID of the customer.",
-            "type": {
-              "kind": "SCALAR",
-              "name": "String",
-              "ofType": null
             },
             "defaultValue": null,
             "isDeprecated": false,
@@ -64693,7 +65001,7 @@
       {
         "kind": "ENUM",
         "name": "OrderChargeStatusEnum",
-        "description": "Determine the current charge status for the order.\n\n    An order is considered overcharged when the sum of the\n    transactionItem's charge amounts exceeds the value of\n    `order.total` - `order.totalGrantedRefund`.\n    If the sum of the transactionItem's charge amounts equals\n    `order.total` - `order.totalGrantedRefund`, we consider the order to be fully\n    charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `order.total` - `order.totalGrantedRefund`, we treat the order as partially charged.\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are charged fully cover the\n    `order.total`-`order.totalGrantedRefund`\n    OVERCHARGED - the charged funds are bigger than the\n    `order.total`-`order.totalGrantedRefund`",
+        "description": "Determine the current charge status for the order.\n\n    An order is considered overcharged when the sum of the\n    transactionItem's charge amounts exceeds the value of\n    `order.total` - `order.totalGrantedRefund`.\n    If the sum of the transactionItem's charge amounts equals\n    `order.total` - `order.totalGrantedRefund`, we consider the order to be fully\n    charged.\n    If the sum of the transactionItem's charge amounts covers a part of the\n    `order.total` - `order.totalGrantedRefund`, we treat the order as partially charged.\n\n    NONE - the funds are not charged.\n    PARTIAL - the funds that are charged don't cover the\n    `order.total`-`order.totalGrantedRefund`\n    FULL - the funds that are charged fully cover the\n    `order.total`-`order.totalGrantedRefund`\n    OVERCHARGED - the charged funds are bigger than the\n    `order.total`-`order.totalGrantedRefund`\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -66445,6 +66753,18 @@
             "deprecationReason": null
           },
           {
+            "name": "related",
+            "description": "The order event which is related to this event.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrderEvent",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
             "name": "discount",
             "description": "The discount applied to the order.",
             "args": [],
@@ -66828,7 +67148,7 @@
       {
         "kind": "ENUM",
         "name": "OrderEventsEnum",
-        "description": "The different order event types.",
+        "description": "The different order event types. ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -67123,6 +67443,12 @@
           },
           {
             "name": "NOTE_ADDED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOTE_UPDATED",
             "description": null,
             "isDeprecated": false,
             "deprecationReason": null
@@ -68910,7 +69236,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -69847,6 +70173,297 @@
           }
         ],
         "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrderNoteAdd",
+        "description": "Adds note to the order.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+        "fields": [
+          {
+            "name": "order",
+            "description": "Order with the note added.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "event",
+            "description": "Order note created.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrderEvent",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "OrderNoteAddError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrderNoteAddError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "OrderNoteAddErrorCode",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "OrderNoteAddErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REQUIRED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
+        "name": "OrderNoteInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "message",
+            "description": "Note message.",
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrderNoteUpdate",
+        "description": "Updates note of an order.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+        "fields": [
+          {
+            "name": "order",
+            "description": "Order with the note updated.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "Order",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "event",
+            "description": "Order note updated.",
+            "args": [],
+            "type": {
+              "kind": "OBJECT",
+              "name": "OrderEvent",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "errors",
+            "description": null,
+            "args": [],
+            "type": {
+              "kind": "NON_NULL",
+              "name": null,
+              "ofType": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "OrderNoteUpdateError",
+                    "ofType": null
+                  }
+                }
+              }
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "OBJECT",
+        "name": "OrderNoteUpdateError",
+        "description": null,
+        "fields": [
+          {
+            "name": "field",
+            "description": "Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "message",
+            "description": "The error message.",
+            "args": [],
+            "type": {
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "code",
+            "description": "The error code.",
+            "args": [],
+            "type": {
+              "kind": "ENUM",
+              "name": "OrderNoteUpdateErrorCode",
+              "ofType": null
+            },
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "inputFields": null,
+        "interfaces": [],
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "ENUM",
+        "name": "OrderNoteUpdateErrorCode",
+        "description": "An enumeration.",
+        "fields": null,
+        "inputFields": null,
+        "interfaces": null,
+        "enumValues": [
+          {
+            "name": "GRAPHQL_ERROR",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "NOT_FOUND",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "REQUIRED",
+            "description": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
         "possibleTypes": null
       },
       {
@@ -77205,7 +77822,7 @@
               "name": "StorePaymentMethodEnum",
               "ofType": null
             },
-            "defaultValue": "NONE",
+            "defaultValue": null,
             "isDeprecated": false,
             "deprecationReason": null
           },
@@ -80250,7 +80867,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -80290,7 +80907,7 @@
           },
           {
             "name": "isAvailable",
-            "description": "Whether the product is in stock and visible or not.",
+            "description": "Whether the product is in stock, set as available for purchase in the given channel, and published.",
             "args": [
               {
                 "name": "address",
@@ -80633,7 +81250,7 @@
           },
           {
             "name": "isAvailableForPurchase",
-            "description": "Whether the product is available for purchase.",
+            "description": "Refers to a state that can be set by admins to control whether a product is available for purchase in storefronts. This does not guarantee the availability of stock. When set to `False`, this product is still visible to customers, but it cannot be purchased.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -81897,7 +82514,7 @@
           },
           {
             "name": "isAvailableForPurchase",
-            "description": "Whether the product is available for purchase.",
+            "description": "Refers to a state that can be set by admins to control whether a product is available for purchase in storefronts in this channel. This does not guarantee the availability of stock. When set to `False`, this product is still visible to customers, but it cannot be purchased.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -82016,7 +82633,7 @@
           },
           {
             "name": "isAvailableForPurchase",
-            "description": "Determine if product should be available for purchase.",
+            "description": "Determines if product should be available for purchase in this channel. This does not guarantee the availability of stock. When set to `False`, this product is still visible to customers, but it cannot be purchased.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -82155,7 +82772,7 @@
           },
           {
             "name": "isAvailableForPurchase",
-            "description": "Determine if product should be available for purchase.",
+            "description": "Determines if product should be available for purchase in this channel. This does not guarantee the availability of stock. When set to `False`, this product is still visible to customers, but it cannot be purchased.",
             "type": {
               "kind": "SCALAR",
               "name": "Boolean",
@@ -83831,7 +84448,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -84354,7 +84971,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -91829,6 +92446,97 @@
       },
       {
         "kind": "INPUT_OBJECT",
+        "name": "ProductVariantWhereInput",
+        "description": null,
+        "fields": null,
+        "inputFields": [
+          {
+            "name": "metadata",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "MetadataFilter",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "ids",
+            "description": null,
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "AND",
+            "description": "List of conditions that must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductVariantWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          },
+          {
+            "name": "OR",
+            "description": "A list of conditions of which at least one must be met.",
+            "type": {
+              "kind": "LIST",
+              "name": null,
+              "ofType": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductVariantWhereInput",
+                  "ofType": null
+                }
+              }
+            },
+            "defaultValue": null,
+            "isDeprecated": false,
+            "deprecationReason": null
+          }
+        ],
+        "interfaces": null,
+        "enumValues": null,
+        "possibleTypes": null
+      },
+      {
+        "kind": "INPUT_OBJECT",
         "name": "ProductWhereInput",
         "description": null,
         "fields": null,
@@ -92791,7 +93499,7 @@
           },
           {
             "name": "taxCountryConfigurations",
-            "description": "\\n\\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.",
+            "description": "\n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.",
             "args": [],
             "type": {
               "kind": "LIST",
@@ -93188,6 +93896,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "where",
+                "description": "Where filtering options.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CategoryWhereInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "sortBy",
                 "description": "Sort categories.",
                 "type": {
@@ -93364,6 +94084,18 @@
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "CollectionFilterInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "Where filtering options.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "CollectionWhereInput",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -93850,6 +94582,18 @@
                 "type": {
                   "kind": "INPUT_OBJECT",
                   "name": "ProductVariantFilterInput",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
+                "name": "where",
+                "description": "Where filtering options.\n\nAdded in Saleor 3.14.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "INPUT_OBJECT",
+                  "name": "ProductVariantWhereInput",
                   "ofType": null
                 },
                 "defaultValue": null,
@@ -106265,7 +107009,7 @@
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": "The ID of the staff notification recipient.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -107738,7 +108482,7 @@
       {
         "kind": "ENUM",
         "name": "StockUpdatePolicyEnum",
-        "description": "Determine how stocks should be updated, while processing an order.\n\n    SKIP - stocks are not checked and not updated.\n    UPDATE - only do update, if there is enough stock.\n    FORCE - force update, if there is not enough stock.",
+        "description": "Determine how stocks should be updated, while processing an order.\n\n    SKIP - stocks are not checked and not updated.\n    UPDATE - only do update, if there is enough stock.\n    FORCE - force update, if there is not enough stock.\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -111356,7 +112100,7 @@
       {
         "kind": "ENUM",
         "name": "TransactionActionEnum",
-        "description": "Represents possible actions on payment transaction.\n\n    The following actions are possible:\n    CHARGE - Represents the charge action.\n    REFUND - Represents a refund action.\n    VOID - Represents a void action. This field will be removed\n    in Saleor 3.14 (Preview Feature). Use `CANCEL` instead.\n    CANCEL - Represents a cancel action. Added in Saleor 3.12.",
+        "description": "Represents possible actions on payment transaction.\n\n    The following actions are possible:\n    CHARGE - Represents the charge action.\n    REFUND - Represents a refund action.\n    VOID - Represents a void action. This field will be removed\n    in Saleor 3.14 (Preview Feature). Use `CANCEL` instead.\n    CANCEL - Represents a cancel action. Added in Saleor 3.12.\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -112441,7 +113185,7 @@
       {
         "kind": "ENUM",
         "name": "TransactionEventTypeEnum",
-        "description": "Represents possible event types.\n\n    Added in Saleor 3.12.\n\n    The following types are possible:\n    AUTHORIZATION_SUCCESS - represents success authorization.\n    AUTHORIZATION_FAILURE - represents failure authorization.\n    AUTHORIZATION_ADJUSTMENT - represents authorization adjustment.\n    AUTHORIZATION_REQUEST - represents authorization request.\n    AUTHORIZATION_ACTION_REQUIRED - represents authorization that needs\n    additional actions from the customer.\n    CHARGE_ACTION_REQUIRED - represents charge that needs\n    additional actions from the customer.\n    CHARGE_SUCCESS - represents success charge.\n    CHARGE_FAILURE - represents failure charge.\n    CHARGE_BACK - represents chargeback.\n    CHARGE_REQUEST - represents charge request.\n    REFUND_SUCCESS - represents success refund.\n    REFUND_FAILURE - represents failure refund.\n    REFUND_REVERSE - represents reverse refund.\n    REFUND_REQUEST - represents refund request.\n    CANCEL_SUCCESS - represents success cancel.\n    CANCEL_FAILURE - represents failure cancel.\n    CANCEL_REQUEST - represents cancel request.\n    INFO - represents info event.",
+        "description": "Represents possible event types.\n\n    Added in Saleor 3.12.\n\n    The following types are possible:\n    AUTHORIZATION_SUCCESS - represents success authorization.\n    AUTHORIZATION_FAILURE - represents failure authorization.\n    AUTHORIZATION_ADJUSTMENT - represents authorization adjustment.\n    AUTHORIZATION_REQUEST - represents authorization request.\n    AUTHORIZATION_ACTION_REQUIRED - represents authorization that needs\n    additional actions from the customer.\n    CHARGE_ACTION_REQUIRED - represents charge that needs\n    additional actions from the customer.\n    CHARGE_SUCCESS - represents success charge.\n    CHARGE_FAILURE - represents failure charge.\n    CHARGE_BACK - represents chargeback.\n    CHARGE_REQUEST - represents charge request.\n    REFUND_SUCCESS - represents success refund.\n    REFUND_FAILURE - represents failure refund.\n    REFUND_REVERSE - represents reverse refund.\n    REFUND_REQUEST - represents refund request.\n    CANCEL_SUCCESS - represents success cancel.\n    CANCEL_FAILURE - represents failure cancel.\n    CANCEL_REQUEST - represents cancel request.\n    INFO - represents info event.\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -112560,7 +113304,7 @@
       {
         "kind": "ENUM",
         "name": "TransactionFlowStrategyEnum",
-        "description": "Determine the transaction flow strategy.\n\n    AUTHORIZATION - the processed transaction should be only authorized\n    CHARGE - the processed transaction should be charged.",
+        "description": "Determine the transaction flow strategy.\n\n    AUTHORIZATION - the processed transaction should be only authorized\n    CHARGE - the processed transaction should be charged.\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -114188,7 +114932,7 @@
       {
         "kind": "ENUM",
         "name": "TransactionStatus",
-        "description": "Represents a status of payment transaction.\n\n    The following statuses are possible:\n    SUCCESS - Represents a sucess action.\n    FAILURE - Represents a failure action.\n    PENDING - Represents a pending action.",
+        "description": "Represents a status of payment transaction.\n\n    The following statuses are possible:\n    SUCCESS - Represents a sucess action.\n    FAILURE - Represents a failure action.\n    PENDING - Represents a pending action.\n    ",
         "fields": null,
         "inputFields": null,
         "interfaces": null,
@@ -115500,7 +116244,7 @@
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": "The ID of the user.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -115688,7 +116432,7 @@
           },
           {
             "name": "email",
-            "description": null,
+            "description": "The email address of the user.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -115704,7 +116448,7 @@
           },
           {
             "name": "firstName",
-            "description": null,
+            "description": "The given name of the address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -115720,7 +116464,7 @@
           },
           {
             "name": "lastName",
-            "description": null,
+            "description": "The family name of the address.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -115736,7 +116480,7 @@
           },
           {
             "name": "isStaff",
-            "description": null,
+            "description": "Determine if the user is a staff admin.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -115752,7 +116496,7 @@
           },
           {
             "name": "isActive",
-            "description": null,
+            "description": "Determine if the user is active.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -116173,7 +116917,7 @@
           },
           {
             "name": "avatar",
-            "description": null,
+            "description": "The avatar of the user.",
             "args": [
               {
                 "name": "size",
@@ -116195,7 +116939,7 @@
                   "name": "ThumbnailFormatEnum",
                   "ofType": null
                 },
-                "defaultValue": "ORIGINAL",
+                "defaultValue": null,
                 "isDeprecated": false,
                 "deprecationReason": null
               }
@@ -116279,7 +117023,7 @@
           },
           {
             "name": "defaultShippingAddress",
-            "description": null,
+            "description": "The default shipping address of the user.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -116291,7 +117035,7 @@
           },
           {
             "name": "defaultBillingAddress",
-            "description": null,
+            "description": "The default billing address of the user.",
             "args": [],
             "type": {
               "kind": "OBJECT",
@@ -116315,7 +117059,7 @@
           },
           {
             "name": "lastLogin",
-            "description": null,
+            "description": "The date when the user last time log in to the system.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -116327,7 +117071,7 @@
           },
           {
             "name": "dateJoined",
-            "description": null,
+            "description": "The data when the user create account.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -116343,7 +117087,7 @@
           },
           {
             "name": "updatedAt",
-            "description": null,
+            "description": "The data when the user last update the account information.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -121953,13 +122697,9 @@
             "description": null,
             "args": [],
             "type": {
-              "kind": "NON_NULL",
-              "name": null,
-              "ofType": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
-              }
+              "kind": "SCALAR",
+              "name": "String",
+              "ofType": null
             },
             "isDeprecated": false,
             "deprecationReason": null
