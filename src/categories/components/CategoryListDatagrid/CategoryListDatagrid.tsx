@@ -25,7 +25,7 @@ import { messages } from "./messages";
 
 interface CategoryListDatagridProps
   extends PageListProps,
-    SortPage<CategoryListUrlSortField> {
+    Partial<SortPage<CategoryListUrlSortField>> {
   categories: CategoryFragment[];
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
   selectionActionButton?: ReactNode | null;
