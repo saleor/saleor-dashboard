@@ -1,5 +1,4 @@
-import { OrderDraftListQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { OrderDraft } from "@dashboard/orders/types";
 
 import { getCustomerName } from "./datagrid";
 
@@ -11,7 +10,7 @@ describe("getCustomerName", () => {
         firstName: "John",
         lastName: "Doe",
       },
-    } as RelayToFlat<NonNullable<OrderDraftListQuery["draftOrders"]>>[number];
+    } as OrderDraft;
 
     // Act
     const result = getCustomerName(data);
@@ -27,7 +26,7 @@ describe("getCustomerName", () => {
         city: "New York",
       },
       userEmail: "john@doe.com",
-    } as RelayToFlat<NonNullable<OrderDraftListQuery["draftOrders"]>>[number];
+    } as OrderDraft;
 
     // Act
     const result = getCustomerName(data);
@@ -38,9 +37,7 @@ describe("getCustomerName", () => {
 
   it("should return - when no user email and billing address", () => {
     // Arrange
-    const data = {} as RelayToFlat<
-      NonNullable<OrderDraftListQuery["draftOrders"]>
-    >[number];
+    const data = {} as OrderDraft;
 
     // Act
     const result = getCustomerName(data);
