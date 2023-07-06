@@ -1343,11 +1343,9 @@ ${AppAvatarFragmentDoc}`;
 export const TransactionItemFragmentDoc = gql`
     fragment TransactionItem on TransactionItem {
   id
-  type
   pspReference
   actions
-  type
-  status
+  name
   externalUrl
   events {
     ...TransactionEvent
@@ -10482,8 +10480,8 @@ export const CreateManualTransactionCaptureDocument = gql`
     mutation CreateManualTransactionCapture($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String, $pspReference: String) {
   transactionCreate(
     id: $orderId
-    transaction: {type: "Manual capture", status: "Success", pspReference: $pspReference, amountCharged: {amount: $amount, currency: $currency}}
-    transactionEvent: {status: SUCCESS, pspReference: $pspReference, name: $description}
+    transaction: {name: "Manual capture", pspReference: $pspReference, amountCharged: {amount: $amount, currency: $currency}}
+    transactionEvent: {pspReference: $pspReference, message: $description}
   ) {
     transaction {
       ...TransactionItem
@@ -10529,8 +10527,8 @@ export const CreateManualTransactionRefundDocument = gql`
     mutation CreateManualTransactionRefund($orderId: ID!, $amount: PositiveDecimal!, $currency: String!, $description: String, $pspReference: String) {
   transactionCreate(
     id: $orderId
-    transaction: {type: "Manual refund", status: "Success", pspReference: $pspReference, amountRefunded: {amount: $amount, currency: $currency}}
-    transactionEvent: {status: SUCCESS, pspReference: $pspReference, name: $description}
+    transaction: {name: "Manual refund", pspReference: $pspReference, amountRefunded: {amount: $amount, currency: $currency}}
+    transactionEvent: {pspReference: $pspReference, message: $description}
   ) {
     transaction {
       ...TransactionItem
