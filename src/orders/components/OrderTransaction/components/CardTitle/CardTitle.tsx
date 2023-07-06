@@ -61,7 +61,7 @@ export const CardTitle: React.FC<CardTitleProps> = ({
                 <LinkIcon />
               </IconButton>
             )}
-            {transaction.type}
+            {transaction.name}
           </TransactionLink>
 
           <div className={classes.dataDisplay}>
