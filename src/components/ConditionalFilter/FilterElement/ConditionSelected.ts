@@ -1,19 +1,6 @@
 import { getDefaultByControlName } from "../controlsType";
 import { ConditionItem } from "./ConditionOptions";
-
-export interface ItemOption {
-  label: string;
-  value: string;
-  slug: string;
-}
-
-export type ConditionValue =
-  | ItemOption
-  | ItemOption[]
-  | string
-  | string[]
-  | [string, string];
-
+import { ConditionValue } from "./ConditionValue";
 
 export class ConditionSelected {
   private constructor(
@@ -61,9 +48,5 @@ export class ConditionSelected {
 
   public setOptions(options: ConditionValue[]) {
     this.options = options;
-
-    if (this.conditionValue) {
-      this.value = getDefaultByControlName(this.conditionValue.type);
-    }
   }
 }

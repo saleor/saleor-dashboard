@@ -20,7 +20,7 @@ interface ControlledSwitchProps {
   name: string;
   secondLabel?: string | React.ReactNode;
   uncheckedLabel?: string | React.ReactNode;
-  onChange?(event: React.ChangeEvent<any>);
+  onChange?: (event: React.ChangeEvent<any>) => any;
 }
 
 export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {

@@ -71,8 +71,8 @@ interface ProductMediaProps {
   getImageEditUrl: (id: string) => string;
   onImageDelete: (id: string) => () => void;
   onImageReorder?: ReorderAction;
-  onImageUpload(file: File);
-  openMediaUrlModal();
+  onImageUpload: (file: File) => any;
+  openMediaUrlModal: () => any;
 }
 
 const ProductMedia: React.FC<ProductMediaProps> = props => {

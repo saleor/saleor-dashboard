@@ -1,7 +1,12 @@
 // @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
 import useDebounce from "@dashboard/hooks/useDebounce";
-import { _ExperimentalFilters, Box, Text } from "@saleor/macaw-ui/next";
+import {
+  _ExperimentalFilters,
+  Box,
+  FilterEvent,
+  Text,
+} from "@saleor/macaw-ui/next";
 import React from "react";
 
 import {
@@ -32,12 +37,12 @@ const FiltersArea = ({ provider, onConfirm }) => {
 
   const handleLeftOperatorInputValueChange = (event: any) => {
     const fetchAPI = async () => {
+      updateLeftLoadingState(event.path, true);
       const options = await getLeftOperatorOptions(client, event.value);
-      setOperands(options);
+      updateLeftLoadingState(event.path, false);
+      setOperands(prev => [...prev, ...options]);
     };
-    updateLeftLoadingState(event.path, true);
     fetchAPI();
-    updateLeftLoadingState(event.path, false);
   };
 
   const handleLeftOperatorInputValueChangeDebounced = useDebounce(
@@ -47,17 +52,17 @@ const FiltersArea = ({ provider, onConfirm }) => {
 
   const handleRightOperatorInputValueChange = (event: any) => {
     const fetchAPI = async () => {
+      updateRightLoadingState(event.path.split(".")[0], true);
       const options = await getRightOperatorOptionsByQuery(
         client,
         event.path.split(".")[0],
         value,
         event.value,
       );
+      updateRightLoadingState(event.path.split(".")[0], false);
       updateRightOptions(event.path.split(".")[0], options);
     };
-    updateRightLoadingState(event.path.split(".")[0], true);
     fetchAPI();
-    updateRightLoadingState(event.path.split(".")[0], false);
   };
 
   const handleRightOperatorInputValueChangeDebounced = useDebounce(
@@ -65,7 +70,7 @@ const FiltersArea = ({ provider, onConfirm }) => {
     500,
   );
 
-  const handleStateChange = async event => {
+  const handleStateChange = async (event: FilterEvent["detail"]) => {
     if (event.type === "row.add") {
       addEmpty();
     }
@@ -83,6 +88,7 @@ const FiltersArea = ({ provider, onConfirm }) => {
     }
 
     if (event.type === "rightOperator.onChange") {
+      // @ts-expect-error slug in missing in MacawUI
       updateRightOperator(event.path.split(".")[0], event.value);
     }
 

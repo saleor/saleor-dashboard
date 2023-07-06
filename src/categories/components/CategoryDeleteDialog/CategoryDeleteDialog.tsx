@@ -31,8 +31,8 @@ const useStyles = makeStyles(
 export interface CategoryDeleteDialogProps {
   open: boolean;
   name: string;
-  onClose();
-  onConfirm();
+  onClose: () => any;
+  onConfirm: () => any;
 }
 
 const CategoryDeleteDialog: React.FC<CategoryDeleteDialogProps> = props => {

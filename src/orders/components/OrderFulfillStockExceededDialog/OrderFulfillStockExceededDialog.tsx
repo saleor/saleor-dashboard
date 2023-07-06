@@ -27,8 +27,8 @@ export interface OrderFulfillStockExceededDialogProps {
   open: boolean;
   formsetData: OrderFulfillStockFormsetData;
   confirmButtonState: ConfirmButtonTransitionState;
-  onSubmit();
-  onClose();
+  onSubmit: () => any;
+  onClose: () => any;
 }
 
 const OrderFulfillStockExceededDialog: React.FC<

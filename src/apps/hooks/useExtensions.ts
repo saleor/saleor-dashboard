@@ -21,11 +21,11 @@ export interface Extension {
   label: string;
   mount: AppExtensionMountEnum;
   url: string;
-  open(): void;
+  open: () => void;
 }
 
 export interface ExtensionWithParams extends Omit<Extension, "open"> {
-  open(params: AppDetailsUrlMountQueryParams): void;
+  open: (params: AppDetailsUrlMountQueryParams) => void;
 }
 
 export const extensionMountPoints = {
