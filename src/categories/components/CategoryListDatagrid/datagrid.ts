@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { CategoryListUrlSortField } from "@dashboard/categories/urls";
 import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
@@ -39,20 +38,23 @@ export const createGetCellContent =
   (categories: CategoryFragment[], columns: AvailableColumn[]) =>
   ([column, row]: Item): GridCell => {
     const columnId = columns[column]?.id;
+    const rowData: CategoryFragment | undefined = categories[row];
 
-    if (!columnId) {
+    if (!columnId || !rowData) {
       return readonlyTextCell("");
     }
-
-    const rowData = categories[row];
 
     switch (columnId) {
       case "name":
         return readonlyTextCell(rowData?.name ?? "");
       case "subcategories":
-        return readonlyTextCell(rowData?.children?.totalCount.toString() ?? "");
+        return readonlyTextCell(
+          rowData?.children?.totalCount?.toString() ?? "",
+        );
       case "products":
-        return readonlyTextCell(rowData?.products?.totalCount.toString() ?? "");
+        return readonlyTextCell(
+          rowData?.products?.totalCount?.toString() ?? "",
+        );
       default:
         return readonlyTextCell("", false);
     }

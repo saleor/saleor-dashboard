@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import {
   CategoryListUrlSortField,
   categoryUrl,
@@ -27,7 +26,7 @@ import { messages } from "./messages";
 interface CategoryListDatagridProps
   extends Partial<SortPage<CategoryListUrlSortField>>,
     PageListProps {
-  categories?: CategoryFragment[];
+  categories: CategoryFragment[];
   disabled: boolean;
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
   selectionActionButton?: ReactNode | null;
@@ -68,7 +67,6 @@ export const CategoryListDatagrid = ({
       onSave: handleColumnChange,
     });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   const getCellContent = useCallback(
     createGetCellContent(categories, visibleColumns),
     [categories, visibleColumns],
@@ -76,7 +74,7 @@ export const CategoryListDatagrid = ({
 
   const handleHeaderClick = useCallback(
     (col: number) => {
-      if (sort !== undefined) {
+      if (sort !== undefined && onSort) {
         onSort(visibleColumns[col].id as CategoryListUrlSortField);
       }
     },
