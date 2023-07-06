@@ -20,7 +20,6 @@ export const emptyFetchingParams: FetchingParams = {
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
 
-
 export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
   const key = c.name as FetchingParamsKeys
 
