@@ -61,6 +61,12 @@
         "paths": ["lodash", "@material-ui/icons/Delete", "classnames"]
       }
     ],
+    "no-console": [
+      "error",
+      {
+        "allow": ["warn", "error"]
+      }
+    ],
     // These rules should be reviewed - tracked in
     // Tracked in https://github.com/saleor/saleor-dashboard/issues/3813
     "@typescript-eslint/consistent-type-imports": "off",
