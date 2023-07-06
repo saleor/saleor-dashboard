@@ -2120,10 +2120,6 @@
   "DRMMDs": {
     "string": "Attribute Name"
   },
-  "DRwqnt": {
-    "context": "order history message",
-    "string": "Transaction capture requested"
-  },
   "DTL7sE": {
     "context": "dialog content",
     "string": "Are you sure you want to delete {warehouseName}?"
@@ -5233,10 +5229,6 @@
   "ZJPYFl": {
     "context": "accepted header names",
     "string": "Headers with in following format are accepted: <code>authorization*</code>, <code>x-*</code>"
-  },
-  "ZKuzRy": {
-    "context": "order history message",
-    "string": "Transaction void requested"
   },
   "ZMy18J": {
     "string": "You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
