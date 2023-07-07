@@ -132,7 +132,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.GIFT_CARD_LIST]: {
     rowNumber: PAGINATE_BY,
-    columns: ["name", "tag", "product", "usedBy", "balance"],
+    columns: ["giftCardCode", "status", "tag", "product", "usedBy", "balance"],
   },
 };
 

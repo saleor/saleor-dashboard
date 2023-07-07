@@ -6,6 +6,10 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Gift Card",
     description: "column title gift card",
   },
+  status: {
+    id: "tzMNF3",
+    defaultMessage: "Status",
+  },
   tag: {
     id: "FEWgh/",
     defaultMessage: "Tag",

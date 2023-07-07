@@ -10,11 +10,12 @@ import { giftCardUrl } from "@dashboard/giftCards/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import usePaginator from "@dashboard/hooks/usePaginator";
 import { Item } from "@glideapps/glide-data-grid";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, useTheme } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { useGiftCardList } from "../providers/GiftCardListProvider";
+import { canBeSorted } from "../sort";
 import { GiftCardListColummns, GiftCardUrlSortField } from "../types";
 import { createGetCellContent, getColumns } from "./datagrid";
 import { messages } from "./messages";
@@ -30,7 +31,6 @@ export const GiftCardsListDatagrid = () => {
     updateListSettings,
     sort,
     onSort,
-    numberOfColumns,
     pageInfo,
     paginationState,
     params,
@@ -65,16 +65,32 @@ export const GiftCardsListDatagrid = () => {
     onSave: onColumnChange,
   });
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const { theme: currentTheme, themeValues } = useTheme();
+
   const getCellContent = useCallback(
-    createGetCellContent(giftCards, visibleColumns, intl),
-    [giftCards, visibleColumns],
+    createGetCellContent(
+      giftCards,
+      visibleColumns,
+      intl,
+      themeValues,
+      currentTheme,
+    ),
+    [giftCards, visibleColumns, themeValues, currentTheme],
   );
 
   const handleHeaderClick = useCallback(
     (col: number) => {
-      if (sort !== undefined) {
-        onSort(visibleColumns[col].id as GiftCardUrlSortField);
+      const columnName = visibleColumns[col].id;
+
+      if (!Object.keys(GiftCardUrlSortField).includes(columnName)) {
+        return;
+      }
+
+      if (
+        canBeSorted(columnName as GiftCardUrlSortField, false) &&
+        sort !== undefined
+      ) {
+        onSort(columnName as GiftCardUrlSortField);
       }
     },
     [visibleColumns, onSort, sort],
@@ -133,8 +149,8 @@ export const GiftCardsListDatagrid = () => {
       <Box paddingX={6}>
         <TablePagination
           {...paginationValues}
+          component="div"
           settings={settings}
-          colSpan={numberOfColumns}
           onUpdateListSettings={updateListSettings}
         />
       </Box>
