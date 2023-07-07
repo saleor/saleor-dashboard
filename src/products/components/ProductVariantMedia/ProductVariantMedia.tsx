@@ -62,7 +62,7 @@ interface ProductVariantMediaProps {
   media?: ProductMediaFragment[];
   placeholderImage?: string;
   disabled: boolean;
-  onImageAdd();
+  onImageAdd: () => any;
 }
 
 export const ProductVariantMedia: React.FC<

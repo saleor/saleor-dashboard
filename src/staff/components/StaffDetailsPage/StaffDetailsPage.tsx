@@ -59,7 +59,7 @@ export interface StaffDetailsPageProps extends SearchPageProps {
   onDelete: () => void;
   onImageDelete: () => void;
   onSubmit: (data: StaffDetailsFormData) => SubmitPromise;
-  onImageUpload(file: File);
+  onImageUpload: (file: File) => any;
 }
 
 const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({

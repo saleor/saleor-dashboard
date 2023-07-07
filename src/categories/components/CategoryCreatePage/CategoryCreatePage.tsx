@@ -20,7 +20,7 @@ export interface CategoryCreatePageProps {
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   backUrl: string;
-  onSubmit(data: CategoryCreateData);
+  onSubmit: (data: CategoryCreateData) => any;
 }
 
 export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({

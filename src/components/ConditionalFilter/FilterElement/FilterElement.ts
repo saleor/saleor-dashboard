@@ -1,40 +1,50 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { LeftOperand } from "./../useLeftOperands";
-import { CONDITIONS, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
+import { TokenType, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
 import { ConditionItem, ConditionOptions } from "./ConditionOptions";
-import { ConditionOption, ConditionSelected } from "./ConditionSelected";
+import { ConditionSelected } from "./ConditionSelected";
+import { ConditionValue, ItemOption } from "./ConditionValue";
 
-interface ExpressionValue {
-  value: string;
-  label: string;
-  type: string;
+
+class ExpressionValue {
+  constructor(
+    public value: string,
+    public label: string,
+    public type: string
+  ) {}
+
+  public static fromLeftOperand(leftOperand: LeftOperand) {
+    return new ExpressionValue(
+      leftOperand.slug,
+      leftOperand.label,
+      leftOperand.type
+    )
+  }
+
+  public static fromUrlToken(token: UrlToken) {
+    return new ExpressionValue(
+      token.name,
+      token.name,
+      token.name
+    )
+  }
+
+  public static forAttribute(attributeName: string, response: InitialStateResponse) {
+    const attribute = response.attributeByName(attributeName);
+
+    return new ExpressionValue(
+      attributeName,
+      attribute.label,
+      attribute.inputType,
+    )
+  }
+
+  public static emptyStatic() {
+    return new ExpressionValue("", "", TokenType.STATIC)
+  }
 }
-
-const createStaticEntry = (rawEntry: ConditionOption) => {
-  if (typeof rawEntry === "string") {
-    return rawEntry;
-  }
-
-  if (Array.isArray(rawEntry)) {
-    return rawEntry.map(el => (typeof el === "string" ? el : el.slug));
-  }
-
-  return rawEntry.slug;
-};
-
-const createAttributeEntry = (rawEntry: ConditionOption) => {
-  if (typeof rawEntry === "string") {
-    return rawEntry;
-  }
-
-  if (Array.isArray(rawEntry)) {
-    return rawEntry.map(el => (typeof el === "string" ? el : el.slug));
-  }
-
-  return rawEntry.slug;
-};
 
 export class FilterElement {
   private constructor(
@@ -56,11 +66,7 @@ export class FilterElement {
   }
 
   public updateLeftOperator(leftOperand: LeftOperand) {
-    this.value = {
-      value: leftOperand.slug,
-      label: leftOperand.label,
-      type: leftOperand.type,
-    };
+    this.value = ExpressionValue.fromLeftOperand(leftOperand);
     this.condition = Condition.emptyFromLeftOperand(leftOperand);
   }
 
@@ -73,11 +79,11 @@ export class FilterElement {
       ConditionSelected.fromConditionItem(conditionValue);
   }
 
-  public updateRightOperator(value: ConditionOption) {
+  public updateRightOperator(value: ConditionValue) {
     this.condition.selected.setValue(value);
   }
 
-  public updateRightOptions(options: ConditionOption[]) {
+  public updateRightOptions(options: ItemOption[]) {
     this.condition.selected.setOptions(options);
   }
 
@@ -119,24 +125,11 @@ export class FilterElement {
   }
 
   public asUrlEntry(): UrlEntry {
-    const { conditionValue } = this.condition.selected;
-    const conditionIndex = CONDITIONS.findIndex(
-      el => conditionValue && el === conditionValue.label,
-    );
-
     if (this.isAttribute()) {
-      return {
-        [`a${conditionIndex}.${this.value.value}`]: createAttributeEntry(
-          this.condition.selected.value,
-        ),
-      };
+      return UrlEntry.forAttribute(this.condition.selected, this.value.value)
     }
 
-    return {
-      [`s${conditionIndex}.${this.value.value}`]: createStaticEntry(
-        this.condition.selected.value,
-      ),
-    };
+    return UrlEntry.forStatic(this.condition.selected, this.value.value)
   }
 
   public static fromValueEntry(valueEntry: any) {
@@ -145,7 +138,7 @@ export class FilterElement {
 
   public static createEmpty() {
     return new FilterElement(
-      { value: "", label: "", type: "s" },
+      ExpressionValue.emptyStatic(),
       Condition.createEmpty(),
       false,
     );
@@ -154,26 +147,23 @@ export class FilterElement {
   public static fromUrlToken(token: UrlToken, response: InitialStateResponse) {
     if (token.isStatic()) {
       return new FilterElement(
-        { value: token.name, label: token.name, type: token.name },
+        ExpressionValue.fromUrlToken(token),
         Condition.fromUrlToken(token, response),
         false,
       );
     }
 
     if (token.isAttribute()) {
-      const attribute = response.attributeByName(token.name);
-
       return new FilterElement(
-        {
-          value: token.name,
-          label: attribute.label,
-          type: attribute.inputType,
-        },
+        ExpressionValue.forAttribute(token.name, response),
         Condition.fromUrlToken(token, response),
         false,
       );
     }
 
-    return null;
+    return FilterElement.createEmpty();
   }
 }
+
+
+export type FilterContainer = Array<string | FilterElement | FilterContainer>;

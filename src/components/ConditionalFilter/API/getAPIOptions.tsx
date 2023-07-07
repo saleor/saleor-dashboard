@@ -1,16 +1,15 @@
-// @ts-strict-ignore
 import { ApolloClient } from "@apollo/client";
-import {
-  _GetAttributeChoicesDocument,
-  _GetCategoriesChoicesDocument,
-  _GetChannelOperandsDocument,
-  _GetCollectionsChoicesDocument,
-  _GetDynamicLeftOperandsDocument,
-  _GetProductTypesChoicesDocument,
-} from "@dashboard/graphql";
 
-import { FilterElement } from "../FilterElement";
-import { FilterContainer } from "../useFilterContainer";
+import { FilterContainer, FilterElement } from "../FilterElement";
+import {
+  AttributeChoicesHandler,
+  AttributesHandler,
+  CategoryHandler,
+  ChannelHandler,
+  CollectionHandler,
+  Handler,
+  ProductTypeHandler,
+} from "./Handler";
 
 const getFilterElement = (value: any, index: number): FilterElement => {
   const possibleFilterElement = value[index];
@@ -19,193 +18,67 @@ const getFilterElement = (value: any, index: number): FilterElement => {
     : null;
 };
 
+const createAPIHandler = (
+  selectedRow: FilterElement,
+  client: ApolloClient<unknown>,
+  inputValue: string,
+): Handler => {
+  if (selectedRow.isAttribute()) {
+    return new AttributeChoicesHandler(
+      client,
+      selectedRow.value.value,
+      inputValue,
+    );
+  }
+
+  if (selectedRow.isCollection()) {
+    return new CollectionHandler(client, inputValue);
+  }
+
+  if (selectedRow.isCategory()) {
+    return new CategoryHandler(client, inputValue);
+  }
+
+  if (selectedRow.isProductType()) {
+    return new ProductTypeHandler(client, inputValue);
+  }
+
+  if (selectedRow.isChannel()) {
+    return new ChannelHandler(client, inputValue);
+  }
+
+  throw new Error("Unknown filter element");
+};
+
 export const getInitialRightOperatorOptions = async (
-  client: ApolloClient<any>,
+  client: ApolloClient<unknown>,
   position: string,
   value: FilterContainer,
 ) => {
   const index = parseInt(position, 10);
   const filterElement = getFilterElement(value, index);
+  const handler = createAPIHandler(filterElement, client, "");
 
-  if (filterElement.isAttribute()) {
-    const { data } = await client.query({
-      query: _GetAttributeChoicesDocument,
-      variables: {
-        slug: filterElement.value.value,
-        first: 5,
-        query: "",
-      },
-    });
-    return data.attribute.choices.edges.map(({ node }) => ({
-      label: node.name,
-      value: node.id,
-      slug: node.slug,
-    }));
-  }
-
-  if (filterElement.isCollection()) {
-    const { data } = await client.query({
-      query: _GetCollectionsChoicesDocument,
-      variables: {
-        first: 5,
-        query: "",
-      },
-    });
-
-    return data.collections.edges.map(({ node }) => ({
-      label: node.name,
-      value: node.id,
-      slug: node.slug,
-    }));
-  }
-
-  if (filterElement.isCategory()) {
-    const { data } = await client.query({
-      query: _GetCategoriesChoicesDocument,
-      variables: {
-        first: 5,
-        query: "",
-      },
-    });
-
-    return data.categories.edges.map(({ node }) => ({
-      label: node.name,
-      value: node.id,
-      slug: node.slug,
-    }));
-  }
-
-  if (filterElement.isProductType()) {
-    const { data } = await client.query({
-      query: _GetProductTypesChoicesDocument,
-      variables: {
-        first: 5,
-        query: "",
-      },
-    });
-
-    return data.productTypes.edges.map(({ node }) => ({
-      label: node.name,
-      value: node.id,
-      slug: node.slug,
-    }));
-  }
-
-  if (filterElement.isChannel()) {
-    const { data } = await client.query({
-      query: _GetChannelOperandsDocument,
-    });
-
-    return data.channels.map(({ id, name, slug }) => ({
-      label: name,
-      value: id,
-      slug,
-    }));
-  }
+  return handler.fetch();
 };
 
 export const getRightOperatorOptionsByQuery = async (
-  client: ApolloClient<any>,
+  client: ApolloClient<unknown>,
   position: string,
   value: FilterContainer,
   inputValue: string,
 ) => {
   const index = parseInt(position, 10);
   const filterElement = getFilterElement(value, index);
+  const handler = createAPIHandler(filterElement, client, inputValue);
 
-  if (filterElement.isAttribute()) {
-    const { data } = await client.query({
-      query: _GetAttributeChoicesDocument,
-      variables: {
-        slug: filterElement.value.value,
-        first: 5,
-        query: inputValue,
-      },
-    });
-    return data.attribute.choices.edges.map(({ node }) => ({
-      label: node.name,
-      value: node.id,
-    }));
-  }
-
-  if (filterElement.isCollection()) {
-    const { data } = await client.query({
-      query: _GetCollectionsChoicesDocument,
-      variables: {
-        first: 5,
-        query: inputValue,
-      },
-    });
-
-    return data.collections.edges.map(({ node }) => ({
-      label: node.name,
-      value: node.id,
-      slug: node.slug,
-    }));
-  }
-
-  if (filterElement.isCategory()) {
-    const { data } = await client.query({
-      query: _GetCategoriesChoicesDocument,
-      variables: {
-        first: 5,
-        query: inputValue,
-      },
-    });
-
-    return data.categories.edges.map(({ node }) => ({
-      label: node.name,
-      value: node.id,
-      slug: node.slug,
-    }));
-  }
-
-  if (filterElement.isProductType()) {
-    const { data } = await client.query({
-      query: _GetProductTypesChoicesDocument,
-      variables: {
-        first: 5,
-        query: inputValue,
-      },
-    });
-
-    return data.productTypes.edges.map(({ node }) => ({
-      label: node.name,
-      value: node.id,
-    }));
-  }
-
-  if (filterElement.isChannel()) {
-    const { data } = await client.query({
-      query: _GetChannelOperandsDocument,
-    });
-    const options = data.channels.map(({ id, name, slug }) => ({
-      label: name,
-      value: id,
-      slug,
-    }));
-
-    return options.filter(({ label }) =>
-      label.toLowerCase().includes(inputValue.toLowerCase()),
-    );
-  }
+  return handler.fetch();
 };
 
 export const getLeftOperatorOptions = async (
-  client: any,
+  client: ApolloClient<unknown>,
   inputValue: string,
 ) => {
-  const { data } = await client.query({
-    query: _GetDynamicLeftOperandsDocument,
-    variables: {
-      first: 5,
-      query: inputValue,
-    },
-  });
-  return data.attributes.edges.map(({ node }) => ({
-    label: node.name,
-    value: node.id,
-    type: node.inputType,
-    slug: node.slug,
-  }));
+  const handler = new AttributesHandler(client, inputValue);
+  return handler.fetch();
 };

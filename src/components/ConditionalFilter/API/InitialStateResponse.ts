@@ -1,8 +1,8 @@
 import { AttributeInputType } from "../FilterElement/ConditionOptions";
-import { ItemOption } from "../FilterElement/ConditionSelected";
+import { ItemOption } from "../FilterElement/ConditionValue";
 import { UrlToken } from "../ValueProvider/UrlToken";
 
-interface AttributeDTO {
+export interface AttributeDTO {
   choices: Array<{ label: string; value: string; slug: string }>;
   inputType: AttributeInputType;
   label: string;
@@ -10,7 +10,15 @@ interface AttributeDTO {
   value: string;
 }
 
-export class InitialStateResponse {
+export interface InitialState {
+  category: ItemOption[];
+  attribute: Record<string, AttributeDTO>;
+  channel: ItemOption[];
+  collection: ItemOption[];
+  producttype: ItemOption[];
+}
+
+export class InitialStateResponse implements InitialState {
   constructor(
     public category: ItemOption[],
     public attribute: Record<string, AttributeDTO>,

@@ -1,14 +1,13 @@
-// @ts-strict-ignore
-import { ConditionOption } from "./FilterElement/ConditionSelected";
+import { ConditionValue } from "./FilterElement/ConditionValue";
 
 export const CONTROL_DEFAULTS = {
   text: "",
   number: "",
   "number.range": [] as unknown as [string, string],
-  multiselect: [] as ConditionOption[],
+  multiselect: [] as ConditionValue,
   select: "",
   combobox: "",
 };
 
-export const getDefaultByControlName = (name: string): ConditionOption =>
-  CONTROL_DEFAULTS[name];
+export const getDefaultByControlName = (name: string): ConditionValue =>
+  CONTROL_DEFAULTS[name as keyof typeof CONTROL_DEFAULTS];

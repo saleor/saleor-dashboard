@@ -1,24 +1,12 @@
 import { getDefaultByControlName } from "../controlsType";
 import { ConditionItem } from "./ConditionOptions";
-
-export interface ItemOption {
-  label: string;
-  value: string;
-  slug?: string;
-}
-
-export type ConditionOption =
-  | ItemOption
-  | ItemOption[]
-  | string
-  | string[]
-  | [string, string];
+import { ConditionValue } from "./ConditionValue";
 
 export class ConditionSelected {
   private constructor(
-    public value: ConditionOption,
+    public value: ConditionValue,
     public conditionValue: ConditionItem | null,
-    public options: ConditionOption[],
+    public options: ConditionValue[],
     public loading: boolean,
   ) {}
 
@@ -37,7 +25,7 @@ export class ConditionSelected {
 
   public static fromConditionItemAndValue(
     conditionItem: ConditionItem,
-    value: ConditionOption,
+    value: ConditionValue,
   ) {
     return new ConditionSelected(value, conditionItem, [], false);
   }
@@ -54,15 +42,11 @@ export class ConditionSelected {
     return this.loading;
   }
 
-  public setValue(value: ConditionOption) {
+  public setValue(value: ConditionValue) {
     this.value = value;
   }
 
-  public setOptions(options: ConditionOption[]) {
+  public setOptions(options: ConditionValue[]) {
     this.options = options;
-
-    if (this.conditionValue) {
-      this.value = getDefaultByControlName(this.conditionValue.type);
-    }
   }
 }

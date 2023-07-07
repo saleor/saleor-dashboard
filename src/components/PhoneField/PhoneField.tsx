@@ -21,7 +21,7 @@ interface PhoneFieldProps {
   number: string;
   prefixes: string[];
   label?: string;
-  onChange(event: React.ChangeEvent<any>);
+  onChange: (event: React.ChangeEvent<any>) => any;
 }
 
 const PhoneField: React.FC<PhoneFieldProps> = props => {

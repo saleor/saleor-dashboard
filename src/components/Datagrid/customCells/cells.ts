@@ -3,7 +3,7 @@ import {
   numberCellEmptyValue,
 } from "@dashboard/components/Datagrid/customCells/NumberCell";
 import { Locale } from "@dashboard/components/Locale";
-import { GridCell, GridCellKind } from "@glideapps/glide-data-grid";
+import { GridCell, GridCellKind, TextCell } from "@glideapps/glide-data-grid";
 
 import {
   DropdownCell,
@@ -30,7 +30,7 @@ export function textCell(value: string): GridCell {
 export function readonlyTextCell(
   value: string,
   hasCursorPointer: boolean = true,
-): GridCell {
+): TextCell {
   return {
     cursor: hasCursorPointer ? "pointer" : "default",
     allowOverlay: false,
