@@ -23,8 +23,8 @@ const FiltersArea = ({ provider, onConfirm }) => {
     updateLeftOperator,
     updateRightOperator,
     updateCondition,
-    fetchRightOptions,
-    fetchLeftOptions,
+    updateRightOptions,
+    updateLeftOptions,
   } = useFilterContainer(provider, apiProvider, leftOperandsProvider);
 
   const handleStateChange = async (event: FilterEvent["detail"]) => {
@@ -49,15 +49,15 @@ const FiltersArea = ({ provider, onConfirm }) => {
     }
 
     if (event.type === "rightOperator.onFocus") {
-      fetchRightOptions(event.path.split(".")[0], "");
+      updateRightOptions(event.path.split(".")[0], "");
     }
 
     if (event.type === "rightOperator.onInputValueChange") {
-      fetchRightOptions(event.path.split(".")[0], event.value);
+      updateRightOptions(event.path.split(".")[0], event.value);
     }
 
     if (event.type === "leftOperator.onInputValueChange") {
-      fetchLeftOptions(event.path.split(".")[0], event.value);
+      updateLeftOptions(event.path.split(".")[0], event.value);
     }
   };
 

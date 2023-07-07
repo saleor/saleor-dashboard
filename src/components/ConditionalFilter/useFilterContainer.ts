@@ -34,7 +34,7 @@ export const useFilterContainer = (
     updateAt(position, el => el.updateRightOperator(rightOperator));
   };
 
-  const updateRightOptions = (position: string, options: ItemOption[]) => {
+  const _updateRightOptions = (position: string, options: ItemOption[]) => {
     updateAt(position, el => el.updateRightOptions(options));
   };
 
@@ -54,10 +54,10 @@ export const useFilterContainer = (
       inputValue,
     );
     updateRightLoadingState(position, false);
-    updateRightOptions(position, options);
+    _updateRightOptions(position, options);
   };
 
-  const fetchRightOptions = useDebounce(_fetchRightOptions, 500);
+  const updateRightOptions = useDebounce(_fetchRightOptions, 500);
 
   const _fetchLeftOptions = async (position: string, inputValue: string) => {
     updateLeftLoadingState(position, true);
@@ -66,7 +66,7 @@ export const useFilterContainer = (
     leftOperandsProvider.setOperands(options);
   };
 
-  const fetchLeftOptions = useDebounce(_fetchLeftOptions, 500);
+  const updateLeftOptions = useDebounce(_fetchLeftOptions, 500);
 
   return {
     value,
@@ -75,7 +75,7 @@ export const useFilterContainer = (
     updateLeftOperator,
     updateRightOperator,
     updateCondition,
-    fetchRightOptions,
-    fetchLeftOptions,
+    updateRightOptions,
+    updateLeftOptions,
   };
 };
