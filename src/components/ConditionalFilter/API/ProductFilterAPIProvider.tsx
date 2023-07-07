@@ -4,6 +4,7 @@ import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterAPIProvider } from "./FilterAPIProvider";
 import {
   AttributeChoicesHandler,
+  AttributesHandler,
   CategoryHandler,
   ChannelHandler,
   CollectionHandler,
@@ -11,9 +12,13 @@ import {
   ProductTypeHandler,
 } from "./Handler";
 
-const getFilterElement = (value: any, index: number): FilterElement => {
+const getFilterElement = (
+  value: FilterContainer,
+  index: number,
+): FilterElement => {
   const possibleFilterElement = value[index];
-  return typeof possibleFilterElement !== "string"
+  return typeof possibleFilterElement !== "string" &&
+    !Array.isArray(possibleFilterElement)
     ? possibleFilterElement
     : null;
 };
@@ -65,7 +70,13 @@ export const useProductFilterAPIProvider = (): FilterAPIProvider => {
     return handler.fetch();
   };
 
+  const fetchLeftOptions = async (inputValue: string) => {
+    const handler = new AttributesHandler(client, inputValue);
+    return handler.fetch();
+  };
+
   return {
     fetchRightOptions,
+    fetchLeftOptions,
   };
 };

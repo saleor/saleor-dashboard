@@ -10,6 +10,11 @@ export interface LeftOperand {
   slug: string;
 }
 
+export interface LeftOperandsProvider {
+  operands: LeftOperand[];
+  setOperands: (operands: LeftOperand[]) => void;
+}
+
 const STATIC_OPTIONS: LeftOperand[] = [
   { value: "price", label: "Price", type: "price", slug: "price" },
   { value: "category", label: "Category", type: "category", slug: "category" },
@@ -22,11 +27,12 @@ const STATIC_OPTIONS: LeftOperand[] = [
   { value: "channel", label: "Channel", type: "channel", slug: "channel" },
 ];
 
-export const useLeftOperands = () => {
+export const useLeftOperandsProvider = (): LeftOperandsProvider => {
   const [operands, setOperands] = useState<LeftOperand[]>(STATIC_OPTIONS);
 
   return {
     operands,
-    setOperands,
+    setOperands: (options: LeftOperand[]) =>
+      setOperands(prev => [...prev, ...options]),
   };
 };

@@ -1,6 +1,4 @@
 // @ts-strict-ignore
-import { useApolloClient } from "@apollo/client";
-import useDebounce from "@dashboard/hooks/useDebounce";
 import {
   _ExperimentalFilters,
   Box,
@@ -9,15 +7,14 @@ import {
 } from "@saleor/macaw-ui/next";
 import React from "react";
 
-import { getLeftOperatorOptions } from "./API/getAPIOptions";
 import { useProductFilterAPIProvider } from "./API/ProductFilterAPIProvider";
 import { useFilterContainer } from "./useFilterContainer";
-import { useLeftOperands } from "./useLeftOperands";
+import { useLeftOperandsProvider } from "./useLeftOperands";
 import { useUrlValueProvider } from "./ValueProvider/useUrlValueProvider";
 
 const FiltersArea = ({ provider, onConfirm }) => {
-  const client = useApolloClient();
   const apiProvider = useProductFilterAPIProvider();
+  const leftOperandsProvider = useLeftOperandsProvider();
 
   const {
     value,
@@ -26,26 +23,9 @@ const FiltersArea = ({ provider, onConfirm }) => {
     updateLeftOperator,
     updateRightOperator,
     updateCondition,
-    updateLeftLoadingState,
     fetchRightOptions,
-  } = useFilterContainer(provider, apiProvider);
-
-  const { operands, setOperands } = useLeftOperands();
-
-  const handleLeftOperatorInputValueChange = (event: any) => {
-    const fetchAPI = async () => {
-      updateLeftLoadingState(event.path, true);
-      const options = await getLeftOperatorOptions(client, event.value);
-      updateLeftLoadingState(event.path, false);
-      setOperands(prev => [...prev, ...options]);
-    };
-    fetchAPI();
-  };
-
-  const handleLeftOperatorInputValueChangeDebounced = useDebounce(
-    handleLeftOperatorInputValueChange,
-    500,
-  );
+    fetchLeftOptions,
+  } = useFilterContainer(provider, apiProvider, leftOperandsProvider);
 
   const handleStateChange = async (event: FilterEvent["detail"]) => {
     if (event.type === "row.add") {
@@ -77,7 +57,7 @@ const FiltersArea = ({ provider, onConfirm }) => {
     }
 
     if (event.type === "leftOperator.onInputValueChange") {
-      handleLeftOperatorInputValueChangeDebounced(event);
+      fetchLeftOptions(event.path.split(".")[0], event.value);
     }
   };
 
@@ -86,7 +66,7 @@ const FiltersArea = ({ provider, onConfirm }) => {
   return (
     <Box>
       <_ExperimentalFilters
-        leftOptions={operands}
+        leftOptions={leftOperandsProvider.operands}
         // @ts-expect-error
         value={value}
         onChange={handleStateChange}

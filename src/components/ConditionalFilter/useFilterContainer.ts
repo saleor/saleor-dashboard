@@ -5,10 +5,12 @@ import { FilterAPIProvider } from "./API/FilterAPIProvider";
 import { FilterContainer } from "./FilterElement";
 import { ConditionValue, ItemOption } from "./FilterElement/ConditionValue";
 import { useContainerState } from "./useContainerState";
+import { LeftOperandsProvider } from "./useLeftOperands";
 
 export const useFilterContainer = (
   initialValue: FilterContainer,
   apiProvider: FilterAPIProvider,
+  leftOperandsProvider: LeftOperandsProvider,
 ) => {
   const { value, updateAt, removeAt, createEmpty } =
     useContainerState(initialValue);
@@ -57,6 +59,15 @@ export const useFilterContainer = (
 
   const fetchRightOptions = useDebounce(_fetchRightOptions, 500);
 
+  const _fetchLeftOptions = async (position: string, inputValue: string) => {
+    updateLeftLoadingState(position, true);
+    const options = await apiProvider.fetchLeftOptions(inputValue);
+    updateLeftLoadingState(position, false);
+    leftOperandsProvider.setOperands(options);
+  };
+
+  const fetchLeftOptions = useDebounce(_fetchLeftOptions, 500);
+
   return {
     value,
     addEmpty,
@@ -64,7 +75,7 @@ export const useFilterContainer = (
     updateLeftOperator,
     updateRightOperator,
     updateCondition,
-    updateLeftLoadingState,
     fetchRightOptions,
+    fetchLeftOptions,
   };
 };
