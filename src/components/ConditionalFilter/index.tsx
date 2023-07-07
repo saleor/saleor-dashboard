@@ -9,17 +9,15 @@ import {
 } from "@saleor/macaw-ui/next";
 import React from "react";
 
-import {
-  getInitialRightOperatorOptions,
-  getLeftOperatorOptions,
-  getRightOperatorOptionsByQuery,
-} from "./API/getAPIOptions";
+import { getLeftOperatorOptions } from "./API/getAPIOptions";
+import { useProductFilterAPIProvider } from "./API/ProductFilterAPIProvider";
 import { useFilterContainer } from "./useFilterContainer";
 import { useLeftOperands } from "./useLeftOperands";
 import { useUrlValueProvider } from "./ValueProvider/useUrlValueProvider";
 
 const FiltersArea = ({ provider, onConfirm }) => {
   const client = useApolloClient();
+  const apiProvider = useProductFilterAPIProvider();
 
   const {
     value,
@@ -28,10 +26,9 @@ const FiltersArea = ({ provider, onConfirm }) => {
     updateLeftOperator,
     updateRightOperator,
     updateCondition,
-    updateRightOptions,
-    updateRightLoadingState,
     updateLeftLoadingState,
-  } = useFilterContainer(provider);
+    fetchRightOptions,
+  } = useFilterContainer(provider, apiProvider);
 
   const { operands, setOperands } = useLeftOperands();
 
@@ -47,26 +44,6 @@ const FiltersArea = ({ provider, onConfirm }) => {
 
   const handleLeftOperatorInputValueChangeDebounced = useDebounce(
     handleLeftOperatorInputValueChange,
-    500,
-  );
-
-  const handleRightOperatorInputValueChange = (event: any) => {
-    const fetchAPI = async () => {
-      updateRightLoadingState(event.path.split(".")[0], true);
-      const options = await getRightOperatorOptionsByQuery(
-        client,
-        event.path.split(".")[0],
-        value,
-        event.value,
-      );
-      updateRightLoadingState(event.path.split(".")[0], false);
-      updateRightOptions(event.path.split(".")[0], options);
-    };
-    fetchAPI();
-  };
-
-  const handleRightOperatorInputValueChangeDebounced = useDebounce(
-    handleRightOperatorInputValueChange,
     500,
   );
 
@@ -88,20 +65,15 @@ const FiltersArea = ({ provider, onConfirm }) => {
     }
 
     if (event.type === "rightOperator.onChange") {
-      // @ts-expect-error slug in missing in MacawUI
       updateRightOperator(event.path.split(".")[0], event.value);
     }
 
     if (event.type === "rightOperator.onFocus") {
-      const path = event.path.split(".")[0];
-      updateRightLoadingState(path, true);
-      const options = await getInitialRightOperatorOptions(client, path, value);
-      updateRightOptions(path, options);
-      updateRightLoadingState(path, false);
+      fetchRightOptions(event.path.split(".")[0], "");
     }
 
     if (event.type === "rightOperator.onInputValueChange") {
-      handleRightOperatorInputValueChangeDebounced(event);
+      fetchRightOptions(event.path.split(".")[0], event.value);
     }
 
     if (event.type === "leftOperator.onInputValueChange") {

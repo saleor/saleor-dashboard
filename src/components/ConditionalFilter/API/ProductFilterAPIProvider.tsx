@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { ApolloClient } from "@apollo/client";
+import { ApolloClient, useApolloClient } from "@apollo/client";
 
-import { FilterElement } from "../FilterElement";
+import { FilterContainer, FilterElement } from "../FilterElement";
+import { FilterAPIProvider } from "./FilterAPIProvider";
 import {
   AttributeChoicesHandler,
-  AttributesHandler,
   CategoryHandler,
   ChannelHandler,
   CollectionHandler,
@@ -51,10 +50,22 @@ const createAPIHandler = (
   throw new Error("Unknown filter element");
 };
 
-export const getLeftOperatorOptions = async (
-  client: ApolloClient<unknown>,
-  inputValue: string,
-) => {
-  const handler = new AttributesHandler(client, inputValue);
-  return handler.fetch();
+export const useProductFilterAPIProvider = (): FilterAPIProvider => {
+  const client = useApolloClient();
+
+  const fetchRightOptions = async (
+    position: string,
+    value: FilterContainer,
+    inputValue: string,
+  ) => {
+    const index = parseInt(position, 10);
+    const filterElement = getFilterElement(value, index);
+    const handler = createAPIHandler(filterElement, client, inputValue);
+
+    return handler.fetch();
+  };
+
+  return {
+    fetchRightOptions,
+  };
 };
