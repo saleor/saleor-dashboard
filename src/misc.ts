@@ -468,7 +468,7 @@ export function transformFormToAddressInput<T>(
 }
 
 export function getStringOrPlaceholder(
-  s: string | undefined,
+  s: string | undefined | null,
   placeholder?: string,
 ): string {
   return s || placeholder || "...";
