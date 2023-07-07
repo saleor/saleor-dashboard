@@ -569,16 +569,11 @@ export const createManualTransactionCapture = gql`
     transactionCreate(
       id: $orderId
       transaction: {
-        type: "Manual capture"
-        status: "Success"
+        name: "Manual capture"
         pspReference: $pspReference
         amountCharged: { amount: $amount, currency: $currency }
       }
-      transactionEvent: {
-        status: SUCCESS
-        pspReference: $pspReference
-        name: $description
-      }
+      transactionEvent: { pspReference: $pspReference, message: $description }
     ) {
       transaction {
         ...TransactionItem
@@ -601,16 +596,11 @@ export const createManualTransactionRefund = gql`
     transactionCreate(
       id: $orderId
       transaction: {
-        type: "Manual refund"
-        status: "Success"
+        name: "Manual refund"
         pspReference: $pspReference
         amountRefunded: { amount: $amount, currency: $currency }
       }
-      transactionEvent: {
-        status: SUCCESS
-        pspReference: $pspReference
-        name: $description
-      }
+      transactionEvent: { pspReference: $pspReference, message: $description }
     ) {
       transaction {
         ...TransactionItem

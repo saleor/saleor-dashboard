@@ -1,13 +1,14 @@
-// @ts-strict-ignore
 import { UrlToken } from "../UrlToken";
 
 export interface FetchingParams {
   category: string[];
   collection: string[];
   channel: string[];
-  producttype: [];
+  producttype: string[];
   attribute: Record<string, string[]>;
 }
+
+type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">
 
 export const emptyFetchingParams: FetchingParams = {
   category: [],
@@ -20,8 +21,10 @@ export const emptyFetchingParams: FetchingParams = {
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
 
 export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
-  if (!c.isAttribute() && !p[c.name]) {
-    p[c.name] = [];
+  const key = c.name as FetchingParamsKeys
+
+  if (!c.isAttribute() && !p[key]) {
+    p[key] = []
   }
 
   if (c.isAttribute() && !p.attribute[c.name]) {
@@ -34,7 +37,7 @@ export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
     return p;
   }
 
-  p[c.name] = unique(p[c.name].concat(c.value));
+  p[key] = unique(p[key].concat(c.value));
 
   return p;
 };

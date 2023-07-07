@@ -122,7 +122,7 @@ const OrderSendRefundPage: React.FC<OrderSendRefundPageProps> = ({
             {loading && <Skeleton />}
             <ul className={classes.dataList}>
               {order?.transactions.map(transaction => (
-                <DataLine label={transaction.type}>
+                <DataLine label={transaction.name}>
                   <DataLineMoney money={transaction.refundedAmount} />
                 </DataLine>
               ))}

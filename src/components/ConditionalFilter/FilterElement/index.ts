@@ -1,2 +1,2 @@
 export { Condition } from "./Condition"
-export { FilterElement } from "./FilterElement"
+export { type FilterContainer,FilterElement } from "./FilterElement"
