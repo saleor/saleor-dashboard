@@ -21,7 +21,7 @@ import {
 } from "@dashboard/graphql";
 
 import { ItemOption } from "../FilterElement/ConditionValue";
-import { LeftOperand } from "../useFilterLeftOperands";
+import { LeftOperand } from "../LeftOperandsProvider";
 
 export interface Handler {
   client: ApolloClient<unknown>;

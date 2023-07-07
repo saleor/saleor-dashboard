@@ -4,8 +4,8 @@ import useDebounce from "@dashboard/hooks/useDebounce";
 import { FilterAPIProvider } from "./API/FilterAPIProvider";
 import { FilterContainer } from "./FilterElement";
 import { ConditionValue, ItemOption } from "./FilterElement/ConditionValue";
+import { LeftOperandsProvider } from "./LeftOperandsProvider";
 import { useContainerState } from "./useContainerState";
-import { LeftOperandsProvider } from "./useFilterLeftOperands";
 
 export const useFilterContainer = (
   initialValue: FilterContainer,
