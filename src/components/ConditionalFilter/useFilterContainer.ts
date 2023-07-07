@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
 import useDebounce from "@dashboard/hooks/useDebounce";
 
 import { FilterAPIProvider } from "./API/FilterAPIProvider";
