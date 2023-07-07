@@ -3,7 +3,7 @@ import useRouter from "use-react-router";
 
 import { useInitialAPIState } from "../API/initialState/useInitalAPIState";
 import { FilterContainer } from "../FilterElement";
-import { FilterValueProvider, createVariables } from "../FilterValueProvider";
+import { createVariables,FilterValueProvider } from "../FilterValueProvider";
 import { useTokenArray } from "./TokenArray";
 import { UrlEntry } from "./UrlToken";
 
