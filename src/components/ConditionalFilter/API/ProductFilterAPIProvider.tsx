@@ -17,10 +17,14 @@ const getFilterElement = (
   index: number,
 ): FilterElement => {
   const possibleFilterElement = value[index];
-  return typeof possibleFilterElement !== "string" &&
+  if (
+    typeof possibleFilterElement !== "string" &&
     !Array.isArray(possibleFilterElement)
-    ? possibleFilterElement
-    : null;
+  ) {
+    return possibleFilterElement;
+  }
+
+  throw new Error("Unknown filter element used to create API handler");
 };
 
 const createAPIHandler = (
