@@ -5,7 +5,7 @@ import { FilterAPIProvider } from "./API/FilterAPIProvider";
 import { FilterContainer } from "./FilterElement";
 import { ConditionValue, ItemOption } from "./FilterElement/ConditionValue";
 import { useContainerState } from "./useContainerState";
-import { LeftOperandsProvider } from "./useLeftOperands";
+import { LeftOperandsProvider } from "./useFilterLeftOperands";
 
 export const useFilterContainer = (
   initialValue: FilterContainer,

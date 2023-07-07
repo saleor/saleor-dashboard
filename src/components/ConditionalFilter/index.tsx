@@ -9,12 +9,12 @@ import React from "react";
 
 import { useProductFilterAPIProvider } from "./API/ProductFilterAPIProvider";
 import { useFilterContainer } from "./useFilterContainer";
-import { useLeftOperandsProvider } from "./useLeftOperands";
+import { useFilterLeftOperandsProvider } from "./useFilterLeftOperands";
 import { useUrlValueProvider } from "./ValueProvider/useUrlValueProvider";
 
 const FiltersArea = ({ provider, onConfirm }) => {
   const apiProvider = useProductFilterAPIProvider();
-  const leftOperandsProvider = useLeftOperandsProvider();
+  const leftOperandsProvider = useFilterLeftOperandsProvider();
 
   const {
     value,

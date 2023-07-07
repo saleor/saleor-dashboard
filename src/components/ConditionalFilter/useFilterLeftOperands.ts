@@ -1,19 +1,6 @@
-import { AttributeInputTypeEnum } from "@dashboard/graphql";
 import { useState } from "react";
 
-import { StaticElementName } from "./FilterElement/ConditionOptions";
-
-export interface LeftOperand {
-  type: AttributeInputTypeEnum | StaticElementName;
-  label: string;
-  value: string;
-  slug: string;
-}
-
-export interface LeftOperandsProvider {
-  operands: LeftOperand[];
-  setOperands: (operands: LeftOperand[]) => void;
-}
+import { LeftOperand, LeftOperandsProvider } from "./LeftOperandsProvider";
 
 const STATIC_OPTIONS: LeftOperand[] = [
   { value: "price", label: "Price", type: "price", slug: "price" },
@@ -27,7 +14,7 @@ const STATIC_OPTIONS: LeftOperand[] = [
   { value: "channel", label: "Channel", type: "channel", slug: "channel" },
 ];
 
-export const useLeftOperandsProvider = (): LeftOperandsProvider => {
+export const useFilterLeftOperandsProvider = (): LeftOperandsProvider => {
   const [operands, setOperands] = useState<LeftOperand[]>(STATIC_OPTIONS);
 
   return {
