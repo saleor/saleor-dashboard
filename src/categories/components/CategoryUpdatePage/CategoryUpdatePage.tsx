@@ -16,7 +16,7 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { maybe } from "../../../misc";
-import { RelayToFlat } from "../../../types";
+import { ListProps, ListViews, RelayToFlat } from "../../../types";
 import CategoryDetailsForm from "../../components/CategoryDetailsForm";
 import CategoryBackground from "../CategoryBackground";
 import { CategoryProducts } from "../CategoryProducts";
@@ -28,7 +28,11 @@ export enum CategoryPageTab {
   products = "products",
 }
 
-export interface CategoryUpdatePageProps {
+export interface CategoryUpdatePageProps
+  extends Pick<
+    ListProps<ListViews.CATEGORY_LIST>,
+    "onUpdateListSettings" | "settings"
+  > {
   categoryId: string;
   changeTab: (index: CategoryPageTab) => void;
   currentTab: CategoryPageTab;
@@ -70,6 +74,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
   onCategoriesDelete,
   onProductsDelete,
   onSelectProductsIds,
+  settings,
+  onUpdateListSettings,
 }: CategoryUpdatePageProps) => {
   const intl = useIntl();
   const navigate = useNavigator();
@@ -161,6 +167,8 @@ export const CategoryUpdatePage: React.FC<CategoryUpdatePageProps> = ({
             {currentTab === CategoryPageTab.categories && (
               <CategorySubcategories
                 disabled={disabled}
+                onUpdateListSettings={onUpdateListSettings}
+                settings={settings}
                 subcategories={subcategories}
                 onCategoriesDelete={onCategoriesDelete}
                 onSelectCategoriesIds={onSelectCategoriesIds}

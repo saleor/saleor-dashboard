@@ -15,6 +15,7 @@ import {
   useUpdateMetadataMutation,
   useUpdatePrivateMetadataMutation,
 } from "@dashboard/graphql";
+import useListSettings from "@dashboard/hooks/useListSettings";
 import useLocalPaginator, {
   useSectionLocalPaginationState,
 } from "@dashboard/hooks/useLocalPaginator";
@@ -23,6 +24,7 @@ import useNotifier from "@dashboard/hooks/useNotifier";
 import { PaginatorContext } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { commonMessages, errorMessages } from "@dashboard/intl";
+import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createMetadataUpdateHandler from "@dashboard/utils/handlers/metadataUpdateHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
@@ -97,6 +99,9 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
     clearCategryRowSelection();
     setActiveTab(tab);
   };
+
+  const { settings, updateListSettings } =
+    useListSettings<ListViews.CATEGORY_LIST>(ListViews.CATEGORY_LIST);
 
   const { data, loading, refetch } = useCategoryDetailsQuery({
     displayLoader: true,
@@ -274,6 +279,8 @@ export const CategoryDetails: React.FC<CategoryDetailsProps> = ({
       <WindowTitle title={maybe(() => data.category.name)} />
       <CategoryUpdatePage
         categoryId={id}
+        settings={settings}
+        onUpdateListSettings={updateListSettings}
         changeTab={changeTab}
         currentTab={activeTab}
         category={maybe(() => data.category)}
