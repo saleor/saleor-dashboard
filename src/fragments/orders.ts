@@ -456,12 +456,9 @@ export const transactionEvent = gql`
 export const transactionItemFragment = gql`
   fragment TransactionItem on TransactionItem {
     id
-    # TODO: remove me
-    type
     pspReference
     actions
-    type
-    status
+    name
     externalUrl
     events {
       ...TransactionEvent

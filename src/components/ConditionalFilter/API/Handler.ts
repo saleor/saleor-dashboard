@@ -20,7 +20,8 @@ import {
   _GetProductTypesChoicesQueryVariables,
 } from "@dashboard/graphql";
 
-import { ItemOption } from "../FilterElement/ConditionSelected";
+import { ItemOption } from "../FilterElement/ConditionValue";
+
 
 export interface Handler {
   client: ApolloClient<unknown>;
@@ -28,7 +29,7 @@ export interface Handler {
   fetch: () => Promise<ItemOption[]>;
 }
 
-const createOptionsFromAPI = (
+export const createOptionsFromAPI = (
   // TODO: try to use type from graphql
   data: Array<{ node: { name: string | null; id: string; slug: string } }>,
 ): ItemOption[] =>

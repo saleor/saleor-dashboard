@@ -21,6 +21,12 @@ jobs:
       IS_CLOUD_INSTANCE: true
     steps:
       - uses: actions/checkout@v2
+      - name: Set custom version
+        run: |
+          HASH=$(git rev-parse --short HEAD)
+          CURRENT_VERSION=$(jq -r .version package.json)
+          echo "CUSTOM_VERSION=${CURRENT_VERSION}-${HASH}" >> $GITHUB_ENV
+
       - name: Setup Node
         uses: actions/setup-node@v3
         with:

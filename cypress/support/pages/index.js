@@ -37,3 +37,5 @@ export * as productDetailsPage from "./catalog/products/productDetailsPage";
 export * as priceListComponent from "./catalog/products/priceListComponent";
 export * as variantsPage from "./catalog/products/VariantsPage";
 export * as channelsPage from "./channelsPage";
+export * as pagesPage from "./pagesPage";
+export * as pageDetailsPage from "./pageDetailsPage";
