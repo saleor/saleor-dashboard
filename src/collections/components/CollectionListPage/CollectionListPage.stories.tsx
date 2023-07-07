@@ -22,6 +22,10 @@ const props: CollectionListPageProps = {
   ...pageListProps.default,
   ...filterPageProps,
   ...sortPageProps,
+  settings: {
+    ...pageListProps.default.settings,
+    columns: ["name", "productCount", "availability"],
+  },
   sort: {
     ...sortPageProps.sort,
     sort: CollectionListUrlSortField.name,
