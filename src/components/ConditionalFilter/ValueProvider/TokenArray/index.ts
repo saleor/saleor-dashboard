@@ -1,11 +1,8 @@
-// @ts-strict-ignore
-
 import { parse, ParsedQs } from "qs";
 import { useRef } from "react";
 
 import { InitialStateResponse } from "../../API/InitialStateResponse";
-import { FilterElement } from "../../FilterElement";
-import { FilterContainer } from "../../useFilterContainer";
+import { FilterContainer, FilterElement } from "../../FilterElement";
 import { UrlEntry, UrlToken } from "../UrlToken";
 import {
   emptyFetchingParams,
@@ -52,7 +49,7 @@ const tokenizeUrl = (urlParams: string) => {
 const mapUrlTokensToFilterValues = (
   urlTokens: TokenArray,
   response: InitialStateResponse,
-) =>
+): FilterContainer =>
   urlTokens.map(el => {
     if (typeof el === "string") {
       return el;
@@ -98,7 +95,7 @@ export class TokenArray extends Array<string | UrlToken | TokenArray> {
 }
 
 export const useTokenArray = (url: string) => {
-  const instance = useRef<TokenArray>(null);
+  const instance = useRef<TokenArray | null>(null);
 
   if (!instance.current) {
     instance.current = new TokenArray(url);

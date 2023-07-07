@@ -161,6 +161,9 @@ export class FilterElement {
       );
     }
 
-    return null;
+    return FilterElement.createEmpty();
   }
 }
+
+
+export type FilterContainer = Array<string | FilterElement | FilterContainer>;
