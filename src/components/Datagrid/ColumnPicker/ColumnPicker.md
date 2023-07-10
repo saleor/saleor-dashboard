@@ -2,7 +2,7 @@
 
 ### System Architecture
 
-<img width="977" alt="image" src="https://user-images.githubusercontent.com/41952692/233042483-d2cb30f3-26b7-40b5-9d08-2ea42f7f0242.png">
+<img width="858" alt="image" src="https://github.com/saleor/saleor-dashboard/assets/41952692/8ce49003-e2af-4901-9098-fa5deb9bbe66">
 
 ### Column types
 
