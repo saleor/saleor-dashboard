@@ -82,7 +82,10 @@ export interface OrderDetailsPageProps {
   onInvoiceClick: (invoiceId: string) => any;
   onInvoiceGenerate: () => any;
   onInvoiceSend: (invoiceId: string) => any;
-  onTransactionAction: (transactionId: string, actionType: TransactionActionEnum) => any;
+  onTransactionAction: (
+    transactionId: string,
+    actionType: TransactionActionEnum,
+  ) => any;
   onAddManualTransaction: () => any;
   onSubmit: (data: MetadataIdSchema) => SubmitPromise;
 }

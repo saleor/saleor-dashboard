@@ -20,7 +20,10 @@ export interface MetadataFormData {
   privateMetadata: MetadataInput[];
 }
 
-export type MetadataIdSchema = Record<string, {
+export type MetadataIdSchema = Record<
+  string,
+  {
     metadata: MetadataInput[];
     privateMetadata: MetadataInput[];
-  }>;
+  }
+>;

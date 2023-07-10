@@ -33,13 +33,11 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
     refetchQueries: [GIFT_CARD_LIST_QUERY, ...refetchQueries],
   });
 
-  const {
-    onBulkDeleteGiftCards,
-    bulkDeleteGiftCardOpts,
-  } = useGiftCardBulkDelete({
-    onClose,
-    refetchQueries: [GIFT_CARD_LIST_QUERY, ...refetchQueries],
-  });
+  const { onBulkDeleteGiftCards, bulkDeleteGiftCardOpts } =
+    useGiftCardBulkDelete({
+      onClose,
+      refetchQueries: [GIFT_CARD_LIST_QUERY, ...refetchQueries],
+    });
 
   const dialogProps: Pick<
     ActionDialogProps,
