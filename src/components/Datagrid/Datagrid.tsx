@@ -105,6 +105,7 @@ export interface DatagridProps {
   columnSelect?: DataEditorProps["columnSelect"];
   showEmptyDatagrid?: boolean;
   rowAnchor?: (item: Item) => string;
+  rowHeight?: number | ((index: number) => number);
   actionButtonPosition?: "left" | "right";
   recentlyAddedColumn?: string; // Enables scroll to recently added column
 }
@@ -139,6 +140,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
   onRowSelectionChange,
   actionButtonPosition = "left",
   recentlyAddedColumn,
+  rowHeight = cellHeight,
   ...datagridProps
 }): ReactElement => {
   const classes = useStyles({ actionButtonPosition });
@@ -523,7 +525,7 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   onItemHovered={handleRowHover}
                   getRowThemeOverride={handleGetThemeOverride}
                   gridSelection={selection}
-                  rowHeight={cellHeight}
+                  rowHeight={rowHeight}
                   headerHeight={cellHeight}
                   ref={editor}
                   onPaste
