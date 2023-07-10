@@ -21,7 +21,7 @@ import {
 } from "@dashboard/graphql";
 
 import { ItemOption } from "../FilterElement/ConditionValue";
-
+import { LeftOperand } from "../LeftOperandsProvider";
 
 export interface Handler {
   client: ApolloClient<unknown>;
@@ -146,7 +146,7 @@ export class ChannelHandler implements Handler {
 export class AttributesHandler implements Handler {
   constructor(public client: ApolloClient<unknown>, public query: string) {}
 
-  fetch = async () => {
+  fetch = async (): Promise<LeftOperand[]> => {
     const { data } = await this.client.query<
       _GetDynamicLeftOperandsQuery,
       _GetDynamicLeftOperandsQueryVariables
@@ -161,7 +161,7 @@ export class AttributesHandler implements Handler {
       data.attributes?.edges.map(({ node }) => ({
         label: node.name ?? "",
         value: node.id,
-        type: node.inputType,
+        type: node.inputType ?? ("" as LeftOperand["type"]),
         slug: node.slug ?? "",
       })) ?? []
     );
