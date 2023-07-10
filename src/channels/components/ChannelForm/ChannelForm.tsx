@@ -194,6 +194,8 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
             onChange={onChange}
             min={0}
             max={120}
+            // TODO: Should be removed after single autocomplete
+            // select is migrated to macaw inputs
             __height={12.5}
           />
         </Box>
