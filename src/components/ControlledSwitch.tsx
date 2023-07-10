@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FormControlLabel, Switch } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
@@ -19,7 +20,7 @@ interface ControlledSwitchProps {
   name: string;
   secondLabel?: string | React.ReactNode;
   uncheckedLabel?: string | React.ReactNode;
-  onChange?(event: React.ChangeEvent<any>);
+  onChange?: (event: React.ChangeEvent<any>) => any;
 }
 
 export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
@@ -61,7 +62,7 @@ export const ControlledSwitch: React.FC<ControlledSwitchProps> = props => {
           ) : (
             label
           )}
-          <div>{secondLabel ? secondLabel : null}</div>
+          <div>{secondLabel || null}</div>
         </div>
       }
       disabled={disabled}

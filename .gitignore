@@ -22,6 +22,7 @@
 !.tx
 !.husky
 !.storybook
+!.changeset
 *.log
 *.pyc
 *.mo

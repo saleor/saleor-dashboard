@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { Divider, Fade, Modal, Paper } from "@material-ui/core";
@@ -92,7 +93,7 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
           },
           {
             keyboardShortcut:
-              navigator.platform.toLowerCase().indexOf("mac") >= 0
+              navigator.platform.toLowerCase().includes("mac")
                 ? "⌘+K"
                 : "Ctrl+K",
           },

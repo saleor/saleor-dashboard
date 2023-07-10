@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import CardTitle from "@dashboard/components/CardTitle";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -61,7 +62,7 @@ interface ProductVariantMediaProps {
   media?: ProductMediaFragment[];
   placeholderImage?: string;
   disabled: boolean;
-  onImageAdd();
+  onImageAdd: () => any;
 }
 
 export const ProductVariantMedia: React.FC<

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { renderHook } from "@testing-library/react-hooks";
 
 import { useFilterHandlers } from "./useFilterHandlers";
@@ -248,7 +249,7 @@ describe("useFilterHandlers", () => {
             query: "query",
           },
           defaultSortField: "",
-          keepActiveTab: true,
+          keepActiveTab: false,
         }),
       );
 
@@ -286,7 +287,7 @@ describe("useFilterHandlers", () => {
           },
           hasSortWithRank: true,
           defaultSortField: "",
-          keepActiveTab: true,
+          keepActiveTab: false,
         }),
       );
 

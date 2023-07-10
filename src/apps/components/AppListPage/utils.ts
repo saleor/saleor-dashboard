@@ -1,4 +1,4 @@
-import { GetV2SaleorAppsResponse } from "@dashboard/apps/marketplace.types";
+import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { AppInstallation, InstalledApp } from "@dashboard/apps/types";
 import {
   AppInstallationFragment,
@@ -24,7 +24,7 @@ export const resolveSectionsAvailability = ({
 
 const findAppInMarketplace = (
   manifestUrl: string | null,
-  installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
+  installableMarketplaceApps?: AppstoreApi.ReleasedSaleorApp[],
 ) => {
   if (!manifestUrl) {
     return undefined;
@@ -37,7 +37,7 @@ const findAppInMarketplace = (
 
 export const getVerifiedInstalledApps = (
   installedApps?: AppListItemFragment[],
-  installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
+  installableMarketplaceApps?: AppstoreApi.ReleasedSaleorApp[],
 ): InstalledApp[] | undefined =>
   installedApps?.map(app => {
     const marketplaceApp = findAppInMarketplace(
@@ -48,13 +48,12 @@ export const getVerifiedInstalledApps = (
     return {
       app,
       isExternal: !marketplaceApp,
-      logo: marketplaceApp?.logo,
     };
   });
 
 export const getVerifiedAppsInstallations = (
   appsInstallations?: AppInstallationFragment[],
-  installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
+  installableMarketplaceApps?: AppstoreApi.ReleasedSaleorApp[],
 ): AppInstallation[] | undefined =>
   appsInstallations?.map(appInstallation => {
     const marketplaceApp = findAppInMarketplace(
@@ -65,7 +64,6 @@ export const getVerifiedAppsInstallations = (
     return {
       appInstallation,
       isExternal: !marketplaceApp,
-      logo: marketplaceApp?.logo,
     };
   });
 
@@ -75,14 +73,14 @@ export const getVerifiedAppsInstallations = (
  * not relying on one page of installed apps list.
  */
 const isAppNotInstalled = (
-  manifestUrl: string,
+  manifestUrl: string | null,
   installedApps?: AppListItemFragment[],
 ) => installedApps?.every(app => app.manifestUrl !== manifestUrl);
 
 export const getVerifiedInstallableMarketplaceApps = (
   installedApps?: AppListItemFragment[],
-  installableMarketplaceApps?: GetV2SaleorAppsResponse.ReleasedSaleorApp[],
-): GetV2SaleorAppsResponse.ReleasedSaleorApp[] | undefined =>
+  installableMarketplaceApps?: AppstoreApi.ReleasedSaleorApp[],
+): AppstoreApi.ReleasedSaleorApp[] | undefined =>
   installableMarketplaceApps?.filter(app =>
     isAppNotInstalled(app.manifestUrl, installedApps),
   );

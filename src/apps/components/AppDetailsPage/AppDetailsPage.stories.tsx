@@ -1,7 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react";
 
 import { appDetails } from "../../fixtures";
-import AppDetailsPage, { AppDetailsPageProps } from "./AppDetailsPage";
+import { AppDetailsPage, AppDetailsPageProps } from "./AppDetailsPage";
 
 const props: AppDetailsPageProps = {
   data: appDetails,

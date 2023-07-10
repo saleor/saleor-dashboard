@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Money from "@dashboard/components/Money";
 import Skeleton from "@dashboard/components/Skeleton";
 import TableCellAvatar from "@dashboard/components/TableCellAvatar";
@@ -43,7 +44,7 @@ interface OrderReturnRefundLinesCardProps {
   itemsSelections: FormsetReplacementData;
   itemsQuantities: FormsetQuantityData;
   onChangeSelected: FormsetChange<boolean>;
-  onSetMaxQuantity();
+  onSetMaxQuantity: () => any;
 }
 
 export const ItemsCard: React.FC<OrderReturnRefundLinesCardProps> = ({

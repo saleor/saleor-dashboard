@@ -1,16 +1,16 @@
+import { AppstoreApi } from "@dashboard/apps/appstore.types";
 import { AppInstallationFragment, JobStatusEnum } from "@dashboard/graphql";
 import { intlMock } from "@test/intl";
 
 import { appsInProgress, releasedApp } from "./fixtures";
-import { GetV2SaleorAppsResponse } from "./marketplace.types";
-import { getAppDetails, resolveInstallationOfMarketplaceApp } from "./utils";
+import { getAppDetails, resolveInstallationOfAppstoreApp } from "./utils";
 
 type AppDetails = ReturnType<typeof getAppDetails>;
 
 describe("App utils app details", () => {
   it("should return app details when required released app data passed", () => {
     // Arrange
-    const app: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
+    const app: AppstoreApi.ReleasedSaleorApp = {
       name: {
         en: "Test app",
       },
@@ -68,7 +68,7 @@ describe("App utils app details", () => {
 
   it("should return app details when required coming soon app data passed", () => {
     // Arrange
-    const app: GetV2SaleorAppsResponse.ComingSoonSaleorApp = {
+    const app: AppstoreApi.ComingSoonSaleorApp = {
       name: {
         en: "Test app",
       },
@@ -109,7 +109,7 @@ describe("App utils app details", () => {
 
   it("should return app details when required app pending installation data passed", () => {
     // Arrange
-    const app: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
+    const app: AppstoreApi.ReleasedSaleorApp = {
       name: {
         en: "Test app",
       },
@@ -134,6 +134,7 @@ describe("App utils app details", () => {
       status: JobStatusEnum.PENDING,
       message: "Test message",
       manifestUrl: "https://www.example.com/manifest",
+      brand: null,
     };
 
     // Act
@@ -175,7 +176,7 @@ describe("App utils app details", () => {
 
   it("should return app details when required app failed installation data passed", () => {
     // Arrange
-    const app: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
+    const app: AppstoreApi.ReleasedSaleorApp = {
       name: {
         en: "Test app",
       },
@@ -200,6 +201,7 @@ describe("App utils app details", () => {
       status: JobStatusEnum.FAILED,
       message: "Test message",
       manifestUrl: "https://www.example.com/manifest",
+      brand: null,
     };
 
     // Act
@@ -249,6 +251,7 @@ describe("App utils app details", () => {
         status: JobStatusEnum.PENDING,
         message: "Test message",
         manifestUrl: releasedApp.manifestUrl as string,
+        brand: null,
       };
       const appInstallationList: AppInstallationFragment[] = [
         releasedAppInstallation,
@@ -256,7 +259,7 @@ describe("App utils app details", () => {
       ];
 
       // Act
-      const installation = resolveInstallationOfMarketplaceApp(
+      const installation = resolveInstallationOfAppstoreApp(
         releasedApp,
         appInstallationList,
       );

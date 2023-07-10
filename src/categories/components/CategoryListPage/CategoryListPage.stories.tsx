@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { categories } from "@dashboard/categories/fixtures";
 import { CategoryListUrlSortField } from "@dashboard/categories/urls";
 import {
@@ -24,6 +25,11 @@ const categoryTableProps: CategoryTableProps = {
     ...sortPageProps.sort,
     sort: CategoryListUrlSortField.name,
   },
+  onCategoriesDelete: () => undefined,
+  onSelectCategoriesIds: () => undefined,
+  selectedCategoriesIds: [],
+  hasPresetsChanged: false,
+  onTabUpdate: () => undefined,
 };
 
 const meta: Meta<typeof CategoryListPage> = {
@@ -46,6 +52,7 @@ export const Default: Story = {
 export const Loading: Story = {
   args: {
     ...categoryTableProps,
+    disabled: true,
     categories: undefined,
   },
   parameters: {

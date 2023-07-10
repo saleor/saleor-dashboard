@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
@@ -31,8 +32,8 @@ export interface ProductVariantDeleteDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   open: boolean;
   name: string;
-  onClose?();
-  onConfirm?();
+  onClose?: () => any;
+  onConfirm?: () => any;
 }
 
 const ProductVariantDeleteDialog: React.FC<

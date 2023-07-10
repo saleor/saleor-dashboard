@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import compact from "lodash/compact";
 
 import {

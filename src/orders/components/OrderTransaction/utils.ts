@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   TransactionActionEnum,
   TransactionEventFragment,
@@ -21,7 +22,6 @@ export const mapActionToMessage: Record<
   TransactionActionUnion,
   MessageDescriptor
 > = {
-  VOID: transactionActionMessages.void,
   CHARGE: transactionActionMessages.capture,
   CANCEL: transactionActionMessages.cancel,
   // refund is handled in "Send refund" view not in Transactions list

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { attributeListUrl } from "@dashboard/attributes/urls";
 import { ATTRIBUTE_TYPES_WITH_DEDICATED_VALUES } from "@dashboard/attributes/utils/data";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -95,11 +96,8 @@ const AttributePage: React.FC<AttributePageProps> = ({
   const intl = useIntl();
   const navigate = useNavigator();
 
-  const {
-    isMetadataModified,
-    isPrivateMetadataModified,
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const initialForm: AttributePageFormData = !attribute
     ? {
@@ -136,15 +134,10 @@ const AttributePage: React.FC<AttributePageProps> = ({
       };
 
   const handleSubmit = (data: AttributePageFormData) => {
-    const metadata = !attribute || isMetadataModified ? data.metadata : [];
     const type = attribute === null ? data.type : undefined;
-    const privateMetadata =
-      !attribute || isPrivateMetadataModified ? data.privateMetadata : [];
 
     return onSubmit({
       ...data,
-      metadata,
-      privateMetadata,
       slug: data.slug || slugify(data.name).toLowerCase(),
       type,
     });
@@ -218,7 +211,11 @@ const AttributePage: React.FC<AttributePageProps> = ({
                   </>
                 )}
                 <CardSpacer />
-                <Metadata data={data} onChange={changeMetadata} />
+                <Metadata
+                  data={data}
+                  isLoading={disabled}
+                  onChange={changeMetadata}
+                />
               </DetailPageLayout.Content>
               <DetailPageLayout.RightSidebar>
                 <AttributeOrganization

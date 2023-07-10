@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Skeleton from "@dashboard/components/Skeleton";
 import {
   OrderDetailsFragment,
@@ -61,12 +62,11 @@ const OrderTransactionGiftCard: React.FC<OrderTransactionGiftCardProps> = ({
 
   const fakeTransaction: FakeTransaction = {
     id: giftCard.id,
-    type: intl.formatMessage(transactionGiftCardMessages.giftCard, {
+    name: intl.formatMessage(transactionGiftCardMessages.giftCard, {
       code: giftCard.last4CodeChars,
     }),
     actions: [],
     pspReference: giftCard.last4CodeChars,
-    status: "",
     externalUrl: null,
     chargedAmount: prepareMoney(amount, currency),
     // Fake amounts

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { transactionEvent } from "@dashboard/orders/fixtures";
 import Wrapper from "@test/wrapper";
 import { render, screen } from "@testing-library/react";

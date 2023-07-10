@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import IconButtonTableCell from "@dashboard/components/IconButtonTableCell";
 import Money from "@dashboard/components/Money";

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { update } from "@dashboard/utils/lists";
 
 import { FieldType, IFilter, IFilterElementMutableDataGeneric } from "./types";

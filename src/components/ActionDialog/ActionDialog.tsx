@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { DialogProps } from "@dashboard/types";
 import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
@@ -15,7 +16,7 @@ export interface ActionDialogProps extends DialogProps {
   title: string;
   variant?: ActionDialogVariant;
   backButtonText?: string;
-  onConfirm();
+  onConfirm: () => any;
 }
 
 const ActionDialog: React.FC<ActionDialogProps> = props => {

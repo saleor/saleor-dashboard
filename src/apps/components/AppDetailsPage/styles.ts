@@ -38,10 +38,6 @@ export const useStyles = makeStyles(
       marginTop: 0,
       width: "100%",
     },
-    linkContainer: {
-      fontWeight: 500,
-      marginTop: theme.spacing(1.5),
-    },
     marketplaceContent: {
       "& button": {
         marginTop: theme.spacing(1),
@@ -50,15 +46,6 @@ export const useStyles = makeStyles(
         padding: theme.spacing(2, 3, 2, 3),
       },
       padding: theme.spacing(1),
-    },
-    permissionsContainer: {
-      "& li": {
-        "&:last-child": {
-          marginBottom: 0,
-        },
-        marginBottom: theme.spacing(1),
-      },
-      paddingLeft: theme.spacing(2),
     },
   }),
   { name: "AppDetailsPage" },

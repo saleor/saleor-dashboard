@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import {

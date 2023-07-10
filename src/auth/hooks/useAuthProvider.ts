@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ApolloClient, ApolloError } from "@apollo/client";
 import { IMessageContext } from "@dashboard/components/messages";
 import { DEMO_MODE } from "@dashboard/config";
@@ -129,8 +130,6 @@ export function useAuthProvider({
         navigate("/");
       }
     }
-
-    return;
   };
 
   const handleLogin = async (email: string, password: string) => {
@@ -181,9 +180,12 @@ export function useAuthProvider({
   };
 
   const handleExternalLogin = async (
-    pluginId: string,
+    pluginId: string | undefined,
     input: ExternalLoginInput,
   ) => {
+    if (!pluginId) {
+      return;
+    }
     try {
       const result = await getExternalAccessToken({
         pluginId,

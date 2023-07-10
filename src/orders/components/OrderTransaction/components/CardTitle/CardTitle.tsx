@@ -45,11 +45,10 @@ export const CardTitle: React.FC<CardTitleProps> = ({
     chargePendingAmount,
     canceledAmount,
     chargedAmount,
-    authorizedAmount,
-    type,
+    authorizedAmount
   } = transaction;
 
-  const title = capitalize(type || "Transaction")
+  const title = capitalize(transaction.name || "Transaction")
   return (
     <DefaultCardTitle
       className={className}

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import ImageUpload from "@dashboard/components/ImageUpload";
 import MediaTile from "@dashboard/components/MediaTile";
@@ -70,8 +71,8 @@ interface ProductMediaProps {
   getImageEditUrl: (id: string) => string;
   onImageDelete: (id: string) => () => void;
   onImageReorder?: ReorderAction;
-  onImageUpload(file: File);
-  openMediaUrlModal();
+  onImageUpload: (file: File) => any;
+  openMediaUrlModal: () => any;
 }
 
 const ProductMedia: React.FC<ProductMediaProps> = props => {

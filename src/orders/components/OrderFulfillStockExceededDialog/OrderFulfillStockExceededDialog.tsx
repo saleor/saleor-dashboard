@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -26,8 +27,8 @@ export interface OrderFulfillStockExceededDialogProps {
   open: boolean;
   formsetData: OrderFulfillStockFormsetData;
   confirmButtonState: ConfirmButtonTransitionState;
-  onSubmit();
-  onClose();
+  onSubmit: () => any;
+  onClose: () => any;
 }
 
 const OrderFulfillStockExceededDialog: React.FC<

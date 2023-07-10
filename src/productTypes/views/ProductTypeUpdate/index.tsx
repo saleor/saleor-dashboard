@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import AssignAttributeDialog from "@dashboard/components/AssignAttributeDialog";
 import AttributeUnassignDialog from "@dashboard/components/AttributeUnassignDialog";
 import BulkAttributeUnassignDialog from "@dashboard/components/BulkAttributeUnassignDialog";
@@ -68,54 +69,48 @@ export const ProductTypeUpdate: React.FC<ProductTypeUpdateProps> = ({
     formErrors: [],
   });
 
-  const [
-    updateProductType,
-    updateProductTypeOpts,
-  ] = useProductTypeUpdateMutation({
-    onCompleted: updateData => {
-      if (
-        !updateData.productTypeUpdate.errors ||
-        updateData.productTypeUpdate.errors.length === 0
-      ) {
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-      } else if (
-        updateData.productTypeUpdate.errors !== null &&
-        updateData.productTypeUpdate.errors.length > 0
-      ) {
-        setErrors(prevErrors => ({
-          ...prevErrors,
-          formErrors: updateData.productTypeUpdate.errors,
-        }));
-      }
-    },
-  });
-  const [
-    updateProductAttributes,
-    updateProductAttributesOpts,
-  ] = useProductAttributeAssignmentUpdateMutation({
-    onCompleted: updateData => {
-      if (
-        updateData.productAttributeAssignmentUpdate.errors !== null &&
-        updateData.productAttributeAssignmentUpdate.errors.length > 0
-      ) {
-        setErrors(prevErrors => ({
-          ...prevErrors,
-          formErrors: updateData.productAttributeAssignmentUpdate.errors,
-        }));
-      }
-    },
-  });
+  const [updateProductType, updateProductTypeOpts] =
+    useProductTypeUpdateMutation({
+      onCompleted: updateData => {
+        if (
+          !updateData.productTypeUpdate.errors ||
+          updateData.productTypeUpdate.errors.length === 0
+        ) {
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+        } else if (
+          updateData.productTypeUpdate.errors !== null &&
+          updateData.productTypeUpdate.errors.length > 0
+        ) {
+          setErrors(prevErrors => ({
+            ...prevErrors,
+            formErrors: updateData.productTypeUpdate.errors,
+          }));
+        }
+      },
+    });
+  const [updateProductAttributes, updateProductAttributesOpts] =
+    useProductAttributeAssignmentUpdateMutation({
+      onCompleted: updateData => {
+        if (
+          updateData.productAttributeAssignmentUpdate.errors !== null &&
+          updateData.productAttributeAssignmentUpdate.errors.length > 0
+        ) {
+          setErrors(prevErrors => ({
+            ...prevErrors,
+            formErrors: updateData.productAttributeAssignmentUpdate.errors,
+          }));
+        }
+      },
+    });
 
   const [updateMetadata] = useUpdateMetadataMutation({});
   const [updatePrivateMetadata] = useUpdatePrivateMetadataMutation({});
 
-  const [
-    selectedVariantAttributes,
-    setSelectedVariantAttributes,
-  ] = React.useState<string[]>([]);
+  const [selectedVariantAttributes, setSelectedVariantAttributes] =
+    React.useState<string[]>([]);
 
   const handleProductTypeUpdate = async (formData: ProductTypeForm) => {
     const operations = formData.variantAttributes.map(variantAttribute => ({

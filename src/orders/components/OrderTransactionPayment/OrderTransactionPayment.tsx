@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   OrderPaymentFragment,
   PaymentGatewayFragment,
@@ -44,10 +45,9 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
 
   const transactionFromPayment: FakeTransaction = {
     id: payment.id,
-    type: findMethodName(payment.gateway, allPaymentMethods),
+    name: findMethodName(payment.gateway, allPaymentMethods),
     actions: mapOrderActionsToTransactionActions(payment.actions),
     pspReference: "",
-    status: "",
     externalUrl: null,
     chargedAmount: getTransactionAmount(payment.capturedAmount, currency),
     authorizedAmount: getTransactionAmount(
@@ -69,7 +69,7 @@ const OrderTransactionPayment: React.FC<OrderTransactionPaymentProps> = ({
       if (action === TransactionActionEnum.CHARGE) {
         onCapture();
       }
-      if (action === TransactionActionEnum.VOID) {
+      if (action === TransactionActionEnum.CANCEL) {
         onVoid();
       }
     };

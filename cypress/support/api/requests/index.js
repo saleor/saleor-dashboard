@@ -8,3 +8,8 @@ export {
   deleteStaffMembersStartsWith,
   updateStaffMember,
 } from "./StaffMembers";
+export * as productsRequests from "./Product";
+export * as productsTypeRequests from "./ProductType";
+export * as attributeRequests from "./Attribute";
+export * as pageRequests from "./Page";
+export * as pageTypeRequests from "./PageType";

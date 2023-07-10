@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   OrderAction,
   OrderPaymentFragment,
@@ -137,7 +138,7 @@ export const mapOrderActionsToTransactionActions = (
     .map(action => {
       switch (action) {
         case OrderAction.VOID:
-          return TransactionActionEnum.VOID;
+          return TransactionActionEnum.CANCEL;
         case OrderAction.CAPTURE:
           return TransactionActionEnum.CHARGE;
         case OrderAction.REFUND:

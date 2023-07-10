@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { getWebhookTypes } from "@dashboard/custom-apps/components/WebhookEvents/utils";
 import { WebhookEventTypeAsyncEnum } from "@dashboard/graphql";
 import { InlineFragmentNode, ObjectFieldNode, parse, visit } from "graphql";

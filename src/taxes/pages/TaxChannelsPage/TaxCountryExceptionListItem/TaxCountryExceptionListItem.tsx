@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import SingleSelectField, {
   Choice,
@@ -26,13 +27,9 @@ interface TaxCountryExceptionListItemProps {
   strategyChoices: Choice[];
 }
 
-export const TaxCountryExceptionListItem: React.FC<TaxCountryExceptionListItemProps> = ({
-  country,
-  onDelete,
-  onChange,
-  strategyChoices,
-  divider = true,
-}) => {
+export const TaxCountryExceptionListItem: React.FC<
+  TaxCountryExceptionListItemProps
+> = ({ country, onDelete, onChange, strategyChoices, divider = true }) => {
   const classes = useStyles();
   return (
     <>

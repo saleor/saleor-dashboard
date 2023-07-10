@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import Label from "@dashboard/orders/components/OrderHistory/Label";
 import { Accordion, Text } from "@saleor/macaw-ui/next";
@@ -16,9 +17,10 @@ export const ChannelAvailabilityItemWrapper: React.FC<
 > = ({ data: { name }, messages, children }) => (
   <Accordion data-test-id="channel-availability-item">
     <Accordion.Item value="channel-availability-item" gap={9}>
-      <Accordion.Trigger buttonDataTestId="expand-icon">
+      <Accordion.Trigger>
         <Text variant={"bodyEmp"}>{name}</Text>
         <Label text={messages.availableDateText} />
+        <Accordion.TriggerButton dataTestId="expand-icon" />
       </Accordion.Trigger>
       <Accordion.Content paddingLeft={3}>{children}</Accordion.Content>
     </Accordion.Item>

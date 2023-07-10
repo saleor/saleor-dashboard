@@ -1,10 +1,12 @@
 import {
   MarkAsPaidStrategyEnum,
   OrderDetailsFragment,
+  OrderDraftListQuery,
   OrderRefundDataQuery,
   TransactionEventFragment,
   TransactionItemFragment,
 } from "@dashboard/graphql";
+import { RelayToFlat } from "@dashboard/types";
 
 /** Check if order has transactions & feature flag enabled */
 export const orderHasTransactions = (order: OrderDetailsFragment): boolean =>
@@ -37,6 +39,10 @@ export type OrderRefundSharedType = Pick<
     keyof OrderDetailsFragment &
     keyof OrderRefundData
 >;
+
+export type OrderDraft = RelayToFlat<
+  NonNullable<OrderDraftListQuery["draftOrders"]>
+>[number];
 
 /** Type of the trasaction event (e.g. CHARGE_SUCCESS -> CHARGE) */
 export type TransactionEventType =

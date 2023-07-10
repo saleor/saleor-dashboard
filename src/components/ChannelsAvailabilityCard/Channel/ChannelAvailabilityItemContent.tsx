@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelData } from "@dashboard/channels/utils";
 import useCurrentDate from "@dashboard/hooks/useCurrentDate";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";
@@ -236,7 +237,7 @@ export const ChannelAvailabilityItemContent: React.FC<ChannelContentProps> = ({
                         )
                       : ""
                   }
-                  value={availableForPurchase ? availableForPurchase : ""}
+                  value={availableForPurchase || ""}
                   onChange={e =>
                     onChange(id, {
                       ...formData,

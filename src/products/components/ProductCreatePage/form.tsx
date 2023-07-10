@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   getAttributesDisplayData,
   getRichTextAttributesFromMap,
@@ -252,9 +253,8 @@ function useProductCreateForm(
     triggerChange,
   });
 
-  const {
-    makeChangeHandler: makeMetadataChangeHandler,
-  } = useMetadataChangeTrigger();
+  const { makeChangeHandler: makeMetadataChangeHandler } =
+    useMetadataChangeTrigger();
 
   const handleCollectionSelect = createMultiAutocompleteSelectHandler(
     toggleValue,
@@ -404,13 +404,10 @@ function useProductCreateForm(
     return errors;
   };
 
-  const {
-    setExitDialogSubmitRef,
-    setIsSubmitDisabled,
-    setIsDirty,
-  } = useExitFormDialog({
-    formId: PRODUCT_CREATE_FORM_ID,
-  });
+  const { setExitDialogSubmitRef, setIsSubmitDisabled, setIsDirty } =
+    useExitFormDialog({
+      formId: PRODUCT_CREATE_FORM_ID,
+    });
 
   useEffect(() => setExitDialogSubmitRef(submit), [submit]);
 

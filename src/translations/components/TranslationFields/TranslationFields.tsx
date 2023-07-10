@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import Grid from "@dashboard/components/Grid";
@@ -230,12 +231,12 @@ const TranslationFields: React.FC<TranslationFieldsProps> = props => {
                         onDiscard={onDiscard}
                         onSubmit={data => onSubmit(field, data)}
                       />
-                    ) : // FIXME
+                    ) // FIXME
                     // For now this is the only way to fix the issue
                     // of initializing the editor with fetched data.
                     // Without this the editor doesn't get the saved data
                     // and is empty
-                    disabled ? (
+                    : disabled ? (
                       <Skeleton />
                     ) : (
                       <TranslationFieldsRich

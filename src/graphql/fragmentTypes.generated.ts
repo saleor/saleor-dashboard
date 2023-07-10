@@ -12,6 +12,9 @@
       "ShippingMethod"
     ],
     "Event": [
+      "AccountChangeEmailRequested",
+      "AccountConfirmationRequested",
+      "AccountDeleteRequested",
       "AddressCreated",
       "AddressDeleted",
       "AddressUpdated",
@@ -67,6 +70,7 @@
       "MenuItemDeleted",
       "MenuItemUpdated",
       "MenuUpdated",
+      "OrderBulkCreated",
       "OrderCancelled",
       "OrderConfirmed",
       "OrderCreated",
@@ -126,7 +130,6 @@
       "StaffDeleted",
       "StaffUpdated",
       "ThumbnailCreated",
-      "TransactionActionRequest",
       "TransactionCancelationRequested",
       "TransactionChargeRequested",
       "TransactionInitializeSession",

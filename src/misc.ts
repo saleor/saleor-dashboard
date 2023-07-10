@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { FetchResult, MutationFunction, MutationResult } from "@apollo/client";
 import {
   AddressInput,
@@ -467,7 +468,7 @@ export function transformFormToAddressInput<T>(
 }
 
 export function getStringOrPlaceholder(
-  s: string | undefined,
+  s: string | undefined | null,
   placeholder?: string,
 ): string {
   return s || placeholder || "...";

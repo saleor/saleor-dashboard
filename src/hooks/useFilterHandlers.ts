@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { IFilter } from "@dashboard/components/Filter";
 import { ActiveTab, Pagination, Search, Sort } from "@dashboard/types";
 import {
@@ -119,7 +120,7 @@ export const useFilterHandlers = <
         ...params,
         after: undefined,
         before: undefined,
-        activeTab: getActiveTabValue(checkIfParamsEmpty(params) && hasQuery),
+        activeTab: getActiveTabValue(checkIfParamsEmpty(params) && !hasQuery),
         query: hasQuery ? trimmedQuery : undefined,
         ...(hasSortWithRank && {
           sort: hasQuery ? sortWithQuery : sortWithoutQuery,

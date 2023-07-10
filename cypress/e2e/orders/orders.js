@@ -40,6 +40,7 @@ import {
   expandPrivateFulfillmentMetadata,
   expandPublicFulfillmentMetadata,
   finalizeDraftOrder,
+  openVariantDetailsOptions,
   selectChannelInPicker,
   updatePrivateMetadataFieldFulfillmentOrder,
   updatePublicMetadataFieldFulfillmentOrder,
@@ -56,6 +57,7 @@ describe("Orders", () => {
   let variantsList;
   let address;
   let taxClass;
+  let productDetails;
 
   const shippingPrice = 2;
   const variantPrice = 1;
@@ -124,7 +126,8 @@ describe("Orders", () => {
           });
         },
       )
-      .then(({ variantsList: variantsResp }) => {
+      .then(({ variantsList: variantsResp, product }) => {
+        productDetails = product;
         variantsList = variantsResp;
         cy.checkIfDataAreNotNull({
           customer,
@@ -287,7 +290,7 @@ describe("Orders", () => {
         address,
       }).then(unconfirmedOrderResponse => {
         cy.visit(urlList.orders + `${unconfirmedOrderResponse.order.id}`);
-        deleteProductFromGridTableOnIndex(0);
+        deleteProductFromGridTableOnIndex(1);
         cy.contains(MESSAGES.noProductFound).should("be.visible");
         cy.get(ORDERS_SELECTORS.productDeleteFromRowButton).should("not.exist");
       });
@@ -515,6 +518,59 @@ describe("Orders", () => {
               });
           });
         });
+      });
+    },
+  );
+  it(
+    "should open product details from order details - unconfirmed order. TC: SALEOR_2133",
+    { tags: ["@orders", "@allEnv", "@stable"] },
+    () => {
+      createUnconfirmedOrder({
+        customerId: customer.id,
+        channelId: defaultChannel.id,
+        shippingMethod,
+        variantsList,
+        address,
+      }).then(unconfirmedOrderResponse => {
+        cy.visit(urlList.orders + `${unconfirmedOrderResponse.order.id}`);
+        openVariantDetailsOptions();
+        cy.get(ORDERS_SELECTORS.openProductDetailsButton).then(
+          openProductInNewTabButton => {
+            cy.wrap(openProductInNewTabButton)
+              .invoke("attr", "target")
+              .should("eq", "_blank");
+            cy.wrap(openProductInNewTabButton)
+              .invoke("attr", "href")
+              .should("contain", productDetails.id.replace("=", ""));
+          },
+        );
+      });
+    },
+  );
+  it(
+    "should open product details from order details - confirmed order. TC: 2134",
+    { tags: ["@orders", "@allEnv", "@stable"] },
+    () => {
+      let order;
+      createReadyToFulfillOrder({
+        customerId: customer.id,
+        channelId: defaultChannel.id,
+        shippingMethod,
+        variantsList,
+        address,
+      }).then(({ order: orderResp }) => {
+        order = orderResp;
+        cy.visit(urlList.orders + `${order.id}`);
+        cy.get(ORDERS_SELECTORS.rowActionButton)
+          .find("a")
+          .then(openProductInNewTabButton => {
+            cy.wrap(openProductInNewTabButton)
+              .invoke("attr", "target")
+              .should("eq", "_blank");
+            cy.wrap(openProductInNewTabButton)
+              .invoke("attr", "href")
+              .should("contain", productDetails.id.replace("=", ""));
+          });
       });
     },
   );

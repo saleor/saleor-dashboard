@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import { buttonMessages } from "@dashboard/intl";
@@ -24,7 +25,7 @@ import { useStyles } from "./styles";
 export interface OrderCustomerChangeDialogProps {
   open: boolean;
   onConfirm: (data: OrderCustomerChangeData) => void;
-  onClose();
+  onClose: () => any;
 }
 
 const OrderCustomerChangeDialog: React.FC<

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { subtractMoney } from "@dashboard/components/Money";
 import {
   AddressFragment,

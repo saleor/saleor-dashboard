@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";

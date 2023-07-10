@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { channelAddUrl, channelUrl } from "@dashboard/channels/urls";
 import { LimitsInfo } from "@dashboard/components/AppLayout/LimitsInfo";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";

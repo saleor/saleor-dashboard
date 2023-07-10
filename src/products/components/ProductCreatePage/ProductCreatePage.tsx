@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -94,7 +95,7 @@ interface ProductCreatePageProps {
   onAttributeSelectBlur: () => void;
   onCloseDialog: (currentParams?: ProductCreateUrlQueryParams) => void;
   onSelectProductType: (productTypeId: string) => void;
-  onSubmit?(data: ProductCreateData);
+  onSubmit?: (data: ProductCreateData) => any;
 }
 
 export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
@@ -224,7 +225,7 @@ export const ProductCreatePage: React.FC<ProductCreatePageProps> = ({
         attributeRichTextGetters,
       }) => {
         // Comparing explicitly to false because `hasVariants` can be undefined
-        const isSimpleProduct = data.productType?.hasVariants === false;
+        const isSimpleProduct = !(data.productType?.hasVariants);
 
         const errors = [...apiErrors, ...validationErrors];
 

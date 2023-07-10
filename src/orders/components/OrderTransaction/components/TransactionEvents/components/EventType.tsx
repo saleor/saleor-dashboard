@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { capitalize } from "@dashboard/misc";
 import { transactionEventTypeMap } from "@dashboard/orders/messages";
 import { TransactionEventType } from "@dashboard/orders/types";

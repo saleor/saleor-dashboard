@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { category as categoryFixture } from "@dashboard/categories/fixtures";
 import { listActionsProps } from "@dashboard/fixtures";
@@ -25,11 +26,13 @@ const updateProps: Omit<CategoryUpdatePageProps, "classes"> = {
   onImageDelete: () => undefined,
   onImageUpload: () => undefined,
   onSubmit: () => undefined,
-  productListToolbar: null,
   products: mapEdgesToItems(category.products),
   saveButtonBarState: "default",
   subcategories: mapEdgesToItems(category.children),
-  subcategoryListToolbar: null,
+  onCategoriesDelete: () => undefined,
+  onProductsDelete: () => undefined,
+  onSelectCategoriesIds: () => undefined,
+  onSelectProductsIds: () => undefined,
   ...listActionsProps,
 };
 
