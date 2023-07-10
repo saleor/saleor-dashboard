@@ -4,10 +4,23 @@ directive @doc(
   category: String!
 ) on ENUM | FIELD | FIELD_DEFINITION | INPUT_OBJECT | OBJECT
 
+"""Webhook events triggered by a specific location."""
+directive @webhookEventsInfo(
+  """List of asynchronous webhook events triggered by a specific location."""
+  asyncEvents: [WebhookEventTypeAsyncEnum!]!
+
+  """List of synchronous webhook events triggered by a specific location."""
+  syncEvents: [WebhookEventTypeSyncEnum!]!
+) on FIELD | FIELD_DEFINITION | INPUT_OBJECT | OBJECT
+
 """
 Create a new address for the customer. 
 
 Requires one of the following permissions: AUTHENTICATED_USER.
+
+Triggers the following webhook events:
+- CUSTOMER_UPDATED (async): A customer account was updated.
+- ADDRESS_CREATED (async): An address was created.
 """
 type AccountAddressCreate {
   """A user instance for which the address was created."""
@@ -19,6 +32,9 @@ type AccountAddressCreate {
 
 """
 Delete an address of the logged-in user. Requires one of the following permissions: MANAGE_USERS, IS_OWNER.
+
+Triggers the following webhook events:
+- ADDRESS_DELETED (async): An address was deleted.
 """
 type AccountAddressDelete {
   """A user instance for which the address was deleted."""
@@ -30,6 +46,9 @@ type AccountAddressDelete {
 
 """
 Updates an address of the logged-in user. Requires one of the following permissions: MANAGE_USERS, IS_OWNER.
+
+Triggers the following webhook events:
+- ADDRESS_UPDATED (async): An address was updated.
 """
 type AccountAddressUpdate {
   """A user object for which the address was edited."""
@@ -37,6 +56,77 @@ type AccountAddressUpdate {
   accountErrors: [AccountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [AccountError!]!
   address: Address
+}
+
+"""
+Event sent when account change email is requested.
+
+Added in Saleor 3.15.
+"""
+type AccountChangeEmailRequested implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The URL to redirect the user after he accepts the request."""
+  redirectUrl: String
+
+  """The user the event relates to."""
+  user: User
+
+  """The channel data."""
+  channel: Channel
+
+  """The token required to confirm request."""
+  token: String
+
+  """Shop data."""
+  shop: Shop
+
+  """The new email address the user wants to change to."""
+  newEmail: String
+}
+
+"""
+Event sent when account confirmation requested. This event is always sent. enableAccountConfirmationByEmail flag set to True is not required.
+
+Added in Saleor 3.15.
+"""
+type AccountConfirmationRequested implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The URL to redirect the user after he accepts the request."""
+  redirectUrl: String
+
+  """The user the event relates to."""
+  user: User
+
+  """The channel data."""
+  channel: Channel
+
+  """The token required to confirm request."""
+  token: String
+
+  """Shop data."""
+  shop: Shop
 }
 
 """
@@ -48,6 +138,40 @@ type AccountDelete {
   accountErrors: [AccountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [AccountError!]!
   user: User
+}
+
+"""
+Event sent when account delete is requested.
+
+Added in Saleor 3.15.
+"""
+type AccountDeleteRequested implements Event {
+  """Time of the event."""
+  issuedAt: DateTime
+
+  """Saleor version that triggered the event."""
+  version: String
+
+  """The user or application that triggered the event."""
+  issuingPrincipal: IssuingPrincipal
+
+  """The application receiving the webhook."""
+  recipient: App
+
+  """The URL to redirect the user after he accepts the request."""
+  redirectUrl: String
+
+  """The user the event relates to."""
+  user: User
+
+  """The channel data."""
+  channel: Channel
+
+  """The token required to confirm request."""
+  token: String
+
+  """Shop data."""
+  shop: Shop
 }
 
 """Represents errors in account mutations."""
@@ -130,7 +254,13 @@ input AccountInput {
   metadata: [MetadataInput!]
 }
 
-"""Register a new user."""
+"""
+Register a new user.
+
+Triggers the following webhook events:
+- CUSTOMER_CREATED (async): A new customer account was created.
+- NOTIFY_USER (async): A notification for account confirmation.
+"""
 type AccountRegister {
   """Informs whether users need to confirm their email address."""
   requiresConfirmation: Boolean
@@ -172,6 +302,9 @@ input AccountRegisterInput {
 Sends an email with the account removal link for the logged-in user. 
 
 Requires one of the following permissions: AUTHENTICATED_USER.
+
+Triggers the following webhook events:
+- NOTIFY_USER (async): A notification for account delete request.
 """
 type AccountRequestDeletion {
   accountErrors: [AccountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -182,6 +315,9 @@ type AccountRequestDeletion {
 Sets a default address for the authenticated user. 
 
 Requires one of the following permissions: AUTHENTICATED_USER.
+
+Triggers the following webhook events:
+- CUSTOMER_UPDATED (async): A customer's address was updated.
 """
 type AccountSetDefaultAddress {
   """An updated user instance."""
@@ -194,6 +330,10 @@ type AccountSetDefaultAddress {
 Updates the account of the logged-in user. 
 
 Requires one of the following permissions: AUTHENTICATED_USER.
+
+Triggers the following webhook events:
+- CUSTOMER_UPDATED (async): A customer account was updated.
+- CUSTOMER_METADATA_UPDATED (async): Optionally called when customer's metadata was updated.
 """
 type AccountUpdate {
   accountErrors: [AccountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -203,14 +343,13 @@ type AccountUpdate {
 
 """Represents user address data."""
 type Address implements Node & ObjectWithMetadata {
+  """The ID of the address."""
   id: ID!
 
   """
   List of private metadata items. Requires staff permissions to access.
   
   Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -220,8 +359,6 @@ type Address implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -229,8 +366,6 @@ type Address implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -238,8 +373,6 @@ type Address implements Node & ObjectWithMetadata {
   List of public metadata items. Can be accessed without permissions.
   
   Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metadata: [MetadataItem!]!
 
@@ -249,8 +382,6 @@ type Address implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -258,22 +389,40 @@ type Address implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.10.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
+
+  """The given name of the address."""
   firstName: String!
+
+  """The family name of the address."""
   lastName: String!
+
+  """Company or organization name."""
   companyName: String!
+
+  """The first line of the address."""
   streetAddress1: String!
+
+  """The second line of the address."""
   streetAddress2: String!
+
+  """The city of the address."""
   city: String!
+
+  """The district of the address."""
   cityArea: String!
+
+  """The postal code of the address."""
   postalCode: String!
 
-  """Shop's default country."""
+  """The country of the address."""
   country: CountryDisplay!
+
+  """The country area of the address."""
   countryArea: String!
+
+  """The phone number assigned the address."""
   phone: String
 
   """Address is user's default shipping address."""
@@ -287,6 +436,9 @@ type Address implements Node & ObjectWithMetadata {
 Creates user address. 
 
 Requires one of the following permissions: MANAGE_USERS.
+
+Triggers the following webhook events:
+- ADDRESS_CREATED (async): A new address was created.
 """
 type AddressCreate {
   """A user instance for which the address was created."""
@@ -322,6 +474,9 @@ type AddressCreated implements Event {
 Deletes an address. 
 
 Requires one of the following permissions: MANAGE_USERS.
+
+Triggers the following webhook events:
+- ADDRESS_DELETED (async): An address was deleted.
 """
 type AddressDelete {
   """A user instance for which the address was deleted."""
@@ -384,7 +539,11 @@ input AddressInput {
   """State or province."""
   countryArea: String
 
-  """Phone number."""
+  """
+  Phone number.
+  
+  Phone numbers are validated with Google's [libphonenumber](https://github.com/google/libphonenumber) library.
+  """
   phone: String
 }
 
@@ -392,6 +551,9 @@ input AddressInput {
 Sets a default address for the given user. 
 
 Requires one of the following permissions: MANAGE_USERS.
+
+Triggers the following webhook events:
+- CUSTOMER_UPDATED (async): A customer was updated.
 """
 type AddressSetDefault {
   """An updated user instance."""
@@ -410,6 +572,9 @@ enum AddressTypeEnum {
 Updates an address. 
 
 Requires one of the following permissions: MANAGE_USERS.
+
+Triggers the following webhook events:
+- ADDRESS_UPDATED (async): An address was updated.
 """
 type AddressUpdate {
   """A user object for which the address was edited."""
@@ -443,22 +608,91 @@ type AddressUpdated implements Event {
 
 """Represents address validation rules for a country."""
 type AddressValidationData {
+  """The country code of the address validation rule."""
   countryCode: String!
+
+  """The country name of the address validation rule."""
   countryName: String!
+
+  """
+  The address format of the address validation rule.
+  
+  Many fields in the JSON refer to address fields by one-letter abbreviations. These are defined as follows:
+  
+  - `N`: Name
+  - `O`: Organisation
+  - `A`: Street Address Line(s)
+  - `D`: Dependent locality (may be an inner-city district or a suburb)
+  - `C`: City or Locality
+  - `S`: Administrative area such as a state, province, island etc
+  - `Z`: Zip or postal code
+  - `X`: Sorting code
+  
+  [Click here for more information.](https://github.com/google/libaddressinput/wiki/AddressValidationMetadata)
+  """
   addressFormat: String!
+
+  """
+  The latin address format of the address validation rule.
+  
+  Many fields in the JSON refer to address fields by one-letter abbreviations. These are defined as follows:
+  
+  - `N`: Name
+  - `O`: Organisation
+  - `A`: Street Address Line(s)
+  - `D`: Dependent locality (may be an inner-city district or a suburb)
+  - `C`: City or Locality
+  - `S`: Administrative area such as a state, province, island etc
+  - `Z`: Zip or postal code
+  - `X`: Sorting code
+  
+  [Click here for more information.](https://github.com/google/libaddressinput/wiki/AddressValidationMetadata)
+  """
   addressLatinFormat: String!
+
+  """The allowed fields to use in address."""
   allowedFields: [String!]!
+
+  """The required fields to create a valid address."""
   requiredFields: [String!]!
+
+  """
+  The list of fields that should be in upper case for address validation rule.
+  """
   upperFields: [String!]!
+
+  """The formal name of the county area of the address validation rule."""
   countryAreaType: String!
+
+  """
+  The available choices for the country area of the address validation rule.
+  """
   countryAreaChoices: [ChoiceValue!]!
+
+  """The formal name of the city of the address validation rule."""
   cityType: String!
+
+  """The available choices for the city of the address validation rule."""
   cityChoices: [ChoiceValue!]!
+
+  """The formal name of the city area of the address validation rule."""
   cityAreaType: String!
+
+  """
+  The available choices for the city area of the address validation rule.
+  """
   cityAreaChoices: [ChoiceValue!]!
+
+  """The formal name of the postal code of the address validation rule."""
   postalCodeType: String!
+
+  """The regular expression for postal code validation."""
   postalCodeMatchers: [String!]!
+
+  """The example postal code of the address validation rule."""
   postalCodeExamples: [String!]!
+
+  """The postal code prefix of the address validation rule."""
   postalCodePrefix: String!
 }
 
@@ -488,6 +722,7 @@ Determine the allocation strategy for the channel.
     within the channel
 
     PRIORITIZE_HIGH_STOCK - allocate stock in a warehouse with the most stock
+    
 """
 enum AllocationStrategyEnum {
   PRIORITIZE_SORTING_ORDER
@@ -496,6 +731,7 @@ enum AllocationStrategyEnum {
 
 """Represents app data."""
 type App implements Node & ObjectWithMetadata {
+  """The ID of the app."""
   id: ID!
 
   """List of private metadata items. Requires staff permissions to access."""
@@ -507,8 +743,6 @@ type App implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -516,8 +750,6 @@ type App implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -530,8 +762,6 @@ type App implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -539,8 +769,6 @@ type App implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
 
@@ -637,6 +865,9 @@ type App implements Node & ObjectWithMetadata {
 Activate the app. 
 
 Requires one of the following permissions: MANAGE_APPS.
+
+Triggers the following webhook events:
+- APP_STATUS_CHANGED (async): An app was activated.
 """
 type AppActivate {
   appErrors: [AppError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -690,7 +921,7 @@ type AppBrandLogo {
     
     Note: this API is currently in Feature Preview and can be subject to changes at later point.
     """
-    format: IconThumbnailFormatEnum = ORIGINAL
+    format: IconThumbnailFormatEnum
   ): String!
 }
 
@@ -713,6 +944,9 @@ type AppCountableEdge {
 
 """
 Creates a new app. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS.
+
+Triggers the following webhook events:
+- APP_INSTALLED (async): An app was installed.
 """
 type AppCreate {
   """The newly created authentication token."""
@@ -726,6 +960,9 @@ type AppCreate {
 Deactivate the app. 
 
 Requires one of the following permissions: MANAGE_APPS.
+
+Triggers the following webhook events:
+- APP_STATUS_CHANGED (async): An app was deactivated.
 """
 type AppDeactivate {
   appErrors: [AppError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -737,6 +974,9 @@ type AppDeactivate {
 Deletes an app. 
 
 Requires one of the following permissions: MANAGE_APPS.
+
+Triggers the following webhook events:
+- APP_DELETED (async): An app was deleted.
 """
 type AppDelete {
   appErrors: [AppError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -814,6 +1054,7 @@ enum AppErrorCode {
 
 """Represents app data."""
 type AppExtension implements Node {
+  """The ID of the app extension."""
   id: ID!
 
   """List of the app extension's permissions."""
@@ -830,9 +1071,11 @@ type AppExtension implements Node {
 
   """Type of way how app extension will be opened."""
   target: AppExtensionTargetEnum!
+
+  """The app assigned to app extension."""
   app: App!
 
-  """JWT token used to authenticate by thridparty app extension."""
+  """JWT token used to authenticate by third-party app extension."""
   accessToken: String
 }
 
@@ -882,6 +1125,7 @@ All available ways of opening an app extension.
 
     POPUP - app's extension will be mounted as a popup window
     APP_PAGE - redirect to app's page
+    
 """
 enum AppExtensionTargetEnum {
   POPUP
@@ -894,6 +1138,7 @@ Fetch and validate manifest.
 Requires one of the following permissions: MANAGE_APPS.
 """
 type AppFetchManifest {
+  """The validated manifest."""
   manifest: Manifest
   appErrors: [AppError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [AppError!]!
@@ -926,7 +1171,7 @@ input AppInstallInput {
   """Name of the app to install."""
   appName: String
 
-  """Url to app's manifest in JSON format."""
+  """URL to app's manifest in JSON format."""
   manifestUrl: String
 
   """Determine if app will be set active or not."""
@@ -938,6 +1183,7 @@ input AppInstallInput {
 
 """Represents ongoing installation of app."""
 type AppInstallation implements Node & Job {
+  """The ID of the app installation."""
   id: ID!
 
   """Job status."""
@@ -951,7 +1197,11 @@ type AppInstallation implements Node & Job {
 
   """Job message."""
   message: String
+
+  """The name of the app installation."""
   appName: String!
+
+  """The URL address of manifest for the app installation."""
   manifestUrl: String!
 
   """
@@ -1032,7 +1282,7 @@ type AppManifestBrandLogo {
     
     Note: this API is currently in Feature Preview and can be subject to changes at later point.
     """
-    format: IconThumbnailFormatEnum = ORIGINAL
+    format: IconThumbnailFormatEnum
   ): String!
 }
 
@@ -1094,6 +1344,9 @@ type AppManifestWebhook {
 Retry failed installation of new app. 
 
 Requires one of the following permissions: MANAGE_APPS.
+
+Triggers the following webhook events:
+- APP_INSTALLED (async): An app was installed.
 """
 type AppRetryInstall {
   appErrors: [AppError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -1141,6 +1394,7 @@ type AppStatusChanged implements Event {
 
 """Represents token data."""
 type AppToken implements Node {
+  """The ID of the app token."""
   id: ID!
 
   """Name of the authenticated token."""
@@ -1207,6 +1461,9 @@ enum AppTypeEnum {
 Updates an existing app. 
 
 Requires one of the following permissions: MANAGE_APPS.
+
+Triggers the following webhook events:
+- APP_UPDATED (async): An app was updated.
 """
 type AppUpdate {
   appErrors: [AppError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -1238,7 +1495,9 @@ type AppUpdated implements Event {
 
 """An enumeration."""
 enum AreaUnitsEnum {
+  SQ_MM
   SQ_CM
+  SQ_DM
   SQ_M
   SQ_KM
   SQ_FT
@@ -1277,6 +1536,7 @@ type AssignedVariantAttribute {
 Custom attribute of a product. Attributes can be assigned to products and variants at the product type level.
 """
 type Attribute implements Node & ObjectWithMetadata {
+  """The ID of the attribute."""
   id: ID!
 
   """List of private metadata items. Requires staff permissions to access."""
@@ -1288,8 +1548,6 @@ type Attribute implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -1297,8 +1555,6 @@ type Attribute implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -1311,8 +1567,6 @@ type Attribute implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -1320,8 +1574,6 @@ type Attribute implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
 
@@ -1406,6 +1658,10 @@ type Attribute implements Node & ObjectWithMetadata {
 
   """Flag indicating that attribute has predefined choices."""
   withChoices: Boolean!
+
+  """
+  A list of product types that use this attribute as a product attribute.
+  """
   productTypes(
     """Return the elements in the list that come before the specified cursor."""
     before: String
@@ -1423,6 +1679,10 @@ type Attribute implements Node & ObjectWithMetadata {
     """
     last: Int
   ): ProductTypeCountableConnection!
+
+  """
+  A list of product types that use this attribute as a product variant attribute.
+  """
   productVariantTypes(
     """Return the elements in the list that come before the specified cursor."""
     before: String
@@ -1453,6 +1713,9 @@ type Attribute implements Node & ObjectWithMetadata {
 Deletes attributes. 
 
 Requires one of the following permissions: MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
+
+Triggers the following webhook events:
+- ATTRIBUTE_DELETED (async): An attribute was deleted.
 """
 type AttributeBulkDelete {
   """Returns how many objects were affected."""
@@ -1547,7 +1810,12 @@ type AttributeCountableEdge {
   cursor: String!
 }
 
-"""Creates an attribute."""
+"""
+Creates an attribute.
+
+Triggers the following webhook events:
+- ATTRIBUTE_CREATED (async): An attribute was created.
+"""
 type AttributeCreate {
   attribute: Attribute
   attributeErrors: [AttributeError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -1643,6 +1911,9 @@ type AttributeCreated implements Event {
 Deletes an attribute. 
 
 Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+
+Triggers the following webhook events:
+- ATTRIBUTE_DELETED (async): An attribute was deleted.
 """
 type AttributeDelete {
   attributeErrors: [AttributeError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -1782,6 +2053,10 @@ input AttributeInputTypeEnumFilterInput {
 Reorder the values of an attribute. 
 
 Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+
+Triggers the following webhook events:
+- ATTRIBUTE_VALUE_UPDATED (async): An attribute value was updated.
+- ATTRIBUTE_UPDATED (async): An attribute was updated.
 """
 type AttributeReorderValues {
   """Attribute from which values are reordered."""
@@ -1888,6 +2163,9 @@ input AttributeTypeEnumFilterInput {
 Updates attribute. 
 
 Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+
+Triggers the following webhook events:
+- ATTRIBUTE_UPDATED (async): An attribute was updated.
 """
 type AttributeUpdate {
   attribute: Attribute
@@ -1976,6 +2254,7 @@ type AttributeUpdated implements Event {
 
 """Represents a value of an attribute."""
 type AttributeValue implements Node {
+  """The ID of the attribute value."""
   id: ID!
 
   """Name of a value displayed in the interface."""
@@ -2037,6 +2316,10 @@ type AttributeValue implements Node {
 Deletes values of attributes. 
 
 Requires one of the following permissions: MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
+
+Triggers the following webhook events:
+- ATTRIBUTE_VALUE_DELETED (async): An attribute value was deleted.
+- ATTRIBUTE_UPDATED (async): An attribute was updated.
 """
 type AttributeValueBulkDelete {
   """Returns how many objects were affected."""
@@ -2119,6 +2402,10 @@ type AttributeValueCountableEdge {
 Creates a value for an attribute. 
 
 Requires one of the following permissions: MANAGE_PRODUCTS.
+
+Triggers the following webhook events:
+- ATTRIBUTE_VALUE_CREATED (async): An attribute value was created.
+- ATTRIBUTE_UPDATED (async): An attribute was updated.
 """
 type AttributeValueCreate {
   """The updated attribute."""
@@ -2193,6 +2480,10 @@ type AttributeValueCreated implements Event {
 Deletes a value of an attribute. 
 
 Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+
+Triggers the following webhook events:
+- ATTRIBUTE_VALUE_DELETED (async): An attribute value was deleted.
+- ATTRIBUTE_UPDATED (async): An attribute was updated.
 """
 type AttributeValueDelete {
   """The updated attribute."""
@@ -2410,6 +2701,10 @@ input AttributeValueTranslationInput {
 Updates value of an attribute. 
 
 Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+
+Triggers the following webhook events:
+- ATTRIBUTE_VALUE_UPDATED (async): An attribute value was updated.
+- ATTRIBUTE_UPDATED (async): An attribute was updated.
 """
 type AttributeValueUpdate {
   """The updated attribute."""
@@ -2725,8 +3020,6 @@ type Category implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -2734,8 +3027,6 @@ type Category implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -2748,8 +3039,6 @@ type Category implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -2757,8 +3046,6 @@ type Category implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   seoTitle: String
@@ -2877,7 +3164,7 @@ type Category implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): Image
 
   """Returns translated category fields for the given language code."""
@@ -3151,8 +3438,20 @@ type CategoryUpdated implements Event {
   category: Category
 }
 
+input CategoryWhereInput {
+  metadata: [MetadataFilter!]
+  ids: [ID!]
+
+  """List of conditions that must be met."""
+  AND: [CategoryWhereInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [CategoryWhereInput!]
+}
+
 """Represents channel."""
 type Channel implements Node {
+  """The ID of the channel."""
   id: ID!
 
   """Slug of the channel."""
@@ -3241,6 +3540,9 @@ type Channel implements Node {
 Activate a channel. 
 
 Requires one of the following permissions: MANAGE_CHANNELS.
+
+Triggers the following webhook events:
+- CHANNEL_STATUS_CHANGED (async): A channel was activated.
 """
 type ChannelActivate {
   """Activated channel."""
@@ -3253,6 +3555,9 @@ type ChannelActivate {
 Creates new channel. 
 
 Requires one of the following permissions: MANAGE_CHANNELS.
+
+Triggers the following webhook events:
+- CHANNEL_CREATED (async): A channel was created.
 """
 type ChannelCreate {
   channelErrors: [ChannelError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -3261,7 +3566,7 @@ type ChannelCreate {
 }
 
 input ChannelCreateInput {
-  """isActive flag."""
+  """Determine if channel will be set active or not."""
   isActive: Boolean
 
   """
@@ -3331,6 +3636,9 @@ type ChannelCreated implements Event {
 Deactivate a channel. 
 
 Requires one of the following permissions: MANAGE_CHANNELS.
+
+Triggers the following webhook events:
+- CHANNEL_STATUS_CHANGED (async): A channel was deactivated.
 """
 type ChannelDeactivate {
   """Deactivated channel."""
@@ -3343,6 +3651,9 @@ type ChannelDeactivate {
 Delete a channel. Orders associated with the deleted channel will be moved to the target channel. Checkouts, product availability, and pricing will be removed. 
 
 Requires one of the following permissions: MANAGE_CHANNELS.
+
+Triggers the following webhook events:
+- CHANNEL_DELETED (async): A channel was deleted.
 """
 type ChannelDelete {
   channelErrors: [ChannelError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -3463,6 +3774,9 @@ Update a channel.
 
 Requires one of the following permissions: MANAGE_CHANNELS.
 Requires one of the following permissions when updating only orderSettings field: MANAGE_CHANNELS, MANAGE_ORDERS.
+
+Triggers the following webhook events:
+- CHANNEL_UPDATED (async): A channel was updated.
 """
 type ChannelUpdate {
   channelErrors: [ChannelError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -3471,7 +3785,7 @@ type ChannelUpdate {
 }
 
 input ChannelUpdateInput {
-  """isActive flag."""
+  """Determine if channel will be set active or not."""
   isActive: Boolean
 
   """
@@ -3546,6 +3860,7 @@ type ChannelUpdated implements Event {
 
 """Checkout object."""
 type Checkout implements Node & ObjectWithMetadata {
+  """The ID of the checkout."""
   id: ID!
 
   """List of private metadata items. Requires staff permissions to access."""
@@ -3557,8 +3872,6 @@ type Checkout implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -3566,8 +3879,6 @@ type Checkout implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -3580,8 +3891,6 @@ type Checkout implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -3589,10 +3898,10 @@ type Checkout implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
+
+  """The date and time when the checkout was created."""
   created: DateTime!
 
   """
@@ -3602,20 +3911,54 @@ type Checkout implements Node & ObjectWithMetadata {
   """
   updatedAt: DateTime!
   lastChange: DateTime! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `updatedAt` instead.")
+
+  """The user assigned to the checkout."""
   user: User
+
+  """The channel for which checkout was created."""
   channel: Channel!
+
+  """The billing address of the checkout."""
   billingAddress: Address
+
+  """The shipping address of the checkout."""
   shippingAddress: Address
+
+  """The note for the checkout."""
   note: String!
+
+  """
+  The total discount applied to the checkout. Note: Only discount created via voucher are included in this field.
+  """
   discount: Money
+
+  """The name of voucher assigned to the checkout."""
   discountName: String
+
+  """
+  Translation of the discountName field in the language set in Checkout.languageCode field.Note: this field is set automatically when Checkout.languageCode is defined; otherwise it's null
+  """
   translatedDiscountName: String
+
+  """The code of voucher assigned to the checkout."""
   voucherCode: String
 
-  """Shipping methods that can be used with this checkout."""
+  """
+  Shipping methods that can be used with this checkout.
+  
+  Triggers the following webhook events:
+  - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
+  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
+  """
   availableShippingMethods: [ShippingMethod!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `shippingMethods` instead.")
 
-  """Shipping methods that can be used with this checkout."""
+  """
+  Shipping methods that can be used with this checkout.
+  
+  Triggers the following webhook events:
+  - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
+  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
+  """
   shippingMethods: [ShippingMethod!]!
 
   """
@@ -3625,7 +3968,12 @@ type Checkout implements Node & ObjectWithMetadata {
   """
   availableCollectionPoints: [Warehouse!]!
 
-  """List of available payment gateways."""
+  """
+  List of available payment gateways.
+  
+  Triggers the following webhook events:
+  - PAYMENT_LIST_GATEWAYS (sync): Fetch payment gateways available for checkout.
+  """
   availablePaymentGateways: [PaymentGateway!]!
 
   """Email of a customer."""
@@ -3652,20 +4000,40 @@ type Checkout implements Node & ObjectWithMetadata {
   """
   lines: [CheckoutLine!]!
 
-  """The price of the shipping, with all the taxes included."""
+  """
+  The price of the shipping, with all the taxes included. Set to 0 when no delivery method is selected.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.
+  """
   shippingPrice: TaxedMoney!
 
-  """The shipping method related with checkout."""
+  """
+  The shipping method related with checkout.
+  
+  Triggers the following webhook events:
+  - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
+  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
+  """
   shippingMethod: ShippingMethod @deprecated(reason: "This field will be removed in Saleor 4.0. Use `deliveryMethod` instead.")
 
   """
   The delivery method selected for this checkout.
   
   Added in Saleor 3.1.
+  
+  Triggers the following webhook events:
+  - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
+  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
   """
   deliveryMethod: DeliveryMethod
 
-  """The price of the checkout before shipping, with taxes included."""
+  """
+  The price of the checkout before shipping, with taxes included.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.
+  """
   subtotalPrice: TaxedMoney!
 
   """
@@ -3680,6 +4048,9 @@ type Checkout implements Node & ObjectWithMetadata {
 
   """
   The sum of the the checkout line prices, with all the taxes,shipping costs, and discounts included.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.
   """
   totalPrice: TaxedMoney!
 
@@ -3689,6 +4060,9 @@ type Checkout implements Node & ObjectWithMetadata {
   Added in Saleor 3.13.
   
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.
   """
   totalBalance: Money!
 
@@ -3717,6 +4091,9 @@ type Checkout implements Node & ObjectWithMetadata {
   Added in Saleor 3.13.
   
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.
   """
   authorizeStatus: CheckoutAuthorizeStatusEnum!
 
@@ -3726,11 +4103,19 @@ type Checkout implements Node & ObjectWithMetadata {
   Added in Saleor 3.13.
   
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.
   """
   chargeStatus: CheckoutChargeStatusEnum!
 }
 
-"""Adds a gift card or a voucher to a checkout."""
+"""
+Adds a gift card or a voucher to a checkout.
+
+Triggers the following webhook events:
+- CHECKOUT_UPDATED (async): A checkout was updated.
+"""
 type CheckoutAddPromoCode {
   """The checkout with the added gift card or voucher."""
   checkout: Checkout
@@ -3768,6 +4153,7 @@ Determine a current authorize status for checkout.
     NONE - the funds are not authorized
     PARTIAL - the cover funds don't cover fully the checkout's total
     FULL - the cover funds covers the checkout's total
+    
 """
 enum CheckoutAuthorizeStatusEnum {
   NONE
@@ -3775,7 +4161,12 @@ enum CheckoutAuthorizeStatusEnum {
   FULL
 }
 
-"""Update billing address in the existing checkout."""
+"""
+Update billing address in the existing checkout.
+
+Triggers the following webhook events:
+- CHECKOUT_UPDATED (async): A checkout was updated.
+"""
 type CheckoutBillingAddressUpdate {
   """An updated checkout."""
   checkout: Checkout
@@ -3798,6 +4189,7 @@ Determine the current charge status for the checkout.
     PARTIAL - the funds that are charged don't cover the checkout's total
     FULL - the funds that are charged fully cover the checkout's total
     OVERCHARGED - the charged funds are bigger than checkout's total
+    
 """
 enum CheckoutChargeStatusEnum {
   NONE
@@ -3808,6 +4200,18 @@ enum CheckoutChargeStatusEnum {
 
 """
 Completes the checkout. As a result a new order is created and a payment charge is made. This action requires a successful payment before it can be performed. In case additional confirmation step as 3D secure is required confirmationNeeded flag will be set to True and no order created until payment is confirmed with second call of this mutation.
+
+Triggers the following webhook events:
+- SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
+- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
+- CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.
+- ORDER_CREATED (async): Triggered when order is created.
+- NOTIFY_USER (async): A notification for order placement.
+- NOTIFY_USER (async): A staff notification for order placement.
+- ORDER_UPDATED (async): Triggered when order received the update after placement.
+- ORDER_PAID (async): Triggered when newly created order is paid.
+- ORDER_FULLY_PAID (async): Triggered when newly created order is fully paid.
+- ORDER_CONFIRMED (async): Optionally triggered when newly created order are automatically marked as confirmed.
 """
 type CheckoutComplete {
   """Placed order."""
@@ -3841,7 +4245,12 @@ type CheckoutCountableEdge {
   cursor: String!
 }
 
-"""Create a new checkout."""
+"""
+Create a new checkout.
+
+Triggers the following webhook events:
+- CHECKOUT_CREATED (async): A checkout was created.
+"""
 type CheckoutCreate {
   """
   Whether the checkout was created or the current active one was returned. Refer to checkoutLinesAdd and checkoutLinesUpdate to merge a cart with an active checkout.
@@ -3971,6 +4380,9 @@ type CheckoutCreated implements Event {
 Sets the customer as the owner of the checkout. 
 
 Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_USER.
+
+Triggers the following webhook events:
+- CHECKOUT_UPDATED (async): A checkout was updated.
 """
 type CheckoutCustomerAttach {
   """An updated checkout."""
@@ -3983,6 +4395,9 @@ type CheckoutCustomerAttach {
 Removes the user assigned as the owner of the checkout. 
 
 Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_USER.
+
+Triggers the following webhook events:
+- CHECKOUT_UPDATED (async): A checkout was updated.
 """
 type CheckoutCustomerDetach {
   """An updated checkout."""
@@ -3995,6 +4410,10 @@ type CheckoutCustomerDetach {
 Updates the delivery method (shipping method or pick up point) of the checkout.
 
 Added in Saleor 3.1.
+
+Triggers the following webhook events:
+- SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
+- CHECKOUT_UPDATED (async): A checkout was updated.
 """
 type CheckoutDeliveryMethodUpdate {
   """An updated checkout."""
@@ -4002,7 +4421,12 @@ type CheckoutDeliveryMethodUpdate {
   errors: [CheckoutError!]!
 }
 
-"""Updates email address in the existing checkout object."""
+"""
+Updates email address in the existing checkout object.
+
+Triggers the following webhook events:
+- CHECKOUT_UPDATED (async): A checkout was updated.
+"""
 type CheckoutEmailUpdate {
   """An updated checkout."""
   checkout: Checkout
@@ -4128,7 +4552,12 @@ type CheckoutFullyPaid implements Event {
   checkout: Checkout
 }
 
-"""Update language code in the existing checkout."""
+"""
+Update language code in the existing checkout.
+
+Triggers the following webhook events:
+- CHECKOUT_UPDATED (async): A checkout was updated.
+"""
 type CheckoutLanguageCodeUpdate {
   """An updated checkout."""
   checkout: Checkout
@@ -4138,14 +4567,13 @@ type CheckoutLanguageCodeUpdate {
 
 """Represents an item in the checkout."""
 type CheckoutLine implements Node & ObjectWithMetadata {
+  """The ID of the checkout line."""
   id: ID!
 
   """
   List of private metadata items. Requires staff permissions to access.
   
   Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -4155,8 +4583,6 @@ type CheckoutLine implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -4164,8 +4590,6 @@ type CheckoutLine implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -4173,8 +4597,6 @@ type CheckoutLine implements Node & ObjectWithMetadata {
   List of public metadata items. Can be accessed without permissions.
   
   Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metadata: [MetadataItem!]!
 
@@ -4184,8 +4606,6 @@ type CheckoutLine implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -4193,20 +4613,32 @@ type CheckoutLine implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
+
+  """The product variant from which the checkout line was created."""
   variant: ProductVariant!
+
+  """The quantity of product variant assigned to the checkout line."""
   quantity: Int!
 
-  """The unit price of the checkout line, with taxes and discounts."""
+  """
+  The unit price of the checkout line, with taxes and discounts.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.
+  """
   unitPrice: TaxedMoney!
 
   """The unit price of the checkout line, without discounts."""
   undiscountedUnitPrice: Money!
 
-  """The sum of the checkout line price, taxes and discounts."""
+  """
+  The sum of the checkout line price, taxes and discounts.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.
+  """
   totalPrice: TaxedMoney!
 
   """The sum of the checkout line price, without discounts."""
@@ -4233,7 +4665,12 @@ type CheckoutLineCountableEdge {
   cursor: String!
 }
 
-"""Deletes a CheckoutLine."""
+"""
+Deletes a CheckoutLine.
+
+Triggers the following webhook events:
+- CHECKOUT_UPDATED (async): A checkout was updated.
+"""
 type CheckoutLineDelete {
   """An updated checkout."""
   checkout: Checkout
@@ -4300,6 +4737,9 @@ input CheckoutLineUpdateInput {
 
 """
 Adds a checkout line to the existing checkout.If line was already in checkout, its quantity will be increased.
+
+Triggers the following webhook events:
+- CHECKOUT_UPDATED (async): A checkout was updated.
 """
 type CheckoutLinesAdd {
   """An updated checkout."""
@@ -4308,14 +4748,24 @@ type CheckoutLinesAdd {
   errors: [CheckoutError!]!
 }
 
-"""Deletes checkout lines."""
+"""
+Deletes checkout lines.
+
+Triggers the following webhook events:
+- CHECKOUT_UPDATED (async): A checkout was updated.
+"""
 type CheckoutLinesDelete {
   """An updated checkout."""
   checkout: Checkout
   errors: [CheckoutError!]!
 }
 
-"""Updates checkout line in the existing checkout."""
+"""
+Updates checkout line in the existing checkout.
+
+Triggers the following webhook events:
+- CHECKOUT_UPDATED (async): A checkout was updated.
+"""
 type CheckoutLinesUpdate {
   """An updated checkout."""
   checkout: Checkout
@@ -4356,7 +4806,12 @@ type CheckoutPaymentCreate {
   errors: [PaymentError!]!
 }
 
-"""Remove a gift card or a voucher from a checkout."""
+"""
+Remove a gift card or a voucher from a checkout.
+
+Triggers the following webhook events:
+- CHECKOUT_UPDATED (async): A checkout was updated.
+"""
 type CheckoutRemovePromoCode {
   """The checkout with the removed gift card or voucher."""
   checkout: Checkout
@@ -4364,7 +4819,12 @@ type CheckoutRemovePromoCode {
   errors: [CheckoutError!]!
 }
 
-"""Update shipping address in the existing checkout."""
+"""
+Update shipping address in the existing checkout.
+
+Triggers the following webhook events:
+- CHECKOUT_UPDATED (async): A checkout was updated.
+"""
 type CheckoutShippingAddressUpdate {
   """An updated checkout."""
   checkout: Checkout
@@ -4372,7 +4832,13 @@ type CheckoutShippingAddressUpdate {
   errors: [CheckoutError!]!
 }
 
-"""Updates the shipping method of the checkout."""
+"""
+Updates the shipping method of the checkout.
+
+Triggers the following webhook events:
+- SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
+- CHECKOUT_UPDATED (async): A checkout was updated.
+"""
 type CheckoutShippingMethodUpdate {
   """An updated checkout."""
   checkout: Checkout
@@ -4434,7 +4900,10 @@ input CheckoutValidationRules {
 }
 
 type ChoiceValue {
+  """The raw name of the choice."""
   raw: String
+
+  """The verbose name of the choice."""
   verbose: String
 }
 
@@ -4451,8 +4920,6 @@ type Collection implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -4460,8 +4927,6 @@ type Collection implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -4474,8 +4939,6 @@ type Collection implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -4483,8 +4946,6 @@ type Collection implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   seoTitle: String
@@ -4555,7 +5016,7 @@ type Collection implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): Image
 
   """Returns translated collection fields for the given language code."""
@@ -5082,6 +5543,17 @@ type CollectionUpdated implements Event {
   ): Collection
 }
 
+input CollectionWhereInput {
+  metadata: [MetadataFilter!]
+  ids: [ID!]
+
+  """List of conditions that must be met."""
+  AND: [CollectionWhereInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [CollectionWhereInput!]
+}
+
 """Stores information about a single configuration field."""
 type ConfigurationItem {
   """Name of the field."""
@@ -5131,6 +5603,10 @@ type ConfirmAccount {
 Confirm the email change of the logged-in user. 
 
 Requires one of the following permissions: AUTHENTICATED_USER.
+
+Triggers the following webhook events:
+- CUSTOMER_UPDATED (async): A customer account was updated.
+- NOTIFY_USER (async): A notification that account email change was confirmed.
 """
 type ConfirmEmailChange {
   """A user instance with a new email."""
@@ -5401,7 +5877,7 @@ type CountryDisplay {
   country: String!
 
   """Country tax."""
-  vat: VAT @deprecated(reason: "This field will be removed in Saleor 4.0. Use `TaxClassCountryRate` type to manage tax rates per country.")
+  vat: VAT @deprecated(reason: "This field will be removed in Saleor 4.0. Always returns `null`. Use `TaxClassCountryRate` type to manage tax rates per country.")
 }
 
 input CountryFilterInput {
@@ -5469,6 +5945,9 @@ type CreditCard {
 Deletes customers. 
 
 Requires one of the following permissions: MANAGE_USERS.
+
+Triggers the following webhook events:
+- CUSTOMER_DELETED (async): A customer account was deleted.
 """
 type CustomerBulkDelete {
   """Returns how many objects were affected."""
@@ -5493,6 +5972,10 @@ Added in Saleor 3.13.
 Note: this API is currently in Feature Preview and can be subject to changes at later point. 
 
 Requires one of the following permissions: MANAGE_USERS.
+
+Triggers the following webhook events:
+- CUSTOMER_UPDATED (async): A customer account was updated.
+- CUSTOMER_METADATA_UPDATED (async): Optionally called when customer's metadata was updated.
 """
 type CustomerBulkUpdate {
   """Returns how many objects were created."""
@@ -5543,6 +6026,11 @@ input CustomerBulkUpdateInput {
 Creates a new customer. 
 
 Requires one of the following permissions: MANAGE_USERS.
+
+Triggers the following webhook events:
+- CUSTOMER_CREATED (async): A new customer account was created.
+- CUSTOMER_METADATA_UPDATED (async): Optionally called when customer's metadata was updated.
+- NOTIFY_USER (async): A notification for setting the password.
 """
 type CustomerCreate {
   accountErrors: [AccountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -5576,6 +6064,9 @@ type CustomerCreated implements Event {
 Deletes a customer. 
 
 Requires one of the following permissions: MANAGE_USERS.
+
+Triggers the following webhook events:
+- CUSTOMER_DELETED (async): A customer account was deleted.
 """
 type CustomerDelete {
   accountErrors: [AccountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -5585,6 +6076,7 @@ type CustomerDelete {
 
 """History log of the customer."""
 type CustomerEvent implements Node {
+  """The ID of the customer event."""
   id: ID!
 
   """Date when event happened at in ISO 8601 format."""
@@ -5720,6 +6212,10 @@ type CustomerMetadataUpdated implements Event {
 Updates an existing customer. 
 
 Requires one of the following permissions: MANAGE_USERS.
+
+Triggers the following webhook events:
+- CUSTOMER_UPDATED (async): A new customer account was updated.
+- CUSTOMER_METADATA_UPDATED (async): Optionally called when customer's metadata was updated.
 """
 type CustomerUpdate {
   accountErrors: [AccountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -5863,8 +6359,6 @@ type DigitalContent implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -5872,8 +6366,6 @@ type DigitalContent implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -5886,8 +6378,6 @@ type DigitalContent implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -5895,8 +6385,6 @@ type DigitalContent implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   useDefaultSettings: Boolean!
@@ -6104,7 +6592,9 @@ enum DiscountValueTypeEnum {
 
 """An enumeration."""
 enum DistanceUnitsEnum {
+  MM
   CM
+  DM
   M
   KM
   FT
@@ -6577,6 +7067,7 @@ enum ExportEventsEnum {
 
 """Represents a job data of exported file."""
 type ExportFile implements Node & Job {
+  """The ID of the export file."""
   id: ID!
 
   """Job status."""
@@ -6596,7 +7087,11 @@ type ExportFile implements Node & Job {
 
   """List of events associated with the export."""
   events: [ExportEvent!]
+
+  """The user who requests file export."""
   user: User
+
+  """The app which requests file export."""
   app: App
 }
 
@@ -6646,6 +7141,9 @@ Export gift cards to csv file.
 Added in Saleor 3.1. 
 
 Requires one of the following permissions: MANAGE_GIFT_CARD.
+
+Triggers the following webhook events:
+- NOTIFY_USER (async): A notification for the exported file.
 """
 type ExportGiftCards {
   """
@@ -6687,6 +7185,9 @@ input ExportInfoInput {
 Export products to csv file. 
 
 Requires one of the following permissions: MANAGE_PRODUCTS.
+
+Triggers the following webhook events:
+- NOTIFY_USER (async): A notification for the exported file.
 """
 type ExportProducts {
   """
@@ -6882,8 +7383,6 @@ type Fulfillment implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -6891,8 +7390,6 @@ type Fulfillment implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -6905,8 +7402,6 @@ type Fulfillment implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -6914,8 +7409,6 @@ type Fulfillment implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   fulfillmentOrder: Int!
@@ -7180,8 +7673,6 @@ type GiftCard implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -7189,8 +7680,6 @@ type GiftCard implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -7203,8 +7692,6 @@ type GiftCard implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -7212,8 +7699,6 @@ type GiftCard implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
 
@@ -7710,6 +8195,7 @@ input GiftCardFilterInput {
   currentBalance: PriceRangeInput
   initialBalance: PriceRangeInput
   code: String
+  createdByEmail: String
 }
 
 """
@@ -8015,7 +8501,10 @@ input GlobalIDFilterInput {
 
 """Represents permission group data."""
 type Group implements Node {
+  """The ID of the group."""
   id: ID!
+
+  """The name of the group."""
   name: String!
 
   """
@@ -8103,8 +8592,6 @@ type Invoice implements ObjectWithMetadata & Job & Node {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -8112,8 +8599,6 @@ type Invoice implements ObjectWithMetadata & Job & Node {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -8126,8 +8611,6 @@ type Invoice implements ObjectWithMetadata & Job & Node {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -8135,8 +8618,6 @@ type Invoice implements ObjectWithMetadata & Job & Node {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
 
@@ -9201,22 +9682,47 @@ type Limits {
 
 """The manifest definition."""
 type Manifest {
+  """The identifier of the manifest for the app."""
   identifier: String!
+
+  """The version of the manifest for the app."""
   version: String!
+
+  """The name of the manifest for the app ."""
   name: String!
+
+  """Description of the app displayed in the dashboard."""
   about: String
+
+  """The array permissions required for the app."""
   permissions: [Permission!]
+
+  """App website rendered in the dashboard."""
   appUrl: String
 
   """URL to iframe with the configuration for the app."""
   configurationUrl: String @deprecated(reason: "This field will be removed in Saleor 4.0. Use `appUrl` instead.")
+
+  """
+  Endpoint used during process of app installation, [see installing an app.](https://docs.saleor.io/docs/3.x/developer/extending/apps/installing-apps#installing-an-app)
+  """
   tokenTargetUrl: String
 
   """Description of the data privacy defined for this app."""
   dataPrivacy: String @deprecated(reason: "This field will be removed in Saleor 4.0. Use `dataPrivacyUrl` instead.")
+
+  """URL to the full privacy policy."""
   dataPrivacyUrl: String
+
+  """External URL to the app homepage."""
   homepageUrl: String
+
+  """External URL to the page where app users can find support."""
   supportUrl: String
+
+  """
+  List of extensions that will be mounted in Saleor's dashboard. For details, please [see the extension section.](https://docs.saleor.io/docs/3.x/developer/extending/apps/extending-dashboard-with-apps#key-concepts)
+  """
   extensions: [AppManifestExtension!]!
 
   """
@@ -9274,6 +9780,8 @@ Determine the mark as paid strategy for the channel.
 
     PAYMENT_FLOW - new orders marked as paid will receive a
     `Payment` object, that will cover the `order.total`.
+
+    
 """
 enum MarkAsPaidStrategyEnum {
   TRANSACTION_FLOW
@@ -9282,13 +9790,17 @@ enum MarkAsPaidStrategyEnum {
 
 """An enumeration."""
 enum MeasurementUnitsEnum {
+  MM
   CM
+  DM
   M
   KM
   FT
   YD
   INCH
+  SQ_MM
   SQ_CM
+  SQ_DM
   SQ_M
   SQ_KM
   SQ_FT
@@ -9361,8 +9873,6 @@ type Menu implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -9370,8 +9880,6 @@ type Menu implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -9384,8 +9892,6 @@ type Menu implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -9393,8 +9899,6 @@ type Menu implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   name: String!
@@ -9570,8 +10074,6 @@ type MenuItem implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -9579,8 +10081,6 @@ type MenuItem implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -9593,8 +10093,6 @@ type MenuItem implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -9602,8 +10100,6 @@ type MenuItem implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   name: String!
@@ -10350,7 +10846,7 @@ type Mutation {
   
   Requires one of the following permissions: MANAGE_SETTINGS.
   """
-  shopFetchTaxRates: ShopFetchTaxRates @deprecated(reason: "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0.")
+  shopFetchTaxRates: ShopFetchTaxRates @deprecated(reason: "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0.")
 
   """
   Creates/updates translations for shop settings. 
@@ -10383,7 +10879,7 @@ type Mutation {
   orderSettingsUpdate(
     """Fields required to update shop order settings."""
     input: OrderSettingsUpdateInput!
-  ): OrderSettingsUpdate @deprecated(reason: "\\n\\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead.")
+  ): OrderSettingsUpdate @deprecated(reason: "\n\nDEPRECATED: this mutation will be removed in Saleor 4.0. Use `channelUpdate` mutation instead.")
 
   """
   Update gift card settings. 
@@ -11422,6 +11918,23 @@ type Mutation {
   ): TransactionRequestAction
 
   """
+  Request a refund for payment transaction based on granted refund.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: HANDLE_PAYMENTS.
+  """
+  transactionRequestRefundForGrantedRefund(
+    """The ID of the granted refund."""
+    grantedRefundId: ID!
+
+    """The ID of the transaction."""
+    id: ID!
+  ): TransactionRequestRefundForGrantedRefund
+
+  """
   Report the event for the transaction.
   
   Added in Saleor 3.13.
@@ -11766,7 +12279,9 @@ type Mutation {
   ): DraftOrderUpdate
 
   """
-  Adds note to the order. 
+  Adds note to the order.
+  
+  DEPRECATED: this mutation will be removed in Saleor 4.0. 
   
   Requires one of the following permissions: MANAGE_ORDERS.
   """
@@ -11776,7 +12291,7 @@ type Mutation {
 
     """Fields required to create a note for the order."""
     input: OrderAddNoteInput!
-  ): OrderAddNote
+  ): OrderAddNote @deprecated(reason: "This field will be removed in Saleor 4.0. Use `orderNoteAdd` instead.")
 
   """
   Cancel an order. 
@@ -12022,6 +12537,40 @@ type Mutation {
     """ID of a order line to remove its discount"""
     orderLineId: ID!
   ): OrderLineDiscountRemove
+
+  """
+  Adds note to the order.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderNoteAdd(
+    """ID of the order to add a note for."""
+    order: ID!
+
+    """Fields required to create a note for the order."""
+    input: OrderNoteInput!
+  ): OrderNoteAdd
+
+  """
+  Updates note of an order.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+  
+  Requires one of the following permissions: MANAGE_ORDERS.
+  """
+  orderNoteUpdate(
+    """ID of the note."""
+    note: ID!
+
+    """Fields required to create a note for the order."""
+    input: OrderNoteInput!
+  ): OrderNoteUpdate
 
   """
   Mark order as manually paid. 
@@ -12535,6 +13084,9 @@ type Mutation {
   Creates a new sale. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - SALE_CREATED (async): A sale was created.
   """
   saleCreate(
     """Fields required to create a sale."""
@@ -12545,6 +13097,9 @@ type Mutation {
   Deletes a sale. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - SALE_DELETED (async): A sale was deleted.
   """
   saleDelete(
     """ID of a sale to delete."""
@@ -12555,6 +13110,9 @@ type Mutation {
   Deletes sales. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - SALE_DELETED (async): A sale was deleted.
   """
   saleBulkDelete(
     """List of sale IDs to delete."""
@@ -12565,6 +13123,10 @@ type Mutation {
   Updates a sale. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - SALE_UPDATED (async): A sale was updated.
+  - SALE_TOGGLE (async): Optionally triggered when a sale is started or stopped.
   """
   saleUpdate(
     """ID of a sale to update."""
@@ -12578,6 +13140,9 @@ type Mutation {
   Adds products, categories, collections to a voucher. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - SALE_UPDATED (async): A sale was updated.
   """
   saleCataloguesAdd(
     """ID of a sale."""
@@ -12591,6 +13156,9 @@ type Mutation {
   Removes products, categories, collections from a sale. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - SALE_UPDATED (async): A sale was updated.
   """
   saleCataloguesRemove(
     """ID of a sale."""
@@ -12631,6 +13199,9 @@ type Mutation {
   Creates a new voucher. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - VOUCHER_CREATED (async): A voucher was created.
   """
   voucherCreate(
     """Fields required to create a voucher."""
@@ -12641,6 +13212,9 @@ type Mutation {
   Deletes a voucher. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - VOUCHER_DELETED (async): A voucher was deleted.
   """
   voucherDelete(
     """ID of a voucher to delete."""
@@ -12651,6 +13225,9 @@ type Mutation {
   Deletes vouchers. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - VOUCHER_DELETED (async): A voucher was deleted.
   """
   voucherBulkDelete(
     """List of voucher IDs to delete."""
@@ -12661,6 +13238,9 @@ type Mutation {
   Updates a voucher. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - VOUCHER_UPDATED (async): A voucher was updated.
   """
   voucherUpdate(
     """ID of a voucher to update."""
@@ -12674,6 +13254,9 @@ type Mutation {
   Adds products, categories, collections to a voucher. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - VOUCHER_UPDATED (async): A voucher was updated.
   """
   voucherCataloguesAdd(
     """ID of a voucher."""
@@ -12687,6 +13270,9 @@ type Mutation {
   Removes products, categories, collections from a voucher. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - VOUCHER_UPDATED (async): A voucher was updated.
   """
   voucherCataloguesRemove(
     """ID of a voucher."""
@@ -12714,6 +13300,9 @@ type Mutation {
   Manage voucher's availability in channels. 
   
   Requires one of the following permissions: MANAGE_DISCOUNTS.
+  
+  Triggers the following webhook events:
+  - VOUCHER_UPDATED (async): A voucher was updated.
   """
   voucherChannelListingUpdate(
     """ID of a voucher to update."""
@@ -12727,6 +13316,9 @@ type Mutation {
   Export products to csv file. 
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
+  
+  Triggers the following webhook events:
+  - NOTIFY_USER (async): A notification for the exported file.
   """
   exportProducts(
     """Fields required to export product data."""
@@ -12739,6 +13331,9 @@ type Mutation {
   Added in Saleor 3.1. 
   
   Requires one of the following permissions: MANAGE_GIFT_CARD.
+  
+  Triggers the following webhook events:
+  - NOTIFY_USER (async): A notification for the exported file.
   """
   exportGiftCards(
     """Fields required to export gift cards data."""
@@ -12755,7 +13350,12 @@ type Mutation {
     file: Upload!
   ): FileUpload
 
-  """Adds a gift card or a voucher to a checkout."""
+  """
+  Adds a gift card or a voucher to a checkout.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_UPDATED (async): A checkout was updated.
+  """
   checkoutAddPromoCode(
     """
     The ID of the checkout.
@@ -12782,7 +13382,12 @@ type Mutation {
     token: UUID
   ): CheckoutAddPromoCode
 
-  """Update billing address in the existing checkout."""
+  """
+  Update billing address in the existing checkout.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_UPDATED (async): A checkout was updated.
+  """
   checkoutBillingAddressUpdate(
     """The billing address of the checkout."""
     billingAddress: AddressInput!
@@ -12818,6 +13423,18 @@ type Mutation {
 
   """
   Completes the checkout. As a result a new order is created and a payment charge is made. This action requires a successful payment before it can be performed. In case additional confirmation step as 3D secure is required confirmationNeeded flag will be set to True and no order created until payment is confirmed with second call of this mutation.
+  
+  Triggers the following webhook events:
+  - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
+  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
+  - CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.
+  - ORDER_CREATED (async): Triggered when order is created.
+  - NOTIFY_USER (async): A notification for order placement.
+  - NOTIFY_USER (async): A staff notification for order placement.
+  - ORDER_UPDATED (async): Triggered when order received the update after placement.
+  - ORDER_PAID (async): Triggered when newly created order is paid.
+  - ORDER_FULLY_PAID (async): Triggered when newly created order is fully paid.
+  - ORDER_CONFIRMED (async): Optionally triggered when newly created order are automatically marked as confirmed.
   """
   checkoutComplete(
     """
@@ -12864,7 +13481,12 @@ type Mutation {
     token: UUID
   ): CheckoutComplete
 
-  """Create a new checkout."""
+  """
+  Create a new checkout.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_CREATED (async): A checkout was created.
+  """
   checkoutCreate(
     """Fields required to create checkout."""
     input: CheckoutCreateInput!
@@ -12886,6 +13508,9 @@ type Mutation {
   Sets the customer as the owner of the checkout. 
   
   Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_USER.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_UPDATED (async): A checkout was updated.
   """
   checkoutCustomerAttach(
     """
@@ -12919,6 +13544,9 @@ type Mutation {
   Removes the user assigned as the owner of the checkout. 
   
   Requires one of the following permissions: AUTHENTICATED_APP, AUTHENTICATED_USER.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_UPDATED (async): A checkout was updated.
   """
   checkoutCustomerDetach(
     """
@@ -12943,7 +13571,12 @@ type Mutation {
     token: UUID
   ): CheckoutCustomerDetach
 
-  """Updates email address in the existing checkout object."""
+  """
+  Updates email address in the existing checkout object.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_UPDATED (async): A checkout was updated.
+  """
   checkoutEmailUpdate(
     """
     The ID of the checkout. 
@@ -12970,7 +13603,12 @@ type Mutation {
     token: UUID
   ): CheckoutEmailUpdate
 
-  """Deletes a CheckoutLine."""
+  """
+  Deletes a CheckoutLine.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_UPDATED (async): A checkout was updated.
+  """
   checkoutLineDelete(
     """
     The ID of the checkout. 
@@ -12997,7 +13635,12 @@ type Mutation {
     token: UUID
   ): CheckoutLineDelete @deprecated(reason: "This field will be removed in Saleor 4.0. Use `checkoutLinesDelete` instead.")
 
-  """Deletes checkout lines."""
+  """
+  Deletes checkout lines.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_UPDATED (async): A checkout was updated.
+  """
   checkoutLinesDelete(
     """
     The checkout's ID.
@@ -13019,6 +13662,9 @@ type Mutation {
 
   """
   Adds a checkout line to the existing checkout.If line was already in checkout, its quantity will be increased.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_UPDATED (async): A checkout was updated.
   """
   checkoutLinesAdd(
     """
@@ -13048,7 +13694,12 @@ type Mutation {
     token: UUID
   ): CheckoutLinesAdd
 
-  """Updates checkout line in the existing checkout."""
+  """
+  Updates checkout line in the existing checkout.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_UPDATED (async): A checkout was updated.
+  """
   checkoutLinesUpdate(
     """
     The ID of the checkout. 
@@ -13077,7 +13728,12 @@ type Mutation {
     token: UUID
   ): CheckoutLinesUpdate
 
-  """Remove a gift card or a voucher from a checkout."""
+  """
+  Remove a gift card or a voucher from a checkout.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_UPDATED (async): A checkout was updated.
+  """
   checkoutRemovePromoCode(
     """
     The ID of the checkout. 
@@ -13134,7 +13790,12 @@ type Mutation {
     token: UUID
   ): CheckoutPaymentCreate
 
-  """Update shipping address in the existing checkout."""
+  """
+  Update shipping address in the existing checkout.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_UPDATED (async): A checkout was updated.
+  """
   checkoutShippingAddressUpdate(
     """
     The ID of the checkout. 
@@ -13168,7 +13829,13 @@ type Mutation {
     validationRules: CheckoutAddressValidationRules
   ): CheckoutShippingAddressUpdate
 
-  """Updates the shipping method of the checkout."""
+  """
+  Updates the shipping method of the checkout.
+  
+  Triggers the following webhook events:
+  - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout shipping method with the external one.
+  - CHECKOUT_UPDATED (async): A checkout was updated.
+  """
   checkoutShippingMethodUpdate(
     """
     The ID of the checkout. 
@@ -13199,6 +13866,10 @@ type Mutation {
   Updates the delivery method (shipping method or pick up point) of the checkout.
   
   Added in Saleor 3.1.
+  
+  Triggers the following webhook events:
+  - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Triggered when updating the checkout delivery method with the external one.
+  - CHECKOUT_UPDATED (async): A checkout was updated.
   """
   checkoutDeliveryMethodUpdate(
     """Delivery Method ID (`Warehouse` ID or `ShippingMethod` ID)."""
@@ -13219,7 +13890,12 @@ type Mutation {
     token: UUID
   ): CheckoutDeliveryMethodUpdate
 
-  """Update language code in the existing checkout."""
+  """
+  Update language code in the existing checkout.
+  
+  Triggers the following webhook events:
+  - CHECKOUT_UPDATED (async): A checkout was updated.
+  """
   checkoutLanguageCodeUpdate(
     """
     The ID of the checkout. 
@@ -13250,6 +13926,18 @@ type Mutation {
   Create new order from existing checkout. Requires the following permissions: AUTHENTICATED_APP and HANDLE_CHECKOUTS.
   
   Added in Saleor 3.2.
+  
+  Triggers the following webhook events:
+  - SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
+  - CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
+  - CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.
+  - ORDER_CREATED (async): Triggered when order is created.
+  - NOTIFY_USER (async): A notification for order placement.
+  - NOTIFY_USER (async): A staff notification for order placement.
+  - ORDER_UPDATED (async): Triggered when order received the update after placement.
+  - ORDER_PAID (async): Triggered when newly created order is paid.
+  - ORDER_FULLY_PAID (async): Triggered when newly created order is fully paid.
+  - ORDER_CONFIRMED (async): Optionally triggered when newly created order are automatically marked as confirmed.
   """
   orderCreateFromCheckout(
     """ID of a checkout that will be converted to an order."""
@@ -13279,6 +13967,9 @@ type Mutation {
   Creates new channel. 
   
   Requires one of the following permissions: MANAGE_CHANNELS.
+  
+  Triggers the following webhook events:
+  - CHANNEL_CREATED (async): A channel was created.
   """
   channelCreate(
     """Fields required to create channel."""
@@ -13290,6 +13981,9 @@ type Mutation {
   
   Requires one of the following permissions: MANAGE_CHANNELS.
   Requires one of the following permissions when updating only orderSettings field: MANAGE_CHANNELS, MANAGE_ORDERS.
+  
+  Triggers the following webhook events:
+  - CHANNEL_UPDATED (async): A channel was updated.
   """
   channelUpdate(
     """ID of a channel to update."""
@@ -13303,6 +13997,9 @@ type Mutation {
   Delete a channel. Orders associated with the deleted channel will be moved to the target channel. Checkouts, product availability, and pricing will be removed. 
   
   Requires one of the following permissions: MANAGE_CHANNELS.
+  
+  Triggers the following webhook events:
+  - CHANNEL_DELETED (async): A channel was deleted.
   """
   channelDelete(
     """ID of a channel to delete."""
@@ -13316,6 +14013,9 @@ type Mutation {
   Activate a channel. 
   
   Requires one of the following permissions: MANAGE_CHANNELS.
+  
+  Triggers the following webhook events:
+  - CHANNEL_STATUS_CHANGED (async): A channel was activated.
   """
   channelActivate(
     """ID of the channel to activate."""
@@ -13326,6 +14026,9 @@ type Mutation {
   Deactivate a channel. 
   
   Requires one of the following permissions: MANAGE_CHANNELS.
+  
+  Triggers the following webhook events:
+  - CHANNEL_STATUS_CHANGED (async): A channel was deactivated.
   """
   channelDeactivate(
     """ID of the channel to deactivate."""
@@ -13347,7 +14050,12 @@ type Mutation {
     moves: [ReorderInput!]!
   ): ChannelReorderWarehouses
 
-  """Creates an attribute."""
+  """
+  Creates an attribute.
+  
+  Triggers the following webhook events:
+  - ATTRIBUTE_CREATED (async): An attribute was created.
+  """
   attributeCreate(
     """Fields required to create an attribute."""
     input: AttributeCreateInput!
@@ -13357,6 +14065,9 @@ type Mutation {
   Deletes an attribute. 
   
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  
+  Triggers the following webhook events:
+  - ATTRIBUTE_DELETED (async): An attribute was deleted.
   """
   attributeDelete(
     """
@@ -13374,6 +14085,9 @@ type Mutation {
   Updates attribute. 
   
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  
+  Triggers the following webhook events:
+  - ATTRIBUTE_UPDATED (async): An attribute was updated.
   """
   attributeUpdate(
     """
@@ -13425,6 +14139,9 @@ type Mutation {
   Deletes attributes. 
   
   Requires one of the following permissions: MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
+  
+  Triggers the following webhook events:
+  - ATTRIBUTE_DELETED (async): An attribute was deleted.
   """
   attributeBulkDelete(
     """List of attribute IDs to delete."""
@@ -13435,6 +14152,10 @@ type Mutation {
   Deletes values of attributes. 
   
   Requires one of the following permissions: MANAGE_PAGE_TYPES_AND_ATTRIBUTES.
+  
+  Triggers the following webhook events:
+  - ATTRIBUTE_VALUE_DELETED (async): An attribute value was deleted.
+  - ATTRIBUTE_UPDATED (async): An attribute was updated.
   """
   attributeValueBulkDelete(
     """List of attribute value IDs to delete."""
@@ -13445,6 +14166,10 @@ type Mutation {
   Creates a value for an attribute. 
   
   Requires one of the following permissions: MANAGE_PRODUCTS.
+  
+  Triggers the following webhook events:
+  - ATTRIBUTE_VALUE_CREATED (async): An attribute value was created.
+  - ATTRIBUTE_UPDATED (async): An attribute was updated.
   """
   attributeValueCreate(
     """Attribute to which value will be assigned."""
@@ -13458,6 +14183,10 @@ type Mutation {
   Deletes a value of an attribute. 
   
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  
+  Triggers the following webhook events:
+  - ATTRIBUTE_VALUE_DELETED (async): An attribute value was deleted.
+  - ATTRIBUTE_UPDATED (async): An attribute was updated.
   """
   attributeValueDelete(
     """
@@ -13475,6 +14204,10 @@ type Mutation {
   Updates value of an attribute. 
   
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  
+  Triggers the following webhook events:
+  - ATTRIBUTE_VALUE_UPDATED (async): An attribute value was updated.
+  - ATTRIBUTE_UPDATED (async): An attribute was updated.
   """
   attributeValueUpdate(
     """
@@ -13526,6 +14259,10 @@ type Mutation {
   Reorder the values of an attribute. 
   
   Requires one of the following permissions: MANAGE_PRODUCT_TYPES_AND_ATTRIBUTES.
+  
+  Triggers the following webhook events:
+  - ATTRIBUTE_VALUE_UPDATED (async): An attribute value was updated.
+  - ATTRIBUTE_UPDATED (async): An attribute was updated.
   """
   attributeReorderValues(
     """ID of an attribute."""
@@ -13537,6 +14274,9 @@ type Mutation {
 
   """
   Creates a new app. Requires the following permissions: AUTHENTICATED_STAFF_USER and MANAGE_APPS.
+  
+  Triggers the following webhook events:
+  - APP_INSTALLED (async): An app was installed.
   """
   appCreate(
     """Fields required to create a new app."""
@@ -13547,6 +14287,9 @@ type Mutation {
   Updates an existing app. 
   
   Requires one of the following permissions: MANAGE_APPS.
+  
+  Triggers the following webhook events:
+  - APP_UPDATED (async): An app was updated.
   """
   appUpdate(
     """ID of an app to update."""
@@ -13560,6 +14303,9 @@ type Mutation {
   Deletes an app. 
   
   Requires one of the following permissions: MANAGE_APPS.
+  
+  Triggers the following webhook events:
+  - APP_DELETED (async): An app was deleted.
   """
   appDelete(
     """ID of an app to delete."""
@@ -13604,6 +14350,9 @@ type Mutation {
   Retry failed installation of new app. 
   
   Requires one of the following permissions: MANAGE_APPS.
+  
+  Triggers the following webhook events:
+  - APP_INSTALLED (async): An app was installed.
   """
   appRetryInstall(
     """Determine if app will be set active or not."""
@@ -13628,12 +14377,18 @@ type Mutation {
   
   Requires one of the following permissions: MANAGE_APPS.
   """
-  appFetchManifest(manifestUrl: String!): AppFetchManifest
+  appFetchManifest(
+    """URL to app's manifest in JSON format."""
+    manifestUrl: String!
+  ): AppFetchManifest
 
   """
   Activate the app. 
   
   Requires one of the following permissions: MANAGE_APPS.
+  
+  Triggers the following webhook events:
+  - APP_STATUS_CHANGED (async): An app was activated.
   """
   appActivate(
     """ID of app to activate."""
@@ -13644,6 +14399,9 @@ type Mutation {
   Deactivate the app. 
   
   Requires one of the following permissions: MANAGE_APPS.
+  
+  Triggers the following webhook events:
+  - APP_STATUS_CHANGED (async): An app was deactivated.
   """
   appDeactivate(
     """ID of app to deactivate."""
@@ -13737,7 +14495,12 @@ type Mutation {
     pluginId: String!
   ): ExternalVerify
 
-  """Sends an email with the account password modification link."""
+  """
+  Sends an email with the account password modification link.
+  
+  Triggers the following webhook events:
+  - NOTIFY_USER (async): A notification for password reset.
+  """
   requestPasswordReset(
     """
     Slug of a channel which will be used for notify user. Optional when only one channel exists.
@@ -13793,6 +14556,9 @@ type Mutation {
   Request email change of the logged in user. 
   
   Requires one of the following permissions: AUTHENTICATED_USER.
+  
+  Triggers the following webhook events:
+  - NOTIFY_USER (async): A notification for account email change.
   """
   requestEmailChange(
     """
@@ -13816,6 +14582,10 @@ type Mutation {
   Confirm the email change of the logged-in user. 
   
   Requires one of the following permissions: AUTHENTICATED_USER.
+  
+  Triggers the following webhook events:
+  - CUSTOMER_UPDATED (async): A customer account was updated.
+  - NOTIFY_USER (async): A notification that account email change was confirmed.
   """
   confirmEmailChange(
     """
@@ -13831,6 +14601,10 @@ type Mutation {
   Create a new address for the customer. 
   
   Requires one of the following permissions: AUTHENTICATED_USER.
+  
+  Triggers the following webhook events:
+  - CUSTOMER_UPDATED (async): A customer account was updated.
+  - ADDRESS_CREATED (async): An address was created.
   """
   accountAddressCreate(
     """Fields required to create address."""
@@ -13844,6 +14618,9 @@ type Mutation {
 
   """
   Updates an address of the logged-in user. Requires one of the following permissions: MANAGE_USERS, IS_OWNER.
+  
+  Triggers the following webhook events:
+  - ADDRESS_UPDATED (async): An address was updated.
   """
   accountAddressUpdate(
     """ID of the address to update."""
@@ -13855,6 +14632,9 @@ type Mutation {
 
   """
   Delete an address of the logged-in user. Requires one of the following permissions: MANAGE_USERS, IS_OWNER.
+  
+  Triggers the following webhook events:
+  - ADDRESS_DELETED (async): An address was deleted.
   """
   accountAddressDelete(
     """ID of the address to delete."""
@@ -13865,6 +14645,9 @@ type Mutation {
   Sets a default address for the authenticated user. 
   
   Requires one of the following permissions: AUTHENTICATED_USER.
+  
+  Triggers the following webhook events:
+  - CUSTOMER_UPDATED (async): A customer's address was updated.
   """
   accountSetDefaultAddress(
     """ID of the address to set as default."""
@@ -13874,7 +14657,13 @@ type Mutation {
     type: AddressTypeEnum!
   ): AccountSetDefaultAddress
 
-  """Register a new user."""
+  """
+  Register a new user.
+  
+  Triggers the following webhook events:
+  - CUSTOMER_CREATED (async): A new customer account was created.
+  - NOTIFY_USER (async): A notification for account confirmation.
+  """
   accountRegister(
     """Fields required to create a user."""
     input: AccountRegisterInput!
@@ -13884,6 +14673,10 @@ type Mutation {
   Updates the account of the logged-in user. 
   
   Requires one of the following permissions: AUTHENTICATED_USER.
+  
+  Triggers the following webhook events:
+  - CUSTOMER_UPDATED (async): A customer account was updated.
+  - CUSTOMER_METADATA_UPDATED (async): Optionally called when customer's metadata was updated.
   """
   accountUpdate(
     """Fields required to update the account of the logged-in user."""
@@ -13894,6 +14687,9 @@ type Mutation {
   Sends an email with the account removal link for the logged-in user. 
   
   Requires one of the following permissions: AUTHENTICATED_USER.
+  
+  Triggers the following webhook events:
+  - NOTIFY_USER (async): A notification for account delete request.
   """
   accountRequestDeletion(
     """
@@ -13923,6 +14719,9 @@ type Mutation {
   Creates user address. 
   
   Requires one of the following permissions: MANAGE_USERS.
+  
+  Triggers the following webhook events:
+  - ADDRESS_CREATED (async): A new address was created.
   """
   addressCreate(
     """Fields required to create address."""
@@ -13936,6 +14735,9 @@ type Mutation {
   Updates an address. 
   
   Requires one of the following permissions: MANAGE_USERS.
+  
+  Triggers the following webhook events:
+  - ADDRESS_UPDATED (async): An address was updated.
   """
   addressUpdate(
     """ID of the address to update."""
@@ -13949,6 +14751,9 @@ type Mutation {
   Deletes an address. 
   
   Requires one of the following permissions: MANAGE_USERS.
+  
+  Triggers the following webhook events:
+  - ADDRESS_DELETED (async): An address was deleted.
   """
   addressDelete(
     """ID of the address to delete."""
@@ -13959,6 +14764,9 @@ type Mutation {
   Sets a default address for the given user. 
   
   Requires one of the following permissions: MANAGE_USERS.
+  
+  Triggers the following webhook events:
+  - CUSTOMER_UPDATED (async): A customer was updated.
   """
   addressSetDefault(
     """ID of the address."""
@@ -13975,6 +14783,11 @@ type Mutation {
   Creates a new customer. 
   
   Requires one of the following permissions: MANAGE_USERS.
+  
+  Triggers the following webhook events:
+  - CUSTOMER_CREATED (async): A new customer account was created.
+  - CUSTOMER_METADATA_UPDATED (async): Optionally called when customer's metadata was updated.
+  - NOTIFY_USER (async): A notification for setting the password.
   """
   customerCreate(
     """Fields required to create a customer."""
@@ -13985,6 +14798,10 @@ type Mutation {
   Updates an existing customer. 
   
   Requires one of the following permissions: MANAGE_USERS.
+  
+  Triggers the following webhook events:
+  - CUSTOMER_UPDATED (async): A new customer account was updated.
+  - CUSTOMER_METADATA_UPDATED (async): Optionally called when customer's metadata was updated.
   """
   customerUpdate(
     """
@@ -14005,6 +14822,9 @@ type Mutation {
   Deletes a customer. 
   
   Requires one of the following permissions: MANAGE_USERS.
+  
+  Triggers the following webhook events:
+  - CUSTOMER_DELETED (async): A customer account was deleted.
   """
   customerDelete(
     """
@@ -14022,6 +14842,9 @@ type Mutation {
   Deletes customers. 
   
   Requires one of the following permissions: MANAGE_USERS.
+  
+  Triggers the following webhook events:
+  - CUSTOMER_DELETED (async): A customer account was deleted.
   """
   customerBulkDelete(
     """List of user IDs to delete."""
@@ -14036,6 +14859,10 @@ type Mutation {
   Note: this API is currently in Feature Preview and can be subject to changes at later point. 
   
   Requires one of the following permissions: MANAGE_USERS.
+  
+  Triggers the following webhook events:
+  - CUSTOMER_UPDATED (async): A customer account was updated.
+  - CUSTOMER_METADATA_UPDATED (async): Optionally called when customer's metadata was updated.
   """
   customerBulkUpdate(
     """Input list of customers to update."""
@@ -14049,6 +14876,10 @@ type Mutation {
   Creates a new staff user. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
+  
+  Triggers the following webhook events:
+  - STAFF_CREATED (async): A new staff account was created.
+  - NOTIFY_USER (async): A notification for setting the password.
   """
   staffCreate(
     """Fields required to create a staff user."""
@@ -14059,6 +14890,9 @@ type Mutation {
   Updates an existing staff user. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
+  
+  Triggers the following webhook events:
+  - STAFF_UPDATED (async): A staff account was updated.
   """
   staffUpdate(
     """ID of a staff user to update."""
@@ -14072,6 +14906,9 @@ type Mutation {
   Deletes a staff user. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
+  
+  Triggers the following webhook events:
+  - STAFF_DELETED (async): A staff account was deleted.
   """
   staffDelete(
     """ID of a staff user to delete."""
@@ -14082,6 +14919,9 @@ type Mutation {
   Deletes staff users. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
+  
+  Triggers the following webhook events:
+  - STAFF_DELETED (async): A staff account was deleted.
   """
   staffBulkDelete(
     """List of user IDs to delete."""
@@ -14122,6 +14962,9 @@ type Mutation {
   Create new permission group. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
+  
+  Triggers the following webhook events:
+  - PERMISSION_GROUP_CREATED (async)
   """
   permissionGroupCreate(
     """Input fields to create permission group."""
@@ -14132,6 +14975,9 @@ type Mutation {
   Update permission group. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
+  
+  Triggers the following webhook events:
+  - PERMISSION_GROUP_UPDATED (async)
   """
   permissionGroupUpdate(
     """ID of the group to update."""
@@ -14145,6 +14991,9 @@ type Mutation {
   Delete permission group. Apps are not allowed to perform this mutation. 
   
   Requires one of the following permissions: MANAGE_STAFF.
+  
+  Triggers the following webhook events:
+  - PERMISSION_GROUP_DELETED (async)
   """
   permissionGroupDelete(
     """ID of the group to delete."""
@@ -14215,8 +15064,6 @@ type Order implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -14224,8 +15071,6 @@ type Order implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -14238,8 +15083,6 @@ type Order implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -14247,8 +15090,6 @@ type Order implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   created: DateTime!
@@ -14259,6 +15100,10 @@ type Order implements Node & ObjectWithMetadata {
   User who placed the order. This field is set only for orders placed by authenticated users. Can be fetched for orders created in Saleor 3.2 and later, for other orders requires one of the following permissions: MANAGE_USERS, MANAGE_ORDERS, OWNER.
   """
   user: User
+
+  """
+  Google Analytics tracking client ID. This field will be removed in Saleor 4.0.
+  """
   trackingClientId: String!
 
   """
@@ -14419,7 +15264,7 @@ type Order implements Node & ObjectWithMetadata {
   """Amount authorized for the order."""
   totalAuthorized: Money!
 
-  """Amount captured for the order."""
+  """Amount captured for the order. """
   totalCaptured: Money! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `totalCharged` instead.")
 
   """
@@ -14603,7 +15448,9 @@ enum OrderAction {
 }
 
 """
-Adds note to the order. 
+Adds note to the order.
+
+DEPRECATED: this mutation will be removed in Saleor 4.0. 
 
 Requires one of the following permissions: MANAGE_ORDERS.
 """
@@ -14618,7 +15465,11 @@ type OrderAddNote {
 }
 
 input OrderAddNoteInput {
-  """Note message."""
+  """
+  Note message.
+  
+  DEPRECATED: this field will be removed in Saleor 4.0.
+  """
   message: String!
 }
 
@@ -14637,6 +15488,7 @@ Determine a current authorize status for order.
     `order.total`-`order.totalGrantedRefund`
     FULL - the funds that are authorized and charged fully cover the
     `order.total`-`order.totalGrantedRefund`
+    
 """
 enum OrderAuthorizeStatusEnum {
   NONE
@@ -14784,9 +15636,6 @@ input OrderBulkCreateInput {
 
   """Customer associated with the order."""
   user: OrderBulkCreateUserInput!
-
-  """Tracking ID of the customer."""
-  trackingClientId: String
 
   """Billing address of the customer."""
   billingAddress: AddressInput!
@@ -15060,6 +15909,7 @@ Determine the current charge status for the order.
     `order.total`-`order.totalGrantedRefund`
     OVERCHARGED - the charged funds are bigger than the
     `order.total`-`order.totalGrantedRefund`
+    
 """
 enum OrderChargeStatusEnum {
   NONE
@@ -15122,6 +15972,18 @@ type OrderCountableEdge {
 Create new order from existing checkout. Requires the following permissions: AUTHENTICATED_APP and HANDLE_CHECKOUTS.
 
 Added in Saleor 3.2.
+
+Triggers the following webhook events:
+- SHIPPING_LIST_METHODS_FOR_CHECKOUT (sync): Optionally triggered when cached external shipping methods are invalid.
+- CHECKOUT_FILTER_SHIPPING_METHODS (sync): Optionally triggered when cached filtered shipping methods are invalid.
+- CHECKOUT_CALCULATE_TAXES (sync): Optionally triggered when checkout prices are expired.
+- ORDER_CREATED (async): Triggered when order is created.
+- NOTIFY_USER (async): A notification for order placement.
+- NOTIFY_USER (async): A staff notification for order placement.
+- ORDER_UPDATED (async): Triggered when order received the update after placement.
+- ORDER_PAID (async): Triggered when newly created order is paid.
+- ORDER_FULLY_PAID (async): Triggered when newly created order is fully paid.
+- ORDER_CONFIRMED (async): Optionally triggered when newly created order are automatically marked as confirmed.
 """
 type OrderCreateFromCheckout {
   """Placed order."""
@@ -15412,11 +16274,17 @@ type OrderEvent implements Node {
   """The order which is related to this order."""
   relatedOrder: Order
 
+  """
+  The order event which is related to this event.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  related: OrderEvent
+
   """The discount applied to the order."""
   discount: OrderEventDiscountObject
-
-  """The status of payment's transaction."""
-  status: TransactionStatus @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature).Use `TransactionEvent` to track the status of `TransactionItem`.")
 
   """The reference of payment's transaction."""
   reference: String
@@ -15489,7 +16357,7 @@ enum OrderEventsEmailsEnum {
   DIGITAL_LINKS
 }
 
-"""The different order event types."""
+"""The different order event types. """
 enum OrderEventsEnum {
   DRAFT_CREATED
   DRAFT_CREATED_FROM_REPLACE
@@ -15522,17 +16390,7 @@ enum OrderEventsEnum {
   PAYMENT_FAILED
   TRANSACTION_EVENT
   TRANSACTION_CHARGE_REQUESTED
-
-  """
-  This field will be removed in Saleor 3.15 (Preview Feature). Use `TRANSACTION_CHARGE_REQUESTED` instead.
-  """
-  TRANSACTION_CAPTURE_REQUESTED
   TRANSACTION_REFUND_REQUESTED
-
-  """
-  This field will be removed in Saleor 3.15 (Preview Feature). Use `TRANSACTION_CANCEL_REQUESTED` instead.
-  """
-  TRANSACTION_VOID_REQUESTED
   TRANSACTION_CANCEL_REQUESTED
   TRANSACTION_MARK_AS_PAID_FAILED
   INVOICE_REQUESTED
@@ -15548,6 +16406,7 @@ enum OrderEventsEnum {
   FULFILLMENT_AWAITS_APPROVAL
   TRACKING_UPDATED
   NOTE_ADDED
+  NOTE_UPDATED
   OTHER
 }
 
@@ -15770,19 +16629,85 @@ type OrderGrantRefundCreateError {
 
   """The error code."""
   code: OrderGrantRefundCreateErrorCode!
+
+  """
+  List of lines which cause the error.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  lines: [OrderGrantRefundCreateLineError!]
 }
 
 """An enumeration."""
 enum OrderGrantRefundCreateErrorCode {
   GRAPHQL_ERROR
   NOT_FOUND
+  SHIPPING_COSTS_ALREADY_GRANTED
+  REQUIRED
+  INVALID
 }
 
 input OrderGrantRefundCreateInput {
-  """Amount of the granted refund."""
-  amount: Decimal!
+  """
+  Amount of the granted refund. If not provided, the amount will be calculated automatically based on provided `lines` and `grantRefundForShipping`.
+  """
+  amount: Decimal
 
   """Reason of the granted refund."""
+  reason: String
+
+  """
+  Lines to assign to granted refund.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  lines: [OrderGrantRefundCreateLineInput!]
+
+  """
+  Determine if granted refund should include shipping costs.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  grantRefundForShipping: Boolean
+}
+
+type OrderGrantRefundCreateLineError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: OrderGrantRefundCreateLineErrorCode!
+
+  """The ID of the line related to the error."""
+  lineId: ID!
+}
+
+"""An enumeration."""
+enum OrderGrantRefundCreateLineErrorCode {
+  GRAPHQL_ERROR
+  NOT_FOUND
+  QUANTITY_GREATER_THAN_AVAILABLE
+}
+
+input OrderGrantRefundCreateLineInput {
+  """The ID of the order line."""
+  id: ID!
+
+  """The quantity of line items to be marked to refund."""
+  quantity: Int!
+
+  """Reason of the granted refund for the line."""
   reason: String
 }
 
@@ -15802,7 +16727,6 @@ type OrderGrantRefundUpdate {
   """Created granted refund."""
   grantedRefund: OrderGrantedRefund
   errors: [OrderGrantRefundUpdateError!]!
-  orderGrantedRefund: OrderGrantedRefund
 }
 
 type OrderGrantRefundUpdateError {
@@ -15816,6 +16740,24 @@ type OrderGrantRefundUpdateError {
 
   """The error code."""
   code: OrderGrantRefundUpdateErrorCode!
+
+  """
+  List of lines to add which cause the error.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  addLines: [OrderGrantRefundUpdateLineError!]
+
+  """
+  List of lines to remove which cause the error.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  removeLines: [OrderGrantRefundUpdateLineError!]
 }
 
 """An enumeration."""
@@ -15823,14 +16765,79 @@ enum OrderGrantRefundUpdateErrorCode {
   GRAPHQL_ERROR
   NOT_FOUND
   REQUIRED
+  INVALID
+  SHIPPING_COSTS_ALREADY_GRANTED
 }
 
 input OrderGrantRefundUpdateInput {
-  """Amount of the granted refund."""
+  """
+  Amount of the granted refund. if not provided and `addLines` or `removeLines` or `grantRefundForShipping` is provided, amount will be calculated automatically.
+  """
   amount: Decimal
 
   """Reason of the granted refund."""
   reason: String
+
+  """
+  Lines to assign to granted refund.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  addLines: [OrderGrantRefundUpdateLineAddInput!]
+
+  """
+  Lines to remove from granted refund.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  removeLines: [ID!]
+
+  """
+  Determine if granted refund should include shipping costs.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  grantRefundForShipping: Boolean
+}
+
+input OrderGrantRefundUpdateLineAddInput {
+  """The ID of the order line."""
+  id: ID!
+
+  """The quantity of line items to be marked to refund."""
+  quantity: Int!
+
+  """Reason of the granted refund for the line."""
+  reason: String
+}
+
+type OrderGrantRefundUpdateLineError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: OrderGrantRefundUpdateLineErrorCode!
+
+  """The ID of the line related to the error."""
+  lineId: ID!
+}
+
+"""An enumeration."""
+enum OrderGrantRefundUpdateLineErrorCode {
+  GRAPHQL_ERROR
+  NOT_FOUND
+  QUANTITY_GREATER_THAN_AVAILABLE
 }
 
 """
@@ -15862,6 +16869,44 @@ type OrderGrantedRefund {
 
   """App that performed the action."""
   app: App
+
+  """
+  If true, the refunded amount includes the shipping price.If false, the refunded amount does not include the shipping price.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  shippingCostsIncluded: Boolean!
+
+  """
+  Lines assigned to the granted refund.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  lines: [OrderGrantedRefundLine!]
+}
+
+"""
+Represents granted refund line.
+
+Added in Saleor 3.15.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point.
+"""
+type OrderGrantedRefundLine {
+  id: ID!
+
+  """Number of items to refund."""
+  quantity: Int!
+
+  """Line of the order associated with this granted refund."""
+  orderLine: OrderLine!
+
+  """Reason for refunding the line."""
+  reason: String
 }
 
 """Represents order line of particular order."""
@@ -15872,8 +16917,6 @@ type OrderLine implements Node & ObjectWithMetadata {
   List of private metadata items. Requires staff permissions to access.
   
   Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -15883,8 +16926,6 @@ type OrderLine implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -15892,8 +16933,6 @@ type OrderLine implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -15901,8 +16940,6 @@ type OrderLine implements Node & ObjectWithMetadata {
   List of public metadata items. Can be accessed without permissions.
   
   Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metadata: [MetadataItem!]!
 
@@ -15912,8 +16949,6 @@ type OrderLine implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -15921,8 +16956,6 @@ type OrderLine implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.5.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   productName: String!
@@ -15946,7 +16979,7 @@ type OrderLine implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): Image
 
   """Price of the single item in the order line."""
@@ -16159,6 +17192,86 @@ type OrderMetadataUpdated implements Event {
 
   """The order the event relates to."""
   order: Order
+}
+
+"""
+Adds note to the order.
+
+Added in Saleor 3.15.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_ORDERS.
+"""
+type OrderNoteAdd {
+  """Order with the note added."""
+  order: Order
+
+  """Order note created."""
+  event: OrderEvent
+  errors: [OrderNoteAddError!]!
+}
+
+type OrderNoteAddError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: OrderNoteAddErrorCode
+}
+
+"""An enumeration."""
+enum OrderNoteAddErrorCode {
+  GRAPHQL_ERROR
+  REQUIRED
+}
+
+input OrderNoteInput {
+  """Note message."""
+  message: String!
+}
+
+"""
+Updates note of an order.
+
+Added in Saleor 3.15.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: MANAGE_ORDERS.
+"""
+type OrderNoteUpdate {
+  """Order with the note updated."""
+  order: Order
+
+  """Order note updated."""
+  event: OrderEvent
+  errors: [OrderNoteUpdateError!]!
+}
+
+type OrderNoteUpdateError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: OrderNoteUpdateErrorCode
+}
+
+"""An enumeration."""
+enum OrderNoteUpdateErrorCode {
+  GRAPHQL_ERROR
+  NOT_FOUND
+  REQUIRED
 }
 
 union OrderOrCheckout = Checkout | Order
@@ -16611,8 +17724,6 @@ type Page implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -16620,8 +17731,6 @@ type Page implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -16634,8 +17743,6 @@ type Page implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -16643,8 +17750,6 @@ type Page implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   seoTitle: String
@@ -17109,8 +18214,6 @@ type PageType implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -17118,8 +18221,6 @@ type PageType implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -17132,8 +18233,6 @@ type PageType implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -17141,8 +18240,6 @@ type PageType implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   name: String!
@@ -17429,8 +18526,6 @@ type Payment implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -17438,8 +18533,6 @@ type Payment implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -17452,8 +18545,6 @@ type Payment implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -17461,8 +18552,6 @@ type Payment implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   gateway: String!
@@ -17859,7 +18948,7 @@ input PaymentInput {
   
   Added in Saleor 3.1.
   """
-  storePaymentMethod: StorePaymentMethodEnum = NONE
+  storePaymentMethod: StorePaymentMethodEnum
 
   """
   User public metadata.
@@ -18045,6 +19134,9 @@ enum PermissionEnum {
 Create new permission group. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
+
+Triggers the following webhook events:
+- PERMISSION_GROUP_CREATED (async)
 """
 type PermissionGroupCreate {
   permissionGroupErrors: [PermissionGroupError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -18107,6 +19199,9 @@ type PermissionGroupCreated implements Event {
 Delete permission group. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
+
+Triggers the following webhook events:
+- PERMISSION_GROUP_DELETED (async)
 """
 type PermissionGroupDelete {
   permissionGroupErrors: [PermissionGroupError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -18194,6 +19289,9 @@ input PermissionGroupSortingInput {
 Update permission group. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
+
+Triggers the following webhook events:
+- PERMISSION_GROUP_UPDATED (async)
 """
 type PermissionGroupUpdate {
   permissionGroupErrors: [PermissionGroupError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -18464,8 +19562,6 @@ type Product implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -18473,8 +19569,6 @@ type Product implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -18487,8 +19581,6 @@ type Product implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -18496,8 +19588,6 @@ type Product implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   seoTitle: String
@@ -18542,7 +19632,7 @@ type Product implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): Image
 
   """
@@ -18555,7 +19645,9 @@ type Product implements Node & ObjectWithMetadata {
     address: AddressInput
   ): ProductPricingInfo
 
-  """Whether the product is in stock and visible or not."""
+  """
+  Whether the product is in stock, set as available for purchase in the given channel, and published.
+  """
   isAvailable(
     """
     Destination address used to find warehouses where stock availability for this product is checked. If address is empty, uses `Shop.companyAddress` or fallbacks to server's `settings.DEFAULT_COUNTRY` configuration.
@@ -18646,7 +19738,9 @@ type Product implements Node & ObjectWithMetadata {
   """Date when product is available for purchase."""
   availableForPurchaseAt: DateTime
 
-  """Whether the product is available for purchase."""
+  """
+  Refers to a state that can be set by admins to control whether a product is available for purchase in storefronts. This does not guarantee the availability of stock. When set to `False`, this product is still visible to customers, but it cannot be purchased.
+  """
   isAvailableForPurchase: Boolean
 
   """
@@ -18929,7 +20023,9 @@ type ProductChannelListing implements Node {
   """
   margin: Margin
 
-  """Whether the product is available for purchase."""
+  """
+  Refers to a state that can be set by admins to control whether a product is available for purchase in storefronts in this channel. This does not guarantee the availability of stock. When set to `False`, this product is still visible to customers, but it cannot be purchased.
+  """
   isAvailableForPurchase: Boolean
 
   """
@@ -18969,7 +20065,9 @@ input ProductChannelListingAddInput {
   """
   visibleInListings: Boolean
 
-  """Determine if product should be available for purchase."""
+  """
+  Determines if product should be available for purchase in this channel. This does not guarantee the availability of stock. When set to `False`, this product is still visible to customers, but it cannot be purchased.
+  """
   isAvailableForPurchase: Boolean
 
   """
@@ -19008,7 +20106,9 @@ input ProductChannelListingCreateInput {
   """
   visibleInListings: Boolean
 
-  """Determine if product should be available for purchase."""
+  """
+  Determines if product should be available for purchase in this channel. This does not guarantee the availability of stock. When set to `False`, this product is still visible to customers, but it cannot be purchased.
+  """
   isAvailableForPurchase: Boolean
 
   """
@@ -19377,7 +20477,7 @@ type ProductImage {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): String!
 }
 
@@ -19462,8 +20562,6 @@ type ProductMedia implements Node & ObjectWithMetadata {
   List of private metadata items. Requires staff permissions to access.
   
   Added in Saleor 3.12.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetadata: [MetadataItem!]!
 
@@ -19473,8 +20571,6 @@ type ProductMedia implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.12.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -19482,8 +20578,6 @@ type ProductMedia implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.12.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -19491,8 +20585,6 @@ type ProductMedia implements Node & ObjectWithMetadata {
   List of public metadata items. Can be accessed without permissions.
   
   Added in Saleor 3.12.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metadata: [MetadataItem!]!
 
@@ -19502,8 +20594,6 @@ type ProductMedia implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.12.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -19511,8 +20601,6 @@ type ProductMedia implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.12.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   sortOrder: Int
@@ -19530,7 +20618,7 @@ type ProductMedia implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): String!
 
   """
@@ -19824,7 +20912,14 @@ type ProductPricingInfo {
   discount: TaxedMoney
 
   """The discount amount in the local currency."""
-  discountLocalCurrency: TaxedMoney
+  discountLocalCurrency: TaxedMoney @deprecated(reason: "This field will be removed in Saleor 4.0. Always returns `null`.")
+
+  """
+  Determines whether this product's price displayed in a storefront should include taxes.
+  
+  Added in Saleor 3.9.
+  """
+  displayGrossPrices: Boolean!
 
   """The discounted price range of the product variants."""
   priceRange: TaxedMoneyRange
@@ -19835,14 +20930,7 @@ type ProductPricingInfo {
   """
   The discounted price range of the product variants in the local currency.
   """
-  priceRangeLocalCurrency: TaxedMoneyRange
-
-  """
-  Determines whether this product's price displayed in a storefront should include taxes.
-  
-  Added in Saleor 3.9.
-  """
-  displayGrossPrices: Boolean!
+  priceRangeLocalCurrency: TaxedMoneyRange @deprecated(reason: "This field will be removed in Saleor 4.0. Always returns `null`.")
 }
 
 """
@@ -19945,8 +21033,6 @@ type ProductType implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -19954,8 +21040,6 @@ type ProductType implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -19968,8 +21052,6 @@ type ProductType implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -19977,8 +21059,6 @@ type ProductType implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   name: String!
@@ -20285,8 +21365,6 @@ type ProductVariant implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -20294,8 +21372,6 @@ type ProductVariant implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -20308,8 +21384,6 @@ type ProductVariant implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -20317,8 +21391,6 @@ type ProductVariant implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   name: String!
@@ -21273,6 +22345,17 @@ type ProductVariantUpdated implements Event {
   ): ProductVariant
 }
 
+input ProductVariantWhereInput {
+  metadata: [MetadataFilter!]
+  ids: [ID!]
+
+  """List of conditions that must be met."""
+  AND: [ProductVariantWhereInput!]
+
+  """A list of conditions of which at least one must be met."""
+  OR: [ProductVariantWhereInput!]
+}
+
 input ProductWhereInput {
   metadata: [MetadataFilter!]
   ids: [ID!]
@@ -21563,7 +22646,9 @@ type Query {
   ): TaxCountryConfiguration
 
   """
-  \n\nRequires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
+  
+  
+  Requires one of the following permissions: AUTHENTICATED_STAFF_USER, AUTHENTICATED_APP.
   """
   taxCountryConfigurations: [TaxCountryConfiguration!]
 
@@ -21699,6 +22784,15 @@ type Query {
     """Filtering options for categories."""
     filter: CategoryFilterInput
 
+    """
+    Where filtering options.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    where: CategoryWhereInput
+
     """Sort categories."""
     sortBy: CategorySortingInput
 
@@ -21751,6 +22845,15 @@ type Query {
   collections(
     """Filtering options for collections."""
     filter: CollectionFilterInput
+
+    """
+    Where filtering options.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    where: CollectionWhereInput
 
     """Sort collections."""
     sortBy: CollectionSortingInput
@@ -21906,6 +23009,15 @@ type Query {
 
     """Filtering options for product variant."""
     filter: ProductVariantFilterInput
+
+    """
+    Where filtering options.
+    
+    Added in Saleor 3.14.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    where: ProductVariantWhereInput
 
     """Sort products variants."""
     sortBy: ProductVariantSortingInput
@@ -22975,6 +24087,9 @@ enum ReportingPeriod {
 Request email change of the logged in user. 
 
 Requires one of the following permissions: AUTHENTICATED_USER.
+
+Triggers the following webhook events:
+- NOTIFY_USER (async): A notification for account email change.
 """
 type RequestEmailChange {
   """A user instance."""
@@ -22983,7 +24098,12 @@ type RequestEmailChange {
   errors: [AccountError!]!
 }
 
-"""Sends an email with the account password modification link."""
+"""
+Sends an email with the account password modification link.
+
+Triggers the following webhook events:
+- NOTIFY_USER (async): A notification for password reset.
+"""
 type RequestPasswordReset {
   accountErrors: [AccountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
   errors: [AccountError!]!
@@ -23004,8 +24124,6 @@ type Sale implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -23013,8 +24131,6 @@ type Sale implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -23027,8 +24143,6 @@ type Sale implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -23036,8 +24150,6 @@ type Sale implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   name: String!
@@ -23161,6 +24273,9 @@ type Sale implements Node & ObjectWithMetadata {
 Adds products, categories, collections to a voucher. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- SALE_UPDATED (async): A sale was updated.
 """
 type SaleAddCatalogues {
   """Sale of which catalogue IDs will be modified."""
@@ -23173,6 +24288,9 @@ type SaleAddCatalogues {
 Deletes sales. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- SALE_DELETED (async): A sale was deleted.
 """
 type SaleBulkDelete {
   """Returns how many objects were affected."""
@@ -23238,6 +24356,9 @@ type SaleCountableEdge {
 Creates a new sale. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- SALE_CREATED (async): A sale was created.
 """
 type SaleCreate {
   discountErrors: [DiscountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -23274,6 +24395,9 @@ type SaleCreated implements Event {
 Deletes a sale. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- SALE_DELETED (async): A sale was deleted.
 """
 type SaleDelete {
   discountErrors: [DiscountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -23346,6 +24470,9 @@ input SaleInput {
 Removes products, categories, collections from a sale. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- SALE_UPDATED (async): A sale was updated.
 """
 type SaleRemoveCatalogues {
   """Sale of which catalogue IDs will be modified."""
@@ -23471,6 +24598,10 @@ enum SaleType {
 Updates a sale. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- SALE_UPDATED (async): A sale was updated.
+- SALE_TOGGLE (async): Optionally triggered when a sale is started or stopped.
 """
 type SaleUpdate {
   discountErrors: [DiscountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -23797,8 +24928,6 @@ type ShippingMethodType implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -23806,8 +24935,6 @@ type ShippingMethodType implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -23820,8 +24947,6 @@ type ShippingMethodType implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -23829,8 +24954,6 @@ type ShippingMethodType implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
 
@@ -24193,8 +25316,6 @@ type ShippingZone implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -24202,8 +25323,6 @@ type ShippingZone implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -24216,8 +25335,6 @@ type ShippingZone implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -24225,8 +25342,6 @@ type ShippingZone implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   name: String!
@@ -24891,6 +26006,9 @@ input SiteDomainInput {
 Deletes staff users. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
+
+Triggers the following webhook events:
+- STAFF_DELETED (async): A staff account was deleted.
 """
 type StaffBulkDelete {
   """Returns how many objects were affected."""
@@ -24903,6 +26021,10 @@ type StaffBulkDelete {
 Creates a new staff user. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
+
+Triggers the following webhook events:
+- STAFF_CREATED (async): A new staff account was created.
+- NOTIFY_USER (async): A notification for setting the password.
 """
 type StaffCreate {
   staffErrors: [StaffError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -24976,6 +26098,9 @@ type StaffCreated implements Event {
 Deletes a staff user. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
+
+Triggers the following webhook events:
+- STAFF_DELETED (async): A staff account was deleted.
 """
 type StaffDelete {
   staffErrors: [StaffError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -25043,6 +26168,7 @@ enum StaffMemberStatus {
 Represents a recipient of email notifications send by Saleor, such as notifications about new orders. Notifications can be assigned to staff users or arbitrary email addresses.
 """
 type StaffNotificationRecipient implements Node {
+  """The ID of the staff notification recipient."""
   id: ID!
 
   """Returns a user subscribed to email notifications."""
@@ -25103,6 +26229,9 @@ type StaffNotificationRecipientUpdate {
 Updates an existing staff user. Apps are not allowed to perform this mutation. 
 
 Requires one of the following permissions: MANAGE_STAFF.
+
+Triggers the following webhook events:
+- STAFF_UPDATED (async): A staff account was updated.
 """
 type StaffUpdate {
   staffErrors: [StaffError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -25359,6 +26488,7 @@ Determine how stocks should be updated, while processing an order.
     SKIP - stocks are not checked and not updated.
     UPDATE - only do update, if there is enough stock.
     FORCE - force update, if there is not enough stock.
+    
 """
 enum StockUpdatePolicyEnum {
   SKIP
@@ -25429,8 +26559,6 @@ type TaxClass implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -25438,8 +26566,6 @@ type TaxClass implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -25452,8 +26578,6 @@ type TaxClass implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -25461,8 +26585,6 @@ type TaxClass implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
 
@@ -25677,8 +26799,6 @@ type TaxConfiguration implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -25686,8 +26806,6 @@ type TaxConfiguration implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -25700,8 +26818,6 @@ type TaxConfiguration implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -25709,8 +26825,6 @@ type TaxConfiguration implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
 
@@ -26193,42 +27307,13 @@ Represents possible actions on payment transaction.
     The following actions are possible:
     CHARGE - Represents the charge action.
     REFUND - Represents a refund action.
-    VOID - Represents a void action. This field will be removed
-    in Saleor 3.14 (Preview Feature). Use `CANCEL` instead.
     CANCEL - Represents a cancel action. Added in Saleor 3.12.
+    
 """
 enum TransactionActionEnum {
   CHARGE
   REFUND
-  VOID
   CANCEL
-}
-
-"""
-Event sent when transaction action is requested.
-
-Added in Saleor 3.4.
-
-DEPRECATED: this subscription will be removed in Saleor 3.14 (Preview Feature). Use `TransactionChargeRequested`, `TransactionRefundRequested`, `TransactionCancelationRequested` instead.
-"""
-type TransactionActionRequest implements Event {
-  """Time of the event."""
-  issuedAt: DateTime
-
-  """Saleor version that triggered the event."""
-  version: String
-
-  """The user or application that triggered the event."""
-  issuingPrincipal: IssuingPrincipal
-
-  """The application receiving the webhook."""
-  recipient: App
-
-  """Look up a transaction."""
-  transaction: TransactionItem
-
-  """Requested action data."""
-  action: TransactionAction!
 }
 
 """
@@ -26324,20 +27409,6 @@ enum TransactionCreateErrorCode {
 
 input TransactionCreateInput {
   """
-  Status of the transaction.
-  
-  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.
-  """
-  status: String
-
-  """
-  Payment type used for this transaction.
-  
-  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `name` and `message` instead.
-  """
-  type: String
-
-  """
   Payment name of the transaction.
   
   Added in Saleor 3.13.
@@ -26350,13 +27421,6 @@ input TransactionCreateInput {
   Added in Saleor 3.13.
   """
   message: String
-
-  """
-  Reference of the transaction. 
-  
-  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `pspReference` instead.
-  """
-  reference: String
 
   """
   PSP Reference of the transaction. 
@@ -26376,13 +27440,6 @@ input TransactionCreateInput {
 
   """Amount refunded by this transaction."""
   amountRefunded: MoneyInput
-
-  """
-  Amount voided by this transaction.
-  
-  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `amountCanceled` instead.
-  """
-  amountVoided: MoneyInput
 
   """
   Amount canceled by this transaction.
@@ -26411,21 +27468,12 @@ type TransactionEvent implements Node {
   id: ID!
   createdAt: DateTime!
 
-  """Status of transaction's event."""
-  status: TransactionStatus @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature). Use `type` instead.")
-
-  """Reference of transaction's event."""
-  reference: String! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature).Use `pspReference` instead.")
-
   """
   PSP reference of transaction.
   
   Added in Saleor 3.13.
   """
   pspReference: String!
-
-  """Name of the transaction's event."""
-  name: String @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature). Use `message` instead.")
 
   """
   Message related to the transaction's event.
@@ -26465,32 +27513,11 @@ type TransactionEvent implements Node {
 
 input TransactionEventInput {
   """
-  Current status of the payment transaction.
-  
-  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Status will be calculated by Saleor.
-  """
-  status: TransactionStatus
-
-  """
-  Reference of the transaction. 
-  
-  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `pspReference` instead.
-  """
-  reference: String
-
-  """
   PSP Reference related to this action.
   
   Added in Saleor 3.13.
   """
   pspReference: String
-
-  """
-  Name of the transaction.
-  
-  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `message` instead. `name` field will be added to `message`.
-  """
-  name: String
 
   """
   The message related to the event.
@@ -26571,6 +27598,7 @@ Represents possible event types.
     CANCEL_FAILURE - represents failure cancel.
     CANCEL_REQUEST - represents cancel request.
     INFO - represents info event.
+    
 """
 enum TransactionEventTypeEnum {
   AUTHORIZATION_SUCCESS
@@ -26598,6 +27626,7 @@ Determine the transaction flow strategy.
 
     AUTHORIZATION - the processed transaction should be only authorized
     CHARGE - the processed transaction should be charged.
+    
 """
 enum TransactionFlowStrategyEnum {
   AUTHORIZATION
@@ -26699,8 +27728,6 @@ type TransactionItem implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -26708,8 +27735,6 @@ type TransactionItem implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -26722,8 +27747,6 @@ type TransactionItem implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -26731,8 +27754,6 @@ type TransactionItem implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   createdAt: DateTime!
@@ -26763,9 +27784,6 @@ type TransactionItem implements Node & ObjectWithMetadata {
   """
   refundPendingAmount: Money!
 
-  """Total amount voided for this payment."""
-  voidedAmount: Money! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature).Use `canceledAmount` instead.")
-
   """
   Total amount canceled for this payment.
   
@@ -26790,12 +27808,6 @@ type TransactionItem implements Node & ObjectWithMetadata {
   """
   chargePendingAmount: Money!
 
-  """Status of transaction."""
-  status: String! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.")
-
-  """Type of transaction."""
-  type: String! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature). Use `name` or `message` instead.")
-
   """
   Name of the transaction.
   
@@ -26809,9 +27821,6 @@ type TransactionItem implements Node & ObjectWithMetadata {
   Added in Saleor 3.13.
   """
   message: String!
-
-  """Reference of transaction."""
-  reference: String! @deprecated(reason: "This field will be removed in Saleor 3.15 (Preview Feature).Use `pspReference` instead.")
 
   """
   PSP reference of transaction.
@@ -26993,6 +28002,15 @@ type TransactionRefundRequested implements Event {
 
   """Requested action data."""
   action: TransactionAction!
+
+  """
+  Granted refund related to refund request.
+  
+  Added in Saleor 3.15.
+  
+  Note: this API is currently in Feature Preview and can be subject to changes at later point.
+  """
+  grantedRefund: OrderGrantedRefund
 }
 
 """
@@ -27031,17 +28049,38 @@ enum TransactionRequestActionErrorCode {
 }
 
 """
-Represents a status of payment transaction.
+Request a refund for payment transaction based on granted refund.
 
-    The following statuses are possible:
-    SUCCESS - Represents a sucess action.
-    FAILURE - Represents a failure action.
-    PENDING - Represents a pending action.
+Added in Saleor 3.15.
+
+Note: this API is currently in Feature Preview and can be subject to changes at later point. 
+
+Requires one of the following permissions: HANDLE_PAYMENTS.
 """
-enum TransactionStatus {
-  PENDING
-  SUCCESS
-  FAILURE
+type TransactionRequestRefundForGrantedRefund {
+  transaction: TransactionItem
+  errors: [TransactionRequestRefundForGrantedRefundError!]!
+}
+
+type TransactionRequestRefundForGrantedRefundError {
+  """
+  Name of a field that caused the error. A value of `null` indicates that the error isn't associated with a particular field.
+  """
+  field: String
+
+  """The error message."""
+  message: String
+
+  """The error code."""
+  code: TransactionRequestRefundForGrantedRefundErrorCode!
+}
+
+"""An enumeration."""
+enum TransactionRequestRefundForGrantedRefundErrorCode {
+  INVALID
+  GRAPHQL_ERROR
+  NOT_FOUND
+  MISSING_TRANSACTION_ACTION_REQUEST_WEBHOOK
 }
 
 """
@@ -27083,20 +28122,6 @@ enum TransactionUpdateErrorCode {
 
 input TransactionUpdateInput {
   """
-  Status of the transaction.
-  
-  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). The `status` is not needed. The amounts can be used to define the current status of transactions.
-  """
-  status: String
-
-  """
-  Payment type used for this transaction.
-  
-  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `name` and `message` instead.
-  """
-  type: String
-
-  """
   Payment name of the transaction.
   
   Added in Saleor 3.13.
@@ -27109,13 +28134,6 @@ input TransactionUpdateInput {
   Added in Saleor 3.13.
   """
   message: String
-
-  """
-  Reference of the transaction. 
-  
-  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `pspReference` instead.
-  """
-  reference: String
 
   """
   PSP Reference of the transaction. 
@@ -27135,13 +28153,6 @@ input TransactionUpdateInput {
 
   """Amount refunded by this transaction."""
   amountRefunded: MoneyInput
-
-  """
-  Amount voided by this transaction.
-  
-  DEPRECATED: this field will be removed in Saleor 3.15 (Preview Feature). Use `amountCanceled` instead.
-  """
-  amountVoided: MoneyInput
 
   """
   Amount canceled by this transaction.
@@ -27344,6 +28355,7 @@ enum UploadErrorCode {
 
 """Represents user data."""
 type User implements Node & ObjectWithMetadata {
+  """The ID of the user."""
   id: ID!
 
   """List of private metadata items. Requires staff permissions to access."""
@@ -27355,8 +28367,6 @@ type User implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -27364,8 +28374,6 @@ type User implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -27378,8 +28386,6 @@ type User implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -27387,14 +28393,22 @@ type User implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
+
+  """The email address of the user."""
   email: String!
+
+  """The given name of the address."""
   firstName: String!
+
+  """The family name of the address."""
   lastName: String!
+
+  """Determine if the user is a staff admin."""
   isStaff: Boolean!
+
+  """Determine if the user is active."""
   isActive: Boolean!
 
   """List of all user's addresses."""
@@ -27514,6 +28528,8 @@ type User implements Node & ObjectWithMetadata {
   Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   restrictedAccessToChannels: Boolean!
+
+  """The avatar of the user."""
   avatar(
     """
     Desired longest side the image in pixels. Defaults to 4096. Images are never cropped. Pass 0 to retrieve the original size (not recommended).
@@ -27525,7 +28541,7 @@ type User implements Node & ObjectWithMetadata {
     
     Added in Saleor 3.6.
     """
-    format: ThumbnailFormatEnum = ORIGINAL
+    format: ThumbnailFormatEnum
   ): Image
 
   """
@@ -27543,7 +28559,11 @@ type User implements Node & ObjectWithMetadata {
 
   """User language code."""
   languageCode: LanguageCodeEnum!
+
+  """The default shipping address of the user."""
   defaultShippingAddress: Address
+
+  """The default billing address of the user."""
   defaultBillingAddress: Address
 
   """
@@ -27552,8 +28572,14 @@ type User implements Node & ObjectWithMetadata {
   Added in Saleor 3.10.
   """
   externalReference: String
+
+  """The date when the user last time log in to the system."""
   lastLogin: DateTime
+
+  """The data when the user create account."""
   dateJoined: DateTime!
+
+  """The data when the user last update the account information."""
   updatedAt: DateTime!
 }
 
@@ -27763,7 +28789,7 @@ type VariantPricingInfo {
   discount: TaxedMoney
 
   """The discount amount in the local currency."""
-  discountLocalCurrency: TaxedMoney
+  discountLocalCurrency: TaxedMoney @deprecated(reason: "This field will be removed in Saleor 4.0. Always returns `null`.")
 
   """The price, with any discount subtracted."""
   price: TaxedMoney
@@ -27772,7 +28798,7 @@ type VariantPricingInfo {
   priceUndiscounted: TaxedMoney
 
   """The discounted price in the local currency."""
-  priceLocalCurrency: TaxedMoney
+  priceLocalCurrency: TaxedMoney @deprecated(reason: "This field will be removed in Saleor 4.0. Always returns `null`.")
 }
 
 """Verify JWT token."""
@@ -27821,8 +28847,6 @@ type Voucher implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -27830,8 +28854,6 @@ type Voucher implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -27844,8 +28866,6 @@ type Voucher implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -27853,8 +28873,6 @@ type Voucher implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   name: String
@@ -27994,6 +29012,9 @@ type Voucher implements Node & ObjectWithMetadata {
 Adds products, categories, collections to a voucher. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- VOUCHER_UPDATED (async): A voucher was updated.
 """
 type VoucherAddCatalogues {
   """Voucher of which catalogue IDs will be modified."""
@@ -28006,6 +29027,9 @@ type VoucherAddCatalogues {
 Deletes vouchers. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- VOUCHER_DELETED (async): A voucher was deleted.
 """
 type VoucherBulkDelete {
   """Returns how many objects were affected."""
@@ -28046,6 +29070,9 @@ input VoucherChannelListingInput {
 Manage voucher's availability in channels. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- VOUCHER_UPDATED (async): A voucher was updated.
 """
 type VoucherChannelListingUpdate {
   """An updated voucher instance."""
@@ -28075,6 +29102,9 @@ type VoucherCountableEdge {
 Creates a new voucher. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- VOUCHER_CREATED (async): A voucher was created.
 """
 type VoucherCreate {
   discountErrors: [DiscountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -28111,6 +29141,9 @@ type VoucherCreated implements Event {
 Deletes a voucher. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- VOUCHER_DELETED (async): A voucher was deleted.
 """
 type VoucherDelete {
   discountErrors: [DiscountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -28242,6 +29275,9 @@ type VoucherMetadataUpdated implements Event {
 Removes products, categories, collections from a voucher. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- VOUCHER_UPDATED (async): A voucher was updated.
 """
 type VoucherRemoveCatalogues {
   """Voucher of which catalogue IDs will be modified."""
@@ -28343,6 +29379,9 @@ enum VoucherTypeEnum {
 Updates a voucher. 
 
 Requires one of the following permissions: MANAGE_DISCOUNTS.
+
+Triggers the following webhook events:
+- VOUCHER_UPDATED (async): A voucher was updated.
 """
 type VoucherUpdate {
   discountErrors: [DiscountError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -28388,8 +29427,6 @@ type Warehouse implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafield(key: String!): String
 
@@ -28397,8 +29434,6 @@ type Warehouse implements Node & ObjectWithMetadata {
   Private metadata. Requires staff permissions to access. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   privateMetafields(keys: [String!]): Metadata
 
@@ -28411,8 +29446,6 @@ type Warehouse implements Node & ObjectWithMetadata {
   Tip: Use GraphQL aliases to fetch multiple keys.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafield(key: String!): String
 
@@ -28420,8 +29453,6 @@ type Warehouse implements Node & ObjectWithMetadata {
   Public metadata. Use `keys` to control which fields you want to include. The default is to include everything.
   
   Added in Saleor 3.3.
-  
-  Note: this API is currently in Feature Preview and can be subject to changes at later point.
   """
   metafields(keys: [String!]): Metadata
   name: String!
@@ -28746,7 +29777,7 @@ type WarehouseUpdated implements Event {
 """Webhook."""
 type Webhook implements Node {
   id: ID!
-  name: String!
+  name: String
 
   """List of webhook events."""
   events: [WebhookEvent!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `asyncEvents` or `syncEvents` instead.")
@@ -28978,6 +30009,15 @@ enum WebhookEventTypeAsyncEnum {
   """All the events."""
   ANY_EVENTS
 
+  """An account confirmation is requested."""
+  ACCOUNT_CONFIRMATION_REQUESTED
+
+  """Account email change is requested."""
+  ACCOUNT_CHANGE_EMAIL_REQUESTED
+
+  """An account delete is requested."""
+  ACCOUNT_DELETE_REQUESTED
+
   """A new address created."""
   ADDRESS_CREATED
 
@@ -29371,13 +30411,6 @@ enum WebhookEventTypeAsyncEnum {
 
   """A staff user is deleted."""
   STAFF_DELETED
-
-  """
-  An action requested for transaction.
-  
-  DEPRECATED: this subscription will be removed in Saleor 3.14 (Preview Feature). Use `TRANSACTION_CHARGE_REQUESTED`, `TRANSACTION_REFUND_REQUESTED`, `TRANSACTION_CANCELATION_REQUESTED` instead.
-  """
-  TRANSACTION_ACTION_REQUEST
 
   """
   Transaction item metadata is updated.
@@ -29440,6 +30473,15 @@ enum WebhookEventTypeEnum {
   """All the events."""
   ANY_EVENTS
 
+  """An account confirmation is requested."""
+  ACCOUNT_CONFIRMATION_REQUESTED
+
+  """Account email change is requested."""
+  ACCOUNT_CHANGE_EMAIL_REQUESTED
+
+  """An account delete is requested."""
+  ACCOUNT_DELETE_REQUESTED
+
   """A new address created."""
   ADDRESS_CREATED
 
@@ -29833,13 +30875,6 @@ enum WebhookEventTypeEnum {
 
   """A staff user is deleted."""
   STAFF_DELETED
-
-  """
-  An action requested for transaction.
-  
-  DEPRECATED: this subscription will be removed in Saleor 3.14 (Preview Feature). Use `TRANSACTION_CHARGE_REQUESTED`, `TRANSACTION_REFUND_REQUESTED`, `TRANSACTION_CANCELATION_REQUESTED` instead.
-  """
-  TRANSACTION_ACTION_REQUEST
 
   """
   Transaction item metadata is updated.
@@ -30050,6 +31085,9 @@ enum WebhookEventTypeSyncEnum {
 
 """An enumeration."""
 enum WebhookSampleEventTypeEnum {
+  ACCOUNT_CONFIRMATION_REQUESTED
+  ACCOUNT_CHANGE_EMAIL_REQUESTED
+  ACCOUNT_DELETE_REQUESTED
   ADDRESS_CREATED
   ADDRESS_UPDATED
   ADDRESS_DELETED
@@ -30154,7 +31192,6 @@ enum WebhookSampleEventTypeEnum {
   STAFF_CREATED
   STAFF_UPDATED
   STAFF_DELETED
-  TRANSACTION_ACTION_REQUEST
   TRANSACTION_ITEM_METADATA_UPDATED
   TRANSLATION_CREATED
   TRANSLATION_UPDATED
