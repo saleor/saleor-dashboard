@@ -106,7 +106,7 @@ export interface DatagridProps {
   showEmptyDatagrid?: boolean;
   rowAnchor?: (item: Item) => string;
   actionButtonPosition?: "left" | "right";
-  recentlyAddedColumn?: string; // Enables scroll to recently added column
+  recentlyAddedColumn?: string | null; // Enables scroll to recently added column
 }
 
 export const Datagrid: React.FC<DatagridProps> = ({

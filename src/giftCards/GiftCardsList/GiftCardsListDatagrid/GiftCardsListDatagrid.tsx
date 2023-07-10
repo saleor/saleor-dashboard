@@ -49,9 +49,12 @@ export const GiftCardsListDatagrid = () => {
   const availableColumns = useMemo(() => getColumns(intl, sort), [intl, sort]);
 
   const onColumnChange = useCallback(
-    (picked: GiftCardListColummns[]) => {
+    (columns: string[]) => {
       if (updateListSettings) {
-        updateListSettings("columns", picked.filter(Boolean));
+        updateListSettings(
+          "columns",
+          (columns as GiftCardListColummns[]).filter(Boolean),
+        );
       }
     },
     [updateListSettings],
@@ -87,7 +90,7 @@ export const GiftCardsListDatagrid = () => {
       const columnName = visibleColumns[col].id;
 
       if (!Object.keys(GiftCardUrlSortField).includes(columnName)) {
-        return;
+        return null;
       }
 
       if (
@@ -175,7 +178,10 @@ export const GiftCardsListDatagrid = () => {
 
       <Box paddingX={6}>
         <TablePagination
-          {...paginationValues}
+          hasNextPage={paginationValues?.hasNextPage ?? false}
+          nextHref={paginationValues.nextHref}
+          hasPreviousPage={paginationValues?.hasPreviousPage ?? false}
+          prevHref={paginationValues?.prevHref}
           component="div"
           settings={settings}
           onUpdateListSettings={updateListSettings}

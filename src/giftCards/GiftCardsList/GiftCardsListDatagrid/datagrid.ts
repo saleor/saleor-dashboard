@@ -64,7 +64,9 @@ export const getColumns = (
 export const createGetCellContent =
   (
     categories: Array<
-      ExtendedGiftCard<GiftCardListQuery["giftCards"]["edges"][0]["node"]>
+      ExtendedGiftCard<
+        NonNullable<GiftCardListQuery["giftCards"]>["edges"][0]["node"]
+      >
     >,
     columns: AvailableColumn[],
     intl: IntlShape,

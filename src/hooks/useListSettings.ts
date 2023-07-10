@@ -10,7 +10,7 @@ export interface UseListSettings<TColumns extends string = string> {
   settings: ListSettings<TColumns>;
   updateListSettings: <T extends keyof ListSettings<TColumns>>(
     key: T,
-    value: ListSettings<TColumns>[T],
+    value: ListSettings[T],
   ) => void;
 }
 

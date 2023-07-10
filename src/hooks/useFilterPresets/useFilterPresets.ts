@@ -11,7 +11,7 @@ import { useState } from "react";
 
 export interface UseFilterPresets {
   presetIdToDelete: number | null;
-  setPresetIdToDelete: React.Dispatch<React.SetStateAction<number>>;
+  setPresetIdToDelete: React.Dispatch<React.SetStateAction<number | null>>;
   presets: GetFilterTabsOutput<string>;
   selectedPreset: number | undefined;
   onPresetChange: (index: number) => void;
