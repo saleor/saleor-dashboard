@@ -1,39 +1,11 @@
-import { Typography } from "@material-ui/core";
-import AddIcon from "@material-ui/icons/Add";
-import RemoveIcon from "@material-ui/icons/Remove";
-import { IconButton, makeStyles } from "@saleor/macaw-ui";
-import clsx from "clsx";
-import React from "react";
-
-import Hr from "../Hr";
-
-const useStyles = makeStyles(
-  theme => ({
-    content: {
-      padding: theme.spacing(3, 0),
-    },
-    expandButton: {
-      position: "relative",
-      right: theme.spacing(-2),
-      top: theme.spacing(0.5),
-    },
-    root: {
-      border: `1px solid ${theme.palette.divider}`,
-      borderRadius: 12,
-      padding: theme.spacing(0, 3),
-    },
-    title: {
-      display: "flex",
-      justifyContent: "space-between",
-    },
-    titleText: {
-      padding: theme.spacing(2, 0),
-    },
-  }),
-  {
-    name: "Accordion",
-  },
-);
+import {
+  Accordion as AccordionMacaw,
+  Box,
+  Divider,
+  sprinkles,
+  Text,
+} from "@saleor/macaw-ui/next";
+import React, { useState } from "react";
 
 export interface AccordionProps {
   className?: string;
@@ -42,38 +14,52 @@ export interface AccordionProps {
   title: string;
 }
 
+const AccordionItemId = "accordionItemId";
+
 const Accordion: React.FC<AccordionProps> = ({
   children,
-  className,
   initialExpand,
   quickPeek,
   title,
-  ...props
+  className,
 }) => {
-  const classes = useStyles({});
-  const [expanded, setExpanded] = React.useState(!!initialExpand);
+  const [openedAccordionId, setOpendAccordionId] = useState<undefined | string>(
+    !!initialExpand ? AccordionItemId : undefined,
+  );
 
   return (
-    <div className={clsx(classes.root, className)} {...props}>
-      <div className={classes.title}>
-        <Typography className={classes.titleText}>{title}</Typography>
-        <div className={classes.expandButton}>
-          <IconButton
-            variant="secondary"
-            onClick={() => setExpanded(!expanded)}
-          >
-            {expanded ? <RemoveIcon /> : <AddIcon />}
-          </IconButton>
-        </div>
-      </div>
-      {(expanded || !!quickPeek) && (
-        <>
-          <Hr />
-          <div className={classes.content}>
-            {quickPeek ? (expanded ? children : quickPeek) : children}
-          </div>
-        </>
-      )}
+    <div className={className}>
+      <AccordionMacaw
+        value={openedAccordionId}
+        onValueChange={value => setOpendAccordionId(value)}
+        className={sprinkles({
+          borderStyle: "solid",
+          borderWidth: 1,
+          borderColor: "neutralPlain",
+          paddingX: 4,
+          borderRadius: 5,
+        })}
+      >
+        <AccordionMacaw.Item value={AccordionItemId}>
+          <AccordionMacaw.Trigger>
+            <Text paddingY={3} variant="body" size="small">
+              {title}
+            </Text>
+            <AccordionMacaw.TriggerButton dataTestId="expand-icon" />
+          </AccordionMacaw.Trigger>
+          <AccordionMacaw.Content>
+            <Divider />
+            <Box paddingY={3}>{children}</Box>
+          </AccordionMacaw.Content>
+        </AccordionMacaw.Item>
+
+        {!openedAccordionId && !!quickPeek && (
+          <>
+            <Divider />
+            <Box paddingY={4}>{quickPeek}</Box>
+          </>
+        )}
+      </AccordionMacaw>
     </div>
   );
 };
