@@ -12,10 +12,13 @@ import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import useGiftCardTagsSearch from "@dashboard/searches/useGiftCardTagsSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
+import { Box } from "@saleor/macaw-ui/next";
 import compact from "lodash/compact";
 import React from "react";
-import { useIntl } from "react-intl";
+import { FormattedMessage, useIntl } from "react-intl";
 
+import { GiftCardListBulkActions } from "../GiftCardListBulkActions";
+import { GiftCarsListDeleteButton } from "../GiftCardsListDeleteButton";
 import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
 import { GiftCardListActionParamsEnum } from "../types";
@@ -41,9 +44,10 @@ const GiftCardListSearchAndFilters: React.FC = () => {
     onPresetDelete,
     presets,
     presetIdToDelete,
+    selectedRowIds,
   } = useGiftCardList();
 
-  const { onClose } = useGiftCardListDialogs();
+  const { onClose, openDeleteDialog } = useGiftCardListDialogs();
 
   const defaultSearchVariables = {
     variables: { ...DEFAULT_INITIAL_SEARCH_DATA, first: 5 },
@@ -123,6 +127,21 @@ const GiftCardListSearchAndFilters: React.FC = () => {
         searchPlaceholder={intl.formatMessage(messages.searchPlaceholder, {
           exampleGiftCardCode: "21F1-39DY-V4U2",
         })}
+        actions={
+          <Box display="flex" gap={4}>
+            {selectedRowIds.length > 0 && (
+              <>
+                <GiftCardListBulkActions />
+                <GiftCarsListDeleteButton onClick={openDeleteDialog}>
+                  <FormattedMessage
+                    defaultMessage="Delete gift cards"
+                    id="d68yq7"
+                  />
+                </GiftCarsListDeleteButton>
+              </>
+            )}
+          </Box>
+        }
       />
 
       <SaveFilterTabDialog

@@ -11,6 +11,7 @@ import useNavigator from "@dashboard/hooks/useNavigator";
 import usePaginator from "@dashboard/hooks/usePaginator";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui/next";
+import isEqual from "lodash/isEqual";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
@@ -29,6 +30,9 @@ export const GiftCardsListDatagrid = () => {
     giftCards,
     settings,
     updateListSettings,
+    selectedRowIds,
+    setSelectedRowIds,
+    setClearDatagridRowSelectionCallback,
     sort,
     onSort,
     pageInfo,
@@ -112,6 +116,29 @@ export const GiftCardsListDatagrid = () => {
     return "";
   }, []);
 
+  const handleGiftCardSelectionChange = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!giftCards) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => giftCards[row].id);
+      const haveSaveValues = isEqual(rowsIds, selectedRowIds);
+
+      if (!haveSaveValues) {
+        setSelectedRowIds(rowsIds);
+      }
+
+      setClearDatagridRowSelectionCallback(clearSelection);
+    },
+    [
+      giftCards,
+      setClearDatagridRowSelectionCallback,
+      selectedRowIds,
+      setSelectedRowIds,
+    ],
+  );
+
   return (
     <DatagridChangeStateContext.Provider value={datagridState}>
       <Datagrid
@@ -126,7 +153,7 @@ export const GiftCardsListDatagrid = () => {
         rows={giftCards?.length ?? 0}
         availableColumns={visibleColumns}
         emptyText={intl.formatMessage(messages.noData)}
-        // onRowSelectionChange={onSelectCollectionIds}
+        onRowSelectionChange={handleGiftCardSelectionChange}
         getCellContent={getCellContent}
         getCellError={() => false}
         selectionActions={() => null}
