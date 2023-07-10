@@ -6,9 +6,9 @@ import {
 import React from "react";
 
 import { useProductFilterAPIProvider } from "./API/ProductFilterAPIProvider";
+import { FilterContainer } from "./FilterElement";
 import { useFilterContainer } from "./useFilterContainer";
 import { useFilterLeftOperandsProvider } from "./useFilterLeftOperands";
-import { FilterContainer } from "./FilterElement";
 
 interface FiltersAreaProps {
   filterValue: FilterContainer

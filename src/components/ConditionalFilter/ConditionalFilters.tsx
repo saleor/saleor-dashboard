@@ -1,12 +1,9 @@
-import {
-  _ExperimentalFilters,
-  Box,
-  Text,
-} from "@saleor/macaw-ui/next";
+import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
-import { FiltersArea } from "./FIltersArea";
-import { FilterValueProvider } from "./FilterValueProvider";
+
 import { FilterContainer } from "./FilterElement";
+import { FiltersArea } from "./FiltersArea";
+import { FilterValueProvider } from "./FilterValueProvider";
 
 interface ConditionalFiltersProps {
   provider: FilterValueProvider
