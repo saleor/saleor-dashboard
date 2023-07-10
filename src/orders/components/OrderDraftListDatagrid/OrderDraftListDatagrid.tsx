@@ -1,32 +1,34 @@
-// @ts-strict-ignore
-import ColumnPicker from "@dashboard/components/ColumnPicker/ColumnPicker";
+import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
+import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
-import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
 import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { TablePaginationWithContext } from "@dashboard/components/TablePagination";
-import { OrderDraftListQuery } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
+import { OrderDraft } from "@dashboard/orders/types";
 import { OrderDraftListUrlSortField, orderUrl } from "@dashboard/orders/urls";
-import { ListProps, RelayToFlat, SortPage } from "@dashboard/types";
+import { ListProps, SortPage } from "@dashboard/types";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box } from "@saleor/macaw-ui/next";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { createGetCellContent, getColumns } from "./datagrid";
+import {
+  createGetCellContent,
+  orderDraftListStaticColumnsAdapter,
+} from "./datagrid";
 import { messages } from "./messages";
 import { canBeSorted } from "./utils";
 
 interface OrderDraftListDatagridProps
   extends ListProps,
     SortPage<OrderDraftListUrlSortField> {
-  orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
+  orders: OrderDraft[];
   hasRowHover?: boolean;
   onRowClick?: (id: string) => void;
-  onSelectOrderDraftIds;
+  onSelectOrderDraftIds: (ids: number[], clearSelection: () => void) => void;
 }
 
 export const OrderDraftListDatagrid = ({
@@ -44,33 +46,40 @@ export const OrderDraftListDatagrid = ({
   const { locale } = useLocale();
   const datagridState = useDatagridChangeState();
 
-  const availableColumns = useMemo(() => getColumns(intl, sort), [intl, sort]);
+  const handleColumnChange = useCallback(
+    picked => {
+      if (onUpdateListSettings) {
+        onUpdateListSettings("columns", picked.filter(Boolean));
+      }
+    },
+    [onUpdateListSettings],
+  );
 
-  const {
-    columns,
-    availableColumnsChoices,
-    columnChoices,
-    defaultColumns,
-    onColumnMoved,
-    onColumnResize,
-    onColumnsChange,
-    picker,
-  } = useColumnsDefault(availableColumns);
+  const memoizedStaticColumns = useMemo(
+    () => orderDraftListStaticColumnsAdapter(intl, sort),
+    [intl, sort],
+  );
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const { handlers, staticColumns, visibleColumns, selectedColumns } =
+    useColumns({
+      staticColumns: memoizedStaticColumns,
+      selectedColumns: settings?.columns ?? [],
+      onSave: handleColumnChange,
+    });
+
   const getCellContent = useCallback(
-    createGetCellContent({ orders, columns, locale }),
-    [columns, locale, orders],
+    createGetCellContent({ orders, columns: visibleColumns, locale }),
+    [visibleColumns, locale, orders],
   );
 
   const handleHeaderClick = useCallback(
     (col: number) => {
-      const columnName = columns[col].id as OrderDraftListUrlSortField;
+      const columnName = visibleColumns[col].id as OrderDraftListUrlSortField;
       if (canBeSorted(columnName)) {
         onSort(columnName);
       }
     },
-    [columns, onSort],
+    [visibleColumns, onSort],
   );
 
   const handleRowClick = useCallback(
@@ -102,7 +111,7 @@ export const OrderDraftListDatagrid = ({
         freezeColumns={1}
         hasRowHover={hasRowHover}
         loading={disabled}
-        availableColumns={columns}
+        availableColumns={visibleColumns}
         verticalBorder={col => col > 0}
         getCellContent={getCellContent}
         getCellError={() => false}
@@ -111,27 +120,16 @@ export const OrderDraftListDatagrid = ({
         rows={orders?.length ?? 0}
         selectionActions={() => null}
         onRowSelectionChange={onSelectOrderDraftIds}
-        onColumnMoved={onColumnMoved}
-        onColumnResize={onColumnResize}
+        onColumnResize={handlers.onResize}
+        onColumnMoved={handlers.onMove}
         onHeaderClicked={handleHeaderClick}
         onRowClick={handleRowClick}
         rowAnchor={handleRowAnchor}
-        renderColumnPicker={defaultProps => (
+        renderColumnPicker={() => (
           <ColumnPicker
-            {...defaultProps}
-            IconButtonProps={{
-              ...defaultProps.IconButtonProps,
-              disabled: orders.length === 0,
-            }}
-            availableColumns={availableColumnsChoices}
-            initialColumns={columnChoices}
-            defaultColumns={defaultColumns}
-            onSave={onColumnsChange}
-            hasMore={false}
-            loading={false}
-            onFetchMore={() => undefined}
-            onQueryChange={picker.setQuery}
-            query={picker.query}
+            staticColumns={staticColumns}
+            selectedColumns={selectedColumns}
+            onSave={handlers.onChange}
           />
         )}
       />

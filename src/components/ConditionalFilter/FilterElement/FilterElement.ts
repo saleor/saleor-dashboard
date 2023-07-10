@@ -1,48 +1,46 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
-import { LeftOperand } from "./../useLeftOperands";
+import { LeftOperand } from "../LeftOperandsProvider";
 import { TokenType, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
 import { ConditionItem, ConditionOptions } from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
 import { ConditionValue, ItemOption } from "./ConditionValue";
 
-
 class ExpressionValue {
   constructor(
     public value: string,
     public label: string,
-    public type: string
+    public type: string,
   ) {}
 
   public static fromLeftOperand(leftOperand: LeftOperand) {
     return new ExpressionValue(
       leftOperand.slug,
       leftOperand.label,
-      leftOperand.type
-    )
+      leftOperand.type,
+    );
   }
 
   public static fromUrlToken(token: UrlToken) {
-    return new ExpressionValue(
-      token.name,
-      token.name,
-      token.name
-    )
+    return new ExpressionValue(token.name, token.name, token.name);
   }
 
-  public static forAttribute(attributeName: string, response: InitialStateResponse) {
+  public static forAttribute(
+    attributeName: string,
+    response: InitialStateResponse,
+  ) {
     const attribute = response.attributeByName(attributeName);
 
     return new ExpressionValue(
       attributeName,
       attribute.label,
       attribute.inputType,
-    )
+    );
   }
 
   public static emptyStatic() {
-    return new ExpressionValue("", "", TokenType.STATIC)
+    return new ExpressionValue("", "", TokenType.STATIC);
   }
 }
 
@@ -126,10 +124,10 @@ export class FilterElement {
 
   public asUrlEntry(): UrlEntry {
     if (this.isAttribute()) {
-      return UrlEntry.forAttribute(this.condition.selected, this.value.value)
+      return UrlEntry.forAttribute(this.condition.selected, this.value.value);
     }
 
-    return UrlEntry.forStatic(this.condition.selected, this.value.value)
+    return UrlEntry.forStatic(this.condition.selected, this.value.value);
   }
 
   public static fromValueEntry(valueEntry: any) {
@@ -164,6 +162,5 @@ export class FilterElement {
     return FilterElement.createEmpty();
   }
 }
-
 
 export type FilterContainer = Array<string | FilterElement | FilterContainer>;
