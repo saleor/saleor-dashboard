@@ -1,4 +1,5 @@
 // @ts-strict-ignore
+import { capitalize } from "@dashboard/misc";
 import { transactionEventTypeMap } from "@dashboard/orders/messages";
 import { TransactionEventType } from "@dashboard/orders/types";
 import { makeStyles } from "@saleor/macaw-ui";
@@ -27,10 +28,9 @@ export const EventType = ({ type, message }: EventTypeProps) => {
   const classes = useStyles();
   const mapEventToMessage = transactionEventTypeMap[type];
 
-  const displayType = mapEventToMessage
-    ? intl.formatMessage(mapEventToMessage)
-    : message || type;
-
+  const displayType = capitalize(
+    mapEventToMessage ? intl.formatMessage(mapEventToMessage) : message || type,
+  );
   return (
     <Box display="flex" alignItems="center">
       {displayType}

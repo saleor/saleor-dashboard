@@ -5561,6 +5561,10 @@
     "context": "click and collect",
     "string": "Click&Collect"
   },
+  "biDgQS": {
+    "context": "button, opens modal to create transaction in order",
+    "string": "Manual transaction"
+  },
   "biVFKU": {
     "context": "subsection header",
     "string": "Billing Address"
@@ -6285,10 +6289,6 @@
   "hnRRUe": {
     "context": "docs link label",
     "string": "Learn more..."
-  },
-  "hnaOnB": {
-    "context": "button, opens modal to create transaction in order",
-    "string": "Capture manual transaction"
   },
   "ho75Lr": {
     "context": "status label deactivated",
