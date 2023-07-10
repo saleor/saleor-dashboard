@@ -81,6 +81,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.DRAFT_LIST]: {
     rowNumber: PAGINATE_BY,
+    columns: ["number", "date", "customer", "total"],
   },
   [ListViews.NAVIGATION_LIST]: {
     rowNumber: PAGINATE_BY,
