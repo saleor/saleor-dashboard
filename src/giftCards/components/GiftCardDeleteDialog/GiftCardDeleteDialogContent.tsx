@@ -34,7 +34,7 @@ export interface GiftCardDeleteDialogContentProps<
     Partial<
       Pick<
         GiftCardsListConsumerProps,
-        "listElements" | "selectedItemsCount" | "giftCards" | "loading"
+        "selectedRowIds" | "giftCards" | "loading"
       >
     > {
   id?: string;
@@ -51,8 +51,7 @@ function GiftCardDeleteDialogContent<
   onConfirm,
   confirmButtonState,
   singleDeletion,
-  selectedItemsCount: listSelectedItemsCount,
-  listElements,
+  selectedRowIds,
   giftCards,
   giftCard,
   loading,
@@ -62,7 +61,7 @@ function GiftCardDeleteDialogContent<
 
   const [isConsentChecked, setConsentChecked] = useState(false);
 
-  const selectedItemsCount = listSelectedItemsCount || SINGLE;
+  const selectedItemsCount = selectedRowIds.length || SINGLE;
 
   useEffect(() => {
     if (!open) {
@@ -75,7 +74,7 @@ function GiftCardDeleteDialogContent<
       return false;
     }
 
-    return listElements?.some(hasSelectedGiftCardBalance);
+    return selectedRowIds?.some(hasSelectedGiftCardBalance);
   };
 
   const hasSelectedGiftCardBalance = (id: string) => {

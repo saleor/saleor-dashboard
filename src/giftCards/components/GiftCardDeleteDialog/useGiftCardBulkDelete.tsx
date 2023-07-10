@@ -26,11 +26,7 @@ const useGiftCardBulkDelete = ({
   const notify = useNotifier();
   const intl = useIntl();
 
-  const {
-    listElements,
-    selectedItemsCount,
-    reset: resetSelectedItems,
-  } = useGiftCardList();
+  const { selectedRowIds, clearRowSelection } = useGiftCardList();
 
   const [bulkDeleteGiftCard, bulkDeleteGiftCardOpts] =
     useBulkDeleteGiftCardMutation({
@@ -41,12 +37,12 @@ const useGiftCardBulkDelete = ({
           notify({
             status: "success",
             text: intl.formatMessage(messages.deleteSuccessAlertText, {
-              selectedItemsCount,
+              selectedItemsCount: selectedRowIds.length,
             }),
           });
 
           onClose();
-          resetSelectedItems();
+          clearRowSelection();
           return;
         }
 
@@ -59,7 +55,7 @@ const useGiftCardBulkDelete = ({
     });
 
   const onBulkDeleteGiftCards = () =>
-    bulkDeleteGiftCard({ variables: { ids: listElements } });
+    bulkDeleteGiftCard({ variables: { ids: selectedRowIds } });
 
   return {
     onBulkDeleteGiftCards,

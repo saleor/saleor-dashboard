@@ -45,10 +45,10 @@ const GiftCardExportDialog: React.FC<
   const {
     loading: loadingGiftCardList,
     totalCount: filteredGiftCardsCount,
-    listElements,
+    selectedRowIds,
   } = useGiftCardList();
 
-  const selectedIds = idsToExport ?? listElements;
+  const selectedIds = idsToExport ?? selectedRowIds;
 
   const { data: allGiftCardsCountData, loading: loadingGiftCardCount } =
     useGiftCardTotalCountQuery();
@@ -111,7 +111,7 @@ const GiftCardExportDialog: React.FC<
         description: "export selected items to csv file",
       },
       {
-        number: listElements.length,
+        number: selectedRowIds.length,
       },
     ),
   };
