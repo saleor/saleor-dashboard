@@ -1,27 +1,36 @@
 import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 
+import { FilterAPIProvider } from "./API/FilterAPIProvider";
 import { FilterContainer } from "./FilterElement";
 import { FiltersArea } from "./FiltersArea";
 import { FilterValueProvider } from "./FilterValueProvider";
+import { LeftOperandsProvider } from "./LeftOperandsProvider";
 
 interface ConditionalFiltersProps {
-  provider: FilterValueProvider
+  valueProvider: FilterValueProvider
+  apiProvider: FilterAPIProvider
+  leftOperandsProvider: LeftOperandsProvider
   onConfirm: (value: FilterContainer) => void
 }
 
-export const ConditionalFilters = ({ provider, onConfirm }: ConditionalFiltersProps) => {
+export const ConditionalFilters = ({ valueProvider, apiProvider, leftOperandsProvider, onConfirm }: ConditionalFiltersProps) => {
   const handleConfirm = (value: FilterContainer) => {
-    provider.persist(value)
+    valueProvider.persist(value)
     onConfirm(value)
   }
 
   return (
     <Box>
-      {provider.loading ? (
+      {valueProvider.loading ? (
         <Text>Loading...</Text>
       ) : (
-        <FiltersArea filterValue={provider.value} onConfirm={handleConfirm} />
+        <FiltersArea
+          apiProvider={apiProvider}
+          leftOperandsProvider={leftOperandsProvider}
+          filterValue={valueProvider.value}
+          onConfirm={handleConfirm}
+        />
       )}
     </Box>
   );

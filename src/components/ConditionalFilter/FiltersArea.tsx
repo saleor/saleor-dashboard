@@ -5,20 +5,19 @@ import {
 } from "@saleor/macaw-ui/next";
 import React from "react";
 
-import { useProductFilterAPIProvider } from "./API/ProductFilterAPIProvider";
+import { FilterAPIProvider } from "./API/FilterAPIProvider";
 import { FilterContainer } from "./FilterElement";
+import { LeftOperandsProvider } from "./LeftOperandsProvider";
 import { useFilterContainer } from "./useFilterContainer";
-import { useFilterLeftOperandsProvider } from "./useFilterLeftOperands";
 
 interface FiltersAreaProps {
   filterValue: FilterContainer
+  apiProvider: FilterAPIProvider
+  leftOperandsProvider: LeftOperandsProvider
   onConfirm: (value: FilterContainer) => void
 }
 
-export const FiltersArea = ({ filterValue, onConfirm }: FiltersAreaProps) => {
-  const apiProvider = useProductFilterAPIProvider();
-  const leftOperandsProvider = useFilterLeftOperandsProvider();
-
+export const FiltersArea = ({ filterValue, apiProvider, leftOperandsProvider, onConfirm }: FiltersAreaProps) => {
   const {
     value,
     addEmpty,
