@@ -6,8 +6,9 @@ import { FilterContainer } from "./FilterElement";
 export const ConditionalProductFilters = () => {
   const provider = useUrlValueProvider();
 
+  // @ts-ignore
   const handleConfirm = (value: FilterContainer) => {
-    console.log("confirm", value)
+
   }
 
   return <ConditionalFilters provider={provider} onConfirm={handleConfirm} />
