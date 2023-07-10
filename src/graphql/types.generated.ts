@@ -9451,20 +9451,6 @@ export type GiftCardCurrenciesQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GiftCardCurrenciesQuery = { __typename: 'Query', giftCardCurrencies: Array<string> };
 
-export type GiftCardBulkActivateMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
-}>;
-
-
-export type GiftCardBulkActivateMutation = { __typename: 'Mutation', giftCardBulkActivate: { __typename: 'GiftCardBulkActivate', count: number, errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }> } | null };
-
-export type GiftCardBulkDeactivateMutationVariables = Exact<{
-  ids: Array<Scalars['ID']> | Scalars['ID'];
-}>;
-
-
-export type GiftCardBulkDeactivateMutation = { __typename: 'Mutation', giftCardBulkDeactivate: { __typename: 'GiftCardBulkDeactivate', count: number, errors: Array<{ __typename: 'GiftCardError', code: GiftCardErrorCode, field: string | null, message: string | null }> } | null };
-
 export type DeleteGiftCardMutationVariables = Exact<{
   id: Scalars['ID'];
 }>;
