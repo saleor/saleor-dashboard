@@ -113,9 +113,13 @@ export const createGetCellContent =
       case "product":
         return readonlyTextCell("-");
       case "usedBy":
-        return readonlyTextCell(
-          `${rowData?.usedBy?.firstName} ${rowData?.usedBy?.lastName}`,
-        );
+        if (rowData.usedBy) {
+          return readonlyTextCell(
+            `${rowData.usedBy.firstName} ${rowData.usedBy.lastName}`,
+          );
+        }
+
+        return readonlyTextCell(rowData?.usedByEmail ?? PLACEHOLDER);
       case "balance":
         return moneyCell(
           rowData.currentBalance.amount,

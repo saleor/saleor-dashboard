@@ -119,7 +119,7 @@ export const GiftCardsListDatagrid = () => {
         loading={loading}
         rowMarkers="checkbox"
         columnSelect="single"
-        hasRowHover={false}
+        hasRowHover={true}
         onColumnMoved={handlers.onMove}
         onColumnResize={handlers.onResize}
         verticalBorder={col => col > 0}
