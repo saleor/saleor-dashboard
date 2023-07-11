@@ -18,6 +18,7 @@ import {
 } from "@dashboard/graphql";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { buttonMessages } from "@dashboard/intl";
+import { orderListUrl } from "@dashboard/orders/urls";
 import { FetchMoreProps, RelayToFlat } from "@dashboard/types";
 import createSingleAutocompleteSelectHandler from "@dashboard/utils/handlers/singleAutocompleteSelectChangeHandler";
 import { Card, CardContent, Typography } from "@material-ui/core";
@@ -168,7 +169,23 @@ const OrderCustomer: React.FC<OrderCustomerProps> = props => {
               <FormattedMessage id="Qovenh" defaultMessage="Anonymous user" />
             </Typography>
           ) : (
-            <Typography className={classes.userEmail}>{userEmail}</Typography>
+            <>
+              <Typography className={classes.userEmail}>{userEmail}</Typography>
+              <div>
+                <Link
+                  underline={false}
+                  href={orderListUrl({
+                    customer: userEmail,
+                  })}
+                >
+                  <FormattedMessage
+                    id="J4NBVR"
+                    defaultMessage="View Orders"
+                    description="link"
+                  />
+                </Link>
+              </div>
+            </>
           )
         ) : (
           <>
