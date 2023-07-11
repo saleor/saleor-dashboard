@@ -1,45 +1,9 @@
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Typography } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { Box, sprinkles, Text } from "@saleor/macaw-ui/next";
+import React, { ReactNode } from "react";
 
 import { DateTime } from "../Date";
 import Link from "../Link";
-
-const useStyles = makeStyles(
-  theme => ({
-    container: {
-      alignItems: "start",
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "space-between",
-      width: "100%",
-    },
-    title: {
-      wordBreak: "break-all",
-    },
-    date: {
-      color: theme.typography.caption.color,
-      paddingLeft: 24,
-      whiteSpace: "nowrap",
-    },
-    elementsContainer: {
-      alignItems: "center",
-      display: "flex",
-      flexDirection: "row",
-      flexWrap: "wrap",
-    },
-    secondaryTitle: {
-      color: "#9e9e9e",
-      fontSize: 14,
-      marginTop: theme.spacing(2),
-    },
-    titleElement: {
-      marginRight: theme.spacing(0.5),
-    },
-  }),
-  { name: "TimelineEventHeader" },
-);
 
 export interface TitleElement {
   text: string;
@@ -52,26 +16,43 @@ export interface TimelineEventHeaderProps {
   titleElements?: TitleElement[];
   secondaryTitle?: string;
   hasPlainDate?: boolean;
+  children?: ReactNode;
 }
 
 export const TimelineEventHeader: React.FC<
   TimelineEventHeaderProps
 > = props => {
-  const { title, date, titleElements, secondaryTitle, hasPlainDate } = props;
+  const { title, date, titleElements, secondaryTitle, hasPlainDate, children } =
+    props;
   const navigate = useNavigator();
 
-  const classes = useStyles(props);
-
   return (
-    <div className={classes.container}>
-      {title && <Typography className={classes.title}>{title}</Typography>}
+    <Box
+      display="flex"
+      alignItems="center"
+      flexDirection="row"
+      justifyContent="space-between"
+      width="100%"
+    >
+      {title && (
+        <Text variant="caption" size="large" wordBreak="break-all">
+          {title}
+        </Text>
+      )}
       {titleElements && (
-        <div className={classes.elementsContainer}>
+        <Box
+          display="flex"
+          alignItems="center"
+          flexDirection="row"
+          flexWrap="wrap"
+        >
           {titleElements.filter(Boolean).map(({ text, link }) => {
             if (link) {
               return (
                 <Link
-                  className={classes.titleElement}
+                  className={sprinkles({
+                    marginRight: 0.5,
+                  })}
                   onClick={() => navigate(link)}
                 >
                   {text}
@@ -80,20 +61,26 @@ export const TimelineEventHeader: React.FC<
             }
 
             return (
-              <Typography className={classes.titleElement}>{text}</Typography>
+              <Text variant="caption" size="large" marginRight={0.5}>
+                {text}
+              </Text>
             );
           })}
-        </div>
+        </Box>
       )}
-      <Typography className={classes.date}>
-        <DateTime date={date} plain={hasPlainDate} />
-      </Typography>
-      {secondaryTitle && (
-        <Typography className={classes.secondaryTitle}>
-          {secondaryTitle}
-        </Typography>
-      )}
-    </div>
+      <Box display="flex" alignItems="center" gap={5} marginLeft="auto">
+        {children}
+        <Text
+          variant="caption"
+          size="large"
+          color="textNeutralSubdued"
+          whiteSpace="nowrap"
+        >
+          <DateTime date={date} plain={hasPlainDate} />
+        </Text>
+      </Box>
+      {secondaryTitle && <Text marginTop={2}>{secondaryTitle}</Text>}
+    </Box>
   );
 };
 

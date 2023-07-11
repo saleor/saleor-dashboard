@@ -10,16 +10,11 @@ export function useRichTextSubmit(
 ) {
   const { setIsDirty, setExitDialogSubmitRef } = useExitFormDialog();
 
-  const {
-    defaultValue,
-    editorRef,
-    isReadyForMount,
-    handleChange,
-    getValue,
-  } = useRichText({
-    initial,
-    triggerChange: () => setIsDirty(true),
-  });
+  const { defaultValue, editorRef, isReadyForMount, handleChange, getValue } =
+    useRichText({
+      initial,
+      triggerChange: () => setIsDirty(true),
+    });
 
   const handleSubmit = React.useCallback(async () => {
     const result = onSubmit(await getValue());
@@ -34,10 +29,10 @@ export function useRichTextSubmit(
     return errors;
   }, [getValue, onSubmit, setIsDirty]);
 
-  React.useEffect(() => setExitDialogSubmitRef(handleSubmit), [
-    handleSubmit,
-    setExitDialogSubmitRef,
-  ]);
+  React.useEffect(
+    () => setExitDialogSubmitRef(handleSubmit),
+    [handleSubmit, setExitDialogSubmitRef],
+  );
 
   return {
     defaultValue,

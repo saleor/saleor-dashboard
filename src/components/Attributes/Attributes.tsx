@@ -88,6 +88,7 @@ export const Attributes: React.FC<AttributesProps> = ({
                     }}
                   />
                 </Text>
+                <Accordion.TriggerButton dataTestId="expand-icon" />
               </Accordion.Trigger>
               <Accordion.Content>
                 {attributes.length > 0 && (

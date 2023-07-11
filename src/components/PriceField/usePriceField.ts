@@ -8,9 +8,10 @@ import { findPriceSeparator, getCurrencyDecimalPoints } from "./utils";
 export function usePriceField(currency: string, onChange: FormChange) {
   const minValue = 0;
 
-  const maxDecimalLength = useMemo(() => getCurrencyDecimalPoints(currency), [
-    currency,
-  ]);
+  const maxDecimalLength = useMemo(
+    () => getCurrencyDecimalPoints(currency),
+    [currency],
+  );
 
   const handleChange: FormChange = e => {
     let value = e.target.value;

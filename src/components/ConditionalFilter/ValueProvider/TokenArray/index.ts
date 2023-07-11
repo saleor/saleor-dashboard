@@ -35,9 +35,7 @@ const mapToTokens = (urlEntries: Array<ParsedQs | string>): TokenArray =>
       return mapToTokens(entry);
     }
 
-    return UrlToken.fromUrlEntry(
-      UrlEntry.fromQs(entry)
-    );
+    return UrlToken.fromUrlEntry(UrlEntry.fromQs(entry));
   }) as TokenArray;
 
 const tokenizeUrl = (urlParams: string) => {

@@ -92,10 +92,9 @@ const Navigator: React.FC<NavigatorProps> = ({ visible, setVisibility }) => {
             description: "navigator notification",
           },
           {
-            keyboardShortcut:
-              navigator.platform.toLowerCase().includes("mac")
-                ? "⌘+K"
-                : "Ctrl+K",
+            keyboardShortcut: navigator.platform.toLowerCase().includes("mac")
+              ? "⌘+K"
+              : "Ctrl+K",
           },
         ),
         title: intl.formatMessage({

@@ -45,11 +45,10 @@ export type FilterElementValueData =
 export type IFilterElementMutableData = FilterElementCommonData &
   FilterElementValueData;
 
-export type IFilterElementMutableDataGeneric<
-  T extends FieldType,
-> = T extends FieldType.keyValue
-  ? KeyValueFilterElementData & FilterElementCommonData
-  : RegularFilterElementData & FilterElementCommonData;
+export type IFilterElementMutableDataGeneric<T extends FieldType> =
+  T extends FieldType.keyValue
+    ? KeyValueFilterElementData & FilterElementCommonData
+    : RegularFilterElementData & FilterElementCommonData;
 
 type FilterElementCommon<K extends string = string> = {
   autocomplete?: boolean;
@@ -68,13 +67,11 @@ type FilterElementCommon<K extends string = string> = {
 export type FilterElement<K extends string = string> = FilterElementCommon<K> &
   Partial<UnknownFilterElementData>;
 
-export type FilterElementRegular<
-  K extends string = string,
-> = FilterElementCommon<K> & RegularFilterElementData;
+export type FilterElementRegular<K extends string = string> =
+  FilterElementCommon<K> & RegularFilterElementData;
 
-export type FilterElementKeyValue<
-  K extends string = string,
-> = FilterElementCommon<K> & KeyValueFilterElementData;
+export type FilterElementKeyValue<K extends string = string> =
+  FilterElementCommon<K> & KeyValueFilterElementData;
 
 export type FilterElementGeneric<
   K extends string,
