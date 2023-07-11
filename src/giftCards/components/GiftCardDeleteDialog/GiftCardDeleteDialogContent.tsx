@@ -61,7 +61,7 @@ function GiftCardDeleteDialogContent<
 
   const [isConsentChecked, setConsentChecked] = useState(false);
 
-  const selectedItemsCount = selectedRowIds.length || SINGLE;
+  const selectedItemsCount = selectedRowIds?.length || SINGLE;
 
   useEffect(() => {
     if (!open) {
