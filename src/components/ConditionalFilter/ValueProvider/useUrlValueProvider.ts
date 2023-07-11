@@ -3,7 +3,7 @@ import useRouter from "use-react-router";
 
 import { useInitialAPIState } from "../API/initialState/useInitalAPIState";
 import { FilterContainer } from "../FilterElement";
-import { createVariables, FilterValueProvider } from "../FilterValueProvider";
+import { FilterValueProvider } from "../FilterValueProvider";
 import { useTokenArray } from "./TokenArray";
 import { UrlEntry } from "./UrlToken";
 
@@ -42,7 +42,6 @@ export const useUrlValueProvider = (): FilterValueProvider => {
 
   return {
     value,
-    queryVars: createVariables(value),
     loading,
     persist,
   };
