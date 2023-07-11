@@ -137,7 +137,7 @@ export const OrderDraftDetailsDatagrid = ({
         rowMarkers="none"
         columnSelect="none"
         freezeColumns={2}
-        verticalBorder={col => (col > 1)}
+        verticalBorder={col => col > 1}
         availableColumns={columns}
         emptyText={intl.formatMessage(messages.emptyText)}
         getCellContent={getCellContent}

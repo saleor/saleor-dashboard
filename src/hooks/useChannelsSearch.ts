@@ -3,7 +3,7 @@ import { FetchMoreProps, Search, SearchProps } from "@dashboard/types";
 import { filter } from "fuzzaldrin";
 import React from "react";
 
-export const useChannelsSearch = function<T extends { name: string }>(
+export const useChannelsSearch = function <T extends { name: string }>(
   channels: T[],
 ) {
   const [query, onQueryChange] = React.useState("");
