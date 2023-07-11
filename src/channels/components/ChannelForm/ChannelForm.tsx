@@ -1,3 +1,7 @@
+import React from "react";
+
+import { FormattedMessage, useIntl } from "react-intl";
+
 // @ts-strict-ignore
 import {
   ChannelShippingZones,
@@ -23,8 +27,6 @@ import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import { Box, Button, CopyIcon, Input, Text } from "@saleor/macaw-ui/next";
-import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
 
 import { messages } from "./messages";
 import { ExtendedFormHelperTextProps } from "./types";
@@ -90,7 +92,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
         <DashboardCard.Title>
           {intl.formatMessage(commonMessages.generalInformations)}
         </DashboardCard.Title>
-        <DashboardCard.Content>
+        <DashboardCard.Content data-test-id="general-information">
           <Input
             error={!!formErrors.name}
             helperText={getChannelsErrorMessage(formErrors?.name, intl)}
@@ -187,6 +189,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
         <Box paddingX={6}>
           <Input
             name="deleteExpiredOrdersAfter"
+            data-test-id="delete-expired-order-input"
             value={data.deleteExpiredOrdersAfter}
             error={!!formErrors.deleteExpiredOrdersAfter}
             type="number"

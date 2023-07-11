@@ -8,6 +8,7 @@ import { CHANNELS_SELECTORS } from "../../../elements/channels/channels-selector
 import { SELECT_CHANNELS_TO_ASSIGN } from "../../../elements/channels/select-channels-to-assign";
 import { HEADER_SELECTORS } from "../../../elements/header/header-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
+import { MESSAGES } from "../../../fixtures/";
 import { productDetailsUrl, urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { createChannel } from "../../../support/api/requests/Channels";
@@ -17,7 +18,10 @@ import {
   getShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
 import { createWarehouse as createWarehouseViaApi } from "../../../support/api/requests/Warehouse";
-import { createChannelByView } from "../../../support/pages/channelsPage";
+import {
+  createChannelByView,
+  setChannelRequiredFields,
+} from "../../../support/pages/channelsPage";
 
 describe("Channels", () => {
   const channelStartsWith = `CyChannels`;
@@ -92,6 +96,36 @@ describe("Channels", () => {
     },
   );
   it(
+    "should create new channel with expired orders functionality set. TC: SALEOR_0713",
+    { tags: ["@channel", "@allEnv", "@stable"] },
+    () => {
+      const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
+      const orderExpiresAfter = 120;
+      cy.addAliasToGraphRequest("Channels");
+      cy.addAliasToGraphRequest("ChannelCreate");
+      cy.visit(urlList.channels);
+      cy.waitForRequestAndCheckIfNoErrors("@Channels");
+      setChannelRequiredFields({ name: randomChannel, currency });
+      cy.get('[data-test-id="delete-expired-order-input"]')
+        .click({ force: true })
+        .clear()
+        .type(orderExpiresAfter);
+      cy.clickConfirmButton();
+      cy.waitForRequestAndCheckIfNoErrors("@ChannelCreate").then(
+        channelCreate => {
+          expect(
+            channelCreate.response.body.data.channelCreate.channel
+              .orderSettings,
+          ).to.have.property("deleteExpiredOrdersAfter", orderExpiresAfter);
+          cy.get('[data-test-id="delete-expired-order-input"]').should(
+            "contain.text",
+            orderExpiresAfter,
+          );
+        },
+      );
+    },
+  );
+  it(
     "should create channel with shippingZone and warehouse TC: SALEOR_0712",
     { tags: ["@channel", "@allEnv"] },
     () => {
@@ -101,7 +135,6 @@ describe("Channels", () => {
       const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
       cy.addAliasToGraphRequest("Channels");
       cy.visit(urlList.channels);
-      cy.expectSkeletonIsVisible();
       cy.wait("@Channels");
       createChannelByView({
         name: randomChannel,
@@ -120,7 +153,7 @@ describe("Channels", () => {
   );
 
   it(
-    "should validate slug name. TC: SALEOR_0703",
+    "should validate that creating channels with same slug name as other is not possible. TC: SALEOR_0703",
     { tags: ["@channel", "@allEnv", "@stable"] },
     () => {
       const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
@@ -133,8 +166,10 @@ describe("Channels", () => {
       cy.visit(urlList.channels);
       cy.expectSkeletonIsVisible();
       createChannelByView({ name: randomChannel, currency });
-      cy.get(ADD_CHANNEL_FORM_SELECTORS.slugValidationMessage).should(
-        "be.visible",
+      cy.confirmationErrorMessageShouldAppear();
+      cy.get(ADD_CHANNEL_FORM_SELECTORS.generalInformationSection).should(
+        "contain.text",
+        MESSAGES.slugMustBeUnique,
       );
     },
   );
