@@ -1,12 +1,11 @@
-// @ts-strict-ignore
 import {
   moneyCell,
   readonlyTextCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
-import { OrderDraftListQuery } from "@dashboard/graphql";
-import { RelayToFlat, Sort } from "@dashboard/types";
+import { OrderDraft } from "@dashboard/orders/types";
+import { Sort } from "@dashboard/types";
 import { getColumnSortDirectionIcon } from "@dashboard/utils/columns/getColumnSortDirectionIcon";
 import { GridCell, Item } from "@glideapps/glide-data-grid";
 import moment from "moment";
@@ -14,32 +13,35 @@ import { IntlShape } from "react-intl";
 
 import { columnsMessages } from "./messages";
 
-export const getColumns = (intl: IntlShape, sort: Sort): AvailableColumn[] => [
-  {
-    id: "number",
-    title: intl.formatMessage(columnsMessages.number),
-    width: 100,
-    icon: getColumnSortDirectionIcon(sort, "number"),
-  },
-  {
-    id: "date",
-    title: intl.formatMessage(columnsMessages.date),
-    width: 200,
-    icon: getColumnSortDirectionIcon(sort, "date"),
-  },
-  {
-    id: "customer",
-    title: intl.formatMessage(columnsMessages.customer),
-    width: 200,
-    icon: getColumnSortDirectionIcon(sort, "customer"),
-  },
-  {
-    id: "total",
-    title: intl.formatMessage(columnsMessages.total),
-    width: 200,
-    icon: getColumnSortDirectionIcon(sort, "total"),
-  },
-];
+export const orderDraftListStaticColumnsAdapter = (
+  intl: IntlShape,
+  sort: Sort,
+): AvailableColumn[] =>
+  [
+    {
+      id: "number",
+      title: intl.formatMessage(columnsMessages.number),
+      width: 100,
+    },
+    {
+      id: "date",
+      title: intl.formatMessage(columnsMessages.date),
+      width: 200,
+    },
+    {
+      id: "customer",
+      title: intl.formatMessage(columnsMessages.customer),
+      width: 200,
+    },
+    {
+      id: "total",
+      title: intl.formatMessage(columnsMessages.total),
+      width: 200,
+    },
+  ].map(column => ({
+    ...column,
+    icon: getColumnSortDirectionIcon(sort, column.id),
+  }));
 
 export const createGetCellContent =
   ({
@@ -47,15 +49,15 @@ export const createGetCellContent =
     locale,
     columns,
   }: {
-    orders: RelayToFlat<OrderDraftListQuery["draftOrders"]>;
+    orders: OrderDraft[];
     columns: AvailableColumn[];
     locale: Locale;
   }) =>
   ([column, row]: Item): GridCell => {
-    const rowData = orders[row];
+    const rowData: OrderDraft | undefined = orders[row];
     const columnId = columns[column]?.id;
 
-    if (!columnId) {
+    if (!columnId || !rowData) {
       return readonlyTextCell("");
     }
 
@@ -76,12 +78,12 @@ export const createGetCellContent =
             readonly: true,
           },
         );
+      default:
+        return readonlyTextCell("");
     }
   };
 
-export function getCustomerName(
-  rowData: RelayToFlat<OrderDraftListQuery["draftOrders"]>[number],
-) {
+export function getCustomerName(rowData: OrderDraft) {
   if (rowData?.billingAddress?.firstName && rowData?.billingAddress?.lastName) {
     return `${rowData.billingAddress.firstName} ${rowData.billingAddress.lastName}`;
   }

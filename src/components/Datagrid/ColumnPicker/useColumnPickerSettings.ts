@@ -7,7 +7,8 @@ export type DatagridViews =
   | "PRODUCT_DETAILS"
   | "ORDER_LIST"
   | "ORDER_DETAILS"
-  | "ORDER_DRAFT_DETAILS";
+  | "ORDER_DRAFT_DETAILS"
+  | "COLLECTION_LIST";
 
 type DynamicColumnSettings = {
   [view in DatagridViews]: string[];
@@ -19,6 +20,7 @@ export const defaultDynamicColumns: DynamicColumnSettings = {
   ORDER_LIST: [],
   ORDER_DETAILS: [],
   ORDER_DRAFT_DETAILS: [],
+  COLLECTION_LIST: [],
 };
 
 export const useColumnPickerSettings = (view: DatagridViews) => {

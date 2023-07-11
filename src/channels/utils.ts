@@ -307,7 +307,7 @@ export const createChannelsDataFromProduct = (productData?: ProductFragment) =>
         listing => listing.channel.id === channel.id,
       );
       // Comparing explicitly to false because `hasVariants` can be undefined
-      const isSimpleProduct = !(productData.productType?.hasVariants);
+      const isSimpleProduct = !productData.productType?.hasVariants;
       const haveVariantsChannelListings = productData.variants.some(variant =>
         variant.channelListings.some(
           listing => listing.channel.id === channel.id,

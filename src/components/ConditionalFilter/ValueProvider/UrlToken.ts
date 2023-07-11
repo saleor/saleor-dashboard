@@ -9,11 +9,10 @@ const STATIC_TO_LOAD = ["category", "collection", "channel", "producttype"];
 
 export const TokenType = {
   ATTRIBUTE: "a",
-  STATIC: "s"
-} as const
+  STATIC: "s",
+} as const;
 
-export type TokenTypeValue = (typeof TokenType)[keyof typeof TokenType]
-
+export type TokenTypeValue = (typeof TokenType)[keyof typeof TokenType];
 
 export class UrlEntry {
   constructor(key: string, value: string | string[]) {
@@ -21,49 +20,54 @@ export class UrlEntry {
   }
 
   public static fromQs(entry: ParsedQs) {
-    const key = Object.keys(entry)[0]
-    const value = entry[key] as string | string[]
+    const key = Object.keys(entry)[0];
+    const value = entry[key] as string | string[];
 
-    return new UrlEntry(key, value)
+    return new UrlEntry(key, value);
   }
 
-  public static forAttribute (condition: ConditionSelected, paramName: string) {
-    return UrlEntry.fromConditionSelected(condition, paramName, TokenType.ATTRIBUTE)
+  public static forAttribute(condition: ConditionSelected, paramName: string) {
+    return UrlEntry.fromConditionSelected(
+      condition,
+      paramName,
+      TokenType.ATTRIBUTE,
+    );
   }
 
-  public static forStatic (condition: ConditionSelected, paramName: string) {
-    return UrlEntry.fromConditionSelected(condition, paramName, TokenType.STATIC)
+  public static forStatic(condition: ConditionSelected, paramName: string) {
+    return UrlEntry.fromConditionSelected(
+      condition,
+      paramName,
+      TokenType.STATIC,
+    );
   }
 
-  public getInfo () {
-    const [key, value] = Object.entries(this)[0] as [
-      string,
-      string | string[],
-    ];
+  public getInfo() {
+    const [key, value] = Object.entries(this)[0] as [string, string | string[]];
     const [identifier, entryName] = key.split(".");
     const [type, control] = identifier.split("") as [TokenTypeValue, number];
-    const conditionKid = CONDITIONS[control]
+    const conditionKid = CONDITIONS[control];
 
-    return { key, value, entryName, type, conditionKid }
+    return { key, value, entryName, type, conditionKid };
   }
 
-  private static fromConditionSelected (
+  private static fromConditionSelected(
     condition: ConditionSelected,
     paramName: string,
-    tokenSlug: TokenTypeValue
+    tokenSlug: TokenTypeValue,
   ) {
     const { conditionValue } = condition;
-    const slug = slugFromConditionValue(condition.value)
+    const slug = slugFromConditionValue(condition.value);
 
     if (!conditionValue) {
-      return new UrlEntry(tokenSlug, slug)
+      return new UrlEntry(tokenSlug, slug);
     }
 
     const conditionIndex = CONDITIONS.findIndex(
       el => el === conditionValue.label,
     );
-    
-    return new UrlEntry(`${tokenSlug}${conditionIndex}.${paramName}`, slug)
+
+    return new UrlEntry(`${tokenSlug}${conditionIndex}.${paramName}`, slug);
   }
 }
 
@@ -76,12 +80,7 @@ export class UrlToken {
   ) {}
 
   public static fromUrlEntry(entry: UrlEntry) {
-    const {
-      entryName,
-      value,
-      type,
-      conditionKid
-    } = entry.getInfo()
+    const { entryName, value, type, conditionKid } = entry.getInfo();
 
     return new UrlToken(entryName, value, type, conditionKid);
   }

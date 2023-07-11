@@ -82,8 +82,9 @@ const ProductVariantMediaSelectDialog: React.FC<
                   className={clsx([
                     classes.imageContainer,
                     {
-                      [classes.selectedImageContainer]:
-                        selectedMedia.includes(mediaObj.id),
+                      [classes.selectedImageContainer]: selectedMedia.includes(
+                        mediaObj.id,
+                      ),
                     },
                   ])}
                   onClick={() => handleMediaSelect(mediaObj.id)}

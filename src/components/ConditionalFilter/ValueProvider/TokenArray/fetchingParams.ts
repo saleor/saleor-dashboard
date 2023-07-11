@@ -8,7 +8,7 @@ export interface FetchingParams {
   attribute: Record<string, string[]>;
 }
 
-type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">
+type FetchingParamsKeys = keyof Omit<FetchingParams, "attribute">;
 
 export const emptyFetchingParams: FetchingParams = {
   category: [],
@@ -21,10 +21,10 @@ export const emptyFetchingParams: FetchingParams = {
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
 
 export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
-  const key = c.name as FetchingParamsKeys
+  const key = c.name as FetchingParamsKeys;
 
   if (!c.isAttribute() && !p[key]) {
-    p[key] = []
+    p[key] = [];
   }
 
   if (c.isAttribute() && !p.attribute[c.name]) {
