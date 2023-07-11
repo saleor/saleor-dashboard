@@ -1,15 +1,14 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useColumnPickerSettings } from "@dashboard/components/Datagrid/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
-import SaveFilterTabDialog, {
-  SaveFilterTabDialogFormData,
-} from "@dashboard/components/SaveFilterTabDialog";
+import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import {
   useCollectionBulkDeleteMutation,
   useCollectionListQuery,
 } from "@dashboard/graphql";
-import useBulkActions from "@dashboard/hooks/useBulkActions";
+import { useFilterPresets } from "@dashboard/hooks/useFilterPresets";
 import useListSettings from "@dashboard/hooks/useListSettings";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -18,6 +17,7 @@ import usePaginator, {
   createPaginationState,
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
+import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { commonMessages } from "@dashboard/intl";
 import { maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
@@ -27,8 +27,8 @@ import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems, mapNodeToChoice } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
 import { DialogContentText } from "@material-ui/core";
-import { DeleteIcon, IconButton } from "@saleor/macaw-ui";
-import React, { useEffect } from "react";
+import isEqual from "lodash/isEqual";
+import React, { useCallback, useEffect } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import CollectionListPage from "../../components/CollectionListPage/CollectionListPage";
@@ -38,14 +38,10 @@ import {
   CollectionListUrlQueryParams,
 } from "../../urls";
 import {
-  deleteFilterTab,
-  getActiveFilters,
   getFilterOpts,
   getFilterQueryParam,
-  getFiltersCurrentTab,
-  getFilterTabs,
   getFilterVariables,
-  saveFilterTab,
+  storageUtils,
 } from "./filters";
 import { canBeSorted, DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
 
@@ -57,22 +53,29 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const navigate = useNavigator();
   const intl = useIntl();
   const notify = useNotifier();
-  const { isSelected, listElements, reset, toggle, toggleAll } = useBulkActions(
-    params.ids,
-  );
   const { updateListSettings, settings } = useListSettings(
     ListViews.COLLECTION_LIST,
   );
+  const { columnPickerSettings } = useColumnPickerSettings("COLLECTION_LIST");
 
   usePaginationReset(collectionListUrl, params, settings.rowNumber);
+  const { channel } = useAppChannel(false);
+
+  const {
+    clearRowSelection,
+    selectedRowIds,
+    setClearDatagridRowSelectionCallback,
+    setSelectedRowIds,
+  } = useRowSelection(params);
 
   const [changeFilters, resetFilters, handleSearchChange] =
     createFilterHandlers({
-      cleanupFn: reset,
+      cleanupFn: clearRowSelection,
       createUrl: collectionListUrl,
       getFilterQueryParam,
       navigate,
       params,
+      keepActiveTab: true,
     });
 
   const { availableChannels } = useAppChannel(false);
@@ -82,6 +85,23 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const selectedChannel = availableChannels.find(
     channel => channel.slug === params.channel,
   );
+
+  const {
+    selectedPreset,
+    presets,
+    hasPresetsChange,
+    onPresetChange,
+    onPresetDelete,
+    onPresetSave,
+    onPresetUpdate,
+    setPresetIdToDelete,
+    presetIdToDelete,
+  } = useFilterPresets({
+    params,
+    reset: clearRowSelection,
+    getUrl: collectionListUrl,
+    storageUtils,
+  });
 
   const paginationState = createPaginationState(settings.rowNumber, params);
   const queryVariables = React.useMemo(
@@ -98,6 +118,8 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     variables: queryVariables,
   });
 
+  const collections = mapEdgesToItems(data?.collections);
+
   const [collectionBulkDelete, collectionBulkDeleteOpts] =
     useCollectionBulkDeleteMutation({
       onCompleted: data => {
@@ -107,14 +129,13 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
             text: intl.formatMessage(commonMessages.savedChanges),
           });
           refetch();
-          reset();
+          clearRowSelection();
           closeModal();
         }
       },
     });
 
   const filterOpts = getFilterOpts(params, channelOpts);
-  const tabs = getFilterTabs();
 
   useEffect(() => {
     if (!canBeSorted(params.sort, !!selectedChannel)) {
@@ -127,33 +148,10 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     }
   }, [params]);
 
-  const currentTab = getFiltersCurrentTab(params, tabs);
-
   const [openModal, closeModal] = createDialogActionHandlers<
     CollectionListUrlDialog,
     CollectionListUrlQueryParams
   >(navigate, collectionListUrl, params);
-
-  const handleTabChange = (tab: number) => {
-    reset();
-    navigate(
-      collectionListUrl({
-        activeTab: tab.toString(),
-        ...getFilterTabs()[tab - 1].data,
-      }),
-    );
-  };
-
-  const handleTabDelete = () => {
-    deleteFilterTab(currentTab);
-    reset();
-    navigate(collectionListUrl());
-  };
-
-  const handleTabSave = (data: SaveFilterTabDialogFormData) => {
-    saveFilterTab(data.name, getActiveFilters(params));
-    handleTabChange(tabs.length + 1);
-  };
 
   const paginationValues = usePaginator({
     pageInfo: maybe(() => data.collections.pageInfo),
@@ -163,53 +161,75 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, collectionListUrl, params);
 
+  const handleSetSelectedCollectionIds = useCallback(
+    (rows: number[], clearSelection: () => void) => {
+      if (!collections) {
+        return;
+      }
+
+      const rowsIds = rows.map(row => collections[row].id);
+      const haveSaveValues = isEqual(rowsIds, selectedRowIds);
+
+      if (!haveSaveValues) {
+        setSelectedRowIds(rowsIds);
+      }
+
+      setClearDatagridRowSelectionCallback(clearSelection);
+    },
+    [
+      collections,
+      selectedRowIds,
+      setClearDatagridRowSelectionCallback,
+      setSelectedRowIds,
+    ],
+  );
+
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <CollectionListPage
-        currentTab={currentTab}
+        currentTab={selectedPreset}
+        currencySymbol={channel?.currencyCode}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
         onAll={resetFilters}
-        onTabChange={handleTabChange}
-        onTabDelete={() => openModal("delete-search")}
+        onTabChange={onPresetChange}
+        onTabDelete={(id: number) => {
+          setPresetIdToDelete(id);
+          openModal("delete-search");
+        }}
         onTabSave={() => openModal("save-search")}
-        tabs={tabs.map(tab => tab.name)}
+        onTabUpdate={onPresetUpdate}
+        tabs={presets.map(tab => tab.name)}
+        loading={loading}
         disabled={loading}
-        collections={mapEdgesToItems(data?.collections)}
+        columnPickerSettings={columnPickerSettings}
+        collections={collections}
         settings={settings}
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
-        toolbar={
-          <IconButton
-            variant="secondary"
-            color="primary"
-            data-test-id="delete-icon"
-            onClick={() =>
-              openModal("remove", {
-                ids: listElements,
-              })
-            }
-          >
-            <DeleteIcon />
-          </IconButton>
-        }
-        isChecked={isSelected}
-        selected={listElements.length}
-        toggle={toggle}
-        toggleAll={toggleAll}
         selectedChannelId={selectedChannel?.id}
         filterOpts={filterOpts}
         onFilterChange={changeFilters}
+        selectedCollectionIds={selectedRowIds}
+        onSelectCollectionIds={handleSetSelectedCollectionIds}
+        hasPresetsChanged={hasPresetsChange}
+        onCollectionsDelete={() =>
+          openModal("remove", {
+            ids: selectedRowIds,
+          })
+        }
       />
       <ActionDialog
-        open={params.action === "remove" && maybe(() => params.ids.length > 0)}
+        open={
+          params.action === "remove" && maybe(() => selectedRowIds.length > 0)
+        }
         onClose={closeModal}
         confirmButtonState={collectionBulkDeleteOpts.status}
         onConfirm={() =>
           collectionBulkDelete({
             variables: {
-              ids: params.ids,
+              ids: selectedRowIds,
             },
           })
         }
@@ -225,9 +245,9 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
             id="yT5zvU"
             defaultMessage="{counter,plural,one{Are you sure you want to delete this collection?} other{Are you sure you want to delete {displayQuantity} collections?}}"
             values={{
-              counter: maybe(() => params.ids.length),
+              counter: maybe(() => selectedRowIds.length),
               displayQuantity: (
-                <strong>{maybe(() => params.ids.length)}</strong>
+                <strong>{maybe(() => selectedRowIds.length)}</strong>
               ),
             }}
           />
@@ -237,14 +257,14 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         open={params.action === "save-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabSave}
+        onSubmit={onPresetSave}
       />
       <DeleteFilterTabDialog
         open={params.action === "delete-search"}
         confirmButtonState="default"
         onClose={closeModal}
-        onSubmit={handleTabDelete}
-        tabName={maybe(() => tabs[currentTab - 1].name, "...")}
+        onSubmit={onPresetDelete}
+        tabName={maybe(() => presets[presetIdToDelete - 1].name, "...")}
       />
     </PaginatorContext.Provider>
   );

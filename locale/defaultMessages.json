@@ -2377,6 +2377,9 @@
     "context": "option title",
     "string": "Prioritize warehouses by sorting order"
   },
+  "FTYkgw": {
+    "string": "Delete collections"
+  },
   "FWbv/u": {
     "context": "page header",
     "string": "Create Discount"
@@ -2396,10 +2399,6 @@
   "FcTTvh": {
     "context": "postal codes, header",
     "string": "Postal codes"
-  },
-  "FcVEpe": {
-    "context": "collection publication date",
-    "string": "Unpublished"
   },
   "FemBUF": {
     "context": "header",
@@ -3389,10 +3388,6 @@
   "McN+wq": {
     "context": "customers section name",
     "string": "Customers"
-  },
-  "Mee46w": {
-    "context": "collection publication date",
-    "string": "Becomes published on {date}"
   },
   "MewrtN": {
     "context": "section header",
@@ -5848,10 +5843,6 @@
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
   },
-  "dpY94C": {
-    "context": "collection publication date",
-    "string": "Published on {date}"
-  },
   "dsJ+Wv": {
     "context": "note on export gift cards",
     "string": "Note: Only active and not used gift cards will be expored"
@@ -5909,6 +5900,9 @@
   "eOrLzG": {
     "context": "button",
     "string": "Done"
+  },
+  "eRqx44": {
+    "string": "Search collections..."
   },
   "eUjFjW": {
     "string": "Permission group created"
@@ -7690,9 +7684,6 @@
   "s8FlDW": {
     "context": "hide error log label in notification",
     "string": "Hide log"
-  },
-  "s97tLq": {
-    "string": "Search Collections"
   },
   "s9sOcC": {
     "context": "button",
