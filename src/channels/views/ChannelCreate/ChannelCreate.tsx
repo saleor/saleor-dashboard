@@ -66,6 +66,7 @@ export const ChannelCreateView = ({}) => {
     slug,
     defaultCountry,
     markAsPaidStrategy,
+    deleteExpiredOrdersAfter,
   }: FormData) => {
     const input: ChannelCreateInput = {
       defaultCountry,
@@ -79,6 +80,7 @@ export const ChannelCreateView = ({}) => {
       },
       orderSettings: {
         markAsPaidStrategy,
+        deleteExpiredOrdersAfter,
       },
     };
 
