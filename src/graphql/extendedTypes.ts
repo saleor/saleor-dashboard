@@ -1,6 +1,6 @@
 import { PermissionEnum } from "./types.generated";
 
 export interface Node {
-    id: string
+  id: string;
 }
 export type PrefixedPermissions = `PERMISSION_${PermissionEnum}`;
