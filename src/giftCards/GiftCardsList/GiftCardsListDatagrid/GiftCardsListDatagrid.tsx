@@ -7,13 +7,13 @@ import {
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import TablePagination from "@dashboard/components/TablePagination";
 import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
-import { giftCardUrl } from "@dashboard/giftCards/urls";
+import { giftCardListUrl, giftCardUrl } from "@dashboard/giftCards/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import usePaginator from "@dashboard/hooks/usePaginator";
 import { Item } from "@glideapps/glide-data-grid";
 import { Box, useTheme } from "@saleor/macaw-ui/next";
 import isEqual from "lodash/isEqual";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
 import { messages as filterLabels } from "../GiftCardListSearchAndFilters/filters";
@@ -153,6 +153,17 @@ export const GiftCardsListDatagrid = () => {
       setSelectedRowIds,
     ],
   );
+
+  useEffect(() => {
+    if (!canBeSorted(params.sort, isCurrencySelected)) {
+      navigate(
+        giftCardListUrl({
+          ...params,
+          sort: GiftCardUrlSortField.usedBy,
+        }),
+      );
+    }
+  });
 
   return (
     <DatagridChangeStateContext.Provider value={datagridState}>
