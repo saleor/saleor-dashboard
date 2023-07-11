@@ -104,7 +104,7 @@ export const GiftCardsListDatagrid = () => {
         onSort(columnName as GiftCardUrlSortField);
       }
     },
-    [visibleColumns, onSort, sort],
+    [visibleColumns, onSort, sort, isCurrencySelected],
   );
 
   const handleRowAnchor = useCallback(
@@ -119,17 +119,20 @@ export const GiftCardsListDatagrid = () => {
     [giftCards],
   );
 
-  const handleGetColumnTooltipContent = useCallback((colIndex: number) => {
-    const columnName = visibleColumns[colIndex].id;
+  const handleGetColumnTooltipContent = useCallback(
+    (colIndex: number) => {
+      const columnName = visibleColumns[colIndex].id;
 
-    if (canBeSorted(columnName as GiftCardUrlSortField, isCurrencySelected)) {
-      return "";
-    }
+      if (canBeSorted(columnName as GiftCardUrlSortField, isCurrencySelected)) {
+        return "";
+      }
 
-    return intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-      filterName: filterLabels.currencyLabel.defaultMessage,
-    });
-  }, []);
+      return intl.formatMessage(commonTooltipMessages.noFilterSelected, {
+        filterName: filterLabels.currencyLabel.defaultMessage,
+      });
+    },
+    [visibleColumns, isCurrencySelected],
+  );
 
   const handleGiftCardSelectionChange = useCallback(
     (rows: number[], clearSelection: () => void) => {
