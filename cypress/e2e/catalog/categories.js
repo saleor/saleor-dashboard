@@ -241,34 +241,7 @@ describe("As an admin I want to manage categories", () => {
         name: secondCategoryName,
       }).then(() => {
         cy.visit(urlList.categories).searchInTable(startsWith);
-        ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
-        cy.get(SHARED_ELEMENTS.firstRowDataGrid)
-          .invoke("text")
-          .then(firstOnListCategoryName => {
-            cy.get(SHARED_ELEMENTS.secondRowDataGrid)
-              .invoke("text")
-              .then(secondOnListCategoryName => {
-                // deletes two first rows from categories list view
-                cy.clickGridCell(0, 0);
-                cy.clickGridCell(0, 1);
-
-                cy.get(CATEGORY_DETAILS_SELECTORS.deleteCategoriesButton)
-                  .click()
-                  .get(BUTTON_SELECTORS.submit)
-                  .click()
-                  .waitForRequestAndCheckIfNoErrors("@CategoryBulkDelete");
-                ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
-
-                cy.contains(
-                  SHARED_ELEMENTS.dataGridTable,
-                  firstOnListCategoryName,
-                ).should("not.exist");
-                cy.contains(
-                  SHARED_ELEMENTS.dataGridTable,
-                  secondOnListCategoryName,
-                ).should("not.exist");
-              });
-          });
+        cy.deleteTwoFirstRecordsFromGridListAndValidate("CategoryBulkDelete");
       });
     },
   );

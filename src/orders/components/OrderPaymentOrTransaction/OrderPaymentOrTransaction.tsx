@@ -14,7 +14,10 @@ import { OrderTransactionsWrapper } from "./OrderTransactionsWrapper";
 export interface OrderPaymentOrTransactionProps {
   order: OrderDetailsFragment;
   shop: OrderDetailsQuery["shop"];
-  onTransactionAction: (transactionId: string, actionType: TransactionActionEnum) => any;
+  onTransactionAction: (
+    transactionId: string,
+    actionType: TransactionActionEnum,
+  ) => any;
   onPaymentCapture: () => any;
   onPaymentVoid: () => any;
   onPaymentRefund: () => any;

@@ -11,9 +11,8 @@ export interface OrderCustomerChangeData {
   changeActionOption: CustomerChangeActionEnum;
 }
 
-type UseOrderCustomerChangeFormResult = CommonUseFormResult<
-  OrderCustomerChangeData
->;
+type UseOrderCustomerChangeFormResult =
+  CommonUseFormResult<OrderCustomerChangeData>;
 
 export interface OrderCustomerChangeFormProps {
   children: (props: UseOrderCustomerChangeFormResult) => React.ReactNode;
