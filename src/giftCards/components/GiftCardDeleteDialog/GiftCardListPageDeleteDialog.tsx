@@ -1,5 +1,4 @@
 import { ActionDialogProps } from "@dashboard/components/ActionDialog";
-import { useGiftCardListDialogs } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListDialogsProvider";
 import { useGiftCardList } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
 import { GIFT_CARD_LIST_QUERY } from "@dashboard/giftCards/GiftCardsList/queries";
 import { DialogProps } from "@dashboard/types";
@@ -23,12 +22,10 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
   const listProps = useGiftCardList();
   const { giftCards, loading, selectedRowIds } = listProps;
 
-  const { id } = useGiftCardListDialogs();
-
-  const singleDeletion = !!id || selectedRowIds.length === SINGLE;
+  const singleDeletion = selectedRowIds.length === SINGLE;
 
   const { onDeleteGiftCard, deleteGiftCardOpts } = useGiftCardSingleDelete({
-    id,
+    id: selectedRowIds[0],
     onClose,
     refetchQueries: [GIFT_CARD_LIST_QUERY, ...refetchQueries],
   });
@@ -42,7 +39,7 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
   const dialogProps: Pick<
     ActionDialogProps,
     "onConfirm" | "confirmButtonState"
-  > = !!id
+  > = singleDeletion
     ? {
         onConfirm: onDeleteGiftCard,
         confirmButtonState: deleteGiftCardOpts?.status,
@@ -56,7 +53,7 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
     <GiftCardDeleteDialogContent
       {...listProps}
       {...dialogProps}
-      id={id}
+      ids={selectedRowIds}
       open={open}
       onClose={onClose}
       singleDeletion={singleDeletion}

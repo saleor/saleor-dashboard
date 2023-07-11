@@ -136,11 +136,12 @@ export const GiftCardsListDatagrid = () => {
 
   const handleGiftCardSelectionChange = useCallback(
     (rows: number[], clearSelection: () => void) => {
-      if (!giftCards || giftCards.length === 0) {
+      if (!giftCards) {
         return;
       }
 
       const rowsIds = rows.map(row => giftCards[row].id);
+
       const haveSaveValues = isEqual(rowsIds, selectedRowIds);
 
       if (!haveSaveValues) {
@@ -149,12 +150,7 @@ export const GiftCardsListDatagrid = () => {
 
       setClearDatagridRowSelectionCallback(clearSelection);
     },
-    [
-      giftCards,
-      setClearDatagridRowSelectionCallback,
-      selectedRowIds,
-      setSelectedRowIds,
-    ],
+    [giftCards, selectedRowIds],
   );
 
   useEffect(() => {

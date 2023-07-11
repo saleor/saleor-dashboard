@@ -37,7 +37,7 @@ export interface GiftCardDeleteDialogContentProps<
         "selectedRowIds" | "giftCards" | "loading"
       >
     > {
-  id?: string;
+  ids?: string[];
   giftCard?: TGiftCard;
   singleDeletion: boolean;
 }
@@ -45,7 +45,7 @@ export interface GiftCardDeleteDialogContentProps<
 function GiftCardDeleteDialogContent<
   TGiftCard extends DeleteDialogContentGiftCard,
 >({
-  id,
+  ids,
   open,
   onClose,
   onConfirm,
@@ -84,7 +84,7 @@ function GiftCardDeleteDialogContent<
   };
 
   const deletingCardsWithBalance = singleDeletion
-    ? hasSelectedGiftCardBalance(id)
+    ? hasSelectedGiftCardBalance(ids[0])
     : hasSelectedAnyGiftCardsWithBalance();
 
   const submitEnabled = deletingCardsWithBalance ? isConsentChecked : true;

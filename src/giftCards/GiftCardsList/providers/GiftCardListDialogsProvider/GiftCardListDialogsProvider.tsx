@@ -57,8 +57,8 @@ const GiftCardListDialogsProvider: React.FC<
   const isDialogOpen = (type: GiftCardListActionParamsEnum) =>
     params?.action === type;
 
-  const handleDeleteDialogOpen = (id?: string) => {
-    openDialog(DELETE, id ? { id } : undefined);
+  const handleDeleteDialogOpen = () => {
+    openDialog(DELETE);
   };
 
   const openSearchDeleteDialog = () =>
