@@ -6,7 +6,7 @@ import { AvailableColumn } from "../types";
 import messages from "./messages";
 
 export interface ColumnPickerDynamicColumnsProps {
-  dynamicColumns: AvailableColumn[] | undefined;
+  dynamicColumns?: AvailableColumn[] | null | undefined;
   setExpanded: (value: React.SetStateAction<boolean>) => void;
   handleToggle: (id: string) => void;
   selectedColumns: string[];

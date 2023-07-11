@@ -18,8 +18,13 @@ import "@percy/cypress";
 
 import { commandTimings } from "cypress-timings";
 
-import { SHARED_ELEMENTS } from "../elements/shared/sharedElements";
+import {
+  BUTTON_SELECTORS,
+  CATEGORY_DETAILS_SELECTORS,
+  SHARED_ELEMENTS,
+} from "../elements";
 import { urlList } from "../fixtures/urlList";
+import { ensureCanvasStatic } from "../support/customCommands/sharedElementsOperations/canvas";
 import cypressGrep from "../support/cypress-grep/support";
 
 commandTimings();
@@ -121,6 +126,39 @@ Cypress.Commands.add("clickGridHeader", col => {
     cy.get("body").click(headerXCenter, headerYCenter);
   });
 });
+Cypress.Commands.add(
+  "deleteTwoFirstRecordsFromGridListAndValidate",
+  deleteRequestName => {
+    ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
+    cy.get(SHARED_ELEMENTS.firstRowDataGrid)
+      .invoke("text")
+      .then(firstOnListCollectionName => {
+        cy.get(SHARED_ELEMENTS.secondRowDataGrid)
+          .invoke("text")
+          .then(secondOnListCollectionName => {
+            // check two first rows on list view
+            cy.clickGridCell(0, 0);
+            cy.clickGridCell(0, 1);
+
+            cy.get(CATEGORY_DETAILS_SELECTORS.deleteCategoriesButton)
+              .click()
+              .get(BUTTON_SELECTORS.submit)
+              .click()
+              .waitForRequestAndCheckIfNoErrors(`@${deleteRequestName}`);
+            ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
+
+            cy.contains(
+              SHARED_ELEMENTS.dataGridTable,
+              firstOnListCollectionName,
+            ).should("not.exist");
+            cy.contains(
+              SHARED_ELEMENTS.dataGridTable,
+              secondOnListCollectionName,
+            ).should("not.exist");
+          });
+      });
+  },
+);
 
 Cypress.on(
   "uncaught:exception",
