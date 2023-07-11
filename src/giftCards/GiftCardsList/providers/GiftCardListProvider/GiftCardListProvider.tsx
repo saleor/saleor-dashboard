@@ -33,7 +33,13 @@ import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
 import createSortHandler from "@dashboard/utils/handlers/sortHandler";
 import { mapEdgesToItems } from "@dashboard/utils/maps";
 import { getSortParams } from "@dashboard/utils/sort";
-import React, { createContext, useContext } from "react";
+import React, {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 
 import { getFilterQueryParam, storageUtils } from "../../filters";
 import { getFilterVariables } from "../../GiftCardListSearchAndFilters/filters";
@@ -68,6 +74,8 @@ export interface GiftCardsListConsumerProps
   changeFilters: (filter: IFilter<any>) => void;
   resetFilters: () => void;
   handleSearchChange: (query: string) => void;
+  isFilterPresetOpen: boolean;
+  setFilterPresetOpen: Dispatch<SetStateAction<boolean>>;
 }
 
 export const GiftCardsListContext =
@@ -82,6 +90,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   const navigate = useNavigator();
   const notify = useNotifier();
 
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
   const { clearRowSelection, ...rowSelectionUtils } = useRowSelection(params);
 
   const filterUtils = useFilterPresets({
@@ -155,6 +164,8 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     changeFilters,
     resetFilters,
     handleSearchChange,
+    isFilterPresetOpen,
+    setFilterPresetOpen,
   };
 
   return (

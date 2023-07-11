@@ -119,20 +119,17 @@ export const GiftCardsListDatagrid = () => {
     [giftCards],
   );
 
-  const handleGetColumnTooltipContent = useCallback(
-    (colIndex: number) => {
-      const columnName = visibleColumns[colIndex].id;
+  const handleGetColumnTooltipContent = useCallback((colIndex: number) => {
+    const columnName = visibleColumns[colIndex].id;
 
-      if (canBeSorted(columnName as GiftCardUrlSortField, isCurrencySelected)) {
-        return "";
-      }
+    if (canBeSorted(columnName as GiftCardUrlSortField, isCurrencySelected)) {
+      return "";
+    }
 
-      return intl.formatMessage(commonTooltipMessages.noFilterSelected, {
-        filterName: filterLabels.currencyLabel.defaultMessage,
-      });
-    },
-    [isCurrencySelected],
-  );
+    return intl.formatMessage(commonTooltipMessages.noFilterSelected, {
+      filterName: filterLabels.currencyLabel.defaultMessage,
+    });
+  }, []);
 
   const handleGiftCardSelectionChange = useCallback(
     (rows: number[], clearSelection: () => void) => {

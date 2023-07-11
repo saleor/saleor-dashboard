@@ -3,7 +3,7 @@ import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
-import React, { useState } from "react";
+import React from "react";
 import { useIntl } from "react-intl";
 
 import { giftCardSettingsUrl } from "../../urls";
@@ -23,6 +23,7 @@ const GiftCardsListHeader: React.FC = () => {
     openSearchDeleteDialog,
     openSearchSaveDialog,
   } = useGiftCardListDialogs();
+
   const {
     hasPresetsChange,
     selectedPreset,
@@ -31,9 +32,9 @@ const GiftCardsListHeader: React.FC = () => {
     setPresetIdToDelete,
     onPresetChange,
     resetFilters,
+    isFilterPresetOpen,
+    setFilterPresetOpen,
   } = useGiftCardList();
-
-  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   const openSettings = () => navigate(giftCardSettingsUrl);
 

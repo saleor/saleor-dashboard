@@ -7,7 +7,6 @@ import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
 import { useGiftCardCurrenciesQuery } from "@dashboard/graphql";
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
-import { maybe } from "@dashboard/misc";
 import useCustomerSearch from "@dashboard/searches/useCustomerSearch";
 import useGiftCardTagsSearch from "@dashboard/searches/useGiftCardTagsSearch";
 import useProductSearch from "@dashboard/searches/useProductSearch";
@@ -156,7 +155,7 @@ const GiftCardListSearchAndFilters: React.FC = () => {
         confirmButtonState="default"
         onClose={onClose}
         onSubmit={onPresetDelete}
-        tabName={maybe(() => presets[presetIdToDelete - 1].name, "...")}
+        tabName={presets[presetIdToDelete - 1]?.name ?? "..."}
       />
     </>
   );
