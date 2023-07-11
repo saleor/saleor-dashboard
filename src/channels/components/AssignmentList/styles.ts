@@ -53,7 +53,6 @@ export const useHeaderStyles = makeStyles(
 export const useStyles = makeStyles(
   theme => ({
     container: {
-      padding: theme.spacing(1, 0),
       display: "flex",
       flexDirection: "row",
       justifyContent: "space-between",
