@@ -43,4 +43,8 @@ export const messages = defineMessages({
     defaultMessage: "No gift cards found",
     description: "no cards found title message",
   },
+  active: {
+    defaultMessage: "Active",
+    id: "3a5wL8",
+  },
 });

@@ -93,7 +93,18 @@ export const createGetCellContent =
         const status = getStatusText(rowData);
 
         if (!status) {
-          return readonlyTextCell("", false);
+          return tagsCell(
+            [
+              {
+                tag: intl.formatMessage(messages.active),
+                color: getTagCellColor(
+                  getStatusColor("success", currentTheme),
+                  theme,
+                ),
+              },
+            ],
+            [intl.formatMessage(messages.active)],
+          );
         }
 
         const statusLabel = intl.formatMessage(status.label);
@@ -113,7 +124,7 @@ export const createGetCellContent =
       case "tag":
         return readonlyTextCell(getTagCellText(rowData?.tags ?? []));
       case "product":
-        return readonlyTextCell("-");
+        return readonlyTextCell(rowData?.product?.name ?? PLACEHOLDER);
       case "usedBy":
         if (rowData.usedBy) {
           return readonlyTextCell(
