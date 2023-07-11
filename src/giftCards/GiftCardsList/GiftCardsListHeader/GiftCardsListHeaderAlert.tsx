@@ -34,7 +34,7 @@ const GiftCardsListHeaderAlert: React.FC = () => {
         title={intl.formatMessage(messages.noGiftCardsAlertTitle)}
         variant="warning"
         close={false}
-        className="remove-icon-background"
+        className="remove-icon-background remove-content-padding-top "
       >
         <GiftCardsListHeaderAlertContent
           giftCardProductTypesExist={giftCardProductTypesExist}

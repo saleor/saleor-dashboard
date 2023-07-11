@@ -1,11 +1,8 @@
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import { Button } from "@dashboard/components/Button";
-import CardMenu, { CardMenuItem } from "@dashboard/components/CardMenu";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
-import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { Box, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
@@ -39,24 +36,6 @@ const GiftCardsListHeader: React.FC = () => {
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   const openSettings = () => navigate(giftCardSettingsUrl);
-
-  const menuItems: CardMenuItem[] = [
-    {
-      label: intl.formatMessage(messages.settings),
-      testId: "settingsMenuItem",
-      onSelect: openSettings,
-    },
-    {
-      label: intl.formatMessage(messages.bulkIssue),
-      testId: "bulkIssueMenuItem",
-      onSelect: openBulkCreateDialog,
-    },
-    {
-      label: intl.formatMessage(messages.exportCodes),
-      testId: "exportCodesMenuItem",
-      onSelect: openExportDialog,
-    },
-  ];
 
   return (
     <>
@@ -99,8 +78,26 @@ const GiftCardsListHeader: React.FC = () => {
           </Box>
 
           <Box display="flex" alignItems="center" gap={2}>
-            <CardMenu menuItems={menuItems} data-test-id="menu" />
-            <HorizontalSpacer spacing={2} />
+            <TopNav.Menu
+              items={[
+                {
+                  label: intl.formatMessage(messages.settings),
+                  testId: "settingsMenuItem",
+                  onSelect: openSettings,
+                },
+                {
+                  label: intl.formatMessage(messages.bulkIssue),
+                  testId: "bulkIssueMenuItem",
+                  onSelect: openBulkCreateDialog,
+                },
+                {
+                  label: intl.formatMessage(messages.exportCodes),
+                  testId: "exportCodesMenuItem",
+                  onSelect: openExportDialog,
+                },
+              ]}
+              data-test-id="menu"
+            />
             <Button
               variant="primary"
               onClick={openCreateDialog}
