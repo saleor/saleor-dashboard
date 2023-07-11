@@ -107,6 +107,7 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
       navigate,
       params,
       cleanupFn: clearRowSelection,
+      keepActiveTab: true,
     });
 
   const { updateListSettings, settings } =
@@ -144,7 +145,8 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     handleError: handleGiftCardListError,
   });
 
-  const giftCards = mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard);
+  const giftCards =
+    mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard) ?? [];
 
   const providerValues: GiftCardsListConsumerProps = {
     onSort: handleSort,

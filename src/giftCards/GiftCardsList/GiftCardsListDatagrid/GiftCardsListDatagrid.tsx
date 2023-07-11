@@ -136,7 +136,7 @@ export const GiftCardsListDatagrid = () => {
 
   const handleGiftCardSelectionChange = useCallback(
     (rows: number[], clearSelection: () => void) => {
-      if (!giftCards) {
+      if (!giftCards || giftCards.length === 0) {
         return;
       }
 
@@ -158,7 +158,7 @@ export const GiftCardsListDatagrid = () => {
   );
 
   useEffect(() => {
-    if (!canBeSorted(params.sort, isCurrencySelected)) {
+    if (params.sort && !canBeSorted(params.sort, isCurrencySelected)) {
       navigate(
         giftCardListUrl({
           ...params,
