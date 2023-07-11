@@ -6,6 +6,7 @@ import {
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import TablePagination from "@dashboard/components/TablePagination";
+import { commonTooltipMessages } from "@dashboard/components/TooltipTableCellHeader/messages";
 import { giftCardUrl } from "@dashboard/giftCards/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import usePaginator from "@dashboard/hooks/usePaginator";
@@ -15,6 +16,7 @@ import isEqual from "lodash/isEqual";
 import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
+import { messages as filterLabels } from "../GiftCardListSearchAndFilters/filters";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
 import { canBeSorted } from "../sort";
 import { GiftCardListColummns, GiftCardUrlSortField } from "../types";
@@ -39,6 +41,8 @@ export const GiftCardsListDatagrid = () => {
     paginationState,
     params,
   } = useGiftCardList();
+
+  const isCurrencySelected = !!params.currency;
 
   const paginationValues = usePaginator({
     pageInfo,
@@ -94,7 +98,7 @@ export const GiftCardsListDatagrid = () => {
       }
 
       if (
-        canBeSorted(columnName as GiftCardUrlSortField, false) &&
+        canBeSorted(columnName as GiftCardUrlSortField, isCurrencySelected) &&
         sort !== undefined
       ) {
         onSort(columnName as GiftCardUrlSortField);
@@ -115,9 +119,20 @@ export const GiftCardsListDatagrid = () => {
     [giftCards],
   );
 
-  const handleGetColumnTooltipContent = useCallback(() => {
-    return "";
-  }, []);
+  const handleGetColumnTooltipContent = useCallback(
+    (colIndex: number) => {
+      const columnName = visibleColumns[colIndex].id;
+
+      if (canBeSorted(columnName as GiftCardUrlSortField, isCurrencySelected)) {
+        return "";
+      }
+
+      return intl.formatMessage(commonTooltipMessages.noFilterSelected, {
+        filterName: filterLabels.currencyLabel.defaultMessage,
+      });
+    },
+    [isCurrencySelected],
+  );
 
   const handleGiftCardSelectionChange = useCallback(
     (rows: number[], clearSelection: () => void) => {
