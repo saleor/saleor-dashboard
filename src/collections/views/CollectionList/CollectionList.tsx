@@ -184,6 +184,15 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     ],
   );
 
+  const handleCollectionBulkDelete = useCallback(async () => {
+    await collectionBulkDelete({
+      variables: {
+        ids: selectedRowIds,
+      },
+    });
+    clearRowSelection();
+  }, [selectedRowIds]);
+
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <CollectionListPage
@@ -226,13 +235,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         }
         onClose={closeModal}
         confirmButtonState={collectionBulkDeleteOpts.status}
-        onConfirm={() =>
-          collectionBulkDelete({
-            variables: {
-              ids: selectedRowIds,
-            },
-          })
-        }
+        onConfirm={handleCollectionBulkDelete}
         variant="delete"
         title={intl.formatMessage({
           id: "Ykw8k5",
