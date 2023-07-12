@@ -1,11 +1,10 @@
-// @ts-strict-ignore
 import {
   CategoryListUrlSortField,
   categoryUrl,
 } from "@dashboard/categories/urls";
-import ColumnPicker from "@dashboard/components/ColumnPicker";
+import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
+import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
-import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
 import {
   DatagridChangeStateContext,
   useDatagridChangeState,
@@ -18,14 +17,16 @@ import { Box } from "@saleor/macaw-ui/next";
 import React, { ReactNode, useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { createGetCellContent, getColumns } from "./datagrid";
+import {
+  categoryListStaticColumnsAdapter,
+  createGetCellContent,
+} from "./datagrid";
 import { messages } from "./messages";
 
 interface CategoryListDatagridProps
-  extends Partial<SortPage<CategoryListUrlSortField>>,
-    PageListProps {
-  categories?: CategoryFragment[];
-  disabled: boolean;
+  extends PageListProps,
+    Partial<SortPage<CategoryListUrlSortField>> {
+  categories: CategoryFragment[];
   onSelectCategoriesIds: (ids: number[], clearSelection: () => void) => void;
   selectionActionButton?: ReactNode | null;
   hasRowHover?: boolean;
@@ -44,32 +45,40 @@ export const CategoryListDatagrid = ({
 }: CategoryListDatagridProps) => {
   const datagridState = useDatagridChangeState();
   const intl = useIntl();
-  const availableColumns = useMemo(() => getColumns(intl, sort), [intl, sort]);
 
-  const {
-    availableColumnsChoices,
-    columnChoices,
-    columns,
-    defaultColumns,
-    onColumnMoved,
-    onColumnResize,
-    onColumnsChange,
-    picker,
-  } = useColumnsDefault(availableColumns);
+  const memoizedStaticColumns = useMemo(
+    () => categoryListStaticColumnsAdapter(intl, sort),
+    [intl, sort],
+  );
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const handleColumnChange = useCallback(
+    picked => {
+      if (onUpdateListSettings) {
+        onUpdateListSettings("columns", picked.filter(Boolean));
+      }
+    },
+    [onUpdateListSettings],
+  );
+
+  const { handlers, selectedColumns, staticColumns, visibleColumns } =
+    useColumns({
+      staticColumns: memoizedStaticColumns,
+      selectedColumns: settings?.columns ?? [],
+      onSave: handleColumnChange,
+    });
+
   const getCellContent = useCallback(
-    createGetCellContent(categories, columns),
-    [categories, columns],
+    createGetCellContent(categories, visibleColumns),
+    [categories, visibleColumns],
   );
 
   const handleHeaderClick = useCallback(
     (col: number) => {
-      if (sort !== undefined) {
-        onSort(columns[col].id as CategoryListUrlSortField);
+      if (sort !== undefined && onSort) {
+        onSort(visibleColumns[col].id as CategoryListUrlSortField);
       }
     },
-    [columns, onSort, sort],
+    [visibleColumns, onSort, sort],
   );
 
   const handleRowAnchor = useCallback(
@@ -86,7 +95,7 @@ export const CategoryListDatagrid = ({
         columnSelect={sort !== undefined ? "single" : undefined}
         verticalBorder={col => col > 0}
         rowMarkers="checkbox"
-        availableColumns={columns}
+        availableColumns={visibleColumns}
         rows={categories?.length ?? 0}
         getCellContent={getCellContent}
         getCellError={() => false}
@@ -96,21 +105,14 @@ export const CategoryListDatagrid = ({
         menuItems={() => []}
         actionButtonPosition="right"
         selectionActions={() => selectionActionButton}
-        onColumnResize={onColumnResize}
-        onColumnMoved={onColumnMoved}
+        onColumnResize={handlers.onResize}
+        onColumnMoved={handlers.onMove}
         onRowSelectionChange={onSelectCategoriesIds}
-        renderColumnPicker={defaultProps => (
+        renderColumnPicker={() => (
           <ColumnPicker
-            {...defaultProps}
-            availableColumns={availableColumnsChoices}
-            initialColumns={columnChoices}
-            defaultColumns={defaultColumns}
-            onSave={onColumnsChange}
-            hasMore={false}
-            loading={false}
-            onFetchMore={() => undefined}
-            onQueryChange={picker.setQuery}
-            query={picker.query}
+            onSave={handlers.onChange}
+            selectedColumns={selectedColumns}
+            staticColumns={staticColumns}
           />
         )}
       />

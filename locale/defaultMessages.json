@@ -2370,6 +2370,9 @@
     "context": "option title",
     "string": "Prioritize warehouses by sorting order"
   },
+  "FTYkgw": {
+    "string": "Delete collections"
+  },
   "FWbv/u": {
     "context": "page header",
     "string": "Create Discount"
@@ -2389,10 +2392,6 @@
   "FcTTvh": {
     "context": "postal codes, header",
     "string": "Postal codes"
-  },
-  "FcVEpe": {
-    "context": "collection publication date",
-    "string": "Unpublished"
   },
   "FemBUF": {
     "context": "header",
@@ -2932,6 +2931,10 @@
   "J4E+jp": {
     "string": "Variant name"
   },
+  "J4NBVR": {
+    "context": "link",
+    "string": "View Orders"
+  },
   "J7mFhU": {
     "context": "currency code select",
     "string": "{code} - {countries}"
@@ -3379,10 +3382,6 @@
   "McN+wq": {
     "context": "customers section name",
     "string": "Customers"
-  },
-  "Mee46w": {
-    "context": "collection publication date",
-    "string": "Becomes published on {date}"
   },
   "MewrtN": {
     "context": "section header",
@@ -5551,6 +5550,10 @@
     "context": "click and collect",
     "string": "Click&Collect"
   },
+  "biDgQS": {
+    "context": "button, opens modal to create transaction in order",
+    "string": "Manual transaction"
+  },
   "biVFKU": {
     "context": "subsection header",
     "string": "Billing Address"
@@ -5834,10 +5837,6 @@
   "dnbJKr": {
     "string": "This transaction doesn't have any events"
   },
-  "dpY94C": {
-    "context": "collection publication date",
-    "string": "Published on {date}"
-  },
   "dsJ+Wv": {
     "context": "note on export gift cards",
     "string": "Note: Only active and not used gift cards will be expored"
@@ -5895,6 +5894,9 @@
   "eOrLzG": {
     "context": "button",
     "string": "Done"
+  },
+  "eRqx44": {
+    "string": "Search collections..."
   },
   "eUjFjW": {
     "string": "Permission group created"
@@ -6275,10 +6277,6 @@
   "hnRRUe": {
     "context": "docs link label",
     "string": "Learn more..."
-  },
-  "hnaOnB": {
-    "context": "button, opens modal to create transaction in order",
-    "string": "Capture manual transaction"
   },
   "ho75Lr": {
     "context": "status label deactivated",
@@ -7680,9 +7678,6 @@
   "s8FlDW": {
     "context": "hide error log label in notification",
     "string": "Hide log"
-  },
-  "s97tLq": {
-    "string": "Search Collections"
   },
   "s9sOcC": {
     "context": "button",
