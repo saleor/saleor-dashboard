@@ -21,6 +21,7 @@ import { createWarehouse as createWarehouseViaApi } from "../../../support/api/r
 import {
   createChannelByView,
   setChannelRequiredFields,
+  typeExpirationDate,
 } from "../../../support/pages/channelsPage";
 
 describe("Channels", () => {
@@ -106,10 +107,7 @@ describe("Channels", () => {
       cy.visit(urlList.channels);
       cy.waitForRequestAndCheckIfNoErrors("@Channels");
       setChannelRequiredFields({ name: randomChannel, currency });
-      cy.get('[data-test-id="delete-expired-order-input"]')
-        .click({ force: true })
-        .clear()
-        .type(orderExpiresAfter);
+      typeExpirationDate(orderExpiresAfter);
       cy.clickConfirmButton();
       cy.waitForRequestAndCheckIfNoErrors("@ChannelCreate").then(
         channelCreate => {
@@ -117,12 +115,44 @@ describe("Channels", () => {
             channelCreate.response.body.data.channelCreate.channel
               .orderSettings,
           ).to.have.property("deleteExpiredOrdersAfter", orderExpiresAfter);
-          cy.get('[data-test-id="delete-expired-order-input"]').should(
-            "contain.text",
-            orderExpiresAfter,
-          );
+          cy.get(CHANNELS_SELECTORS.orderExpirationInput)
+            .invoke("val")
+            .should("contain", orderExpiresAfter.toString());
         },
       );
+    },
+  );
+  it(
+    "should not be able to create new channel with expired orders functionality with values outside boundary conditions. TC: SALEOR_0714",
+    { tags: ["@channel", "@allEnv"] },
+    () => {
+      const randomChannel = `${channelStartsWith} ${faker.datatype.number()}`;
+      const underBoundaryConditions = 0;
+      const overBoundaryConditions = 121;
+      cy.addAliasToGraphRequest("Channels");
+      cy.addAliasToGraphRequest("ChannelCreate");
+      cy.visit(urlList.channels);
+      cy.waitForRequestAndCheckIfNoErrors("@Channels");
+      setChannelRequiredFields({ name: randomChannel, currency });
+      typeExpirationDate(underBoundaryConditions);
+
+      cy.clickConfirmButton();
+      cy.wait("@ChannelCreate").then(createChannelResponse => {
+        cy.log(createChannelResponse);
+        expect(
+          createChannelResponse.response.body.data.channelCreate.errors.length,
+        ).to.eq(1);
+        cy.confirmationErrorMessageShouldAppear();
+      });
+      typeExpirationDate(overBoundaryConditions);
+      cy.clickConfirmButton();
+      cy.wait("@ChannelCreate").then(createChannelResponse => {
+        cy.log(createChannelResponse);
+        expect(
+          createChannelResponse.response.body.data.channelCreate.errors.length,
+        ).to.eq(1);
+        cy.confirmationErrorMessageShouldAppear();
+      });
     },
   );
   it(

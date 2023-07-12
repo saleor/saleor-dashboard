@@ -75,6 +75,12 @@ export function addShippingZone(shippingZone) {
       shippingZone,
     );
 }
+export function typeExpirationDate(expirationDays) {
+  cy.get(CHANNELS_SELECTORS.orderExpirationInput)
+    .click({ force: true })
+    .clear()
+    .type(expirationDays);
+}
 
 export function clickCreateChannelButton() {
   return cy.get(CHANNELS_SELECTORS.createChannelButton).click();
