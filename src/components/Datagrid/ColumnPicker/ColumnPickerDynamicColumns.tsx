@@ -1,6 +1,8 @@
-import { Box, Button, PlusIcon, RemoveIcon, Text } from "@saleor/macaw-ui/next";
 import React from "react";
+
 import { FormattedMessage } from "react-intl";
+
+import { Box, Button, PlusIcon, RemoveIcon, Text } from "@saleor/macaw-ui/next";
 
 import { AvailableColumn } from "../types";
 import messages from "./messages";
@@ -44,7 +46,7 @@ export const ColumnPickerDynamicColumns = ({
       >
         <Button
           onClick={() => onToggle(column.id)}
-          data-test-id={`dynamic-col-${column.id}`}
+          data-test-id={`remove-dynamic-col-button-${column.title}`}
           variant="tertiary"
           size="small"
           icon={<RemoveIcon color="iconNeutralPlain" />}
@@ -59,7 +61,13 @@ export const ColumnPickerDynamicColumns = ({
         >
           {`${column.metaGroup} /`}
         </Text>
-        <Text variant="body" size="small" color="textNeutralDefault" ellipsis>
+        <Text
+          variant="body"
+          size="small"
+          color="textNeutralDefault"
+          ellipsis
+          data-test-id={`column-name-${column.title}`}
+        >
           {column.title}
         </Text>
       </Box>
