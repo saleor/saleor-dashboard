@@ -15,7 +15,7 @@ export const messages = defineMessages({
     defaultMessage: "Search categories...",
   },
   bulkCategoryDelete: {
-    defaultMessage: "Bulk category delete",
-    id: "qU/z0Q",
+    defaultMessage: "Delete categories",
+    id: "FiO/W/",
   },
 });

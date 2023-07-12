@@ -108,8 +108,8 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
                 {selectedOrderDraftIds.length > 0 && (
                   <BulkDeleteButton onClick={onDraftOrdersDelete}>
                     {intl.formatMessage({
-                      id: "YJ2uRR",
-                      defaultMessage: "Bulk delete draft orders",
+                      id: "+b/qJ9",
+                      defaultMessage: "Delete draft orders",
                     })}
                   </BulkDeleteButton>
                 )}

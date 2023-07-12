@@ -272,8 +272,8 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
                 {selectedProductIds.length > 0 && (
                   <BulkDeleteButton onClick={onProductsDelete}>
                     <FormattedMessage
-                      defaultMessage="Bulk product delete"
-                      id="jrBxCQ"
+                      defaultMessage="Delete products"
+                      id="uwk5e9"
                     />
                   </BulkDeleteButton>
                 )}
