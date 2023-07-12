@@ -1,3 +1,7 @@
+import React, { useState } from "react";
+
+import { FormattedMessage } from "react-intl";
+
 import {
   Box,
   Button,
@@ -7,8 +11,6 @@ import {
   Text,
   vars,
 } from "@saleor/macaw-ui/next";
-import React, { useState } from "react";
-import { FormattedMessage } from "react-intl";
 
 import { AvailableColumn } from "../types";
 import { ColumnPickerCategories } from "./ColumnPickerCategories";
@@ -46,6 +48,7 @@ export const ColumnPicker = ({
     >
       <Popover.Trigger>
         <Button
+          data-test-id="open-column-picker-button"
           variant="tertiary"
           icon={<TableEditIcon />}
           pointerEvents={pickerOpen ? "none" : undefined}
