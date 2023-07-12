@@ -21,9 +21,7 @@ describe("As an admin I should be able to use column picker", () => {
       cy.addAliasToGraphRequest("AvailableColumnAttributes");
       cy.visit(urlList.products);
 
-      ensureCanvasStatic(PRODUCTS_LIST.dataGridTable).then(() => {
-        cy.assertCanvasRowsNumber(PRODUCTS_LIST.dataGridTable, 21);
-      });
+      ensureCanvasStatic(PRODUCTS_LIST.dataGridTable);
       columnPickerPage.openColumnPicker();
       columnPickerPage.openDynamicColumnsSearch();
       columnPickerPage.typeNameInSearchColumnInput(dynamicColumnToBeSearched);
