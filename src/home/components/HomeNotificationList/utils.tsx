@@ -4,7 +4,7 @@ import { IntlShape } from "react-intl";
 
 import { homeNotificationTableMessages as messages } from "./messages";
 
-export const getOrderToFullfillText = (
+export const getOrderToFulfillText = (
   ordersToFulfill: number | undefined,
   intl: IntlShape,
 ) => {
