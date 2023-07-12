@@ -270,10 +270,7 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             actions={
               <Box display="flex" gap={4}>
                 {selectedProductIds.length > 0 && (
-                  <BulkDeleteButton
-                    onClick={onProductsDelete}
-                    dataTestId="delete-products-button"
-                  >
+                  <BulkDeleteButton onClick={onProductsDelete}>
                     <FormattedMessage
                       defaultMessage="Bulk product delete"
                       id="jrBxCQ"
