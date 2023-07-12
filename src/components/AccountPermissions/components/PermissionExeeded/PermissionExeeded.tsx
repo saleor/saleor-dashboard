@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { UserFragment } from "@dashboard/graphql";
 import { List, ListItem, ListItemText } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui/next";

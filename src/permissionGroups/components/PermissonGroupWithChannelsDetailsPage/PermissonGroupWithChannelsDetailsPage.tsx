@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -97,8 +98,7 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
 
   const initialForm: PermissionGroupWithChannelsDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
-    hasAllChannels:
-      permissionGroup?.restrictedAccessToChannels === false ?? false,
+    hasAllChannels: !permissionGroup?.restrictedAccessToChannels ?? false,
     channels: getInitialChannels(permissionGroup, channels?.length ?? 0),
     isActive: false,
     name: permissionGroup?.name || "",

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { channels, permissions } from "@dashboard/fixtures";
 import React from "react";
 

@@ -1,4 +1,4 @@
-export * from "./PermissonGroupWithChannelsDetailsPage";
+// @ts-strict-ignore
 import { channels, permissions } from "@dashboard/fixtures";
 import React from "react";
 
@@ -12,6 +12,7 @@ import {
   PermissonGroupWithChannelsDetailsPage,
   PermissonGroupWithChannelsDetailsPageProps,
 } from "./PermissonGroupWithChannelsDetailsPage";
+export * from "./PermissonGroupWithChannelsDetailsPage";
 
 const props: PermissonGroupWithChannelsDetailsPageProps = {
   disabled: false,
