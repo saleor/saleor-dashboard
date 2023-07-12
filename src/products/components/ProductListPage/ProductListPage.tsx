@@ -8,6 +8,7 @@ import {
 } from "@dashboard/apps/hooks/useExtensions";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
@@ -39,7 +40,6 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import { ProductListUrlSortField, productUrl } from "../../urls";
 import { ProductListDatagrid } from "../ProductListDatagrid";
-import { ProductListDeleteButton } from "../ProductListDeleteButton";
 import { ProductListTiles } from "../ProductListTiles/ProductListTiles";
 import { ProductListViewSwitch } from "../ProductListViewSwitch";
 import {
@@ -269,10 +269,17 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             })}
             actions={
               <Box display="flex" gap={4}>
-                <ProductListDeleteButton
-                  onClick={onProductsDelete}
-                  show={selectedProductIds.length > 0}
-                />
+                {selectedProductIds.length > 0 && (
+                  <BulkDeleteButton
+                    onClick={onProductsDelete}
+                    dataTestId="delete-products-button"
+                  >
+                    <FormattedMessage
+                      defaultMessage="Bulk product delete"
+                      id="jrBxCQ"
+                    />
+                  </BulkDeleteButton>
+                )}
                 <ProductListViewSwitch
                   defaultValue={storedProductListViewType}
                   setProductListViewType={props => {
