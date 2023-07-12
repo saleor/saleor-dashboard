@@ -62,6 +62,12 @@ jest.mock("@apollo/client", () => ({
   ApolloError: jest.fn(),
 }));
 
+jest.mock("@dashboard/featureFlags", () => ({
+  useFlag: jest.fn(() => ({
+    enabled: false,
+  })),
+}));
+
 jest.mock("@dashboard/graphql", () => ({
   useUserDetailsQuery: jest.fn(() => ({
     data: undefined,
