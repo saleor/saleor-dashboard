@@ -28,4 +28,5 @@ export const PRODUCT_DETAILS = {
   editVariant: '[data-test-id="row-action-button"]',
   firstRowDataGrid: "[data-testid='glide-cell-1-0']",
   dataGridTable: "[data-testid='data-grid-canvas']",
+  productUpdateFormSection: "[data-test-id='product-update-form']",
 };

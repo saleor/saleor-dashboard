@@ -72,8 +72,6 @@ export interface ProductListPageProps
   onExport: () => void;
   onTabUpdate: (tabName: string) => void;
   onTabDelete: (tabIndex: number) => void;
-  columnPickerSettings: string[];
-  setDynamicColumnSettings: (cols: string[]) => void;
   availableColumnsAttributesOpts: ReturnType<
     typeof useAvailableColumnAttributesLazyQuery
   >;
@@ -111,8 +109,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
     tabs,
     onTabUpdate,
     hasPresetsChanged,
-    columnPickerSettings,
-    setDynamicColumnSettings,
     selectedProductIds,
     onProductsDelete,
     clearRowSelection,
@@ -302,8 +298,6 @@ export const ProductListPage: React.FC<ProductListPageProps> = props => {
             onRowClick={id => {
               navigate(productUrl(id));
             }}
-            columnPickerSettings={columnPickerSettings}
-            setDynamicColumnSettings={setDynamicColumnSettings}
           />
         ) : (
           <ProductListTiles

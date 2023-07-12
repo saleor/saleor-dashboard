@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useColumnPickerSettings } from "@dashboard/components/Datagrid/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import {
@@ -56,7 +55,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.COLLECTION_LIST,
   );
-  const { columnPickerSettings } = useColumnPickerSettings("COLLECTION_LIST");
 
   usePaginationReset(collectionListUrl, params, settings.rowNumber);
   const { channel } = useAppChannel(false);
@@ -211,7 +209,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         tabs={presets.map(tab => tab.name)}
         loading={loading}
         disabled={loading}
-        columnPickerSettings={columnPickerSettings}
         collections={collections}
         settings={settings}
         onSort={handleSort}
