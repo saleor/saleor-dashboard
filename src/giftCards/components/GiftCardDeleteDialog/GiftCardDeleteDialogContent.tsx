@@ -84,7 +84,7 @@ function GiftCardDeleteDialogContent<
   };
 
   const deletingCardsWithBalance = singleDeletion
-    ? hasSelectedGiftCardBalance(ids[0])
+    ? hasSelectedGiftCardBalance(ids?.[0])
     : hasSelectedAnyGiftCardsWithBalance();
 
   const submitEnabled = deletingCardsWithBalance ? isConsentChecked : true;
