@@ -3,9 +3,8 @@ import {
   contentMaxWidth,
   savebarHeight,
 } from "@dashboard/components/AppLayout/consts";
-import { Box, desktopMediaQuery, Sprinkles } from "@saleor/macaw-ui/next";
+import { Box, Sprinkles } from "@saleor/macaw-ui/next";
 import React, { useMemo } from "react";
-import { useMediaQuery } from "usehooks-ts";
 
 interface DetailPageLayoutProps {
   children: React.ReactNode;
@@ -21,8 +20,6 @@ export const RootLayout: React.FC<DetailPageLayoutProps> = ({
   gridTemplateColumns = 12,
   withSavebar = true,
 }) => {
-  const matches = useMediaQuery(desktopMediaQuery);
-
   const gridTemplateColumnsValue =
     useMemo((): Sprinkles["gridTemplateColumns"] => {
       if (gridTemplateColumns instanceof Object) {
@@ -39,17 +36,14 @@ export const RootLayout: React.FC<DetailPageLayoutProps> = ({
     }, [gridTemplateColumns]);
 
   const heightValue = useMemo(() => {
-    if (matches) {
-      return withSavebar
-        ? contentWithSidebarHeight
-        : contentWithoutSidebarHeight;
-    }
-
-    return "auto";
-  }, [matches, withSavebar]);
+    return withSavebar ? contentWithSidebarHeight : contentWithoutSidebarHeight;
+  }, [withSavebar]);
 
   return (
     <Box
+      // TODO: Use custom value media query when it will be ready
+      // https://github.com/saleor/macaw-ui/issues/498
+      className="mobile-full-height"
       display="grid"
       margin="auto"
       gridTemplateColumns={gridTemplateColumnsValue}

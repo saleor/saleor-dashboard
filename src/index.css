@@ -48,3 +48,9 @@ body {
 [id*="ScrollableDialog"] .infinite-scroll-component {
   overflow: hidden !important;
 }
+
+@media screen and (max-width: 1024px) {
+  .mobile-full-height {
+    height: auto !important;
+  }
+}
