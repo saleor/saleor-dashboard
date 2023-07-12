@@ -2,6 +2,7 @@ import { getDefaultByControlName } from "../controlsType";
 import { ConditionItem } from "./ConditionOptions";
 import { ConditionValue } from "./ConditionValue";
 
+
 export class ConditionSelected {
   private constructor(
     public value: ConditionValue,
