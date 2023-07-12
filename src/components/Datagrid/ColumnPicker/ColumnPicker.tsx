@@ -1,7 +1,3 @@
-import React, { useState } from "react";
-
-import { FormattedMessage } from "react-intl";
-
 import {
   Box,
   Button,
@@ -11,6 +7,8 @@ import {
   Text,
   vars,
 } from "@saleor/macaw-ui/next";
+import React, { useState } from "react";
+import { FormattedMessage } from "react-intl";
 
 import { AvailableColumn } from "../types";
 import { ColumnPickerCategories } from "./ColumnPickerCategories";

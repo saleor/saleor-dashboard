@@ -1,9 +1,7 @@
-import React from "react";
-
-import { FormattedMessage } from "react-intl";
-
 import { CircularProgress } from "@material-ui/core";
 import { Box, Checkbox, Text } from "@saleor/macaw-ui/next";
+import React from "react";
+import { FormattedMessage } from "react-intl";
 
 import { ColumnPickerSearch } from "./ColumnPickerSearch";
 import messages from "./messages";
