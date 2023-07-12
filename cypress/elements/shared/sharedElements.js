@@ -7,7 +7,6 @@ export const SHARED_ELEMENTS = {
   dataGridTable: "[data-testid='data-grid-canvas']",
   skeleton: '[data-test-id="skeleton"]',
   table: 'table[class*="Table"]',
-
   firstRowDataGrid: "[data-testid='glide-cell-1-0']",
   secondRowDataGrid: "[id='glide-cell-1-1']",
   openColumnPickerButton: "[data-test-id='open-column-picker-button']",

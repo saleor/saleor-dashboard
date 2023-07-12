@@ -14,7 +14,7 @@ describe("As an admin I should be able to use column picker", () => {
   });
 
   it(
-    "should be able to add new dynamic column to grid on product list via search. TC: SALEOR_",
+    "should be able to add new dynamic column to grid on product list via search. TC: SALEOR_2610",
     { tags: ["@critical", "@allEnv", "@stable"] },
     () => {
       const dynamicColumnToBeSearched = "ABV";
@@ -49,7 +49,7 @@ describe("As an admin I should be able to use column picker", () => {
     },
   );
   it(
-    "should be able to remove dynamic column from picker on products list. TC: SALEOR_",
+    "should be able to remove dynamic column from picker on products list. TC: SALEOR_2611",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       const listConfigLocalStorage = JSON.stringify(
@@ -82,7 +82,7 @@ describe("As an admin I should be able to use column picker", () => {
     },
   );
   it(
-    "should validate: that there is always at least one active static column, use pagination when searching dynamic columns, hiding column picker works, re. TC: SALEOR_",
+    "should validate: that there is always at least one active static column, use pagination when searching dynamic columns, hiding column picker works. TC: SALEOR_2612",
     { tags: ["@productsList", "@allEnv", "@stable"] },
     () => {
       cy.addAliasToGraphRequest("ProductDetails");
