@@ -8,7 +8,7 @@ import { HomeNotificationListItem } from "./HomeNotificationListItem";
 import { homeNotificationTableMessages as messages } from "./messages";
 import {
   getOrdersToCaptureText,
-  getOrderTpFullfillText,
+  getOrderToFullfillText,
   getProductsOutOfStockText,
 } from "./utils";
 
@@ -52,7 +52,7 @@ export const HomeNotificationList = ({
           linkUrl={ordersToFulfillHref}
           dataTestId="orders-to-fulfill"
         >
-          {getOrderTpFullfillText(ordersToFulfill, intl)}
+          {getOrderToFullfillText(ordersToFulfill, intl)}
         </HomeNotificationListItem>
 
         <HomeNotificationListItem
