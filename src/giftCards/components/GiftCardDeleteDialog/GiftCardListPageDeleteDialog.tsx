@@ -20,7 +20,7 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
   refetchQueries = [],
 }) => {
   const listProps = useGiftCardList();
-  const { giftCards, loading, selectedRowIds } = listProps;
+  const { giftCards, loading, selectedRowIds, clearRowSelection } = listProps;
 
   const singleDeletion = selectedRowIds.length === SINGLE;
 
@@ -41,11 +41,17 @@ const GiftCardDeleteDialog: React.FC<GiftCardDeleteDialogProps> = ({
     "onConfirm" | "confirmButtonState"
   > = singleDeletion
     ? {
-        onConfirm: onDeleteGiftCard,
+        onConfirm: () => {
+          onDeleteGiftCard();
+          clearRowSelection();
+        },
         confirmButtonState: deleteGiftCardOpts?.status,
       }
     : {
-        onConfirm: onBulkDeleteGiftCards,
+        onConfirm: () => {
+          onBulkDeleteGiftCards();
+          clearRowSelection();
+        },
         confirmButtonState: bulkDeleteGiftCardOpts?.status,
       };
 

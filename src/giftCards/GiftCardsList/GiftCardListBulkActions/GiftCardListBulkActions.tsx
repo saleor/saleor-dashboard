@@ -92,11 +92,15 @@ export const GiftCardListBulkActions: React.FC = () => {
       refetchQueries: [GIFT_CARD_LIST_QUERY],
     });
 
-  const handleActivateGiftCards = () =>
-    activateGiftCards({ variables: { ids: selectedRowIds } });
+  const handleActivateGiftCards = async () => {
+    await activateGiftCards({ variables: { ids: selectedRowIds } });
+    clearRowSelection();
+  };
 
-  const handleDeactivateGiftCards = () =>
-    deactivateGiftCards({ variables: { ids: selectedRowIds } });
+  const handleDeactivateGiftCards = async () => {
+    await deactivateGiftCards({ variables: { ids: selectedRowIds } });
+    clearRowSelection();
+  };
 
   const isSelectionMixed =
     hasAnyEnabledCardsSelected && hasAnyDisabledCardsSelected;
