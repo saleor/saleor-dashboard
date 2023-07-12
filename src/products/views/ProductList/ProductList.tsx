@@ -2,7 +2,6 @@
 import { filterable } from "@dashboard/attributes/utils/data";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context";
 import { useColumnPickerSettings } from "@dashboard/components/Datagrid/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
@@ -294,8 +293,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     .filter(isAttributeColumnValue)
     .map(getAttributeIdFromColumnValue);
 
-  const { valueProvider } = useConditionalFilterContext();
-  console.log(valueProvider.queryVars);
   const { data, loading, refetch } = useProductListQuery({
     displayLoader: true,
     variables: {

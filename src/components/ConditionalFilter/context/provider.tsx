@@ -5,7 +5,7 @@ import { useFilterLeftOperandsProvider } from "../useFilterLeftOperands";
 import { useUrlValueProvider } from "../ValueProvider/useUrlValueProvider";
 import { ConditionalFilterContext } from "./context";
 
-export const ConditionalFilterProvider: FC = ({ children }) => {
+export const ConditionalProductFilterProvider: FC = ({ children }) => {
   const apiProvider = useProductFilterAPIProvider();
   const valueProvider = useUrlValueProvider(apiProvider);
   const leftOperandsProvider = useFilterLeftOperandsProvider();
