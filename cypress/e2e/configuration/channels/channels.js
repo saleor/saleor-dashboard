@@ -21,7 +21,7 @@ import { createWarehouse as createWarehouseViaApi } from "../../../support/api/r
 import {
   createChannelByView,
   setChannelRequiredFields,
-  typeExpirationDate,
+  typeExpirationDays,
 } from "../../../support/pages/channelsPage";
 
 describe("Channels", () => {
@@ -107,7 +107,7 @@ describe("Channels", () => {
       cy.visit(urlList.channels);
       cy.waitForRequestAndCheckIfNoErrors("@Channels");
       setChannelRequiredFields({ name: randomChannel, currency });
-      typeExpirationDate(orderExpiresAfter);
+      typeExpirationDays(orderExpiresAfter);
       cy.clickConfirmButton();
       cy.waitForRequestAndCheckIfNoErrors("@ChannelCreate").then(
         channelCreate => {
@@ -134,7 +134,7 @@ describe("Channels", () => {
       cy.visit(urlList.channels);
       cy.waitForRequestAndCheckIfNoErrors("@Channels");
       setChannelRequiredFields({ name: randomChannel, currency });
-      typeExpirationDate(underBoundaryConditions);
+      typeExpirationDays(underBoundaryConditions);
 
       cy.clickConfirmButton();
       cy.wait("@ChannelCreate").then(createChannelResponse => {
@@ -144,7 +144,7 @@ describe("Channels", () => {
         ).to.eq(1);
         cy.confirmationErrorMessageShouldAppear();
       });
-      typeExpirationDate(overBoundaryConditions);
+      typeExpirationDays(overBoundaryConditions);
       cy.clickConfirmButton();
       cy.wait("@ChannelCreate").then(createChannelResponse => {
         cy.log(createChannelResponse);

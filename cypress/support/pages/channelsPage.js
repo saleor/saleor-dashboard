@@ -75,7 +75,7 @@ export function addShippingZone(shippingZone) {
       shippingZone,
     );
 }
-export function typeExpirationDate(expirationDays) {
+export function typeExpirationDays(expirationDays) {
   cy.get(CHANNELS_SELECTORS.orderExpirationInput)
     .click({ force: true })
     .clear()
