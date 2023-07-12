@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import RichTextEditor from "@dashboard/components/RichTextEditor";
 import { RichTextEditorLoading } from "@dashboard/components/RichTextEditor/RichTextEditorLoading";
@@ -19,7 +20,7 @@ interface ProductDetailsFormProps {
   disabled?: boolean;
   errors: ProductErrorFragment[];
 
-  onChange(event: any);
+  onChange: (event: any) => any;
 }
 
 export const ProductDetailsForm: React.FC<ProductDetailsFormProps> = ({

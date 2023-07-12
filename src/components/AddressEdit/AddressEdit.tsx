@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { AddressTypeInput } from "@dashboard/customers/types";
 import { AccountErrorFragment, OrderErrorFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
@@ -31,8 +32,8 @@ interface AddressEditProps {
   data: AddressTypeInput;
   disabled?: boolean;
   errors: Array<AccountErrorFragment | OrderErrorFragment>;
-  onChange(event: React.ChangeEvent<any>);
-  onCountryChange(event: React.ChangeEvent<any>);
+  onChange: (event: React.ChangeEvent<any>) => any;
+  onCountryChange: (event: React.ChangeEvent<any>) => any;
 }
 
 const PossibleFormFields = {

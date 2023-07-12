@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import AccountPermissionGroups from "@dashboard/components/AccountPermissionGroups";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
@@ -58,7 +59,7 @@ export interface StaffDetailsPageProps extends SearchPageProps {
   onDelete: () => void;
   onImageDelete: () => void;
   onSubmit: (data: StaffDetailsFormData) => SubmitPromise;
-  onImageUpload(file: File);
+  onImageUpload: (file: File) => any;
 }
 
 const StaffDetailsPage: React.FC<StaffDetailsPageProps> = ({

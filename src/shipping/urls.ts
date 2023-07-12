@@ -51,13 +51,12 @@ export type ShippingRateUrlQueryParams = Dialog<ShippingRateUrlDialog> &
   SingleAction &
   BulkAction;
 export type ShippingRateCreateUrlDialog = ZipCodeRangeActions | ChannelsAction;
-export type ShippingRateCreateUrlQueryParams = Dialog<
-  ShippingRateCreateUrlDialog
-> &
-  SingleAction &
-  Partial<{
-    type: ShippingMethodTypeEnum;
-  }>;
+export type ShippingRateCreateUrlQueryParams =
+  Dialog<ShippingRateCreateUrlDialog> &
+    SingleAction &
+    Partial<{
+      type: ShippingMethodTypeEnum;
+    }>;
 
 export const shippingRateCreatePath = (id: string) =>
   urlJoin(shippingZonePath(id), "add");

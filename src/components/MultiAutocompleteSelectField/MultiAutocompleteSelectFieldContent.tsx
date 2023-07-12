@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import chevronDown from "@assets/images/ChevronDown.svg";
 import Checkbox from "@dashboard/components/Checkbox";
 import HorizontalSpacer from "@dashboard/components/HorizontalSpacer";
@@ -342,7 +343,7 @@ const MultiAutocompleteSelectFieldContent: React.FC<
             className={clsx(classes.arrowInnerContainer, {
               // Needs to be explicitely compared to false because
               // scrolledToBottom can be either true, false or undefined
-              [classes.hide]: scrolledToBottom !== false,
+              [classes.hide]: scrolledToBottom,
             })}
           >
             <SVG src={chevronDown} />

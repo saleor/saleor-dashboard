@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
 import Hr from "@dashboard/components/Hr";
@@ -113,20 +114,19 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
       date: localizeDate(date),
     });
 
-  const handleRadioFieldChange = (type: keyof DateFields) => (
-    e: ChangeEvent,
-  ) => {
-    const { value } = e.target;
-    if (!value) {
-      onChange({
-        target: {
-          name: type,
-          value: null,
-        },
-      });
-    }
-    return onChange(e);
-  };
+  const handleRadioFieldChange =
+    (type: keyof DateFields) => (e: ChangeEvent) => {
+      const { value } = e.target;
+      if (!value) {
+        onChange({
+          target: {
+            name: type,
+            value: null,
+          },
+        });
+      }
+      return onChange(e);
+    };
 
   return (
     <Card>
@@ -181,7 +181,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
               type="date"
               fullWidth={true}
               helperText={getFieldError(errors, "publicationDate")?.message}
-              value={publicationDate ? publicationDate : ""}
+              value={publicationDate || ""}
               onChange={onChange}
               className={classes.date}
               InputLabelProps={{
@@ -250,7 +250,7 @@ export const VisibilityCard: React.FC<VisibilityCardProps> = props => {
                   type="date"
                   fullWidth={true}
                   helperText={getFieldError(errors, "startDate")?.message}
-                  value={availableForPurchase ? availableForPurchase : ""}
+                  value={availableForPurchase || ""}
                   onChange={onChange}
                   className={classes.date}
                   InputLabelProps={{

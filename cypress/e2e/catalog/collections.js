@@ -3,8 +3,7 @@
 
 import faker from "faker";
 
-import { collectionRow } from "../../elements/catalog/collection-selectors";
-import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
+import { BUTTON_SELECTORS } from "../../elements";
 import { collectionDetailsUrl, urlList } from "../../fixtures/urlList";
 import { createChannel } from "../../support/api/requests/Channels";
 import {
@@ -87,7 +86,7 @@ describe("As an admin I want to manage collections.", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
 
-      cy.visit(urlList.collections).expectSkeletonIsVisible();
+      cy.visit(urlList.collections);
       createCollection(collectionName, false, defaultChannel).then(
         collectionResp => {
           collection = collectionResp;
@@ -111,7 +110,7 @@ describe("As an admin I want to manage collections.", () => {
       const collectionName = `${startsWith}${faker.datatype.number()}`;
       let collection;
 
-      cy.visit(urlList.collections).expectSkeletonIsVisible();
+      cy.visit(urlList.collections);
       createCollection(collectionName, true, defaultChannel).then(
         collectionResp => {
           collection = collectionResp;
@@ -140,7 +139,7 @@ describe("As an admin I want to manage collections.", () => {
         channel = channelResp;
 
         updateChannelInProduct(product.id, channel.id);
-        cy.visit(urlList.collections).expectSkeletonIsVisible();
+        cy.visit(urlList.collections);
         createCollection(collectionName, false, channel).then(
           collectionResp => {
             collection = collectionResp;
@@ -179,7 +178,7 @@ describe("As an admin I want to manage collections.", () => {
         })
         .then(({ product: productResp }) => (createdProduct = productResp));
 
-      cy.visit(urlList.collections).expectSkeletonIsVisible();
+      cy.visit(urlList.collections);
       createCollection(collectionName, true, defaultChannel).then(
         collectionResp => {
           collection = collectionResp;
@@ -362,27 +361,14 @@ describe("As an admin I want to manage collections.", () => {
       const secondCollectionName = `${deleteSeveral}${startsWith}${faker.datatype.number()}`;
       let firstCollection;
       let secondCollection;
-
+      cy.addAliasToGraphRequest("CollectionBulkDelete");
       createCollectionRequest(firstCollectionName).then(collectionResp => {
         firstCollection = collectionResp;
       });
       createCollectionRequest(secondCollectionName).then(collectionResp => {
         secondCollection = collectionResp;
-
-        cy.visit(urlList.collections)
-          .searchInTable(deleteSeveral)
-          .get(collectionRow(firstCollection.id))
-          .find(BUTTON_SELECTORS.checkbox)
-          .click()
-          .get(collectionRow(secondCollection.id))
-          .find(BUTTON_SELECTORS.checkbox)
-          .click()
-          .get(BUTTON_SELECTORS.deleteIcon)
-          .click()
-          .addAliasToGraphRequest("CollectionBulkDelete")
-          .get(BUTTON_SELECTORS.submit)
-          .click()
-          .waitForRequestAndCheckIfNoErrors("@CollectionBulkDelete");
+        cy.visit(urlList.collections);
+        cy.deleteTwoFirstRecordsFromGridListAndValidate("CollectionBulkDelete");
         getCollection({ collectionId: firstCollection.id })
           .its("collection")
           .should("be.null");

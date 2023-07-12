@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Card, CardContent, CardHeader } from "@material-ui/core";
 import RefreshIcon from "@material-ui/icons/Refresh";
 import { IconButton } from "@saleor/macaw-ui";
@@ -5,7 +6,7 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 export interface FilterCardProps {
-  handleClear();
+  handleClear: () => any;
 }
 
 const FilterCard: React.FC<FilterCardProps> = ({ children, handleClear }) => {

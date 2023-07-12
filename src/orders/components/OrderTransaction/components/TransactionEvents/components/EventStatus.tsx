@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Pill } from "@dashboard/components/Pill";
 import { TransactionEventStatus } from "@dashboard/orders/types";
 import React from "react";
@@ -16,6 +17,7 @@ export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
       return (
         <Pill
           color="warning"
+          size="small"
           label={intl.formatMessage(statusMessages.pending)}
         />
       );
@@ -23,6 +25,7 @@ export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
       return (
         <Pill
           color="success"
+          size={"small"}
           label={intl.formatMessage(statusMessages.success)}
         />
       );
@@ -30,16 +33,25 @@ export const EventStatus: React.FC<EventStatusProps> = ({ status }) => {
       return (
         <Pill
           color="error"
+          size={"small"}
           label={intl.formatMessage(statusMessages.failure)}
         />
       );
     case "REQUEST":
       return (
-        <Pill color="info" label={intl.formatMessage(statusMessages.request)} />
+        <Pill
+          color="info"
+          size={"small"}
+          label={intl.formatMessage(statusMessages.request)}
+        />
       );
     case "INFO":
       return (
-        <Pill color="generic" label={intl.formatMessage(statusMessages.info)} />
+        <Pill
+          color="generic"
+          size={"small"}
+          label={intl.formatMessage(statusMessages.info)}
+        />
       );
     default:
       const _exhaustiveCheck: never = status;

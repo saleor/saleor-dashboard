@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
@@ -21,8 +22,8 @@ export interface OrderPaymentVoidDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
-  onClose?();
-  onConfirm?();
+  onClose?: () => any;
+  onConfirm?: () => any;
 }
 
 const OrderPaymentVoidDialog: React.FC<OrderPaymentVoidDialogProps> = ({

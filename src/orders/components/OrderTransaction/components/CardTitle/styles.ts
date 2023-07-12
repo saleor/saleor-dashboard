@@ -1,4 +1,5 @@
 import { makeStyles } from "@saleor/macaw-ui";
+import { vars } from "@saleor/macaw-ui/next";
 
 export const useStyles = makeStyles(
   theme => ({
@@ -12,15 +13,11 @@ export const useStyles = makeStyles(
       display: "flex",
       gap: theme.spacing(1),
       alignItems: "center",
-      fontWeight: 600,
     },
     dataDisplay: {
       display: "flex",
-      gap: theme.spacing(2),
-
-      "& > dl": {
-        minWidth: "73px", // aligns amounts with < 10 to each other
-      },
+      gap: vars.spacing[7],
+      alignItems: "center",
     },
   }),
   { name: "OrderTransactionCardTitle" },
@@ -29,25 +26,10 @@ export const useStyles = makeStyles(
 export const useMoneyDisplayStyles = makeStyles(
   theme => ({
     wrapper: {
+      fontSize: vars.fontSize.captionSmall,
+      lineHeight: vars.lineHeight.captionSmall,
       color: theme.palette.saleor.main[2],
       margin: 0,
-      textAlign: "left",
-    },
-    label: {
-      fontWeight: 600,
-      lineHeight: "12px",
-      fontSize: theme.spacing(1.25),
-      textTransform: "uppercase",
-    },
-    moneyWrapper: {
-      margin: 0,
-      fontSize: 14,
-    },
-    currency: {
-      fontWeight: 400,
-    },
-    amount: {
-      fontWeight: 600,
     },
   }),
   {

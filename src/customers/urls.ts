@@ -51,10 +51,8 @@ export const customerAddUrl = customerAddPath;
 export const customerAddressesPath = (id: string) =>
   urlJoin(customerPath(id), "addresses");
 export type CustomerAddressesUrlDialog = "add" | "edit" | "remove";
-export type CustomerAddressesUrlQueryParams = Dialog<
-  CustomerAddressesUrlDialog
-> &
-  SingleAction;
+export type CustomerAddressesUrlQueryParams =
+  Dialog<CustomerAddressesUrlDialog> & SingleAction;
 export const customerAddressesUrl = (
   id: string,
   params?: CustomerAddressesUrlQueryParams,

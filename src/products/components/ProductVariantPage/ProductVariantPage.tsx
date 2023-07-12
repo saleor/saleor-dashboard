@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   getReferenceAttributeEntityTypeFromAttribute,
   mergeAttributeValues,
@@ -117,10 +118,10 @@ interface ProductVariantPageProps {
   variantDeactivatePreoderButtonState: ConfirmButtonTransitionState;
   onVariantReorder: ReorderAction;
   onAttributeSelectBlur: () => void;
-  onDelete();
-  onSubmit(data: ProductVariantUpdateSubmitData);
-  onSetDefaultVariant();
-  onWarehouseConfigure();
+  onDelete: () => any;
+  onSubmit: (data: ProductVariantUpdateSubmitData) => any;
+  onSetDefaultVariant: () => any;
+  onWarehouseConfigure: () => any;
 }
 
 const ProductVariantPage: React.FC<ProductVariantPageProps> = ({

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { createPaginationState } from "@dashboard/hooks/usePaginator";
 import useShop from "@dashboard/hooks/useShop";
@@ -30,7 +31,7 @@ const TranslationsEntities: React.FC<TranslationsEntitiesProps> = ({
   const navigate = useNavigator();
   const shop = useShop();
 
-  if (Object.keys(TranslatableEntities).indexOf(params.tab) === -1) {
+  if (!Object.keys(TranslatableEntities).includes(params.tab)) {
     navigate(
       "?" +
         stringifyQs({

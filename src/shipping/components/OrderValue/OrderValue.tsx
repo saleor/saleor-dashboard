@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelShippingData } from "@dashboard/channels/utils";
 import CardTitle from "@dashboard/components/CardTitle";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
@@ -5,7 +6,6 @@ import PriceField from "@dashboard/components/PriceField";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import TableHead from "@dashboard/components/TableHead";
 import TableRowLink from "@dashboard/components/TableRowLink";
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import { ShippingChannelsErrorFragment } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
 import {
@@ -82,13 +82,6 @@ export const OrderValue: React.FC<OrderValueProps> = ({
             onChange={onChange}
             disabled={disabled}
           />
-          <VerticalSpacer />
-          <FormattedMessage
-            id="u5c/tR"
-            defaultMessage="Channels that don’t have assigned discounts will use their parent channel to define the price. Price will be converted to channel’s currency"
-            description="channels discount info"
-          />
-          <VerticalSpacer />
         </div>
         {orderValueRestricted && (
           <ResponsiveTable className={classes.table}>

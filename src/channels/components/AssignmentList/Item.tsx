@@ -1,5 +1,5 @@
 import DeletableItem from "@dashboard/components/DeletableItem";
-import { Divider, Typography } from "@material-ui/core";
+import { Divider, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { SortableElement, SortableElementProps } from "react-sortable-hoc";
 
@@ -28,7 +28,7 @@ const Item = SortableElement(
                 data-test-id="button-drag-handle"
               />
             )}
-            <Typography>{name}</Typography>
+            <Text size="small">{name}</Text>
           </div>
           <DeletableItem id={id} onDelete={onDelete} />
         </div>

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ShippingErrorCode } from "@dashboard/graphql";
 import { mapCountriesToCountriesCodes } from "@dashboard/utils/maps";
 import React from "react";

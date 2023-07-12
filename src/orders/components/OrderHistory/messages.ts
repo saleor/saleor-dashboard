@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   OrderEventFragment,
   OrderEventsEmailsEnum,
@@ -286,18 +287,6 @@ export const getEventMessage = (
       return intl.formatMessage({
         id: "fqJXzO",
         defaultMessage: "Transaction refund requested",
-        description: "order history message",
-      });
-    case OrderEventsEnum.TRANSACTION_VOID_REQUESTED:
-      return intl.formatMessage({
-        id: "ZKuzRy",
-        defaultMessage: "Transaction void requested",
-        description: "order history message",
-      });
-    case OrderEventsEnum.TRANSACTION_CAPTURE_REQUESTED:
-      return intl.formatMessage({
-        id: "DRwqnt",
-        defaultMessage: "Transaction capture requested",
         description: "order history message",
       });
     case OrderEventsEnum.TRANSACTION_CHARGE_REQUESTED:

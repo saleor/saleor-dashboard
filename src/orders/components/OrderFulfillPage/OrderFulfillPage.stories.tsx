@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { OrderErrorCode } from "@dashboard/graphql";
 import { warehouseList } from "@dashboard/warehouses/fixtures";
 import React from "react";

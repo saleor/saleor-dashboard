@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   TransactionActionEnum,
   TransactionEventTypeEnum,
@@ -14,14 +15,13 @@ const props: OrderTransactionProps = {
   transaction: {
     __typename: "TransactionItem",
     id: "VHJhbnNhY3Rpb25JdGVtOjI=",
-    type: "Adyen: refund",
+    name: "Adyen: refund",
     pspReference: "12345",
     actions: [
       TransactionActionEnum.CHARGE,
       TransactionActionEnum.REFUND,
-      TransactionActionEnum.VOID,
+      TransactionActionEnum.CANCEL,
     ],
-    status: "Partial capture",
     externalUrl: "https://google.com",
     events: [
       {

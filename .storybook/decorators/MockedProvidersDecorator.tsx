@@ -8,7 +8,6 @@ import { BrowserRouter } from "react-router-dom";
 import { ExternalAppProvider } from "../../src/apps/components/ExternalAppContext";
 import { DevModeProvider } from "../../src/components/DevModePanel/DevModeProvider";
 import { Locale, RawLocaleProvider } from "../../src/components/Locale";
-import { FlagsServiceProvider } from "../../src/hooks/useFlags/flagsService";
 import { paletteOverrides, themeOverrides } from "../../src/themeOverrides";
 
 import { Provider as DateProvider } from "../../src/components/Date/DateContext";
@@ -16,6 +15,7 @@ import { TimezoneProvider } from "../../src/components/Timezone";
 import MessageManagerProvider from "../../src/components/messages";
 import { getAppMountUri } from "../../src/config";
 import { ApolloMockedProvider } from "../../testUtils/ApolloMockedProvider";
+import { FeatureFlagsProvider } from "@dashboard/featureFlags";
 
 export const MockedProvidersDecorator: React.FC = ({ children }) => (
   <ApolloMockedProvider>
@@ -35,7 +35,7 @@ export const MockedProvidersDecorator: React.FC = ({ children }) => (
               <ThemeProvider>
                 <BrowserRouter basename={getAppMountUri()}>
                   <ExternalAppProvider>
-                    <FlagsServiceProvider>
+                    <FeatureFlagsProvider strategies={[]}>
                       <MessageManagerProvider>
                         <DevModeProvider>
                           <div
@@ -47,7 +47,7 @@ export const MockedProvidersDecorator: React.FC = ({ children }) => (
                           </div>
                         </DevModeProvider>
                       </MessageManagerProvider>
-                    </FlagsServiceProvider>
+                    </FeatureFlagsProvider>
                   </ExternalAppProvider>
                 </BrowserRouter>
               </ThemeProvider>

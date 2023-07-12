@@ -9,7 +9,7 @@ import {
   PermissionEnum,
 } from "@dashboard/graphql";
 
-import { GetV2SaleorAppsResponse } from "./marketplace.types";
+import { AppstoreApi } from "./appstore.types";
 
 export const activeApp: AppListItemFragment = {
   __typename: "App",
@@ -27,6 +27,7 @@ export const activeApp: AppListItemFragment = {
       name: "Manage customers.",
     },
   ],
+  brand: null,
 };
 
 export const inactiveApp: AppListItemFragment = {
@@ -50,6 +51,7 @@ export const inactiveApp: AppListItemFragment = {
       name: "Manage customers.",
     },
   ],
+  brand: null,
 };
 
 export const installedAppsList: AppListItemFragment[] = [
@@ -64,6 +66,7 @@ export const failedAppInProgress: AppInstallationFragment = {
   manifestUrl: "https://www.released-example.com/manifest",
   message: "Failed to connect to app. Try later or contact with app support.",
   status: JobStatusEnum.FAILED,
+  brand: null,
 };
 
 export const pendingAppInProgress: AppInstallationFragment = {
@@ -73,6 +76,7 @@ export const pendingAppInProgress: AppInstallationFragment = {
   manifestUrl: "https://www.released-example.com/manifest",
   message: "Pending.",
   status: JobStatusEnum.PENDING,
+  brand: null,
 };
 
 export const successAppInProgress: AppInstallationFragment = {
@@ -82,6 +86,7 @@ export const successAppInProgress: AppInstallationFragment = {
   manifestUrl: "https://www.released-example.com/manifest",
   message: "Success.",
   status: JobStatusEnum.SUCCESS,
+  brand: null,
 };
 
 export const appsInProgress: AppInstallationFragment[] = [
@@ -124,6 +129,7 @@ export const appDetails: NonNullable<AppQuery["app"]> = {
   type: AppTypeEnum.THIRDPARTY,
   version: "1.0.0",
   webhooks: [],
+  brand: null,
 };
 
 export const installApp: AppManifestFragment = {
@@ -151,6 +157,7 @@ export const installApp: AppManifestFragment = {
   supportUrl: null,
   tokenTargetUrl: null,
   version: "1.0",
+  brand: null,
 };
 
 export const appAvatar: AppAvatarFragment = {
@@ -159,7 +166,7 @@ export const appAvatar: AppAvatarFragment = {
   __typename: "App",
 };
 
-export const releasedApp: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
+export const releasedApp: AppstoreApi.ReleasedSaleorApp = {
   name: {
     en: "Test released app",
   },
@@ -205,7 +212,7 @@ export const releasedApp: GetV2SaleorAppsResponse.ReleasedSaleorApp = {
   ],
 };
 
-export const comingSoonApp: GetV2SaleorAppsResponse.ComingSoonSaleorApp = {
+export const comingSoonApp: AppstoreApi.ComingSoonSaleorApp = {
   name: {
     en: "Test coming soon app",
   },

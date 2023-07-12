@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ChannelsAvailabilityDialog from "@dashboard/components/ChannelsAvailabilityDialog";
 import { ChannelFragment } from "@dashboard/graphql";
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
@@ -19,13 +20,9 @@ export interface ProductChannelsListingsDialogProps extends DialogProps {
   onConfirm: ProductChannelsListingDialogSubmit;
 }
 
-const ProductChannelsListingsDialog: React.FC<ProductChannelsListingsDialogProps> = ({
-  channels,
-  data,
-  open,
-  onClose,
-  onConfirm,
-}) => {
+const ProductChannelsListingsDialog: React.FC<
+  ProductChannelsListingsDialogProps
+> = ({ channels, data, open, onClose, onConfirm }) => {
   const intl = useIntl();
 
   const [selected, setSelected] = useStateFromProps(

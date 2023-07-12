@@ -50,7 +50,7 @@ interface EditableTableCellProps {
   focused?: boolean;
   InputProps?: TextFieldProps;
   value: string;
-  onConfirm(value: string): any;
+  onConfirm: (value: string) => any;
 }
 
 export const EditableTableCell: React.FC<EditableTableCellProps> = props => {

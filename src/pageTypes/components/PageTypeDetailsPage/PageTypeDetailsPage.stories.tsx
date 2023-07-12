@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { listActionsProps } from "@dashboard/fixtures";
 import { PageErrorCode } from "@dashboard/graphql";
 import React from "react";

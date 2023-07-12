@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import Checkbox from "@dashboard/components/Checkbox";
 import ResponsiveTable from "@dashboard/components/ResponsiveTable";
 import Skeleton from "@dashboard/components/Skeleton";
@@ -11,15 +12,10 @@ import {
   productTypeUrl,
 } from "@dashboard/productTypes/urls";
 import { getArrowDirection } from "@dashboard/utils/sort";
-import {
-  TableBody,
-  TableCell,
-  TableFooter,
-  Typography,
-} from "@material-ui/core";
+import { TableBody, TableCell, TableFooter } from "@material-ui/core";
 import { makeStyles } from "@saleor/macaw-ui";
 import React from "react";
-import { FormattedMessage, useIntl } from "react-intl";
+import { FormattedMessage } from "react-intl";
 
 import { maybe, renderCollection } from "../../../misc";
 import { ListActions, ListProps, SortPage } from "../../../types";
@@ -70,8 +66,6 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
   } = props;
   const classes = useStyles(props);
 
-  const intl = useIntl();
-
   return (
     <ResponsiveTable>
       <TableHead
@@ -108,9 +102,9 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
           className={classes.colType}
         >
           <FormattedMessage
-            id="jyTwDR"
-            defaultMessage="Type"
-            description="product type is either simple or configurable"
+            id="9QtKvB"
+            defaultMessage="Shippable"
+            description="Product type is shippable"
           />
         </TableCellHeader>
         <TableCell className={classes.colTax}>
@@ -150,22 +144,7 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                 </TableCell>
                 <TableCell className={classes.colName}>
                   {productType ? (
-                    <>
-                      <span data-test-id="name">{productType.name}</span>
-                      <Typography variant="caption">
-                        {maybe(() => productType.hasVariants)
-                          ? intl.formatMessage({
-                              id: "X90t9n",
-                              defaultMessage: "Configurable",
-                              description: "product type",
-                            })
-                          : intl.formatMessage({
-                              id: "yNb+dT",
-                              defaultMessage: "Simple product",
-                              description: "product type",
-                            })}
-                      </Typography>
-                    </>
+                    <span data-test-id="name">{productType.name}</span>
                   ) : (
                     <Skeleton />
                   )}
@@ -175,16 +154,16 @@ const ProductTypeList: React.FC<ProductTypeListProps> = props => {
                     productType.isShippingRequired ? (
                       <>
                         <FormattedMessage
-                          id="ADTNND"
-                          defaultMessage="Physical"
+                          id="ICeshC"
+                          defaultMessage="Shippable"
                           description="product type"
                         />
                       </>
                     ) : (
                       <>
                         <FormattedMessage
-                          id="asdvmK"
-                          defaultMessage="Digital"
+                          id="vdk01u"
+                          defaultMessage="Not shippable"
                           description="product type"
                         />
                       </>

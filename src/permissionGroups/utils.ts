@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { UserContext } from "@dashboard/auth/types";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import {

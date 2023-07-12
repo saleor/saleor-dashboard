@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   ChannelData,
   ChannelPriceAndPreorderArgs,
@@ -83,16 +84,6 @@ export const ProductVariantPrice: React.FC<
           description: "product pricing, section header",
         })}
       </DashboardCard.Title>
-      <DashboardCard.Content>
-        <Text variant="body">
-          {intl.formatMessage({
-            id: "VvA7ai",
-            defaultMessage:
-              "Channels that don’t have assigned prices will use their parent channel to define the price. Price will be converted to channel’s currency",
-            description: "info text",
-          })}
-        </Text>
-      </DashboardCard.Content>
       <ResponsiveTable>
         <TableHead>
           <TableRowLink>

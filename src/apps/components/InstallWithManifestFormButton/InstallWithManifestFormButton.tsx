@@ -8,13 +8,13 @@ import { FormattedMessage, useIntl } from "react-intl";
 import { messages } from "./messages";
 import { useStyles } from "./styles";
 
-interface Props {
-  onSubmitted(manifestUrl: string): void;
+interface InstallWithManifestFormButtonProps {
+  onSubmitted: (manifestUrl: string) => void;
 }
 
-export const InstallWithManifestFormButton: React.FC<Props> = ({
-  onSubmitted,
-}) => {
+export const InstallWithManifestFormButton: React.FC<
+  InstallWithManifestFormButtonProps
+> = ({ onSubmitted }) => {
   const styles = useStyles();
   const intl = useIntl();
 

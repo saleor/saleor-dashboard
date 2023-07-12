@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { pageListProps, searchPageProps } from "@dashboard/fixtures";
 import { LanguageCodeEnum } from "@dashboard/graphql";
 import { Meta, StoryObj } from "@storybook/react";

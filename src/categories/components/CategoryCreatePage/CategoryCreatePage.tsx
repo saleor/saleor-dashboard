@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { CardSpacer } from "@dashboard/components/CardSpacer";
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
@@ -19,7 +20,7 @@ export interface CategoryCreatePageProps {
   disabled: boolean;
   saveButtonBarState: ConfirmButtonTransitionState;
   backUrl: string;
-  onSubmit(data: CategoryCreateData);
+  onSubmit: (data: CategoryCreateData) => any;
 }
 
 export const CategoryCreatePage: React.FC<CategoryCreatePageProps> = ({

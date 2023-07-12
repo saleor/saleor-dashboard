@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Button } from "@dashboard/components/Button";
 import { FulfillmentStatus } from "@dashboard/graphql";
 import { buttonMessages, commonMessages } from "@dashboard/intl";
@@ -16,8 +17,8 @@ interface AcionButtonsProps {
   orderIsPaid?: boolean;
   fulfillmentAllowUnpaid: boolean;
   hasTransactions: boolean;
-  onTrackingCodeAdd();
-  onApprove();
+  onTrackingCodeAdd: () => any;
+  onApprove: () => any;
 }
 
 const statusesToShow = [

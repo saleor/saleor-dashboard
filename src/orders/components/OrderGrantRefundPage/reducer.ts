@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { OrderDetailsGrantRefundFragment } from "@dashboard/graphql";
 import { exhaustiveCheck } from "@dashboard/utils/ts";
 

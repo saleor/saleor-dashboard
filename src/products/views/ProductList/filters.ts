@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
 import {
   AttributeFragment,
@@ -464,12 +465,7 @@ export function getFilterQueryParam(
   }
 }
 
-export const {
-  deleteFilterTab,
-  getFilterTabs,
-  saveFilterTab,
-  updateFilterTab,
-} = createFilterTabUtils<string>(PRODUCT_FILTERS_KEY);
+export const storageUtils = createFilterTabUtils<string>(PRODUCT_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
   createFilterUtils<ProductListUrlQueryParams, ProductListUrlFilters>({

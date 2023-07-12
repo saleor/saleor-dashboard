@@ -1,13 +1,12 @@
+// @ts-strict-ignore
 import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useAppDashboardUpdates";
 import { useUpdateAppToken } from "@dashboard/apps/components/AppFrame/useUpdateAppToken";
-import {
-  AppDetailsUrlQueryParams,
-  prepareFeatureFlagsList,
-} from "@dashboard/apps/urls";
-import { useAllFlags } from "@dashboard/hooks/useFlags";
+import { AppDetailsUrlQueryParams } from "@dashboard/apps/urls";
+import { useAllFlags } from "@dashboard/featureFlags";
 import { CircularProgress } from "@material-ui/core";
+import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import clsx from "clsx";
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback } from "react";
 
 import { AppIFrame } from "./AppIFrame";
 import { useStyles } from "./styles";
@@ -21,7 +20,9 @@ interface Props {
   className?: string;
   params?: AppDetailsUrlQueryParams;
   refetch?: () => void;
-  onError?(): void;
+  dashboardVersion: string;
+  coreVersion?: string;
+  onError?: () => void;
 }
 
 const getOrigin = (url: string) => new URL(url).origin;
@@ -34,6 +35,8 @@ export const AppFrame: React.FC<Props> = ({
   params,
   onError,
   refetch,
+  dashboardVersion,
+  coreVersion,
 }) => {
   const frameRef = React.useRef<HTMLIFrameElement | null>(null);
   const classes = useStyles();
@@ -48,6 +51,10 @@ export const AppFrame: React.FC<Props> = ({
     appOrigin,
     appId,
     appToken,
+    {
+      core: coreVersion,
+      dashboard: dashboardVersion,
+    },
   );
 
   /**
@@ -64,18 +71,15 @@ export const AppFrame: React.FC<Props> = ({
      * Move handshake to notifyReady, so app is requesting token after it's ready to receive it
      * Currently handshake it 2 times, for compatibility
      */
-    postToExtension({
-      type: "handshake",
-      payload: {
-        token: appToken,
-        version: 1,
-      },
-    });
+    postToExtension(
+      DashboardEventFactory.createHandshakeEvent(appToken, 1, {
+        core: coreVersion,
+        dashboard: dashboardVersion,
+      }),
+    );
 
     setHandshakeDone(true);
   }, [appToken, postToExtension, setHandshakeDone]);
-
-  const featureFlags = useMemo(() => prepareFeatureFlagsList(flags), [flags]);
 
   useUpdateAppToken({
     postToExtension,
@@ -97,7 +101,7 @@ export const AppFrame: React.FC<Props> = ({
         ref={frameRef}
         src={src}
         appId={appId}
-        featureFlags={featureFlags}
+        featureFlags={flags}
         params={params}
         onLoad={handleLoad}
         onError={onError}

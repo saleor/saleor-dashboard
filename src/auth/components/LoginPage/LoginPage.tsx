@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { UserContextError } from "@dashboard/auth/types";
 import { passwordResetUrl } from "@dashboard/auth/urls";
 import { Button } from "@dashboard/components/Button";
@@ -29,7 +30,7 @@ export interface LoginCardProps {
   onSubmit?: (event: LoginFormData) => SubmitPromise;
 }
 
-const LoginCard: React.FC<LoginCardProps> = props => {
+const LoginPage: React.FC<LoginCardProps> = props => {
   const {
     errors,
     disabled,
@@ -179,5 +180,5 @@ const LoginCard: React.FC<LoginCardProps> = props => {
     </LoginForm>
   );
 };
-LoginCard.displayName = "LoginCard";
-export default LoginCard;
+LoginPage.displayName = "LoginPage";
+export default LoginPage;

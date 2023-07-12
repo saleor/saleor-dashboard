@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import CardSpacer from "@dashboard/components/CardSpacer";
 import {
   OrderDetailsFragment,
@@ -13,12 +14,15 @@ import { OrderTransactionsWrapper } from "./OrderTransactionsWrapper";
 export interface OrderPaymentOrTransactionProps {
   order: OrderDetailsFragment;
   shop: OrderDetailsQuery["shop"];
-  onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
-  onPaymentCapture();
-  onPaymentVoid();
-  onPaymentRefund();
-  onMarkAsPaid();
-  onAddManualTransaction();
+  onTransactionAction: (
+    transactionId: string,
+    actionType: TransactionActionEnum,
+  ) => any;
+  onPaymentCapture: () => any;
+  onPaymentVoid: () => any;
+  onPaymentRefund: () => any;
+  onMarkAsPaid: () => any;
+  onAddManualTransaction: () => any;
 }
 
 export const OrderPaymentOrTransaction: React.FC<

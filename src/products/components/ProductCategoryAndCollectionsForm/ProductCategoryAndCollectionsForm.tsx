@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import MultiSelectField from "@dashboard/components/MultiSelectField";
@@ -9,7 +10,7 @@ import { useIntl } from "react-intl";
 interface ProductCategoryAndCollectionsFormProps {
   categories?: Array<{ value: string; label: string }>;
   collections?: Array<{ value: string; label: string }>;
-  errors: { [key: string]: string };
+  errors: Record<string, string>;
   productCollections?: string[];
   category?: string;
   loading?: boolean;

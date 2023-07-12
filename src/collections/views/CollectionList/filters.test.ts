@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { createFilterStructure } from "@dashboard/collections/components/CollectionListPage";
 import { CollectionListUrlFilters } from "@dashboard/collections/urls";
 import { CollectionPublished } from "@dashboard/graphql";

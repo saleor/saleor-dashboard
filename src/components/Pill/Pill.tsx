@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { getStatusColor } from "@dashboard/misc";
 import { makeStyles, Pill as MacawuiPill, PillProps } from "@saleor/macaw-ui";
 import { useTheme, vars } from "@saleor/macaw-ui/next";

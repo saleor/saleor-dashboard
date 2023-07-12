@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import BackButton from "@dashboard/components/BackButton";
 import {
   ConfirmButton,
@@ -30,8 +31,8 @@ export interface OrderFulfillmentTrackingDialogProps {
   errors: OrderErrorFragment[];
   open: boolean;
   trackingNumber: string;
-  onClose();
-  onConfirm(data: FormData);
+  onClose: () => any;
+  onConfirm: (data: FormData) => any;
 }
 
 const OrderFulfillmentTrackingDialog: React.FC<

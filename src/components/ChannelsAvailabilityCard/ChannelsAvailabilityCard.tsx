@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { Channel as ChannelList, ChannelData } from "@dashboard/channels/utils";
 import { PermissionEnum } from "@dashboard/graphql";
 import useDateLocalize from "@dashboard/hooks/useDateLocalize";

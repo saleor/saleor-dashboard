@@ -18,7 +18,7 @@ import { useStyles } from "./styles";
 interface Option {
   label: string;
   disabled?: boolean;
-  onSelect(e: React.MouseEvent<HTMLLIElement, MouseEvent>): void;
+  onSelect: (e: React.MouseEvent<HTMLLIElement, MouseEvent>) => void;
 }
 
 export interface ButtonWithSelectProps

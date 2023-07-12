@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import AddressFormatter from "@dashboard/components/AddressFormatter";
 import { AddressFragment } from "@dashboard/graphql";
 import { commonMessages } from "@dashboard/intl";
@@ -17,7 +18,9 @@ export interface CustomerAddressChoiceCardProps {
   onEditClick?: () => void;
 }
 
-const CustomerAddressChoiceCard: React.FC<CustomerAddressChoiceCardProps> = props => {
+const CustomerAddressChoiceCard: React.FC<
+  CustomerAddressChoiceCardProps
+> = props => {
   const { address, selected, editable, onSelect, onEditClick } = props;
   const classes = useStyles(props);
 

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ExtendedFormHelperTextProps } from "@dashboard/channels/components/ChannelForm/types";
 import { FetchMoreProps } from "@dashboard/types";
 import {
@@ -107,6 +108,7 @@ const SingleAutocompleteSelectFieldComponent: React.FC<
           // this is to prevent unwanted state updates when the dropdown is closed with an empty value,
           // which downshift interprets as the value being updated with an empty string, causing side-effects
           stateReducer={(_, changes) => {
+            // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
             if (changes.isOpen === false) {
               delete changes.inputValue;
             }

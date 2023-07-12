@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ChannelsAction } from "@dashboard/channels/urls";
 import { createCollectionChannels } from "@dashboard/channels/utils";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
@@ -48,16 +49,12 @@ export const CollectionCreate: React.FC<CollectionCreateProps> = ({
     CollectionCreateUrlQueryParams
   >(navigate, params => collectionAddUrl(params), params);
 
-  const [
-    updateChannels,
-    updateChannelsOpts,
-  ] = useCollectionChannelListingUpdateMutation({});
+  const [updateChannels, updateChannelsOpts] =
+    useCollectionChannelListingUpdateMutation({});
   const { availableChannels } = useAppChannel(false);
 
-  const allChannels = createCollectionChannels(
-    availableChannels,
-  )?.sort((channel, nextChannel) =>
-    channel.name.localeCompare(nextChannel.name),
+  const allChannels = createCollectionChannels(availableChannels)?.sort(
+    (channel, nextChannel) => channel.name.localeCompare(nextChannel.name),
   );
 
   const {

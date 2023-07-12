@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { isDarkTheme } from "@dashboard/misc";
 import { alpha } from "@material-ui/core/styles";
 import ArrowLeft from "@material-ui/icons/ArrowLeft";
@@ -57,11 +58,13 @@ export interface TablePaginationActionsProps {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   nextIconButtonProps?: any;
-  onNextPage(event);
-  onPreviousPage(event);
+  onNextPage: (event) => any;
+  onPreviousPage: (event) => any;
 }
 
-export const TablePaginationActions: React.FC<TablePaginationActionsProps> = props => {
+export const TablePaginationActions: React.FC<
+  TablePaginationActionsProps
+> = props => {
   const {
     backIconButtonProps,
     className,

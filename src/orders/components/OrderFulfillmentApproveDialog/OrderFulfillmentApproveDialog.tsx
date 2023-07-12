@@ -29,8 +29,8 @@ export interface OrderFulfillmentAcceptDialogProps {
   confirmButtonState: ConfirmButtonTransitionState;
   errors: OrderErrorFragment[];
   open: boolean;
-  onClose(): void;
-  onConfirm(data: OrderFulfillmentAcceptDialogFormData): void;
+  onClose: () => void;
+  onConfirm: (data: OrderFulfillmentAcceptDialogFormData) => void;
 }
 
 const OrderFulfillmentAcceptDialog: React.FC<

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import packageInfo from "../package.json";
 import { SearchVariables } from "./hooks/makeSearch";
 import { ListSettings, ListViews, Pagination } from "./types";
@@ -32,6 +33,7 @@ export const PAGINATE_BY = 20;
 export const VALUES_PAGINATE_BY = 10;
 
 export type ProductListColumns =
+  | "name"
   | "productType"
   | "description"
   | "availability"
@@ -70,21 +72,25 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.CATEGORY_LIST]: {
     rowNumber: PAGINATE_BY,
+    columns: ["name", "products", "subcategories"],
   },
   [ListViews.COLLECTION_LIST]: {
     rowNumber: PAGINATE_BY,
+    columns: ["name", "productCount", "availability"],
   },
   [ListViews.CUSTOMER_LIST]: {
     rowNumber: PAGINATE_BY,
   },
   [ListViews.DRAFT_LIST]: {
     rowNumber: PAGINATE_BY,
+    columns: ["number", "date", "customer", "total"],
   },
   [ListViews.NAVIGATION_LIST]: {
     rowNumber: PAGINATE_BY,
   },
   [ListViews.ORDER_LIST]: {
     rowNumber: PAGINATE_BY,
+    columns: ["number", "date", "customer", "payment", "status", "total"],
   },
   [ListViews.PAGES_LIST]: {
     rowNumber: PAGINATE_BY,
@@ -93,7 +99,14 @@ export const defaultListSettings: AppListViewSettings = {
     rowNumber: PAGINATE_BY,
   },
   [ListViews.PRODUCT_LIST]: {
-    columns: ["availability", "description", "price", "productType", "date"],
+    columns: [
+      "name",
+      "availability",
+      "description",
+      "price",
+      "productType",
+      "date",
+    ],
     rowNumber: PAGINATE_BY,
   },
   [ListViews.SALES_LIST]: {

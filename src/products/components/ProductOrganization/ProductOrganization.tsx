@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import Link from "@dashboard/components/Link";
 import MultiAutocompleteSelectField, {
@@ -12,7 +13,6 @@ import {
   ProductErrorFragment,
 } from "@dashboard/graphql";
 import { ChangeEvent } from "@dashboard/hooks/useForm";
-import { commonMessages } from "@dashboard/intl";
 import { productTypeUrl } from "@dashboard/productTypes/urls";
 import { FetchMoreProps } from "@dashboard/types";
 import { getFormErrors, getProductErrorMessage } from "@dashboard/utils/errors";
@@ -131,17 +131,6 @@ export const ProductOrganization: React.FC<
                 >
                   {productType?.name ?? "..."}
                 </Link>
-              </Text>
-            </Box>
-
-            <Box display="flex" flexDirection="column">
-              <Text variant="bodyEmp">
-                <FormattedMessage id="Be+J13" defaultMessage="Configurable" />
-              </Text>
-              <Text variant="caption">
-                {productType?.hasVariants
-                  ? intl.formatMessage(commonMessages.yes)
-                  : intl.formatMessage(commonMessages.no)}
               </Text>
             </Box>
           </Box>

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useProductVariantListQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import {

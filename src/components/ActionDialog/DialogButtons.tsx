@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { ConfirmButtonTransitionState } from "@dashboard/components/ConfirmButton";
 import { buttonMessages } from "@dashboard/intl";
 import { DialogActions } from "@material-ui/core";
@@ -17,7 +18,7 @@ interface DialogButtonsProps {
   children?: React.ReactNode;
   showBackButton?: boolean;
   backButtonText?: string;
-  onConfirm();
+  onConfirm: () => any;
 }
 
 const DialogButtons: React.FC<DialogButtonsProps> = props => {

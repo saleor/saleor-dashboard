@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ChannelAllocationStrategy from "@dashboard/channels/components/ChannelAllocationStrategy";
 import ShippingZones from "@dashboard/channels/components/ShippingZones";
 import Warehouses from "@dashboard/channels/components/Warehouses";
@@ -125,6 +126,7 @@ const ChannelDetailsPage = function <TErrors extends ChannelErrorFragment[]>({
     shippingZonesToDisplay: channelShippingZones,
     warehousesToDisplay: channelWarehouses,
     markAsPaidStrategy: orderSettings?.markAsPaidStrategy,
+    deleteExpiredOrdersAfter: orderSettings?.deleteExpiredOrdersAfter,
   };
 
   const getFilteredShippingZonesChoices = (

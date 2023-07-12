@@ -5,7 +5,7 @@ import { useMemo } from "react";
 
 export const cellHeight = 40;
 
-const useStyles = makeStyles(
+const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
   () => {
     const rowActionSelected = {
       background: vars.colors.background.plain,
@@ -16,6 +16,8 @@ const useStyles = makeStyles(
     return {
       actionBtnBar: {
         position: "absolute",
+        left: props => (props.actionButtonPosition === "left" ? 0 : "auto"),
+        right: props => (props.actionButtonPosition === "right" ? 0 : "auto"),
         zIndex: 1,
         background: vars.colors.background.plain,
         borderRadius: vars.borderRadius[4],
@@ -123,7 +125,6 @@ const useStyles = makeStyles(
         border: `1px solid ${vars.colors.border.neutralHighlight}`,
         borderLeft: "none",
         borderRight: "none",
-        cursor: "pointer",
         color: vars.colors.foreground.iconNeutralPlain,
         marginLeft: -1,
         display: "flex",

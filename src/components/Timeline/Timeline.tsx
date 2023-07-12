@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { Button } from "@dashboard/components/Button";
 import { getUserInitials } from "@dashboard/misc";
@@ -66,8 +67,8 @@ interface TimelineAddNoteProps {
   disabled?: boolean;
   message: string;
   reset: () => void;
-  onChange(event: React.ChangeEvent<any>);
-  onSubmit(event: React.FormEvent<any>);
+  onChange: (event: React.ChangeEvent<any>) => any;
+  onSubmit: (event: React.FormEvent<any>) => any;
 }
 
 export const Timeline: React.FC<TimelineProps> = props => {

@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { WebhookErrorCode } from "@dashboard/graphql";
 import React from "react";
 

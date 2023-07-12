@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   LanguageCodeEnum,
   useCategoryTranslationDetailsQuery,
@@ -40,21 +41,19 @@ const TranslationsCategories: React.FC<TranslationsCategoriesProps> = ({
     variables: { id, language: languageCode },
   });
 
-  const [
-    updateTranslations,
-    updateTranslationsOpts,
-  ] = useUpdateCategoryTranslationsMutation({
-    onCompleted: data => {
-      if (data.categoryTranslate.errors.length === 0) {
-        categoryTranslations.refetch();
-        notify({
-          status: "success",
-          text: intl.formatMessage(commonMessages.savedChanges),
-        });
-        navigate("?", { replace: true });
-      }
-    },
-  });
+  const [updateTranslations, updateTranslationsOpts] =
+    useUpdateCategoryTranslationsMutation({
+      onCompleted: data => {
+        if (data.categoryTranslate.errors.length === 0) {
+          categoryTranslations.refetch();
+          notify({
+            status: "success",
+            text: intl.formatMessage(commonMessages.savedChanges),
+          });
+          navigate("?", { replace: true });
+        }
+      },
+    });
 
   const onEdit = (field: string) =>
     navigate(

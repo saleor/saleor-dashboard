@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   extensionMountPoints,
   useExtensions,
@@ -21,7 +22,6 @@ export const SingleItem: React.FC<Props> = ({ menuItem }) => {
     const extension = getMenuItemExtension(extensions, menuItem.id);
     if (extension) {
       extension.open();
-      return;
     }
   };
   return (

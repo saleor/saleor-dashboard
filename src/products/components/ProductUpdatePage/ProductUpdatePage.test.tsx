@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import placeholderImage from "@assets/images/placeholder255x255.png";
 import { channelsList } from "@dashboard/channels/fixtures";
 import { collections } from "@dashboard/collections/fixtures";
@@ -15,6 +16,14 @@ import { MemoryRouter } from "react-router-dom";
 import ProductUpdatePage, { ProductUpdatePageProps } from "./ProductUpdatePage";
 
 const product = productFixture(placeholderImage);
+
+jest.mock("@dashboard/hooks/useNavigator", () => {
+  const actualModule = jest.requireActual("@dashboard/hooks/useNavigator");
+  return {
+    __esModule: true,
+    ...actualModule,
+  };
+});
 
 const onSubmit = jest.fn();
 const useNavigator = jest.spyOn(_useNavigator, "default");

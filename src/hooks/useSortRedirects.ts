@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Sort } from "@dashboard/types";
 import { useEffect, useRef } from "react";

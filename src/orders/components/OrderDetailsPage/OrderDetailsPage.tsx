@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import {
   extensionMountPoints,
   mapToMenuItemsForOrderDetails,
@@ -63,27 +64,30 @@ export interface OrderDetailsPageProps {
   ) => void;
   onOrderLineRemove?: (id: string) => void;
   onShippingMethodEdit?: () => void;
-  onBillingAddressEdit();
-  onFulfillmentApprove(id: string);
-  onFulfillmentCancel(id: string);
-  onFulfillmentTrackingNumberUpdate(id: string);
-  onOrderFulfill();
-  onProductClick?(id: string);
-  onPaymentCapture();
-  onMarkAsPaid();
-  onPaymentRefund();
-  onPaymentVoid();
-  onShippingAddressEdit();
-  onOrderCancel();
-  onNoteAdd(data: HistoryFormData);
-  onProfileView();
-  onOrderReturn();
-  onInvoiceClick(invoiceId: string);
-  onInvoiceGenerate();
-  onInvoiceSend(invoiceId: string);
-  onTransactionAction(transactionId: string, actionType: TransactionActionEnum);
-  onAddManualTransaction();
-  onSubmit(data: MetadataIdSchema): SubmitPromise;
+  onBillingAddressEdit: () => any;
+  onFulfillmentApprove: (id: string) => any;
+  onFulfillmentCancel: (id: string) => any;
+  onFulfillmentTrackingNumberUpdate: (id: string) => any;
+  onOrderFulfill: () => any;
+  onProductClick?: (id: string) => any;
+  onPaymentCapture: () => any;
+  onMarkAsPaid: () => any;
+  onPaymentRefund: () => any;
+  onPaymentVoid: () => any;
+  onShippingAddressEdit: () => any;
+  onOrderCancel: () => any;
+  onNoteAdd: (data: HistoryFormData) => any;
+  onProfileView: () => any;
+  onOrderReturn: () => any;
+  onInvoiceClick: (invoiceId: string) => any;
+  onInvoiceGenerate: () => any;
+  onInvoiceSend: (invoiceId: string) => any;
+  onTransactionAction: (
+    transactionId: string,
+    actionType: TransactionActionEnum,
+  ) => any;
+  onAddManualTransaction: () => any;
+  onSubmit: (data: MetadataIdSchema) => SubmitPromise;
 }
 
 const OrderDetailsPage: React.FC<OrderDetailsPageProps> = props => {

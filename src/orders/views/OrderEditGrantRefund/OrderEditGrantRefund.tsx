@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import NotFoundPage from "@dashboard/components/NotFoundPage";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {

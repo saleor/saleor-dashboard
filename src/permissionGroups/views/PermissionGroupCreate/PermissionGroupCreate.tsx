@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { usePermissionGroupCreateMutation } from "@dashboard/graphql";

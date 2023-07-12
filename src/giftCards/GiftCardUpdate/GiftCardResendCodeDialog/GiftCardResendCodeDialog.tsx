@@ -1,3 +1,4 @@
+// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import { useChannelsSearch } from "@dashboard/components/ChannelsAvailabilityDialog/utils";
 import ControlledCheckbox from "@dashboard/components/ControlledCheckbox";
@@ -67,7 +68,7 @@ const GiftCardResendCodeDialog: React.FC<DialogProps> = ({ open, onClose }) => {
       variables: {
         input: {
           id,
-          email: email ? email : null,
+          email: email || null,
           channel: channelSlug,
         },
       },
