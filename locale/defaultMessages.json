@@ -2948,6 +2948,10 @@
   "J4E+jp": {
     "string": "Variant name"
   },
+  "J4NBVR": {
+    "context": "link",
+    "string": "View Orders"
+  },
   "J7mFhU": {
     "context": "currency code select",
     "string": "{code} - {countries}"
