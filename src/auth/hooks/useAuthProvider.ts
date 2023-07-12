@@ -2,11 +2,11 @@
 import { ApolloClient, ApolloError } from "@apollo/client";
 import { IMessageContext } from "@dashboard/components/messages";
 import { DEMO_MODE } from "@dashboard/config";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   useUserDetailsQuery,
   useUserDetailsWithChannelsQuery,
 } from "@dashboard/graphql";
-import { useFlags } from "@dashboard/hooks/useFlags";
 import useLocalStorage from "@dashboard/hooks/useLocalStorage";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
@@ -83,11 +83,11 @@ export function useAuthProvider({
     }
   }, [authenticated, authenticating]);
 
-  const { channelPermissions } = useFlags(["channelPermissions"]);
+  const { enabled } = useFlag("channel_permissions");
 
   const userDetails = useUserDetailsQuery({
     client: apolloClient,
-    skip: !authenticated || channelPermissions.enabled,
+    skip: !authenticated || enabled,
     // Don't change this to 'network-only' - update of intl provider's
     // state will cause an error
     fetchPolicy: "cache-and-network",
@@ -95,7 +95,7 @@ export function useAuthProvider({
 
   const userDetailsWithChannels = useUserDetailsWithChannelsQuery({
     client: apolloClient,
-    skip: !authenticated || !channelPermissions.enabled,
+    skip: !authenticated || !enabled,
     // Don't change this to 'network-only' - update of intl provider's
     // state will cause an error
     fetchPolicy: "cache-and-network",
@@ -254,9 +254,7 @@ export function useAuthProvider({
     logout: handleLogout,
     authenticating: authenticating && !errors.length,
     authenticated: authenticated && !!user?.isStaff && !errors.length,
-    user: channelPermissions.enabled
-      ? userDetailsWithChannels.data?.me
-      : userDetails.data?.me,
+    user: enabled ? userDetailsWithChannels.data?.me : userDetails.data?.me,
     errors,
   };
 }

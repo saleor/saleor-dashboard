@@ -22,11 +22,16 @@ const AVAILABLE_FLAGS = [
     content: { enabled: false, value: "default" },
   } as const,
   */
-
   {
     name: "product_filters",
     displayName: "Product filters",
     description: "New filters on product listing page",
+    content: { enabled: false, payload: "" },
+  } as const,
+  {
+    name: "channel_permissions",
+    displayName: "Channel permissions",
+    description: "Allow to assign channel to permission group",
     content: { enabled: false, payload: "" },
   } as const,
 ] satisfies FlagDefinition[];

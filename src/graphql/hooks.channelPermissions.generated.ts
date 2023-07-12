@@ -22,6 +22,11 @@ export const AppManifestFragmentDoc = gql`
     code
     name
   }
+  brand {
+    logo {
+      default(format: WEBP, size: 64)
+    }
+  }
 }
     `;
 export const WebhookFragmentDoc = gql`
@@ -49,6 +54,11 @@ export const AppFragmentDoc = gql`
   supportUrl
   version
   accessToken
+  brand {
+    logo {
+      default(format: WEBP, size: 64)
+    }
+  }
   privateMetadata {
     key
     value
@@ -74,6 +84,11 @@ export const AppInstallationFragmentDoc = gql`
   appName
   manifestUrl
   id
+  brand {
+    logo {
+      default(format: WEBP, size: 64)
+    }
+  }
 }
     `;
 export const AppPermissionFragmentDoc = gql`
@@ -91,6 +106,11 @@ export const AppListItemFragmentDoc = gql`
   appUrl
   manifestUrl
   version
+  brand {
+    logo {
+      default(format: WEBP, size: 64)
+    }
+  }
   permissions {
     ...AppPermission
   }
@@ -270,6 +290,7 @@ export const ChannelDetailsFragmentDoc = gql`
   }
   orderSettings {
     markAsPaidStrategy
+    deleteExpiredOrdersAfter
   }
 }
     ${ChannelFragmentDoc}
@@ -1359,11 +1380,9 @@ ${AppAvatarFragmentDoc}`;
 export const TransactionItemFragmentDoc = gql`
     fragment TransactionItem on TransactionItem {
   id
-  type
   pspReference
   actions
-  type
-  status
+  name
   externalUrl
   events {
     ...TransactionEvent
@@ -1583,6 +1602,7 @@ export const OrderLineFragmentDoc = gql`
   }
   variant {
     id
+    name
     quantityAvailable
     preorder {
       endDate

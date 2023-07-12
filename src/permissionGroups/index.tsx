@@ -1,4 +1,4 @@
-import { useFlags } from "@dashboard/hooks/useFlags";
+import { useFlag } from "@dashboard/featureFlags";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -73,7 +73,7 @@ const PermissionGroupWithChannelsDetails: React.FC<
 
 const Component = () => {
   const intl = useIntl();
-  const { channelPermissions } = useFlags(["channelPermissions"]);
+  const { enabled } = useFlag("channel_permissions");
 
   return (
     <>
@@ -87,15 +87,13 @@ const Component = () => {
         <Route
           path={permissionGroupAddPath}
           component={
-            channelPermissions.enabled
-              ? PermissionGroupWithChannelsCreate
-              : PermissionGroupCreate
+            enabled ? PermissionGroupWithChannelsCreate : PermissionGroupCreate
           }
         />
         <Route
           path={permissionGroupDetailsPath(":id")}
           component={
-            channelPermissions.enabled
+            enabled
               ? PermissionGroupWithChannelsDetails
               : PermissionGroupDetails
           }

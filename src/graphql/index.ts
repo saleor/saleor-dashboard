@@ -8,4 +8,5 @@ export {
 } from "./hooks.channelPermissions.generated";
 export * from "./hooks.generated";
 export * from "./typePolicies.generated";
+export type { UserWithChannelsFragment } from "./types.channelPermissions.generated";
 export * from "./types.generated";

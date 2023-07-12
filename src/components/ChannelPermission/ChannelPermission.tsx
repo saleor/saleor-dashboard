@@ -29,6 +29,7 @@ export const ChannelPermission = ({
   disabledSelectAllChannels,
 }: ChannelPermissionProps) => {
   const intl = useIntl();
+  const channelsChoices = mapNodeToChoice(allChannels);
 
   return (
     <Box height="100%">
@@ -62,9 +63,11 @@ export const ChannelPermission = ({
               size="small"
               data-test-id="channels"
               disabled={disabled}
-              options={mapNodeToChoice(allChannels)}
+              options={channelsChoices}
               label={intl.formatMessage(messages.selectChannels)}
-              value={selectedChannels}
+              value={channelsChoices.filter(channel =>
+                selectedChannels.includes(channel.value),
+              )}
               placeholder={intl.formatMessage(messages.searchChannels)}
               onChange={values => {
                 onChannelChange({
