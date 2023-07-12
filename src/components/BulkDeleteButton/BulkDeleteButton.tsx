@@ -4,13 +4,12 @@ import React, { forwardRef, useState } from "react";
 interface ProductListDeleteButtonProps {
   onClick: () => void;
   children: React.ReactNode;
-  dataTestId?: string;
 }
 
 export const BulkDeleteButton = forwardRef<
   HTMLButtonElement,
   ProductListDeleteButtonProps
->(({ onClick, children, dataTestId }, ref) => {
+>(({ onClick, children }, ref) => {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
   return (
@@ -27,7 +26,7 @@ export const BulkDeleteButton = forwardRef<
           onClick={onClick}
           icon={<TrashBinIcon />}
           variant="secondary"
-          data-test-id={dataTestId}
+          data-test-id="bulk-delete-button"
         />
       </Tooltip.Trigger>
       <Tooltip.Content side="bottom">
