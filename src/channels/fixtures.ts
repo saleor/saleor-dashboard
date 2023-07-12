@@ -50,6 +50,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     ],
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
       __typename: "OrderSettings",
     },
   },
@@ -84,6 +85,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     ],
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
       __typename: "OrderSettings",
     },
   },
@@ -118,6 +120,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     ],
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
       __typename: "OrderSettings",
     },
   },
@@ -152,6 +155,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     ],
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
       __typename: "OrderSettings",
     },
   },
@@ -186,6 +190,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     ],
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
       __typename: "OrderSettings",
     },
   },
@@ -220,6 +225,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     ],
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
       __typename: "OrderSettings",
     },
   },
@@ -254,6 +260,7 @@ export const channelsList: ChannelDetailsFragment[] = [
     ],
     orderSettings: {
       markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+      deleteExpiredOrdersAfter: 60,
       __typename: "OrderSettings",
     },
   },
@@ -290,6 +297,7 @@ export const channel: ChannelDetailsFragment = {
   ],
   orderSettings: {
     markAsPaidStrategy: MarkAsPaidStrategyEnum.TRANSACTION_FLOW,
+    deleteExpiredOrdersAfter: 60,
     __typename: "OrderSettings",
   },
 };
