@@ -34,7 +34,6 @@ export interface CollectionListPageProps
     SortPage<CollectionListUrlSortField> {
   onTabUpdate: (tabName: string) => void;
   selectedChannelId: string;
-  columnPickerSettings: string[];
   collections: Collections;
   loading: boolean;
   selectedCollectionIds: string[];

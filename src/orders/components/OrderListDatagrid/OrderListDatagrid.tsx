@@ -130,7 +130,7 @@ export const OrderListDatagrid: React.FC<OrderListDatagridProps> = ({
             <ColumnPicker
               staticColumns={staticColumns}
               selectedColumns={selectedColumns}
-              onSave={handlers.onChange}
+              onToggle={handlers.onToggle}
             />
           )}
           fullScreenTitle={intl.formatMessage(messages.orders)}

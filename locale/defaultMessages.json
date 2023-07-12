@@ -4411,6 +4411,10 @@
     "context": "page header, edit view",
     "string": "Edit grant refund"
   },
+  "U+79k0": {
+    "context": "order expiration card description",
+    "string": "The time in days after expired orders will be deleted. Allowed range between 1 and 120."
+  },
   "U1eJIw": {
     "context": "order history message",
     "string": "Products were added to an order"
@@ -5268,10 +5272,6 @@
   "ZhDQel": {
     "context": "header",
     "string": "Password"
-  },
-  "ZhaXLU": {
-    "context": "button",
-    "string": "Copy"
   },
   "ZhqH8J": {
     "context": "button",
@@ -6658,6 +6658,10 @@
   },
   "kTr2o8": {
     "string": "Attribute name"
+  },
+  "kVKTwC": {
+    "context": "order expiration card title",
+    "string": "Order expiration"
   },
   "kVOslW": {
     "context": "reason for discount label",

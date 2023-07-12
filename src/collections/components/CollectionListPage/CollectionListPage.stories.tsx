@@ -34,7 +34,6 @@ const props: CollectionListPageProps = {
   collections,
   selectedChannelId: "123",
   filterOpts: collectionListFilterOpts,
-  columnPickerSettings: ["name"],
   selectedCollectionIds: [],
   hasPresetsChanged: () => false,
   onAll: () => undefined,

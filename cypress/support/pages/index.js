@@ -38,4 +38,5 @@ export * as priceListComponent from "./catalog/products/priceListComponent";
 export * as variantsPage from "./catalog/products/VariantsPage";
 export * as channelsPage from "./channelsPage";
 export * as pagesPage from "./pagesPage";
+export * as columnPickerPage from "./columnPicker";
 export * as pageDetailsPage from "./pageDetailsPage";
