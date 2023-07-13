@@ -2,7 +2,8 @@ name: TEST-ENV-DEPLOYMENT
 # Build and deploy test instance for every pull request
 
 on: [pull_request]
-
+env:
+  TESTMO_RUN_ID: RUN_ID
 jobs:
   deploy:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
@@ -174,8 +175,6 @@ jobs:
   testmo-report-preparation:
     needs: prepare-tests
     runs-on: ubuntu-22.04
-    outputs:
-      testmo-run-id: ${{ steps.run-tests.outputs.testmo-run-id }}
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -194,7 +193,7 @@ jobs:
             --name "Deployment tests" \
             --source frontend-e2e-tests > testmo-run-id.txt
           ID=$(cat testmo-run-id.txt)
-          echo "testmo-run-id=$ID" >> $GITHUB_OUTPUT
+          echo "TESTMO_RUN_ID=$ID" >> $GITHUB_ENV
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
@@ -275,7 +274,7 @@ jobs:
         run: |
           npx testmo automation:run:submit-thread \
           --instance "$TESTMO_URL" \
-          --run-id "${{ needs.testmo-report-preparation.outputs.testmo-run-id }}" \
+          --run-id ${{env.TESTMO_RUN_ID}}" \
           --results ../../results/*.xml
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
@@ -297,7 +296,7 @@ jobs:
         run: |
           npx testmo automation:run:complete \
             --instance "$TESTMO_URL" \
-            --run-id "${{ needs.testmo-report-preparation.outputs.testmo-run-id }}"
+            --run-id ${{env.TESTMO_RUN_ID}}""
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
