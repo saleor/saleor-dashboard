@@ -11,8 +11,6 @@ import {
   Handler,
   ProductTypeHandler,
 } from "./Handler";
-import { useDataFromAPI } from "./initialState/helpers";
-import { InitialStateResponse } from "./InitialStateResponse";
 
 const getFilterElement = (
   value: FilterContainer,
@@ -84,21 +82,5 @@ export const useProductFilterAPIProvider = (): FilterAPIProvider => {
   return {
     fetchRightOptions,
     fetchLeftOptions,
-  };
-};
-
-export const useInitialState = () => {
-  const { data, loading, fetchQueries } = useDataFromAPI();
-
-  return {
-    data: new InitialStateResponse(
-      data?.category,
-      data?.attribute,
-      data?.channel,
-      data?.collection,
-      data?.producttype,
-    ),
-    loading,
-    fetchQueries,
   };
 };

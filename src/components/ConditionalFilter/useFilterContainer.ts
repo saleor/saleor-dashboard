@@ -2,23 +2,16 @@ import useDebounce from "@dashboard/hooks/useDebounce";
 
 import { FilterAPIProvider } from "./API/FilterAPIProvider";
 import { useConditionalFilterContext } from "./context";
-import { FilterContainer } from "./FilterElement";
 import { ConditionValue, ItemOption } from "./FilterElement/ConditionValue";
 import { LeftOperandsProvider } from "./LeftOperandsProvider";
 
 export const useFilterContainer = (
-  initialValue: FilterContainer,
   apiProvider: FilterAPIProvider,
   leftOperandsProvider: LeftOperandsProvider,
 ) => {
-  // const { value, updateAt, removeAt, createEmpty } =
-  //   useContainerState(initialValue);
-
   const {
-    state: { value, updateAt, removeAt, createEmpty },
+    containerState: { value, updateAt, removeAt, createEmpty },
   } = useConditionalFilterContext();
-
-  console.log(value);
 
   const addEmpty = () => {
     createEmpty();

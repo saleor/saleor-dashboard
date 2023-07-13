@@ -17,10 +17,7 @@ export const ConditionalFilters: FC = () => {
       {valueProvider.loading ? (
         <Text>Loading...</Text>
       ) : (
-        <FiltersArea
-          onConfirm={handleConfirm}
-          filterValue={valueProvider.value}
-        />
+        <FiltersArea onConfirm={handleConfirm} />
       )}
     </Box>
   );

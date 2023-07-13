@@ -44,7 +44,6 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     ProductListUrlSortField,
   );
 
-  console.log("product list provider");
   return (
     <ConditionalProductFilterProvider>
       <ProductListComponent params={params} />
