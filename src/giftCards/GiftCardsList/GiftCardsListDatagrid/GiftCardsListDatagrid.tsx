@@ -192,8 +192,7 @@ export const GiftCardsListDatagrid = () => {
           <ColumnPicker
             staticColumns={staticColumns}
             selectedColumns={selectedColumns}
-            onDynamicColumnSelect={handlers.onDynamicColumnSelect}
-            onSave={handlers.onChange}
+            onToggle={handlers.onToggle}
           />
         )}
       />
