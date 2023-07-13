@@ -22,6 +22,7 @@ import { FetchingParams } from "../../ValueProvider/TokenArray/fetchingParams";
 import { createOptionsFromAPI } from "../Handler";
 import { InitialState } from "../InitialStateResponse";
 import { InitialAPIResponse } from "./types";
+import { createBooleanOptions } from "../../constants";
 
 const isChannelQuery = (
   query: InitialAPIResponse,
@@ -82,7 +83,7 @@ export const createInitialStateFromData = (
       if (isProductTypeQuery(query)) {
         return {
           ...acc,
-          producttype: createOptionsFromAPI(
+          productType: createOptionsFromAPI(
             query.data?.productTypes?.edges ?? [],
           ),
         };
@@ -114,7 +115,12 @@ export const createInitialStateFromData = (
       channel: [],
       collection: [],
       category: [],
-      producttype: [],
+      productType: [],
+      isAvailable: createBooleanOptions(),
+      isPublished: createBooleanOptions(),
+      isVisibleInListing: createBooleanOptions(),
+      hasCategory: createBooleanOptions(),
+      giftCard: createBooleanOptions(),
       attribute: {},
     },
   );
@@ -122,7 +128,7 @@ export const createInitialStateFromData = (
 export const useDataFromAPI = ({
   category,
   collection,
-  producttype,
+  productType,
   channel,
   attribute,
 }: FetchingParams) => {
@@ -180,7 +186,7 @@ export const useDataFromAPI = ({
       );
     }
 
-    if (producttype.length > 0) {
+    if (productType.length > 0) {
       queriesToRun.push(
         client.query<
           _SearchProductTypesOperandsQuery,
@@ -188,8 +194,8 @@ export const useDataFromAPI = ({
         >({
           query: _SearchProductTypesOperandsDocument,
           variables: {
-            productTypesSlugs: producttype,
-            first: producttype.length,
+            productTypesSlugs: productType,
+            first: productType.length,
           },
         }),
       );

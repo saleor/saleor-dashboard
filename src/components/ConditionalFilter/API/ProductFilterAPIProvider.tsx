@@ -5,12 +5,14 @@ import { FilterAPIProvider } from "./FilterAPIProvider";
 import {
   AttributeChoicesHandler,
   AttributesHandler,
+  BooleanValuesHandler,
   CategoryHandler,
   ChannelHandler,
   CollectionHandler,
   Handler,
   ProductTypeHandler,
 } from "./Handler";
+import { RowType } from "../constants";
 
 const getFilterElement = (
   value: FilterContainer,
@@ -27,12 +29,24 @@ const getFilterElement = (
   throw new Error("Unknown filter element used to create API handler");
 };
 
+const isStaticBoolean = (rowType: RowType) => {
+  return [
+    "isAvailable",
+    "isPublished",
+    "isVisibleInListing",
+    "hasCategory",
+    "giftCard"
+  ].includes(rowType)
+}
+
 const createAPIHandler = (
   selectedRow: FilterElement,
   client: ApolloClient<unknown>,
   inputValue: string,
 ): Handler => {
-  if (selectedRow.isAttribute()) {
+  const rowType = selectedRow.rowType()
+
+  if (rowType === "attribute") {
     return new AttributeChoicesHandler(
       client,
       selectedRow.value.value,
@@ -40,19 +54,36 @@ const createAPIHandler = (
     );
   }
 
-  if (selectedRow.isCollection()) {
+  if (rowType && isStaticBoolean(rowType)) {
+    return new BooleanValuesHandler([
+      {
+        label: "Yes",
+        value: "true",
+        type: rowType,
+        slug: "true"
+      },
+      {
+        label: "No",
+        value: "false",
+        type: rowType,
+        slug: "false"
+      }
+    ])
+  }
+
+  if (rowType === "collection") {
     return new CollectionHandler(client, inputValue);
   }
 
-  if (selectedRow.isCategory()) {
+  if (rowType === "category") {
     return new CategoryHandler(client, inputValue);
   }
 
-  if (selectedRow.isProductType()) {
+  if (rowType === "productType") {
     return new ProductTypeHandler(client, inputValue);
   }
 
-  if (selectedRow.isChannel()) {
+  if (rowType === "channel") {
     return new ChannelHandler(client, inputValue);
   }
 

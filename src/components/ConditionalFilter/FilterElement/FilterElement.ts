@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { LeftOperand } from "../LeftOperandsProvider";
+import { RowType, STATIC_OPTIONS } from "../constants";
 import { TokenType, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
 import { ConditionItem, ConditionOptions } from "./ConditionOptions";
@@ -23,7 +24,13 @@ class ExpressionValue {
   }
 
   public static fromUrlToken(token: UrlToken) {
-    return new ExpressionValue(token.name, token.name, token.name);
+    const option = STATIC_OPTIONS.find(o => o.slug === token.name)
+
+    if (!option) {
+      return new ExpressionValue(token.name, token.name, token.name);
+    }
+
+    return new ExpressionValue(token.name, option.label, token.name);
   }
 
   public static forAttribute(
@@ -106,22 +113,17 @@ export class FilterElement {
     return ConditionOptions.isAttributeInputType(this.value.type);
   }
 
-  public isCollection() {
-    return this.value.value === "collection";
-  }
+  public rowType (): RowType | null {
+    if (this.isStatic()) {
+      return this.value.value as RowType
+    }
 
-  public isCategory() {
-    return this.value.value === "category";
-  }
+    if (this.isAttribute()) {
+      return "attribute"
+    }
 
-  public isProductType() {
-    return this.value.value === "producttype";
+    return null;
   }
-
-  public isChannel() {
-    return this.value.value === "channel";
-  }
-
 
   public asUrlEntry(): UrlEntry {
     if (this.isAttribute()) {

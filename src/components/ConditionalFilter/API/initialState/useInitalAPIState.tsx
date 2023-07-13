@@ -15,7 +15,12 @@ export const useInitialAPIState = (props: FetchingParams) => {
       initialState.attribute,
       initialState.channel,
       initialState.collection,
-      initialState.producttype,
+      initialState.productType,
+      initialState.isAvailable,
+      initialState.isPublished,
+      initialState.isVisibleInListing,
+      initialState.hasCategory,
+      initialState.giftCard
     ),
     loading,
   };
