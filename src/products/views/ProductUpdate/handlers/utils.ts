@@ -88,13 +88,11 @@ export function getProductChannelsUpdateVariables(
       ] as Array<keyof ProductChannelListingAddInput>;
 
       if (!listing.isPublished) {
-        fielsToPick.push("publicationDate");
-        fielsToPick.push("publishedAt");
+        fielsToPick.push("publicationDate", "publishedAt");
       }
 
       if (!listing.isAvailableForPurchase) {
-        fielsToPick.push("availableForPurchaseAt");
-        fielsToPick.push("availableForPurchaseDate");
+        fielsToPick.push("availableForPurchaseAt", "availableForPurchaseDate");
       }
 
       return pick(
