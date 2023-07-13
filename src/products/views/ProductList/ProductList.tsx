@@ -2,7 +2,6 @@
 import { filterable } from "@dashboard/attributes/utils/data";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useColumnPickerSettings } from "@dashboard/components/Datagrid/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -89,9 +88,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
   );
-
-  const { columnPickerSettings, setDynamicColumnsSettings } =
-    useColumnPickerSettings("PRODUCT_LIST");
 
   usePaginationReset(productListUrl, params, settings.rowNumber);
 
@@ -289,7 +285,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     [params, settings.rowNumber],
   );
 
-  const filteredColumnIds = (columnPickerSettings ?? [])
+  const filteredColumnIds = (settings.columns ?? [])
     .filter(isAttributeColumnValue)
     .map(getAttributeIdFromColumnValue);
 
@@ -420,8 +416,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         tabs={presets.map(tab => tab.name)}
         onExport={() => openModal("export")}
         selectedChannelId={selectedChannel?.id}
-        columnPickerSettings={columnPickerSettings}
-        setDynamicColumnSettings={setDynamicColumnsSettings}
         selectedProductIds={selectedRowIds}
         onSelectProductIds={handleSetSelectedProductIds}
         clearRowSelection={clearRowSelection}

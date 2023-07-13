@@ -1,5 +1,4 @@
 import { ArrowLeftIcon, CloseIcon } from "@saleor/macaw-ui/next";
-import uniqBy from "lodash/uniqBy";
 import React, { Dispatch, SetStateAction } from "react";
 
 import { AvailableColumn } from "../types";
@@ -60,11 +59,6 @@ export const sortColumns = (
   order: string[],
 ) => columns?.sort((a, b) => order.indexOf(a.id) - order.indexOf(b.id));
 
-export const filterSelectedColumns = (
-  columns: AvailableColumn[] | undefined,
-  selected: string[],
-) => columns?.filter(column => selected.includes(column.id));
-
 export const areCategoriesLoaded = (categories: ColumnCategory[] | undefined) =>
   categories?.every(category => Array.isArray(category.selectedNodes));
 
@@ -72,9 +66,13 @@ export const extractSelectedNodesFromCategories = (
   categories: ColumnCategory[] | undefined,
 ) => categories?.flatMap(category => category.selectedNodes);
 
-export const extractAvailableNodesFromCategories = (
-  categories: ColumnCategory[] | undefined,
-) => categories?.flatMap(category => category.availableNodes);
+export const findDynamicColumn = (
+  categories: ColumnCategory[],
+  columnId: string,
+) =>
+  categories
+    .flatMap(category => category.availableNodes)
+    .find(column => column?.id === columnId);
 
 export const mergeSelectedColumns = ({
   staticColumns,
@@ -88,8 +86,3 @@ export const mergeSelectedColumns = ({
   [...staticColumns, ...(dynamicColumns ?? [])].filter(
     column => selectedColumns.includes(column.id) || column.id === "empty",
   );
-
-export const mergeCurrentDynamicColumnsWithCandidates = (
-  dynamicColumns: AvailableColumn[] | undefined,
-  candidates: AvailableColumn[],
-) => uniqBy([...(dynamicColumns ?? []), ...candidates], "id");

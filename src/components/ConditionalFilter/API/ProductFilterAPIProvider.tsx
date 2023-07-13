@@ -2,6 +2,7 @@ import { ApolloClient, useApolloClient } from "@apollo/client";
 
 import { RowType } from "../constants";
 import { FilterContainer, FilterElement } from "../FilterElement";
+import { FetchingParams } from "../ValueProvider/TokenArray/fetchingParams";
 import { FilterAPIProvider } from "./FilterAPIProvider";
 import {
   AttributeChoicesHandler,
@@ -13,6 +14,11 @@ import {
   Handler,
   ProductTypeHandler,
 } from "./Handler";
+import {
+  createInitialStateFromData,
+  useDataFromAPI,
+} from "./initialState/helpers";
+import { InitialStateResponse } from "./InitialStateResponse";
 
 const getFilterElement = (
   value: FilterContainer,
@@ -110,8 +116,31 @@ export const useProductFilterAPIProvider = (): FilterAPIProvider => {
     return handler.fetch();
   };
 
+  const useInitialState = (fetchingParams: FetchingParams) => {
+    const { data, loading } = useDataFromAPI({
+      ...fetchingParams,
+    });
+
+    const initialState = createInitialStateFromData(
+      data,
+      fetchingParams.channel,
+    );
+
+    return {
+      data: new InitialStateResponse(
+        initialState.category,
+        initialState.attribute,
+        initialState.channel,
+        initialState.collection,
+        initialState.producttype,
+      ),
+      loading,
+    };
+  };
+
   return {
     fetchRightOptions,
     fetchLeftOptions,
+    useInitialState,
   };
 };

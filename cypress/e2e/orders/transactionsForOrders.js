@@ -16,7 +16,6 @@ import {
   createShipping,
   getDefaultTaxClass,
   productsUtils,
-  updateTaxConfigurationForChannel,
 } from "../../support/api/utils";
 import { transactionsOrderUtils } from "../../support/pages/";
 
@@ -44,7 +43,6 @@ describe("Orders", () => {
           channelId: channel.id,
           markAsPaidStrategy: "TRANSACTION_FLOW",
         });
-        updateTaxConfigurationForChannel({ channelSlug: channel.slug });
         getDefaultTaxClass();
       })
       .then(resp => {

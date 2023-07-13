@@ -2,7 +2,14 @@ import { FetchingParams } from "../../ValueProvider/TokenArray/fetchingParams";
 import { InitialStateResponse } from "../InitialStateResponse";
 import { createInitialStateFromData, useDataFromAPI } from "./helpers";
 
-export const useInitialAPIState = (props: FetchingParams) => {
+export interface InitialStateAPIProvider {
+  data: InitialStateResponse;
+  loading: boolean;
+}
+
+export const useInitialAPIState = (
+  props: FetchingParams,
+): InitialStateAPIProvider => {
   const { data, loading } = useDataFromAPI({
     ...props,
   });

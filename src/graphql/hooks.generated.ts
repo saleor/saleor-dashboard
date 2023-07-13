@@ -254,6 +254,7 @@ export const ChannelDetailsFragmentDoc = gql`
   }
   orderSettings {
     markAsPaidStrategy
+    deleteExpiredOrdersAfter
   }
 }
     ${ChannelFragmentDoc}

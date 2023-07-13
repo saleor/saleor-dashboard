@@ -2,7 +2,7 @@
 
 ### System Architecture
 
-<img width="977" alt="image" src="https://user-images.githubusercontent.com/41952692/233042483-d2cb30f3-26b7-40b5-9d08-2ea42f7f0242.png">
+<img width="858" alt="image" src="https://github.com/saleor/saleor-dashboard/assets/41952692/8ce49003-e2af-4901-9098-fa5deb9bbe66">
 
 ### Column types
 
@@ -34,35 +34,32 @@ attribute:QXR0cmlidXRlOjIx
 - dynamic columns - array of dynamic columns for the column picker
 - column categories - array of column categories, which is abstraction for dynamic column. For example attributes is a column category, whereas Flavor attribute is an actual column value. This object has all API-related properties, like search handler, fetch more props, etc.
 - selected columns - array of column IDs which are selected in the column picker. It is saved in local storage
-- dynamic column settings - array of column IDs which are selected in the left section of the column picker. It is saved in local storage.
 - recently added column - this value is used in datagrid component to enable auto-scroll to newly added column
 - handlers:
   - column resize handler (for datagrid)
   - column reorder handler (for datagrid)
-  - column visibility handler (for column picker)
-  - dynamic column selection handler (for column picker)
+  - column selection toggle (for column picker)
+  - customUpdateVisible - used to manually update visible columns state. For now it is required to update arrow icon in the datagrid columns
 
-In order to use this hook, you need to provide four things:
+In order to use this hook, you need to provide two/three things:
 
 - `staticColumns` - array of static columns in datagrid-ready format (`AvailableColumns[]`)
-- `columnCategories` - array of column categories
+- `columnCategories` - array of column categories (only if there are any dynamic columns)
 - state & setter of column settings which we get from `useListSettings`
-- state of column picker settings which we get from `useColumnPickerSettings`
 
 ## Adapting new views
 
-### Column picker settings
+### Selected columns in LS
 
-Firstly, in the view file, we need to provide two settings object, one for the selected columns and one for the dynamic column settings. We should use `useColumnPickerSettings` and `useListSettings` hook for that. The first settings object manages columns selected for the datagrid (visible columns). The second manages state of seleceted dynamic columns (if we pick a value from left side of column picked, it is then displayed on the right side of the picker as dynamic column with togglable visibility). Toggling the visiblity saves the column in the first settings object.
-
-The reason why column picker settings object needs to be in the view file and cannot be integrated into internal logic of useColumns is because we use column picker settings in the query. We need to know which columns are selected in order to fetch the correct data from the API.
+Firstly, in the view file, we need to provide settings object which holds seleted columns IDs. We should use `useListSettings` hook for that.
 
 ```tsx
-const { columnPickerSettings, setDynamicColumnsSettings } =
-  useColumnPickerSettings("PRODUCT_LIST");
+const { updateListSettings, settings } = useListSettings(
+  ListViews.PRODUCT_LIST,
+);
 
 // Translates columnIDs to api IDs
-const filteredColumnIds = columnPickerSettings
+const filteredColumnIds = settings.columns
   .filter(isAttributeColumnValue)
   .map(getAttributeIdFromColumnValue);
 
@@ -131,12 +128,12 @@ export const parseDynamicColumnsForProductListView = ({
     name: "Attributes",
     prefix: "attribute",
     availableNodes: parseAttributesColumns(
-      attributesData,
+      attributesData, // all attributes
       activeAttributeSortId,
       sort,
     ),
     selectedNodes: parseAttributesColumns(
-      gridAttributesData,
+      gridAttributesData, // selected attributes
       activeAttributeSortId,
       sort,
     ),
@@ -151,7 +148,7 @@ export const parseDynamicColumnsForProductListView = ({
 
 Here we only have 1 column category, attributes. `attributesData` is the result of the first query, `gridAttributesData` is the result of the second query. We also provide pagination props, which are used in the column picker.
 
-Queries which are used in this case are for categories. Let's look at the first query:
+Let's have a look at the first query:
 
 ```tsx
 export const availableColumnAttribues = gql`
@@ -185,7 +182,7 @@ export const availableColumnAttribues = gql`
 
 This query is used to fetch all **available** attributes. It is paginated and has a search filter and results are displayed in the left part of the column picker.
 
-The second query is similar, but it has a filter of IDs, which come from local storage settings (useColumnPickerSettngs):
+The second query is similar, but it has a filter of IDs, which come from local storage settings (useListSettings):
 
 ```tsx
 export const gridAttributes = gql`
