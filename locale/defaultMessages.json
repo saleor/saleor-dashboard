@@ -89,6 +89,9 @@
   "+a+2ug": {
     "string": "Members"
   },
+  "+b/qJ9": {
+    "string": "Delete draft orders"
+  },
   "+b3KCV": {
     "context": "button",
     "string": "Activate"
@@ -2407,6 +2410,9 @@
   "Ff+Gsm": {
     "context": "WarehouseSettings public stock description",
     "string": "If enabled stock in this warehouse will be shown"
+  },
+  "FiO/W/": {
+    "string": "Delete categories"
   },
   "FjrExY": {
     "context": "price based shipping methods, section header",
@@ -5095,9 +5101,6 @@
     "context": "no address is set in draft order",
     "string": "Not set"
   },
-  "YJ2uRR": {
-    "string": "Bulk delete draft orders"
-  },
   "YJ4TXc": {
     "context": "tab name",
     "string": "All Staff Members"
@@ -5235,9 +5238,6 @@
   },
   "ZMy18J": {
     "string": "You have reached your channel limit, you will be no longer able to add channels to your store. If you would like to up your limit, contact your administration staff about raising your limits."
-  },
-  "ZN5IZl": {
-    "string": "Bulk categories delete"
   },
   "ZPOyI1": {
     "context": "fulfilled fulfillment, section header",
@@ -5768,9 +5768,6 @@
   "cwoN25": {
     "context": "config type section title",
     "string": "Configuration Type"
-  },
-  "cxOmce": {
-    "string": "Bulk products delete"
   },
   "cy8sV7": {
     "context": "volume units types",
@@ -6534,9 +6531,6 @@
   "jqJqdE": {
     "context": "VariantDetailsChannelsAvailabilityCard no items available",
     "string": "This variant is not available at any of the channels"
-  },
-  "jrBxCQ": {
-    "string": "Bulk product delete"
   },
   "jswILH": {
     "context": "add attribute as column in product list table",
@@ -7454,9 +7448,6 @@
     "context": "order line total price",
     "string": "Total"
   },
-  "qU/z0Q": {
-    "string": "Bulk category delete"
-  },
   "qZHHed": {
     "context": "stock exceeded dialog title",
     "string": "Not enough stock"
@@ -8069,6 +8060,9 @@
   "utaSh3": {
     "context": "staff member's account",
     "string": "Status"
+  },
+  "uwk5e9": {
+    "string": "Delete products"
   },
   "uxPpRx": {
     "context": "button",

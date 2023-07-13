@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { categoryAddUrl } from "@dashboard/categories/urls";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { DashboardCard } from "@dashboard/components/Card";
 import { InternalLink } from "@dashboard/components/InternalLink";
 import { CategoryDetailsQuery } from "@dashboard/graphql";
@@ -8,7 +9,6 @@ import { Box, Button } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage } from "react-intl";
 
-import { CategoryDeleteButton } from "../CategoryDeleteButton";
 import { CategoryListDatagrid } from "../CategoryListDatagrid";
 
 interface CategorySubcategoriesProps
@@ -61,12 +61,12 @@ export const CategorySubcategories = ({
         onSelectCategoriesIds={onSelectCategoriesIds}
         selectionActionButton={
           <Box paddingRight={5}>
-            <CategoryDeleteButton onClick={onCategoriesDelete}>
+            <BulkDeleteButton onClick={onCategoriesDelete}>
               <FormattedMessage
-                defaultMessage="Bulk categories delete"
-                id="ZN5IZl"
+                defaultMessage="Delete categories"
+                id="FiO/W/"
               />
-            </CategoryDeleteButton>
+            </BulkDeleteButton>
           </Box>
         }
       />

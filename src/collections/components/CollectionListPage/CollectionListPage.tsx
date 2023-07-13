@@ -7,6 +7,7 @@ import {
 } from "@dashboard/collections/urls";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { getByName } from "@dashboard/components/Filter/utils";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
@@ -19,7 +20,6 @@ import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CollectionListDatagrid } from "../CollectionListDatagrid";
-import { CollectionListDeleteButton } from "../CollectionListDeleteButton";
 import {
   CollectionFilterKeys,
   CollectionListFilterOpts,
@@ -139,12 +139,12 @@ const CollectionListPage: React.FC<CollectionListPageProps> = ({
           actions={
             <Box display="flex" gap={4}>
               {selectedCollectionIds.length > 0 && (
-                <CollectionListDeleteButton onClick={onCollectionsDelete}>
+                <BulkDeleteButton onClick={onCollectionsDelete}>
                   <FormattedMessage
                     defaultMessage="Delete collections"
                     id="FTYkgw"
                   />
-                </CollectionListDeleteButton>
+                </BulkDeleteButton>
               )}
             </Box>
           }
