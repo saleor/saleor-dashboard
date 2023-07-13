@@ -18,11 +18,11 @@ import {
 } from "@dashboard/graphql";
 import { useEffect, useState } from "react";
 
+import { createBooleanOptions } from "../../constants";
 import { FetchingParams } from "../../ValueProvider/TokenArray/fetchingParams";
 import { createOptionsFromAPI } from "../Handler";
 import { InitialState } from "../InitialStateResponse";
 import { InitialAPIResponse } from "./types";
-import { createBooleanOptions } from "../../constants";
 
 const isChannelQuery = (
   query: InitialAPIResponse,

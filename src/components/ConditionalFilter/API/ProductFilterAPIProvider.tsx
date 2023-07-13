@@ -1,5 +1,6 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
 
+import { RowType } from "../constants";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterAPIProvider } from "./FilterAPIProvider";
 import {
@@ -12,7 +13,6 @@ import {
   Handler,
   ProductTypeHandler,
 } from "./Handler";
-import { RowType } from "../constants";
 
 const getFilterElement = (
   value: FilterContainer,

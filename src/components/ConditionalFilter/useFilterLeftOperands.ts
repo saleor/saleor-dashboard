@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-import { LeftOperand, LeftOperandsProvider } from "./LeftOperandsProvider";
 import { STATIC_OPTIONS } from "./constants";
+import { LeftOperand, LeftOperandsProvider } from "./LeftOperandsProvider";
 
 
 export const useFilterLeftOperandsProvider = (): LeftOperandsProvider => {
