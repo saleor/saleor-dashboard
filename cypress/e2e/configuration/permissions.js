@@ -52,7 +52,6 @@ describe("Permissions groups", () => {
         .click()
         .wait("@PermissionGroupCreate")
         .then(createPermissionRequest => {
-          cy.log(createPermissionRequest);
           const permissionGroupResponse =
             createPermissionRequest.response.body.data.permissionGroupCreate;
           expect(permissionGroupResponse.errors).to.have.length(0);
