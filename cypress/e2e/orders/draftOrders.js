@@ -5,7 +5,6 @@ import faker from "faker";
 
 import {
   BUTTON_SELECTORS,
-  DRAFT_ORDERS_LIST_SELECTORS,
   ORDERS_SELECTORS,
   SHARED_ELEMENTS,
 } from "../../elements/";
@@ -16,6 +15,7 @@ import {
 } from "../../support/api/requests/";
 import { createShipping, getDefaultChannel } from "../../support/api/utils/";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
+import { ensureCanvasStatic } from "../../support/customCommands/sharedElementsOperations/canvas";
 import {
   finalizeDraftOrder,
   selectChannelInPicker,
@@ -108,10 +108,8 @@ describe("Draft orders", () => {
             .click()
             .waitForRequestAndCheckIfNoErrors("@OrderList");
           cy.visit(urlList.draftOrders).then(() => {
-            cy.get(DRAFT_ORDERS_LIST_SELECTORS.draftOrderRow).should(
-              "have.length.greaterThan",
-              5,
-            );
+            cy.url().should("include", urlList.draftOrders);
+            ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
             cy.contains(draftOrderNumber).should("not.exist");
           });
         });
