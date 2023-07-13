@@ -17,7 +17,6 @@ import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { GiftCardListBulkActions } from "../GiftCardListBulkActions";
-import { GiftCarsListDeleteButton } from "../GiftCardsListDeleteButton";
 import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
 import { GiftCardListActionParamsEnum } from "../types";
@@ -26,6 +25,7 @@ import {
   giftCardListFilterErrorMessages as errorMessages,
   giftCardListSearchAndFiltersMessages as messages,
 } from "./messages";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 
 const GiftCardListSearchAndFilters: React.FC = () => {
   const intl = useIntl();
@@ -131,12 +131,12 @@ const GiftCardListSearchAndFilters: React.FC = () => {
             {selectedRowIds.length > 0 && (
               <>
                 <GiftCardListBulkActions />
-                <GiftCarsListDeleteButton onClick={openDeleteDialog}>
+                <BulkDeleteButton onClick={openDeleteDialog}>
                   <FormattedMessage
                     defaultMessage="Delete gift cards"
                     id="d68yq7"
                   />
-                </GiftCarsListDeleteButton>
+                </BulkDeleteButton>
               </>
             )}
           </Box>
