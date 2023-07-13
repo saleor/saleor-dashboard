@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { DEFAULT_INITIAL_SEARCH_DATA } from "@dashboard/config";
@@ -25,7 +26,6 @@ import {
   giftCardListFilterErrorMessages as errorMessages,
   giftCardListSearchAndFiltersMessages as messages,
 } from "./messages";
-import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 
 const GiftCardListSearchAndFilters: React.FC = () => {
   const intl = useIntl();
