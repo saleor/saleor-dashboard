@@ -192,7 +192,7 @@ jobs:
             --instance "$TESTMO_URL" \
             --project-id 1 \
             --name "Deployment tests" \
-            --source unit-tests > testmo-run-id.txt
+            --source frontend-e2e-tests > testmo-run-id.txt
           ID=$(cat testmo-run-id.txt)
           echo "testmo-run-id=$ID" >> $GITHUB_OUTPUT
         env:
@@ -202,7 +202,13 @@ jobs:
 
   cypress-run-selected:
     runs-on: ubuntu-22.04
-    needs: [prepare-tests, deploy, testmo-report-preparation, testmo-report-preparation]
+    needs:
+      [
+        prepare-tests,
+        deploy,
+        testmo-report-preparation,
+        testmo-report-preparation,
+      ]
     container: cypress/browsers:node18.12.0-chrome106-ff106
     strategy:
       fail-fast: false
@@ -260,17 +266,17 @@ jobs:
           parallel: true
           group: "UI - Chrome"
           record: true
-          tag: Critical, ${{github.event.action}}    
+          tag: Critical, ${{github.event.action}}
       - name: Install dependencies
         working-directory: .github/workflows
-        run: npm ci 
+        run: npm ci
       - name: Testmo threads submit
         working-directory: .github/workflows
-        run: | 
-            npx testmo automation:run:submit-thread \
-            --instance "$TESTMO_URL" \
-            --run-id "${{ needs.testmo-report-preparation.outputs.testmo-run-id }}" \
-            --results ../../results/*.xml
+        run: |
+          npx testmo automation:run:submit-thread \
+          --instance "$TESTMO_URL" \
+          --run-id "${{ needs.testmo-report-preparation.outputs.testmo-run-id }}" \
+          --results ../../results/*.xml
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
@@ -286,7 +292,7 @@ jobs:
           cache: npm
       - run: npm ci
         working-directory: .github/workflows
-      - name: complete testmo report 
+      - name: complete testmo report
         working-directory: .github/workflows
         run: |
           npx testmo automation:run:complete \
