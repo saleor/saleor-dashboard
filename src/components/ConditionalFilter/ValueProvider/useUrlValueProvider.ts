@@ -1,7 +1,8 @@
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { stringify } from "qs";
+import { useEffect } from "react";
 import useRouter from "use-react-router";
 
-import { FilterAPIProvider } from "../API/FilterAPIProvider";
 import { FilterContainer } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { useTokenArray } from "./TokenArray";
@@ -22,17 +23,20 @@ const prepareStructure = (filterValue: FilterContainer): Structure =>
     return f.asUrlEntry();
   });
 
-export const useUrlValueProvider = (
-  apiProvider: FilterAPIProvider,
-): FilterValueProvider => {
+export const useUrlValueProvider = (initalState: any): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(router.location.search);
+  const navigate = useNavigator();
+
   params.delete("asc");
   params.delete("sort");
 
   const tokenizedUrl = useTokenArray(params.toString());
   const fetchingParams = tokenizedUrl.getFetchingParams();
-  const { data, loading } = apiProvider.useInitialState(fetchingParams);
+  const { data, loading } = initalState;
+  useEffect(() => {
+    initalState.fetchQueries(fetchingParams);
+  }, []);
   const value = loading ? [] : tokenizedUrl.asFilterValuesFromResponse(data);
 
   const persist = (filterValue: FilterContainer) => {

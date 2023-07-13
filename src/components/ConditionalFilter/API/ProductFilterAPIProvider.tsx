@@ -1,7 +1,6 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
 
 import { FilterContainer, FilterElement } from "../FilterElement";
-import { FetchingParams } from "../ValueProvider/TokenArray/fetchingParams";
 import { FilterAPIProvider } from "./FilterAPIProvider";
 import {
   AttributeChoicesHandler,
@@ -12,10 +11,7 @@ import {
   Handler,
   ProductTypeHandler,
 } from "./Handler";
-import {
-  createInitialStateFromData,
-  useDataFromAPI,
-} from "./initialState/helpers";
+import { useDataFromAPI } from "./initialState/helpers";
 import { InitialStateResponse } from "./InitialStateResponse";
 
 const getFilterElement = (
@@ -85,31 +81,24 @@ export const useProductFilterAPIProvider = (): FilterAPIProvider => {
     return handler.fetch();
   };
 
-  const useInitialState = (fetchingParams: FetchingParams) => {
-    const { data, loading } = useDataFromAPI({
-      ...fetchingParams,
-    });
-
-    const initialState = createInitialStateFromData(
-      data,
-      fetchingParams.channel,
-    );
-
-    return {
-      data: new InitialStateResponse(
-        initialState.category,
-        initialState.attribute,
-        initialState.channel,
-        initialState.collection,
-        initialState.producttype,
-      ),
-      loading,
-    };
-  };
-
   return {
     fetchRightOptions,
     fetchLeftOptions,
-    useInitialState,
+  };
+};
+
+export const useInitialState = () => {
+  const { data, loading, fetchQueries } = useDataFromAPI();
+
+  return {
+    data: new InitialStateResponse(
+      data?.category,
+      data?.attribute,
+      data?.channel,
+      data?.collection,
+      data?.producttype,
+    ),
+    loading,
+    fetchQueries,
   };
 };

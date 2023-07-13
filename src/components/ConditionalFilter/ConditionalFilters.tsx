@@ -18,8 +18,8 @@ export const ConditionalFilters: FC = () => {
         <Text>Loading...</Text>
       ) : (
         <FiltersArea
-          filterValue={valueProvider.value}
           onConfirm={handleConfirm}
+          filterValue={valueProvider.value}
         />
       )}
     </Box>

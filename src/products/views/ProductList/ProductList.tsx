@@ -375,6 +375,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     queryString: params,
   });
 
+  console.log("product list");
+
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <ProductListPage

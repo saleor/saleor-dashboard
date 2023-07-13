@@ -16,7 +16,7 @@ import {
   _SearchProductTypesOperandsQuery,
   _SearchProductTypesOperandsQueryVariables,
 } from "@dashboard/graphql";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 import { FetchingParams } from "../../ValueProvider/TokenArray/fetchingParams";
 import { createOptionsFromAPI } from "../Handler";
@@ -119,26 +119,19 @@ export const createInitialStateFromData = (
     },
   );
 
-export const useDataFromAPI = ({
-  category,
-  collection,
-  producttype,
-  channel,
-  attribute,
-}: FetchingParams) => {
+export const useDataFromAPI = () => {
   const client = useApolloClient();
-  const [data, setData] = useState<InitialAPIResponse[]>([]);
+  const [data, setData] = useState<InitialState>(null);
   const [loading, setLoading] = useState(true);
+  const queriesToRun: Array<Promise<InitialAPIResponse>> = [];
 
-  useEffect(() => {
-    const queriesToRun: Array<Promise<InitialAPIResponse>> = [];
-
-    const fetchQueries = async () => {
-      const data = await Promise.all(queriesToRun);
-      setData(data);
-      setLoading(false);
-    };
-
+  const fetchQueries = async ({
+    category,
+    collection,
+    producttype,
+    channel,
+    attribute,
+  }: FetchingParams) => {
     if (channel.length > 0) {
       queriesToRun.push(
         client.query<
@@ -211,11 +204,15 @@ export const useDataFromAPI = ({
       );
     }
 
-    void fetchQueries();
-  }, []);
+    const data = await Promise.all(queriesToRun);
+    const initialState = createInitialStateFromData(data, channel);
+    setData(initialState);
+    setLoading(false);
+  };
 
   return {
     data,
     loading,
+    fetchQueries,
   };
 };
