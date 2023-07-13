@@ -1,7 +1,6 @@
 // @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
-import { useColumnPickerSettings } from "@dashboard/components/Datagrid/ColumnPicker/useColumnPickerSettings";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import {
@@ -56,7 +55,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const { updateListSettings, settings } = useListSettings(
     ListViews.COLLECTION_LIST,
   );
-  const { columnPickerSettings } = useColumnPickerSettings("COLLECTION_LIST");
 
   usePaginationReset(collectionListUrl, params, settings.rowNumber);
   const { channel } = useAppChannel(false);
@@ -184,6 +182,15 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
     ],
   );
 
+  const handleCollectionBulkDelete = useCallback(async () => {
+    await collectionBulkDelete({
+      variables: {
+        ids: selectedRowIds,
+      },
+    });
+    clearRowSelection();
+  }, [selectedRowIds]);
+
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <CollectionListPage
@@ -202,7 +209,6 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         tabs={presets.map(tab => tab.name)}
         loading={loading}
         disabled={loading}
-        columnPickerSettings={columnPickerSettings}
         collections={collections}
         settings={settings}
         onSort={handleSort}
@@ -226,13 +232,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         }
         onClose={closeModal}
         confirmButtonState={collectionBulkDeleteOpts.status}
-        onConfirm={() =>
-          collectionBulkDelete({
-            variables: {
-              ids: selectedRowIds,
-            },
-          })
-        }
+        onConfirm={handleCollectionBulkDelete}
         variant="delete"
         title={intl.formatMessage({
           id: "Ykw8k5",

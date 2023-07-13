@@ -2,16 +2,13 @@
 import useStateFromProps from "@dashboard/hooks/useStateFromProps";
 import { addAtIndex, removeAtIndex } from "@dashboard/utils/lists";
 import { GridColumn } from "@glideapps/glide-data-grid";
-import difference from "lodash/difference";
 import React from "react";
 
 import { AvailableColumn } from "../types";
 import {
   areCategoriesLoaded,
-  extractAvailableNodesFromCategories,
   extractSelectedNodesFromCategories,
-  filterSelectedColumns,
-  mergeCurrentDynamicColumnsWithCandidates,
+  findDynamicColumn,
   mergeSelectedColumns,
   sortColumns,
 } from "./utils";
@@ -34,8 +31,6 @@ export interface UseColumnsProps {
   columnCategories?: ColumnCategory[];
   selectedColumns: string[];
   onSave: (columns: string[]) => void;
-  columnPickerSettings?: string[];
-  setDynamicColumnSettings?: (cols: string[]) => void;
 }
 
 export const useColumns = ({
@@ -43,8 +38,6 @@ export const useColumns = ({
   selectedColumns,
   columnCategories,
   onSave,
-  columnPickerSettings,
-  setDynamicColumnSettings,
 }: UseColumnsProps) => {
   const [dynamicColumns, updateDynamicColumns] = React.useState<
     AvailableColumn[] | null | undefined
@@ -58,11 +51,11 @@ export const useColumns = ({
       updateDynamicColumns(
         sortColumns(
           extractSelectedNodesFromCategories(columnCategories),
-          columnPickerSettings,
+          selectedColumns,
         ),
       );
     }
-  }, [columnCategories, columnPickerSettings, dynamicColumns]);
+  }, [columnCategories, selectedColumns, dynamicColumns]);
 
   const initialColumnsState = React.useMemo(
     () =>
@@ -120,47 +113,37 @@ export const useColumns = ({
     [setVisibleColumns],
   );
 
-  const onChange = (columns: string[]) => {
-    // Recently added is used by datagrid to auto-scroll to the column
-    setRecentlyAddedColumn(difference(columns, selectedColumns)[0]);
-    // Saves in LS
-    onSave(columns);
+  const onToggle = (columnId: string) => {
+    const isAdded = !selectedColumns.includes(columnId);
+    const isDynamic = columnId.includes(":");
+    if (isAdded) {
+      onSave([...selectedColumns, columnId]);
+      setRecentlyAddedColumn(columnId);
+    } else {
+      onSave(selectedColumns.filter(id => id !== columnId));
+    }
+    if (isDynamic) {
+      if (isAdded) {
+        updateDynamicColumns(prevDynamicColumns => [
+          ...(prevDynamicColumns ?? []),
+          findDynamicColumn(columnCategories, columnId),
+        ]);
+      } else {
+        updateDynamicColumns(prevDynamicColumns =>
+          (prevDynamicColumns ?? []).filter(column => column.id !== columnId),
+        );
+      }
+    }
   };
 
   // Should be used only for special cases
   const onCustomUpdateVisible = setVisibleColumns;
 
-  const onDynamicColumnSelect = (selected: string[]) => {
-    if (typeof setDynamicColumnSettings !== "function") {
-      return;
-    }
-
-    // This is optimistic update - dynamic columns are only synced
-    // with the API on the initial render
-    setDynamicColumnSettings(selected);
-    updateDynamicColumns(prevDynamicColumns =>
-      filterSelectedColumns(
-        sortColumns(
-          mergeCurrentDynamicColumnsWithCandidates(
-            prevDynamicColumns,
-            filterSelectedColumns(
-              extractAvailableNodesFromCategories(columnCategories),
-              selected,
-            ),
-          ),
-          selected,
-        ),
-        selected,
-      ),
-    );
-  };
-
   return {
     handlers: {
       onMove,
       onResize,
-      onChange,
-      onDynamicColumnSelect,
+      onToggle,
       onCustomUpdateVisible,
     },
     visibleColumns,
@@ -168,7 +151,6 @@ export const useColumns = ({
     dynamicColumns,
     selectedColumns,
     columnCategories,
-    columnPickerSettings,
     recentlyAddedColumn,
   };
 };

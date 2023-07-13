@@ -3,8 +3,7 @@ import {
   ChannelShippingZones,
   ChannelWarehouses,
 } from "@dashboard/channels/pages/ChannelDetailsPage/types";
-import CardSpacer from "@dashboard/components/CardSpacer";
-import CardTitle from "@dashboard/components/CardTitle";
+import { DashboardCard } from "@dashboard/components/Card";
 import ControlledSwitch from "@dashboard/components/ControlledSwitch";
 import FormSpacer from "@dashboard/components/FormSpacer";
 import Link from "@dashboard/components/Link";
@@ -23,18 +22,11 @@ import { ChangeEvent, FormChange } from "@dashboard/hooks/useForm";
 import { commonMessages } from "@dashboard/intl";
 import { getFormErrors } from "@dashboard/utils/errors";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
-import {
-  Card,
-  CardContent,
-  InputAdornment,
-  TextField,
-  Typography,
-} from "@material-ui/core";
-import { Box } from "@saleor/macaw-ui/next";
+import { Box, Button, CopyIcon, Input, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import { useStyles } from "../styles";
+import { messages } from "./messages";
 import { ExtendedFormHelperTextProps } from "./types";
 
 export interface FormData extends StockSettingsInput {
@@ -49,6 +41,7 @@ export interface FormData extends StockSettingsInput {
   warehousesToDisplay: ChannelWarehouses;
   defaultCountry: CountryCode;
   markAsPaidStrategy: MarkAsPaidStrategyEnum;
+  deleteExpiredOrdersAfter: number;
 }
 
 export interface ChannelFormProps {
@@ -79,91 +72,62 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
   onMarkAsPaidStrategyChange,
 }) => {
   const intl = useIntl();
-  const [copied, copy] = useClipboard();
+  const [, copy] = useClipboard();
   const formErrors = getFormErrors<keyof FormData, ChannelErrorFragment>(
-    ["name", "slug", "currencyCode", "defaultCountry"],
+    [
+      "name",
+      "slug",
+      "currencyCode",
+      "defaultCountry",
+      "deleteExpiredOrdersAfter",
+    ],
     errors,
   );
-  const classes = useStyles();
 
   return (
     <>
-      <Card>
-        <CardTitle
-          title={intl.formatMessage(commonMessages.generalInformations)}
-        />
-        <CardContent>
-          <TextField
+      <DashboardCard>
+        <DashboardCard.Title>
+          {intl.formatMessage(commonMessages.generalInformations)}
+        </DashboardCard.Title>
+        <DashboardCard.Content data-test-id="general-information">
+          <Input
             error={!!formErrors.name}
             helperText={getChannelsErrorMessage(formErrors?.name, intl)}
             disabled={disabled}
-            fullWidth
-            label={intl.formatMessage({
-              id: "UymotP",
-              defaultMessage: "Channel name",
-              description: "channel name",
-            })}
+            label={intl.formatMessage(messages.channelName)}
             name="name"
             value={data.name}
             onChange={onChange}
           />
           <FormSpacer />
-          <TextField
+          <Input
             error={!!formErrors.slug}
             helperText={getChannelsErrorMessage(formErrors?.slug, intl)}
             disabled={disabled}
-            fullWidth
-            FormHelperTextProps={
-              {
-                "data-test-id": "slug-text-input-helper-text",
-              } as ExtendedFormHelperTextProps
-            }
-            label={intl.formatMessage({
-              id: "74Zo/H",
-              defaultMessage: "Slug",
-              description: "channel slug",
-            })}
+            label={intl.formatMessage(messages.channelSlug)}
             name="slug"
             value={data.slug}
             onChange={onChange}
-            InputProps={{
-              endAdornment: (
-                <InputAdornment
-                  className={classes.copyBtn}
-                  position="end"
-                  disableTypography
-                  onClick={() => copy(data.slug)}
-                >
-                  {copied ? (
-                    <FormattedMessage
-                      id="r86alc"
-                      defaultMessage="Copied"
-                      description="button"
-                    />
-                  ) : (
-                    <FormattedMessage
-                      id="ZhaXLU"
-                      defaultMessage="Copy"
-                      description="button"
-                    />
-                  )}
-                </InputAdornment>
-              ),
-            }}
+            endAdornment={
+              <Button
+                variant="tertiary"
+                onClick={() => copy(data.slug)}
+                textTransform="uppercase"
+                icon={<CopyIcon />}
+              />
+            }
           />
-          <FormSpacer />
-        </CardContent>
-      </Card>
-      <CardSpacer />
-      <Card>
-        <CardTitle
-          title={intl.formatMessage({
-            id: "3y4r+z",
-            defaultMessage: "Channel Settings",
-            description: "channel settings",
-          })}
-        />
-        <CardContent>
+        </DashboardCard.Content>
+      </DashboardCard>
+      <Box display="grid" __gridTemplateColumns="2fr 1fr" rowGap={2}>
+        <Text variant="heading" margin={6}>
+          <FormattedMessage {...messages.channelSettings} />
+        </Text>
+        <Text variant="heading" margin={6}>
+          <FormattedMessage {...messages.orderExpiration} />
+        </Text>
+        <Box paddingX={6}>
           {currencyCodes ? (
             <SingleAutocompleteSelectField
               data-test-id="channel-currency-select-input"
@@ -179,11 +143,7 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
                 intl,
               )}
               disabled={disabled}
-              label={intl.formatMessage({
-                id: "9Sz0By",
-                defaultMessage: "Currency",
-                description: "channel currency",
-              })}
+              label={intl.formatMessage(messages.channelCurrency)}
               choices={currencyCodes}
               name="currencyCode"
               displayValue={selectedCurrencyCode}
@@ -191,18 +151,18 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               onChange={onCurrencyCodeChange}
             />
           ) : (
-            <>
-              <Typography variant="caption" className={classes.label}>
-                <FormattedMessage
-                  id="39yi8w"
-                  defaultMessage="Selected currency"
-                  description="selected currency"
-                />
-              </Typography>
-              <Typography>{data.currencyCode}</Typography>
-            </>
+            <Box display="flex" flexDirection="column">
+              <Text variant="caption">
+                <FormattedMessage {...messages.selectedCurrency} />
+              </Text>
+              <Text>{data.currencyCode}</Text>
+            </Box>
           )}
-          <FormSpacer />
+        </Box>
+        <Text variant="caption" paddingX={6}>
+          <FormattedMessage {...messages.orderExpirationDescription} />
+        </Text>
+        <Box paddingX={6}>
           <SingleAutocompleteSelectField
             data-test-id="country-select-input"
             error={!!formErrors.defaultCountry}
@@ -216,73 +176,82 @@ export const ChannelForm: React.FC<ChannelFormProps> = ({
               intl,
             )}
             disabled={disabled}
-            label={intl.formatMessage({
-              id: "tV+Dcm",
-              defaultMessage: "Default country",
-            })}
+            label={intl.formatMessage(messages.defaultCountry)}
             choices={countries}
             name="defaultCountry"
             displayValue={selectedCountryDisplayName}
             value={data.defaultCountry}
             onChange={onDefaultCountryChange}
           />
-          <FormSpacer />
-          <Box display="flex" gap={1.5} alignItems="center">
-            <ControlledSwitch
-              data-test-id="order-settings-mark-as-paid"
-              disabled={disabled}
-              checked={
-                data.markAsPaidStrategy ===
-                MarkAsPaidStrategyEnum.TRANSACTION_FLOW
-              }
-              onChange={onMarkAsPaidStrategyChange}
-              name="markAsPaidStrategy"
-              label={
-                <span>
-                  <FormattedMessage
-                    defaultMessage='"Mark as paid" feature creates a'
-                    id="MDOw8D"
-                  />{" "}
-                  <Link
-                    href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
-                    target="_blank"
-                    rel="noopener noreferer"
-                  >
-                    <FormattedMessage
-                      defaultMessage="Transaction"
-                      id="1+ROfp"
-                    />
-                  </Link>{" "}
-                  <FormattedMessage
-                    defaultMessage="- used by Payment Apps"
-                    id="Fqe4aB"
-                  />
-                </span>
-              }
-              secondLabel={
-                <span>
-                  <FormattedMessage
-                    defaultMessage="If left unchecked it creates a"
-                    id="hHv0ih"
-                  />{" "}
-                  <Link
-                    href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
-                    target="_blank"
-                    rel="noopener noreferer"
-                  >
-                    <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
-                  </Link>{" "}
-                  <FormattedMessage
-                    defaultMessage="- used by Payment Plugins"
-                    id="50lR2F"
-                  />
-                </span>
-              }
-            />
-            <PreviewPill />
-          </Box>
-        </CardContent>
-      </Card>
+        </Box>
+        <Box paddingX={6}>
+          <Input
+            name="deleteExpiredOrdersAfter"
+            data-test-id="delete-expired-order-input"
+            value={data.deleteExpiredOrdersAfter}
+            error={!!formErrors.deleteExpiredOrdersAfter}
+            type="number"
+            label="TTL"
+            onChange={onChange}
+            min={0}
+            max={120}
+            // TODO: Should be removed after single autocomplete
+            // select is migrated to macaw inputs
+            __height={12.5}
+          />
+        </Box>
+        <Box display="flex" gap={1.5} alignItems="center" paddingX={6}>
+          <ControlledSwitch
+            data-test-id="order-settings-mark-as-paid"
+            disabled={disabled}
+            checked={
+              data.markAsPaidStrategy ===
+              MarkAsPaidStrategyEnum.TRANSACTION_FLOW
+            }
+            onChange={onMarkAsPaidStrategyChange}
+            name="markAsPaidStrategy"
+            label={
+              <span>
+                <FormattedMessage
+                  defaultMessage='"Mark as paid" feature creates a'
+                  id="MDOw8D"
+                />{" "}
+                <Link
+                  href="https://docs.saleor.io/docs/3.x/developer/payments#processing-a-payment-with-payment-app"
+                  target="_blank"
+                  rel="noopener noreferer"
+                >
+                  <FormattedMessage defaultMessage="Transaction" id="1+ROfp" />
+                </Link>{" "}
+                <FormattedMessage
+                  defaultMessage="- used by Payment Apps"
+                  id="Fqe4aB"
+                />
+              </span>
+            }
+            secondLabel={
+              <span>
+                <FormattedMessage
+                  defaultMessage="If left unchecked it creates a"
+                  id="hHv0ih"
+                />{" "}
+                <Link
+                  href="https://docs.saleor.io/docs/3.x/developer/payments#payment-plugin"
+                  target="_blank"
+                  rel="noopener noreferer"
+                >
+                  <FormattedMessage defaultMessage="Payment" id="NmK6zy" />
+                </Link>{" "}
+                <FormattedMessage
+                  defaultMessage="- used by Payment Plugins"
+                  id="50lR2F"
+                />
+              </span>
+            }
+          />
+          <PreviewPill />
+        </Box>
+      </Box>
     </>
   );
 };

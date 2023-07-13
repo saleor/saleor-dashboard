@@ -110,7 +110,7 @@ export const CategoryListDatagrid = ({
         onRowSelectionChange={onSelectCategoriesIds}
         renderColumnPicker={() => (
           <ColumnPicker
-            onSave={handlers.onChange}
+            onToggle={handlers.onToggle}
             selectedColumns={selectedColumns}
             staticColumns={staticColumns}
           />

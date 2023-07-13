@@ -164,12 +164,14 @@ export const OrderDraftList: React.FC<OrderDraftListProps> = ({ params }) => {
 
   const handleSort = createSortHandler(navigate, orderDraftListUrl, params);
 
-  const onOrderDraftBulkDelete = () =>
-    orderDraftBulkDelete({
+  const onOrderDraftBulkDelete = useCallback(async () => {
+    await orderDraftBulkDelete({
       variables: {
         ids: selectedRowIds,
       },
     });
+    clearRowSelection();
+  }, []);
 
   const handleSetSelectedOrderDraftIds = useCallback(
     (rows: number[], clearSelection: () => void) => {

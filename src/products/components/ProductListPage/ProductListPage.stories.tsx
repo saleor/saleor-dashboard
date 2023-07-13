@@ -66,8 +66,6 @@ const props: ProductListPageProps = {
     ...pageListProps.default.settings,
     columns: ["availability", "productType", "price"],
   },
-  columnPickerSettings: [],
-  setDynamicColumnSettings: () => undefined,
 };
 
 const meta: Meta<typeof ProductListPage> = {

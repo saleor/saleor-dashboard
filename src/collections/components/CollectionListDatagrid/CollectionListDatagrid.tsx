@@ -27,7 +27,6 @@ interface CollectionListDatagridProps
     SortPage<CollectionListUrlSortField> {
   collections: Collections;
   loading: boolean;
-  columnPickerSettings: string[];
   selectedChannelId: string;
   hasRowHover?: boolean;
   onSelectCollectionIds: (
@@ -48,7 +47,6 @@ export const CollectionListDatagrid = ({
   onRowClick,
   rowAnchor,
   disabled,
-  columnPickerSettings,
   onSelectCollectionIds,
   onSort,
   filterDependency,
@@ -76,9 +74,7 @@ export const CollectionListDatagrid = ({
     handlers,
     visibleColumns,
     staticColumns,
-    dynamicColumns,
     selectedColumns,
-    columnCategories,
     recentlyAddedColumn,
   } = useColumns({
     staticColumns: collectionListStaticColumns,
@@ -181,12 +177,8 @@ export const CollectionListDatagrid = ({
         renderColumnPicker={() => (
           <ColumnPicker
             staticColumns={staticColumns}
-            dynamicColumns={dynamicColumns}
             selectedColumns={selectedColumns}
-            columnCategories={columnCategories}
-            onDynamicColumnSelect={handlers.onDynamicColumnSelect}
-            columnPickerSettings={columnPickerSettings}
-            onSave={handlers.onChange}
+            onToggle={handlers.onToggle}
           />
         )}
       />

@@ -122,6 +122,7 @@ export class FilterElement {
     return this.value.value === "channel";
   }
 
+
   public asUrlEntry(): UrlEntry {
     if (this.isAttribute()) {
       return UrlEntry.forAttribute(this.condition.selected, this.value.value);

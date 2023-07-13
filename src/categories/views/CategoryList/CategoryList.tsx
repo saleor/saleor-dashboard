@@ -114,7 +114,9 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
     );
   };
 
-  const handleCategoryBulkDelete = (data: CategoryBulkDeleteMutation) => {
+  const handleCategoryBulkDeleteOnComplete = (
+    data: CategoryBulkDeleteMutation,
+  ) => {
     if (data.categoryBulkDelete.errors.length === 0) {
       navigate(categoryListUrl(), { replace: true });
       refetch();
@@ -147,8 +149,17 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
 
   const [categoryBulkDelete, categoryBulkDeleteOpts] =
     useCategoryBulkDeleteMutation({
-      onCompleted: handleCategoryBulkDelete,
+      onCompleted: handleCategoryBulkDeleteOnComplete,
     });
+
+  const handleCategoryBulkDelete = useCallback(async () => {
+    await categoryBulkDelete({
+      variables: {
+        ids: selectedRowIds,
+      },
+    });
+    clearRowSelection();
+  }, [selectedRowIds]);
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
@@ -191,13 +202,7 @@ export const CategoryList: React.FC<CategoryListProps> = ({ params }) => {
             }),
           )
         }
-        onConfirm={() =>
-          categoryBulkDelete({
-            variables: {
-              ids: selectedRowIds,
-            },
-          })
-        }
+        onConfirm={handleCategoryBulkDelete}
         open={params.action === "delete"}
         title={intl.formatMessage({
           id: "sG0w22",
