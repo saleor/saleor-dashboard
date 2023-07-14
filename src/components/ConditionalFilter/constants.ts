@@ -14,8 +14,6 @@ export const STATIC_CONDITIONS = {
   ],
   collection: [{ type: "multiselect", label: "in", value: "input-4" }],
   channel: [{ type: "select", label: "is", value: "input-5" }],
-  
-  // new
   productType: [
     { type: "combobox", label: "is", value: "input-1" },
     { type: "multiselect", label: "in", value: "input-2" }
@@ -25,11 +23,6 @@ export const STATIC_CONDITIONS = {
   isVisibleInListing: [{ type: "select", label: "is", value: "input-1" }],
   hasCategory: [{ type: "select", label: "is", value: "input-1" }],
   giftCard: [{ type: "select", label: "is", value: "input-1" }],
-
-  // to implement
-  publishedFrom: [{ type: "date", label: "is", value: "input-1" }],
-  availableFrom: [{ type: "date", label: "is", value: "input-1" }],
-  stockAvailability: [{ type: "boolean", label: "is", value: "input-1" }],
 };
 
 export const STATIC_OPTIONS: LeftOperand[] = [
