@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
 import {
@@ -59,14 +58,14 @@ const GiftCardExportDialog: React.FC<
     onCompleted: data => {
       const errors = data?.exportGiftCards?.errors;
 
-      if (!errors.length) {
+      if (!errors?.length) {
         notify({
           text: intl.formatMessage(messages.successAlertDescription),
           title: intl.formatMessage(messages.successAlertTitle),
         });
 
         queue(Task.EXPORT, {
-          id: data.exportGiftCards.exportFile.id,
+          id: data?.exportGiftCards?.exportFile?.id,
         });
 
         onClose();
@@ -91,7 +90,7 @@ const GiftCardExportDialog: React.FC<
       : exportSettingsInitialFormData,
     handleSubmit,
   );
-  const allGiftCardsCount = allGiftCardsCountData?.giftCards?.totalCount;
+  const allGiftCardsCount = allGiftCardsCountData?.giftCards?.totalCount ?? 0;
 
   const exportScopeLabels = {
     allItems: intl.formatMessage(
@@ -126,7 +125,9 @@ const GiftCardExportDialog: React.FC<
           {!loading && (
             <>
               <ExportDialogSettings
-                errors={exportGiftCardsOpts?.data?.exportGiftCards?.errors}
+                errors={
+                  exportGiftCardsOpts?.data?.exportGiftCards?.errors ?? []
+                }
                 onChange={change}
                 selectedItems={selectedIds?.length}
                 data={data}

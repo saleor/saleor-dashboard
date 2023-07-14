@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { IMessage } from "@dashboard/components/messages";
 import {
@@ -39,25 +38,24 @@ export const GiftCardListBulkActions: React.FC = () => {
   const [activateGiftCards, activateGiftCardsOpts] =
     useGiftCardBulkActivateMutation({
       onCompleted: data => {
-        const { errors, count } = data?.giftCardBulkActivate;
-
-        const notifierData: IMessage = !!errors?.length
+        const notifierData: IMessage = !!data?.giftCardBulkActivate?.errors
+          ?.length
           ? {
               status: "error",
               text: intl.formatMessage(messages.errorActivateAlertText, {
-                count,
+                count: data?.giftCardBulkActivate?.count,
               }),
             }
           : {
               status: "success",
               text: intl.formatMessage(messages.successActivateAlertText, {
-                count,
+                count: data?.giftCardBulkActivate?.count,
               }),
             };
 
         notify(notifierData);
 
-        if (!errors.length) {
+        if (!data?.giftCardBulkActivate?.errors?.length) {
           clearRowSelection();
         }
       },
@@ -67,25 +65,24 @@ export const GiftCardListBulkActions: React.FC = () => {
   const [deactivateGiftCards, deactivateGiftCardsOpts] =
     useGiftCardBulkDeactivateMutation({
       onCompleted: data => {
-        const { errors, count } = data?.giftCardBulkDeactivate;
-
-        const notifierData: IMessage = !!errors?.length
+        const notifierData: IMessage = !!data?.giftCardBulkDeactivate?.errors
+          ?.length
           ? {
               status: "error",
               text: intl.formatMessage(messages.errorDeactivateAlertText, {
-                count,
+                count: data?.giftCardBulkDeactivate?.count,
               }),
             }
           : {
               status: "success",
               text: intl.formatMessage(messages.successDeactivateAlertText, {
-                count,
+                count: data?.giftCardBulkDeactivate?.count,
               }),
             };
 
         notify(notifierData);
 
-        if (!errors.length) {
+        if (!data?.giftCardBulkDeactivate?.errors?.length) {
           clearRowSelection();
         }
       },

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useGiftCardList } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
 import {
   BulkDeleteGiftCardMutation,
@@ -33,7 +32,7 @@ const useGiftCardBulkDelete = ({
       onCompleted: data => {
         const errors = data?.giftCardBulkDelete?.errors;
 
-        if (!errors.length) {
+        if (!errors?.length) {
           notify({
             status: "success",
             text: intl.formatMessage(messages.deleteSuccessAlertText, {

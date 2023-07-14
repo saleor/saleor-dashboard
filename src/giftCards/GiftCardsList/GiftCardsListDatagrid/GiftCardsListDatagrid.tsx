@@ -16,7 +16,7 @@ import isEqual from "lodash/isEqual";
 import React, { useCallback, useEffect, useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import { messages as filterLabels } from "../GiftCardListSearchAndFilters/filters";
+import { messages as filterLabels } from "../filters";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
 import { canBeSorted } from "../sort";
 import { GiftCardListColummns, GiftCardUrlSortField } from "../types";

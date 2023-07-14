@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ActionDialog, {
   ActionDialogProps,
 } from "@dashboard/components/ActionDialog";
@@ -80,11 +79,11 @@ function GiftCardDeleteDialogContent<
   const hasSelectedGiftCardBalance = (id: string) => {
     const card = giftCards?.find(getById(id)) || giftCard;
 
-    return card?.currentBalance?.amount > 0;
+    return (card?.currentBalance?.amount ?? 0) > 0;
   };
 
   const deletingCardsWithBalance = singleDeletion
-    ? hasSelectedGiftCardBalance(ids?.[0])
+    ? hasSelectedGiftCardBalance(ids?.[0] ?? "")
     : hasSelectedAnyGiftCardsWithBalance();
 
   const submitEnabled = deletingCardsWithBalance ? isConsentChecked : true;

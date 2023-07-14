@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ApolloError } from "@apollo/client";
 import { IFilter } from "@dashboard/components/Filter";
 import { ExtendedGiftCard } from "@dashboard/giftCards/GiftCardUpdate/providers/GiftCardDetailsProvider/types";
@@ -66,9 +65,11 @@ export interface GiftCardsListConsumerProps
     UseListSettings<GiftCardListColummns>,
     SortPage<GiftCardUrlSortField> {
   giftCards: Array<
-    ExtendedGiftCard<GiftCardListQuery["giftCards"]["edges"][0]["node"]>
+    ExtendedGiftCard<
+      NonNullable<GiftCardListQuery["giftCards"]>["edges"][0]["node"]
+    >
   >;
-  pageInfo: PageInfo;
+  pageInfo?: PageInfo;
   loading: boolean;
   params: GiftCardListUrlQueryParams;
   paginationState: PaginationState;
@@ -82,9 +83,19 @@ export interface GiftCardsListConsumerProps
 }
 
 export const GiftCardsListContext =
-  createContext<GiftCardsListConsumerProps>(null);
+  createContext<GiftCardsListConsumerProps | null>(null);
 
-export const useGiftCardList = () => useContext(GiftCardsListContext);
+export const useGiftCardList = () => {
+  const context = useContext(GiftCardsListContext);
+
+  if (!context) {
+    throw new Error(
+      "You are trying to use GiftCardsListContext outside of its provider",
+    );
+  }
+
+  return context;
+};
 
 export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
   children,
@@ -148,7 +159,8 @@ export const GiftCardsListProvider: React.FC<GiftCardsListProviderProps> = ({
     handleError: handleGiftCardListError,
   });
 
-  const giftCards = mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard);
+  const giftCards =
+    mapEdgesToItems(data?.giftCards)?.map(getExtendedGiftCard) ?? [];
 
   const providerValues: GiftCardsListConsumerProps = {
     onSort: handleSort,
