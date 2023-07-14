@@ -24,8 +24,6 @@ import { ItemOption } from "../FilterElement/ConditionValue";
 import { LeftOperand } from "../LeftOperandsProvider";
 
 export interface Handler {
-  client: ApolloClient<unknown>;
-  query: string;
   fetch: () => Promise<ItemOption[]>;
 }
 
@@ -165,5 +163,13 @@ export class AttributesHandler implements Handler {
         slug: node.slug ?? "",
       })) ?? []
     );
+  };
+}
+
+export class BooleanValuesHandler implements Handler {
+  constructor(public options: LeftOperand[]) {}
+
+  fetch = async (): Promise<LeftOperand[]> => {
+    return this.options
   };
 }

@@ -40,7 +40,7 @@ export const useProductInitialAPIState = (): InitialAPIState => {
   const fetchQueries = async ({
     category,
     collection,
-    producttype,
+    productType,
     channel,
     attribute,
   }: FetchingParams) => {
@@ -85,7 +85,7 @@ export const useProductInitialAPIState = (): InitialAPIState => {
       );
     }
 
-    if (producttype.length > 0) {
+    if (productType.length > 0) {
       queriesToRun.push(
         client.query<
           _SearchProductTypesOperandsQuery,
@@ -93,8 +93,8 @@ export const useProductInitialAPIState = (): InitialAPIState => {
         >({
           query: _SearchProductTypesOperandsDocument,
           variables: {
-            productTypesSlugs: producttype,
-            first: producttype.length,
+            productTypesSlugs: productType,
+            first: productType.length,
           },
         }),
       );
@@ -124,7 +124,12 @@ export const useProductInitialAPIState = (): InitialAPIState => {
         initialState.attribute,
         initialState.channel,
         initialState.collection,
-        initialState.producttype,
+        initialState.productType,
+        initialState.isAvailable,
+        initialState.isPublished,
+        initialState.isVisibleInListing,
+        initialState.hasCategory,
+        initialState.giftCard
       ),
     );
     setLoading(false);
