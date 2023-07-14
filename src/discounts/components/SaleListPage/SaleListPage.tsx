@@ -4,8 +4,13 @@ import { Button } from "@dashboard/components/Button";
 import { getByName } from "@dashboard/components/Filter/utils";
 import FilterBar from "@dashboard/components/FilterBar";
 import { ListPageLayout } from "@dashboard/components/Layouts";
-import { saleAddUrl, SaleListUrlSortField } from "@dashboard/discounts/urls";
+import {
+  saleAddUrl,
+  SaleListUrlSortField,
+  saleUrl,
+} from "@dashboard/discounts/urls";
 import { SaleFragment } from "@dashboard/graphql";
+import useNavigator from "@dashboard/hooks/useNavigator";
 import { commonMessages } from "@dashboard/intl";
 import {
   ChannelProps,
@@ -19,7 +24,7 @@ import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import SaleList from "../SaleList";
+import { SaleListDatagrid } from "../SaleListDatagrid";
 import {
   createFilterStructure,
   SaleFilterKeys,
@@ -50,9 +55,16 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   ...listProps
 }) => {
   const intl = useIntl();
+  const navigation = useNavigator();
   const structure = createFilterStructure(intl, filterOpts);
 
   const filterDependency = structure.find(getByName("channel"));
+
+  const handleRowClick = (id: string) => {
+    navigation(saleUrl(id));
+  };
+
+  const handleSelectSaleIds = () => {};
 
   return (
     <ListPageLayout>
@@ -91,7 +103,12 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
           onTabDelete={onTabDelete}
           onTabSave={onTabSave}
         />
-        <SaleList filterDependency={filterDependency} {...listProps} />
+        <SaleListDatagrid
+          {...listProps}
+          filterDependency={filterDependency}
+          onSelectSaleIds={handleSelectSaleIds}
+          onRowClick={handleRowClick}
+        />
       </Card>
     </ListPageLayout>
   );
