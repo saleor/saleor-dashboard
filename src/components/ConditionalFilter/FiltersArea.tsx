@@ -6,11 +6,10 @@ import { FilterContainer } from "./FilterElement";
 import { useFilterContainer } from "./useFilterContainer";
 
 interface FiltersAreaProps {
-  filterValue: FilterContainer;
   onConfirm: (value: FilterContainer) => void;
 }
 
-export const FiltersArea = ({ filterValue, onConfirm }: FiltersAreaProps) => {
+export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
   const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
 
   const {
@@ -22,7 +21,7 @@ export const FiltersArea = ({ filterValue, onConfirm }: FiltersAreaProps) => {
     updateCondition,
     updateRightOptions,
     updateLeftOptions,
-  } = useFilterContainer(filterValue, apiProvider, leftOperandsProvider);
+  } = useFilterContainer(apiProvider, leftOperandsProvider);
 
   const handleStateChange = async (event: FilterEvent["detail"]) => {
     if (!event) return;

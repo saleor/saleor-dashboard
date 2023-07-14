@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FilterContainer, FilterElement } from "./FilterElement";
 
@@ -7,6 +7,12 @@ type Element = FilterContainer[number];
 
 export const useContainerState = (initialValue: FilterContainer) => {
   const [value, setValue] = useState(initialValue);
+
+  useEffect(() => {
+    if (value.length === 0 && initialValue.length > 0) {
+      setValue(initialValue);
+    }
+  }, [initialValue]);
 
   const isFilterElement = (
     elIndex: number,

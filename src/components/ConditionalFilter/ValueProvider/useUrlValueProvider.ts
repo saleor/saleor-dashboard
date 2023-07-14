@@ -1,7 +1,8 @@
 import { stringify } from "qs";
+import { useEffect } from "react";
 import useRouter from "use-react-router";
 
-import { FilterAPIProvider } from "../API/FilterAPIProvider";
+import { InitialAPIState } from "../API";
 import { FilterContainer } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { useTokenArray } from "./TokenArray";
@@ -23,16 +24,21 @@ const prepareStructure = (filterValue: FilterContainer): Structure =>
   });
 
 export const useUrlValueProvider = (
-  apiProvider: FilterAPIProvider,
+  initialState: InitialAPIState,
 ): FilterValueProvider => {
   const router = useRouter();
   const params = new URLSearchParams(router.location.search);
+  const { data, loading, fetchQueries } = initialState;
+
   params.delete("asc");
   params.delete("sort");
 
   const tokenizedUrl = useTokenArray(params.toString());
   const fetchingParams = tokenizedUrl.getFetchingParams();
-  const { data, loading } = apiProvider.useInitialState(fetchingParams);
+  useEffect(() => {
+    fetchQueries(fetchingParams);
+  }, []);
+
   const value = loading ? [] : tokenizedUrl.asFilterValuesFromResponse(data);
 
   const persist = (filterValue: FilterContainer) => {

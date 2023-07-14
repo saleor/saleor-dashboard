@@ -1,1 +1,1 @@
-export * from "./useInitalAPIState";
+export * from "./useInitialAPIState";

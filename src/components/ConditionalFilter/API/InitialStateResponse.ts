@@ -25,20 +25,24 @@ export interface InitialState {
 
 export class InitialStateResponse implements InitialState {
   constructor(
-    public category: ItemOption[],
-    public attribute: Record<string, AttributeDTO>,
-    public channel: ItemOption[],
-    public collection: ItemOption[],
-    public productType: ItemOption[],
-    public isAvailable: ItemOption[],
-    public isPublished: ItemOption[],
-    public isVisibleInListing: ItemOption[],
-    public hasCategory: ItemOption[],
-    public giftCard: ItemOption[]
+    public category: ItemOption[] = [],
+    public attribute: Record<string, AttributeDTO> = {},
+    public channel: ItemOption[] = [],
+    public collection: ItemOption[] = [],
+    public productType: ItemOption[] = [],
+    public isAvailable: ItemOption[] = [],
+    public isPublished: ItemOption[] = [],
+    public isVisibleInListing: ItemOption[] = [],
+    public hasCategory: ItemOption[] = [],
+    public giftCard: ItemOption[] = []
   ) { }
 
   public attributeByName(name: string) {
     return this.attribute[name];
+  }
+
+  public static empty() {
+    return new InitialStateResponse();
   }
 
   public filterByUrlToken(token: UrlToken) {
