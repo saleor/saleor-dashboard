@@ -17,11 +17,11 @@ import compact from "lodash/compact";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
+import { createFilterStructure, getFilterOpts } from "../filters";
 import { GiftCardListBulkActions } from "../GiftCardListBulkActions";
 import { useGiftCardListDialogs } from "../providers/GiftCardListDialogsProvider";
 import { useGiftCardList } from "../providers/GiftCardListProvider";
 import { GiftCardListActionParamsEnum } from "../types";
-import { createFilterStructure, getFilterOpts } from "./filters";
 import {
   giftCardListFilterErrorMessages as errorMessages,
   giftCardListSearchAndFiltersMessages as messages,

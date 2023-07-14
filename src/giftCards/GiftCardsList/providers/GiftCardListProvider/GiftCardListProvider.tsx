@@ -41,8 +41,11 @@ import React, {
   useState,
 } from "react";
 
-import { getFilterQueryParam, storageUtils } from "../../filters";
-import { getFilterVariables } from "../../GiftCardListSearchAndFilters/filters";
+import {
+  getFilterQueryParam,
+  getFilterVariables,
+  storageUtils,
+} from "../../filters";
 import {
   GiftCardListColummns,
   GiftCardListUrlQueryParams,
