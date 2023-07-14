@@ -62,6 +62,7 @@ export interface AppListViewSettings {
   [ListViews.TRANSLATION_ATTRIBUTE_VALUE_LIST]: ListSettings;
   [ListViews.GIFT_CARD_LIST]: ListSettings;
   [ListViews.ORDER_DETAILS_LIST]: ListSettings;
+  [ListViews.ORDER_DRAFT_DETAILS_LIST]: ListSettings;
 }
 
 export const defaultListSettings: AppListViewSettings = {
@@ -138,6 +139,10 @@ export const defaultListSettings: AppListViewSettings = {
     rowNumber: PAGINATE_BY,
   },
   [ListViews.ORDER_DETAILS_LIST]: {
+    rowNumber: PAGINATE_BY,
+    columns: ["product", "sku", "variantName", "quantity", "price", "total"],
+  },
+  [ListViews.ORDER_DRAFT_DETAILS_LIST]: {
     rowNumber: PAGINATE_BY,
     columns: ["product", "sku", "variantName", "quantity", "price", "total"],
   },
