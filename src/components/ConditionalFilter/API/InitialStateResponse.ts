@@ -31,6 +31,10 @@ export class InitialStateResponse implements InitialState {
     return this.attribute[name];
   }
 
+  public static empty() {
+    return new InitialStateResponse([], {}, [], [], []);
+  }
+
   public filterByUrlToken(token: UrlToken) {
     if (token.isAttribute()) {
       return this.attribute[token.name].choices.filter(({ value }) =>
