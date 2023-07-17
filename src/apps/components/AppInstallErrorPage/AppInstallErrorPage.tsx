@@ -39,4 +39,3 @@ export const AppInstallErrorPage: React.FC<AppInstallErrorPageProps> = ({
   );
 };
 
-export default AppInstallErrorPage;
