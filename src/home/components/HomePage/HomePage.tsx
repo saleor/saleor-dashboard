@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import CardSpacer from "@dashboard/components/CardSpacer";
 import { DetailPageLayout } from "@dashboard/components/Layouts";
@@ -6,7 +5,7 @@ import Money from "@dashboard/components/Money";
 import RequirePermissions from "@dashboard/components/RequirePermissions";
 import Skeleton from "@dashboard/components/Skeleton";
 import { HomeQuery, PermissionEnum } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { Activities, ProductTopToday } from "@dashboard/home/types";
 import { Box } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
@@ -19,13 +18,13 @@ import { HomeProductList } from "../HomeProductList";
 import { homePageMessages } from "./messages";
 
 export interface HomePageProps {
-  activities: RelayToFlat<HomeQuery["activities"]>;
+  activities: Activities;
   orders: number | null;
   ordersToCapture: number | null;
   ordersToFulfill: number | null;
   productsOutOfStock: number;
-  sales: HomeQuery["salesToday"]["gross"];
-  topProducts: RelayToFlat<HomeQuery["productTopToday"]> | null;
+  sales: NonNullable<HomeQuery["salesToday"]>["gross"];
+  topProducts: ProductTopToday | null;
   userName: string;
   createNewChannelHref: string;
   ordersToFulfillHref: string;
@@ -98,8 +97,8 @@ const HomePage: React.FC<HomePageProps> = props => {
             ordersToFulfillHref={ordersToFulfillHref}
             ordersToCaptureHref={ordersToCaptureHref}
             productsOutOfStockHref={productsOutOfStockHref}
-            ordersToCapture={ordersToCapture}
-            ordersToFulfill={ordersToFulfill}
+            ordersToCapture={ordersToCapture ?? 0}
+            ordersToFulfill={ordersToFulfill ?? 0}
             productsOutOfStock={productsOutOfStock}
             noChannel={noChannel}
           />

@@ -1,9 +1,7 @@
-// @ts-strict-ignore
 import { DashboardCard } from "@dashboard/components/Card";
 import { DateTime } from "@dashboard/components/Date";
 import Skeleton from "@dashboard/components/Skeleton";
-import { HomeQuery } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+import { Activities } from "@dashboard/home/types";
 import { Box, List, Text, useTheme } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -12,7 +10,7 @@ import { renderCollection } from "../../../misc";
 import { getActivityMessage } from "./activityMessages";
 
 interface HomeActivityCardProps {
-  activities: RelayToFlat<HomeQuery["activities"]>;
+  activities: Activities;
   testId?: string;
 }
 

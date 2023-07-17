@@ -1,9 +1,7 @@
-// @ts-strict-ignore
 import Money from "@dashboard/components/Money";
 import Skeleton from "@dashboard/components/Skeleton";
-import { HomeQuery } from "@dashboard/graphql";
+import { ProductTopToday } from "@dashboard/home/types";
 import { productVariantEditUrl } from "@dashboard/products/urls";
-import { RelayToFlat } from "@dashboard/types";
 import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -13,7 +11,7 @@ import { HomeProductListItem } from "./HomeProductListItem";
 
 interface HomeProductListProps {
   testId?: string;
-  topProducts: RelayToFlat<HomeQuery["productTopToday"]>;
+  topProducts: ProductTopToday;
 }
 
 export const HomeProductList = ({
@@ -37,7 +35,11 @@ export const HomeProductList = ({
           variant => (
             <HomeProductListItem
               key={variant ? variant.id : "skeleton"}
-              linkUrl={productVariantEditUrl(variant.product.id, variant.id)}
+              linkUrl={
+                variant
+                  ? productVariantEditUrl(variant.product.id, variant.id)
+                  : ""
+              }
             >
               {variant ? (
                 <>
@@ -79,7 +81,11 @@ export const HomeProductList = ({
                   </Box>
 
                   <Text textAlign="right">
-                    <Money money={variant.revenue.gross} />
+                    {variant.revenue ? (
+                      <Money money={variant.revenue.gross} />
+                    ) : (
+                      "-"
+                    )}
                   </Text>
                 </>
               ) : (
