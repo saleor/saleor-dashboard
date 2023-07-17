@@ -81,8 +81,9 @@ export const SaleListDatagrid = ({
       sales,
       columns: visibleColumns,
       locale,
+      selectedChannelId,
     }),
-    [sales, locale, visibleColumns],
+    [sales, selectedChannelId, locale, visibleColumns],
   );
 
   const handleRowClick = useCallback(
