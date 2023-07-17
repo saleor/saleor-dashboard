@@ -130,6 +130,7 @@ export interface FilterPresetsProps {
   onFilterPresetUpdate: (name: string) => void;
   onFilterPresetDelete: (id: number) => void;
   onFilterPresetPresetSave: () => void;
+  hasPresetsChanged?: () => boolean;
 }
 
 export interface TabPageProps {
