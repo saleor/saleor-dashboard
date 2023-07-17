@@ -6,54 +6,46 @@ import {
   useExtensions,
 } from "@dashboard/apps/hooks/useExtensions";
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
+import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
-import ButtonWithSelect from "@dashboard/components/ButtonWithSelect";
-import CardMenu from "@dashboard/components/CardMenu/CardMenu";
-import FilterBar from "@dashboard/components/FilterBar";
+import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
+import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
+import { Customers } from "@dashboard/customers/types";
 import {
   customerAddUrl,
   CustomerListUrlSortField,
+  customerUrl,
 } from "@dashboard/customers/urls";
-import { ListCustomersQuery } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import {
-  FilterPageProps,
-  ListActions,
-  PageListProps,
-  RelayToFlat,
-  SortPage,
-  TabPageProps,
-} from "@dashboard/types";
-import { Card } from "@material-ui/core";
-import { makeStyles } from "@saleor/macaw-ui";
-import React from "react";
+import { FilterPageProps, PageListProps, SortPage } from "@dashboard/types";
+import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
+import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import CustomerList from "../CustomerList/CustomerList";
+import { CustomerListDatagrid } from "../CustomerListDatagrid/CustomerListDatagrid";
+import { CustomerListDeleteButton } from "../CustomerListDeleteButton";
 import {
   createFilterStructure,
   CustomerFilterKeys,
   CustomerListFilterOpts,
 } from "./filters";
 
-const useStyles = makeStyles(
-  theme => ({
-    settings: {
-      marginRight: theme.spacing(2),
-    },
-  }),
-  { name: "CustomerListPage" },
-);
-
 export interface CustomerListPageProps
   extends PageListProps,
-    ListActions,
-    FilterPageProps<CustomerFilterKeys, CustomerListFilterOpts>,
-    SortPage<CustomerListUrlSortField>,
-    TabPageProps {
-  customers: RelayToFlat<ListCustomersQuery["customers"]>;
+    Omit<
+      FilterPageProps<CustomerFilterKeys, CustomerListFilterOpts>,
+      "onTabDelete"
+    >,
+    SortPage<CustomerListUrlSortField> {
+  customers: Customers;
   selectedCustomerIds: string[];
+  onTabUpdate: (tabName: string) => void;
+  loading: boolean;
+  hasPresetsChange: () => boolean;
+  onSelectCustomerIds: (rows: number[], clearSelection: () => void) => void;
+  onCustomersDelete: () => void;
+  onTabDelete: (id: number) => void;
 }
 
 const CustomerListPage: React.FC<CustomerListPageProps> = ({
@@ -66,16 +58,19 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
   onTabChange,
   onTabDelete,
   onTabSave,
+  onTabUpdate,
   tabs,
   selectedCustomerIds,
+  hasPresetsChange,
+  onCustomersDelete,
   ...customerListProps
 }) => {
   const intl = useIntl();
-  const classes = useStyles({});
   const navigate = useNavigator();
 
   const userPermissions = useUserPermissions();
   const structure = createFilterStructure(intl, filterOpts, userPermissions);
+  const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
 
   const { CUSTOMER_OVERVIEW_CREATE, CUSTOMER_OVERVIEW_MORE_ACTIONS } =
     useExtensions(extensionMountPoints.CUSTOMER_LIST);
@@ -87,49 +82,100 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
 
   return (
     <>
-      <TopNav title={intl.formatMessage(sectionNames.customers)}>
-        {extensionMenuItems.length > 0 && (
-          <CardMenu
-            className={classes.settings}
-            menuItems={extensionMenuItems}
-          />
-        )}
-        <ButtonWithSelect
-          onClick={() => navigate(customerAddUrl)}
-          options={extensionCreateButtonItems}
-          data-test-id="create-customer"
+      <TopNav
+        title={intl.formatMessage(sectionNames.customers)}
+        withoutBorder
+        isAlignToRight={false}
+      >
+        <Box
+          __flex={1}
+          display="flex"
+          justifyContent="space-between"
+          alignItems="center"
         >
-          <FormattedMessage
-            id="QLVddq"
-            defaultMessage="Create customer"
-            description="button"
-          />
-        </ButtonWithSelect>
+          <Box display="flex">
+            <Box marginX={5} display="flex" alignItems="center">
+              <ChevronRightIcon />
+            </Box>
+            <FilterPresetsSelect
+              presetsChanged={hasPresetsChange()}
+              onSelect={onTabChange}
+              onRemove={onTabDelete}
+              onUpdate={onTabUpdate}
+              savedPresets={tabs}
+              activePreset={currentTab}
+              onSelectAll={onAll}
+              onSave={onTabSave}
+              isOpen={isFilterPresetOpen}
+              onOpenChange={setFilterPresetOpen}
+              selectAllLabel={intl.formatMessage({
+                id: "D95l71",
+                defaultMessage: "All customers",
+                description: "tab name",
+              })}
+            />
+          </Box>
+          <Box display="flex" alignItems="center" gap={2}>
+            {extensionMenuItems.length > 0 && (
+              <TopNav.Menu items={extensionMenuItems} />
+            )}
+            {extensionCreateButtonItems.length > 0 ? (
+              <ButtonWithDropdown
+                options={extensionCreateButtonItems}
+                data-test-id="create-customer"
+                onClick={() => navigate(customerAddUrl)}
+              >
+                <FormattedMessage
+                  id="QLVddq"
+                  defaultMessage="Create customer"
+                  description="button"
+                />
+              </ButtonWithDropdown>
+            ) : (
+              <Button
+                data-test-id="create-customer"
+                onClick={() => navigate(customerAddUrl)}
+              >
+                <FormattedMessage
+                  id="QLVddq"
+                  defaultMessage="Create customer"
+                  description="button"
+                />
+              </Button>
+            )}
+          </Box>
+        </Box>
       </TopNav>
-      <Card>
-        <FilterBar
-          allTabLabel={intl.formatMessage({
-            id: "xQK2EC",
-            defaultMessage: "All Customers",
-            description: "tab name",
-          })}
-          currentTab={currentTab}
+      <Box>
+        <ListFilters
           filterStructure={structure}
           initialSearch={initialSearch}
           searchPlaceholder={intl.formatMessage({
-            id: "2mRLis",
-            defaultMessage: "Search Customer",
+            id: "kdRcqU",
+            defaultMessage: "Search customers...",
           })}
-          tabs={tabs}
-          onAll={onAll}
           onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
-          onTabChange={onTabChange}
-          onTabDelete={onTabDelete}
-          onTabSave={onTabSave}
+          actions={
+            <Box display="flex" gap={4}>
+              {selectedCustomerIds.length > 0 && (
+                <CustomerListDeleteButton onClick={onCustomersDelete}>
+                  <FormattedMessage
+                    defaultMessage="Delete customers"
+                    id="kFsTMN"
+                  />
+                </CustomerListDeleteButton>
+              )}
+            </Box>
+          }
         />
-        <CustomerList {...customerListProps} />
-      </Card>
+        <CustomerListDatagrid
+          {...customerListProps}
+          hasRowHover={!isFilterPresetOpen}
+          rowAnchor={customerUrl}
+          onRowClick={id => navigate(customerUrl(id))}
+        />
+      </Box>
     </>
   );
 };
