@@ -9,18 +9,18 @@ import { ColumnCategory } from "./useColumns";
 
 export interface ColumnPickerAvailableNodesProps {
   currentCategory: ColumnCategory;
-  columnPickerSettings: string[];
+  selectedColumns: string[];
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
-  changeHandler: (column: string) => void;
+  onToggle: (column: string) => void;
 }
 
 export const ColumnPickerAvailableNodes = ({
   currentCategory,
-  columnPickerSettings,
+  selectedColumns,
   query,
   setQuery,
-  changeHandler,
+  onToggle,
 }: ColumnPickerAvailableNodesProps) => {
   const areNodesLoading = currentCategory.availableNodes === undefined;
   const areNodesEmpty = currentCategory.availableNodes?.length === 0;
@@ -51,11 +51,16 @@ export const ColumnPickerAvailableNodes = ({
     return currentCategory.availableNodes!.map(node => (
       <Box padding={2} key={node.id}>
         <Checkbox
-          onCheckedChange={() => changeHandler(node.id)}
-          checked={columnPickerSettings.includes(node.id)}
-          data-test-id={`search-dynamic-${node.id}`}
+          onCheckedChange={() => onToggle(node.id)}
+          checked={selectedColumns.includes(node.id)}
+          data-test-id={`dynamic-column`}
         >
-          <Text size="small" color="textNeutralSubdued" ellipsis>
+          <Text
+            data-test-id={`dynamic-column-name-${node.title}`}
+            size="small"
+            color="textNeutralSubdued"
+            ellipsis
+          >
             {node.title}
           </Text>
         </Checkbox>

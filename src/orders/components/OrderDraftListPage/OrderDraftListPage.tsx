@@ -1,5 +1,6 @@
 // @ts-strict-ignore
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { OrderDraftListQuery, RefreshLimitsQuery } from "@dashboard/graphql";
 import { OrderDraftListUrlSortField } from "@dashboard/orders/urls";
 import {
@@ -15,7 +16,6 @@ import React, { useState } from "react";
 import { useIntl } from "react-intl";
 
 import { OrderDraftListDatagrid } from "../OrderDraftListDatagrid";
-import { OrderDraftListDeleteButton } from "../OrderDraftListDeleteButton";
 import { OrderDraftListHeader } from "../OrderDraftListHeader/OrderDraftListHeader";
 import OrderLimitReached from "../OrderLimitReached";
 import {
@@ -106,12 +106,12 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
             actions={
               <Box display="flex" gap={4}>
                 {selectedOrderDraftIds.length > 0 && (
-                  <OrderDraftListDeleteButton onClick={onDraftOrdersDelete}>
+                  <BulkDeleteButton onClick={onDraftOrdersDelete}>
                     {intl.formatMessage({
-                      id: "YJ2uRR",
-                      defaultMessage: "Bulk delete draft orders",
+                      id: "+b/qJ9",
+                      defaultMessage: "Delete draft orders",
                     })}
-                  </OrderDraftListDeleteButton>
+                  </BulkDeleteButton>
                 )}
               </Box>
             }

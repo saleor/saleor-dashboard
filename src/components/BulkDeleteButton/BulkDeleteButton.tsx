@@ -1,14 +1,14 @@
 import { Button, Tooltip, TrashBinIcon } from "@saleor/macaw-ui/next";
-import React, { forwardRef, ReactNode, useState } from "react";
+import React, { forwardRef, useState } from "react";
 
-interface CategoryDeleteButtonProps {
+interface ProductListDeleteButtonProps {
   onClick: () => void;
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
-export const CategoryDeleteButton = forwardRef<
+export const BulkDeleteButton = forwardRef<
   HTMLButtonElement,
-  CategoryDeleteButtonProps
+  ProductListDeleteButtonProps
 >(({ onClick, children }, ref) => {
   const [isTooltipOpen, setIsTooltipOpen] = useState(false);
 
@@ -26,7 +26,7 @@ export const CategoryDeleteButton = forwardRef<
           onClick={onClick}
           icon={<TrashBinIcon />}
           variant="secondary"
-          data-test-id="delete-categories-button"
+          data-test-id="bulk-delete-button"
         />
       </Tooltip.Trigger>
       <Tooltip.Content side="bottom">
@@ -36,3 +36,5 @@ export const CategoryDeleteButton = forwardRef<
     </Tooltip>
   );
 });
+
+BulkDeleteButton.displayName = "BulkDeleteButton";

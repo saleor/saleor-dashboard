@@ -11,8 +11,8 @@ import {
 import { getSearchFetchMoreProps } from "@dashboard/hooks/makeTopLevelSearch/utils";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
-import { getDefaultNotifierSuccessErrorData } from "@dashboard/hooks/useNotifier/utils";
 import useShop from "@dashboard/hooks/useShop";
+import { commonMessages } from "@dashboard/intl";
 import { extractMutationErrors } from "@dashboard/misc";
 import getChannelsErrorMessage from "@dashboard/utils/errors/channels";
 import currencyCodes from "currency-codes";
@@ -25,7 +25,7 @@ import { calculateItemsOrderMoves } from "../ChannelDetails/handlers";
 import { useShippingZones } from "../ChannelDetails/useShippingZones";
 import { useWarehouses } from "../ChannelDetails/useWarehouses";
 
-export const ChannelCreateView = ({}) => {
+export const ChannelCreateView = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
@@ -40,7 +40,12 @@ export const ChannelCreateView = ({}) => {
 
   const [createChannel, createChannelOpts] = useChannelCreateMutation({
     onCompleted: ({ channelCreate: { errors } }: ChannelCreateMutation) => {
-      notify(getDefaultNotifierSuccessErrorData(errors, intl));
+      if (!errors.length) {
+        notify({
+          status: "success",
+          text: intl.formatMessage(commonMessages.savedChanges),
+        });
+      }
     },
   });
 
@@ -66,6 +71,7 @@ export const ChannelCreateView = ({}) => {
     slug,
     defaultCountry,
     markAsPaidStrategy,
+    deleteExpiredOrdersAfter,
   }: FormData) => {
     const input: ChannelCreateInput = {
       defaultCountry,
@@ -79,6 +85,7 @@ export const ChannelCreateView = ({}) => {
       },
       orderSettings: {
         markAsPaidStrategy,
+        deleteExpiredOrdersAfter,
       },
     };
 

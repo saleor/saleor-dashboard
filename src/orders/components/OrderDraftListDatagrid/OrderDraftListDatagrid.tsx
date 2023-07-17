@@ -129,7 +129,7 @@ export const OrderDraftListDatagrid = ({
           <ColumnPicker
             staticColumns={staticColumns}
             selectedColumns={selectedColumns}
-            onSave={handlers.onChange}
+            onToggle={handlers.onToggle}
           />
         )}
       />

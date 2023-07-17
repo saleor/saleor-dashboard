@@ -1,3 +1,4 @@
+import { ConditionalProductFilterProvider } from "@dashboard/components/ConditionalFilter/context";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { getArrayQueryParam } from "@dashboard/utils/urls";
@@ -43,7 +44,11 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
     ProductListUrlSortField,
   );
 
-  return <ProductListComponent params={params} />;
+  return (
+    <ConditionalProductFilterProvider>
+      <ProductListComponent params={params} />
+    </ConditionalProductFilterProvider>
+  );
 };
 
 const ProductUpdate: React.FC<RouteComponentProps<any>> = ({ match }) => {

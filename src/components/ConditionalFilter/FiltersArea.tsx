@@ -1,23 +1,17 @@
-import {
-  _ExperimentalFilters,
-  Box,
-  FilterEvent,
-} from "@saleor/macaw-ui/next";
+import { _ExperimentalFilters, Box, FilterEvent } from "@saleor/macaw-ui/next";
 import React from "react";
 
-import { FilterAPIProvider } from "./API/FilterAPIProvider";
+import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
-import { LeftOperandsProvider } from "./LeftOperandsProvider";
 import { useFilterContainer } from "./useFilterContainer";
 
 interface FiltersAreaProps {
-  filterValue: FilterContainer
-  apiProvider: FilterAPIProvider
-  leftOperandsProvider: LeftOperandsProvider
-  onConfirm: (value: FilterContainer) => void
+  onConfirm: (value: FilterContainer) => void;
 }
 
-export const FiltersArea = ({ filterValue, apiProvider, leftOperandsProvider, onConfirm }: FiltersAreaProps) => {
+export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
+  const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
+
   const {
     value,
     addEmpty,
@@ -27,10 +21,10 @@ export const FiltersArea = ({ filterValue, apiProvider, leftOperandsProvider, on
     updateCondition,
     updateRightOptions,
     updateLeftOptions,
-  } = useFilterContainer(filterValue, apiProvider, leftOperandsProvider);
+  } = useFilterContainer(apiProvider, leftOperandsProvider);
 
   const handleStateChange = async (event: FilterEvent["detail"]) => {
-    if (!event) return
+    if (!event) return;
 
     if (event.type === "row.add") {
       addEmpty();

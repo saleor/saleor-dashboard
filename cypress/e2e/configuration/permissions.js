@@ -36,7 +36,7 @@ describe("Permissions groups", () => {
     { tags: ["@permissions", "@allEnv", "@stable"] },
     () => {
       const permissionName = `${startsWith}${faker.datatype.number()}`;
-
+      cy.addAliasToGraphRequest("PermissionGroupCreate");
       cy.visit(urlList.permissionsGroups)
         .get(PERMISSION_GROUP_LIST_SELECTORS.createPermissionButton)
         .click()
@@ -50,15 +50,14 @@ describe("Permissions groups", () => {
         .check()
         .get(BUTTON_SELECTORS.confirm)
         .click()
-        .get(PERMISSION_GROUP_DETAILS_SELECTORS.assignMemberButton)
-        .should("be.visible")
-        .get(BUTTON_SELECTORS.back)
-        .click()
-        .waitForProgressBarToNotExist();
-      cy.contains(
-        PERMISSION_GROUP_LIST_SELECTORS.permissionGroupRow,
-        permissionName,
-      ).should("be.visible");
+        .wait("@PermissionGroupCreate")
+        .then(createPermissionRequest => {
+          const permissionGroupResponse =
+            createPermissionRequest.response.body.data.permissionGroupCreate;
+          expect(permissionGroupResponse.errors).to.have.length(0);
+          expect(permissionGroupResponse.group.name).to.contain(permissionName);
+          expect(permissionGroupResponse.group.permissions).to.have.length(2);
+        });
     },
   );
 
@@ -66,7 +65,7 @@ describe("Permissions groups", () => {
     "should delete permission group. TC: SALEOR_1402",
     { tags: ["@permissions", "@allEnv", "@stable"] },
     () => {
-      const permissionName = `${startsWith}${faker.datatype.number()}`;
+      const permissionName = `A-${startsWith}${faker.datatype.number()}`;
       let staffMember;
 
       getStaffMembersStartsWith(TEST_ADMIN_USER.email)
