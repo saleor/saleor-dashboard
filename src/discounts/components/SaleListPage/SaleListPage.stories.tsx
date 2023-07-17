@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { saleList } from "@dashboard/discounts/fixtures";
 import { SaleListUrlSortField } from "@dashboard/discounts/urls";
 import {
@@ -44,8 +43,8 @@ const props: SaleListPageProps = {
     started: {
       active: false,
       value: {
-        max: undefined,
-        min: undefined,
+        max: "",
+        min: "",
       },
     },
     status: {

@@ -123,7 +123,7 @@ export interface FilterProps<TKeys extends string> {
 }
 
 export interface FilterPresetsProps {
-  selectedFilterPreset: number;
+  selectedFilterPreset: number | undefined;
   filterPresets: string[];
   onFilterPresetsAll: () => void;
   onFilterPresetChange: (id: number) => void;

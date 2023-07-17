@@ -1,10 +1,10 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import {
+  SaleFragment,
   useSaleBulkDeleteMutation,
   useSaleListQuery,
 } from "@dashboard/graphql";
@@ -19,7 +19,6 @@ import usePaginator, {
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { commonMessages } from "@dashboard/intl";
-import { maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
@@ -65,7 +64,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   );
   const channelOpts = availableChannels
     ? mapNodeToChoice(availableChannels, channel => channel.slug)
-    : null;
+    : [];
 
   const [openModal, closeModal] = createDialogActionHandlers<
     SaleListUrlDialog,
@@ -87,7 +86,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     variables: queryVariables,
   });
 
-  const sales = mapEdgesToItems(data?.sales);
+  const sales: SaleFragment[] = mapEdgesToItems(data?.sales) ?? [];
 
   const {
     clearRowSelection,
@@ -123,7 +122,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     });
 
   useEffect(() => {
-    if (!canBeSorted(params.sort, !!selectedChannel)) {
+    if (!canBeSorted(params?.sort, !!selectedChannel)) {
       navigate(
         saleListUrl({
           ...params,
@@ -133,17 +132,15 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     }
   }, [params]);
 
-  const canOpenBulkActionDialog = maybe(() => params.ids.length > 0);
-
   const paginationValues = usePaginator({
-    pageInfo: maybe(() => data.sales.pageInfo),
+    pageInfo: data?.sales?.pageInfo,
     paginationState,
     queryString: params,
   });
 
   const [saleBulkDelete, saleBulkDeleteOpts] = useSaleBulkDeleteMutation({
     onCompleted: data => {
-      if (data.saleBulkDelete.errors.length === 0) {
+      if (data?.saleBulkDelete?.errors?.length === 0) {
         notify({
           status: "success",
           text: intl.formatMessage(commonMessages.savedChanges),
@@ -180,10 +177,18 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     ],
   );
 
+  const getFilterPresetDeleteName = () => {
+    if (!presetIdToDelete || !presets[presetIdToDelete - 1]) {
+      return "...";
+    }
+
+    return presets[presetIdToDelete - 1].name;
+  };
+
   const onSaleBulkDelete = () =>
     saleBulkDelete({
       variables: {
-        ids: params.ids,
+        ids: selectedRowIds,
       },
     });
 
@@ -216,13 +221,13 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         onSort={handleSort}
         onUpdateListSettings={updateListSettings}
         sort={getSortParams(params)}
-        selectedChannelId={selectedChannel?.id}
+        selectedChannelId={selectedChannel?.id ?? ""}
       />
       <ActionDialog
         confirmButtonState={saleBulkDeleteOpts.status}
         onClose={closeModal}
         onConfirm={onSaleBulkDelete}
-        open={params.action === "remove" && canOpenBulkActionDialog}
+        open={params.action === "remove" && selectedRowIds.length > 0}
         title={intl.formatMessage({
           id: "ZWIjvr",
           defaultMessage: "Delete Sales",
@@ -230,19 +235,17 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         })}
         variant="delete"
       >
-        {canOpenBulkActionDialog && (
-          <DialogContentText>
-            <FormattedMessage
-              id="FPzzh7"
-              defaultMessage="{counter,plural,one{Are you sure you want to delete this sale?} other{Are you sure you want to delete {displayQuantity} sales?}}"
-              description="dialog content"
-              values={{
-                counter: params.ids.length,
-                displayQuantity: <strong>{params.ids.length}</strong>,
-              }}
-            />
-          </DialogContentText>
-        )}
+        <DialogContentText>
+          <FormattedMessage
+            id="FPzzh7"
+            defaultMessage="{counter,plural,one{Are you sure you want to delete this sale?} other{Are you sure you want to delete {displayQuantity} sales?}}"
+            description="dialog content"
+            values={{
+              counter: selectedRowIds.length,
+              displayQuantity: <strong>{selectedRowIds.length}</strong>,
+            }}
+          />
+        </DialogContentText>
       </ActionDialog>
       <SaveFilterTabDialog
         open={params.action === "save-search"}
@@ -255,7 +258,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPresetDelete}
-        tabName={maybe(() => presets[presetIdToDelete - 1].name, "...")}
+        tabName={getFilterPresetDeleteName()}
       />
     </PaginatorContext.Provider>
   );
