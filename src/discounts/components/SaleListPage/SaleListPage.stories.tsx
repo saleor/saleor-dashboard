@@ -23,7 +23,7 @@ const props: SaleListPageProps = {
   onSalesDelete: () => {},
   settings: {
     ...pageListProps.default.settings,
-    columns: ["name", "starts", "ends", "value"],
+    columns: ["name", "startDate", "endDate", "value"],
   },
   filterOpts: {
     channel: {

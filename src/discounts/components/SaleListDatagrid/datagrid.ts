@@ -25,12 +25,12 @@ export const salesListStaticColumnsAdapter = (
       width: 350,
     },
     {
-      id: "starts",
+      id: "startDate",
       title: intl.formatMessage(columnsMessages.starts),
       width: 200,
     },
     {
-      id: "ends",
+      id: "endDate",
       title: intl.formatMessage(columnsMessages.ends),
       width: 200,
     },
@@ -71,13 +71,13 @@ export const createGetCellContent =
     switch (columnId) {
       case "name":
         return readonlyTextCell(rowData.name);
-      case "starts":
+      case "startDate":
         return readonlyTextCell(
           rowData.startDate
             ? moment(rowData.startDate).locale(locale).format("lll")
             : PLACEHOLDER,
         );
-      case "ends":
+      case "endDate":
         return readonlyTextCell(
           rowData.endDate
             ? moment(rowData.endDate).locale(locale).format("lll")

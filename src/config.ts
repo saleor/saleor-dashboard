@@ -111,7 +111,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.SALES_LIST]: {
     rowNumber: PAGINATE_BY,
-    columns: ["name", "starts", "ends", "value"],
+    columns: ["name", "startDate", "endDate", "value"],
   },
   [ListViews.SHIPPING_METHODS_LIST]: {
     rowNumber: PAGINATE_BY,
