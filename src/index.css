@@ -49,6 +49,10 @@ body {
   overflow: hidden !important;
 }
 
+/* 
+  TODO: Remove it when macaw will handle media queries in custom properties
+  https://github.com/saleor/macaw-ui/issues/498
+*/
 @media screen and (max-width: 1024px) {
   .mobile-full-height {
     height: auto !important;
