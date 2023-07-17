@@ -2,10 +2,10 @@
 import {
   CustomerAddressesQuery,
   CustomerDetailsQuery,
-  ListCustomersQuery,
   PaymentChargeStatusEnum,
 } from "@dashboard/graphql";
-import { RelayToFlat } from "@dashboard/types";
+
+import { Customers } from "./types";
 
 export const customers = [
   {
@@ -682,7 +682,7 @@ export const customers = [
   },
 ];
 
-export const customerList: RelayToFlat<ListCustomersQuery["customers"]> = [
+export const customerList: Customers = [
   {
     __typename: "User",
     email: "Curtis.bailey@example.com",

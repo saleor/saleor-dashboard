@@ -5,7 +5,6 @@ import {
   pageListProps,
   searchPageProps,
   sortPageProps,
-  tabPageProps,
 } from "@dashboard/fixtures";
 import { Meta, StoryObj } from "@storybook/react";
 import React from "react";
@@ -24,7 +23,6 @@ const props: CustomerListPageProps = {
   ...pageListProps.default,
   ...searchPageProps,
   ...sortPageProps,
-  ...tabPageProps,
   customers: customerList,
   selectedCustomerIds: ["123"],
   filterOpts: {
@@ -47,6 +45,12 @@ const props: CustomerListPageProps = {
     ...sortPageProps.sort,
     sort: CustomerListUrlSortField.name,
   },
+  onTabUpdate: () => undefined,
+  loading: false,
+  hasPresetsChange: () => false,
+  onSelectCustomerIds: () => undefined,
+  onCustomersDelete: () => undefined,
+  onTabDelete: () => undefined,
 };
 
 const CustomerListPage = props => (
