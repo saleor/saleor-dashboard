@@ -107,7 +107,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
           </Box>
           <Box>
             <Button
-              href={saleAddUrl()}
+              onClick={() => navigation(saleAddUrl())}
               variant="primary"
               data-test-id="create-sale"
             >
