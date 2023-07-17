@@ -63,7 +63,6 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
   const navigation = useNavigator();
   const structure = createFilterStructure(intl, filterOpts);
   const [isFilterPresetOpen, setFilterPresetOpen] = useState(false);
-
   const filterDependency = structure.find(getByName("channel"));
 
   const handleRowClick = (id: string) => {
@@ -149,6 +148,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
 
         <SaleListDatagrid
           {...listProps}
+          hasRowHover={!isFilterPresetOpen}
           filterDependency={filterDependency}
           onRowClick={handleRowClick}
         />
