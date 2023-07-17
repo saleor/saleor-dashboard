@@ -1,3 +1,4 @@
+import { PLACEHOLDER } from "@dashboard/components/Datagrid/const";
 import { readonlyTextCell } from "@dashboard/components/Datagrid/customCells/cells";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { Locale } from "@dashboard/components/Locale";
@@ -72,15 +73,19 @@ export const createGetCellContent =
         return readonlyTextCell(rowData.name);
       case "starts":
         return readonlyTextCell(
-          moment(rowData.startDate).locale(locale).format("lll"),
+          rowData.startDate
+            ? moment(rowData.startDate).locale(locale).format("lll")
+            : PLACEHOLDER,
         );
       case "ends":
         return readonlyTextCell(
-          moment(rowData.endDate).locale(locale).format("lll"),
+          rowData.endDate
+            ? moment(rowData.endDate).locale(locale).format("lll")
+            : PLACEHOLDER,
         );
       case "value":
         if (!channel) {
-          return readonlyTextCell("-");
+          return readonlyTextCell(PLACEHOLDER);
         }
 
         if (rowData?.type && channel?.discountValue) {
@@ -101,7 +106,7 @@ export const createGetCellContent =
           );
         }
 
-        return readonlyTextCell("-");
+        return readonlyTextCell(PLACEHOLDER);
 
       default:
         return readonlyTextCell("");
