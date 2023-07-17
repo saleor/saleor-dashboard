@@ -90,7 +90,7 @@ const SaleListPage: React.FC<SaleListPageProps> = ({
             </Box>
 
             <FilterPresetsSelect
-              presetsChanged={hasPresetsChanged?.()}
+              presetsChanged={hasPresetsChanged()}
               onSelect={onFilterPresetChange}
               onRemove={onFilterPresetDelete}
               onUpdate={onFilterPresetUpdate}
