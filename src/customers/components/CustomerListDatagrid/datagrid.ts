@@ -26,11 +26,15 @@ export const customerListStaticColumnsAdapter = (
       title: intl.formatMessage(columnsMessages.email),
       width: 200,
     },
-    includeOrders && {
-      id: "orders",
-      title: intl.formatMessage(columnsMessages.orders),
-      width: 200,
-    },
+    ...(includeOrders
+      ? [
+          {
+            id: "orders",
+            title: intl.formatMessage(columnsMessages.orders),
+            width: 200,
+          },
+        ]
+      : []),
   ].map(column => ({
     ...column,
     icon: getColumnSortDirectionIcon(sort, column.id),
@@ -41,11 +45,11 @@ export const createGetCellContent =
     customers,
     columns,
   }: {
-    customers: Customers;
+    customers: Customers | undefined;
     columns: AvailableColumn[];
   }) =>
   ([column, row]: Item): GridCell => {
-    const rowData = customers[row];
+    const rowData = customers?.[row];
     const columnId = columns[column]?.id;
 
     if (!columnId || !rowData) {
@@ -54,11 +58,11 @@ export const createGetCellContent =
 
     switch (columnId) {
       case "name":
-        return readonlyTextCell(getUserName(rowData));
+        return readonlyTextCell(getUserName(rowData) ?? "");
       case "email":
         return readonlyTextCell(rowData?.email ?? "");
       case "orders":
-        return readonlyTextCell(rowData?.orders?.totalCount.toString() ?? "");
+        return readonlyTextCell(rowData?.orders?.totalCount?.toString() ?? "");
       default:
         return readonlyTextCell("");
     }

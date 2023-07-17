@@ -38,7 +38,7 @@ export interface CustomerListPageProps
       "onTabDelete"
     >,
     SortPage<CustomerListUrlSortField> {
-  customers: Customers;
+  customers: Customers | undefined;
   selectedCustomerIds: string[];
   onTabUpdate: (tabName: string) => void;
   loading: boolean;

@@ -53,7 +53,7 @@ const props: CustomerListPageProps = {
   onTabDelete: () => undefined,
 };
 
-const CustomerListPage = props => (
+const CustomerListPage = (props: CustomerListPageProps) => (
   <MockedUserProvider>
     <CustomerListPageComponent {...props} />
   </MockedUserProvider>

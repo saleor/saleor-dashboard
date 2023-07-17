@@ -133,7 +133,7 @@ export interface FilterPresetsProps {
 }
 
 export interface TabPageProps {
-  currentTab: number;
+  currentTab: number | undefined;
   tabs: string[];
   onAll: () => void;
   onTabChange: (tab: number) => void;

@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import ActionDialog from "@dashboard/components/ActionDialog";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
@@ -18,7 +17,6 @@ import usePaginator, {
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
 import { commonMessages, sectionNames } from "@dashboard/intl";
-import { maybe } from "@dashboard/misc";
 import { ListViews } from "@dashboard/types";
 import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHandlers";
 import createFilterHandlers from "@dashboard/utils/handlers/filterHandlers";
@@ -113,7 +111,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   >(navigate, customerListUrl, params);
 
   const paginationValues = usePaginator({
-    pageInfo: maybe(() => data.customers.pageInfo),
+    pageInfo: data?.customers?.pageInfo,
     paginationState,
     queryString: params,
   });
@@ -121,7 +119,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   const [bulkRemoveCustomers, bulkRemoveCustomersOpts] =
     useBulkRemoveCustomersMutation({
       onCompleted: data => {
-        if (data.customerBulkDelete.errors.length === 0) {
+        if (data.customerBulkDelete?.errors.length === 0) {
           notify({
             status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
@@ -157,6 +155,13 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
       setSelectedRowIds,
     ],
   );
+
+  const getTabName = useCallback(() => {
+    if (!presetIdToDelete || !presets) {
+      return "...";
+    }
+    return presets[presetIdToDelete - 1].name;
+  }, [presetIdToDelete, presets]);
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
@@ -228,7 +233,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPresetDelete}
-        tabName={maybe(() => presets[presetIdToDelete - 1].name, "...")}
+        tabName={getTabName()}
       />
     </PaginatorContext.Provider>
   );

@@ -25,7 +25,7 @@ import { messages } from "./messages";
 interface CustomerListDatagridProps
   extends ListProps,
     SortPage<CustomerListUrlSortField> {
-  customers: Customers;
+  customers: Customers | undefined;
   loading: boolean;
   hasRowHover?: boolean;
   onSelectCustomerIds: (
@@ -53,14 +53,14 @@ export const CustomerListDatagrid = ({
   const datagrid = useDatagridChangeState();
 
   const userPermissions = useUserPermissions();
-  const hasManageOrdersPermission = userPermissions.some(
-    perm => perm.code === PermissionEnum.MANAGE_ORDERS,
-  );
+  const hasManageOrdersPermission =
+    userPermissions?.some(perm => perm.code === PermissionEnum.MANAGE_ORDERS) ??
+    false;
 
   const customerListStaticColumns = useMemo(
     () =>
       customerListStaticColumnsAdapter(intl, sort, hasManageOrdersPermission),
-    [intl, sort],
+    [intl, sort, hasManageOrdersPermission],
   );
 
   const onColumnChange = useCallback(
@@ -94,7 +94,7 @@ export const CustomerListDatagrid = ({
 
   const handleRowClick = useCallback(
     ([_, row]: Item) => {
-      if (!onRowClick) {
+      if (!onRowClick || !customers) {
         return;
       }
       const rowData: Customer = customers[row];
@@ -105,7 +105,7 @@ export const CustomerListDatagrid = ({
 
   const handleRowAnchor = useCallback(
     ([, row]: Item) => {
-      if (!rowAnchor) {
+      if (!rowAnchor || !customers) {
         return "";
       }
       const rowData: Customer = customers[row];

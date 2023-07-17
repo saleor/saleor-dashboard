@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import packageInfo from "../package.json";
 import { SearchVariables } from "./hooks/makeSearch";
 import { ListSettings, ListViews, Pagination } from "./types";
@@ -7,7 +6,7 @@ export const getAppDefaultUri = () => "/";
 export const getAppMountUri = () =>
   window?.__SALEOR_CONFIG__?.APP_MOUNT_URI || getAppDefaultUri();
 export const getApiUrl = () => window.__SALEOR_CONFIG__.API_URL;
-export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL, 10) || 300;
+export const SW_INTERVAL = parseInt(process.env.SW_INTERVAL ?? "300", 10);
 export const IS_CLOUD_INSTANCE =
   window.__SALEOR_CONFIG__.IS_CLOUD_INSTANCE === "true";
 
