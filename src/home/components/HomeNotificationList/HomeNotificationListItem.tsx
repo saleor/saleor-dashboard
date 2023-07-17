@@ -1,5 +1,10 @@
-import KeyboardArrowRight from "@material-ui/icons/KeyboardArrowRight";
-import { Box, List, sprinkles, Text } from "@saleor/macaw-ui/next";
+import {
+  Box,
+  ChevronRightIcon,
+  List,
+  sprinkles,
+  Text,
+} from "@saleor/macaw-ui/next";
 import React, { ReactNode } from "react";
 import { Link } from "react-router-dom";
 
@@ -30,7 +35,7 @@ export const HomeNotificationListItem = ({
         width="100%"
       >
         <Text size="small">{children}</Text>
-        <KeyboardArrowRight />
+        <ChevronRightIcon />
       </Box>
     </Link>
   </List.Item>
