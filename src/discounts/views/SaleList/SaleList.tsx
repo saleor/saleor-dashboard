@@ -119,6 +119,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
       getFilterQueryParam,
       navigate,
       params,
+      keepActiveTab: true,
     });
 
   useEffect(() => {
