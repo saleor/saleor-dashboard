@@ -2,11 +2,10 @@
 import { saleList } from "@dashboard/discounts/fixtures";
 import { SaleListUrlSortField } from "@dashboard/discounts/urls";
 import {
-  filterPageProps,
-  listActionsProps,
+  filterPresetsProps,
   pageListProps,
+  searchPageProps,
   sortPageProps,
-  tabPageProps,
 } from "@dashboard/fixtures";
 import { DiscountStatusEnum, DiscountValueTypeEnum } from "@dashboard/graphql";
 import { Meta, StoryObj } from "@storybook/react";
@@ -15,11 +14,18 @@ import { PaginatorContextDecorator } from "../../../../.storybook/decorators";
 import SaleListPage, { SaleListPageProps } from "./SaleListPage";
 
 const props: SaleListPageProps = {
-  ...listActionsProps,
   ...pageListProps.default,
-  ...filterPageProps,
+  ...searchPageProps,
   ...sortPageProps,
-  ...tabPageProps,
+  ...filterPresetsProps,
+  onFilterChange: () => undefined,
+  selectedSaleIds: [],
+  onSelectSaleIds: () => {},
+  onSalesDelete: () => {},
+  settings: {
+    ...pageListProps.default.settings,
+    columns: ["name", "starts", "ends", "value"],
+  },
   filterOpts: {
     channel: {
       active: false,
@@ -76,6 +82,7 @@ export const Loading: Story = {
   args: {
     ...props,
     sales: undefined,
+    disabled: true,
   },
   parameters: {
     chromatic: { diffThreshold: 0.85 },
