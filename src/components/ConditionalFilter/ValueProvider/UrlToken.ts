@@ -107,7 +107,7 @@ export class UrlToken {
     public value: string | string[],
     public type: TokenTypeValue,
     public conditionKind: string,
-  ) { }
+  ) {}
 
   public static fromUrlEntry(entry: UrlEntry) {
     const { entryName, value, type, conditionKid } = entry.getInfo();
