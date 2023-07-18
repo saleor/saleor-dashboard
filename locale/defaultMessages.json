@@ -427,10 +427,6 @@
     "context": "section header",
     "string": "Refunded Amount"
   },
-  "0opVvi": {
-    "context": "number of ordered products",
-    "string": "{amount, plural,one {One ordered}other {{amount} Ordered}}"
-  },
   "0qg33z": {
     "context": "table column header",
     "string": "Return"
@@ -1053,9 +1049,6 @@
     "context": "vat not included in order price",
     "string": "does not apply"
   },
-  "5LRkEs": {
-    "string": "The new dashboard and the GraphQL API are preview-quality software."
-  },
   "5ObBlW": {
     "string": "Dark Mode"
   },
@@ -1197,10 +1190,6 @@
   "6JlXeD": {
     "context": "button",
     "string": "Create page type"
-  },
-  "6L6Fy2": {
-    "context": "header",
-    "string": "Disclaimer"
   },
   "6QjMei": {
     "string": "Preorder end time needs to be set in the future"
@@ -2499,9 +2488,6 @@
   "G5NKx6": {
     "context": "tooltip",
     "string": "Checkout reservation time threshold is enabled in settings."
-  },
-  "G7mu0y": {
-    "string": "The GraphQL API is beta quality. It is not fully optimized and some mutations or queries may be missing."
   },
   "GAmGog": {
     "context": "value input label",
@@ -5859,6 +5845,10 @@
     "context": "current balance filter label",
     "string": "Current balance"
   },
+  "e08xWz": {
+    "context": "header",
+    "string": "Top products"
+  },
   "e0RKe+": {
     "context": "generate invoice button",
     "string": "Generate"
@@ -7041,6 +7031,10 @@
     "context": "order history message",
     "string": "Fulfilled {quantity} items"
   },
+  "nII/qB": {
+    "context": "number of ordered products",
+    "string": "{amount, plural,one {One ordered}other {{amount} ordered}}"
+  },
   "nIrjSR": {
     "context": "section header",
     "string": "Ongoing Installations"
@@ -7615,10 +7609,6 @@
   "rqtV5d": {
     "context": "order status",
     "string": "Ready to capture"
-  },
-  "rr8fyf": {
-    "context": "header",
-    "string": "Top Products"
   },
   "rs815i": {
     "context": "text field label",
