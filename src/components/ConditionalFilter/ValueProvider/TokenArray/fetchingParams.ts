@@ -4,7 +4,7 @@ export interface FetchingParams {
   category: string[];
   collection: string[];
   channel: string[];
-  producttype: string[];
+  productType: string[];
   attribute: Record<string, string[]>;
 }
 
@@ -14,7 +14,7 @@ export const emptyFetchingParams: FetchingParams = {
   category: [],
   collection: [],
   channel: [],
-  producttype: [],
+  productType: [],
   attribute: {},
 };
 
