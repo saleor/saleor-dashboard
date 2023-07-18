@@ -1,4 +1,4 @@
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { _ExperimentalFilters, Box, Divider } from "@saleor/macaw-ui/next";
 import React, { FC } from "react";
 
 import { useConditionalFilterContext } from "./context";
@@ -15,7 +15,24 @@ export const ConditionalFilters: FC = () => {
   return (
     <Box>
       {valueProvider.loading ? (
-        <Text>Loading...</Text>
+        <Box
+          __minWidth="700px"
+          __minHeight="100px"
+          paddingX={5}
+          paddingY={4}
+          display="flex"
+          gap={3}
+          flexDirection="column"
+        >
+          <_ExperimentalFilters.Skeleton height={7} />
+          <_ExperimentalFilters.Skeleton height={7} />
+          <_ExperimentalFilters.Skeleton height={7} />
+          <Divider />
+          <Box display="flex" gap={4} justifyContent="space-between">
+            <_ExperimentalFilters.Skeleton height={7} __width="20%" />
+            <_ExperimentalFilters.Skeleton height={7} __width="20%" />
+          </Box>
+        </Box>
       ) : (
         <FiltersArea onConfirm={handleConfirm} />
       )}

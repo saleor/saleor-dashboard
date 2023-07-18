@@ -34,7 +34,7 @@
     "@material-ui/lab": "^4.0.0-alpha.61",
     "@material-ui/styles": "^4.11.4",
     "@reach/auto-id": "^0.16.0",
-    "@saleor/macaw-ui": "0.8.0-pre.104",
+    "@saleor/macaw-ui": "0.8.0-pre.105",
     "@saleor/sdk": "0.6.0",
     "@sentry/react": "^6.0.0",
     "@types/faker": "^5.1.6",
@@ -278,7 +278,7 @@
       "^@material-ui/core$": "<rootDir>/node_modules/@material-ui/core",
       "^@material-ui/icons$": "<rootDir>/node_modules/@material-ui/icons",
       "^@material-ui/styles$": "<rootDir>/node_modules/@material-ui/styles",
-      "^@saleor/macaw-ui/next$": "<rootDir>/node_modules/@saleor/macaw-ui/dist/macaw-ui.cjs",
+      "^@saleor/macaw-ui/next$": "<rootDir>/node_modules/@saleor/macaw-ui/dist/macaw-ui.js",
       "^react$": "<rootDir>/node_modules/react",
       "^react-dom$": "<rootDir>/node_modules/react-dom"
     }
