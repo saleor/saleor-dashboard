@@ -285,7 +285,9 @@ function getDescriptionCellContent(
     );
 
     if (descriptionFirstParagraph) {
-      return readonlyTextCell(descriptionFirstParagraph.data.text);
+      return readonlyTextCell(
+        (descriptionFirstParagraph.data?.text ?? "").replace("&nbsp;", ""),
+      );
     }
   }
 
