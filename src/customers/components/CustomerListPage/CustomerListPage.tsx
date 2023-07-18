@@ -8,6 +8,7 @@ import {
 import { useUserPermissions } from "@dashboard/auth/hooks/useUserPermissions";
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { ButtonWithDropdown } from "@dashboard/components/ButtonWithDropdown";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { Customers } from "@dashboard/customers/types";
@@ -28,7 +29,6 @@ import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
 import { CustomerListDatagrid } from "../CustomerListDatagrid/CustomerListDatagrid";
-import { CustomerListDeleteButton } from "../CustomerListDeleteButton";
 import {
   createFilterStructure,
   CustomerFilterKeys,
@@ -157,12 +157,12 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
           actions={
             <Box display="flex" gap={4}>
               {selectedCustomerIds.length > 0 && (
-                <CustomerListDeleteButton onClick={onCustomersDelete}>
+                <BulkDeleteButton onClick={onCustomersDelete}>
                   <FormattedMessage
                     defaultMessage="Delete customers"
                     id="kFsTMN"
                   />
-                </CustomerListDeleteButton>
+                </BulkDeleteButton>
               )}
             </Box>
           }
