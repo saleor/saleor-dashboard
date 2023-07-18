@@ -1,6 +1,7 @@
 // @ts-strict-ignore
 import {
   filterPageProps,
+  filterPresetsProps,
   listActionsProps,
   pageListProps,
   searchPageProps,
@@ -23,6 +24,7 @@ const props: CustomerListPageProps = {
   ...pageListProps.default,
   ...searchPageProps,
   ...sortPageProps,
+  ...filterPresetsProps,
   customers: customerList,
   selectedCustomerIds: ["123"],
   filterOpts: {
@@ -45,12 +47,10 @@ const props: CustomerListPageProps = {
     ...sortPageProps.sort,
     sort: CustomerListUrlSortField.name,
   },
-  onTabUpdate: () => undefined,
   loading: false,
-  hasPresetsChange: () => false,
+  hasPresetsChanged: () => false,
   onSelectCustomerIds: () => undefined,
   onCustomersDelete: () => undefined,
-  onTabDelete: () => undefined,
 };
 
 const CustomerListPage = (props: CustomerListPageProps) => (

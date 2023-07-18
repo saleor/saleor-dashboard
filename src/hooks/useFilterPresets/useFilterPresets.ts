@@ -94,7 +94,7 @@ export const useFilterPresets = <
     onPresetChange(presets.findIndex(tab => tab.name === tabName) + 1);
   };
 
-  const hasPresetsChange = () => {
+  const hasPresetsChanged = () => {
     const { parsedQs } = prepareQs(location.search);
 
     if (!selectedPreset) {
@@ -119,6 +119,6 @@ export const useFilterPresets = <
     onPresetDelete,
     onPresetSave,
     onPresetUpdate,
-    hasPresetsChange,
+    hasPresetsChanged,
   };
 };

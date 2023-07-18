@@ -66,7 +66,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
   const {
     selectedPreset,
     presets,
-    hasPresetsChange,
+    hasPresetsChanged,
     onPresetChange,
     onPresetDelete,
     onPresetSave,
@@ -190,7 +190,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         selectedCustomerIds={selectedRowIds}
         onSelectCustomerIds={handleSetSelectedCustomerIds}
         sort={getSortParams(params)}
-        hasPresetsChanged={hasPresetsChange}
+        hasPresetsChanged={hasPresetsChanged}
         onCustomersDelete={() => openModal("remove", { ids: selectedRowIds })}
       />
       <ActionDialog

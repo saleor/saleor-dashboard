@@ -179,7 +179,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   } = useRowSelection(params);
 
   const {
-    hasPresetsChange,
+    hasPresetsChanged,
     onPresetChange,
     onPresetDelete,
     onPresetSave,
@@ -411,7 +411,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         }}
         onProductsDelete={() => openModal("delete")}
         onTabChange={onPresetChange}
-        hasPresetsChanged={hasPresetsChange()}
+        hasPresetsChanged={hasPresetsChanged()}
         initialSearch={params.query || ""}
         tabs={presets.map(tab => tab.name)}
         onExport={() => openModal("export")}
