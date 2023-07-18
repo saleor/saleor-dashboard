@@ -156,13 +156,6 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     ],
   );
 
-  const getTabName = useCallback(() => {
-    if (!presetIdToDelete || !presets) {
-      return "...";
-    }
-    return presets[presetIdToDelete - 1].name;
-  }, [presetIdToDelete, presets]);
-
   return (
     <PaginatorContext.Provider value={paginationValues}>
       <WindowTitle title={intl.formatMessage(sectionNames.customers)} />
@@ -233,7 +226,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPresetDelete}
-        tabName={getTabName()}
+        tabName={presets?.[presetIdToDelete ?? 1 - 1]?.name ?? "..."}
       />
     </PaginatorContext.Provider>
   );
