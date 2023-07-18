@@ -1,4 +1,4 @@
-schema: https://master.staging.saleor.cloud/graphql/
+schema: ${API_URI}
 generates:
   ./introspection.json:
     plugins:
