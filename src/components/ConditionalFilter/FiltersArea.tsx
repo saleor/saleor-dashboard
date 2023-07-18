@@ -25,6 +25,7 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
 
   const handleStateChange = async (event: FilterEvent["detail"]) => {
     if (!event) return;
+    console.log("event", event)
 
     if (event.type === "row.add") {
       addEmpty();
@@ -43,6 +44,7 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
     }
 
     if (event.type === "rightOperator.onChange") {
+      console.log("rightOperator.onChange", event.value)
       updateRightOperator(event.path.split(".")[0], event.value);
     }
 
@@ -51,6 +53,8 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
     }
 
     if (event.type === "rightOperator.onInputValueChange") {
+      console.log("rightOperator.onInputValueChange", event.value)
+
       updateRightOptions(event.path.split(".")[0], event.value);
     }
 
