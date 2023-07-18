@@ -1,4 +1,4 @@
-import { UrlToken } from "../UrlToken";
+import { TokenType, UrlToken } from "../UrlToken";
 
 export interface FetchingParams {
   category: string[];
@@ -20,6 +20,10 @@ export const emptyFetchingParams: FetchingParams = {
 
 const unique = <T>(array: Iterable<T>) => Array.from(new Set(array));
 
+const includedInParams = (c: UrlToken) =>
+  TokenType.ATTRIBUTE_DROPDOWN === c.type
+  || TokenType.ATTRIBUTE_MULTISELECT === c.type
+
 export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
   const key = c.name as FetchingParamsKeys;
 
@@ -31,8 +35,14 @@ export const toFetchingParams = (p: FetchingParams, c: UrlToken) => {
     p.attribute[c.name] = [];
   }
 
-  if (c.isAttribute()) {
+  if (c.isAttribute() && includedInParams(c)) {
     p.attribute[c.name] = unique(p.attribute[c.name].concat(c.value));
+
+    return p;
+  }
+
+  if (c.isAttribute() && !includedInParams(c)) {
+    p.attribute[c.name] = []
 
     return p;
   }
