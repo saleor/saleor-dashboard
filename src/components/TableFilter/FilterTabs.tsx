@@ -14,7 +14,7 @@ const useStyles = makeStyles(
 
 interface FilterTabsProps {
   children?: React.ReactNode;
-  currentTab: number | undefined;
+  currentTab: number;
 }
 
 export const FilterTabs: React.FC<FilterTabsProps> = props => {

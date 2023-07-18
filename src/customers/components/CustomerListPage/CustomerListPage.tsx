@@ -18,7 +18,11 @@ import {
 } from "@dashboard/customers/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
-import { FilterPageProps, PageListProps, SortPage } from "@dashboard/types";
+import {
+  FilterPagePropsWithPresets,
+  PageListProps,
+  SortPage,
+} from "@dashboard/types";
 import { Box, Button, ChevronRightIcon } from "@saleor/macaw-ui/next";
 import React, { useState } from "react";
 import { FormattedMessage, useIntl } from "react-intl";
@@ -33,35 +37,29 @@ import {
 
 export interface CustomerListPageProps
   extends PageListProps,
-    Omit<
-      FilterPageProps<CustomerFilterKeys, CustomerListFilterOpts>,
-      "onTabDelete"
-    >,
+    FilterPagePropsWithPresets<CustomerFilterKeys, CustomerListFilterOpts>,
     SortPage<CustomerListUrlSortField> {
   customers: Customers | undefined;
   selectedCustomerIds: string[];
-  onTabUpdate: (tabName: string) => void;
   loading: boolean;
-  hasPresetsChange: () => boolean;
   onSelectCustomerIds: (rows: number[], clearSelection: () => void) => void;
   onCustomersDelete: () => void;
-  onTabDelete: (id: number) => void;
 }
 
 const CustomerListPage: React.FC<CustomerListPageProps> = ({
-  currentTab,
+  selectedFilterPreset,
   filterOpts,
   initialSearch,
-  onAll,
+  onFilterPresetsAll,
   onFilterChange,
+  onFilterPresetDelete,
+  onFilterPresetUpdate,
   onSearchChange,
-  onTabChange,
-  onTabDelete,
-  onTabSave,
-  onTabUpdate,
-  tabs,
+  onFilterPresetChange,
+  onFilterPresetPresetSave,
+  filterPresets,
   selectedCustomerIds,
-  hasPresetsChange,
+  hasPresetsChanged,
   onCustomersDelete,
   ...customerListProps
 }) => {
@@ -98,14 +96,14 @@ const CustomerListPage: React.FC<CustomerListPageProps> = ({
               <ChevronRightIcon />
             </Box>
             <FilterPresetsSelect
-              presetsChanged={hasPresetsChange()}
-              onSelect={onTabChange}
-              onRemove={onTabDelete}
-              onUpdate={onTabUpdate}
-              savedPresets={tabs}
-              activePreset={currentTab}
-              onSelectAll={onAll}
-              onSave={onTabSave}
+              presetsChanged={hasPresetsChanged()}
+              onSelect={onFilterPresetChange}
+              onRemove={onFilterPresetDelete}
+              onUpdate={onFilterPresetUpdate}
+              savedPresets={filterPresets}
+              activePreset={selectedFilterPreset}
+              onSelectAll={onFilterPresetsAll}
+              onSave={onFilterPresetPresetSave}
               isOpen={isFilterPresetOpen}
               onOpenChange={setFilterPresetOpen}
               selectAllLabel={intl.formatMessage({

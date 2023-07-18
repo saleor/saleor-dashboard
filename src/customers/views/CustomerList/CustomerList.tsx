@@ -167,20 +167,20 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
     <PaginatorContext.Provider value={paginationValues}>
       <WindowTitle title={intl.formatMessage(sectionNames.customers)} />
       <CustomerListPage
-        currentTab={selectedPreset}
+        selectedFilterPreset={selectedPreset}
         filterOpts={getFilterOpts(params)}
         initialSearch={params.query || ""}
         onSearchChange={handleSearchChange}
         onFilterChange={changeFilters}
-        onAll={resetFilters}
-        onTabChange={onPresetChange}
-        onTabDelete={(id: number) => {
+        onFilterPresetsAll={resetFilters}
+        onFilterPresetChange={onPresetChange}
+        onFilterPresetDelete={(id: number) => {
           setPresetIdToDelete(id);
           openModal("delete-search");
         }}
-        onTabSave={() => openModal("save-search")}
-        onTabUpdate={onPresetUpdate}
-        tabs={presets.map(tab => tab.name)}
+        onFilterPresetPresetSave={() => openModal("save-search")}
+        onFilterPresetUpdate={onPresetUpdate}
+        filterPresets={presets.map(preset => preset.name)}
         customers={customers}
         settings={settings}
         disabled={loading}
@@ -190,7 +190,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         selectedCustomerIds={selectedRowIds}
         onSelectCustomerIds={handleSetSelectedCustomerIds}
         sort={getSortParams(params)}
-        hasPresetsChange={hasPresetsChange}
+        hasPresetsChanged={hasPresetsChange}
         onCustomersDelete={() => openModal("remove", { ids: selectedRowIds })}
       />
       <ActionDialog
