@@ -24,6 +24,10 @@ export const columnsMessages = defineMessages({
     defaultMessage: "Total",
     description: "total price of ordered products",
   },
+  status: {
+    id: "tzMNF3",
+    defaultMessage: "Status",
+  },
 });
 
 export const messages = defineMessages({

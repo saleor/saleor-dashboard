@@ -8,7 +8,6 @@ import {
   thumbnailCell,
 } from "@dashboard/components/Datagrid/customCells/cells";
 import { GetCellContentOpts } from "@dashboard/components/Datagrid/Datagrid";
-import {} from "@dashboard/components/Datagrid/hooks/useEmptyColumn";
 import { AvailableColumn } from "@dashboard/components/Datagrid/types";
 import { OrderDetailsFragment, OrderErrorFragment } from "@dashboard/graphql";
 import useLocale from "@dashboard/hooks/useLocale";
@@ -63,7 +62,7 @@ export const orderDraftDetailsStaticColumnsAdapter = (
   },
   {
     id: "status",
-    title: "Status",
+    title: intl.formatMessage(columnsMessages.status),
     width: 250,
   },
 ];
