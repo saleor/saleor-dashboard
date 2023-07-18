@@ -316,7 +316,7 @@ export const shop: (placeholderImage: string) => HomeQuery = (
                 {
                   __typename: "AttributeValue",
                   id: "QXR0cmlidXRlVmFsdWU6OTI=",
-                  name: "XS",
+                  name: "XL",
                   sortOrder: 0,
                 },
               ],
@@ -326,7 +326,83 @@ export const shop: (placeholderImage: string) => HomeQuery = (
           product: {
             __typename: "Product",
             id: "UHJvZHVjdDo4",
-            name: "Gardner-Martin",
+            name: "Black Hoodie",
+            thumbnail: {
+              __typename: "Image",
+              url: placeholderImage,
+            },
+          },
+          quantityOrdered: 1,
+          revenue: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 37.65,
+              currency: "USD",
+            },
+          },
+        },
+      },
+      {
+        __typename: "ProductVariantCountableEdge",
+        node: {
+          __typename: "ProductVariant",
+          attributes: [
+            {
+              __typename: "SelectedAttribute",
+              values: [
+                {
+                  __typename: "AttributeValue",
+                  id: "QXR0cmlidXRlVmFsdWU6OTI2=",
+                  name: "2l",
+                  sortOrder: 0,
+                },
+              ],
+            },
+          ],
+          id: "UHJvZHVjdFZhcmlhbnQ6NDM=2",
+          product: {
+            __typename: "Product",
+            id: "UHJvZHVjdDo4",
+            name: "Bean Juice",
+            thumbnail: {
+              __typename: "Image",
+              url: placeholderImage,
+            },
+          },
+          quantityOrdered: 1,
+          revenue: {
+            __typename: "TaxedMoney",
+            gross: {
+              __typename: "Money",
+              amount: 37.65,
+              currency: "USD",
+            },
+          },
+        },
+      },
+      {
+        __typename: "ProductVariantCountableEdge",
+        node: {
+          __typename: "ProductVariant",
+          attributes: [
+            {
+              __typename: "SelectedAttribute",
+              values: [
+                {
+                  __typename: "AttributeValue",
+                  id: "QXR0cmlidXRlVmFsdWU6OTI=3",
+                  name: "L",
+                  sortOrder: 0,
+                },
+              ],
+            },
+          ],
+          id: "UHJvZHVjdFZhcmlhbnQ6NDM=3",
+          product: {
+            __typename: "Product",
+            id: "UHJvZHVjdDo4",
+            name: "Black Hoodie",
             thumbnail: {
               __typename: "Image",
               url: placeholderImage,

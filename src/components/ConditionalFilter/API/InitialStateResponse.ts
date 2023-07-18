@@ -15,20 +15,34 @@ export interface InitialState {
   attribute: Record<string, AttributeDTO>;
   channel: ItemOption[];
   collection: ItemOption[];
-  producttype: ItemOption[];
+  productType: ItemOption[];
+  isAvailable: ItemOption[];
+  isPublished: ItemOption[];
+  isVisibleInListing: ItemOption[];
+  hasCategory: ItemOption[];
+  giftCard: ItemOption[];
 }
 
 export class InitialStateResponse implements InitialState {
   constructor(
-    public category: ItemOption[],
-    public attribute: Record<string, AttributeDTO>,
-    public channel: ItemOption[],
-    public collection: ItemOption[],
-    public producttype: ItemOption[],
-  ) {}
+    public category: ItemOption[] = [],
+    public attribute: Record<string, AttributeDTO> = {},
+    public channel: ItemOption[] = [],
+    public collection: ItemOption[] = [],
+    public productType: ItemOption[] = [],
+    public isAvailable: ItemOption[] = [],
+    public isPublished: ItemOption[] = [],
+    public isVisibleInListing: ItemOption[] = [],
+    public hasCategory: ItemOption[] = [],
+    public giftCard: ItemOption[] = []
+  ) { }
 
   public attributeByName(name: string) {
     return this.attribute[name];
+  }
+
+  public static empty() {
+    return new InitialStateResponse();
   }
 
   public filterByUrlToken(token: UrlToken) {
@@ -53,10 +67,20 @@ export class InitialStateResponse implements InitialState {
         return this.category;
       case "collection":
         return this.collection;
-      case "producttype":
-        return this.producttype;
+      case "productType":
+        return this.productType;
       case "channel":
         return this.channel;
+      case "isAvailable":
+        return this.isAvailable;
+      case "isPublished":
+        return this.isPublished;
+      case "isVisibleInListing":
+        return this.isVisibleInListing;
+      case "hasCategory":
+        return this.hasCategory;
+      case "giftCard":
+        return this.giftCard;
       default:
         return [];
     }

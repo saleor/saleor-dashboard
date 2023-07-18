@@ -1,4 +1,4 @@
-import AppInstallErrorPage from "@dashboard/apps/components/AppInstallErrorPage";
+import {AppInstallErrorPage} from "@dashboard/apps/components/AppInstallErrorPage";
 import AppInstallPage from "@dashboard/apps/components/AppInstallPage";
 import {
   AppInstallUrlQueryParams,
@@ -100,7 +100,7 @@ export const AppInstallView: React.FC<Props> = ({ params }) => {
       <WindowTitle title={intl.formatMessage(messages.installApp)} />
       {!!fetchManifestOpts.data?.appFetchManifest?.errors?.length ||
       !!fetchManifestOpts.error ? (
-        <AppInstallErrorPage onBack={() => navigate("/")} />
+        <AppInstallErrorPage onBack={navigateToAppsList} />
       ) : (
         <AppInstallPage
           data={fetchManifestOpts?.data?.appFetchManifest?.manifest ?? null}

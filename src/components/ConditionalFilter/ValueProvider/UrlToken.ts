@@ -5,7 +5,17 @@ import { slugFromConditionValue } from "../FilterElement/ConditionValue";
 
 export const CONDITIONS = ["is", "equals", "in", "between", "lower", "greater"];
 
-const STATIC_TO_LOAD = ["category", "collection", "channel", "producttype"];
+const STATIC_TO_LOAD = [
+  "category",
+  "collection",
+  "channel",
+  "productType",
+  "isAvailable",
+  "isPublished",
+  "isVisibleInListing",
+  "hasCategory",
+  "giftCard"
+];
 
 export const TokenType = {
   ATTRIBUTE: "a",
