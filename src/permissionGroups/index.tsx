@@ -1,4 +1,3 @@
-import { useFlag } from "@dashboard/featureFlags";
 import { sectionNames } from "@dashboard/intl";
 import { asSortParams } from "@dashboard/utils/sort";
 import { parse as parseQs } from "qs";
@@ -16,11 +15,9 @@ import {
   PermissionGroupListUrlQueryParams,
   PermissionGroupListUrlSortField,
 } from "./urls";
-import PermissionGroupCreate from "./views/PermissionGroupCreate";
-import PermissionGroupDetailsComponent from "./views/PermissionGroupDetails";
+import { PermissionGroupCreate } from "./views/PermissionGroupCreate";
+import { PermissionGroupDetails as PermissionGroupDetailsComponent } from "./views/PermissionGroupDetails";
 import PermissionGroupListComponent from "./views/PermissionGroupList";
-import { PermissionGroupWithChannelsCreate } from "./views/PermissionGroupWithChannelsCreate";
-import { PermissionGroupWithChannelsDetails as PermissionGroupWithChannelsDetailsComponent } from "./views/PermissionGroupWithChannelsDetails";
 
 const permissionGroupList: React.FC<RouteComponentProps<{}>> = ({
   location,
@@ -54,26 +51,8 @@ const PermissionGroupDetails: React.FC<
   );
 };
 
-const PermissionGroupWithChannelsDetails: React.FC<
-  RouteComponentProps<PermissionGroupDetailsRouteProps>
-> = ({ match }) => {
-  const qs = parseQs(location.search.substr(1)) as any;
-  const params: PermissionGroupDetailsUrlQueryParams = asSortParams(
-    qs,
-    MembersListUrlSortField,
-  );
-
-  return (
-    <PermissionGroupWithChannelsDetailsComponent
-      id={decodeURIComponent(match.params.id)}
-      params={params}
-    />
-  );
-};
-
 const Component = () => {
   const intl = useIntl();
-  const { enabled } = useFlag("channel_permissions");
 
   return (
     <>
@@ -86,17 +65,11 @@ const Component = () => {
         />
         <Route
           path={permissionGroupAddPath}
-          component={
-            enabled ? PermissionGroupWithChannelsCreate : PermissionGroupCreate
-          }
+          component={PermissionGroupCreate}
         />
         <Route
           path={permissionGroupDetailsPath(":id")}
-          component={
-            enabled
-              ? PermissionGroupWithChannelsDetails
-              : PermissionGroupDetails
-          }
+          component={PermissionGroupDetails}
         />
       </Switch>
     </>

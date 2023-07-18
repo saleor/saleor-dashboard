@@ -1,26 +1,38 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
+import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
 import { usePermissionGroupCreateMutation } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import useShop from "@dashboard/hooks/useShop";
 import { extractMutationErrors } from "@dashboard/misc";
-import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage";
-import React from "react";
+import { PermissionData } from "@dashboard/permissionGroups/components/PermissonGroupDetailsPage";
+import React, { useMemo } from "react";
 import { useIntl } from "react-intl";
 
-import PermissionGroupCreatePage, {
+import {
   PermissionGroupCreateFormData,
+  PermissionGroupCreatePage,
 } from "../../components/PermissionGroupCreatePage";
 import { permissionGroupDetailsUrl } from "../../urls";
+import {
+  checkIfUserHasRestictedChannels,
+  getChannelsOptions,
+} from "../../utils";
 
-const PermissionGroupCreateView: React.FC = () => {
+export const PermissionGroupCreate: React.FC = () => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const intl = useIntl();
   const shop = useShop();
   const user = useUser();
+  const { availableChannels } = useAppChannel(false);
+  const hasUserRestrictedChannels = checkIfUserHasRestictedChannels(user.user);
+  const userAvailableChannels = useMemo(
+    () => getChannelsOptions(availableChannels, user.user),
+    [availableChannels, user.user],
+  );
 
   const [createPermissionGroup, createPermissionGroupResult] =
     usePermissionGroupCreateMutation({
@@ -43,20 +55,26 @@ const PermissionGroupCreateView: React.FC = () => {
   const errors =
     createPermissionGroupResult?.data?.permissionGroupCreate?.errors || [];
 
-  const onSubmit = (formData: PermissionGroupCreateFormData) =>
-    extractMutationErrors(
+  const onSubmit = (formData: PermissionGroupCreateFormData) => {
+    const channelChoices = userAvailableChannels.map(channel => channel.id);
+
+    return extractMutationErrors(
       createPermissionGroup({
         variables: {
           input: {
-            addPermissions: formData.hasFullAccess
-              ? shop.permissions.map(perm => perm.code)
-              : formData.permissions,
+            addPermissions: formData.permissions,
             addUsers: [],
             name: formData.name,
+            addChannels: formData.hasAllChannels
+              ? channelChoices
+              : formData.channels,
+            restrictedAccessToChannels:
+              hasUserRestrictedChannels || !formData.hasAllChannels,
           },
         },
       }),
     );
+  };
 
   const userPermissions = user?.user.userPermissions.map(p => p.code) || [];
 
@@ -80,15 +98,14 @@ const PermissionGroupCreateView: React.FC = () => {
         })}
       />
       <PermissionGroupCreatePage
-        errors={errors}
+        errors={errors as any}
         disabled={createPermissionGroupResult.loading}
         permissions={permissions}
+        channels={userAvailableChannels}
+        hasRestrictedChannels={hasUserRestrictedChannels}
         saveButtonBarState={createPermissionGroupResult.status}
         onSubmit={onSubmit}
       />
     </>
   );
 };
-PermissionGroupCreateView.displayName = "PermissionGroupCreateView";
-
-export default PermissionGroupCreateView;

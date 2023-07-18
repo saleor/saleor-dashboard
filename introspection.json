@@ -3000,7 +3000,7 @@
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": "The ID of allocation.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -31745,7 +31745,7 @@
       {
         "kind": "OBJECT",
         "name": "ExternalAuthentication",
-        "description": null,
+        "description": "External authentication plugin.",
         "fields": [
           {
             "name": "id",
@@ -34417,7 +34417,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardActivate",
-        "description": "Activate a gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+        "description": "Activate a gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_STATUS_CHANGED (async): A gift card was activated.",
         "fields": [
           {
             "name": "giftCard",
@@ -34488,7 +34488,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardAddNote",
-        "description": "Adds note to the gift card.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+        "description": "Adds note to the gift card.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_UPDATED (async): A gift card was updated.",
         "fields": [
           {
             "name": "giftCard",
@@ -34574,7 +34574,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardBulkActivate",
-        "description": "Activate gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+        "description": "Activate gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_STATUS_CHANGED (async): A gift card was activated.",
         "fields": [
           {
             "name": "count",
@@ -34625,7 +34625,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardBulkCreate",
-        "description": "Create gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+        "description": "Create gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_CREATED (async): A gift card was created.\n- NOTIFY_USER (async): A notification for created gift card.",
         "fields": [
           {
             "name": "count",
@@ -34791,7 +34791,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardBulkDeactivate",
-        "description": "Deactivate gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+        "description": "Deactivate gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_STATUS_CHANGED (async): A gift card was deactivated.",
         "fields": [
           {
             "name": "count",
@@ -34842,7 +34842,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardBulkDelete",
-        "description": "Delete gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+        "description": "Delete gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_DELETED (async): A gift card was deleted.",
         "fields": [
           {
             "name": "count",
@@ -34999,7 +34999,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardCreate",
-        "description": "Creates a new gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+        "description": "Creates a new gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_CREATED (async): A gift card was created.\n- NOTIFY_USER (async): A notification for created gift card.",
         "fields": [
           {
             "name": "giftCardErrors",
@@ -35294,7 +35294,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardDeactivate",
-        "description": "Deactivate a gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+        "description": "Deactivate a gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_STATUS_CHANGED (async): A gift card was deactivated.",
         "fields": [
           {
             "name": "giftCard",
@@ -35365,7 +35365,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardDelete",
-        "description": "Delete gift card.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+        "description": "Delete gift card.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_DELETED (async): A gift card was deleted.",
         "fields": [
           {
             "name": "giftCardErrors",
@@ -36289,7 +36289,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardResend",
-        "description": "Resend a gift card.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+        "description": "Resend a gift card.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for gift card resend.",
         "fields": [
           {
             "name": "giftCard",
@@ -37049,7 +37049,7 @@
       {
         "kind": "OBJECT",
         "name": "GiftCardUpdate",
-        "description": "Update a gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+        "description": "Update a gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_UPDATED (async): A gift card was updated.",
         "fields": [
           {
             "name": "giftCardErrors",
@@ -38430,7 +38430,7 @@
       {
         "kind": "OBJECT",
         "name": "InvoiceRequest",
-        "description": "Request an invoice for the order using plugin. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+        "description": "Request an invoice for the order using plugin. \n\nRequires one of the following permissions: MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- INVOICE_REQUESTED (async): An invoice was requested.",
         "fields": [
           {
             "name": "order",
@@ -38513,7 +38513,7 @@
       {
         "kind": "OBJECT",
         "name": "InvoiceRequestDelete",
-        "description": "Requests deletion of an invoice. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+        "description": "Requests deletion of an invoice. \n\nRequires one of the following permissions: MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- INVOICE_DELETED (async): An invoice was requested to delete.",
         "fields": [
           {
             "name": "invoiceErrors",
@@ -38677,7 +38677,7 @@
       {
         "kind": "OBJECT",
         "name": "InvoiceSendNotification",
-        "description": "Send an invoice notification to the customer. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+        "description": "Send an invoice notification to the customer. \n\nRequires one of the following permissions: MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- INVOICE_SENT (async): A notification for invoice send\n- NOTIFY_USER (async): A notification for invoice send",
         "fields": [
           {
             "name": "invoiceErrors",
@@ -43799,7 +43799,7 @@
       {
         "kind": "OBJECT",
         "name": "LimitInfo",
-        "description": null,
+        "description": "Store the current and allowed usage.",
         "fields": [
           {
             "name": "currentUsage",
@@ -43846,7 +43846,7 @@
         "fields": [
           {
             "name": "channels",
-            "description": null,
+            "description": "Defines the number of channels.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -43858,7 +43858,7 @@
           },
           {
             "name": "orders",
-            "description": null,
+            "description": "Defines the number of order.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -43870,7 +43870,7 @@
           },
           {
             "name": "productVariants",
-            "description": null,
+            "description": "Defines the number of product variants.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -43882,7 +43882,7 @@
           },
           {
             "name": "staffUsers",
-            "description": null,
+            "description": "Defines the number of staff users.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -43894,7 +43894,7 @@
           },
           {
             "name": "warehouses",
-            "description": null,
+            "description": "Defines the number of warehouses.",
             "args": [],
             "type": {
               "kind": "SCALAR",
@@ -55526,7 +55526,7 @@
           },
           {
             "name": "invoiceRequest",
-            "description": "Request an invoice for the order using plugin. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+            "description": "Request an invoice for the order using plugin. \n\nRequires one of the following permissions: MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- INVOICE_REQUESTED (async): An invoice was requested.",
             "args": [
               {
                 "name": "number",
@@ -55567,7 +55567,7 @@
           },
           {
             "name": "invoiceRequestDelete",
-            "description": "Requests deletion of an invoice. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+            "description": "Requests deletion of an invoice. \n\nRequires one of the following permissions: MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- INVOICE_DELETED (async): An invoice was requested to delete.",
             "args": [
               {
                 "name": "id",
@@ -55715,7 +55715,7 @@
           },
           {
             "name": "invoiceSendNotification",
-            "description": "Send an invoice notification to the customer. \n\nRequires one of the following permissions: MANAGE_ORDERS.",
+            "description": "Send an invoice notification to the customer. \n\nRequires one of the following permissions: MANAGE_ORDERS.\n\nTriggers the following webhook events:\n- INVOICE_SENT (async): A notification for invoice send\n- NOTIFY_USER (async): A notification for invoice send",
             "args": [
               {
                 "name": "id",
@@ -55744,7 +55744,7 @@
           },
           {
             "name": "giftCardActivate",
-            "description": "Activate a gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+            "description": "Activate a gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_STATUS_CHANGED (async): A gift card was activated.",
             "args": [
               {
                 "name": "id",
@@ -55773,7 +55773,7 @@
           },
           {
             "name": "giftCardCreate",
-            "description": "Creates a new gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+            "description": "Creates a new gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_CREATED (async): A gift card was created.\n- NOTIFY_USER (async): A notification for created gift card.",
             "args": [
               {
                 "name": "input",
@@ -55802,7 +55802,7 @@
           },
           {
             "name": "giftCardDelete",
-            "description": "Delete gift card.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+            "description": "Delete gift card.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_DELETED (async): A gift card was deleted.",
             "args": [
               {
                 "name": "id",
@@ -55831,7 +55831,7 @@
           },
           {
             "name": "giftCardDeactivate",
-            "description": "Deactivate a gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+            "description": "Deactivate a gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_STATUS_CHANGED (async): A gift card was deactivated.",
             "args": [
               {
                 "name": "id",
@@ -55860,7 +55860,7 @@
           },
           {
             "name": "giftCardUpdate",
-            "description": "Update a gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+            "description": "Update a gift card. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_UPDATED (async): A gift card was updated.",
             "args": [
               {
                 "name": "id",
@@ -55905,7 +55905,7 @@
           },
           {
             "name": "giftCardResend",
-            "description": "Resend a gift card.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+            "description": "Resend a gift card.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- NOTIFY_USER (async): A notification for gift card resend.",
             "args": [
               {
                 "name": "input",
@@ -55934,7 +55934,7 @@
           },
           {
             "name": "giftCardAddNote",
-            "description": "Adds note to the gift card.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+            "description": "Adds note to the gift card.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_UPDATED (async): A gift card was updated.",
             "args": [
               {
                 "name": "id",
@@ -55979,7 +55979,7 @@
           },
           {
             "name": "giftCardBulkCreate",
-            "description": "Create gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+            "description": "Create gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_CREATED (async): A gift card was created.\n- NOTIFY_USER (async): A notification for created gift card.",
             "args": [
               {
                 "name": "input",
@@ -56008,7 +56008,7 @@
           },
           {
             "name": "giftCardBulkDelete",
-            "description": "Delete gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+            "description": "Delete gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_DELETED (async): A gift card was deleted.",
             "args": [
               {
                 "name": "ids",
@@ -56045,7 +56045,7 @@
           },
           {
             "name": "giftCardBulkActivate",
-            "description": "Activate gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+            "description": "Activate gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_STATUS_CHANGED (async): A gift card was activated.",
             "args": [
               {
                 "name": "ids",
@@ -56082,7 +56082,7 @@
           },
           {
             "name": "giftCardBulkDeactivate",
-            "description": "Deactivate gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.",
+            "description": "Deactivate gift cards.\n\nAdded in Saleor 3.1. \n\nRequires one of the following permissions: MANAGE_GIFT_CARD.\n\nTriggers the following webhook events:\n- GIFT_CARD_STATUS_CHANGED (async): A gift card was deactivated.",
             "args": [
               {
                 "name": "ids",
@@ -96826,6 +96826,18 @@
                 "deprecationReason": null
               },
               {
+                "name": "search",
+                "description": "Search gift cards by email and name of user, who created or used the gift card, and by code.\n\nAdded in Saleor 3.15.\n\nNote: this API is currently in Feature Preview and can be subject to changes at later point.",
+                "type": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                },
+                "defaultValue": null,
+                "isDeprecated": false,
+                "deprecationReason": null
+              },
+              {
                 "name": "before",
                 "description": "Return the elements in the list that come before the specified cursor.",
                 "type": {
@@ -97529,7 +97541,7 @@
           },
           {
             "name": "checkout",
-            "description": "Look up a checkout by token and slug of channel.",
+            "description": "Look up a checkout by id.\n\nRequires one of the following permissions to query checkouts that belong to other users: MANAGE_CHECKOUTS, IMPERSONATE_USER. ",
             "args": [
               {
                 "name": "id",
@@ -108689,7 +108701,7 @@
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": "The ID of stock.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -108705,7 +108717,7 @@
           },
           {
             "name": "warehouse",
-            "description": null,
+            "description": "The warehouse associated with the stock.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -108721,7 +108733,7 @@
           },
           {
             "name": "productVariant",
-            "description": null,
+            "description": "Information about the product variant.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -121780,7 +121792,7 @@
         "fields": [
           {
             "name": "id",
-            "description": null,
+            "description": "The ID of the warehouse.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -121968,7 +121980,7 @@
           },
           {
             "name": "name",
-            "description": null,
+            "description": "Warehouse name.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -121984,7 +121996,7 @@
           },
           {
             "name": "slug",
-            "description": null,
+            "description": "Warehouse slug.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -122000,7 +122012,7 @@
           },
           {
             "name": "email",
-            "description": null,
+            "description": "Warehouse email.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -122016,7 +122028,7 @@
           },
           {
             "name": "isPrivate",
-            "description": null,
+            "description": "Determine if the warehouse is private.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -122032,7 +122044,7 @@
           },
           {
             "name": "address",
-            "description": null,
+            "description": "Address of the warehouse.",
             "args": [],
             "type": {
               "kind": "NON_NULL",
@@ -122080,7 +122092,7 @@
           },
           {
             "name": "shippingZones",
-            "description": null,
+            "description": "Shipping zones supported by the warehouse.",
             "args": [
               {
                 "name": "before",

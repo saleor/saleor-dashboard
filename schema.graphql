@@ -698,6 +698,7 @@ type AddressValidationData {
 
 """Represents allocation."""
 type Allocation implements Node {
+  """The ID of allocation."""
   id: ID!
 
   """
@@ -7226,6 +7227,7 @@ enum ExportScope {
   FILTER
 }
 
+"""External authentication plugin."""
 type ExternalAuthentication {
   """ID of external authentication plugin."""
   id: String!
@@ -7807,6 +7809,9 @@ type GiftCard implements Node & ObjectWithMetadata {
 Activate a gift card. 
 
 Requires one of the following permissions: MANAGE_GIFT_CARD.
+
+Triggers the following webhook events:
+- GIFT_CARD_STATUS_CHANGED (async): A gift card was activated.
 """
 type GiftCardActivate {
   """Activated gift card."""
@@ -7821,6 +7826,9 @@ Adds note to the gift card.
 Added in Saleor 3.1. 
 
 Requires one of the following permissions: MANAGE_GIFT_CARD.
+
+Triggers the following webhook events:
+- GIFT_CARD_UPDATED (async): A gift card was updated.
 """
 type GiftCardAddNote {
   """Gift card with the note added."""
@@ -7842,6 +7850,9 @@ Activate gift cards.
 Added in Saleor 3.1. 
 
 Requires one of the following permissions: MANAGE_GIFT_CARD.
+
+Triggers the following webhook events:
+- GIFT_CARD_STATUS_CHANGED (async): A gift card was activated.
 """
 type GiftCardBulkActivate {
   """Returns how many objects were affected."""
@@ -7855,6 +7866,10 @@ Create gift cards.
 Added in Saleor 3.1. 
 
 Requires one of the following permissions: MANAGE_GIFT_CARD.
+
+Triggers the following webhook events:
+- GIFT_CARD_CREATED (async): A gift card was created.
+- NOTIFY_USER (async): A notification for created gift card.
 """
 type GiftCardBulkCreate {
   """Returns how many objects were created."""
@@ -7888,6 +7903,9 @@ Deactivate gift cards.
 Added in Saleor 3.1. 
 
 Requires one of the following permissions: MANAGE_GIFT_CARD.
+
+Triggers the following webhook events:
+- GIFT_CARD_STATUS_CHANGED (async): A gift card was deactivated.
 """
 type GiftCardBulkDeactivate {
   """Returns how many objects were affected."""
@@ -7901,6 +7919,9 @@ Delete gift cards.
 Added in Saleor 3.1. 
 
 Requires one of the following permissions: MANAGE_GIFT_CARD.
+
+Triggers the following webhook events:
+- GIFT_CARD_DELETED (async): A gift card was deleted.
 """
 type GiftCardBulkDelete {
   """Returns how many objects were affected."""
@@ -7929,6 +7950,10 @@ type GiftCardCountableEdge {
 Creates a new gift card. 
 
 Requires one of the following permissions: MANAGE_GIFT_CARD.
+
+Triggers the following webhook events:
+- GIFT_CARD_CREATED (async): A gift card was created.
+- NOTIFY_USER (async): A notification for created gift card.
 """
 type GiftCardCreate {
   giftCardErrors: [GiftCardError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -8026,6 +8051,9 @@ type GiftCardCreated implements Event {
 Deactivate a gift card. 
 
 Requires one of the following permissions: MANAGE_GIFT_CARD.
+
+Triggers the following webhook events:
+- GIFT_CARD_STATUS_CHANGED (async): A gift card was deactivated.
 """
 type GiftCardDeactivate {
   """Deactivated gift card."""
@@ -8040,6 +8068,9 @@ Delete gift card.
 Added in Saleor 3.1. 
 
 Requires one of the following permissions: MANAGE_GIFT_CARD.
+
+Triggers the following webhook events:
+- GIFT_CARD_DELETED (async): A gift card was deleted.
 """
 type GiftCardDelete {
   giftCardErrors: [GiftCardError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -8226,6 +8257,9 @@ Resend a gift card.
 Added in Saleor 3.1. 
 
 Requires one of the following permissions: MANAGE_GIFT_CARD.
+
+Triggers the following webhook events:
+- NOTIFY_USER (async): A notification for gift card resend.
 """
 type GiftCardResend {
   """Gift card which has been sent."""
@@ -8411,6 +8445,9 @@ input GiftCardTagFilterInput {
 Update a gift card. 
 
 Requires one of the following permissions: MANAGE_GIFT_CARD.
+
+Triggers the following webhook events:
+- GIFT_CARD_UPDATED (async): A gift card was updated.
 """
 type GiftCardUpdate {
   giftCardErrors: [GiftCardError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -8745,6 +8782,9 @@ enum InvoiceErrorCode {
 Request an invoice for the order using plugin. 
 
 Requires one of the following permissions: MANAGE_ORDERS.
+
+Triggers the following webhook events:
+- INVOICE_REQUESTED (async): An invoice was requested.
 """
 type InvoiceRequest {
   """Order related to an invoice."""
@@ -8758,6 +8798,9 @@ type InvoiceRequest {
 Requests deletion of an invoice. 
 
 Requires one of the following permissions: MANAGE_ORDERS.
+
+Triggers the following webhook events:
+- INVOICE_DELETED (async): An invoice was requested to delete.
 """
 type InvoiceRequestDelete {
   invoiceErrors: [InvoiceError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -8798,6 +8841,10 @@ type InvoiceRequested implements Event {
 Send an invoice notification to the customer. 
 
 Requires one of the following permissions: MANAGE_ORDERS.
+
+Triggers the following webhook events:
+- INVOICE_SENT (async): A notification for invoice send
+- NOTIFY_USER (async): A notification for invoice send
 """
 type InvoiceSendNotification {
   invoiceErrors: [InvoiceError!]! @deprecated(reason: "This field will be removed in Saleor 4.0. Use `errors` field instead.")
@@ -9664,6 +9711,7 @@ type LanguageDisplay {
   language: String!
 }
 
+"""Store the current and allowed usage."""
 type LimitInfo {
   """Defines the current resource usage."""
   currentUsage: Limits!
@@ -9673,10 +9721,19 @@ type LimitInfo {
 }
 
 type Limits {
+  """Defines the number of channels."""
   channels: Int
+
+  """Defines the number of order."""
   orders: Int
+
+  """Defines the number of product variants."""
   productVariants: Int
+
+  """Defines the number of staff users."""
   staffUsers: Int
+
+  """Defines the number of warehouses."""
   warehouses: Int
 }
 
@@ -12851,6 +12908,9 @@ type Mutation {
   Request an invoice for the order using plugin. 
   
   Requires one of the following permissions: MANAGE_ORDERS.
+  
+  Triggers the following webhook events:
+  - INVOICE_REQUESTED (async): An invoice was requested.
   """
   invoiceRequest(
     """Invoice number, if not provided it will be generated."""
@@ -12864,6 +12924,9 @@ type Mutation {
   Requests deletion of an invoice. 
   
   Requires one of the following permissions: MANAGE_ORDERS.
+  
+  Triggers the following webhook events:
+  - INVOICE_DELETED (async): An invoice was requested to delete.
   """
   invoiceRequestDelete(
     """ID of an invoice to request the deletion."""
@@ -12910,6 +12973,10 @@ type Mutation {
   Send an invoice notification to the customer. 
   
   Requires one of the following permissions: MANAGE_ORDERS.
+  
+  Triggers the following webhook events:
+  - INVOICE_SENT (async): A notification for invoice send
+  - NOTIFY_USER (async): A notification for invoice send
   """
   invoiceSendNotification(
     """ID of an invoice to be sent."""
@@ -12920,6 +12987,9 @@ type Mutation {
   Activate a gift card. 
   
   Requires one of the following permissions: MANAGE_GIFT_CARD.
+  
+  Triggers the following webhook events:
+  - GIFT_CARD_STATUS_CHANGED (async): A gift card was activated.
   """
   giftCardActivate(
     """ID of a gift card to activate."""
@@ -12930,6 +13000,10 @@ type Mutation {
   Creates a new gift card. 
   
   Requires one of the following permissions: MANAGE_GIFT_CARD.
+  
+  Triggers the following webhook events:
+  - GIFT_CARD_CREATED (async): A gift card was created.
+  - NOTIFY_USER (async): A notification for created gift card.
   """
   giftCardCreate(
     """Fields required to create a gift card."""
@@ -12942,6 +13016,9 @@ type Mutation {
   Added in Saleor 3.1. 
   
   Requires one of the following permissions: MANAGE_GIFT_CARD.
+  
+  Triggers the following webhook events:
+  - GIFT_CARD_DELETED (async): A gift card was deleted.
   """
   giftCardDelete(
     """ID of the gift card to delete."""
@@ -12952,6 +13029,9 @@ type Mutation {
   Deactivate a gift card. 
   
   Requires one of the following permissions: MANAGE_GIFT_CARD.
+  
+  Triggers the following webhook events:
+  - GIFT_CARD_STATUS_CHANGED (async): A gift card was deactivated.
   """
   giftCardDeactivate(
     """ID of a gift card to deactivate."""
@@ -12962,6 +13042,9 @@ type Mutation {
   Update a gift card. 
   
   Requires one of the following permissions: MANAGE_GIFT_CARD.
+  
+  Triggers the following webhook events:
+  - GIFT_CARD_UPDATED (async): A gift card was updated.
   """
   giftCardUpdate(
     """ID of a gift card to update."""
@@ -12977,6 +13060,9 @@ type Mutation {
   Added in Saleor 3.1. 
   
   Requires one of the following permissions: MANAGE_GIFT_CARD.
+  
+  Triggers the following webhook events:
+  - NOTIFY_USER (async): A notification for gift card resend.
   """
   giftCardResend(
     """Fields required to resend a gift card."""
@@ -12989,6 +13075,9 @@ type Mutation {
   Added in Saleor 3.1. 
   
   Requires one of the following permissions: MANAGE_GIFT_CARD.
+  
+  Triggers the following webhook events:
+  - GIFT_CARD_UPDATED (async): A gift card was updated.
   """
   giftCardAddNote(
     """ID of the gift card to add a note for."""
@@ -13004,6 +13093,10 @@ type Mutation {
   Added in Saleor 3.1. 
   
   Requires one of the following permissions: MANAGE_GIFT_CARD.
+  
+  Triggers the following webhook events:
+  - GIFT_CARD_CREATED (async): A gift card was created.
+  - NOTIFY_USER (async): A notification for created gift card.
   """
   giftCardBulkCreate(
     """Fields required to create gift cards."""
@@ -13016,6 +13109,9 @@ type Mutation {
   Added in Saleor 3.1. 
   
   Requires one of the following permissions: MANAGE_GIFT_CARD.
+  
+  Triggers the following webhook events:
+  - GIFT_CARD_DELETED (async): A gift card was deleted.
   """
   giftCardBulkDelete(
     """List of gift card IDs to delete."""
@@ -13028,6 +13124,9 @@ type Mutation {
   Added in Saleor 3.1. 
   
   Requires one of the following permissions: MANAGE_GIFT_CARD.
+  
+  Triggers the following webhook events:
+  - GIFT_CARD_STATUS_CHANGED (async): A gift card was activated.
   """
   giftCardBulkActivate(
     """List of gift card IDs to activate."""
@@ -13040,6 +13139,9 @@ type Mutation {
   Added in Saleor 3.1. 
   
   Requires one of the following permissions: MANAGE_GIFT_CARD.
+  
+  Triggers the following webhook events:
+  - GIFT_CARD_STATUS_CHANGED (async): A gift card was deactivated.
   """
   giftCardBulkDeactivate(
     """List of gift card IDs to deactivate."""
@@ -23413,6 +23515,15 @@ type Query {
     """
     filter: GiftCardFilterInput
 
+    """
+    Search gift cards by email and name of user, who created or used the gift card, and by code.
+    
+    Added in Saleor 3.15.
+    
+    Note: this API is currently in Feature Preview and can be subject to changes at later point.
+    """
+    search: String
+
     """Return the elements in the list that come before the specified cursor."""
     before: String
 
@@ -23652,7 +23763,11 @@ type Query {
   """List of all tax rates available from tax gateway."""
   taxTypes: [TaxType!]
 
-  """Look up a checkout by token and slug of channel."""
+  """
+  Look up a checkout by id.
+  
+  Requires one of the following permissions to query checkouts that belong to other users: MANAGE_CHECKOUTS, IMPERSONATE_USER. 
+  """
   checkout(
     """
     The checkout's ID.
@@ -26307,8 +26422,13 @@ input StaffUserInput {
 
 """Represents stock."""
 type Stock implements Node {
+  """The ID of stock."""
   id: ID!
+
+  """The warehouse associated with the stock."""
   warehouse: Warehouse!
+
+  """Information about the product variant."""
   productVariant: ProductVariant!
 
   """
@@ -29416,6 +29536,7 @@ type VoucherUpdated implements Event {
 
 """Represents warehouse."""
 type Warehouse implements Node & ObjectWithMetadata {
+  """The ID of the warehouse."""
   id: ID!
 
   """List of private metadata items. Requires staff permissions to access."""
@@ -29455,10 +29576,20 @@ type Warehouse implements Node & ObjectWithMetadata {
   Added in Saleor 3.3.
   """
   metafields(keys: [String!]): Metadata
+
+  """Warehouse name."""
   name: String!
+
+  """Warehouse slug."""
   slug: String!
+
+  """Warehouse email."""
   email: String!
+
+  """Determine if the warehouse is private."""
   isPrivate: Boolean!
+
+  """Address of the warehouse."""
   address: Address!
 
   """Warehouse company name."""
@@ -29470,6 +29601,8 @@ type Warehouse implements Node & ObjectWithMetadata {
   Added in Saleor 3.1.
   """
   clickAndCollectOption: WarehouseClickAndCollectOptionEnum!
+
+  """Shipping zones supported by the warehouse."""
   shippingZones(
     """Return the elements in the list that come before the specified cursor."""
     before: String

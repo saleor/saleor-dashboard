@@ -1,9 +1,10 @@
 // @ts-strict-ignore
-import { permissions } from "@dashboard/fixtures";
+import { channels, permissions } from "@dashboard/fixtures";
 import React from "react";
 
 import { errorsOfPermissionGroupCreate } from "../../fixtures";
-import PermissionGroupCreatePage, {
+import {
+  PermissionGroupCreatePage,
   PermissionGroupCreatePageProps,
 } from "./PermissionGroupCreatePage";
 
@@ -12,11 +13,13 @@ const props: PermissionGroupCreatePageProps = {
   errors: [],
   onSubmit: () => undefined,
   permissions,
+  channels,
   saveButtonBarState: undefined,
+  hasRestrictedChannels: false,
 };
 
 export default {
-  title: "Permission Groups / Permission Group Create",
+  title: "Permission Groups / Permission Group Create With Channels",
 };
 
 export const Default = () => <PermissionGroupCreatePage {...props} />;

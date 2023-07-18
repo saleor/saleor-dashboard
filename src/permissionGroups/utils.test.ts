@@ -9,8 +9,7 @@ import {
 } from "@dashboard/graphql";
 import { PermissionGroupWithContextDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
 
-import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
-import { PermissionGroupWithChannelsDetailsPageFormData } from "./components/PermissonGroupWithChannelsDetailsPage";
+import { PermissionGroupDetailsPageFormData } from "./components/PermissonGroupDetailsPage";
 import { permissionGroup, permissionGroupWithChannels } from "./fixtures";
 import {
   arePermissionsExceeded,
@@ -32,7 +31,7 @@ describe("Permission group utils", () => {
       // Arrange
       const formData = {
         channels: [],
-      } as PermissionGroupWithChannelsDetailsPageFormData;
+      } as PermissionGroupDetailsPageFormData;
 
       const permissionGroup = {
         restrictedAccessToChannels: false,
@@ -69,7 +68,7 @@ describe("Permission group utils", () => {
       // Arrange
       const formData = {
         channels: ["1"],
-      } as PermissionGroupWithChannelsDetailsPageFormData;
+      } as PermissionGroupDetailsPageFormData;
 
       const permissionGroup = {
         restrictedAccessToChannels: false,
@@ -106,7 +105,7 @@ describe("Permission group utils", () => {
       // Arrange
       const formData = {
         channels: ["2", "3", "55"],
-      } as PermissionGroupWithChannelsDetailsPageFormData;
+      } as PermissionGroupDetailsPageFormData;
 
       const permissionGroup = {
         restrictedAccessToChannels: true,
@@ -143,7 +142,7 @@ describe("Permission group utils", () => {
       // Arrange
       const formData = {
         channels: ["2"],
-      } as PermissionGroupWithChannelsDetailsPageFormData;
+      } as PermissionGroupDetailsPageFormData;
 
       const permissionGroup = {
         restrictedAccessToChannels: true,
@@ -177,7 +176,7 @@ describe("Permission group utils", () => {
       const formData = {
         channels: ["2"],
         hasAllChannels: true,
-      } as PermissionGroupWithChannelsDetailsPageFormData;
+      } as PermissionGroupDetailsPageFormData;
 
       const permissionGroup = {
         restrictedAccessToChannels: false,
@@ -307,7 +306,7 @@ describe("Permission group utils", () => {
       // Arrange
       const formData = {
         permissions: [PermissionEnum.HANDLE_TAXES],
-      } as PermissionGroupWithChannelsDetailsPageFormData;
+      } as PermissionGroupDetailsPageFormData;
 
       const permissionGroup = {
         permissions: [],
@@ -331,7 +330,7 @@ describe("Permission group utils", () => {
           PermissionEnum.HANDLE_TAXES,
           PermissionEnum.HANDLE_CHECKOUTS,
         ],
-      } as PermissionGroupWithChannelsDetailsPageFormData;
+      } as PermissionGroupDetailsPageFormData;
 
       const permissionGroup = {
         permissions: [

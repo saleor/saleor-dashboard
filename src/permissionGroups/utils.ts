@@ -10,8 +10,7 @@ import {
 import { PermissionGroupWithContextDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
 import difference from "lodash/difference";
 
-import { PermissionGroupDetailsPageFormData } from "./components/PermissionGroupDetailsPage";
-import { PermissionGroupWithChannelsDetailsPageFormData } from "./components/PermissonGroupWithChannelsDetailsPage";
+import { PermissionGroupDetailsPageFormData } from "./components/PermissonGroupDetailsPage";
 /**
  * Will return true if group has all permissions available in shop assigned.
  */
@@ -80,7 +79,7 @@ export const usersDiff = (
  */
 export const channelsDiff = (
   permissionGroup: PermissionGroupWithContextDetailsFragment,
-  formData: PermissionGroupWithChannelsDetailsPageFormData,
+  formData: PermissionGroupDetailsPageFormData,
   allChannels: ChannelFragment[],
   isUserAbleToEdit: boolean,
 ) => {
@@ -169,7 +168,7 @@ export const getChannelsOptions = (
 
   if (
     "restrictedAccessToChannels" in user &&
-    user.restrictedAccessToChannels === false
+    !user.restrictedAccessToChannels
   ) {
     return availableChannels;
   }

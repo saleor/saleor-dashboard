@@ -39,7 +39,7 @@ import {
 import PermissionGroupInfo from "../PermissionGroupInfo";
 import PermissionGroupMemberList from "../PermissionGroupMemberList";
 
-export interface PermissionGroupWithChannelsDetailsPageFormData {
+export interface PermissionGroupDetailsPageFormData {
   name: string;
   hasFullAccess: boolean;
   hasAllChannels: boolean;
@@ -49,13 +49,13 @@ export interface PermissionGroupWithChannelsDetailsPageFormData {
   channels: string[];
 }
 
-export interface PermissionWithChannelsData
+export interface PermissionData
   extends Omit<UserPermissionFragment, "__typename"> {
   lastSource?: boolean;
   disabled?: boolean;
 }
 
-export interface PermissonGroupWithChannelsDetailsPageProps
+export interface PermissonGroupDetailsPageProps
   extends ListActions,
     SortPage<MembersListUrlSortField> {
   channels: ChannelFragment[];
@@ -64,18 +64,16 @@ export interface PermissonGroupWithChannelsDetailsPageProps
   errors: PermissionGroupErrorFragment[];
   members: PermissionGroupDetailsFragment["users"];
   permissionGroup: PermissionGroupWithContextDetailsFragment;
-  permissions: PermissionWithChannelsData[];
+  permissions: PermissionData[];
   permissionsExceeded: boolean;
   saveButtonBarState: "loading" | "success" | "error" | "default";
   onAssign: () => void;
   onUnassign: (ids: string[]) => void;
-  onSubmit: (
-    data: PermissionGroupWithChannelsDetailsPageFormData,
-  ) => SubmitPromise;
+  onSubmit: (data: PermissionGroupDetailsPageFormData) => SubmitPromise;
 }
 
-export const PermissonGroupWithChannelsDetailsPage: React.FC<
-  PermissonGroupWithChannelsDetailsPageProps
+export const PermissonGroupDetailsPage: React.FC<
+  PermissonGroupDetailsPageProps
 > = ({
   disabled,
   errors,
@@ -96,7 +94,7 @@ export const PermissonGroupWithChannelsDetailsPage: React.FC<
   const channelsOptions = getChannelsOptions(channels, user.user);
   const hasUserRestrictedChannels = checkIfUserHasRestictedChannels(user.user);
 
-  const initialForm: PermissionGroupWithChannelsDetailsPageFormData = {
+  const initialForm: PermissionGroupDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
     hasAllChannels: !permissionGroup?.restrictedAccessToChannels ?? false,
     channels: getInitialChannels(permissionGroup, channels?.length ?? 0),

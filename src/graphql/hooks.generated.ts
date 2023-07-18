@@ -171,6 +171,42 @@ export const UserPermissionFragmentDoc = gql`
   name
 }
     `;
+export const ChannelFragmentFragmentDoc = gql`
+    fragment ChannelFragment on Channel {
+  id
+  isActive
+  name
+  slug
+  currencyCode
+  defaultCountry {
+    code
+    country
+  }
+  stockSettings {
+    allocationStrategy
+  }
+}
+    `;
+export const UserWithChannelsFragmentDoc = gql`
+    fragment UserWithChannels on User {
+  id
+  email
+  firstName
+  lastName
+  isStaff
+  userPermissions {
+    ...UserPermission
+  }
+  avatar(size: 128) {
+    url
+  }
+  accessibleChannels {
+    ...ChannelFragment
+  }
+  restrictedAccessToChannels
+}
+    ${UserPermissionFragmentDoc}
+${ChannelFragmentFragmentDoc}`;
 export const UserFragmentDoc = gql`
     fragment User on User {
   id
@@ -2113,6 +2149,24 @@ export const PermissionGroupMemberFragmentDoc = gql`
   }
 }
     ${StaffMemberFragmentDoc}`;
+export const PermissionGroupWithContextDetailsFragmentDoc = gql`
+    fragment PermissionGroupWithContextDetails on Group {
+  ...PermissionGroup
+  restrictedAccessToChannels
+  accessibleChannels {
+    ...Channel
+  }
+  permissions {
+    ...Permission
+  }
+  users {
+    ...PermissionGroupMember
+  }
+}
+    ${PermissionGroupFragmentDoc}
+${ChannelFragmentDoc}
+${PermissionFragmentDoc}
+${PermissionGroupMemberFragmentDoc}`;
 export const PermissionGroupDetailsFragmentDoc = gql`
     fragment PermissionGroupDetails on Group {
   ...PermissionGroup
@@ -12070,7 +12124,7 @@ export type PermissionGroupListQueryResult = Apollo.QueryResult<Types.Permission
 export const PermissionGroupDetailsDocument = gql`
     query PermissionGroupDetails($id: ID!, $userId: ID!) {
   permissionGroup(id: $id) {
-    ...PermissionGroupDetails
+    ...PermissionGroupWithContextDetails
   }
   user(id: $userId) {
     editableGroups {
@@ -12084,7 +12138,7 @@ export const PermissionGroupDetailsDocument = gql`
     }
   }
 }
-    ${PermissionGroupDetailsFragmentDoc}`;
+    ${PermissionGroupWithContextDetailsFragmentDoc}`;
 
 /**
  * __usePermissionGroupDetailsQuery__

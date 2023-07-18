@@ -1,6 +1,6 @@
 // @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
-import { PermissionData } from "@dashboard/permissionGroups/components/PermissionGroupDetailsPage/PermissionGroupDetailsPage";
+import { PermissionData } from "@dashboard/permissionGroups/components/PermissonGroupDetailsPage";
 import { Box, Text } from "@saleor/macaw-ui/next";
 import React, { ChangeEvent } from "react";
 import { useIntl } from "react-intl";
@@ -74,11 +74,10 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     onChange({
       target: {
         name: "hasFullAccess",
-        value:
+        value: !!(
           permissions.length === updatedPersmissions.length &&
           !data.hasFullAccess
-            ? true
-            : false,
+        ),
       },
     } as ChangeEvent<any>);
 
