@@ -22,12 +22,13 @@ export const HomeNotificationListItem = ({
   <List.Item
     borderColor="neutralPlain"
     borderWidth={1}
-    paddingX={3}
-    paddingY={4}
     borderBottomStyle="solid"
     data-test-id={dataTestId}
   >
-    <Link className={sprinkles({ width: "100%" })} to={linkUrl}>
+    <Link
+      className={sprinkles({ width: "100%", paddingX: 3, paddingY: 4 })}
+      to={linkUrl}
+    >
       <Box
         display="flex"
         justifyContent="space-between"

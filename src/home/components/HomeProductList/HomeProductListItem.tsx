@@ -16,11 +16,10 @@ export const HomeProductListItem = ({
   <List.Item
     borderColor="neutralPlain"
     borderWidth={1}
-    padding={3}
     borderBottomStyle="solid"
     data-test-id={dataTestId}
   >
-    <Link className={sprinkles({ width: "100%" })} to={linkUrl}>
+    <Link className={sprinkles({ width: "100%", padding: 3 })} to={linkUrl}>
       <Box
         display="flex"
         justifyContent="space-between"
