@@ -24,7 +24,7 @@ class ExpressionValue {
   }
 
   public static fromUrlToken(token: UrlToken) {
-    const option = STATIC_OPTIONS.find(o => o.slug === token.name)
+    const option = STATIC_OPTIONS.find(o => o.slug === token.name);
 
     if (!option) {
       return new ExpressionValue(token.name, token.name, token.name);
@@ -113,13 +113,13 @@ export class FilterElement {
     return ConditionOptions.isAttributeInputType(this.value.type);
   }
 
-  public rowType (): RowType | null {
+  public rowType(): RowType | null {
     if (this.isStatic()) {
-      return this.value.value as RowType
+      return this.value.value as RowType;
     }
 
     if (this.isAttribute()) {
-      return "attribute"
+      return "attribute";
     }
 
     return null;
@@ -161,7 +161,6 @@ export class FilterElement {
         false,
       );
     }
-
     return FilterElement.createEmpty();
   }
 }

@@ -60,7 +60,13 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
   };
 
   return (
-    <Box>
+    <Box
+      paddingX={5}
+      paddingY={3}
+      backgroundColor="interactiveNeutralSecondaryHovering"
+      borderBottomLeftRadius={2}
+      borderBottomRightRadius={2}
+    >
       <_ExperimentalFilters
         leftOptions={leftOperandsProvider.operands}
         // @ts-expect-error
@@ -69,10 +75,10 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
       >
         <_ExperimentalFilters.Footer>
           <_ExperimentalFilters.AddRowButton>
-            Add new row
+            + Add row
           </_ExperimentalFilters.AddRowButton>
           <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)}>
-            Confirm
+            Save
           </_ExperimentalFilters.ConfirmButton>
         </_ExperimentalFilters.Footer>
       </_ExperimentalFilters>
