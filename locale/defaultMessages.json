@@ -6888,10 +6888,6 @@
     "context": "add authorization key error",
     "string": "Authorization key with this type already exists"
   },
-  "mAabef": {
-    "context": "checkbox label",
-    "string": "Group has full access to the store"
-  },
   "mCP0UD": {
     "context": "order draft creation date",
     "string": "Date"
@@ -8220,6 +8216,9 @@
   "vwMO04": {
     "context": "draft order",
     "string": "Created"
+  },
+  "vz3yxp": {
+    "string": "Channels permissions"
   },
   "vzce9B": {
     "context": "customer gift cards card subtitle",
