@@ -71,7 +71,7 @@ export const ChannelPermission = ({
               placeholder={intl.formatMessage(messages.searchChannels)}
               onChange={values => {
                 onChannelChange({
-                  target: { name: "channels", value: values },
+                  target: { name: "channels", value: values.map(v => v.value) },
                 });
               }}
             />
