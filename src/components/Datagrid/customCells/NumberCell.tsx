@@ -10,7 +10,7 @@ import React from "react";
 
 import { Locale } from "../../Locale";
 
-export const numberCellEmptyValue = Symbol();
+export const numberCellEmptyValue = Symbol("number-cell-empty-value");
 interface NumberCellProps {
   readonly kind: "number-cell";
   readonly value: number | typeof numberCellEmptyValue;
