@@ -7,7 +7,7 @@ type StateCallback = (el: FilterElement) => void;
 type Element = FilterContainer[number];
 
 export const useContainerState = (valueProvider: FilterValueProvider) => {
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState<FilterContainer>([]);
 
   useEffect(() => {
     if (!valueProvider.loading) {

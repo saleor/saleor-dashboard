@@ -70,9 +70,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage from "../../components/ProductListPage";
 import {
-  getFilteringVariables,
   getFilterOpts,
   getFilterQueryParam,
+  getFilterVariables,
   storageUtils,
 } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
@@ -284,12 +284,13 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     ? mapNodeToChoice(availableChannels, channel => channel.slug)
     : null;
 
-  const filterVariables = getFilteringVariables(
-    productListingPageFiltersFlag,
-    valueProvider.value,
-    params,
-    !!selectedChannel,
-  );
+  const filterVariables = getFilterVariables({
+    isProductListingPageFiltersFlagEnabled:
+      productListingPageFiltersFlag.enabled,
+    filterContainer: valueProvider.value,
+    queryParams: params,
+    isChannelSelected: !!selectedChannel,
+  });
 
   const sort = getSortQueryVariables(params, !!selectedChannel);
   const queryVariables = React.useMemo<

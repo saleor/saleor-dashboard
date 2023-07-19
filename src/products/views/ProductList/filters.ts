@@ -371,7 +371,8 @@ function getFilteredAttributeValue(
   return attrValues;
 }
 
-export function getFilterVariables(
+// TODO: Remove this function when productListingPageFiltersFlag is removed
+export function getLegacyFilterVariables(
   params: ProductListUrlFilters,
   isChannelSelected: boolean,
 ): ProductFilterInput {
@@ -490,17 +491,21 @@ export const getWhereVariables = (
   return undefined;
 };
 
-// TODO: Remove this function when productListingPageFiltersFlag is removed
-export const getFilteringVariables = (
-  productListingPageFiltersFlag: FlagValue,
-  value: FilterContainer,
-  params: ProductListUrlFilters,
-  isChannelSelected: boolean,
-) => {
-  if (productListingPageFiltersFlag.enabled) {
-    const queryVars = createProductQueryVariables(value);
-    return { where: queryVars, search: params.query };
+export const getFilterVariables = ({
+  isProductListingPageFiltersFlagEnabled,
+  filterContainer,
+  queryParams,
+  isChannelSelected,
+}: {
+  isProductListingPageFiltersFlagEnabled: boolean;
+  filterContainer: FilterContainer;
+  queryParams: ProductListUrlFilters;
+  isChannelSelected: boolean;
+}) => {
+  if (isProductListingPageFiltersFlagEnabled) {
+    const queryVars = createProductQueryVariables(filterContainer);
+    return { where: queryVars, search: queryParams.query };
   }
 
-  return { filter: getFilterVariables(params, isChannelSelected) };
+  return { filter: getLegacyFilterVariables(queryParams, isChannelSelected) };
 };

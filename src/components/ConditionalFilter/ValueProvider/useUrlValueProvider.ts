@@ -29,7 +29,7 @@ export const useUrlValueProvider = (
   const router = useRouter();
   const params = new URLSearchParams(router.location.search);
   const { data, loading, fetchQueries } = initialState;
-  const [value, setValue] = useState([]);
+  const [value, setValue] = useState<FilterContainer>([]);
 
   params.delete("asc");
   params.delete("sort");
