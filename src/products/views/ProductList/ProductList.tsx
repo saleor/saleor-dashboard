@@ -86,7 +86,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
-  const { valueProvider, containerState } = useConditionalFilterContext();
+  const { valueProvider } = useConditionalFilterContext();
   const productListingPageFiltersFlag = useFlag("product_filters");
 
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
@@ -97,51 +97,59 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
 
   const intl = useIntl();
   const { data: initialFilterAttributes } =
-    useInitialProductFilterAttributesQuery();
+    useInitialProductFilterAttributesQuery({
+      skip: productListingPageFiltersFlag.enabled,
+    });
   const { data: initialFilterCategories } =
     useInitialProductFilterCategoriesQuery({
       variables: {
         categories: params.categories,
       },
-      skip: !params.categories?.length,
+      skip: !params.categories?.length || productListingPageFiltersFlag.enabled,
     });
   const { data: initialFilterCollections } =
     useInitialProductFilterCollectionsQuery({
       variables: {
         collections: params.collections,
       },
-      skip: !params.collections?.length,
+      skip:
+        !params.collections?.length || productListingPageFiltersFlag.enabled,
     });
   const { data: initialFilterProductTypes } =
     useInitialProductFilterProductTypesQuery({
       variables: {
         productTypes: params.productTypes,
       },
-      skip: !params.productTypes?.length,
+      skip:
+        !params.productTypes?.length || productListingPageFiltersFlag.enabled,
     });
   const searchCategories = useCategorySearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 5,
     },
+    skip: productListingPageFiltersFlag.enabled,
   });
   const searchCollections = useCollectionSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 5,
     },
+    skip: productListingPageFiltersFlag.enabled,
   });
   const searchProductTypes = useProductTypeSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 5,
     },
+    skip: productListingPageFiltersFlag.enabled,
   });
   const searchAttributes = useAttributeSearch({
     variables: {
       ...DEFAULT_INITIAL_SEARCH_DATA,
       first: 10,
     },
+    skip: productListingPageFiltersFlag.enabled,
   });
   const [focusedAttribute, setFocusedAttribute] = useState<string>();
   const searchAttributeValues = useAttributeValueSearch({
@@ -306,6 +314,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       ...queryVariables,
       hasChannel: !!selectedChannel,
     },
+    skip: valueProvider.loading,
   });
 
   const products = mapEdgesToItems(data?.products);
@@ -402,7 +411,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
         gridAttributesOpts={gridAttributesOpts}
         settings={settings}
         availableColumnsAttributesOpts={availableColumnsAttributesOpts}
-        disabled={loading}
+        disabled={loading || valueProvider.loading}
         limits={limitOpts.data?.shop.limits}
         products={products}
         onUpdateListSettings={(...props) => {

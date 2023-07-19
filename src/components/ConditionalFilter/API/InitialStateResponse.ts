@@ -37,8 +37,8 @@ export class InitialStateResponse implements InitialState {
     public isPublished: ItemOption[] = [],
     public isVisibleInListing: ItemOption[] = [],
     public hasCategory: ItemOption[] = [],
-    public giftCard: ItemOption[] = []
-  ) { }
+    public giftCard: ItemOption[] = [],
+  ) {}
 
   public attributeByName(name: string) {
     return this.attribute[name];
@@ -56,10 +56,13 @@ export class InitialStateResponse implements InitialState {
     }
 
     if (token.isAttribute()) {
-      const attr = this.attribute[token.name]
+      const attr = this.attribute[token.name];
       return attr.inputType === "BOOLEAN"
-        ? createBoleanOption(token.value === "true", AttributeInputTypeEnum.BOOLEAN)
-        : token.value
+        ? createBoleanOption(
+            token.value === "true",
+            AttributeInputTypeEnum.BOOLEAN,
+          )
+        : token.value;
     }
 
     if (!token.isLoadable()) {

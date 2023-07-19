@@ -1,5 +1,5 @@
 import { stringify } from "qs";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
 import { InitialAPIState } from "../API";
@@ -29,6 +29,7 @@ export const useUrlValueProvider = (
   const router = useRouter();
   const params = new URLSearchParams(router.location.search);
   const { data, loading, fetchQueries } = initialState;
+  const [value, setValue] = useState([]);
 
   params.delete("asc");
   params.delete("sort");
@@ -36,21 +37,24 @@ export const useUrlValueProvider = (
   const tokenizedUrl = useTokenArray(params.toString());
   const fetchingParams = tokenizedUrl.getFetchingParams();
   useEffect(() => {
-    fetchQueries(fetchingParams);
+    const executeFetchQueries = async () => {
+      await fetchQueries(fetchingParams);
+    };
+
+    void executeFetchQueries();
   }, []);
 
-  const value = loading ? [] : tokenizedUrl.asFilterValuesFromResponse(data);
+  useEffect(() => {
+    setValue(tokenizedUrl.asFilterValuesFromResponse(data));
+  }, [data]);
 
   const persist = (filterValue: FilterContainer) => {
     router.history.replace({
       pathname: router.location.pathname,
       search: stringify(prepareStructure(filterValue)),
     });
-
-    console.log("persist", filterValue);
+    setValue(filterValue);
   };
-
-  console.log("value", value);
 
   return {
     value,
