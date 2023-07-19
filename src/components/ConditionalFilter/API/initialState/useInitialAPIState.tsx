@@ -26,7 +26,7 @@ import { InitialAPIResponse } from "./types";
 export interface InitialAPIState {
   data: InitialStateResponse;
   loading: boolean;
-  fetchQueries: (params: FetchingParams) => void;
+  fetchQueries: (params: FetchingParams) => Promise<void>;
 }
 
 export const useProductInitialAPIState = (): InitialAPIState => {
@@ -129,7 +129,7 @@ export const useProductInitialAPIState = (): InitialAPIState => {
         initialState.isPublished,
         initialState.isVisibleInListing,
         initialState.hasCategory,
-        initialState.giftCard
+        initialState.giftCard,
       ),
     );
     setLoading(false);

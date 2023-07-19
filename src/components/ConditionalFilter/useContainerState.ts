@@ -1,18 +1,19 @@
 import { useEffect, useState } from "react";
 
 import { FilterContainer, FilterElement } from "./FilterElement";
+import { FilterValueProvider } from "./FilterValueProvider";
 
 type StateCallback = (el: FilterElement) => void;
 type Element = FilterContainer[number];
 
-export const useContainerState = (initialValue: FilterContainer) => {
-  const [value, setValue] = useState(initialValue);
+export const useContainerState = (valueProvider: FilterValueProvider) => {
+  const [value, setValue] = useState<FilterContainer>([]);
 
   useEffect(() => {
-    if (value.length === 0 && initialValue.length > 0) {
-      setValue(initialValue);
+    if (!valueProvider.loading) {
+      setValue(valueProvider.value);
     }
-  }, [initialValue]);
+  }, [valueProvider.loading]);
 
   const isFilterElement = (
     elIndex: number,
