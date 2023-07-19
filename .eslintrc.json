@@ -111,8 +111,7 @@
     "no-useless-escape": "off",
     "prefer-promise-reject-errors": "off",
     "react/display-name": "off",
-    "react/jsx-key": "off",
-    "symbol-description": "warn"
+    "react/jsx-key": "warn"
   },
   "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts"]
 }
