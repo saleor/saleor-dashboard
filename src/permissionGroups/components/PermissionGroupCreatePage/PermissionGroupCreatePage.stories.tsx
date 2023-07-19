@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { channels, permissions } from "@dashboard/fixtures";
 import React from "react";
 
@@ -11,10 +10,10 @@ import {
 const props: PermissionGroupCreatePageProps = {
   disabled: false,
   errors: [],
-  onSubmit: () => undefined,
+  onSubmit: () => new Promise(resolve => resolve(undefined)),
   permissions,
   channels,
-  saveButtonBarState: undefined,
+  saveButtonBarState: "default",
   hasRestrictedChannels: false,
 };
 

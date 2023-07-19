@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
 import { Backlink } from "@dashboard/components/Backlink";
@@ -153,7 +152,7 @@ export const PermissionGroupCreatePage: React.FC<
               onCancel={() => navigate(permissionGroupListUrl())}
               onSubmit={submit}
               state={saveButtonBarState}
-              disabled={isSaveDisabled}
+              disabled={!!isSaveDisabled}
             />
           </DetailPageLayout>
         );

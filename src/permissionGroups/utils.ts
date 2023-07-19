@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { UserContext } from "@dashboard/auth/types";
 import { MultiAutocompleteChoiceType } from "@dashboard/components/MultiAutocompleteSelectField";
 import {
@@ -14,9 +13,12 @@ import { PermissionGroupDetailsPageFormData } from "./components/PermissonGroupD
  * Will return true if group has all permissions available in shop assigned.
  */
 export const isGroupFullAccess = (
-  permissionGroup: PermissionGroupDetailsFragment,
+  permissionGroup: PermissionGroupDetailsFragment | null | undefined,
   shopPermissions: Array<Omit<PermissionFragment, "__typename">>,
 ) => {
+  if (!permissionGroup) {
+    return false;
+  }
   const assignedCodes = extractPermissionCodes(permissionGroup);
 
   if (assignedCodes.length !== shopPermissions?.length) {
@@ -35,19 +37,31 @@ export const isGroupFullAccess = (
  * Return list of codes which are assigned to the permission group.
  */
 export const extractPermissionCodes = (
-  permissionGroup: PermissionGroupDetailsFragment,
-) =>
-  permissionGroup?.permissions
+  permissionGroup: PermissionGroupDetailsFragment | null | undefined,
+) => {
+  if (!permissionGroup) {
+    return [];
+  }
+
+  return permissionGroup?.permissions
     ? permissionGroup.permissions.map(perm => perm.code)
     : [];
+};
 
 /**
  * Return lists of permissions which have to be added and removed from group.
  */
 export const permissionsDiff = (
-  permissionGroup: PermissionGroupDetailsFragment,
+  permissionGroup: PermissionGroupDetailsFragment | null | undefined,
   formData: PermissionGroupDetailsPageFormData,
 ) => {
+  if (!permissionGroup) {
+    return {
+      addPermissions: [],
+      removePermissions: [],
+    };
+  }
+
   const newPermissions = formData.permissions;
   const oldPermissions = extractPermissionCodes(permissionGroup);
 
@@ -61,11 +75,18 @@ export const permissionsDiff = (
  * Return lists of users which have to be added and removed from group.
  */
 export const usersDiff = (
-  permissionGroup: PermissionGroupDetailsFragment,
+  permissionGroup: PermissionGroupDetailsFragment | null | undefined,
   formData: PermissionGroupDetailsPageFormData,
 ) => {
-  const newUsers = formData.users.map(u => u.id);
-  const oldUsers = permissionGroup?.users.map(u => u.id);
+  if (!permissionGroup) {
+    return {
+      addUsers: [],
+      removeUsers: [],
+    };
+  }
+
+  const newUsers = formData?.users?.map(u => u.id) ?? [];
+  const oldUsers = permissionGroup?.users?.map(u => u.id) ?? [];
 
   return {
     addUsers: difference(newUsers, oldUsers),
@@ -77,16 +98,24 @@ export const usersDiff = (
  * Return lists of channels which have to be added and removed from group.
  */
 export const channelsDiff = (
-  permissionGroup: PermissionGroupDetailsFragment,
+  permissionGroup: PermissionGroupDetailsFragment | null | undefined,
   formData: PermissionGroupDetailsPageFormData,
   allChannels: ChannelFragment[],
   isUserAbleToEdit: boolean,
 ) => {
+  if (!permissionGroup) {
+    return {
+      addChannels: [],
+      removeChannels: [],
+    };
+  }
+
   const newChannels = formData.hasAllChannels
     ? allChannels.map(c => c.id)
     : formData.channels;
-  const oldChannels = permissionGroup?.accessibleChannels.map(c => c.id);
-  const hasRestrictedChannels = permissionGroup?.restrictedAccessToChannels;
+  const oldChannels = permissionGroup?.accessibleChannels?.map(c => c.id) ?? [];
+  const hasRestrictedChannels =
+    permissionGroup?.restrictedAccessToChannels ?? [];
 
   if (!isUserAbleToEdit) {
     return {
@@ -112,11 +141,15 @@ export const channelsDiff = (
  * Permissions are exceeded when group has permission which is not handled by user
  */
 export const arePermissionsExceeded = (
-  permissionGroup: PermissionGroupDetailsFragment,
-  user: UserFragment,
+  permissionGroup: PermissionGroupDetailsFragment | null | undefined,
+  user: UserFragment | null | undefined,
 ) => {
+  if (!permissionGroup || !user) {
+    return false;
+  }
+
   const groupPermissions = extractPermissionCodes(permissionGroup);
-  const userPermissions = user.userPermissions.map(p => p.code);
+  const userPermissions = user?.userPermissions?.map(p => p.code) ?? [];
   return difference(groupPermissions, userPermissions).length > 0;
 };
 
@@ -127,7 +160,7 @@ export const mapAccessibleChannelsToChoice = (
   permissionGroup: PermissionGroupDetailsFragment,
   isUserAbleToEdit?: boolean,
 ): MultiAutocompleteChoiceType[] =>
-  permissionGroup?.accessibleChannels.map(
+  permissionGroup?.accessibleChannels?.map(
     channel =>
       ({
         label: channel.name,
@@ -143,7 +176,7 @@ export const checkIfUserIsEligibleToEditChannels = (
   user: UserContext["user"],
   permissionGroupAccessibleChannels: ChannelFragment[],
 ) => {
-  const userChannels = getUserAccessibleChannels(user).map(c => c.id);
+  const userChannels = getUserAccessibleChannels(user)?.map(c => c.id) ?? [];
 
   if (userChannels.length === 0) {
     return true;
@@ -172,7 +205,7 @@ export const getChannelsOptions = (
     return availableChannels;
   }
 
-  if ("accessibleChannels" in user) {
+  if ("accessibleChannels" in user && user.accessibleChannels !== null) {
     return user.accessibleChannels;
   }
 
@@ -193,7 +226,7 @@ export const checkIfUserHasRestictedChannels = (user?: UserContext["user"]) => {
 /**
  * Get user accessible channels.
  */
-const getUserAccessibleChannels = (user?: UserContext["user"]) => {
+const getUserAccessibleChannels = (user?: UserContext["user"] | null) => {
   if (user && "accessibleChannels" in user) {
     return user.accessibleChannels;
   }
@@ -202,15 +235,19 @@ const getUserAccessibleChannels = (user?: UserContext["user"]) => {
 };
 
 export const getInitialChannels = (
-  permissionGroup: PermissionGroupDetailsFragment,
+  permissionGroup: PermissionGroupDetailsFragment | null | undefined,
   allChannelsLength: number,
 ) => {
+  if (!permissionGroup) {
+    return [];
+  }
+
   if (
     !permissionGroup?.restrictedAccessToChannels &&
-    permissionGroup?.accessibleChannels.length === allChannelsLength
+    permissionGroup?.accessibleChannels?.length === allChannelsLength
   ) {
     return [];
   }
 
-  return permissionGroup?.accessibleChannels.map(channel => channel.id);
+  return permissionGroup?.accessibleChannels?.map(channel => channel.id) ?? [];
 };

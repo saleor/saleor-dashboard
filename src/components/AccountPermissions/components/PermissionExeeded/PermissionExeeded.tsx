@@ -1,5 +1,4 @@
-// @ts-strict-ignore
-import { UserFragment } from "@dashboard/graphql";
+import { UserPermissionFragment } from "@dashboard/graphql";
 import { List, ListItem, ListItemText } from "@material-ui/core";
 import { Box, Text } from "@saleor/macaw-ui/next";
 import React from "react";
@@ -8,7 +7,7 @@ import { useIntl } from "react-intl";
 import { messages } from "../../messages";
 
 interface PermissionsExceededProps {
-  userPermissions: UserFragment["userPermissions"];
+  userPermissions: UserPermissionFragment[];
 }
 
 export const PermissionsExceeded = ({

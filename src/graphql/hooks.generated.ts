@@ -171,6 +171,14 @@ export const UserPermissionFragmentDoc = gql`
   name
 }
     `;
+export const UserUserPermissionWithSourcePermissionGroupsFragmentDoc = gql`
+    fragment UserUserPermissionWithSourcePermissionGroups on UserPermission {
+  ...UserPermission
+  sourcePermissionGroups(userId: $userId) {
+    id
+  }
+}
+    ${UserPermissionFragmentDoc}`;
 export const ChannelFragmentDoc = gql`
     fragment Channel on Channel {
   id
@@ -6138,14 +6146,14 @@ export const ShopInfoDocument = gql`
     name
     trackInventoryByDefault
     permissions {
-      code
-      name
+      ...Permission
     }
     version
   }
 }
     ${CountryWithCodeFragmentDoc}
-${LanguageFragmentDoc}`;
+${LanguageFragmentDoc}
+${PermissionFragmentDoc}`;
 
 /**
  * __useShopInfoQuery__

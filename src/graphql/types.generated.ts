@@ -8910,6 +8910,8 @@ export type AvailableAttributeFragment = { __typename: 'Attribute', id: string, 
 
 export type UserPermissionFragment = { __typename: 'UserPermission', code: PermissionEnum, name: string };
 
+export type UserUserPermissionWithSourcePermissionGroupsFragment = { __typename: 'UserPermission', code: PermissionEnum, name: string, sourcePermissionGroups: Array<{ __typename: 'Group', id: string }> | null };
+
 export type UserFragment = { __typename: 'User', id: string, email: string, firstName: string, lastName: string, isStaff: boolean, restrictedAccessToChannels: boolean, userPermissions: Array<{ __typename: 'UserPermission', code: PermissionEnum, name: string }> | null, avatar: { __typename: 'Image', url: string } | null, accessibleChannels: Array<{ __typename: 'Channel', id: string, isActive: boolean, name: string, slug: string, currencyCode: string, defaultCountry: { __typename: 'CountryDisplay', code: string, country: string }, stockSettings: { __typename: 'StockSettings', allocationStrategy: AllocationStrategyEnum } }> | null };
 
 export type UserBaseFragment = { __typename: 'User', id: string, firstName: string, lastName: string };

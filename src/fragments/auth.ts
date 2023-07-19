@@ -7,6 +7,15 @@ export const userUserPermissionFragment = gql`
   }
 `;
 
+export const userUserPermissionWithSourcePermissionGroupsFragment = gql`
+  fragment UserUserPermissionWithSourcePermissionGroups on UserPermission {
+    ...UserPermission
+    sourcePermissionGroups(userId: $userId) {
+      id
+    }
+  }
+`;
+
 export const fragmentUser = gql`
   fragment User on User {
     id

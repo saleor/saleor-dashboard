@@ -1,26 +1,27 @@
-// @ts-strict-ignore
 import {
   PermissionEnum,
-  PermissionGroupDetailsQuery,
-  ShopInfoQuery,
-  UserDetailsQuery,
+  PermissionFragment,
+  UserPermissionFragment,
+  UserUserPermissionWithSourcePermissionGroupsFragment,
 } from "@dashboard/graphql";
 
 export const getLastSourcesOfPermission = (
   groupId: string,
-  userPermissions: PermissionGroupDetailsQuery["user"]["userPermissions"],
+  userPermissions: Array<
+    NonNullable<UserUserPermissionWithSourcePermissionGroupsFragment>
+  >,
 ) =>
   userPermissions
     .filter(
       perm =>
-        perm.sourcePermissionGroups.length === 1 &&
-        perm.sourcePermissionGroups[0].id === groupId,
+        perm.sourcePermissionGroups?.length === 1 &&
+        perm.sourcePermissionGroups[0]?.id === groupId,
     )
     .map(perm => perm.code);
 
 export const getPermissionsComponentChoices = (
-  userPermissions: UserDetailsQuery["me"]["userPermissions"],
-  shopPermissions: ShopInfoQuery["shop"]["permissions"],
+  userPermissions: UserPermissionFragment[],
+  shopPermissions: PermissionFragment[],
   lastSourcesOfPermissionIds: string[],
 ) => {
   const userCodes = userPermissions.map(p => p.code) || [];

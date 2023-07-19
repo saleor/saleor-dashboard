@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
 import { WindowTitle } from "@dashboard/components/WindowTitle";
@@ -45,9 +44,12 @@ export const PermissionGroupCreate: React.FC = () => {
               defaultMessage: "Permission group created",
             }),
           });
-          navigate(
-            permissionGroupDetailsUrl(data.permissionGroupCreate.group.id),
-          );
+
+          if (data?.permissionGroupCreate?.group?.id) {
+            navigate(
+              permissionGroupDetailsUrl(data.permissionGroupCreate.group.id),
+            );
+          }
         }
       },
     });
@@ -76,7 +78,7 @@ export const PermissionGroupCreate: React.FC = () => {
     );
   };
 
-  const userPermissions = user?.user.userPermissions.map(p => p.code) || [];
+  const userPermissions = user?.user?.userPermissions?.map(p => p.code) || [];
 
   const permissions: PermissionData[] =
     shop?.permissions.map(

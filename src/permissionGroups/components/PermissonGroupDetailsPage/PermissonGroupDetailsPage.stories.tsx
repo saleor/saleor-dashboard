@@ -1,5 +1,5 @@
-// @ts-strict-ignore
 import { channels, permissions } from "@dashboard/fixtures";
+import { MembersListUrlSortField } from "@dashboard/permissionGroups/urls";
 import React from "react";
 
 import {
@@ -22,14 +22,17 @@ const props: PermissonGroupDetailsPageProps = {
   members: users,
   onAssign: () => undefined,
   onSort: () => undefined,
-  onSubmit: () => undefined,
+  onSubmit: () => new Promise(resolve => resolve(undefined)),
   onUnassign: () => undefined,
   permissionGroup,
   permissions,
   permissionsExceeded: false,
-  saveButtonBarState: undefined,
+  saveButtonBarState: "default",
   selected: 0,
-  sort: null,
+  sort: {
+    asc: true,
+    sort: MembersListUrlSortField.name,
+  },
   toggle: () => undefined,
   toggleAll: () => undefined,
   toolbar: null,
@@ -54,8 +57,8 @@ export const Loading = () => (
   <PermissonGroupDetailsPage
     {...props}
     disabled={true}
-    permissionGroup={undefined}
-    permissions={undefined}
+    permissionGroup={permissionGroup}
+    permissions={permissions}
   />
 );
 

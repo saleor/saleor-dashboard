@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import { PermissionData } from "@dashboard/permissionGroups/components/PermissonGroupDetailsPage";
 import { Box, Text } from "@saleor/macaw-ui/next";
@@ -10,11 +9,6 @@ import { PermissionsExceeded } from "./components/PermissionExeeded";
 import { PermissionList } from "./components/PermissionList";
 import { messages } from "./messages";
 
-const byAlphabeticalOrder =
-  <T extends {}>(field: string) =>
-  (a: T, b: T) =>
-    a[field].localeCompare(b[field]);
-
 interface AccountPermissionsProps {
   permissions: PermissionData[];
   permissionsExceeded: boolean;
@@ -24,7 +18,7 @@ interface AccountPermissionsProps {
   };
   disabled: boolean;
   description: string;
-  errorMessage: string;
+  errorMessage: string | undefined;
   fullAccessLabel: string;
   onChange: (event: React.ChangeEvent<any>, cb?: () => void) => void;
 }
@@ -40,8 +34,8 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
     errorMessage,
   } = props;
 
-  const permissions = Object.values(props?.permissions ?? {}).sort(
-    byAlphabeticalOrder("name"),
+  const permissions = Object.values(props?.permissions ?? {}).sort((a, b) =>
+    a.name.localeCompare(b.name),
   );
 
   const intl = useIntl();
@@ -96,7 +90,7 @@ const AccountPermissions: React.FC<AccountPermissionsProps> = props => {
       </Text>
 
       {permissionsExceeded && (
-        <PermissionsExceeded userPermissions={user.userPermissions} />
+        <PermissionsExceeded userPermissions={user?.userPermissions ?? []} />
       )}
 
       {!permissionsExceeded && (

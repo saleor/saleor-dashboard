@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { UserContext } from "@dashboard/auth/types";
 import {
   ChannelFragment,
@@ -30,7 +29,7 @@ describe("Permission group utils", () => {
       // Arrange
       const formData = {
         channels: [],
-      } as PermissionGroupDetailsPageFormData;
+      } as unknown as PermissionGroupDetailsPageFormData;
 
       const permissionGroup = {
         restrictedAccessToChannels: false,
@@ -309,7 +308,7 @@ describe("Permission group utils", () => {
 
       const permissionGroup = {
         permissions: [],
-      } as PermissionGroupDetailsFragment;
+      } as unknown as PermissionGroupDetailsFragment;
 
       // Act
       const { addPermissions, removePermissions } = permissionsDiff(
@@ -362,7 +361,7 @@ describe("Permission group utils", () => {
 
       const permissionGroup = {
         users: [],
-      } as PermissionGroupDetailsFragment;
+      } as unknown as PermissionGroupDetailsFragment;
 
       // Act
       const { addUsers, removeUsers } = usersDiff(permissionGroup, formData);
@@ -685,7 +684,7 @@ describe("Permission group utils", () => {
 
       // Assert
       expect(initialChannels).toEqual([
-        permissionGroupWithChannels.accessibleChannels[0].id,
+        permissionGroupWithChannels.accessibleChannels?.[0].id,
       ]);
     });
   });

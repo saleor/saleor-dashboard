@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useUser } from "@dashboard/auth";
 import AccountPermissions from "@dashboard/components/AccountPermissions";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
@@ -62,7 +61,7 @@ export interface PermissonGroupDetailsPageProps
   isUserAbleToEditChannesl: boolean;
   errors: PermissionGroupErrorFragment[];
   members: PermissionGroupDetailsFragment["users"];
-  permissionGroup: PermissionGroupDetailsFragment;
+  permissionGroup: PermissionGroupDetailsFragment | null | undefined;
   permissions: PermissionData[];
   permissionsExceeded: boolean;
   saveButtonBarState: "loading" | "success" | "error" | "default";
