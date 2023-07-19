@@ -96,6 +96,9 @@
     "context": "button",
     "string": "Activate"
   },
+  "+bhokL": {
+    "string": "Search discounts..."
+  },
   "+do3gl": {
     "context": "input helper text",
     "string": "This number defines quantity of items in checkout line that can be bought. You can override this setting per variant. Leaving this setting empty mean that there is no limits."
@@ -2758,6 +2761,9 @@
     "context": "create gift card product alert message",
     "string": "Create a gift card product"
   },
+  "Hswqx2": {
+    "string": "Delete discounts"
+  },
   "HvJPcU": {
     "string": "Category deleted"
   },
@@ -5317,6 +5323,10 @@
   "a5msuh": {
     "string": "Yes"
   },
+  "a6GDem": {
+    "context": "tab name",
+    "string": "All discounts"
+  },
   "a9S9Je": {
     "context": "page types section name",
     "string": "Page Types"
@@ -5620,10 +5630,6 @@
   },
   "c8nvms": {
     "string": "Sales"
-  },
-  "c8zJID": {
-    "context": "tab name",
-    "string": "All Discounts"
   },
   "cBHRxx": {
     "context": "button",
@@ -6827,9 +6833,6 @@
   "li1BBk": {
     "context": "export items as csv file",
     "string": "Plain CSV file"
-  },
-  "lit2zF": {
-    "string": "Search Discounts"
   },
   "ll2dE6": {
     "context": "PageTypeDeleteWarningDialog multiple assigned items description",

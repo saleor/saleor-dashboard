@@ -69,7 +69,7 @@ const OrderDraftListPage: React.FC<OrderDraftListPageProps> = ({
       <OrderDraftListHeader
         disabled={disabled}
         selectedFilterPreset={selectedFilterPreset}
-        hasPresetsChanged={hasPresetsChanged()}
+        hasPresetsChanged={hasPresetsChanged}
         isFilterPresetOpen={isFilterPresetOpen}
         setFilterPresetOpen={setFilterPresetOpen}
         limits={limits}

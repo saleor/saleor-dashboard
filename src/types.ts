@@ -123,13 +123,14 @@ export interface FilterProps<TKeys extends string> {
 }
 
 export interface FilterPresetsProps {
-  selectedFilterPreset: number;
+  selectedFilterPreset: number | undefined;
   filterPresets: string[];
   onFilterPresetsAll: () => void;
   onFilterPresetChange: (id: number) => void;
   onFilterPresetUpdate: (name: string) => void;
   onFilterPresetDelete: (id: number) => void;
   onFilterPresetPresetSave: () => void;
+  hasPresetsChanged: () => boolean;
 }
 
 export interface TabPageProps {

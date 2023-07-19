@@ -166,9 +166,7 @@ describe("As an admin I want to create sale for products", () => {
            cy.clearSessionData()
           .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
           */
-          cy.visit(urlList.sales)
-            .expectSkeletonIsVisible()
-            .waitForProgressBarToNotExist();
+          cy.visit(urlList.sales);
           createSale({
             saleName,
             channelName: channel.name,
