@@ -790,6 +790,9 @@
     "context": "product",
     "string": "Stock quantity"
   },
+  "3a5wL8": {
+    "string": "Active"
+  },
   "3bQz2o": {
     "context": "bulk issue gift cards success alert title",
     "string": "Gift Cards Issued"
@@ -1282,6 +1285,10 @@
   },
   "7Chrsf": {
     "string": "Passwords do not match"
+  },
+  "7EDqed": {
+    "context": "tab name",
+    "string": "All gift cards"
   },
   "7FL+WZ": {
     "context": "export products to csv file, button",
@@ -5765,6 +5772,9 @@
     "context": "volume units types",
     "string": "Volume"
   },
+  "d68yq7": {
+    "string": "Delete gift cards"
+  },
   "d7dT8o": {
     "context": "button, sets granted refund amount in input",
     "string": "Set max"
@@ -6206,6 +6216,10 @@
   "h2Hta6": {
     "context": "caption",
     "string": "If enabled, attribute will be accessible to customers."
+  },
+  "h2hEKV": {
+    "context": "search gift card placeholder",
+    "string": "Search gift cards, e.g {exampleGiftCardCode}"
   },
   "h5r9+x": {
     "context": "sort shipping methods by zone, section header",
@@ -6818,10 +6832,6 @@
   "lW5uJO": {
     "context": "money",
     "string": "from {money}"
-  },
-  "labkPK": {
-    "context": "search gift card placeholder",
-    "string": "Search Gift Cards, e.g {exampleGiftCardCode}"
   },
   "lct0qd": {
     "string": "This list shows all attributes that will be assigned to pages that have this page type assigned."

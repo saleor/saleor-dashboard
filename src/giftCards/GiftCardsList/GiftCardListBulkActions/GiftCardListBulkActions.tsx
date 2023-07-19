@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { ConfirmButton } from "@dashboard/components/ConfirmButton";
 import { IMessage } from "@dashboard/components/messages";
 import {
@@ -10,55 +9,54 @@ import { getByIds } from "@dashboard/orders/components/OrderReturnPage/utils";
 import React from "react";
 import { useIntl } from "react-intl";
 
-import { useGiftCardList } from "../../providers/GiftCardListProvider";
-import { GIFT_CARD_LIST_QUERY } from "../../queries";
-import { bulkEnableDisableSectionMessages as messages } from "./messages";
+import { bulkEnableDisableSectionMessages as messages } from "../messages";
+import { useGiftCardList } from "../providers/GiftCardListProvider";
+import { GIFT_CARD_LIST_QUERY } from "../queries";
 
-const BulkEnableDisableSection: React.FC = () => {
+export const GiftCardListBulkActions: React.FC = () => {
   const intl = useIntl();
   const notify = useNotifier();
 
-  const { listElements: ids, reset, giftCards } = useGiftCardList();
+  const { selectedRowIds, clearRowSelection, giftCards } = useGiftCardList();
 
   const hasAnyEnabledCardsSelected = giftCards
-    .filter(getByIds(ids))
+    .filter(getByIds(selectedRowIds))
     .some(({ isActive }) => isActive);
 
   const areAllSelectedCardsActive = giftCards
-    .filter(getByIds(ids))
+    .filter(getByIds(selectedRowIds))
     .every(({ isActive }) => isActive);
 
   const hasAnyDisabledCardsSelected = giftCards
-    .filter(getByIds(ids))
+    .filter(getByIds(selectedRowIds))
     .some(({ isActive }) => !isActive);
 
   const areAllSelectedCardsDisabled = giftCards
-    .filter(getByIds(ids))
+    .filter(getByIds(selectedRowIds))
     .every(({ isActive }) => !isActive);
 
   const [activateGiftCards, activateGiftCardsOpts] =
     useGiftCardBulkActivateMutation({
       onCompleted: data => {
-        const { errors, count } = data?.giftCardBulkActivate;
-
-        const notifierData: IMessage = !!errors?.length
+        const notifierData: IMessage = !!data?.giftCardBulkActivate?.errors
+          ?.length
           ? {
               status: "error",
               text: intl.formatMessage(messages.errorActivateAlertText, {
-                count,
+                count: data?.giftCardBulkActivate?.count,
               }),
             }
           : {
               status: "success",
               text: intl.formatMessage(messages.successActivateAlertText, {
-                count,
+                count: data?.giftCardBulkActivate?.count,
               }),
             };
 
         notify(notifierData);
 
-        if (!errors.length) {
-          reset();
+        if (!data?.giftCardBulkActivate?.errors?.length) {
+          clearRowSelection();
         }
       },
       refetchQueries: [GIFT_CARD_LIST_QUERY],
@@ -67,36 +65,39 @@ const BulkEnableDisableSection: React.FC = () => {
   const [deactivateGiftCards, deactivateGiftCardsOpts] =
     useGiftCardBulkDeactivateMutation({
       onCompleted: data => {
-        const { errors, count } = data?.giftCardBulkDeactivate;
-
-        const notifierData: IMessage = !!errors?.length
+        const notifierData: IMessage = !!data?.giftCardBulkDeactivate?.errors
+          ?.length
           ? {
               status: "error",
               text: intl.formatMessage(messages.errorDeactivateAlertText, {
-                count,
+                count: data?.giftCardBulkDeactivate?.count,
               }),
             }
           : {
               status: "success",
               text: intl.formatMessage(messages.successDeactivateAlertText, {
-                count,
+                count: data?.giftCardBulkDeactivate?.count,
               }),
             };
 
         notify(notifierData);
 
-        if (!errors.length) {
-          reset();
+        if (!data?.giftCardBulkDeactivate?.errors?.length) {
+          clearRowSelection();
         }
       },
       refetchQueries: [GIFT_CARD_LIST_QUERY],
     });
 
-  const handleActivateGiftCards = () =>
-    activateGiftCards({ variables: { ids } });
+  const handleActivateGiftCards = async () => {
+    await activateGiftCards({ variables: { ids: selectedRowIds } });
+    clearRowSelection();
+  };
 
-  const handleDeactivateGiftCards = () =>
-    deactivateGiftCards({ variables: { ids } });
+  const handleDeactivateGiftCards = async () => {
+    await deactivateGiftCards({ variables: { ids: selectedRowIds } });
+    clearRowSelection();
+  };
 
   const isSelectionMixed =
     hasAnyEnabledCardsSelected && hasAnyDisabledCardsSelected;
@@ -126,5 +127,3 @@ const BulkEnableDisableSection: React.FC = () => {
     </>
   );
 };
-
-export default BulkEnableDisableSection;

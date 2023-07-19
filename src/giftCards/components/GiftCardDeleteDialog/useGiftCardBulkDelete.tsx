@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { useGiftCardList } from "@dashboard/giftCards/GiftCardsList/providers/GiftCardListProvider";
 import {
   BulkDeleteGiftCardMutation,
@@ -26,27 +25,23 @@ const useGiftCardBulkDelete = ({
   const notify = useNotifier();
   const intl = useIntl();
 
-  const {
-    listElements,
-    selectedItemsCount,
-    reset: resetSelectedItems,
-  } = useGiftCardList();
+  const { selectedRowIds, clearRowSelection } = useGiftCardList();
 
   const [bulkDeleteGiftCard, bulkDeleteGiftCardOpts] =
     useBulkDeleteGiftCardMutation({
       onCompleted: data => {
         const errors = data?.giftCardBulkDelete?.errors;
 
-        if (!errors.length) {
+        if (!errors?.length) {
           notify({
             status: "success",
             text: intl.formatMessage(messages.deleteSuccessAlertText, {
-              selectedItemsCount,
+              selectedItemsCount: selectedRowIds.length,
             }),
           });
 
           onClose();
-          resetSelectedItems();
+          clearRowSelection();
           return;
         }
 
@@ -59,7 +54,7 @@ const useGiftCardBulkDelete = ({
     });
 
   const onBulkDeleteGiftCards = () =>
-    bulkDeleteGiftCard({ variables: { ids: listElements } });
+    bulkDeleteGiftCard({ variables: { ids: selectedRowIds } });
 
   return {
     onBulkDeleteGiftCards,
