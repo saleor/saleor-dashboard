@@ -186,12 +186,14 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
     return presets[presetIdToDelete - 1].name;
   };
 
-  const onSaleBulkDelete = () =>
-    saleBulkDelete({
+  const onSaleBulkDelete = async () => {
+    await saleBulkDelete({
       variables: {
         ids: selectedRowIds,
       },
     });
+    clearRowSelection();
+  };
 
   return (
     <PaginatorContext.Provider value={paginationValues}>
