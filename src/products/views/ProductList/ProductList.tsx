@@ -2,6 +2,7 @@
 import { filterable } from "@dashboard/attributes/utils/data";
 import ActionDialog from "@dashboard/components/ActionDialog";
 import useAppChannel from "@dashboard/components/AppLayout/AppChannelContext";
+import { useConditionalFilterContext } from "@dashboard/components/ConditionalFilter/context";
 import DeleteFilterTabDialog from "@dashboard/components/DeleteFilterTabDialog";
 import SaveFilterTabDialog from "@dashboard/components/SaveFilterTabDialog";
 import { useShopLimitsQuery } from "@dashboard/components/Shop/queries";
@@ -12,6 +13,7 @@ import {
   ProductListColumns,
 } from "@dashboard/config";
 import { Task } from "@dashboard/containers/BackgroundTasks/types";
+import { useFlag } from "@dashboard/featureFlags";
 import {
   ProductListQueryVariables,
   useAvailableColumnAttributesLazyQuery,
@@ -68,9 +70,9 @@ import { FormattedMessage, useIntl } from "react-intl";
 
 import ProductListPage from "../../components/ProductListPage";
 import {
+  getFilteringVariables,
   getFilterOpts,
   getFilterQueryParam,
-  getFilterVariables,
   storageUtils,
 } from "./filters";
 import { DEFAULT_SORT_KEY, getSortQueryVariables } from "./sort";
@@ -84,6 +86,8 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const navigate = useNavigator();
   const notify = useNotifier();
   const { queue } = useBackgroundTask();
+  const { valueProvider, containerState } = useConditionalFilterContext();
+  const productListingPageFiltersFlag = useFlag("product_filters");
 
   const { updateListSettings, settings } = useListSettings<ProductListColumns>(
     ListViews.PRODUCT_LIST,
@@ -271,18 +275,25 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
   const channelOpts = availableChannels
     ? mapNodeToChoice(availableChannels, channel => channel.slug)
     : null;
-  const filter = getFilterVariables(params, !!selectedChannel);
+
+  const filterVariables = getFilteringVariables(
+    productListingPageFiltersFlag,
+    valueProvider.value,
+    params,
+    !!selectedChannel,
+  );
+
   const sort = getSortQueryVariables(params, !!selectedChannel);
   const queryVariables = React.useMemo<
     Omit<ProductListQueryVariables, "hasChannel" | "hasSelectedAttributes">
   >(
     () => ({
       ...paginationState,
-      filter,
+      ...filterVariables,
       sort,
       channel: selectedChannel?.slug,
     }),
-    [params, settings.rowNumber],
+    [params, settings.rowNumber, valueProvider.value],
   );
 
   const filteredColumnIds = (settings.columns ?? [])
@@ -472,7 +483,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
             variables: {
               input: {
                 ...data,
-                filter,
+                ...filterVariables,
                 ids: selectedRowIds,
               },
             },

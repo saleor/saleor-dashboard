@@ -1,5 +1,8 @@
 // @ts-strict-ignore
+import { FilterContainer } from "@dashboard/components/ConditionalFilter/FilterElement";
+import { createProductQueryVariables } from "@dashboard/components/ConditionalFilter/queryVariables";
 import { SingleAutocompleteChoiceType } from "@dashboard/components/SingleAutocompleteSelectField";
+import { FlagValue } from "@dashboard/featureFlags/FlagContent";
 import {
   AttributeFragment,
   AttributeInputTypeEnum,
@@ -8,6 +11,7 @@ import {
   InitialProductFilterCollectionsQuery,
   InitialProductFilterProductTypesQuery,
   ProductFilterInput,
+  ProductWhereInput,
   SearchAttributeValuesQuery,
   SearchAttributeValuesQueryVariables,
   SearchCategoriesQuery,
@@ -37,6 +41,7 @@ import {
   FilterElementRegular,
 } from "../../../components/Filter";
 import {
+  GteLte,
   createFilterTabUtils,
   createFilterUtils,
   dedupeFilter,
@@ -46,7 +51,6 @@ import {
   getMultipleValueQueryParam,
   getSingleEnumValueQueryParam,
   getSingleValueQueryParam,
-  GteLte,
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
@@ -473,3 +477,30 @@ export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
     ...ProductListUrlFiltersWithMultipleValues,
     ...ProductListUrlFiltersAsDictWithMultipleValues,
   });
+
+export const getWhereVariables = (
+  productListingPageFiltersFlag: FlagValue,
+  value: FilterContainer,
+): ProductWhereInput => {
+  if (productListingPageFiltersFlag.enabled) {
+    const queryVars = createProductQueryVariables(value);
+    return queryVars;
+  }
+
+  return undefined;
+};
+
+// TODO: Remove this function when productListingPageFiltersFlag is removed
+export const getFilteringVariables = (
+  productListingPageFiltersFlag: FlagValue,
+  value: FilterContainer,
+  params: ProductListUrlFilters,
+  isChannelSelected: boolean,
+) => {
+  if (productListingPageFiltersFlag.enabled) {
+    const queryVars = createProductQueryVariables(value);
+    return { where: queryVars, search: params.query };
+  }
+
+  return { filter: getFilterVariables(params, isChannelSelected) };
+};

@@ -46,7 +46,11 @@ export const useUrlValueProvider = (
       pathname: router.location.pathname,
       search: stringify(prepareStructure(filterValue)),
     });
+
+    console.log("persist", filterValue);
   };
+
+  console.log("value", value);
 
   return {
     value,
