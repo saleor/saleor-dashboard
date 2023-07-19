@@ -60,28 +60,25 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
   };
 
   return (
-    <Box
-      paddingX={5}
-      paddingY={3}
-      backgroundColor="interactiveNeutralSecondaryHovering"
-      borderBottomLeftRadius={2}
-      borderBottomRightRadius={2}
+    <_ExperimentalFilters
+      leftOptions={leftOperandsProvider.operands}
+      // @ts-expect-error
+      value={value}
+      onChange={handleStateChange}
     >
-      <_ExperimentalFilters
-        leftOptions={leftOperandsProvider.operands}
-        // @ts-expect-error
-        value={value}
-        onChange={handleStateChange}
-      >
-        <_ExperimentalFilters.Footer>
-          <_ExperimentalFilters.AddRowButton>
-            + Add row
-          </_ExperimentalFilters.AddRowButton>
+      <_ExperimentalFilters.Footer>
+        <_ExperimentalFilters.AddRowButton>
+          + Add row
+        </_ExperimentalFilters.AddRowButton>
+        <Box display="flex" gap={3}>
+          <_ExperimentalFilters.ClearButton>
+            Clear
+          </_ExperimentalFilters.ClearButton>
           <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)}>
             Save
           </_ExperimentalFilters.ConfirmButton>
-        </_ExperimentalFilters.Footer>
-      </_ExperimentalFilters>
-    </Box>
+        </Box>
+      </_ExperimentalFilters.Footer>
+    </_ExperimentalFilters>
   );
 };
