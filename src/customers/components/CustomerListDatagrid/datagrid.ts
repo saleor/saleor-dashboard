@@ -19,12 +19,12 @@ export const customerListStaticColumnsAdapter = (
     {
       id: "name",
       title: intl.formatMessage(columnsMessages.name),
-      width: 350,
+      width: 450,
     },
     {
       id: "email",
       title: intl.formatMessage(columnsMessages.email),
-      width: 200,
+      width: 450,
     },
     ...(includeOrders
       ? [
