@@ -49,19 +49,24 @@ export const useContainerState = (initialValue: FilterContainer) => {
     setValue(v => v.filter((_, elIndex) => ![index].includes(elIndex)));
   };
 
-  const createEmpty = () => {
+  const create = (element: FilterElement) => {
     const newValue: FilterContainer = [];
 
     if (value.length > 0) {
-      newValue.push("OR");
+      newValue.push("AND");
     }
 
-    newValue.push(FilterElement.createEmpty());
+    newValue.push(element);
 
     setValue(v => v.concat(newValue));
   };
 
+  const createEmpty = () => {
+    create(FilterElement.createEmpty())
+  };
+
   return {
+    create,
     createEmpty,
     updateAt,
     removeAt,

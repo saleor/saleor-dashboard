@@ -2,23 +2,31 @@ import useDebounce from "@dashboard/hooks/useDebounce";
 
 import { FilterAPIProvider } from "./API/FilterAPIProvider";
 import { useConditionalFilterContext } from "./context";
+import { FilterElement } from "./FilterElement";
 import { ConditionValue, ItemOption } from "./FilterElement/ConditionValue";
-import { LeftOperandsProvider } from "./LeftOperandsProvider";
+import { LeftOperand, LeftOperandsProvider } from "./LeftOperandsProvider";
+import { Constraint } from "./FilterElement/Constraint";
 
 export const useFilterContainer = (
   apiProvider: FilterAPIProvider,
   leftOperandsProvider: LeftOperandsProvider,
 ) => {
   const {
-    containerState: { value, updateAt, removeAt, createEmpty },
+    containerState: { value, updateAt, removeAt, createEmpty, create },
   } = useConditionalFilterContext();
 
   const addEmpty = () => {
     createEmpty();
   };
 
-  const updateLeftOperator = (position: string, leftOperator: any) => {
+  const updateLeftOperator = (position: string, leftOperator: LeftOperand) => {
     updateAt(position, el => el.updateLeftOperator(leftOperator));
+
+    const dependency = Constraint.getDependency(leftOperator.value)
+   
+    if (dependency) {
+      create(FilterElement.createStaticBySlug(dependency))
+    }
   };
 
   const updateLeftLoadingState = (position: string, loading: boolean) => {

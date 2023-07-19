@@ -4,9 +4,10 @@ import { RowType, STATIC_OPTIONS } from "../constants";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { TokenType, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
-import { ConditionItem, ConditionOptions } from "./ConditionOptions";
+import { ConditionItem, ConditionOptions, StaticElementName } from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
 import { ConditionValue, ItemOption } from "./ConditionValue";
+import { Constraint } from "./Constraint";
 
 class ExpressionValue {
   constructor(
@@ -14,6 +15,18 @@ class ExpressionValue {
     public label: string,
     public type: string,
   ) {}
+
+  public static fromSlug (slug: string) {
+    const option = STATIC_OPTIONS.find(o => o.slug === slug)
+
+    if (!option) return ExpressionValue.emptyStatic()
+
+    return new ExpressionValue(
+      option.slug,
+      option.label,
+      option.type,
+    );
+  }
 
   public static fromLeftOperand(leftOperand: LeftOperand) {
     return new ExpressionValue(
@@ -56,7 +69,14 @@ export class FilterElement {
     public value: ExpressionValue,
     public condition: Condition,
     public loading: boolean,
-  ) {}
+    public constraint?: Constraint,
+  ) {
+    const newConstraint = Constraint.fromSlug(this.value.value)
+
+    if (newConstraint) {
+      this.constraint = newConstraint
+    }
+  }
 
   public enableLoading() {
     this.loading = true;
@@ -73,6 +93,12 @@ export class FilterElement {
   public updateLeftOperator(leftOperand: LeftOperand) {
     this.value = ExpressionValue.fromLeftOperand(leftOperand);
     this.condition = Condition.emptyFromLeftOperand(leftOperand);
+
+    const newConstraint = Constraint.fromSlug(this.value.value)
+
+    if (newConstraint) {
+      this.constraint = newConstraint
+    }
   }
 
   public updateLeftLoadingState(loading: boolean) {
@@ -141,6 +167,14 @@ export class FilterElement {
     return new FilterElement(
       ExpressionValue.emptyStatic(),
       Condition.createEmpty(),
+      false,
+    );
+  }
+
+  public static createStaticBySlug (slug: StaticElementName) {
+    return new FilterElement(
+      ExpressionValue.fromSlug(slug),
+      Condition.emptyFromSlug(slug),
       false,
     );
   }
