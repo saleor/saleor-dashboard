@@ -37,11 +37,7 @@ export const useUrlValueProvider = (
   const tokenizedUrl = useTokenArray(params.toString());
   const fetchingParams = tokenizedUrl.getFetchingParams();
   useEffect(() => {
-    const executeFetchQueries = async () => {
-      await fetchQueries(fetchingParams);
-    };
-
-    void executeFetchQueries();
+    fetchQueries(fetchingParams);
   }, []);
 
   useEffect(() => {
