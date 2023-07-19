@@ -32,6 +32,10 @@ export const permissionGroupMember = gql`
 export const permissionGroupDetailsFragment = gql`
   fragment PermissionGroupDetails on Group {
     ...PermissionGroup
+    restrictedAccessToChannels
+    accessibleChannels {
+      ...Channel
+    }
     permissions {
       ...Permission
     }

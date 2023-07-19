@@ -171,8 +171,8 @@ export const UserPermissionFragmentDoc = gql`
   name
 }
     `;
-export const ChannelFragmentFragmentDoc = gql`
-    fragment ChannelFragment on Channel {
+export const ChannelFragmentDoc = gql`
+    fragment Channel on Channel {
   id
   isActive
   name
@@ -187,8 +187,8 @@ export const ChannelFragmentFragmentDoc = gql`
   }
 }
     `;
-export const UserWithChannelsFragmentDoc = gql`
-    fragment UserWithChannels on User {
+export const UserFragmentDoc = gql`
+    fragment User on User {
   id
   email
   firstName
@@ -201,27 +201,12 @@ export const UserWithChannelsFragmentDoc = gql`
     url
   }
   accessibleChannels {
-    ...ChannelFragment
+    ...Channel
   }
   restrictedAccessToChannels
 }
     ${UserPermissionFragmentDoc}
-${ChannelFragmentFragmentDoc}`;
-export const UserFragmentDoc = gql`
-    fragment User on User {
-  id
-  email
-  firstName
-  lastName
-  isStaff
-  userPermissions {
-    ...UserPermission
-  }
-  avatar {
-    url
-  }
-}
-    ${UserPermissionFragmentDoc}`;
+${ChannelFragmentDoc}`;
 export const CategoryFragmentDoc = gql`
     fragment Category on Category {
   id
@@ -257,22 +242,6 @@ export const ChannelErrorFragmentDoc = gql`
   code
   field
   message
-}
-    `;
-export const ChannelFragmentDoc = gql`
-    fragment Channel on Channel {
-  id
-  isActive
-  name
-  slug
-  currencyCode
-  defaultCountry {
-    code
-    country
-  }
-  stockSettings {
-    allocationStrategy
-  }
 }
     `;
 export const WarehouseFragmentDoc = gql`
@@ -2149,8 +2118,8 @@ export const PermissionGroupMemberFragmentDoc = gql`
   }
 }
     ${StaffMemberFragmentDoc}`;
-export const PermissionGroupWithContextDetailsFragmentDoc = gql`
-    fragment PermissionGroupWithContextDetails on Group {
+export const PermissionGroupDetailsFragmentDoc = gql`
+    fragment PermissionGroupDetails on Group {
   ...PermissionGroup
   restrictedAccessToChannels
   accessibleChannels {
@@ -2165,19 +2134,6 @@ export const PermissionGroupWithContextDetailsFragmentDoc = gql`
 }
     ${PermissionGroupFragmentDoc}
 ${ChannelFragmentDoc}
-${PermissionFragmentDoc}
-${PermissionGroupMemberFragmentDoc}`;
-export const PermissionGroupDetailsFragmentDoc = gql`
-    fragment PermissionGroupDetails on Group {
-  ...PermissionGroup
-  permissions {
-    ...Permission
-  }
-  users {
-    ...PermissionGroupMember
-  }
-}
-    ${PermissionGroupFragmentDoc}
 ${PermissionFragmentDoc}
 ${PermissionGroupMemberFragmentDoc}`;
 export const PluginConfigurationBaseFragmentDoc = gql`
@@ -12124,7 +12080,7 @@ export type PermissionGroupListQueryResult = Apollo.QueryResult<Types.Permission
 export const PermissionGroupDetailsDocument = gql`
     query PermissionGroupDetails($id: ID!, $userId: ID!) {
   permissionGroup(id: $id) {
-    ...PermissionGroupWithContextDetails
+    ...PermissionGroupDetails
   }
   user(id: $userId) {
     editableGroups {
@@ -12138,7 +12094,7 @@ export const PermissionGroupDetailsDocument = gql`
     }
   }
 }
-    ${PermissionGroupWithContextDetailsFragmentDoc}`;
+    ${PermissionGroupDetailsFragmentDoc}`;
 
 /**
  * __usePermissionGroupDetailsQuery__

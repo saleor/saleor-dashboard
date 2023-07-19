@@ -7,7 +7,6 @@ import {
   PermissionGroupDetailsFragment,
   UserFragment,
 } from "@dashboard/graphql";
-import { PermissionGroupWithContextDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
 
 import { PermissionGroupDetailsPageFormData } from "./components/PermissonGroupDetailsPage";
 import { permissionGroup, permissionGroupWithChannels } from "./fixtures";
@@ -49,7 +48,7 @@ describe("Permission group utils", () => {
             name: "channel-3",
           },
         ],
-      } as PermissionGroupWithContextDetailsFragment;
+      } as PermissionGroupDetailsFragment;
 
       // Act
       const { addChannels, removeChannels } = channelsDiff(
@@ -86,7 +85,7 @@ describe("Permission group utils", () => {
             name: "channel-3",
           },
         ],
-      } as PermissionGroupWithContextDetailsFragment;
+      } as PermissionGroupDetailsFragment;
 
       // Act
       const { addChannels, removeChannels } = channelsDiff(
@@ -123,7 +122,7 @@ describe("Permission group utils", () => {
             name: "channel-3",
           },
         ],
-      } as PermissionGroupWithContextDetailsFragment;
+      } as PermissionGroupDetailsFragment;
 
       // Act
       const { addChannels, removeChannels } = channelsDiff(
@@ -156,7 +155,7 @@ describe("Permission group utils", () => {
             name: "channel-2",
           },
         ],
-      } as PermissionGroupWithContextDetailsFragment;
+      } as PermissionGroupDetailsFragment;
 
       // Act
       const { addChannels, removeChannels } = channelsDiff(
@@ -190,7 +189,7 @@ describe("Permission group utils", () => {
             name: "channel-2",
           },
         ],
-      } as PermissionGroupWithContextDetailsFragment;
+      } as PermissionGroupDetailsFragment;
 
       const allChannels = [
         { id: "12", name: "channel-12" },
@@ -468,7 +467,7 @@ describe("Permission group utils", () => {
             currencyCode: "USD",
           },
         ],
-      } as PermissionGroupWithContextDetailsFragment;
+      } as PermissionGroupDetailsFragment;
 
       // Act
       const accessibleChannels = mapAccessibleChannelsToChoice(permissionGroup);

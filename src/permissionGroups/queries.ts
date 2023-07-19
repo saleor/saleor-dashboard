@@ -32,7 +32,7 @@ export const permissionGroupListQuery = gql`
 export const permissionGroupDetailsQuery = gql`
   query PermissionGroupDetails($id: ID!, $userId: ID!) {
     permissionGroup(id: $id) {
-      ...PermissionGroupWithContextDetails
+      ...PermissionGroupDetails
     }
     user(id: $userId) {
       editableGroups {

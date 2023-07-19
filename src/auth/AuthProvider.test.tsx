@@ -1,9 +1,6 @@
 // @ts-strict-ignore
 import { useApolloClient } from "@apollo/client";
-import {
-  useUserDetailsQuery,
-  useUserDetailsWithChannelsQuery,
-} from "@dashboard/graphql";
+import { useUserDetailsQuery } from "@dashboard/graphql";
 import useNotifier from "@dashboard/hooks/useNotifier";
 import { useAuth, useAuthState } from "@saleor/sdk";
 import { act, renderHook } from "@testing-library/react-hooks";
@@ -62,17 +59,8 @@ jest.mock("@apollo/client", () => ({
   ApolloError: jest.fn(),
 }));
 
-jest.mock("@dashboard/featureFlags", () => ({
-  useFlag: jest.fn(() => ({
-    enabled: false,
-  })),
-}));
-
 jest.mock("@dashboard/graphql", () => ({
   useUserDetailsQuery: jest.fn(() => ({
-    data: undefined,
-  })),
-  useUserDetailsWithChannelsQuery: jest.fn(() => ({
     data: undefined,
   })),
 }));
@@ -122,14 +110,6 @@ describe("AuthProvider", () => {
         },
       },
     }));
-    (useUserDetailsWithChannelsQuery as jest.Mock).mockImplementation(() => ({
-      data: {
-        me: {
-          email: adminCredentials.email,
-          isStaff: true,
-        },
-      },
-    }));
 
     // Act
     const hook = renderHook(() =>
@@ -162,11 +142,6 @@ describe("AuthProvider", () => {
         me: null,
       },
     }));
-    (useUserDetailsWithChannelsQuery as jest.Mock).mockImplementation(() => ({
-      data: {
-        me: null,
-      },
-    }));
 
     // Act
     const hook = renderHook(() =>
@@ -189,24 +164,6 @@ describe("AuthProvider", () => {
       authenticating: false,
     }));
     (useUserDetailsQuery as jest.Mock).mockImplementation(() => ({
-      data: {
-        me: {
-          email: nonStaffUserCredentials.email,
-          isStaff: false,
-        },
-      },
-    }));
-
-    (useUserDetailsQuery as jest.Mock).mockImplementation(() => ({
-      data: {
-        me: {
-          email: nonStaffUserCredentials.email,
-          isStaff: false,
-        },
-      },
-    }));
-
-    (useUserDetailsWithChannelsQuery as jest.Mock).mockImplementation(() => ({
       data: {
         me: {
           email: nonStaffUserCredentials.email,

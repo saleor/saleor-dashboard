@@ -14,7 +14,6 @@ import {
   PermissionGroupErrorFragment,
   UserPermissionFragment,
 } from "@dashboard/graphql";
-import { PermissionGroupWithContextDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
 import { FormChange, SubmitPromise } from "@dashboard/hooks/useForm";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { buttonMessages } from "@dashboard/intl";
@@ -63,7 +62,7 @@ export interface PermissonGroupDetailsPageProps
   isUserAbleToEditChannesl: boolean;
   errors: PermissionGroupErrorFragment[];
   members: PermissionGroupDetailsFragment["users"];
-  permissionGroup: PermissionGroupWithContextDetailsFragment;
+  permissionGroup: PermissionGroupDetailsFragment;
   permissions: PermissionData[];
   permissionsExceeded: boolean;
   saveButtonBarState: "loading" | "success" | "error" | "default";

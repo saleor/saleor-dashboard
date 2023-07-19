@@ -7,7 +7,6 @@ import {
   PermissionGroupDetailsFragment,
   UserFragment,
 } from "@dashboard/graphql";
-import { PermissionGroupWithContextDetailsFragment } from "@dashboard/graphql/types.channelPermissions.generated";
 import difference from "lodash/difference";
 
 import { PermissionGroupDetailsPageFormData } from "./components/PermissonGroupDetailsPage";
@@ -78,7 +77,7 @@ export const usersDiff = (
  * Return lists of channels which have to be added and removed from group.
  */
 export const channelsDiff = (
-  permissionGroup: PermissionGroupWithContextDetailsFragment,
+  permissionGroup: PermissionGroupDetailsFragment,
   formData: PermissionGroupDetailsPageFormData,
   allChannels: ChannelFragment[],
   isUserAbleToEdit: boolean,
@@ -125,7 +124,7 @@ export const arePermissionsExceeded = (
  * Return lists of permission group accessible channels.
  */
 export const mapAccessibleChannelsToChoice = (
-  permissionGroup: PermissionGroupWithContextDetailsFragment,
+  permissionGroup: PermissionGroupDetailsFragment,
   isUserAbleToEdit?: boolean,
 ): MultiAutocompleteChoiceType[] =>
   permissionGroup?.accessibleChannels.map(
@@ -203,7 +202,7 @@ const getUserAccessibleChannels = (user?: UserContext["user"]) => {
 };
 
 export const getInitialChannels = (
-  permissionGroup: PermissionGroupWithContextDetailsFragment,
+  permissionGroup: PermissionGroupDetailsFragment,
   allChannelsLength: number,
 ) => {
   if (

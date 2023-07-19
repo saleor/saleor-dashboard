@@ -22,6 +22,7 @@ const AVAILABLE_FLAGS = [
     content: { enabled: false, value: "default" },
   } as const,
   */
+
   {
     name: "product_filters",
     displayName: "Product filters",

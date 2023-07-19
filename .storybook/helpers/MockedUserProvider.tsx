@@ -24,6 +24,8 @@ export const MockedUserProvider: React.FC<{
         userPermissions: customPermissions ?? adminUserPermissions,
         avatar: null,
         __typename: "User",
+        accessibleChannels: [],
+        restrictedAccessToChannels: false,
       },
       errors: [],
     }}

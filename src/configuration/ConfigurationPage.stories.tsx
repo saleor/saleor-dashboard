@@ -24,6 +24,8 @@ const user = {
   lastName: "Newton",
   note: null,
   userPermissions: staffMember.userPermissions,
+  restrictedAccessToChannels: false,
+  accessibleChannels: [],
 };
 
 const versions = {

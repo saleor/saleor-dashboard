@@ -1,4 +1,4 @@
-import { UserFragment, UserWithChannelsFragment } from "@dashboard/graphql";
+import { UserFragment } from "@dashboard/graphql";
 import {
   GetExternalAccessTokenData,
   GetExternalAuthUrlData,
@@ -40,7 +40,7 @@ export interface UserContext {
     pluginId: string,
     input: RequestExternalLoginInput,
   ) => Promise<GetExternalAuthUrlData>;
-  user?: UserFragment | UserWithChannelsFragment;
+  user?: UserFragment;
   authenticating: boolean;
   authenticated: boolean;
   errors: UserContextError[];
