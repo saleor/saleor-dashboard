@@ -8,21 +8,28 @@ export const ExpressionFilters = () => (
       <Button>Show filters</Button>
     </Popover.Trigger>
     <Popover.Content align="start">
-      <Box>
+      <Box
+        __minHeight="250px"
+        __minWidth="636px"
+        display="grid"
+        __gridTemplateRows="auto 1fr"
+      >
         <Box
-          paddingX={5}
-          paddingY={4}
+          paddingTop={3}
+          paddingX={3}
+          paddingBottom={1.5}
           display="flex"
           gap={1}
           alignItems="center"
           justifyContent="space-between"
           backgroundColor="surfaceNeutralPlain"
+          borderTopLeftRadius={2}
+          borderTopRightRadius={2}
         >
           <Text variant="body" size="medium">
-            Filter conditions
+            Conditions
           </Text>
           <Box display="flex" alignItems="center" gap={2}>
-            <Button variant="tertiary">Clear filters</Button>
             <Popover.Close>
               <Button variant="tertiary" icon={<CloseIcon />} />
             </Popover.Close>
