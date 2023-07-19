@@ -131,3 +131,11 @@ export function bulkDeleteRecords() {
     .get(BUTTON_SELECTORS.submit)
     .click();
 }
+export function getUrlWithFilteredTags(url, tagsArray) {
+  const urlHelper = url + "?asc=true&sort=usedBy";
+  let tagsPath = "";
+  tagsArray.forEach((tag, index) => {
+    tagsPath += `&tag%5B${index}%5D=${tag}`;
+  });
+  return urlHelper + tagsPath;
+}

@@ -162,7 +162,10 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
           secondGiftCard = giftCard;
           secondGiftCardCode = secondGiftCard.code;
           cy.visit(
-            `${urlList.giftCards}?asc=true&sort=usedBy&tag%5B0%5D=${firstGiftCardTag}&tag%5B1%5D=${secondGiftCardTag}`,
+            giftCardsPage.getUrlWithFilteredTags(urlList.giftCards, [
+              firstGiftCardTag,
+              secondGiftCardTag,
+            ]),
           );
 
           giftCardsPage.selectGiftCardOnListView(secondGiftCardCode);
@@ -227,7 +230,10 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
           secondGiftCard = giftCard;
           secondGiftCardCode = giftCard.code;
           cy.visit(
-            `${urlList.giftCards}?asc=true&sort=usedBy&tag%5B0%5D=${firstGiftCardTag}&tag%5B1%5D=${secondGiftCardTag}`,
+            giftCardsPage.getUrlWithFilteredTags(urlList.giftCards, [
+              firstGiftCardTag,
+              secondGiftCardTag,
+            ]),
           );
           giftCardsPage.selectGiftCardOnListView(secondGiftCardCode);
           giftCardsPage.selectGiftCardOnListView(firstGiftCardCode);

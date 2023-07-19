@@ -123,7 +123,10 @@ describe("As an admin I want to update gift card", () => {
           secondGiftCardCode = secondGiftCard.code;
           secondGiftCardId = secondGiftCard.id;
           cy.visit(
-            `${urlList.giftCards}?asc=true&sort=usedBy&tag%5B0%5D=${firstGiftCardTag}&tag%5B1%5D=${secondGiftCardTag}`,
+            giftCardsPage.getUrlWithFilteredTags(urlList.giftCards, [
+              firstGiftCardTag,
+              secondGiftCardTag,
+            ]),
           );
           giftCardsPage.selectGiftCardOnListView(secondGiftCardCode);
           giftCardsPage.selectGiftCardOnListView(firstGiftCardCode);

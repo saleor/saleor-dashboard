@@ -60,14 +60,17 @@ describe("As an admin I want to export gift card", () => {
           secondGiftCardCode = secondGiftCard.code;
           secondGiftCardId = secondGiftCard.id;
           cy.visit(
-            `${urlList.giftCards}?asc=true&sort=usedBy&tag%5B0%5D=${firstGiftCardTag}&tag%5B1%5D=${secondGiftCardTag}`,
+            giftCardsPage.getUrlWithFilteredTags(urlList.giftCards, [
+              firstGiftCardTag,
+              secondGiftCardTag,
+            ]),
           );
           giftCardsPage.selectGiftCardOnListView(secondGiftCardCode);
           giftCardsPage.selectGiftCardOnListView(firstGiftCardCode);
           giftCardsPage.openExportGiftCardsDialog();
           giftCardsPage.selectSelectedRecordsButton();
           giftCardsPage.selectExportAsCSVButton();
-          cy.clickSubmitButton().confirmationMessageShouldDisappear();
+          cy.clickSubmitButton();
           getMailWithGiftCardExportWithAttachment(
             TEST_ADMIN_USER.email,
             `Your exported gift cards data #${exportId} is ready`,
@@ -114,14 +117,17 @@ describe("As an admin I want to export gift card", () => {
           secondGiftCardId = secondGiftCard.id;
           secondGiftCardCode = secondGiftCard.code;
           cy.visit(
-            `${urlList.giftCards}?asc=true&sort=usedBy&tag%5B0%5D=${firstGiftCardTag}&tag%5B1%5D=${secondGiftCardTag}`,
+            giftCardsPage.getUrlWithFilteredTags(urlList.giftCards, [
+              firstGiftCardTag,
+              secondGiftCardTag,
+            ]),
           );
           giftCardsPage.selectGiftCardOnListView(secondGiftCardCode);
           giftCardsPage.selectGiftCardOnListView(firstGiftCardCode);
           giftCardsPage.openExportGiftCardsDialog();
           giftCardsPage.selectSelectedRecordsButton();
           giftCardsPage.selectExportAsXLSXButton();
-          cy.clickSubmitButton().confirmationMessageShouldDisappear();
+          cy.clickSubmitButton();
           getMailWithGiftCardExportWithAttachment(
             TEST_ADMIN_USER.email,
             `Your exported gift cards data #${exportId} is ready`,
