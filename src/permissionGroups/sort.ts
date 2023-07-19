@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import { StaffMemberFragment } from "@dashboard/graphql";
 import { getUserName } from "@dashboard/misc";
 
@@ -7,12 +6,13 @@ import { MembersListUrlSortField } from "./urls";
 export const sortMembers =
   (sort: string, asc: boolean) =>
   (a: StaffMemberFragment, b: StaffMemberFragment) => {
-    let valueA;
-    let valueB;
+    let valueA: string = "";
+    let valueB: string = "";
+
     switch (sort) {
       case MembersListUrlSortField.name:
-        valueA = getUserName(a);
-        valueB = getUserName(b);
+        valueA = getUserName(a) ?? "";
+        valueB = getUserName(b) ?? "";
         break;
       case MembersListUrlSortField.email:
         valueA = a.email;
@@ -21,6 +21,6 @@ export const sortMembers =
     }
 
     return asc
-      ? ("" + valueA).localeCompare(valueB)
-      : ("" + valueA).localeCompare(valueB) * -1;
+      ? valueA.localeCompare(valueB)
+      : valueA.localeCompare(valueB) * -1;
   };
