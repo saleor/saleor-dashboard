@@ -38,6 +38,7 @@ import {
   getFilterOpts,
   getFilterQueryParam,
   getFilterVariables,
+  getPresetNameToDelete,
   storageUtils,
 } from "./filters";
 import { getSortQueryVariables } from "./sort";
@@ -226,7 +227,7 @@ export const CustomerList: React.FC<CustomerListProps> = ({ params }) => {
         confirmButtonState="default"
         onClose={closeModal}
         onSubmit={onPresetDelete}
-        tabName={presets?.[presetIdToDelete ?? 1 - 1]?.name ?? "..."}
+        tabName={getPresetNameToDelete(presets, presetIdToDelete)}
       />
     </PaginatorContext.Provider>
   );
