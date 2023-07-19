@@ -62,7 +62,6 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
   return (
     <_ExperimentalFilters
       leftOptions={leftOperandsProvider.operands}
-      // @ts-expect-error
       value={value}
       onChange={handleStateChange}
     >
