@@ -193,7 +193,8 @@ jobs:
             --name "Deployment tests" \
             --source frontend-e2e-tests > testmo-run-id.txt
           ID=$(cat testmo-run-id.txt)
-          echo "TESTMO_RUN_ID=$ID" >> $GITHUB_ENV
+          echo "TESTMO_RUN_ID=$ID" >> $GITHUB_ENV \
+          echo $TESTMO_RUN_ID
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
