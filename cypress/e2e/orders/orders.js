@@ -575,7 +575,7 @@ describe("Orders", () => {
     },
   );
   it(
-    "should be able to turn of all but one static columns on orders detail. TC: SALEOR_2136",
+    "should be able to turn off all but one static columns on orders detail. TC: SALEOR_2136",
     { tags: ["@orders", "@allEnv", "@stable"] },
     () => {
       let order;
