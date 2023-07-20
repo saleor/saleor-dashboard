@@ -47,6 +47,7 @@ export const AppPaths = {
   resolveAppDeepPath: (id: string, subPath: string) =>
     urlJoin(AppPaths.resolveAppPath(id), subPath),
   appInstallPath: urlJoin(AppSections.appsSection, "install"),
+  resolveRequestPermissionsPath: (id: string) => urlJoin(AppSections.appsSection, id, 'permissions'),
 };
 
 export const AppUrls = {

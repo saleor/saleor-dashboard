@@ -12,6 +12,7 @@ import {
   NotifyReady,
   RedirectAction,
   UpdateRouting,
+  RequestPermissions,
 } from "@saleor/app-sdk/app-bridge";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
@@ -208,10 +209,34 @@ const useNotifyReadyAction = (
   };
 };
 
+const useHandlePermissionRequest = (appId: string) => {
+  const navigate = useNavigator();
+
+  return {
+    handle: (action: RequestPermissions) => {
+      const { actionId, permissions, redirectPath } = action.payload;
+
+      console.log(permissions); // todo debug
+      console.log(redirectPath); // todo debug
+
+      const qs = new URLSearchParams({
+        permissions: permissions.join(","),
+        redirectPath,
+      });
+
+      // todo: extract to urls helpers
+      navigate("/apps/" + appId + "/permissions" + "?" + qs.toString());
+
+      return createResponseStatus(actionId, true);
+    },
+  };
+};
+
 export const AppActionsHandler = {
   useHandleNotificationAction,
   useHandleUpdateRoutingAction,
   useHandleRedirectAction,
   useNotifyReadyAction,
   createResponseStatus,
+  useHandlePermissionRequest,
 };
