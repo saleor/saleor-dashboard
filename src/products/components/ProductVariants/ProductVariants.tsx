@@ -128,6 +128,7 @@ export const ProductVariants: React.FC<ProductVariantsProps> = ({
         id: "3C3Nj5",
         description: "button",
       })}
+      fillHandle={true}
       availableColumns={columns}
       emptyText={intl.formatMessage(messages.empty)}
       getCellContent={getCellContent}
