@@ -4,9 +4,10 @@ import { RowType, STATIC_OPTIONS } from "../constants";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { TokenType, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
-import { ConditionItem, ConditionOptions } from "./ConditionOptions";
+import { ConditionItem, ConditionOptions, StaticElementName } from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
 import { ConditionValue, ItemOption } from "./ConditionValue";
+import { Constraint } from "./Constraint";
 
 class ExpressionValue {
   constructor(
@@ -14,6 +15,18 @@ class ExpressionValue {
     public label: string,
     public type: string,
   ) {}
+
+  public static fromSlug (slug: string) {
+    const option = STATIC_OPTIONS.find(o => o.slug === slug)
+
+    if (!option) return ExpressionValue.emptyStatic()
+
+    return new ExpressionValue(
+      option.slug,
+      option.label,
+      option.type,
+    );
+  }
 
   public static fromLeftOperand(leftOperand: LeftOperand) {
     return new ExpressionValue(
@@ -56,7 +69,14 @@ export class FilterElement {
     public value: ExpressionValue,
     public condition: Condition,
     public loading: boolean,
-  ) {}
+    public constraint?: Constraint,
+  ) {
+    const newConstraint = Constraint.fromSlug(this.value.value)
+
+    if (newConstraint) {
+      this.constraint = newConstraint
+    }
+  }
 
   public enableLoading() {
     this.loading = true;
@@ -125,12 +145,25 @@ export class FilterElement {
     return null;
   }
 
+  public setConstraint (constraint: Constraint) {
+    this.constraint = constraint
+  }
+
+  public clearConstraint () {
+    this.constraint = undefined
+  }
+
+
   public asUrlEntry(): UrlEntry {
     if (this.isAttribute()) {
       return UrlEntry.forAttribute(this.condition.selected, this.value.value);
     }
 
     return UrlEntry.forStatic(this.condition.selected, this.value.value);
+  }
+
+  public static isCompatible(element: unknown): element is FilterElement {
+    return typeof element !== "string" && !Array.isArray(element)
   }
 
   public static fromValueEntry(valueEntry: any) {
@@ -141,6 +174,14 @@ export class FilterElement {
     return new FilterElement(
       ExpressionValue.emptyStatic(),
       Condition.createEmpty(),
+      false,
+    );
+  }
+
+  public static createStaticBySlug (slug: StaticElementName) {
+    return new FilterElement(
+      ExpressionValue.fromSlug(slug),
+      Condition.emptyFromSlug(slug),
       false,
     );
   }

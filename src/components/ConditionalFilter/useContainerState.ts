@@ -6,6 +6,49 @@ import { FilterValueProvider } from "./FilterValueProvider";
 type StateCallback = (el: FilterElement) => void;
 type Element = FilterContainer[number];
 
+
+const isFilterElement = (el: unknown): el is FilterElement => typeof el !== "string" && !Array.isArray(el)
+
+const removeConstraint = (container: FilterContainer) => {
+  return container.map((el) => {
+    if (!isFilterElement(el)) return el
+
+    if (!el.constraint?.existIn(container)) {
+      el.clearConstraint()
+    }
+
+    return el
+  })
+}
+
+const calculateIndexesToRemove = (container: FilterContainer, position: number) => {
+  const next = position + 1
+  const previous = position - 1
+  const indexTuple = [position]
+
+  if (typeof container[next] === "string") {
+    indexTuple.push(next)
+
+    return indexTuple
+  }
+
+  if (typeof container[previous] === "string") {
+    indexTuple.push(previous)
+  }
+
+  return indexTuple
+}
+
+
+const removeElement = (container: FilterContainer, position: number) => {
+  const indexTuple = calculateIndexesToRemove(container, position)
+
+  const newContainer = container
+    .filter((_, elIndex) => !indexTuple.includes(elIndex))
+
+  return removeConstraint(newContainer)
+}
+
 export const useContainerState = (valueProvider: FilterValueProvider) => {
   const [value, setValue] = useState<FilterContainer>([]);
 
@@ -15,17 +58,17 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     }
   }, [valueProvider.loading]);
 
-  const isFilterElement = (
+  const isFilterElementAtIndex = (
     elIndex: number,
     index: number,
     el: Element,
   ): el is FilterElement => {
-    return elIndex === index && typeof el !== "string" && !Array.isArray(el);
+    return elIndex === index && isFilterElement(el);
   };
 
   const updateFilterElement =
     (index: number, cb: StateCallback) => (el: Element, elIndex: number) => {
-      if (isFilterElement(elIndex, index, el)) {
+      if (isFilterElementAtIndex(elIndex, index, el)) {
         cb(el);
       }
 
@@ -37,32 +80,48 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     setValue(v => v.map(updateFilterElement(index, cb)));
   };
 
+  const updateBySlug = (slug: string, cb: StateCallback) => {
+    setValue(v => v.map((el) => {
+      if (isFilterElement(el) && el.value.value === slug) {
+        cb(el)
+      }
+
+      return el
+    }))
+  };
+
   const removeAt = (position: string) => {
     const index = parseInt(position, 10);
 
-    if (value.length > 0) {
-      setValue(v =>
-        v.filter((_, elIndex) => ![index - 1, index].includes(elIndex)),
-      );
-      return;
-    }
-
-    setValue(v => v.filter((_, elIndex) => ![index].includes(elIndex)));
+    setValue(v => removeElement(v, index));
   };
 
-  const createEmpty = () => {
+  const create = (element: FilterElement) => {
     const newValue: FilterContainer = [];
 
     if (value.length > 0) {
-      newValue.push("OR");
+      newValue.push("AND");
     }
 
-    newValue.push(FilterElement.createEmpty());
+    newValue.push(element);
 
     setValue(v => v.concat(newValue));
   };
 
+  const exist = (slug: string) => {
+    return value.some((entry) =>
+      isFilterElement(entry) && entry.value.value === slug
+    )
+  }
+
+  const createEmpty = () => {
+    create(FilterElement.createEmpty())
+  };
+
   return {
+    create,
+    exist,
+    updateBySlug,
     createEmpty,
     updateAt,
     removeAt,

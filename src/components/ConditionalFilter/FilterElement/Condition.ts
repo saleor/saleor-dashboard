@@ -2,7 +2,7 @@
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { UrlToken } from "./../ValueProvider/UrlToken";
-import { ConditionOptions } from "./ConditionOptions";
+import { ConditionOptions, StaticElementName } from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
 import { ItemOption } from "./ConditionValue";
 
@@ -29,6 +29,16 @@ export class Condition {
     return new Condition(
       ConditionOptions.empty(),
       ConditionSelected.empty(),
+      false,
+    );
+  }
+
+  public static emptyFromSlug(slug: StaticElementName) {
+    const options = ConditionOptions.fromName(slug);
+
+    return new Condition(
+      options,
+      ConditionSelected.fromConditionItem(options.first()),
       false,
     );
   }
