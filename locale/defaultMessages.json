@@ -96,6 +96,9 @@
     "context": "button",
     "string": "Activate"
   },
+  "+bhokL": {
+    "string": "Search discounts..."
+  },
   "+do3gl": {
     "context": "input helper text",
     "string": "This number defines quantity of items in checkout line that can be bought. You can override this setting per variant. Leaving this setting empty mean that there is no limits."
@@ -787,6 +790,9 @@
     "context": "product",
     "string": "Stock quantity"
   },
+  "3a5wL8": {
+    "string": "Active"
+  },
   "3bQz2o": {
     "context": "bulk issue gift cards success alert title",
     "string": "Gift Cards Issued"
@@ -1279,6 +1285,10 @@
   },
   "7Chrsf": {
     "string": "Passwords do not match"
+  },
+  "7EDqed": {
+    "context": "tab name",
+    "string": "All gift cards"
   },
   "7FL+WZ": {
     "context": "export products to csv file, button",
@@ -2757,6 +2767,9 @@
   "HqeqEV": {
     "context": "create gift card product alert message",
     "string": "Create a gift card product"
+  },
+  "Hswqx2": {
+    "string": "Delete discounts"
   },
   "HvJPcU": {
     "string": "Category deleted"
@@ -5317,6 +5330,10 @@
   "a5msuh": {
     "string": "Yes"
   },
+  "a6GDem": {
+    "context": "tab name",
+    "string": "All discounts"
+  },
   "a9S9Je": {
     "context": "page types section name",
     "string": "Page Types"
@@ -5621,10 +5638,6 @@
   "c8nvms": {
     "string": "Sales"
   },
-  "c8zJID": {
-    "context": "tab name",
-    "string": "All Discounts"
-  },
   "cBHRxx": {
     "context": "button",
     "string": "Assign Warehouse"
@@ -5758,6 +5771,9 @@
   "cy8sV7": {
     "context": "volume units types",
     "string": "Volume"
+  },
+  "d68yq7": {
+    "string": "Delete gift cards"
   },
   "d7dT8o": {
     "context": "button, sets granted refund amount in input",
@@ -6200,6 +6216,10 @@
   "h2Hta6": {
     "context": "caption",
     "string": "If enabled, attribute will be accessible to customers."
+  },
+  "h2hEKV": {
+    "context": "search gift card placeholder",
+    "string": "Search gift cards, e.g {exampleGiftCardCode}"
   },
   "h5r9+x": {
     "context": "sort shipping methods by zone, section header",
@@ -6813,10 +6833,6 @@
     "context": "money",
     "string": "from {money}"
   },
-  "labkPK": {
-    "context": "search gift card placeholder",
-    "string": "Search Gift Cards, e.g {exampleGiftCardCode}"
-  },
   "lct0qd": {
     "string": "This list shows all attributes that will be assigned to pages that have this page type assigned."
   },
@@ -6827,9 +6843,6 @@
   "li1BBk": {
     "context": "export items as csv file",
     "string": "Plain CSV file"
-  },
-  "lit2zF": {
-    "string": "Search Discounts"
   },
   "ll2dE6": {
     "context": "PageTypeDeleteWarningDialog multiple assigned items description",

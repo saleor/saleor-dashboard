@@ -40,3 +40,4 @@ export * as channelsPage from "./channelsPage";
 export * as pagesPage from "./pagesPage";
 export * as columnPickerPage from "./columnPicker";
 export * as pageDetailsPage from "./pageDetailsPage";
+export * as giftCardsPage from "./catalog/giftCardPage";

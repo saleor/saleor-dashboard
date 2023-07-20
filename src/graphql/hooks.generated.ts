@@ -8206,77 +8206,6 @@ export function useGiftCardAddNoteMutation(baseOptions?: ApolloReactHooks.Mutati
 export type GiftCardAddNoteMutationHookResult = ReturnType<typeof useGiftCardAddNoteMutation>;
 export type GiftCardAddNoteMutationResult = Apollo.MutationResult<Types.GiftCardAddNoteMutation>;
 export type GiftCardAddNoteMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardAddNoteMutation, Types.GiftCardAddNoteMutationVariables>;
-export const GiftCardDetailsDocument = gql`
-    query GiftCardDetails($id: ID!) {
-  giftCard(id: $id) {
-    ...GiftCardData
-    events {
-      ...GiftCardEvent
-    }
-  }
-}
-    ${GiftCardDataFragmentDoc}
-${GiftCardEventFragmentDoc}`;
-
-/**
- * __useGiftCardDetailsQuery__
- *
- * To run a query within a React component, call `useGiftCardDetailsQuery` and pass it any options that fit your needs.
- * When your component renders, `useGiftCardDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGiftCardDetailsQuery({
- *   variables: {
- *      id: // value for 'id'
- *   },
- * });
- */
-export function useGiftCardDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>(GiftCardDetailsDocument, options);
-      }
-export function useGiftCardDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>(GiftCardDetailsDocument, options);
-        }
-export type GiftCardDetailsQueryHookResult = ReturnType<typeof useGiftCardDetailsQuery>;
-export type GiftCardDetailsLazyQueryHookResult = ReturnType<typeof useGiftCardDetailsLazyQuery>;
-export type GiftCardDetailsQueryResult = Apollo.QueryResult<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>;
-export const GiftCardCurrenciesDocument = gql`
-    query GiftCardCurrencies {
-  giftCardCurrencies
-}
-    `;
-
-/**
- * __useGiftCardCurrenciesQuery__
- *
- * To run a query within a React component, call `useGiftCardCurrenciesQuery` and pass it any options that fit your needs.
- * When your component renders, `useGiftCardCurrenciesQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useGiftCardCurrenciesQuery({
- *   variables: {
- *   },
- * });
- */
-export function useGiftCardCurrenciesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>) {
-        const options = {...defaultOptions, ...baseOptions}
-        return ApolloReactHooks.useQuery<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>(GiftCardCurrenciesDocument, options);
-      }
-export function useGiftCardCurrenciesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>) {
-          const options = {...defaultOptions, ...baseOptions}
-          return ApolloReactHooks.useLazyQuery<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>(GiftCardCurrenciesDocument, options);
-        }
-export type GiftCardCurrenciesQueryHookResult = ReturnType<typeof useGiftCardCurrenciesQuery>;
-export type GiftCardCurrenciesLazyQueryHookResult = ReturnType<typeof useGiftCardCurrenciesLazyQuery>;
-export type GiftCardCurrenciesQueryResult = Apollo.QueryResult<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>;
 export const GiftCardBulkActivateDocument = gql`
     mutation GiftCardBulkActivate($ids: [ID!]!) {
   giftCardBulkActivate(ids: $ids) {
@@ -8349,6 +8278,77 @@ export function useGiftCardBulkDeactivateMutation(baseOptions?: ApolloReactHooks
 export type GiftCardBulkDeactivateMutationHookResult = ReturnType<typeof useGiftCardBulkDeactivateMutation>;
 export type GiftCardBulkDeactivateMutationResult = Apollo.MutationResult<Types.GiftCardBulkDeactivateMutation>;
 export type GiftCardBulkDeactivateMutationOptions = Apollo.BaseMutationOptions<Types.GiftCardBulkDeactivateMutation, Types.GiftCardBulkDeactivateMutationVariables>;
+export const GiftCardDetailsDocument = gql`
+    query GiftCardDetails($id: ID!) {
+  giftCard(id: $id) {
+    ...GiftCardData
+    events {
+      ...GiftCardEvent
+    }
+  }
+}
+    ${GiftCardDataFragmentDoc}
+${GiftCardEventFragmentDoc}`;
+
+/**
+ * __useGiftCardDetailsQuery__
+ *
+ * To run a query within a React component, call `useGiftCardDetailsQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGiftCardDetailsQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGiftCardDetailsQuery({
+ *   variables: {
+ *      id: // value for 'id'
+ *   },
+ * });
+ */
+export function useGiftCardDetailsQuery(baseOptions: ApolloReactHooks.QueryHookOptions<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>(GiftCardDetailsDocument, options);
+      }
+export function useGiftCardDetailsLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>(GiftCardDetailsDocument, options);
+        }
+export type GiftCardDetailsQueryHookResult = ReturnType<typeof useGiftCardDetailsQuery>;
+export type GiftCardDetailsLazyQueryHookResult = ReturnType<typeof useGiftCardDetailsLazyQuery>;
+export type GiftCardDetailsQueryResult = Apollo.QueryResult<Types.GiftCardDetailsQuery, Types.GiftCardDetailsQueryVariables>;
+export const GiftCardCurrenciesDocument = gql`
+    query GiftCardCurrencies {
+  giftCardCurrencies
+}
+    `;
+
+/**
+ * __useGiftCardCurrenciesQuery__
+ *
+ * To run a query within a React component, call `useGiftCardCurrenciesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGiftCardCurrenciesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGiftCardCurrenciesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGiftCardCurrenciesQuery(baseOptions?: ApolloReactHooks.QueryHookOptions<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return ApolloReactHooks.useQuery<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>(GiftCardCurrenciesDocument, options);
+      }
+export function useGiftCardCurrenciesLazyQuery(baseOptions?: ApolloReactHooks.LazyQueryHookOptions<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return ApolloReactHooks.useLazyQuery<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>(GiftCardCurrenciesDocument, options);
+        }
+export type GiftCardCurrenciesQueryHookResult = ReturnType<typeof useGiftCardCurrenciesQuery>;
+export type GiftCardCurrenciesLazyQueryHookResult = ReturnType<typeof useGiftCardCurrenciesLazyQuery>;
+export type GiftCardCurrenciesQueryResult = Apollo.QueryResult<Types.GiftCardCurrenciesQuery, Types.GiftCardCurrenciesQueryVariables>;
 export const DeleteGiftCardDocument = gql`
     mutation DeleteGiftCard($id: ID!) {
   giftCardDelete(id: $id) {
@@ -13839,13 +13839,14 @@ export type InitialProductFilterProductTypesQueryHookResult = ReturnType<typeof 
 export type InitialProductFilterProductTypesLazyQueryHookResult = ReturnType<typeof useInitialProductFilterProductTypesLazyQuery>;
 export type InitialProductFilterProductTypesQueryResult = Apollo.QueryResult<Types.InitialProductFilterProductTypesQuery, Types.InitialProductFilterProductTypesQueryVariables>;
 export const ProductListDocument = gql`
-    query ProductList($first: Int, $after: String, $last: Int, $before: String, $filter: ProductFilterInput, $channel: String, $sort: ProductOrder, $hasChannel: Boolean!) {
+    query ProductList($first: Int, $after: String, $last: Int, $before: String, $filter: ProductFilterInput, $where: ProductWhereInput, $channel: String, $sort: ProductOrder, $hasChannel: Boolean!) {
   products(
     before: $before
     after: $after
     first: $first
     last: $last
     filter: $filter
+    where: $where
     sortBy: $sort
     channel: $channel
   ) {
@@ -13888,6 +13889,7 @@ ${ProductListAttributeFragmentDoc}`;
  *      last: // value for 'last'
  *      before: // value for 'before'
  *      filter: // value for 'filter'
+ *      where: // value for 'where'
  *      channel: // value for 'channel'
  *      sort: // value for 'sort'
  *      hasChannel: // value for 'hasChannel'

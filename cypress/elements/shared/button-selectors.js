@@ -21,4 +21,5 @@ export const BUTTON_SELECTORS = {
     '[data-test-id = "delete-selected-elements-icon"]',
   dialogBackButton: '[data-test-id="back"]',
   expandMetadataButton: '[data-test-id="expand"]',
+  bulkDeleteButton: '[data-test-id="bulk-delete-button"]',
 };

@@ -43,7 +43,7 @@ export enum ListViews {
   WAREHOUSE_LIST = "WAREHOUSE_LIST",
   WEBHOOK_LIST = "WEBHOOK_LIST",
   TRANSLATION_ATTRIBUTE_VALUE_LIST = "TRANSLATION_ATTRIBUTE_VALUE_LIST",
-  GIFT_CARD_LIST = " GIFT_CARD_LIST",
+  GIFT_CARD_LIST = "GIFT_CARD_LIST",
 }
 
 export interface ListProps<TColumns extends string = string> {
@@ -123,13 +123,14 @@ export interface FilterProps<TKeys extends string> {
 }
 
 export interface FilterPresetsProps {
-  selectedFilterPreset: number;
+  selectedFilterPreset: number | undefined;
   filterPresets: string[];
   onFilterPresetsAll: () => void;
   onFilterPresetChange: (id: number) => void;
   onFilterPresetUpdate: (name: string) => void;
   onFilterPresetDelete: (id: number) => void;
   onFilterPresetPresetSave: () => void;
+  hasPresetsChanged: () => boolean;
 }
 
 export interface TabPageProps {

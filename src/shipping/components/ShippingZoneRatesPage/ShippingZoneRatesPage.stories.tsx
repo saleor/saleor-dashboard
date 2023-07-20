@@ -64,7 +64,7 @@ const props: ShippingZoneRatesPageProps = {
   toggleAll: () => undefined,
   toolbar: () => undefined,
   variant: ShippingMethodTypeEnum.PRICE,
-  formId: Symbol(),
+  formId: Symbol("shipping-zone-rates-details-form-id"),
   taxClasses,
   fetchMoreTaxClasses: undefined,
 };

@@ -314,6 +314,7 @@ export const filterPresetsProps: FilterPresetsProps = {
   onFilterPresetPresetSave: () => undefined,
   onFilterPresetUpdate: () => undefined,
   filterPresets: ["Tab X"],
+  hasPresetsChanged: () => false,
 };
 
 export const paginatorContextValues: PaginatorContextValues = {

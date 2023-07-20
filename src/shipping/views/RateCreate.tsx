@@ -30,7 +30,7 @@ import createDialogActionHandlers from "@dashboard/utils/handlers/dialogActionHa
 import React from "react";
 import { useIntl } from "react-intl";
 
-const FORM_ID = Symbol();
+const FORM_ID = Symbol("shipping-zone-rates-create-form-id");
 
 export interface RateCreateProps {
   id: string;

@@ -26,12 +26,12 @@ import {
 } from "@dashboard/utils/maps";
 import { defineMessages, IntlShape } from "react-intl";
 
-import { GiftCardListUrlQueryParams } from "../types";
 import {
   GiftCardListFilterKeys,
   GiftCardListFilterOpts,
   GiftCardListUrlFilters,
   GiftCardListUrlFiltersEnum,
+  GiftCardListUrlQueryParams,
   GiftCardStatusFilterEnum,
   SearchWithFetchMoreProps,
 } from "./types";
@@ -337,8 +337,7 @@ export function createFilterStructure(
   ];
 }
 
-export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
-  createFilterTabUtils<GiftCardListUrlFilters>(GIFT_CARD_FILTERS_KEY);
+export const storageUtils = createFilterTabUtils<string>(GIFT_CARD_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
   createFilterUtils<GiftCardListUrlQueryParams, GiftCardListUrlFilters>(
