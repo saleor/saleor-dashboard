@@ -3,8 +3,8 @@ import React from "react";
 
 import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
-import { useFilterContainer } from "./useFilterContainer";
 import { LeftOperand } from "./LeftOperandsProvider";
+import { useFilterContainer } from "./useFilterContainer";
 
 interface FiltersAreaProps {
   onConfirm: (value: FilterContainer) => void;

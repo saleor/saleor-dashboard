@@ -26,17 +26,13 @@ export const STATIC_CONDITIONS = {
   giftCard: [{ type: "select", label: "is", value: "input-1" }],
 };
 
+
 export const CONSTRAINTS = {
-  price: {
-    dependsOn: "channel",
+  channel: {
+    dependsOn: ["price", "isVisibleInListing"],
     removable: true,
     disabled: ["left", "condition"]
   },
-  isVisibleInListing: {
-    dependsOn: "channel",
-    removable: true,
-    disabled: ["left", "condition"]
-  }
 }
 
 export const STATIC_OPTIONS: LeftOperand[] = [

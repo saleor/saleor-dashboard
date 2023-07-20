@@ -93,12 +93,6 @@ export class FilterElement {
   public updateLeftOperator(leftOperand: LeftOperand) {
     this.value = ExpressionValue.fromLeftOperand(leftOperand);
     this.condition = Condition.emptyFromLeftOperand(leftOperand);
-
-    const newConstraint = Constraint.fromSlug(this.value.value)
-
-    if (newConstraint) {
-      this.constraint = newConstraint
-    }
   }
 
   public updateLeftLoadingState(loading: boolean) {
@@ -151,12 +145,25 @@ export class FilterElement {
     return null;
   }
 
+  public setConstraint (constraint: Constraint) {
+    this.constraint = constraint
+  }
+
+  public clearConstraint () {
+    this.constraint = undefined
+  }
+
+
   public asUrlEntry(): UrlEntry {
     if (this.isAttribute()) {
       return UrlEntry.forAttribute(this.condition.selected, this.value.value);
     }
 
     return UrlEntry.forStatic(this.condition.selected, this.value.value);
+  }
+
+  public static isCompatible(element: unknown): element is FilterElement {
+    return typeof element !== "string" && !Array.isArray(element)
   }
 
   public static fromValueEntry(valueEntry: any) {
