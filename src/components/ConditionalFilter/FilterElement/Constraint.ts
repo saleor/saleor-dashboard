@@ -40,22 +40,4 @@ export class Constraint {
       return this.dependsOn.includes(s.value.value)
     })
   }
-
-  public withDisabledScope (scope: [DisabledScope]) {
-    this.disabled = scope
-
-    return this
-  }
-
-  public cannotBeRemoved () {
-    this.removable = true
-
-    return this
-  }
-
-  public canBeRemoved () {
-    this.removable = false
-
-    return this
-  }
 }
