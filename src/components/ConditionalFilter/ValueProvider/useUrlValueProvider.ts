@@ -52,9 +52,17 @@ export const useUrlValueProvider = (
     setValue(filterValue);
   };
 
+  const clear = () => {
+    router.history.replace({
+      pathname: router.location.pathname,
+    });
+    setValue([]);
+  };
+
   return {
     value,
     loading,
     persist,
+    clear,
   };
 };
