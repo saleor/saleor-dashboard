@@ -5,9 +5,11 @@ import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
 import { LeftOperand } from "./LeftOperandsProvider";
 import { useFilterContainer } from "./useFilterContainer";
+import { ErrorEntry } from "./Validation";
 
 interface FiltersAreaProps {
   onConfirm: (value: FilterContainer) => void;
+  errors?: ErrorEntry[]
 }
 
 export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
@@ -15,6 +17,7 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
 
   const {
     value,
+    hasEemptyRows,
     addEmpty,
     removeAt,
     updateLeftOperator,
@@ -76,7 +79,7 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
             Clear
           </_ExperimentalFilters.ClearButton>
           <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)}>
-            Save
+            Save {hasEemptyRows && "DISABLED"}
           </_ExperimentalFilters.ConfirmButton>
         </Box>
       </_ExperimentalFilters.Footer>

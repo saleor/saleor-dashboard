@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 
 import { FilterContainer, FilterElement } from "./FilterElement";
+import { isFilterElement } from "./FilterElement/FilterElement";
 import { FilterValueProvider } from "./FilterValueProvider";
 
 type StateCallback = (el: FilterElement) => void;
 type Element = FilterContainer[number];
-
-
-const isFilterElement = (el: unknown): el is FilterElement => typeof el !== "string" && !Array.isArray(el)
 
 const removeConstraint = (container: FilterContainer) => {
   return container.map((el) => {

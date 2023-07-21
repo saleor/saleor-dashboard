@@ -16,6 +16,10 @@ class ExpressionValue {
     public type: string,
   ) {}
 
+  public isEmpty() {
+    return this.value.length === 0 || this.label.length === 0
+  }
+
   public static fromSlug (slug: string) {
     const option = STATIC_OPTIONS.find(o => o.slug === slug)
 
@@ -122,7 +126,7 @@ export class FilterElement {
   }
 
   public isEmpty() {
-    return this.value.type === "e";
+    return this.value.isEmpty() || this.condition.isEmpty()
   }
 
   public isStatic() {
@@ -204,6 +208,14 @@ export class FilterElement {
     }
     return FilterElement.createEmpty();
   }
+}
+
+export const isFilterElement = (el: unknown): el is FilterElement => typeof el !== "string" && !Array.isArray(el)
+
+export const hasEmptyRows = (container: FilterContainer) => {
+  return container
+    .filter(isFilterElement)
+    .some((e: FilterElement) => e.isEmpty())
 }
 
 export type FilterContainer = Array<string | FilterElement | FilterContainer>;

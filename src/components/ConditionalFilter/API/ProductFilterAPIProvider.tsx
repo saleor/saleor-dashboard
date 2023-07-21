@@ -105,7 +105,7 @@ const createAPIHandler = (
     return new ChannelHandler(client, inputValue);
   }
 
-  throw new Error("Unknown filter element");
+  throw new Error(`Unknown filter element: "${rowType}"`);
 };
 
 export const useProductFilterAPIProvider = (): FilterAPIProvider => {

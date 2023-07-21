@@ -1,16 +1,25 @@
 import { Box } from "@saleor/macaw-ui/next";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 
 import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
 import { FiltersArea } from "./FiltersArea";
 import { LoadingFiltersArea } from "./LoadingFiltersArea";
+import { ErrorEntry, Validator } from "./Validation";
 
 export const ConditionalFilters: FC = () => {
   const { valueProvider } = useConditionalFilterContext();
+  const [errors, setErrors] = useState<ErrorEntry[]>([])
 
   const handleConfirm = (value: FilterContainer) => {
-    valueProvider.persist(value);
+    const validator = new Validator(value)
+
+    if (validator.isValid()) {
+      valueProvider.persist(value);
+      return
+    }
+
+    setErrors(validator.getErrors())
   };
 
   return valueProvider.loading ? (
@@ -22,7 +31,7 @@ export const ConditionalFilters: FC = () => {
       borderBottomLeftRadius={2}
       borderBottomRightRadius={2}
     >
-      <FiltersArea onConfirm={handleConfirm} />
+      <FiltersArea onConfirm={handleConfirm} errors={errors} />
     </Box>
   );
 };
