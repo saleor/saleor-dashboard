@@ -106,9 +106,11 @@ const createAttributeQueryPart = (
   return value;
 };
 
+type ProductQueryVars = ProductWhereInput & { channel?: { eq: string } };
+
 export const createProductQueryVariables = (
   value: FilterContainer,
-): ProductWhereInput & { channel?: { eq: string } } => {
+): ProductQueryVars => {
   return value.reduce(
     (p, c) => {
       if (typeof c === "string" || Array.isArray(c)) return p;
