@@ -1,7 +1,7 @@
 import { createAppsDebug } from "@dashboard/apps/apps-debug";
 import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostToExtension";
 import { useExternalApp } from "@dashboard/apps/components/ExternalAppContext/ExternalAppContext";
-import { AppPaths, AppUrls } from "@dashboard/apps/urls";
+import { AppUrls } from "@dashboard/apps/urls";
 import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";

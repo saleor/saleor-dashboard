@@ -8,8 +8,10 @@ import {
 } from "@dashboard/graphql";
 import { Box, BoxProps, Button, Text, TextProps } from "@saleor/macaw-ui/next";
 import React, { useEffect } from "react";
+import { useIntl } from "react-intl";
 import { useLocation, useParams } from "react-router";
 
+import { appPermissionsRequestViewMessages } from "./messages";
 import { usePermissionsRequestRedirects } from "./usePermissionsRequestRedirects";
 
 const SmallText = (props: TextProps) => <Text size="small" {...props} />;
@@ -51,6 +53,7 @@ function usePageQuery() {
 export const AppPermissionRequestView = () => {
   const params = useParams<{ id: string }>();
   const { redirectPath, requestedPermissions } = usePageQuery();
+  const { formatMessage } = useIntl();
 
   const appId = params.id;
 
@@ -102,18 +105,22 @@ export const AppPermissionRequestView = () => {
   return (
     <Box padding={12}>
       <SmallText as="h1" variant="hero" textAlign="center">
-        Authorize {data.app.name}
+        {formatMessage(appPermissionsRequestViewMessages.headerAuthorize)}{" "}
+        {data.app.name}
       </SmallText>
-      <WrapperBox      >
+      <WrapperBox>
         <Box display="flex" gap={4}>
           <Box as="img" __width={"50px"} src={data.app.brand.logo.default} />
           <Box>
             <Text>
-              <Text variant="bodyStrong">{data.app.name}</Text> by{" "}
+              <Text variant="bodyStrong">{data.app.name}</Text>{" "}
+              {formatMessage(appPermissionsRequestViewMessages.by)}{" "}
               {data.app.author}
             </Text>
             <Text as="p" color="textNeutralSubdued">
-              requests access to new permissions.
+              {formatMessage(
+                appPermissionsRequestViewMessages.requestsNewPermissions,
+              )}
             </Text>
           </Box>
         </Box>
@@ -147,35 +154,42 @@ export const AppPermissionRequestView = () => {
           borderColor="neutralHighlight"
         >
           <SmallHeading marginBottom={2}>
-            What happens if I approve?
+            {formatMessage(
+              appPermissionsRequestViewMessages.approveScenarioHelperHeader,
+            )}
           </SmallHeading>
           <SmallText>
-            The app <SmallText variant="bodyStrong">{data.app.name}</SmallText>{" "}
-            will have access to new permissions. From now on it will be able to
-            use them to perform operations these permissions allow. You should
-            ensure you trust the app before you approve. Read more about
-            permissions in{" "}
+            {formatMessage(
+              appPermissionsRequestViewMessages.approveScenarioHelperBody,
+            )}
+          </SmallText>
+          <SmallText as="p">
             <Link
               target="__blank"
               href="https://docs.saleor.io/docs/3.x/developer/permissions#app-permissions"
             >
-              our docs
+              {formatMessage(
+                appPermissionsRequestViewMessages.permissionsDocsLink,
+              )}
             </Link>
           </SmallText>
           <SmallHeading marginBottom={2} marginTop={4}>
-            What happens if I deny?
+            {formatMessage(
+              appPermissionsRequestViewMessages.denyScenarioHelperHeader,
+            )}
           </SmallHeading>
           <SmallText>
-            Nothing will change in terms of permissions. The Dashboard will
-            redirect to the app and inform it that you denied the request.
+            {formatMessage(
+              appPermissionsRequestViewMessages.denyScenarioHelperBody,
+            )}
           </SmallText>
         </Box>
         <Box display="flex" justifyContent="flex-end" gap={4} marginTop={12}>
           <Button disabled={loading} onClick={onDeny} variant="secondary">
-            Deny
+            {formatMessage(appPermissionsRequestViewMessages.denyButton)}
           </Button>
           <Button disabled={loading} onClick={onApprove}>
-            Approve
+            {formatMessage(appPermissionsRequestViewMessages.approveButton)}
           </Button>
         </Box>
       </WrapperBox>
