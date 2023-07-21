@@ -193,7 +193,7 @@ jobs:
             --name "Deployment tests" \
             --source frontend-e2e-tests > testmo-run-id.txt
           ID=$(cat testmo-run-id.txt)
-          echo "TESTMO_RUN_ID=$ID" >> $GITHUB_OUTPUT
+          echo "TESTMO_RUN_ID=$ID" >> $GITHUB_ENV
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
@@ -279,7 +279,7 @@ jobs:
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
-          TESTMO_RUN_ID: ${{needs.testmo-report-preparation.outputs.testmo-run-id}}
+          TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
   test-complete:
     needs: [testmo-report-preparation, cypress-run-selected]
     if: always()
@@ -301,4 +301,4 @@ jobs:
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
-          TESTMO_RUN_ID: ${{needs.testmo-report-preparation.outputs.testmo-run-id}}
+          TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
