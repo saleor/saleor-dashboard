@@ -41,8 +41,10 @@ export const useUrlValueProvider = (
   }, []);
 
   useEffect(() => {
+    if (loading) return
+
     setValue(tokenizedUrl.asFilterValuesFromResponse(data));
-  }, [data]);
+  }, [data, loading]);
 
   const persist = (filterValue: FilterContainer) => {
     router.history.replace({

@@ -56,7 +56,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     if (!valueProvider.loading) {
       setValue(valueProvider.value);
     }
-  }, [valueProvider.loading]);
+  }, [valueProvider.loading, valueProvider.value]);
 
   const isFilterElementAtIndex = (
     elIndex: number,
