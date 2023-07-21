@@ -287,7 +287,7 @@ describe("AppActionsHandler", function () {
 
       expect(mockNavigate).toHaveBeenCalledTimes(1);
       expect(mockNavigate).toHaveBeenCalledWith(
-        "/apps/XYZ/permissions?redirectPath=%2Fpermissions-result&requestedPermissions%5B0%5D=MANAGE_ORDERS&requestedPermissions%5B1%5D=MANAGE_CHANNELS",
+        "/apps/XYZ/permissions?redirectPath=%2Fpermissions-result&requestedPermissions=MANAGE_ORDERS%2CMANAGE_CHANNELS"
       );
     });
   });

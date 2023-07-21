@@ -25,7 +25,7 @@ export const usePermissionsRequestRedirects = ({
   const navigateToAppDenied = () => {
     navigate(
       AppPaths.resolveAppPath(encodeURIComponent(appId)) +
-        `?appPath=${redirectPath}&error=${errors.USER_DENIED_PERMISSIONS}}`,
+        `?appPath=${redirectPath}&error=${errors.USER_DENIED_PERMISSIONS}`,
     );
   };
 
