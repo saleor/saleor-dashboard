@@ -37,11 +37,14 @@ function usePageQuery() {
 
   return React.useMemo(() => {
     const params = new URLSearchParams(search);
+    const permissionsParams = params.get("requestedPermissions");
 
-    const requestedPermissions = params
-      .get("requestedPermissions")
-      .split(",") as PermissionEnum[];
+    const requestedPermissions = permissionsParams
+      ? (permissionsParams.split(",") as PermissionEnum[])
+      : [];
     const redirectPath = params.get("redirectPath");
+
+    if (!redirectPath) throw new Error("Redirect path is required");
 
     return {
       requestedPermissions,
@@ -73,10 +76,10 @@ export const AppPermissionRequestView = () => {
   const { mapCodesToNames, isReady } = useGetAvailableAppPermissions();
 
   useEffect(() => {
-    if (!data || !isReady) return;
+    if (!data || !data.app || !isReady) return;
 
     const diff = getPermissionsDiff(
-      data.app.permissions.map(p => p.code),
+      (data.app.permissions ?? []).map(p => p.code),
       requestedPermissions,
     );
 
@@ -86,14 +89,14 @@ export const AppPermissionRequestView = () => {
     if (diff.added.length === 0) navigateToAppApproved();
   }, [data, requestedPermissions]);
 
-  if (!data || !isReady) return null;
+  if (!data || !isReady || !data.app) return null;
 
   const onApprove = () => {
     updatePermissions({
       variables: {
         id: appId,
         permissions: [
-          ...data.app.permissions.map(p => p.code),
+          ...(data.app?.permissions ?? []).map(p => p.code),
           ...requestedPermissions,
         ],
       },
@@ -110,7 +113,9 @@ export const AppPermissionRequestView = () => {
       </SmallText>
       <WrapperBox>
         <Box display="flex" gap={4}>
-          <Box as="img" __width={"50px"} src={data.app.brand.logo.default} />
+          {data.app.brand?.logo.default && (
+            <Box as="img" __width={"50px"} src={data.app.brand.logo.default} />
+          )}
           <Box>
             <Text>
               <Text variant="bodyStrong">{data.app.name}</Text>{" "}
@@ -132,7 +137,7 @@ export const AppPermissionRequestView = () => {
             paddingRight={6}
           >
             <SmallHeading marginBottom={2}>Current permissions</SmallHeading>
-            {data.app.permissions.map(permission => (
+            {(data.app.permissions ?? []).map(permission => (
               <Text as="p" key={permission.code}>
                 {permission.name}
               </Text>

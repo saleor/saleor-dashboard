@@ -218,6 +218,18 @@ const useHandlePermissionRequest = (appId: string) => {
 
       debug("Received RequestPermissions action");
 
+      if (permissions.length === 0) {
+        debug("Empty permissions array, skipping");
+
+        return createResponseStatus(actionId, false);
+      }
+
+      if (!redirectPath || redirectPath.length === 0) {
+        debug("Invalid path, skipping");
+
+        return createResponseStatus(actionId, false);
+      }
+
       navigate(
         AppUrls.resolveRequestPermissionsUrl(appId, {
           redirectPath,
