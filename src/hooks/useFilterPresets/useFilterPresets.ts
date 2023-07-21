@@ -18,7 +18,7 @@ export interface UseFilterPresets {
   onPresetDelete: () => void;
   onPresetSave: (data: SaveFilterTabDialogFormData) => void;
   onPresetUpdate: (tabName: string) => void;
-  hasPresetsChange: () => boolean;
+  hasPresetsChanged: () => boolean;
 }
 
 export const useFilterPresets = <

@@ -25,7 +25,7 @@ const GiftCardsListHeader: React.FC = () => {
   } = useGiftCardListDialogs();
 
   const {
-    hasPresetsChange,
+    hasPresetsChanged,
     selectedPreset,
     presets,
     onPresetUpdate,
@@ -57,7 +57,7 @@ const GiftCardsListHeader: React.FC = () => {
             </Box>
 
             <FilterPresetsSelect
-              presetsChanged={hasPresetsChange()}
+              presetsChanged={hasPresetsChanged()}
               onSelect={onPresetChange}
               onRemove={(id: number) => {
                 setPresetIdToDelete(id);
