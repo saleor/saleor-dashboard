@@ -17,7 +17,7 @@ export const STATIC_CONDITIONS = {
   channel: [{ type: "select", label: "is", value: "input-5" }],
   productType: [
     { type: "combobox", label: "is", value: "input-1" },
-    { type: "multiselect", label: "in", value: "input-2" }
+    { type: "multiselect", label: "in", value: "input-2" },
   ],
   isAvailable: [{ type: "select", label: "is", value: "input-1" }],
   isPublished: [{ type: "select", label: "is", value: "input-1" }],
@@ -26,14 +26,13 @@ export const STATIC_CONDITIONS = {
   giftCard: [{ type: "select", label: "is", value: "input-1" }],
 };
 
-
 export const CONSTRAINTS = {
   channel: {
-    dependsOn: ["price", "isVisibleInListing"],
-    removable: true,
-    disabled: ["left", "condition"]
+    dependsOn: ["price", "isVisibleInListing", "isAvailable", "isPublished"],
+    removable: false,
+    disabled: ["left", "condition"],
   },
-}
+};
 
 export const STATIC_OPTIONS: LeftOperand[] = [
   { value: "price", label: "Price", type: "price", slug: "price" },
@@ -45,12 +44,42 @@ export const STATIC_OPTIONS: LeftOperand[] = [
     slug: "collection",
   },
   { value: "channel", label: "Channel", type: "channel", slug: "channel" },
-  { value: "productType", label: "Product Type", type: "productType", slug: "productType" },
-  { value: "isAvailable", label: "Is available", type: "isAvailable", slug: "isAvailable" },
-  { value: "isPublished", label: "Is published", type: "isPublished", slug: "isPublished" },
-  { value: "isVisibleInListing", label: "Visible in listing", type: "isVisibleInListing", slug: "isVisibleInListing" },
-  { value: "hasCategory", label: "Has category", type: "hasCategory", slug: "hasCategory" },
-  { value: "giftCard", label: "Has giftcard", type: "giftCard", slug: "giftCard" },
+  {
+    value: "productType",
+    label: "Product Type",
+    type: "productType",
+    slug: "productType",
+  },
+  {
+    value: "isAvailable",
+    label: "Is available",
+    type: "isAvailable",
+    slug: "isAvailable",
+  },
+  {
+    value: "isPublished",
+    label: "Is published",
+    type: "isPublished",
+    slug: "isPublished",
+  },
+  {
+    value: "isVisibleInListing",
+    label: "Visible in listing",
+    type: "isVisibleInListing",
+    slug: "isVisibleInListing",
+  },
+  {
+    value: "hasCategory",
+    label: "Has category",
+    type: "hasCategory",
+    slug: "hasCategory",
+  },
+  {
+    value: "giftCard",
+    label: "Has giftcard",
+    type: "giftCard",
+    slug: "giftCard",
+  },
 ];
 
 export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
@@ -69,38 +98,42 @@ export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
 };
 
 export const getAtributeInputType = (item: ConditionItem | null) => {
-  const result = Object.entries(ATTRIBUTE_INPUT_TYPE_CONDITIONS)
-    .find(([_, value]) =>
-      value.find(entry => entry.type === item?.type && entry.label === item.label)
-    )
+  const result = Object.entries(ATTRIBUTE_INPUT_TYPE_CONDITIONS).find(
+    ([_, value]) =>
+      value.find(
+        entry => entry.type === item?.type && entry.label === item.label,
+      ),
+  );
 
-  return result && result[0] 
-}
+  return result && result[0];
+};
 
-
-export type RowType = keyof typeof STATIC_CONDITIONS | "attribute"
+export type RowType = keyof typeof STATIC_CONDITIONS | "attribute";
 
 export const booleanOptionTrue = (type?: string) => ({
   label: "Yes",
   value: "true",
   slug: "true",
-  ...({ type })
-})
+  ...{ type },
+});
 
-export const booleanOptionFalse =  (type?: string) => ({
+export const booleanOptionFalse = (type?: string) => ({
   label: "No",
   value: "false",
   slug: "false",
-  ...({ type })
-})
+  ...{ type },
+});
 
 export const createBooleanOptions = (type?: string): ItemOption[] => [
   booleanOptionTrue(type),
-  booleanOptionFalse(type)
-]
+  booleanOptionFalse(type),
+];
 
-export const createBoleanOption = (flag: boolean, type?: string): ItemOption => {
-  if (flag) return booleanOptionTrue(type)
+export const createBoleanOption = (
+  flag: boolean,
+  type?: string,
+): ItemOption => {
+  if (flag) return booleanOptionTrue(type);
 
-  return booleanOptionFalse(type)
-}
+  return booleanOptionFalse(type);
+};

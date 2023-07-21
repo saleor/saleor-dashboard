@@ -41,6 +41,7 @@ import {
   FilterElementRegular,
 } from "../../../components/Filter";
 import {
+  GteLte,
   createFilterTabUtils,
   createFilterUtils,
   dedupeFilter,
@@ -50,7 +51,6 @@ import {
   getMultipleValueQueryParam,
   getSingleEnumValueQueryParam,
   getSingleValueQueryParam,
-  GteLte,
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
@@ -61,6 +61,7 @@ import {
   ProductListUrlQueryParams,
 } from "../../urls";
 import { getProductGiftCardFilterParam } from "./utils";
+
 export const PRODUCT_FILTERS_KEY = "productPresets";
 
 function getAttributeFilterParamType(inputType: AttributeInputTypeEnum) {
@@ -496,16 +497,27 @@ export const getFilterVariables = ({
   filterContainer,
   queryParams,
   isChannelSelected,
+  channelSlug,
 }: {
   isProductListingPageFiltersFlagEnabled: boolean;
   filterContainer: FilterContainer;
   queryParams: ProductListUrlFilters;
   isChannelSelected: boolean;
+  channelSlug: string | undefined;
 }) => {
   if (isProductListingPageFiltersFlagEnabled) {
     const queryVars = createProductQueryVariables(filterContainer);
-    return { where: queryVars, search: queryParams.query };
+    const { channel, ...where } = queryVars;
+
+    return {
+      where,
+      search: queryParams.query,
+      channel: channel?.eq,
+    };
   }
 
-  return { filter: getLegacyFilterVariables(queryParams, isChannelSelected) };
+  return {
+    filter: getLegacyFilterVariables(queryParams, isChannelSelected),
+    channel: channelSlug,
+  };
 };

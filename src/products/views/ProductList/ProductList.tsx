@@ -290,6 +290,7 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
     filterContainer: valueProvider.value,
     queryParams: params,
     isChannelSelected: !!selectedChannel,
+    channelSlug: selectedChannel?.slug,
   });
 
   const sort = getSortQueryVariables(params, !!selectedChannel);
@@ -300,7 +301,6 @@ export const ProductList: React.FC<ProductListProps> = ({ params }) => {
       ...paginationState,
       ...filterVariables,
       sort,
-      channel: selectedChannel?.slug,
     }),
     [params, settings.rowNumber, valueProvider.value],
   );
