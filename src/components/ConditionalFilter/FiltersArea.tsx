@@ -3,6 +3,7 @@ import React from "react";
 
 import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
+import { LeftOperand } from "./LeftOperandsProvider";
 import { useFilterContainer } from "./useFilterContainer";
 
 interface FiltersAreaProps {
@@ -35,7 +36,7 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
     }
 
     if (event.type === "leftOperator.onChange") {
-      updateLeftOperator(event.path, event.value);
+      updateLeftOperator(event.path, event.value as LeftOperand);
     }
 
     if (event.type === "condition.onChange") {
@@ -60,22 +61,25 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
   };
 
   return (
-    <Box>
-      <_ExperimentalFilters
-        leftOptions={leftOperandsProvider.operands}
-        // @ts-expect-error
-        value={value}
-        onChange={handleStateChange}
-      >
-        <_ExperimentalFilters.Footer>
-          <_ExperimentalFilters.AddRowButton>
-            Add new row
-          </_ExperimentalFilters.AddRowButton>
+    <_ExperimentalFilters
+      leftOptions={leftOperandsProvider.operands}
+      // @ts-expect-error
+      value={value}
+      onChange={handleStateChange}
+    >
+      <_ExperimentalFilters.Footer>
+        <_ExperimentalFilters.AddRowButton>
+          + Add row
+        </_ExperimentalFilters.AddRowButton>
+        <Box display="flex" gap={3}>
+          <_ExperimentalFilters.ClearButton>
+            Clear
+          </_ExperimentalFilters.ClearButton>
           <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)}>
-            Confirm
+            Save
           </_ExperimentalFilters.ConfirmButton>
-        </_ExperimentalFilters.Footer>
-      </_ExperimentalFilters>
-    </Box>
+        </Box>
+      </_ExperimentalFilters.Footer>
+    </_ExperimentalFilters>
   );
 };

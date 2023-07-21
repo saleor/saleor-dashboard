@@ -1,4 +1,5 @@
 import { ApolloClient, useApolloClient } from "@apollo/client";
+import { AttributeInputTypeEnum } from "@dashboard/graphql";
 
 import { RowType } from "../constants";
 import { FilterContainer, FilterElement } from "../FilterElement";
@@ -45,6 +46,23 @@ const createAPIHandler = (
   inputValue: string,
 ): Handler => {
   const rowType = selectedRow.rowType()
+
+  if (rowType === "attribute" && selectedRow.value.type === "BOOLEAN") {
+    return new BooleanValuesHandler([
+      {
+        label: "Yes",
+        value: "true",
+        type: AttributeInputTypeEnum.BOOLEAN,
+        slug: "true"
+      },
+      {
+        label: "No",
+        value: "false",
+        type: AttributeInputTypeEnum.BOOLEAN,
+        slug: "false"
+      }
+    ])
+  }
 
   if (rowType === "attribute") {
     return new AttributeChoicesHandler(

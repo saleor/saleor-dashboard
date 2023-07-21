@@ -12,7 +12,7 @@ export const ConditionalProductFilterProvider: FC = ({ children }) => {
   const initialState = useProductInitialAPIState();
   const valueProvider = useUrlValueProvider(initialState);
   const leftOperandsProvider = useFilterLeftOperandsProvider();
-  const containerState = useContainerState(valueProvider.value);
+  const containerState = useContainerState(valueProvider);
 
   return (
     <ConditionalFilterContext.Provider

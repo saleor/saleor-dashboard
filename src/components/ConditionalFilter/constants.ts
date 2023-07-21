@@ -1,3 +1,4 @@
+import { ConditionItem } from "./FilterElement/ConditionOptions";
 import { ItemOption } from "./FilterElement/ConditionValue";
 import { LeftOperand } from "./LeftOperandsProvider";
 
@@ -24,6 +25,15 @@ export const STATIC_CONDITIONS = {
   hasCategory: [{ type: "select", label: "is", value: "input-1" }],
   giftCard: [{ type: "select", label: "is", value: "input-1" }],
 };
+
+
+export const CONSTRAINTS = {
+  channel: {
+    dependsOn: ["price", "isVisibleInListing"],
+    removable: true,
+    disabled: ["left", "condition"]
+  },
+}
 
 export const STATIC_OPTIONS: LeftOperand[] = [
   { value: "price", label: "Price", type: "price", slug: "price" },
@@ -58,18 +68,39 @@ export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
   SWATCH: [{ type: "multiselect", label: "in", value: "input-2" }],
 };
 
+export const getAtributeInputType = (item: ConditionItem | null) => {
+  const result = Object.entries(ATTRIBUTE_INPUT_TYPE_CONDITIONS)
+    .find(([_, value]) =>
+      value.find(entry => entry.type === item?.type && entry.label === item.label)
+    )
+
+  return result && result[0] 
+}
+
 
 export type RowType = keyof typeof STATIC_CONDITIONS | "attribute"
 
-export const createBooleanOptions = (): ItemOption[] => [
-  {
-    label: "Yes",
-    value: "true",
-    slug: "true"
-  },
-  {
-    label: "No",
-    value: "false",
-    slug: "false"
-  }
+export const booleanOptionTrue = (type?: string) => ({
+  label: "Yes",
+  value: "true",
+  slug: "true",
+  ...({ type })
+})
+
+export const booleanOptionFalse =  (type?: string) => ({
+  label: "No",
+  value: "false",
+  slug: "false",
+  ...({ type })
+})
+
+export const createBooleanOptions = (type?: string): ItemOption[] => [
+  booleanOptionTrue(type),
+  booleanOptionFalse(type)
 ]
+
+export const createBoleanOption = (flag: boolean, type?: string): ItemOption => {
+  if (flag) return booleanOptionTrue(type)
+
+  return booleanOptionFalse(type)
+}
