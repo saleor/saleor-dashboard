@@ -1,54 +1,91 @@
+import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
 import { AppPaths } from "@dashboard/apps/urls";
+import Link from "@dashboard/components/Link";
 import {
   PermissionEnum,
   useAppQuery,
   useAppUpdatePermissionsMutation,
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
-import { Box, Button, Text } from "@saleor/macaw-ui/next";
+import { Box, Button, Text, TextProps } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useLocation, useParams } from "react-router";
-import Link from "@dashboard/components/Link";
 
-function useQuery() {
+const SmallText = (props: TextProps) => <Text size="small" {...props} />;
+const SmallHeading = (props: TextProps) => (
+  <SmallText as="h2" variant="heading" {...props} />
+);
+
+function usePageQuery() {
   const { search } = useLocation();
 
   return React.useMemo(() => {
     const params = new URLSearchParams(search);
 
-    return Object.fromEntries(params) as Record<string, string>;
+    const requestedPermissions = params
+      .get("permissions")
+      .split(",") as PermissionEnum[];
+    const redirectPath = params.get("redirectPath");
+
+    return {
+      requestedPermissions,
+      redirectPath,
+    };
   }, [search]);
 }
 
 export const AppPermissionRequestView = () => {
-  const params = useParams();
-  const query = useQuery();
+  const params = useParams<{ id: string }>();
+  const { redirectPath, requestedPermissions } = usePageQuery();
+
+  const appId = params.id;
+
   const { data } = useAppQuery({
     variables: {
-      id: params.id,
+      id: appId,
     },
   });
-  const [updatePermissions, mutationData] = useAppUpdatePermissionsMutation();
+  const [updatePermissions, { loading }] = useAppUpdatePermissionsMutation();
 
   const navigate = useNavigator();
 
-  const requestedPermissions = query?.permissions?.split(
-    ",",
-  ) as PermissionEnum[];
+  const { mapCodesToNames, isReady } = useGetAvailableAppPermissions();
 
-  console.log(params);
-  console.log(query);
-  console.log(requestedPermissions);
-  console.log(data);
-  console.log(mutationData);
+  if (!data || !isReady) return null;
 
-  if (!data) return null;
+  const navigateToAppApproved = () => {
+    navigate(
+      AppPaths.resolveAppPath(encodeURIComponent(appId)) +
+        `?appPath=${redirectPath}`,
+    );
+  };
+
+  const navigateToAppDenied = () => {
+    navigate(
+      AppPaths.resolveAppPath(encodeURIComponent(appId)) +
+        `?appPath=${redirectPath}&error=USER_DENIED_PERMISSIONS`,
+    );
+  };
+
+  const onApprove = () => {
+    updatePermissions({
+      variables: {
+        id: appId,
+        permissions: [
+          ...data.app.permissions.map(p => p.code),
+          ...requestedPermissions,
+        ],
+      },
+    }).then(navigateToAppApproved);
+  };
+
+  const onDeny = () => navigateToAppDenied();
 
   return (
     <Box padding={12}>
-      <Text as="h1" variant="hero" size="small" textAlign="center">
+      <SmallText as="h1" variant="hero" textAlign="center">
         Authorize {data.app.name}
-      </Text>
+      </SmallText>
       <Box
         marginX="auto"
         marginY={12}
@@ -71,22 +108,40 @@ export const AppPermissionRequestView = () => {
             </Text>
           </Box>
         </Box>
-        <Box marginY={8}>
-          {requestedPermissions.map(p => (
-            <Text as="p" key={p}>
-              {p}
-            </Text>
-          ))}
+        <Box marginY={8} display="grid" gridTemplateColumns={2} gap={6}>
+          <Box
+            borderRightStyle="solid"
+            borderWidth={1}
+            borderColor="neutralHighlight"
+            paddingRight={6}
+          >
+            <SmallHeading marginBottom={2}>Current permissions</SmallHeading>
+            {data.app.permissions.map(permission => (
+              <Text as="p" key={permission.code}>
+                {permission.name}
+              </Text>
+            ))}
+          </Box>
+          <Box>
+            <SmallHeading marginBottom={2}>Requested permissions</SmallHeading>
+            {mapCodesToNames(requestedPermissions).map(permissionName => (
+              <Text as="p" key={permissionName}>
+                {permissionName}
+              </Text>
+            ))}
+          </Box>
         </Box>
-        <Box borderTopStyle="solid" paddingTop={8} borderWidth={1} borderColor="neutralHighlight">
-          <Text size="small" as="h2" variant="heading" marginBottom={2}>
+        <Box
+          borderTopStyle="solid"
+          paddingTop={8}
+          borderWidth={1}
+          borderColor="neutralHighlight"
+        >
+          <SmallHeading marginBottom={2}>
             What happens if I approve?
-          </Text>
-          <Text size="small">
-            The app{" "}
-            <Text size="small" variant="bodyStrong">
-              {data.app.name}
-            </Text>{" "}
+          </SmallHeading>
+          <SmallText>
+            The app <SmallText variant="bodyStrong">{data.app.name}</SmallText>{" "}
             will have access to new permissions. From now on it will be able to
             use them to perform operations these permissions allow. You should
             ensure you trust the app before you approve. Read more about
@@ -97,41 +152,20 @@ export const AppPermissionRequestView = () => {
             >
               our docs
             </Link>
-          </Text>
-          <Text
-            size="small"
-            as="h2"
-            variant="heading"
-            marginBottom={2}
-            marginTop={4}
-          >
+          </SmallText>
+          <SmallHeading marginBottom={2} marginTop={4}>
             What happens if I deny?
-          </Text>
-          <Text size="small">
+          </SmallHeading>
+          <SmallText>
             Nothing will change in terms of permissions. The Dashboard will
             redirect to the app and inform it that you denied the request.
-          </Text>
+          </SmallText>
         </Box>
         <Box display="flex" justifyContent="flex-end" gap={4} marginTop={12}>
-          <Button variant="secondary">Deny</Button>
-          <Button
-            onClick={() => {
-              updatePermissions({
-                variables: {
-                  id: params.id,
-                  permissions: [
-                    ...data.app.permissions.map(p => p.code),
-                    ...requestedPermissions,
-                  ],
-                },
-              }).then(() => {
-                navigate(
-                  AppPaths.resolveAppPath(encodeURIComponent(params.id)) +
-                    `?appPath=${query.redirectPath}`,
-                );
-              });
-            }}
-          >
+          <Button disabled={loading} onClick={onDeny} variant="secondary">
+            Deny
+          </Button>
+          <Button disabled={loading} onClick={onApprove}>
             Approve
           </Button>
         </Box>
