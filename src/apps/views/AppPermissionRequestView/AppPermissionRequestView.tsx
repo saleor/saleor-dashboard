@@ -1,20 +1,33 @@
 import { getPermissionsDiff } from "@dashboard/apps/getPermissionsDiff";
 import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
-import { AppPaths } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
 import {
   PermissionEnum,
   useAppQuery,
   useAppUpdatePermissionsMutation,
 } from "@dashboard/graphql";
-import useNavigator from "@dashboard/hooks/useNavigator";
-import { Box, Button, Text, TextProps } from "@saleor/macaw-ui/next";
+import { Box, BoxProps, Button, Text, TextProps } from "@saleor/macaw-ui/next";
 import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router";
+
+import { usePermissionsRequestRedirects } from "./usePermissionsRequestRedirects";
 
 const SmallText = (props: TextProps) => <Text size="small" {...props} />;
 const SmallHeading = (props: TextProps) => (
   <SmallText as="h2" variant="heading" {...props} />
+);
+const WrapperBox = (props: BoxProps) => (
+  <Box
+    marginX="auto"
+    marginY={12}
+    borderColor="neutralHighlight"
+    borderWidth={1}
+    borderStyle="solid"
+    padding={8}
+    __maxWidth={"600px"}
+    borderRadius={4}
+    {...props}
+  />
 );
 
 function usePageQuery() {
@@ -24,7 +37,7 @@ function usePageQuery() {
     const params = new URLSearchParams(search);
 
     const requestedPermissions = params
-      .get("permissions")
+      .get("requestedPermissions")
       .split(",") as PermissionEnum[];
     const redirectPath = params.get("redirectPath");
 
@@ -48,7 +61,11 @@ export const AppPermissionRequestView = () => {
   });
   const [updatePermissions, { loading }] = useAppUpdatePermissionsMutation();
 
-  const navigate = useNavigator();
+  const { navigateToAppApproved, navigateToAppDenied } =
+    usePermissionsRequestRedirects({
+      appId,
+      redirectPath,
+    });
 
   const { mapCodesToNames, isReady } = useGetAvailableAppPermissions();
 
@@ -67,20 +84,6 @@ export const AppPermissionRequestView = () => {
   }, [data, requestedPermissions]);
 
   if (!data || !isReady) return null;
-
-  const navigateToAppApproved = () => {
-    navigate(
-      AppPaths.resolveAppPath(encodeURIComponent(appId)) +
-        `?appPath=${redirectPath}`,
-    );
-  };
-
-  const navigateToAppDenied = () => {
-    navigate(
-      AppPaths.resolveAppPath(encodeURIComponent(appId)) +
-        `?appPath=${redirectPath}&error=USER_DENIED_PERMISSIONS`,
-    );
-  };
 
   const onApprove = () => {
     updatePermissions({
@@ -101,16 +104,7 @@ export const AppPermissionRequestView = () => {
       <SmallText as="h1" variant="hero" textAlign="center">
         Authorize {data.app.name}
       </SmallText>
-      <Box
-        marginX="auto"
-        marginY={12}
-        borderColor="neutralHighlight"
-        borderWidth={1}
-        borderStyle="solid"
-        padding={8}
-        __maxWidth={"600px"}
-        borderRadius={4}
-      >
+      <WrapperBox      >
         <Box display="flex" gap={4}>
           <Box as="img" __width={"50px"} src={data.app.brand.logo.default} />
           <Box>
@@ -184,7 +178,7 @@ export const AppPermissionRequestView = () => {
             Approve
           </Button>
         </Box>
-      </Box>
+      </WrapperBox>
     </Box>
   );
 };

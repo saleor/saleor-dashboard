@@ -1,7 +1,7 @@
 import { createAppsDebug } from "@dashboard/apps/apps-debug";
 import { usePostToExtension } from "@dashboard/apps/components/AppFrame/usePostToExtension";
 import { useExternalApp } from "@dashboard/apps/components/ExternalAppContext/ExternalAppContext";
-import { AppUrls } from "@dashboard/apps/urls";
+import { AppPaths, AppUrls } from "@dashboard/apps/urls";
 import { getAppMountUri } from "@dashboard/config";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import useNotifier from "@dashboard/hooks/useNotifier";
@@ -11,8 +11,8 @@ import {
   NotificationAction,
   NotifyReady,
   RedirectAction,
-  UpdateRouting,
   RequestPermissions,
+  UpdateRouting,
 } from "@saleor/app-sdk/app-bridge";
 import { useIntl } from "react-intl";
 import urlJoin from "url-join";
@@ -216,16 +216,14 @@ const useHandlePermissionRequest = (appId: string) => {
     handle: (action: RequestPermissions) => {
       const { actionId, permissions, redirectPath } = action.payload;
 
-      console.log(permissions); // todo debug
-      console.log(redirectPath); // todo debug
+      debug("Received RequestPermissions action");
 
-      const qs = new URLSearchParams({
-        permissions: permissions.join(","),
-        redirectPath,
-      });
-
-      // todo: extract to urls helpers
-      navigate("/apps/" + appId + "/permissions" + "?" + qs.toString());
+      navigate(
+        AppUrls.resolveRequestPermissionsUrl(appId, {
+          redirectPath,
+          requestedPermissions: permissions,
+        }),
+      );
 
       return createResponseStatus(actionId, true);
     },

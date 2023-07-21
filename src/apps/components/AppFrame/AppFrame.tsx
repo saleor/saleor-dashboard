@@ -3,7 +3,7 @@ import { useAppDashboardUpdates } from "@dashboard/apps/components/AppFrame/useA
 import { useUpdateAppToken } from "@dashboard/apps/components/AppFrame/useUpdateAppToken";
 import { AppDetailsUrlQueryParams } from "@dashboard/apps/urls";
 import { useAllFlags } from "@dashboard/featureFlags";
-import { CircularProgress, Modal } from "@material-ui/core";
+import { CircularProgress } from "@material-ui/core";
 import { DashboardEventFactory } from "@saleor/app-sdk/app-bridge";
 import clsx from "clsx";
 import React, { useCallback } from "react";

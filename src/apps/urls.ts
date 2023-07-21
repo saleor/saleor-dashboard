@@ -47,7 +47,8 @@ export const AppPaths = {
   resolveAppDeepPath: (id: string, subPath: string) =>
     urlJoin(AppPaths.resolveAppPath(id), subPath),
   appInstallPath: urlJoin(AppSections.appsSection, "install"),
-  resolveRequestPermissionsPath: (id: string) => urlJoin(AppSections.appsSection, id, 'permissions'),
+  resolveRequestPermissionsPath: (id: string) =>
+    urlJoin(AppSections.appsSection, id, "permissions"),
 };
 
 export const AppUrls = {
@@ -141,4 +142,20 @@ export const AppUrls = {
 
     return urlJoin(appUrl, window.location.search, iframeContextQueryString);
   },
+  resolveRequestPermissionsUrl: (
+    id: string,
+    params: {
+      requestedPermissions: string[];
+      redirectPath: string;
+    },
+  ) =>
+    urlJoin(
+      AppSections.appsSection,
+      id,
+      "permissions",
+      `?${stringifyQs({
+        redirectPath: params.redirectPath,
+        requestedPermissions: params.requestedPermissions.join(","),
+      })}`,
+    ),
 };

@@ -1,5 +1,5 @@
-import { getPermissionsDiff } from "@dashboard/apps/components/AppPermissionsDialog/getPermissionsDiff";
 import { PermissionEnum } from "@dashboard/graphql";
+import { getPermissionsDiff } from "./getPermissionsDiff";
 
 describe("getPermissionsDiff", () => {
   describe("Correctly resolves added permissions", () => {
