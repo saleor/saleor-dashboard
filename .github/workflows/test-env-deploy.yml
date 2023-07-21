@@ -274,7 +274,7 @@ jobs:
         run: |
           npx testmo automation:run:submit-thread \
           --instance "$TESTMO_URL" \
-          --run-id ${{TESTMO_RUN_ID}}" \
+          --run-id "$TESTMO_RUN_ID" \
           --results ../../results/*.xml
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
@@ -297,7 +297,7 @@ jobs:
         run: |
           npx testmo automation:run:complete \
             --instance "$TESTMO_URL" \
-            --run-id "${{TESTMO_RUN_ID}}"
+            --run-id "$TESTMO_RUN_ID"
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
