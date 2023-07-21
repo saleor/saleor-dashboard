@@ -1,3 +1,4 @@
+import { getPermissionsDiff } from "@dashboard/apps/getPermissionsDiff";
 import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
 import { AppPaths } from "@dashboard/apps/urls";
 import Link from "@dashboard/components/Link";
@@ -8,7 +9,7 @@ import {
 } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { Box, Button, Text, TextProps } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { useEffect } from "react";
 import { useLocation, useParams } from "react-router";
 
 const SmallText = (props: TextProps) => <Text size="small" {...props} />;
@@ -50,6 +51,20 @@ export const AppPermissionRequestView = () => {
   const navigate = useNavigator();
 
   const { mapCodesToNames, isReady } = useGetAvailableAppPermissions();
+
+  useEffect(() => {
+    if (!data || !isReady) return;
+
+    const diff = getPermissionsDiff(
+      data.app.permissions.map(p => p.code),
+      requestedPermissions,
+    );
+
+    /**
+     * If app requests permissions that are already granted, redirect to app with success status
+     */
+    if (diff.added.length === 0) navigateToAppApproved();
+  }, [data, requestedPermissions]);
 
   if (!data || !isReady) return null;
 
