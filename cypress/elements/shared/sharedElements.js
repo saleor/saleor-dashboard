@@ -2,6 +2,7 @@ export const SHARED_ELEMENTS = {
   body: "body",
   header: "[data-test-id='page-header']",
   progressBar: '[role="progressbar"]',
+  rowNumberOption: "[data-test-id='rowNumberOption']",
   circularProgress: '[class*="CircularProgress-circle"]',
   autocompleteCircle: '[class*="arrowInnerContainer"]',
   dataGridTable: "[data-testid='data-grid-canvas']",

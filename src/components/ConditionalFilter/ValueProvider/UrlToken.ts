@@ -1,5 +1,6 @@
 import { ParsedQs } from "qs";
 
+import { getAtributeInputType } from "../constants";
 import { ConditionSelected } from "../FilterElement/ConditionSelected";
 import { slugFromConditionValue } from "../FilterElement/ConditionValue";
 
@@ -18,11 +19,27 @@ const STATIC_TO_LOAD = [
 ];
 
 export const TokenType = {
-  ATTRIBUTE: "a",
+  ATTRIBUTE_DROPDOWN: "o",
+  ATTRIBUTE_MULTISELECT: "m",
+  ATTRIBUTE_NUMERIC: "n",
+  ATTRIBUTE_DATE_TIME: "t",
+  ATTRIBUTE_DATE: "d",
+  ATTRIBUTE_BOOLEAN: "b",
   STATIC: "s",
 } as const;
 
+
 export type TokenTypeValue = (typeof TokenType)[keyof typeof TokenType];
+
+const resolveTokenType = (name: string): TokenTypeValue => {
+  const key = `ATTRIBUTE_${name}` as keyof typeof TokenType
+
+  if (key in TokenType) {
+    return TokenType[key]
+  }
+
+  return TokenType.STATIC
+}
 
 export class UrlEntry {
   constructor(key: string, value: string | string[]) {
@@ -37,10 +54,13 @@ export class UrlEntry {
   }
 
   public static forAttribute(condition: ConditionSelected, paramName: string) {
+    const inputType = getAtributeInputType(condition.conditionValue)
+    const tokenSlug = resolveTokenType(inputType || "")
+
     return UrlEntry.fromConditionSelected(
       condition,
       paramName,
-      TokenType.ATTRIBUTE,
+      tokenSlug,
     );
   }
 
@@ -100,7 +120,15 @@ export class UrlToken {
   }
 
   public isAttribute() {
-    return this.type === TokenType.ATTRIBUTE;
+    const result = Object.entries(TokenType)
+      .find(([_, slug]) => slug === this.type)
+
+    return result && result[0].includes("ATTRIBUTE")
+  }
+
+  public hasDynamicValues() {
+    return TokenType.ATTRIBUTE_DROPDOWN === this.type
+      || TokenType.ATTRIBUTE_MULTISELECT === this.type
   }
 
   public isLoadable() {

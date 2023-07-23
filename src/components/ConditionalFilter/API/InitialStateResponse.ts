@@ -1,3 +1,6 @@
+import { AttributeInputTypeEnum } from "@dashboard/graphql";
+
+import { createBoleanOption } from "../constants";
 import { AttributeInputType } from "../FilterElement/ConditionOptions";
 import { ItemOption } from "../FilterElement/ConditionValue";
 import { UrlToken } from "../ValueProvider/UrlToken";
@@ -34,8 +37,8 @@ export class InitialStateResponse implements InitialState {
     public isPublished: ItemOption[] = [],
     public isVisibleInListing: ItemOption[] = [],
     public hasCategory: ItemOption[] = [],
-    public giftCard: ItemOption[] = []
-  ) { }
+    public giftCard: ItemOption[] = [],
+  ) {}
 
   public attributeByName(name: string) {
     return this.attribute[name];
@@ -46,10 +49,20 @@ export class InitialStateResponse implements InitialState {
   }
 
   public filterByUrlToken(token: UrlToken) {
-    if (token.isAttribute()) {
+    if (token.isAttribute() && token.hasDynamicValues()) {
       return this.attribute[token.name].choices.filter(({ value }) =>
         token.value.includes(value),
       );
+    }
+
+    if (token.isAttribute()) {
+      const attr = this.attribute[token.name];
+      return attr.inputType === "BOOLEAN"
+        ? createBoleanOption(
+            token.value === "true",
+            AttributeInputTypeEnum.BOOLEAN,
+          )
+        : token.value;
     }
 
     if (!token.isLoadable()) {

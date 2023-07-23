@@ -4,10 +4,22 @@ import {
   getActiveTabIndexAfterTabDelete,
   getNextUniqueTabName,
 } from "@dashboard/products/views/ProductList/utils";
-import { StorageUtils } from "@dashboard/utils/filters";
+import { GetFilterTabsOutput, StorageUtils } from "@dashboard/utils/filters";
 import { prepareQs } from "@dashboard/utils/filters/qs";
 import { stringify } from "qs";
 import { useState } from "react";
+
+export interface UseFilterPresets {
+  presetIdToDelete: number | null;
+  setPresetIdToDelete: React.Dispatch<React.SetStateAction<number | null>>;
+  presets: GetFilterTabsOutput<string>;
+  selectedPreset: number | undefined;
+  onPresetChange: (index: number) => void;
+  onPresetDelete: () => void;
+  onPresetSave: (data: SaveFilterTabDialogFormData) => void;
+  onPresetUpdate: (tabName: string) => void;
+  hasPresetsChange: () => boolean;
+}
 
 export const useFilterPresets = <
   T extends { activeTab?: string; action?: string },
@@ -21,7 +33,7 @@ export const useFilterPresets = <
   reset: () => void;
   getUrl: () => string;
   storageUtils: StorageUtils<string>;
-}) => {
+}): UseFilterPresets => {
   const navigate = useNavigator();
   const baseUrl = getUrl();
   const [presetIdToDelete, setPresetIdToDelete] = useState<number | null>(null);

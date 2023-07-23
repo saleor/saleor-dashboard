@@ -42,7 +42,7 @@ const defaultChannels = [
 
 const props: ShippingZoneRatesCreatePageProps = {
   backUrl: "",
-  formId: Symbol(),
+  formId: Symbol("shipping-zone-rates-create-form-id"),
   allChannelsCount: 3,
   channelErrors: [],
   disabled: false,

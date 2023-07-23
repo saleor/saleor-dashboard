@@ -1,15 +1,15 @@
-import VerticalSpacer from "@dashboard/components/VerticalSpacer";
 import React from "react";
 
+import GiftCardListSearchAndFilters from "./GiftCardListSearchAndFilters";
+import { GiftCardsListDatagrid } from "./GiftCardsListDatagrid";
 import GiftCardsListHeader from "./GiftCardsListHeader";
 import GiftCardsListOrderInfoCard from "./GiftCardsListOrderInfoCard/GiftCardsListOrderInfoCard";
-import GiftCardsListTable from "./GiftCardsListTable";
 
 const GiftCardsListPage: React.FC = () => (
   <>
     <GiftCardsListHeader />
-    <GiftCardsListTable />
-    <VerticalSpacer spacing={2} />
+    <GiftCardListSearchAndFilters />
+    <GiftCardsListDatagrid />
     <GiftCardsListOrderInfoCard />
   </>
 );

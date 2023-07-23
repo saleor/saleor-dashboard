@@ -4,6 +4,7 @@ import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import { SELECT_SHIPPING_METHOD_FORM } from "../../elements/shipping/select-shipping-method-form";
 
 export function finalizeDraftOrder(name) {
+  cy.addAliasToGraphRequest("OrderDraftFinalize");
   cy.get(DRAFT_ORDER_SELECTORS.addProducts)
     .click()
     .assignElements(name)
@@ -36,5 +37,7 @@ export function finalizeDraftOrder(name) {
     .click()
     .wait("@OrderShippingMethodUpdate")
     .get(DRAFT_ORDER_SELECTORS.finalizeButton)
-    .click();
+    .click()
+    .waitForRequestAndCheckIfNoErrors("@OrderDraftFinalize")
+    .confirmationMessageShouldAppear();
 }

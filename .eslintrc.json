@@ -37,8 +37,7 @@
     }
   ],
   "rules": {
-    "@typescript-eslint/semi": ["off"],
-    "@typescript-eslint/quotes": ["off", "double"],
+    // Custom rules:
     "import/no-duplicates": "error",
     "import/no-extraneous-dependencies": "off", // imports are handled by simple-import-sort/sort
     "import/no-internal-modules": "off", // imports are handled by simple-import-sort/sort
@@ -46,7 +45,6 @@
     "sort-imports": "off", // imports are handled by simple-import-sort/sort
     "simple-import-sort/imports": "warn",
     "simple-import-sort/exports": "warn",
-    "react-refresh/only-export-components": "warn",
     "react-hooks/rules-of-hooks": "error",
     "formatjs/enforce-id": [
       "error",
@@ -67,10 +65,16 @@
         "allow": ["warn", "error"]
       }
     ],
-    // These rules should be reviewed - tracked in
-    // Tracked in https://github.com/saleor/saleor-dashboard/issues/3813
+    // Decided to turn off:
+    "react/prop-types": "off",
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-floating-promises": "off",
+    "@typescript-eslint/no-misused-promises": "off",
     "@typescript-eslint/consistent-type-imports": "off",
     "@typescript-eslint/no-confusing-void-expression": "off",
+    // Migration in progress:
+    // Tracked in https://github.com/saleor/saleor-dashboard/issues/3813
     "@typescript-eslint/no-unnecessary-type-assertion": "off",
     "@typescript-eslint/prefer-reduce-type-parameter": "off",
     "@typescript-eslint/promise-function-async": "off",
@@ -79,40 +83,35 @@
     "@typescript-eslint/strict-boolean-expressions": "off",
     "multiline-ternary": "off",
     "no-extra-boolean-cast": "off",
-    "@typescript-eslint/await-thenable": "warn",
-    "@typescript-eslint/ban-ts-comment": "warn",
-    "@typescript-eslint/ban-types": "warn",
-    "@typescript-eslint/consistent-type-assertions": "warn",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/naming-convention": "warn",
-    "@typescript-eslint/no-base-to-string": "warn",
-    "@typescript-eslint/no-dynamic-delete": "warn",
-    "@typescript-eslint/no-floating-promises": "warn",
-    "@typescript-eslint/no-invalid-void-type": "warn",
-    "@typescript-eslint/no-misused-promises": "warn",
-    "@typescript-eslint/no-non-null-asserted-optional-chain": "warn",
-    "@typescript-eslint/no-non-null-assertion": "warn",
-    "@typescript-eslint/no-redeclare": "warn",
-    "@typescript-eslint/prefer-nullish-coalescing": "warn",
-    "@typescript-eslint/prefer-optional-chain": "warn",
-    "@typescript-eslint/restrict-plus-operands": "warn",
-    "@typescript-eslint/restrict-template-expressions": "warn",
-    "array-callback-return": "warn",
-    "import/export": "warn",
-    "n/no-callback-literal": "warn",
-    "no-case-declarations": "warn",
-    "no-empty-pattern": "warn",
-    "no-fallthrough": "warn",
-    "no-new": "warn",
-    "no-prototype-builtins": "warn",
-    "no-unreachable": "warn",
-    "no-useless-catch": "warn",
-    "no-useless-escape": "warn",
-    "prefer-promise-reject-errors": "warn",
-    "react/display-name": "warn",
-    "react/jsx-key": "warn",
-    "react/prop-types": "warn",
-    "symbol-description": "warn"
+    "@typescript-eslint/await-thenable": "off",
+    "@typescript-eslint/ban-ts-comment": "off",
+    "@typescript-eslint/ban-types": "off",
+    "@typescript-eslint/consistent-type-assertions": "off",
+    "@typescript-eslint/naming-convention": "off",
+    "@typescript-eslint/no-base-to-string": "off",
+    "@typescript-eslint/no-dynamic-delete": "off",
+    "@typescript-eslint/no-invalid-void-type": "off",
+    "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
+    "@typescript-eslint/no-non-null-assertion": "off",
+    "@typescript-eslint/no-redeclare": "off",
+    "@typescript-eslint/prefer-optional-chain": "off",
+    "@typescript-eslint/restrict-plus-operands": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "react-refresh/only-export-components": "off",
+    "array-callback-return": "off",
+    "import/export": "off",
+    "n/no-callback-literal": "off",
+    "no-case-declarations": "off",
+    "no-empty-pattern": "off",
+    "no-fallthrough": "off",
+    "no-new": "off",
+    "no-prototype-builtins": "off",
+    "no-unreachable": "off",
+    "no-useless-catch": "off",
+    "no-useless-escape": "off",
+    "prefer-promise-reject-errors": "off",
+    "react/display-name": "off",
+    "react/jsx-key": "warn"
   },
   "ignorePatterns": ["node_modules/", "**/types/**/*", "type-policies.ts"]
 }
