@@ -16,7 +16,7 @@ interface FiltersAreaProps {
   onCancel?: () => void;
 }
 
-export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel }) => {
+export const FiltersArea: FC<FiltersAreaProps> = ({ onCancel }) => {
   const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
 
   const {
@@ -83,9 +83,6 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel }) => {
           >
             Clear all fields
           </_ExperimentalFilters.ClearButton>
-          {/* <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)}>
-            Save
-          </_ExperimentalFilters.ConfirmButton> */}
         </Box>
       </_ExperimentalFilters.Footer>
     </_ExperimentalFilters>
