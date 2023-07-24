@@ -6,11 +6,20 @@ import { FilterContainer } from "./FilterElement";
 import { FiltersArea } from "./FiltersArea";
 import { LoadingFiltersArea } from "./LoadingFiltersArea";
 
-export const ConditionalFilters: FC = () => {
-  const { valueProvider } = useConditionalFilterContext();
+export const ConditionalFilters: FC<{ onClose: () => void }> = ({
+  onClose,
+}) => {
+  const { valueProvider, containerState } = useConditionalFilterContext();
 
   const handleConfirm = (value: FilterContainer) => {
     valueProvider.persist(value);
+    onClose();
+  };
+
+  const handleCancel = () => {
+    valueProvider.clear();
+    containerState.clear();
+    onClose();
   };
 
   return valueProvider.loading ? (
@@ -22,7 +31,7 @@ export const ConditionalFilters: FC = () => {
       borderBottomLeftRadius={2}
       borderBottomRightRadius={2}
     >
-      <FiltersArea onConfirm={handleConfirm} />
+      <FiltersArea onConfirm={handleConfirm} onCancel={handleCancel} />
     </Box>
   );
 };

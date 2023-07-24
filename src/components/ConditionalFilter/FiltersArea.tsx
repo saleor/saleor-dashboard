@@ -1,5 +1,5 @@
 import { _ExperimentalFilters, Box, FilterEvent } from "@saleor/macaw-ui/next";
-import React from "react";
+import React, { FC } from "react";
 
 import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
@@ -8,9 +8,10 @@ import { useFilterContainer } from "./useFilterContainer";
 
 interface FiltersAreaProps {
   onConfirm: (value: FilterContainer) => void;
+  onCancel?: () => void;
 }
 
-export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
+export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel }) => {
   const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
 
   const {
@@ -72,7 +73,7 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
           + Add row
         </_ExperimentalFilters.AddRowButton>
         <Box display="flex" gap={3}>
-          <_ExperimentalFilters.ClearButton>
+          <_ExperimentalFilters.ClearButton onClick={onCancel}>
             Clear
           </_ExperimentalFilters.ClearButton>
           <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)}>
