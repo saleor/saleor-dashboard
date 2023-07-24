@@ -24,6 +24,8 @@ export function createChannelByView({
     .get(ADD_CHANNEL_FORM_SELECTORS.slug)
     .type(slug)
     .get(ADD_CHANNEL_FORM_SELECTORS.currency)
+    .find("input")
+    .should("be.enabled")
     .click();
   cy.get(ADD_CHANNEL_FORM_SELECTORS.currency).type(currency);
   cy.get("body").then($body => {
