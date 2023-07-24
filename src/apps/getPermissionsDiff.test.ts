@@ -1,4 +1,5 @@
 import { PermissionEnum } from "@dashboard/graphql";
+
 import { getPermissionsDiff } from "./getPermissionsDiff";
 
 describe("getPermissionsDiff", () => {

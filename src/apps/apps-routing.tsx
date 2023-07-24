@@ -11,8 +11,8 @@ import {
   AppInstallView,
   AppListView,
   AppManageView,
-  AppView,
   AppPermissionRequestView,
+  AppView,
 } from "src/apps/views";
 
 import { WindowTitle } from "../components/WindowTitle";

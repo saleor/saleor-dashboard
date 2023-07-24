@@ -1,4 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks";
+
 import { usePermissionsRequestRedirects } from "./usePermissionsRequestRedirects";
 
 const mockNavigate = jest.fn();
