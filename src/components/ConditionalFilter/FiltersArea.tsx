@@ -1,4 +1,9 @@
-import { _ExperimentalFilters, Box, FilterEvent } from "@saleor/macaw-ui/next";
+import {
+  _ExperimentalFilters,
+  Box,
+  FilterEvent,
+  Row,
+} from "@saleor/macaw-ui/next";
 import React from "react";
 
 import { useConditionalFilterContext } from "./context";
@@ -63,8 +68,7 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
   return (
     <_ExperimentalFilters
       leftOptions={leftOperandsProvider.operands}
-      // @ts-expect-error
-      value={value}
+      value={value as Array<string | Row>}
       onChange={handleStateChange}
     >
       <_ExperimentalFilters.Footer>
