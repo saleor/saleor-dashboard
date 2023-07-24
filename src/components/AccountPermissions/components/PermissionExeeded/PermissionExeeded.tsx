@@ -1,6 +1,5 @@
 import { UserPermissionFragment } from "@dashboard/graphql";
-import { List, ListItem, ListItemText } from "@material-ui/core";
-import { Box, Text } from "@saleor/macaw-ui/next";
+import { Box, List, Text } from "@saleor/macaw-ui/next";
 import React from "react";
 import { useIntl } from "react-intl";
 
@@ -35,11 +34,19 @@ export const PermissionsExceeded = ({
         {intl.formatMessage(messages.availablePermissions)}
       </Text>
 
-      <List dense={true}>
+      <List>
         {userPermissions.map(perm => (
-          <ListItem key={perm.code}>
-            <ListItemText primary={`- ${perm.name}`} />
-          </ListItem>
+          <List.Item
+            key={perm.code}
+            marginY={4}
+            marginLeft={4}
+            cursor="text"
+            backgroundColor={{
+              hover: "interactiveNeutralHighlightDefault",
+            }}
+          >
+            <Text variant="caption" size="large">{`- ${perm.name}`}</Text>
+          </List.Item>
         ))}
       </List>
     </>
