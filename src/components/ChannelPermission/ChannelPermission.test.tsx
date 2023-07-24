@@ -1,4 +1,3 @@
-import { IconButtonProps } from "@saleor/macaw-ui";
 import {
   act,
   render,
@@ -19,13 +18,6 @@ jest.mock("react-intl", () => ({
   FormattedMessage: ({ defaultMessage }: { defaultMessage: string }) => (
     <>{defaultMessage}</>
   ),
-}));
-
-jest.mock("@saleor/macaw-ui", () => ({
-  useStyles: jest.fn(() => () => ({})),
-  makeStyles: jest.fn(() => () => ({})),
-  ChevronIcon: jest.fn(() => () => <></>),
-  IconButton: (props: IconButtonProps) => <button {...props} />,
 }));
 
 describe("ChannelPermission", () => {
