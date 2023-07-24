@@ -3,6 +3,8 @@ const fetch = require("node-fetch");
 
 const program = new Command();
 
+const pathToCloudAPI = "https://staging-cloud.saleor.io/platform/api/";
+
 program
   .name("cleanEnvironments")
   .description("Clean environments")
@@ -31,7 +33,7 @@ async function getEnvironmentsForReleaseTesting(token) {
 
 async function getEnvironments(token) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/`,
+    `${pathToCloudAPI}organizations/saleor/environments/`,
     {
       method: "GET",
       headers: {
@@ -46,7 +48,7 @@ async function getEnvironments(token) {
 
 async function cleanEnvironment(environment, snapshot, token) {
   const response = await fetch(
-    `https://staging-cloud.saleor.io/api/organizations/saleor/environments/${environment.key}/restore/`,
+    `${pathToCloudAPI}organizations/saleor/environments/${environment.key}/restore/`,
     {
       method: "PUT",
       body: JSON.stringify({ restore_from: snapshot }),
@@ -82,7 +84,7 @@ async function waitUntilTaskInProgress(taskId, environment) {
 
   while (true) {
     const response = await fetch(
-      `https://staging-cloud.saleor.io/api/service/task-status/${taskId}/`,
+      `${pathToCloudAPI}service/task-status/${taskId}/`,
       {
         method: "GET",
         headers: {

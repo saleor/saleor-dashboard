@@ -6,4 +6,5 @@ export const GIFT_CARD_SHOW_MORE = {
     csv: 'input[value="CSV"]',
     xlsx: 'input[value="XLSX"]',
   },
+  exportSelectedRecords: '[data-test-id="IDS"]',
 };

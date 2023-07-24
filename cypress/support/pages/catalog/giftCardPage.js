@@ -1,8 +1,10 @@
+import { SHARED_ELEMENTS } from "../../../elements";
 import { GIFT_CARD_DIALOG } from "../../../elements/catalog/giftCard/giftCardDialog";
 import {
   GIFT_CARD_LIST,
-  giftCardRow
+  giftCardRow,
 } from "../../../elements/catalog/giftCard/giftCardList";
+import { GIFT_CARD_SHOW_MORE } from "../../../elements/catalog/giftCard/giftCardShowMore";
 import { GIFT_CARD_UPDATE } from "../../../elements/catalog/giftCard/giftCardUpdate";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { giftCardDetailsUrl, urlList } from "../../../fixtures/urlList";
@@ -11,7 +13,7 @@ export function openAndFillUpCreateGiftCardDialog({
   note,
   tag,
   amount,
-  currency
+  currency,
 }) {
   cy.visit(urlList.giftCards)
     .get(GIFT_CARD_LIST.issueCardButton)
@@ -39,7 +41,7 @@ export function saveGiftCard() {
 }
 
 export const expiryPeriods = {
-  MONTH: GIFT_CARD_DIALOG.expirationOptions.expiryPeriodMonthType
+  MONTH: GIFT_CARD_DIALOG.expirationOptions.expiryPeriodMonthType,
 };
 
 export function setExpiryPeriod(amount, period) {
@@ -77,6 +79,20 @@ export function selectGiftCard(giftCardId) {
     .find(GIFT_CARD_LIST.selectGiftCardCheckbox)
     .click();
 }
+export function selectGiftCardOnListView(giftCardCode) {
+  const splitCode = giftCardCode.split("-");
+  const lastCodeElement = splitCode.slice(-1).toString();
+  cy.log(lastCodeElement);
+  return cy
+    .contains(
+      `${SHARED_ELEMENTS.dataGridTable} table tbody tr`,
+      lastCodeElement,
+    )
+    .invoke("index")
+    .then(index => {
+      cy.clickGridCell(0, index);
+    });
+}
 
 export function enterAndSelectGiftCards(giftCardsIds) {
   const alias = "GiftCardList";
@@ -86,6 +102,40 @@ export function enterAndSelectGiftCards(giftCardsIds) {
       elementsGraphqlAlias: alias,
       elementsName: "giftCards",
       elementsIds: giftCardsIds,
-      actionFunction: selectGiftCard
+      actionFunction: selectGiftCard,
     });
+}
+export function openExportGiftCardsDialog() {
+  cy.get(BUTTON_SELECTORS.showMoreButton)
+    .click({ force: true })
+    .get(GIFT_CARD_SHOW_MORE.exportCodesMenu)
+    .click();
+}
+export function selectSelectedRecordsButton() {
+  cy.get(GIFT_CARD_SHOW_MORE.exportSelectedRecords).click();
+}
+export function selectExportAsCSVButton() {
+  cy.get(GIFT_CARD_SHOW_MORE.exportAsRadioBtn.csv).click();
+}
+export function selectExportAsXLSXButton() {
+  cy.get(GIFT_CARD_SHOW_MORE.exportAsRadioBtn.xlsx).click();
+}
+export function clickDeactivateButton() {
+  cy.get(GIFT_CARD_LIST.deactivateGiftCardButton).click();
+}
+export function bulkDeleteRecords() {
+  cy.get(BUTTON_SELECTORS.bulkDeleteButton)
+    .click()
+    .get(GIFT_CARD_UPDATE.consentCheckbox)
+    .click()
+    .get(BUTTON_SELECTORS.submit)
+    .click();
+}
+export function getUrlWithFilteredTags(url, tagsArray) {
+  const urlHelper = url + "?asc=true&sort=usedBy";
+  let tagsPath = "";
+  tagsArray.forEach((tag, index) => {
+    tagsPath += `&tag%5B${index}%5D=${tag}`;
+  });
+  return urlHelper + tagsPath;
 }

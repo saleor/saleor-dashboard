@@ -45,6 +45,10 @@ body {
   background: none !important;
 }
 
+.remove-content-padding-top .MuiCardContent-root {
+  padding-top: 0 !important;
+}
+
 [id*="ScrollableDialog"] .infinite-scroll-component {
   overflow: hidden !important;
 }

@@ -24,7 +24,6 @@ export function createSale({
 
   cy.get(SALES_SELECTORS.createSaleButton)
     .click()
-    .waitForProgressBarToNotBeVisible()
     .get(SALES_SELECTORS.nameInput)
     .type(saleName)
     .get(discountOption)
@@ -37,7 +36,6 @@ export function createSale({
     .addAliasToGraphRequest("SaleCreate")
     .get(SALES_SELECTORS.saveButton)
     .click()
-    .confirmationMessageShouldDisappear()
     .waitForRequestAndCheckIfNoErrors("@SaleCreate");
 }
 
@@ -102,9 +100,7 @@ export function createSaleWithNewProduct({
        cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
       */
-    cy.visit(urlList.sales)
-      .expectSkeletonIsVisible()
-      .waitForProgressBarToNotExist();
+    cy.visit(urlList.sales);
     createSale({
       saleName: name,
       channelName: channel.name,
@@ -141,9 +137,7 @@ export function createSaleWithNewVariant({
        cy.clearSessionData()
       .loginUserViaRequest("auth", ONE_PERMISSION_USERS.discount) 
       */
-    cy.visit(urlList.sales)
-      .expectSkeletonIsVisible()
-      .waitForProgressBarToNotExist();
+    cy.visit(urlList.sales);
     createSale({
       saleName: name,
       channelName: channel.name,

@@ -156,7 +156,7 @@ export function getMailWithGiftCardExportWithAttachment(
     } else {
       cy.mpGetMailsBySubject(subject).then(mailsWithSubject => {
         if (!mailsWithSubject.length) {
-          cy.wait(10000);
+          cy.wait(5000);
           getMailWithGiftCardExportWithAttachment(
             email,
             subject,

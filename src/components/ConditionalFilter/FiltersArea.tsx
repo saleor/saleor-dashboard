@@ -3,6 +3,7 @@ import React from "react";
 
 import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
+import { LeftOperand } from "./LeftOperandsProvider";
 import { useFilterContainer } from "./useFilterContainer";
 
 interface FiltersAreaProps {
@@ -35,7 +36,7 @@ export const FiltersArea = ({ onConfirm }: FiltersAreaProps) => {
     }
 
     if (event.type === "leftOperator.onChange") {
-      updateLeftOperator(event.path, event.value);
+      updateLeftOperator(event.path, event.value as LeftOperand);
     }
 
     if (event.type === "condition.onChange") {

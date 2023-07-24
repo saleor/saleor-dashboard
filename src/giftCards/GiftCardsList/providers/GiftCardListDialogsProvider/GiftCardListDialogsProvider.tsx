@@ -1,4 +1,3 @@
-// @ts-strict-ignore
 import GiftCardListPageDeleteDialog from "@dashboard/giftCards/components/GiftCardDeleteDialog/GiftCardListPageDeleteDialog";
 import GiftCardBulkCreateDialog from "@dashboard/giftCards/GiftCardBulkCreateDialog";
 import GiftCardCreateDialogContent from "@dashboard/giftCards/GiftCardCreateDialog";
@@ -32,10 +31,19 @@ export interface GiftCardListDialogsConsumerProps {
 }
 
 export const GiftCardListDialogsContext =
-  createContext<GiftCardListDialogsConsumerProps>(null);
+  createContext<GiftCardListDialogsConsumerProps | null>(null);
 
-export const useGiftCardListDialogs = () =>
-  useContext(GiftCardListDialogsContext);
+export const useGiftCardListDialogs = () => {
+  const context = useContext(GiftCardListDialogsContext);
+
+  if (!context) {
+    throw new Error(
+      "You are trying to use GiftCardListDialogsContext outside of its provider",
+    );
+  }
+
+  return context;
+};
 
 const GiftCardListDialogsProvider: React.FC<
   GiftCardListDialogsProviderProps
@@ -57,8 +65,8 @@ const GiftCardListDialogsProvider: React.FC<
   const isDialogOpen = (type: GiftCardListActionParamsEnum) =>
     params?.action === type;
 
-  const handleDeleteDialogOpen = (id?: string) => {
-    openDialog(DELETE, id ? { id } : undefined);
+  const handleDeleteDialogOpen = () => {
+    openDialog(DELETE);
   };
 
   const openSearchDeleteDialog = () =>
@@ -75,7 +83,7 @@ const GiftCardListDialogsProvider: React.FC<
     openSearchSaveDialog,
     openSearchDeleteDialog,
     onClose,
-    id,
+    id: id ?? "",
   };
 
   return (

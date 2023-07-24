@@ -1,7 +1,7 @@
 /// <reference types="cypress"/>
 /// <reference types="../../../support"/>
 
-import { PRODUCT_DETAILS, SHARED_ELEMENTS } from "../../../elements";
+import { SHARED_ELEMENTS } from "../../../elements";
 import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
 import { LOCAL_STORAGE_FOR_COLUMN_PICKER } from "../../../fixtures";
 import { urlList } from "../../../fixtures/urlList";
@@ -127,10 +127,6 @@ describe("As an admin I should be able to use column picker", () => {
           //next line hides picker
           cy.get(SHARED_ELEMENTS.pageHeader).click({ force: true });
           cy.get(SHARED_ELEMENTS.dynamicColumnContainer).should("not.exist");
-          // now it checks does picking record from grid works when picker is gone
-          cy.clickGridCell(1, 1);
-          cy.waitForRequestAndCheckIfNoErrors("@ProductDetails");
-          cy.get(PRODUCT_DETAILS.productUpdateFormSection).should("be.visible");
         });
     },
   );

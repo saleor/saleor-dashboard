@@ -17,7 +17,7 @@ export interface ListFiltersProps<TKeys extends string = string>
   actions?: ReactNode;
 }
 
-export const ListFilters = ({
+export const ListFilters = <TFilterKeys extends string = string>({
   currencySymbol,
   filterStructure,
   initialSearch,
@@ -27,7 +27,7 @@ export const ListFilters = ({
   onFilterAttributeFocus,
   errorMessages,
   actions,
-}: ListFiltersProps) => {
+}: ListFiltersProps<TFilterKeys>) => {
   const isProductPage = window.location.pathname.includes("/products");
   const productListingPageFiltersFlag = useFlag("product_filters");
   const filtersEnabled = isProductPage && productListingPageFiltersFlag.enabled;
@@ -45,7 +45,7 @@ export const ListFilters = ({
           {filtersEnabled ? (
             <ExpressionFilters />
           ) : (
-            <FiltersSelect
+            <FiltersSelect<TFilterKeys>
               errorMessages={errorMessages}
               menu={filterStructure}
               currencySymbol={currencySymbol}
