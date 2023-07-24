@@ -2,11 +2,10 @@ name: TEST-ENV-DEPLOYMENT
 # Build and deploy test instance for every pull request
 
 on: [pull_request]
-
 jobs:
   deploy:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     outputs:
       base_URL: ${{ steps.set-domain.outputs.domain }}
     steps:
@@ -121,11 +120,11 @@ jobs:
           deployment_id: ${{ steps.storybook-deployment.outputs.deployment_id }}
 
   prepare-tests:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
+    needs: deploy
     outputs:
       tags: ${{steps.get_tags.outputs.result}}
       containers: ${{ steps.get_containers.outputs.result}}
-
     steps:
       - name: Get tags
         id: get_tags
@@ -171,9 +170,43 @@ jobs:
         run: |
           echo ${{steps.get_tags.outputs.result}}
 
+  testmo-report-preparation:
+    needs: prepare-tests
+    runs-on: ubuntu-22.04
+    outputs:
+      testmo-run-id: ${{ steps.run-tests.outputs.TESTMO_RUN_ID }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+          cache: npm
+      - name: install dependencies
+        working-directory: .github/workflows
+        run: npm ci
+      - name: create testmo run
+        working-directory: .github/workflows
+        run: |
+          ID=$(npx testmo automation:run:create \
+            --instance "$TESTMO_URL" \
+            --project-id 1 \
+            --name "Deployment tests" \
+            --source frontend-e2e-tests)
+          echo "TESTMO_RUN_ID=$ID" >> $GITHUB_OUTPUT
+        env:
+          TESTMO_URL: ${{ secrets.TESTMO_URL }}
+          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
+        id: run-tests
+
   cypress-run-selected:
-    runs-on: ubuntu-latest
-    needs: [prepare-tests, deploy]
+    runs-on: ubuntu-22.04
+    needs:
+      [
+        prepare-tests,
+        deploy,
+        testmo-report-preparation,
+        testmo-report-preparation,
+      ]
     container: cypress/browsers:node18.12.0-chrome106-ff106
     strategy:
       fail-fast: false
@@ -213,7 +246,6 @@ jobs:
       - name: Install Dependencies
         if: steps.cache-node-modules.outputs.cache-hit != 'true'
         run: NODE_OPTIONS=--max_old_space_size=4096 npm install
-
       - name: Cypress run critical
         uses: cypress-io/github-action@v4
         env:
@@ -233,3 +265,39 @@ jobs:
           group: "UI - Chrome"
           record: true
           tag: Critical, ${{github.event.action}}
+      - name: Install dependencies
+        working-directory: .github/workflows
+        run: npm ci
+      - name: Testmo threads submit
+        working-directory: .github/workflows
+        run: |
+          npx testmo automation:run:submit-thread \
+          --instance "$TESTMO_URL" \
+          --run-id "$TESTMO_RUN_ID" \
+          --results ../../results/*.xml
+        env:
+          TESTMO_URL: ${{ secrets.TESTMO_URL }}
+          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
+          TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
+  test-complete:
+    needs: [testmo-report-preparation, cypress-run-selected]
+    if: always()
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version-file: ".nvmrc"
+          cache: npm
+      - run: npm ci
+        working-directory: .github/workflows
+      - name: complete testmo report
+        working-directory: .github/workflows
+        run: |
+          npx testmo automation:run:complete \
+            --instance "$TESTMO_URL" \
+            --run-id "$TESTMO_RUN_ID"
+        env:
+          TESTMO_URL: ${{ secrets.TESTMO_URL }}
+          TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
+          TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
