@@ -70,7 +70,7 @@ export const OrderDetailsDatagrid = ({
       data: lines,
       loading,
     }),
-    [intl, visibleColumns],
+    [intl, visibleColumns, loading],
   );
 
   const getMenuItems = useCallback(
