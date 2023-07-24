@@ -691,9 +691,6 @@
     "context": "section header button",
     "string": "Manage"
   },
-  "2mRLis": {
-    "string": "Search Customer"
-  },
   "2ob30/": {
     "string": "Success! In a few minutes you’ll receive a message with instructions on how to reset your password."
   },
@@ -1474,6 +1471,10 @@
     "context": "button",
     "string": "Back to homepage"
   },
+  "945a4a": {
+    "context": "column header",
+    "string": "Customer e-mail"
+  },
   "94oZR0": {
     "context": "deactivate app billing info",
     "string": "You will be still billed for the app."
@@ -1481,9 +1482,6 @@
   "95oJ5d": {
     "context": "button",
     "string": "Go back to dashboard"
-  },
-  "97l2MO": {
-    "string": "Customer Email"
   },
   "98Nw4g": {
     "context": "card subtitle",
@@ -2053,6 +2051,10 @@
     "context": "no warehouses info",
     "string": "There are no warehouses set up for your store. To add stock quantity to the variant please <a>configure a warehouse</a>"
   },
+  "D95l71": {
+    "context": "tab name",
+    "string": "All customers"
+  },
   "D9Rg+F": {
     "context": "window title",
     "string": "Channel details"
@@ -2172,9 +2174,6 @@
   },
   "E8T3e+": {
     "string": "Cannot add and remove group the same time"
-  },
-  "E8VDeH": {
-    "string": "No. of Orders"
   },
   "E9Dz18": {
     "context": "Order summary refunds header",
@@ -2608,9 +2607,6 @@
   "GpqEl5": {
     "context": "shipping method description",
     "string": "Description"
-  },
-  "Gr1SAu": {
-    "string": "Customer Name"
   },
   "GsBRWL": {
     "string": "Languages"
@@ -3370,6 +3366,10 @@
   },
   "MSItJD": {
     "string": "You are about to leave the Dashboard. Do you want to continue?"
+  },
+  "MTGT8E": {
+    "context": "column header",
+    "string": "No. of orders"
   },
   "MTl5o6": {
     "context": "new discount label",
@@ -6631,6 +6631,9 @@
   "kFkPWB": {
     "string": "Number"
   },
+  "kFsTMN": {
+    "string": "Delete customers"
+  },
   "kIvvax": {
     "string": "Search Products..."
   },
@@ -6708,6 +6711,9 @@
   "kcMVsB": {
     "context": "balance amound missing error message",
     "string": "Balance amount is missing"
+  },
+  "kdRcqU": {
+    "string": "Search customers..."
   },
   "kgVqk1": {
     "string": "Category name"
@@ -7093,6 +7099,10 @@
   "nX2pCU": {
     "context": "window title",
     "string": "Create customer"
+  },
+  "nZDQbr": {
+    "context": "column header",
+    "string": "Customer name"
   },
   "nayZY0": {
     "context": "returned event title",
@@ -8391,10 +8401,6 @@
   "xPnZ0R": {
     "context": "title",
     "string": "Details"
-  },
-  "xQK2EC": {
-    "context": "tab name",
-    "string": "All Customers"
   },
   "xRbqcg": {
     "context": "option",
