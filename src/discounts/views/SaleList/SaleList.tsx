@@ -96,7 +96,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
   } = useRowSelection(params);
 
   const {
-    hasPresetsChange,
+    hasPresetsChanged,
     onPresetChange,
     onPresetDelete,
     onPresetSave,
@@ -215,7 +215,7 @@ export const SaleList: React.FC<SaleListProps> = ({ params }) => {
         onFilterPresetsAll={resetFilters}
         filterPresets={presets.map(preset => preset.name)}
         selectedFilterPreset={selectedPreset}
-        hasPresetsChanged={hasPresetsChange}
+        hasPresetsChanged={hasPresetsChanged}
         onSalesDelete={() => openModal("remove")}
         selectedSaleIds={selectedRowIds}
         sales={sales}

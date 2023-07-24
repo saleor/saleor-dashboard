@@ -43,6 +43,8 @@ export function setChannelRequiredFields({
     .click({ force: true })
     .type(slug, { force: true })
     .get(ADD_CHANNEL_FORM_SELECTORS.currency)
+    .find("input")
+    .should("be.enabled")
     .click();
   cy.get(ADD_CHANNEL_FORM_SELECTORS.currency).type(currency);
   cy.get("body").then($body => {
