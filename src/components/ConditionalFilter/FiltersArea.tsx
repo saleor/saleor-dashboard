@@ -1,4 +1,9 @@
-import { _ExperimentalFilters, Box, FilterEvent } from "@saleor/macaw-ui/next";
+import {
+  _ExperimentalFilters,
+  Box,
+  FilterEvent,
+  Row,
+} from "@saleor/macaw-ui/next";
 import React, { FC } from "react";
 
 import { useConditionalFilterContext } from "./context";
@@ -64,21 +69,23 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel }) => {
   return (
     <_ExperimentalFilters
       leftOptions={leftOperandsProvider.operands}
-      // @ts-expect-error
-      value={value}
+      value={value as Array<string | Row>}
       onChange={handleStateChange}
     >
       <_ExperimentalFilters.Footer>
-        <_ExperimentalFilters.AddRowButton>
-          + Add row
+        <_ExperimentalFilters.AddRowButton variant="tertiary">
+          Add filter
         </_ExperimentalFilters.AddRowButton>
         <Box display="flex" gap={3}>
-          <_ExperimentalFilters.ClearButton onClick={onCancel}>
-            Clear
+          <_ExperimentalFilters.ClearButton
+            onClick={onCancel}
+            variant="tertiary"
+          >
+            Clear all fields
           </_ExperimentalFilters.ClearButton>
-          <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)}>
+          {/* <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)}>
             Save
-          </_ExperimentalFilters.ConfirmButton>
+          </_ExperimentalFilters.ConfirmButton> */}
         </Box>
       </_ExperimentalFilters.Footer>
     </_ExperimentalFilters>
