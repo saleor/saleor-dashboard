@@ -49,6 +49,7 @@ export const FilterPresetItem = ({
             alignItems="center"
           >
             <RemoveIcon
+              data-test-id="preset-delete-button"
               color={{
                 default: "iconNeutralSubdued",
                 hover: "iconNeutralPlain",
