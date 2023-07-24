@@ -74,7 +74,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel }) => {
     >
       <_ExperimentalFilters.Footer>
         <_ExperimentalFilters.AddRowButton variant="tertiary">
-          Add filter
+          + Add filter
         </_ExperimentalFilters.AddRowButton>
         <Box display="flex" gap={3}>
           <_ExperimentalFilters.ClearButton
