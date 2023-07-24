@@ -1,15 +1,14 @@
-// @ts-strict-ignore
 import { FilterElement } from "@dashboard/components/Filter";
 import {
   CustomerFilterKeys,
   CustomerListFilterOpts,
 } from "@dashboard/customers/components/CustomerListPage";
 import { CustomerFilterInput } from "@dashboard/graphql";
-import { maybe } from "@dashboard/misc";
 
 import {
   createFilterTabUtils,
   createFilterUtils,
+  GetFilterTabsOutput,
   getGteLteVariables,
   getMinMaxQueryParam,
 } from "../../../utils/filters";
@@ -26,29 +25,23 @@ export function getFilterOpts(
 ): CustomerListFilterOpts {
   return {
     joined: {
-      active: maybe(
-        () =>
-          [params.joinedFrom, params.joinedTo].some(
-            field => field !== undefined,
-          ),
-        false,
-      ),
+      active:
+        [params.joinedFrom, params.joinedTo].some(
+          field => field !== undefined,
+        ) ?? false,
       value: {
-        max: maybe(() => params.joinedTo, ""),
-        min: maybe(() => params.joinedFrom, ""),
+        max: params.joinedTo ?? "",
+        min: params.joinedFrom ?? "",
       },
     },
     numberOfOrders: {
-      active: maybe(
-        () =>
-          [params.numberOfOrdersFrom, params.numberOfOrdersTo].some(
-            field => field !== undefined,
-          ),
-        false,
-      ),
+      active:
+        [params.numberOfOrdersFrom, params.numberOfOrdersTo].some(
+          field => field !== undefined,
+        ) ?? false,
       value: {
-        max: maybe(() => params.numberOfOrdersTo, ""),
-        min: maybe(() => params.numberOfOrdersFrom, ""),
+        max: params.numberOfOrdersTo ?? "",
+        min: params.numberOfOrdersFrom ?? "",
       },
     },
   };
@@ -63,8 +56,12 @@ export function getFilterVariables(
       lte: params.joinedTo,
     }),
     numberOfOrders: getGteLteVariables({
-      gte: parseInt(params.numberOfOrdersFrom, 10),
-      lte: parseInt(params.numberOfOrdersTo, 10),
+      gte: params?.numberOfOrdersFrom
+        ? parseInt(params.numberOfOrdersFrom, 10)
+        : null,
+      lte: params?.numberOfOrdersTo
+        ? parseInt(params.numberOfOrdersTo, 10)
+        : null,
     }),
     search: params.query,
   };
@@ -92,10 +89,20 @@ export function getFilterQueryParam(
   }
 }
 
-export const { deleteFilterTab, getFilterTabs, saveFilterTab } =
-  createFilterTabUtils<CustomerListUrlFilters>(CUSTOMER_FILTERS_KEY);
+export const storageUtils = createFilterTabUtils<string>(CUSTOMER_FILTERS_KEY);
 
 export const { areFiltersApplied, getActiveFilters, getFiltersCurrentTab } =
   createFilterUtils<CustomerListUrlQueryParams, CustomerListUrlFilters>(
     CustomerListUrlFiltersEnum,
   );
+
+export const getPresetNameToDelete = (
+  presets: GetFilterTabsOutput<string>,
+  presetIdToDelete: number | null,
+): string => {
+  const presetIndex = presetIdToDelete ? presetIdToDelete - 1 : 0;
+  const preset = presets?.[presetIndex];
+  const tabName = preset?.name ?? "...";
+
+  return tabName;
+};

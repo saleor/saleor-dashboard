@@ -87,7 +87,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
   const {
     selectedPreset,
     presets,
-    hasPresetsChange,
+    hasPresetsChanged,
     onPresetChange,
     onPresetDelete,
     onPresetSave,
@@ -219,7 +219,7 @@ export const CollectionList: React.FC<CollectionListProps> = ({ params }) => {
         onFilterChange={changeFilters}
         selectedCollectionIds={selectedRowIds}
         onSelectCollectionIds={handleSetSelectedCollectionIds}
-        hasPresetsChanged={hasPresetsChange}
+        hasPresetsChanged={hasPresetsChanged}
         onCollectionsDelete={() =>
           openModal("remove", {
             ids: selectedRowIds,

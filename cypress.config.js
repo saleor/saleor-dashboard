@@ -14,6 +14,13 @@ module.exports = defineConfig({
     runMode: 1,
     openMode: 0,
   },
+  reporter: "junit",
+  reporterOptions: {
+    mochaFile: "results/test-output-[hash].xml",
+    jenkinsMode: true,
+    outputs: true,
+    testCaseSwitchClassnameAndName: true,
+  },
   e2e: {
     env: {
       grepFilterSpecs: true,

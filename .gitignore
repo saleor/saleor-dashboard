@@ -35,7 +35,7 @@ dist/
 # data
 /docs/_build/
 /media/
-/node_modules/
+node_modules/
 /static/
 /videos/
 /screenshots/

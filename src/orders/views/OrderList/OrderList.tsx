@@ -54,7 +54,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
   );
 
   const {
-    hasPresetsChange,
+    hasPresetsChanged,
     onPresetChange,
     onPresetDelete,
     onPresetSave,
@@ -163,7 +163,7 @@ export const OrderList: React.FC<OrderListProps> = ({ params }) => {
         onAll={resetFilters}
         onSettingsOpen={() => navigate(orderSettingsPath)}
         params={params}
-        hasPresetsChanged={hasPresetsChange()}
+        hasPresetsChanged={hasPresetsChanged()}
       />
       <SaveFilterTabDialog
         open={params.action === "save-search"}

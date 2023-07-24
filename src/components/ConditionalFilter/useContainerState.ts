@@ -8,44 +8,47 @@ type StateCallback = (el: FilterElement) => void;
 type Element = FilterContainer[number];
 
 const removeConstraint = (container: FilterContainer) => {
-  return container.map((el) => {
-    if (!isFilterElement(el)) return el
+  return container.map(el => {
+    if (!isFilterElement(el)) return el;
 
     if (!el.constraint?.existIn(container)) {
-      el.clearConstraint()
+      el.clearConstraint();
     }
 
-    return el
-  })
-}
+    return el;
+  });
+};
 
-const calculateIndexesToRemove = (container: FilterContainer, position: number) => {
-  const next = position + 1
-  const previous = position - 1
-  const indexTuple = [position]
+const calculateIndexesToRemove = (
+  container: FilterContainer,
+  position: number,
+) => {
+  const next = position + 1;
+  const previous = position - 1;
+  const indexTuple = [position];
 
   if (typeof container[next] === "string") {
-    indexTuple.push(next)
+    indexTuple.push(next);
 
-    return indexTuple
+    return indexTuple;
   }
 
   if (typeof container[previous] === "string") {
-    indexTuple.push(previous)
+    indexTuple.push(previous);
   }
 
-  return indexTuple
-}
-
+  return indexTuple;
+};
 
 const removeElement = (container: FilterContainer, position: number) => {
-  const indexTuple = calculateIndexesToRemove(container, position)
+  const indexTuple = calculateIndexesToRemove(container, position);
 
-  const newContainer = container
-    .filter((_, elIndex) => !indexTuple.includes(elIndex))
+  const newContainer = container.filter(
+    (_, elIndex) => !indexTuple.includes(elIndex),
+  );
 
-  return removeConstraint(newContainer)
-}
+  return removeConstraint(newContainer);
+};
 
 export const useContainerState = (valueProvider: FilterValueProvider) => {
   const [value, setValue] = useState<FilterContainer>([]);
@@ -79,13 +82,15 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
   };
 
   const updateBySlug = (slug: string, cb: StateCallback) => {
-    setValue(v => v.map((el) => {
-      if (isFilterElement(el) && el.value.value === slug) {
-        cb(el)
-      }
+    setValue(v =>
+      v.map(el => {
+        if (isFilterElement(el) && el.value.value === slug) {
+          cb(el);
+        }
 
-      return el
-    }))
+        return el;
+      }),
+    );
   };
 
   const removeAt = (position: string) => {
@@ -107,13 +112,17 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
   };
 
   const exist = (slug: string) => {
-    return value.some((entry) =>
-      isFilterElement(entry) && entry.value.value === slug
-    )
-  }
+    return value.some(
+      entry => isFilterElement(entry) && entry.value.value === slug,
+    );
+  };
 
   const createEmpty = () => {
-    create(FilterElement.createEmpty())
+    create(FilterElement.createEmpty());
+  };
+
+  const clear = () => {
+    setValue([]);
   };
 
   return {
@@ -124,5 +133,6 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     updateAt,
     removeAt,
     value,
+    clear,
   };
 };

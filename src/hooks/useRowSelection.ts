@@ -17,10 +17,10 @@ export const useRowSelection = (
   const clearDatagridRowSelectionCallback = useRef<(() => void) | null>(null);
 
   const clearRowSelection = () => {
-    setSelectedRowIds([]);
     if (clearDatagridRowSelectionCallback.current) {
       clearDatagridRowSelectionCallback.current();
     }
+    setSelectedRowIds([]);
   };
 
   const setClearDatagridRowSelectionCallback = (callback: () => void) => {
