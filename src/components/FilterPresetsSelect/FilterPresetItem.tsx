@@ -1,5 +1,6 @@
-import { Box, Dropdown, List, RemoveIcon, Text } from "@saleor/macaw-ui/next";
 import React, { MouseEvent } from "react";
+
+import { Box, Dropdown, List, RemoveIcon, Text } from "@saleor/macaw-ui/next";
 
 interface FilterPresetItemProps {
   onSelect: (e: MouseEvent<HTMLLIElement>) => void;
@@ -30,6 +31,7 @@ export const FilterPresetItem = ({
         onClick={onSelect}
         onMouseOver={() => setHasHover(true)}
         onMouseLeave={() => setHasHover(false)}
+        data-test-id="preset"
       >
         <Text ellipsis variant={isActive ? "bodyStrong" : "body"}>
           {children}
