@@ -601,9 +601,6 @@
     "context": "dialog header",
     "string": "Invite Staff Member"
   },
-  "26+K4N": {
-    "string": "There was a poblem with the file you uploaded as an image and it couldn't be used. Please try a different file."
-  },
   "26BKkX": {
     "context": "order status",
     "string": "Partially returned"
@@ -3060,6 +3057,9 @@
   "JiRKgJ": {
     "context": "dialog search placeholder",
     "string": "Search by collection name, etc..."
+  },
+  "JiVwOU": {
+    "string": "There was a problem with the file you uploaded as an image and it couldn't be used. Please try a different file."
   },
   "Jj0de8": {
     "context": "voucher status",
