@@ -45,7 +45,7 @@ describe("Test for deleting products", () => {
   });
 
   it(
-    "should delete 2 first products on products grid view - SALEOR_2709",
+    "should delete 2 first products on products grid view - SALEOR_2715",
     { tags: ["@metadata", "@allEnv", "@stable"] },
     () => {
       cy.clearSessionData().loginUserViaRequest();
