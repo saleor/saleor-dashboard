@@ -62,12 +62,12 @@ export const createGetCellContent =
       return loadingCell();
     }
 
-    const columnId = columns[column].id;
+    const columnId = columns[column]?.id;
     const rowData = added.includes(row)
       ? undefined
       : data[getDatagridRowDataIndex(row, removed)];
 
-    if (!rowData) {
+    if (!rowData || !columnId) {
       return readonlyTextCell("", false);
     }
 

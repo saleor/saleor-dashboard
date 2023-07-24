@@ -47,7 +47,7 @@ export const OrderDraftDetailsDatagrid = ({
   const datagrid = useDatagridChangeState();
 
   const { updateListSettings, settings } = useListSettings(
-    ListViews.ORDER_DETAILS_LIST,
+    ListViews.ORDER_DRAFT_DETAILS_LIST,
   );
 
   const emptyColumn = useEmptyColumn();

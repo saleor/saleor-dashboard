@@ -91,13 +91,13 @@ export const useGetCellContent = ({
       return readonlyTextCell("", false);
     }
 
-    const columnId = columns[column].id;
+    const columnId = columns[column]?.id;
     const change = changes.current[getChangeIndex(columnId, row)]?.data;
     const rowData = added.includes(row)
       ? undefined
       : lines[getDatagridRowDataIndex(row, removed)];
 
-    if (!rowData) {
+    if (!rowData || !columnId) {
       return readonlyTextCell("", false);
     }
 
