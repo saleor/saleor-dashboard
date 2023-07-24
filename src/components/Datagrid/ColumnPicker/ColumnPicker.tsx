@@ -60,7 +60,7 @@ export const ColumnPicker = ({
           }
         />
       </Popover.Trigger>
-      <Popover.Content className={sprinkles({ margin: 1.5 })}>
+      <Popover.Content className={sprinkles({ margin: 1.5 })} align="end">
         <Box
           display="grid"
           gridTemplateColumns={expanded ? 2 : 1}
