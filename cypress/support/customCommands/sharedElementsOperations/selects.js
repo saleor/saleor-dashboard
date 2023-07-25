@@ -23,6 +23,9 @@ Cypress.Commands.add("clickSubmitButton", () =>
 Cypress.Commands.add("clickConfirmButton", () =>
   cy.get(BUTTON_SELECTORS.confirm).click(),
 );
+Cypress.Commands.add("openColumnPicker", () =>
+  cy.get(SHARED_ELEMENTS.openColumnPickerButton).click(),
+);
 
 Cypress.Commands.add("createNewOption", (selectSelector, newOption) => {
   cy.get(selectSelector).type(newOption);

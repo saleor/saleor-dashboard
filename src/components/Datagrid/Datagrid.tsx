@@ -182,6 +182,11 @@ export const Datagrid: React.FC<DatagridProps> = ({
       const columnIndex = availableColumns.findIndex(
         column => column.id === recentlyAddedColumn,
       );
+
+      if (columnIndex === -1) {
+        return;
+      }
+
       const datagridScroll = editor.current.scrollTo;
       datagridScroll(columnIndex, 0, "horizontal", 0, 0, { hAlign: "start" });
     }
