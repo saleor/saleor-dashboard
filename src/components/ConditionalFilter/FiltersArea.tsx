@@ -5,10 +5,12 @@ import {
   Row,
 } from "@saleor/macaw-ui/next";
 import React, { FC } from "react";
+import { useIntl } from "react-intl";
 
 import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
 import { LeftOperand } from "./LeftOperandsProvider";
+import { conditionalFilterMessages as messages } from "./messages";
 import { useFilterContainer } from "./useFilterContainer";
 
 interface FiltersAreaProps {
@@ -16,8 +18,9 @@ interface FiltersAreaProps {
   onCancel?: () => void;
 }
 
-export const FiltersArea: FC<FiltersAreaProps> = ({ onCancel }) => {
+export const FiltersArea: FC<FiltersAreaProps> = ({ onCancel, onConfirm }) => {
   const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
+  const { formatMessage } = useIntl();
 
   const {
     value,
@@ -74,15 +77,18 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onCancel }) => {
     >
       <_ExperimentalFilters.Footer>
         <_ExperimentalFilters.AddRowButton variant="tertiary">
-          + Add filter
+          {formatMessage(messages.addFilter)}
         </_ExperimentalFilters.AddRowButton>
         <Box display="flex" gap={3}>
           <_ExperimentalFilters.ClearButton
             onClick={onCancel}
             variant="tertiary"
           >
-            Clear all fields
+            {formatMessage(messages.clearFilters)}
           </_ExperimentalFilters.ClearButton>
+          <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)}>
+            {formatMessage(messages.saveFilters)}
+          </_ExperimentalFilters.ConfirmButton>
         </Box>
       </_ExperimentalFilters.Footer>
     </_ExperimentalFilters>

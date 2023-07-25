@@ -553,6 +553,10 @@
   "1div9r": {
     "string": "Search Attribute"
   },
+  "1eBYfz": {
+    "context": "Popover trigger text (button)",
+    "string": "Show filters"
+  },
   "1gzck6": {
     "string": "{firstName} {lastName}"
   },
@@ -1741,6 +1745,10 @@
   },
   "AyQkmp": {
     "string": "Sorting by this column is not available"
+  },
+  "AyW1j6": {
+    "context": "Clear filters button text",
+    "string": "Clear all fields"
   },
   "AzMSmb": {
     "context": "caption",
@@ -3276,6 +3284,10 @@
   "LY5dS9": {
     "context": "Charged transaction amount, data display header",
     "string": "Charged"
+  },
+  "LeJClL": {
+    "context": "Popover title",
+    "string": "Conditions"
   },
   "Ljtqmt": {
     "context": "page header, order id unknown",
@@ -7167,6 +7179,10 @@
     "context": "dialog title",
     "string": "Delete Warehouse"
   },
+  "nyhf9b": {
+    "context": "Add filter button text",
+    "string": "+ Add filter"
+  },
   "o5KXAN": {
     "context": "delete webhook",
     "string": "Are you sure you want to delete {name}?"
@@ -8305,6 +8321,10 @@
   },
   "wTHjt3": {
     "string": "Search Orders..."
+  },
+  "wUQCnQ": {
+    "context": "Save filters button text",
+    "string": "Save"
   },
   "wWTUrM": {
     "string": "No activities found"
