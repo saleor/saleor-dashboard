@@ -63,7 +63,11 @@ const AppLayout: React.FC<AppLayoutProps> = ({ children }) => {
         visible={isNavigatorVisible}
         setVisibility={setNavigatorVisibility}
       />
-      <Box display="grid" __gridTemplateColumns="auto 1fr">
+      <Box
+        display="grid"
+        __gridTemplateColumns="auto 1fr"
+        className="big-desktop-max-width"
+      >
         {appState.loading && (
           <LinearProgress className={classes.appLoader} color="primary" />
         )}
