@@ -7,7 +7,7 @@ export const useGetAvailableAppPermissions = () => {
   /**
    * App can't have MANAGE_APPS so filter it out
    */
-  const availablePermissions = shopData.permissions
+  const availablePermissions = shopData?.permissions
     .filter(perm => perm.code !== "MANAGE_APPS")
     .map(p => ({
       code: p.code,
@@ -41,5 +41,6 @@ export const useGetAvailableAppPermissions = () => {
   return {
     availablePermissions,
     mapCodesToNames,
+    isReady: !!shopData,
   };
 };

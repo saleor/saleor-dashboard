@@ -1750,6 +1750,9 @@
     "context": "notification",
     "string": "Published pages"
   },
+  "B+Ba0R": {
+    "string": "Requested Permissions"
+  },
   "B/y6LC": {
     "context": "section header",
     "string": "Unfulfilled Products"
@@ -4152,6 +4155,9 @@
     "context": "total price",
     "string": "Total"
   },
+  "S1p0Ja": {
+    "string": "The app will have access to new permissions. From now on it will be able to use them to perform operations these permissions allow. You should ensure you trust the app before you approve."
+  },
   "S22jIs": {
     "context": "button",
     "string": "Set new password"
@@ -4186,6 +4192,9 @@
   },
   "SHm7ee": {
     "string": "Search by product name, attribute, product type etc..."
+  },
+  "SI3/nl": {
+    "string": "Nothing will change in terms of permissions. The Dashboard will redirect to the app and inform it that you denied the request."
   },
   "SKFr04": {
     "string": "Attribute not found."
@@ -4695,6 +4704,9 @@
     "context": "weight units type",
     "string": "Weight"
   },
+  "VkYZQ8": {
+    "string": "Current Permissions"
+  },
   "VmMDLN": {
     "context": "permission list item description",
     "string": "This group is last source of that permission"
@@ -4745,6 +4757,9 @@
   "W8i2Ez": {
     "context": "product field",
     "string": "Name"
+  },
+  "WCaf5C": {
+    "string": "Approve"
   },
   "WCg2GZ": {
     "context": "change warehouse dialog search placeholder",
@@ -5160,6 +5175,9 @@
   },
   "Yo2kC+": {
     "string": "Couldn't process image"
+  },
+  "Yo4h/D": {
+    "string": "Learn more about permissions"
   },
   "YpLVVc": {
     "context": "action",
@@ -5676,6 +5694,9 @@
   "cNSLLO": {
     "context": "button",
     "string": "Unassign and save"
+  },
+  "cOki0G": {
+    "string": "What happens if I deny?"
   },
   "cPAc45": {
     "context": "column picker search no results message",
@@ -6318,6 +6339,9 @@
     "context": "table head",
     "string": "Collection Name"
   },
+  "htvX+Z": {
+    "string": "Deny"
+  },
   "hw9Fah": {
     "context": "button",
     "string": "Send invite"
@@ -6517,12 +6541,19 @@
     "context": "description",
     "string": "No members found"
   },
+  "jVjsVq": {
+    "context": "App by Author",
+    "string": "by"
+  },
   "jWna9Q": {
     "string": "Content Type Name"
   },
   "jXf/9p": {
     "context": "product availability",
     "string": "Hide in product listings"
+  },
+  "ja+tNj": {
+    "string": "requests access to new permissions."
   },
   "jd/LWa": {
     "string": "Voucher applies to all countries"
@@ -8024,6 +8055,10 @@
     "context": "number of postal code ranges",
     "string": "{number} postal code ranges"
   },
+  "udJUSa": {
+    "context": "Authorize {app name}",
+    "string": "Authorize"
+  },
   "ufD5Jr": {
     "string": "Content type"
   },
@@ -8270,6 +8305,9 @@
   "w424P4": {
     "context": "section header",
     "string": "Plugin Information and Status"
+  },
+  "w6kcxY": {
+    "string": "What happens if I approve?"
   },
   "w9xgN9": {
     "context": "see error log label in notification",

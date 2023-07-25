@@ -2,7 +2,7 @@ import { AppPermissionsDialogConfirmation } from "@dashboard/apps/components/App
 import { AppPermissionsDialogPermissionPicker } from "@dashboard/apps/components/AppPermissionsDialog/AppPermissionsDialogPermissionPicker";
 import { useAppPermissionsDialogState } from "@dashboard/apps/components/AppPermissionsDialog/AppPermissionsDialogState";
 import { AppPermissionsDialogMessages } from "@dashboard/apps/components/AppPermissionsDialog/messages";
-import { useGetAvailableAppPermissions } from "@dashboard/apps/components/AppPermissionsDialog/useGetAvailableAppPermissions";
+import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
 import {
   PermissionEnum,
   useAppQuery,
