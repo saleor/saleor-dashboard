@@ -93,9 +93,6 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
           overscrollBehaviorX: "none",
           scrollbarWidth: "none",
         },
-        "& .dvn-scroller::-webkit-scrollbar": {
-          display: "none",
-        },
         borderRadius: 0,
         boxSizing: "content-box",
         width: "100%",
