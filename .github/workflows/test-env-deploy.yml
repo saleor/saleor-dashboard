@@ -275,7 +275,8 @@ jobs:
           TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
   test-complete:
     needs: [testmo-report-preparation, cypress-run-selected, deploy]
-    if: ${{ success() && failure() }}
+    if: |
+      needs.cypress-run-selected.result == 'success' || needs.cypress-run-selected.result == 'failure'
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
