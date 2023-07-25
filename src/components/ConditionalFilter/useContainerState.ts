@@ -6,12 +6,9 @@ import { FilterValueProvider } from "./FilterValueProvider";
 type StateCallback = (el: FilterElement) => void;
 type Element = FilterContainer[number];
 
-const isFilterElement = (el: unknown): el is FilterElement =>
-  typeof el !== "string" && !Array.isArray(el);
-
 const removeConstraint = (container: FilterContainer) => {
   return container.map(el => {
-    if (!isFilterElement(el)) return el;
+    if (!FilterElement.isCompatible(el)) return el;
 
     if (!el.constraint?.existIn(container)) {
       el.clearConstraint();
@@ -66,7 +63,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     index: number,
     el: Element,
   ): el is FilterElement => {
-    return elIndex === index && isFilterElement(el);
+    return elIndex === index && FilterElement.isCompatible(el);
   };
 
   const updateFilterElement =
@@ -86,7 +83,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
   const updateBySlug = (slug: string, cb: StateCallback) => {
     setValue(v =>
       v.map(el => {
-        if (isFilterElement(el) && el.value.value === slug) {
+        if (FilterElement.isCompatible(el) && el.value.value === slug) {
           cb(el);
         }
 
@@ -115,7 +112,7 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
 
   const exist = (slug: string) => {
     return value.some(
-      entry => isFilterElement(entry) && entry.value.value === slug,
+      entry => FilterElement.isCompatible(entry) && entry.value.value === slug,
     );
   };
 

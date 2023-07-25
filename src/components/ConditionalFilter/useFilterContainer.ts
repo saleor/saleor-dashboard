@@ -5,6 +5,7 @@ import { useConditionalFilterContext } from "./context";
 import { FilterElement } from "./FilterElement";
 import { ConditionValue, ItemOption } from "./FilterElement/ConditionValue";
 import { Constraint } from "./FilterElement/Constraint";
+import { hasEmptyRows } from "./FilterElement/FilterElement";
 import { LeftOperand, LeftOperandsProvider } from "./LeftOperandsProvider";
 
 export const useFilterContainer = (
@@ -85,6 +86,7 @@ export const useFilterContainer = (
 
   return {
     value,
+    hasEmptyRows: hasEmptyRows(value),
     addEmpty,
     removeAt,
     updateLeftOperator,

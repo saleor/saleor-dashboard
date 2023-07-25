@@ -5,17 +5,20 @@ import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
 import { LeftOperand } from "./LeftOperandsProvider";
 import { useFilterContainer } from "./useFilterContainer";
+import { ErrorEntry } from "./Validation";
 
 interface FiltersAreaProps {
   onConfirm: (value: FilterContainer) => void;
+  errors?: ErrorEntry[]
   onCancel?: () => void;
 }
 
-export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel }) => {
+export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors }) => {
   const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
 
   const {
     value,
+    hasEmptyRows,
     addEmpty,
     removeAt,
     updateLeftOperator,
@@ -67,6 +70,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel }) => {
       // @ts-expect-error
       value={value}
       onChange={handleStateChange}
+      error={errors}
     >
       <_ExperimentalFilters.Footer>
         <_ExperimentalFilters.AddRowButton>
@@ -76,7 +80,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel }) => {
           <_ExperimentalFilters.ClearButton onClick={onCancel}>
             Clear
           </_ExperimentalFilters.ClearButton>
-          <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)}>
+          <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)} disabled={hasEmptyRows}>
             Save
           </_ExperimentalFilters.ConfirmButton>
         </Box>
