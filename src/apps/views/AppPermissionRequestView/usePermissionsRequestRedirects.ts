@@ -1,11 +1,8 @@
 import { AppPaths } from "@dashboard/apps/urls";
 import useNavigator from "@dashboard/hooks/useNavigator";
 
-const errors = {
-  USER_DENIED_PERMISSIONS: "USER_DENIED_PERMISSIONS",
-};
+type Errors = "USER_DENIED_PERMISSIONS" | "UPDATE_PERMISSIONS_FAILED";
 
-// todo: test
 export const usePermissionsRequestRedirects = ({
   appId,
   redirectPath,
@@ -22,10 +19,10 @@ export const usePermissionsRequestRedirects = ({
     );
   };
 
-  const navigateToAppDenied = () => {
+  const navigateToAppDenied = (error: Errors) => {
     navigate(
       AppPaths.resolveAppPath(encodeURIComponent(appId)) +
-        `?appPath=${redirectPath}&error=${errors.USER_DENIED_PERMISSIONS}`,
+        `?appPath=${redirectPath}&error=${error}`,
     );
   };
 

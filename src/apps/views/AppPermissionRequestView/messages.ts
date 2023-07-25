@@ -19,9 +19,9 @@ export const appPermissionsRequestViewMessages = defineMessages({
     defaultMessage: "Current Permissions",
     id: "VkYZQ8",
   },
-  newPermissionsHeader: {
-    defaultMessage: "New Permissions",
-    id: "0r0/Hb",
+  requestedPermissionsHeader: {
+    defaultMessage: "Requested Permissions",
+    id: 'B+Ba0R',
   },
   approveScenarioHelperHeader: {
     defaultMessage: "What happens if I approve?",

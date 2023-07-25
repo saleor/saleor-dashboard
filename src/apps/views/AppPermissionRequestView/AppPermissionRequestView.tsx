@@ -1,3 +1,4 @@
+import { createAppsDebug } from "@dashboard/apps/apps-debug";
 import { getPermissionsDiff } from "@dashboard/apps/getPermissionsDiff";
 import { useGetAvailableAppPermissions } from "@dashboard/apps/hooks/useGetAvailableAppPermissions";
 import Link from "@dashboard/components/Link";
@@ -53,6 +54,8 @@ function usePageQuery() {
   }, [search]);
 }
 
+const debug = createAppsDebug("AppPermissionRequestView");
+
 export const AppPermissionRequestView = () => {
   const params = useParams<{ id: string }>();
   const { redirectPath, requestedPermissions } = usePageQuery();
@@ -100,10 +103,26 @@ export const AppPermissionRequestView = () => {
           ...requestedPermissions,
         ],
       },
-    }).then(navigateToAppApproved);
+    })
+      .then(resp => {
+        const hasError = resp.data?.appUpdate?.errors?.length;
+
+        if (hasError) {
+          debug("Failed to update the app permissions");
+
+          return navigateToAppDenied("UPDATE_PERMISSIONS_FAILED");
+        }
+
+        return navigateToAppApproved();
+      })
+      .catch(err => {
+        debug("updatePermissions failed", err);
+
+        return navigateToAppDenied("UPDATE_PERMISSIONS_FAILED");
+      });
   };
 
-  const onDeny = () => navigateToAppDenied();
+  const onDeny = () => navigateToAppDenied("USER_DENIED_PERMISSIONS");
 
   return (
     <Box padding={12}>
@@ -136,7 +155,11 @@ export const AppPermissionRequestView = () => {
             borderColor="neutralHighlight"
             paddingRight={6}
           >
-            <SmallHeading marginBottom={2}>Current permissions</SmallHeading>
+            <SmallHeading marginBottom={2}>
+              {formatMessage(
+                appPermissionsRequestViewMessages.currentPermissionsHeader,
+              )}
+            </SmallHeading>
             {(data.app.permissions ?? []).map(permission => (
               <Text as="p" key={permission.code}>
                 {permission.name}
@@ -144,7 +167,11 @@ export const AppPermissionRequestView = () => {
             ))}
           </Box>
           <Box>
-            <SmallHeading marginBottom={2}>Requested permissions</SmallHeading>
+            <SmallHeading marginBottom={2}>
+              {formatMessage(
+                appPermissionsRequestViewMessages.requestedPermissionsHeader,
+              )}
+            </SmallHeading>
             {mapCodesToNames(requestedPermissions).map(permissionName => (
               <Text as="p" key={permissionName}>
                 {permissionName}
