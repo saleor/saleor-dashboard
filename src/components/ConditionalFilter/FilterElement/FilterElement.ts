@@ -14,13 +14,13 @@ class ExpressionValue {
     public value: string,
     public label: string,
     public type: string,
-  ) {}
+  ) { }
 
   public isEmpty() {
     return this.value.length === 0 || this.label.length === 0
   }
 
-  public static fromSlug (slug: string) {
+  public static fromSlug(slug: string) {
     const option = STATIC_OPTIONS.find(o => o.slug === slug)
 
     if (!option) return ExpressionValue.emptyStatic()
@@ -149,11 +149,11 @@ export class FilterElement {
     return null;
   }
 
-  public setConstraint (constraint: Constraint) {
+  public setConstraint(constraint: Constraint) {
     this.constraint = constraint
   }
 
-  public clearConstraint () {
+  public clearConstraint() {
     this.constraint = undefined
   }
 
@@ -167,7 +167,10 @@ export class FilterElement {
   }
 
   public static isCompatible(element: unknown): element is FilterElement {
-    return typeof element === "object" && !Array.isArray(element) && 'value' in element
+    return typeof element === "object" &&
+      !Array.isArray(element) &&
+      element !== null &&
+      'value' in element
   }
 
   public static fromValueEntry(valueEntry: any) {
@@ -182,7 +185,7 @@ export class FilterElement {
     );
   }
 
-  public static createStaticBySlug (slug: StaticElementName) {
+  public static createStaticBySlug(slug: StaticElementName) {
     return new FilterElement(
       ExpressionValue.fromSlug(slug),
       Condition.emptyFromSlug(slug),
