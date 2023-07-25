@@ -13,7 +13,7 @@ interface FiltersAreaProps {
   onCancel?: () => void;
 }
 
-export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel }) => {
+export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors }) => {
   const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
 
   const {
@@ -70,6 +70,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel }) => {
       // @ts-expect-error
       value={value}
       onChange={handleStateChange}
+      error={errors}
     >
       <_ExperimentalFilters.Footer>
         <_ExperimentalFilters.AddRowButton>
@@ -79,8 +80,8 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel }) => {
           <_ExperimentalFilters.ClearButton onClick={onCancel}>
             Clear
           </_ExperimentalFilters.ClearButton>
-          <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)}>
-            Save {hasEemptyRows && "DISABLED"}
+          <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)} disabled={hasEemptyRows}>
+            Save
           </_ExperimentalFilters.ConfirmButton>
         </Box>
       </_ExperimentalFilters.Footer>

@@ -4,13 +4,12 @@ const isTooLong = (value: string, row: number) => {
   if (value.length > 25) {
     return {
       row,
-      right: "The value is too long."
+      rightText: "The value is too long."
     }
   }
 
   return false
 }
-
 
 export const numeric = (element: FilterElement, row: number) => {
   const { value } = element.condition.selected
@@ -29,7 +28,7 @@ export const numeric = (element: FilterElement, row: number) => {
     if (lte > gte) {
       return {
         row,
-        right: "The value must be higher"
+        rightText: "The value must be higher"
       }
     }
   }

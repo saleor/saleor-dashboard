@@ -30,8 +30,9 @@ const hasErrors = (element: RawValidateEntry): element is ErrorEntry  => {
 
 export interface ErrorEntry {
   row: number
-  left?: string
-  right?: string
+  leftText?: string;
+  conditionText?: string;
+  rightText?: string;
 }
 
 type RawValidateEntry = false | ErrorEntry
