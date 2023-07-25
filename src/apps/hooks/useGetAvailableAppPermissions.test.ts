@@ -1,7 +1,8 @@
-import { useGetAvailableAppPermissions } from "@dashboard/apps/components/AppPermissionsDialog/useGetAvailableAppPermissions";
 import { PermissionEnum } from "@dashboard/graphql";
 import useShop from "@dashboard/hooks/useShop";
 import { renderHook } from "@testing-library/react-hooks";
+
+import { useGetAvailableAppPermissions } from "./useGetAvailableAppPermissions";
 
 type PermissionsFromApi = Array<{
   __typename: "Permission";
