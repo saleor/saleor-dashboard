@@ -274,7 +274,7 @@ jobs:
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
           TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
   test-complete:
-    needs: [testmo-report-preparation, cypress-run-selected, deploy]
+    needs: [testmo-report-preparation, cypress-run-selected]
     if: needs.cypress-run-selected.result != 'skipped'
     runs-on: ubuntu-22.04
     steps:
