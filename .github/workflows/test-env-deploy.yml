@@ -171,8 +171,10 @@ jobs:
           echo ${{steps.get_tags.outputs.result}}
 
   testmo-report-preparation:
+    env:
+      TESTMO_URL: ${{ secrets.TESTMO_URL }}
     needs: prepare-tests
-    if: ${{ secrets.TESTMO_URL }}
+    if: ${{ env.TESTMO_URL }}
     runs-on: ubuntu-22.04
     outputs:
       testmo-run-id: ${{ steps.run-tests.outputs.TESTMO_RUN_ID }}
@@ -201,6 +203,8 @@ jobs:
 
   cypress-run-selected:
     runs-on: ubuntu-22.04
+    env:
+      TESTMO_URL: ${{ secrets.TESTMO_URL }}
     needs:
       [
         prepare-tests,
@@ -270,7 +274,7 @@ jobs:
         working-directory: .github/workflows
         run: npm ci
       - name: Testmo threads submit
-        if: ${{ secrets.TESTMO_URL }}
+        if: ${{ env.TESTMO_URL }}
         working-directory: .github/workflows
         run: |
           npx testmo automation:run:submit-thread \
@@ -282,8 +286,10 @@ jobs:
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
           TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
   test-complete:
+    env:
+      TESTMO_URL: ${{ secrets.TESTMO_URL }}
     needs: [testmo-report-preparation, cypress-run-selected]
-    if: ${{ secrets.TESTMO_URL }}
+    if: ${{ env.TESTMO_URL }}
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
