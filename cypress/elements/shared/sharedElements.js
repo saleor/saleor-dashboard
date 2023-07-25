@@ -20,6 +20,7 @@ export const SHARED_ELEMENTS = {
   gridStaticVariantNameButton: '[data-test-id="stat-col-variantName"]',
   gridStaticQuantityButton: '[data-test-id="stat-col-quantity"]',
   gridStaticPriceButton: '[data-test-id="stat-col-price"]',
+  gridStaticStatusButton: '[data-test-id="stat-col-status"]',
   gridStaticTotalButton: '[data-test-id="stat-col-total"]',
   gridStaticProductButton: '[data-test-id="stat-col-product"]',
   dynamicColumnSearchInput: '[data-test-id="search-columns"]',

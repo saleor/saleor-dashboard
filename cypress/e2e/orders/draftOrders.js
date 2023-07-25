@@ -153,13 +153,15 @@ describe("Draft orders", () => {
           .should("contain.text", "Variant")
           .should("contain.text", "Quantity")
           .should("contain.text", "Price")
-          .should("contain.text", "Total");
+          .should("contain.text", "Total")
+          .should("contain.text", "Status");
         // switching off all but one static columns
         cy.get(SHARED_ELEMENTS.gridStaticSkuButton).click();
         cy.get(SHARED_ELEMENTS.gridStaticVariantNameButton).click();
         cy.get(SHARED_ELEMENTS.gridStaticQuantityButton).click();
         cy.get(SHARED_ELEMENTS.gridStaticPriceButton).click();
         cy.get(SHARED_ELEMENTS.gridStaticTotalButton).click();
+        cy.get(SHARED_ELEMENTS.gridStaticStatusButton).click();
         cy.get(SHARED_ELEMENTS.gridStaticProductButton).should(
           "have.attr",
           "data-state",
