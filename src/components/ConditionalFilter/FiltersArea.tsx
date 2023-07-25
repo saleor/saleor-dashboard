@@ -18,7 +18,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors 
 
   const {
     value,
-    hasEemptyRows,
+    hasEmptyRows,
     addEmpty,
     removeAt,
     updateLeftOperator,
@@ -80,7 +80,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors 
           <_ExperimentalFilters.ClearButton onClick={onCancel}>
             Clear
           </_ExperimentalFilters.ClearButton>
-          <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)} disabled={hasEemptyRows}>
+          <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)} disabled={hasEmptyRows}>
             Save
           </_ExperimentalFilters.ConfirmButton>
         </Box>

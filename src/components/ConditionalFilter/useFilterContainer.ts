@@ -86,7 +86,7 @@ export const useFilterContainer = (
 
   return {
     value,
-    hasEemptyRows: hasEmptyRows(value),
+    hasEmptyRows: hasEmptyRows(value),
     addEmpty,
     removeAt,
     updateLeftOperator,

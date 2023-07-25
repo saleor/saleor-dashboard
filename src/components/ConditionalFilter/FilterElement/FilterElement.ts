@@ -167,7 +167,7 @@ export class FilterElement {
   }
 
   public static isCompatible(element: unknown): element is FilterElement {
-    return typeof element !== "string" && !Array.isArray(element)
+    return typeof element === "object" && !Array.isArray(element) && 'value' in element
   }
 
   public static fromValueEntry(valueEntry: any) {
@@ -210,11 +210,9 @@ export class FilterElement {
   }
 }
 
-export const isFilterElement = (el: unknown): el is FilterElement => typeof el !== "string" && !Array.isArray(el)
-
 export const hasEmptyRows = (container: FilterContainer) => {
   return container
-    .filter(isFilterElement)
+    .filter(FilterElement.isCompatible)
     .some((e: FilterElement) => e.isEmpty())
 }
 

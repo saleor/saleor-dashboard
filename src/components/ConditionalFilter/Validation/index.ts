@@ -1,5 +1,5 @@
 import { FilterContainer } from "../FilterElement";
-import { FilterElement, isFilterElement } from "../FilterElement/FilterElement";
+import { FilterElement } from "../FilterElement/FilterElement";
 import { numeric } from "./numeric";
 
 const VALIDATORS = {
@@ -9,7 +9,7 @@ const VALIDATORS = {
 
 
 const toValidated = (element: string | FilterElement | FilterContainer, index: number): RawValidateEntry => {
-  if (!isFilterElement(element)) return false
+  if (!FilterElement.isCompatible(element)) return false
 
   const key = element.isAttribute() ?
     element.value.type :
