@@ -16,7 +16,7 @@ export * from "./PermissonGroupDetailsPage";
 
 const props: PermissonGroupDetailsPageProps = {
   disabled: false,
-  isUserAbleToEditChannesl: true,
+  isUserAbleToEditChannels: true,
   errors: [],
   isChecked: () => false,
   members: users,
@@ -73,7 +73,7 @@ export const WithRestrictedChannelsAndWithoutAccessToEdit = () => (
   <PermissonGroupDetailsPage
     {...props}
     disabled={true}
-    isUserAbleToEditChannesl={false}
+    isUserAbleToEditChannels={false}
     permissionGroup={permissionGroupWithChannels}
   />
 );

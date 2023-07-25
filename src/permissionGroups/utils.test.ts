@@ -28,7 +28,7 @@ describe("Permission group utils", () => {
     it("should return empty added and removed channels when user is not eligible to edit channels", () => {
       // Arrange
       const isUserEligibleToEditPermissionGroup = false;
-      const allAviableChannels = [];
+      const allAviableChannels: ChannelFragment[] = [];
       const formData = {
         channels: [],
       } as unknown as PermissionGroupDetailsPageFormData;
@@ -67,7 +67,7 @@ describe("Permission group utils", () => {
     it("should return  added channel and no removed channels when user had no restricted channels", () => {
       // Arrange
       const isUserEligibleToEditPermissionGroup = true;
-      const allAviableChannels = [];
+      const allAviableChannels: ChannelFragment[] = [];
       const formData = {
         channels: ["1"],
       } as PermissionGroupDetailsPageFormData;
@@ -106,7 +106,7 @@ describe("Permission group utils", () => {
     it("should return all added and removed channels", () => {
       // Arrange
       const isUserEligibleToEditPermissionGroup = true;
-      const allAviableChannels = [];
+      const allAviableChannels: ChannelFragment[] = [];
       const formData = {
         channels: ["2", "3", "55"],
       } as PermissionGroupDetailsPageFormData;
@@ -145,7 +145,7 @@ describe("Permission group utils", () => {
     it("should only removed channels", () => {
       // Arrange
       const isUserEligibleToEditPermissionGroup = true;
-      const allAviableChannels = [];
+      const allAviableChannels: ChannelFragment[] = [];
       const formData = {
         channels: ["2"],
       } as PermissionGroupDetailsPageFormData;

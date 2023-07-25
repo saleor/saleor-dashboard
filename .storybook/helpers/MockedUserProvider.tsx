@@ -15,6 +15,7 @@ export const MockedUserProvider: React.FC<{
       requestLoginByExternalPlugin: undefined,
       authenticating: false,
       authenticated: false,
+      refetchUser: undefined,
       user: {
         id: "0",
         email: "email@email.me",

@@ -180,6 +180,13 @@ export const checkIfUserIsEligibleToEditChannels = (
   );
 };
 
+export const checkIfUserBelongToPermissionGroup = (
+  permissionGroup: PermissionGroupDetailsFragment | null | undefined,
+  userId: string,
+) => {
+  return permissionGroup?.users?.some(u => u.id === userId) ?? false;
+};
+
 /**
  * Get channels options for select field.
  */

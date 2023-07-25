@@ -37,6 +37,7 @@ import {
 import {
   arePermissionsExceeded,
   channelsDiff,
+  checkIfUserBelongToPermissionGroup,
   checkIfUserIsEligibleToEditChannels,
   permissionsDiff,
   usersDiff,
@@ -86,16 +87,28 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
 
   const [permissionGroupUpdate, permissionGroupUpdateResult] =
     usePermissionGroupUpdateMutation({
-      onCompleted: data => {
-        if (data?.permissionGroupUpdate?.errors?.length === 0) {
+      onCompleted: updatedData => {
+        if (updatedData?.permissionGroupUpdate?.errors?.length === 0) {
           notify({
             status: "success",
             text: intl.formatMessage(commonMessages.savedChanges),
           });
+
+          // When user belong to editedd permission group refetch user details
+          // as they are root of user accessible channels
+          if (
+            checkIfUserBelongToPermissionGroup(
+              data?.permissionGroup,
+              user?.user?.id ?? "",
+            )
+          ) {
+            user.refetchUser();
+          }
+
           refetch();
           closeModal();
         } else if (
-          data?.permissionGroupUpdate?.errors.some(
+          updatedData?.permissionGroupUpdate?.errors.some(
             e => e.field === "removeUsers",
           )
         ) {
