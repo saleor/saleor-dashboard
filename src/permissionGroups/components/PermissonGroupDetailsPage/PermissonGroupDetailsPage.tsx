@@ -28,10 +28,10 @@ import React from "react";
 import { useIntl } from "react-intl";
 
 import {
-  checkIfUserHasRestictedChannels,
+  checkIfUserHasRestictedAccessToChannels,
   extractPermissionCodes,
-  getChannelsOptions,
   getInitialChannels,
+  getUserAccessibleChannelsOptions,
   isGroupFullAccess,
 } from "../../utils";
 import PermissionGroupInfo from "../PermissionGroupInfo";
@@ -58,7 +58,7 @@ export interface PermissonGroupDetailsPageProps
     SortPage<MembersListUrlSortField> {
   channels: ChannelFragment[];
   disabled: boolean;
-  isUserAbleToEditChannesl: boolean;
+  isUserAbleToEditChannels: boolean;
   errors: PermissionGroupErrorFragment[];
   members: PermissionGroupDetailsFragment["users"];
   permissionGroup: PermissionGroupDetailsFragment | null | undefined;
@@ -82,15 +82,17 @@ export const PermissonGroupDetailsPage: React.FC<
   permissionsExceeded,
   saveButtonBarState,
   channels,
-  isUserAbleToEditChannesl,
+  isUserAbleToEditChannels,
   ...listProps
 }) => {
   const intl = useIntl();
   const navigate = useNavigator();
   const user = useUser();
 
-  const channelsOptions = getChannelsOptions(channels, user.user);
-  const hasUserRestrictedChannels = checkIfUserHasRestictedChannels(user.user);
+  const channelsOptions = getUserAccessibleChannelsOptions(channels, user.user);
+  const hasUserRestrictedChannels = checkIfUserHasRestictedAccessToChannels(
+    user.user,
+  );
 
   const initialForm: PermissionGroupDetailsPageFormData = {
     hasFullAccess: isGroupFullAccess(permissionGroup, permissions),
@@ -150,13 +152,13 @@ export const PermissonGroupDetailsPage: React.FC<
                       allChannels={
                         // I pass all channels because Multiselect components based on ids,
                         // and need data that will take information about channel
-                        !isUserAbleToEditChannesl ? channels : channelsOptions
+                        !isUserAbleToEditChannels ? channels : channelsOptions
                       }
                       hasAllChannels={data.hasAllChannels}
                       selectedChannels={data.channels}
                       onHasAllChannelsChange={handleHasAllChannelsChange}
                       onChannelChange={handleChannelChange}
-                      disabled={!isUserAbleToEditChannesl}
+                      disabled={!isUserAbleToEditChannels}
                       disabledSelectAllChannels={hasUserRestrictedChannels}
                     />
                   </Box>

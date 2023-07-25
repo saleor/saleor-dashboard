@@ -12,11 +12,11 @@ import { permissionGroup, permissionGroupWithChannels } from "./fixtures";
 import {
   arePermissionsExceeded,
   channelsDiff,
-  checkIfUserHasRestictedChannels,
+  checkIfUserHasRestictedAccessToChannels,
   checkIfUserIsEligibleToEditChannels,
   extractPermissionCodes,
-  getChannelsOptions,
   getInitialChannels,
+  getUserAccessibleChannelsOptions,
   isGroupFullAccess,
   mapAccessibleChannelsToChoice,
   permissionsDiff,
@@ -27,6 +27,8 @@ describe("Permission group utils", () => {
   describe("channelDiff", () => {
     it("should return empty added and removed channels when user is not eligible to edit channels", () => {
       // Arrange
+      const isUserEligibleToEditPermissionGroup = false;
+      const allAviableChannels = [];
       const formData = {
         channels: [],
       } as unknown as PermissionGroupDetailsPageFormData;
@@ -53,8 +55,8 @@ describe("Permission group utils", () => {
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
-        [],
-        false,
+        allAviableChannels,
+        isUserEligibleToEditPermissionGroup,
       );
 
       // Assert
@@ -64,6 +66,8 @@ describe("Permission group utils", () => {
 
     it("should return  added channel and no removed channels when user had no restricted channels", () => {
       // Arrange
+      const isUserEligibleToEditPermissionGroup = true;
+      const allAviableChannels = [];
       const formData = {
         channels: ["1"],
       } as PermissionGroupDetailsPageFormData;
@@ -90,8 +94,8 @@ describe("Permission group utils", () => {
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
-        [],
-        true,
+        allAviableChannels,
+        isUserEligibleToEditPermissionGroup,
       );
 
       // Assert
@@ -101,6 +105,8 @@ describe("Permission group utils", () => {
 
     it("should return all added and removed channels", () => {
       // Arrange
+      const isUserEligibleToEditPermissionGroup = true;
+      const allAviableChannels = [];
       const formData = {
         channels: ["2", "3", "55"],
       } as PermissionGroupDetailsPageFormData;
@@ -127,8 +133,8 @@ describe("Permission group utils", () => {
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
-        [],
-        true,
+        allAviableChannels,
+        isUserEligibleToEditPermissionGroup,
       );
 
       // Assert
@@ -138,6 +144,8 @@ describe("Permission group utils", () => {
 
     it("should only removed channels", () => {
       // Arrange
+      const isUserEligibleToEditPermissionGroup = true;
+      const allAviableChannels = [];
       const formData = {
         channels: ["2"],
       } as PermissionGroupDetailsPageFormData;
@@ -160,8 +168,8 @@ describe("Permission group utils", () => {
       const { addChannels, removeChannels } = channelsDiff(
         permissionGroup,
         formData,
-        [],
-        true,
+        allAviableChannels,
+        isUserEligibleToEditPermissionGroup,
       );
 
       // Assert
@@ -171,6 +179,7 @@ describe("Permission group utils", () => {
 
     it("should return all channels when no restricted channels and allow access all", () => {
       // Arrnage
+      const isUserEligibleToEditPermissionGroup = true;
       const formData = {
         channels: ["2"],
         hasAllChannels: true,
@@ -200,7 +209,7 @@ describe("Permission group utils", () => {
         permissionGroup,
         formData,
         allChannels,
-        true,
+        isUserEligibleToEditPermissionGroup,
       );
 
       // Assert
@@ -479,8 +488,8 @@ describe("Permission group utils", () => {
     });
   });
 
-  describe("getChannelsOptions", () => {
-    it("should return available channels when no users", () => {
+  describe("getUserAccessibleChannelsOptions", () => {
+    it("should return empty array when no users", () => {
       // Arrange
       const availableChannels = [
         {
@@ -498,10 +507,11 @@ describe("Permission group utils", () => {
       ] as ChannelFragment[];
 
       // Act
-      const filteredChannels = getChannelsOptions(availableChannels);
+      const filteredChannels =
+        getUserAccessibleChannelsOptions(availableChannels);
 
       // Assert
-      expect(filteredChannels).toEqual(availableChannels);
+      expect(filteredChannels).toEqual([]);
     });
 
     it("should return available channels when user has no restricted channels", () => {
@@ -526,13 +536,16 @@ describe("Permission group utils", () => {
       } as UserContext["user"];
 
       // Act
-      const filteredChannels = getChannelsOptions(availableChannels, user);
+      const filteredChannels = getUserAccessibleChannelsOptions(
+        availableChannels,
+        user,
+      );
 
       // Assert
       expect(filteredChannels).toEqual(availableChannels);
     });
 
-    it("should return user accessible channels when user has accessibleChannels", () => {
+    it("should return user accessible channels when user has accessibleChannels and has restricted access to channels", () => {
       // Arrange
       const availableChannels = [
         {
@@ -557,10 +570,14 @@ describe("Permission group utils", () => {
             slug: "Userchannel-1",
           },
         ],
+        restrictedAccessToChannels: true,
       } as UserContext["user"];
 
       // Act
-      const filteredChannels = getChannelsOptions(availableChannels, user);
+      const filteredChannels = getUserAccessibleChannelsOptions(
+        availableChannels,
+        user,
+      );
 
       // Assert
       expect(filteredChannels).toEqual([
@@ -581,7 +598,8 @@ describe("Permission group utils", () => {
       } as UserContext["user"];
 
       // Act
-      const hasRestrictedChannels = checkIfUserHasRestictedChannels(user);
+      const hasRestrictedChannels =
+        checkIfUserHasRestictedAccessToChannels(user);
 
       // Assert
       expect(hasRestrictedChannels).toBe(true);
@@ -594,7 +612,8 @@ describe("Permission group utils", () => {
       } as UserContext["user"];
 
       // Act
-      const hasRestrictedChannels = checkIfUserHasRestictedChannels(user);
+      const hasRestrictedChannels =
+        checkIfUserHasRestictedAccessToChannels(user);
 
       // Assert
       expect(hasRestrictedChannels).toBe(false);
@@ -602,7 +621,8 @@ describe("Permission group utils", () => {
 
     it("should return false when user no user", () => {
       // Arrange and Act
-      const hasRestrictedChannels = checkIfUserHasRestictedChannels(undefined);
+      const hasRestrictedChannels =
+        checkIfUserHasRestictedAccessToChannels(undefined);
 
       // Assert
       expect(hasRestrictedChannels).toBe(false);

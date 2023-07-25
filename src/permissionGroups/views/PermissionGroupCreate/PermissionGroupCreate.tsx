@@ -16,8 +16,8 @@ import {
 } from "../../components/PermissionGroupCreatePage";
 import { permissionGroupDetailsUrl } from "../../urls";
 import {
-  checkIfUserHasRestictedChannels,
-  getChannelsOptions,
+  checkIfUserHasRestictedAccessToChannels,
+  getUserAccessibleChannelsOptions,
 } from "../../utils";
 
 export const PermissionGroupCreate: React.FC = () => {
@@ -27,9 +27,11 @@ export const PermissionGroupCreate: React.FC = () => {
   const shop = useShop();
   const user = useUser();
   const { availableChannels } = useAppChannel(false);
-  const hasUserRestrictedChannels = checkIfUserHasRestictedChannels(user.user);
-  const userAvailableChannels = useMemo(
-    () => getChannelsOptions(availableChannels, user.user),
+
+  const hasUserRestrictedAccessToChannels =
+    checkIfUserHasRestictedAccessToChannels(user.user);
+  const userAccessibleChannelsOptions = useMemo(
+    () => getUserAccessibleChannelsOptions(availableChannels, user.user),
     [availableChannels, user.user],
   );
 
@@ -58,7 +60,9 @@ export const PermissionGroupCreate: React.FC = () => {
     createPermissionGroupResult?.data?.permissionGroupCreate?.errors || [];
 
   const onSubmit = (formData: PermissionGroupCreateFormData) => {
-    const channelChoices = userAvailableChannels.map(channel => channel.id);
+    const channelChoices = userAccessibleChannelsOptions.map(
+      channel => channel.id,
+    );
 
     return extractMutationErrors(
       createPermissionGroup({
@@ -71,7 +75,7 @@ export const PermissionGroupCreate: React.FC = () => {
               ? channelChoices
               : formData.channels,
             restrictedAccessToChannels:
-              hasUserRestrictedChannels || !formData.hasAllChannels,
+              hasUserRestrictedAccessToChannels || !formData.hasAllChannels,
           },
         },
       }),
@@ -103,8 +107,8 @@ export const PermissionGroupCreate: React.FC = () => {
         errors={errors as any}
         disabled={createPermissionGroupResult.loading}
         permissions={permissions}
-        channels={userAvailableChannels}
-        hasRestrictedChannels={hasUserRestrictedChannels}
+        channels={userAccessibleChannelsOptions}
+        hasRestrictedChannels={hasUserRestrictedAccessToChannels}
         saveButtonBarState={createPermissionGroupResult.status}
         onSubmit={onSubmit}
       />

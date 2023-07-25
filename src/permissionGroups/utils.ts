@@ -101,9 +101,9 @@ export const channelsDiff = (
   permissionGroup: PermissionGroupDetailsFragment | null | undefined,
   formData: PermissionGroupDetailsPageFormData,
   allChannels: ChannelFragment[],
-  isUserAbleToEdit: boolean,
+  isUserEligibleToEditPermissionGroup: boolean,
 ) => {
-  if (!permissionGroup) {
+  if (!permissionGroup || !isUserEligibleToEditPermissionGroup) {
     return {
       addChannels: [],
       removeChannels: [],
@@ -115,14 +115,7 @@ export const channelsDiff = (
     : formData.channels;
   const oldChannels = permissionGroup?.accessibleChannels?.map(c => c.id) ?? [];
   const hasRestrictedChannels =
-    permissionGroup?.restrictedAccessToChannels ?? [];
-
-  if (!isUserAbleToEdit) {
-    return {
-      addChannels: [],
-      removeChannels: [],
-    };
-  }
+    permissionGroup?.restrictedAccessToChannels ?? false;
 
   if (!hasRestrictedChannels) {
     return {
@@ -190,33 +183,32 @@ export const checkIfUserIsEligibleToEditChannels = (
 /**
  * Get channels options for select field.
  */
-export const getChannelsOptions = (
+export const getUserAccessibleChannelsOptions = (
   availableChannels: ChannelFragment[],
   user?: UserContext["user"],
 ): ChannelFragment[] => {
   if (!user) {
+    return [];
+  }
+
+  if (!user.restrictedAccessToChannels) {
     return availableChannels;
   }
 
-  if (
-    "restrictedAccessToChannels" in user &&
-    !user.restrictedAccessToChannels
-  ) {
-    return availableChannels;
-  }
-
-  if ("accessibleChannels" in user && user.accessibleChannels !== null) {
+  if (user.accessibleChannels !== null) {
     return user.accessibleChannels;
   }
 
-  return availableChannels;
+  return [];
 };
 
 /**
  * Check if user has restricted access to channels.
  */
-export const checkIfUserHasRestictedChannels = (user?: UserContext["user"]) => {
-  if (user && "restrictedAccessToChannels" in user) {
+export const checkIfUserHasRestictedAccessToChannels = (
+  user?: UserContext["user"],
+) => {
+  if (user) {
     return user.restrictedAccessToChannels;
   }
 
@@ -226,12 +218,12 @@ export const checkIfUserHasRestictedChannels = (user?: UserContext["user"]) => {
 /**
  * Get user accessible channels.
  */
-const getUserAccessibleChannels = (user?: UserContext["user"] | null) => {
-  if (user && "accessibleChannels" in user) {
-    return user.accessibleChannels;
+const getUserAccessibleChannels = (user?: UserContext["user"]) => {
+  if (!user || user.accessibleChannels === null) {
+    return [];
   }
 
-  return [];
+  return user.accessibleChannels;
 };
 
 export const getInitialChannels = (

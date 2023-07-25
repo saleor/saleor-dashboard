@@ -134,10 +134,14 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     .map(perm => perm.code);
 
   const userPermissions = user?.user?.userPermissions?.map(p => p.code) || [];
-  const isUserAbleToEdit = checkIfUserIsEligibleToEditChannels(
-    user.user,
-    data?.permissionGroup?.accessibleChannels ?? [],
-  );
+
+  // When user does not have access to channels required by group,
+  // he can not edit permission group
+  const isUserEligibleToEditPermissionGroup =
+    checkIfUserIsEligibleToEditChannels(
+      user.user,
+      data?.permissionGroup?.accessibleChannels ?? [],
+    );
 
   const permissions = (shop?.permissions || []).map(perm => ({
     ...perm,
@@ -152,7 +156,10 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
 
   const isLoading = loading || permissionGroupUpdateResult.loading;
   const disabled =
-    isLoading || !isGroupEditable || permissionsExceeded || !isUserAbleToEdit;
+    isLoading ||
+    !isGroupEditable ||
+    permissionsExceeded ||
+    !isUserEligibleToEditPermissionGroup;
 
   const handleSubmit = async (formData: PermissionGroupDetailsPageFormData) =>
     extractMutationErrors(
@@ -167,7 +174,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
               data?.permissionGroup,
               formData,
               availableChannels,
-              isUserAbleToEdit,
+              isUserEligibleToEditPermissionGroup,
             ),
             restrictedAccessToChannels: !formData.hasAllChannels,
           },
@@ -180,7 +187,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
       <PermissonGroupDetailsPage
         permissionGroup={data?.permissionGroup}
         permissionsExceeded={permissionsExceeded}
-        isUserAbleToEditChannesl={isUserAbleToEdit}
+        isUserAbleToEditChannels={isUserEligibleToEditPermissionGroup}
         channels={availableChannels}
         members={membersList}
         onAssign={() => openModal("assign")}
