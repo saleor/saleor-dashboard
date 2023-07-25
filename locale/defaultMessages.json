@@ -434,9 +434,6 @@
     "context": "table column header",
     "string": "Return"
   },
-  "0r0/Hb": {
-    "string": "New Permissions"
-  },
   "0sd4ez": {
     "context": "selected customer channel subtitle",
     "string": "Customer will be sent the gift card code via this channels email address"
@@ -1754,6 +1751,9 @@
   "AzshS2": {
     "context": "notification",
     "string": "Published pages"
+  },
+  "B+Ba0R": {
+    "string": "Requested Permissions"
   },
   "B/y6LC": {
     "context": "section header",
