@@ -1084,6 +1084,10 @@
     "context": "acre-ft unit",
     "string": "acre-ft"
   },
+  "5ZYUn5": {
+    "context": "Filter and element text",
+    "string": "And"
+  },
   "5ZvuVw": {
     "string": "No products matching given query"
   },
@@ -1127,6 +1131,10 @@
   "5kvaFR": {
     "context": "product field",
     "string": "Export Variant SKU"
+  },
+  "5o84YO": {
+    "context": "Filter where element text",
+    "string": "Where"
   },
   "5pHBSU": {
     "context": "switch button",
@@ -1742,6 +1750,10 @@
   "AyQkmp": {
     "string": "Sorting by this column is not available"
   },
+  "AyW1j6": {
+    "context": "Clear filters button text",
+    "string": "Clear all fields"
+  },
   "AzMSmb": {
     "context": "caption",
     "string": "If enabled this attribute can be used as a column in product table."
@@ -1770,6 +1782,10 @@
   },
   "B52Em/": {
     "string": "Address line 1"
+  },
+  "B5KI59": {
+    "context": "Empty filters text",
+    "string": "Add filter to start"
   },
   "B5yE8S": {
     "context": "dialog header",
@@ -3280,6 +3296,14 @@
     "context": "Charged transaction amount, data display header",
     "string": "Charged"
   },
+  "LdNCP/": {
+    "context": "Filter or element text",
+    "string": "Or"
+  },
+  "LeJClL": {
+    "context": "Popover title",
+    "string": "Conditions"
+  },
   "Ljtqmt": {
     "context": "page header, order id unknown",
     "string": "Order"
@@ -4083,6 +4107,10 @@
   "RZ32u5": {
     "context": "PageTypeDeleteWarningDialog single consent label",
     "string": "Yes, I want to delete this page type and assigned pages"
+  },
+  "RZDxej": {
+    "context": "Popover trigger text (button)",
+    "string": "Filters {count, plural, =0 {} other {({count})} }"
   },
   "RZmdM3": {
     "context": "delete page types",
@@ -7198,6 +7226,10 @@
     "context": "dialog title",
     "string": "Delete Warehouse"
   },
+  "nyhf9b": {
+    "context": "Add filter button text",
+    "string": "+ Add filter"
+  },
   "o5KXAN": {
     "context": "delete webhook",
     "string": "Are you sure you want to delete {name}?"
@@ -8343,6 +8375,10 @@
   },
   "wTHjt3": {
     "string": "Search Orders..."
+  },
+  "wUQCnQ": {
+    "context": "Save filters button text",
+    "string": "Save"
   },
   "wWTUrM": {
     "string": "No activities found"

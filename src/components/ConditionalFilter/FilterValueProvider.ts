@@ -5,4 +5,5 @@ export interface FilterValueProvider {
   loading: boolean;
   persist: (newValue: FilterContainer) => void;
   clear: () => void;
+  count: number;
 }

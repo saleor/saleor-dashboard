@@ -5504,7 +5504,7 @@ export type _GetDynamicLeftOperandsQueryResult = Apollo.QueryResult<Types._GetDy
 export const _GetChannelOperandsDocument = gql`
     query _GetChannelOperands {
   channels {
-    id
+    id: slug
     name
     slug
   }

@@ -1,20 +1,31 @@
-import { _ExperimentalFilters, Box, FilterEvent } from "@saleor/macaw-ui/next";
+import {
+  _ExperimentalFilters,
+  Box,
+  FilterEvent,
+  Row,
+} from "@saleor/macaw-ui/next";
 import React, { FC } from "react";
 
 import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
 import { LeftOperand } from "./LeftOperandsProvider";
+import { useFiltersAreaTranslations } from "./messages";
 import { useFilterContainer } from "./useFilterContainer";
 import { ErrorEntry } from "./Validation";
 
 interface FiltersAreaProps {
   onConfirm: (value: FilterContainer) => void;
-  errors?: ErrorEntry[]
+  errors?: ErrorEntry[];
   onCancel?: () => void;
 }
 
-export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors }) => {
+export const FiltersArea: FC<FiltersAreaProps> = ({
+  onConfirm,
+  onCancel,
+  errors,
+}) => {
   const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
+  const translations = useFiltersAreaTranslations();
 
   const {
     value,
@@ -67,21 +78,27 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onConfirm, onCancel, errors 
   return (
     <_ExperimentalFilters
       leftOptions={leftOperandsProvider.operands}
-      // @ts-expect-error
-      value={value}
+      value={value as Array<string | Row>}
       onChange={handleStateChange}
       error={errors}
+      locale={translations.locale}
     >
       <_ExperimentalFilters.Footer>
-        <_ExperimentalFilters.AddRowButton>
-          + Add row
+        <_ExperimentalFilters.AddRowButton variant="tertiary">
+          {translations.addFilter}
         </_ExperimentalFilters.AddRowButton>
         <Box display="flex" gap={3}>
-          <_ExperimentalFilters.ClearButton onClick={onCancel}>
-            Clear
+          <_ExperimentalFilters.ClearButton
+            onClick={onCancel}
+            variant="tertiary"
+          >
+            {translations.clearFilters}
           </_ExperimentalFilters.ClearButton>
-          <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)} disabled={hasEmptyRows}>
-            Save
+          <_ExperimentalFilters.ConfirmButton
+            onClick={() => onConfirm(value)}
+            disabled={hasEmptyRows}
+          >
+            {translations.saveFilters}
           </_ExperimentalFilters.ConfirmButton>
         </Box>
       </_ExperimentalFilters.Footer>
