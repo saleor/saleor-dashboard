@@ -158,7 +158,7 @@ export const PermissonGroupDetailsPage: React.FC<
                       selectedChannels={data.channels}
                       onHasAllChannelsChange={handleHasAllChannelsChange}
                       onChannelChange={handleChannelChange}
-                      disabled={!isUserAbleToEditChannels}
+                      disabled={!isUserAbleToEditChannels || disabled}
                       disabledSelectAllChannels={hasUserRestrictedChannels}
                     />
                   </Box>
