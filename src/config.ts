@@ -94,6 +94,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.PAGES_LIST]: {
     rowNumber: PAGINATE_BY,
+    columns: ["title", "slug", "visible"],
   },
   [ListViews.PLUGINS_LIST]: {
     rowNumber: PAGINATE_BY,
