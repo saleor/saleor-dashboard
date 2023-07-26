@@ -7,11 +7,13 @@ import { LOCAL_STORAGE_KEYS, urlList } from "../../../fixtures/";
 import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
 import {
   addPresetWithName,
+  clickDeletePresetButton,
   clickSavedPresetContain,
   clickShowSavedPresetsButton,
   clickUpdatePresetButton,
   confirmActivePresetName,
   confirmGridRowsContainsText,
+  hoverSavedPresetContain,
   searchItems,
 } from "../../../support/pages/catalog/presetsAndSearch";
 
@@ -61,6 +63,34 @@ describe("As a user I should be able to save selected filters with search querie
         expect(
           localStorage.getItem(LOCAL_STORAGE_KEYS.keys.productPresets),
         ).to.contains(`query=${searchQuery}%20${updatedSearchQuery.trim()}`);
+      });
+    },
+  );
+  it(
+    "should be able to delete preset. TC: SALEOR_2714",
+    { tags: ["@productsList", "@allEnv", "@stable"] },
+    () => {
+      const firstPreset = "bean";
+      const secondPreset = "hoodie";
+      window.localStorage.setItem(
+        LOCAL_STORAGE_KEYS.keys.productPresets,
+        `[{"data":"query=${firstPreset}","name":"${firstPreset}"},{"data":"query=${secondPreset}","name":"${secondPreset}"}]`,
+      );
+      cy.visit(urlList.products);
+      ensureCanvasStatic(PRODUCTS_LIST.dataGridTable);
+      clickShowSavedPresetsButton();
+      hoverSavedPresetContain(secondPreset);
+      clickDeletePresetButton();
+      cy.clickSubmitButton();
+      ensureCanvasStatic(PRODUCTS_LIST.dataGridTable).then(() => {
+        expect(
+          localStorage.getItem(LOCAL_STORAGE_KEYS.keys.productPresets),
+        ).to.contains(`query=${firstPreset}`);
+        expect(
+          localStorage.getItem(LOCAL_STORAGE_KEYS.keys.productPresets),
+        ).to.not.contains(`query=${secondPreset}`);
+        clickShowSavedPresetsButton();
+        cy.contains(firstPreset).should("be.visible");
       });
     },
   );

@@ -30,6 +30,8 @@ export const useAppActions = (
     appToken,
     versions,
   );
+  const { handle: handlePermissionRequest } =
+    AppActionsHandler.useHandlePermissionRequest(appId);
 
   /**
    * Store if app has performed a handshake with Dashboard, to avoid sending events before that
@@ -56,6 +58,9 @@ export const useAppActions = (
         setHandshakeDone(true);
 
         return response;
+      }
+      case "requestPermissions": {
+        return handlePermissionRequest(action)
       }
       default: {
         throw new Error("Unknown action type");

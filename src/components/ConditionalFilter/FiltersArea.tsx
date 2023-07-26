@@ -12,18 +12,25 @@ import { FilterContainer } from "./FilterElement";
 import { LeftOperand } from "./LeftOperandsProvider";
 import { conditionalFilterMessages as messages } from "./messages";
 import { useFilterContainer } from "./useFilterContainer";
+import { ErrorEntry } from "./Validation";
 
 interface FiltersAreaProps {
   onConfirm: (value: FilterContainer) => void;
+  errors?: ErrorEntry[];
   onCancel?: () => void;
 }
 
-export const FiltersArea: FC<FiltersAreaProps> = ({ onCancel, onConfirm }) => {
+export const FiltersArea: FC<FiltersAreaProps> = ({
+  onConfirm,
+  onCancel,
+  errors,
+}) => {
   const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
   const { formatMessage } = useIntl();
 
   const {
     value,
+    hasEmptyRows,
     addEmpty,
     removeAt,
     updateLeftOperator,
@@ -74,6 +81,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onCancel, onConfirm }) => {
       leftOptions={leftOperandsProvider.operands}
       value={value as Array<string | Row>}
       onChange={handleStateChange}
+      error={errors}
     >
       <_ExperimentalFilters.Footer>
         <_ExperimentalFilters.AddRowButton variant="tertiary">
@@ -86,7 +94,10 @@ export const FiltersArea: FC<FiltersAreaProps> = ({ onCancel, onConfirm }) => {
           >
             {formatMessage(messages.clearFilters)}
           </_ExperimentalFilters.ClearButton>
-          <_ExperimentalFilters.ConfirmButton onClick={() => onConfirm(value)}>
+          <_ExperimentalFilters.ConfirmButton
+            onClick={() => onConfirm(value)}
+            disabled={hasEmptyRows}
+          >
             {formatMessage(messages.saveFilters)}
           </_ExperimentalFilters.ConfirmButton>
         </Box>

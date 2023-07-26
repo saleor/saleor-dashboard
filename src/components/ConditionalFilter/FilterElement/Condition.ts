@@ -25,6 +25,10 @@ export class Condition {
     return this.loading;
   }
 
+  public isEmpty() {
+    return this.options.isEmpty() || this.selected.isEmpty()
+  }
+
   public static createEmpty() {
     return new Condition(
       ConditionOptions.empty(),

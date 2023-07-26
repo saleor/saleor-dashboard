@@ -11,6 +11,7 @@ import {
   AppInstallView,
   AppListView,
   AppManageView,
+  AppPermissionRequestView,
   AppView,
 } from "src/apps/views";
 
@@ -63,6 +64,11 @@ export const AppsSectionRoot = () => {
           exact
           path={AppPaths.resolveAppDetailsPath(":id")}
           component={AppManageRoute}
+        />
+        <Route
+          exact
+          path={AppPaths.resolveRequestPermissionsPath(":id")}
+          component={AppPermissionRequestView}
         />
         <Route path={AppPaths.resolveAppPath(":id")} component={AppViewRoute} />
       </Switch>

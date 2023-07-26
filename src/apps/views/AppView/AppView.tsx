@@ -26,6 +26,9 @@ export const AppView: React.FC<AppProps> = ({ id }) => {
   const notify = useNotifier();
   const intl = useIntl();
 
+  const queryParams = new URLSearchParams(location.search);
+  const appPath = queryParams.get("appPath");
+
   const handleError = useCallback(
     () =>
       notify({
@@ -39,11 +42,15 @@ export const AppView: React.FC<AppProps> = ({ id }) => {
     return <NotFoundPage onBack={() => navigate(AppPaths.appListPath)} />;
   }
 
-  const appCompleteUrl = AppUrls.resolveAppCompleteUrlFromDashboardUrl(
+  let appCompleteUrl = AppUrls.resolveAppCompleteUrlFromDashboardUrl(
     location.pathname,
     data?.app?.appUrl || "",
     id,
   );
+
+  if(appPath) {
+    appCompleteUrl = `${appCompleteUrl}/${appPath}`;
+  }
 
   if (!data || !appCompleteUrl) {
     return null;

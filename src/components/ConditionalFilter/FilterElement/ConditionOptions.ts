@@ -74,6 +74,10 @@ export class ConditionOptions extends Array<ConditionItem> {
     return new ConditionOptions([]);
   }
 
+  public isEmpty() {
+    return this.length === 0
+  }
+
   public findByLabel(label: string) {
     return this.find(f => f.label === label);
   }
