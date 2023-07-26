@@ -553,10 +553,6 @@
   "1div9r": {
     "string": "Search Attribute"
   },
-  "1eBYfz": {
-    "context": "Popover trigger text (button)",
-    "string": "Show filters"
-  },
   "1gzck6": {
     "string": "{firstName} {lastName}"
   },
@@ -1088,6 +1084,10 @@
     "context": "acre-ft unit",
     "string": "acre-ft"
   },
+  "5ZYUn5": {
+    "context": "Filter and element text",
+    "string": "And"
+  },
   "5ZvuVw": {
     "string": "No products matching given query"
   },
@@ -1131,6 +1131,10 @@
   "5kvaFR": {
     "context": "product field",
     "string": "Export Variant SKU"
+  },
+  "5o84YO": {
+    "context": "Filter where element text",
+    "string": "Where"
   },
   "5pHBSU": {
     "context": "switch button",
@@ -1778,6 +1782,10 @@
   },
   "B52Em/": {
     "string": "Address line 1"
+  },
+  "B5KI59": {
+    "context": "Empty filters text",
+    "string": "Add filter to start"
   },
   "B5yE8S": {
     "context": "dialog header",
@@ -3288,6 +3296,10 @@
     "context": "Charged transaction amount, data display header",
     "string": "Charged"
   },
+  "LdNCP/": {
+    "context": "Filter or element text",
+    "string": "Or"
+  },
   "LeJClL": {
     "context": "Popover title",
     "string": "Conditions"
@@ -4095,6 +4107,10 @@
   "RZ32u5": {
     "context": "PageTypeDeleteWarningDialog single consent label",
     "string": "Yes, I want to delete this page type and assigned pages"
+  },
+  "RZDxej": {
+    "context": "Popover trigger text (button)",
+    "string": "Filters {count, plural, =0 {} other {({count})} }"
   },
   "RZmdM3": {
     "context": "delete page types",

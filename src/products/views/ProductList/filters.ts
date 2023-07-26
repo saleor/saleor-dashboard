@@ -41,7 +41,6 @@ import {
   FilterElementRegular,
 } from "../../../components/Filter";
 import {
-  GteLte,
   createFilterTabUtils,
   createFilterUtils,
   dedupeFilter,
@@ -51,6 +50,7 @@ import {
   getMultipleValueQueryParam,
   getSingleEnumValueQueryParam,
   getSingleValueQueryParam,
+  GteLte,
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
