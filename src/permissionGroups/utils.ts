@@ -169,6 +169,11 @@ export const checkIfUserIsEligibleToEditChannels = (
   user: UserContext["user"],
   permissionGroupAccessibleChannels: ChannelFragment[],
 ) => {
+  // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
+  if (user?.restrictedAccessToChannels === false) {
+    return true;
+  }
+
   const userChannels = getUserAccessibleChannels(user)?.map(c => c.id) ?? [];
 
   if (userChannels.length === 0) {
