@@ -211,7 +211,7 @@ jobs:
 
   cypress-run-selected:
     runs-on: ubuntu-22.04
-    needs: [prepare-tests, deploy, testmo-report-preparation]
+    needs: [prepare-tests, deploy]
     container: cypress/browsers:node18.12.0-chrome106-ff106
     strategy:
       fail-fast: false
