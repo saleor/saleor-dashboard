@@ -8391,7 +8391,7 @@ export type _SearchCategoriesOperandsQueryVariables = Exact<{
 }>;
 
 
-export type _SearchCategoriesOperandsQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', name: string, slug: string, id: string } }> } | null };
+export type _SearchCategoriesOperandsQuery = { __typename: 'Query', categories: { __typename: 'CategoryCountableConnection', edges: Array<{ __typename: 'CategoryCountableEdge', node: { __typename: 'Category', id: string, name: string, slug: string } }> } | null };
 
 export type _SearchProductTypesOperandsQueryVariables = Exact<{
   after?: InputMaybe<Scalars['String']>;

@@ -48,7 +48,7 @@ export const initialDynamicOperands = gql`
     ) {
       edges {
         node {
-          id: slug
+          id
           name
           slug
         }

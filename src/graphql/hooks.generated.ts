@@ -5584,7 +5584,7 @@ export const _SearchCategoriesOperandsDocument = gql`
   categories(after: $after, first: $first, filter: {slugs: $categoriesSlugs}) {
     edges {
       node {
-        id: slug
+        id
         name
         slug
       }
