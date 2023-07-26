@@ -1,4 +1,4 @@
-import { unionBy } from "lodash-es";
+import unionBy from "lodash/unionBy";
 import { useState } from "react";
 
 import { STATIC_OPTIONS } from "./constants";
