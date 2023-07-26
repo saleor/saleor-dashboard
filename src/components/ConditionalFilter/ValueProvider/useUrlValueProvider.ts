@@ -41,7 +41,7 @@ export const useUrlValueProvider = (
   }, []);
 
   useEffect(() => {
-    if (loading) return
+    if (loading) return;
 
     setValue(tokenizedUrl.asFilterValuesFromResponse(data));
   }, [data, loading]);
@@ -61,10 +61,13 @@ export const useUrlValueProvider = (
     setValue([]);
   };
 
+  const count = value.filter(v => typeof v !== "string").length;
+
   return {
     value,
     loading,
     persist,
     clear,
+    count,
   };
 };

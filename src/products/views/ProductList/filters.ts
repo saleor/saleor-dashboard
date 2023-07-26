@@ -507,7 +507,6 @@ export const getFilterVariables = ({
 }) => {
   if (isProductListingPageFiltersFlagEnabled) {
     const queryVars = createProductQueryVariables(filterContainer);
-    console.log(filterContainer);
     const { channel, ...where } = queryVars;
 
     return {

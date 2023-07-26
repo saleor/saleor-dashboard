@@ -2,8 +2,8 @@ import { defineMessages } from "react-intl";
 
 export const conditionalFilterMessages = defineMessages({
   popoverTrigger: {
-    defaultMessage: "Show filters",
-    id: "1eBYfz",
+    defaultMessage: "Filters {count, plural, =0 {} other {({count})} }",
+    id: "RZDxej",
     description: "Popover trigger text (button)",
   },
   popoverTitle: {
