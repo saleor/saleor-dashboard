@@ -48,7 +48,7 @@ export const conditionalFilterMessages = defineMessages({
   },
 });
 
-export const useFiltersAreaMessages = () => {
+export const useFiltersAreaTranslations = () => {
   const { formatMessage } = useIntl();
 
   return {

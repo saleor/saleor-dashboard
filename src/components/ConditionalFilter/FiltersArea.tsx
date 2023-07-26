@@ -9,7 +9,7 @@ import React, { FC } from "react";
 import { useConditionalFilterContext } from "./context";
 import { FilterContainer } from "./FilterElement";
 import { LeftOperand } from "./LeftOperandsProvider";
-import { useFiltersAreaMessages } from "./messages";
+import { useFiltersAreaTranslations } from "./messages";
 import { useFilterContainer } from "./useFilterContainer";
 import { ErrorEntry } from "./Validation";
 
@@ -25,7 +25,7 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
   errors,
 }) => {
   const { apiProvider, leftOperandsProvider } = useConditionalFilterContext();
-  const messages = useFiltersAreaMessages();
+  const translations = useFiltersAreaTranslations();
 
   const {
     value,
@@ -81,24 +81,24 @@ export const FiltersArea: FC<FiltersAreaProps> = ({
       value={value as Array<string | Row>}
       onChange={handleStateChange}
       error={errors}
-      locale={messages.locale}
+      locale={translations.locale}
     >
       <_ExperimentalFilters.Footer>
         <_ExperimentalFilters.AddRowButton variant="tertiary">
-          {messages.addFilter}
+          {translations.addFilter}
         </_ExperimentalFilters.AddRowButton>
         <Box display="flex" gap={3}>
           <_ExperimentalFilters.ClearButton
             onClick={onCancel}
             variant="tertiary"
           >
-            {messages.clearFilters}
+            {translations.clearFilters}
           </_ExperimentalFilters.ClearButton>
           <_ExperimentalFilters.ConfirmButton
             onClick={() => onConfirm(value)}
             disabled={hasEmptyRows}
           >
-            {messages.saveFilters}
+            {translations.saveFilters}
           </_ExperimentalFilters.ConfirmButton>
         </Box>
       </_ExperimentalFilters.Footer>
