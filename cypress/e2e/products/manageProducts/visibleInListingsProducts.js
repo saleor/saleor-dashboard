@@ -6,9 +6,14 @@ import { productDetailsUrl } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
 import { searchInShop } from "../../../support/api/requests/storeFront/Search";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import { isProductVisibleInSearchResult } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import { updateProductVisibleInListings } from "../../../support/pages/catalog/products/productDetailsPage";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
+import {
+  isProductVisibleInSearchResult,
+} from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import {
+  updateProductVisibleInListings,
+} from "../../../support/pages/catalog/products/productDetailsPage";
 
 describe("Products displayed in listings", () => {
   const startsWith = "CyVisibleInListings-";
@@ -19,7 +24,7 @@ describe("Products displayed in listings", () => {
   let defaultChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(
@@ -46,10 +51,7 @@ describe("Products displayed in listings", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(

@@ -4,7 +4,10 @@
 import faker from "faker";
 
 import { ORDERS_SELECTORS } from "../../elements/orders/orders-selectors";
-import { ONE_PERMISSION_USERS, urlList } from "../../fixtures";
+import {
+  ONE_PERMISSION_USERS,
+  urlList,
+} from "../../fixtures";
 import {
   createChannel,
   createCustomer,
@@ -34,7 +37,7 @@ describe("Orders", () => {
   let taxClass;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createChannel({ name: randomName })
       .then(channelResp => {
         channel = channelResp;
@@ -103,12 +106,10 @@ describe("Orders", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest("auth", ONE_PERMISSION_USERS.order)
-      .then(() => {
-        // set notifiedAboutNavigator to make navigator banner gone from the start - banner was covering needed elements during test
-        window.localStorage.setItem("notifiedAboutNavigator", "true");
-      });
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.order).then(() => {
+      // set notifiedAboutNavigator to make navigator banner gone from the start - banner was covering needed elements during test
+      window.localStorage.setItem("notifiedAboutNavigator", "true");
+    });
   });
 
   it(

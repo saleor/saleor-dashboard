@@ -24,7 +24,9 @@ import {
   SHARED_ELEMENTS,
 } from "../elements";
 import { urlList } from "../fixtures/urlList";
-import { ensureCanvasStatic } from "../support/customCommands/sharedElementsOperations/canvas";
+import {
+  ensureCanvasStatic,
+} from "../support/customCommands/sharedElementsOperations/canvas";
 import cypressGrep from "../support/cypress-grep/support";
 
 commandTimings();
@@ -167,3 +169,7 @@ Cypress.on(
     // failing the test
     false,
 );
+
+// Cypress.on("test:before:run", () => {
+//   window.localStorage.setItem("notifiedAboutNavigator", "true");
+// });

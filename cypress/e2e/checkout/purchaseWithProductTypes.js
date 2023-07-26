@@ -17,7 +17,9 @@ import {
   getShippingMethodIdFromCheckout,
   updateShippingInCheckout,
 } from "../../support/api/utils/ordersUtils";
-import { createDigitalAndPhysicalProductWithNewDataAndDefaultChannel } from "../../support/api/utils/products/productsUtils";
+import {
+  createDigitalAndPhysicalProductWithNewDataAndDefaultChannel,
+} from "../../support/api/utils/products/productsUtils";
 
 describe("As an unlogged customer I want to order physical and digital products", () => {
   const startsWith = `CyPurchaseByType`;
@@ -33,7 +35,7 @@ describe("As an unlogged customer I want to order physical and digital products"
   let physicalVariants;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createDigitalAndPhysicalProductWithNewDataAndDefaultChannel({
       physicalProductName: physicalName,
       digitalProductName: digitalName,
@@ -54,7 +56,7 @@ describe("As an unlogged customer I want to order physical and digital products"
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

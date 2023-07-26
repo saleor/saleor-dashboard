@@ -3,11 +3,18 @@
 
 import faker from "faker";
 
-import { CUSTOMER_DETAILS_SELECTORS } from "../../elements/customer/customer-details";
-import { CUSTOMERS_LIST_SELECTORS } from "../../elements/customer/customers-list";
+import {
+  CUSTOMER_DETAILS_SELECTORS,
+} from "../../elements/customer/customer-details";
+import {
+  CUSTOMERS_LIST_SELECTORS,
+} from "../../elements/customer/customers-list";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
-import { customerDetailsUrl, urlList } from "../../fixtures/urlList";
+import {
+  customerDetailsUrl,
+  urlList,
+} from "../../fixtures/urlList";
 import {
   addressCreate,
   createCustomer,
@@ -20,7 +27,7 @@ describe("Tests for customer", () => {
   let secondAddress;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     cy.fixture("addresses").then(({ usAddress, secondUsAddress }) => {
       address = usAddress;
       secondAddress = secondUsAddress;
@@ -29,7 +36,7 @@ describe("Tests for customer", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

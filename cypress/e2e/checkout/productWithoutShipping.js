@@ -28,7 +28,7 @@ describe("Products without shipment option", () => {
   let productWithoutShipping;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     createChannel({
       name,

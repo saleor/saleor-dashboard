@@ -3,21 +3,29 @@
 
 import faker from "faker";
 
-import { PRODUCT_DETAILS } from "../../elements/catalog/products/product-details";
+import {
+  PRODUCT_DETAILS,
+} from "../../elements/catalog/products/product-details";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { productDetailsUrl } from "../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../fixtures/users";
 import { createCategory } from "../../support/api/requests/Category";
 import { createCollection } from "../../support/api/requests/Collections";
-import { getProductDetails } from "../../support/api/requests/storeFront/ProductDetails";
+import {
+  getProductDetails,
+} from "../../support/api/requests/storeFront/ProductDetails";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
-import { expectCorrectProductInformation } from "../../support/api/utils/products/checkProductInfo";
+import {
+  expectCorrectProductInformation,
+} from "../../support/api/utils/products/checkProductInfo";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
 } from "../../support/api/utils/products/productsUtils";
 import { metadataForms } from "../../support/pages/catalog/metadataComponent";
-import { fillUpCommonFieldsForAllProductTypes } from "../../support/pages/catalog/products/productDetailsPage";
+import {
+  fillUpCommonFieldsForAllProductTypes,
+} from "../../support/pages/catalog/products/productDetailsPage";
 
 describe("Update products", () => {
   const startsWith = "CyUpdateProducts-";
@@ -30,7 +38,7 @@ describe("Update products", () => {
   let attribute;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;

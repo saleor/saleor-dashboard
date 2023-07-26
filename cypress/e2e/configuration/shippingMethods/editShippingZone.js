@@ -5,14 +5,18 @@ import faker from "faker";
 
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { shippingZoneDetailsUrl } from "../../../fixtures/urlList";
-import { updateChannelWarehouses } from "../../../support/api/requests/Channels";
+import {
+  updateChannelWarehouses,
+} from "../../../support/api/requests/Channels";
 import {
   createShippingZone,
   getShippingZone,
 } from "../../../support/api/requests/ShippingMethod";
 import { createWarehouse } from "../../../support/api/requests/Warehouse";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
-import { fillUpShippingZoneData } from "../../../support/pages/shippingMethodPage";
+import {
+  fillUpShippingZoneData,
+} from "../../../support/pages/shippingMethodPage";
 import { enterAndSelectShippings } from "../../../support/pages/shippingZones";
 
 describe("As a user I should be able to update and delete shipping zone", () => {
@@ -25,7 +29,7 @@ describe("As a user I should be able to update and delete shipping zone", () => 
   let warehouse;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel()
       .then(channel => {
         defaultChannel = channel;
@@ -48,7 +52,7 @@ describe("As a user I should be able to update and delete shipping zone", () => 
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createShippingZone(name, "US", defaultChannel.id, warehouse.id).then(
       shippingZoneResp => {
         shippingZone = shippingZoneResp;

@@ -1,10 +1,17 @@
 /// <reference types="cypress"/>
 /// <reference types="../../../support"/>
 
-import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
+import {
+  PRODUCTS_LIST,
+} from "../../../elements/catalog/products/products-list";
 import { SEARCH } from "../../../elements/shared";
-import { LOCAL_STORAGE_KEYS, urlList } from "../../../fixtures/";
-import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
+import {
+  LOCAL_STORAGE_KEYS,
+  urlList,
+} from "../../../fixtures/";
+import {
+  ensureCanvasStatic,
+} from "../../../support/customCommands/sharedElementsOperations/canvas";
 import {
   addPresetWithName,
   clickDeletePresetButton,
@@ -19,7 +26,7 @@ import {
 
 describe("As a user I should be able to save selected filters with search queries under the given name", () => {
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(
