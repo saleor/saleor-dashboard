@@ -12,7 +12,7 @@ jobs:
         env:
           TESTMO_URL: ${{ secrets.TESTMO_URL }}
         if: "${{ env.TESTMO_URL != '' }}"
-        run: echo "::set-output name=defined::true"
+        run: echo "::set-output name=defined::false"
   deploy:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-22.04
