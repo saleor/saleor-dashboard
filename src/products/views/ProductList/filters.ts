@@ -41,6 +41,7 @@ import {
   FilterElementRegular,
 } from "../../../components/Filter";
 import {
+  GteLte,
   createFilterTabUtils,
   createFilterUtils,
   dedupeFilter,
@@ -50,7 +51,6 @@ import {
   getMultipleValueQueryParam,
   getSingleEnumValueQueryParam,
   getSingleValueQueryParam,
-  GteLte,
 } from "../../../utils/filters";
 import {
   ProductListUrlFilters,
@@ -507,6 +507,7 @@ export const getFilterVariables = ({
 }) => {
   if (isProductListingPageFiltersFlagEnabled) {
     const queryVars = createProductQueryVariables(filterContainer);
+    console.log(filterContainer);
     const { channel, ...where } = queryVars;
 
     return {

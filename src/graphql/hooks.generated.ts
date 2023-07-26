@@ -5504,7 +5504,7 @@ export type _GetDynamicLeftOperandsQueryResult = Apollo.QueryResult<Types._GetDy
 export const _GetChannelOperandsDocument = gql`
     query _GetChannelOperands {
   channels {
-    id
+    id: slug
     name
     slug
   }
@@ -5584,7 +5584,7 @@ export const _SearchCategoriesOperandsDocument = gql`
   categories(after: $after, first: $first, filter: {slugs: $categoriesSlugs}) {
     edges {
       node {
-        id
+        id: slug
         name
         slug
       }

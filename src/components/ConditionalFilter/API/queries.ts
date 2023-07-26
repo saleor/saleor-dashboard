@@ -18,7 +18,7 @@ export const initialDynamicLeftOperands = gql`
 export const initialDynamicOperands = gql`
   query _GetChannelOperands {
     channels {
-      id
+      id: slug
       name
       slug
     }
@@ -48,7 +48,7 @@ export const initialDynamicOperands = gql`
     ) {
       edges {
         node {
-          id
+          id: slug
           name
           slug
         }
