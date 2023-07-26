@@ -49,7 +49,7 @@ const removeElement = (container: FilterContainer, position: number) => {
   return removeConstraint(newContainer);
 };
 
-const removeEmptyElements = (container: FilterContainer, provider: FilterValueProvider) => {
+const removeEmptyElements = (container: FilterContainer, provider: FilterValueProvider): FilterContainer => {
   const emptyIndex = container.findIndex(el =>
     FilterElement.isCompatible(el) && (!provider.isPersisted(el) || el.isEmpty())
   )
