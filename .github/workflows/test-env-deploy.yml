@@ -274,6 +274,7 @@ jobs:
         working-directory: .github/workflows
         run: npm ci
       - name: Testmo threads submit
+        if: needs.check-secret.outputs.testmo-url == 'true'
         working-directory: .github/workflows
         run: |
           npx testmo automation:run:submit-thread \
