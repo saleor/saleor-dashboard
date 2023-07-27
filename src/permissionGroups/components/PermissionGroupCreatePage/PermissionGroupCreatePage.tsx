@@ -114,22 +114,20 @@ export const PermissionGroupCreatePage: React.FC<
                 onChange={change}
                 disabled={disabled}
               />
-              {channels.length > 0 && (
-                <>
-                  <FormSpacer />
-                  <Box paddingX={9}>
-                    <ChannelPermission
-                      allChannels={channels}
-                      selectedChannels={data.channels}
-                      onChannelChange={handleChannelChange}
-                      onHasAllChannelsChange={handleHasAllChannelsChange}
-                      hasAllChannels={data.hasAllChannels}
-                      disabled={false}
-                      disabledSelectAllChannels={hasRestrictedChannels}
-                    />
-                  </Box>
-                </>
-              )}
+
+              <FormSpacer />
+
+              <Box paddingX={9}>
+                <ChannelPermission
+                  allChannels={channels}
+                  selectedChannels={data.channels}
+                  onChannelChange={handleChannelChange}
+                  onHasAllChannelsChange={handleHasAllChannelsChange}
+                  hasAllChannels={data.hasAllChannels}
+                  disabled={false}
+                  disabledSelectAllChannels={hasRestrictedChannels}
+                />
+              </Box>
             </DetailPageLayout.Content>
             <DetailPageLayout.RightSidebar>
               <AccountPermissions

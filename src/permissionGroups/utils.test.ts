@@ -698,6 +698,28 @@ describe("Permission group utils", () => {
       // Assert
       expect(isEligible).toBe(false);
     });
+
+    it("should return false when user does not have any accessible channels", () => {
+      // Arrange
+      const user = {
+        accessibleChannels: [],
+        restrictedAccessToChannels: true,
+      } as unknown as UserContext["user"];
+
+      const permissionGroupAccessibleChannels = [
+        { id: "1", name: "Channel 1", slug: "channel-1" },
+        { id: "2", name: "Channel 2", slug: "channel-2" },
+      ] as ChannelFragment[];
+
+      // Act
+      const isEligible = checkIfUserIsEligibleToEditChannels(
+        user,
+        permissionGroupAccessibleChannels,
+      );
+
+      // Assert
+      expect(isEligible).toBe(false);
+    });
   });
 
   describe("getInitialChannels", () => {

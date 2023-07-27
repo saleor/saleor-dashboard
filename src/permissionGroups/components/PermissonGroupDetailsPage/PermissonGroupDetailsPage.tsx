@@ -144,26 +144,24 @@ export const PermissonGroupDetailsPage: React.FC<
                 errors={errors}
                 onChange={change}
               />
-              {channelsOptions.length > 0 && (
-                <>
-                  <FormSpacer />
-                  <Box paddingX={9}>
-                    <ChannelPermission
-                      allChannels={
-                        // I pass all channels because Multiselect components based on ids,
-                        // and need data that will take information about channel
-                        !isUserAbleToEditChannels ? channels : channelsOptions
-                      }
-                      hasAllChannels={data.hasAllChannels}
-                      selectedChannels={data.channels}
-                      onHasAllChannelsChange={handleHasAllChannelsChange}
-                      onChannelChange={handleChannelChange}
-                      disabled={!isUserAbleToEditChannels || disabled}
-                      disabledSelectAllChannels={hasUserRestrictedChannels}
-                    />
-                  </Box>
-                </>
-              )}
+
+              <FormSpacer />
+
+              <Box paddingX={9}>
+                <ChannelPermission
+                  allChannels={
+                    // I pass all channels because Multiselect components based on ids,
+                    // and need data that will take information about channel
+                    !isUserAbleToEditChannels ? channels : channelsOptions
+                  }
+                  hasAllChannels={data.hasAllChannels}
+                  selectedChannels={data.channels}
+                  onHasAllChannelsChange={handleHasAllChannelsChange}
+                  onChannelChange={handleChannelChange}
+                  disabled={!isUserAbleToEditChannels || disabled}
+                  disabledSelectAllChannels={hasUserRestrictedChannels}
+                />
+              </Box>
 
               <FormSpacer />
               <PermissionGroupMemberList
