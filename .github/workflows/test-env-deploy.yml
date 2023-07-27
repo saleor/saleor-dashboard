@@ -3,16 +3,6 @@ name: TEST-ENV-DEPLOYMENT
 
 on: [pull_request]
 jobs:
-  check-secret:
-    runs-on: ubuntu-22.04
-    outputs:
-      testmo-url: ${{ steps.testmo-url.outputs.defined }}
-    steps:
-      - id: testmo-url
-        env:
-          TESTMO_URL: ${{ secrets.TESTMO_URL }}
-        if: "${{ env.TESTMO_URL != '' }}"
-        run: echo "::set-output name=defined::true"
   deploy:
     if: github.event.pull_request.head.repo.full_name == 'saleor/saleor-dashboard'
     runs-on: ubuntu-22.04
@@ -181,8 +171,8 @@ jobs:
           echo ${{steps.get_tags.outputs.result}}
 
   testmo-report-preparation:
-    needs: [check-secret, prepare-tests]
-    if: needs.check-secret.outputs.testmo-url == 'true'
+    needs: prepare-tests
+    if: github.event.pull_request.head.repo.fork == false
     runs-on: ubuntu-22.04
     outputs:
       testmo-run-id: ${{ steps.run-tests.outputs.TESTMO_RUN_ID }}
@@ -274,7 +264,7 @@ jobs:
         working-directory: .github/workflows
         run: npm ci
       - name: Testmo threads submit
-        if: needs.check-secret.outputs.testmo-url == 'true'
+        if: github.event.pull_request.head.repo.fork == false
         working-directory: .github/workflows
         run: |
           npx testmo automation:run:submit-thread \
@@ -286,9 +276,9 @@ jobs:
           TESTMO_TOKEN: ${{ secrets.TESTMO_TOKEN }}
           TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
   test-complete:
-    needs: [testmo-report-preparation, cypress-run-selected, check-secret]
+    needs: [testmo-report-preparation, cypress-run-selected]
     if: |
-      always() && !contains(needs.*.result, 'skipped') && needs.check-secret.outputs.testmo-url == 'true'
+      always() && !contains(needs.*.result, 'skipped') && !contains(needs.*.result, 'cancelled') && github.event.pull_request.head.repo.fork == false
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
