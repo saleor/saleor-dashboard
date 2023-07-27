@@ -93,11 +93,13 @@ export const ATTRIBUTE_INPUT_TYPE_CONDITIONS = {
     { type: "number.range", label: "between", value: "input-4" },
   ],
   DATE_TIME: [
-    { type: "datetime", label: "is", value: "input-1" },
+    { type: "datetime", label: "lower", value: "input-2" },
+    { type: "datetime", label: "greater", value: "input-3" },
     { type: "datetime.range", label: "between", value: "input-4" },
   ],
   DATE: [
-    { type: "date", label: "is", value: "input-1" },
+    { type: "date", label: "lower", value: "input-1" },
+    { type: "date", label: "greater", value: "input-2" },
     { type: "date.range", label: "between", value: "input-4" },
   ],
   SWATCH: [{ type: "multiselect", label: "in", value: "input-2" }],
