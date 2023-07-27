@@ -8,7 +8,6 @@ import {
 import { FilterContainer } from "./FilterElement";
 import { ConditionSelected } from "./FilterElement/ConditionSelected";
 import {
-  ConditionValue,
   isItemOption,
   isItemOptionArray,
   isTuple,
