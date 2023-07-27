@@ -3,7 +3,7 @@ import { ConditionValue } from "./FilterElement/ConditionValue";
 export const CONTROL_DEFAULTS = {
   text: "",
   number: "",
-  "number.range": [] as unknown as [string, string],
+  "number.range": ["", ""] as [string, string],
   multiselect: [] as ConditionValue,
   select: "",
   combobox: "",

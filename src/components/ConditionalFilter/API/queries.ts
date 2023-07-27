@@ -2,15 +2,35 @@ import { gql } from "@apollo/client";
 
 export const initialDynamicLeftOperands = gql`
   query _GetDynamicLeftOperands($first: Int!, $query: String!) {
-    attributes(first: $first, filter: { type: PRODUCT_TYPE, search: $query }) {
+    attributes(
+      first: $first
+      search: $query
+      where: {
+        type: { eq: PRODUCT_TYPE }
+        inputType: {
+          oneOf: [
+            DROPDOWN
+            MULTISELECT
+            BOOLEAN
+            NUMERIC
+            DATE
+            DATE_TIME
+            SWATCH
+          ]
+        }
+      }
+    ) {
       edges {
         node {
           id
           name
           slug
           inputType
+          __typename
         }
+        __typename
       }
+      __typename
     }
   }
 `;

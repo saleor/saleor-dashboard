@@ -36,7 +36,7 @@ export const ListFilters = <TFilterKeys extends string = string>({
     <>
       <Box
         display="grid"
-        gridTemplateColumns={2}
+        __gridTemplateColumns="auto 1fr"
         gap={4}
         paddingBottom={2}
         paddingX={6}
