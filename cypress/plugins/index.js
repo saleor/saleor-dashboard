@@ -37,7 +37,7 @@ module.exports = async (on, config) => {
     process.env.CYPRESS_PERMISSIONS_USERS_PASSWORD;
   config.env.MAILPITURL = process.env.CYPRESS_MAILPITURL;
   config.env.grepTags = process.env.CYPRESS_grepTags;
-  config.baseUrl = baseUrl(process.env.CYPRESS_demoTests);
+  config.baseUrl = process.env.CYPRESS_baseUrl;
 
   on("before:browser:launch", (_browser = {}, launchOptions) => {
     launchOptions.args.push("--proxy-bypass-list=<-loopback>");
@@ -46,9 +46,6 @@ module.exports = async (on, config) => {
 
   return config;
 };
-
-const baseUrl = isDemoTesting =>
-  isDemoTesting ? process.env.CYPRESS_DEMO_URI : process.env.CYPRESS_baseUrl;
 
 function getShopInfo(envVariables) {
   const createTokenMutation = graphql.gql`mutation tokenCreate($email: String!, $password: String!){
