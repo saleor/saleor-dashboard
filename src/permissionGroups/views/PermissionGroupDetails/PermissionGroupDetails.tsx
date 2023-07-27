@@ -38,7 +38,6 @@ import {
   arePermissionsExceeded,
   channelsDiff,
   checkIfUserBelongToPermissionGroup,
-  checkIfUserIsEligibleToEditChannels,
   permissionsDiff,
   usersDiff,
 } from "../../utils";
@@ -136,7 +135,8 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   };
 
   const isGroupEditable =
-    (data?.user?.editableGroups || []).filter(g => g.id === id).length > 0;
+    (data?.user?.editableGroups || []).filter(g => g.id === id).length > 0 &&
+    data?.permissionGroup?.userCanManage;
 
   const lastSourcesOfPermission = (data?.user?.userPermissions || [])
     .filter(
@@ -147,14 +147,6 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
     .map(perm => perm.code);
 
   const userPermissions = user?.user?.userPermissions?.map(p => p.code) || [];
-
-  // When user does not have access to channels required by group,
-  // he can not edit permission group
-  const isUserEligibleToEditPermissionGroup =
-    checkIfUserIsEligibleToEditChannels(
-      user.user,
-      data?.permissionGroup?.accessibleChannels ?? [],
-    );
 
   const permissions = (shop?.permissions || []).map(perm => ({
     ...perm,
@@ -168,11 +160,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
   );
 
   const isLoading = loading || permissionGroupUpdateResult.loading;
-  const disabled =
-    isLoading ||
-    !isGroupEditable ||
-    permissionsExceeded ||
-    !isUserEligibleToEditPermissionGroup;
+  const disabled = isLoading || !isGroupEditable || permissionsExceeded;
 
   const handleSubmit = async (formData: PermissionGroupDetailsPageFormData) =>
     extractMutationErrors(
@@ -187,7 +175,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
               data?.permissionGroup,
               formData,
               availableChannels,
-              isUserEligibleToEditPermissionGroup,
+              !!isGroupEditable,
             ),
             restrictedAccessToChannels: !formData.hasAllChannels,
           },
@@ -200,7 +188,7 @@ export const PermissionGroupDetails: React.FC<PermissionGroupDetailsProps> = ({
       <PermissonGroupDetailsPage
         permissionGroup={data?.permissionGroup}
         permissionsExceeded={permissionsExceeded}
-        isUserAbleToEditChannels={isUserEligibleToEditPermissionGroup}
+        isUserAbleToEditChannels={!!isGroupEditable}
         channels={availableChannels}
         members={membersList}
         onAssign={() => openModal("assign")}

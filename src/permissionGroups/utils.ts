@@ -101,9 +101,9 @@ export const channelsDiff = (
   permissionGroup: PermissionGroupDetailsFragment | null | undefined,
   formData: PermissionGroupDetailsPageFormData,
   allChannels: ChannelFragment[],
-  isUserEligibleToEditPermissionGroup: boolean,
+  isGroupEditable: boolean,
 ) => {
-  if (!permissionGroup || !isUserEligibleToEditPermissionGroup) {
+  if (!permissionGroup || !isGroupEditable) {
     return {
       addChannels: [],
       removeChannels: [],
@@ -162,29 +162,6 @@ export const mapAccessibleChannelsToChoice = (
       } as unknown as MultiAutocompleteChoiceType),
   ) ?? [];
 
-/**
- * User is eligible to edit channels when he has access to all channels in permission group.
- */
-export const checkIfUserIsEligibleToEditChannels = (
-  user: UserContext["user"],
-  permissionGroupAccessibleChannels: ChannelFragment[],
-) => {
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-boolean-literal-compare
-  if (user?.restrictedAccessToChannels === false) {
-    return true;
-  }
-
-  const userChannels = getUserAccessibleChannels(user)?.map(c => c.id) ?? [];
-
-  if (userChannels.length === 0) {
-    return false;
-  }
-
-  return permissionGroupAccessibleChannels.every(permChan =>
-    userChannels.includes(permChan.id),
-  );
-};
-
 export const checkIfUserBelongToPermissionGroup = (
   permissionGroup: PermissionGroupDetailsFragment | null | undefined,
   userId: string,
@@ -225,17 +202,6 @@ export const checkIfUserHasRestictedAccessToChannels = (
   }
 
   return false;
-};
-
-/**
- * Get user accessible channels.
- */
-const getUserAccessibleChannels = (user?: UserContext["user"]) => {
-  if (!user || user.accessibleChannels === null) {
-    return [];
-  }
-
-  return user.accessibleChannels;
 };
 
 export const getInitialChannels = (
