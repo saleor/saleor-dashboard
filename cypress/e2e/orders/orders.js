@@ -9,7 +9,11 @@ import {
   ORDERS_SELECTORS,
   SHARED_ELEMENTS,
 } from "../../elements/";
-import { MESSAGES, ONE_PERMISSION_USERS, urlList } from "../../fixtures";
+import {
+  MESSAGES,
+  ONE_PERMISSION_USERS,
+  urlList,
+} from "../../fixtures";
 import {
   createCustomer,
   getOrder,
@@ -28,6 +32,9 @@ import {
   productsUtils,
   updateTaxConfigurationForChannel,
 } from "../../support/api/utils/";
+import {
+  ensureCanvasStatic,
+} from "../../support/customCommands/sharedElementsOperations/canvas";
 import {
   addNewProductToOrder,
   addPrivateMetadataFieldFulfillmentOrder,
@@ -308,7 +315,7 @@ describe("Orders", () => {
         address,
       }).then(unconfirmedOrderResponse => {
         cy.visit(urlList.orders + `${unconfirmedOrderResponse.order.id}`);
-
+        ensureCanvasStatic(SHARED_ELEMENTS.dataGridTable);
         changeQuantityOfProducts();
 
         cy.get(ORDERS_SELECTORS.orderSummarySubtotalPriceRow).should(
