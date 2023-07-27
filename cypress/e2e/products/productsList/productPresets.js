@@ -1,10 +1,20 @@
 /// <reference types="cypress"/>
 /// <reference types="../../../support"/>
 
-import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
-import { SEARCH } from "../../../elements/shared";
-import { LOCAL_STORAGE_KEYS, urlList } from "../../../fixtures/";
-import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
+import {
+  PRODUCTS_LIST,
+} from "../../../elements/catalog/products/products-list";
+import {
+  PRESETS,
+  SEARCH,
+} from "../../../elements/shared";
+import {
+  LOCAL_STORAGE_KEYS,
+  urlList,
+} from "../../../fixtures/";
+import {
+  ensureCanvasStatic,
+} from "../../../support/customCommands/sharedElementsOperations/canvas";
 import {
   addPresetWithName,
   clickDeletePresetButton,
@@ -90,7 +100,7 @@ describe("As a user I should be able to save selected filters with search querie
           localStorage.getItem(LOCAL_STORAGE_KEYS.keys.productPresets),
         ).to.not.contains(`query=${secondPreset}`);
         clickShowSavedPresetsButton();
-        cy.contains(firstPreset).should("be.visible");
+        cy.get(PRESETS.savedPreset).contains(firstPreset).should("be.visible");
       });
     },
   );
