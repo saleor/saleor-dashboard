@@ -1,20 +1,25 @@
 // @ts-strict-ignore
-import ColumnPicker from "@dashboard/components/ColumnPicker";
+import { ColumnPicker } from "@dashboard/components/Datagrid/ColumnPicker/ColumnPicker";
+import { useColumns } from "@dashboard/components/Datagrid/ColumnPicker/useColumns";
 import Datagrid from "@dashboard/components/Datagrid/Datagrid";
-import { useColumnsDefault } from "@dashboard/components/Datagrid/hooks/useColumnsDefault";
 import {
   DatagridChangeStateContext,
   useDatagridChangeState,
 } from "@dashboard/components/Datagrid/hooks/useDatagridChange";
 import { OrderLineFragment } from "@dashboard/graphql";
+import useListSettings from "@dashboard/hooks/useListSettings";
 import { productPath } from "@dashboard/products/urls";
+import { ListViews } from "@dashboard/types";
 import { ExternalLinkIcon } from "@saleor/macaw-ui/next";
-import React, { useCallback } from "react";
+import React, { useCallback, useMemo } from "react";
 import { useIntl } from "react-intl";
 import { Link } from "react-router-dom";
 
 import { messages as orderMessages } from "../OrderListDatagrid/messages";
-import { useColumns, useGetCellContent } from "./datagrid";
+import {
+  createGetCellContent,
+  orderDetailsStaticColumnsAdapter,
+} from "./datagrid";
 import { messages } from "./messages";
 
 interface OrderDetailsDatagridProps {
@@ -29,24 +34,44 @@ export const OrderDetailsDatagrid = ({
   const intl = useIntl();
   const datagrid = useDatagridChangeState();
 
-  const availableColumns = useColumns();
+  const { updateListSettings, settings } = useListSettings(
+    ListViews.ORDER_DETAILS_LIST,
+  );
+
+  const orderDetailsStaticColumns = useMemo(
+    () => orderDetailsStaticColumnsAdapter(intl),
+    [intl],
+  );
+
+  const handleColumnChange = useCallback(
+    picked => {
+      if (updateListSettings) {
+        updateListSettings("columns", picked.filter(Boolean));
+      }
+    },
+    [updateListSettings],
+  );
 
   const {
-    availableColumnsChoices,
-    columnChoices,
-    columns,
-    defaultColumns,
-    onColumnMoved,
-    onColumnResize,
-    onColumnsChange,
-    picker,
-  } = useColumnsDefault(availableColumns);
-
-  const getCellContent = useGetCellContent({
-    columns,
-    data: lines,
-    loading,
+    handlers,
+    visibleColumns,
+    staticColumns,
+    selectedColumns,
+    recentlyAddedColumn,
+  } = useColumns({
+    staticColumns: orderDetailsStaticColumns,
+    selectedColumns: settings?.columns ?? [],
+    onSave: handleColumnChange,
   });
+
+  const getCellContent = useCallback(
+    createGetCellContent({
+      columns: visibleColumns,
+      data: lines,
+      loading,
+    }),
+    [intl, visibleColumns, loading],
+  );
 
   const getMenuItems = useCallback(
     index => [
@@ -76,31 +101,21 @@ export const OrderDetailsDatagrid = ({
         rowMarkers="none"
         columnSelect="single"
         freezeColumns={1}
-        availableColumns={columns}
+        availableColumns={visibleColumns}
         emptyText={intl.formatMessage(orderMessages.emptyText)}
         getCellContent={getCellContent}
         getCellError={() => false}
         menuItems={getMenuItems}
         rows={loading ? 1 : lines.length}
         selectionActions={() => null}
-        onColumnResize={onColumnResize}
-        onColumnMoved={onColumnMoved}
-        renderColumnPicker={defaultProps => (
+        onColumnResize={handlers.onResize}
+        onColumnMoved={handlers.onMove}
+        recentlyAddedColumn={recentlyAddedColumn}
+        renderColumnPicker={() => (
           <ColumnPicker
-            {...defaultProps}
-            IconButtonProps={{
-              ...defaultProps.IconButtonProps,
-              disabled: lines.length === 0,
-            }}
-            availableColumns={availableColumnsChoices}
-            initialColumns={columnChoices}
-            defaultColumns={defaultColumns}
-            onSave={onColumnsChange}
-            hasMore={false}
-            loading={false}
-            onFetchMore={() => undefined}
-            onQueryChange={picker.setQuery}
-            query={picker.query}
+            staticColumns={staticColumns}
+            selectedColumns={selectedColumns}
+            onToggle={handlers.onToggle}
           />
         )}
       />

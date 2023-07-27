@@ -10,6 +10,10 @@ export class ConditionSelected {
     public loading: boolean,
   ) {}
 
+  public isEmpty() {
+    return this.value === ""
+  }
+
   public static empty() {
     return new ConditionSelected("", null, [], false);
   }

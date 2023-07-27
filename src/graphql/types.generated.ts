@@ -8374,7 +8374,7 @@ export type _GetDynamicLeftOperandsQuery = { __typename: 'Query', attributes: { 
 export type _GetChannelOperandsQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type _GetChannelOperandsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', id: string, name: string, slug: string }> | null };
+export type _GetChannelOperandsQuery = { __typename: 'Query', channels: Array<{ __typename: 'Channel', name: string, slug: string, id: string }> | null };
 
 export type _SearchCollectionsOperandsQueryVariables = Exact<{
   first: Scalars['Int'];

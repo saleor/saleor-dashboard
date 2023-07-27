@@ -1,14 +1,32 @@
-import { ConditionalFilters } from "@dashboard/components/ConditionalFilter";
-import { Box, Button, CloseIcon, Popover, Text } from "@saleor/macaw-ui/next";
-import React from "react";
+import {
+  conditionalFilterMessages,
+  ConditionalFilters,
+  useConditionalFilterContext,
+} from "@dashboard/components/ConditionalFilter";
+import {
+  Box,
+  Button,
+  CloseIcon,
+  DropdownButton,
+  Popover,
+  Text,
+} from "@saleor/macaw-ui/next";
+import React, { useState } from "react";
+import { useIntl } from "react-intl";
 
 export const ExpressionFilters = () => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const { formatMessage } = useIntl();
+  const { valueProvider } = useConditionalFilterContext();
 
   return (
     <Popover open={open} onOpenChange={open => setOpen(open)}>
       <Popover.Trigger>
-        <Button>Show filters</Button>
+        <DropdownButton>
+          {formatMessage(conditionalFilterMessages.popoverTrigger, {
+            count: valueProvider.count,
+          })}
+        </DropdownButton>
       </Popover.Trigger>
       <Popover.Content align="start">
         <Box
@@ -17,6 +35,7 @@ export const ExpressionFilters = () => {
           display="grid"
           __gridTemplateRows="auto 1fr"
         >
+          <Popover.Arrow fill="surfaceNeutralPlain" />
           <Box
             paddingTop={3}
             paddingX={3}
@@ -30,7 +49,7 @@ export const ExpressionFilters = () => {
             borderTopRightRadius={2}
           >
             <Text variant="body" size="medium">
-              Conditions
+              {formatMessage(conditionalFilterMessages.popoverTitle)}
             </Text>
             <Box display="flex" alignItems="center" gap={2}>
               <Popover.Close>
