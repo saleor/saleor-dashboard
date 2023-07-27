@@ -169,7 +169,3 @@ Cypress.on(
     // failing the test
     false,
 );
-
-// Cypress.on("test:before:run", () => {
-//   window.localStorage.setItem("notifiedAboutNavigator", "true");
-// });
