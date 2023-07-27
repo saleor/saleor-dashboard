@@ -8,6 +8,8 @@ import { useIntl } from "react-intl";
 
 import { useAuthProvider } from "./hooks/useAuthProvider";
 
+const originalWindowNavigator = window.navigator;
+
 const adminCredentials = {
   email: "admin@example.com",
   password: "admin",
@@ -22,6 +24,24 @@ const nonStaffUserCredentials = {
 beforeEach(() => {
   localStorage.clear();
   sessionStorage.clear();
+
+  Object.defineProperty(window, "navigator", {
+    configurable: true,
+    enumerable: true,
+    value: {
+      credentials: {
+        get: jest.fn(),
+      },
+    },
+  });
+});
+
+afterAll(() => {
+  Object.defineProperty(window, "navigator", {
+    configurable: true,
+    enumerable: true,
+    value: originalWindowNavigator,
+  });
 });
 
 jest.mock("react-intl", () => ({
