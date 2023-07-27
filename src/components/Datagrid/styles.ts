@@ -91,15 +91,11 @@ const useStyles = makeStyles<{ actionButtonPosition?: "left" | "right" }>(
       datagrid: {
         "& .dvn-scroller": {
           overscrollBehaviorX: "none",
-          scrollbarWidth: "none",
-        },
-        "& .dvn-scroller::-webkit-scrollbar": {
-          display: "none",
+          overflowY: "hidden",
         },
         borderRadius: 0,
         boxSizing: "content-box",
         width: "100%",
-        paddingBottom: "1px",
       },
       root: {
         position: "relative",
