@@ -164,6 +164,10 @@ export class FilterElement {
     return UrlEntry.forStatic(this.condition.selected, this.value.value);
   }
 
+  public equals(element: FilterElement) {
+    return this.value.value === element.value.value
+  }
+
   public static isCompatible(element: unknown): element is FilterElement {
     return (
       typeof element === "object" &&

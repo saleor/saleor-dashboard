@@ -49,6 +49,17 @@ const removeElement = (container: FilterContainer, position: number) => {
   return removeConstraint(newContainer);
 };
 
+const removeEmptyElements = (container: FilterContainer, provider: FilterValueProvider): FilterContainer => {
+  const emptyIndex = container.findIndex(el =>
+    FilterElement.isCompatible(el) && (!provider.isPersisted(el) || el.isEmpty())
+  )
+
+  if (emptyIndex < 0) return container
+
+  return removeEmptyElements(removeElement(container, emptyIndex), provider)
+}
+
+
 export const useContainerState = (valueProvider: FilterValueProvider) => {
   const [value, setValue] = useState<FilterContainer>([]);
 
@@ -124,6 +135,10 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     setValue([]);
   };
 
+  const clearEmpty = () => {
+    setValue(v => removeEmptyElements(v, valueProvider))
+  }
+
   return {
     create,
     exist,
@@ -133,5 +148,6 @@ export const useContainerState = (valueProvider: FilterValueProvider) => {
     removeAt,
     value,
     clear,
+    clearEmpty
   };
 };
