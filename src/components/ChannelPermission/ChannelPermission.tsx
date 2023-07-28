@@ -33,9 +33,14 @@ export const ChannelPermission = ({
 
   return (
     <Box height="100%">
-      <Text as="p" variant="bodyEmp" size="large" marginBottom={5}>
-        {intl.formatMessage(messages.title)}
-      </Text>
+      <Box marginBottom={5} display="flex" alignItems="center">
+        <Text as="span" variant="bodyEmp" size="large">
+          {intl.formatMessage(messages.title)}
+        </Text>
+        <Text as="span" marginLeft={1}>
+          ({intl.formatMessage(messages.titleLable)})
+        </Text>
+      </Box>
 
       <Box height="100%">
         {description && (
