@@ -33,7 +33,6 @@ import React, {
 } from "react";
 import { FormattedMessage } from "react-intl";
 
-import { contentMaxWidth } from "../AppLayout/consts";
 import { CardMenuItem } from "../CardMenu";
 import { ColumnPickerProps } from "../ColumnPicker";
 import { FullScreenContainer } from "./components/FullScreenContainer";
@@ -73,6 +72,7 @@ export interface MenuItemsActions {
 }
 
 export interface DatagridProps {
+  fillHandle?: boolean,
   addButtonLabel?: string;
   availableColumns: readonly AvailableColumn[];
   emptyText: string;
@@ -500,8 +500,6 @@ export const Datagrid: React.FC<DatagridProps> = ({
                   borderTopWidth={1}
                   borderTopStyle="solid"
                   borderColor="neutralPlain"
-                  __maxWidth={contentMaxWidth}
-                  margin="auto"
                 />
                 <DataEditor
                   {...datagridProps}

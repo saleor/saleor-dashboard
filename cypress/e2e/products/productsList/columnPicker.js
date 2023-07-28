@@ -2,15 +2,19 @@
 /// <reference types="../../../support"/>
 
 import { SHARED_ELEMENTS } from "../../../elements";
-import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
+import {
+  PRODUCTS_LIST,
+} from "../../../elements/catalog/products/products-list";
 import { LOCAL_STORAGE_FOR_COLUMN_PICKER } from "../../../fixtures";
 import { urlList } from "../../../fixtures/urlList";
-import { ensureCanvasStatic } from "../../../support/customCommands/sharedElementsOperations/canvas";
+import {
+  ensureCanvasStatic,
+} from "../../../support/customCommands/sharedElementsOperations/canvas";
 import { columnPickerPage } from "../../../support/pages";
 
 describe("As an admin I should be able to use column picker", () => {
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

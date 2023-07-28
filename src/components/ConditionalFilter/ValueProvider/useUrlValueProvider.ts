@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import useRouter from "use-react-router";
 
 import { InitialAPIState } from "../API";
-import { FilterContainer } from "../FilterElement";
+import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
 import { TokenArray } from "./TokenArray";
 import { UrlEntry } from "./UrlToken";
@@ -63,6 +63,10 @@ export const useUrlValueProvider = (
     setValue([]);
   };
 
+  const isPersisted = (element: FilterElement) => {
+    return value.some(p => FilterElement.isCompatible(p) && p.equals(element))
+  }
+
   const count = value.filter(v => typeof v !== "string").length;
 
   return {
@@ -70,6 +74,7 @@ export const useUrlValueProvider = (
     loading,
     persist,
     clear,
+    isPersisted,
     count,
   };
 };

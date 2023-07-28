@@ -7,9 +7,16 @@ import { APP_DETAILS } from "../elements/apps/appDetails";
 import { APPS_LIST_SELECTORS } from "../elements/apps/appsList";
 import { WEBHOOK_DETAILS } from "../elements/apps/webhookDetails";
 import { BUTTON_SELECTORS } from "../elements/shared/button-selectors";
-import { appDetailsUrl, urlList } from "../fixtures/urlList";
+import {
+  appDetailsUrl,
+  urlList,
+} from "../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../fixtures/users";
-import { createApp, getApp, updateApp } from "../support/api/requests/Apps";
+import {
+  createApp,
+  getApp,
+  updateApp,
+} from "../support/api/requests/Apps";
 import {
   addShippingMethod,
   createCheckout,
@@ -18,7 +25,9 @@ import {
 import { createVoucher } from "../support/api/requests/Discounts/Vouchers";
 import { createGiftCard } from "../support/api/requests/GiftCard";
 import { getDefaultChannel } from "../support/api/utils/channelsUtils";
-import { getShippingMethodIdFromCheckout } from "../support/api/utils/ordersUtils";
+import {
+  getShippingMethodIdFromCheckout,
+} from "../support/api/utils/ordersUtils";
 import {
   createProductInChannel,
   createTypeAttributeAndCategoryForProduct,
@@ -41,7 +50,7 @@ describe("As a staff user I want to manage apps", () => {
   const email = `example@example.com`;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     createApp(name, "MANAGE_APPS").then(app => {
       createdApp = app;
@@ -93,7 +102,7 @@ describe("As a staff user I want to manage apps", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest("auth", ONE_PERMISSION_USERS.app);
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.app);
   });
 
   it(

@@ -5,14 +5,21 @@ import faker from "faker";
 
 import { urlList } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import { updateChannelWarehouses } from "../../../support/api/requests/Channels";
+import {
+  updateChannelWarehouses,
+} from "../../../support/api/requests/Channels";
 import { createCheckout } from "../../../support/api/requests/Checkout";
 import { createVariant } from "../../../support/api/requests/Product";
 import { createWarehouse } from "../../../support/api/requests/Warehouse";
 import * as channelsUtils from "../../../support/api/utils/channelsUtils";
-import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import { isShippingAvailableInCheckout } from "../../../support/api/utils/storeFront/checkoutUtils";
+import {
+  createWaitingForCaptureOrder,
+} from "../../../support/api/utils/ordersUtils";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
+import {
+  isShippingAvailableInCheckout,
+} from "../../../support/api/utils/storeFront/checkoutUtils";
 import {
   createShippingRate,
   createShippingZone,
@@ -37,7 +44,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
     const productTypeSlug = `${faker.lorem.slug()}slug`;
     const productSlug = `${faker.lorem.slug()}slug`;
     const warehouseSlug = `${faker.lorem.slug()}slug`;
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     channelsUtils
       .getDefaultChannel()
       .then(channel => {
@@ -108,7 +115,7 @@ describe("As a staff user I want to create shipping zone and rate", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

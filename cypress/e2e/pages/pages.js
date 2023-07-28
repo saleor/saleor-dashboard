@@ -37,7 +37,7 @@ describe("Tests for pages", () => {
   };
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     attributeRequests
       .createAttribute({ name, type: "PAGE_TYPE" })
       .then(attributeResp => {
@@ -51,7 +51,7 @@ describe("Tests for pages", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

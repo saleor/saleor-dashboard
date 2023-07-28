@@ -3,10 +3,15 @@
 
 import faker from "faker";
 
-import { GIFT_CARD_UPDATE } from "../../../elements/catalog/giftCard/giftCardUpdate";
+import {
+  GIFT_CARD_UPDATE,
+} from "../../../elements/catalog/giftCard/giftCardUpdate";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { MESSAGES } from "../../../fixtures";
-import { giftCardDetailsUrl, urlList } from "../../../fixtures/urlList";
+import {
+  giftCardDetailsUrl,
+  urlList,
+} from "../../../fixtures/urlList";
 import {
   createGiftCard,
   getGiftCardWithId,
@@ -16,13 +21,8 @@ import { giftCardsPage } from "../../../support/pages";
 
 describe("As an admin I want to update gift card", () => {
   const startsWith = "updateGCard";
-
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-  });
-
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

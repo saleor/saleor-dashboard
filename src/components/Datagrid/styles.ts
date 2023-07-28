@@ -211,7 +211,7 @@ export function useDatagridTheme(
       borderColor: themeValues.colors.border.neutralHighlight,
       fontFamily: "'Inter var', sans-serif",
       baseFontStyle: themeValues.fontSize.bodySmall,
-      headerFontStyle: themeValues.fontSize.bodySmall,
+      headerFontStyle: `${themeValues.fontWeight.bodyStrongSmall} ${themeValues.fontSize.bodyStrongSmall}`,
       editorFontSize: themeValues.fontSize.bodySmall,
       textMedium: themeValues.colors.foreground.iconNeutralPlain,
       textGroupHeader: themeValues.colors.foreground.iconNeutralDefault,
