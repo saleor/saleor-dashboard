@@ -1,10 +1,11 @@
 import { ListFilters } from "@dashboard/components/AppLayout/ListFilters";
 import { TopNav } from "@dashboard/components/AppLayout/TopNav";
+import { BulkDeleteButton } from "@dashboard/components/BulkDeleteButton";
 import { FilterPresetsSelect } from "@dashboard/components/FilterPresetsSelect";
 import { ListPageLayout } from "@dashboard/components/Layouts";
-import { PageFragment } from "@dashboard/graphql";
 import useNavigator from "@dashboard/hooks/useNavigator";
 import { sectionNames } from "@dashboard/intl";
+import { Pages } from "@dashboard/pages/types";
 import {
   PageListUrlDialog,
   PageListUrlQueryParams,
@@ -37,7 +38,7 @@ export interface PageListPageProps
   extends PageListProps,
     FilterPagePropsWithPresets<PageListFilterKeys, PageListFilterOpts>,
     SortPage<PageListUrlSortField> {
-  pages: PageFragment[];
+  pages: Pages | undefined;
   selectedPageIds: string[];
   loading: boolean;
   onSelectPageIds: (rows: number[], clearSelection: () => void) => void;
@@ -130,7 +131,21 @@ const PageListPage: React.FC<PageListPageProps> = ({
           searchPlaceholder={intl.formatMessage(messages.searchPlaceholder)}
           onFilterChange={onFilterChange}
           onSearchChange={onSearchChange}
-          actions={null} // TODO: add bulk delete & publish
+          actions={
+            selectedPageIds.length > 0 && (
+              <Box display="flex" gap={4}>
+                <Button variant="secondary" onClick={onPagesUnpublish}>
+                  <FormattedMessage {...messages.unpublish} />
+                </Button>
+                <Button variant="secondary" onClick={onPagesPublish}>
+                  <FormattedMessage {...messages.publish} />
+                </Button>
+                <BulkDeleteButton onClick={onPagesDelete}>
+                  <FormattedMessage {...messages.delete} />
+                </BulkDeleteButton>
+              </Box>
+            )
+          }
         />
         <PageListDatagrid
           {...listProps}

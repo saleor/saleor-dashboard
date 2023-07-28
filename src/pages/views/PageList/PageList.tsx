@@ -22,7 +22,6 @@ import usePaginator, {
   PaginatorContext,
 } from "@dashboard/hooks/usePaginator";
 import { useRowSelection } from "@dashboard/hooks/useRowSelection";
-import { maybe } from "@dashboard/misc";
 import PageTypePickerDialog from "@dashboard/pages/components/PageTypePickerDialog";
 import usePageTypeSearch from "@dashboard/searches/usePageTypeSearch";
 import { ListViews } from "@dashboard/types";
@@ -111,7 +110,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
   const pages = mapEdgesToItems(data?.pages);
 
   const paginationValues = usePaginator({
-    pageInfo: maybe(() => data.pages.pageInfo),
+    pageInfo: data?.pages?.pageInfo,
     paginationState,
     queryString: params,
   });
@@ -123,7 +122,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
 
   const [bulkPageRemove, bulkPageRemoveOpts] = usePageBulkRemoveMutation({
     onCompleted: data => {
-      if (data.pageBulkDelete.errors.length === 0) {
+      if (data.pageBulkDelete?.errors.length === 0) {
         closeModal();
         notify({
           status: "success",
@@ -141,7 +140,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
 
   const [bulkPagePublish, bulkPagePublishOpts] = usePageBulkPublishMutation({
     onCompleted: data => {
-      if (data.pageBulkPublish.errors.length === 0) {
+      if (data.pageBulkPublish?.errors.length === 0) {
         closeModal();
         notify({
           status: "success",
@@ -247,7 +246,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         onConfirm={() =>
           bulkPagePublish({
             variables: {
-              ids: params.ids,
+              ids: selectedRowIds,
               isPublished: true,
             },
           })
@@ -264,10 +263,8 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
             defaultMessage="{counter,plural,one{Are you sure you want to publish this page?} other{Are you sure you want to publish {displayQuantity} pages?}}"
             description="dialog content"
             values={{
-              counter: maybe(() => params.ids.length),
-              displayQuantity: (
-                <strong>{maybe(() => params.ids.length)}</strong>
-              ),
+              counter: selectedRowIds.length,
+              displayQuantity: <strong>{selectedRowIds.length}</strong>,
             }}
           />
         </DialogContentText>
@@ -279,7 +276,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         onConfirm={() =>
           bulkPagePublish({
             variables: {
-              ids: params.ids,
+              ids: selectedRowIds,
               isPublished: false,
             },
           })
@@ -295,8 +292,8 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           defaultMessage="{counter,plural,one{Are you sure you want to unpublish this page?} other{Are you sure you want to unpublish {displayQuantity} pages?}}"
           description="dialog content"
           values={{
-            counter: maybe(() => params.ids.length),
-            displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>,
+            counter: selectedRowIds.length,
+            displayQuantity: <strong>{selectedRowIds.length}</strong>,
           }}
         />
       </ActionDialog>
@@ -307,7 +304,7 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
         onConfirm={() =>
           bulkPageRemove({
             variables: {
-              ids: params.ids,
+              ids: selectedRowIds,
             },
           })
         }
@@ -323,8 +320,8 @@ export const PageList: React.FC<PageListProps> = ({ params }) => {
           defaultMessage="{counter,plural,one{Are you sure you want to delete this page?} other{Are you sure you want to delete {displayQuantity} pages?}}"
           description="dialog content"
           values={{
-            counter: maybe(() => params.ids.length),
-            displayQuantity: <strong>{maybe(() => params.ids.length)}</strong>,
+            counter: selectedRowIds.length,
+            displayQuantity: <strong>{selectedRowIds.length}</strong>,
           }}
         />
       </ActionDialog>
