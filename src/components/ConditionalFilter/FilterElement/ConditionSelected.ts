@@ -1,6 +1,6 @@
 import { getDefaultByControlName } from "../controlsType";
 import { ConditionItem } from "./ConditionOptions";
-import { ConditionValue } from "./ConditionValue";
+import { ConditionValue, isItemOptionArray, isTuple } from "./ConditionValue";
 
 export class ConditionSelected {
   private constructor(
@@ -11,7 +11,11 @@ export class ConditionSelected {
   ) {}
 
   public isEmpty() {
-    return this.value === ""
+    return (
+      this.value === "" ||
+      (isItemOptionArray(this.value) && this.value.length === 0) ||
+      (isTuple(this.value) && this.value.includes(""))
+    );
   }
 
   public static empty() {

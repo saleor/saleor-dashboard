@@ -1,10 +1,13 @@
-/* eslint-disable @typescript-eslint/member-ordering */
 import { InitialStateResponse } from "../API/InitialStateResponse";
 import { RowType, STATIC_OPTIONS } from "../constants";
 import { LeftOperand } from "../LeftOperandsProvider";
 import { TokenType, UrlEntry, UrlToken } from "./../ValueProvider/UrlToken";
 import { Condition } from "./Condition";
-import { ConditionItem, ConditionOptions, StaticElementName } from "./ConditionOptions";
+import {
+  ConditionItem,
+  ConditionOptions,
+  StaticElementName,
+} from "./ConditionOptions";
 import { ConditionSelected } from "./ConditionSelected";
 import { ConditionValue, ItemOption } from "./ConditionValue";
 import { Constraint } from "./Constraint";
@@ -14,22 +17,18 @@ class ExpressionValue {
     public value: string,
     public label: string,
     public type: string,
-  ) { }
+  ) {}
 
   public isEmpty() {
-    return this.value.length === 0 || this.label.length === 0
+    return this.value.length === 0 || this.label.length === 0;
   }
 
   public static fromSlug(slug: string) {
-    const option = STATIC_OPTIONS.find(o => o.slug === slug)
+    const option = STATIC_OPTIONS.find(o => o.slug === slug);
 
-    if (!option) return ExpressionValue.emptyStatic()
+    if (!option) return ExpressionValue.emptyStatic();
 
-    return new ExpressionValue(
-      option.slug,
-      option.label,
-      option.type,
-    );
+    return new ExpressionValue(option.slug, option.label, option.type);
   }
 
   public static fromLeftOperand(leftOperand: LeftOperand) {
@@ -75,10 +74,10 @@ export class FilterElement {
     public loading: boolean,
     public constraint?: Constraint,
   ) {
-    const newConstraint = Constraint.fromSlug(this.value.value)
+    const newConstraint = Constraint.fromSlug(this.value.value);
 
     if (newConstraint) {
-      this.constraint = newConstraint
+      this.constraint = newConstraint;
     }
   }
 
@@ -126,7 +125,7 @@ export class FilterElement {
   }
 
   public isEmpty() {
-    return this.value.isEmpty() || this.condition.isEmpty()
+    return this.value.isEmpty() || this.condition.isEmpty();
   }
 
   public isStatic() {
@@ -150,13 +149,12 @@ export class FilterElement {
   }
 
   public setConstraint(constraint: Constraint) {
-    this.constraint = constraint
+    this.constraint = constraint;
   }
 
   public clearConstraint() {
-    this.constraint = undefined
+    this.constraint = undefined;
   }
-
 
   public asUrlEntry(): UrlEntry {
     if (this.isAttribute()) {
@@ -167,10 +165,12 @@ export class FilterElement {
   }
 
   public static isCompatible(element: unknown): element is FilterElement {
-    return typeof element === "object" &&
+    return (
+      typeof element === "object" &&
       !Array.isArray(element) &&
       element !== null &&
-      'value' in element
+      "value" in element
+    );
   }
 
   public static fromValueEntry(valueEntry: any) {
@@ -216,7 +216,7 @@ export class FilterElement {
 export const hasEmptyRows = (container: FilterContainer) => {
   return container
     .filter(FilterElement.isCompatible)
-    .some((e: FilterElement) => e.isEmpty())
-}
+    .some((e: FilterElement) => e.isEmpty());
+};
 
 export type FilterContainer = Array<string | FilterElement | FilterContainer>;
