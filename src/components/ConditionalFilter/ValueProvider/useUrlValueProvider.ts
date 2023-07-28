@@ -5,7 +5,7 @@ import useRouter from "use-react-router";
 import { InitialAPIState } from "../API";
 import { FilterContainer, FilterElement } from "../FilterElement";
 import { FilterValueProvider } from "../FilterValueProvider";
-import { useTokenArray } from "./TokenArray";
+import { TokenArray } from "./TokenArray";
 import { UrlEntry } from "./UrlToken";
 
 type Structure = Array<string | UrlEntry | Structure>;
@@ -25,20 +25,22 @@ const prepareStructure = (filterValue: FilterContainer): Structure =>
 
 export const useUrlValueProvider = (
   initialState: InitialAPIState,
+  locationSearch: string,
 ): FilterValueProvider => {
   const router = useRouter();
-  const params = new URLSearchParams(router.location.search);
+  const params = new URLSearchParams(locationSearch);
   const { data, loading, fetchQueries } = initialState;
   const [value, setValue] = useState<FilterContainer>([]);
 
   params.delete("asc");
   params.delete("sort");
 
-  const tokenizedUrl = useTokenArray(params.toString());
+  const tokenizedUrl = new TokenArray(params.toString());
   const fetchingParams = tokenizedUrl.getFetchingParams();
+
   useEffect(() => {
     fetchQueries(fetchingParams);
-  }, []);
+  }, [locationSearch]);
 
   useEffect(() => {
     if (loading) return;

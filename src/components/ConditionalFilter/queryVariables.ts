@@ -35,7 +35,7 @@ const createStaticQueryPart = (
   }
 
   if (isTuple(value) && label === "between") {
-    const [lte, gte] = value;
+    const [gte, lte] = value;
     return { range: { lte, gte } };
   }
 
@@ -59,7 +59,7 @@ const createStaticQueryPart = (
 };
 
 const getRangeQueryPartByType = (value: [string, string], type: string) => {
-  const [lte, gte] = value;
+  const [gte, lte] = value;
 
   switch (type) {
     case "datetime.range":
@@ -69,6 +69,21 @@ const getRangeQueryPartByType = (value: [string, string], type: string) => {
     case "number.range":
     default:
       return { valuesRange: { lte: parseFloat(lte), gte: parseFloat(gte) } };
+  }
+};
+
+const getQueryPartByType = (
+  value: string,
+  type: string,
+  what: "lte" | "gte",
+) => {
+  switch (type) {
+    case "datetime":
+      return { dateTime: { [what]: value } };
+    case "date":
+      return { date: { [what]: value } };
+    default:
+      return { valuesRange: { [what]: parseFloat(value) } };
   }
 };
 
@@ -82,11 +97,11 @@ const createAttributeQueryPart = (
   const { value } = selected;
 
   if (label === "lower" && typeof value === "string") {
-    return { slug: attributeSlug, valuesRange: { lte: parseFloat(value) } };
+    return { slug: attributeSlug, ...getQueryPartByType(value, type, "lte") };
   }
 
   if (label === "greater" && typeof value === "string") {
-    return { slug: attributeSlug, valuesRange: { gte: parseFloat(value) } };
+    return { slug: attributeSlug, ...getQueryPartByType(value, type, "gte") };
   }
 
   if (isTuple(value) && label === "between") {
