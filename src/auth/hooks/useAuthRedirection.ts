@@ -40,17 +40,8 @@ export const useAuthRedirection = () => {
   };
 
   useEffect(() => {
-    if (!shouldRedirect) {
-      return;
-    }
-
-    if (authenticated || authenticating) {
-      window.location.href = getAppMountUri();
-      return;
-    }
-
-    if (!authenticated && !authenticating) {
-      handleAuthentication();
+    if (shouldRedirect && !authenticated && !authenticating) {
+      handleAuthentication()
     }
   }, [shouldRedirect, authenticated, authenticating]);
 
