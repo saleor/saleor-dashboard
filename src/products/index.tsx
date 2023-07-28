@@ -45,7 +45,7 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   );
 
   return (
-    <ConditionalProductFilterProvider>
+    <ConditionalProductFilterProvider locationSearch={location.search}>
       <ProductListComponent params={params} />
     </ConditionalProductFilterProvider>
   );

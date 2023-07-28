@@ -7,10 +7,12 @@ import { useFilterLeftOperandsProvider } from "../useFilterLeftOperands";
 import { useUrlValueProvider } from "../ValueProvider/useUrlValueProvider";
 import { ConditionalFilterContext } from "./context";
 
-export const ConditionalProductFilterProvider: FC = ({ children }) => {
+export const ConditionalProductFilterProvider: FC<{
+  locationSearch: string;
+}> = ({ children, locationSearch }) => {
   const apiProvider = useProductFilterAPIProvider();
   const initialState = useProductInitialAPIState();
-  const valueProvider = useUrlValueProvider(initialState);
+  const valueProvider = useUrlValueProvider(initialState, locationSearch);
   const leftOperandsProvider = useFilterLeftOperandsProvider();
   const containerState = useContainerState(valueProvider);
 
