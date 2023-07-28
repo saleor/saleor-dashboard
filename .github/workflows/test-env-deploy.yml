@@ -172,6 +172,7 @@ jobs:
 
   testmo-report-preparation:
     needs: prepare-tests
+    if: github.event.pull_request.head.repo.fork == false
     runs-on: ubuntu-22.04
     outputs:
       testmo-run-id: ${{ steps.run-tests.outputs.TESTMO_RUN_ID }}
@@ -200,13 +201,7 @@ jobs:
 
   cypress-run-selected:
     runs-on: ubuntu-22.04
-    needs:
-      [
-        prepare-tests,
-        deploy,
-        testmo-report-preparation,
-        testmo-report-preparation,
-      ]
+    needs: [prepare-tests, deploy, testmo-report-preparation]
     container: cypress/browsers:node18.12.0-chrome106-ff106
     strategy:
       fail-fast: false
@@ -269,6 +264,7 @@ jobs:
         working-directory: .github/workflows
         run: npm ci
       - name: Testmo threads submit
+        if: github.event.pull_request.head.repo.fork == false
         working-directory: .github/workflows
         run: |
           npx testmo automation:run:submit-thread \
@@ -281,7 +277,8 @@ jobs:
           TESTMO_RUN_ID: ${{ needs.testmo-report-preparation.outputs.testmo-run-id }}
   test-complete:
     needs: [testmo-report-preparation, cypress-run-selected]
-    if: always()
+    if: |
+      always() && !contains(needs.*.result, 'skipped') && !contains(needs.*.result, 'cancelled') && github.event.pull_request.head.repo.fork == false
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v3
