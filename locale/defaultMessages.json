@@ -8186,6 +8186,10 @@
     "context": "button",
     "string": "CANCEL END DATE"
   },
+  "vBykp8": {
+    "context": "Alert text",
+    "string": "You are using an old version of the filter presets. Update your presets to continue using filters."
+  },
   "vC8vyb": {
     "context": "enabled status option label",
     "string": "Enabled"
