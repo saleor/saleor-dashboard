@@ -34,6 +34,7 @@ export const useUrlValueProvider = (
 
   params.delete("asc");
   params.delete("sort");
+  params.delete("activeTab");
 
   const tokenizedUrl = new TokenArray(params.toString());
   const fetchingParams = tokenizedUrl.getFetchingParams();
@@ -64,8 +65,8 @@ export const useUrlValueProvider = (
   };
 
   const isPersisted = (element: FilterElement) => {
-    return value.some(p => FilterElement.isCompatible(p) && p.equals(element))
-  }
+    return value.some(p => FilterElement.isCompatible(p) && p.equals(element));
+  };
 
   const count = value.filter(v => typeof v !== "string").length;
 
