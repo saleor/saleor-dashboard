@@ -6,6 +6,7 @@ import { parse as parseQs } from "qs";
 import React from "react";
 import { useIntl } from "react-intl";
 import { Route, RouteComponentProps, Switch } from "react-router-dom";
+import { useFlag } from "@dashboard/featureFlags";
 
 import { WindowTitle } from "../components/WindowTitle";
 import {
@@ -32,6 +33,8 @@ import ProductVariantCreateComponent from "./views/ProductVariantCreate";
 
 const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   const qs = parseQs(location.search.substr(1)) as any;
+  const productListingPageFiltersFlag = useFlag("product_filters");
+
   const params: ProductListUrlQueryParams = asSortParams(
     {
       ...qs,
@@ -45,7 +48,11 @@ const ProductList: React.FC<RouteComponentProps<any>> = ({ location }) => {
   );
 
   return (
-    <ConditionalProductFilterProvider locationSearch={location.search}>
+    <ConditionalProductFilterProvider
+      locationSearch={
+        productListingPageFiltersFlag.enabled ? location.search : ""
+      }
+    >
       <ProductListComponent params={params} />
     </ConditionalProductFilterProvider>
   );

@@ -9,11 +9,11 @@ export const LegacyFiltersPresetsAlert = () => {
   const presets = storageUtils.getFilterTabs();
   const { formatMessage } = useIntl();
 
-  const hasLegacyPresets = !presets.every(preset =>
-    preset.data.match(`[${Object.values(TokenType)}][0-9].`),
+  const legacyPresets = presets.filter(
+    preset => !preset.data.match(`[${Object.values(TokenType)}][0-9].`),
   );
 
-  if (hasLegacyPresets) {
+  if (legacyPresets.length > 0) {
     return (
       <Box
         __backgroundColor={getStatusColor("warning")}
@@ -21,7 +21,15 @@ export const LegacyFiltersPresetsAlert = () => {
         paddingY={5}
         marginBottom={5}
       >
-        <Text>{formatMessage(messages.alertText)}</Text>
+        <Text>
+          {formatMessage(messages.alertText, {
+            presetNames: (
+              <Text variant="bodyStrong">
+                {legacyPresets.map(p => p.name).join(", ")}
+              </Text>
+            ),
+          })}
+        </Text>
       </Box>
     );
   }
@@ -31,8 +39,8 @@ export const LegacyFiltersPresetsAlert = () => {
 const messages = defineMessages({
   alertText: {
     defaultMessage:
-      "You are using an old version of the filter presets. Update your presets to continue using filters.",
+      "You are using an old version of filter presets. The following presets: {presetNames} must be updated to continue using filters",
     description: "Alert text",
-    id: "vBykp8",
+    id: "eIGXwJ",
   },
 });
