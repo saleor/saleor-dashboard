@@ -72,6 +72,7 @@ export interface MenuItemsActions {
 }
 
 export interface DatagridProps {
+  fillHandle?: boolean,
   addButtonLabel?: string;
   availableColumns: readonly AvailableColumn[];
   emptyText: string;
