@@ -14,7 +14,6 @@ import "./customCommands/sharedElementsOperations/selects.js";
 import "./customCommands/sharedElementsOperations/tables";
 import "./customCommands/softAssertions";
 import "./customCommands/user";
-import "@percy/cypress";
 
 import { commandTimings } from "cypress-timings";
 
