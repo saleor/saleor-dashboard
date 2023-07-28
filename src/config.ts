@@ -126,6 +126,7 @@ export const defaultListSettings: AppListViewSettings = {
   },
   [ListViews.VOUCHER_LIST]: {
     rowNumber: PAGINATE_BY,
+    columns: ["code", "minSpent", "starts", "ends", "value", "uses"],
   },
   [ListViews.WAREHOUSE_LIST]: {
     rowNumber: PAGINATE_BY,

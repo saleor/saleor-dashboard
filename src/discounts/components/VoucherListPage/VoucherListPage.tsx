@@ -22,7 +22,7 @@ import { Card } from "@material-ui/core";
 import React from "react";
 import { FormattedMessage, useIntl } from "react-intl";
 
-import VoucherList from "../VoucherList";
+import { VoucherListDatagrid } from "../VoucherListDatagrid";
 import {
   createFilterStructure,
   VoucherFilterKeys,
@@ -37,6 +37,7 @@ export interface VoucherListPageProps
     TabPageProps,
     ChannelProps {
   vouchers: VoucherFragment[];
+  onSelectVouchersIds: (rows: number[], clearSelection: () => void) => void;
 }
 const VoucherListPage: React.FC<VoucherListPageProps> = ({
   currentTab,
@@ -93,7 +94,10 @@ const VoucherListPage: React.FC<VoucherListPageProps> = ({
           onTabDelete={onTabDelete}
           onTabSave={onTabSave}
         />
-        <VoucherList filterDependency={filterDependency} {...listProps} />
+        <VoucherListDatagrid
+          filterDependency={filterDependency}
+          {...listProps}
+        />
       </Card>
     </ListPageLayout>
   );

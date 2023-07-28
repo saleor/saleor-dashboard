@@ -177,6 +177,10 @@ export const VoucherList: React.FC<VoucherListProps> = ({ params }) => {
     <PaginatorContext.Provider value={paginationValues}>
       <WindowTitle title={intl.formatMessage(sectionNames.vouchers)} />
       <VoucherListPage
+        onSelectVouchersIds={() => {
+          // eslint-disable-next-line no-console
+          console.log("TODO: onSelectVouchersIds");
+        }}
         currentTab={currentTab}
         filterOpts={getFilterOpts(params, channelOpts)}
         initialSearch={params.query || ""}

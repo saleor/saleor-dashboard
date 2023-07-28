@@ -25,7 +25,7 @@ export const columnsMessages = defineMessages({
 
 export const messages = defineMessages({
   empty: {
-    id: "51HE+Q",
-    defaultMessage: "No sales found",
+    id: "U2mOqA",
+    defaultMessage: "No vouchers found",
   },
 });

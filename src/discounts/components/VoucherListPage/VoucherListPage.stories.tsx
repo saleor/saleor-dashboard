@@ -22,6 +22,7 @@ const props: VoucherListPageProps = {
   ...sortPageProps,
   ...tabPageProps,
   ...filterPageProps,
+  onSelectVouchersIds: () => undefined,
   filterOpts: {
     channel: {
       active: false,
