@@ -80,7 +80,7 @@ describe("Orders", () => {
     privateMetadataValue + "- updated private metadata value";
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateOrdersSettings();
     getDefaultChannel()
       .then(channel => {
@@ -148,10 +148,7 @@ describe("Orders", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.order,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.order);
   });
 
   it(

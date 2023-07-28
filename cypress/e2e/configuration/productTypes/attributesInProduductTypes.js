@@ -3,7 +3,9 @@
 
 import faker from "faker";
 
-import { PRODUCT_TYPE_DETAILS_SELECTORS } from "../../../elements/productTypes/productTypeDetails";
+import {
+  PRODUCT_TYPE_DETAILS_SELECTORS,
+} from "../../../elements/productTypes/productTypeDetails";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { productTypeDetailsUrl } from "../../../fixtures/urlList";
 import { createAttribute } from "../../../support/api/requests/Attribute";
@@ -18,13 +20,13 @@ describe("As an admin I want to manage attributes in product types", () => {
   let attribute;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createAttribute({ name: startsWith }).then(resp => (attribute = resp));
     cy.checkIfDataAreNotNull(attribute);
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

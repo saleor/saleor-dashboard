@@ -32,7 +32,7 @@ describe("As an admin I should be able to filter products", () => {
   let collection;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createTypeAttributeAndCategoryForProduct({ name }).then(
       ({
         attribute: attributeResp,
@@ -86,7 +86,7 @@ describe("As an admin I should be able to filter products", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest().visit(urlList.products);
+    cy.loginUserViaRequest().visit(urlList.products);
   });
 
   const filterProductsBy = [

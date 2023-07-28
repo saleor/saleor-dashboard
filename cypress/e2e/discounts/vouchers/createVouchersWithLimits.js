@@ -8,7 +8,8 @@ import {
   addPayment,
   createCheckoutWithVoucher,
 } from "../../../support/api/utils/ordersUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
 import {
   discountOptions,
   loginAndCreateCheckoutForVoucherWithDiscount,
@@ -26,7 +27,7 @@ describe("As an admin I want to create voucher", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     productsUtils
       .createProductWithShipping({ name, productPrice, shippingPrice })
       .then(

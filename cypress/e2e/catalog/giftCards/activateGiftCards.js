@@ -1,7 +1,9 @@
 /// <reference types="cypress" />
 import faker from "faker";
 
-import { GIFT_CARD_LIST } from "../../../elements/catalog/giftCard/giftCardList";
+import {
+  GIFT_CARD_LIST,
+} from "../../../elements/catalog/giftCard/giftCardList";
 import { urlList } from "../../../fixtures/urlList";
 import { completeCheckout } from "../../../support/api/requests/Checkout";
 import {
@@ -17,8 +19,11 @@ import {
   addPayment,
   purchaseProductWithPromoCode,
 } from "../../../support/api/utils/ordersUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import { updateTaxConfigurationForChannel } from "../../../support/api/utils/taxesUtils";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
+import {
+  updateTaxConfigurationForChannel,
+} from "../../../support/api/utils/taxesUtils";
 import { giftCardsPage } from "../../../support/pages";
 
 describe("As a admin I want to use enabled gift card in checkout", () => {
@@ -38,7 +43,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
   before(() => {
     const name = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     productsUtils
       .createProductWithShipping({ name, shippingPrice, productPrice })
@@ -59,7 +64,7 @@ describe("As a admin I want to use enabled gift card in checkout", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     updateTaxConfigurationForChannel({
       channelSlug: defaultChannel.slug,
       pricesEnteredWithTax: true,

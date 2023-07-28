@@ -6,8 +6,13 @@ import {
   updateMetadata,
   updatePrivateMetadata,
 } from "../support/api/requests/Metadata";
-import { createDraftOrder, getOrder } from "../support/api/requests/Order";
-import { getProductMetadata } from "../support/api/requests/storeFront/ProductDetails";
+import {
+  createDraftOrder,
+  getOrder,
+} from "../support/api/requests/Order";
+import {
+  getProductMetadata,
+} from "../support/api/requests/storeFront/ProductDetails";
 import { getDefaultChannel } from "../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
@@ -22,7 +27,7 @@ describe("Test for metadata", () => {
   let product;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     getDefaultChannel()
       .then(channelResp => {
         channel = channelResp;
@@ -47,7 +52,7 @@ describe("Test for metadata", () => {
     "should create metadata for product",
     { tags: ["@metadata", "@allEnv", "@stable"] },
     () => {
-      cy.clearSessionData().loginUserViaRequest();
+      cy.loginUserViaRequest();
       updateMetadata(product.id, metadata.key, metadata.value);
       updatePrivateMetadata(product.id, metadata.key, metadata.value)
         .then(() => {
@@ -90,7 +95,7 @@ describe("Test for metadata", () => {
     { tags: ["@metadata", "@allEnv", "@stable"] },
     () => {
       let order;
-      cy.clearSessionData().loginUserViaRequest();
+      cy.loginUserViaRequest();
       createDraftOrder({ channelId: channel.id })
         .then(orderResp => {
           order = orderResp;

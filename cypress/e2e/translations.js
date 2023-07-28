@@ -18,7 +18,7 @@ describe("As an admin I want to manage translations", () => {
   let category;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     createCategory({ name: startsWith, slug }).then(categoryResp => {
       category = categoryResp;
       cy.checkIfDataAreNotNull({ category });
@@ -26,7 +26,7 @@ describe("As an admin I want to manage translations", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

@@ -1,6 +1,8 @@
 /// <reference types="cypress"/>
 
-import { PRODUCTS_LIST } from "../../../elements/catalog/products/products-list";
+import {
+  PRODUCTS_LIST,
+} from "../../../elements/catalog/products/products-list";
 import { urlList } from "../../../fixtures/urlList";
 import {
   changeToDatagridView,
@@ -9,12 +11,10 @@ import {
 
 describe("As an user I should be able switch between product views", () => {
   beforeEach(() => {
-    cy.clearSessionData()
-      .loginUserViaRequest()
-      .then(() => {
-        // set notifiedAboutNavigator to make navigator banner gone from the start - banner was covering needed elements during test
-        window.localStorage.setItem("notifiedAboutNavigator", "true");
-      });
+    cy.loginUserViaRequest().then(() => {
+      // set notifiedAboutNavigator to make navigator banner gone from the start - banner was covering needed elements during test
+      window.localStorage.setItem("notifiedAboutNavigator", "true");
+    });
     cy.visit(urlList.products);
   });
 

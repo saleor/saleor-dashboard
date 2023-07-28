@@ -4,7 +4,10 @@
 import faker from "faker";
 
 import { BUTTON_SELECTORS } from "../../elements";
-import { collectionDetailsUrl, urlList } from "../../fixtures/urlList";
+import {
+  collectionDetailsUrl,
+  urlList,
+} from "../../fixtures/urlList";
 import { createChannel } from "../../support/api/requests/Channels";
 import {
   addChannelToCollection,
@@ -12,8 +15,12 @@ import {
   createCollection as createCollectionRequest,
 } from "../../support/api/requests/Collections";
 import { updateChannelInProduct } from "../../support/api/requests/Product";
-import { getCollection } from "../../support/api/requests/storeFront/Collections";
-import { getProductDetails } from "../../support/api/requests/storeFront/ProductDetails";
+import {
+  getCollection,
+} from "../../support/api/requests/storeFront/Collections";
+import {
+  getProductDetails,
+} from "../../support/api/requests/storeFront/ProductDetails";
 import { searchInShop } from "../../support/api/requests/storeFront/Search";
 import * as channelsUtils from "../../support/api/utils/channelsUtils";
 import * as productsUtils from "../../support/api/utils/products/productsUtils";
@@ -35,7 +42,7 @@ describe("As an admin I want to manage collections.", () => {
   let defaultChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     channelsUtils
       .getDefaultChannel()
@@ -76,7 +83,7 @@ describe("As an admin I want to manage collections.", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

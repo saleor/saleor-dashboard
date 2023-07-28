@@ -3,8 +3,12 @@
 
 import faker from "faker";
 
-import { PERMISSION_GROUP_DETAILS_SELECTORS } from "../../elements/permissionGroup/permissionGroupDetails";
-import { PERMISSION_GROUP_LIST_SELECTORS } from "../../elements/permissionGroup/permissionGroupsList";
+import {
+  PERMISSION_GROUP_DETAILS_SELECTORS,
+} from "../../elements/permissionGroup/permissionGroupDetails";
+import {
+  PERMISSION_GROUP_LIST_SELECTORS,
+} from "../../elements/permissionGroup/permissionGroupsList";
 import { BUTTON_SELECTORS } from "../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../elements/shared/sharedElements";
 import {
@@ -17,18 +21,16 @@ import {
   createPermissionGroup,
   getPermissionGroup,
 } from "../../support/api/requests/PermissionGroup.js";
-import { getStaffMembersStartsWith } from "../../support/api/requests/StaffMembers";
+import {
+  getStaffMembersStartsWith,
+} from "../../support/api/requests/StaffMembers";
 
 describe("Permissions groups", () => {
   const startsWith = "CyPermissions-" + Date.now();
   const permissionManageProducts = "[MANAGE_PRODUCTS]";
 
-  before(() => {
-    cy.clearSessionData().loginUserViaRequest();
-  });
-
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
 
   it(

@@ -4,7 +4,9 @@
 import faker from "faker";
 
 import { createCheckout } from "../../support/api/requests/Checkout";
-import { updateStockReservation } from "../../support/api/requests/ShopSettings";
+import {
+  updateStockReservation,
+} from "../../support/api/requests/ShopSettings";
 import { getDefaultChannel } from "../../support/api/utils/channelsUtils";
 import {
   createProductInChannel,
@@ -34,7 +36,7 @@ describe("As an admin I want to manage stock reservation", () => {
   let dataForCheckout;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     cy.fixture("addresses").then(addresses => {
       address = addresses.usAddress;
@@ -81,7 +83,7 @@ describe("As an admin I want to manage stock reservation", () => {
   beforeEach(() => {
     const productName = `${startsWith}${faker.datatype.number()}`;
 
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
 
     createProductInChannel({
       attributeId: attribute.id,

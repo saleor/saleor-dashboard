@@ -3,7 +3,9 @@
 
 import faker from "faker";
 
-import { VARIANTS_SELECTORS } from "../../../elements/catalog/products/variants-selectors";
+import {
+  VARIANTS_SELECTORS,
+} from "../../../elements/catalog/products/variants-selectors";
 import { BUTTON_SELECTORS } from "../../../elements/shared/button-selectors";
 import { SHARED_ELEMENTS } from "../../../elements/shared/sharedElements";
 import { productVariantDetailUrl } from "../../../fixtures/urlList";
@@ -14,10 +16,15 @@ import {
   updateChannelPriceInVariant,
 } from "../../../support/api/requests/Product";
 import { createTypeProduct } from "../../../support/api/requests/ProductType";
-import { createWaitingForCaptureOrder } from "../../../support/api/utils/ordersUtils";
-import * as productUtils from "../../../support/api/utils/products/productsUtils";
+import {
+  createWaitingForCaptureOrder,
+} from "../../../support/api/utils/ordersUtils";
+import * as productUtils
+  from "../../../support/api/utils/products/productsUtils";
 import * as shippingUtils from "../../../support/api/utils/shippingUtils";
-import { deleteWarehouseStartsWith } from "../../../support/api/utils/warehouseUtils";
+import {
+  deleteWarehouseStartsWith,
+} from "../../../support/api/utils/warehouseUtils";
 
 describe("Updating products without sku", () => {
   const startsWith = "UpdateProductsSku";
@@ -38,7 +45,7 @@ describe("Updating products without sku", () => {
   const attributeValues = ["value1", "value2"];
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     productUtils.deleteProductsStartsWith(startsWith);
     shippingUtils.deleteShippingStartsWith(startsWith);
     deleteWarehouseStartsWith(startsWith);
@@ -90,7 +97,7 @@ describe("Updating products without sku", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
   });
   it(
     "should be able to add SKU to simple product TC: SALEOR_2802",

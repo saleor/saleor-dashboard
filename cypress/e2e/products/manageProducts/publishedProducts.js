@@ -5,11 +5,18 @@ import faker from "faker";
 
 import { productDetailsUrl } from "../../../fixtures/urlList";
 import { ONE_PERMISSION_USERS } from "../../../fixtures/users";
-import { getProductDetails } from "../../../support/api/requests/storeFront/ProductDetails";
+import {
+  getProductDetails,
+} from "../../../support/api/requests/storeFront/ProductDetails";
 import { getDefaultChannel } from "../../../support/api/utils/channelsUtils";
-import * as productsUtils from "../../../support/api/utils/products/productsUtils";
-import { isProductVisible } from "../../../support/api/utils/storeFront/storeFrontProductUtils";
-import { updateProductPublish } from "../../../support/pages/catalog/products/productDetailsPage";
+import * as productsUtils
+  from "../../../support/api/utils/products/productsUtils";
+import {
+  isProductVisible,
+} from "../../../support/api/utils/storeFront/storeFrontProductUtils";
+import {
+  updateProductPublish,
+} from "../../../support/pages/catalog/products/productDetailsPage";
 
 describe("Published products", () => {
   const startsWith = "CyPublishedProducts-";
@@ -20,7 +27,7 @@ describe("Published products", () => {
   let defaultChannel;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     productsUtils
       .createTypeAttributeAndCategoryForProduct({ name })
       .then(
@@ -47,10 +54,7 @@ describe("Published products", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(

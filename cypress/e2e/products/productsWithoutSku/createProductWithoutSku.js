@@ -8,7 +8,10 @@ import {
   PRODUCT_DETAILS,
   PRODUCTS_LIST,
 } from "../../../elements/";
-import { ONE_PERMISSION_USERS, urlList } from "../../../fixtures/";
+import {
+  ONE_PERMISSION_USERS,
+  urlList,
+} from "../../../fixtures/";
 import {
   productsRequests,
   productsTypeRequests,
@@ -41,7 +44,7 @@ describe("Creating variants", () => {
   let address;
 
   before(() => {
-    cy.clearSessionData().loginUserViaRequest();
+    cy.loginUserViaRequest();
     const name = `${startsWith}${faker.datatype.number()}`;
     const simpleProductTypeName = `${startsWith}${faker.datatype.number()}`;
 
@@ -97,10 +100,7 @@ describe("Creating variants", () => {
   });
 
   beforeEach(() => {
-    cy.clearSessionData().loginUserViaRequest(
-      "auth",
-      ONE_PERMISSION_USERS.product,
-    );
+    cy.loginUserViaRequest("auth", ONE_PERMISSION_USERS.product);
   });
 
   it(
